@@ -880,2283 +880,2283 @@ type DeidentifyConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (dc DeidentifyConfigAttributes) InternalRef() terra.Reference {
-	return dc.ref
+func (dc DeidentifyConfigAttributes) InternalRef() (terra.Reference, error) {
+	return dc.ref, nil
 }
 
 func (dc DeidentifyConfigAttributes) InternalWithRef(ref terra.Reference) DeidentifyConfigAttributes {
 	return DeidentifyConfigAttributes{ref: ref}
 }
 
-func (dc DeidentifyConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (dc DeidentifyConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dc.ref.InternalTokens()
 }
 
 func (dc DeidentifyConfigAttributes) InfoTypeTransformations() terra.ListValue[InfoTypeTransformationsAttributes] {
-	return terra.ReferenceList[InfoTypeTransformationsAttributes](dc.ref.Append("info_type_transformations"))
+	return terra.ReferenceAsList[InfoTypeTransformationsAttributes](dc.ref.Append("info_type_transformations"))
 }
 
 func (dc DeidentifyConfigAttributes) RecordTransformations() terra.ListValue[RecordTransformationsAttributes] {
-	return terra.ReferenceList[RecordTransformationsAttributes](dc.ref.Append("record_transformations"))
+	return terra.ReferenceAsList[RecordTransformationsAttributes](dc.ref.Append("record_transformations"))
 }
 
 type InfoTypeTransformationsAttributes struct {
 	ref terra.Reference
 }
 
-func (itt InfoTypeTransformationsAttributes) InternalRef() terra.Reference {
-	return itt.ref
+func (itt InfoTypeTransformationsAttributes) InternalRef() (terra.Reference, error) {
+	return itt.ref, nil
 }
 
 func (itt InfoTypeTransformationsAttributes) InternalWithRef(ref terra.Reference) InfoTypeTransformationsAttributes {
 	return InfoTypeTransformationsAttributes{ref: ref}
 }
 
-func (itt InfoTypeTransformationsAttributes) InternalTokens() hclwrite.Tokens {
+func (itt InfoTypeTransformationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return itt.ref.InternalTokens()
 }
 
 func (itt InfoTypeTransformationsAttributes) Transformations() terra.ListValue[TransformationsAttributes] {
-	return terra.ReferenceList[TransformationsAttributes](itt.ref.Append("transformations"))
+	return terra.ReferenceAsList[TransformationsAttributes](itt.ref.Append("transformations"))
 }
 
 type TransformationsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TransformationsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TransformationsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TransformationsAttributes) InternalWithRef(ref terra.Reference) TransformationsAttributes {
 	return TransformationsAttributes{ref: ref}
 }
 
-func (t TransformationsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TransformationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TransformationsAttributes) InfoTypes() terra.ListValue[InfoTypesAttributes] {
-	return terra.ReferenceList[InfoTypesAttributes](t.ref.Append("info_types"))
+	return terra.ReferenceAsList[InfoTypesAttributes](t.ref.Append("info_types"))
 }
 
 func (t TransformationsAttributes) PrimitiveTransformation() terra.ListValue[TransformationsPrimitiveTransformationAttributes] {
-	return terra.ReferenceList[TransformationsPrimitiveTransformationAttributes](t.ref.Append("primitive_transformation"))
+	return terra.ReferenceAsList[TransformationsPrimitiveTransformationAttributes](t.ref.Append("primitive_transformation"))
 }
 
 type InfoTypesAttributes struct {
 	ref terra.Reference
 }
 
-func (it InfoTypesAttributes) InternalRef() terra.Reference {
-	return it.ref
+func (it InfoTypesAttributes) InternalRef() (terra.Reference, error) {
+	return it.ref, nil
 }
 
 func (it InfoTypesAttributes) InternalWithRef(ref terra.Reference) InfoTypesAttributes {
 	return InfoTypesAttributes{ref: ref}
 }
 
-func (it InfoTypesAttributes) InternalTokens() hclwrite.Tokens {
+func (it InfoTypesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return it.ref.InternalTokens()
 }
 
 func (it InfoTypesAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(it.ref.Append("name"))
+	return terra.ReferenceAsString(it.ref.Append("name"))
 }
 
 type TransformationsPrimitiveTransformationAttributes struct {
 	ref terra.Reference
 }
 
-func (pt TransformationsPrimitiveTransformationAttributes) InternalRef() terra.Reference {
-	return pt.ref
+func (pt TransformationsPrimitiveTransformationAttributes) InternalRef() (terra.Reference, error) {
+	return pt.ref, nil
 }
 
 func (pt TransformationsPrimitiveTransformationAttributes) InternalWithRef(ref terra.Reference) TransformationsPrimitiveTransformationAttributes {
 	return TransformationsPrimitiveTransformationAttributes{ref: ref}
 }
 
-func (pt TransformationsPrimitiveTransformationAttributes) InternalTokens() hclwrite.Tokens {
+func (pt TransformationsPrimitiveTransformationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pt.ref.InternalTokens()
 }
 
 func (pt TransformationsPrimitiveTransformationAttributes) ReplaceWithInfoTypeConfig() terra.BoolValue {
-	return terra.ReferenceBool(pt.ref.Append("replace_with_info_type_config"))
+	return terra.ReferenceAsBool(pt.ref.Append("replace_with_info_type_config"))
 }
 
 func (pt TransformationsPrimitiveTransformationAttributes) CharacterMaskConfig() terra.ListValue[TransformationsPrimitiveTransformationCharacterMaskConfigAttributes] {
-	return terra.ReferenceList[TransformationsPrimitiveTransformationCharacterMaskConfigAttributes](pt.ref.Append("character_mask_config"))
+	return terra.ReferenceAsList[TransformationsPrimitiveTransformationCharacterMaskConfigAttributes](pt.ref.Append("character_mask_config"))
 }
 
 func (pt TransformationsPrimitiveTransformationAttributes) CryptoDeterministicConfig() terra.ListValue[TransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes] {
-	return terra.ReferenceList[TransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes](pt.ref.Append("crypto_deterministic_config"))
+	return terra.ReferenceAsList[TransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes](pt.ref.Append("crypto_deterministic_config"))
 }
 
 func (pt TransformationsPrimitiveTransformationAttributes) CryptoReplaceFfxFpeConfig() terra.ListValue[TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes] {
-	return terra.ReferenceList[TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes](pt.ref.Append("crypto_replace_ffx_fpe_config"))
+	return terra.ReferenceAsList[TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes](pt.ref.Append("crypto_replace_ffx_fpe_config"))
 }
 
 func (pt TransformationsPrimitiveTransformationAttributes) ReplaceConfig() terra.ListValue[TransformationsPrimitiveTransformationReplaceConfigAttributes] {
-	return terra.ReferenceList[TransformationsPrimitiveTransformationReplaceConfigAttributes](pt.ref.Append("replace_config"))
+	return terra.ReferenceAsList[TransformationsPrimitiveTransformationReplaceConfigAttributes](pt.ref.Append("replace_config"))
 }
 
 type TransformationsPrimitiveTransformationCharacterMaskConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (cmc TransformationsPrimitiveTransformationCharacterMaskConfigAttributes) InternalRef() terra.Reference {
-	return cmc.ref
+func (cmc TransformationsPrimitiveTransformationCharacterMaskConfigAttributes) InternalRef() (terra.Reference, error) {
+	return cmc.ref, nil
 }
 
 func (cmc TransformationsPrimitiveTransformationCharacterMaskConfigAttributes) InternalWithRef(ref terra.Reference) TransformationsPrimitiveTransformationCharacterMaskConfigAttributes {
 	return TransformationsPrimitiveTransformationCharacterMaskConfigAttributes{ref: ref}
 }
 
-func (cmc TransformationsPrimitiveTransformationCharacterMaskConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (cmc TransformationsPrimitiveTransformationCharacterMaskConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cmc.ref.InternalTokens()
 }
 
 func (cmc TransformationsPrimitiveTransformationCharacterMaskConfigAttributes) MaskingCharacter() terra.StringValue {
-	return terra.ReferenceString(cmc.ref.Append("masking_character"))
+	return terra.ReferenceAsString(cmc.ref.Append("masking_character"))
 }
 
 func (cmc TransformationsPrimitiveTransformationCharacterMaskConfigAttributes) NumberToMask() terra.NumberValue {
-	return terra.ReferenceNumber(cmc.ref.Append("number_to_mask"))
+	return terra.ReferenceAsNumber(cmc.ref.Append("number_to_mask"))
 }
 
 func (cmc TransformationsPrimitiveTransformationCharacterMaskConfigAttributes) ReverseOrder() terra.BoolValue {
-	return terra.ReferenceBool(cmc.ref.Append("reverse_order"))
+	return terra.ReferenceAsBool(cmc.ref.Append("reverse_order"))
 }
 
 func (cmc TransformationsPrimitiveTransformationCharacterMaskConfigAttributes) CharactersToIgnore() terra.ListValue[TransformationsPrimitiveTransformationCharacterMaskConfigCharactersToIgnoreAttributes] {
-	return terra.ReferenceList[TransformationsPrimitiveTransformationCharacterMaskConfigCharactersToIgnoreAttributes](cmc.ref.Append("characters_to_ignore"))
+	return terra.ReferenceAsList[TransformationsPrimitiveTransformationCharacterMaskConfigCharactersToIgnoreAttributes](cmc.ref.Append("characters_to_ignore"))
 }
 
 type TransformationsPrimitiveTransformationCharacterMaskConfigCharactersToIgnoreAttributes struct {
 	ref terra.Reference
 }
 
-func (cti TransformationsPrimitiveTransformationCharacterMaskConfigCharactersToIgnoreAttributes) InternalRef() terra.Reference {
-	return cti.ref
+func (cti TransformationsPrimitiveTransformationCharacterMaskConfigCharactersToIgnoreAttributes) InternalRef() (terra.Reference, error) {
+	return cti.ref, nil
 }
 
 func (cti TransformationsPrimitiveTransformationCharacterMaskConfigCharactersToIgnoreAttributes) InternalWithRef(ref terra.Reference) TransformationsPrimitiveTransformationCharacterMaskConfigCharactersToIgnoreAttributes {
 	return TransformationsPrimitiveTransformationCharacterMaskConfigCharactersToIgnoreAttributes{ref: ref}
 }
 
-func (cti TransformationsPrimitiveTransformationCharacterMaskConfigCharactersToIgnoreAttributes) InternalTokens() hclwrite.Tokens {
+func (cti TransformationsPrimitiveTransformationCharacterMaskConfigCharactersToIgnoreAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cti.ref.InternalTokens()
 }
 
 func (cti TransformationsPrimitiveTransformationCharacterMaskConfigCharactersToIgnoreAttributes) CharactersToSkip() terra.StringValue {
-	return terra.ReferenceString(cti.ref.Append("characters_to_skip"))
+	return terra.ReferenceAsString(cti.ref.Append("characters_to_skip"))
 }
 
 func (cti TransformationsPrimitiveTransformationCharacterMaskConfigCharactersToIgnoreAttributes) CommonCharactersToIgnore() terra.StringValue {
-	return terra.ReferenceString(cti.ref.Append("common_characters_to_ignore"))
+	return terra.ReferenceAsString(cti.ref.Append("common_characters_to_ignore"))
 }
 
 type TransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (cdc TransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes) InternalRef() terra.Reference {
-	return cdc.ref
+func (cdc TransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes) InternalRef() (terra.Reference, error) {
+	return cdc.ref, nil
 }
 
 func (cdc TransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes) InternalWithRef(ref terra.Reference) TransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes {
 	return TransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes{ref: ref}
 }
 
-func (cdc TransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (cdc TransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cdc.ref.InternalTokens()
 }
 
 func (cdc TransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes) Context() terra.ListValue[TransformationsPrimitiveTransformationCryptoDeterministicConfigContextAttributes] {
-	return terra.ReferenceList[TransformationsPrimitiveTransformationCryptoDeterministicConfigContextAttributes](cdc.ref.Append("context"))
+	return terra.ReferenceAsList[TransformationsPrimitiveTransformationCryptoDeterministicConfigContextAttributes](cdc.ref.Append("context"))
 }
 
 func (cdc TransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes) CryptoKey() terra.ListValue[TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes] {
-	return terra.ReferenceList[TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes](cdc.ref.Append("crypto_key"))
+	return terra.ReferenceAsList[TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes](cdc.ref.Append("crypto_key"))
 }
 
 func (cdc TransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes) SurrogateInfoType() terra.ListValue[TransformationsPrimitiveTransformationCryptoDeterministicConfigSurrogateInfoTypeAttributes] {
-	return terra.ReferenceList[TransformationsPrimitiveTransformationCryptoDeterministicConfigSurrogateInfoTypeAttributes](cdc.ref.Append("surrogate_info_type"))
+	return terra.ReferenceAsList[TransformationsPrimitiveTransformationCryptoDeterministicConfigSurrogateInfoTypeAttributes](cdc.ref.Append("surrogate_info_type"))
 }
 
 type TransformationsPrimitiveTransformationCryptoDeterministicConfigContextAttributes struct {
 	ref terra.Reference
 }
 
-func (c TransformationsPrimitiveTransformationCryptoDeterministicConfigContextAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c TransformationsPrimitiveTransformationCryptoDeterministicConfigContextAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c TransformationsPrimitiveTransformationCryptoDeterministicConfigContextAttributes) InternalWithRef(ref terra.Reference) TransformationsPrimitiveTransformationCryptoDeterministicConfigContextAttributes {
 	return TransformationsPrimitiveTransformationCryptoDeterministicConfigContextAttributes{ref: ref}
 }
 
-func (c TransformationsPrimitiveTransformationCryptoDeterministicConfigContextAttributes) InternalTokens() hclwrite.Tokens {
+func (c TransformationsPrimitiveTransformationCryptoDeterministicConfigContextAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c TransformationsPrimitiveTransformationCryptoDeterministicConfigContextAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("name"))
+	return terra.ReferenceAsString(c.ref.Append("name"))
 }
 
 type TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (ck TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes) InternalRef() terra.Reference {
-	return ck.ref
+func (ck TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes) InternalRef() (terra.Reference, error) {
+	return ck.ref, nil
 }
 
 func (ck TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes) InternalWithRef(ref terra.Reference) TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes {
 	return TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes{ref: ref}
 }
 
-func (ck TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (ck TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ck.ref.InternalTokens()
 }
 
 func (ck TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes) KmsWrapped() terra.ListValue[TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyKmsWrappedAttributes] {
-	return terra.ReferenceList[TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyKmsWrappedAttributes](ck.ref.Append("kms_wrapped"))
+	return terra.ReferenceAsList[TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyKmsWrappedAttributes](ck.ref.Append("kms_wrapped"))
 }
 
 func (ck TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes) Transient() terra.ListValue[TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyTransientAttributes] {
-	return terra.ReferenceList[TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyTransientAttributes](ck.ref.Append("transient"))
+	return terra.ReferenceAsList[TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyTransientAttributes](ck.ref.Append("transient"))
 }
 
 func (ck TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes) Unwrapped() terra.ListValue[TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyUnwrappedAttributes] {
-	return terra.ReferenceList[TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyUnwrappedAttributes](ck.ref.Append("unwrapped"))
+	return terra.ReferenceAsList[TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyUnwrappedAttributes](ck.ref.Append("unwrapped"))
 }
 
 type TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyKmsWrappedAttributes struct {
 	ref terra.Reference
 }
 
-func (kw TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyKmsWrappedAttributes) InternalRef() terra.Reference {
-	return kw.ref
+func (kw TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyKmsWrappedAttributes) InternalRef() (terra.Reference, error) {
+	return kw.ref, nil
 }
 
 func (kw TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyKmsWrappedAttributes) InternalWithRef(ref terra.Reference) TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyKmsWrappedAttributes {
 	return TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyKmsWrappedAttributes{ref: ref}
 }
 
-func (kw TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyKmsWrappedAttributes) InternalTokens() hclwrite.Tokens {
+func (kw TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyKmsWrappedAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kw.ref.InternalTokens()
 }
 
 func (kw TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyKmsWrappedAttributes) CryptoKeyName() terra.StringValue {
-	return terra.ReferenceString(kw.ref.Append("crypto_key_name"))
+	return terra.ReferenceAsString(kw.ref.Append("crypto_key_name"))
 }
 
 func (kw TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyKmsWrappedAttributes) WrappedKey() terra.StringValue {
-	return terra.ReferenceString(kw.ref.Append("wrapped_key"))
+	return terra.ReferenceAsString(kw.ref.Append("wrapped_key"))
 }
 
 type TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyTransientAttributes struct {
 	ref terra.Reference
 }
 
-func (t TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyTransientAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyTransientAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyTransientAttributes) InternalWithRef(ref terra.Reference) TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyTransientAttributes {
 	return TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyTransientAttributes{ref: ref}
 }
 
-func (t TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyTransientAttributes) InternalTokens() hclwrite.Tokens {
+func (t TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyTransientAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyTransientAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("name"))
+	return terra.ReferenceAsString(t.ref.Append("name"))
 }
 
 type TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyUnwrappedAttributes struct {
 	ref terra.Reference
 }
 
-func (u TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyUnwrappedAttributes) InternalRef() terra.Reference {
-	return u.ref
+func (u TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyUnwrappedAttributes) InternalRef() (terra.Reference, error) {
+	return u.ref, nil
 }
 
 func (u TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyUnwrappedAttributes) InternalWithRef(ref terra.Reference) TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyUnwrappedAttributes {
 	return TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyUnwrappedAttributes{ref: ref}
 }
 
-func (u TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyUnwrappedAttributes) InternalTokens() hclwrite.Tokens {
+func (u TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyUnwrappedAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return u.ref.InternalTokens()
 }
 
 func (u TransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyUnwrappedAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(u.ref.Append("key"))
+	return terra.ReferenceAsString(u.ref.Append("key"))
 }
 
 type TransformationsPrimitiveTransformationCryptoDeterministicConfigSurrogateInfoTypeAttributes struct {
 	ref terra.Reference
 }
 
-func (sit TransformationsPrimitiveTransformationCryptoDeterministicConfigSurrogateInfoTypeAttributes) InternalRef() terra.Reference {
-	return sit.ref
+func (sit TransformationsPrimitiveTransformationCryptoDeterministicConfigSurrogateInfoTypeAttributes) InternalRef() (terra.Reference, error) {
+	return sit.ref, nil
 }
 
 func (sit TransformationsPrimitiveTransformationCryptoDeterministicConfigSurrogateInfoTypeAttributes) InternalWithRef(ref terra.Reference) TransformationsPrimitiveTransformationCryptoDeterministicConfigSurrogateInfoTypeAttributes {
 	return TransformationsPrimitiveTransformationCryptoDeterministicConfigSurrogateInfoTypeAttributes{ref: ref}
 }
 
-func (sit TransformationsPrimitiveTransformationCryptoDeterministicConfigSurrogateInfoTypeAttributes) InternalTokens() hclwrite.Tokens {
+func (sit TransformationsPrimitiveTransformationCryptoDeterministicConfigSurrogateInfoTypeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sit.ref.InternalTokens()
 }
 
 func (sit TransformationsPrimitiveTransformationCryptoDeterministicConfigSurrogateInfoTypeAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sit.ref.Append("name"))
+	return terra.ReferenceAsString(sit.ref.Append("name"))
 }
 
 func (sit TransformationsPrimitiveTransformationCryptoDeterministicConfigSurrogateInfoTypeAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(sit.ref.Append("version"))
+	return terra.ReferenceAsString(sit.ref.Append("version"))
 }
 
 type TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (crffc TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes) InternalRef() terra.Reference {
-	return crffc.ref
+func (crffc TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes) InternalRef() (terra.Reference, error) {
+	return crffc.ref, nil
 }
 
 func (crffc TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes) InternalWithRef(ref terra.Reference) TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes {
 	return TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes{ref: ref}
 }
 
-func (crffc TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (crffc TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return crffc.ref.InternalTokens()
 }
 
 func (crffc TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes) CommonAlphabet() terra.StringValue {
-	return terra.ReferenceString(crffc.ref.Append("common_alphabet"))
+	return terra.ReferenceAsString(crffc.ref.Append("common_alphabet"))
 }
 
 func (crffc TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes) CustomAlphabet() terra.StringValue {
-	return terra.ReferenceString(crffc.ref.Append("custom_alphabet"))
+	return terra.ReferenceAsString(crffc.ref.Append("custom_alphabet"))
 }
 
 func (crffc TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes) Radix() terra.NumberValue {
-	return terra.ReferenceNumber(crffc.ref.Append("radix"))
+	return terra.ReferenceAsNumber(crffc.ref.Append("radix"))
 }
 
 func (crffc TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes) Context() terra.ListValue[TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigContextAttributes] {
-	return terra.ReferenceList[TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigContextAttributes](crffc.ref.Append("context"))
+	return terra.ReferenceAsList[TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigContextAttributes](crffc.ref.Append("context"))
 }
 
 func (crffc TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes) CryptoKey() terra.ListValue[TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes] {
-	return terra.ReferenceList[TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes](crffc.ref.Append("crypto_key"))
+	return terra.ReferenceAsList[TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes](crffc.ref.Append("crypto_key"))
 }
 
 func (crffc TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes) SurrogateInfoType() terra.ListValue[TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigSurrogateInfoTypeAttributes] {
-	return terra.ReferenceList[TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigSurrogateInfoTypeAttributes](crffc.ref.Append("surrogate_info_type"))
+	return terra.ReferenceAsList[TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigSurrogateInfoTypeAttributes](crffc.ref.Append("surrogate_info_type"))
 }
 
 type TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigContextAttributes struct {
 	ref terra.Reference
 }
 
-func (c TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigContextAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigContextAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigContextAttributes) InternalWithRef(ref terra.Reference) TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigContextAttributes {
 	return TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigContextAttributes{ref: ref}
 }
 
-func (c TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigContextAttributes) InternalTokens() hclwrite.Tokens {
+func (c TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigContextAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigContextAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("name"))
+	return terra.ReferenceAsString(c.ref.Append("name"))
 }
 
 type TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (ck TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes) InternalRef() terra.Reference {
-	return ck.ref
+func (ck TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes) InternalRef() (terra.Reference, error) {
+	return ck.ref, nil
 }
 
 func (ck TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes) InternalWithRef(ref terra.Reference) TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes {
 	return TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes{ref: ref}
 }
 
-func (ck TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (ck TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ck.ref.InternalTokens()
 }
 
 func (ck TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes) KmsWrapped() terra.ListValue[TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyKmsWrappedAttributes] {
-	return terra.ReferenceList[TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyKmsWrappedAttributes](ck.ref.Append("kms_wrapped"))
+	return terra.ReferenceAsList[TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyKmsWrappedAttributes](ck.ref.Append("kms_wrapped"))
 }
 
 func (ck TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes) Transient() terra.ListValue[TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyTransientAttributes] {
-	return terra.ReferenceList[TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyTransientAttributes](ck.ref.Append("transient"))
+	return terra.ReferenceAsList[TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyTransientAttributes](ck.ref.Append("transient"))
 }
 
 func (ck TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes) Unwrapped() terra.ListValue[TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyUnwrappedAttributes] {
-	return terra.ReferenceList[TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyUnwrappedAttributes](ck.ref.Append("unwrapped"))
+	return terra.ReferenceAsList[TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyUnwrappedAttributes](ck.ref.Append("unwrapped"))
 }
 
 type TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyKmsWrappedAttributes struct {
 	ref terra.Reference
 }
 
-func (kw TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyKmsWrappedAttributes) InternalRef() terra.Reference {
-	return kw.ref
+func (kw TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyKmsWrappedAttributes) InternalRef() (terra.Reference, error) {
+	return kw.ref, nil
 }
 
 func (kw TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyKmsWrappedAttributes) InternalWithRef(ref terra.Reference) TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyKmsWrappedAttributes {
 	return TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyKmsWrappedAttributes{ref: ref}
 }
 
-func (kw TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyKmsWrappedAttributes) InternalTokens() hclwrite.Tokens {
+func (kw TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyKmsWrappedAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kw.ref.InternalTokens()
 }
 
 func (kw TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyKmsWrappedAttributes) CryptoKeyName() terra.StringValue {
-	return terra.ReferenceString(kw.ref.Append("crypto_key_name"))
+	return terra.ReferenceAsString(kw.ref.Append("crypto_key_name"))
 }
 
 func (kw TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyKmsWrappedAttributes) WrappedKey() terra.StringValue {
-	return terra.ReferenceString(kw.ref.Append("wrapped_key"))
+	return terra.ReferenceAsString(kw.ref.Append("wrapped_key"))
 }
 
 type TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyTransientAttributes struct {
 	ref terra.Reference
 }
 
-func (t TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyTransientAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyTransientAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyTransientAttributes) InternalWithRef(ref terra.Reference) TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyTransientAttributes {
 	return TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyTransientAttributes{ref: ref}
 }
 
-func (t TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyTransientAttributes) InternalTokens() hclwrite.Tokens {
+func (t TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyTransientAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyTransientAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("name"))
+	return terra.ReferenceAsString(t.ref.Append("name"))
 }
 
 type TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyUnwrappedAttributes struct {
 	ref terra.Reference
 }
 
-func (u TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyUnwrappedAttributes) InternalRef() terra.Reference {
-	return u.ref
+func (u TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyUnwrappedAttributes) InternalRef() (terra.Reference, error) {
+	return u.ref, nil
 }
 
 func (u TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyUnwrappedAttributes) InternalWithRef(ref terra.Reference) TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyUnwrappedAttributes {
 	return TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyUnwrappedAttributes{ref: ref}
 }
 
-func (u TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyUnwrappedAttributes) InternalTokens() hclwrite.Tokens {
+func (u TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyUnwrappedAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return u.ref.InternalTokens()
 }
 
 func (u TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyUnwrappedAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(u.ref.Append("key"))
+	return terra.ReferenceAsString(u.ref.Append("key"))
 }
 
 type TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigSurrogateInfoTypeAttributes struct {
 	ref terra.Reference
 }
 
-func (sit TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigSurrogateInfoTypeAttributes) InternalRef() terra.Reference {
-	return sit.ref
+func (sit TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigSurrogateInfoTypeAttributes) InternalRef() (terra.Reference, error) {
+	return sit.ref, nil
 }
 
 func (sit TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigSurrogateInfoTypeAttributes) InternalWithRef(ref terra.Reference) TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigSurrogateInfoTypeAttributes {
 	return TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigSurrogateInfoTypeAttributes{ref: ref}
 }
 
-func (sit TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigSurrogateInfoTypeAttributes) InternalTokens() hclwrite.Tokens {
+func (sit TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigSurrogateInfoTypeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sit.ref.InternalTokens()
 }
 
 func (sit TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigSurrogateInfoTypeAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sit.ref.Append("name"))
+	return terra.ReferenceAsString(sit.ref.Append("name"))
 }
 
 func (sit TransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigSurrogateInfoTypeAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(sit.ref.Append("version"))
+	return terra.ReferenceAsString(sit.ref.Append("version"))
 }
 
 type TransformationsPrimitiveTransformationReplaceConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (rc TransformationsPrimitiveTransformationReplaceConfigAttributes) InternalRef() terra.Reference {
-	return rc.ref
+func (rc TransformationsPrimitiveTransformationReplaceConfigAttributes) InternalRef() (terra.Reference, error) {
+	return rc.ref, nil
 }
 
 func (rc TransformationsPrimitiveTransformationReplaceConfigAttributes) InternalWithRef(ref terra.Reference) TransformationsPrimitiveTransformationReplaceConfigAttributes {
 	return TransformationsPrimitiveTransformationReplaceConfigAttributes{ref: ref}
 }
 
-func (rc TransformationsPrimitiveTransformationReplaceConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (rc TransformationsPrimitiveTransformationReplaceConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rc.ref.InternalTokens()
 }
 
 func (rc TransformationsPrimitiveTransformationReplaceConfigAttributes) NewValue() terra.ListValue[TransformationsPrimitiveTransformationReplaceConfigNewValueAttributes] {
-	return terra.ReferenceList[TransformationsPrimitiveTransformationReplaceConfigNewValueAttributes](rc.ref.Append("new_value"))
+	return terra.ReferenceAsList[TransformationsPrimitiveTransformationReplaceConfigNewValueAttributes](rc.ref.Append("new_value"))
 }
 
 type TransformationsPrimitiveTransformationReplaceConfigNewValueAttributes struct {
 	ref terra.Reference
 }
 
-func (nv TransformationsPrimitiveTransformationReplaceConfigNewValueAttributes) InternalRef() terra.Reference {
-	return nv.ref
+func (nv TransformationsPrimitiveTransformationReplaceConfigNewValueAttributes) InternalRef() (terra.Reference, error) {
+	return nv.ref, nil
 }
 
 func (nv TransformationsPrimitiveTransformationReplaceConfigNewValueAttributes) InternalWithRef(ref terra.Reference) TransformationsPrimitiveTransformationReplaceConfigNewValueAttributes {
 	return TransformationsPrimitiveTransformationReplaceConfigNewValueAttributes{ref: ref}
 }
 
-func (nv TransformationsPrimitiveTransformationReplaceConfigNewValueAttributes) InternalTokens() hclwrite.Tokens {
+func (nv TransformationsPrimitiveTransformationReplaceConfigNewValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nv.ref.InternalTokens()
 }
 
 func (nv TransformationsPrimitiveTransformationReplaceConfigNewValueAttributes) BooleanValue() terra.BoolValue {
-	return terra.ReferenceBool(nv.ref.Append("boolean_value"))
+	return terra.ReferenceAsBool(nv.ref.Append("boolean_value"))
 }
 
 func (nv TransformationsPrimitiveTransformationReplaceConfigNewValueAttributes) DayOfWeekValue() terra.StringValue {
-	return terra.ReferenceString(nv.ref.Append("day_of_week_value"))
+	return terra.ReferenceAsString(nv.ref.Append("day_of_week_value"))
 }
 
 func (nv TransformationsPrimitiveTransformationReplaceConfigNewValueAttributes) FloatValue() terra.NumberValue {
-	return terra.ReferenceNumber(nv.ref.Append("float_value"))
+	return terra.ReferenceAsNumber(nv.ref.Append("float_value"))
 }
 
 func (nv TransformationsPrimitiveTransformationReplaceConfigNewValueAttributes) IntegerValue() terra.NumberValue {
-	return terra.ReferenceNumber(nv.ref.Append("integer_value"))
+	return terra.ReferenceAsNumber(nv.ref.Append("integer_value"))
 }
 
 func (nv TransformationsPrimitiveTransformationReplaceConfigNewValueAttributes) StringValue() terra.StringValue {
-	return terra.ReferenceString(nv.ref.Append("string_value"))
+	return terra.ReferenceAsString(nv.ref.Append("string_value"))
 }
 
 func (nv TransformationsPrimitiveTransformationReplaceConfigNewValueAttributes) TimestampValue() terra.StringValue {
-	return terra.ReferenceString(nv.ref.Append("timestamp_value"))
+	return terra.ReferenceAsString(nv.ref.Append("timestamp_value"))
 }
 
 func (nv TransformationsPrimitiveTransformationReplaceConfigNewValueAttributes) DateValue() terra.ListValue[TransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes] {
-	return terra.ReferenceList[TransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes](nv.ref.Append("date_value"))
+	return terra.ReferenceAsList[TransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes](nv.ref.Append("date_value"))
 }
 
 func (nv TransformationsPrimitiveTransformationReplaceConfigNewValueAttributes) TimeValue() terra.ListValue[TransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes] {
-	return terra.ReferenceList[TransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes](nv.ref.Append("time_value"))
+	return terra.ReferenceAsList[TransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes](nv.ref.Append("time_value"))
 }
 
 type TransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes struct {
 	ref terra.Reference
 }
 
-func (dv TransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes) InternalRef() terra.Reference {
-	return dv.ref
+func (dv TransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes) InternalRef() (terra.Reference, error) {
+	return dv.ref, nil
 }
 
 func (dv TransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes) InternalWithRef(ref terra.Reference) TransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes {
 	return TransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes{ref: ref}
 }
 
-func (dv TransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes) InternalTokens() hclwrite.Tokens {
+func (dv TransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dv.ref.InternalTokens()
 }
 
 func (dv TransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes) Day() terra.NumberValue {
-	return terra.ReferenceNumber(dv.ref.Append("day"))
+	return terra.ReferenceAsNumber(dv.ref.Append("day"))
 }
 
 func (dv TransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes) Month() terra.NumberValue {
-	return terra.ReferenceNumber(dv.ref.Append("month"))
+	return terra.ReferenceAsNumber(dv.ref.Append("month"))
 }
 
 func (dv TransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes) Year() terra.NumberValue {
-	return terra.ReferenceNumber(dv.ref.Append("year"))
+	return terra.ReferenceAsNumber(dv.ref.Append("year"))
 }
 
 type TransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes struct {
 	ref terra.Reference
 }
 
-func (tv TransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes) InternalRef() terra.Reference {
-	return tv.ref
+func (tv TransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes) InternalRef() (terra.Reference, error) {
+	return tv.ref, nil
 }
 
 func (tv TransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes) InternalWithRef(ref terra.Reference) TransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes {
 	return TransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes{ref: ref}
 }
 
-func (tv TransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes) InternalTokens() hclwrite.Tokens {
+func (tv TransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tv.ref.InternalTokens()
 }
 
 func (tv TransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes) Hours() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("hours"))
+	return terra.ReferenceAsNumber(tv.ref.Append("hours"))
 }
 
 func (tv TransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes) Minutes() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("minutes"))
+	return terra.ReferenceAsNumber(tv.ref.Append("minutes"))
 }
 
 func (tv TransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes) Nanos() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("nanos"))
+	return terra.ReferenceAsNumber(tv.ref.Append("nanos"))
 }
 
 func (tv TransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes) Seconds() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("seconds"))
+	return terra.ReferenceAsNumber(tv.ref.Append("seconds"))
 }
 
 type RecordTransformationsAttributes struct {
 	ref terra.Reference
 }
 
-func (rt RecordTransformationsAttributes) InternalRef() terra.Reference {
-	return rt.ref
+func (rt RecordTransformationsAttributes) InternalRef() (terra.Reference, error) {
+	return rt.ref, nil
 }
 
 func (rt RecordTransformationsAttributes) InternalWithRef(ref terra.Reference) RecordTransformationsAttributes {
 	return RecordTransformationsAttributes{ref: ref}
 }
 
-func (rt RecordTransformationsAttributes) InternalTokens() hclwrite.Tokens {
+func (rt RecordTransformationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rt.ref.InternalTokens()
 }
 
 func (rt RecordTransformationsAttributes) FieldTransformations() terra.ListValue[FieldTransformationsAttributes] {
-	return terra.ReferenceList[FieldTransformationsAttributes](rt.ref.Append("field_transformations"))
+	return terra.ReferenceAsList[FieldTransformationsAttributes](rt.ref.Append("field_transformations"))
 }
 
 func (rt RecordTransformationsAttributes) RecordSuppressions() terra.ListValue[RecordSuppressionsAttributes] {
-	return terra.ReferenceList[RecordSuppressionsAttributes](rt.ref.Append("record_suppressions"))
+	return terra.ReferenceAsList[RecordSuppressionsAttributes](rt.ref.Append("record_suppressions"))
 }
 
 type FieldTransformationsAttributes struct {
 	ref terra.Reference
 }
 
-func (ft FieldTransformationsAttributes) InternalRef() terra.Reference {
-	return ft.ref
+func (ft FieldTransformationsAttributes) InternalRef() (terra.Reference, error) {
+	return ft.ref, nil
 }
 
 func (ft FieldTransformationsAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsAttributes {
 	return FieldTransformationsAttributes{ref: ref}
 }
 
-func (ft FieldTransformationsAttributes) InternalTokens() hclwrite.Tokens {
+func (ft FieldTransformationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ft.ref.InternalTokens()
 }
 
 func (ft FieldTransformationsAttributes) Condition() terra.ListValue[FieldTransformationsConditionAttributes] {
-	return terra.ReferenceList[FieldTransformationsConditionAttributes](ft.ref.Append("condition"))
+	return terra.ReferenceAsList[FieldTransformationsConditionAttributes](ft.ref.Append("condition"))
 }
 
 func (ft FieldTransformationsAttributes) Fields() terra.ListValue[FieldsAttributes] {
-	return terra.ReferenceList[FieldsAttributes](ft.ref.Append("fields"))
+	return terra.ReferenceAsList[FieldsAttributes](ft.ref.Append("fields"))
 }
 
 func (ft FieldTransformationsAttributes) PrimitiveTransformation() terra.ListValue[FieldTransformationsPrimitiveTransformationAttributes] {
-	return terra.ReferenceList[FieldTransformationsPrimitiveTransformationAttributes](ft.ref.Append("primitive_transformation"))
+	return terra.ReferenceAsList[FieldTransformationsPrimitiveTransformationAttributes](ft.ref.Append("primitive_transformation"))
 }
 
 type FieldTransformationsConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (c FieldTransformationsConditionAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c FieldTransformationsConditionAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c FieldTransformationsConditionAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsConditionAttributes {
 	return FieldTransformationsConditionAttributes{ref: ref}
 }
 
-func (c FieldTransformationsConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (c FieldTransformationsConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c FieldTransformationsConditionAttributes) Expressions() terra.ListValue[FieldTransformationsConditionExpressionsAttributes] {
-	return terra.ReferenceList[FieldTransformationsConditionExpressionsAttributes](c.ref.Append("expressions"))
+	return terra.ReferenceAsList[FieldTransformationsConditionExpressionsAttributes](c.ref.Append("expressions"))
 }
 
 type FieldTransformationsConditionExpressionsAttributes struct {
 	ref terra.Reference
 }
 
-func (e FieldTransformationsConditionExpressionsAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e FieldTransformationsConditionExpressionsAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e FieldTransformationsConditionExpressionsAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsConditionExpressionsAttributes {
 	return FieldTransformationsConditionExpressionsAttributes{ref: ref}
 }
 
-func (e FieldTransformationsConditionExpressionsAttributes) InternalTokens() hclwrite.Tokens {
+func (e FieldTransformationsConditionExpressionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
 func (e FieldTransformationsConditionExpressionsAttributes) LogicalOperator() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("logical_operator"))
+	return terra.ReferenceAsString(e.ref.Append("logical_operator"))
 }
 
 func (e FieldTransformationsConditionExpressionsAttributes) Conditions() terra.ListValue[FieldTransformationsConditionExpressionsConditionsAttributes] {
-	return terra.ReferenceList[FieldTransformationsConditionExpressionsConditionsAttributes](e.ref.Append("conditions"))
+	return terra.ReferenceAsList[FieldTransformationsConditionExpressionsConditionsAttributes](e.ref.Append("conditions"))
 }
 
 type FieldTransformationsConditionExpressionsConditionsAttributes struct {
 	ref terra.Reference
 }
 
-func (c FieldTransformationsConditionExpressionsConditionsAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c FieldTransformationsConditionExpressionsConditionsAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c FieldTransformationsConditionExpressionsConditionsAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsConditionExpressionsConditionsAttributes {
 	return FieldTransformationsConditionExpressionsConditionsAttributes{ref: ref}
 }
 
-func (c FieldTransformationsConditionExpressionsConditionsAttributes) InternalTokens() hclwrite.Tokens {
+func (c FieldTransformationsConditionExpressionsConditionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c FieldTransformationsConditionExpressionsConditionsAttributes) Conditions() terra.ListValue[FieldTransformationsConditionExpressionsConditionsConditionsAttributes] {
-	return terra.ReferenceList[FieldTransformationsConditionExpressionsConditionsConditionsAttributes](c.ref.Append("conditions"))
+	return terra.ReferenceAsList[FieldTransformationsConditionExpressionsConditionsConditionsAttributes](c.ref.Append("conditions"))
 }
 
 type FieldTransformationsConditionExpressionsConditionsConditionsAttributes struct {
 	ref terra.Reference
 }
 
-func (c FieldTransformationsConditionExpressionsConditionsConditionsAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c FieldTransformationsConditionExpressionsConditionsConditionsAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c FieldTransformationsConditionExpressionsConditionsConditionsAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsConditionExpressionsConditionsConditionsAttributes {
 	return FieldTransformationsConditionExpressionsConditionsConditionsAttributes{ref: ref}
 }
 
-func (c FieldTransformationsConditionExpressionsConditionsConditionsAttributes) InternalTokens() hclwrite.Tokens {
+func (c FieldTransformationsConditionExpressionsConditionsConditionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c FieldTransformationsConditionExpressionsConditionsConditionsAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("operator"))
+	return terra.ReferenceAsString(c.ref.Append("operator"))
 }
 
 func (c FieldTransformationsConditionExpressionsConditionsConditionsAttributes) Field() terra.ListValue[FieldTransformationsConditionExpressionsConditionsConditionsFieldAttributes] {
-	return terra.ReferenceList[FieldTransformationsConditionExpressionsConditionsConditionsFieldAttributes](c.ref.Append("field"))
+	return terra.ReferenceAsList[FieldTransformationsConditionExpressionsConditionsConditionsFieldAttributes](c.ref.Append("field"))
 }
 
 func (c FieldTransformationsConditionExpressionsConditionsConditionsAttributes) Value() terra.ListValue[FieldTransformationsConditionExpressionsConditionsConditionsValueAttributes] {
-	return terra.ReferenceList[FieldTransformationsConditionExpressionsConditionsConditionsValueAttributes](c.ref.Append("value"))
+	return terra.ReferenceAsList[FieldTransformationsConditionExpressionsConditionsConditionsValueAttributes](c.ref.Append("value"))
 }
 
 type FieldTransformationsConditionExpressionsConditionsConditionsFieldAttributes struct {
 	ref terra.Reference
 }
 
-func (f FieldTransformationsConditionExpressionsConditionsConditionsFieldAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FieldTransformationsConditionExpressionsConditionsConditionsFieldAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FieldTransformationsConditionExpressionsConditionsConditionsFieldAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsConditionExpressionsConditionsConditionsFieldAttributes {
 	return FieldTransformationsConditionExpressionsConditionsConditionsFieldAttributes{ref: ref}
 }
 
-func (f FieldTransformationsConditionExpressionsConditionsConditionsFieldAttributes) InternalTokens() hclwrite.Tokens {
+func (f FieldTransformationsConditionExpressionsConditionsConditionsFieldAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
 func (f FieldTransformationsConditionExpressionsConditionsConditionsFieldAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("name"))
+	return terra.ReferenceAsString(f.ref.Append("name"))
 }
 
 type FieldTransformationsConditionExpressionsConditionsConditionsValueAttributes struct {
 	ref terra.Reference
 }
 
-func (v FieldTransformationsConditionExpressionsConditionsConditionsValueAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v FieldTransformationsConditionExpressionsConditionsConditionsValueAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v FieldTransformationsConditionExpressionsConditionsConditionsValueAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsConditionExpressionsConditionsConditionsValueAttributes {
 	return FieldTransformationsConditionExpressionsConditionsConditionsValueAttributes{ref: ref}
 }
 
-func (v FieldTransformationsConditionExpressionsConditionsConditionsValueAttributes) InternalTokens() hclwrite.Tokens {
+func (v FieldTransformationsConditionExpressionsConditionsConditionsValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 
 func (v FieldTransformationsConditionExpressionsConditionsConditionsValueAttributes) BooleanValue() terra.BoolValue {
-	return terra.ReferenceBool(v.ref.Append("boolean_value"))
+	return terra.ReferenceAsBool(v.ref.Append("boolean_value"))
 }
 
 func (v FieldTransformationsConditionExpressionsConditionsConditionsValueAttributes) DayOfWeekValue() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("day_of_week_value"))
+	return terra.ReferenceAsString(v.ref.Append("day_of_week_value"))
 }
 
 func (v FieldTransformationsConditionExpressionsConditionsConditionsValueAttributes) FloatValue() terra.NumberValue {
-	return terra.ReferenceNumber(v.ref.Append("float_value"))
+	return terra.ReferenceAsNumber(v.ref.Append("float_value"))
 }
 
 func (v FieldTransformationsConditionExpressionsConditionsConditionsValueAttributes) IntegerValue() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("integer_value"))
+	return terra.ReferenceAsString(v.ref.Append("integer_value"))
 }
 
 func (v FieldTransformationsConditionExpressionsConditionsConditionsValueAttributes) StringValue() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("string_value"))
+	return terra.ReferenceAsString(v.ref.Append("string_value"))
 }
 
 func (v FieldTransformationsConditionExpressionsConditionsConditionsValueAttributes) TimestampValue() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("timestamp_value"))
+	return terra.ReferenceAsString(v.ref.Append("timestamp_value"))
 }
 
 func (v FieldTransformationsConditionExpressionsConditionsConditionsValueAttributes) DateValue() terra.ListValue[FieldTransformationsConditionExpressionsConditionsConditionsValueDateValueAttributes] {
-	return terra.ReferenceList[FieldTransformationsConditionExpressionsConditionsConditionsValueDateValueAttributes](v.ref.Append("date_value"))
+	return terra.ReferenceAsList[FieldTransformationsConditionExpressionsConditionsConditionsValueDateValueAttributes](v.ref.Append("date_value"))
 }
 
 func (v FieldTransformationsConditionExpressionsConditionsConditionsValueAttributes) TimeValue() terra.ListValue[FieldTransformationsConditionExpressionsConditionsConditionsValueTimeValueAttributes] {
-	return terra.ReferenceList[FieldTransformationsConditionExpressionsConditionsConditionsValueTimeValueAttributes](v.ref.Append("time_value"))
+	return terra.ReferenceAsList[FieldTransformationsConditionExpressionsConditionsConditionsValueTimeValueAttributes](v.ref.Append("time_value"))
 }
 
 type FieldTransformationsConditionExpressionsConditionsConditionsValueDateValueAttributes struct {
 	ref terra.Reference
 }
 
-func (dv FieldTransformationsConditionExpressionsConditionsConditionsValueDateValueAttributes) InternalRef() terra.Reference {
-	return dv.ref
+func (dv FieldTransformationsConditionExpressionsConditionsConditionsValueDateValueAttributes) InternalRef() (terra.Reference, error) {
+	return dv.ref, nil
 }
 
 func (dv FieldTransformationsConditionExpressionsConditionsConditionsValueDateValueAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsConditionExpressionsConditionsConditionsValueDateValueAttributes {
 	return FieldTransformationsConditionExpressionsConditionsConditionsValueDateValueAttributes{ref: ref}
 }
 
-func (dv FieldTransformationsConditionExpressionsConditionsConditionsValueDateValueAttributes) InternalTokens() hclwrite.Tokens {
+func (dv FieldTransformationsConditionExpressionsConditionsConditionsValueDateValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dv.ref.InternalTokens()
 }
 
 func (dv FieldTransformationsConditionExpressionsConditionsConditionsValueDateValueAttributes) Day() terra.NumberValue {
-	return terra.ReferenceNumber(dv.ref.Append("day"))
+	return terra.ReferenceAsNumber(dv.ref.Append("day"))
 }
 
 func (dv FieldTransformationsConditionExpressionsConditionsConditionsValueDateValueAttributes) Month() terra.NumberValue {
-	return terra.ReferenceNumber(dv.ref.Append("month"))
+	return terra.ReferenceAsNumber(dv.ref.Append("month"))
 }
 
 func (dv FieldTransformationsConditionExpressionsConditionsConditionsValueDateValueAttributes) Year() terra.NumberValue {
-	return terra.ReferenceNumber(dv.ref.Append("year"))
+	return terra.ReferenceAsNumber(dv.ref.Append("year"))
 }
 
 type FieldTransformationsConditionExpressionsConditionsConditionsValueTimeValueAttributes struct {
 	ref terra.Reference
 }
 
-func (tv FieldTransformationsConditionExpressionsConditionsConditionsValueTimeValueAttributes) InternalRef() terra.Reference {
-	return tv.ref
+func (tv FieldTransformationsConditionExpressionsConditionsConditionsValueTimeValueAttributes) InternalRef() (terra.Reference, error) {
+	return tv.ref, nil
 }
 
 func (tv FieldTransformationsConditionExpressionsConditionsConditionsValueTimeValueAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsConditionExpressionsConditionsConditionsValueTimeValueAttributes {
 	return FieldTransformationsConditionExpressionsConditionsConditionsValueTimeValueAttributes{ref: ref}
 }
 
-func (tv FieldTransformationsConditionExpressionsConditionsConditionsValueTimeValueAttributes) InternalTokens() hclwrite.Tokens {
+func (tv FieldTransformationsConditionExpressionsConditionsConditionsValueTimeValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tv.ref.InternalTokens()
 }
 
 func (tv FieldTransformationsConditionExpressionsConditionsConditionsValueTimeValueAttributes) Hours() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("hours"))
+	return terra.ReferenceAsNumber(tv.ref.Append("hours"))
 }
 
 func (tv FieldTransformationsConditionExpressionsConditionsConditionsValueTimeValueAttributes) Minutes() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("minutes"))
+	return terra.ReferenceAsNumber(tv.ref.Append("minutes"))
 }
 
 func (tv FieldTransformationsConditionExpressionsConditionsConditionsValueTimeValueAttributes) Nanos() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("nanos"))
+	return terra.ReferenceAsNumber(tv.ref.Append("nanos"))
 }
 
 func (tv FieldTransformationsConditionExpressionsConditionsConditionsValueTimeValueAttributes) Seconds() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("seconds"))
+	return terra.ReferenceAsNumber(tv.ref.Append("seconds"))
 }
 
 type FieldsAttributes struct {
 	ref terra.Reference
 }
 
-func (f FieldsAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FieldsAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FieldsAttributes) InternalWithRef(ref terra.Reference) FieldsAttributes {
 	return FieldsAttributes{ref: ref}
 }
 
-func (f FieldsAttributes) InternalTokens() hclwrite.Tokens {
+func (f FieldsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
 func (f FieldsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("name"))
+	return terra.ReferenceAsString(f.ref.Append("name"))
 }
 
 type FieldTransformationsPrimitiveTransformationAttributes struct {
 	ref terra.Reference
 }
 
-func (pt FieldTransformationsPrimitiveTransformationAttributes) InternalRef() terra.Reference {
-	return pt.ref
+func (pt FieldTransformationsPrimitiveTransformationAttributes) InternalRef() (terra.Reference, error) {
+	return pt.ref, nil
 }
 
 func (pt FieldTransformationsPrimitiveTransformationAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsPrimitiveTransformationAttributes {
 	return FieldTransformationsPrimitiveTransformationAttributes{ref: ref}
 }
 
-func (pt FieldTransformationsPrimitiveTransformationAttributes) InternalTokens() hclwrite.Tokens {
+func (pt FieldTransformationsPrimitiveTransformationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pt.ref.InternalTokens()
 }
 
 func (pt FieldTransformationsPrimitiveTransformationAttributes) BucketingConfig() terra.ListValue[BucketingConfigAttributes] {
-	return terra.ReferenceList[BucketingConfigAttributes](pt.ref.Append("bucketing_config"))
+	return terra.ReferenceAsList[BucketingConfigAttributes](pt.ref.Append("bucketing_config"))
 }
 
 func (pt FieldTransformationsPrimitiveTransformationAttributes) CharacterMaskConfig() terra.ListValue[FieldTransformationsPrimitiveTransformationCharacterMaskConfigAttributes] {
-	return terra.ReferenceList[FieldTransformationsPrimitiveTransformationCharacterMaskConfigAttributes](pt.ref.Append("character_mask_config"))
+	return terra.ReferenceAsList[FieldTransformationsPrimitiveTransformationCharacterMaskConfigAttributes](pt.ref.Append("character_mask_config"))
 }
 
 func (pt FieldTransformationsPrimitiveTransformationAttributes) CryptoDeterministicConfig() terra.ListValue[FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes] {
-	return terra.ReferenceList[FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes](pt.ref.Append("crypto_deterministic_config"))
+	return terra.ReferenceAsList[FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes](pt.ref.Append("crypto_deterministic_config"))
 }
 
 func (pt FieldTransformationsPrimitiveTransformationAttributes) CryptoHashConfig() terra.ListValue[CryptoHashConfigAttributes] {
-	return terra.ReferenceList[CryptoHashConfigAttributes](pt.ref.Append("crypto_hash_config"))
+	return terra.ReferenceAsList[CryptoHashConfigAttributes](pt.ref.Append("crypto_hash_config"))
 }
 
 func (pt FieldTransformationsPrimitiveTransformationAttributes) CryptoReplaceFfxFpeConfig() terra.ListValue[FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes] {
-	return terra.ReferenceList[FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes](pt.ref.Append("crypto_replace_ffx_fpe_config"))
+	return terra.ReferenceAsList[FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes](pt.ref.Append("crypto_replace_ffx_fpe_config"))
 }
 
 func (pt FieldTransformationsPrimitiveTransformationAttributes) DateShiftConfig() terra.ListValue[DateShiftConfigAttributes] {
-	return terra.ReferenceList[DateShiftConfigAttributes](pt.ref.Append("date_shift_config"))
+	return terra.ReferenceAsList[DateShiftConfigAttributes](pt.ref.Append("date_shift_config"))
 }
 
 func (pt FieldTransformationsPrimitiveTransformationAttributes) FixedSizeBucketingConfig() terra.ListValue[FixedSizeBucketingConfigAttributes] {
-	return terra.ReferenceList[FixedSizeBucketingConfigAttributes](pt.ref.Append("fixed_size_bucketing_config"))
+	return terra.ReferenceAsList[FixedSizeBucketingConfigAttributes](pt.ref.Append("fixed_size_bucketing_config"))
 }
 
 func (pt FieldTransformationsPrimitiveTransformationAttributes) RedactConfig() terra.ListValue[RedactConfigAttributes] {
-	return terra.ReferenceList[RedactConfigAttributes](pt.ref.Append("redact_config"))
+	return terra.ReferenceAsList[RedactConfigAttributes](pt.ref.Append("redact_config"))
 }
 
 func (pt FieldTransformationsPrimitiveTransformationAttributes) ReplaceConfig() terra.ListValue[FieldTransformationsPrimitiveTransformationReplaceConfigAttributes] {
-	return terra.ReferenceList[FieldTransformationsPrimitiveTransformationReplaceConfigAttributes](pt.ref.Append("replace_config"))
+	return terra.ReferenceAsList[FieldTransformationsPrimitiveTransformationReplaceConfigAttributes](pt.ref.Append("replace_config"))
 }
 
 func (pt FieldTransformationsPrimitiveTransformationAttributes) ReplaceDictionaryConfig() terra.ListValue[ReplaceDictionaryConfigAttributes] {
-	return terra.ReferenceList[ReplaceDictionaryConfigAttributes](pt.ref.Append("replace_dictionary_config"))
+	return terra.ReferenceAsList[ReplaceDictionaryConfigAttributes](pt.ref.Append("replace_dictionary_config"))
 }
 
 func (pt FieldTransformationsPrimitiveTransformationAttributes) TimePartConfig() terra.ListValue[TimePartConfigAttributes] {
-	return terra.ReferenceList[TimePartConfigAttributes](pt.ref.Append("time_part_config"))
+	return terra.ReferenceAsList[TimePartConfigAttributes](pt.ref.Append("time_part_config"))
 }
 
 type BucketingConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (bc BucketingConfigAttributes) InternalRef() terra.Reference {
-	return bc.ref
+func (bc BucketingConfigAttributes) InternalRef() (terra.Reference, error) {
+	return bc.ref, nil
 }
 
 func (bc BucketingConfigAttributes) InternalWithRef(ref terra.Reference) BucketingConfigAttributes {
 	return BucketingConfigAttributes{ref: ref}
 }
 
-func (bc BucketingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (bc BucketingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bc.ref.InternalTokens()
 }
 
 func (bc BucketingConfigAttributes) Buckets() terra.ListValue[BucketsAttributes] {
-	return terra.ReferenceList[BucketsAttributes](bc.ref.Append("buckets"))
+	return terra.ReferenceAsList[BucketsAttributes](bc.ref.Append("buckets"))
 }
 
 type BucketsAttributes struct {
 	ref terra.Reference
 }
 
-func (b BucketsAttributes) InternalRef() terra.Reference {
-	return b.ref
+func (b BucketsAttributes) InternalRef() (terra.Reference, error) {
+	return b.ref, nil
 }
 
 func (b BucketsAttributes) InternalWithRef(ref terra.Reference) BucketsAttributes {
 	return BucketsAttributes{ref: ref}
 }
 
-func (b BucketsAttributes) InternalTokens() hclwrite.Tokens {
+func (b BucketsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return b.ref.InternalTokens()
 }
 
 func (b BucketsAttributes) Max() terra.ListValue[MaxAttributes] {
-	return terra.ReferenceList[MaxAttributes](b.ref.Append("max"))
+	return terra.ReferenceAsList[MaxAttributes](b.ref.Append("max"))
 }
 
 func (b BucketsAttributes) Min() terra.ListValue[MinAttributes] {
-	return terra.ReferenceList[MinAttributes](b.ref.Append("min"))
+	return terra.ReferenceAsList[MinAttributes](b.ref.Append("min"))
 }
 
 func (b BucketsAttributes) ReplacementValue() terra.ListValue[ReplacementValueAttributes] {
-	return terra.ReferenceList[ReplacementValueAttributes](b.ref.Append("replacement_value"))
+	return terra.ReferenceAsList[ReplacementValueAttributes](b.ref.Append("replacement_value"))
 }
 
 type MaxAttributes struct {
 	ref terra.Reference
 }
 
-func (m MaxAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MaxAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MaxAttributes) InternalWithRef(ref terra.Reference) MaxAttributes {
 	return MaxAttributes{ref: ref}
 }
 
-func (m MaxAttributes) InternalTokens() hclwrite.Tokens {
+func (m MaxAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
 func (m MaxAttributes) BooleanValue() terra.BoolValue {
-	return terra.ReferenceBool(m.ref.Append("boolean_value"))
+	return terra.ReferenceAsBool(m.ref.Append("boolean_value"))
 }
 
 func (m MaxAttributes) DayOfWeekValue() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("day_of_week_value"))
+	return terra.ReferenceAsString(m.ref.Append("day_of_week_value"))
 }
 
 func (m MaxAttributes) FloatValue() terra.NumberValue {
-	return terra.ReferenceNumber(m.ref.Append("float_value"))
+	return terra.ReferenceAsNumber(m.ref.Append("float_value"))
 }
 
 func (m MaxAttributes) IntegerValue() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("integer_value"))
+	return terra.ReferenceAsString(m.ref.Append("integer_value"))
 }
 
 func (m MaxAttributes) StringValue() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("string_value"))
+	return terra.ReferenceAsString(m.ref.Append("string_value"))
 }
 
 func (m MaxAttributes) TimestampValue() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("timestamp_value"))
+	return terra.ReferenceAsString(m.ref.Append("timestamp_value"))
 }
 
 func (m MaxAttributes) DateValue() terra.ListValue[MaxDateValueAttributes] {
-	return terra.ReferenceList[MaxDateValueAttributes](m.ref.Append("date_value"))
+	return terra.ReferenceAsList[MaxDateValueAttributes](m.ref.Append("date_value"))
 }
 
 func (m MaxAttributes) TimeValue() terra.ListValue[MaxTimeValueAttributes] {
-	return terra.ReferenceList[MaxTimeValueAttributes](m.ref.Append("time_value"))
+	return terra.ReferenceAsList[MaxTimeValueAttributes](m.ref.Append("time_value"))
 }
 
 type MaxDateValueAttributes struct {
 	ref terra.Reference
 }
 
-func (dv MaxDateValueAttributes) InternalRef() terra.Reference {
-	return dv.ref
+func (dv MaxDateValueAttributes) InternalRef() (terra.Reference, error) {
+	return dv.ref, nil
 }
 
 func (dv MaxDateValueAttributes) InternalWithRef(ref terra.Reference) MaxDateValueAttributes {
 	return MaxDateValueAttributes{ref: ref}
 }
 
-func (dv MaxDateValueAttributes) InternalTokens() hclwrite.Tokens {
+func (dv MaxDateValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dv.ref.InternalTokens()
 }
 
 func (dv MaxDateValueAttributes) Day() terra.NumberValue {
-	return terra.ReferenceNumber(dv.ref.Append("day"))
+	return terra.ReferenceAsNumber(dv.ref.Append("day"))
 }
 
 func (dv MaxDateValueAttributes) Month() terra.NumberValue {
-	return terra.ReferenceNumber(dv.ref.Append("month"))
+	return terra.ReferenceAsNumber(dv.ref.Append("month"))
 }
 
 func (dv MaxDateValueAttributes) Year() terra.NumberValue {
-	return terra.ReferenceNumber(dv.ref.Append("year"))
+	return terra.ReferenceAsNumber(dv.ref.Append("year"))
 }
 
 type MaxTimeValueAttributes struct {
 	ref terra.Reference
 }
 
-func (tv MaxTimeValueAttributes) InternalRef() terra.Reference {
-	return tv.ref
+func (tv MaxTimeValueAttributes) InternalRef() (terra.Reference, error) {
+	return tv.ref, nil
 }
 
 func (tv MaxTimeValueAttributes) InternalWithRef(ref terra.Reference) MaxTimeValueAttributes {
 	return MaxTimeValueAttributes{ref: ref}
 }
 
-func (tv MaxTimeValueAttributes) InternalTokens() hclwrite.Tokens {
+func (tv MaxTimeValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tv.ref.InternalTokens()
 }
 
 func (tv MaxTimeValueAttributes) Hours() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("hours"))
+	return terra.ReferenceAsNumber(tv.ref.Append("hours"))
 }
 
 func (tv MaxTimeValueAttributes) Minutes() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("minutes"))
+	return terra.ReferenceAsNumber(tv.ref.Append("minutes"))
 }
 
 func (tv MaxTimeValueAttributes) Nanos() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("nanos"))
+	return terra.ReferenceAsNumber(tv.ref.Append("nanos"))
 }
 
 func (tv MaxTimeValueAttributes) Seconds() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("seconds"))
+	return terra.ReferenceAsNumber(tv.ref.Append("seconds"))
 }
 
 type MinAttributes struct {
 	ref terra.Reference
 }
 
-func (m MinAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MinAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MinAttributes) InternalWithRef(ref terra.Reference) MinAttributes {
 	return MinAttributes{ref: ref}
 }
 
-func (m MinAttributes) InternalTokens() hclwrite.Tokens {
+func (m MinAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
 func (m MinAttributes) BooleanValue() terra.BoolValue {
-	return terra.ReferenceBool(m.ref.Append("boolean_value"))
+	return terra.ReferenceAsBool(m.ref.Append("boolean_value"))
 }
 
 func (m MinAttributes) DayOfWeekValue() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("day_of_week_value"))
+	return terra.ReferenceAsString(m.ref.Append("day_of_week_value"))
 }
 
 func (m MinAttributes) FloatValue() terra.NumberValue {
-	return terra.ReferenceNumber(m.ref.Append("float_value"))
+	return terra.ReferenceAsNumber(m.ref.Append("float_value"))
 }
 
 func (m MinAttributes) IntegerValue() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("integer_value"))
+	return terra.ReferenceAsString(m.ref.Append("integer_value"))
 }
 
 func (m MinAttributes) StringValue() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("string_value"))
+	return terra.ReferenceAsString(m.ref.Append("string_value"))
 }
 
 func (m MinAttributes) TimestampValue() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("timestamp_value"))
+	return terra.ReferenceAsString(m.ref.Append("timestamp_value"))
 }
 
 func (m MinAttributes) DateValue() terra.ListValue[MinDateValueAttributes] {
-	return terra.ReferenceList[MinDateValueAttributes](m.ref.Append("date_value"))
+	return terra.ReferenceAsList[MinDateValueAttributes](m.ref.Append("date_value"))
 }
 
 func (m MinAttributes) TimeValue() terra.ListValue[MinTimeValueAttributes] {
-	return terra.ReferenceList[MinTimeValueAttributes](m.ref.Append("time_value"))
+	return terra.ReferenceAsList[MinTimeValueAttributes](m.ref.Append("time_value"))
 }
 
 type MinDateValueAttributes struct {
 	ref terra.Reference
 }
 
-func (dv MinDateValueAttributes) InternalRef() terra.Reference {
-	return dv.ref
+func (dv MinDateValueAttributes) InternalRef() (terra.Reference, error) {
+	return dv.ref, nil
 }
 
 func (dv MinDateValueAttributes) InternalWithRef(ref terra.Reference) MinDateValueAttributes {
 	return MinDateValueAttributes{ref: ref}
 }
 
-func (dv MinDateValueAttributes) InternalTokens() hclwrite.Tokens {
+func (dv MinDateValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dv.ref.InternalTokens()
 }
 
 func (dv MinDateValueAttributes) Day() terra.NumberValue {
-	return terra.ReferenceNumber(dv.ref.Append("day"))
+	return terra.ReferenceAsNumber(dv.ref.Append("day"))
 }
 
 func (dv MinDateValueAttributes) Month() terra.NumberValue {
-	return terra.ReferenceNumber(dv.ref.Append("month"))
+	return terra.ReferenceAsNumber(dv.ref.Append("month"))
 }
 
 func (dv MinDateValueAttributes) Year() terra.NumberValue {
-	return terra.ReferenceNumber(dv.ref.Append("year"))
+	return terra.ReferenceAsNumber(dv.ref.Append("year"))
 }
 
 type MinTimeValueAttributes struct {
 	ref terra.Reference
 }
 
-func (tv MinTimeValueAttributes) InternalRef() terra.Reference {
-	return tv.ref
+func (tv MinTimeValueAttributes) InternalRef() (terra.Reference, error) {
+	return tv.ref, nil
 }
 
 func (tv MinTimeValueAttributes) InternalWithRef(ref terra.Reference) MinTimeValueAttributes {
 	return MinTimeValueAttributes{ref: ref}
 }
 
-func (tv MinTimeValueAttributes) InternalTokens() hclwrite.Tokens {
+func (tv MinTimeValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tv.ref.InternalTokens()
 }
 
 func (tv MinTimeValueAttributes) Hours() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("hours"))
+	return terra.ReferenceAsNumber(tv.ref.Append("hours"))
 }
 
 func (tv MinTimeValueAttributes) Minutes() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("minutes"))
+	return terra.ReferenceAsNumber(tv.ref.Append("minutes"))
 }
 
 func (tv MinTimeValueAttributes) Nanos() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("nanos"))
+	return terra.ReferenceAsNumber(tv.ref.Append("nanos"))
 }
 
 func (tv MinTimeValueAttributes) Seconds() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("seconds"))
+	return terra.ReferenceAsNumber(tv.ref.Append("seconds"))
 }
 
 type ReplacementValueAttributes struct {
 	ref terra.Reference
 }
 
-func (rv ReplacementValueAttributes) InternalRef() terra.Reference {
-	return rv.ref
+func (rv ReplacementValueAttributes) InternalRef() (terra.Reference, error) {
+	return rv.ref, nil
 }
 
 func (rv ReplacementValueAttributes) InternalWithRef(ref terra.Reference) ReplacementValueAttributes {
 	return ReplacementValueAttributes{ref: ref}
 }
 
-func (rv ReplacementValueAttributes) InternalTokens() hclwrite.Tokens {
+func (rv ReplacementValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rv.ref.InternalTokens()
 }
 
 func (rv ReplacementValueAttributes) BooleanValue() terra.BoolValue {
-	return terra.ReferenceBool(rv.ref.Append("boolean_value"))
+	return terra.ReferenceAsBool(rv.ref.Append("boolean_value"))
 }
 
 func (rv ReplacementValueAttributes) DayOfWeekValue() terra.StringValue {
-	return terra.ReferenceString(rv.ref.Append("day_of_week_value"))
+	return terra.ReferenceAsString(rv.ref.Append("day_of_week_value"))
 }
 
 func (rv ReplacementValueAttributes) FloatValue() terra.NumberValue {
-	return terra.ReferenceNumber(rv.ref.Append("float_value"))
+	return terra.ReferenceAsNumber(rv.ref.Append("float_value"))
 }
 
 func (rv ReplacementValueAttributes) IntegerValue() terra.StringValue {
-	return terra.ReferenceString(rv.ref.Append("integer_value"))
+	return terra.ReferenceAsString(rv.ref.Append("integer_value"))
 }
 
 func (rv ReplacementValueAttributes) StringValue() terra.StringValue {
-	return terra.ReferenceString(rv.ref.Append("string_value"))
+	return terra.ReferenceAsString(rv.ref.Append("string_value"))
 }
 
 func (rv ReplacementValueAttributes) TimestampValue() terra.StringValue {
-	return terra.ReferenceString(rv.ref.Append("timestamp_value"))
+	return terra.ReferenceAsString(rv.ref.Append("timestamp_value"))
 }
 
 func (rv ReplacementValueAttributes) DateValue() terra.ListValue[ReplacementValueDateValueAttributes] {
-	return terra.ReferenceList[ReplacementValueDateValueAttributes](rv.ref.Append("date_value"))
+	return terra.ReferenceAsList[ReplacementValueDateValueAttributes](rv.ref.Append("date_value"))
 }
 
 func (rv ReplacementValueAttributes) TimeValue() terra.ListValue[ReplacementValueTimeValueAttributes] {
-	return terra.ReferenceList[ReplacementValueTimeValueAttributes](rv.ref.Append("time_value"))
+	return terra.ReferenceAsList[ReplacementValueTimeValueAttributes](rv.ref.Append("time_value"))
 }
 
 type ReplacementValueDateValueAttributes struct {
 	ref terra.Reference
 }
 
-func (dv ReplacementValueDateValueAttributes) InternalRef() terra.Reference {
-	return dv.ref
+func (dv ReplacementValueDateValueAttributes) InternalRef() (terra.Reference, error) {
+	return dv.ref, nil
 }
 
 func (dv ReplacementValueDateValueAttributes) InternalWithRef(ref terra.Reference) ReplacementValueDateValueAttributes {
 	return ReplacementValueDateValueAttributes{ref: ref}
 }
 
-func (dv ReplacementValueDateValueAttributes) InternalTokens() hclwrite.Tokens {
+func (dv ReplacementValueDateValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dv.ref.InternalTokens()
 }
 
 func (dv ReplacementValueDateValueAttributes) Day() terra.NumberValue {
-	return terra.ReferenceNumber(dv.ref.Append("day"))
+	return terra.ReferenceAsNumber(dv.ref.Append("day"))
 }
 
 func (dv ReplacementValueDateValueAttributes) Month() terra.NumberValue {
-	return terra.ReferenceNumber(dv.ref.Append("month"))
+	return terra.ReferenceAsNumber(dv.ref.Append("month"))
 }
 
 func (dv ReplacementValueDateValueAttributes) Year() terra.NumberValue {
-	return terra.ReferenceNumber(dv.ref.Append("year"))
+	return terra.ReferenceAsNumber(dv.ref.Append("year"))
 }
 
 type ReplacementValueTimeValueAttributes struct {
 	ref terra.Reference
 }
 
-func (tv ReplacementValueTimeValueAttributes) InternalRef() terra.Reference {
-	return tv.ref
+func (tv ReplacementValueTimeValueAttributes) InternalRef() (terra.Reference, error) {
+	return tv.ref, nil
 }
 
 func (tv ReplacementValueTimeValueAttributes) InternalWithRef(ref terra.Reference) ReplacementValueTimeValueAttributes {
 	return ReplacementValueTimeValueAttributes{ref: ref}
 }
 
-func (tv ReplacementValueTimeValueAttributes) InternalTokens() hclwrite.Tokens {
+func (tv ReplacementValueTimeValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tv.ref.InternalTokens()
 }
 
 func (tv ReplacementValueTimeValueAttributes) Hours() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("hours"))
+	return terra.ReferenceAsNumber(tv.ref.Append("hours"))
 }
 
 func (tv ReplacementValueTimeValueAttributes) Minutes() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("minutes"))
+	return terra.ReferenceAsNumber(tv.ref.Append("minutes"))
 }
 
 func (tv ReplacementValueTimeValueAttributes) Nanos() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("nanos"))
+	return terra.ReferenceAsNumber(tv.ref.Append("nanos"))
 }
 
 func (tv ReplacementValueTimeValueAttributes) Seconds() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("seconds"))
+	return terra.ReferenceAsNumber(tv.ref.Append("seconds"))
 }
 
 type FieldTransformationsPrimitiveTransformationCharacterMaskConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (cmc FieldTransformationsPrimitiveTransformationCharacterMaskConfigAttributes) InternalRef() terra.Reference {
-	return cmc.ref
+func (cmc FieldTransformationsPrimitiveTransformationCharacterMaskConfigAttributes) InternalRef() (terra.Reference, error) {
+	return cmc.ref, nil
 }
 
 func (cmc FieldTransformationsPrimitiveTransformationCharacterMaskConfigAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsPrimitiveTransformationCharacterMaskConfigAttributes {
 	return FieldTransformationsPrimitiveTransformationCharacterMaskConfigAttributes{ref: ref}
 }
 
-func (cmc FieldTransformationsPrimitiveTransformationCharacterMaskConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (cmc FieldTransformationsPrimitiveTransformationCharacterMaskConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cmc.ref.InternalTokens()
 }
 
 func (cmc FieldTransformationsPrimitiveTransformationCharacterMaskConfigAttributes) MaskingCharacter() terra.StringValue {
-	return terra.ReferenceString(cmc.ref.Append("masking_character"))
+	return terra.ReferenceAsString(cmc.ref.Append("masking_character"))
 }
 
 func (cmc FieldTransformationsPrimitiveTransformationCharacterMaskConfigAttributes) NumberToMask() terra.NumberValue {
-	return terra.ReferenceNumber(cmc.ref.Append("number_to_mask"))
+	return terra.ReferenceAsNumber(cmc.ref.Append("number_to_mask"))
 }
 
 func (cmc FieldTransformationsPrimitiveTransformationCharacterMaskConfigAttributes) ReverseOrder() terra.BoolValue {
-	return terra.ReferenceBool(cmc.ref.Append("reverse_order"))
+	return terra.ReferenceAsBool(cmc.ref.Append("reverse_order"))
 }
 
 func (cmc FieldTransformationsPrimitiveTransformationCharacterMaskConfigAttributes) CharactersToIgnore() terra.ListValue[FieldTransformationsPrimitiveTransformationCharacterMaskConfigCharactersToIgnoreAttributes] {
-	return terra.ReferenceList[FieldTransformationsPrimitiveTransformationCharacterMaskConfigCharactersToIgnoreAttributes](cmc.ref.Append("characters_to_ignore"))
+	return terra.ReferenceAsList[FieldTransformationsPrimitiveTransformationCharacterMaskConfigCharactersToIgnoreAttributes](cmc.ref.Append("characters_to_ignore"))
 }
 
 type FieldTransformationsPrimitiveTransformationCharacterMaskConfigCharactersToIgnoreAttributes struct {
 	ref terra.Reference
 }
 
-func (cti FieldTransformationsPrimitiveTransformationCharacterMaskConfigCharactersToIgnoreAttributes) InternalRef() terra.Reference {
-	return cti.ref
+func (cti FieldTransformationsPrimitiveTransformationCharacterMaskConfigCharactersToIgnoreAttributes) InternalRef() (terra.Reference, error) {
+	return cti.ref, nil
 }
 
 func (cti FieldTransformationsPrimitiveTransformationCharacterMaskConfigCharactersToIgnoreAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsPrimitiveTransformationCharacterMaskConfigCharactersToIgnoreAttributes {
 	return FieldTransformationsPrimitiveTransformationCharacterMaskConfigCharactersToIgnoreAttributes{ref: ref}
 }
 
-func (cti FieldTransformationsPrimitiveTransformationCharacterMaskConfigCharactersToIgnoreAttributes) InternalTokens() hclwrite.Tokens {
+func (cti FieldTransformationsPrimitiveTransformationCharacterMaskConfigCharactersToIgnoreAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cti.ref.InternalTokens()
 }
 
 func (cti FieldTransformationsPrimitiveTransformationCharacterMaskConfigCharactersToIgnoreAttributes) CharactersToSkip() terra.StringValue {
-	return terra.ReferenceString(cti.ref.Append("characters_to_skip"))
+	return terra.ReferenceAsString(cti.ref.Append("characters_to_skip"))
 }
 
 func (cti FieldTransformationsPrimitiveTransformationCharacterMaskConfigCharactersToIgnoreAttributes) CommonCharactersToIgnore() terra.StringValue {
-	return terra.ReferenceString(cti.ref.Append("common_characters_to_ignore"))
+	return terra.ReferenceAsString(cti.ref.Append("common_characters_to_ignore"))
 }
 
 type FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (cdc FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes) InternalRef() terra.Reference {
-	return cdc.ref
+func (cdc FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes) InternalRef() (terra.Reference, error) {
+	return cdc.ref, nil
 }
 
 func (cdc FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes {
 	return FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes{ref: ref}
 }
 
-func (cdc FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (cdc FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cdc.ref.InternalTokens()
 }
 
 func (cdc FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes) Context() terra.ListValue[FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigContextAttributes] {
-	return terra.ReferenceList[FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigContextAttributes](cdc.ref.Append("context"))
+	return terra.ReferenceAsList[FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigContextAttributes](cdc.ref.Append("context"))
 }
 
 func (cdc FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes) CryptoKey() terra.ListValue[FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes] {
-	return terra.ReferenceList[FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes](cdc.ref.Append("crypto_key"))
+	return terra.ReferenceAsList[FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes](cdc.ref.Append("crypto_key"))
 }
 
 func (cdc FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigAttributes) SurrogateInfoType() terra.ListValue[FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigSurrogateInfoTypeAttributes] {
-	return terra.ReferenceList[FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigSurrogateInfoTypeAttributes](cdc.ref.Append("surrogate_info_type"))
+	return terra.ReferenceAsList[FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigSurrogateInfoTypeAttributes](cdc.ref.Append("surrogate_info_type"))
 }
 
 type FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigContextAttributes struct {
 	ref terra.Reference
 }
 
-func (c FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigContextAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigContextAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigContextAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigContextAttributes {
 	return FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigContextAttributes{ref: ref}
 }
 
-func (c FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigContextAttributes) InternalTokens() hclwrite.Tokens {
+func (c FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigContextAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigContextAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("name"))
+	return terra.ReferenceAsString(c.ref.Append("name"))
 }
 
 type FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (ck FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes) InternalRef() terra.Reference {
-	return ck.ref
+func (ck FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes) InternalRef() (terra.Reference, error) {
+	return ck.ref, nil
 }
 
 func (ck FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes {
 	return FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes{ref: ref}
 }
 
-func (ck FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (ck FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ck.ref.InternalTokens()
 }
 
 func (ck FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes) KmsWrapped() terra.ListValue[FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyKmsWrappedAttributes] {
-	return terra.ReferenceList[FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyKmsWrappedAttributes](ck.ref.Append("kms_wrapped"))
+	return terra.ReferenceAsList[FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyKmsWrappedAttributes](ck.ref.Append("kms_wrapped"))
 }
 
 func (ck FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes) Transient() terra.ListValue[FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyTransientAttributes] {
-	return terra.ReferenceList[FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyTransientAttributes](ck.ref.Append("transient"))
+	return terra.ReferenceAsList[FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyTransientAttributes](ck.ref.Append("transient"))
 }
 
 func (ck FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyAttributes) Unwrapped() terra.ListValue[FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyUnwrappedAttributes] {
-	return terra.ReferenceList[FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyUnwrappedAttributes](ck.ref.Append("unwrapped"))
+	return terra.ReferenceAsList[FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyUnwrappedAttributes](ck.ref.Append("unwrapped"))
 }
 
 type FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyKmsWrappedAttributes struct {
 	ref terra.Reference
 }
 
-func (kw FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyKmsWrappedAttributes) InternalRef() terra.Reference {
-	return kw.ref
+func (kw FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyKmsWrappedAttributes) InternalRef() (terra.Reference, error) {
+	return kw.ref, nil
 }
 
 func (kw FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyKmsWrappedAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyKmsWrappedAttributes {
 	return FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyKmsWrappedAttributes{ref: ref}
 }
 
-func (kw FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyKmsWrappedAttributes) InternalTokens() hclwrite.Tokens {
+func (kw FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyKmsWrappedAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kw.ref.InternalTokens()
 }
 
 func (kw FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyKmsWrappedAttributes) CryptoKeyName() terra.StringValue {
-	return terra.ReferenceString(kw.ref.Append("crypto_key_name"))
+	return terra.ReferenceAsString(kw.ref.Append("crypto_key_name"))
 }
 
 func (kw FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyKmsWrappedAttributes) WrappedKey() terra.StringValue {
-	return terra.ReferenceString(kw.ref.Append("wrapped_key"))
+	return terra.ReferenceAsString(kw.ref.Append("wrapped_key"))
 }
 
 type FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyTransientAttributes struct {
 	ref terra.Reference
 }
 
-func (t FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyTransientAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyTransientAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyTransientAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyTransientAttributes {
 	return FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyTransientAttributes{ref: ref}
 }
 
-func (t FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyTransientAttributes) InternalTokens() hclwrite.Tokens {
+func (t FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyTransientAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyTransientAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("name"))
+	return terra.ReferenceAsString(t.ref.Append("name"))
 }
 
 type FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyUnwrappedAttributes struct {
 	ref terra.Reference
 }
 
-func (u FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyUnwrappedAttributes) InternalRef() terra.Reference {
-	return u.ref
+func (u FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyUnwrappedAttributes) InternalRef() (terra.Reference, error) {
+	return u.ref, nil
 }
 
 func (u FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyUnwrappedAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyUnwrappedAttributes {
 	return FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyUnwrappedAttributes{ref: ref}
 }
 
-func (u FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyUnwrappedAttributes) InternalTokens() hclwrite.Tokens {
+func (u FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyUnwrappedAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return u.ref.InternalTokens()
 }
 
 func (u FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigCryptoKeyUnwrappedAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(u.ref.Append("key"))
+	return terra.ReferenceAsString(u.ref.Append("key"))
 }
 
 type FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigSurrogateInfoTypeAttributes struct {
 	ref terra.Reference
 }
 
-func (sit FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigSurrogateInfoTypeAttributes) InternalRef() terra.Reference {
-	return sit.ref
+func (sit FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigSurrogateInfoTypeAttributes) InternalRef() (terra.Reference, error) {
+	return sit.ref, nil
 }
 
 func (sit FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigSurrogateInfoTypeAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigSurrogateInfoTypeAttributes {
 	return FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigSurrogateInfoTypeAttributes{ref: ref}
 }
 
-func (sit FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigSurrogateInfoTypeAttributes) InternalTokens() hclwrite.Tokens {
+func (sit FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigSurrogateInfoTypeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sit.ref.InternalTokens()
 }
 
 func (sit FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigSurrogateInfoTypeAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sit.ref.Append("name"))
+	return terra.ReferenceAsString(sit.ref.Append("name"))
 }
 
 func (sit FieldTransformationsPrimitiveTransformationCryptoDeterministicConfigSurrogateInfoTypeAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(sit.ref.Append("version"))
+	return terra.ReferenceAsString(sit.ref.Append("version"))
 }
 
 type CryptoHashConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (chc CryptoHashConfigAttributes) InternalRef() terra.Reference {
-	return chc.ref
+func (chc CryptoHashConfigAttributes) InternalRef() (terra.Reference, error) {
+	return chc.ref, nil
 }
 
 func (chc CryptoHashConfigAttributes) InternalWithRef(ref terra.Reference) CryptoHashConfigAttributes {
 	return CryptoHashConfigAttributes{ref: ref}
 }
 
-func (chc CryptoHashConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (chc CryptoHashConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return chc.ref.InternalTokens()
 }
 
 func (chc CryptoHashConfigAttributes) CryptoKey() terra.ListValue[CryptoHashConfigCryptoKeyAttributes] {
-	return terra.ReferenceList[CryptoHashConfigCryptoKeyAttributes](chc.ref.Append("crypto_key"))
+	return terra.ReferenceAsList[CryptoHashConfigCryptoKeyAttributes](chc.ref.Append("crypto_key"))
 }
 
 type CryptoHashConfigCryptoKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (ck CryptoHashConfigCryptoKeyAttributes) InternalRef() terra.Reference {
-	return ck.ref
+func (ck CryptoHashConfigCryptoKeyAttributes) InternalRef() (terra.Reference, error) {
+	return ck.ref, nil
 }
 
 func (ck CryptoHashConfigCryptoKeyAttributes) InternalWithRef(ref terra.Reference) CryptoHashConfigCryptoKeyAttributes {
 	return CryptoHashConfigCryptoKeyAttributes{ref: ref}
 }
 
-func (ck CryptoHashConfigCryptoKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (ck CryptoHashConfigCryptoKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ck.ref.InternalTokens()
 }
 
 func (ck CryptoHashConfigCryptoKeyAttributes) KmsWrapped() terra.ListValue[CryptoHashConfigCryptoKeyKmsWrappedAttributes] {
-	return terra.ReferenceList[CryptoHashConfigCryptoKeyKmsWrappedAttributes](ck.ref.Append("kms_wrapped"))
+	return terra.ReferenceAsList[CryptoHashConfigCryptoKeyKmsWrappedAttributes](ck.ref.Append("kms_wrapped"))
 }
 
 func (ck CryptoHashConfigCryptoKeyAttributes) Transient() terra.ListValue[CryptoHashConfigCryptoKeyTransientAttributes] {
-	return terra.ReferenceList[CryptoHashConfigCryptoKeyTransientAttributes](ck.ref.Append("transient"))
+	return terra.ReferenceAsList[CryptoHashConfigCryptoKeyTransientAttributes](ck.ref.Append("transient"))
 }
 
 func (ck CryptoHashConfigCryptoKeyAttributes) Unwrapped() terra.ListValue[CryptoHashConfigCryptoKeyUnwrappedAttributes] {
-	return terra.ReferenceList[CryptoHashConfigCryptoKeyUnwrappedAttributes](ck.ref.Append("unwrapped"))
+	return terra.ReferenceAsList[CryptoHashConfigCryptoKeyUnwrappedAttributes](ck.ref.Append("unwrapped"))
 }
 
 type CryptoHashConfigCryptoKeyKmsWrappedAttributes struct {
 	ref terra.Reference
 }
 
-func (kw CryptoHashConfigCryptoKeyKmsWrappedAttributes) InternalRef() terra.Reference {
-	return kw.ref
+func (kw CryptoHashConfigCryptoKeyKmsWrappedAttributes) InternalRef() (terra.Reference, error) {
+	return kw.ref, nil
 }
 
 func (kw CryptoHashConfigCryptoKeyKmsWrappedAttributes) InternalWithRef(ref terra.Reference) CryptoHashConfigCryptoKeyKmsWrappedAttributes {
 	return CryptoHashConfigCryptoKeyKmsWrappedAttributes{ref: ref}
 }
 
-func (kw CryptoHashConfigCryptoKeyKmsWrappedAttributes) InternalTokens() hclwrite.Tokens {
+func (kw CryptoHashConfigCryptoKeyKmsWrappedAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kw.ref.InternalTokens()
 }
 
 func (kw CryptoHashConfigCryptoKeyKmsWrappedAttributes) CryptoKeyName() terra.StringValue {
-	return terra.ReferenceString(kw.ref.Append("crypto_key_name"))
+	return terra.ReferenceAsString(kw.ref.Append("crypto_key_name"))
 }
 
 func (kw CryptoHashConfigCryptoKeyKmsWrappedAttributes) WrappedKey() terra.StringValue {
-	return terra.ReferenceString(kw.ref.Append("wrapped_key"))
+	return terra.ReferenceAsString(kw.ref.Append("wrapped_key"))
 }
 
 type CryptoHashConfigCryptoKeyTransientAttributes struct {
 	ref terra.Reference
 }
 
-func (t CryptoHashConfigCryptoKeyTransientAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t CryptoHashConfigCryptoKeyTransientAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t CryptoHashConfigCryptoKeyTransientAttributes) InternalWithRef(ref terra.Reference) CryptoHashConfigCryptoKeyTransientAttributes {
 	return CryptoHashConfigCryptoKeyTransientAttributes{ref: ref}
 }
 
-func (t CryptoHashConfigCryptoKeyTransientAttributes) InternalTokens() hclwrite.Tokens {
+func (t CryptoHashConfigCryptoKeyTransientAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t CryptoHashConfigCryptoKeyTransientAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("name"))
+	return terra.ReferenceAsString(t.ref.Append("name"))
 }
 
 type CryptoHashConfigCryptoKeyUnwrappedAttributes struct {
 	ref terra.Reference
 }
 
-func (u CryptoHashConfigCryptoKeyUnwrappedAttributes) InternalRef() terra.Reference {
-	return u.ref
+func (u CryptoHashConfigCryptoKeyUnwrappedAttributes) InternalRef() (terra.Reference, error) {
+	return u.ref, nil
 }
 
 func (u CryptoHashConfigCryptoKeyUnwrappedAttributes) InternalWithRef(ref terra.Reference) CryptoHashConfigCryptoKeyUnwrappedAttributes {
 	return CryptoHashConfigCryptoKeyUnwrappedAttributes{ref: ref}
 }
 
-func (u CryptoHashConfigCryptoKeyUnwrappedAttributes) InternalTokens() hclwrite.Tokens {
+func (u CryptoHashConfigCryptoKeyUnwrappedAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return u.ref.InternalTokens()
 }
 
 func (u CryptoHashConfigCryptoKeyUnwrappedAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(u.ref.Append("key"))
+	return terra.ReferenceAsString(u.ref.Append("key"))
 }
 
 type FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (crffc FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes) InternalRef() terra.Reference {
-	return crffc.ref
+func (crffc FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes) InternalRef() (terra.Reference, error) {
+	return crffc.ref, nil
 }
 
 func (crffc FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes {
 	return FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes{ref: ref}
 }
 
-func (crffc FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (crffc FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return crffc.ref.InternalTokens()
 }
 
 func (crffc FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes) CommonAlphabet() terra.StringValue {
-	return terra.ReferenceString(crffc.ref.Append("common_alphabet"))
+	return terra.ReferenceAsString(crffc.ref.Append("common_alphabet"))
 }
 
 func (crffc FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes) CustomAlphabet() terra.StringValue {
-	return terra.ReferenceString(crffc.ref.Append("custom_alphabet"))
+	return terra.ReferenceAsString(crffc.ref.Append("custom_alphabet"))
 }
 
 func (crffc FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes) Radix() terra.NumberValue {
-	return terra.ReferenceNumber(crffc.ref.Append("radix"))
+	return terra.ReferenceAsNumber(crffc.ref.Append("radix"))
 }
 
 func (crffc FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes) Context() terra.ListValue[FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigContextAttributes] {
-	return terra.ReferenceList[FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigContextAttributes](crffc.ref.Append("context"))
+	return terra.ReferenceAsList[FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigContextAttributes](crffc.ref.Append("context"))
 }
 
 func (crffc FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes) CryptoKey() terra.ListValue[FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes] {
-	return terra.ReferenceList[FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes](crffc.ref.Append("crypto_key"))
+	return terra.ReferenceAsList[FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes](crffc.ref.Append("crypto_key"))
 }
 
 func (crffc FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigAttributes) SurrogateInfoType() terra.ListValue[FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigSurrogateInfoTypeAttributes] {
-	return terra.ReferenceList[FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigSurrogateInfoTypeAttributes](crffc.ref.Append("surrogate_info_type"))
+	return terra.ReferenceAsList[FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigSurrogateInfoTypeAttributes](crffc.ref.Append("surrogate_info_type"))
 }
 
 type FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigContextAttributes struct {
 	ref terra.Reference
 }
 
-func (c FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigContextAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigContextAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigContextAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigContextAttributes {
 	return FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigContextAttributes{ref: ref}
 }
 
-func (c FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigContextAttributes) InternalTokens() hclwrite.Tokens {
+func (c FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigContextAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigContextAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("name"))
+	return terra.ReferenceAsString(c.ref.Append("name"))
 }
 
 type FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (ck FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes) InternalRef() terra.Reference {
-	return ck.ref
+func (ck FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes) InternalRef() (terra.Reference, error) {
+	return ck.ref, nil
 }
 
 func (ck FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes {
 	return FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes{ref: ref}
 }
 
-func (ck FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (ck FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ck.ref.InternalTokens()
 }
 
 func (ck FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes) KmsWrapped() terra.ListValue[FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyKmsWrappedAttributes] {
-	return terra.ReferenceList[FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyKmsWrappedAttributes](ck.ref.Append("kms_wrapped"))
+	return terra.ReferenceAsList[FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyKmsWrappedAttributes](ck.ref.Append("kms_wrapped"))
 }
 
 func (ck FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes) Transient() terra.ListValue[FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyTransientAttributes] {
-	return terra.ReferenceList[FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyTransientAttributes](ck.ref.Append("transient"))
+	return terra.ReferenceAsList[FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyTransientAttributes](ck.ref.Append("transient"))
 }
 
 func (ck FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyAttributes) Unwrapped() terra.ListValue[FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyUnwrappedAttributes] {
-	return terra.ReferenceList[FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyUnwrappedAttributes](ck.ref.Append("unwrapped"))
+	return terra.ReferenceAsList[FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyUnwrappedAttributes](ck.ref.Append("unwrapped"))
 }
 
 type FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyKmsWrappedAttributes struct {
 	ref terra.Reference
 }
 
-func (kw FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyKmsWrappedAttributes) InternalRef() terra.Reference {
-	return kw.ref
+func (kw FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyKmsWrappedAttributes) InternalRef() (terra.Reference, error) {
+	return kw.ref, nil
 }
 
 func (kw FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyKmsWrappedAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyKmsWrappedAttributes {
 	return FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyKmsWrappedAttributes{ref: ref}
 }
 
-func (kw FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyKmsWrappedAttributes) InternalTokens() hclwrite.Tokens {
+func (kw FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyKmsWrappedAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kw.ref.InternalTokens()
 }
 
 func (kw FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyKmsWrappedAttributes) CryptoKeyName() terra.StringValue {
-	return terra.ReferenceString(kw.ref.Append("crypto_key_name"))
+	return terra.ReferenceAsString(kw.ref.Append("crypto_key_name"))
 }
 
 func (kw FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyKmsWrappedAttributes) WrappedKey() terra.StringValue {
-	return terra.ReferenceString(kw.ref.Append("wrapped_key"))
+	return terra.ReferenceAsString(kw.ref.Append("wrapped_key"))
 }
 
 type FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyTransientAttributes struct {
 	ref terra.Reference
 }
 
-func (t FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyTransientAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyTransientAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyTransientAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyTransientAttributes {
 	return FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyTransientAttributes{ref: ref}
 }
 
-func (t FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyTransientAttributes) InternalTokens() hclwrite.Tokens {
+func (t FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyTransientAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyTransientAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("name"))
+	return terra.ReferenceAsString(t.ref.Append("name"))
 }
 
 type FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyUnwrappedAttributes struct {
 	ref terra.Reference
 }
 
-func (u FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyUnwrappedAttributes) InternalRef() terra.Reference {
-	return u.ref
+func (u FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyUnwrappedAttributes) InternalRef() (terra.Reference, error) {
+	return u.ref, nil
 }
 
 func (u FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyUnwrappedAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyUnwrappedAttributes {
 	return FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyUnwrappedAttributes{ref: ref}
 }
 
-func (u FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyUnwrappedAttributes) InternalTokens() hclwrite.Tokens {
+func (u FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyUnwrappedAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return u.ref.InternalTokens()
 }
 
 func (u FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigCryptoKeyUnwrappedAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(u.ref.Append("key"))
+	return terra.ReferenceAsString(u.ref.Append("key"))
 }
 
 type FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigSurrogateInfoTypeAttributes struct {
 	ref terra.Reference
 }
 
-func (sit FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigSurrogateInfoTypeAttributes) InternalRef() terra.Reference {
-	return sit.ref
+func (sit FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigSurrogateInfoTypeAttributes) InternalRef() (terra.Reference, error) {
+	return sit.ref, nil
 }
 
 func (sit FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigSurrogateInfoTypeAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigSurrogateInfoTypeAttributes {
 	return FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigSurrogateInfoTypeAttributes{ref: ref}
 }
 
-func (sit FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigSurrogateInfoTypeAttributes) InternalTokens() hclwrite.Tokens {
+func (sit FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigSurrogateInfoTypeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sit.ref.InternalTokens()
 }
 
 func (sit FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigSurrogateInfoTypeAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sit.ref.Append("name"))
+	return terra.ReferenceAsString(sit.ref.Append("name"))
 }
 
 func (sit FieldTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigSurrogateInfoTypeAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(sit.ref.Append("version"))
+	return terra.ReferenceAsString(sit.ref.Append("version"))
 }
 
 type DateShiftConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (dsc DateShiftConfigAttributes) InternalRef() terra.Reference {
-	return dsc.ref
+func (dsc DateShiftConfigAttributes) InternalRef() (terra.Reference, error) {
+	return dsc.ref, nil
 }
 
 func (dsc DateShiftConfigAttributes) InternalWithRef(ref terra.Reference) DateShiftConfigAttributes {
 	return DateShiftConfigAttributes{ref: ref}
 }
 
-func (dsc DateShiftConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (dsc DateShiftConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dsc.ref.InternalTokens()
 }
 
 func (dsc DateShiftConfigAttributes) LowerBoundDays() terra.NumberValue {
-	return terra.ReferenceNumber(dsc.ref.Append("lower_bound_days"))
+	return terra.ReferenceAsNumber(dsc.ref.Append("lower_bound_days"))
 }
 
 func (dsc DateShiftConfigAttributes) UpperBoundDays() terra.NumberValue {
-	return terra.ReferenceNumber(dsc.ref.Append("upper_bound_days"))
+	return terra.ReferenceAsNumber(dsc.ref.Append("upper_bound_days"))
 }
 
 func (dsc DateShiftConfigAttributes) Context() terra.ListValue[DateShiftConfigContextAttributes] {
-	return terra.ReferenceList[DateShiftConfigContextAttributes](dsc.ref.Append("context"))
+	return terra.ReferenceAsList[DateShiftConfigContextAttributes](dsc.ref.Append("context"))
 }
 
 func (dsc DateShiftConfigAttributes) CryptoKey() terra.ListValue[DateShiftConfigCryptoKeyAttributes] {
-	return terra.ReferenceList[DateShiftConfigCryptoKeyAttributes](dsc.ref.Append("crypto_key"))
+	return terra.ReferenceAsList[DateShiftConfigCryptoKeyAttributes](dsc.ref.Append("crypto_key"))
 }
 
 type DateShiftConfigContextAttributes struct {
 	ref terra.Reference
 }
 
-func (c DateShiftConfigContextAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c DateShiftConfigContextAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c DateShiftConfigContextAttributes) InternalWithRef(ref terra.Reference) DateShiftConfigContextAttributes {
 	return DateShiftConfigContextAttributes{ref: ref}
 }
 
-func (c DateShiftConfigContextAttributes) InternalTokens() hclwrite.Tokens {
+func (c DateShiftConfigContextAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c DateShiftConfigContextAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("name"))
+	return terra.ReferenceAsString(c.ref.Append("name"))
 }
 
 type DateShiftConfigCryptoKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (ck DateShiftConfigCryptoKeyAttributes) InternalRef() terra.Reference {
-	return ck.ref
+func (ck DateShiftConfigCryptoKeyAttributes) InternalRef() (terra.Reference, error) {
+	return ck.ref, nil
 }
 
 func (ck DateShiftConfigCryptoKeyAttributes) InternalWithRef(ref terra.Reference) DateShiftConfigCryptoKeyAttributes {
 	return DateShiftConfigCryptoKeyAttributes{ref: ref}
 }
 
-func (ck DateShiftConfigCryptoKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (ck DateShiftConfigCryptoKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ck.ref.InternalTokens()
 }
 
 func (ck DateShiftConfigCryptoKeyAttributes) KmsWrapped() terra.ListValue[DateShiftConfigCryptoKeyKmsWrappedAttributes] {
-	return terra.ReferenceList[DateShiftConfigCryptoKeyKmsWrappedAttributes](ck.ref.Append("kms_wrapped"))
+	return terra.ReferenceAsList[DateShiftConfigCryptoKeyKmsWrappedAttributes](ck.ref.Append("kms_wrapped"))
 }
 
 func (ck DateShiftConfigCryptoKeyAttributes) Transient() terra.ListValue[DateShiftConfigCryptoKeyTransientAttributes] {
-	return terra.ReferenceList[DateShiftConfigCryptoKeyTransientAttributes](ck.ref.Append("transient"))
+	return terra.ReferenceAsList[DateShiftConfigCryptoKeyTransientAttributes](ck.ref.Append("transient"))
 }
 
 func (ck DateShiftConfigCryptoKeyAttributes) Unwrapped() terra.ListValue[DateShiftConfigCryptoKeyUnwrappedAttributes] {
-	return terra.ReferenceList[DateShiftConfigCryptoKeyUnwrappedAttributes](ck.ref.Append("unwrapped"))
+	return terra.ReferenceAsList[DateShiftConfigCryptoKeyUnwrappedAttributes](ck.ref.Append("unwrapped"))
 }
 
 type DateShiftConfigCryptoKeyKmsWrappedAttributes struct {
 	ref terra.Reference
 }
 
-func (kw DateShiftConfigCryptoKeyKmsWrappedAttributes) InternalRef() terra.Reference {
-	return kw.ref
+func (kw DateShiftConfigCryptoKeyKmsWrappedAttributes) InternalRef() (terra.Reference, error) {
+	return kw.ref, nil
 }
 
 func (kw DateShiftConfigCryptoKeyKmsWrappedAttributes) InternalWithRef(ref terra.Reference) DateShiftConfigCryptoKeyKmsWrappedAttributes {
 	return DateShiftConfigCryptoKeyKmsWrappedAttributes{ref: ref}
 }
 
-func (kw DateShiftConfigCryptoKeyKmsWrappedAttributes) InternalTokens() hclwrite.Tokens {
+func (kw DateShiftConfigCryptoKeyKmsWrappedAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kw.ref.InternalTokens()
 }
 
 func (kw DateShiftConfigCryptoKeyKmsWrappedAttributes) CryptoKeyName() terra.StringValue {
-	return terra.ReferenceString(kw.ref.Append("crypto_key_name"))
+	return terra.ReferenceAsString(kw.ref.Append("crypto_key_name"))
 }
 
 func (kw DateShiftConfigCryptoKeyKmsWrappedAttributes) WrappedKey() terra.StringValue {
-	return terra.ReferenceString(kw.ref.Append("wrapped_key"))
+	return terra.ReferenceAsString(kw.ref.Append("wrapped_key"))
 }
 
 type DateShiftConfigCryptoKeyTransientAttributes struct {
 	ref terra.Reference
 }
 
-func (t DateShiftConfigCryptoKeyTransientAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t DateShiftConfigCryptoKeyTransientAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t DateShiftConfigCryptoKeyTransientAttributes) InternalWithRef(ref terra.Reference) DateShiftConfigCryptoKeyTransientAttributes {
 	return DateShiftConfigCryptoKeyTransientAttributes{ref: ref}
 }
 
-func (t DateShiftConfigCryptoKeyTransientAttributes) InternalTokens() hclwrite.Tokens {
+func (t DateShiftConfigCryptoKeyTransientAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t DateShiftConfigCryptoKeyTransientAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("name"))
+	return terra.ReferenceAsString(t.ref.Append("name"))
 }
 
 type DateShiftConfigCryptoKeyUnwrappedAttributes struct {
 	ref terra.Reference
 }
 
-func (u DateShiftConfigCryptoKeyUnwrappedAttributes) InternalRef() terra.Reference {
-	return u.ref
+func (u DateShiftConfigCryptoKeyUnwrappedAttributes) InternalRef() (terra.Reference, error) {
+	return u.ref, nil
 }
 
 func (u DateShiftConfigCryptoKeyUnwrappedAttributes) InternalWithRef(ref terra.Reference) DateShiftConfigCryptoKeyUnwrappedAttributes {
 	return DateShiftConfigCryptoKeyUnwrappedAttributes{ref: ref}
 }
 
-func (u DateShiftConfigCryptoKeyUnwrappedAttributes) InternalTokens() hclwrite.Tokens {
+func (u DateShiftConfigCryptoKeyUnwrappedAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return u.ref.InternalTokens()
 }
 
 func (u DateShiftConfigCryptoKeyUnwrappedAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(u.ref.Append("key"))
+	return terra.ReferenceAsString(u.ref.Append("key"))
 }
 
 type FixedSizeBucketingConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (fsbc FixedSizeBucketingConfigAttributes) InternalRef() terra.Reference {
-	return fsbc.ref
+func (fsbc FixedSizeBucketingConfigAttributes) InternalRef() (terra.Reference, error) {
+	return fsbc.ref, nil
 }
 
 func (fsbc FixedSizeBucketingConfigAttributes) InternalWithRef(ref terra.Reference) FixedSizeBucketingConfigAttributes {
 	return FixedSizeBucketingConfigAttributes{ref: ref}
 }
 
-func (fsbc FixedSizeBucketingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (fsbc FixedSizeBucketingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fsbc.ref.InternalTokens()
 }
 
 func (fsbc FixedSizeBucketingConfigAttributes) BucketSize() terra.NumberValue {
-	return terra.ReferenceNumber(fsbc.ref.Append("bucket_size"))
+	return terra.ReferenceAsNumber(fsbc.ref.Append("bucket_size"))
 }
 
 func (fsbc FixedSizeBucketingConfigAttributes) LowerBound() terra.ListValue[LowerBoundAttributes] {
-	return terra.ReferenceList[LowerBoundAttributes](fsbc.ref.Append("lower_bound"))
+	return terra.ReferenceAsList[LowerBoundAttributes](fsbc.ref.Append("lower_bound"))
 }
 
 func (fsbc FixedSizeBucketingConfigAttributes) UpperBound() terra.ListValue[UpperBoundAttributes] {
-	return terra.ReferenceList[UpperBoundAttributes](fsbc.ref.Append("upper_bound"))
+	return terra.ReferenceAsList[UpperBoundAttributes](fsbc.ref.Append("upper_bound"))
 }
 
 type LowerBoundAttributes struct {
 	ref terra.Reference
 }
 
-func (lb LowerBoundAttributes) InternalRef() terra.Reference {
-	return lb.ref
+func (lb LowerBoundAttributes) InternalRef() (terra.Reference, error) {
+	return lb.ref, nil
 }
 
 func (lb LowerBoundAttributes) InternalWithRef(ref terra.Reference) LowerBoundAttributes {
 	return LowerBoundAttributes{ref: ref}
 }
 
-func (lb LowerBoundAttributes) InternalTokens() hclwrite.Tokens {
+func (lb LowerBoundAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lb.ref.InternalTokens()
 }
 
 func (lb LowerBoundAttributes) BooleanValue() terra.BoolValue {
-	return terra.ReferenceBool(lb.ref.Append("boolean_value"))
+	return terra.ReferenceAsBool(lb.ref.Append("boolean_value"))
 }
 
 func (lb LowerBoundAttributes) DayOfWeekValue() terra.StringValue {
-	return terra.ReferenceString(lb.ref.Append("day_of_week_value"))
+	return terra.ReferenceAsString(lb.ref.Append("day_of_week_value"))
 }
 
 func (lb LowerBoundAttributes) FloatValue() terra.NumberValue {
-	return terra.ReferenceNumber(lb.ref.Append("float_value"))
+	return terra.ReferenceAsNumber(lb.ref.Append("float_value"))
 }
 
 func (lb LowerBoundAttributes) IntegerValue() terra.StringValue {
-	return terra.ReferenceString(lb.ref.Append("integer_value"))
+	return terra.ReferenceAsString(lb.ref.Append("integer_value"))
 }
 
 func (lb LowerBoundAttributes) StringValue() terra.StringValue {
-	return terra.ReferenceString(lb.ref.Append("string_value"))
+	return terra.ReferenceAsString(lb.ref.Append("string_value"))
 }
 
 func (lb LowerBoundAttributes) TimestampValue() terra.StringValue {
-	return terra.ReferenceString(lb.ref.Append("timestamp_value"))
+	return terra.ReferenceAsString(lb.ref.Append("timestamp_value"))
 }
 
 func (lb LowerBoundAttributes) DateValue() terra.ListValue[LowerBoundDateValueAttributes] {
-	return terra.ReferenceList[LowerBoundDateValueAttributes](lb.ref.Append("date_value"))
+	return terra.ReferenceAsList[LowerBoundDateValueAttributes](lb.ref.Append("date_value"))
 }
 
 func (lb LowerBoundAttributes) TimeValue() terra.ListValue[LowerBoundTimeValueAttributes] {
-	return terra.ReferenceList[LowerBoundTimeValueAttributes](lb.ref.Append("time_value"))
+	return terra.ReferenceAsList[LowerBoundTimeValueAttributes](lb.ref.Append("time_value"))
 }
 
 type LowerBoundDateValueAttributes struct {
 	ref terra.Reference
 }
 
-func (dv LowerBoundDateValueAttributes) InternalRef() terra.Reference {
-	return dv.ref
+func (dv LowerBoundDateValueAttributes) InternalRef() (terra.Reference, error) {
+	return dv.ref, nil
 }
 
 func (dv LowerBoundDateValueAttributes) InternalWithRef(ref terra.Reference) LowerBoundDateValueAttributes {
 	return LowerBoundDateValueAttributes{ref: ref}
 }
 
-func (dv LowerBoundDateValueAttributes) InternalTokens() hclwrite.Tokens {
+func (dv LowerBoundDateValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dv.ref.InternalTokens()
 }
 
 func (dv LowerBoundDateValueAttributes) Day() terra.NumberValue {
-	return terra.ReferenceNumber(dv.ref.Append("day"))
+	return terra.ReferenceAsNumber(dv.ref.Append("day"))
 }
 
 func (dv LowerBoundDateValueAttributes) Month() terra.NumberValue {
-	return terra.ReferenceNumber(dv.ref.Append("month"))
+	return terra.ReferenceAsNumber(dv.ref.Append("month"))
 }
 
 func (dv LowerBoundDateValueAttributes) Year() terra.NumberValue {
-	return terra.ReferenceNumber(dv.ref.Append("year"))
+	return terra.ReferenceAsNumber(dv.ref.Append("year"))
 }
 
 type LowerBoundTimeValueAttributes struct {
 	ref terra.Reference
 }
 
-func (tv LowerBoundTimeValueAttributes) InternalRef() terra.Reference {
-	return tv.ref
+func (tv LowerBoundTimeValueAttributes) InternalRef() (terra.Reference, error) {
+	return tv.ref, nil
 }
 
 func (tv LowerBoundTimeValueAttributes) InternalWithRef(ref terra.Reference) LowerBoundTimeValueAttributes {
 	return LowerBoundTimeValueAttributes{ref: ref}
 }
 
-func (tv LowerBoundTimeValueAttributes) InternalTokens() hclwrite.Tokens {
+func (tv LowerBoundTimeValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tv.ref.InternalTokens()
 }
 
 func (tv LowerBoundTimeValueAttributes) Hours() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("hours"))
+	return terra.ReferenceAsNumber(tv.ref.Append("hours"))
 }
 
 func (tv LowerBoundTimeValueAttributes) Minutes() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("minutes"))
+	return terra.ReferenceAsNumber(tv.ref.Append("minutes"))
 }
 
 func (tv LowerBoundTimeValueAttributes) Nanos() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("nanos"))
+	return terra.ReferenceAsNumber(tv.ref.Append("nanos"))
 }
 
 func (tv LowerBoundTimeValueAttributes) Seconds() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("seconds"))
+	return terra.ReferenceAsNumber(tv.ref.Append("seconds"))
 }
 
 type UpperBoundAttributes struct {
 	ref terra.Reference
 }
 
-func (ub UpperBoundAttributes) InternalRef() terra.Reference {
-	return ub.ref
+func (ub UpperBoundAttributes) InternalRef() (terra.Reference, error) {
+	return ub.ref, nil
 }
 
 func (ub UpperBoundAttributes) InternalWithRef(ref terra.Reference) UpperBoundAttributes {
 	return UpperBoundAttributes{ref: ref}
 }
 
-func (ub UpperBoundAttributes) InternalTokens() hclwrite.Tokens {
+func (ub UpperBoundAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ub.ref.InternalTokens()
 }
 
 func (ub UpperBoundAttributes) BooleanValue() terra.BoolValue {
-	return terra.ReferenceBool(ub.ref.Append("boolean_value"))
+	return terra.ReferenceAsBool(ub.ref.Append("boolean_value"))
 }
 
 func (ub UpperBoundAttributes) DayOfWeekValue() terra.StringValue {
-	return terra.ReferenceString(ub.ref.Append("day_of_week_value"))
+	return terra.ReferenceAsString(ub.ref.Append("day_of_week_value"))
 }
 
 func (ub UpperBoundAttributes) FloatValue() terra.NumberValue {
-	return terra.ReferenceNumber(ub.ref.Append("float_value"))
+	return terra.ReferenceAsNumber(ub.ref.Append("float_value"))
 }
 
 func (ub UpperBoundAttributes) IntegerValue() terra.StringValue {
-	return terra.ReferenceString(ub.ref.Append("integer_value"))
+	return terra.ReferenceAsString(ub.ref.Append("integer_value"))
 }
 
 func (ub UpperBoundAttributes) StringValue() terra.StringValue {
-	return terra.ReferenceString(ub.ref.Append("string_value"))
+	return terra.ReferenceAsString(ub.ref.Append("string_value"))
 }
 
 func (ub UpperBoundAttributes) TimestampValue() terra.StringValue {
-	return terra.ReferenceString(ub.ref.Append("timestamp_value"))
+	return terra.ReferenceAsString(ub.ref.Append("timestamp_value"))
 }
 
 func (ub UpperBoundAttributes) DateValue() terra.ListValue[UpperBoundDateValueAttributes] {
-	return terra.ReferenceList[UpperBoundDateValueAttributes](ub.ref.Append("date_value"))
+	return terra.ReferenceAsList[UpperBoundDateValueAttributes](ub.ref.Append("date_value"))
 }
 
 func (ub UpperBoundAttributes) TimeValue() terra.ListValue[UpperBoundTimeValueAttributes] {
-	return terra.ReferenceList[UpperBoundTimeValueAttributes](ub.ref.Append("time_value"))
+	return terra.ReferenceAsList[UpperBoundTimeValueAttributes](ub.ref.Append("time_value"))
 }
 
 type UpperBoundDateValueAttributes struct {
 	ref terra.Reference
 }
 
-func (dv UpperBoundDateValueAttributes) InternalRef() terra.Reference {
-	return dv.ref
+func (dv UpperBoundDateValueAttributes) InternalRef() (terra.Reference, error) {
+	return dv.ref, nil
 }
 
 func (dv UpperBoundDateValueAttributes) InternalWithRef(ref terra.Reference) UpperBoundDateValueAttributes {
 	return UpperBoundDateValueAttributes{ref: ref}
 }
 
-func (dv UpperBoundDateValueAttributes) InternalTokens() hclwrite.Tokens {
+func (dv UpperBoundDateValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dv.ref.InternalTokens()
 }
 
 func (dv UpperBoundDateValueAttributes) Day() terra.NumberValue {
-	return terra.ReferenceNumber(dv.ref.Append("day"))
+	return terra.ReferenceAsNumber(dv.ref.Append("day"))
 }
 
 func (dv UpperBoundDateValueAttributes) Month() terra.NumberValue {
-	return terra.ReferenceNumber(dv.ref.Append("month"))
+	return terra.ReferenceAsNumber(dv.ref.Append("month"))
 }
 
 func (dv UpperBoundDateValueAttributes) Year() terra.NumberValue {
-	return terra.ReferenceNumber(dv.ref.Append("year"))
+	return terra.ReferenceAsNumber(dv.ref.Append("year"))
 }
 
 type UpperBoundTimeValueAttributes struct {
 	ref terra.Reference
 }
 
-func (tv UpperBoundTimeValueAttributes) InternalRef() terra.Reference {
-	return tv.ref
+func (tv UpperBoundTimeValueAttributes) InternalRef() (terra.Reference, error) {
+	return tv.ref, nil
 }
 
 func (tv UpperBoundTimeValueAttributes) InternalWithRef(ref terra.Reference) UpperBoundTimeValueAttributes {
 	return UpperBoundTimeValueAttributes{ref: ref}
 }
 
-func (tv UpperBoundTimeValueAttributes) InternalTokens() hclwrite.Tokens {
+func (tv UpperBoundTimeValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tv.ref.InternalTokens()
 }
 
 func (tv UpperBoundTimeValueAttributes) Hours() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("hours"))
+	return terra.ReferenceAsNumber(tv.ref.Append("hours"))
 }
 
 func (tv UpperBoundTimeValueAttributes) Minutes() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("minutes"))
+	return terra.ReferenceAsNumber(tv.ref.Append("minutes"))
 }
 
 func (tv UpperBoundTimeValueAttributes) Nanos() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("nanos"))
+	return terra.ReferenceAsNumber(tv.ref.Append("nanos"))
 }
 
 func (tv UpperBoundTimeValueAttributes) Seconds() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("seconds"))
+	return terra.ReferenceAsNumber(tv.ref.Append("seconds"))
 }
 
 type RedactConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (rc RedactConfigAttributes) InternalRef() terra.Reference {
-	return rc.ref
+func (rc RedactConfigAttributes) InternalRef() (terra.Reference, error) {
+	return rc.ref, nil
 }
 
 func (rc RedactConfigAttributes) InternalWithRef(ref terra.Reference) RedactConfigAttributes {
 	return RedactConfigAttributes{ref: ref}
 }
 
-func (rc RedactConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (rc RedactConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rc.ref.InternalTokens()
 }
 
@@ -3164,456 +3164,456 @@ type FieldTransformationsPrimitiveTransformationReplaceConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (rc FieldTransformationsPrimitiveTransformationReplaceConfigAttributes) InternalRef() terra.Reference {
-	return rc.ref
+func (rc FieldTransformationsPrimitiveTransformationReplaceConfigAttributes) InternalRef() (terra.Reference, error) {
+	return rc.ref, nil
 }
 
 func (rc FieldTransformationsPrimitiveTransformationReplaceConfigAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsPrimitiveTransformationReplaceConfigAttributes {
 	return FieldTransformationsPrimitiveTransformationReplaceConfigAttributes{ref: ref}
 }
 
-func (rc FieldTransformationsPrimitiveTransformationReplaceConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (rc FieldTransformationsPrimitiveTransformationReplaceConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rc.ref.InternalTokens()
 }
 
 func (rc FieldTransformationsPrimitiveTransformationReplaceConfigAttributes) NewValue() terra.ListValue[FieldTransformationsPrimitiveTransformationReplaceConfigNewValueAttributes] {
-	return terra.ReferenceList[FieldTransformationsPrimitiveTransformationReplaceConfigNewValueAttributes](rc.ref.Append("new_value"))
+	return terra.ReferenceAsList[FieldTransformationsPrimitiveTransformationReplaceConfigNewValueAttributes](rc.ref.Append("new_value"))
 }
 
 type FieldTransformationsPrimitiveTransformationReplaceConfigNewValueAttributes struct {
 	ref terra.Reference
 }
 
-func (nv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueAttributes) InternalRef() terra.Reference {
-	return nv.ref
+func (nv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueAttributes) InternalRef() (terra.Reference, error) {
+	return nv.ref, nil
 }
 
 func (nv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsPrimitiveTransformationReplaceConfigNewValueAttributes {
 	return FieldTransformationsPrimitiveTransformationReplaceConfigNewValueAttributes{ref: ref}
 }
 
-func (nv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueAttributes) InternalTokens() hclwrite.Tokens {
+func (nv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nv.ref.InternalTokens()
 }
 
 func (nv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueAttributes) BooleanValue() terra.BoolValue {
-	return terra.ReferenceBool(nv.ref.Append("boolean_value"))
+	return terra.ReferenceAsBool(nv.ref.Append("boolean_value"))
 }
 
 func (nv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueAttributes) DayOfWeekValue() terra.StringValue {
-	return terra.ReferenceString(nv.ref.Append("day_of_week_value"))
+	return terra.ReferenceAsString(nv.ref.Append("day_of_week_value"))
 }
 
 func (nv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueAttributes) FloatValue() terra.NumberValue {
-	return terra.ReferenceNumber(nv.ref.Append("float_value"))
+	return terra.ReferenceAsNumber(nv.ref.Append("float_value"))
 }
 
 func (nv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueAttributes) IntegerValue() terra.StringValue {
-	return terra.ReferenceString(nv.ref.Append("integer_value"))
+	return terra.ReferenceAsString(nv.ref.Append("integer_value"))
 }
 
 func (nv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueAttributes) StringValue() terra.StringValue {
-	return terra.ReferenceString(nv.ref.Append("string_value"))
+	return terra.ReferenceAsString(nv.ref.Append("string_value"))
 }
 
 func (nv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueAttributes) TimestampValue() terra.StringValue {
-	return terra.ReferenceString(nv.ref.Append("timestamp_value"))
+	return terra.ReferenceAsString(nv.ref.Append("timestamp_value"))
 }
 
 func (nv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueAttributes) DateValue() terra.ListValue[FieldTransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes] {
-	return terra.ReferenceList[FieldTransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes](nv.ref.Append("date_value"))
+	return terra.ReferenceAsList[FieldTransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes](nv.ref.Append("date_value"))
 }
 
 func (nv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueAttributes) TimeValue() terra.ListValue[FieldTransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes] {
-	return terra.ReferenceList[FieldTransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes](nv.ref.Append("time_value"))
+	return terra.ReferenceAsList[FieldTransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes](nv.ref.Append("time_value"))
 }
 
 type FieldTransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes struct {
 	ref terra.Reference
 }
 
-func (dv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes) InternalRef() terra.Reference {
-	return dv.ref
+func (dv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes) InternalRef() (terra.Reference, error) {
+	return dv.ref, nil
 }
 
 func (dv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes {
 	return FieldTransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes{ref: ref}
 }
 
-func (dv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes) InternalTokens() hclwrite.Tokens {
+func (dv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dv.ref.InternalTokens()
 }
 
 func (dv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes) Day() terra.NumberValue {
-	return terra.ReferenceNumber(dv.ref.Append("day"))
+	return terra.ReferenceAsNumber(dv.ref.Append("day"))
 }
 
 func (dv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes) Month() terra.NumberValue {
-	return terra.ReferenceNumber(dv.ref.Append("month"))
+	return terra.ReferenceAsNumber(dv.ref.Append("month"))
 }
 
 func (dv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueDateValueAttributes) Year() terra.NumberValue {
-	return terra.ReferenceNumber(dv.ref.Append("year"))
+	return terra.ReferenceAsNumber(dv.ref.Append("year"))
 }
 
 type FieldTransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes struct {
 	ref terra.Reference
 }
 
-func (tv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes) InternalRef() terra.Reference {
-	return tv.ref
+func (tv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes) InternalRef() (terra.Reference, error) {
+	return tv.ref, nil
 }
 
 func (tv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes) InternalWithRef(ref terra.Reference) FieldTransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes {
 	return FieldTransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes{ref: ref}
 }
 
-func (tv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes) InternalTokens() hclwrite.Tokens {
+func (tv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tv.ref.InternalTokens()
 }
 
 func (tv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes) Hours() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("hours"))
+	return terra.ReferenceAsNumber(tv.ref.Append("hours"))
 }
 
 func (tv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes) Minutes() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("minutes"))
+	return terra.ReferenceAsNumber(tv.ref.Append("minutes"))
 }
 
 func (tv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes) Nanos() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("nanos"))
+	return terra.ReferenceAsNumber(tv.ref.Append("nanos"))
 }
 
 func (tv FieldTransformationsPrimitiveTransformationReplaceConfigNewValueTimeValueAttributes) Seconds() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("seconds"))
+	return terra.ReferenceAsNumber(tv.ref.Append("seconds"))
 }
 
 type ReplaceDictionaryConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (rdc ReplaceDictionaryConfigAttributes) InternalRef() terra.Reference {
-	return rdc.ref
+func (rdc ReplaceDictionaryConfigAttributes) InternalRef() (terra.Reference, error) {
+	return rdc.ref, nil
 }
 
 func (rdc ReplaceDictionaryConfigAttributes) InternalWithRef(ref terra.Reference) ReplaceDictionaryConfigAttributes {
 	return ReplaceDictionaryConfigAttributes{ref: ref}
 }
 
-func (rdc ReplaceDictionaryConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (rdc ReplaceDictionaryConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rdc.ref.InternalTokens()
 }
 
 func (rdc ReplaceDictionaryConfigAttributes) WordList() terra.ListValue[WordListAttributes] {
-	return terra.ReferenceList[WordListAttributes](rdc.ref.Append("word_list"))
+	return terra.ReferenceAsList[WordListAttributes](rdc.ref.Append("word_list"))
 }
 
 type WordListAttributes struct {
 	ref terra.Reference
 }
 
-func (wl WordListAttributes) InternalRef() terra.Reference {
-	return wl.ref
+func (wl WordListAttributes) InternalRef() (terra.Reference, error) {
+	return wl.ref, nil
 }
 
 func (wl WordListAttributes) InternalWithRef(ref terra.Reference) WordListAttributes {
 	return WordListAttributes{ref: ref}
 }
 
-func (wl WordListAttributes) InternalTokens() hclwrite.Tokens {
+func (wl WordListAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wl.ref.InternalTokens()
 }
 
 func (wl WordListAttributes) Words() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](wl.ref.Append("words"))
+	return terra.ReferenceAsList[terra.StringValue](wl.ref.Append("words"))
 }
 
 type TimePartConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (tpc TimePartConfigAttributes) InternalRef() terra.Reference {
-	return tpc.ref
+func (tpc TimePartConfigAttributes) InternalRef() (terra.Reference, error) {
+	return tpc.ref, nil
 }
 
 func (tpc TimePartConfigAttributes) InternalWithRef(ref terra.Reference) TimePartConfigAttributes {
 	return TimePartConfigAttributes{ref: ref}
 }
 
-func (tpc TimePartConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (tpc TimePartConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tpc.ref.InternalTokens()
 }
 
 func (tpc TimePartConfigAttributes) PartToExtract() terra.StringValue {
-	return terra.ReferenceString(tpc.ref.Append("part_to_extract"))
+	return terra.ReferenceAsString(tpc.ref.Append("part_to_extract"))
 }
 
 type RecordSuppressionsAttributes struct {
 	ref terra.Reference
 }
 
-func (rs RecordSuppressionsAttributes) InternalRef() terra.Reference {
-	return rs.ref
+func (rs RecordSuppressionsAttributes) InternalRef() (terra.Reference, error) {
+	return rs.ref, nil
 }
 
 func (rs RecordSuppressionsAttributes) InternalWithRef(ref terra.Reference) RecordSuppressionsAttributes {
 	return RecordSuppressionsAttributes{ref: ref}
 }
 
-func (rs RecordSuppressionsAttributes) InternalTokens() hclwrite.Tokens {
+func (rs RecordSuppressionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rs.ref.InternalTokens()
 }
 
 func (rs RecordSuppressionsAttributes) Condition() terra.ListValue[RecordSuppressionsConditionAttributes] {
-	return terra.ReferenceList[RecordSuppressionsConditionAttributes](rs.ref.Append("condition"))
+	return terra.ReferenceAsList[RecordSuppressionsConditionAttributes](rs.ref.Append("condition"))
 }
 
 type RecordSuppressionsConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (c RecordSuppressionsConditionAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c RecordSuppressionsConditionAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c RecordSuppressionsConditionAttributes) InternalWithRef(ref terra.Reference) RecordSuppressionsConditionAttributes {
 	return RecordSuppressionsConditionAttributes{ref: ref}
 }
 
-func (c RecordSuppressionsConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (c RecordSuppressionsConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c RecordSuppressionsConditionAttributes) Expressions() terra.ListValue[RecordSuppressionsConditionExpressionsAttributes] {
-	return terra.ReferenceList[RecordSuppressionsConditionExpressionsAttributes](c.ref.Append("expressions"))
+	return terra.ReferenceAsList[RecordSuppressionsConditionExpressionsAttributes](c.ref.Append("expressions"))
 }
 
 type RecordSuppressionsConditionExpressionsAttributes struct {
 	ref terra.Reference
 }
 
-func (e RecordSuppressionsConditionExpressionsAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e RecordSuppressionsConditionExpressionsAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e RecordSuppressionsConditionExpressionsAttributes) InternalWithRef(ref terra.Reference) RecordSuppressionsConditionExpressionsAttributes {
 	return RecordSuppressionsConditionExpressionsAttributes{ref: ref}
 }
 
-func (e RecordSuppressionsConditionExpressionsAttributes) InternalTokens() hclwrite.Tokens {
+func (e RecordSuppressionsConditionExpressionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
 func (e RecordSuppressionsConditionExpressionsAttributes) LogicalOperator() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("logical_operator"))
+	return terra.ReferenceAsString(e.ref.Append("logical_operator"))
 }
 
 func (e RecordSuppressionsConditionExpressionsAttributes) Conditions() terra.ListValue[RecordSuppressionsConditionExpressionsConditionsAttributes] {
-	return terra.ReferenceList[RecordSuppressionsConditionExpressionsConditionsAttributes](e.ref.Append("conditions"))
+	return terra.ReferenceAsList[RecordSuppressionsConditionExpressionsConditionsAttributes](e.ref.Append("conditions"))
 }
 
 type RecordSuppressionsConditionExpressionsConditionsAttributes struct {
 	ref terra.Reference
 }
 
-func (c RecordSuppressionsConditionExpressionsConditionsAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c RecordSuppressionsConditionExpressionsConditionsAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c RecordSuppressionsConditionExpressionsConditionsAttributes) InternalWithRef(ref terra.Reference) RecordSuppressionsConditionExpressionsConditionsAttributes {
 	return RecordSuppressionsConditionExpressionsConditionsAttributes{ref: ref}
 }
 
-func (c RecordSuppressionsConditionExpressionsConditionsAttributes) InternalTokens() hclwrite.Tokens {
+func (c RecordSuppressionsConditionExpressionsConditionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c RecordSuppressionsConditionExpressionsConditionsAttributes) Conditions() terra.ListValue[RecordSuppressionsConditionExpressionsConditionsConditionsAttributes] {
-	return terra.ReferenceList[RecordSuppressionsConditionExpressionsConditionsConditionsAttributes](c.ref.Append("conditions"))
+	return terra.ReferenceAsList[RecordSuppressionsConditionExpressionsConditionsConditionsAttributes](c.ref.Append("conditions"))
 }
 
 type RecordSuppressionsConditionExpressionsConditionsConditionsAttributes struct {
 	ref terra.Reference
 }
 
-func (c RecordSuppressionsConditionExpressionsConditionsConditionsAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c RecordSuppressionsConditionExpressionsConditionsConditionsAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c RecordSuppressionsConditionExpressionsConditionsConditionsAttributes) InternalWithRef(ref terra.Reference) RecordSuppressionsConditionExpressionsConditionsConditionsAttributes {
 	return RecordSuppressionsConditionExpressionsConditionsConditionsAttributes{ref: ref}
 }
 
-func (c RecordSuppressionsConditionExpressionsConditionsConditionsAttributes) InternalTokens() hclwrite.Tokens {
+func (c RecordSuppressionsConditionExpressionsConditionsConditionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c RecordSuppressionsConditionExpressionsConditionsConditionsAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("operator"))
+	return terra.ReferenceAsString(c.ref.Append("operator"))
 }
 
 func (c RecordSuppressionsConditionExpressionsConditionsConditionsAttributes) Field() terra.ListValue[RecordSuppressionsConditionExpressionsConditionsConditionsFieldAttributes] {
-	return terra.ReferenceList[RecordSuppressionsConditionExpressionsConditionsConditionsFieldAttributes](c.ref.Append("field"))
+	return terra.ReferenceAsList[RecordSuppressionsConditionExpressionsConditionsConditionsFieldAttributes](c.ref.Append("field"))
 }
 
 func (c RecordSuppressionsConditionExpressionsConditionsConditionsAttributes) Value() terra.ListValue[RecordSuppressionsConditionExpressionsConditionsConditionsValueAttributes] {
-	return terra.ReferenceList[RecordSuppressionsConditionExpressionsConditionsConditionsValueAttributes](c.ref.Append("value"))
+	return terra.ReferenceAsList[RecordSuppressionsConditionExpressionsConditionsConditionsValueAttributes](c.ref.Append("value"))
 }
 
 type RecordSuppressionsConditionExpressionsConditionsConditionsFieldAttributes struct {
 	ref terra.Reference
 }
 
-func (f RecordSuppressionsConditionExpressionsConditionsConditionsFieldAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f RecordSuppressionsConditionExpressionsConditionsConditionsFieldAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f RecordSuppressionsConditionExpressionsConditionsConditionsFieldAttributes) InternalWithRef(ref terra.Reference) RecordSuppressionsConditionExpressionsConditionsConditionsFieldAttributes {
 	return RecordSuppressionsConditionExpressionsConditionsConditionsFieldAttributes{ref: ref}
 }
 
-func (f RecordSuppressionsConditionExpressionsConditionsConditionsFieldAttributes) InternalTokens() hclwrite.Tokens {
+func (f RecordSuppressionsConditionExpressionsConditionsConditionsFieldAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
 func (f RecordSuppressionsConditionExpressionsConditionsConditionsFieldAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("name"))
+	return terra.ReferenceAsString(f.ref.Append("name"))
 }
 
 type RecordSuppressionsConditionExpressionsConditionsConditionsValueAttributes struct {
 	ref terra.Reference
 }
 
-func (v RecordSuppressionsConditionExpressionsConditionsConditionsValueAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v RecordSuppressionsConditionExpressionsConditionsConditionsValueAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v RecordSuppressionsConditionExpressionsConditionsConditionsValueAttributes) InternalWithRef(ref terra.Reference) RecordSuppressionsConditionExpressionsConditionsConditionsValueAttributes {
 	return RecordSuppressionsConditionExpressionsConditionsConditionsValueAttributes{ref: ref}
 }
 
-func (v RecordSuppressionsConditionExpressionsConditionsConditionsValueAttributes) InternalTokens() hclwrite.Tokens {
+func (v RecordSuppressionsConditionExpressionsConditionsConditionsValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 
 func (v RecordSuppressionsConditionExpressionsConditionsConditionsValueAttributes) BooleanValue() terra.BoolValue {
-	return terra.ReferenceBool(v.ref.Append("boolean_value"))
+	return terra.ReferenceAsBool(v.ref.Append("boolean_value"))
 }
 
 func (v RecordSuppressionsConditionExpressionsConditionsConditionsValueAttributes) DayOfWeekValue() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("day_of_week_value"))
+	return terra.ReferenceAsString(v.ref.Append("day_of_week_value"))
 }
 
 func (v RecordSuppressionsConditionExpressionsConditionsConditionsValueAttributes) FloatValue() terra.NumberValue {
-	return terra.ReferenceNumber(v.ref.Append("float_value"))
+	return terra.ReferenceAsNumber(v.ref.Append("float_value"))
 }
 
 func (v RecordSuppressionsConditionExpressionsConditionsConditionsValueAttributes) IntegerValue() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("integer_value"))
+	return terra.ReferenceAsString(v.ref.Append("integer_value"))
 }
 
 func (v RecordSuppressionsConditionExpressionsConditionsConditionsValueAttributes) StringValue() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("string_value"))
+	return terra.ReferenceAsString(v.ref.Append("string_value"))
 }
 
 func (v RecordSuppressionsConditionExpressionsConditionsConditionsValueAttributes) TimestampValue() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("timestamp_value"))
+	return terra.ReferenceAsString(v.ref.Append("timestamp_value"))
 }
 
 func (v RecordSuppressionsConditionExpressionsConditionsConditionsValueAttributes) DateValue() terra.ListValue[RecordSuppressionsConditionExpressionsConditionsConditionsValueDateValueAttributes] {
-	return terra.ReferenceList[RecordSuppressionsConditionExpressionsConditionsConditionsValueDateValueAttributes](v.ref.Append("date_value"))
+	return terra.ReferenceAsList[RecordSuppressionsConditionExpressionsConditionsConditionsValueDateValueAttributes](v.ref.Append("date_value"))
 }
 
 func (v RecordSuppressionsConditionExpressionsConditionsConditionsValueAttributes) TimeValue() terra.ListValue[RecordSuppressionsConditionExpressionsConditionsConditionsValueTimeValueAttributes] {
-	return terra.ReferenceList[RecordSuppressionsConditionExpressionsConditionsConditionsValueTimeValueAttributes](v.ref.Append("time_value"))
+	return terra.ReferenceAsList[RecordSuppressionsConditionExpressionsConditionsConditionsValueTimeValueAttributes](v.ref.Append("time_value"))
 }
 
 type RecordSuppressionsConditionExpressionsConditionsConditionsValueDateValueAttributes struct {
 	ref terra.Reference
 }
 
-func (dv RecordSuppressionsConditionExpressionsConditionsConditionsValueDateValueAttributes) InternalRef() terra.Reference {
-	return dv.ref
+func (dv RecordSuppressionsConditionExpressionsConditionsConditionsValueDateValueAttributes) InternalRef() (terra.Reference, error) {
+	return dv.ref, nil
 }
 
 func (dv RecordSuppressionsConditionExpressionsConditionsConditionsValueDateValueAttributes) InternalWithRef(ref terra.Reference) RecordSuppressionsConditionExpressionsConditionsConditionsValueDateValueAttributes {
 	return RecordSuppressionsConditionExpressionsConditionsConditionsValueDateValueAttributes{ref: ref}
 }
 
-func (dv RecordSuppressionsConditionExpressionsConditionsConditionsValueDateValueAttributes) InternalTokens() hclwrite.Tokens {
+func (dv RecordSuppressionsConditionExpressionsConditionsConditionsValueDateValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dv.ref.InternalTokens()
 }
 
 func (dv RecordSuppressionsConditionExpressionsConditionsConditionsValueDateValueAttributes) Day() terra.NumberValue {
-	return terra.ReferenceNumber(dv.ref.Append("day"))
+	return terra.ReferenceAsNumber(dv.ref.Append("day"))
 }
 
 func (dv RecordSuppressionsConditionExpressionsConditionsConditionsValueDateValueAttributes) Month() terra.NumberValue {
-	return terra.ReferenceNumber(dv.ref.Append("month"))
+	return terra.ReferenceAsNumber(dv.ref.Append("month"))
 }
 
 func (dv RecordSuppressionsConditionExpressionsConditionsConditionsValueDateValueAttributes) Year() terra.NumberValue {
-	return terra.ReferenceNumber(dv.ref.Append("year"))
+	return terra.ReferenceAsNumber(dv.ref.Append("year"))
 }
 
 type RecordSuppressionsConditionExpressionsConditionsConditionsValueTimeValueAttributes struct {
 	ref terra.Reference
 }
 
-func (tv RecordSuppressionsConditionExpressionsConditionsConditionsValueTimeValueAttributes) InternalRef() terra.Reference {
-	return tv.ref
+func (tv RecordSuppressionsConditionExpressionsConditionsConditionsValueTimeValueAttributes) InternalRef() (terra.Reference, error) {
+	return tv.ref, nil
 }
 
 func (tv RecordSuppressionsConditionExpressionsConditionsConditionsValueTimeValueAttributes) InternalWithRef(ref terra.Reference) RecordSuppressionsConditionExpressionsConditionsConditionsValueTimeValueAttributes {
 	return RecordSuppressionsConditionExpressionsConditionsConditionsValueTimeValueAttributes{ref: ref}
 }
 
-func (tv RecordSuppressionsConditionExpressionsConditionsConditionsValueTimeValueAttributes) InternalTokens() hclwrite.Tokens {
+func (tv RecordSuppressionsConditionExpressionsConditionsConditionsValueTimeValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tv.ref.InternalTokens()
 }
 
 func (tv RecordSuppressionsConditionExpressionsConditionsConditionsValueTimeValueAttributes) Hours() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("hours"))
+	return terra.ReferenceAsNumber(tv.ref.Append("hours"))
 }
 
 func (tv RecordSuppressionsConditionExpressionsConditionsConditionsValueTimeValueAttributes) Minutes() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("minutes"))
+	return terra.ReferenceAsNumber(tv.ref.Append("minutes"))
 }
 
 func (tv RecordSuppressionsConditionExpressionsConditionsConditionsValueTimeValueAttributes) Nanos() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("nanos"))
+	return terra.ReferenceAsNumber(tv.ref.Append("nanos"))
 }
 
 func (tv RecordSuppressionsConditionExpressionsConditionsConditionsValueTimeValueAttributes) Seconds() terra.NumberValue {
-	return terra.ReferenceNumber(tv.ref.Append("seconds"))
+	return terra.ReferenceAsNumber(tv.ref.Append("seconds"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type DeidentifyConfigState struct {

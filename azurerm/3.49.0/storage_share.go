@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewStorageShare creates a new instance of [StorageShare].
 func NewStorageShare(name string, args StorageShareArgs) *StorageShare {
 	return &StorageShare{
 		Args: args,
@@ -19,28 +20,51 @@ func NewStorageShare(name string, args StorageShareArgs) *StorageShare {
 
 var _ terra.Resource = (*StorageShare)(nil)
 
+// StorageShare represents the Terraform resource azurerm_storage_share.
 type StorageShare struct {
-	Name  string
-	Args  StorageShareArgs
-	state *storageShareState
+	Name      string
+	Args      StorageShareArgs
+	state     *storageShareState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [StorageShare].
 func (ss *StorageShare) Type() string {
 	return "azurerm_storage_share"
 }
 
+// LocalName returns the local name for [StorageShare].
 func (ss *StorageShare) LocalName() string {
 	return ss.Name
 }
 
+// Configuration returns the configuration (args) for [StorageShare].
 func (ss *StorageShare) Configuration() interface{} {
 	return ss.Args
 }
 
+// DependOn is used for other resources to depend on [StorageShare].
+func (ss *StorageShare) DependOn() terra.Reference {
+	return terra.ReferenceResource(ss)
+}
+
+// Dependencies returns the list of resources [StorageShare] depends_on.
+func (ss *StorageShare) Dependencies() terra.Dependencies {
+	return ss.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [StorageShare].
+func (ss *StorageShare) LifecycleManagement() *terra.Lifecycle {
+	return ss.Lifecycle
+}
+
+// Attributes returns the attributes for [StorageShare].
 func (ss *StorageShare) Attributes() storageShareAttributes {
 	return storageShareAttributes{ref: terra.ReferenceResource(ss)}
 }
 
+// ImportState imports the given attribute values into [StorageShare]'s state.
 func (ss *StorageShare) ImportState(av io.Reader) error {
 	ss.state = &storageShareState{}
 	if err := json.NewDecoder(av).Decode(ss.state); err != nil {
@@ -49,10 +73,12 @@ func (ss *StorageShare) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [StorageShare] has state.
 func (ss *StorageShare) State() (*storageShareState, bool) {
 	return ss.state, ss.state != nil
 }
 
+// StateMust returns the state for [StorageShare]. Panics if the state is nil.
 func (ss *StorageShare) StateMust() *storageShareState {
 	if ss.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ss.Type(), ss.LocalName()))
@@ -60,10 +86,7 @@ func (ss *StorageShare) StateMust() *storageShareState {
 	return ss.state
 }
 
-func (ss *StorageShare) DependOn() terra.Reference {
-	return terra.ReferenceResource(ss)
-}
-
+// StorageShareArgs contains the configurations for azurerm_storage_share.
 type StorageShareArgs struct {
 	// AccessTier: string, optional
 	AccessTier terra.StringValue `hcl:"access_tier,attr"`
@@ -83,55 +106,62 @@ type StorageShareArgs struct {
 	Acl []storageshare.Acl `hcl:"acl,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *storageshare.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that StorageShare depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type storageShareAttributes struct {
 	ref terra.Reference
 }
 
+// AccessTier returns a reference to field access_tier of azurerm_storage_share.
 func (ss storageShareAttributes) AccessTier() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("access_tier"))
+	return terra.ReferenceAsString(ss.ref.Append("access_tier"))
 }
 
+// EnabledProtocol returns a reference to field enabled_protocol of azurerm_storage_share.
 func (ss storageShareAttributes) EnabledProtocol() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("enabled_protocol"))
+	return terra.ReferenceAsString(ss.ref.Append("enabled_protocol"))
 }
 
+// Id returns a reference to field id of azurerm_storage_share.
 func (ss storageShareAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("id"))
+	return terra.ReferenceAsString(ss.ref.Append("id"))
 }
 
+// Metadata returns a reference to field metadata of azurerm_storage_share.
 func (ss storageShareAttributes) Metadata() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ss.ref.Append("metadata"))
+	return terra.ReferenceAsMap[terra.StringValue](ss.ref.Append("metadata"))
 }
 
+// Name returns a reference to field name of azurerm_storage_share.
 func (ss storageShareAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("name"))
+	return terra.ReferenceAsString(ss.ref.Append("name"))
 }
 
+// Quota returns a reference to field quota of azurerm_storage_share.
 func (ss storageShareAttributes) Quota() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("quota"))
+	return terra.ReferenceAsNumber(ss.ref.Append("quota"))
 }
 
+// ResourceManagerId returns a reference to field resource_manager_id of azurerm_storage_share.
 func (ss storageShareAttributes) ResourceManagerId() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("resource_manager_id"))
+	return terra.ReferenceAsString(ss.ref.Append("resource_manager_id"))
 }
 
+// StorageAccountName returns a reference to field storage_account_name of azurerm_storage_share.
 func (ss storageShareAttributes) StorageAccountName() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("storage_account_name"))
+	return terra.ReferenceAsString(ss.ref.Append("storage_account_name"))
 }
 
+// Url returns a reference to field url of azurerm_storage_share.
 func (ss storageShareAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("url"))
+	return terra.ReferenceAsString(ss.ref.Append("url"))
 }
 
 func (ss storageShareAttributes) Acl() terra.SetValue[storageshare.AclAttributes] {
-	return terra.ReferenceSet[storageshare.AclAttributes](ss.ref.Append("acl"))
+	return terra.ReferenceAsSet[storageshare.AclAttributes](ss.ref.Append("acl"))
 }
 
 func (ss storageShareAttributes) Timeouts() storageshare.TimeoutsAttributes {
-	return terra.ReferenceSingle[storageshare.TimeoutsAttributes](ss.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[storageshare.TimeoutsAttributes](ss.ref.Append("timeouts"))
 }
 
 type storageShareState struct {

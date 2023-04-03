@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAutomationConnectionType creates a new instance of [AutomationConnectionType].
 func NewAutomationConnectionType(name string, args AutomationConnectionTypeArgs) *AutomationConnectionType {
 	return &AutomationConnectionType{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAutomationConnectionType(name string, args AutomationConnectionTypeArgs)
 
 var _ terra.Resource = (*AutomationConnectionType)(nil)
 
+// AutomationConnectionType represents the Terraform resource azurerm_automation_connection_type.
 type AutomationConnectionType struct {
-	Name  string
-	Args  AutomationConnectionTypeArgs
-	state *automationConnectionTypeState
+	Name      string
+	Args      AutomationConnectionTypeArgs
+	state     *automationConnectionTypeState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AutomationConnectionType].
 func (act *AutomationConnectionType) Type() string {
 	return "azurerm_automation_connection_type"
 }
 
+// LocalName returns the local name for [AutomationConnectionType].
 func (act *AutomationConnectionType) LocalName() string {
 	return act.Name
 }
 
+// Configuration returns the configuration (args) for [AutomationConnectionType].
 func (act *AutomationConnectionType) Configuration() interface{} {
 	return act.Args
 }
 
+// DependOn is used for other resources to depend on [AutomationConnectionType].
+func (act *AutomationConnectionType) DependOn() terra.Reference {
+	return terra.ReferenceResource(act)
+}
+
+// Dependencies returns the list of resources [AutomationConnectionType] depends_on.
+func (act *AutomationConnectionType) Dependencies() terra.Dependencies {
+	return act.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AutomationConnectionType].
+func (act *AutomationConnectionType) LifecycleManagement() *terra.Lifecycle {
+	return act.Lifecycle
+}
+
+// Attributes returns the attributes for [AutomationConnectionType].
 func (act *AutomationConnectionType) Attributes() automationConnectionTypeAttributes {
 	return automationConnectionTypeAttributes{ref: terra.ReferenceResource(act)}
 }
 
+// ImportState imports the given attribute values into [AutomationConnectionType]'s state.
 func (act *AutomationConnectionType) ImportState(av io.Reader) error {
 	act.state = &automationConnectionTypeState{}
 	if err := json.NewDecoder(av).Decode(act.state); err != nil {
@@ -49,10 +73,12 @@ func (act *AutomationConnectionType) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AutomationConnectionType] has state.
 func (act *AutomationConnectionType) State() (*automationConnectionTypeState, bool) {
 	return act.state, act.state != nil
 }
 
+// StateMust returns the state for [AutomationConnectionType]. Panics if the state is nil.
 func (act *AutomationConnectionType) StateMust() *automationConnectionTypeState {
 	if act.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", act.Type(), act.LocalName()))
@@ -60,10 +86,7 @@ func (act *AutomationConnectionType) StateMust() *automationConnectionTypeState 
 	return act.state
 }
 
-func (act *AutomationConnectionType) DependOn() terra.Reference {
-	return terra.ReferenceResource(act)
-}
-
+// AutomationConnectionTypeArgs contains the configurations for azurerm_automation_connection_type.
 type AutomationConnectionTypeArgs struct {
 	// AutomationAccountName: string, required
 	AutomationAccountName terra.StringValue `hcl:"automation_account_name,attr" validate:"required"`
@@ -79,39 +102,42 @@ type AutomationConnectionTypeArgs struct {
 	Field []automationconnectiontype.Field `hcl:"field,block" validate:"min=1"`
 	// Timeouts: optional
 	Timeouts *automationconnectiontype.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that AutomationConnectionType depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type automationConnectionTypeAttributes struct {
 	ref terra.Reference
 }
 
+// AutomationAccountName returns a reference to field automation_account_name of azurerm_automation_connection_type.
 func (act automationConnectionTypeAttributes) AutomationAccountName() terra.StringValue {
-	return terra.ReferenceString(act.ref.Append("automation_account_name"))
+	return terra.ReferenceAsString(act.ref.Append("automation_account_name"))
 }
 
+// Id returns a reference to field id of azurerm_automation_connection_type.
 func (act automationConnectionTypeAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(act.ref.Append("id"))
+	return terra.ReferenceAsString(act.ref.Append("id"))
 }
 
+// IsGlobal returns a reference to field is_global of azurerm_automation_connection_type.
 func (act automationConnectionTypeAttributes) IsGlobal() terra.BoolValue {
-	return terra.ReferenceBool(act.ref.Append("is_global"))
+	return terra.ReferenceAsBool(act.ref.Append("is_global"))
 }
 
+// Name returns a reference to field name of azurerm_automation_connection_type.
 func (act automationConnectionTypeAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(act.ref.Append("name"))
+	return terra.ReferenceAsString(act.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_automation_connection_type.
 func (act automationConnectionTypeAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(act.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(act.ref.Append("resource_group_name"))
 }
 
 func (act automationConnectionTypeAttributes) Field() terra.ListValue[automationconnectiontype.FieldAttributes] {
-	return terra.ReferenceList[automationconnectiontype.FieldAttributes](act.ref.Append("field"))
+	return terra.ReferenceAsList[automationconnectiontype.FieldAttributes](act.ref.Append("field"))
 }
 
 func (act automationConnectionTypeAttributes) Timeouts() automationconnectiontype.TimeoutsAttributes {
-	return terra.ReferenceSingle[automationconnectiontype.TimeoutsAttributes](act.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[automationconnectiontype.TimeoutsAttributes](act.ref.Append("timeouts"))
 }
 
 type automationConnectionTypeState struct {

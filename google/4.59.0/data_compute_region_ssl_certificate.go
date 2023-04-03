@@ -4,6 +4,7 @@ package google
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataComputeRegionSslCertificate creates a new instance of [DataComputeRegionSslCertificate].
 func NewDataComputeRegionSslCertificate(name string, args DataComputeRegionSslCertificateArgs) *DataComputeRegionSslCertificate {
 	return &DataComputeRegionSslCertificate{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataComputeRegionSslCertificate(name string, args DataComputeRegionSslCe
 
 var _ terra.DataResource = (*DataComputeRegionSslCertificate)(nil)
 
+// DataComputeRegionSslCertificate represents the Terraform data resource google_compute_region_ssl_certificate.
 type DataComputeRegionSslCertificate struct {
 	Name string
 	Args DataComputeRegionSslCertificateArgs
 }
 
+// DataSource returns the Terraform object type for [DataComputeRegionSslCertificate].
 func (crsc *DataComputeRegionSslCertificate) DataSource() string {
 	return "google_compute_region_ssl_certificate"
 }
 
+// LocalName returns the local name for [DataComputeRegionSslCertificate].
 func (crsc *DataComputeRegionSslCertificate) LocalName() string {
 	return crsc.Name
 }
 
+// Configuration returns the configuration (args) for [DataComputeRegionSslCertificate].
 func (crsc *DataComputeRegionSslCertificate) Configuration() interface{} {
 	return crsc.Args
 }
 
+// Attributes returns the attributes for [DataComputeRegionSslCertificate].
 func (crsc *DataComputeRegionSslCertificate) Attributes() dataComputeRegionSslCertificateAttributes {
 	return dataComputeRegionSslCertificateAttributes{ref: terra.ReferenceDataResource(crsc)}
 }
 
+// DataComputeRegionSslCertificateArgs contains the configurations for google_compute_region_ssl_certificate.
 type DataComputeRegionSslCertificateArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -48,50 +55,62 @@ type dataComputeRegionSslCertificateAttributes struct {
 	ref terra.Reference
 }
 
+// Certificate returns a reference to field certificate of google_compute_region_ssl_certificate.
 func (crsc dataComputeRegionSslCertificateAttributes) Certificate() terra.StringValue {
-	return terra.ReferenceString(crsc.ref.Append("certificate"))
+	return terra.ReferenceAsString(crsc.ref.Append("certificate"))
 }
 
+// CertificateId returns a reference to field certificate_id of google_compute_region_ssl_certificate.
 func (crsc dataComputeRegionSslCertificateAttributes) CertificateId() terra.NumberValue {
-	return terra.ReferenceNumber(crsc.ref.Append("certificate_id"))
+	return terra.ReferenceAsNumber(crsc.ref.Append("certificate_id"))
 }
 
+// CreationTimestamp returns a reference to field creation_timestamp of google_compute_region_ssl_certificate.
 func (crsc dataComputeRegionSslCertificateAttributes) CreationTimestamp() terra.StringValue {
-	return terra.ReferenceString(crsc.ref.Append("creation_timestamp"))
+	return terra.ReferenceAsString(crsc.ref.Append("creation_timestamp"))
 }
 
+// Description returns a reference to field description of google_compute_region_ssl_certificate.
 func (crsc dataComputeRegionSslCertificateAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(crsc.ref.Append("description"))
+	return terra.ReferenceAsString(crsc.ref.Append("description"))
 }
 
+// ExpireTime returns a reference to field expire_time of google_compute_region_ssl_certificate.
 func (crsc dataComputeRegionSslCertificateAttributes) ExpireTime() terra.StringValue {
-	return terra.ReferenceString(crsc.ref.Append("expire_time"))
+	return terra.ReferenceAsString(crsc.ref.Append("expire_time"))
 }
 
+// Id returns a reference to field id of google_compute_region_ssl_certificate.
 func (crsc dataComputeRegionSslCertificateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(crsc.ref.Append("id"))
+	return terra.ReferenceAsString(crsc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_compute_region_ssl_certificate.
 func (crsc dataComputeRegionSslCertificateAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(crsc.ref.Append("name"))
+	return terra.ReferenceAsString(crsc.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of google_compute_region_ssl_certificate.
 func (crsc dataComputeRegionSslCertificateAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(crsc.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(crsc.ref.Append("name_prefix"))
 }
 
+// PrivateKey returns a reference to field private_key of google_compute_region_ssl_certificate.
 func (crsc dataComputeRegionSslCertificateAttributes) PrivateKey() terra.StringValue {
-	return terra.ReferenceString(crsc.ref.Append("private_key"))
+	return terra.ReferenceAsString(crsc.ref.Append("private_key"))
 }
 
+// Project returns a reference to field project of google_compute_region_ssl_certificate.
 func (crsc dataComputeRegionSslCertificateAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(crsc.ref.Append("project"))
+	return terra.ReferenceAsString(crsc.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_compute_region_ssl_certificate.
 func (crsc dataComputeRegionSslCertificateAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(crsc.ref.Append("region"))
+	return terra.ReferenceAsString(crsc.ref.Append("region"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_region_ssl_certificate.
 func (crsc dataComputeRegionSslCertificateAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(crsc.ref.Append("self_link"))
+	return terra.ReferenceAsString(crsc.ref.Append("self_link"))
 }

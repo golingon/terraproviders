@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMssqlManagedInstanceFailoverGroup creates a new instance of [MssqlManagedInstanceFailoverGroup].
 func NewMssqlManagedInstanceFailoverGroup(name string, args MssqlManagedInstanceFailoverGroupArgs) *MssqlManagedInstanceFailoverGroup {
 	return &MssqlManagedInstanceFailoverGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMssqlManagedInstanceFailoverGroup(name string, args MssqlManagedInstance
 
 var _ terra.Resource = (*MssqlManagedInstanceFailoverGroup)(nil)
 
+// MssqlManagedInstanceFailoverGroup represents the Terraform resource azurerm_mssql_managed_instance_failover_group.
 type MssqlManagedInstanceFailoverGroup struct {
-	Name  string
-	Args  MssqlManagedInstanceFailoverGroupArgs
-	state *mssqlManagedInstanceFailoverGroupState
+	Name      string
+	Args      MssqlManagedInstanceFailoverGroupArgs
+	state     *mssqlManagedInstanceFailoverGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MssqlManagedInstanceFailoverGroup].
 func (mmifg *MssqlManagedInstanceFailoverGroup) Type() string {
 	return "azurerm_mssql_managed_instance_failover_group"
 }
 
+// LocalName returns the local name for [MssqlManagedInstanceFailoverGroup].
 func (mmifg *MssqlManagedInstanceFailoverGroup) LocalName() string {
 	return mmifg.Name
 }
 
+// Configuration returns the configuration (args) for [MssqlManagedInstanceFailoverGroup].
 func (mmifg *MssqlManagedInstanceFailoverGroup) Configuration() interface{} {
 	return mmifg.Args
 }
 
+// DependOn is used for other resources to depend on [MssqlManagedInstanceFailoverGroup].
+func (mmifg *MssqlManagedInstanceFailoverGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(mmifg)
+}
+
+// Dependencies returns the list of resources [MssqlManagedInstanceFailoverGroup] depends_on.
+func (mmifg *MssqlManagedInstanceFailoverGroup) Dependencies() terra.Dependencies {
+	return mmifg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MssqlManagedInstanceFailoverGroup].
+func (mmifg *MssqlManagedInstanceFailoverGroup) LifecycleManagement() *terra.Lifecycle {
+	return mmifg.Lifecycle
+}
+
+// Attributes returns the attributes for [MssqlManagedInstanceFailoverGroup].
 func (mmifg *MssqlManagedInstanceFailoverGroup) Attributes() mssqlManagedInstanceFailoverGroupAttributes {
 	return mssqlManagedInstanceFailoverGroupAttributes{ref: terra.ReferenceResource(mmifg)}
 }
 
+// ImportState imports the given attribute values into [MssqlManagedInstanceFailoverGroup]'s state.
 func (mmifg *MssqlManagedInstanceFailoverGroup) ImportState(av io.Reader) error {
 	mmifg.state = &mssqlManagedInstanceFailoverGroupState{}
 	if err := json.NewDecoder(av).Decode(mmifg.state); err != nil {
@@ -49,10 +73,12 @@ func (mmifg *MssqlManagedInstanceFailoverGroup) ImportState(av io.Reader) error 
 	return nil
 }
 
+// State returns the state and a bool indicating if [MssqlManagedInstanceFailoverGroup] has state.
 func (mmifg *MssqlManagedInstanceFailoverGroup) State() (*mssqlManagedInstanceFailoverGroupState, bool) {
 	return mmifg.state, mmifg.state != nil
 }
 
+// StateMust returns the state for [MssqlManagedInstanceFailoverGroup]. Panics if the state is nil.
 func (mmifg *MssqlManagedInstanceFailoverGroup) StateMust() *mssqlManagedInstanceFailoverGroupState {
 	if mmifg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mmifg.Type(), mmifg.LocalName()))
@@ -60,10 +86,7 @@ func (mmifg *MssqlManagedInstanceFailoverGroup) StateMust() *mssqlManagedInstanc
 	return mmifg.state
 }
 
-func (mmifg *MssqlManagedInstanceFailoverGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(mmifg)
-}
-
+// MssqlManagedInstanceFailoverGroupArgs contains the configurations for azurerm_mssql_managed_instance_failover_group.
 type MssqlManagedInstanceFailoverGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -83,51 +106,56 @@ type MssqlManagedInstanceFailoverGroupArgs struct {
 	ReadWriteEndpointFailoverPolicy *mssqlmanagedinstancefailovergroup.ReadWriteEndpointFailoverPolicy `hcl:"read_write_endpoint_failover_policy,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *mssqlmanagedinstancefailovergroup.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MssqlManagedInstanceFailoverGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mssqlManagedInstanceFailoverGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_mssql_managed_instance_failover_group.
 func (mmifg mssqlManagedInstanceFailoverGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mmifg.ref.Append("id"))
+	return terra.ReferenceAsString(mmifg.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_mssql_managed_instance_failover_group.
 func (mmifg mssqlManagedInstanceFailoverGroupAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(mmifg.ref.Append("location"))
+	return terra.ReferenceAsString(mmifg.ref.Append("location"))
 }
 
+// ManagedInstanceId returns a reference to field managed_instance_id of azurerm_mssql_managed_instance_failover_group.
 func (mmifg mssqlManagedInstanceFailoverGroupAttributes) ManagedInstanceId() terra.StringValue {
-	return terra.ReferenceString(mmifg.ref.Append("managed_instance_id"))
+	return terra.ReferenceAsString(mmifg.ref.Append("managed_instance_id"))
 }
 
+// Name returns a reference to field name of azurerm_mssql_managed_instance_failover_group.
 func (mmifg mssqlManagedInstanceFailoverGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mmifg.ref.Append("name"))
+	return terra.ReferenceAsString(mmifg.ref.Append("name"))
 }
 
+// PartnerManagedInstanceId returns a reference to field partner_managed_instance_id of azurerm_mssql_managed_instance_failover_group.
 func (mmifg mssqlManagedInstanceFailoverGroupAttributes) PartnerManagedInstanceId() terra.StringValue {
-	return terra.ReferenceString(mmifg.ref.Append("partner_managed_instance_id"))
+	return terra.ReferenceAsString(mmifg.ref.Append("partner_managed_instance_id"))
 }
 
+// ReadonlyEndpointFailoverPolicyEnabled returns a reference to field readonly_endpoint_failover_policy_enabled of azurerm_mssql_managed_instance_failover_group.
 func (mmifg mssqlManagedInstanceFailoverGroupAttributes) ReadonlyEndpointFailoverPolicyEnabled() terra.BoolValue {
-	return terra.ReferenceBool(mmifg.ref.Append("readonly_endpoint_failover_policy_enabled"))
+	return terra.ReferenceAsBool(mmifg.ref.Append("readonly_endpoint_failover_policy_enabled"))
 }
 
+// Role returns a reference to field role of azurerm_mssql_managed_instance_failover_group.
 func (mmifg mssqlManagedInstanceFailoverGroupAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(mmifg.ref.Append("role"))
+	return terra.ReferenceAsString(mmifg.ref.Append("role"))
 }
 
 func (mmifg mssqlManagedInstanceFailoverGroupAttributes) PartnerRegion() terra.ListValue[mssqlmanagedinstancefailovergroup.PartnerRegionAttributes] {
-	return terra.ReferenceList[mssqlmanagedinstancefailovergroup.PartnerRegionAttributes](mmifg.ref.Append("partner_region"))
+	return terra.ReferenceAsList[mssqlmanagedinstancefailovergroup.PartnerRegionAttributes](mmifg.ref.Append("partner_region"))
 }
 
 func (mmifg mssqlManagedInstanceFailoverGroupAttributes) ReadWriteEndpointFailoverPolicy() terra.ListValue[mssqlmanagedinstancefailovergroup.ReadWriteEndpointFailoverPolicyAttributes] {
-	return terra.ReferenceList[mssqlmanagedinstancefailovergroup.ReadWriteEndpointFailoverPolicyAttributes](mmifg.ref.Append("read_write_endpoint_failover_policy"))
+	return terra.ReferenceAsList[mssqlmanagedinstancefailovergroup.ReadWriteEndpointFailoverPolicyAttributes](mmifg.ref.Append("read_write_endpoint_failover_policy"))
 }
 
 func (mmifg mssqlManagedInstanceFailoverGroupAttributes) Timeouts() mssqlmanagedinstancefailovergroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[mssqlmanagedinstancefailovergroup.TimeoutsAttributes](mmifg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[mssqlmanagedinstancefailovergroup.TimeoutsAttributes](mmifg.ref.Append("timeouts"))
 }
 
 type mssqlManagedInstanceFailoverGroupState struct {

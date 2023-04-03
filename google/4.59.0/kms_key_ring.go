@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewKmsKeyRing creates a new instance of [KmsKeyRing].
 func NewKmsKeyRing(name string, args KmsKeyRingArgs) *KmsKeyRing {
 	return &KmsKeyRing{
 		Args: args,
@@ -19,28 +20,51 @@ func NewKmsKeyRing(name string, args KmsKeyRingArgs) *KmsKeyRing {
 
 var _ terra.Resource = (*KmsKeyRing)(nil)
 
+// KmsKeyRing represents the Terraform resource google_kms_key_ring.
 type KmsKeyRing struct {
-	Name  string
-	Args  KmsKeyRingArgs
-	state *kmsKeyRingState
+	Name      string
+	Args      KmsKeyRingArgs
+	state     *kmsKeyRingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [KmsKeyRing].
 func (kkr *KmsKeyRing) Type() string {
 	return "google_kms_key_ring"
 }
 
+// LocalName returns the local name for [KmsKeyRing].
 func (kkr *KmsKeyRing) LocalName() string {
 	return kkr.Name
 }
 
+// Configuration returns the configuration (args) for [KmsKeyRing].
 func (kkr *KmsKeyRing) Configuration() interface{} {
 	return kkr.Args
 }
 
+// DependOn is used for other resources to depend on [KmsKeyRing].
+func (kkr *KmsKeyRing) DependOn() terra.Reference {
+	return terra.ReferenceResource(kkr)
+}
+
+// Dependencies returns the list of resources [KmsKeyRing] depends_on.
+func (kkr *KmsKeyRing) Dependencies() terra.Dependencies {
+	return kkr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [KmsKeyRing].
+func (kkr *KmsKeyRing) LifecycleManagement() *terra.Lifecycle {
+	return kkr.Lifecycle
+}
+
+// Attributes returns the attributes for [KmsKeyRing].
 func (kkr *KmsKeyRing) Attributes() kmsKeyRingAttributes {
 	return kmsKeyRingAttributes{ref: terra.ReferenceResource(kkr)}
 }
 
+// ImportState imports the given attribute values into [KmsKeyRing]'s state.
 func (kkr *KmsKeyRing) ImportState(av io.Reader) error {
 	kkr.state = &kmsKeyRingState{}
 	if err := json.NewDecoder(av).Decode(kkr.state); err != nil {
@@ -49,10 +73,12 @@ func (kkr *KmsKeyRing) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [KmsKeyRing] has state.
 func (kkr *KmsKeyRing) State() (*kmsKeyRingState, bool) {
 	return kkr.state, kkr.state != nil
 }
 
+// StateMust returns the state for [KmsKeyRing]. Panics if the state is nil.
 func (kkr *KmsKeyRing) StateMust() *kmsKeyRingState {
 	if kkr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", kkr.Type(), kkr.LocalName()))
@@ -60,10 +86,7 @@ func (kkr *KmsKeyRing) StateMust() *kmsKeyRingState {
 	return kkr.state
 }
 
-func (kkr *KmsKeyRing) DependOn() terra.Reference {
-	return terra.ReferenceResource(kkr)
-}
-
+// KmsKeyRingArgs contains the configurations for google_kms_key_ring.
 type KmsKeyRingArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -75,31 +98,33 @@ type KmsKeyRingArgs struct {
 	Project terra.StringValue `hcl:"project,attr"`
 	// Timeouts: optional
 	Timeouts *kmskeyring.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that KmsKeyRing depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type kmsKeyRingAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of google_kms_key_ring.
 func (kkr kmsKeyRingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kkr.ref.Append("id"))
+	return terra.ReferenceAsString(kkr.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_kms_key_ring.
 func (kkr kmsKeyRingAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(kkr.ref.Append("location"))
+	return terra.ReferenceAsString(kkr.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_kms_key_ring.
 func (kkr kmsKeyRingAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(kkr.ref.Append("name"))
+	return terra.ReferenceAsString(kkr.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_kms_key_ring.
 func (kkr kmsKeyRingAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(kkr.ref.Append("project"))
+	return terra.ReferenceAsString(kkr.ref.Append("project"))
 }
 
 func (kkr kmsKeyRingAttributes) Timeouts() kmskeyring.TimeoutsAttributes {
-	return terra.ReferenceSingle[kmskeyring.TimeoutsAttributes](kkr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[kmskeyring.TimeoutsAttributes](kkr.ref.Append("timeouts"))
 }
 
 type kmsKeyRingState struct {

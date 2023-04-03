@@ -33,7 +33,7 @@ func (sp S3PathAttributes) InternalWithRef(ref terra.Reference) S3PathAttributes
 	return S3PathAttributes{ref: ref}
 }
 
-func (sp S3PathAttributes) InternalTokens() hclwrite.Tokens {
+func (sp S3PathAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sp.ref.InternalTokens()
 }
 
@@ -57,7 +57,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

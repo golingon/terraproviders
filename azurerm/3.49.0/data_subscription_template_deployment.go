@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataSubscriptionTemplateDeployment creates a new instance of [DataSubscriptionTemplateDeployment].
 func NewDataSubscriptionTemplateDeployment(name string, args DataSubscriptionTemplateDeploymentArgs) *DataSubscriptionTemplateDeployment {
 	return &DataSubscriptionTemplateDeployment{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataSubscriptionTemplateDeployment(name string, args DataSubscriptionTem
 
 var _ terra.DataResource = (*DataSubscriptionTemplateDeployment)(nil)
 
+// DataSubscriptionTemplateDeployment represents the Terraform data resource azurerm_subscription_template_deployment.
 type DataSubscriptionTemplateDeployment struct {
 	Name string
 	Args DataSubscriptionTemplateDeploymentArgs
 }
 
+// DataSource returns the Terraform object type for [DataSubscriptionTemplateDeployment].
 func (std *DataSubscriptionTemplateDeployment) DataSource() string {
 	return "azurerm_subscription_template_deployment"
 }
 
+// LocalName returns the local name for [DataSubscriptionTemplateDeployment].
 func (std *DataSubscriptionTemplateDeployment) LocalName() string {
 	return std.Name
 }
 
+// Configuration returns the configuration (args) for [DataSubscriptionTemplateDeployment].
 func (std *DataSubscriptionTemplateDeployment) Configuration() interface{} {
 	return std.Args
 }
 
+// Attributes returns the attributes for [DataSubscriptionTemplateDeployment].
 func (std *DataSubscriptionTemplateDeployment) Attributes() dataSubscriptionTemplateDeploymentAttributes {
 	return dataSubscriptionTemplateDeploymentAttributes{ref: terra.ReferenceDataResource(std)}
 }
 
+// DataSubscriptionTemplateDeploymentArgs contains the configurations for azurerm_subscription_template_deployment.
 type DataSubscriptionTemplateDeploymentArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -49,18 +56,21 @@ type dataSubscriptionTemplateDeploymentAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_subscription_template_deployment.
 func (std dataSubscriptionTemplateDeploymentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(std.ref.Append("id"))
+	return terra.ReferenceAsString(std.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_subscription_template_deployment.
 func (std dataSubscriptionTemplateDeploymentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(std.ref.Append("name"))
+	return terra.ReferenceAsString(std.ref.Append("name"))
 }
 
+// OutputContent returns a reference to field output_content of azurerm_subscription_template_deployment.
 func (std dataSubscriptionTemplateDeploymentAttributes) OutputContent() terra.StringValue {
-	return terra.ReferenceString(std.ref.Append("output_content"))
+	return terra.ReferenceAsString(std.ref.Append("output_content"))
 }
 
 func (std dataSubscriptionTemplateDeploymentAttributes) Timeouts() datasubscriptiontemplatedeployment.TimeoutsAttributes {
-	return terra.ReferenceSingle[datasubscriptiontemplatedeployment.TimeoutsAttributes](std.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datasubscriptiontemplatedeployment.TimeoutsAttributes](std.ref.Append("timeouts"))
 }

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataNetappPool creates a new instance of [DataNetappPool].
 func NewDataNetappPool(name string, args DataNetappPoolArgs) *DataNetappPool {
 	return &DataNetappPool{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataNetappPool(name string, args DataNetappPoolArgs) *DataNetappPool {
 
 var _ terra.DataResource = (*DataNetappPool)(nil)
 
+// DataNetappPool represents the Terraform data resource azurerm_netapp_pool.
 type DataNetappPool struct {
 	Name string
 	Args DataNetappPoolArgs
 }
 
+// DataSource returns the Terraform object type for [DataNetappPool].
 func (np *DataNetappPool) DataSource() string {
 	return "azurerm_netapp_pool"
 }
 
+// LocalName returns the local name for [DataNetappPool].
 func (np *DataNetappPool) LocalName() string {
 	return np.Name
 }
 
+// Configuration returns the configuration (args) for [DataNetappPool].
 func (np *DataNetappPool) Configuration() interface{} {
 	return np.Args
 }
 
+// Attributes returns the attributes for [DataNetappPool].
 func (np *DataNetappPool) Attributes() dataNetappPoolAttributes {
 	return dataNetappPoolAttributes{ref: terra.ReferenceDataResource(np)}
 }
 
+// DataNetappPoolArgs contains the configurations for azurerm_netapp_pool.
 type DataNetappPoolArgs struct {
 	// AccountName: string, required
 	AccountName terra.StringValue `hcl:"account_name,attr" validate:"required"`
@@ -53,34 +60,41 @@ type dataNetappPoolAttributes struct {
 	ref terra.Reference
 }
 
+// AccountName returns a reference to field account_name of azurerm_netapp_pool.
 func (np dataNetappPoolAttributes) AccountName() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("account_name"))
+	return terra.ReferenceAsString(np.ref.Append("account_name"))
 }
 
+// Id returns a reference to field id of azurerm_netapp_pool.
 func (np dataNetappPoolAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("id"))
+	return terra.ReferenceAsString(np.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_netapp_pool.
 func (np dataNetappPoolAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("location"))
+	return terra.ReferenceAsString(np.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_netapp_pool.
 func (np dataNetappPoolAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("name"))
+	return terra.ReferenceAsString(np.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_netapp_pool.
 func (np dataNetappPoolAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(np.ref.Append("resource_group_name"))
 }
 
+// ServiceLevel returns a reference to field service_level of azurerm_netapp_pool.
 func (np dataNetappPoolAttributes) ServiceLevel() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("service_level"))
+	return terra.ReferenceAsString(np.ref.Append("service_level"))
 }
 
+// SizeInTb returns a reference to field size_in_tb of azurerm_netapp_pool.
 func (np dataNetappPoolAttributes) SizeInTb() terra.NumberValue {
-	return terra.ReferenceNumber(np.ref.Append("size_in_tb"))
+	return terra.ReferenceAsNumber(np.ref.Append("size_in_tb"))
 }
 
 func (np dataNetappPoolAttributes) Timeouts() datanetapppool.TimeoutsAttributes {
-	return terra.ReferenceSingle[datanetapppool.TimeoutsAttributes](np.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datanetapppool.TimeoutsAttributes](np.ref.Append("timeouts"))
 }

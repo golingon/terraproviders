@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApiManagementProductGroup creates a new instance of [ApiManagementProductGroup].
 func NewApiManagementProductGroup(name string, args ApiManagementProductGroupArgs) *ApiManagementProductGroup {
 	return &ApiManagementProductGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApiManagementProductGroup(name string, args ApiManagementProductGroupArg
 
 var _ terra.Resource = (*ApiManagementProductGroup)(nil)
 
+// ApiManagementProductGroup represents the Terraform resource azurerm_api_management_product_group.
 type ApiManagementProductGroup struct {
-	Name  string
-	Args  ApiManagementProductGroupArgs
-	state *apiManagementProductGroupState
+	Name      string
+	Args      ApiManagementProductGroupArgs
+	state     *apiManagementProductGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiManagementProductGroup].
 func (ampg *ApiManagementProductGroup) Type() string {
 	return "azurerm_api_management_product_group"
 }
 
+// LocalName returns the local name for [ApiManagementProductGroup].
 func (ampg *ApiManagementProductGroup) LocalName() string {
 	return ampg.Name
 }
 
+// Configuration returns the configuration (args) for [ApiManagementProductGroup].
 func (ampg *ApiManagementProductGroup) Configuration() interface{} {
 	return ampg.Args
 }
 
+// DependOn is used for other resources to depend on [ApiManagementProductGroup].
+func (ampg *ApiManagementProductGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(ampg)
+}
+
+// Dependencies returns the list of resources [ApiManagementProductGroup] depends_on.
+func (ampg *ApiManagementProductGroup) Dependencies() terra.Dependencies {
+	return ampg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiManagementProductGroup].
+func (ampg *ApiManagementProductGroup) LifecycleManagement() *terra.Lifecycle {
+	return ampg.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiManagementProductGroup].
 func (ampg *ApiManagementProductGroup) Attributes() apiManagementProductGroupAttributes {
 	return apiManagementProductGroupAttributes{ref: terra.ReferenceResource(ampg)}
 }
 
+// ImportState imports the given attribute values into [ApiManagementProductGroup]'s state.
 func (ampg *ApiManagementProductGroup) ImportState(av io.Reader) error {
 	ampg.state = &apiManagementProductGroupState{}
 	if err := json.NewDecoder(av).Decode(ampg.state); err != nil {
@@ -49,10 +73,12 @@ func (ampg *ApiManagementProductGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiManagementProductGroup] has state.
 func (ampg *ApiManagementProductGroup) State() (*apiManagementProductGroupState, bool) {
 	return ampg.state, ampg.state != nil
 }
 
+// StateMust returns the state for [ApiManagementProductGroup]. Panics if the state is nil.
 func (ampg *ApiManagementProductGroup) StateMust() *apiManagementProductGroupState {
 	if ampg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ampg.Type(), ampg.LocalName()))
@@ -60,10 +86,7 @@ func (ampg *ApiManagementProductGroup) StateMust() *apiManagementProductGroupSta
 	return ampg.state
 }
 
-func (ampg *ApiManagementProductGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(ampg)
-}
-
+// ApiManagementProductGroupArgs contains the configurations for azurerm_api_management_product_group.
 type ApiManagementProductGroupArgs struct {
 	// ApiManagementName: string, required
 	ApiManagementName terra.StringValue `hcl:"api_management_name,attr" validate:"required"`
@@ -77,35 +100,38 @@ type ApiManagementProductGroupArgs struct {
 	ResourceGroupName terra.StringValue `hcl:"resource_group_name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *apimanagementproductgroup.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ApiManagementProductGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiManagementProductGroupAttributes struct {
 	ref terra.Reference
 }
 
+// ApiManagementName returns a reference to field api_management_name of azurerm_api_management_product_group.
 func (ampg apiManagementProductGroupAttributes) ApiManagementName() terra.StringValue {
-	return terra.ReferenceString(ampg.ref.Append("api_management_name"))
+	return terra.ReferenceAsString(ampg.ref.Append("api_management_name"))
 }
 
+// GroupName returns a reference to field group_name of azurerm_api_management_product_group.
 func (ampg apiManagementProductGroupAttributes) GroupName() terra.StringValue {
-	return terra.ReferenceString(ampg.ref.Append("group_name"))
+	return terra.ReferenceAsString(ampg.ref.Append("group_name"))
 }
 
+// Id returns a reference to field id of azurerm_api_management_product_group.
 func (ampg apiManagementProductGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ampg.ref.Append("id"))
+	return terra.ReferenceAsString(ampg.ref.Append("id"))
 }
 
+// ProductId returns a reference to field product_id of azurerm_api_management_product_group.
 func (ampg apiManagementProductGroupAttributes) ProductId() terra.StringValue {
-	return terra.ReferenceString(ampg.ref.Append("product_id"))
+	return terra.ReferenceAsString(ampg.ref.Append("product_id"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_api_management_product_group.
 func (ampg apiManagementProductGroupAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ampg.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ampg.ref.Append("resource_group_name"))
 }
 
 func (ampg apiManagementProductGroupAttributes) Timeouts() apimanagementproductgroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[apimanagementproductgroup.TimeoutsAttributes](ampg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[apimanagementproductgroup.TimeoutsAttributes](ampg.ref.Append("timeouts"))
 }
 
 type apiManagementProductGroupState struct {

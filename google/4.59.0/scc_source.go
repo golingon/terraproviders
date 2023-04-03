@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSccSource creates a new instance of [SccSource].
 func NewSccSource(name string, args SccSourceArgs) *SccSource {
 	return &SccSource{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSccSource(name string, args SccSourceArgs) *SccSource {
 
 var _ terra.Resource = (*SccSource)(nil)
 
+// SccSource represents the Terraform resource google_scc_source.
 type SccSource struct {
-	Name  string
-	Args  SccSourceArgs
-	state *sccSourceState
+	Name      string
+	Args      SccSourceArgs
+	state     *sccSourceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SccSource].
 func (ss *SccSource) Type() string {
 	return "google_scc_source"
 }
 
+// LocalName returns the local name for [SccSource].
 func (ss *SccSource) LocalName() string {
 	return ss.Name
 }
 
+// Configuration returns the configuration (args) for [SccSource].
 func (ss *SccSource) Configuration() interface{} {
 	return ss.Args
 }
 
+// DependOn is used for other resources to depend on [SccSource].
+func (ss *SccSource) DependOn() terra.Reference {
+	return terra.ReferenceResource(ss)
+}
+
+// Dependencies returns the list of resources [SccSource] depends_on.
+func (ss *SccSource) Dependencies() terra.Dependencies {
+	return ss.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SccSource].
+func (ss *SccSource) LifecycleManagement() *terra.Lifecycle {
+	return ss.Lifecycle
+}
+
+// Attributes returns the attributes for [SccSource].
 func (ss *SccSource) Attributes() sccSourceAttributes {
 	return sccSourceAttributes{ref: terra.ReferenceResource(ss)}
 }
 
+// ImportState imports the given attribute values into [SccSource]'s state.
 func (ss *SccSource) ImportState(av io.Reader) error {
 	ss.state = &sccSourceState{}
 	if err := json.NewDecoder(av).Decode(ss.state); err != nil {
@@ -49,10 +73,12 @@ func (ss *SccSource) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SccSource] has state.
 func (ss *SccSource) State() (*sccSourceState, bool) {
 	return ss.state, ss.state != nil
 }
 
+// StateMust returns the state for [SccSource]. Panics if the state is nil.
 func (ss *SccSource) StateMust() *sccSourceState {
 	if ss.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ss.Type(), ss.LocalName()))
@@ -60,10 +86,7 @@ func (ss *SccSource) StateMust() *sccSourceState {
 	return ss.state
 }
 
-func (ss *SccSource) DependOn() terra.Reference {
-	return terra.ReferenceResource(ss)
-}
-
+// SccSourceArgs contains the configurations for google_scc_source.
 type SccSourceArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -75,35 +98,38 @@ type SccSourceArgs struct {
 	Organization terra.StringValue `hcl:"organization,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *sccsource.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SccSource depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sccSourceAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of google_scc_source.
 func (ss sccSourceAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("description"))
+	return terra.ReferenceAsString(ss.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of google_scc_source.
 func (ss sccSourceAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("display_name"))
+	return terra.ReferenceAsString(ss.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of google_scc_source.
 func (ss sccSourceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("id"))
+	return terra.ReferenceAsString(ss.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_scc_source.
 func (ss sccSourceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("name"))
+	return terra.ReferenceAsString(ss.ref.Append("name"))
 }
 
+// Organization returns a reference to field organization of google_scc_source.
 func (ss sccSourceAttributes) Organization() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("organization"))
+	return terra.ReferenceAsString(ss.ref.Append("organization"))
 }
 
 func (ss sccSourceAttributes) Timeouts() sccsource.TimeoutsAttributes {
-	return terra.ReferenceSingle[sccsource.TimeoutsAttributes](ss.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[sccsource.TimeoutsAttributes](ss.ref.Append("timeouts"))
 }
 
 type sccSourceState struct {

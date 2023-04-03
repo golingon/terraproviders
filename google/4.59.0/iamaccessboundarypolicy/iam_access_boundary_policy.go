@@ -47,112 +47,112 @@ type RulesAttributes struct {
 	ref terra.Reference
 }
 
-func (r RulesAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RulesAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RulesAttributes) InternalWithRef(ref terra.Reference) RulesAttributes {
 	return RulesAttributes{ref: ref}
 }
 
-func (r RulesAttributes) InternalTokens() hclwrite.Tokens {
+func (r RulesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RulesAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("description"))
+	return terra.ReferenceAsString(r.ref.Append("description"))
 }
 
 func (r RulesAttributes) AccessBoundaryRule() terra.ListValue[AccessBoundaryRuleAttributes] {
-	return terra.ReferenceList[AccessBoundaryRuleAttributes](r.ref.Append("access_boundary_rule"))
+	return terra.ReferenceAsList[AccessBoundaryRuleAttributes](r.ref.Append("access_boundary_rule"))
 }
 
 type AccessBoundaryRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (abr AccessBoundaryRuleAttributes) InternalRef() terra.Reference {
-	return abr.ref
+func (abr AccessBoundaryRuleAttributes) InternalRef() (terra.Reference, error) {
+	return abr.ref, nil
 }
 
 func (abr AccessBoundaryRuleAttributes) InternalWithRef(ref terra.Reference) AccessBoundaryRuleAttributes {
 	return AccessBoundaryRuleAttributes{ref: ref}
 }
 
-func (abr AccessBoundaryRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (abr AccessBoundaryRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return abr.ref.InternalTokens()
 }
 
 func (abr AccessBoundaryRuleAttributes) AvailablePermissions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](abr.ref.Append("available_permissions"))
+	return terra.ReferenceAsList[terra.StringValue](abr.ref.Append("available_permissions"))
 }
 
 func (abr AccessBoundaryRuleAttributes) AvailableResource() terra.StringValue {
-	return terra.ReferenceString(abr.ref.Append("available_resource"))
+	return terra.ReferenceAsString(abr.ref.Append("available_resource"))
 }
 
 func (abr AccessBoundaryRuleAttributes) AvailabilityCondition() terra.ListValue[AvailabilityConditionAttributes] {
-	return terra.ReferenceList[AvailabilityConditionAttributes](abr.ref.Append("availability_condition"))
+	return terra.ReferenceAsList[AvailabilityConditionAttributes](abr.ref.Append("availability_condition"))
 }
 
 type AvailabilityConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (ac AvailabilityConditionAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac AvailabilityConditionAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac AvailabilityConditionAttributes) InternalWithRef(ref terra.Reference) AvailabilityConditionAttributes {
 	return AvailabilityConditionAttributes{ref: ref}
 }
 
-func (ac AvailabilityConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (ac AvailabilityConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
 func (ac AvailabilityConditionAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("description"))
+	return terra.ReferenceAsString(ac.ref.Append("description"))
 }
 
 func (ac AvailabilityConditionAttributes) Expression() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("expression"))
+	return terra.ReferenceAsString(ac.ref.Append("expression"))
 }
 
 func (ac AvailabilityConditionAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("location"))
+	return terra.ReferenceAsString(ac.ref.Append("location"))
 }
 
 func (ac AvailabilityConditionAttributes) Title() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("title"))
+	return terra.ReferenceAsString(ac.ref.Append("title"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type RulesState struct {

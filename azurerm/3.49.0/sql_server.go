@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSqlServer creates a new instance of [SqlServer].
 func NewSqlServer(name string, args SqlServerArgs) *SqlServer {
 	return &SqlServer{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSqlServer(name string, args SqlServerArgs) *SqlServer {
 
 var _ terra.Resource = (*SqlServer)(nil)
 
+// SqlServer represents the Terraform resource azurerm_sql_server.
 type SqlServer struct {
-	Name  string
-	Args  SqlServerArgs
-	state *sqlServerState
+	Name      string
+	Args      SqlServerArgs
+	state     *sqlServerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SqlServer].
 func (ss *SqlServer) Type() string {
 	return "azurerm_sql_server"
 }
 
+// LocalName returns the local name for [SqlServer].
 func (ss *SqlServer) LocalName() string {
 	return ss.Name
 }
 
+// Configuration returns the configuration (args) for [SqlServer].
 func (ss *SqlServer) Configuration() interface{} {
 	return ss.Args
 }
 
+// DependOn is used for other resources to depend on [SqlServer].
+func (ss *SqlServer) DependOn() terra.Reference {
+	return terra.ReferenceResource(ss)
+}
+
+// Dependencies returns the list of resources [SqlServer] depends_on.
+func (ss *SqlServer) Dependencies() terra.Dependencies {
+	return ss.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SqlServer].
+func (ss *SqlServer) LifecycleManagement() *terra.Lifecycle {
+	return ss.Lifecycle
+}
+
+// Attributes returns the attributes for [SqlServer].
 func (ss *SqlServer) Attributes() sqlServerAttributes {
 	return sqlServerAttributes{ref: terra.ReferenceResource(ss)}
 }
 
+// ImportState imports the given attribute values into [SqlServer]'s state.
 func (ss *SqlServer) ImportState(av io.Reader) error {
 	ss.state = &sqlServerState{}
 	if err := json.NewDecoder(av).Decode(ss.state); err != nil {
@@ -49,10 +73,12 @@ func (ss *SqlServer) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SqlServer] has state.
 func (ss *SqlServer) State() (*sqlServerState, bool) {
 	return ss.state, ss.state != nil
 }
 
+// StateMust returns the state for [SqlServer]. Panics if the state is nil.
 func (ss *SqlServer) StateMust() *sqlServerState {
 	if ss.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ss.Type(), ss.LocalName()))
@@ -60,10 +86,7 @@ func (ss *SqlServer) StateMust() *sqlServerState {
 	return ss.state
 }
 
-func (ss *SqlServer) DependOn() terra.Reference {
-	return terra.ReferenceResource(ss)
-}
-
+// SqlServerArgs contains the configurations for azurerm_sql_server.
 type SqlServerArgs struct {
 	// AdministratorLogin: string, required
 	AdministratorLogin terra.StringValue `hcl:"administrator_login,attr" validate:"required"`
@@ -89,63 +112,71 @@ type SqlServerArgs struct {
 	ThreatDetectionPolicy *sqlserver.ThreatDetectionPolicy `hcl:"threat_detection_policy,block"`
 	// Timeouts: optional
 	Timeouts *sqlserver.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SqlServer depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sqlServerAttributes struct {
 	ref terra.Reference
 }
 
+// AdministratorLogin returns a reference to field administrator_login of azurerm_sql_server.
 func (ss sqlServerAttributes) AdministratorLogin() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("administrator_login"))
+	return terra.ReferenceAsString(ss.ref.Append("administrator_login"))
 }
 
+// AdministratorLoginPassword returns a reference to field administrator_login_password of azurerm_sql_server.
 func (ss sqlServerAttributes) AdministratorLoginPassword() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("administrator_login_password"))
+	return terra.ReferenceAsString(ss.ref.Append("administrator_login_password"))
 }
 
+// ConnectionPolicy returns a reference to field connection_policy of azurerm_sql_server.
 func (ss sqlServerAttributes) ConnectionPolicy() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("connection_policy"))
+	return terra.ReferenceAsString(ss.ref.Append("connection_policy"))
 }
 
+// FullyQualifiedDomainName returns a reference to field fully_qualified_domain_name of azurerm_sql_server.
 func (ss sqlServerAttributes) FullyQualifiedDomainName() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("fully_qualified_domain_name"))
+	return terra.ReferenceAsString(ss.ref.Append("fully_qualified_domain_name"))
 }
 
+// Id returns a reference to field id of azurerm_sql_server.
 func (ss sqlServerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("id"))
+	return terra.ReferenceAsString(ss.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_sql_server.
 func (ss sqlServerAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("location"))
+	return terra.ReferenceAsString(ss.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_sql_server.
 func (ss sqlServerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("name"))
+	return terra.ReferenceAsString(ss.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_sql_server.
 func (ss sqlServerAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ss.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_sql_server.
 func (ss sqlServerAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ss.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ss.ref.Append("tags"))
 }
 
+// Version returns a reference to field version of azurerm_sql_server.
 func (ss sqlServerAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("version"))
+	return terra.ReferenceAsString(ss.ref.Append("version"))
 }
 
 func (ss sqlServerAttributes) Identity() terra.ListValue[sqlserver.IdentityAttributes] {
-	return terra.ReferenceList[sqlserver.IdentityAttributes](ss.ref.Append("identity"))
+	return terra.ReferenceAsList[sqlserver.IdentityAttributes](ss.ref.Append("identity"))
 }
 
 func (ss sqlServerAttributes) ThreatDetectionPolicy() terra.ListValue[sqlserver.ThreatDetectionPolicyAttributes] {
-	return terra.ReferenceList[sqlserver.ThreatDetectionPolicyAttributes](ss.ref.Append("threat_detection_policy"))
+	return terra.ReferenceAsList[sqlserver.ThreatDetectionPolicyAttributes](ss.ref.Append("threat_detection_policy"))
 }
 
 func (ss sqlServerAttributes) Timeouts() sqlserver.TimeoutsAttributes {
-	return terra.ReferenceSingle[sqlserver.TimeoutsAttributes](ss.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[sqlserver.TimeoutsAttributes](ss.ref.Append("timeouts"))
 }
 
 type sqlServerState struct {

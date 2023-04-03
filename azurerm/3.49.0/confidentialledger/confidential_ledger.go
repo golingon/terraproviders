@@ -38,84 +38,84 @@ type AzureadBasedServicePrincipalAttributes struct {
 	ref terra.Reference
 }
 
-func (absp AzureadBasedServicePrincipalAttributes) InternalRef() terra.Reference {
-	return absp.ref
+func (absp AzureadBasedServicePrincipalAttributes) InternalRef() (terra.Reference, error) {
+	return absp.ref, nil
 }
 
 func (absp AzureadBasedServicePrincipalAttributes) InternalWithRef(ref terra.Reference) AzureadBasedServicePrincipalAttributes {
 	return AzureadBasedServicePrincipalAttributes{ref: ref}
 }
 
-func (absp AzureadBasedServicePrincipalAttributes) InternalTokens() hclwrite.Tokens {
+func (absp AzureadBasedServicePrincipalAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return absp.ref.InternalTokens()
 }
 
 func (absp AzureadBasedServicePrincipalAttributes) LedgerRoleName() terra.StringValue {
-	return terra.ReferenceString(absp.ref.Append("ledger_role_name"))
+	return terra.ReferenceAsString(absp.ref.Append("ledger_role_name"))
 }
 
 func (absp AzureadBasedServicePrincipalAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(absp.ref.Append("principal_id"))
+	return terra.ReferenceAsString(absp.ref.Append("principal_id"))
 }
 
 func (absp AzureadBasedServicePrincipalAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(absp.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(absp.ref.Append("tenant_id"))
 }
 
 type CertificateBasedSecurityPrincipalAttributes struct {
 	ref terra.Reference
 }
 
-func (cbsp CertificateBasedSecurityPrincipalAttributes) InternalRef() terra.Reference {
-	return cbsp.ref
+func (cbsp CertificateBasedSecurityPrincipalAttributes) InternalRef() (terra.Reference, error) {
+	return cbsp.ref, nil
 }
 
 func (cbsp CertificateBasedSecurityPrincipalAttributes) InternalWithRef(ref terra.Reference) CertificateBasedSecurityPrincipalAttributes {
 	return CertificateBasedSecurityPrincipalAttributes{ref: ref}
 }
 
-func (cbsp CertificateBasedSecurityPrincipalAttributes) InternalTokens() hclwrite.Tokens {
+func (cbsp CertificateBasedSecurityPrincipalAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cbsp.ref.InternalTokens()
 }
 
 func (cbsp CertificateBasedSecurityPrincipalAttributes) LedgerRoleName() terra.StringValue {
-	return terra.ReferenceString(cbsp.ref.Append("ledger_role_name"))
+	return terra.ReferenceAsString(cbsp.ref.Append("ledger_role_name"))
 }
 
 func (cbsp CertificateBasedSecurityPrincipalAttributes) PemPublicKey() terra.StringValue {
-	return terra.ReferenceString(cbsp.ref.Append("pem_public_key"))
+	return terra.ReferenceAsString(cbsp.ref.Append("pem_public_key"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AzureadBasedServicePrincipalState struct {

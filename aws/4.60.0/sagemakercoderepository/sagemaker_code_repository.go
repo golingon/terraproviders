@@ -28,7 +28,7 @@ func (gc GitConfigAttributes) InternalWithRef(ref terra.Reference) GitConfigAttr
 	return GitConfigAttributes{ref: ref}
 }
 
-func (gc GitConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (gc GitConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gc.ref.InternalTokens()
 }
 

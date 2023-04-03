@@ -37,92 +37,92 @@ type AlternativeNameServerConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ansc AlternativeNameServerConfigAttributes) InternalRef() terra.Reference {
-	return ansc.ref
+func (ansc AlternativeNameServerConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ansc.ref, nil
 }
 
 func (ansc AlternativeNameServerConfigAttributes) InternalWithRef(ref terra.Reference) AlternativeNameServerConfigAttributes {
 	return AlternativeNameServerConfigAttributes{ref: ref}
 }
 
-func (ansc AlternativeNameServerConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ansc AlternativeNameServerConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ansc.ref.InternalTokens()
 }
 
 func (ansc AlternativeNameServerConfigAttributes) TargetNameServers() terra.SetValue[TargetNameServersAttributes] {
-	return terra.ReferenceSet[TargetNameServersAttributes](ansc.ref.Append("target_name_servers"))
+	return terra.ReferenceAsSet[TargetNameServersAttributes](ansc.ref.Append("target_name_servers"))
 }
 
 type TargetNameServersAttributes struct {
 	ref terra.Reference
 }
 
-func (tns TargetNameServersAttributes) InternalRef() terra.Reference {
-	return tns.ref
+func (tns TargetNameServersAttributes) InternalRef() (terra.Reference, error) {
+	return tns.ref, nil
 }
 
 func (tns TargetNameServersAttributes) InternalWithRef(ref terra.Reference) TargetNameServersAttributes {
 	return TargetNameServersAttributes{ref: ref}
 }
 
-func (tns TargetNameServersAttributes) InternalTokens() hclwrite.Tokens {
+func (tns TargetNameServersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tns.ref.InternalTokens()
 }
 
 func (tns TargetNameServersAttributes) ForwardingPath() terra.StringValue {
-	return terra.ReferenceString(tns.ref.Append("forwarding_path"))
+	return terra.ReferenceAsString(tns.ref.Append("forwarding_path"))
 }
 
 func (tns TargetNameServersAttributes) Ipv4Address() terra.StringValue {
-	return terra.ReferenceString(tns.ref.Append("ipv4_address"))
+	return terra.ReferenceAsString(tns.ref.Append("ipv4_address"))
 }
 
 type NetworksAttributes struct {
 	ref terra.Reference
 }
 
-func (n NetworksAttributes) InternalRef() terra.Reference {
-	return n.ref
+func (n NetworksAttributes) InternalRef() (terra.Reference, error) {
+	return n.ref, nil
 }
 
 func (n NetworksAttributes) InternalWithRef(ref terra.Reference) NetworksAttributes {
 	return NetworksAttributes{ref: ref}
 }
 
-func (n NetworksAttributes) InternalTokens() hclwrite.Tokens {
+func (n NetworksAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return n.ref.InternalTokens()
 }
 
 func (n NetworksAttributes) NetworkUrl() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("network_url"))
+	return terra.ReferenceAsString(n.ref.Append("network_url"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AlternativeNameServerConfigState struct {

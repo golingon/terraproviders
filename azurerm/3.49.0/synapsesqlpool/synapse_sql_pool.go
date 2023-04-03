@@ -29,56 +29,56 @@ type RestoreAttributes struct {
 	ref terra.Reference
 }
 
-func (r RestoreAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RestoreAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RestoreAttributes) InternalWithRef(ref terra.Reference) RestoreAttributes {
 	return RestoreAttributes{ref: ref}
 }
 
-func (r RestoreAttributes) InternalTokens() hclwrite.Tokens {
+func (r RestoreAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RestoreAttributes) PointInTime() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("point_in_time"))
+	return terra.ReferenceAsString(r.ref.Append("point_in_time"))
 }
 
 func (r RestoreAttributes) SourceDatabaseId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("source_database_id"))
+	return terra.ReferenceAsString(r.ref.Append("source_database_id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type RestoreState struct {

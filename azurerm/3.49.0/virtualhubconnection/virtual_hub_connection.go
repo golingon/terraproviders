@@ -47,112 +47,112 @@ type RoutingAttributes struct {
 	ref terra.Reference
 }
 
-func (r RoutingAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RoutingAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RoutingAttributes) InternalWithRef(ref terra.Reference) RoutingAttributes {
 	return RoutingAttributes{ref: ref}
 }
 
-func (r RoutingAttributes) InternalTokens() hclwrite.Tokens {
+func (r RoutingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RoutingAttributes) AssociatedRouteTableId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("associated_route_table_id"))
+	return terra.ReferenceAsString(r.ref.Append("associated_route_table_id"))
 }
 
 func (r RoutingAttributes) PropagatedRouteTable() terra.ListValue[PropagatedRouteTableAttributes] {
-	return terra.ReferenceList[PropagatedRouteTableAttributes](r.ref.Append("propagated_route_table"))
+	return terra.ReferenceAsList[PropagatedRouteTableAttributes](r.ref.Append("propagated_route_table"))
 }
 
 func (r RoutingAttributes) StaticVnetRoute() terra.ListValue[StaticVnetRouteAttributes] {
-	return terra.ReferenceList[StaticVnetRouteAttributes](r.ref.Append("static_vnet_route"))
+	return terra.ReferenceAsList[StaticVnetRouteAttributes](r.ref.Append("static_vnet_route"))
 }
 
 type PropagatedRouteTableAttributes struct {
 	ref terra.Reference
 }
 
-func (prt PropagatedRouteTableAttributes) InternalRef() terra.Reference {
-	return prt.ref
+func (prt PropagatedRouteTableAttributes) InternalRef() (terra.Reference, error) {
+	return prt.ref, nil
 }
 
 func (prt PropagatedRouteTableAttributes) InternalWithRef(ref terra.Reference) PropagatedRouteTableAttributes {
 	return PropagatedRouteTableAttributes{ref: ref}
 }
 
-func (prt PropagatedRouteTableAttributes) InternalTokens() hclwrite.Tokens {
+func (prt PropagatedRouteTableAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return prt.ref.InternalTokens()
 }
 
 func (prt PropagatedRouteTableAttributes) Labels() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](prt.ref.Append("labels"))
+	return terra.ReferenceAsSet[terra.StringValue](prt.ref.Append("labels"))
 }
 
 func (prt PropagatedRouteTableAttributes) RouteTableIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](prt.ref.Append("route_table_ids"))
+	return terra.ReferenceAsList[terra.StringValue](prt.ref.Append("route_table_ids"))
 }
 
 type StaticVnetRouteAttributes struct {
 	ref terra.Reference
 }
 
-func (svr StaticVnetRouteAttributes) InternalRef() terra.Reference {
-	return svr.ref
+func (svr StaticVnetRouteAttributes) InternalRef() (terra.Reference, error) {
+	return svr.ref, nil
 }
 
 func (svr StaticVnetRouteAttributes) InternalWithRef(ref terra.Reference) StaticVnetRouteAttributes {
 	return StaticVnetRouteAttributes{ref: ref}
 }
 
-func (svr StaticVnetRouteAttributes) InternalTokens() hclwrite.Tokens {
+func (svr StaticVnetRouteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return svr.ref.InternalTokens()
 }
 
 func (svr StaticVnetRouteAttributes) AddressPrefixes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](svr.ref.Append("address_prefixes"))
+	return terra.ReferenceAsSet[terra.StringValue](svr.ref.Append("address_prefixes"))
 }
 
 func (svr StaticVnetRouteAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(svr.ref.Append("name"))
+	return terra.ReferenceAsString(svr.ref.Append("name"))
 }
 
 func (svr StaticVnetRouteAttributes) NextHopIpAddress() terra.StringValue {
-	return terra.ReferenceString(svr.ref.Append("next_hop_ip_address"))
+	return terra.ReferenceAsString(svr.ref.Append("next_hop_ip_address"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type RoutingState struct {

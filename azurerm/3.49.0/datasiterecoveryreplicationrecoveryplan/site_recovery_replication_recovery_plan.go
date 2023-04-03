@@ -27,148 +27,148 @@ type RecoveryGroupAttributes struct {
 	ref terra.Reference
 }
 
-func (rg RecoveryGroupAttributes) InternalRef() terra.Reference {
-	return rg.ref
+func (rg RecoveryGroupAttributes) InternalRef() (terra.Reference, error) {
+	return rg.ref, nil
 }
 
 func (rg RecoveryGroupAttributes) InternalWithRef(ref terra.Reference) RecoveryGroupAttributes {
 	return RecoveryGroupAttributes{ref: ref}
 }
 
-func (rg RecoveryGroupAttributes) InternalTokens() hclwrite.Tokens {
+func (rg RecoveryGroupAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rg.ref.InternalTokens()
 }
 
 func (rg RecoveryGroupAttributes) ReplicatedProtectedItems() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rg.ref.Append("replicated_protected_items"))
+	return terra.ReferenceAsList[terra.StringValue](rg.ref.Append("replicated_protected_items"))
 }
 
 func (rg RecoveryGroupAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(rg.ref.Append("type"))
+	return terra.ReferenceAsString(rg.ref.Append("type"))
 }
 
 func (rg RecoveryGroupAttributes) PostAction() terra.SetValue[terra.ListValue[PostActionAttributes]] {
-	return terra.ReferenceSet[terra.ListValue[PostActionAttributes]](rg.ref.Append("post_action"))
+	return terra.ReferenceAsSet[terra.ListValue[PostActionAttributes]](rg.ref.Append("post_action"))
 }
 
 func (rg RecoveryGroupAttributes) PreAction() terra.SetValue[terra.ListValue[PreActionAttributes]] {
-	return terra.ReferenceSet[terra.ListValue[PreActionAttributes]](rg.ref.Append("pre_action"))
+	return terra.ReferenceAsSet[terra.ListValue[PreActionAttributes]](rg.ref.Append("pre_action"))
 }
 
 type PostActionAttributes struct {
 	ref terra.Reference
 }
 
-func (pa PostActionAttributes) InternalRef() terra.Reference {
-	return pa.ref
+func (pa PostActionAttributes) InternalRef() (terra.Reference, error) {
+	return pa.ref, nil
 }
 
 func (pa PostActionAttributes) InternalWithRef(ref terra.Reference) PostActionAttributes {
 	return PostActionAttributes{ref: ref}
 }
 
-func (pa PostActionAttributes) InternalTokens() hclwrite.Tokens {
+func (pa PostActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pa.ref.InternalTokens()
 }
 
 func (pa PostActionAttributes) FabricLocation() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("fabric_location"))
+	return terra.ReferenceAsString(pa.ref.Append("fabric_location"))
 }
 
 func (pa PostActionAttributes) FailOverDirections() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](pa.ref.Append("fail_over_directions"))
+	return terra.ReferenceAsSet[terra.StringValue](pa.ref.Append("fail_over_directions"))
 }
 
 func (pa PostActionAttributes) FailOverTypes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](pa.ref.Append("fail_over_types"))
+	return terra.ReferenceAsSet[terra.StringValue](pa.ref.Append("fail_over_types"))
 }
 
 func (pa PostActionAttributes) ManualActionInstruction() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("manual_action_instruction"))
+	return terra.ReferenceAsString(pa.ref.Append("manual_action_instruction"))
 }
 
 func (pa PostActionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("name"))
+	return terra.ReferenceAsString(pa.ref.Append("name"))
 }
 
 func (pa PostActionAttributes) RunbookId() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("runbook_id"))
+	return terra.ReferenceAsString(pa.ref.Append("runbook_id"))
 }
 
 func (pa PostActionAttributes) ScriptPath() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("script_path"))
+	return terra.ReferenceAsString(pa.ref.Append("script_path"))
 }
 
 func (pa PostActionAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("type"))
+	return terra.ReferenceAsString(pa.ref.Append("type"))
 }
 
 type PreActionAttributes struct {
 	ref terra.Reference
 }
 
-func (pa PreActionAttributes) InternalRef() terra.Reference {
-	return pa.ref
+func (pa PreActionAttributes) InternalRef() (terra.Reference, error) {
+	return pa.ref, nil
 }
 
 func (pa PreActionAttributes) InternalWithRef(ref terra.Reference) PreActionAttributes {
 	return PreActionAttributes{ref: ref}
 }
 
-func (pa PreActionAttributes) InternalTokens() hclwrite.Tokens {
+func (pa PreActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pa.ref.InternalTokens()
 }
 
 func (pa PreActionAttributes) FabricLocation() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("fabric_location"))
+	return terra.ReferenceAsString(pa.ref.Append("fabric_location"))
 }
 
 func (pa PreActionAttributes) FailOverDirections() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](pa.ref.Append("fail_over_directions"))
+	return terra.ReferenceAsSet[terra.StringValue](pa.ref.Append("fail_over_directions"))
 }
 
 func (pa PreActionAttributes) FailOverTypes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](pa.ref.Append("fail_over_types"))
+	return terra.ReferenceAsSet[terra.StringValue](pa.ref.Append("fail_over_types"))
 }
 
 func (pa PreActionAttributes) ManualActionInstruction() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("manual_action_instruction"))
+	return terra.ReferenceAsString(pa.ref.Append("manual_action_instruction"))
 }
 
 func (pa PreActionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("name"))
+	return terra.ReferenceAsString(pa.ref.Append("name"))
 }
 
 func (pa PreActionAttributes) RunbookId() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("runbook_id"))
+	return terra.ReferenceAsString(pa.ref.Append("runbook_id"))
 }
 
 func (pa PreActionAttributes) ScriptPath() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("script_path"))
+	return terra.ReferenceAsString(pa.ref.Append("script_path"))
 }
 
 func (pa PreActionAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("type"))
+	return terra.ReferenceAsString(pa.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type RecoveryGroupState struct {

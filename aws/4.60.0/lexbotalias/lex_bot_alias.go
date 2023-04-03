@@ -46,7 +46,7 @@ func (cl ConversationLogsAttributes) InternalWithRef(ref terra.Reference) Conver
 	return ConversationLogsAttributes{ref: ref}
 }
 
-func (cl ConversationLogsAttributes) InternalTokens() hclwrite.Tokens {
+func (cl ConversationLogsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cl.ref.InternalTokens()
 }
 
@@ -70,7 +70,7 @@ func (ls LogSettingsAttributes) InternalWithRef(ref terra.Reference) LogSettings
 	return LogSettingsAttributes{ref: ref}
 }
 
-func (ls LogSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ls LogSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ls.ref.InternalTokens()
 }
 
@@ -106,7 +106,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

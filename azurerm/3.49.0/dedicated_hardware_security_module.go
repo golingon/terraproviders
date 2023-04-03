@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDedicatedHardwareSecurityModule creates a new instance of [DedicatedHardwareSecurityModule].
 func NewDedicatedHardwareSecurityModule(name string, args DedicatedHardwareSecurityModuleArgs) *DedicatedHardwareSecurityModule {
 	return &DedicatedHardwareSecurityModule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDedicatedHardwareSecurityModule(name string, args DedicatedHardwareSecur
 
 var _ terra.Resource = (*DedicatedHardwareSecurityModule)(nil)
 
+// DedicatedHardwareSecurityModule represents the Terraform resource azurerm_dedicated_hardware_security_module.
 type DedicatedHardwareSecurityModule struct {
-	Name  string
-	Args  DedicatedHardwareSecurityModuleArgs
-	state *dedicatedHardwareSecurityModuleState
+	Name      string
+	Args      DedicatedHardwareSecurityModuleArgs
+	state     *dedicatedHardwareSecurityModuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DedicatedHardwareSecurityModule].
 func (dhsm *DedicatedHardwareSecurityModule) Type() string {
 	return "azurerm_dedicated_hardware_security_module"
 }
 
+// LocalName returns the local name for [DedicatedHardwareSecurityModule].
 func (dhsm *DedicatedHardwareSecurityModule) LocalName() string {
 	return dhsm.Name
 }
 
+// Configuration returns the configuration (args) for [DedicatedHardwareSecurityModule].
 func (dhsm *DedicatedHardwareSecurityModule) Configuration() interface{} {
 	return dhsm.Args
 }
 
+// DependOn is used for other resources to depend on [DedicatedHardwareSecurityModule].
+func (dhsm *DedicatedHardwareSecurityModule) DependOn() terra.Reference {
+	return terra.ReferenceResource(dhsm)
+}
+
+// Dependencies returns the list of resources [DedicatedHardwareSecurityModule] depends_on.
+func (dhsm *DedicatedHardwareSecurityModule) Dependencies() terra.Dependencies {
+	return dhsm.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DedicatedHardwareSecurityModule].
+func (dhsm *DedicatedHardwareSecurityModule) LifecycleManagement() *terra.Lifecycle {
+	return dhsm.Lifecycle
+}
+
+// Attributes returns the attributes for [DedicatedHardwareSecurityModule].
 func (dhsm *DedicatedHardwareSecurityModule) Attributes() dedicatedHardwareSecurityModuleAttributes {
 	return dedicatedHardwareSecurityModuleAttributes{ref: terra.ReferenceResource(dhsm)}
 }
 
+// ImportState imports the given attribute values into [DedicatedHardwareSecurityModule]'s state.
 func (dhsm *DedicatedHardwareSecurityModule) ImportState(av io.Reader) error {
 	dhsm.state = &dedicatedHardwareSecurityModuleState{}
 	if err := json.NewDecoder(av).Decode(dhsm.state); err != nil {
@@ -49,10 +73,12 @@ func (dhsm *DedicatedHardwareSecurityModule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DedicatedHardwareSecurityModule] has state.
 func (dhsm *DedicatedHardwareSecurityModule) State() (*dedicatedHardwareSecurityModuleState, bool) {
 	return dhsm.state, dhsm.state != nil
 }
 
+// StateMust returns the state for [DedicatedHardwareSecurityModule]. Panics if the state is nil.
 func (dhsm *DedicatedHardwareSecurityModule) StateMust() *dedicatedHardwareSecurityModuleState {
 	if dhsm.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dhsm.Type(), dhsm.LocalName()))
@@ -60,10 +86,7 @@ func (dhsm *DedicatedHardwareSecurityModule) StateMust() *dedicatedHardwareSecur
 	return dhsm.state
 }
 
-func (dhsm *DedicatedHardwareSecurityModule) DependOn() terra.Reference {
-	return terra.ReferenceResource(dhsm)
-}
-
+// DedicatedHardwareSecurityModuleArgs contains the configurations for azurerm_dedicated_hardware_security_module.
 type DedicatedHardwareSecurityModuleArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -87,55 +110,61 @@ type DedicatedHardwareSecurityModuleArgs struct {
 	NetworkProfile *dedicatedhardwaresecuritymodule.NetworkProfile `hcl:"network_profile,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *dedicatedhardwaresecuritymodule.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DedicatedHardwareSecurityModule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dedicatedHardwareSecurityModuleAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_dedicated_hardware_security_module.
 func (dhsm dedicatedHardwareSecurityModuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dhsm.ref.Append("id"))
+	return terra.ReferenceAsString(dhsm.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_dedicated_hardware_security_module.
 func (dhsm dedicatedHardwareSecurityModuleAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(dhsm.ref.Append("location"))
+	return terra.ReferenceAsString(dhsm.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_dedicated_hardware_security_module.
 func (dhsm dedicatedHardwareSecurityModuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dhsm.ref.Append("name"))
+	return terra.ReferenceAsString(dhsm.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_dedicated_hardware_security_module.
 func (dhsm dedicatedHardwareSecurityModuleAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(dhsm.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(dhsm.ref.Append("resource_group_name"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_dedicated_hardware_security_module.
 func (dhsm dedicatedHardwareSecurityModuleAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(dhsm.ref.Append("sku_name"))
+	return terra.ReferenceAsString(dhsm.ref.Append("sku_name"))
 }
 
+// StampId returns a reference to field stamp_id of azurerm_dedicated_hardware_security_module.
 func (dhsm dedicatedHardwareSecurityModuleAttributes) StampId() terra.StringValue {
-	return terra.ReferenceString(dhsm.ref.Append("stamp_id"))
+	return terra.ReferenceAsString(dhsm.ref.Append("stamp_id"))
 }
 
+// Tags returns a reference to field tags of azurerm_dedicated_hardware_security_module.
 func (dhsm dedicatedHardwareSecurityModuleAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dhsm.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dhsm.ref.Append("tags"))
 }
 
+// Zones returns a reference to field zones of azurerm_dedicated_hardware_security_module.
 func (dhsm dedicatedHardwareSecurityModuleAttributes) Zones() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dhsm.ref.Append("zones"))
+	return terra.ReferenceAsSet[terra.StringValue](dhsm.ref.Append("zones"))
 }
 
 func (dhsm dedicatedHardwareSecurityModuleAttributes) ManagementNetworkProfile() terra.ListValue[dedicatedhardwaresecuritymodule.ManagementNetworkProfileAttributes] {
-	return terra.ReferenceList[dedicatedhardwaresecuritymodule.ManagementNetworkProfileAttributes](dhsm.ref.Append("management_network_profile"))
+	return terra.ReferenceAsList[dedicatedhardwaresecuritymodule.ManagementNetworkProfileAttributes](dhsm.ref.Append("management_network_profile"))
 }
 
 func (dhsm dedicatedHardwareSecurityModuleAttributes) NetworkProfile() terra.ListValue[dedicatedhardwaresecuritymodule.NetworkProfileAttributes] {
-	return terra.ReferenceList[dedicatedhardwaresecuritymodule.NetworkProfileAttributes](dhsm.ref.Append("network_profile"))
+	return terra.ReferenceAsList[dedicatedhardwaresecuritymodule.NetworkProfileAttributes](dhsm.ref.Append("network_profile"))
 }
 
 func (dhsm dedicatedHardwareSecurityModuleAttributes) Timeouts() dedicatedhardwaresecuritymodule.TimeoutsAttributes {
-	return terra.ReferenceSingle[dedicatedhardwaresecuritymodule.TimeoutsAttributes](dhsm.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dedicatedhardwaresecuritymodule.TimeoutsAttributes](dhsm.ref.Append("timeouts"))
 }
 
 type dedicatedHardwareSecurityModuleState struct {

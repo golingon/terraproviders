@@ -30,7 +30,7 @@ func (c ConfigAttributes) InternalWithRef(ref terra.Reference) ConfigAttributes 
 	return ConfigAttributes{ref: ref}
 }
 
-func (c ConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -58,7 +58,7 @@ func (et EndTimeAttributes) InternalWithRef(ref terra.Reference) EndTimeAttribut
 	return EndTimeAttributes{ref: ref}
 }
 
-func (et EndTimeAttributes) InternalTokens() hclwrite.Tokens {
+func (et EndTimeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return et.ref.InternalTokens()
 }
 
@@ -82,7 +82,7 @@ func (st StartTimeAttributes) InternalWithRef(ref terra.Reference) StartTimeAttr
 	return StartTimeAttributes{ref: ref}
 }
 
-func (st StartTimeAttributes) InternalTokens() hclwrite.Tokens {
+func (st StartTimeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return st.ref.InternalTokens()
 }
 

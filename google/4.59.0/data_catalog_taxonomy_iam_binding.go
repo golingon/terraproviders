@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataCatalogTaxonomyIamBinding creates a new instance of [DataCatalogTaxonomyIamBinding].
 func NewDataCatalogTaxonomyIamBinding(name string, args DataCatalogTaxonomyIamBindingArgs) *DataCatalogTaxonomyIamBinding {
 	return &DataCatalogTaxonomyIamBinding{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataCatalogTaxonomyIamBinding(name string, args DataCatalogTaxonomyIamBi
 
 var _ terra.Resource = (*DataCatalogTaxonomyIamBinding)(nil)
 
+// DataCatalogTaxonomyIamBinding represents the Terraform resource google_data_catalog_taxonomy_iam_binding.
 type DataCatalogTaxonomyIamBinding struct {
-	Name  string
-	Args  DataCatalogTaxonomyIamBindingArgs
-	state *dataCatalogTaxonomyIamBindingState
+	Name      string
+	Args      DataCatalogTaxonomyIamBindingArgs
+	state     *dataCatalogTaxonomyIamBindingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataCatalogTaxonomyIamBinding].
 func (dctib *DataCatalogTaxonomyIamBinding) Type() string {
 	return "google_data_catalog_taxonomy_iam_binding"
 }
 
+// LocalName returns the local name for [DataCatalogTaxonomyIamBinding].
 func (dctib *DataCatalogTaxonomyIamBinding) LocalName() string {
 	return dctib.Name
 }
 
+// Configuration returns the configuration (args) for [DataCatalogTaxonomyIamBinding].
 func (dctib *DataCatalogTaxonomyIamBinding) Configuration() interface{} {
 	return dctib.Args
 }
 
+// DependOn is used for other resources to depend on [DataCatalogTaxonomyIamBinding].
+func (dctib *DataCatalogTaxonomyIamBinding) DependOn() terra.Reference {
+	return terra.ReferenceResource(dctib)
+}
+
+// Dependencies returns the list of resources [DataCatalogTaxonomyIamBinding] depends_on.
+func (dctib *DataCatalogTaxonomyIamBinding) Dependencies() terra.Dependencies {
+	return dctib.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataCatalogTaxonomyIamBinding].
+func (dctib *DataCatalogTaxonomyIamBinding) LifecycleManagement() *terra.Lifecycle {
+	return dctib.Lifecycle
+}
+
+// Attributes returns the attributes for [DataCatalogTaxonomyIamBinding].
 func (dctib *DataCatalogTaxonomyIamBinding) Attributes() dataCatalogTaxonomyIamBindingAttributes {
 	return dataCatalogTaxonomyIamBindingAttributes{ref: terra.ReferenceResource(dctib)}
 }
 
+// ImportState imports the given attribute values into [DataCatalogTaxonomyIamBinding]'s state.
 func (dctib *DataCatalogTaxonomyIamBinding) ImportState(av io.Reader) error {
 	dctib.state = &dataCatalogTaxonomyIamBindingState{}
 	if err := json.NewDecoder(av).Decode(dctib.state); err != nil {
@@ -49,10 +73,12 @@ func (dctib *DataCatalogTaxonomyIamBinding) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataCatalogTaxonomyIamBinding] has state.
 func (dctib *DataCatalogTaxonomyIamBinding) State() (*dataCatalogTaxonomyIamBindingState, bool) {
 	return dctib.state, dctib.state != nil
 }
 
+// StateMust returns the state for [DataCatalogTaxonomyIamBinding]. Panics if the state is nil.
 func (dctib *DataCatalogTaxonomyIamBinding) StateMust() *dataCatalogTaxonomyIamBindingState {
 	if dctib.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dctib.Type(), dctib.LocalName()))
@@ -60,10 +86,7 @@ func (dctib *DataCatalogTaxonomyIamBinding) StateMust() *dataCatalogTaxonomyIamB
 	return dctib.state
 }
 
-func (dctib *DataCatalogTaxonomyIamBinding) DependOn() terra.Reference {
-	return terra.ReferenceResource(dctib)
-}
-
+// DataCatalogTaxonomyIamBindingArgs contains the configurations for google_data_catalog_taxonomy_iam_binding.
 type DataCatalogTaxonomyIamBindingArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,43 +102,48 @@ type DataCatalogTaxonomyIamBindingArgs struct {
 	Taxonomy terra.StringValue `hcl:"taxonomy,attr" validate:"required"`
 	// Condition: optional
 	Condition *datacatalogtaxonomyiambinding.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that DataCatalogTaxonomyIamBinding depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataCatalogTaxonomyIamBindingAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_data_catalog_taxonomy_iam_binding.
 func (dctib dataCatalogTaxonomyIamBindingAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(dctib.ref.Append("etag"))
+	return terra.ReferenceAsString(dctib.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_data_catalog_taxonomy_iam_binding.
 func (dctib dataCatalogTaxonomyIamBindingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dctib.ref.Append("id"))
+	return terra.ReferenceAsString(dctib.ref.Append("id"))
 }
 
+// Members returns a reference to field members of google_data_catalog_taxonomy_iam_binding.
 func (dctib dataCatalogTaxonomyIamBindingAttributes) Members() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dctib.ref.Append("members"))
+	return terra.ReferenceAsSet[terra.StringValue](dctib.ref.Append("members"))
 }
 
+// Project returns a reference to field project of google_data_catalog_taxonomy_iam_binding.
 func (dctib dataCatalogTaxonomyIamBindingAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(dctib.ref.Append("project"))
+	return terra.ReferenceAsString(dctib.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_data_catalog_taxonomy_iam_binding.
 func (dctib dataCatalogTaxonomyIamBindingAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(dctib.ref.Append("region"))
+	return terra.ReferenceAsString(dctib.ref.Append("region"))
 }
 
+// Role returns a reference to field role of google_data_catalog_taxonomy_iam_binding.
 func (dctib dataCatalogTaxonomyIamBindingAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(dctib.ref.Append("role"))
+	return terra.ReferenceAsString(dctib.ref.Append("role"))
 }
 
+// Taxonomy returns a reference to field taxonomy of google_data_catalog_taxonomy_iam_binding.
 func (dctib dataCatalogTaxonomyIamBindingAttributes) Taxonomy() terra.StringValue {
-	return terra.ReferenceString(dctib.ref.Append("taxonomy"))
+	return terra.ReferenceAsString(dctib.ref.Append("taxonomy"))
 }
 
 func (dctib dataCatalogTaxonomyIamBindingAttributes) Condition() terra.ListValue[datacatalogtaxonomyiambinding.ConditionAttributes] {
-	return terra.ReferenceList[datacatalogtaxonomyiambinding.ConditionAttributes](dctib.ref.Append("condition"))
+	return terra.ReferenceAsList[datacatalogtaxonomyiambinding.ConditionAttributes](dctib.ref.Append("condition"))
 }
 
 type dataCatalogTaxonomyIamBindingState struct {

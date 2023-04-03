@@ -39,7 +39,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -67,7 +67,7 @@ func (vc VpcConfigurationAttributes) InternalWithRef(ref terra.Reference) VpcCon
 	return VpcConfigurationAttributes{ref: ref}
 }
 
-func (vc VpcConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (vc VpcConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vc.ref.InternalTokens()
 }
 

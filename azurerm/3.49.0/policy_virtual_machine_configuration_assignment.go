@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewPolicyVirtualMachineConfigurationAssignment creates a new instance of [PolicyVirtualMachineConfigurationAssignment].
 func NewPolicyVirtualMachineConfigurationAssignment(name string, args PolicyVirtualMachineConfigurationAssignmentArgs) *PolicyVirtualMachineConfigurationAssignment {
 	return &PolicyVirtualMachineConfigurationAssignment{
 		Args: args,
@@ -19,28 +20,51 @@ func NewPolicyVirtualMachineConfigurationAssignment(name string, args PolicyVirt
 
 var _ terra.Resource = (*PolicyVirtualMachineConfigurationAssignment)(nil)
 
+// PolicyVirtualMachineConfigurationAssignment represents the Terraform resource azurerm_policy_virtual_machine_configuration_assignment.
 type PolicyVirtualMachineConfigurationAssignment struct {
-	Name  string
-	Args  PolicyVirtualMachineConfigurationAssignmentArgs
-	state *policyVirtualMachineConfigurationAssignmentState
+	Name      string
+	Args      PolicyVirtualMachineConfigurationAssignmentArgs
+	state     *policyVirtualMachineConfigurationAssignmentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PolicyVirtualMachineConfigurationAssignment].
 func (pvmca *PolicyVirtualMachineConfigurationAssignment) Type() string {
 	return "azurerm_policy_virtual_machine_configuration_assignment"
 }
 
+// LocalName returns the local name for [PolicyVirtualMachineConfigurationAssignment].
 func (pvmca *PolicyVirtualMachineConfigurationAssignment) LocalName() string {
 	return pvmca.Name
 }
 
+// Configuration returns the configuration (args) for [PolicyVirtualMachineConfigurationAssignment].
 func (pvmca *PolicyVirtualMachineConfigurationAssignment) Configuration() interface{} {
 	return pvmca.Args
 }
 
+// DependOn is used for other resources to depend on [PolicyVirtualMachineConfigurationAssignment].
+func (pvmca *PolicyVirtualMachineConfigurationAssignment) DependOn() terra.Reference {
+	return terra.ReferenceResource(pvmca)
+}
+
+// Dependencies returns the list of resources [PolicyVirtualMachineConfigurationAssignment] depends_on.
+func (pvmca *PolicyVirtualMachineConfigurationAssignment) Dependencies() terra.Dependencies {
+	return pvmca.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PolicyVirtualMachineConfigurationAssignment].
+func (pvmca *PolicyVirtualMachineConfigurationAssignment) LifecycleManagement() *terra.Lifecycle {
+	return pvmca.Lifecycle
+}
+
+// Attributes returns the attributes for [PolicyVirtualMachineConfigurationAssignment].
 func (pvmca *PolicyVirtualMachineConfigurationAssignment) Attributes() policyVirtualMachineConfigurationAssignmentAttributes {
 	return policyVirtualMachineConfigurationAssignmentAttributes{ref: terra.ReferenceResource(pvmca)}
 }
 
+// ImportState imports the given attribute values into [PolicyVirtualMachineConfigurationAssignment]'s state.
 func (pvmca *PolicyVirtualMachineConfigurationAssignment) ImportState(av io.Reader) error {
 	pvmca.state = &policyVirtualMachineConfigurationAssignmentState{}
 	if err := json.NewDecoder(av).Decode(pvmca.state); err != nil {
@@ -49,10 +73,12 @@ func (pvmca *PolicyVirtualMachineConfigurationAssignment) ImportState(av io.Read
 	return nil
 }
 
+// State returns the state and a bool indicating if [PolicyVirtualMachineConfigurationAssignment] has state.
 func (pvmca *PolicyVirtualMachineConfigurationAssignment) State() (*policyVirtualMachineConfigurationAssignmentState, bool) {
 	return pvmca.state, pvmca.state != nil
 }
 
+// StateMust returns the state for [PolicyVirtualMachineConfigurationAssignment]. Panics if the state is nil.
 func (pvmca *PolicyVirtualMachineConfigurationAssignment) StateMust() *policyVirtualMachineConfigurationAssignmentState {
 	if pvmca.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pvmca.Type(), pvmca.LocalName()))
@@ -60,10 +86,7 @@ func (pvmca *PolicyVirtualMachineConfigurationAssignment) StateMust() *policyVir
 	return pvmca.state
 }
 
-func (pvmca *PolicyVirtualMachineConfigurationAssignment) DependOn() terra.Reference {
-	return terra.ReferenceResource(pvmca)
-}
-
+// PolicyVirtualMachineConfigurationAssignmentArgs contains the configurations for azurerm_policy_virtual_machine_configuration_assignment.
 type PolicyVirtualMachineConfigurationAssignmentArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,35 +100,37 @@ type PolicyVirtualMachineConfigurationAssignmentArgs struct {
 	Configuration *policyvirtualmachineconfigurationassignment.Configuration `hcl:"configuration,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *policyvirtualmachineconfigurationassignment.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that PolicyVirtualMachineConfigurationAssignment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type policyVirtualMachineConfigurationAssignmentAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_policy_virtual_machine_configuration_assignment.
 func (pvmca policyVirtualMachineConfigurationAssignmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pvmca.ref.Append("id"))
+	return terra.ReferenceAsString(pvmca.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_policy_virtual_machine_configuration_assignment.
 func (pvmca policyVirtualMachineConfigurationAssignmentAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(pvmca.ref.Append("location"))
+	return terra.ReferenceAsString(pvmca.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_policy_virtual_machine_configuration_assignment.
 func (pvmca policyVirtualMachineConfigurationAssignmentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pvmca.ref.Append("name"))
+	return terra.ReferenceAsString(pvmca.ref.Append("name"))
 }
 
+// VirtualMachineId returns a reference to field virtual_machine_id of azurerm_policy_virtual_machine_configuration_assignment.
 func (pvmca policyVirtualMachineConfigurationAssignmentAttributes) VirtualMachineId() terra.StringValue {
-	return terra.ReferenceString(pvmca.ref.Append("virtual_machine_id"))
+	return terra.ReferenceAsString(pvmca.ref.Append("virtual_machine_id"))
 }
 
 func (pvmca policyVirtualMachineConfigurationAssignmentAttributes) Configuration() terra.ListValue[policyvirtualmachineconfigurationassignment.ConfigurationAttributes] {
-	return terra.ReferenceList[policyvirtualmachineconfigurationassignment.ConfigurationAttributes](pvmca.ref.Append("configuration"))
+	return terra.ReferenceAsList[policyvirtualmachineconfigurationassignment.ConfigurationAttributes](pvmca.ref.Append("configuration"))
 }
 
 func (pvmca policyVirtualMachineConfigurationAssignmentAttributes) Timeouts() policyvirtualmachineconfigurationassignment.TimeoutsAttributes {
-	return terra.ReferenceSingle[policyvirtualmachineconfigurationassignment.TimeoutsAttributes](pvmca.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[policyvirtualmachineconfigurationassignment.TimeoutsAttributes](pvmca.ref.Append("timeouts"))
 }
 
 type policyVirtualMachineConfigurationAssignmentState struct {

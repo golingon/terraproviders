@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFactoryDatasetMysql creates a new instance of [DataFactoryDatasetMysql].
 func NewDataFactoryDatasetMysql(name string, args DataFactoryDatasetMysqlArgs) *DataFactoryDatasetMysql {
 	return &DataFactoryDatasetMysql{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFactoryDatasetMysql(name string, args DataFactoryDatasetMysqlArgs) *
 
 var _ terra.Resource = (*DataFactoryDatasetMysql)(nil)
 
+// DataFactoryDatasetMysql represents the Terraform resource azurerm_data_factory_dataset_mysql.
 type DataFactoryDatasetMysql struct {
-	Name  string
-	Args  DataFactoryDatasetMysqlArgs
-	state *dataFactoryDatasetMysqlState
+	Name      string
+	Args      DataFactoryDatasetMysqlArgs
+	state     *dataFactoryDatasetMysqlState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFactoryDatasetMysql].
 func (dfdm *DataFactoryDatasetMysql) Type() string {
 	return "azurerm_data_factory_dataset_mysql"
 }
 
+// LocalName returns the local name for [DataFactoryDatasetMysql].
 func (dfdm *DataFactoryDatasetMysql) LocalName() string {
 	return dfdm.Name
 }
 
+// Configuration returns the configuration (args) for [DataFactoryDatasetMysql].
 func (dfdm *DataFactoryDatasetMysql) Configuration() interface{} {
 	return dfdm.Args
 }
 
+// DependOn is used for other resources to depend on [DataFactoryDatasetMysql].
+func (dfdm *DataFactoryDatasetMysql) DependOn() terra.Reference {
+	return terra.ReferenceResource(dfdm)
+}
+
+// Dependencies returns the list of resources [DataFactoryDatasetMysql] depends_on.
+func (dfdm *DataFactoryDatasetMysql) Dependencies() terra.Dependencies {
+	return dfdm.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFactoryDatasetMysql].
+func (dfdm *DataFactoryDatasetMysql) LifecycleManagement() *terra.Lifecycle {
+	return dfdm.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFactoryDatasetMysql].
 func (dfdm *DataFactoryDatasetMysql) Attributes() dataFactoryDatasetMysqlAttributes {
 	return dataFactoryDatasetMysqlAttributes{ref: terra.ReferenceResource(dfdm)}
 }
 
+// ImportState imports the given attribute values into [DataFactoryDatasetMysql]'s state.
 func (dfdm *DataFactoryDatasetMysql) ImportState(av io.Reader) error {
 	dfdm.state = &dataFactoryDatasetMysqlState{}
 	if err := json.NewDecoder(av).Decode(dfdm.state); err != nil {
@@ -49,10 +73,12 @@ func (dfdm *DataFactoryDatasetMysql) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFactoryDatasetMysql] has state.
 func (dfdm *DataFactoryDatasetMysql) State() (*dataFactoryDatasetMysqlState, bool) {
 	return dfdm.state, dfdm.state != nil
 }
 
+// StateMust returns the state for [DataFactoryDatasetMysql]. Panics if the state is nil.
 func (dfdm *DataFactoryDatasetMysql) StateMust() *dataFactoryDatasetMysqlState {
 	if dfdm.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dfdm.Type(), dfdm.LocalName()))
@@ -60,10 +86,7 @@ func (dfdm *DataFactoryDatasetMysql) StateMust() *dataFactoryDatasetMysqlState {
 	return dfdm.state
 }
 
-func (dfdm *DataFactoryDatasetMysql) DependOn() terra.Reference {
-	return terra.ReferenceResource(dfdm)
-}
-
+// DataFactoryDatasetMysqlArgs contains the configurations for azurerm_data_factory_dataset_mysql.
 type DataFactoryDatasetMysqlArgs struct {
 	// AdditionalProperties: map of string, optional
 	AdditionalProperties terra.MapValue[terra.StringValue] `hcl:"additional_properties,attr"`
@@ -89,59 +112,67 @@ type DataFactoryDatasetMysqlArgs struct {
 	SchemaColumn []datafactorydatasetmysql.SchemaColumn `hcl:"schema_column,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *datafactorydatasetmysql.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataFactoryDatasetMysql depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFactoryDatasetMysqlAttributes struct {
 	ref terra.Reference
 }
 
+// AdditionalProperties returns a reference to field additional_properties of azurerm_data_factory_dataset_mysql.
 func (dfdm dataFactoryDatasetMysqlAttributes) AdditionalProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dfdm.ref.Append("additional_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](dfdm.ref.Append("additional_properties"))
 }
 
+// Annotations returns a reference to field annotations of azurerm_data_factory_dataset_mysql.
 func (dfdm dataFactoryDatasetMysqlAttributes) Annotations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dfdm.ref.Append("annotations"))
+	return terra.ReferenceAsList[terra.StringValue](dfdm.ref.Append("annotations"))
 }
 
+// DataFactoryId returns a reference to field data_factory_id of azurerm_data_factory_dataset_mysql.
 func (dfdm dataFactoryDatasetMysqlAttributes) DataFactoryId() terra.StringValue {
-	return terra.ReferenceString(dfdm.ref.Append("data_factory_id"))
+	return terra.ReferenceAsString(dfdm.ref.Append("data_factory_id"))
 }
 
+// Description returns a reference to field description of azurerm_data_factory_dataset_mysql.
 func (dfdm dataFactoryDatasetMysqlAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dfdm.ref.Append("description"))
+	return terra.ReferenceAsString(dfdm.ref.Append("description"))
 }
 
+// Folder returns a reference to field folder of azurerm_data_factory_dataset_mysql.
 func (dfdm dataFactoryDatasetMysqlAttributes) Folder() terra.StringValue {
-	return terra.ReferenceString(dfdm.ref.Append("folder"))
+	return terra.ReferenceAsString(dfdm.ref.Append("folder"))
 }
 
+// Id returns a reference to field id of azurerm_data_factory_dataset_mysql.
 func (dfdm dataFactoryDatasetMysqlAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dfdm.ref.Append("id"))
+	return terra.ReferenceAsString(dfdm.ref.Append("id"))
 }
 
+// LinkedServiceName returns a reference to field linked_service_name of azurerm_data_factory_dataset_mysql.
 func (dfdm dataFactoryDatasetMysqlAttributes) LinkedServiceName() terra.StringValue {
-	return terra.ReferenceString(dfdm.ref.Append("linked_service_name"))
+	return terra.ReferenceAsString(dfdm.ref.Append("linked_service_name"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory_dataset_mysql.
 func (dfdm dataFactoryDatasetMysqlAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dfdm.ref.Append("name"))
+	return terra.ReferenceAsString(dfdm.ref.Append("name"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_data_factory_dataset_mysql.
 func (dfdm dataFactoryDatasetMysqlAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dfdm.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](dfdm.ref.Append("parameters"))
 }
 
+// TableName returns a reference to field table_name of azurerm_data_factory_dataset_mysql.
 func (dfdm dataFactoryDatasetMysqlAttributes) TableName() terra.StringValue {
-	return terra.ReferenceString(dfdm.ref.Append("table_name"))
+	return terra.ReferenceAsString(dfdm.ref.Append("table_name"))
 }
 
 func (dfdm dataFactoryDatasetMysqlAttributes) SchemaColumn() terra.ListValue[datafactorydatasetmysql.SchemaColumnAttributes] {
-	return terra.ReferenceList[datafactorydatasetmysql.SchemaColumnAttributes](dfdm.ref.Append("schema_column"))
+	return terra.ReferenceAsList[datafactorydatasetmysql.SchemaColumnAttributes](dfdm.ref.Append("schema_column"))
 }
 
 func (dfdm dataFactoryDatasetMysqlAttributes) Timeouts() datafactorydatasetmysql.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafactorydatasetmysql.TimeoutsAttributes](dfdm.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafactorydatasetmysql.TimeoutsAttributes](dfdm.ref.Append("timeouts"))
 }
 
 type dataFactoryDatasetMysqlState struct {

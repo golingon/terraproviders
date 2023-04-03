@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewNotebooksRuntimeIamPolicy creates a new instance of [NotebooksRuntimeIamPolicy].
 func NewNotebooksRuntimeIamPolicy(name string, args NotebooksRuntimeIamPolicyArgs) *NotebooksRuntimeIamPolicy {
 	return &NotebooksRuntimeIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewNotebooksRuntimeIamPolicy(name string, args NotebooksRuntimeIamPolicyArg
 
 var _ terra.Resource = (*NotebooksRuntimeIamPolicy)(nil)
 
+// NotebooksRuntimeIamPolicy represents the Terraform resource google_notebooks_runtime_iam_policy.
 type NotebooksRuntimeIamPolicy struct {
-	Name  string
-	Args  NotebooksRuntimeIamPolicyArgs
-	state *notebooksRuntimeIamPolicyState
+	Name      string
+	Args      NotebooksRuntimeIamPolicyArgs
+	state     *notebooksRuntimeIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NotebooksRuntimeIamPolicy].
 func (nrip *NotebooksRuntimeIamPolicy) Type() string {
 	return "google_notebooks_runtime_iam_policy"
 }
 
+// LocalName returns the local name for [NotebooksRuntimeIamPolicy].
 func (nrip *NotebooksRuntimeIamPolicy) LocalName() string {
 	return nrip.Name
 }
 
+// Configuration returns the configuration (args) for [NotebooksRuntimeIamPolicy].
 func (nrip *NotebooksRuntimeIamPolicy) Configuration() interface{} {
 	return nrip.Args
 }
 
+// DependOn is used for other resources to depend on [NotebooksRuntimeIamPolicy].
+func (nrip *NotebooksRuntimeIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(nrip)
+}
+
+// Dependencies returns the list of resources [NotebooksRuntimeIamPolicy] depends_on.
+func (nrip *NotebooksRuntimeIamPolicy) Dependencies() terra.Dependencies {
+	return nrip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NotebooksRuntimeIamPolicy].
+func (nrip *NotebooksRuntimeIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return nrip.Lifecycle
+}
+
+// Attributes returns the attributes for [NotebooksRuntimeIamPolicy].
 func (nrip *NotebooksRuntimeIamPolicy) Attributes() notebooksRuntimeIamPolicyAttributes {
 	return notebooksRuntimeIamPolicyAttributes{ref: terra.ReferenceResource(nrip)}
 }
 
+// ImportState imports the given attribute values into [NotebooksRuntimeIamPolicy]'s state.
 func (nrip *NotebooksRuntimeIamPolicy) ImportState(av io.Reader) error {
 	nrip.state = &notebooksRuntimeIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(nrip.state); err != nil {
@@ -48,10 +72,12 @@ func (nrip *NotebooksRuntimeIamPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NotebooksRuntimeIamPolicy] has state.
 func (nrip *NotebooksRuntimeIamPolicy) State() (*notebooksRuntimeIamPolicyState, bool) {
 	return nrip.state, nrip.state != nil
 }
 
+// StateMust returns the state for [NotebooksRuntimeIamPolicy]. Panics if the state is nil.
 func (nrip *NotebooksRuntimeIamPolicy) StateMust() *notebooksRuntimeIamPolicyState {
 	if nrip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", nrip.Type(), nrip.LocalName()))
@@ -59,10 +85,7 @@ func (nrip *NotebooksRuntimeIamPolicy) StateMust() *notebooksRuntimeIamPolicySta
 	return nrip.state
 }
 
-func (nrip *NotebooksRuntimeIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(nrip)
-}
-
+// NotebooksRuntimeIamPolicyArgs contains the configurations for google_notebooks_runtime_iam_policy.
 type NotebooksRuntimeIamPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -74,35 +97,39 @@ type NotebooksRuntimeIamPolicyArgs struct {
 	Project terra.StringValue `hcl:"project,attr"`
 	// RuntimeName: string, required
 	RuntimeName terra.StringValue `hcl:"runtime_name,attr" validate:"required"`
-	// DependsOn contains resources that NotebooksRuntimeIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type notebooksRuntimeIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_notebooks_runtime_iam_policy.
 func (nrip notebooksRuntimeIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(nrip.ref.Append("etag"))
+	return terra.ReferenceAsString(nrip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_notebooks_runtime_iam_policy.
 func (nrip notebooksRuntimeIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(nrip.ref.Append("id"))
+	return terra.ReferenceAsString(nrip.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_notebooks_runtime_iam_policy.
 func (nrip notebooksRuntimeIamPolicyAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(nrip.ref.Append("location"))
+	return terra.ReferenceAsString(nrip.ref.Append("location"))
 }
 
+// PolicyData returns a reference to field policy_data of google_notebooks_runtime_iam_policy.
 func (nrip notebooksRuntimeIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(nrip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(nrip.ref.Append("policy_data"))
 }
 
+// Project returns a reference to field project of google_notebooks_runtime_iam_policy.
 func (nrip notebooksRuntimeIamPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(nrip.ref.Append("project"))
+	return terra.ReferenceAsString(nrip.ref.Append("project"))
 }
 
+// RuntimeName returns a reference to field runtime_name of google_notebooks_runtime_iam_policy.
 func (nrip notebooksRuntimeIamPolicyAttributes) RuntimeName() terra.StringValue {
-	return terra.ReferenceString(nrip.ref.Append("runtime_name"))
+	return terra.ReferenceAsString(nrip.ref.Append("runtime_name"))
 }
 
 type notebooksRuntimeIamPolicyState struct {

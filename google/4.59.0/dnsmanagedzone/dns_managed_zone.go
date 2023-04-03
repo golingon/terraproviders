@@ -86,260 +86,260 @@ type CloudLoggingConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (clc CloudLoggingConfigAttributes) InternalRef() terra.Reference {
-	return clc.ref
+func (clc CloudLoggingConfigAttributes) InternalRef() (terra.Reference, error) {
+	return clc.ref, nil
 }
 
 func (clc CloudLoggingConfigAttributes) InternalWithRef(ref terra.Reference) CloudLoggingConfigAttributes {
 	return CloudLoggingConfigAttributes{ref: ref}
 }
 
-func (clc CloudLoggingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (clc CloudLoggingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return clc.ref.InternalTokens()
 }
 
 func (clc CloudLoggingConfigAttributes) EnableLogging() terra.BoolValue {
-	return terra.ReferenceBool(clc.ref.Append("enable_logging"))
+	return terra.ReferenceAsBool(clc.ref.Append("enable_logging"))
 }
 
 type DnssecConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (dc DnssecConfigAttributes) InternalRef() terra.Reference {
-	return dc.ref
+func (dc DnssecConfigAttributes) InternalRef() (terra.Reference, error) {
+	return dc.ref, nil
 }
 
 func (dc DnssecConfigAttributes) InternalWithRef(ref terra.Reference) DnssecConfigAttributes {
 	return DnssecConfigAttributes{ref: ref}
 }
 
-func (dc DnssecConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (dc DnssecConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dc.ref.InternalTokens()
 }
 
 func (dc DnssecConfigAttributes) Kind() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("kind"))
+	return terra.ReferenceAsString(dc.ref.Append("kind"))
 }
 
 func (dc DnssecConfigAttributes) NonExistence() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("non_existence"))
+	return terra.ReferenceAsString(dc.ref.Append("non_existence"))
 }
 
 func (dc DnssecConfigAttributes) State() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("state"))
+	return terra.ReferenceAsString(dc.ref.Append("state"))
 }
 
 func (dc DnssecConfigAttributes) DefaultKeySpecs() terra.ListValue[DefaultKeySpecsAttributes] {
-	return terra.ReferenceList[DefaultKeySpecsAttributes](dc.ref.Append("default_key_specs"))
+	return terra.ReferenceAsList[DefaultKeySpecsAttributes](dc.ref.Append("default_key_specs"))
 }
 
 type DefaultKeySpecsAttributes struct {
 	ref terra.Reference
 }
 
-func (dks DefaultKeySpecsAttributes) InternalRef() terra.Reference {
-	return dks.ref
+func (dks DefaultKeySpecsAttributes) InternalRef() (terra.Reference, error) {
+	return dks.ref, nil
 }
 
 func (dks DefaultKeySpecsAttributes) InternalWithRef(ref terra.Reference) DefaultKeySpecsAttributes {
 	return DefaultKeySpecsAttributes{ref: ref}
 }
 
-func (dks DefaultKeySpecsAttributes) InternalTokens() hclwrite.Tokens {
+func (dks DefaultKeySpecsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dks.ref.InternalTokens()
 }
 
 func (dks DefaultKeySpecsAttributes) Algorithm() terra.StringValue {
-	return terra.ReferenceString(dks.ref.Append("algorithm"))
+	return terra.ReferenceAsString(dks.ref.Append("algorithm"))
 }
 
 func (dks DefaultKeySpecsAttributes) KeyLength() terra.NumberValue {
-	return terra.ReferenceNumber(dks.ref.Append("key_length"))
+	return terra.ReferenceAsNumber(dks.ref.Append("key_length"))
 }
 
 func (dks DefaultKeySpecsAttributes) KeyType() terra.StringValue {
-	return terra.ReferenceString(dks.ref.Append("key_type"))
+	return terra.ReferenceAsString(dks.ref.Append("key_type"))
 }
 
 func (dks DefaultKeySpecsAttributes) Kind() terra.StringValue {
-	return terra.ReferenceString(dks.ref.Append("kind"))
+	return terra.ReferenceAsString(dks.ref.Append("kind"))
 }
 
 type ForwardingConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (fc ForwardingConfigAttributes) InternalRef() terra.Reference {
-	return fc.ref
+func (fc ForwardingConfigAttributes) InternalRef() (terra.Reference, error) {
+	return fc.ref, nil
 }
 
 func (fc ForwardingConfigAttributes) InternalWithRef(ref terra.Reference) ForwardingConfigAttributes {
 	return ForwardingConfigAttributes{ref: ref}
 }
 
-func (fc ForwardingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (fc ForwardingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fc.ref.InternalTokens()
 }
 
 func (fc ForwardingConfigAttributes) TargetNameServers() terra.SetValue[TargetNameServersAttributes] {
-	return terra.ReferenceSet[TargetNameServersAttributes](fc.ref.Append("target_name_servers"))
+	return terra.ReferenceAsSet[TargetNameServersAttributes](fc.ref.Append("target_name_servers"))
 }
 
 type TargetNameServersAttributes struct {
 	ref terra.Reference
 }
 
-func (tns TargetNameServersAttributes) InternalRef() terra.Reference {
-	return tns.ref
+func (tns TargetNameServersAttributes) InternalRef() (terra.Reference, error) {
+	return tns.ref, nil
 }
 
 func (tns TargetNameServersAttributes) InternalWithRef(ref terra.Reference) TargetNameServersAttributes {
 	return TargetNameServersAttributes{ref: ref}
 }
 
-func (tns TargetNameServersAttributes) InternalTokens() hclwrite.Tokens {
+func (tns TargetNameServersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tns.ref.InternalTokens()
 }
 
 func (tns TargetNameServersAttributes) ForwardingPath() terra.StringValue {
-	return terra.ReferenceString(tns.ref.Append("forwarding_path"))
+	return terra.ReferenceAsString(tns.ref.Append("forwarding_path"))
 }
 
 func (tns TargetNameServersAttributes) Ipv4Address() terra.StringValue {
-	return terra.ReferenceString(tns.ref.Append("ipv4_address"))
+	return terra.ReferenceAsString(tns.ref.Append("ipv4_address"))
 }
 
 type PeeringConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (pc PeeringConfigAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc PeeringConfigAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc PeeringConfigAttributes) InternalWithRef(ref terra.Reference) PeeringConfigAttributes {
 	return PeeringConfigAttributes{ref: ref}
 }
 
-func (pc PeeringConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (pc PeeringConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
 func (pc PeeringConfigAttributes) TargetNetwork() terra.ListValue[TargetNetworkAttributes] {
-	return terra.ReferenceList[TargetNetworkAttributes](pc.ref.Append("target_network"))
+	return terra.ReferenceAsList[TargetNetworkAttributes](pc.ref.Append("target_network"))
 }
 
 type TargetNetworkAttributes struct {
 	ref terra.Reference
 }
 
-func (tn TargetNetworkAttributes) InternalRef() terra.Reference {
-	return tn.ref
+func (tn TargetNetworkAttributes) InternalRef() (terra.Reference, error) {
+	return tn.ref, nil
 }
 
 func (tn TargetNetworkAttributes) InternalWithRef(ref terra.Reference) TargetNetworkAttributes {
 	return TargetNetworkAttributes{ref: ref}
 }
 
-func (tn TargetNetworkAttributes) InternalTokens() hclwrite.Tokens {
+func (tn TargetNetworkAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tn.ref.InternalTokens()
 }
 
 func (tn TargetNetworkAttributes) NetworkUrl() terra.StringValue {
-	return terra.ReferenceString(tn.ref.Append("network_url"))
+	return terra.ReferenceAsString(tn.ref.Append("network_url"))
 }
 
 type PrivateVisibilityConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (pvc PrivateVisibilityConfigAttributes) InternalRef() terra.Reference {
-	return pvc.ref
+func (pvc PrivateVisibilityConfigAttributes) InternalRef() (terra.Reference, error) {
+	return pvc.ref, nil
 }
 
 func (pvc PrivateVisibilityConfigAttributes) InternalWithRef(ref terra.Reference) PrivateVisibilityConfigAttributes {
 	return PrivateVisibilityConfigAttributes{ref: ref}
 }
 
-func (pvc PrivateVisibilityConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (pvc PrivateVisibilityConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pvc.ref.InternalTokens()
 }
 
 func (pvc PrivateVisibilityConfigAttributes) GkeClusters() terra.ListValue[GkeClustersAttributes] {
-	return terra.ReferenceList[GkeClustersAttributes](pvc.ref.Append("gke_clusters"))
+	return terra.ReferenceAsList[GkeClustersAttributes](pvc.ref.Append("gke_clusters"))
 }
 
 func (pvc PrivateVisibilityConfigAttributes) Networks() terra.SetValue[NetworksAttributes] {
-	return terra.ReferenceSet[NetworksAttributes](pvc.ref.Append("networks"))
+	return terra.ReferenceAsSet[NetworksAttributes](pvc.ref.Append("networks"))
 }
 
 type GkeClustersAttributes struct {
 	ref terra.Reference
 }
 
-func (gc GkeClustersAttributes) InternalRef() terra.Reference {
-	return gc.ref
+func (gc GkeClustersAttributes) InternalRef() (terra.Reference, error) {
+	return gc.ref, nil
 }
 
 func (gc GkeClustersAttributes) InternalWithRef(ref terra.Reference) GkeClustersAttributes {
 	return GkeClustersAttributes{ref: ref}
 }
 
-func (gc GkeClustersAttributes) InternalTokens() hclwrite.Tokens {
+func (gc GkeClustersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gc.ref.InternalTokens()
 }
 
 func (gc GkeClustersAttributes) GkeClusterName() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("gke_cluster_name"))
+	return terra.ReferenceAsString(gc.ref.Append("gke_cluster_name"))
 }
 
 type NetworksAttributes struct {
 	ref terra.Reference
 }
 
-func (n NetworksAttributes) InternalRef() terra.Reference {
-	return n.ref
+func (n NetworksAttributes) InternalRef() (terra.Reference, error) {
+	return n.ref, nil
 }
 
 func (n NetworksAttributes) InternalWithRef(ref terra.Reference) NetworksAttributes {
 	return NetworksAttributes{ref: ref}
 }
 
-func (n NetworksAttributes) InternalTokens() hclwrite.Tokens {
+func (n NetworksAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return n.ref.InternalTokens()
 }
 
 func (n NetworksAttributes) NetworkUrl() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("network_url"))
+	return terra.ReferenceAsString(n.ref.Append("network_url"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type CloudLoggingConfigState struct {

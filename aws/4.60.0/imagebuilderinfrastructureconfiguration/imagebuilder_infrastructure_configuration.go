@@ -38,7 +38,7 @@ func (imo InstanceMetadataOptionsAttributes) InternalWithRef(ref terra.Reference
 	return InstanceMetadataOptionsAttributes{ref: ref}
 }
 
-func (imo InstanceMetadataOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (imo InstanceMetadataOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return imo.ref.InternalTokens()
 }
 
@@ -62,7 +62,7 @@ func (l LoggingAttributes) InternalWithRef(ref terra.Reference) LoggingAttribute
 	return LoggingAttributes{ref: ref}
 }
 
-func (l LoggingAttributes) InternalTokens() hclwrite.Tokens {
+func (l LoggingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 
@@ -82,7 +82,7 @@ func (sl S3LogsAttributes) InternalWithRef(ref terra.Reference) S3LogsAttributes
 	return S3LogsAttributes{ref: ref}
 }
 
-func (sl S3LogsAttributes) InternalTokens() hclwrite.Tokens {
+func (sl S3LogsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sl.ref.InternalTokens()
 }
 

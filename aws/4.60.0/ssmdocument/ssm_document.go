@@ -30,7 +30,7 @@ func (p ParameterAttributes) InternalWithRef(ref terra.Reference) ParameterAttri
 	return ParameterAttributes{ref: ref}
 }
 
-func (p ParameterAttributes) InternalTokens() hclwrite.Tokens {
+func (p ParameterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -62,7 +62,7 @@ func (as AttachmentsSourceAttributes) InternalWithRef(ref terra.Reference) Attac
 	return AttachmentsSourceAttributes{ref: ref}
 }
 
-func (as AttachmentsSourceAttributes) InternalTokens() hclwrite.Tokens {
+func (as AttachmentsSourceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return as.ref.InternalTokens()
 }
 

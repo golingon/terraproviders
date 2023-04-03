@@ -249,7 +249,7 @@ func (cr CorsRuleAttributes) InternalWithRef(ref terra.Reference) CorsRuleAttrib
 	return CorsRuleAttributes{ref: ref}
 }
 
-func (cr CorsRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (cr CorsRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cr.ref.InternalTokens()
 }
 
@@ -285,7 +285,7 @@ func (g GrantAttributes) InternalWithRef(ref terra.Reference) GrantAttributes {
 	return GrantAttributes{ref: ref}
 }
 
-func (g GrantAttributes) InternalTokens() hclwrite.Tokens {
+func (g GrantAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return g.ref.InternalTokens()
 }
 
@@ -317,7 +317,7 @@ func (lr LifecycleRuleAttributes) InternalWithRef(ref terra.Reference) Lifecycle
 	return LifecycleRuleAttributes{ref: ref}
 }
 
-func (lr LifecycleRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (lr LifecycleRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lr.ref.InternalTokens()
 }
 
@@ -369,7 +369,7 @@ func (e ExpirationAttributes) InternalWithRef(ref terra.Reference) ExpirationAtt
 	return ExpirationAttributes{ref: ref}
 }
 
-func (e ExpirationAttributes) InternalTokens() hclwrite.Tokens {
+func (e ExpirationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -397,7 +397,7 @@ func (nve NoncurrentVersionExpirationAttributes) InternalWithRef(ref terra.Refer
 	return NoncurrentVersionExpirationAttributes{ref: ref}
 }
 
-func (nve NoncurrentVersionExpirationAttributes) InternalTokens() hclwrite.Tokens {
+func (nve NoncurrentVersionExpirationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nve.ref.InternalTokens()
 }
 
@@ -417,7 +417,7 @@ func (nvt NoncurrentVersionTransitionAttributes) InternalWithRef(ref terra.Refer
 	return NoncurrentVersionTransitionAttributes{ref: ref}
 }
 
-func (nvt NoncurrentVersionTransitionAttributes) InternalTokens() hclwrite.Tokens {
+func (nvt NoncurrentVersionTransitionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nvt.ref.InternalTokens()
 }
 
@@ -441,7 +441,7 @@ func (t TransitionAttributes) InternalWithRef(ref terra.Reference) TransitionAtt
 	return TransitionAttributes{ref: ref}
 }
 
-func (t TransitionAttributes) InternalTokens() hclwrite.Tokens {
+func (t TransitionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -469,7 +469,7 @@ func (l LoggingAttributes) InternalWithRef(ref terra.Reference) LoggingAttribute
 	return LoggingAttributes{ref: ref}
 }
 
-func (l LoggingAttributes) InternalTokens() hclwrite.Tokens {
+func (l LoggingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 
@@ -493,7 +493,7 @@ func (olc ObjectLockConfigurationAttributes) InternalWithRef(ref terra.Reference
 	return ObjectLockConfigurationAttributes{ref: ref}
 }
 
-func (olc ObjectLockConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (olc ObjectLockConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return olc.ref.InternalTokens()
 }
 
@@ -517,7 +517,7 @@ func (r ObjectLockConfigurationRuleAttributes) InternalWithRef(ref terra.Referen
 	return ObjectLockConfigurationRuleAttributes{ref: ref}
 }
 
-func (r ObjectLockConfigurationRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (r ObjectLockConfigurationRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -537,7 +537,7 @@ func (dr DefaultRetentionAttributes) InternalWithRef(ref terra.Reference) Defaul
 	return DefaultRetentionAttributes{ref: ref}
 }
 
-func (dr DefaultRetentionAttributes) InternalTokens() hclwrite.Tokens {
+func (dr DefaultRetentionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dr.ref.InternalTokens()
 }
 
@@ -565,7 +565,7 @@ func (rc ReplicationConfigurationAttributes) InternalWithRef(ref terra.Reference
 	return ReplicationConfigurationAttributes{ref: ref}
 }
 
-func (rc ReplicationConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (rc ReplicationConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rc.ref.InternalTokens()
 }
 
@@ -589,7 +589,7 @@ func (r RulesAttributes) InternalWithRef(ref terra.Reference) RulesAttributes {
 	return RulesAttributes{ref: ref}
 }
 
-func (r RulesAttributes) InternalTokens() hclwrite.Tokens {
+func (r RulesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -637,7 +637,7 @@ func (d DestinationAttributes) InternalWithRef(ref terra.Reference) DestinationA
 	return DestinationAttributes{ref: ref}
 }
 
-func (d DestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (d DestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -681,7 +681,7 @@ func (act AccessControlTranslationAttributes) InternalWithRef(ref terra.Referenc
 	return AccessControlTranslationAttributes{ref: ref}
 }
 
-func (act AccessControlTranslationAttributes) InternalTokens() hclwrite.Tokens {
+func (act AccessControlTranslationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return act.ref.InternalTokens()
 }
 
@@ -701,7 +701,7 @@ func (m MetricsAttributes) InternalWithRef(ref terra.Reference) MetricsAttribute
 	return MetricsAttributes{ref: ref}
 }
 
-func (m MetricsAttributes) InternalTokens() hclwrite.Tokens {
+func (m MetricsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -725,7 +725,7 @@ func (rt ReplicationTimeAttributes) InternalWithRef(ref terra.Reference) Replica
 	return ReplicationTimeAttributes{ref: ref}
 }
 
-func (rt ReplicationTimeAttributes) InternalTokens() hclwrite.Tokens {
+func (rt ReplicationTimeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rt.ref.InternalTokens()
 }
 
@@ -749,7 +749,7 @@ func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes 
 	return FilterAttributes{ref: ref}
 }
 
-func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
+func (f FilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -773,7 +773,7 @@ func (ssc SourceSelectionCriteriaAttributes) InternalWithRef(ref terra.Reference
 	return SourceSelectionCriteriaAttributes{ref: ref}
 }
 
-func (ssc SourceSelectionCriteriaAttributes) InternalTokens() hclwrite.Tokens {
+func (ssc SourceSelectionCriteriaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ssc.ref.InternalTokens()
 }
 
@@ -793,7 +793,7 @@ func (skeo SseKmsEncryptedObjectsAttributes) InternalWithRef(ref terra.Reference
 	return SseKmsEncryptedObjectsAttributes{ref: ref}
 }
 
-func (skeo SseKmsEncryptedObjectsAttributes) InternalTokens() hclwrite.Tokens {
+func (skeo SseKmsEncryptedObjectsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return skeo.ref.InternalTokens()
 }
 
@@ -813,7 +813,7 @@ func (ssec ServerSideEncryptionConfigurationAttributes) InternalWithRef(ref terr
 	return ServerSideEncryptionConfigurationAttributes{ref: ref}
 }
 
-func (ssec ServerSideEncryptionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ssec ServerSideEncryptionConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ssec.ref.InternalTokens()
 }
 
@@ -833,7 +833,7 @@ func (r ServerSideEncryptionConfigurationRuleAttributes) InternalWithRef(ref ter
 	return ServerSideEncryptionConfigurationRuleAttributes{ref: ref}
 }
 
-func (r ServerSideEncryptionConfigurationRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (r ServerSideEncryptionConfigurationRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -857,7 +857,7 @@ func (assebd ApplyServerSideEncryptionByDefaultAttributes) InternalWithRef(ref t
 	return ApplyServerSideEncryptionByDefaultAttributes{ref: ref}
 }
 
-func (assebd ApplyServerSideEncryptionByDefaultAttributes) InternalTokens() hclwrite.Tokens {
+func (assebd ApplyServerSideEncryptionByDefaultAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return assebd.ref.InternalTokens()
 }
 
@@ -881,7 +881,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -913,7 +913,7 @@ func (v VersioningAttributes) InternalWithRef(ref terra.Reference) VersioningAtt
 	return VersioningAttributes{ref: ref}
 }
 
-func (v VersioningAttributes) InternalTokens() hclwrite.Tokens {
+func (v VersioningAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 
@@ -937,7 +937,7 @@ func (w WebsiteAttributes) InternalWithRef(ref terra.Reference) WebsiteAttribute
 	return WebsiteAttributes{ref: ref}
 }
 
-func (w WebsiteAttributes) InternalTokens() hclwrite.Tokens {
+func (w WebsiteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return w.ref.InternalTokens()
 }
 

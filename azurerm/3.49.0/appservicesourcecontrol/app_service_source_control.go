@@ -47,116 +47,116 @@ type GithubActionConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (gac GithubActionConfigurationAttributes) InternalRef() terra.Reference {
-	return gac.ref
+func (gac GithubActionConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return gac.ref, nil
 }
 
 func (gac GithubActionConfigurationAttributes) InternalWithRef(ref terra.Reference) GithubActionConfigurationAttributes {
 	return GithubActionConfigurationAttributes{ref: ref}
 }
 
-func (gac GithubActionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (gac GithubActionConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gac.ref.InternalTokens()
 }
 
 func (gac GithubActionConfigurationAttributes) GenerateWorkflowFile() terra.BoolValue {
-	return terra.ReferenceBool(gac.ref.Append("generate_workflow_file"))
+	return terra.ReferenceAsBool(gac.ref.Append("generate_workflow_file"))
 }
 
 func (gac GithubActionConfigurationAttributes) LinuxAction() terra.BoolValue {
-	return terra.ReferenceBool(gac.ref.Append("linux_action"))
+	return terra.ReferenceAsBool(gac.ref.Append("linux_action"))
 }
 
 func (gac GithubActionConfigurationAttributes) CodeConfiguration() terra.ListValue[CodeConfigurationAttributes] {
-	return terra.ReferenceList[CodeConfigurationAttributes](gac.ref.Append("code_configuration"))
+	return terra.ReferenceAsList[CodeConfigurationAttributes](gac.ref.Append("code_configuration"))
 }
 
 func (gac GithubActionConfigurationAttributes) ContainerConfiguration() terra.ListValue[ContainerConfigurationAttributes] {
-	return terra.ReferenceList[ContainerConfigurationAttributes](gac.ref.Append("container_configuration"))
+	return terra.ReferenceAsList[ContainerConfigurationAttributes](gac.ref.Append("container_configuration"))
 }
 
 type CodeConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (cc CodeConfigurationAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc CodeConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc CodeConfigurationAttributes) InternalWithRef(ref terra.Reference) CodeConfigurationAttributes {
 	return CodeConfigurationAttributes{ref: ref}
 }
 
-func (cc CodeConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (cc CodeConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
 func (cc CodeConfigurationAttributes) RuntimeStack() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("runtime_stack"))
+	return terra.ReferenceAsString(cc.ref.Append("runtime_stack"))
 }
 
 func (cc CodeConfigurationAttributes) RuntimeVersion() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("runtime_version"))
+	return terra.ReferenceAsString(cc.ref.Append("runtime_version"))
 }
 
 type ContainerConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (cc ContainerConfigurationAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc ContainerConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc ContainerConfigurationAttributes) InternalWithRef(ref terra.Reference) ContainerConfigurationAttributes {
 	return ContainerConfigurationAttributes{ref: ref}
 }
 
-func (cc ContainerConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (cc ContainerConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
 func (cc ContainerConfigurationAttributes) ImageName() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("image_name"))
+	return terra.ReferenceAsString(cc.ref.Append("image_name"))
 }
 
 func (cc ContainerConfigurationAttributes) RegistryPassword() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("registry_password"))
+	return terra.ReferenceAsString(cc.ref.Append("registry_password"))
 }
 
 func (cc ContainerConfigurationAttributes) RegistryUrl() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("registry_url"))
+	return terra.ReferenceAsString(cc.ref.Append("registry_url"))
 }
 
 func (cc ContainerConfigurationAttributes) RegistryUsername() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("registry_username"))
+	return terra.ReferenceAsString(cc.ref.Append("registry_username"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type GithubActionConfigurationState struct {

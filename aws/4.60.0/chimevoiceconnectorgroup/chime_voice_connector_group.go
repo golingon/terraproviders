@@ -26,7 +26,7 @@ func (c ConnectorAttributes) InternalWithRef(ref terra.Reference) ConnectorAttri
 	return ConnectorAttributes{ref: ref}
 }
 
-func (c ConnectorAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConnectorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 

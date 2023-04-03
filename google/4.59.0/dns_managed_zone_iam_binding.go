@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDnsManagedZoneIamBinding creates a new instance of [DnsManagedZoneIamBinding].
 func NewDnsManagedZoneIamBinding(name string, args DnsManagedZoneIamBindingArgs) *DnsManagedZoneIamBinding {
 	return &DnsManagedZoneIamBinding{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDnsManagedZoneIamBinding(name string, args DnsManagedZoneIamBindingArgs)
 
 var _ terra.Resource = (*DnsManagedZoneIamBinding)(nil)
 
+// DnsManagedZoneIamBinding represents the Terraform resource google_dns_managed_zone_iam_binding.
 type DnsManagedZoneIamBinding struct {
-	Name  string
-	Args  DnsManagedZoneIamBindingArgs
-	state *dnsManagedZoneIamBindingState
+	Name      string
+	Args      DnsManagedZoneIamBindingArgs
+	state     *dnsManagedZoneIamBindingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DnsManagedZoneIamBinding].
 func (dmzib *DnsManagedZoneIamBinding) Type() string {
 	return "google_dns_managed_zone_iam_binding"
 }
 
+// LocalName returns the local name for [DnsManagedZoneIamBinding].
 func (dmzib *DnsManagedZoneIamBinding) LocalName() string {
 	return dmzib.Name
 }
 
+// Configuration returns the configuration (args) for [DnsManagedZoneIamBinding].
 func (dmzib *DnsManagedZoneIamBinding) Configuration() interface{} {
 	return dmzib.Args
 }
 
+// DependOn is used for other resources to depend on [DnsManagedZoneIamBinding].
+func (dmzib *DnsManagedZoneIamBinding) DependOn() terra.Reference {
+	return terra.ReferenceResource(dmzib)
+}
+
+// Dependencies returns the list of resources [DnsManagedZoneIamBinding] depends_on.
+func (dmzib *DnsManagedZoneIamBinding) Dependencies() terra.Dependencies {
+	return dmzib.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DnsManagedZoneIamBinding].
+func (dmzib *DnsManagedZoneIamBinding) LifecycleManagement() *terra.Lifecycle {
+	return dmzib.Lifecycle
+}
+
+// Attributes returns the attributes for [DnsManagedZoneIamBinding].
 func (dmzib *DnsManagedZoneIamBinding) Attributes() dnsManagedZoneIamBindingAttributes {
 	return dnsManagedZoneIamBindingAttributes{ref: terra.ReferenceResource(dmzib)}
 }
 
+// ImportState imports the given attribute values into [DnsManagedZoneIamBinding]'s state.
 func (dmzib *DnsManagedZoneIamBinding) ImportState(av io.Reader) error {
 	dmzib.state = &dnsManagedZoneIamBindingState{}
 	if err := json.NewDecoder(av).Decode(dmzib.state); err != nil {
@@ -49,10 +73,12 @@ func (dmzib *DnsManagedZoneIamBinding) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DnsManagedZoneIamBinding] has state.
 func (dmzib *DnsManagedZoneIamBinding) State() (*dnsManagedZoneIamBindingState, bool) {
 	return dmzib.state, dmzib.state != nil
 }
 
+// StateMust returns the state for [DnsManagedZoneIamBinding]. Panics if the state is nil.
 func (dmzib *DnsManagedZoneIamBinding) StateMust() *dnsManagedZoneIamBindingState {
 	if dmzib.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dmzib.Type(), dmzib.LocalName()))
@@ -60,10 +86,7 @@ func (dmzib *DnsManagedZoneIamBinding) StateMust() *dnsManagedZoneIamBindingStat
 	return dmzib.state
 }
 
-func (dmzib *DnsManagedZoneIamBinding) DependOn() terra.Reference {
-	return terra.ReferenceResource(dmzib)
-}
-
+// DnsManagedZoneIamBindingArgs contains the configurations for google_dns_managed_zone_iam_binding.
 type DnsManagedZoneIamBindingArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,39 +100,43 @@ type DnsManagedZoneIamBindingArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *dnsmanagedzoneiambinding.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that DnsManagedZoneIamBinding depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dnsManagedZoneIamBindingAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_dns_managed_zone_iam_binding.
 func (dmzib dnsManagedZoneIamBindingAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(dmzib.ref.Append("etag"))
+	return terra.ReferenceAsString(dmzib.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_dns_managed_zone_iam_binding.
 func (dmzib dnsManagedZoneIamBindingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dmzib.ref.Append("id"))
+	return terra.ReferenceAsString(dmzib.ref.Append("id"))
 }
 
+// ManagedZone returns a reference to field managed_zone of google_dns_managed_zone_iam_binding.
 func (dmzib dnsManagedZoneIamBindingAttributes) ManagedZone() terra.StringValue {
-	return terra.ReferenceString(dmzib.ref.Append("managed_zone"))
+	return terra.ReferenceAsString(dmzib.ref.Append("managed_zone"))
 }
 
+// Members returns a reference to field members of google_dns_managed_zone_iam_binding.
 func (dmzib dnsManagedZoneIamBindingAttributes) Members() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dmzib.ref.Append("members"))
+	return terra.ReferenceAsSet[terra.StringValue](dmzib.ref.Append("members"))
 }
 
+// Project returns a reference to field project of google_dns_managed_zone_iam_binding.
 func (dmzib dnsManagedZoneIamBindingAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(dmzib.ref.Append("project"))
+	return terra.ReferenceAsString(dmzib.ref.Append("project"))
 }
 
+// Role returns a reference to field role of google_dns_managed_zone_iam_binding.
 func (dmzib dnsManagedZoneIamBindingAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(dmzib.ref.Append("role"))
+	return terra.ReferenceAsString(dmzib.ref.Append("role"))
 }
 
 func (dmzib dnsManagedZoneIamBindingAttributes) Condition() terra.ListValue[dnsmanagedzoneiambinding.ConditionAttributes] {
-	return terra.ReferenceList[dnsmanagedzoneiambinding.ConditionAttributes](dmzib.ref.Append("condition"))
+	return terra.ReferenceAsList[dnsmanagedzoneiambinding.ConditionAttributes](dmzib.ref.Append("condition"))
 }
 
 type dnsManagedZoneIamBindingState struct {

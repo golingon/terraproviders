@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewArtifactRegistryRepositoryIamPolicy creates a new instance of [ArtifactRegistryRepositoryIamPolicy].
 func NewArtifactRegistryRepositoryIamPolicy(name string, args ArtifactRegistryRepositoryIamPolicyArgs) *ArtifactRegistryRepositoryIamPolicy {
 	return &ArtifactRegistryRepositoryIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewArtifactRegistryRepositoryIamPolicy(name string, args ArtifactRegistryRe
 
 var _ terra.Resource = (*ArtifactRegistryRepositoryIamPolicy)(nil)
 
+// ArtifactRegistryRepositoryIamPolicy represents the Terraform resource google_artifact_registry_repository_iam_policy.
 type ArtifactRegistryRepositoryIamPolicy struct {
-	Name  string
-	Args  ArtifactRegistryRepositoryIamPolicyArgs
-	state *artifactRegistryRepositoryIamPolicyState
+	Name      string
+	Args      ArtifactRegistryRepositoryIamPolicyArgs
+	state     *artifactRegistryRepositoryIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ArtifactRegistryRepositoryIamPolicy].
 func (arrip *ArtifactRegistryRepositoryIamPolicy) Type() string {
 	return "google_artifact_registry_repository_iam_policy"
 }
 
+// LocalName returns the local name for [ArtifactRegistryRepositoryIamPolicy].
 func (arrip *ArtifactRegistryRepositoryIamPolicy) LocalName() string {
 	return arrip.Name
 }
 
+// Configuration returns the configuration (args) for [ArtifactRegistryRepositoryIamPolicy].
 func (arrip *ArtifactRegistryRepositoryIamPolicy) Configuration() interface{} {
 	return arrip.Args
 }
 
+// DependOn is used for other resources to depend on [ArtifactRegistryRepositoryIamPolicy].
+func (arrip *ArtifactRegistryRepositoryIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(arrip)
+}
+
+// Dependencies returns the list of resources [ArtifactRegistryRepositoryIamPolicy] depends_on.
+func (arrip *ArtifactRegistryRepositoryIamPolicy) Dependencies() terra.Dependencies {
+	return arrip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ArtifactRegistryRepositoryIamPolicy].
+func (arrip *ArtifactRegistryRepositoryIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return arrip.Lifecycle
+}
+
+// Attributes returns the attributes for [ArtifactRegistryRepositoryIamPolicy].
 func (arrip *ArtifactRegistryRepositoryIamPolicy) Attributes() artifactRegistryRepositoryIamPolicyAttributes {
 	return artifactRegistryRepositoryIamPolicyAttributes{ref: terra.ReferenceResource(arrip)}
 }
 
+// ImportState imports the given attribute values into [ArtifactRegistryRepositoryIamPolicy]'s state.
 func (arrip *ArtifactRegistryRepositoryIamPolicy) ImportState(av io.Reader) error {
 	arrip.state = &artifactRegistryRepositoryIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(arrip.state); err != nil {
@@ -48,10 +72,12 @@ func (arrip *ArtifactRegistryRepositoryIamPolicy) ImportState(av io.Reader) erro
 	return nil
 }
 
+// State returns the state and a bool indicating if [ArtifactRegistryRepositoryIamPolicy] has state.
 func (arrip *ArtifactRegistryRepositoryIamPolicy) State() (*artifactRegistryRepositoryIamPolicyState, bool) {
 	return arrip.state, arrip.state != nil
 }
 
+// StateMust returns the state for [ArtifactRegistryRepositoryIamPolicy]. Panics if the state is nil.
 func (arrip *ArtifactRegistryRepositoryIamPolicy) StateMust() *artifactRegistryRepositoryIamPolicyState {
 	if arrip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", arrip.Type(), arrip.LocalName()))
@@ -59,10 +85,7 @@ func (arrip *ArtifactRegistryRepositoryIamPolicy) StateMust() *artifactRegistryR
 	return arrip.state
 }
 
-func (arrip *ArtifactRegistryRepositoryIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(arrip)
-}
-
+// ArtifactRegistryRepositoryIamPolicyArgs contains the configurations for google_artifact_registry_repository_iam_policy.
 type ArtifactRegistryRepositoryIamPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -74,35 +97,39 @@ type ArtifactRegistryRepositoryIamPolicyArgs struct {
 	Project terra.StringValue `hcl:"project,attr"`
 	// Repository: string, required
 	Repository terra.StringValue `hcl:"repository,attr" validate:"required"`
-	// DependsOn contains resources that ArtifactRegistryRepositoryIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type artifactRegistryRepositoryIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_artifact_registry_repository_iam_policy.
 func (arrip artifactRegistryRepositoryIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(arrip.ref.Append("etag"))
+	return terra.ReferenceAsString(arrip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_artifact_registry_repository_iam_policy.
 func (arrip artifactRegistryRepositoryIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(arrip.ref.Append("id"))
+	return terra.ReferenceAsString(arrip.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_artifact_registry_repository_iam_policy.
 func (arrip artifactRegistryRepositoryIamPolicyAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(arrip.ref.Append("location"))
+	return terra.ReferenceAsString(arrip.ref.Append("location"))
 }
 
+// PolicyData returns a reference to field policy_data of google_artifact_registry_repository_iam_policy.
 func (arrip artifactRegistryRepositoryIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(arrip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(arrip.ref.Append("policy_data"))
 }
 
+// Project returns a reference to field project of google_artifact_registry_repository_iam_policy.
 func (arrip artifactRegistryRepositoryIamPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(arrip.ref.Append("project"))
+	return terra.ReferenceAsString(arrip.ref.Append("project"))
 }
 
+// Repository returns a reference to field repository of google_artifact_registry_repository_iam_policy.
 func (arrip artifactRegistryRepositoryIamPolicyAttributes) Repository() terra.StringValue {
-	return terra.ReferenceString(arrip.ref.Append("repository"))
+	return terra.ReferenceAsString(arrip.ref.Append("repository"))
 }
 
 type artifactRegistryRepositoryIamPolicyState struct {

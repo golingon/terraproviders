@@ -29,56 +29,56 @@ type BusinessIdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (bi BusinessIdentityAttributes) InternalRef() terra.Reference {
-	return bi.ref
+func (bi BusinessIdentityAttributes) InternalRef() (terra.Reference, error) {
+	return bi.ref, nil
 }
 
 func (bi BusinessIdentityAttributes) InternalWithRef(ref terra.Reference) BusinessIdentityAttributes {
 	return BusinessIdentityAttributes{ref: ref}
 }
 
-func (bi BusinessIdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (bi BusinessIdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bi.ref.InternalTokens()
 }
 
 func (bi BusinessIdentityAttributes) Qualifier() terra.StringValue {
-	return terra.ReferenceString(bi.ref.Append("qualifier"))
+	return terra.ReferenceAsString(bi.ref.Append("qualifier"))
 }
 
 func (bi BusinessIdentityAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(bi.ref.Append("value"))
+	return terra.ReferenceAsString(bi.ref.Append("value"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type BusinessIdentityState struct {

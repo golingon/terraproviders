@@ -18,24 +18,24 @@ type BatchingAttributes struct {
 	ref terra.Reference
 }
 
-func (b BatchingAttributes) InternalRef() terra.Reference {
-	return b.ref
+func (b BatchingAttributes) InternalRef() (terra.Reference, error) {
+	return b.ref, nil
 }
 
 func (b BatchingAttributes) InternalWithRef(ref terra.Reference) BatchingAttributes {
 	return BatchingAttributes{ref: ref}
 }
 
-func (b BatchingAttributes) InternalTokens() hclwrite.Tokens {
+func (b BatchingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return b.ref.InternalTokens()
 }
 
 func (b BatchingAttributes) EnableBatching() terra.BoolValue {
-	return terra.ReferenceBool(b.ref.Append("enable_batching"))
+	return terra.ReferenceAsBool(b.ref.Append("enable_batching"))
 }
 
 func (b BatchingAttributes) SendAfter() terra.StringValue {
-	return terra.ReferenceString(b.ref.Append("send_after"))
+	return terra.ReferenceAsString(b.ref.Append("send_after"))
 }
 
 type BatchingState struct {

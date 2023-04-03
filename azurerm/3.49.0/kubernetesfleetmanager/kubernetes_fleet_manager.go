@@ -27,60 +27,60 @@ type HubProfileAttributes struct {
 	ref terra.Reference
 }
 
-func (hp HubProfileAttributes) InternalRef() terra.Reference {
-	return hp.ref
+func (hp HubProfileAttributes) InternalRef() (terra.Reference, error) {
+	return hp.ref, nil
 }
 
 func (hp HubProfileAttributes) InternalWithRef(ref terra.Reference) HubProfileAttributes {
 	return HubProfileAttributes{ref: ref}
 }
 
-func (hp HubProfileAttributes) InternalTokens() hclwrite.Tokens {
+func (hp HubProfileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hp.ref.InternalTokens()
 }
 
 func (hp HubProfileAttributes) DnsPrefix() terra.StringValue {
-	return terra.ReferenceString(hp.ref.Append("dns_prefix"))
+	return terra.ReferenceAsString(hp.ref.Append("dns_prefix"))
 }
 
 func (hp HubProfileAttributes) Fqdn() terra.StringValue {
-	return terra.ReferenceString(hp.ref.Append("fqdn"))
+	return terra.ReferenceAsString(hp.ref.Append("fqdn"))
 }
 
 func (hp HubProfileAttributes) KubernetesVersion() terra.StringValue {
-	return terra.ReferenceString(hp.ref.Append("kubernetes_version"))
+	return terra.ReferenceAsString(hp.ref.Append("kubernetes_version"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type HubProfileState struct {

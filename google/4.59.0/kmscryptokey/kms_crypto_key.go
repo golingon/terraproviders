@@ -27,52 +27,52 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type VersionTemplateAttributes struct {
 	ref terra.Reference
 }
 
-func (vt VersionTemplateAttributes) InternalRef() terra.Reference {
-	return vt.ref
+func (vt VersionTemplateAttributes) InternalRef() (terra.Reference, error) {
+	return vt.ref, nil
 }
 
 func (vt VersionTemplateAttributes) InternalWithRef(ref terra.Reference) VersionTemplateAttributes {
 	return VersionTemplateAttributes{ref: ref}
 }
 
-func (vt VersionTemplateAttributes) InternalTokens() hclwrite.Tokens {
+func (vt VersionTemplateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vt.ref.InternalTokens()
 }
 
 func (vt VersionTemplateAttributes) Algorithm() terra.StringValue {
-	return terra.ReferenceString(vt.ref.Append("algorithm"))
+	return terra.ReferenceAsString(vt.ref.Append("algorithm"))
 }
 
 func (vt VersionTemplateAttributes) ProtectionLevel() terra.StringValue {
-	return terra.ReferenceString(vt.ref.Append("protection_level"))
+	return terra.ReferenceAsString(vt.ref.Append("protection_level"))
 }
 
 type TimeoutsState struct {

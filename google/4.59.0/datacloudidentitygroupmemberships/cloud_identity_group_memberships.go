@@ -22,88 +22,88 @@ type MembershipsAttributes struct {
 	ref terra.Reference
 }
 
-func (m MembershipsAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MembershipsAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MembershipsAttributes) InternalWithRef(ref terra.Reference) MembershipsAttributes {
 	return MembershipsAttributes{ref: ref}
 }
 
-func (m MembershipsAttributes) InternalTokens() hclwrite.Tokens {
+func (m MembershipsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
 func (m MembershipsAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("create_time"))
+	return terra.ReferenceAsString(m.ref.Append("create_time"))
 }
 
 func (m MembershipsAttributes) Group() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("group"))
+	return terra.ReferenceAsString(m.ref.Append("group"))
 }
 
 func (m MembershipsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("name"))
+	return terra.ReferenceAsString(m.ref.Append("name"))
 }
 
 func (m MembershipsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("type"))
+	return terra.ReferenceAsString(m.ref.Append("type"))
 }
 
 func (m MembershipsAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("update_time"))
+	return terra.ReferenceAsString(m.ref.Append("update_time"))
 }
 
 func (m MembershipsAttributes) PreferredMemberKey() terra.ListValue[PreferredMemberKeyAttributes] {
-	return terra.ReferenceList[PreferredMemberKeyAttributes](m.ref.Append("preferred_member_key"))
+	return terra.ReferenceAsList[PreferredMemberKeyAttributes](m.ref.Append("preferred_member_key"))
 }
 
 func (m MembershipsAttributes) Roles() terra.SetValue[RolesAttributes] {
-	return terra.ReferenceSet[RolesAttributes](m.ref.Append("roles"))
+	return terra.ReferenceAsSet[RolesAttributes](m.ref.Append("roles"))
 }
 
 type PreferredMemberKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (pmk PreferredMemberKeyAttributes) InternalRef() terra.Reference {
-	return pmk.ref
+func (pmk PreferredMemberKeyAttributes) InternalRef() (terra.Reference, error) {
+	return pmk.ref, nil
 }
 
 func (pmk PreferredMemberKeyAttributes) InternalWithRef(ref terra.Reference) PreferredMemberKeyAttributes {
 	return PreferredMemberKeyAttributes{ref: ref}
 }
 
-func (pmk PreferredMemberKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (pmk PreferredMemberKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pmk.ref.InternalTokens()
 }
 
 func (pmk PreferredMemberKeyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pmk.ref.Append("id"))
+	return terra.ReferenceAsString(pmk.ref.Append("id"))
 }
 
 func (pmk PreferredMemberKeyAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(pmk.ref.Append("namespace"))
+	return terra.ReferenceAsString(pmk.ref.Append("namespace"))
 }
 
 type RolesAttributes struct {
 	ref terra.Reference
 }
 
-func (r RolesAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RolesAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RolesAttributes) InternalWithRef(ref terra.Reference) RolesAttributes {
 	return RolesAttributes{ref: ref}
 }
 
-func (r RolesAttributes) InternalTokens() hclwrite.Tokens {
+func (r RolesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RolesAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("name"))
+	return terra.ReferenceAsString(r.ref.Append("name"))
 }
 
 type MembershipsState struct {

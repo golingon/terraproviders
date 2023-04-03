@@ -20,76 +20,76 @@ type ManagedDiskIdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (mdi ManagedDiskIdentityAttributes) InternalRef() terra.Reference {
-	return mdi.ref
+func (mdi ManagedDiskIdentityAttributes) InternalRef() (terra.Reference, error) {
+	return mdi.ref, nil
 }
 
 func (mdi ManagedDiskIdentityAttributes) InternalWithRef(ref terra.Reference) ManagedDiskIdentityAttributes {
 	return ManagedDiskIdentityAttributes{ref: ref}
 }
 
-func (mdi ManagedDiskIdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (mdi ManagedDiskIdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mdi.ref.InternalTokens()
 }
 
 func (mdi ManagedDiskIdentityAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(mdi.ref.Append("principal_id"))
+	return terra.ReferenceAsString(mdi.ref.Append("principal_id"))
 }
 
 func (mdi ManagedDiskIdentityAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(mdi.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(mdi.ref.Append("tenant_id"))
 }
 
 func (mdi ManagedDiskIdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(mdi.ref.Append("type"))
+	return terra.ReferenceAsString(mdi.ref.Append("type"))
 }
 
 type StorageAccountIdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (sai StorageAccountIdentityAttributes) InternalRef() terra.Reference {
-	return sai.ref
+func (sai StorageAccountIdentityAttributes) InternalRef() (terra.Reference, error) {
+	return sai.ref, nil
 }
 
 func (sai StorageAccountIdentityAttributes) InternalWithRef(ref terra.Reference) StorageAccountIdentityAttributes {
 	return StorageAccountIdentityAttributes{ref: ref}
 }
 
-func (sai StorageAccountIdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (sai StorageAccountIdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sai.ref.InternalTokens()
 }
 
 func (sai StorageAccountIdentityAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(sai.ref.Append("principal_id"))
+	return terra.ReferenceAsString(sai.ref.Append("principal_id"))
 }
 
 func (sai StorageAccountIdentityAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(sai.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(sai.ref.Append("tenant_id"))
 }
 
 func (sai StorageAccountIdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(sai.ref.Append("type"))
+	return terra.ReferenceAsString(sai.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type ManagedDiskIdentityState struct {

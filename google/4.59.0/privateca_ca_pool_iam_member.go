@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewPrivatecaCaPoolIamMember creates a new instance of [PrivatecaCaPoolIamMember].
 func NewPrivatecaCaPoolIamMember(name string, args PrivatecaCaPoolIamMemberArgs) *PrivatecaCaPoolIamMember {
 	return &PrivatecaCaPoolIamMember{
 		Args: args,
@@ -19,28 +20,51 @@ func NewPrivatecaCaPoolIamMember(name string, args PrivatecaCaPoolIamMemberArgs)
 
 var _ terra.Resource = (*PrivatecaCaPoolIamMember)(nil)
 
+// PrivatecaCaPoolIamMember represents the Terraform resource google_privateca_ca_pool_iam_member.
 type PrivatecaCaPoolIamMember struct {
-	Name  string
-	Args  PrivatecaCaPoolIamMemberArgs
-	state *privatecaCaPoolIamMemberState
+	Name      string
+	Args      PrivatecaCaPoolIamMemberArgs
+	state     *privatecaCaPoolIamMemberState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PrivatecaCaPoolIamMember].
 func (pcpim *PrivatecaCaPoolIamMember) Type() string {
 	return "google_privateca_ca_pool_iam_member"
 }
 
+// LocalName returns the local name for [PrivatecaCaPoolIamMember].
 func (pcpim *PrivatecaCaPoolIamMember) LocalName() string {
 	return pcpim.Name
 }
 
+// Configuration returns the configuration (args) for [PrivatecaCaPoolIamMember].
 func (pcpim *PrivatecaCaPoolIamMember) Configuration() interface{} {
 	return pcpim.Args
 }
 
+// DependOn is used for other resources to depend on [PrivatecaCaPoolIamMember].
+func (pcpim *PrivatecaCaPoolIamMember) DependOn() terra.Reference {
+	return terra.ReferenceResource(pcpim)
+}
+
+// Dependencies returns the list of resources [PrivatecaCaPoolIamMember] depends_on.
+func (pcpim *PrivatecaCaPoolIamMember) Dependencies() terra.Dependencies {
+	return pcpim.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PrivatecaCaPoolIamMember].
+func (pcpim *PrivatecaCaPoolIamMember) LifecycleManagement() *terra.Lifecycle {
+	return pcpim.Lifecycle
+}
+
+// Attributes returns the attributes for [PrivatecaCaPoolIamMember].
 func (pcpim *PrivatecaCaPoolIamMember) Attributes() privatecaCaPoolIamMemberAttributes {
 	return privatecaCaPoolIamMemberAttributes{ref: terra.ReferenceResource(pcpim)}
 }
 
+// ImportState imports the given attribute values into [PrivatecaCaPoolIamMember]'s state.
 func (pcpim *PrivatecaCaPoolIamMember) ImportState(av io.Reader) error {
 	pcpim.state = &privatecaCaPoolIamMemberState{}
 	if err := json.NewDecoder(av).Decode(pcpim.state); err != nil {
@@ -49,10 +73,12 @@ func (pcpim *PrivatecaCaPoolIamMember) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PrivatecaCaPoolIamMember] has state.
 func (pcpim *PrivatecaCaPoolIamMember) State() (*privatecaCaPoolIamMemberState, bool) {
 	return pcpim.state, pcpim.state != nil
 }
 
+// StateMust returns the state for [PrivatecaCaPoolIamMember]. Panics if the state is nil.
 func (pcpim *PrivatecaCaPoolIamMember) StateMust() *privatecaCaPoolIamMemberState {
 	if pcpim.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pcpim.Type(), pcpim.LocalName()))
@@ -60,10 +86,7 @@ func (pcpim *PrivatecaCaPoolIamMember) StateMust() *privatecaCaPoolIamMemberStat
 	return pcpim.state
 }
 
-func (pcpim *PrivatecaCaPoolIamMember) DependOn() terra.Reference {
-	return terra.ReferenceResource(pcpim)
-}
-
+// PrivatecaCaPoolIamMemberArgs contains the configurations for google_privateca_ca_pool_iam_member.
 type PrivatecaCaPoolIamMemberArgs struct {
 	// CaPool: string, required
 	CaPool terra.StringValue `hcl:"ca_pool,attr" validate:"required"`
@@ -79,43 +102,48 @@ type PrivatecaCaPoolIamMemberArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *privatecacapooliammember.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that PrivatecaCaPoolIamMember depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type privatecaCaPoolIamMemberAttributes struct {
 	ref terra.Reference
 }
 
+// CaPool returns a reference to field ca_pool of google_privateca_ca_pool_iam_member.
 func (pcpim privatecaCaPoolIamMemberAttributes) CaPool() terra.StringValue {
-	return terra.ReferenceString(pcpim.ref.Append("ca_pool"))
+	return terra.ReferenceAsString(pcpim.ref.Append("ca_pool"))
 }
 
+// Etag returns a reference to field etag of google_privateca_ca_pool_iam_member.
 func (pcpim privatecaCaPoolIamMemberAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(pcpim.ref.Append("etag"))
+	return terra.ReferenceAsString(pcpim.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_privateca_ca_pool_iam_member.
 func (pcpim privatecaCaPoolIamMemberAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pcpim.ref.Append("id"))
+	return terra.ReferenceAsString(pcpim.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_privateca_ca_pool_iam_member.
 func (pcpim privatecaCaPoolIamMemberAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(pcpim.ref.Append("location"))
+	return terra.ReferenceAsString(pcpim.ref.Append("location"))
 }
 
+// Member returns a reference to field member of google_privateca_ca_pool_iam_member.
 func (pcpim privatecaCaPoolIamMemberAttributes) Member() terra.StringValue {
-	return terra.ReferenceString(pcpim.ref.Append("member"))
+	return terra.ReferenceAsString(pcpim.ref.Append("member"))
 }
 
+// Project returns a reference to field project of google_privateca_ca_pool_iam_member.
 func (pcpim privatecaCaPoolIamMemberAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(pcpim.ref.Append("project"))
+	return terra.ReferenceAsString(pcpim.ref.Append("project"))
 }
 
+// Role returns a reference to field role of google_privateca_ca_pool_iam_member.
 func (pcpim privatecaCaPoolIamMemberAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(pcpim.ref.Append("role"))
+	return terra.ReferenceAsString(pcpim.ref.Append("role"))
 }
 
 func (pcpim privatecaCaPoolIamMemberAttributes) Condition() terra.ListValue[privatecacapooliammember.ConditionAttributes] {
-	return terra.ReferenceList[privatecacapooliammember.ConditionAttributes](pcpim.ref.Append("condition"))
+	return terra.ReferenceAsList[privatecacapooliammember.ConditionAttributes](pcpim.ref.Append("condition"))
 }
 
 type privatecaCaPoolIamMemberState struct {

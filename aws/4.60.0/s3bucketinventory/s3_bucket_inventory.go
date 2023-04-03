@@ -61,7 +61,7 @@ func (d DestinationAttributes) InternalWithRef(ref terra.Reference) DestinationA
 	return DestinationAttributes{ref: ref}
 }
 
-func (d DestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (d DestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -81,7 +81,7 @@ func (b BucketAttributes) InternalWithRef(ref terra.Reference) BucketAttributes 
 	return BucketAttributes{ref: ref}
 }
 
-func (b BucketAttributes) InternalTokens() hclwrite.Tokens {
+func (b BucketAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return b.ref.InternalTokens()
 }
 
@@ -117,7 +117,7 @@ func (e EncryptionAttributes) InternalWithRef(ref terra.Reference) EncryptionAtt
 	return EncryptionAttributes{ref: ref}
 }
 
-func (e EncryptionAttributes) InternalTokens() hclwrite.Tokens {
+func (e EncryptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -141,7 +141,7 @@ func (sk SseKmsAttributes) InternalWithRef(ref terra.Reference) SseKmsAttributes
 	return SseKmsAttributes{ref: ref}
 }
 
-func (sk SseKmsAttributes) InternalTokens() hclwrite.Tokens {
+func (sk SseKmsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sk.ref.InternalTokens()
 }
 
@@ -161,7 +161,7 @@ func (ss SseS3Attributes) InternalWithRef(ref terra.Reference) SseS3Attributes {
 	return SseS3Attributes{ref: ref}
 }
 
-func (ss SseS3Attributes) InternalTokens() hclwrite.Tokens {
+func (ss SseS3Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ss.ref.InternalTokens()
 }
 
@@ -177,7 +177,7 @@ func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes 
 	return FilterAttributes{ref: ref}
 }
 
-func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
+func (f FilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -197,7 +197,7 @@ func (s ScheduleAttributes) InternalWithRef(ref terra.Reference) ScheduleAttribu
 	return ScheduleAttributes{ref: ref}
 }
 
-func (s ScheduleAttributes) InternalTokens() hclwrite.Tokens {
+func (s ScheduleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 

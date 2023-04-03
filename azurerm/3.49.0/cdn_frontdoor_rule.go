@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCdnFrontdoorRule creates a new instance of [CdnFrontdoorRule].
 func NewCdnFrontdoorRule(name string, args CdnFrontdoorRuleArgs) *CdnFrontdoorRule {
 	return &CdnFrontdoorRule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCdnFrontdoorRule(name string, args CdnFrontdoorRuleArgs) *CdnFrontdoorRu
 
 var _ terra.Resource = (*CdnFrontdoorRule)(nil)
 
+// CdnFrontdoorRule represents the Terraform resource azurerm_cdn_frontdoor_rule.
 type CdnFrontdoorRule struct {
-	Name  string
-	Args  CdnFrontdoorRuleArgs
-	state *cdnFrontdoorRuleState
+	Name      string
+	Args      CdnFrontdoorRuleArgs
+	state     *cdnFrontdoorRuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CdnFrontdoorRule].
 func (cfr *CdnFrontdoorRule) Type() string {
 	return "azurerm_cdn_frontdoor_rule"
 }
 
+// LocalName returns the local name for [CdnFrontdoorRule].
 func (cfr *CdnFrontdoorRule) LocalName() string {
 	return cfr.Name
 }
 
+// Configuration returns the configuration (args) for [CdnFrontdoorRule].
 func (cfr *CdnFrontdoorRule) Configuration() interface{} {
 	return cfr.Args
 }
 
+// DependOn is used for other resources to depend on [CdnFrontdoorRule].
+func (cfr *CdnFrontdoorRule) DependOn() terra.Reference {
+	return terra.ReferenceResource(cfr)
+}
+
+// Dependencies returns the list of resources [CdnFrontdoorRule] depends_on.
+func (cfr *CdnFrontdoorRule) Dependencies() terra.Dependencies {
+	return cfr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CdnFrontdoorRule].
+func (cfr *CdnFrontdoorRule) LifecycleManagement() *terra.Lifecycle {
+	return cfr.Lifecycle
+}
+
+// Attributes returns the attributes for [CdnFrontdoorRule].
 func (cfr *CdnFrontdoorRule) Attributes() cdnFrontdoorRuleAttributes {
 	return cdnFrontdoorRuleAttributes{ref: terra.ReferenceResource(cfr)}
 }
 
+// ImportState imports the given attribute values into [CdnFrontdoorRule]'s state.
 func (cfr *CdnFrontdoorRule) ImportState(av io.Reader) error {
 	cfr.state = &cdnFrontdoorRuleState{}
 	if err := json.NewDecoder(av).Decode(cfr.state); err != nil {
@@ -49,10 +73,12 @@ func (cfr *CdnFrontdoorRule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CdnFrontdoorRule] has state.
 func (cfr *CdnFrontdoorRule) State() (*cdnFrontdoorRuleState, bool) {
 	return cfr.state, cfr.state != nil
 }
 
+// StateMust returns the state for [CdnFrontdoorRule]. Panics if the state is nil.
 func (cfr *CdnFrontdoorRule) StateMust() *cdnFrontdoorRuleState {
 	if cfr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cfr.Type(), cfr.LocalName()))
@@ -60,10 +86,7 @@ func (cfr *CdnFrontdoorRule) StateMust() *cdnFrontdoorRuleState {
 	return cfr.state
 }
 
-func (cfr *CdnFrontdoorRule) DependOn() terra.Reference {
-	return terra.ReferenceResource(cfr)
-}
-
+// CdnFrontdoorRuleArgs contains the configurations for azurerm_cdn_frontdoor_rule.
 type CdnFrontdoorRuleArgs struct {
 	// BehaviorOnMatch: string, optional
 	BehaviorOnMatch terra.StringValue `hcl:"behavior_on_match,attr"`
@@ -81,47 +104,51 @@ type CdnFrontdoorRuleArgs struct {
 	Conditions *cdnfrontdoorrule.Conditions `hcl:"conditions,block"`
 	// Timeouts: optional
 	Timeouts *cdnfrontdoorrule.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that CdnFrontdoorRule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cdnFrontdoorRuleAttributes struct {
 	ref terra.Reference
 }
 
+// BehaviorOnMatch returns a reference to field behavior_on_match of azurerm_cdn_frontdoor_rule.
 func (cfr cdnFrontdoorRuleAttributes) BehaviorOnMatch() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("behavior_on_match"))
+	return terra.ReferenceAsString(cfr.ref.Append("behavior_on_match"))
 }
 
+// CdnFrontdoorRuleSetId returns a reference to field cdn_frontdoor_rule_set_id of azurerm_cdn_frontdoor_rule.
 func (cfr cdnFrontdoorRuleAttributes) CdnFrontdoorRuleSetId() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("cdn_frontdoor_rule_set_id"))
+	return terra.ReferenceAsString(cfr.ref.Append("cdn_frontdoor_rule_set_id"))
 }
 
+// CdnFrontdoorRuleSetName returns a reference to field cdn_frontdoor_rule_set_name of azurerm_cdn_frontdoor_rule.
 func (cfr cdnFrontdoorRuleAttributes) CdnFrontdoorRuleSetName() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("cdn_frontdoor_rule_set_name"))
+	return terra.ReferenceAsString(cfr.ref.Append("cdn_frontdoor_rule_set_name"))
 }
 
+// Id returns a reference to field id of azurerm_cdn_frontdoor_rule.
 func (cfr cdnFrontdoorRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("id"))
+	return terra.ReferenceAsString(cfr.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_cdn_frontdoor_rule.
 func (cfr cdnFrontdoorRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("name"))
+	return terra.ReferenceAsString(cfr.ref.Append("name"))
 }
 
+// Order returns a reference to field order of azurerm_cdn_frontdoor_rule.
 func (cfr cdnFrontdoorRuleAttributes) Order() terra.NumberValue {
-	return terra.ReferenceNumber(cfr.ref.Append("order"))
+	return terra.ReferenceAsNumber(cfr.ref.Append("order"))
 }
 
 func (cfr cdnFrontdoorRuleAttributes) Actions() terra.ListValue[cdnfrontdoorrule.ActionsAttributes] {
-	return terra.ReferenceList[cdnfrontdoorrule.ActionsAttributes](cfr.ref.Append("actions"))
+	return terra.ReferenceAsList[cdnfrontdoorrule.ActionsAttributes](cfr.ref.Append("actions"))
 }
 
 func (cfr cdnFrontdoorRuleAttributes) Conditions() terra.ListValue[cdnfrontdoorrule.ConditionsAttributes] {
-	return terra.ReferenceList[cdnfrontdoorrule.ConditionsAttributes](cfr.ref.Append("conditions"))
+	return terra.ReferenceAsList[cdnfrontdoorrule.ConditionsAttributes](cfr.ref.Append("conditions"))
 }
 
 func (cfr cdnFrontdoorRuleAttributes) Timeouts() cdnfrontdoorrule.TimeoutsAttributes {
-	return terra.ReferenceSingle[cdnfrontdoorrule.TimeoutsAttributes](cfr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cdnfrontdoorrule.TimeoutsAttributes](cfr.ref.Append("timeouts"))
 }
 
 type cdnFrontdoorRuleState struct {

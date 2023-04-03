@@ -98,264 +98,264 @@ type AllUpdatesRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (aur AllUpdatesRuleAttributes) InternalRef() terra.Reference {
-	return aur.ref
+func (aur AllUpdatesRuleAttributes) InternalRef() (terra.Reference, error) {
+	return aur.ref, nil
 }
 
 func (aur AllUpdatesRuleAttributes) InternalWithRef(ref terra.Reference) AllUpdatesRuleAttributes {
 	return AllUpdatesRuleAttributes{ref: ref}
 }
 
-func (aur AllUpdatesRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (aur AllUpdatesRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aur.ref.InternalTokens()
 }
 
 func (aur AllUpdatesRuleAttributes) DisableDefaultIamRecipients() terra.BoolValue {
-	return terra.ReferenceBool(aur.ref.Append("disable_default_iam_recipients"))
+	return terra.ReferenceAsBool(aur.ref.Append("disable_default_iam_recipients"))
 }
 
 func (aur AllUpdatesRuleAttributes) MonitoringNotificationChannels() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](aur.ref.Append("monitoring_notification_channels"))
+	return terra.ReferenceAsList[terra.StringValue](aur.ref.Append("monitoring_notification_channels"))
 }
 
 func (aur AllUpdatesRuleAttributes) PubsubTopic() terra.StringValue {
-	return terra.ReferenceString(aur.ref.Append("pubsub_topic"))
+	return terra.ReferenceAsString(aur.ref.Append("pubsub_topic"))
 }
 
 func (aur AllUpdatesRuleAttributes) SchemaVersion() terra.StringValue {
-	return terra.ReferenceString(aur.ref.Append("schema_version"))
+	return terra.ReferenceAsString(aur.ref.Append("schema_version"))
 }
 
 type AmountAttributes struct {
 	ref terra.Reference
 }
 
-func (a AmountAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AmountAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AmountAttributes) InternalWithRef(ref terra.Reference) AmountAttributes {
 	return AmountAttributes{ref: ref}
 }
 
-func (a AmountAttributes) InternalTokens() hclwrite.Tokens {
+func (a AmountAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a AmountAttributes) LastPeriodAmount() terra.BoolValue {
-	return terra.ReferenceBool(a.ref.Append("last_period_amount"))
+	return terra.ReferenceAsBool(a.ref.Append("last_period_amount"))
 }
 
 func (a AmountAttributes) SpecifiedAmount() terra.ListValue[SpecifiedAmountAttributes] {
-	return terra.ReferenceList[SpecifiedAmountAttributes](a.ref.Append("specified_amount"))
+	return terra.ReferenceAsList[SpecifiedAmountAttributes](a.ref.Append("specified_amount"))
 }
 
 type SpecifiedAmountAttributes struct {
 	ref terra.Reference
 }
 
-func (sa SpecifiedAmountAttributes) InternalRef() terra.Reference {
-	return sa.ref
+func (sa SpecifiedAmountAttributes) InternalRef() (terra.Reference, error) {
+	return sa.ref, nil
 }
 
 func (sa SpecifiedAmountAttributes) InternalWithRef(ref terra.Reference) SpecifiedAmountAttributes {
 	return SpecifiedAmountAttributes{ref: ref}
 }
 
-func (sa SpecifiedAmountAttributes) InternalTokens() hclwrite.Tokens {
+func (sa SpecifiedAmountAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sa.ref.InternalTokens()
 }
 
 func (sa SpecifiedAmountAttributes) CurrencyCode() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("currency_code"))
+	return terra.ReferenceAsString(sa.ref.Append("currency_code"))
 }
 
 func (sa SpecifiedAmountAttributes) Nanos() terra.NumberValue {
-	return terra.ReferenceNumber(sa.ref.Append("nanos"))
+	return terra.ReferenceAsNumber(sa.ref.Append("nanos"))
 }
 
 func (sa SpecifiedAmountAttributes) Units() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("units"))
+	return terra.ReferenceAsString(sa.ref.Append("units"))
 }
 
 type BudgetFilterAttributes struct {
 	ref terra.Reference
 }
 
-func (bf BudgetFilterAttributes) InternalRef() terra.Reference {
-	return bf.ref
+func (bf BudgetFilterAttributes) InternalRef() (terra.Reference, error) {
+	return bf.ref, nil
 }
 
 func (bf BudgetFilterAttributes) InternalWithRef(ref terra.Reference) BudgetFilterAttributes {
 	return BudgetFilterAttributes{ref: ref}
 }
 
-func (bf BudgetFilterAttributes) InternalTokens() hclwrite.Tokens {
+func (bf BudgetFilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bf.ref.InternalTokens()
 }
 
 func (bf BudgetFilterAttributes) CalendarPeriod() terra.StringValue {
-	return terra.ReferenceString(bf.ref.Append("calendar_period"))
+	return terra.ReferenceAsString(bf.ref.Append("calendar_period"))
 }
 
 func (bf BudgetFilterAttributes) CreditTypes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](bf.ref.Append("credit_types"))
+	return terra.ReferenceAsList[terra.StringValue](bf.ref.Append("credit_types"))
 }
 
 func (bf BudgetFilterAttributes) CreditTypesTreatment() terra.StringValue {
-	return terra.ReferenceString(bf.ref.Append("credit_types_treatment"))
+	return terra.ReferenceAsString(bf.ref.Append("credit_types_treatment"))
 }
 
 func (bf BudgetFilterAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bf.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](bf.ref.Append("labels"))
 }
 
 func (bf BudgetFilterAttributes) Projects() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](bf.ref.Append("projects"))
+	return terra.ReferenceAsSet[terra.StringValue](bf.ref.Append("projects"))
 }
 
 func (bf BudgetFilterAttributes) Services() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](bf.ref.Append("services"))
+	return terra.ReferenceAsList[terra.StringValue](bf.ref.Append("services"))
 }
 
 func (bf BudgetFilterAttributes) Subaccounts() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](bf.ref.Append("subaccounts"))
+	return terra.ReferenceAsList[terra.StringValue](bf.ref.Append("subaccounts"))
 }
 
 func (bf BudgetFilterAttributes) CustomPeriod() terra.ListValue[CustomPeriodAttributes] {
-	return terra.ReferenceList[CustomPeriodAttributes](bf.ref.Append("custom_period"))
+	return terra.ReferenceAsList[CustomPeriodAttributes](bf.ref.Append("custom_period"))
 }
 
 type CustomPeriodAttributes struct {
 	ref terra.Reference
 }
 
-func (cp CustomPeriodAttributes) InternalRef() terra.Reference {
-	return cp.ref
+func (cp CustomPeriodAttributes) InternalRef() (terra.Reference, error) {
+	return cp.ref, nil
 }
 
 func (cp CustomPeriodAttributes) InternalWithRef(ref terra.Reference) CustomPeriodAttributes {
 	return CustomPeriodAttributes{ref: ref}
 }
 
-func (cp CustomPeriodAttributes) InternalTokens() hclwrite.Tokens {
+func (cp CustomPeriodAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cp.ref.InternalTokens()
 }
 
 func (cp CustomPeriodAttributes) EndDate() terra.ListValue[EndDateAttributes] {
-	return terra.ReferenceList[EndDateAttributes](cp.ref.Append("end_date"))
+	return terra.ReferenceAsList[EndDateAttributes](cp.ref.Append("end_date"))
 }
 
 func (cp CustomPeriodAttributes) StartDate() terra.ListValue[StartDateAttributes] {
-	return terra.ReferenceList[StartDateAttributes](cp.ref.Append("start_date"))
+	return terra.ReferenceAsList[StartDateAttributes](cp.ref.Append("start_date"))
 }
 
 type EndDateAttributes struct {
 	ref terra.Reference
 }
 
-func (ed EndDateAttributes) InternalRef() terra.Reference {
-	return ed.ref
+func (ed EndDateAttributes) InternalRef() (terra.Reference, error) {
+	return ed.ref, nil
 }
 
 func (ed EndDateAttributes) InternalWithRef(ref terra.Reference) EndDateAttributes {
 	return EndDateAttributes{ref: ref}
 }
 
-func (ed EndDateAttributes) InternalTokens() hclwrite.Tokens {
+func (ed EndDateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ed.ref.InternalTokens()
 }
 
 func (ed EndDateAttributes) Day() terra.NumberValue {
-	return terra.ReferenceNumber(ed.ref.Append("day"))
+	return terra.ReferenceAsNumber(ed.ref.Append("day"))
 }
 
 func (ed EndDateAttributes) Month() terra.NumberValue {
-	return terra.ReferenceNumber(ed.ref.Append("month"))
+	return terra.ReferenceAsNumber(ed.ref.Append("month"))
 }
 
 func (ed EndDateAttributes) Year() terra.NumberValue {
-	return terra.ReferenceNumber(ed.ref.Append("year"))
+	return terra.ReferenceAsNumber(ed.ref.Append("year"))
 }
 
 type StartDateAttributes struct {
 	ref terra.Reference
 }
 
-func (sd StartDateAttributes) InternalRef() terra.Reference {
-	return sd.ref
+func (sd StartDateAttributes) InternalRef() (terra.Reference, error) {
+	return sd.ref, nil
 }
 
 func (sd StartDateAttributes) InternalWithRef(ref terra.Reference) StartDateAttributes {
 	return StartDateAttributes{ref: ref}
 }
 
-func (sd StartDateAttributes) InternalTokens() hclwrite.Tokens {
+func (sd StartDateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sd.ref.InternalTokens()
 }
 
 func (sd StartDateAttributes) Day() terra.NumberValue {
-	return terra.ReferenceNumber(sd.ref.Append("day"))
+	return terra.ReferenceAsNumber(sd.ref.Append("day"))
 }
 
 func (sd StartDateAttributes) Month() terra.NumberValue {
-	return terra.ReferenceNumber(sd.ref.Append("month"))
+	return terra.ReferenceAsNumber(sd.ref.Append("month"))
 }
 
 func (sd StartDateAttributes) Year() terra.NumberValue {
-	return terra.ReferenceNumber(sd.ref.Append("year"))
+	return terra.ReferenceAsNumber(sd.ref.Append("year"))
 }
 
 type ThresholdRulesAttributes struct {
 	ref terra.Reference
 }
 
-func (tr ThresholdRulesAttributes) InternalRef() terra.Reference {
-	return tr.ref
+func (tr ThresholdRulesAttributes) InternalRef() (terra.Reference, error) {
+	return tr.ref, nil
 }
 
 func (tr ThresholdRulesAttributes) InternalWithRef(ref terra.Reference) ThresholdRulesAttributes {
 	return ThresholdRulesAttributes{ref: ref}
 }
 
-func (tr ThresholdRulesAttributes) InternalTokens() hclwrite.Tokens {
+func (tr ThresholdRulesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tr.ref.InternalTokens()
 }
 
 func (tr ThresholdRulesAttributes) SpendBasis() terra.StringValue {
-	return terra.ReferenceString(tr.ref.Append("spend_basis"))
+	return terra.ReferenceAsString(tr.ref.Append("spend_basis"))
 }
 
 func (tr ThresholdRulesAttributes) ThresholdPercent() terra.NumberValue {
-	return terra.ReferenceNumber(tr.ref.Append("threshold_percent"))
+	return terra.ReferenceAsNumber(tr.ref.Append("threshold_percent"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AllUpdatesRuleState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCertificateManagerDnsAuthorization creates a new instance of [CertificateManagerDnsAuthorization].
 func NewCertificateManagerDnsAuthorization(name string, args CertificateManagerDnsAuthorizationArgs) *CertificateManagerDnsAuthorization {
 	return &CertificateManagerDnsAuthorization{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCertificateManagerDnsAuthorization(name string, args CertificateManagerD
 
 var _ terra.Resource = (*CertificateManagerDnsAuthorization)(nil)
 
+// CertificateManagerDnsAuthorization represents the Terraform resource google_certificate_manager_dns_authorization.
 type CertificateManagerDnsAuthorization struct {
-	Name  string
-	Args  CertificateManagerDnsAuthorizationArgs
-	state *certificateManagerDnsAuthorizationState
+	Name      string
+	Args      CertificateManagerDnsAuthorizationArgs
+	state     *certificateManagerDnsAuthorizationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CertificateManagerDnsAuthorization].
 func (cmda *CertificateManagerDnsAuthorization) Type() string {
 	return "google_certificate_manager_dns_authorization"
 }
 
+// LocalName returns the local name for [CertificateManagerDnsAuthorization].
 func (cmda *CertificateManagerDnsAuthorization) LocalName() string {
 	return cmda.Name
 }
 
+// Configuration returns the configuration (args) for [CertificateManagerDnsAuthorization].
 func (cmda *CertificateManagerDnsAuthorization) Configuration() interface{} {
 	return cmda.Args
 }
 
+// DependOn is used for other resources to depend on [CertificateManagerDnsAuthorization].
+func (cmda *CertificateManagerDnsAuthorization) DependOn() terra.Reference {
+	return terra.ReferenceResource(cmda)
+}
+
+// Dependencies returns the list of resources [CertificateManagerDnsAuthorization] depends_on.
+func (cmda *CertificateManagerDnsAuthorization) Dependencies() terra.Dependencies {
+	return cmda.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CertificateManagerDnsAuthorization].
+func (cmda *CertificateManagerDnsAuthorization) LifecycleManagement() *terra.Lifecycle {
+	return cmda.Lifecycle
+}
+
+// Attributes returns the attributes for [CertificateManagerDnsAuthorization].
 func (cmda *CertificateManagerDnsAuthorization) Attributes() certificateManagerDnsAuthorizationAttributes {
 	return certificateManagerDnsAuthorizationAttributes{ref: terra.ReferenceResource(cmda)}
 }
 
+// ImportState imports the given attribute values into [CertificateManagerDnsAuthorization]'s state.
 func (cmda *CertificateManagerDnsAuthorization) ImportState(av io.Reader) error {
 	cmda.state = &certificateManagerDnsAuthorizationState{}
 	if err := json.NewDecoder(av).Decode(cmda.state); err != nil {
@@ -49,10 +73,12 @@ func (cmda *CertificateManagerDnsAuthorization) ImportState(av io.Reader) error 
 	return nil
 }
 
+// State returns the state and a bool indicating if [CertificateManagerDnsAuthorization] has state.
 func (cmda *CertificateManagerDnsAuthorization) State() (*certificateManagerDnsAuthorizationState, bool) {
 	return cmda.state, cmda.state != nil
 }
 
+// StateMust returns the state for [CertificateManagerDnsAuthorization]. Panics if the state is nil.
 func (cmda *CertificateManagerDnsAuthorization) StateMust() *certificateManagerDnsAuthorizationState {
 	if cmda.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cmda.Type(), cmda.LocalName()))
@@ -60,10 +86,7 @@ func (cmda *CertificateManagerDnsAuthorization) StateMust() *certificateManagerD
 	return cmda.state
 }
 
-func (cmda *CertificateManagerDnsAuthorization) DependOn() terra.Reference {
-	return terra.ReferenceResource(cmda)
-}
-
+// CertificateManagerDnsAuthorizationArgs contains the configurations for google_certificate_manager_dns_authorization.
 type CertificateManagerDnsAuthorizationArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -81,43 +104,47 @@ type CertificateManagerDnsAuthorizationArgs struct {
 	DnsResourceRecord []certificatemanagerdnsauthorization.DnsResourceRecord `hcl:"dns_resource_record,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *certificatemanagerdnsauthorization.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that CertificateManagerDnsAuthorization depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type certificateManagerDnsAuthorizationAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of google_certificate_manager_dns_authorization.
 func (cmda certificateManagerDnsAuthorizationAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cmda.ref.Append("description"))
+	return terra.ReferenceAsString(cmda.ref.Append("description"))
 }
 
+// Domain returns a reference to field domain of google_certificate_manager_dns_authorization.
 func (cmda certificateManagerDnsAuthorizationAttributes) Domain() terra.StringValue {
-	return terra.ReferenceString(cmda.ref.Append("domain"))
+	return terra.ReferenceAsString(cmda.ref.Append("domain"))
 }
 
+// Id returns a reference to field id of google_certificate_manager_dns_authorization.
 func (cmda certificateManagerDnsAuthorizationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cmda.ref.Append("id"))
+	return terra.ReferenceAsString(cmda.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_certificate_manager_dns_authorization.
 func (cmda certificateManagerDnsAuthorizationAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cmda.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](cmda.ref.Append("labels"))
 }
 
+// Name returns a reference to field name of google_certificate_manager_dns_authorization.
 func (cmda certificateManagerDnsAuthorizationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cmda.ref.Append("name"))
+	return terra.ReferenceAsString(cmda.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_certificate_manager_dns_authorization.
 func (cmda certificateManagerDnsAuthorizationAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cmda.ref.Append("project"))
+	return terra.ReferenceAsString(cmda.ref.Append("project"))
 }
 
 func (cmda certificateManagerDnsAuthorizationAttributes) DnsResourceRecord() terra.ListValue[certificatemanagerdnsauthorization.DnsResourceRecordAttributes] {
-	return terra.ReferenceList[certificatemanagerdnsauthorization.DnsResourceRecordAttributes](cmda.ref.Append("dns_resource_record"))
+	return terra.ReferenceAsList[certificatemanagerdnsauthorization.DnsResourceRecordAttributes](cmda.ref.Append("dns_resource_record"))
 }
 
 func (cmda certificateManagerDnsAuthorizationAttributes) Timeouts() certificatemanagerdnsauthorization.TimeoutsAttributes {
-	return terra.ReferenceSingle[certificatemanagerdnsauthorization.TimeoutsAttributes](cmda.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[certificatemanagerdnsauthorization.TimeoutsAttributes](cmda.ref.Append("timeouts"))
 }
 
 type certificateManagerDnsAuthorizationState struct {

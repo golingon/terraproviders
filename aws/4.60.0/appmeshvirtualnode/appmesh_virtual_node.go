@@ -505,7 +505,7 @@ func (s SpecAttributes) InternalWithRef(ref terra.Reference) SpecAttributes {
 	return SpecAttributes{ref: ref}
 }
 
-func (s SpecAttributes) InternalTokens() hclwrite.Tokens {
+func (s SpecAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -541,7 +541,7 @@ func (b BackendAttributes) InternalWithRef(ref terra.Reference) BackendAttribute
 	return BackendAttributes{ref: ref}
 }
 
-func (b BackendAttributes) InternalTokens() hclwrite.Tokens {
+func (b BackendAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return b.ref.InternalTokens()
 }
 
@@ -561,7 +561,7 @@ func (vs VirtualServiceAttributes) InternalWithRef(ref terra.Reference) VirtualS
 	return VirtualServiceAttributes{ref: ref}
 }
 
-func (vs VirtualServiceAttributes) InternalTokens() hclwrite.Tokens {
+func (vs VirtualServiceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vs.ref.InternalTokens()
 }
 
@@ -585,7 +585,7 @@ func (cp VirtualServiceClientPolicyAttributes) InternalWithRef(ref terra.Referen
 	return VirtualServiceClientPolicyAttributes{ref: ref}
 }
 
-func (cp VirtualServiceClientPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (cp VirtualServiceClientPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cp.ref.InternalTokens()
 }
 
@@ -605,7 +605,7 @@ func (t VirtualServiceClientPolicyTlsAttributes) InternalWithRef(ref terra.Refer
 	return VirtualServiceClientPolicyTlsAttributes{ref: ref}
 }
 
-func (t VirtualServiceClientPolicyTlsAttributes) InternalTokens() hclwrite.Tokens {
+func (t VirtualServiceClientPolicyTlsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -637,7 +637,7 @@ func (c VirtualServiceClientPolicyTlsCertificateAttributes) InternalWithRef(ref 
 	return VirtualServiceClientPolicyTlsCertificateAttributes{ref: ref}
 }
 
-func (c VirtualServiceClientPolicyTlsCertificateAttributes) InternalTokens() hclwrite.Tokens {
+func (c VirtualServiceClientPolicyTlsCertificateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -661,7 +661,7 @@ func (f VirtualServiceClientPolicyTlsCertificateFileAttributes) InternalWithRef(
 	return VirtualServiceClientPolicyTlsCertificateFileAttributes{ref: ref}
 }
 
-func (f VirtualServiceClientPolicyTlsCertificateFileAttributes) InternalTokens() hclwrite.Tokens {
+func (f VirtualServiceClientPolicyTlsCertificateFileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -685,7 +685,7 @@ func (s VirtualServiceClientPolicyTlsCertificateSdsAttributes) InternalWithRef(r
 	return VirtualServiceClientPolicyTlsCertificateSdsAttributes{ref: ref}
 }
 
-func (s VirtualServiceClientPolicyTlsCertificateSdsAttributes) InternalTokens() hclwrite.Tokens {
+func (s VirtualServiceClientPolicyTlsCertificateSdsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -705,7 +705,7 @@ func (v VirtualServiceClientPolicyTlsValidationAttributes) InternalWithRef(ref t
 	return VirtualServiceClientPolicyTlsValidationAttributes{ref: ref}
 }
 
-func (v VirtualServiceClientPolicyTlsValidationAttributes) InternalTokens() hclwrite.Tokens {
+func (v VirtualServiceClientPolicyTlsValidationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 
@@ -729,7 +729,7 @@ func (san VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesAttribut
 	return VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesAttributes{ref: ref}
 }
 
-func (san VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesAttributes) InternalTokens() hclwrite.Tokens {
+func (san VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return san.ref.InternalTokens()
 }
 
@@ -749,7 +749,7 @@ func (m VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesMatchAttri
 	return VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesMatchAttributes{ref: ref}
 }
 
-func (m VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesMatchAttributes) InternalTokens() hclwrite.Tokens {
+func (m VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesMatchAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -769,7 +769,7 @@ func (t VirtualServiceClientPolicyTlsValidationTrustAttributes) InternalWithRef(
 	return VirtualServiceClientPolicyTlsValidationTrustAttributes{ref: ref}
 }
 
-func (t VirtualServiceClientPolicyTlsValidationTrustAttributes) InternalTokens() hclwrite.Tokens {
+func (t VirtualServiceClientPolicyTlsValidationTrustAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -797,7 +797,7 @@ func (a VirtualServiceClientPolicyTlsValidationTrustAcmAttributes) InternalWithR
 	return VirtualServiceClientPolicyTlsValidationTrustAcmAttributes{ref: ref}
 }
 
-func (a VirtualServiceClientPolicyTlsValidationTrustAcmAttributes) InternalTokens() hclwrite.Tokens {
+func (a VirtualServiceClientPolicyTlsValidationTrustAcmAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -817,7 +817,7 @@ func (f VirtualServiceClientPolicyTlsValidationTrustFileAttributes) InternalWith
 	return VirtualServiceClientPolicyTlsValidationTrustFileAttributes{ref: ref}
 }
 
-func (f VirtualServiceClientPolicyTlsValidationTrustFileAttributes) InternalTokens() hclwrite.Tokens {
+func (f VirtualServiceClientPolicyTlsValidationTrustFileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -837,7 +837,7 @@ func (s VirtualServiceClientPolicyTlsValidationTrustSdsAttributes) InternalWithR
 	return VirtualServiceClientPolicyTlsValidationTrustSdsAttributes{ref: ref}
 }
 
-func (s VirtualServiceClientPolicyTlsValidationTrustSdsAttributes) InternalTokens() hclwrite.Tokens {
+func (s VirtualServiceClientPolicyTlsValidationTrustSdsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -857,7 +857,7 @@ func (bd BackendDefaultsAttributes) InternalWithRef(ref terra.Reference) Backend
 	return BackendDefaultsAttributes{ref: ref}
 }
 
-func (bd BackendDefaultsAttributes) InternalTokens() hclwrite.Tokens {
+func (bd BackendDefaultsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bd.ref.InternalTokens()
 }
 
@@ -877,7 +877,7 @@ func (cp BackendDefaultsClientPolicyAttributes) InternalWithRef(ref terra.Refere
 	return BackendDefaultsClientPolicyAttributes{ref: ref}
 }
 
-func (cp BackendDefaultsClientPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (cp BackendDefaultsClientPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cp.ref.InternalTokens()
 }
 
@@ -897,7 +897,7 @@ func (t BackendDefaultsClientPolicyTlsAttributes) InternalWithRef(ref terra.Refe
 	return BackendDefaultsClientPolicyTlsAttributes{ref: ref}
 }
 
-func (t BackendDefaultsClientPolicyTlsAttributes) InternalTokens() hclwrite.Tokens {
+func (t BackendDefaultsClientPolicyTlsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -929,7 +929,7 @@ func (c BackendDefaultsClientPolicyTlsCertificateAttributes) InternalWithRef(ref
 	return BackendDefaultsClientPolicyTlsCertificateAttributes{ref: ref}
 }
 
-func (c BackendDefaultsClientPolicyTlsCertificateAttributes) InternalTokens() hclwrite.Tokens {
+func (c BackendDefaultsClientPolicyTlsCertificateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -953,7 +953,7 @@ func (f BackendDefaultsClientPolicyTlsCertificateFileAttributes) InternalWithRef
 	return BackendDefaultsClientPolicyTlsCertificateFileAttributes{ref: ref}
 }
 
-func (f BackendDefaultsClientPolicyTlsCertificateFileAttributes) InternalTokens() hclwrite.Tokens {
+func (f BackendDefaultsClientPolicyTlsCertificateFileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -977,7 +977,7 @@ func (s BackendDefaultsClientPolicyTlsCertificateSdsAttributes) InternalWithRef(
 	return BackendDefaultsClientPolicyTlsCertificateSdsAttributes{ref: ref}
 }
 
-func (s BackendDefaultsClientPolicyTlsCertificateSdsAttributes) InternalTokens() hclwrite.Tokens {
+func (s BackendDefaultsClientPolicyTlsCertificateSdsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -997,7 +997,7 @@ func (v BackendDefaultsClientPolicyTlsValidationAttributes) InternalWithRef(ref 
 	return BackendDefaultsClientPolicyTlsValidationAttributes{ref: ref}
 }
 
-func (v BackendDefaultsClientPolicyTlsValidationAttributes) InternalTokens() hclwrite.Tokens {
+func (v BackendDefaultsClientPolicyTlsValidationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 
@@ -1021,7 +1021,7 @@ func (san BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesAttribu
 	return BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesAttributes{ref: ref}
 }
 
-func (san BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesAttributes) InternalTokens() hclwrite.Tokens {
+func (san BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return san.ref.InternalTokens()
 }
 
@@ -1041,7 +1041,7 @@ func (m BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesMatchAttr
 	return BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesMatchAttributes{ref: ref}
 }
 
-func (m BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesMatchAttributes) InternalTokens() hclwrite.Tokens {
+func (m BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesMatchAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -1061,7 +1061,7 @@ func (t BackendDefaultsClientPolicyTlsValidationTrustAttributes) InternalWithRef
 	return BackendDefaultsClientPolicyTlsValidationTrustAttributes{ref: ref}
 }
 
-func (t BackendDefaultsClientPolicyTlsValidationTrustAttributes) InternalTokens() hclwrite.Tokens {
+func (t BackendDefaultsClientPolicyTlsValidationTrustAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -1089,7 +1089,7 @@ func (a BackendDefaultsClientPolicyTlsValidationTrustAcmAttributes) InternalWith
 	return BackendDefaultsClientPolicyTlsValidationTrustAcmAttributes{ref: ref}
 }
 
-func (a BackendDefaultsClientPolicyTlsValidationTrustAcmAttributes) InternalTokens() hclwrite.Tokens {
+func (a BackendDefaultsClientPolicyTlsValidationTrustAcmAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -1109,7 +1109,7 @@ func (f BackendDefaultsClientPolicyTlsValidationTrustFileAttributes) InternalWit
 	return BackendDefaultsClientPolicyTlsValidationTrustFileAttributes{ref: ref}
 }
 
-func (f BackendDefaultsClientPolicyTlsValidationTrustFileAttributes) InternalTokens() hclwrite.Tokens {
+func (f BackendDefaultsClientPolicyTlsValidationTrustFileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -1129,7 +1129,7 @@ func (s BackendDefaultsClientPolicyTlsValidationTrustSdsAttributes) InternalWith
 	return BackendDefaultsClientPolicyTlsValidationTrustSdsAttributes{ref: ref}
 }
 
-func (s BackendDefaultsClientPolicyTlsValidationTrustSdsAttributes) InternalTokens() hclwrite.Tokens {
+func (s BackendDefaultsClientPolicyTlsValidationTrustSdsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -1149,7 +1149,7 @@ func (l ListenerAttributes) InternalWithRef(ref terra.Reference) ListenerAttribu
 	return ListenerAttributes{ref: ref}
 }
 
-func (l ListenerAttributes) InternalTokens() hclwrite.Tokens {
+func (l ListenerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 
@@ -1189,7 +1189,7 @@ func (cp ConnectionPoolAttributes) InternalWithRef(ref terra.Reference) Connecti
 	return ConnectionPoolAttributes{ref: ref}
 }
 
-func (cp ConnectionPoolAttributes) InternalTokens() hclwrite.Tokens {
+func (cp ConnectionPoolAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cp.ref.InternalTokens()
 }
 
@@ -1221,7 +1221,7 @@ func (g ConnectionPoolGrpcAttributes) InternalWithRef(ref terra.Reference) Conne
 	return ConnectionPoolGrpcAttributes{ref: ref}
 }
 
-func (g ConnectionPoolGrpcAttributes) InternalTokens() hclwrite.Tokens {
+func (g ConnectionPoolGrpcAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return g.ref.InternalTokens()
 }
 
@@ -1241,7 +1241,7 @@ func (h ConnectionPoolHttpAttributes) InternalWithRef(ref terra.Reference) Conne
 	return ConnectionPoolHttpAttributes{ref: ref}
 }
 
-func (h ConnectionPoolHttpAttributes) InternalTokens() hclwrite.Tokens {
+func (h ConnectionPoolHttpAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 
@@ -1265,7 +1265,7 @@ func (h ConnectionPoolHttp2Attributes) InternalWithRef(ref terra.Reference) Conn
 	return ConnectionPoolHttp2Attributes{ref: ref}
 }
 
-func (h ConnectionPoolHttp2Attributes) InternalTokens() hclwrite.Tokens {
+func (h ConnectionPoolHttp2Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 
@@ -1285,7 +1285,7 @@ func (t ConnectionPoolTcpAttributes) InternalWithRef(ref terra.Reference) Connec
 	return ConnectionPoolTcpAttributes{ref: ref}
 }
 
-func (t ConnectionPoolTcpAttributes) InternalTokens() hclwrite.Tokens {
+func (t ConnectionPoolTcpAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -1305,7 +1305,7 @@ func (hc HealthCheckAttributes) InternalWithRef(ref terra.Reference) HealthCheck
 	return HealthCheckAttributes{ref: ref}
 }
 
-func (hc HealthCheckAttributes) InternalTokens() hclwrite.Tokens {
+func (hc HealthCheckAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hc.ref.InternalTokens()
 }
 
@@ -1349,7 +1349,7 @@ func (od OutlierDetectionAttributes) InternalWithRef(ref terra.Reference) Outlie
 	return OutlierDetectionAttributes{ref: ref}
 }
 
-func (od OutlierDetectionAttributes) InternalTokens() hclwrite.Tokens {
+func (od OutlierDetectionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return od.ref.InternalTokens()
 }
 
@@ -1381,7 +1381,7 @@ func (bed BaseEjectionDurationAttributes) InternalWithRef(ref terra.Reference) B
 	return BaseEjectionDurationAttributes{ref: ref}
 }
 
-func (bed BaseEjectionDurationAttributes) InternalTokens() hclwrite.Tokens {
+func (bed BaseEjectionDurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bed.ref.InternalTokens()
 }
 
@@ -1405,7 +1405,7 @@ func (i IntervalAttributes) InternalWithRef(ref terra.Reference) IntervalAttribu
 	return IntervalAttributes{ref: ref}
 }
 
-func (i IntervalAttributes) InternalTokens() hclwrite.Tokens {
+func (i IntervalAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -1429,7 +1429,7 @@ func (pm PortMappingAttributes) InternalWithRef(ref terra.Reference) PortMapping
 	return PortMappingAttributes{ref: ref}
 }
 
-func (pm PortMappingAttributes) InternalTokens() hclwrite.Tokens {
+func (pm PortMappingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pm.ref.InternalTokens()
 }
 
@@ -1453,7 +1453,7 @@ func (t TimeoutAttributes) InternalWithRef(ref terra.Reference) TimeoutAttribute
 	return TimeoutAttributes{ref: ref}
 }
 
-func (t TimeoutAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -1485,7 +1485,7 @@ func (g TimeoutGrpcAttributes) InternalWithRef(ref terra.Reference) TimeoutGrpcA
 	return TimeoutGrpcAttributes{ref: ref}
 }
 
-func (g TimeoutGrpcAttributes) InternalTokens() hclwrite.Tokens {
+func (g TimeoutGrpcAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return g.ref.InternalTokens()
 }
 
@@ -1509,7 +1509,7 @@ func (i GrpcIdleAttributes) InternalWithRef(ref terra.Reference) GrpcIdleAttribu
 	return GrpcIdleAttributes{ref: ref}
 }
 
-func (i GrpcIdleAttributes) InternalTokens() hclwrite.Tokens {
+func (i GrpcIdleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -1533,7 +1533,7 @@ func (pr GrpcPerRequestAttributes) InternalWithRef(ref terra.Reference) GrpcPerR
 	return GrpcPerRequestAttributes{ref: ref}
 }
 
-func (pr GrpcPerRequestAttributes) InternalTokens() hclwrite.Tokens {
+func (pr GrpcPerRequestAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pr.ref.InternalTokens()
 }
 
@@ -1557,7 +1557,7 @@ func (h TimeoutHttpAttributes) InternalWithRef(ref terra.Reference) TimeoutHttpA
 	return TimeoutHttpAttributes{ref: ref}
 }
 
-func (h TimeoutHttpAttributes) InternalTokens() hclwrite.Tokens {
+func (h TimeoutHttpAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 
@@ -1581,7 +1581,7 @@ func (i HttpIdleAttributes) InternalWithRef(ref terra.Reference) HttpIdleAttribu
 	return HttpIdleAttributes{ref: ref}
 }
 
-func (i HttpIdleAttributes) InternalTokens() hclwrite.Tokens {
+func (i HttpIdleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -1605,7 +1605,7 @@ func (pr HttpPerRequestAttributes) InternalWithRef(ref terra.Reference) HttpPerR
 	return HttpPerRequestAttributes{ref: ref}
 }
 
-func (pr HttpPerRequestAttributes) InternalTokens() hclwrite.Tokens {
+func (pr HttpPerRequestAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pr.ref.InternalTokens()
 }
 
@@ -1629,7 +1629,7 @@ func (h TimeoutHttp2Attributes) InternalWithRef(ref terra.Reference) TimeoutHttp
 	return TimeoutHttp2Attributes{ref: ref}
 }
 
-func (h TimeoutHttp2Attributes) InternalTokens() hclwrite.Tokens {
+func (h TimeoutHttp2Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 
@@ -1653,7 +1653,7 @@ func (i Http2IdleAttributes) InternalWithRef(ref terra.Reference) Http2IdleAttri
 	return Http2IdleAttributes{ref: ref}
 }
 
-func (i Http2IdleAttributes) InternalTokens() hclwrite.Tokens {
+func (i Http2IdleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -1677,7 +1677,7 @@ func (pr Http2PerRequestAttributes) InternalWithRef(ref terra.Reference) Http2Pe
 	return Http2PerRequestAttributes{ref: ref}
 }
 
-func (pr Http2PerRequestAttributes) InternalTokens() hclwrite.Tokens {
+func (pr Http2PerRequestAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pr.ref.InternalTokens()
 }
 
@@ -1701,7 +1701,7 @@ func (t TimeoutTcpAttributes) InternalWithRef(ref terra.Reference) TimeoutTcpAtt
 	return TimeoutTcpAttributes{ref: ref}
 }
 
-func (t TimeoutTcpAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutTcpAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -1721,7 +1721,7 @@ func (i TcpIdleAttributes) InternalWithRef(ref terra.Reference) TcpIdleAttribute
 	return TcpIdleAttributes{ref: ref}
 }
 
-func (i TcpIdleAttributes) InternalTokens() hclwrite.Tokens {
+func (i TcpIdleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -1745,7 +1745,7 @@ func (t ListenerTlsAttributes) InternalWithRef(ref terra.Reference) ListenerTlsA
 	return ListenerTlsAttributes{ref: ref}
 }
 
-func (t ListenerTlsAttributes) InternalTokens() hclwrite.Tokens {
+func (t ListenerTlsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -1773,7 +1773,7 @@ func (c ListenerTlsCertificateAttributes) InternalWithRef(ref terra.Reference) L
 	return ListenerTlsCertificateAttributes{ref: ref}
 }
 
-func (c ListenerTlsCertificateAttributes) InternalTokens() hclwrite.Tokens {
+func (c ListenerTlsCertificateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -1801,7 +1801,7 @@ func (a CertificateAcmAttributes) InternalWithRef(ref terra.Reference) Certifica
 	return CertificateAcmAttributes{ref: ref}
 }
 
-func (a CertificateAcmAttributes) InternalTokens() hclwrite.Tokens {
+func (a CertificateAcmAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -1821,7 +1821,7 @@ func (f ListenerTlsCertificateFileAttributes) InternalWithRef(ref terra.Referenc
 	return ListenerTlsCertificateFileAttributes{ref: ref}
 }
 
-func (f ListenerTlsCertificateFileAttributes) InternalTokens() hclwrite.Tokens {
+func (f ListenerTlsCertificateFileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -1845,7 +1845,7 @@ func (s ListenerTlsCertificateSdsAttributes) InternalWithRef(ref terra.Reference
 	return ListenerTlsCertificateSdsAttributes{ref: ref}
 }
 
-func (s ListenerTlsCertificateSdsAttributes) InternalTokens() hclwrite.Tokens {
+func (s ListenerTlsCertificateSdsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -1865,7 +1865,7 @@ func (v ListenerTlsValidationAttributes) InternalWithRef(ref terra.Reference) Li
 	return ListenerTlsValidationAttributes{ref: ref}
 }
 
-func (v ListenerTlsValidationAttributes) InternalTokens() hclwrite.Tokens {
+func (v ListenerTlsValidationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 
@@ -1889,7 +1889,7 @@ func (san ListenerTlsValidationSubjectAlternativeNamesAttributes) InternalWithRe
 	return ListenerTlsValidationSubjectAlternativeNamesAttributes{ref: ref}
 }
 
-func (san ListenerTlsValidationSubjectAlternativeNamesAttributes) InternalTokens() hclwrite.Tokens {
+func (san ListenerTlsValidationSubjectAlternativeNamesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return san.ref.InternalTokens()
 }
 
@@ -1909,7 +1909,7 @@ func (m ListenerTlsValidationSubjectAlternativeNamesMatchAttributes) InternalWit
 	return ListenerTlsValidationSubjectAlternativeNamesMatchAttributes{ref: ref}
 }
 
-func (m ListenerTlsValidationSubjectAlternativeNamesMatchAttributes) InternalTokens() hclwrite.Tokens {
+func (m ListenerTlsValidationSubjectAlternativeNamesMatchAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -1929,7 +1929,7 @@ func (t ListenerTlsValidationTrustAttributes) InternalWithRef(ref terra.Referenc
 	return ListenerTlsValidationTrustAttributes{ref: ref}
 }
 
-func (t ListenerTlsValidationTrustAttributes) InternalTokens() hclwrite.Tokens {
+func (t ListenerTlsValidationTrustAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -1953,7 +1953,7 @@ func (f ListenerTlsValidationTrustFileAttributes) InternalWithRef(ref terra.Refe
 	return ListenerTlsValidationTrustFileAttributes{ref: ref}
 }
 
-func (f ListenerTlsValidationTrustFileAttributes) InternalTokens() hclwrite.Tokens {
+func (f ListenerTlsValidationTrustFileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -1973,7 +1973,7 @@ func (s ListenerTlsValidationTrustSdsAttributes) InternalWithRef(ref terra.Refer
 	return ListenerTlsValidationTrustSdsAttributes{ref: ref}
 }
 
-func (s ListenerTlsValidationTrustSdsAttributes) InternalTokens() hclwrite.Tokens {
+func (s ListenerTlsValidationTrustSdsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -1993,7 +1993,7 @@ func (l LoggingAttributes) InternalWithRef(ref terra.Reference) LoggingAttribute
 	return LoggingAttributes{ref: ref}
 }
 
-func (l LoggingAttributes) InternalTokens() hclwrite.Tokens {
+func (l LoggingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 
@@ -2013,7 +2013,7 @@ func (al AccessLogAttributes) InternalWithRef(ref terra.Reference) AccessLogAttr
 	return AccessLogAttributes{ref: ref}
 }
 
-func (al AccessLogAttributes) InternalTokens() hclwrite.Tokens {
+func (al AccessLogAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return al.ref.InternalTokens()
 }
 
@@ -2033,7 +2033,7 @@ func (f AccessLogFileAttributes) InternalWithRef(ref terra.Reference) AccessLogF
 	return AccessLogFileAttributes{ref: ref}
 }
 
-func (f AccessLogFileAttributes) InternalTokens() hclwrite.Tokens {
+func (f AccessLogFileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -2057,7 +2057,7 @@ func (f FormatAttributes) InternalWithRef(ref terra.Reference) FormatAttributes 
 	return FormatAttributes{ref: ref}
 }
 
-func (f FormatAttributes) InternalTokens() hclwrite.Tokens {
+func (f FormatAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -2081,7 +2081,7 @@ func (j JsonAttributes) InternalWithRef(ref terra.Reference) JsonAttributes {
 	return JsonAttributes{ref: ref}
 }
 
-func (j JsonAttributes) InternalTokens() hclwrite.Tokens {
+func (j JsonAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return j.ref.InternalTokens()
 }
 
@@ -2105,7 +2105,7 @@ func (sd ServiceDiscoveryAttributes) InternalWithRef(ref terra.Reference) Servic
 	return ServiceDiscoveryAttributes{ref: ref}
 }
 
-func (sd ServiceDiscoveryAttributes) InternalTokens() hclwrite.Tokens {
+func (sd ServiceDiscoveryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sd.ref.InternalTokens()
 }
 
@@ -2129,7 +2129,7 @@ func (acm AwsCloudMapAttributes) InternalWithRef(ref terra.Reference) AwsCloudMa
 	return AwsCloudMapAttributes{ref: ref}
 }
 
-func (acm AwsCloudMapAttributes) InternalTokens() hclwrite.Tokens {
+func (acm AwsCloudMapAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return acm.ref.InternalTokens()
 }
 
@@ -2157,7 +2157,7 @@ func (d DnsAttributes) InternalWithRef(ref terra.Reference) DnsAttributes {
 	return DnsAttributes{ref: ref}
 }
 
-func (d DnsAttributes) InternalTokens() hclwrite.Tokens {
+func (d DnsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 

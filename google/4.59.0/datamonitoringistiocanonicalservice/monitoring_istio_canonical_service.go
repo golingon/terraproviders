@@ -13,20 +13,20 @@ type TelemetryAttributes struct {
 	ref terra.Reference
 }
 
-func (t TelemetryAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TelemetryAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TelemetryAttributes) InternalWithRef(ref terra.Reference) TelemetryAttributes {
 	return TelemetryAttributes{ref: ref}
 }
 
-func (t TelemetryAttributes) InternalTokens() hclwrite.Tokens {
+func (t TelemetryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TelemetryAttributes) ResourceName() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("resource_name"))
+	return terra.ReferenceAsString(t.ref.Append("resource_name"))
 }
 
 type TelemetryState struct {

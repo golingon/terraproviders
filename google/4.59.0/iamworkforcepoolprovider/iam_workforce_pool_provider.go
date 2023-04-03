@@ -32,72 +32,72 @@ type OidcAttributes struct {
 	ref terra.Reference
 }
 
-func (o OidcAttributes) InternalRef() terra.Reference {
-	return o.ref
+func (o OidcAttributes) InternalRef() (terra.Reference, error) {
+	return o.ref, nil
 }
 
 func (o OidcAttributes) InternalWithRef(ref terra.Reference) OidcAttributes {
 	return OidcAttributes{ref: ref}
 }
 
-func (o OidcAttributes) InternalTokens() hclwrite.Tokens {
+func (o OidcAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return o.ref.InternalTokens()
 }
 
 func (o OidcAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("client_id"))
+	return terra.ReferenceAsString(o.ref.Append("client_id"))
 }
 
 func (o OidcAttributes) IssuerUri() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("issuer_uri"))
+	return terra.ReferenceAsString(o.ref.Append("issuer_uri"))
 }
 
 type SamlAttributes struct {
 	ref terra.Reference
 }
 
-func (s SamlAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SamlAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SamlAttributes) InternalWithRef(ref terra.Reference) SamlAttributes {
 	return SamlAttributes{ref: ref}
 }
 
-func (s SamlAttributes) InternalTokens() hclwrite.Tokens {
+func (s SamlAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SamlAttributes) IdpMetadataXml() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("idp_metadata_xml"))
+	return terra.ReferenceAsString(s.ref.Append("idp_metadata_xml"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type OidcState struct {

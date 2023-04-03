@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewFunctionAppSlot creates a new instance of [FunctionAppSlot].
 func NewFunctionAppSlot(name string, args FunctionAppSlotArgs) *FunctionAppSlot {
 	return &FunctionAppSlot{
 		Args: args,
@@ -19,28 +20,51 @@ func NewFunctionAppSlot(name string, args FunctionAppSlotArgs) *FunctionAppSlot 
 
 var _ terra.Resource = (*FunctionAppSlot)(nil)
 
+// FunctionAppSlot represents the Terraform resource azurerm_function_app_slot.
 type FunctionAppSlot struct {
-	Name  string
-	Args  FunctionAppSlotArgs
-	state *functionAppSlotState
+	Name      string
+	Args      FunctionAppSlotArgs
+	state     *functionAppSlotState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [FunctionAppSlot].
 func (fas *FunctionAppSlot) Type() string {
 	return "azurerm_function_app_slot"
 }
 
+// LocalName returns the local name for [FunctionAppSlot].
 func (fas *FunctionAppSlot) LocalName() string {
 	return fas.Name
 }
 
+// Configuration returns the configuration (args) for [FunctionAppSlot].
 func (fas *FunctionAppSlot) Configuration() interface{} {
 	return fas.Args
 }
 
+// DependOn is used for other resources to depend on [FunctionAppSlot].
+func (fas *FunctionAppSlot) DependOn() terra.Reference {
+	return terra.ReferenceResource(fas)
+}
+
+// Dependencies returns the list of resources [FunctionAppSlot] depends_on.
+func (fas *FunctionAppSlot) Dependencies() terra.Dependencies {
+	return fas.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [FunctionAppSlot].
+func (fas *FunctionAppSlot) LifecycleManagement() *terra.Lifecycle {
+	return fas.Lifecycle
+}
+
+// Attributes returns the attributes for [FunctionAppSlot].
 func (fas *FunctionAppSlot) Attributes() functionAppSlotAttributes {
 	return functionAppSlotAttributes{ref: terra.ReferenceResource(fas)}
 }
 
+// ImportState imports the given attribute values into [FunctionAppSlot]'s state.
 func (fas *FunctionAppSlot) ImportState(av io.Reader) error {
 	fas.state = &functionAppSlotState{}
 	if err := json.NewDecoder(av).Decode(fas.state); err != nil {
@@ -49,10 +73,12 @@ func (fas *FunctionAppSlot) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [FunctionAppSlot] has state.
 func (fas *FunctionAppSlot) State() (*functionAppSlotState, bool) {
 	return fas.state, fas.state != nil
 }
 
+// StateMust returns the state for [FunctionAppSlot]. Panics if the state is nil.
 func (fas *FunctionAppSlot) StateMust() *functionAppSlotState {
 	if fas.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", fas.Type(), fas.LocalName()))
@@ -60,10 +86,7 @@ func (fas *FunctionAppSlot) StateMust() *functionAppSlotState {
 	return fas.state
 }
 
-func (fas *FunctionAppSlot) DependOn() terra.Reference {
-	return terra.ReferenceResource(fas)
-}
-
+// FunctionAppSlotArgs contains the configurations for azurerm_function_app_slot.
 type FunctionAppSlotArgs struct {
 	// AppServicePlanId: string, required
 	AppServicePlanId terra.StringValue `hcl:"app_service_plan_id,attr" validate:"required"`
@@ -109,115 +132,133 @@ type FunctionAppSlotArgs struct {
 	SiteConfig *functionappslot.SiteConfig `hcl:"site_config,block"`
 	// Timeouts: optional
 	Timeouts *functionappslot.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that FunctionAppSlot depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type functionAppSlotAttributes struct {
 	ref terra.Reference
 }
 
+// AppServicePlanId returns a reference to field app_service_plan_id of azurerm_function_app_slot.
 func (fas functionAppSlotAttributes) AppServicePlanId() terra.StringValue {
-	return terra.ReferenceString(fas.ref.Append("app_service_plan_id"))
+	return terra.ReferenceAsString(fas.ref.Append("app_service_plan_id"))
 }
 
+// AppSettings returns a reference to field app_settings of azurerm_function_app_slot.
 func (fas functionAppSlotAttributes) AppSettings() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](fas.ref.Append("app_settings"))
+	return terra.ReferenceAsMap[terra.StringValue](fas.ref.Append("app_settings"))
 }
 
+// DailyMemoryTimeQuota returns a reference to field daily_memory_time_quota of azurerm_function_app_slot.
 func (fas functionAppSlotAttributes) DailyMemoryTimeQuota() terra.NumberValue {
-	return terra.ReferenceNumber(fas.ref.Append("daily_memory_time_quota"))
+	return terra.ReferenceAsNumber(fas.ref.Append("daily_memory_time_quota"))
 }
 
+// DefaultHostname returns a reference to field default_hostname of azurerm_function_app_slot.
 func (fas functionAppSlotAttributes) DefaultHostname() terra.StringValue {
-	return terra.ReferenceString(fas.ref.Append("default_hostname"))
+	return terra.ReferenceAsString(fas.ref.Append("default_hostname"))
 }
 
+// EnableBuiltinLogging returns a reference to field enable_builtin_logging of azurerm_function_app_slot.
 func (fas functionAppSlotAttributes) EnableBuiltinLogging() terra.BoolValue {
-	return terra.ReferenceBool(fas.ref.Append("enable_builtin_logging"))
+	return terra.ReferenceAsBool(fas.ref.Append("enable_builtin_logging"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_function_app_slot.
 func (fas functionAppSlotAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(fas.ref.Append("enabled"))
+	return terra.ReferenceAsBool(fas.ref.Append("enabled"))
 }
 
+// FunctionAppName returns a reference to field function_app_name of azurerm_function_app_slot.
 func (fas functionAppSlotAttributes) FunctionAppName() terra.StringValue {
-	return terra.ReferenceString(fas.ref.Append("function_app_name"))
+	return terra.ReferenceAsString(fas.ref.Append("function_app_name"))
 }
 
+// HttpsOnly returns a reference to field https_only of azurerm_function_app_slot.
 func (fas functionAppSlotAttributes) HttpsOnly() terra.BoolValue {
-	return terra.ReferenceBool(fas.ref.Append("https_only"))
+	return terra.ReferenceAsBool(fas.ref.Append("https_only"))
 }
 
+// Id returns a reference to field id of azurerm_function_app_slot.
 func (fas functionAppSlotAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(fas.ref.Append("id"))
+	return terra.ReferenceAsString(fas.ref.Append("id"))
 }
 
+// Kind returns a reference to field kind of azurerm_function_app_slot.
 func (fas functionAppSlotAttributes) Kind() terra.StringValue {
-	return terra.ReferenceString(fas.ref.Append("kind"))
+	return terra.ReferenceAsString(fas.ref.Append("kind"))
 }
 
+// Location returns a reference to field location of azurerm_function_app_slot.
 func (fas functionAppSlotAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(fas.ref.Append("location"))
+	return terra.ReferenceAsString(fas.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_function_app_slot.
 func (fas functionAppSlotAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(fas.ref.Append("name"))
+	return terra.ReferenceAsString(fas.ref.Append("name"))
 }
 
+// OsType returns a reference to field os_type of azurerm_function_app_slot.
 func (fas functionAppSlotAttributes) OsType() terra.StringValue {
-	return terra.ReferenceString(fas.ref.Append("os_type"))
+	return terra.ReferenceAsString(fas.ref.Append("os_type"))
 }
 
+// OutboundIpAddresses returns a reference to field outbound_ip_addresses of azurerm_function_app_slot.
 func (fas functionAppSlotAttributes) OutboundIpAddresses() terra.StringValue {
-	return terra.ReferenceString(fas.ref.Append("outbound_ip_addresses"))
+	return terra.ReferenceAsString(fas.ref.Append("outbound_ip_addresses"))
 }
 
+// PossibleOutboundIpAddresses returns a reference to field possible_outbound_ip_addresses of azurerm_function_app_slot.
 func (fas functionAppSlotAttributes) PossibleOutboundIpAddresses() terra.StringValue {
-	return terra.ReferenceString(fas.ref.Append("possible_outbound_ip_addresses"))
+	return terra.ReferenceAsString(fas.ref.Append("possible_outbound_ip_addresses"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_function_app_slot.
 func (fas functionAppSlotAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(fas.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(fas.ref.Append("resource_group_name"))
 }
 
+// StorageAccountAccessKey returns a reference to field storage_account_access_key of azurerm_function_app_slot.
 func (fas functionAppSlotAttributes) StorageAccountAccessKey() terra.StringValue {
-	return terra.ReferenceString(fas.ref.Append("storage_account_access_key"))
+	return terra.ReferenceAsString(fas.ref.Append("storage_account_access_key"))
 }
 
+// StorageAccountName returns a reference to field storage_account_name of azurerm_function_app_slot.
 func (fas functionAppSlotAttributes) StorageAccountName() terra.StringValue {
-	return terra.ReferenceString(fas.ref.Append("storage_account_name"))
+	return terra.ReferenceAsString(fas.ref.Append("storage_account_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_function_app_slot.
 func (fas functionAppSlotAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](fas.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](fas.ref.Append("tags"))
 }
 
+// Version returns a reference to field version of azurerm_function_app_slot.
 func (fas functionAppSlotAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(fas.ref.Append("version"))
+	return terra.ReferenceAsString(fas.ref.Append("version"))
 }
 
 func (fas functionAppSlotAttributes) SiteCredential() terra.ListValue[functionappslot.SiteCredentialAttributes] {
-	return terra.ReferenceList[functionappslot.SiteCredentialAttributes](fas.ref.Append("site_credential"))
+	return terra.ReferenceAsList[functionappslot.SiteCredentialAttributes](fas.ref.Append("site_credential"))
 }
 
 func (fas functionAppSlotAttributes) AuthSettings() terra.ListValue[functionappslot.AuthSettingsAttributes] {
-	return terra.ReferenceList[functionappslot.AuthSettingsAttributes](fas.ref.Append("auth_settings"))
+	return terra.ReferenceAsList[functionappslot.AuthSettingsAttributes](fas.ref.Append("auth_settings"))
 }
 
 func (fas functionAppSlotAttributes) ConnectionString() terra.SetValue[functionappslot.ConnectionStringAttributes] {
-	return terra.ReferenceSet[functionappslot.ConnectionStringAttributes](fas.ref.Append("connection_string"))
+	return terra.ReferenceAsSet[functionappslot.ConnectionStringAttributes](fas.ref.Append("connection_string"))
 }
 
 func (fas functionAppSlotAttributes) Identity() terra.ListValue[functionappslot.IdentityAttributes] {
-	return terra.ReferenceList[functionappslot.IdentityAttributes](fas.ref.Append("identity"))
+	return terra.ReferenceAsList[functionappslot.IdentityAttributes](fas.ref.Append("identity"))
 }
 
 func (fas functionAppSlotAttributes) SiteConfig() terra.ListValue[functionappslot.SiteConfigAttributes] {
-	return terra.ReferenceList[functionappslot.SiteConfigAttributes](fas.ref.Append("site_config"))
+	return terra.ReferenceAsList[functionappslot.SiteConfigAttributes](fas.ref.Append("site_config"))
 }
 
 func (fas functionAppSlotAttributes) Timeouts() functionappslot.TimeoutsAttributes {
-	return terra.ReferenceSingle[functionappslot.TimeoutsAttributes](fas.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[functionappslot.TimeoutsAttributes](fas.ref.Append("timeouts"))
 }
 
 type functionAppSlotState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSpringCloudAppCosmosdbAssociation creates a new instance of [SpringCloudAppCosmosdbAssociation].
 func NewSpringCloudAppCosmosdbAssociation(name string, args SpringCloudAppCosmosdbAssociationArgs) *SpringCloudAppCosmosdbAssociation {
 	return &SpringCloudAppCosmosdbAssociation{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSpringCloudAppCosmosdbAssociation(name string, args SpringCloudAppCosmos
 
 var _ terra.Resource = (*SpringCloudAppCosmosdbAssociation)(nil)
 
+// SpringCloudAppCosmosdbAssociation represents the Terraform resource azurerm_spring_cloud_app_cosmosdb_association.
 type SpringCloudAppCosmosdbAssociation struct {
-	Name  string
-	Args  SpringCloudAppCosmosdbAssociationArgs
-	state *springCloudAppCosmosdbAssociationState
+	Name      string
+	Args      SpringCloudAppCosmosdbAssociationArgs
+	state     *springCloudAppCosmosdbAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SpringCloudAppCosmosdbAssociation].
 func (scaca *SpringCloudAppCosmosdbAssociation) Type() string {
 	return "azurerm_spring_cloud_app_cosmosdb_association"
 }
 
+// LocalName returns the local name for [SpringCloudAppCosmosdbAssociation].
 func (scaca *SpringCloudAppCosmosdbAssociation) LocalName() string {
 	return scaca.Name
 }
 
+// Configuration returns the configuration (args) for [SpringCloudAppCosmosdbAssociation].
 func (scaca *SpringCloudAppCosmosdbAssociation) Configuration() interface{} {
 	return scaca.Args
 }
 
+// DependOn is used for other resources to depend on [SpringCloudAppCosmosdbAssociation].
+func (scaca *SpringCloudAppCosmosdbAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(scaca)
+}
+
+// Dependencies returns the list of resources [SpringCloudAppCosmosdbAssociation] depends_on.
+func (scaca *SpringCloudAppCosmosdbAssociation) Dependencies() terra.Dependencies {
+	return scaca.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SpringCloudAppCosmosdbAssociation].
+func (scaca *SpringCloudAppCosmosdbAssociation) LifecycleManagement() *terra.Lifecycle {
+	return scaca.Lifecycle
+}
+
+// Attributes returns the attributes for [SpringCloudAppCosmosdbAssociation].
 func (scaca *SpringCloudAppCosmosdbAssociation) Attributes() springCloudAppCosmosdbAssociationAttributes {
 	return springCloudAppCosmosdbAssociationAttributes{ref: terra.ReferenceResource(scaca)}
 }
 
+// ImportState imports the given attribute values into [SpringCloudAppCosmosdbAssociation]'s state.
 func (scaca *SpringCloudAppCosmosdbAssociation) ImportState(av io.Reader) error {
 	scaca.state = &springCloudAppCosmosdbAssociationState{}
 	if err := json.NewDecoder(av).Decode(scaca.state); err != nil {
@@ -49,10 +73,12 @@ func (scaca *SpringCloudAppCosmosdbAssociation) ImportState(av io.Reader) error 
 	return nil
 }
 
+// State returns the state and a bool indicating if [SpringCloudAppCosmosdbAssociation] has state.
 func (scaca *SpringCloudAppCosmosdbAssociation) State() (*springCloudAppCosmosdbAssociationState, bool) {
 	return scaca.state, scaca.state != nil
 }
 
+// StateMust returns the state for [SpringCloudAppCosmosdbAssociation]. Panics if the state is nil.
 func (scaca *SpringCloudAppCosmosdbAssociation) StateMust() *springCloudAppCosmosdbAssociationState {
 	if scaca.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", scaca.Type(), scaca.LocalName()))
@@ -60,10 +86,7 @@ func (scaca *SpringCloudAppCosmosdbAssociation) StateMust() *springCloudAppCosmo
 	return scaca.state
 }
 
-func (scaca *SpringCloudAppCosmosdbAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(scaca)
-}
-
+// SpringCloudAppCosmosdbAssociationArgs contains the configurations for azurerm_spring_cloud_app_cosmosdb_association.
 type SpringCloudAppCosmosdbAssociationArgs struct {
 	// ApiType: string, required
 	ApiType terra.StringValue `hcl:"api_type,attr" validate:"required"`
@@ -89,59 +112,68 @@ type SpringCloudAppCosmosdbAssociationArgs struct {
 	SpringCloudAppId terra.StringValue `hcl:"spring_cloud_app_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *springcloudappcosmosdbassociation.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SpringCloudAppCosmosdbAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type springCloudAppCosmosdbAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// ApiType returns a reference to field api_type of azurerm_spring_cloud_app_cosmosdb_association.
 func (scaca springCloudAppCosmosdbAssociationAttributes) ApiType() terra.StringValue {
-	return terra.ReferenceString(scaca.ref.Append("api_type"))
+	return terra.ReferenceAsString(scaca.ref.Append("api_type"))
 }
 
+// CosmosdbAccessKey returns a reference to field cosmosdb_access_key of azurerm_spring_cloud_app_cosmosdb_association.
 func (scaca springCloudAppCosmosdbAssociationAttributes) CosmosdbAccessKey() terra.StringValue {
-	return terra.ReferenceString(scaca.ref.Append("cosmosdb_access_key"))
+	return terra.ReferenceAsString(scaca.ref.Append("cosmosdb_access_key"))
 }
 
+// CosmosdbAccountId returns a reference to field cosmosdb_account_id of azurerm_spring_cloud_app_cosmosdb_association.
 func (scaca springCloudAppCosmosdbAssociationAttributes) CosmosdbAccountId() terra.StringValue {
-	return terra.ReferenceString(scaca.ref.Append("cosmosdb_account_id"))
+	return terra.ReferenceAsString(scaca.ref.Append("cosmosdb_account_id"))
 }
 
+// CosmosdbCassandraKeyspaceName returns a reference to field cosmosdb_cassandra_keyspace_name of azurerm_spring_cloud_app_cosmosdb_association.
 func (scaca springCloudAppCosmosdbAssociationAttributes) CosmosdbCassandraKeyspaceName() terra.StringValue {
-	return terra.ReferenceString(scaca.ref.Append("cosmosdb_cassandra_keyspace_name"))
+	return terra.ReferenceAsString(scaca.ref.Append("cosmosdb_cassandra_keyspace_name"))
 }
 
+// CosmosdbGremlinDatabaseName returns a reference to field cosmosdb_gremlin_database_name of azurerm_spring_cloud_app_cosmosdb_association.
 func (scaca springCloudAppCosmosdbAssociationAttributes) CosmosdbGremlinDatabaseName() terra.StringValue {
-	return terra.ReferenceString(scaca.ref.Append("cosmosdb_gremlin_database_name"))
+	return terra.ReferenceAsString(scaca.ref.Append("cosmosdb_gremlin_database_name"))
 }
 
+// CosmosdbGremlinGraphName returns a reference to field cosmosdb_gremlin_graph_name of azurerm_spring_cloud_app_cosmosdb_association.
 func (scaca springCloudAppCosmosdbAssociationAttributes) CosmosdbGremlinGraphName() terra.StringValue {
-	return terra.ReferenceString(scaca.ref.Append("cosmosdb_gremlin_graph_name"))
+	return terra.ReferenceAsString(scaca.ref.Append("cosmosdb_gremlin_graph_name"))
 }
 
+// CosmosdbMongoDatabaseName returns a reference to field cosmosdb_mongo_database_name of azurerm_spring_cloud_app_cosmosdb_association.
 func (scaca springCloudAppCosmosdbAssociationAttributes) CosmosdbMongoDatabaseName() terra.StringValue {
-	return terra.ReferenceString(scaca.ref.Append("cosmosdb_mongo_database_name"))
+	return terra.ReferenceAsString(scaca.ref.Append("cosmosdb_mongo_database_name"))
 }
 
+// CosmosdbSqlDatabaseName returns a reference to field cosmosdb_sql_database_name of azurerm_spring_cloud_app_cosmosdb_association.
 func (scaca springCloudAppCosmosdbAssociationAttributes) CosmosdbSqlDatabaseName() terra.StringValue {
-	return terra.ReferenceString(scaca.ref.Append("cosmosdb_sql_database_name"))
+	return terra.ReferenceAsString(scaca.ref.Append("cosmosdb_sql_database_name"))
 }
 
+// Id returns a reference to field id of azurerm_spring_cloud_app_cosmosdb_association.
 func (scaca springCloudAppCosmosdbAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(scaca.ref.Append("id"))
+	return terra.ReferenceAsString(scaca.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_spring_cloud_app_cosmosdb_association.
 func (scaca springCloudAppCosmosdbAssociationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(scaca.ref.Append("name"))
+	return terra.ReferenceAsString(scaca.ref.Append("name"))
 }
 
+// SpringCloudAppId returns a reference to field spring_cloud_app_id of azurerm_spring_cloud_app_cosmosdb_association.
 func (scaca springCloudAppCosmosdbAssociationAttributes) SpringCloudAppId() terra.StringValue {
-	return terra.ReferenceString(scaca.ref.Append("spring_cloud_app_id"))
+	return terra.ReferenceAsString(scaca.ref.Append("spring_cloud_app_id"))
 }
 
 func (scaca springCloudAppCosmosdbAssociationAttributes) Timeouts() springcloudappcosmosdbassociation.TimeoutsAttributes {
-	return terra.ReferenceSingle[springcloudappcosmosdbassociation.TimeoutsAttributes](scaca.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[springcloudappcosmosdbassociation.TimeoutsAttributes](scaca.ref.Append("timeouts"))
 }
 
 type springCloudAppCosmosdbAssociationState struct {

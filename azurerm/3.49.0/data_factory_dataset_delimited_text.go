@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFactoryDatasetDelimitedText creates a new instance of [DataFactoryDatasetDelimitedText].
 func NewDataFactoryDatasetDelimitedText(name string, args DataFactoryDatasetDelimitedTextArgs) *DataFactoryDatasetDelimitedText {
 	return &DataFactoryDatasetDelimitedText{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFactoryDatasetDelimitedText(name string, args DataFactoryDatasetDeli
 
 var _ terra.Resource = (*DataFactoryDatasetDelimitedText)(nil)
 
+// DataFactoryDatasetDelimitedText represents the Terraform resource azurerm_data_factory_dataset_delimited_text.
 type DataFactoryDatasetDelimitedText struct {
-	Name  string
-	Args  DataFactoryDatasetDelimitedTextArgs
-	state *dataFactoryDatasetDelimitedTextState
+	Name      string
+	Args      DataFactoryDatasetDelimitedTextArgs
+	state     *dataFactoryDatasetDelimitedTextState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFactoryDatasetDelimitedText].
 func (dfddt *DataFactoryDatasetDelimitedText) Type() string {
 	return "azurerm_data_factory_dataset_delimited_text"
 }
 
+// LocalName returns the local name for [DataFactoryDatasetDelimitedText].
 func (dfddt *DataFactoryDatasetDelimitedText) LocalName() string {
 	return dfddt.Name
 }
 
+// Configuration returns the configuration (args) for [DataFactoryDatasetDelimitedText].
 func (dfddt *DataFactoryDatasetDelimitedText) Configuration() interface{} {
 	return dfddt.Args
 }
 
+// DependOn is used for other resources to depend on [DataFactoryDatasetDelimitedText].
+func (dfddt *DataFactoryDatasetDelimitedText) DependOn() terra.Reference {
+	return terra.ReferenceResource(dfddt)
+}
+
+// Dependencies returns the list of resources [DataFactoryDatasetDelimitedText] depends_on.
+func (dfddt *DataFactoryDatasetDelimitedText) Dependencies() terra.Dependencies {
+	return dfddt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFactoryDatasetDelimitedText].
+func (dfddt *DataFactoryDatasetDelimitedText) LifecycleManagement() *terra.Lifecycle {
+	return dfddt.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFactoryDatasetDelimitedText].
 func (dfddt *DataFactoryDatasetDelimitedText) Attributes() dataFactoryDatasetDelimitedTextAttributes {
 	return dataFactoryDatasetDelimitedTextAttributes{ref: terra.ReferenceResource(dfddt)}
 }
 
+// ImportState imports the given attribute values into [DataFactoryDatasetDelimitedText]'s state.
 func (dfddt *DataFactoryDatasetDelimitedText) ImportState(av io.Reader) error {
 	dfddt.state = &dataFactoryDatasetDelimitedTextState{}
 	if err := json.NewDecoder(av).Decode(dfddt.state); err != nil {
@@ -49,10 +73,12 @@ func (dfddt *DataFactoryDatasetDelimitedText) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFactoryDatasetDelimitedText] has state.
 func (dfddt *DataFactoryDatasetDelimitedText) State() (*dataFactoryDatasetDelimitedTextState, bool) {
 	return dfddt.state, dfddt.state != nil
 }
 
+// StateMust returns the state for [DataFactoryDatasetDelimitedText]. Panics if the state is nil.
 func (dfddt *DataFactoryDatasetDelimitedText) StateMust() *dataFactoryDatasetDelimitedTextState {
 	if dfddt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dfddt.Type(), dfddt.LocalName()))
@@ -60,10 +86,7 @@ func (dfddt *DataFactoryDatasetDelimitedText) StateMust() *dataFactoryDatasetDel
 	return dfddt.state
 }
 
-func (dfddt *DataFactoryDatasetDelimitedText) DependOn() terra.Reference {
-	return terra.ReferenceResource(dfddt)
-}
-
+// DataFactoryDatasetDelimitedTextArgs contains the configurations for azurerm_data_factory_dataset_delimited_text.
 type DataFactoryDatasetDelimitedTextArgs struct {
 	// AdditionalProperties: map of string, optional
 	AdditionalProperties terra.MapValue[terra.StringValue] `hcl:"additional_properties,attr"`
@@ -111,103 +134,119 @@ type DataFactoryDatasetDelimitedTextArgs struct {
 	SchemaColumn []datafactorydatasetdelimitedtext.SchemaColumn `hcl:"schema_column,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *datafactorydatasetdelimitedtext.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataFactoryDatasetDelimitedText depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFactoryDatasetDelimitedTextAttributes struct {
 	ref terra.Reference
 }
 
+// AdditionalProperties returns a reference to field additional_properties of azurerm_data_factory_dataset_delimited_text.
 func (dfddt dataFactoryDatasetDelimitedTextAttributes) AdditionalProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dfddt.ref.Append("additional_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](dfddt.ref.Append("additional_properties"))
 }
 
+// Annotations returns a reference to field annotations of azurerm_data_factory_dataset_delimited_text.
 func (dfddt dataFactoryDatasetDelimitedTextAttributes) Annotations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dfddt.ref.Append("annotations"))
+	return terra.ReferenceAsList[terra.StringValue](dfddt.ref.Append("annotations"))
 }
 
+// ColumnDelimiter returns a reference to field column_delimiter of azurerm_data_factory_dataset_delimited_text.
 func (dfddt dataFactoryDatasetDelimitedTextAttributes) ColumnDelimiter() terra.StringValue {
-	return terra.ReferenceString(dfddt.ref.Append("column_delimiter"))
+	return terra.ReferenceAsString(dfddt.ref.Append("column_delimiter"))
 }
 
+// CompressionCodec returns a reference to field compression_codec of azurerm_data_factory_dataset_delimited_text.
 func (dfddt dataFactoryDatasetDelimitedTextAttributes) CompressionCodec() terra.StringValue {
-	return terra.ReferenceString(dfddt.ref.Append("compression_codec"))
+	return terra.ReferenceAsString(dfddt.ref.Append("compression_codec"))
 }
 
+// CompressionLevel returns a reference to field compression_level of azurerm_data_factory_dataset_delimited_text.
 func (dfddt dataFactoryDatasetDelimitedTextAttributes) CompressionLevel() terra.StringValue {
-	return terra.ReferenceString(dfddt.ref.Append("compression_level"))
+	return terra.ReferenceAsString(dfddt.ref.Append("compression_level"))
 }
 
+// DataFactoryId returns a reference to field data_factory_id of azurerm_data_factory_dataset_delimited_text.
 func (dfddt dataFactoryDatasetDelimitedTextAttributes) DataFactoryId() terra.StringValue {
-	return terra.ReferenceString(dfddt.ref.Append("data_factory_id"))
+	return terra.ReferenceAsString(dfddt.ref.Append("data_factory_id"))
 }
 
+// Description returns a reference to field description of azurerm_data_factory_dataset_delimited_text.
 func (dfddt dataFactoryDatasetDelimitedTextAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dfddt.ref.Append("description"))
+	return terra.ReferenceAsString(dfddt.ref.Append("description"))
 }
 
+// Encoding returns a reference to field encoding of azurerm_data_factory_dataset_delimited_text.
 func (dfddt dataFactoryDatasetDelimitedTextAttributes) Encoding() terra.StringValue {
-	return terra.ReferenceString(dfddt.ref.Append("encoding"))
+	return terra.ReferenceAsString(dfddt.ref.Append("encoding"))
 }
 
+// EscapeCharacter returns a reference to field escape_character of azurerm_data_factory_dataset_delimited_text.
 func (dfddt dataFactoryDatasetDelimitedTextAttributes) EscapeCharacter() terra.StringValue {
-	return terra.ReferenceString(dfddt.ref.Append("escape_character"))
+	return terra.ReferenceAsString(dfddt.ref.Append("escape_character"))
 }
 
+// FirstRowAsHeader returns a reference to field first_row_as_header of azurerm_data_factory_dataset_delimited_text.
 func (dfddt dataFactoryDatasetDelimitedTextAttributes) FirstRowAsHeader() terra.BoolValue {
-	return terra.ReferenceBool(dfddt.ref.Append("first_row_as_header"))
+	return terra.ReferenceAsBool(dfddt.ref.Append("first_row_as_header"))
 }
 
+// Folder returns a reference to field folder of azurerm_data_factory_dataset_delimited_text.
 func (dfddt dataFactoryDatasetDelimitedTextAttributes) Folder() terra.StringValue {
-	return terra.ReferenceString(dfddt.ref.Append("folder"))
+	return terra.ReferenceAsString(dfddt.ref.Append("folder"))
 }
 
+// Id returns a reference to field id of azurerm_data_factory_dataset_delimited_text.
 func (dfddt dataFactoryDatasetDelimitedTextAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dfddt.ref.Append("id"))
+	return terra.ReferenceAsString(dfddt.ref.Append("id"))
 }
 
+// LinkedServiceName returns a reference to field linked_service_name of azurerm_data_factory_dataset_delimited_text.
 func (dfddt dataFactoryDatasetDelimitedTextAttributes) LinkedServiceName() terra.StringValue {
-	return terra.ReferenceString(dfddt.ref.Append("linked_service_name"))
+	return terra.ReferenceAsString(dfddt.ref.Append("linked_service_name"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory_dataset_delimited_text.
 func (dfddt dataFactoryDatasetDelimitedTextAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dfddt.ref.Append("name"))
+	return terra.ReferenceAsString(dfddt.ref.Append("name"))
 }
 
+// NullValue returns a reference to field null_value of azurerm_data_factory_dataset_delimited_text.
 func (dfddt dataFactoryDatasetDelimitedTextAttributes) NullValue() terra.StringValue {
-	return terra.ReferenceString(dfddt.ref.Append("null_value"))
+	return terra.ReferenceAsString(dfddt.ref.Append("null_value"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_data_factory_dataset_delimited_text.
 func (dfddt dataFactoryDatasetDelimitedTextAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dfddt.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](dfddt.ref.Append("parameters"))
 }
 
+// QuoteCharacter returns a reference to field quote_character of azurerm_data_factory_dataset_delimited_text.
 func (dfddt dataFactoryDatasetDelimitedTextAttributes) QuoteCharacter() terra.StringValue {
-	return terra.ReferenceString(dfddt.ref.Append("quote_character"))
+	return terra.ReferenceAsString(dfddt.ref.Append("quote_character"))
 }
 
+// RowDelimiter returns a reference to field row_delimiter of azurerm_data_factory_dataset_delimited_text.
 func (dfddt dataFactoryDatasetDelimitedTextAttributes) RowDelimiter() terra.StringValue {
-	return terra.ReferenceString(dfddt.ref.Append("row_delimiter"))
+	return terra.ReferenceAsString(dfddt.ref.Append("row_delimiter"))
 }
 
 func (dfddt dataFactoryDatasetDelimitedTextAttributes) AzureBlobFsLocation() terra.ListValue[datafactorydatasetdelimitedtext.AzureBlobFsLocationAttributes] {
-	return terra.ReferenceList[datafactorydatasetdelimitedtext.AzureBlobFsLocationAttributes](dfddt.ref.Append("azure_blob_fs_location"))
+	return terra.ReferenceAsList[datafactorydatasetdelimitedtext.AzureBlobFsLocationAttributes](dfddt.ref.Append("azure_blob_fs_location"))
 }
 
 func (dfddt dataFactoryDatasetDelimitedTextAttributes) AzureBlobStorageLocation() terra.ListValue[datafactorydatasetdelimitedtext.AzureBlobStorageLocationAttributes] {
-	return terra.ReferenceList[datafactorydatasetdelimitedtext.AzureBlobStorageLocationAttributes](dfddt.ref.Append("azure_blob_storage_location"))
+	return terra.ReferenceAsList[datafactorydatasetdelimitedtext.AzureBlobStorageLocationAttributes](dfddt.ref.Append("azure_blob_storage_location"))
 }
 
 func (dfddt dataFactoryDatasetDelimitedTextAttributes) HttpServerLocation() terra.ListValue[datafactorydatasetdelimitedtext.HttpServerLocationAttributes] {
-	return terra.ReferenceList[datafactorydatasetdelimitedtext.HttpServerLocationAttributes](dfddt.ref.Append("http_server_location"))
+	return terra.ReferenceAsList[datafactorydatasetdelimitedtext.HttpServerLocationAttributes](dfddt.ref.Append("http_server_location"))
 }
 
 func (dfddt dataFactoryDatasetDelimitedTextAttributes) SchemaColumn() terra.ListValue[datafactorydatasetdelimitedtext.SchemaColumnAttributes] {
-	return terra.ReferenceList[datafactorydatasetdelimitedtext.SchemaColumnAttributes](dfddt.ref.Append("schema_column"))
+	return terra.ReferenceAsList[datafactorydatasetdelimitedtext.SchemaColumnAttributes](dfddt.ref.Append("schema_column"))
 }
 
 func (dfddt dataFactoryDatasetDelimitedTextAttributes) Timeouts() datafactorydatasetdelimitedtext.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafactorydatasetdelimitedtext.TimeoutsAttributes](dfddt.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafactorydatasetdelimitedtext.TimeoutsAttributes](dfddt.ref.Append("timeouts"))
 }
 
 type dataFactoryDatasetDelimitedTextState struct {

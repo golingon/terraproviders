@@ -33,7 +33,7 @@ func (dpr DestinationPortRangeAttributes) InternalWithRef(ref terra.Reference) D
 	return DestinationPortRangeAttributes{ref: ref}
 }
 
-func (dpr DestinationPortRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (dpr DestinationPortRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dpr.ref.InternalTokens()
 }
 
@@ -57,7 +57,7 @@ func (spr SourcePortRangeAttributes) InternalWithRef(ref terra.Reference) Source
 	return SourcePortRangeAttributes{ref: ref}
 }
 
-func (spr SourcePortRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (spr SourcePortRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return spr.ref.InternalTokens()
 }
 

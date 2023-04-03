@@ -35,7 +35,7 @@ func (als AccessLogSettingsAttributes) InternalWithRef(ref terra.Reference) Acce
 	return AccessLogSettingsAttributes{ref: ref}
 }
 
-func (als AccessLogSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (als AccessLogSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return als.ref.InternalTokens()
 }
 
@@ -59,7 +59,7 @@ func (cs CanarySettingsAttributes) InternalWithRef(ref terra.Reference) CanarySe
 	return CanarySettingsAttributes{ref: ref}
 }
 
-func (cs CanarySettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (cs CanarySettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cs.ref.InternalTokens()
 }
 

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewRedisEnterpriseDatabase creates a new instance of [RedisEnterpriseDatabase].
 func NewRedisEnterpriseDatabase(name string, args RedisEnterpriseDatabaseArgs) *RedisEnterpriseDatabase {
 	return &RedisEnterpriseDatabase{
 		Args: args,
@@ -19,28 +20,51 @@ func NewRedisEnterpriseDatabase(name string, args RedisEnterpriseDatabaseArgs) *
 
 var _ terra.Resource = (*RedisEnterpriseDatabase)(nil)
 
+// RedisEnterpriseDatabase represents the Terraform resource azurerm_redis_enterprise_database.
 type RedisEnterpriseDatabase struct {
-	Name  string
-	Args  RedisEnterpriseDatabaseArgs
-	state *redisEnterpriseDatabaseState
+	Name      string
+	Args      RedisEnterpriseDatabaseArgs
+	state     *redisEnterpriseDatabaseState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RedisEnterpriseDatabase].
 func (red *RedisEnterpriseDatabase) Type() string {
 	return "azurerm_redis_enterprise_database"
 }
 
+// LocalName returns the local name for [RedisEnterpriseDatabase].
 func (red *RedisEnterpriseDatabase) LocalName() string {
 	return red.Name
 }
 
+// Configuration returns the configuration (args) for [RedisEnterpriseDatabase].
 func (red *RedisEnterpriseDatabase) Configuration() interface{} {
 	return red.Args
 }
 
+// DependOn is used for other resources to depend on [RedisEnterpriseDatabase].
+func (red *RedisEnterpriseDatabase) DependOn() terra.Reference {
+	return terra.ReferenceResource(red)
+}
+
+// Dependencies returns the list of resources [RedisEnterpriseDatabase] depends_on.
+func (red *RedisEnterpriseDatabase) Dependencies() terra.Dependencies {
+	return red.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RedisEnterpriseDatabase].
+func (red *RedisEnterpriseDatabase) LifecycleManagement() *terra.Lifecycle {
+	return red.Lifecycle
+}
+
+// Attributes returns the attributes for [RedisEnterpriseDatabase].
 func (red *RedisEnterpriseDatabase) Attributes() redisEnterpriseDatabaseAttributes {
 	return redisEnterpriseDatabaseAttributes{ref: terra.ReferenceResource(red)}
 }
 
+// ImportState imports the given attribute values into [RedisEnterpriseDatabase]'s state.
 func (red *RedisEnterpriseDatabase) ImportState(av io.Reader) error {
 	red.state = &redisEnterpriseDatabaseState{}
 	if err := json.NewDecoder(av).Decode(red.state); err != nil {
@@ -49,10 +73,12 @@ func (red *RedisEnterpriseDatabase) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RedisEnterpriseDatabase] has state.
 func (red *RedisEnterpriseDatabase) State() (*redisEnterpriseDatabaseState, bool) {
 	return red.state, red.state != nil
 }
 
+// StateMust returns the state for [RedisEnterpriseDatabase]. Panics if the state is nil.
 func (red *RedisEnterpriseDatabase) StateMust() *redisEnterpriseDatabaseState {
 	if red.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", red.Type(), red.LocalName()))
@@ -60,10 +86,7 @@ func (red *RedisEnterpriseDatabase) StateMust() *redisEnterpriseDatabaseState {
 	return red.state
 }
 
-func (red *RedisEnterpriseDatabase) DependOn() terra.Reference {
-	return terra.ReferenceResource(red)
-}
-
+// RedisEnterpriseDatabaseArgs contains the configurations for azurerm_redis_enterprise_database.
 type RedisEnterpriseDatabaseArgs struct {
 	// ClientProtocol: string, optional
 	ClientProtocol terra.StringValue `hcl:"client_protocol,attr"`
@@ -89,67 +112,77 @@ type RedisEnterpriseDatabaseArgs struct {
 	Module []redisenterprisedatabase.Module `hcl:"module,block" validate:"min=0,max=4"`
 	// Timeouts: optional
 	Timeouts *redisenterprisedatabase.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that RedisEnterpriseDatabase depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type redisEnterpriseDatabaseAttributes struct {
 	ref terra.Reference
 }
 
+// ClientProtocol returns a reference to field client_protocol of azurerm_redis_enterprise_database.
 func (red redisEnterpriseDatabaseAttributes) ClientProtocol() terra.StringValue {
-	return terra.ReferenceString(red.ref.Append("client_protocol"))
+	return terra.ReferenceAsString(red.ref.Append("client_protocol"))
 }
 
+// ClusterId returns a reference to field cluster_id of azurerm_redis_enterprise_database.
 func (red redisEnterpriseDatabaseAttributes) ClusterId() terra.StringValue {
-	return terra.ReferenceString(red.ref.Append("cluster_id"))
+	return terra.ReferenceAsString(red.ref.Append("cluster_id"))
 }
 
+// ClusteringPolicy returns a reference to field clustering_policy of azurerm_redis_enterprise_database.
 func (red redisEnterpriseDatabaseAttributes) ClusteringPolicy() terra.StringValue {
-	return terra.ReferenceString(red.ref.Append("clustering_policy"))
+	return terra.ReferenceAsString(red.ref.Append("clustering_policy"))
 }
 
+// EvictionPolicy returns a reference to field eviction_policy of azurerm_redis_enterprise_database.
 func (red redisEnterpriseDatabaseAttributes) EvictionPolicy() terra.StringValue {
-	return terra.ReferenceString(red.ref.Append("eviction_policy"))
+	return terra.ReferenceAsString(red.ref.Append("eviction_policy"))
 }
 
+// Id returns a reference to field id of azurerm_redis_enterprise_database.
 func (red redisEnterpriseDatabaseAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(red.ref.Append("id"))
+	return terra.ReferenceAsString(red.ref.Append("id"))
 }
 
+// LinkedDatabaseGroupNickname returns a reference to field linked_database_group_nickname of azurerm_redis_enterprise_database.
 func (red redisEnterpriseDatabaseAttributes) LinkedDatabaseGroupNickname() terra.StringValue {
-	return terra.ReferenceString(red.ref.Append("linked_database_group_nickname"))
+	return terra.ReferenceAsString(red.ref.Append("linked_database_group_nickname"))
 }
 
+// LinkedDatabaseId returns a reference to field linked_database_id of azurerm_redis_enterprise_database.
 func (red redisEnterpriseDatabaseAttributes) LinkedDatabaseId() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](red.ref.Append("linked_database_id"))
+	return terra.ReferenceAsSet[terra.StringValue](red.ref.Append("linked_database_id"))
 }
 
+// Name returns a reference to field name of azurerm_redis_enterprise_database.
 func (red redisEnterpriseDatabaseAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(red.ref.Append("name"))
+	return terra.ReferenceAsString(red.ref.Append("name"))
 }
 
+// Port returns a reference to field port of azurerm_redis_enterprise_database.
 func (red redisEnterpriseDatabaseAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(red.ref.Append("port"))
+	return terra.ReferenceAsNumber(red.ref.Append("port"))
 }
 
+// PrimaryAccessKey returns a reference to field primary_access_key of azurerm_redis_enterprise_database.
 func (red redisEnterpriseDatabaseAttributes) PrimaryAccessKey() terra.StringValue {
-	return terra.ReferenceString(red.ref.Append("primary_access_key"))
+	return terra.ReferenceAsString(red.ref.Append("primary_access_key"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_redis_enterprise_database.
 func (red redisEnterpriseDatabaseAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(red.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(red.ref.Append("resource_group_name"))
 }
 
+// SecondaryAccessKey returns a reference to field secondary_access_key of azurerm_redis_enterprise_database.
 func (red redisEnterpriseDatabaseAttributes) SecondaryAccessKey() terra.StringValue {
-	return terra.ReferenceString(red.ref.Append("secondary_access_key"))
+	return terra.ReferenceAsString(red.ref.Append("secondary_access_key"))
 }
 
 func (red redisEnterpriseDatabaseAttributes) Module() terra.ListValue[redisenterprisedatabase.ModuleAttributes] {
-	return terra.ReferenceList[redisenterprisedatabase.ModuleAttributes](red.ref.Append("module"))
+	return terra.ReferenceAsList[redisenterprisedatabase.ModuleAttributes](red.ref.Append("module"))
 }
 
 func (red redisEnterpriseDatabaseAttributes) Timeouts() redisenterprisedatabase.TimeoutsAttributes {
-	return terra.ReferenceSingle[redisenterprisedatabase.TimeoutsAttributes](red.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[redisenterprisedatabase.TimeoutsAttributes](red.ref.Append("timeouts"))
 }
 
 type redisEnterpriseDatabaseState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewWebApplicationFirewallPolicy creates a new instance of [WebApplicationFirewallPolicy].
 func NewWebApplicationFirewallPolicy(name string, args WebApplicationFirewallPolicyArgs) *WebApplicationFirewallPolicy {
 	return &WebApplicationFirewallPolicy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewWebApplicationFirewallPolicy(name string, args WebApplicationFirewallPol
 
 var _ terra.Resource = (*WebApplicationFirewallPolicy)(nil)
 
+// WebApplicationFirewallPolicy represents the Terraform resource azurerm_web_application_firewall_policy.
 type WebApplicationFirewallPolicy struct {
-	Name  string
-	Args  WebApplicationFirewallPolicyArgs
-	state *webApplicationFirewallPolicyState
+	Name      string
+	Args      WebApplicationFirewallPolicyArgs
+	state     *webApplicationFirewallPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [WebApplicationFirewallPolicy].
 func (wafp *WebApplicationFirewallPolicy) Type() string {
 	return "azurerm_web_application_firewall_policy"
 }
 
+// LocalName returns the local name for [WebApplicationFirewallPolicy].
 func (wafp *WebApplicationFirewallPolicy) LocalName() string {
 	return wafp.Name
 }
 
+// Configuration returns the configuration (args) for [WebApplicationFirewallPolicy].
 func (wafp *WebApplicationFirewallPolicy) Configuration() interface{} {
 	return wafp.Args
 }
 
+// DependOn is used for other resources to depend on [WebApplicationFirewallPolicy].
+func (wafp *WebApplicationFirewallPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(wafp)
+}
+
+// Dependencies returns the list of resources [WebApplicationFirewallPolicy] depends_on.
+func (wafp *WebApplicationFirewallPolicy) Dependencies() terra.Dependencies {
+	return wafp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [WebApplicationFirewallPolicy].
+func (wafp *WebApplicationFirewallPolicy) LifecycleManagement() *terra.Lifecycle {
+	return wafp.Lifecycle
+}
+
+// Attributes returns the attributes for [WebApplicationFirewallPolicy].
 func (wafp *WebApplicationFirewallPolicy) Attributes() webApplicationFirewallPolicyAttributes {
 	return webApplicationFirewallPolicyAttributes{ref: terra.ReferenceResource(wafp)}
 }
 
+// ImportState imports the given attribute values into [WebApplicationFirewallPolicy]'s state.
 func (wafp *WebApplicationFirewallPolicy) ImportState(av io.Reader) error {
 	wafp.state = &webApplicationFirewallPolicyState{}
 	if err := json.NewDecoder(av).Decode(wafp.state); err != nil {
@@ -49,10 +73,12 @@ func (wafp *WebApplicationFirewallPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [WebApplicationFirewallPolicy] has state.
 func (wafp *WebApplicationFirewallPolicy) State() (*webApplicationFirewallPolicyState, bool) {
 	return wafp.state, wafp.state != nil
 }
 
+// StateMust returns the state for [WebApplicationFirewallPolicy]. Panics if the state is nil.
 func (wafp *WebApplicationFirewallPolicy) StateMust() *webApplicationFirewallPolicyState {
 	if wafp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", wafp.Type(), wafp.LocalName()))
@@ -60,10 +86,7 @@ func (wafp *WebApplicationFirewallPolicy) StateMust() *webApplicationFirewallPol
 	return wafp.state
 }
 
-func (wafp *WebApplicationFirewallPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(wafp)
-}
-
+// WebApplicationFirewallPolicyArgs contains the configurations for azurerm_web_application_firewall_policy.
 type WebApplicationFirewallPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -83,55 +106,60 @@ type WebApplicationFirewallPolicyArgs struct {
 	PolicySettings *webapplicationfirewallpolicy.PolicySettings `hcl:"policy_settings,block"`
 	// Timeouts: optional
 	Timeouts *webapplicationfirewallpolicy.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that WebApplicationFirewallPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type webApplicationFirewallPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// HttpListenerIds returns a reference to field http_listener_ids of azurerm_web_application_firewall_policy.
 func (wafp webApplicationFirewallPolicyAttributes) HttpListenerIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](wafp.ref.Append("http_listener_ids"))
+	return terra.ReferenceAsList[terra.StringValue](wafp.ref.Append("http_listener_ids"))
 }
 
+// Id returns a reference to field id of azurerm_web_application_firewall_policy.
 func (wafp webApplicationFirewallPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(wafp.ref.Append("id"))
+	return terra.ReferenceAsString(wafp.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_web_application_firewall_policy.
 func (wafp webApplicationFirewallPolicyAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(wafp.ref.Append("location"))
+	return terra.ReferenceAsString(wafp.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_web_application_firewall_policy.
 func (wafp webApplicationFirewallPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(wafp.ref.Append("name"))
+	return terra.ReferenceAsString(wafp.ref.Append("name"))
 }
 
+// PathBasedRuleIds returns a reference to field path_based_rule_ids of azurerm_web_application_firewall_policy.
 func (wafp webApplicationFirewallPolicyAttributes) PathBasedRuleIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](wafp.ref.Append("path_based_rule_ids"))
+	return terra.ReferenceAsList[terra.StringValue](wafp.ref.Append("path_based_rule_ids"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_web_application_firewall_policy.
 func (wafp webApplicationFirewallPolicyAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(wafp.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(wafp.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_web_application_firewall_policy.
 func (wafp webApplicationFirewallPolicyAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](wafp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](wafp.ref.Append("tags"))
 }
 
 func (wafp webApplicationFirewallPolicyAttributes) CustomRules() terra.ListValue[webapplicationfirewallpolicy.CustomRulesAttributes] {
-	return terra.ReferenceList[webapplicationfirewallpolicy.CustomRulesAttributes](wafp.ref.Append("custom_rules"))
+	return terra.ReferenceAsList[webapplicationfirewallpolicy.CustomRulesAttributes](wafp.ref.Append("custom_rules"))
 }
 
 func (wafp webApplicationFirewallPolicyAttributes) ManagedRules() terra.ListValue[webapplicationfirewallpolicy.ManagedRulesAttributes] {
-	return terra.ReferenceList[webapplicationfirewallpolicy.ManagedRulesAttributes](wafp.ref.Append("managed_rules"))
+	return terra.ReferenceAsList[webapplicationfirewallpolicy.ManagedRulesAttributes](wafp.ref.Append("managed_rules"))
 }
 
 func (wafp webApplicationFirewallPolicyAttributes) PolicySettings() terra.ListValue[webapplicationfirewallpolicy.PolicySettingsAttributes] {
-	return terra.ReferenceList[webapplicationfirewallpolicy.PolicySettingsAttributes](wafp.ref.Append("policy_settings"))
+	return terra.ReferenceAsList[webapplicationfirewallpolicy.PolicySettingsAttributes](wafp.ref.Append("policy_settings"))
 }
 
 func (wafp webApplicationFirewallPolicyAttributes) Timeouts() webapplicationfirewallpolicy.TimeoutsAttributes {
-	return terra.ReferenceSingle[webapplicationfirewallpolicy.TimeoutsAttributes](wafp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[webapplicationfirewallpolicy.TimeoutsAttributes](wafp.ref.Append("timeouts"))
 }
 
 type webApplicationFirewallPolicyState struct {

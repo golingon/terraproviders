@@ -17,22 +17,27 @@ type Provider struct {
 	Args ProviderArgs
 }
 
+// LocalName returns the provider local name for [Provider].
 func (p *Provider) LocalName() string {
 	return "azurerm"
 }
 
+// Source returns the provider source for [Provider].
 func (p *Provider) Source() string {
 	return "hashicorp/azurerm"
 }
 
+// Version returns the provider version for [Provider].
 func (p *Provider) Version() string {
 	return "3.49.0"
 }
 
+// Configuration returns the configuration (args) for [Provider].
 func (p *Provider) Configuration() interface{} {
 	return p.Args
 }
 
+// ProviderArgs contains the configurations for provider.
 type ProviderArgs struct {
 	// AuxiliaryTenantIds: list of string, optional
 	AuxiliaryTenantIds terra.ListValue[terra.StringValue] `hcl:"auxiliary_tenant_ids,attr"`

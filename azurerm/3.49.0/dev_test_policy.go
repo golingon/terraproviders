@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDevTestPolicy creates a new instance of [DevTestPolicy].
 func NewDevTestPolicy(name string, args DevTestPolicyArgs) *DevTestPolicy {
 	return &DevTestPolicy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDevTestPolicy(name string, args DevTestPolicyArgs) *DevTestPolicy {
 
 var _ terra.Resource = (*DevTestPolicy)(nil)
 
+// DevTestPolicy represents the Terraform resource azurerm_dev_test_policy.
 type DevTestPolicy struct {
-	Name  string
-	Args  DevTestPolicyArgs
-	state *devTestPolicyState
+	Name      string
+	Args      DevTestPolicyArgs
+	state     *devTestPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DevTestPolicy].
 func (dtp *DevTestPolicy) Type() string {
 	return "azurerm_dev_test_policy"
 }
 
+// LocalName returns the local name for [DevTestPolicy].
 func (dtp *DevTestPolicy) LocalName() string {
 	return dtp.Name
 }
 
+// Configuration returns the configuration (args) for [DevTestPolicy].
 func (dtp *DevTestPolicy) Configuration() interface{} {
 	return dtp.Args
 }
 
+// DependOn is used for other resources to depend on [DevTestPolicy].
+func (dtp *DevTestPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(dtp)
+}
+
+// Dependencies returns the list of resources [DevTestPolicy] depends_on.
+func (dtp *DevTestPolicy) Dependencies() terra.Dependencies {
+	return dtp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DevTestPolicy].
+func (dtp *DevTestPolicy) LifecycleManagement() *terra.Lifecycle {
+	return dtp.Lifecycle
+}
+
+// Attributes returns the attributes for [DevTestPolicy].
 func (dtp *DevTestPolicy) Attributes() devTestPolicyAttributes {
 	return devTestPolicyAttributes{ref: terra.ReferenceResource(dtp)}
 }
 
+// ImportState imports the given attribute values into [DevTestPolicy]'s state.
 func (dtp *DevTestPolicy) ImportState(av io.Reader) error {
 	dtp.state = &devTestPolicyState{}
 	if err := json.NewDecoder(av).Decode(dtp.state); err != nil {
@@ -49,10 +73,12 @@ func (dtp *DevTestPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DevTestPolicy] has state.
 func (dtp *DevTestPolicy) State() (*devTestPolicyState, bool) {
 	return dtp.state, dtp.state != nil
 }
 
+// StateMust returns the state for [DevTestPolicy]. Panics if the state is nil.
 func (dtp *DevTestPolicy) StateMust() *devTestPolicyState {
 	if dtp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dtp.Type(), dtp.LocalName()))
@@ -60,10 +86,7 @@ func (dtp *DevTestPolicy) StateMust() *devTestPolicyState {
 	return dtp.state
 }
 
-func (dtp *DevTestPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(dtp)
-}
-
+// DevTestPolicyArgs contains the configurations for azurerm_dev_test_policy.
 type DevTestPolicyArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -87,55 +110,63 @@ type DevTestPolicyArgs struct {
 	Threshold terra.StringValue `hcl:"threshold,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *devtestpolicy.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DevTestPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type devTestPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of azurerm_dev_test_policy.
 func (dtp devTestPolicyAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dtp.ref.Append("description"))
+	return terra.ReferenceAsString(dtp.ref.Append("description"))
 }
 
+// EvaluatorType returns a reference to field evaluator_type of azurerm_dev_test_policy.
 func (dtp devTestPolicyAttributes) EvaluatorType() terra.StringValue {
-	return terra.ReferenceString(dtp.ref.Append("evaluator_type"))
+	return terra.ReferenceAsString(dtp.ref.Append("evaluator_type"))
 }
 
+// FactData returns a reference to field fact_data of azurerm_dev_test_policy.
 func (dtp devTestPolicyAttributes) FactData() terra.StringValue {
-	return terra.ReferenceString(dtp.ref.Append("fact_data"))
+	return terra.ReferenceAsString(dtp.ref.Append("fact_data"))
 }
 
+// Id returns a reference to field id of azurerm_dev_test_policy.
 func (dtp devTestPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dtp.ref.Append("id"))
+	return terra.ReferenceAsString(dtp.ref.Append("id"))
 }
 
+// LabName returns a reference to field lab_name of azurerm_dev_test_policy.
 func (dtp devTestPolicyAttributes) LabName() terra.StringValue {
-	return terra.ReferenceString(dtp.ref.Append("lab_name"))
+	return terra.ReferenceAsString(dtp.ref.Append("lab_name"))
 }
 
+// Name returns a reference to field name of azurerm_dev_test_policy.
 func (dtp devTestPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dtp.ref.Append("name"))
+	return terra.ReferenceAsString(dtp.ref.Append("name"))
 }
 
+// PolicySetName returns a reference to field policy_set_name of azurerm_dev_test_policy.
 func (dtp devTestPolicyAttributes) PolicySetName() terra.StringValue {
-	return terra.ReferenceString(dtp.ref.Append("policy_set_name"))
+	return terra.ReferenceAsString(dtp.ref.Append("policy_set_name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_dev_test_policy.
 func (dtp devTestPolicyAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(dtp.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(dtp.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_dev_test_policy.
 func (dtp devTestPolicyAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dtp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dtp.ref.Append("tags"))
 }
 
+// Threshold returns a reference to field threshold of azurerm_dev_test_policy.
 func (dtp devTestPolicyAttributes) Threshold() terra.StringValue {
-	return terra.ReferenceString(dtp.ref.Append("threshold"))
+	return terra.ReferenceAsString(dtp.ref.Append("threshold"))
 }
 
 func (dtp devTestPolicyAttributes) Timeouts() devtestpolicy.TimeoutsAttributes {
-	return terra.ReferenceSingle[devtestpolicy.TimeoutsAttributes](dtp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[devtestpolicy.TimeoutsAttributes](dtp.ref.Append("timeouts"))
 }
 
 type devTestPolicyState struct {

@@ -13,48 +13,48 @@ type FoldersAttributes struct {
 	ref terra.Reference
 }
 
-func (f FoldersAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FoldersAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FoldersAttributes) InternalWithRef(ref terra.Reference) FoldersAttributes {
 	return FoldersAttributes{ref: ref}
 }
 
-func (f FoldersAttributes) InternalTokens() hclwrite.Tokens {
+func (f FoldersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
 func (f FoldersAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("create_time"))
+	return terra.ReferenceAsString(f.ref.Append("create_time"))
 }
 
 func (f FoldersAttributes) DeleteTime() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("delete_time"))
+	return terra.ReferenceAsString(f.ref.Append("delete_time"))
 }
 
 func (f FoldersAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("display_name"))
+	return terra.ReferenceAsString(f.ref.Append("display_name"))
 }
 
 func (f FoldersAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("etag"))
+	return terra.ReferenceAsString(f.ref.Append("etag"))
 }
 
 func (f FoldersAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("name"))
+	return terra.ReferenceAsString(f.ref.Append("name"))
 }
 
 func (f FoldersAttributes) Parent() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("parent"))
+	return terra.ReferenceAsString(f.ref.Append("parent"))
 }
 
 func (f FoldersAttributes) State() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("state"))
+	return terra.ReferenceAsString(f.ref.Append("state"))
 }
 
 func (f FoldersAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("update_time"))
+	return terra.ReferenceAsString(f.ref.Append("update_time"))
 }
 
 type FoldersState struct {

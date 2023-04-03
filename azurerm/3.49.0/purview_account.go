@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewPurviewAccount creates a new instance of [PurviewAccount].
 func NewPurviewAccount(name string, args PurviewAccountArgs) *PurviewAccount {
 	return &PurviewAccount{
 		Args: args,
@@ -19,28 +20,51 @@ func NewPurviewAccount(name string, args PurviewAccountArgs) *PurviewAccount {
 
 var _ terra.Resource = (*PurviewAccount)(nil)
 
+// PurviewAccount represents the Terraform resource azurerm_purview_account.
 type PurviewAccount struct {
-	Name  string
-	Args  PurviewAccountArgs
-	state *purviewAccountState
+	Name      string
+	Args      PurviewAccountArgs
+	state     *purviewAccountState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PurviewAccount].
 func (pa *PurviewAccount) Type() string {
 	return "azurerm_purview_account"
 }
 
+// LocalName returns the local name for [PurviewAccount].
 func (pa *PurviewAccount) LocalName() string {
 	return pa.Name
 }
 
+// Configuration returns the configuration (args) for [PurviewAccount].
 func (pa *PurviewAccount) Configuration() interface{} {
 	return pa.Args
 }
 
+// DependOn is used for other resources to depend on [PurviewAccount].
+func (pa *PurviewAccount) DependOn() terra.Reference {
+	return terra.ReferenceResource(pa)
+}
+
+// Dependencies returns the list of resources [PurviewAccount] depends_on.
+func (pa *PurviewAccount) Dependencies() terra.Dependencies {
+	return pa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PurviewAccount].
+func (pa *PurviewAccount) LifecycleManagement() *terra.Lifecycle {
+	return pa.Lifecycle
+}
+
+// Attributes returns the attributes for [PurviewAccount].
 func (pa *PurviewAccount) Attributes() purviewAccountAttributes {
 	return purviewAccountAttributes{ref: terra.ReferenceResource(pa)}
 }
 
+// ImportState imports the given attribute values into [PurviewAccount]'s state.
 func (pa *PurviewAccount) ImportState(av io.Reader) error {
 	pa.state = &purviewAccountState{}
 	if err := json.NewDecoder(av).Decode(pa.state); err != nil {
@@ -49,10 +73,12 @@ func (pa *PurviewAccount) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PurviewAccount] has state.
 func (pa *PurviewAccount) State() (*purviewAccountState, bool) {
 	return pa.state, pa.state != nil
 }
 
+// StateMust returns the state for [PurviewAccount]. Panics if the state is nil.
 func (pa *PurviewAccount) StateMust() *purviewAccountState {
 	if pa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pa.Type(), pa.LocalName()))
@@ -60,10 +86,7 @@ func (pa *PurviewAccount) StateMust() *purviewAccountState {
 	return pa.state
 }
 
-func (pa *PurviewAccount) DependOn() terra.Reference {
-	return terra.ReferenceResource(pa)
-}
-
+// PurviewAccountArgs contains the configurations for azurerm_purview_account.
 type PurviewAccountArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -85,71 +108,81 @@ type PurviewAccountArgs struct {
 	Identity *purviewaccount.Identity `hcl:"identity,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *purviewaccount.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that PurviewAccount depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type purviewAccountAttributes struct {
 	ref terra.Reference
 }
 
+// AtlasKafkaEndpointPrimaryConnectionString returns a reference to field atlas_kafka_endpoint_primary_connection_string of azurerm_purview_account.
 func (pa purviewAccountAttributes) AtlasKafkaEndpointPrimaryConnectionString() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("atlas_kafka_endpoint_primary_connection_string"))
+	return terra.ReferenceAsString(pa.ref.Append("atlas_kafka_endpoint_primary_connection_string"))
 }
 
+// AtlasKafkaEndpointSecondaryConnectionString returns a reference to field atlas_kafka_endpoint_secondary_connection_string of azurerm_purview_account.
 func (pa purviewAccountAttributes) AtlasKafkaEndpointSecondaryConnectionString() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("atlas_kafka_endpoint_secondary_connection_string"))
+	return terra.ReferenceAsString(pa.ref.Append("atlas_kafka_endpoint_secondary_connection_string"))
 }
 
+// CatalogEndpoint returns a reference to field catalog_endpoint of azurerm_purview_account.
 func (pa purviewAccountAttributes) CatalogEndpoint() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("catalog_endpoint"))
+	return terra.ReferenceAsString(pa.ref.Append("catalog_endpoint"))
 }
 
+// GuardianEndpoint returns a reference to field guardian_endpoint of azurerm_purview_account.
 func (pa purviewAccountAttributes) GuardianEndpoint() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("guardian_endpoint"))
+	return terra.ReferenceAsString(pa.ref.Append("guardian_endpoint"))
 }
 
+// Id returns a reference to field id of azurerm_purview_account.
 func (pa purviewAccountAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("id"))
+	return terra.ReferenceAsString(pa.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_purview_account.
 func (pa purviewAccountAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("location"))
+	return terra.ReferenceAsString(pa.ref.Append("location"))
 }
 
+// ManagedResourceGroupName returns a reference to field managed_resource_group_name of azurerm_purview_account.
 func (pa purviewAccountAttributes) ManagedResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("managed_resource_group_name"))
+	return terra.ReferenceAsString(pa.ref.Append("managed_resource_group_name"))
 }
 
+// Name returns a reference to field name of azurerm_purview_account.
 func (pa purviewAccountAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("name"))
+	return terra.ReferenceAsString(pa.ref.Append("name"))
 }
 
+// PublicNetworkEnabled returns a reference to field public_network_enabled of azurerm_purview_account.
 func (pa purviewAccountAttributes) PublicNetworkEnabled() terra.BoolValue {
-	return terra.ReferenceBool(pa.ref.Append("public_network_enabled"))
+	return terra.ReferenceAsBool(pa.ref.Append("public_network_enabled"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_purview_account.
 func (pa purviewAccountAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(pa.ref.Append("resource_group_name"))
 }
 
+// ScanEndpoint returns a reference to field scan_endpoint of azurerm_purview_account.
 func (pa purviewAccountAttributes) ScanEndpoint() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("scan_endpoint"))
+	return terra.ReferenceAsString(pa.ref.Append("scan_endpoint"))
 }
 
+// Tags returns a reference to field tags of azurerm_purview_account.
 func (pa purviewAccountAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](pa.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](pa.ref.Append("tags"))
 }
 
 func (pa purviewAccountAttributes) ManagedResources() terra.ListValue[purviewaccount.ManagedResourcesAttributes] {
-	return terra.ReferenceList[purviewaccount.ManagedResourcesAttributes](pa.ref.Append("managed_resources"))
+	return terra.ReferenceAsList[purviewaccount.ManagedResourcesAttributes](pa.ref.Append("managed_resources"))
 }
 
 func (pa purviewAccountAttributes) Identity() terra.ListValue[purviewaccount.IdentityAttributes] {
-	return terra.ReferenceList[purviewaccount.IdentityAttributes](pa.ref.Append("identity"))
+	return terra.ReferenceAsList[purviewaccount.IdentityAttributes](pa.ref.Append("identity"))
 }
 
 func (pa purviewAccountAttributes) Timeouts() purviewaccount.TimeoutsAttributes {
-	return terra.ReferenceSingle[purviewaccount.TimeoutsAttributes](pa.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[purviewaccount.TimeoutsAttributes](pa.ref.Append("timeouts"))
 }
 
 type purviewAccountState struct {

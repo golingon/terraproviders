@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewGkeBackupBackupPlan creates a new instance of [GkeBackupBackupPlan].
 func NewGkeBackupBackupPlan(name string, args GkeBackupBackupPlanArgs) *GkeBackupBackupPlan {
 	return &GkeBackupBackupPlan{
 		Args: args,
@@ -19,28 +20,51 @@ func NewGkeBackupBackupPlan(name string, args GkeBackupBackupPlanArgs) *GkeBacku
 
 var _ terra.Resource = (*GkeBackupBackupPlan)(nil)
 
+// GkeBackupBackupPlan represents the Terraform resource google_gke_backup_backup_plan.
 type GkeBackupBackupPlan struct {
-	Name  string
-	Args  GkeBackupBackupPlanArgs
-	state *gkeBackupBackupPlanState
+	Name      string
+	Args      GkeBackupBackupPlanArgs
+	state     *gkeBackupBackupPlanState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GkeBackupBackupPlan].
 func (gbbp *GkeBackupBackupPlan) Type() string {
 	return "google_gke_backup_backup_plan"
 }
 
+// LocalName returns the local name for [GkeBackupBackupPlan].
 func (gbbp *GkeBackupBackupPlan) LocalName() string {
 	return gbbp.Name
 }
 
+// Configuration returns the configuration (args) for [GkeBackupBackupPlan].
 func (gbbp *GkeBackupBackupPlan) Configuration() interface{} {
 	return gbbp.Args
 }
 
+// DependOn is used for other resources to depend on [GkeBackupBackupPlan].
+func (gbbp *GkeBackupBackupPlan) DependOn() terra.Reference {
+	return terra.ReferenceResource(gbbp)
+}
+
+// Dependencies returns the list of resources [GkeBackupBackupPlan] depends_on.
+func (gbbp *GkeBackupBackupPlan) Dependencies() terra.Dependencies {
+	return gbbp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GkeBackupBackupPlan].
+func (gbbp *GkeBackupBackupPlan) LifecycleManagement() *terra.Lifecycle {
+	return gbbp.Lifecycle
+}
+
+// Attributes returns the attributes for [GkeBackupBackupPlan].
 func (gbbp *GkeBackupBackupPlan) Attributes() gkeBackupBackupPlanAttributes {
 	return gkeBackupBackupPlanAttributes{ref: terra.ReferenceResource(gbbp)}
 }
 
+// ImportState imports the given attribute values into [GkeBackupBackupPlan]'s state.
 func (gbbp *GkeBackupBackupPlan) ImportState(av io.Reader) error {
 	gbbp.state = &gkeBackupBackupPlanState{}
 	if err := json.NewDecoder(av).Decode(gbbp.state); err != nil {
@@ -49,10 +73,12 @@ func (gbbp *GkeBackupBackupPlan) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GkeBackupBackupPlan] has state.
 func (gbbp *GkeBackupBackupPlan) State() (*gkeBackupBackupPlanState, bool) {
 	return gbbp.state, gbbp.state != nil
 }
 
+// StateMust returns the state for [GkeBackupBackupPlan]. Panics if the state is nil.
 func (gbbp *GkeBackupBackupPlan) StateMust() *gkeBackupBackupPlanState {
 	if gbbp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", gbbp.Type(), gbbp.LocalName()))
@@ -60,10 +86,7 @@ func (gbbp *GkeBackupBackupPlan) StateMust() *gkeBackupBackupPlanState {
 	return gbbp.state
 }
 
-func (gbbp *GkeBackupBackupPlan) DependOn() terra.Reference {
-	return terra.ReferenceResource(gbbp)
-}
-
+// GkeBackupBackupPlanArgs contains the configurations for google_gke_backup_backup_plan.
 type GkeBackupBackupPlanArgs struct {
 	// Cluster: string, required
 	Cluster terra.StringValue `hcl:"cluster,attr" validate:"required"`
@@ -89,71 +112,80 @@ type GkeBackupBackupPlanArgs struct {
 	RetentionPolicy *gkebackupbackupplan.RetentionPolicy `hcl:"retention_policy,block"`
 	// Timeouts: optional
 	Timeouts *gkebackupbackupplan.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that GkeBackupBackupPlan depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type gkeBackupBackupPlanAttributes struct {
 	ref terra.Reference
 }
 
+// Cluster returns a reference to field cluster of google_gke_backup_backup_plan.
 func (gbbp gkeBackupBackupPlanAttributes) Cluster() terra.StringValue {
-	return terra.ReferenceString(gbbp.ref.Append("cluster"))
+	return terra.ReferenceAsString(gbbp.ref.Append("cluster"))
 }
 
+// Deactivated returns a reference to field deactivated of google_gke_backup_backup_plan.
 func (gbbp gkeBackupBackupPlanAttributes) Deactivated() terra.BoolValue {
-	return terra.ReferenceBool(gbbp.ref.Append("deactivated"))
+	return terra.ReferenceAsBool(gbbp.ref.Append("deactivated"))
 }
 
+// Description returns a reference to field description of google_gke_backup_backup_plan.
 func (gbbp gkeBackupBackupPlanAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(gbbp.ref.Append("description"))
+	return terra.ReferenceAsString(gbbp.ref.Append("description"))
 }
 
+// Etag returns a reference to field etag of google_gke_backup_backup_plan.
 func (gbbp gkeBackupBackupPlanAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(gbbp.ref.Append("etag"))
+	return terra.ReferenceAsString(gbbp.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_gke_backup_backup_plan.
 func (gbbp gkeBackupBackupPlanAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(gbbp.ref.Append("id"))
+	return terra.ReferenceAsString(gbbp.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_gke_backup_backup_plan.
 func (gbbp gkeBackupBackupPlanAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gbbp.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](gbbp.ref.Append("labels"))
 }
 
+// Location returns a reference to field location of google_gke_backup_backup_plan.
 func (gbbp gkeBackupBackupPlanAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(gbbp.ref.Append("location"))
+	return terra.ReferenceAsString(gbbp.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_gke_backup_backup_plan.
 func (gbbp gkeBackupBackupPlanAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(gbbp.ref.Append("name"))
+	return terra.ReferenceAsString(gbbp.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_gke_backup_backup_plan.
 func (gbbp gkeBackupBackupPlanAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(gbbp.ref.Append("project"))
+	return terra.ReferenceAsString(gbbp.ref.Append("project"))
 }
 
+// ProtectedPodCount returns a reference to field protected_pod_count of google_gke_backup_backup_plan.
 func (gbbp gkeBackupBackupPlanAttributes) ProtectedPodCount() terra.NumberValue {
-	return terra.ReferenceNumber(gbbp.ref.Append("protected_pod_count"))
+	return terra.ReferenceAsNumber(gbbp.ref.Append("protected_pod_count"))
 }
 
+// Uid returns a reference to field uid of google_gke_backup_backup_plan.
 func (gbbp gkeBackupBackupPlanAttributes) Uid() terra.StringValue {
-	return terra.ReferenceString(gbbp.ref.Append("uid"))
+	return terra.ReferenceAsString(gbbp.ref.Append("uid"))
 }
 
 func (gbbp gkeBackupBackupPlanAttributes) BackupConfig() terra.ListValue[gkebackupbackupplan.BackupConfigAttributes] {
-	return terra.ReferenceList[gkebackupbackupplan.BackupConfigAttributes](gbbp.ref.Append("backup_config"))
+	return terra.ReferenceAsList[gkebackupbackupplan.BackupConfigAttributes](gbbp.ref.Append("backup_config"))
 }
 
 func (gbbp gkeBackupBackupPlanAttributes) BackupSchedule() terra.ListValue[gkebackupbackupplan.BackupScheduleAttributes] {
-	return terra.ReferenceList[gkebackupbackupplan.BackupScheduleAttributes](gbbp.ref.Append("backup_schedule"))
+	return terra.ReferenceAsList[gkebackupbackupplan.BackupScheduleAttributes](gbbp.ref.Append("backup_schedule"))
 }
 
 func (gbbp gkeBackupBackupPlanAttributes) RetentionPolicy() terra.ListValue[gkebackupbackupplan.RetentionPolicyAttributes] {
-	return terra.ReferenceList[gkebackupbackupplan.RetentionPolicyAttributes](gbbp.ref.Append("retention_policy"))
+	return terra.ReferenceAsList[gkebackupbackupplan.RetentionPolicyAttributes](gbbp.ref.Append("retention_policy"))
 }
 
 func (gbbp gkeBackupBackupPlanAttributes) Timeouts() gkebackupbackupplan.TimeoutsAttributes {
-	return terra.ReferenceSingle[gkebackupbackupplan.TimeoutsAttributes](gbbp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[gkebackupbackupplan.TimeoutsAttributes](gbbp.ref.Append("timeouts"))
 }
 
 type gkeBackupBackupPlanState struct {

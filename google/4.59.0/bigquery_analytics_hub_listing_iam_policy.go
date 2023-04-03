@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewBigqueryAnalyticsHubListingIamPolicy creates a new instance of [BigqueryAnalyticsHubListingIamPolicy].
 func NewBigqueryAnalyticsHubListingIamPolicy(name string, args BigqueryAnalyticsHubListingIamPolicyArgs) *BigqueryAnalyticsHubListingIamPolicy {
 	return &BigqueryAnalyticsHubListingIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewBigqueryAnalyticsHubListingIamPolicy(name string, args BigqueryAnalytics
 
 var _ terra.Resource = (*BigqueryAnalyticsHubListingIamPolicy)(nil)
 
+// BigqueryAnalyticsHubListingIamPolicy represents the Terraform resource google_bigquery_analytics_hub_listing_iam_policy.
 type BigqueryAnalyticsHubListingIamPolicy struct {
-	Name  string
-	Args  BigqueryAnalyticsHubListingIamPolicyArgs
-	state *bigqueryAnalyticsHubListingIamPolicyState
+	Name      string
+	Args      BigqueryAnalyticsHubListingIamPolicyArgs
+	state     *bigqueryAnalyticsHubListingIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BigqueryAnalyticsHubListingIamPolicy].
 func (bahlip *BigqueryAnalyticsHubListingIamPolicy) Type() string {
 	return "google_bigquery_analytics_hub_listing_iam_policy"
 }
 
+// LocalName returns the local name for [BigqueryAnalyticsHubListingIamPolicy].
 func (bahlip *BigqueryAnalyticsHubListingIamPolicy) LocalName() string {
 	return bahlip.Name
 }
 
+// Configuration returns the configuration (args) for [BigqueryAnalyticsHubListingIamPolicy].
 func (bahlip *BigqueryAnalyticsHubListingIamPolicy) Configuration() interface{} {
 	return bahlip.Args
 }
 
+// DependOn is used for other resources to depend on [BigqueryAnalyticsHubListingIamPolicy].
+func (bahlip *BigqueryAnalyticsHubListingIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(bahlip)
+}
+
+// Dependencies returns the list of resources [BigqueryAnalyticsHubListingIamPolicy] depends_on.
+func (bahlip *BigqueryAnalyticsHubListingIamPolicy) Dependencies() terra.Dependencies {
+	return bahlip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BigqueryAnalyticsHubListingIamPolicy].
+func (bahlip *BigqueryAnalyticsHubListingIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return bahlip.Lifecycle
+}
+
+// Attributes returns the attributes for [BigqueryAnalyticsHubListingIamPolicy].
 func (bahlip *BigqueryAnalyticsHubListingIamPolicy) Attributes() bigqueryAnalyticsHubListingIamPolicyAttributes {
 	return bigqueryAnalyticsHubListingIamPolicyAttributes{ref: terra.ReferenceResource(bahlip)}
 }
 
+// ImportState imports the given attribute values into [BigqueryAnalyticsHubListingIamPolicy]'s state.
 func (bahlip *BigqueryAnalyticsHubListingIamPolicy) ImportState(av io.Reader) error {
 	bahlip.state = &bigqueryAnalyticsHubListingIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(bahlip.state); err != nil {
@@ -48,10 +72,12 @@ func (bahlip *BigqueryAnalyticsHubListingIamPolicy) ImportState(av io.Reader) er
 	return nil
 }
 
+// State returns the state and a bool indicating if [BigqueryAnalyticsHubListingIamPolicy] has state.
 func (bahlip *BigqueryAnalyticsHubListingIamPolicy) State() (*bigqueryAnalyticsHubListingIamPolicyState, bool) {
 	return bahlip.state, bahlip.state != nil
 }
 
+// StateMust returns the state for [BigqueryAnalyticsHubListingIamPolicy]. Panics if the state is nil.
 func (bahlip *BigqueryAnalyticsHubListingIamPolicy) StateMust() *bigqueryAnalyticsHubListingIamPolicyState {
 	if bahlip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bahlip.Type(), bahlip.LocalName()))
@@ -59,10 +85,7 @@ func (bahlip *BigqueryAnalyticsHubListingIamPolicy) StateMust() *bigqueryAnalyti
 	return bahlip.state
 }
 
-func (bahlip *BigqueryAnalyticsHubListingIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(bahlip)
-}
-
+// BigqueryAnalyticsHubListingIamPolicyArgs contains the configurations for google_bigquery_analytics_hub_listing_iam_policy.
 type BigqueryAnalyticsHubListingIamPolicyArgs struct {
 	// DataExchangeId: string, required
 	DataExchangeId terra.StringValue `hcl:"data_exchange_id,attr" validate:"required"`
@@ -76,39 +99,44 @@ type BigqueryAnalyticsHubListingIamPolicyArgs struct {
 	PolicyData terra.StringValue `hcl:"policy_data,attr" validate:"required"`
 	// Project: string, optional
 	Project terra.StringValue `hcl:"project,attr"`
-	// DependsOn contains resources that BigqueryAnalyticsHubListingIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type bigqueryAnalyticsHubListingIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// DataExchangeId returns a reference to field data_exchange_id of google_bigquery_analytics_hub_listing_iam_policy.
 func (bahlip bigqueryAnalyticsHubListingIamPolicyAttributes) DataExchangeId() terra.StringValue {
-	return terra.ReferenceString(bahlip.ref.Append("data_exchange_id"))
+	return terra.ReferenceAsString(bahlip.ref.Append("data_exchange_id"))
 }
 
+// Etag returns a reference to field etag of google_bigquery_analytics_hub_listing_iam_policy.
 func (bahlip bigqueryAnalyticsHubListingIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(bahlip.ref.Append("etag"))
+	return terra.ReferenceAsString(bahlip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_bigquery_analytics_hub_listing_iam_policy.
 func (bahlip bigqueryAnalyticsHubListingIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bahlip.ref.Append("id"))
+	return terra.ReferenceAsString(bahlip.ref.Append("id"))
 }
 
+// ListingId returns a reference to field listing_id of google_bigquery_analytics_hub_listing_iam_policy.
 func (bahlip bigqueryAnalyticsHubListingIamPolicyAttributes) ListingId() terra.StringValue {
-	return terra.ReferenceString(bahlip.ref.Append("listing_id"))
+	return terra.ReferenceAsString(bahlip.ref.Append("listing_id"))
 }
 
+// Location returns a reference to field location of google_bigquery_analytics_hub_listing_iam_policy.
 func (bahlip bigqueryAnalyticsHubListingIamPolicyAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(bahlip.ref.Append("location"))
+	return terra.ReferenceAsString(bahlip.ref.Append("location"))
 }
 
+// PolicyData returns a reference to field policy_data of google_bigquery_analytics_hub_listing_iam_policy.
 func (bahlip bigqueryAnalyticsHubListingIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(bahlip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(bahlip.ref.Append("policy_data"))
 }
 
+// Project returns a reference to field project of google_bigquery_analytics_hub_listing_iam_policy.
 func (bahlip bigqueryAnalyticsHubListingIamPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(bahlip.ref.Append("project"))
+	return terra.ReferenceAsString(bahlip.ref.Append("project"))
 }
 
 type bigqueryAnalyticsHubListingIamPolicyState struct {

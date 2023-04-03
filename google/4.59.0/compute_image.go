@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeImage creates a new instance of [ComputeImage].
 func NewComputeImage(name string, args ComputeImageArgs) *ComputeImage {
 	return &ComputeImage{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeImage(name string, args ComputeImageArgs) *ComputeImage {
 
 var _ terra.Resource = (*ComputeImage)(nil)
 
+// ComputeImage represents the Terraform resource google_compute_image.
 type ComputeImage struct {
-	Name  string
-	Args  ComputeImageArgs
-	state *computeImageState
+	Name      string
+	Args      ComputeImageArgs
+	state     *computeImageState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeImage].
 func (ci *ComputeImage) Type() string {
 	return "google_compute_image"
 }
 
+// LocalName returns the local name for [ComputeImage].
 func (ci *ComputeImage) LocalName() string {
 	return ci.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeImage].
 func (ci *ComputeImage) Configuration() interface{} {
 	return ci.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeImage].
+func (ci *ComputeImage) DependOn() terra.Reference {
+	return terra.ReferenceResource(ci)
+}
+
+// Dependencies returns the list of resources [ComputeImage] depends_on.
+func (ci *ComputeImage) Dependencies() terra.Dependencies {
+	return ci.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeImage].
+func (ci *ComputeImage) LifecycleManagement() *terra.Lifecycle {
+	return ci.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeImage].
 func (ci *ComputeImage) Attributes() computeImageAttributes {
 	return computeImageAttributes{ref: terra.ReferenceResource(ci)}
 }
 
+// ImportState imports the given attribute values into [ComputeImage]'s state.
 func (ci *ComputeImage) ImportState(av io.Reader) error {
 	ci.state = &computeImageState{}
 	if err := json.NewDecoder(av).Decode(ci.state); err != nil {
@@ -49,10 +73,12 @@ func (ci *ComputeImage) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeImage] has state.
 func (ci *ComputeImage) State() (*computeImageState, bool) {
 	return ci.state, ci.state != nil
 }
 
+// StateMust returns the state for [ComputeImage]. Panics if the state is nil.
 func (ci *ComputeImage) StateMust() *computeImageState {
 	if ci.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ci.Type(), ci.LocalName()))
@@ -60,10 +86,7 @@ func (ci *ComputeImage) StateMust() *computeImageState {
 	return ci.state
 }
 
-func (ci *ComputeImage) DependOn() terra.Reference {
-	return terra.ReferenceResource(ci)
-}
-
+// ComputeImageArgs contains the configurations for google_compute_image.
 type ComputeImageArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -95,87 +118,100 @@ type ComputeImageArgs struct {
 	RawDisk *computeimage.RawDisk `hcl:"raw_disk,block"`
 	// Timeouts: optional
 	Timeouts *computeimage.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeImage depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeImageAttributes struct {
 	ref terra.Reference
 }
 
+// ArchiveSizeBytes returns a reference to field archive_size_bytes of google_compute_image.
 func (ci computeImageAttributes) ArchiveSizeBytes() terra.NumberValue {
-	return terra.ReferenceNumber(ci.ref.Append("archive_size_bytes"))
+	return terra.ReferenceAsNumber(ci.ref.Append("archive_size_bytes"))
 }
 
+// CreationTimestamp returns a reference to field creation_timestamp of google_compute_image.
 func (ci computeImageAttributes) CreationTimestamp() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("creation_timestamp"))
+	return terra.ReferenceAsString(ci.ref.Append("creation_timestamp"))
 }
 
+// Description returns a reference to field description of google_compute_image.
 func (ci computeImageAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("description"))
+	return terra.ReferenceAsString(ci.ref.Append("description"))
 }
 
+// DiskSizeGb returns a reference to field disk_size_gb of google_compute_image.
 func (ci computeImageAttributes) DiskSizeGb() terra.NumberValue {
-	return terra.ReferenceNumber(ci.ref.Append("disk_size_gb"))
+	return terra.ReferenceAsNumber(ci.ref.Append("disk_size_gb"))
 }
 
+// Family returns a reference to field family of google_compute_image.
 func (ci computeImageAttributes) Family() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("family"))
+	return terra.ReferenceAsString(ci.ref.Append("family"))
 }
 
+// Id returns a reference to field id of google_compute_image.
 func (ci computeImageAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("id"))
+	return terra.ReferenceAsString(ci.ref.Append("id"))
 }
 
+// LabelFingerprint returns a reference to field label_fingerprint of google_compute_image.
 func (ci computeImageAttributes) LabelFingerprint() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("label_fingerprint"))
+	return terra.ReferenceAsString(ci.ref.Append("label_fingerprint"))
 }
 
+// Labels returns a reference to field labels of google_compute_image.
 func (ci computeImageAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ci.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](ci.ref.Append("labels"))
 }
 
+// Licenses returns a reference to field licenses of google_compute_image.
 func (ci computeImageAttributes) Licenses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ci.ref.Append("licenses"))
+	return terra.ReferenceAsList[terra.StringValue](ci.ref.Append("licenses"))
 }
 
+// Name returns a reference to field name of google_compute_image.
 func (ci computeImageAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("name"))
+	return terra.ReferenceAsString(ci.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_compute_image.
 func (ci computeImageAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("project"))
+	return terra.ReferenceAsString(ci.ref.Append("project"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_image.
 func (ci computeImageAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("self_link"))
+	return terra.ReferenceAsString(ci.ref.Append("self_link"))
 }
 
+// SourceDisk returns a reference to field source_disk of google_compute_image.
 func (ci computeImageAttributes) SourceDisk() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("source_disk"))
+	return terra.ReferenceAsString(ci.ref.Append("source_disk"))
 }
 
+// SourceImage returns a reference to field source_image of google_compute_image.
 func (ci computeImageAttributes) SourceImage() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("source_image"))
+	return terra.ReferenceAsString(ci.ref.Append("source_image"))
 }
 
+// SourceSnapshot returns a reference to field source_snapshot of google_compute_image.
 func (ci computeImageAttributes) SourceSnapshot() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("source_snapshot"))
+	return terra.ReferenceAsString(ci.ref.Append("source_snapshot"))
 }
 
 func (ci computeImageAttributes) GuestOsFeatures() terra.SetValue[computeimage.GuestOsFeaturesAttributes] {
-	return terra.ReferenceSet[computeimage.GuestOsFeaturesAttributes](ci.ref.Append("guest_os_features"))
+	return terra.ReferenceAsSet[computeimage.GuestOsFeaturesAttributes](ci.ref.Append("guest_os_features"))
 }
 
 func (ci computeImageAttributes) ImageEncryptionKey() terra.ListValue[computeimage.ImageEncryptionKeyAttributes] {
-	return terra.ReferenceList[computeimage.ImageEncryptionKeyAttributes](ci.ref.Append("image_encryption_key"))
+	return terra.ReferenceAsList[computeimage.ImageEncryptionKeyAttributes](ci.ref.Append("image_encryption_key"))
 }
 
 func (ci computeImageAttributes) RawDisk() terra.ListValue[computeimage.RawDiskAttributes] {
-	return terra.ReferenceList[computeimage.RawDiskAttributes](ci.ref.Append("raw_disk"))
+	return terra.ReferenceAsList[computeimage.RawDiskAttributes](ci.ref.Append("raw_disk"))
 }
 
 func (ci computeImageAttributes) Timeouts() computeimage.TimeoutsAttributes {
-	return terra.ReferenceSingle[computeimage.TimeoutsAttributes](ci.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computeimage.TimeoutsAttributes](ci.ref.Append("timeouts"))
 }
 
 type computeImageState struct {

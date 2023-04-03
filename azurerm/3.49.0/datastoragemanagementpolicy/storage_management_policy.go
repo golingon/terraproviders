@@ -45,260 +45,260 @@ type RuleAttributes struct {
 	ref terra.Reference
 }
 
-func (r RuleAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RuleAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RuleAttributes) InternalWithRef(ref terra.Reference) RuleAttributes {
 	return RuleAttributes{ref: ref}
 }
 
-func (r RuleAttributes) InternalTokens() hclwrite.Tokens {
+func (r RuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RuleAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(r.ref.Append("enabled"))
+	return terra.ReferenceAsBool(r.ref.Append("enabled"))
 }
 
 func (r RuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("name"))
+	return terra.ReferenceAsString(r.ref.Append("name"))
 }
 
 func (r RuleAttributes) Actions() terra.ListValue[ActionsAttributes] {
-	return terra.ReferenceList[ActionsAttributes](r.ref.Append("actions"))
+	return terra.ReferenceAsList[ActionsAttributes](r.ref.Append("actions"))
 }
 
 func (r RuleAttributes) Filters() terra.ListValue[FiltersAttributes] {
-	return terra.ReferenceList[FiltersAttributes](r.ref.Append("filters"))
+	return terra.ReferenceAsList[FiltersAttributes](r.ref.Append("filters"))
 }
 
 type ActionsAttributes struct {
 	ref terra.Reference
 }
 
-func (a ActionsAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a ActionsAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a ActionsAttributes) InternalWithRef(ref terra.Reference) ActionsAttributes {
 	return ActionsAttributes{ref: ref}
 }
 
-func (a ActionsAttributes) InternalTokens() hclwrite.Tokens {
+func (a ActionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a ActionsAttributes) BaseBlob() terra.ListValue[BaseBlobAttributes] {
-	return terra.ReferenceList[BaseBlobAttributes](a.ref.Append("base_blob"))
+	return terra.ReferenceAsList[BaseBlobAttributes](a.ref.Append("base_blob"))
 }
 
 func (a ActionsAttributes) Snapshot() terra.ListValue[SnapshotAttributes] {
-	return terra.ReferenceList[SnapshotAttributes](a.ref.Append("snapshot"))
+	return terra.ReferenceAsList[SnapshotAttributes](a.ref.Append("snapshot"))
 }
 
 func (a ActionsAttributes) Version() terra.ListValue[VersionAttributes] {
-	return terra.ReferenceList[VersionAttributes](a.ref.Append("version"))
+	return terra.ReferenceAsList[VersionAttributes](a.ref.Append("version"))
 }
 
 type BaseBlobAttributes struct {
 	ref terra.Reference
 }
 
-func (bb BaseBlobAttributes) InternalRef() terra.Reference {
-	return bb.ref
+func (bb BaseBlobAttributes) InternalRef() (terra.Reference, error) {
+	return bb.ref, nil
 }
 
 func (bb BaseBlobAttributes) InternalWithRef(ref terra.Reference) BaseBlobAttributes {
 	return BaseBlobAttributes{ref: ref}
 }
 
-func (bb BaseBlobAttributes) InternalTokens() hclwrite.Tokens {
+func (bb BaseBlobAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bb.ref.InternalTokens()
 }
 
 func (bb BaseBlobAttributes) AutoTierToHotFromCoolEnabled() terra.BoolValue {
-	return terra.ReferenceBool(bb.ref.Append("auto_tier_to_hot_from_cool_enabled"))
+	return terra.ReferenceAsBool(bb.ref.Append("auto_tier_to_hot_from_cool_enabled"))
 }
 
 func (bb BaseBlobAttributes) DeleteAfterDaysSinceCreationGreaterThan() terra.NumberValue {
-	return terra.ReferenceNumber(bb.ref.Append("delete_after_days_since_creation_greater_than"))
+	return terra.ReferenceAsNumber(bb.ref.Append("delete_after_days_since_creation_greater_than"))
 }
 
 func (bb BaseBlobAttributes) DeleteAfterDaysSinceLastAccessTimeGreaterThan() terra.NumberValue {
-	return terra.ReferenceNumber(bb.ref.Append("delete_after_days_since_last_access_time_greater_than"))
+	return terra.ReferenceAsNumber(bb.ref.Append("delete_after_days_since_last_access_time_greater_than"))
 }
 
 func (bb BaseBlobAttributes) DeleteAfterDaysSinceModificationGreaterThan() terra.NumberValue {
-	return terra.ReferenceNumber(bb.ref.Append("delete_after_days_since_modification_greater_than"))
+	return terra.ReferenceAsNumber(bb.ref.Append("delete_after_days_since_modification_greater_than"))
 }
 
 func (bb BaseBlobAttributes) TierToArchiveAfterDaysSinceCreationGreaterThan() terra.NumberValue {
-	return terra.ReferenceNumber(bb.ref.Append("tier_to_archive_after_days_since_creation_greater_than"))
+	return terra.ReferenceAsNumber(bb.ref.Append("tier_to_archive_after_days_since_creation_greater_than"))
 }
 
 func (bb BaseBlobAttributes) TierToArchiveAfterDaysSinceLastAccessTimeGreaterThan() terra.NumberValue {
-	return terra.ReferenceNumber(bb.ref.Append("tier_to_archive_after_days_since_last_access_time_greater_than"))
+	return terra.ReferenceAsNumber(bb.ref.Append("tier_to_archive_after_days_since_last_access_time_greater_than"))
 }
 
 func (bb BaseBlobAttributes) TierToArchiveAfterDaysSinceLastTierChangeGreaterThan() terra.NumberValue {
-	return terra.ReferenceNumber(bb.ref.Append("tier_to_archive_after_days_since_last_tier_change_greater_than"))
+	return terra.ReferenceAsNumber(bb.ref.Append("tier_to_archive_after_days_since_last_tier_change_greater_than"))
 }
 
 func (bb BaseBlobAttributes) TierToArchiveAfterDaysSinceModificationGreaterThan() terra.NumberValue {
-	return terra.ReferenceNumber(bb.ref.Append("tier_to_archive_after_days_since_modification_greater_than"))
+	return terra.ReferenceAsNumber(bb.ref.Append("tier_to_archive_after_days_since_modification_greater_than"))
 }
 
 func (bb BaseBlobAttributes) TierToCoolAfterDaysSinceCreationGreaterThan() terra.NumberValue {
-	return terra.ReferenceNumber(bb.ref.Append("tier_to_cool_after_days_since_creation_greater_than"))
+	return terra.ReferenceAsNumber(bb.ref.Append("tier_to_cool_after_days_since_creation_greater_than"))
 }
 
 func (bb BaseBlobAttributes) TierToCoolAfterDaysSinceLastAccessTimeGreaterThan() terra.NumberValue {
-	return terra.ReferenceNumber(bb.ref.Append("tier_to_cool_after_days_since_last_access_time_greater_than"))
+	return terra.ReferenceAsNumber(bb.ref.Append("tier_to_cool_after_days_since_last_access_time_greater_than"))
 }
 
 func (bb BaseBlobAttributes) TierToCoolAfterDaysSinceModificationGreaterThan() terra.NumberValue {
-	return terra.ReferenceNumber(bb.ref.Append("tier_to_cool_after_days_since_modification_greater_than"))
+	return terra.ReferenceAsNumber(bb.ref.Append("tier_to_cool_after_days_since_modification_greater_than"))
 }
 
 type SnapshotAttributes struct {
 	ref terra.Reference
 }
 
-func (s SnapshotAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SnapshotAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SnapshotAttributes) InternalWithRef(ref terra.Reference) SnapshotAttributes {
 	return SnapshotAttributes{ref: ref}
 }
 
-func (s SnapshotAttributes) InternalTokens() hclwrite.Tokens {
+func (s SnapshotAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SnapshotAttributes) ChangeTierToArchiveAfterDaysSinceCreation() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("change_tier_to_archive_after_days_since_creation"))
+	return terra.ReferenceAsNumber(s.ref.Append("change_tier_to_archive_after_days_since_creation"))
 }
 
 func (s SnapshotAttributes) ChangeTierToCoolAfterDaysSinceCreation() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("change_tier_to_cool_after_days_since_creation"))
+	return terra.ReferenceAsNumber(s.ref.Append("change_tier_to_cool_after_days_since_creation"))
 }
 
 func (s SnapshotAttributes) DeleteAfterDaysSinceCreationGreaterThan() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("delete_after_days_since_creation_greater_than"))
+	return terra.ReferenceAsNumber(s.ref.Append("delete_after_days_since_creation_greater_than"))
 }
 
 func (s SnapshotAttributes) TierToArchiveAfterDaysSinceLastTierChangeGreaterThan() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("tier_to_archive_after_days_since_last_tier_change_greater_than"))
+	return terra.ReferenceAsNumber(s.ref.Append("tier_to_archive_after_days_since_last_tier_change_greater_than"))
 }
 
 type VersionAttributes struct {
 	ref terra.Reference
 }
 
-func (v VersionAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v VersionAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v VersionAttributes) InternalWithRef(ref terra.Reference) VersionAttributes {
 	return VersionAttributes{ref: ref}
 }
 
-func (v VersionAttributes) InternalTokens() hclwrite.Tokens {
+func (v VersionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 
 func (v VersionAttributes) ChangeTierToArchiveAfterDaysSinceCreation() terra.NumberValue {
-	return terra.ReferenceNumber(v.ref.Append("change_tier_to_archive_after_days_since_creation"))
+	return terra.ReferenceAsNumber(v.ref.Append("change_tier_to_archive_after_days_since_creation"))
 }
 
 func (v VersionAttributes) ChangeTierToCoolAfterDaysSinceCreation() terra.NumberValue {
-	return terra.ReferenceNumber(v.ref.Append("change_tier_to_cool_after_days_since_creation"))
+	return terra.ReferenceAsNumber(v.ref.Append("change_tier_to_cool_after_days_since_creation"))
 }
 
 func (v VersionAttributes) DeleteAfterDaysSinceCreation() terra.NumberValue {
-	return terra.ReferenceNumber(v.ref.Append("delete_after_days_since_creation"))
+	return terra.ReferenceAsNumber(v.ref.Append("delete_after_days_since_creation"))
 }
 
 func (v VersionAttributes) TierToArchiveAfterDaysSinceLastTierChangeGreaterThan() terra.NumberValue {
-	return terra.ReferenceNumber(v.ref.Append("tier_to_archive_after_days_since_last_tier_change_greater_than"))
+	return terra.ReferenceAsNumber(v.ref.Append("tier_to_archive_after_days_since_last_tier_change_greater_than"))
 }
 
 type FiltersAttributes struct {
 	ref terra.Reference
 }
 
-func (f FiltersAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FiltersAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FiltersAttributes) InternalWithRef(ref terra.Reference) FiltersAttributes {
 	return FiltersAttributes{ref: ref}
 }
 
-func (f FiltersAttributes) InternalTokens() hclwrite.Tokens {
+func (f FiltersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
 func (f FiltersAttributes) BlobTypes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](f.ref.Append("blob_types"))
+	return terra.ReferenceAsSet[terra.StringValue](f.ref.Append("blob_types"))
 }
 
 func (f FiltersAttributes) PrefixMatch() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](f.ref.Append("prefix_match"))
+	return terra.ReferenceAsSet[terra.StringValue](f.ref.Append("prefix_match"))
 }
 
 func (f FiltersAttributes) MatchBlobIndexTag() terra.ListValue[MatchBlobIndexTagAttributes] {
-	return terra.ReferenceList[MatchBlobIndexTagAttributes](f.ref.Append("match_blob_index_tag"))
+	return terra.ReferenceAsList[MatchBlobIndexTagAttributes](f.ref.Append("match_blob_index_tag"))
 }
 
 type MatchBlobIndexTagAttributes struct {
 	ref terra.Reference
 }
 
-func (mbit MatchBlobIndexTagAttributes) InternalRef() terra.Reference {
-	return mbit.ref
+func (mbit MatchBlobIndexTagAttributes) InternalRef() (terra.Reference, error) {
+	return mbit.ref, nil
 }
 
 func (mbit MatchBlobIndexTagAttributes) InternalWithRef(ref terra.Reference) MatchBlobIndexTagAttributes {
 	return MatchBlobIndexTagAttributes{ref: ref}
 }
 
-func (mbit MatchBlobIndexTagAttributes) InternalTokens() hclwrite.Tokens {
+func (mbit MatchBlobIndexTagAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mbit.ref.InternalTokens()
 }
 
 func (mbit MatchBlobIndexTagAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mbit.ref.Append("name"))
+	return terra.ReferenceAsString(mbit.ref.Append("name"))
 }
 
 func (mbit MatchBlobIndexTagAttributes) Operation() terra.StringValue {
-	return terra.ReferenceString(mbit.ref.Append("operation"))
+	return terra.ReferenceAsString(mbit.ref.Append("operation"))
 }
 
 func (mbit MatchBlobIndexTagAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(mbit.ref.Append("value"))
+	return terra.ReferenceAsString(mbit.ref.Append("value"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type RuleState struct {

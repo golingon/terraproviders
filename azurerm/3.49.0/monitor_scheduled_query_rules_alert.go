@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMonitorScheduledQueryRulesAlert creates a new instance of [MonitorScheduledQueryRulesAlert].
 func NewMonitorScheduledQueryRulesAlert(name string, args MonitorScheduledQueryRulesAlertArgs) *MonitorScheduledQueryRulesAlert {
 	return &MonitorScheduledQueryRulesAlert{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMonitorScheduledQueryRulesAlert(name string, args MonitorScheduledQueryR
 
 var _ terra.Resource = (*MonitorScheduledQueryRulesAlert)(nil)
 
+// MonitorScheduledQueryRulesAlert represents the Terraform resource azurerm_monitor_scheduled_query_rules_alert.
 type MonitorScheduledQueryRulesAlert struct {
-	Name  string
-	Args  MonitorScheduledQueryRulesAlertArgs
-	state *monitorScheduledQueryRulesAlertState
+	Name      string
+	Args      MonitorScheduledQueryRulesAlertArgs
+	state     *monitorScheduledQueryRulesAlertState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MonitorScheduledQueryRulesAlert].
 func (msqra *MonitorScheduledQueryRulesAlert) Type() string {
 	return "azurerm_monitor_scheduled_query_rules_alert"
 }
 
+// LocalName returns the local name for [MonitorScheduledQueryRulesAlert].
 func (msqra *MonitorScheduledQueryRulesAlert) LocalName() string {
 	return msqra.Name
 }
 
+// Configuration returns the configuration (args) for [MonitorScheduledQueryRulesAlert].
 func (msqra *MonitorScheduledQueryRulesAlert) Configuration() interface{} {
 	return msqra.Args
 }
 
+// DependOn is used for other resources to depend on [MonitorScheduledQueryRulesAlert].
+func (msqra *MonitorScheduledQueryRulesAlert) DependOn() terra.Reference {
+	return terra.ReferenceResource(msqra)
+}
+
+// Dependencies returns the list of resources [MonitorScheduledQueryRulesAlert] depends_on.
+func (msqra *MonitorScheduledQueryRulesAlert) Dependencies() terra.Dependencies {
+	return msqra.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MonitorScheduledQueryRulesAlert].
+func (msqra *MonitorScheduledQueryRulesAlert) LifecycleManagement() *terra.Lifecycle {
+	return msqra.Lifecycle
+}
+
+// Attributes returns the attributes for [MonitorScheduledQueryRulesAlert].
 func (msqra *MonitorScheduledQueryRulesAlert) Attributes() monitorScheduledQueryRulesAlertAttributes {
 	return monitorScheduledQueryRulesAlertAttributes{ref: terra.ReferenceResource(msqra)}
 }
 
+// ImportState imports the given attribute values into [MonitorScheduledQueryRulesAlert]'s state.
 func (msqra *MonitorScheduledQueryRulesAlert) ImportState(av io.Reader) error {
 	msqra.state = &monitorScheduledQueryRulesAlertState{}
 	if err := json.NewDecoder(av).Decode(msqra.state); err != nil {
@@ -49,10 +73,12 @@ func (msqra *MonitorScheduledQueryRulesAlert) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MonitorScheduledQueryRulesAlert] has state.
 func (msqra *MonitorScheduledQueryRulesAlert) State() (*monitorScheduledQueryRulesAlertState, bool) {
 	return msqra.state, msqra.state != nil
 }
 
+// StateMust returns the state for [MonitorScheduledQueryRulesAlert]. Panics if the state is nil.
 func (msqra *MonitorScheduledQueryRulesAlert) StateMust() *monitorScheduledQueryRulesAlertState {
 	if msqra.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", msqra.Type(), msqra.LocalName()))
@@ -60,10 +86,7 @@ func (msqra *MonitorScheduledQueryRulesAlert) StateMust() *monitorScheduledQuery
 	return msqra.state
 }
 
-func (msqra *MonitorScheduledQueryRulesAlert) DependOn() terra.Reference {
-	return terra.ReferenceResource(msqra)
-}
-
+// MonitorScheduledQueryRulesAlertArgs contains the configurations for azurerm_monitor_scheduled_query_rules_alert.
 type MonitorScheduledQueryRulesAlertArgs struct {
 	// AuthorizedResourceIds: set of string, optional
 	AuthorizedResourceIds terra.SetValue[terra.StringValue] `hcl:"authorized_resource_ids,attr"`
@@ -103,87 +126,101 @@ type MonitorScheduledQueryRulesAlertArgs struct {
 	Timeouts *monitorscheduledqueryrulesalert.Timeouts `hcl:"timeouts,block"`
 	// Trigger: required
 	Trigger *monitorscheduledqueryrulesalert.Trigger `hcl:"trigger,block" validate:"required"`
-	// DependsOn contains resources that MonitorScheduledQueryRulesAlert depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type monitorScheduledQueryRulesAlertAttributes struct {
 	ref terra.Reference
 }
 
+// AuthorizedResourceIds returns a reference to field authorized_resource_ids of azurerm_monitor_scheduled_query_rules_alert.
 func (msqra monitorScheduledQueryRulesAlertAttributes) AuthorizedResourceIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](msqra.ref.Append("authorized_resource_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](msqra.ref.Append("authorized_resource_ids"))
 }
 
+// AutoMitigationEnabled returns a reference to field auto_mitigation_enabled of azurerm_monitor_scheduled_query_rules_alert.
 func (msqra monitorScheduledQueryRulesAlertAttributes) AutoMitigationEnabled() terra.BoolValue {
-	return terra.ReferenceBool(msqra.ref.Append("auto_mitigation_enabled"))
+	return terra.ReferenceAsBool(msqra.ref.Append("auto_mitigation_enabled"))
 }
 
+// DataSourceId returns a reference to field data_source_id of azurerm_monitor_scheduled_query_rules_alert.
 func (msqra monitorScheduledQueryRulesAlertAttributes) DataSourceId() terra.StringValue {
-	return terra.ReferenceString(msqra.ref.Append("data_source_id"))
+	return terra.ReferenceAsString(msqra.ref.Append("data_source_id"))
 }
 
+// Description returns a reference to field description of azurerm_monitor_scheduled_query_rules_alert.
 func (msqra monitorScheduledQueryRulesAlertAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(msqra.ref.Append("description"))
+	return terra.ReferenceAsString(msqra.ref.Append("description"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_monitor_scheduled_query_rules_alert.
 func (msqra monitorScheduledQueryRulesAlertAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(msqra.ref.Append("enabled"))
+	return terra.ReferenceAsBool(msqra.ref.Append("enabled"))
 }
 
+// Frequency returns a reference to field frequency of azurerm_monitor_scheduled_query_rules_alert.
 func (msqra monitorScheduledQueryRulesAlertAttributes) Frequency() terra.NumberValue {
-	return terra.ReferenceNumber(msqra.ref.Append("frequency"))
+	return terra.ReferenceAsNumber(msqra.ref.Append("frequency"))
 }
 
+// Id returns a reference to field id of azurerm_monitor_scheduled_query_rules_alert.
 func (msqra monitorScheduledQueryRulesAlertAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(msqra.ref.Append("id"))
+	return terra.ReferenceAsString(msqra.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_monitor_scheduled_query_rules_alert.
 func (msqra monitorScheduledQueryRulesAlertAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(msqra.ref.Append("location"))
+	return terra.ReferenceAsString(msqra.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_monitor_scheduled_query_rules_alert.
 func (msqra monitorScheduledQueryRulesAlertAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(msqra.ref.Append("name"))
+	return terra.ReferenceAsString(msqra.ref.Append("name"))
 }
 
+// Query returns a reference to field query of azurerm_monitor_scheduled_query_rules_alert.
 func (msqra monitorScheduledQueryRulesAlertAttributes) Query() terra.StringValue {
-	return terra.ReferenceString(msqra.ref.Append("query"))
+	return terra.ReferenceAsString(msqra.ref.Append("query"))
 }
 
+// QueryType returns a reference to field query_type of azurerm_monitor_scheduled_query_rules_alert.
 func (msqra monitorScheduledQueryRulesAlertAttributes) QueryType() terra.StringValue {
-	return terra.ReferenceString(msqra.ref.Append("query_type"))
+	return terra.ReferenceAsString(msqra.ref.Append("query_type"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_monitor_scheduled_query_rules_alert.
 func (msqra monitorScheduledQueryRulesAlertAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(msqra.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(msqra.ref.Append("resource_group_name"))
 }
 
+// Severity returns a reference to field severity of azurerm_monitor_scheduled_query_rules_alert.
 func (msqra monitorScheduledQueryRulesAlertAttributes) Severity() terra.NumberValue {
-	return terra.ReferenceNumber(msqra.ref.Append("severity"))
+	return terra.ReferenceAsNumber(msqra.ref.Append("severity"))
 }
 
+// Tags returns a reference to field tags of azurerm_monitor_scheduled_query_rules_alert.
 func (msqra monitorScheduledQueryRulesAlertAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](msqra.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](msqra.ref.Append("tags"))
 }
 
+// Throttling returns a reference to field throttling of azurerm_monitor_scheduled_query_rules_alert.
 func (msqra monitorScheduledQueryRulesAlertAttributes) Throttling() terra.NumberValue {
-	return terra.ReferenceNumber(msqra.ref.Append("throttling"))
+	return terra.ReferenceAsNumber(msqra.ref.Append("throttling"))
 }
 
+// TimeWindow returns a reference to field time_window of azurerm_monitor_scheduled_query_rules_alert.
 func (msqra monitorScheduledQueryRulesAlertAttributes) TimeWindow() terra.NumberValue {
-	return terra.ReferenceNumber(msqra.ref.Append("time_window"))
+	return terra.ReferenceAsNumber(msqra.ref.Append("time_window"))
 }
 
 func (msqra monitorScheduledQueryRulesAlertAttributes) Action() terra.ListValue[monitorscheduledqueryrulesalert.ActionAttributes] {
-	return terra.ReferenceList[monitorscheduledqueryrulesalert.ActionAttributes](msqra.ref.Append("action"))
+	return terra.ReferenceAsList[monitorscheduledqueryrulesalert.ActionAttributes](msqra.ref.Append("action"))
 }
 
 func (msqra monitorScheduledQueryRulesAlertAttributes) Timeouts() monitorscheduledqueryrulesalert.TimeoutsAttributes {
-	return terra.ReferenceSingle[monitorscheduledqueryrulesalert.TimeoutsAttributes](msqra.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[monitorscheduledqueryrulesalert.TimeoutsAttributes](msqra.ref.Append("timeouts"))
 }
 
 func (msqra monitorScheduledQueryRulesAlertAttributes) Trigger() terra.ListValue[monitorscheduledqueryrulesalert.TriggerAttributes] {
-	return terra.ReferenceList[monitorscheduledqueryrulesalert.TriggerAttributes](msqra.ref.Append("trigger"))
+	return terra.ReferenceAsList[monitorscheduledqueryrulesalert.TriggerAttributes](msqra.ref.Append("trigger"))
 }
 
 type monitorScheduledQueryRulesAlertState struct {

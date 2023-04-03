@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApiManagementProductPolicy creates a new instance of [ApiManagementProductPolicy].
 func NewApiManagementProductPolicy(name string, args ApiManagementProductPolicyArgs) *ApiManagementProductPolicy {
 	return &ApiManagementProductPolicy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApiManagementProductPolicy(name string, args ApiManagementProductPolicyA
 
 var _ terra.Resource = (*ApiManagementProductPolicy)(nil)
 
+// ApiManagementProductPolicy represents the Terraform resource azurerm_api_management_product_policy.
 type ApiManagementProductPolicy struct {
-	Name  string
-	Args  ApiManagementProductPolicyArgs
-	state *apiManagementProductPolicyState
+	Name      string
+	Args      ApiManagementProductPolicyArgs
+	state     *apiManagementProductPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiManagementProductPolicy].
 func (ampp *ApiManagementProductPolicy) Type() string {
 	return "azurerm_api_management_product_policy"
 }
 
+// LocalName returns the local name for [ApiManagementProductPolicy].
 func (ampp *ApiManagementProductPolicy) LocalName() string {
 	return ampp.Name
 }
 
+// Configuration returns the configuration (args) for [ApiManagementProductPolicy].
 func (ampp *ApiManagementProductPolicy) Configuration() interface{} {
 	return ampp.Args
 }
 
+// DependOn is used for other resources to depend on [ApiManagementProductPolicy].
+func (ampp *ApiManagementProductPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(ampp)
+}
+
+// Dependencies returns the list of resources [ApiManagementProductPolicy] depends_on.
+func (ampp *ApiManagementProductPolicy) Dependencies() terra.Dependencies {
+	return ampp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiManagementProductPolicy].
+func (ampp *ApiManagementProductPolicy) LifecycleManagement() *terra.Lifecycle {
+	return ampp.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiManagementProductPolicy].
 func (ampp *ApiManagementProductPolicy) Attributes() apiManagementProductPolicyAttributes {
 	return apiManagementProductPolicyAttributes{ref: terra.ReferenceResource(ampp)}
 }
 
+// ImportState imports the given attribute values into [ApiManagementProductPolicy]'s state.
 func (ampp *ApiManagementProductPolicy) ImportState(av io.Reader) error {
 	ampp.state = &apiManagementProductPolicyState{}
 	if err := json.NewDecoder(av).Decode(ampp.state); err != nil {
@@ -49,10 +73,12 @@ func (ampp *ApiManagementProductPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiManagementProductPolicy] has state.
 func (ampp *ApiManagementProductPolicy) State() (*apiManagementProductPolicyState, bool) {
 	return ampp.state, ampp.state != nil
 }
 
+// StateMust returns the state for [ApiManagementProductPolicy]. Panics if the state is nil.
 func (ampp *ApiManagementProductPolicy) StateMust() *apiManagementProductPolicyState {
 	if ampp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ampp.Type(), ampp.LocalName()))
@@ -60,10 +86,7 @@ func (ampp *ApiManagementProductPolicy) StateMust() *apiManagementProductPolicyS
 	return ampp.state
 }
 
-func (ampp *ApiManagementProductPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(ampp)
-}
-
+// ApiManagementProductPolicyArgs contains the configurations for azurerm_api_management_product_policy.
 type ApiManagementProductPolicyArgs struct {
 	// ApiManagementName: string, required
 	ApiManagementName terra.StringValue `hcl:"api_management_name,attr" validate:"required"`
@@ -79,39 +102,43 @@ type ApiManagementProductPolicyArgs struct {
 	XmlLink terra.StringValue `hcl:"xml_link,attr"`
 	// Timeouts: optional
 	Timeouts *apimanagementproductpolicy.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ApiManagementProductPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiManagementProductPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// ApiManagementName returns a reference to field api_management_name of azurerm_api_management_product_policy.
 func (ampp apiManagementProductPolicyAttributes) ApiManagementName() terra.StringValue {
-	return terra.ReferenceString(ampp.ref.Append("api_management_name"))
+	return terra.ReferenceAsString(ampp.ref.Append("api_management_name"))
 }
 
+// Id returns a reference to field id of azurerm_api_management_product_policy.
 func (ampp apiManagementProductPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ampp.ref.Append("id"))
+	return terra.ReferenceAsString(ampp.ref.Append("id"))
 }
 
+// ProductId returns a reference to field product_id of azurerm_api_management_product_policy.
 func (ampp apiManagementProductPolicyAttributes) ProductId() terra.StringValue {
-	return terra.ReferenceString(ampp.ref.Append("product_id"))
+	return terra.ReferenceAsString(ampp.ref.Append("product_id"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_api_management_product_policy.
 func (ampp apiManagementProductPolicyAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ampp.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ampp.ref.Append("resource_group_name"))
 }
 
+// XmlContent returns a reference to field xml_content of azurerm_api_management_product_policy.
 func (ampp apiManagementProductPolicyAttributes) XmlContent() terra.StringValue {
-	return terra.ReferenceString(ampp.ref.Append("xml_content"))
+	return terra.ReferenceAsString(ampp.ref.Append("xml_content"))
 }
 
+// XmlLink returns a reference to field xml_link of azurerm_api_management_product_policy.
 func (ampp apiManagementProductPolicyAttributes) XmlLink() terra.StringValue {
-	return terra.ReferenceString(ampp.ref.Append("xml_link"))
+	return terra.ReferenceAsString(ampp.ref.Append("xml_link"))
 }
 
 func (ampp apiManagementProductPolicyAttributes) Timeouts() apimanagementproductpolicy.TimeoutsAttributes {
-	return terra.ReferenceSingle[apimanagementproductpolicy.TimeoutsAttributes](ampp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[apimanagementproductpolicy.TimeoutsAttributes](ampp.ref.Append("timeouts"))
 }
 
 type apiManagementProductPolicyState struct {

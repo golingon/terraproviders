@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBackupPolicyVm creates a new instance of [BackupPolicyVm].
 func NewBackupPolicyVm(name string, args BackupPolicyVmArgs) *BackupPolicyVm {
 	return &BackupPolicyVm{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBackupPolicyVm(name string, args BackupPolicyVmArgs) *BackupPolicyVm {
 
 var _ terra.Resource = (*BackupPolicyVm)(nil)
 
+// BackupPolicyVm represents the Terraform resource azurerm_backup_policy_vm.
 type BackupPolicyVm struct {
-	Name  string
-	Args  BackupPolicyVmArgs
-	state *backupPolicyVmState
+	Name      string
+	Args      BackupPolicyVmArgs
+	state     *backupPolicyVmState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BackupPolicyVm].
 func (bpv *BackupPolicyVm) Type() string {
 	return "azurerm_backup_policy_vm"
 }
 
+// LocalName returns the local name for [BackupPolicyVm].
 func (bpv *BackupPolicyVm) LocalName() string {
 	return bpv.Name
 }
 
+// Configuration returns the configuration (args) for [BackupPolicyVm].
 func (bpv *BackupPolicyVm) Configuration() interface{} {
 	return bpv.Args
 }
 
+// DependOn is used for other resources to depend on [BackupPolicyVm].
+func (bpv *BackupPolicyVm) DependOn() terra.Reference {
+	return terra.ReferenceResource(bpv)
+}
+
+// Dependencies returns the list of resources [BackupPolicyVm] depends_on.
+func (bpv *BackupPolicyVm) Dependencies() terra.Dependencies {
+	return bpv.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BackupPolicyVm].
+func (bpv *BackupPolicyVm) LifecycleManagement() *terra.Lifecycle {
+	return bpv.Lifecycle
+}
+
+// Attributes returns the attributes for [BackupPolicyVm].
 func (bpv *BackupPolicyVm) Attributes() backupPolicyVmAttributes {
 	return backupPolicyVmAttributes{ref: terra.ReferenceResource(bpv)}
 }
 
+// ImportState imports the given attribute values into [BackupPolicyVm]'s state.
 func (bpv *BackupPolicyVm) ImportState(av io.Reader) error {
 	bpv.state = &backupPolicyVmState{}
 	if err := json.NewDecoder(av).Decode(bpv.state); err != nil {
@@ -49,10 +73,12 @@ func (bpv *BackupPolicyVm) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BackupPolicyVm] has state.
 func (bpv *BackupPolicyVm) State() (*backupPolicyVmState, bool) {
 	return bpv.state, bpv.state != nil
 }
 
+// StateMust returns the state for [BackupPolicyVm]. Panics if the state is nil.
 func (bpv *BackupPolicyVm) StateMust() *backupPolicyVmState {
 	if bpv.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bpv.Type(), bpv.LocalName()))
@@ -60,10 +86,7 @@ func (bpv *BackupPolicyVm) StateMust() *backupPolicyVmState {
 	return bpv.state
 }
 
-func (bpv *BackupPolicyVm) DependOn() terra.Reference {
-	return terra.ReferenceResource(bpv)
-}
-
+// BackupPolicyVmArgs contains the configurations for azurerm_backup_policy_vm.
 type BackupPolicyVmArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -93,67 +116,72 @@ type BackupPolicyVmArgs struct {
 	RetentionYearly *backuppolicyvm.RetentionYearly `hcl:"retention_yearly,block"`
 	// Timeouts: optional
 	Timeouts *backuppolicyvm.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that BackupPolicyVm depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type backupPolicyVmAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_backup_policy_vm.
 func (bpv backupPolicyVmAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bpv.ref.Append("id"))
+	return terra.ReferenceAsString(bpv.ref.Append("id"))
 }
 
+// InstantRestoreRetentionDays returns a reference to field instant_restore_retention_days of azurerm_backup_policy_vm.
 func (bpv backupPolicyVmAttributes) InstantRestoreRetentionDays() terra.NumberValue {
-	return terra.ReferenceNumber(bpv.ref.Append("instant_restore_retention_days"))
+	return terra.ReferenceAsNumber(bpv.ref.Append("instant_restore_retention_days"))
 }
 
+// Name returns a reference to field name of azurerm_backup_policy_vm.
 func (bpv backupPolicyVmAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(bpv.ref.Append("name"))
+	return terra.ReferenceAsString(bpv.ref.Append("name"))
 }
 
+// PolicyType returns a reference to field policy_type of azurerm_backup_policy_vm.
 func (bpv backupPolicyVmAttributes) PolicyType() terra.StringValue {
-	return terra.ReferenceString(bpv.ref.Append("policy_type"))
+	return terra.ReferenceAsString(bpv.ref.Append("policy_type"))
 }
 
+// RecoveryVaultName returns a reference to field recovery_vault_name of azurerm_backup_policy_vm.
 func (bpv backupPolicyVmAttributes) RecoveryVaultName() terra.StringValue {
-	return terra.ReferenceString(bpv.ref.Append("recovery_vault_name"))
+	return terra.ReferenceAsString(bpv.ref.Append("recovery_vault_name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_backup_policy_vm.
 func (bpv backupPolicyVmAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(bpv.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(bpv.ref.Append("resource_group_name"))
 }
 
+// Timezone returns a reference to field timezone of azurerm_backup_policy_vm.
 func (bpv backupPolicyVmAttributes) Timezone() terra.StringValue {
-	return terra.ReferenceString(bpv.ref.Append("timezone"))
+	return terra.ReferenceAsString(bpv.ref.Append("timezone"))
 }
 
 func (bpv backupPolicyVmAttributes) Backup() terra.ListValue[backuppolicyvm.BackupAttributes] {
-	return terra.ReferenceList[backuppolicyvm.BackupAttributes](bpv.ref.Append("backup"))
+	return terra.ReferenceAsList[backuppolicyvm.BackupAttributes](bpv.ref.Append("backup"))
 }
 
 func (bpv backupPolicyVmAttributes) InstantRestoreResourceGroup() terra.ListValue[backuppolicyvm.InstantRestoreResourceGroupAttributes] {
-	return terra.ReferenceList[backuppolicyvm.InstantRestoreResourceGroupAttributes](bpv.ref.Append("instant_restore_resource_group"))
+	return terra.ReferenceAsList[backuppolicyvm.InstantRestoreResourceGroupAttributes](bpv.ref.Append("instant_restore_resource_group"))
 }
 
 func (bpv backupPolicyVmAttributes) RetentionDaily() terra.ListValue[backuppolicyvm.RetentionDailyAttributes] {
-	return terra.ReferenceList[backuppolicyvm.RetentionDailyAttributes](bpv.ref.Append("retention_daily"))
+	return terra.ReferenceAsList[backuppolicyvm.RetentionDailyAttributes](bpv.ref.Append("retention_daily"))
 }
 
 func (bpv backupPolicyVmAttributes) RetentionMonthly() terra.ListValue[backuppolicyvm.RetentionMonthlyAttributes] {
-	return terra.ReferenceList[backuppolicyvm.RetentionMonthlyAttributes](bpv.ref.Append("retention_monthly"))
+	return terra.ReferenceAsList[backuppolicyvm.RetentionMonthlyAttributes](bpv.ref.Append("retention_monthly"))
 }
 
 func (bpv backupPolicyVmAttributes) RetentionWeekly() terra.ListValue[backuppolicyvm.RetentionWeeklyAttributes] {
-	return terra.ReferenceList[backuppolicyvm.RetentionWeeklyAttributes](bpv.ref.Append("retention_weekly"))
+	return terra.ReferenceAsList[backuppolicyvm.RetentionWeeklyAttributes](bpv.ref.Append("retention_weekly"))
 }
 
 func (bpv backupPolicyVmAttributes) RetentionYearly() terra.ListValue[backuppolicyvm.RetentionYearlyAttributes] {
-	return terra.ReferenceList[backuppolicyvm.RetentionYearlyAttributes](bpv.ref.Append("retention_yearly"))
+	return terra.ReferenceAsList[backuppolicyvm.RetentionYearlyAttributes](bpv.ref.Append("retention_yearly"))
 }
 
 func (bpv backupPolicyVmAttributes) Timeouts() backuppolicyvm.TimeoutsAttributes {
-	return terra.ReferenceSingle[backuppolicyvm.TimeoutsAttributes](bpv.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[backuppolicyvm.TimeoutsAttributes](bpv.ref.Append("timeouts"))
 }
 
 type backupPolicyVmState struct {

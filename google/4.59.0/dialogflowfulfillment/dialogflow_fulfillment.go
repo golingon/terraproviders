@@ -36,80 +36,80 @@ type FeaturesAttributes struct {
 	ref terra.Reference
 }
 
-func (f FeaturesAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FeaturesAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FeaturesAttributes) InternalWithRef(ref terra.Reference) FeaturesAttributes {
 	return FeaturesAttributes{ref: ref}
 }
 
-func (f FeaturesAttributes) InternalTokens() hclwrite.Tokens {
+func (f FeaturesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
 func (f FeaturesAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("type"))
+	return terra.ReferenceAsString(f.ref.Append("type"))
 }
 
 type GenericWebServiceAttributes struct {
 	ref terra.Reference
 }
 
-func (gws GenericWebServiceAttributes) InternalRef() terra.Reference {
-	return gws.ref
+func (gws GenericWebServiceAttributes) InternalRef() (terra.Reference, error) {
+	return gws.ref, nil
 }
 
 func (gws GenericWebServiceAttributes) InternalWithRef(ref terra.Reference) GenericWebServiceAttributes {
 	return GenericWebServiceAttributes{ref: ref}
 }
 
-func (gws GenericWebServiceAttributes) InternalTokens() hclwrite.Tokens {
+func (gws GenericWebServiceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gws.ref.InternalTokens()
 }
 
 func (gws GenericWebServiceAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(gws.ref.Append("password"))
+	return terra.ReferenceAsString(gws.ref.Append("password"))
 }
 
 func (gws GenericWebServiceAttributes) RequestHeaders() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gws.ref.Append("request_headers"))
+	return terra.ReferenceAsMap[terra.StringValue](gws.ref.Append("request_headers"))
 }
 
 func (gws GenericWebServiceAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(gws.ref.Append("uri"))
+	return terra.ReferenceAsString(gws.ref.Append("uri"))
 }
 
 func (gws GenericWebServiceAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(gws.ref.Append("username"))
+	return terra.ReferenceAsString(gws.ref.Append("username"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type FeaturesState struct {

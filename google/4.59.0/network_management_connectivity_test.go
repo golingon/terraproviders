@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNetworkManagementConnectivityTest creates a new instance of [NetworkManagementConnectivityTest].
 func NewNetworkManagementConnectivityTest(name string, args NetworkManagementConnectivityTestArgs) *NetworkManagementConnectivityTest {
 	return &NetworkManagementConnectivityTest{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNetworkManagementConnectivityTest(name string, args NetworkManagementCon
 
 var _ terra.Resource = (*NetworkManagementConnectivityTest)(nil)
 
+// NetworkManagementConnectivityTest represents the Terraform resource google_network_management_connectivity_test.
 type NetworkManagementConnectivityTest struct {
-	Name  string
-	Args  NetworkManagementConnectivityTestArgs
-	state *networkManagementConnectivityTestState
+	Name      string
+	Args      NetworkManagementConnectivityTestArgs
+	state     *networkManagementConnectivityTestState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NetworkManagementConnectivityTest].
 func (nmct *NetworkManagementConnectivityTest) Type() string {
 	return "google_network_management_connectivity_test"
 }
 
+// LocalName returns the local name for [NetworkManagementConnectivityTest].
 func (nmct *NetworkManagementConnectivityTest) LocalName() string {
 	return nmct.Name
 }
 
+// Configuration returns the configuration (args) for [NetworkManagementConnectivityTest].
 func (nmct *NetworkManagementConnectivityTest) Configuration() interface{} {
 	return nmct.Args
 }
 
+// DependOn is used for other resources to depend on [NetworkManagementConnectivityTest].
+func (nmct *NetworkManagementConnectivityTest) DependOn() terra.Reference {
+	return terra.ReferenceResource(nmct)
+}
+
+// Dependencies returns the list of resources [NetworkManagementConnectivityTest] depends_on.
+func (nmct *NetworkManagementConnectivityTest) Dependencies() terra.Dependencies {
+	return nmct.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NetworkManagementConnectivityTest].
+func (nmct *NetworkManagementConnectivityTest) LifecycleManagement() *terra.Lifecycle {
+	return nmct.Lifecycle
+}
+
+// Attributes returns the attributes for [NetworkManagementConnectivityTest].
 func (nmct *NetworkManagementConnectivityTest) Attributes() networkManagementConnectivityTestAttributes {
 	return networkManagementConnectivityTestAttributes{ref: terra.ReferenceResource(nmct)}
 }
 
+// ImportState imports the given attribute values into [NetworkManagementConnectivityTest]'s state.
 func (nmct *NetworkManagementConnectivityTest) ImportState(av io.Reader) error {
 	nmct.state = &networkManagementConnectivityTestState{}
 	if err := json.NewDecoder(av).Decode(nmct.state); err != nil {
@@ -49,10 +73,12 @@ func (nmct *NetworkManagementConnectivityTest) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NetworkManagementConnectivityTest] has state.
 func (nmct *NetworkManagementConnectivityTest) State() (*networkManagementConnectivityTestState, bool) {
 	return nmct.state, nmct.state != nil
 }
 
+// StateMust returns the state for [NetworkManagementConnectivityTest]. Panics if the state is nil.
 func (nmct *NetworkManagementConnectivityTest) StateMust() *networkManagementConnectivityTestState {
 	if nmct.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", nmct.Type(), nmct.LocalName()))
@@ -60,10 +86,7 @@ func (nmct *NetworkManagementConnectivityTest) StateMust() *networkManagementCon
 	return nmct.state
 }
 
-func (nmct *NetworkManagementConnectivityTest) DependOn() terra.Reference {
-	return terra.ReferenceResource(nmct)
-}
-
+// NetworkManagementConnectivityTestArgs contains the configurations for google_network_management_connectivity_test.
 type NetworkManagementConnectivityTestArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -85,51 +108,56 @@ type NetworkManagementConnectivityTestArgs struct {
 	Source *networkmanagementconnectivitytest.Source `hcl:"source,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *networkmanagementconnectivitytest.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that NetworkManagementConnectivityTest depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type networkManagementConnectivityTestAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of google_network_management_connectivity_test.
 func (nmct networkManagementConnectivityTestAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(nmct.ref.Append("description"))
+	return terra.ReferenceAsString(nmct.ref.Append("description"))
 }
 
+// Id returns a reference to field id of google_network_management_connectivity_test.
 func (nmct networkManagementConnectivityTestAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(nmct.ref.Append("id"))
+	return terra.ReferenceAsString(nmct.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_network_management_connectivity_test.
 func (nmct networkManagementConnectivityTestAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](nmct.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](nmct.ref.Append("labels"))
 }
 
+// Name returns a reference to field name of google_network_management_connectivity_test.
 func (nmct networkManagementConnectivityTestAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(nmct.ref.Append("name"))
+	return terra.ReferenceAsString(nmct.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_network_management_connectivity_test.
 func (nmct networkManagementConnectivityTestAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(nmct.ref.Append("project"))
+	return terra.ReferenceAsString(nmct.ref.Append("project"))
 }
 
+// Protocol returns a reference to field protocol of google_network_management_connectivity_test.
 func (nmct networkManagementConnectivityTestAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(nmct.ref.Append("protocol"))
+	return terra.ReferenceAsString(nmct.ref.Append("protocol"))
 }
 
+// RelatedProjects returns a reference to field related_projects of google_network_management_connectivity_test.
 func (nmct networkManagementConnectivityTestAttributes) RelatedProjects() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](nmct.ref.Append("related_projects"))
+	return terra.ReferenceAsList[terra.StringValue](nmct.ref.Append("related_projects"))
 }
 
 func (nmct networkManagementConnectivityTestAttributes) Destination() terra.ListValue[networkmanagementconnectivitytest.DestinationAttributes] {
-	return terra.ReferenceList[networkmanagementconnectivitytest.DestinationAttributes](nmct.ref.Append("destination"))
+	return terra.ReferenceAsList[networkmanagementconnectivitytest.DestinationAttributes](nmct.ref.Append("destination"))
 }
 
 func (nmct networkManagementConnectivityTestAttributes) Source() terra.ListValue[networkmanagementconnectivitytest.SourceAttributes] {
-	return terra.ReferenceList[networkmanagementconnectivitytest.SourceAttributes](nmct.ref.Append("source"))
+	return terra.ReferenceAsList[networkmanagementconnectivitytest.SourceAttributes](nmct.ref.Append("source"))
 }
 
 func (nmct networkManagementConnectivityTestAttributes) Timeouts() networkmanagementconnectivitytest.TimeoutsAttributes {
-	return terra.ReferenceSingle[networkmanagementconnectivitytest.TimeoutsAttributes](nmct.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[networkmanagementconnectivitytest.TimeoutsAttributes](nmct.ref.Append("timeouts"))
 }
 
 type networkManagementConnectivityTestState struct {

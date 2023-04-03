@@ -52,7 +52,7 @@ func (alc AuditLogConfigurationAttributes) InternalWithRef(ref terra.Reference) 
 	return AuditLogConfigurationAttributes{ref: ref}
 }
 
-func (alc AuditLogConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (alc AuditLogConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return alc.ref.InternalTokens()
 }
 
@@ -80,7 +80,7 @@ func (smad SelfManagedActiveDirectoryAttributes) InternalWithRef(ref terra.Refer
 	return SelfManagedActiveDirectoryAttributes{ref: ref}
 }
 
-func (smad SelfManagedActiveDirectoryAttributes) InternalTokens() hclwrite.Tokens {
+func (smad SelfManagedActiveDirectoryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return smad.ref.InternalTokens()
 }
 
@@ -120,7 +120,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFactoryDataFlow creates a new instance of [DataFactoryDataFlow].
 func NewDataFactoryDataFlow(name string, args DataFactoryDataFlowArgs) *DataFactoryDataFlow {
 	return &DataFactoryDataFlow{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFactoryDataFlow(name string, args DataFactoryDataFlowArgs) *DataFact
 
 var _ terra.Resource = (*DataFactoryDataFlow)(nil)
 
+// DataFactoryDataFlow represents the Terraform resource azurerm_data_factory_data_flow.
 type DataFactoryDataFlow struct {
-	Name  string
-	Args  DataFactoryDataFlowArgs
-	state *dataFactoryDataFlowState
+	Name      string
+	Args      DataFactoryDataFlowArgs
+	state     *dataFactoryDataFlowState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFactoryDataFlow].
 func (dfdf *DataFactoryDataFlow) Type() string {
 	return "azurerm_data_factory_data_flow"
 }
 
+// LocalName returns the local name for [DataFactoryDataFlow].
 func (dfdf *DataFactoryDataFlow) LocalName() string {
 	return dfdf.Name
 }
 
+// Configuration returns the configuration (args) for [DataFactoryDataFlow].
 func (dfdf *DataFactoryDataFlow) Configuration() interface{} {
 	return dfdf.Args
 }
 
+// DependOn is used for other resources to depend on [DataFactoryDataFlow].
+func (dfdf *DataFactoryDataFlow) DependOn() terra.Reference {
+	return terra.ReferenceResource(dfdf)
+}
+
+// Dependencies returns the list of resources [DataFactoryDataFlow] depends_on.
+func (dfdf *DataFactoryDataFlow) Dependencies() terra.Dependencies {
+	return dfdf.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFactoryDataFlow].
+func (dfdf *DataFactoryDataFlow) LifecycleManagement() *terra.Lifecycle {
+	return dfdf.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFactoryDataFlow].
 func (dfdf *DataFactoryDataFlow) Attributes() dataFactoryDataFlowAttributes {
 	return dataFactoryDataFlowAttributes{ref: terra.ReferenceResource(dfdf)}
 }
 
+// ImportState imports the given attribute values into [DataFactoryDataFlow]'s state.
 func (dfdf *DataFactoryDataFlow) ImportState(av io.Reader) error {
 	dfdf.state = &dataFactoryDataFlowState{}
 	if err := json.NewDecoder(av).Decode(dfdf.state); err != nil {
@@ -49,10 +73,12 @@ func (dfdf *DataFactoryDataFlow) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFactoryDataFlow] has state.
 func (dfdf *DataFactoryDataFlow) State() (*dataFactoryDataFlowState, bool) {
 	return dfdf.state, dfdf.state != nil
 }
 
+// StateMust returns the state for [DataFactoryDataFlow]. Panics if the state is nil.
 func (dfdf *DataFactoryDataFlow) StateMust() *dataFactoryDataFlowState {
 	if dfdf.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dfdf.Type(), dfdf.LocalName()))
@@ -60,10 +86,7 @@ func (dfdf *DataFactoryDataFlow) StateMust() *dataFactoryDataFlowState {
 	return dfdf.state
 }
 
-func (dfdf *DataFactoryDataFlow) DependOn() terra.Reference {
-	return terra.ReferenceResource(dfdf)
-}
-
+// DataFactoryDataFlowArgs contains the configurations for azurerm_data_factory_data_flow.
 type DataFactoryDataFlowArgs struct {
 	// Annotations: list of string, optional
 	Annotations terra.ListValue[terra.StringValue] `hcl:"annotations,attr"`
@@ -89,59 +112,65 @@ type DataFactoryDataFlowArgs struct {
 	Timeouts *datafactorydataflow.Timeouts `hcl:"timeouts,block"`
 	// Transformation: min=0
 	Transformation []datafactorydataflow.Transformation `hcl:"transformation,block" validate:"min=0"`
-	// DependsOn contains resources that DataFactoryDataFlow depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFactoryDataFlowAttributes struct {
 	ref terra.Reference
 }
 
+// Annotations returns a reference to field annotations of azurerm_data_factory_data_flow.
 func (dfdf dataFactoryDataFlowAttributes) Annotations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dfdf.ref.Append("annotations"))
+	return terra.ReferenceAsList[terra.StringValue](dfdf.ref.Append("annotations"))
 }
 
+// DataFactoryId returns a reference to field data_factory_id of azurerm_data_factory_data_flow.
 func (dfdf dataFactoryDataFlowAttributes) DataFactoryId() terra.StringValue {
-	return terra.ReferenceString(dfdf.ref.Append("data_factory_id"))
+	return terra.ReferenceAsString(dfdf.ref.Append("data_factory_id"))
 }
 
+// Description returns a reference to field description of azurerm_data_factory_data_flow.
 func (dfdf dataFactoryDataFlowAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dfdf.ref.Append("description"))
+	return terra.ReferenceAsString(dfdf.ref.Append("description"))
 }
 
+// Folder returns a reference to field folder of azurerm_data_factory_data_flow.
 func (dfdf dataFactoryDataFlowAttributes) Folder() terra.StringValue {
-	return terra.ReferenceString(dfdf.ref.Append("folder"))
+	return terra.ReferenceAsString(dfdf.ref.Append("folder"))
 }
 
+// Id returns a reference to field id of azurerm_data_factory_data_flow.
 func (dfdf dataFactoryDataFlowAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dfdf.ref.Append("id"))
+	return terra.ReferenceAsString(dfdf.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory_data_flow.
 func (dfdf dataFactoryDataFlowAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dfdf.ref.Append("name"))
+	return terra.ReferenceAsString(dfdf.ref.Append("name"))
 }
 
+// Script returns a reference to field script of azurerm_data_factory_data_flow.
 func (dfdf dataFactoryDataFlowAttributes) Script() terra.StringValue {
-	return terra.ReferenceString(dfdf.ref.Append("script"))
+	return terra.ReferenceAsString(dfdf.ref.Append("script"))
 }
 
+// ScriptLines returns a reference to field script_lines of azurerm_data_factory_data_flow.
 func (dfdf dataFactoryDataFlowAttributes) ScriptLines() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dfdf.ref.Append("script_lines"))
+	return terra.ReferenceAsList[terra.StringValue](dfdf.ref.Append("script_lines"))
 }
 
 func (dfdf dataFactoryDataFlowAttributes) Sink() terra.ListValue[datafactorydataflow.SinkAttributes] {
-	return terra.ReferenceList[datafactorydataflow.SinkAttributes](dfdf.ref.Append("sink"))
+	return terra.ReferenceAsList[datafactorydataflow.SinkAttributes](dfdf.ref.Append("sink"))
 }
 
 func (dfdf dataFactoryDataFlowAttributes) Source() terra.ListValue[datafactorydataflow.SourceAttributes] {
-	return terra.ReferenceList[datafactorydataflow.SourceAttributes](dfdf.ref.Append("source"))
+	return terra.ReferenceAsList[datafactorydataflow.SourceAttributes](dfdf.ref.Append("source"))
 }
 
 func (dfdf dataFactoryDataFlowAttributes) Timeouts() datafactorydataflow.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafactorydataflow.TimeoutsAttributes](dfdf.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafactorydataflow.TimeoutsAttributes](dfdf.ref.Append("timeouts"))
 }
 
 func (dfdf dataFactoryDataFlowAttributes) Transformation() terra.ListValue[datafactorydataflow.TransformationAttributes] {
-	return terra.ReferenceList[datafactorydataflow.TransformationAttributes](dfdf.ref.Append("transformation"))
+	return terra.ReferenceAsList[datafactorydataflow.TransformationAttributes](dfdf.ref.Append("transformation"))
 }
 
 type dataFactoryDataFlowState struct {

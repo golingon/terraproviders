@@ -99,7 +99,7 @@ func (aap AdditionalAuthenticationProviderAttributes) InternalWithRef(ref terra.
 	return AdditionalAuthenticationProviderAttributes{ref: ref}
 }
 
-func (aap AdditionalAuthenticationProviderAttributes) InternalTokens() hclwrite.Tokens {
+func (aap AdditionalAuthenticationProviderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aap.ref.InternalTokens()
 }
 
@@ -131,7 +131,7 @@ func (lac AdditionalAuthenticationProviderLambdaAuthorizerConfigAttributes) Inte
 	return AdditionalAuthenticationProviderLambdaAuthorizerConfigAttributes{ref: ref}
 }
 
-func (lac AdditionalAuthenticationProviderLambdaAuthorizerConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (lac AdditionalAuthenticationProviderLambdaAuthorizerConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lac.ref.InternalTokens()
 }
 
@@ -159,7 +159,7 @@ func (occ AdditionalAuthenticationProviderOpenidConnectConfigAttributes) Interna
 	return AdditionalAuthenticationProviderOpenidConnectConfigAttributes{ref: ref}
 }
 
-func (occ AdditionalAuthenticationProviderOpenidConnectConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (occ AdditionalAuthenticationProviderOpenidConnectConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return occ.ref.InternalTokens()
 }
 
@@ -191,7 +191,7 @@ func (upc AdditionalAuthenticationProviderUserPoolConfigAttributes) InternalWith
 	return AdditionalAuthenticationProviderUserPoolConfigAttributes{ref: ref}
 }
 
-func (upc AdditionalAuthenticationProviderUserPoolConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (upc AdditionalAuthenticationProviderUserPoolConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return upc.ref.InternalTokens()
 }
 
@@ -219,7 +219,7 @@ func (lac LambdaAuthorizerConfigAttributes) InternalWithRef(ref terra.Reference)
 	return LambdaAuthorizerConfigAttributes{ref: ref}
 }
 
-func (lac LambdaAuthorizerConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (lac LambdaAuthorizerConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lac.ref.InternalTokens()
 }
 
@@ -247,7 +247,7 @@ func (lc LogConfigAttributes) InternalWithRef(ref terra.Reference) LogConfigAttr
 	return LogConfigAttributes{ref: ref}
 }
 
-func (lc LogConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (lc LogConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lc.ref.InternalTokens()
 }
 
@@ -275,7 +275,7 @@ func (occ OpenidConnectConfigAttributes) InternalWithRef(ref terra.Reference) Op
 	return OpenidConnectConfigAttributes{ref: ref}
 }
 
-func (occ OpenidConnectConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (occ OpenidConnectConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return occ.ref.InternalTokens()
 }
 
@@ -307,7 +307,7 @@ func (upc UserPoolConfigAttributes) InternalWithRef(ref terra.Reference) UserPoo
 	return UserPoolConfigAttributes{ref: ref}
 }
 
-func (upc UserPoolConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (upc UserPoolConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return upc.ref.InternalTokens()
 }
 

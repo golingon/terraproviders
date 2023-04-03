@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMonitorPrivateLinkScopedService creates a new instance of [MonitorPrivateLinkScopedService].
 func NewMonitorPrivateLinkScopedService(name string, args MonitorPrivateLinkScopedServiceArgs) *MonitorPrivateLinkScopedService {
 	return &MonitorPrivateLinkScopedService{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMonitorPrivateLinkScopedService(name string, args MonitorPrivateLinkScop
 
 var _ terra.Resource = (*MonitorPrivateLinkScopedService)(nil)
 
+// MonitorPrivateLinkScopedService represents the Terraform resource azurerm_monitor_private_link_scoped_service.
 type MonitorPrivateLinkScopedService struct {
-	Name  string
-	Args  MonitorPrivateLinkScopedServiceArgs
-	state *monitorPrivateLinkScopedServiceState
+	Name      string
+	Args      MonitorPrivateLinkScopedServiceArgs
+	state     *monitorPrivateLinkScopedServiceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MonitorPrivateLinkScopedService].
 func (mplss *MonitorPrivateLinkScopedService) Type() string {
 	return "azurerm_monitor_private_link_scoped_service"
 }
 
+// LocalName returns the local name for [MonitorPrivateLinkScopedService].
 func (mplss *MonitorPrivateLinkScopedService) LocalName() string {
 	return mplss.Name
 }
 
+// Configuration returns the configuration (args) for [MonitorPrivateLinkScopedService].
 func (mplss *MonitorPrivateLinkScopedService) Configuration() interface{} {
 	return mplss.Args
 }
 
+// DependOn is used for other resources to depend on [MonitorPrivateLinkScopedService].
+func (mplss *MonitorPrivateLinkScopedService) DependOn() terra.Reference {
+	return terra.ReferenceResource(mplss)
+}
+
+// Dependencies returns the list of resources [MonitorPrivateLinkScopedService] depends_on.
+func (mplss *MonitorPrivateLinkScopedService) Dependencies() terra.Dependencies {
+	return mplss.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MonitorPrivateLinkScopedService].
+func (mplss *MonitorPrivateLinkScopedService) LifecycleManagement() *terra.Lifecycle {
+	return mplss.Lifecycle
+}
+
+// Attributes returns the attributes for [MonitorPrivateLinkScopedService].
 func (mplss *MonitorPrivateLinkScopedService) Attributes() monitorPrivateLinkScopedServiceAttributes {
 	return monitorPrivateLinkScopedServiceAttributes{ref: terra.ReferenceResource(mplss)}
 }
 
+// ImportState imports the given attribute values into [MonitorPrivateLinkScopedService]'s state.
 func (mplss *MonitorPrivateLinkScopedService) ImportState(av io.Reader) error {
 	mplss.state = &monitorPrivateLinkScopedServiceState{}
 	if err := json.NewDecoder(av).Decode(mplss.state); err != nil {
@@ -49,10 +73,12 @@ func (mplss *MonitorPrivateLinkScopedService) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MonitorPrivateLinkScopedService] has state.
 func (mplss *MonitorPrivateLinkScopedService) State() (*monitorPrivateLinkScopedServiceState, bool) {
 	return mplss.state, mplss.state != nil
 }
 
+// StateMust returns the state for [MonitorPrivateLinkScopedService]. Panics if the state is nil.
 func (mplss *MonitorPrivateLinkScopedService) StateMust() *monitorPrivateLinkScopedServiceState {
 	if mplss.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mplss.Type(), mplss.LocalName()))
@@ -60,10 +86,7 @@ func (mplss *MonitorPrivateLinkScopedService) StateMust() *monitorPrivateLinkSco
 	return mplss.state
 }
 
-func (mplss *MonitorPrivateLinkScopedService) DependOn() terra.Reference {
-	return terra.ReferenceResource(mplss)
-}
-
+// MonitorPrivateLinkScopedServiceArgs contains the configurations for azurerm_monitor_private_link_scoped_service.
 type MonitorPrivateLinkScopedServiceArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,35 +100,38 @@ type MonitorPrivateLinkScopedServiceArgs struct {
 	ScopeName terra.StringValue `hcl:"scope_name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *monitorprivatelinkscopedservice.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MonitorPrivateLinkScopedService depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type monitorPrivateLinkScopedServiceAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_monitor_private_link_scoped_service.
 func (mplss monitorPrivateLinkScopedServiceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mplss.ref.Append("id"))
+	return terra.ReferenceAsString(mplss.ref.Append("id"))
 }
 
+// LinkedResourceId returns a reference to field linked_resource_id of azurerm_monitor_private_link_scoped_service.
 func (mplss monitorPrivateLinkScopedServiceAttributes) LinkedResourceId() terra.StringValue {
-	return terra.ReferenceString(mplss.ref.Append("linked_resource_id"))
+	return terra.ReferenceAsString(mplss.ref.Append("linked_resource_id"))
 }
 
+// Name returns a reference to field name of azurerm_monitor_private_link_scoped_service.
 func (mplss monitorPrivateLinkScopedServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mplss.ref.Append("name"))
+	return terra.ReferenceAsString(mplss.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_monitor_private_link_scoped_service.
 func (mplss monitorPrivateLinkScopedServiceAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(mplss.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(mplss.ref.Append("resource_group_name"))
 }
 
+// ScopeName returns a reference to field scope_name of azurerm_monitor_private_link_scoped_service.
 func (mplss monitorPrivateLinkScopedServiceAttributes) ScopeName() terra.StringValue {
-	return terra.ReferenceString(mplss.ref.Append("scope_name"))
+	return terra.ReferenceAsString(mplss.ref.Append("scope_name"))
 }
 
 func (mplss monitorPrivateLinkScopedServiceAttributes) Timeouts() monitorprivatelinkscopedservice.TimeoutsAttributes {
-	return terra.ReferenceSingle[monitorprivatelinkscopedservice.TimeoutsAttributes](mplss.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[monitorprivatelinkscopedservice.TimeoutsAttributes](mplss.ref.Append("timeouts"))
 }
 
 type monitorPrivateLinkScopedServiceState struct {

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataKustoDatabase creates a new instance of [DataKustoDatabase].
 func NewDataKustoDatabase(name string, args DataKustoDatabaseArgs) *DataKustoDatabase {
 	return &DataKustoDatabase{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataKustoDatabase(name string, args DataKustoDatabaseArgs) *DataKustoDat
 
 var _ terra.DataResource = (*DataKustoDatabase)(nil)
 
+// DataKustoDatabase represents the Terraform data resource azurerm_kusto_database.
 type DataKustoDatabase struct {
 	Name string
 	Args DataKustoDatabaseArgs
 }
 
+// DataSource returns the Terraform object type for [DataKustoDatabase].
 func (kd *DataKustoDatabase) DataSource() string {
 	return "azurerm_kusto_database"
 }
 
+// LocalName returns the local name for [DataKustoDatabase].
 func (kd *DataKustoDatabase) LocalName() string {
 	return kd.Name
 }
 
+// Configuration returns the configuration (args) for [DataKustoDatabase].
 func (kd *DataKustoDatabase) Configuration() interface{} {
 	return kd.Args
 }
 
+// Attributes returns the attributes for [DataKustoDatabase].
 func (kd *DataKustoDatabase) Attributes() dataKustoDatabaseAttributes {
 	return dataKustoDatabaseAttributes{ref: terra.ReferenceDataResource(kd)}
 }
 
+// DataKustoDatabaseArgs contains the configurations for azurerm_kusto_database.
 type DataKustoDatabaseArgs struct {
 	// ClusterName: string, required
 	ClusterName terra.StringValue `hcl:"cluster_name,attr" validate:"required"`
@@ -53,38 +60,46 @@ type dataKustoDatabaseAttributes struct {
 	ref terra.Reference
 }
 
+// ClusterName returns a reference to field cluster_name of azurerm_kusto_database.
 func (kd dataKustoDatabaseAttributes) ClusterName() terra.StringValue {
-	return terra.ReferenceString(kd.ref.Append("cluster_name"))
+	return terra.ReferenceAsString(kd.ref.Append("cluster_name"))
 }
 
+// HotCachePeriod returns a reference to field hot_cache_period of azurerm_kusto_database.
 func (kd dataKustoDatabaseAttributes) HotCachePeriod() terra.StringValue {
-	return terra.ReferenceString(kd.ref.Append("hot_cache_period"))
+	return terra.ReferenceAsString(kd.ref.Append("hot_cache_period"))
 }
 
+// Id returns a reference to field id of azurerm_kusto_database.
 func (kd dataKustoDatabaseAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kd.ref.Append("id"))
+	return terra.ReferenceAsString(kd.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_kusto_database.
 func (kd dataKustoDatabaseAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(kd.ref.Append("location"))
+	return terra.ReferenceAsString(kd.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_kusto_database.
 func (kd dataKustoDatabaseAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(kd.ref.Append("name"))
+	return terra.ReferenceAsString(kd.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_kusto_database.
 func (kd dataKustoDatabaseAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(kd.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(kd.ref.Append("resource_group_name"))
 }
 
+// Size returns a reference to field size of azurerm_kusto_database.
 func (kd dataKustoDatabaseAttributes) Size() terra.NumberValue {
-	return terra.ReferenceNumber(kd.ref.Append("size"))
+	return terra.ReferenceAsNumber(kd.ref.Append("size"))
 }
 
+// SoftDeletePeriod returns a reference to field soft_delete_period of azurerm_kusto_database.
 func (kd dataKustoDatabaseAttributes) SoftDeletePeriod() terra.StringValue {
-	return terra.ReferenceString(kd.ref.Append("soft_delete_period"))
+	return terra.ReferenceAsString(kd.ref.Append("soft_delete_period"))
 }
 
 func (kd dataKustoDatabaseAttributes) Timeouts() datakustodatabase.TimeoutsAttributes {
-	return terra.ReferenceSingle[datakustodatabase.TimeoutsAttributes](kd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datakustodatabase.TimeoutsAttributes](kd.ref.Append("timeouts"))
 }

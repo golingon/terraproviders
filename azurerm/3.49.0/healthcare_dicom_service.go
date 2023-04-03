@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewHealthcareDicomService creates a new instance of [HealthcareDicomService].
 func NewHealthcareDicomService(name string, args HealthcareDicomServiceArgs) *HealthcareDicomService {
 	return &HealthcareDicomService{
 		Args: args,
@@ -19,28 +20,51 @@ func NewHealthcareDicomService(name string, args HealthcareDicomServiceArgs) *He
 
 var _ terra.Resource = (*HealthcareDicomService)(nil)
 
+// HealthcareDicomService represents the Terraform resource azurerm_healthcare_dicom_service.
 type HealthcareDicomService struct {
-	Name  string
-	Args  HealthcareDicomServiceArgs
-	state *healthcareDicomServiceState
+	Name      string
+	Args      HealthcareDicomServiceArgs
+	state     *healthcareDicomServiceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [HealthcareDicomService].
 func (hds *HealthcareDicomService) Type() string {
 	return "azurerm_healthcare_dicom_service"
 }
 
+// LocalName returns the local name for [HealthcareDicomService].
 func (hds *HealthcareDicomService) LocalName() string {
 	return hds.Name
 }
 
+// Configuration returns the configuration (args) for [HealthcareDicomService].
 func (hds *HealthcareDicomService) Configuration() interface{} {
 	return hds.Args
 }
 
+// DependOn is used for other resources to depend on [HealthcareDicomService].
+func (hds *HealthcareDicomService) DependOn() terra.Reference {
+	return terra.ReferenceResource(hds)
+}
+
+// Dependencies returns the list of resources [HealthcareDicomService] depends_on.
+func (hds *HealthcareDicomService) Dependencies() terra.Dependencies {
+	return hds.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [HealthcareDicomService].
+func (hds *HealthcareDicomService) LifecycleManagement() *terra.Lifecycle {
+	return hds.Lifecycle
+}
+
+// Attributes returns the attributes for [HealthcareDicomService].
 func (hds *HealthcareDicomService) Attributes() healthcareDicomServiceAttributes {
 	return healthcareDicomServiceAttributes{ref: terra.ReferenceResource(hds)}
 }
 
+// ImportState imports the given attribute values into [HealthcareDicomService]'s state.
 func (hds *HealthcareDicomService) ImportState(av io.Reader) error {
 	hds.state = &healthcareDicomServiceState{}
 	if err := json.NewDecoder(av).Decode(hds.state); err != nil {
@@ -49,10 +73,12 @@ func (hds *HealthcareDicomService) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [HealthcareDicomService] has state.
 func (hds *HealthcareDicomService) State() (*healthcareDicomServiceState, bool) {
 	return hds.state, hds.state != nil
 }
 
+// StateMust returns the state for [HealthcareDicomService]. Panics if the state is nil.
 func (hds *HealthcareDicomService) StateMust() *healthcareDicomServiceState {
 	if hds.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", hds.Type(), hds.LocalName()))
@@ -60,10 +86,7 @@ func (hds *HealthcareDicomService) StateMust() *healthcareDicomServiceState {
 	return hds.state
 }
 
-func (hds *HealthcareDicomService) DependOn() terra.Reference {
-	return terra.ReferenceResource(hds)
-}
-
+// HealthcareDicomServiceArgs contains the configurations for azurerm_healthcare_dicom_service.
 type HealthcareDicomServiceArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -85,55 +108,60 @@ type HealthcareDicomServiceArgs struct {
 	Identity *healthcaredicomservice.Identity `hcl:"identity,block"`
 	// Timeouts: optional
 	Timeouts *healthcaredicomservice.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that HealthcareDicomService depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type healthcareDicomServiceAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_healthcare_dicom_service.
 func (hds healthcareDicomServiceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(hds.ref.Append("id"))
+	return terra.ReferenceAsString(hds.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_healthcare_dicom_service.
 func (hds healthcareDicomServiceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(hds.ref.Append("location"))
+	return terra.ReferenceAsString(hds.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_healthcare_dicom_service.
 func (hds healthcareDicomServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(hds.ref.Append("name"))
+	return terra.ReferenceAsString(hds.ref.Append("name"))
 }
 
+// PublicNetworkAccessEnabled returns a reference to field public_network_access_enabled of azurerm_healthcare_dicom_service.
 func (hds healthcareDicomServiceAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(hds.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(hds.ref.Append("public_network_access_enabled"))
 }
 
+// ServiceUrl returns a reference to field service_url of azurerm_healthcare_dicom_service.
 func (hds healthcareDicomServiceAttributes) ServiceUrl() terra.StringValue {
-	return terra.ReferenceString(hds.ref.Append("service_url"))
+	return terra.ReferenceAsString(hds.ref.Append("service_url"))
 }
 
+// Tags returns a reference to field tags of azurerm_healthcare_dicom_service.
 func (hds healthcareDicomServiceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](hds.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](hds.ref.Append("tags"))
 }
 
+// WorkspaceId returns a reference to field workspace_id of azurerm_healthcare_dicom_service.
 func (hds healthcareDicomServiceAttributes) WorkspaceId() terra.StringValue {
-	return terra.ReferenceString(hds.ref.Append("workspace_id"))
+	return terra.ReferenceAsString(hds.ref.Append("workspace_id"))
 }
 
 func (hds healthcareDicomServiceAttributes) Authentication() terra.ListValue[healthcaredicomservice.AuthenticationAttributes] {
-	return terra.ReferenceList[healthcaredicomservice.AuthenticationAttributes](hds.ref.Append("authentication"))
+	return terra.ReferenceAsList[healthcaredicomservice.AuthenticationAttributes](hds.ref.Append("authentication"))
 }
 
 func (hds healthcareDicomServiceAttributes) PrivateEndpoint() terra.SetValue[healthcaredicomservice.PrivateEndpointAttributes] {
-	return terra.ReferenceSet[healthcaredicomservice.PrivateEndpointAttributes](hds.ref.Append("private_endpoint"))
+	return terra.ReferenceAsSet[healthcaredicomservice.PrivateEndpointAttributes](hds.ref.Append("private_endpoint"))
 }
 
 func (hds healthcareDicomServiceAttributes) Identity() terra.ListValue[healthcaredicomservice.IdentityAttributes] {
-	return terra.ReferenceList[healthcaredicomservice.IdentityAttributes](hds.ref.Append("identity"))
+	return terra.ReferenceAsList[healthcaredicomservice.IdentityAttributes](hds.ref.Append("identity"))
 }
 
 func (hds healthcareDicomServiceAttributes) Timeouts() healthcaredicomservice.TimeoutsAttributes {
-	return terra.ReferenceSingle[healthcaredicomservice.TimeoutsAttributes](hds.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[healthcaredicomservice.TimeoutsAttributes](hds.ref.Append("timeouts"))
 }
 
 type healthcareDicomServiceState struct {

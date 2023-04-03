@@ -45,108 +45,108 @@ type AnthosClusterAttributes struct {
 	ref terra.Reference
 }
 
-func (ac AnthosClusterAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac AnthosClusterAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac AnthosClusterAttributes) InternalWithRef(ref terra.Reference) AnthosClusterAttributes {
 	return AnthosClusterAttributes{ref: ref}
 }
 
-func (ac AnthosClusterAttributes) InternalTokens() hclwrite.Tokens {
+func (ac AnthosClusterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
 func (ac AnthosClusterAttributes) Membership() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("membership"))
+	return terra.ReferenceAsString(ac.ref.Append("membership"))
 }
 
 type ExecutionConfigsAttributes struct {
 	ref terra.Reference
 }
 
-func (ec ExecutionConfigsAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec ExecutionConfigsAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec ExecutionConfigsAttributes) InternalWithRef(ref terra.Reference) ExecutionConfigsAttributes {
 	return ExecutionConfigsAttributes{ref: ref}
 }
 
-func (ec ExecutionConfigsAttributes) InternalTokens() hclwrite.Tokens {
+func (ec ExecutionConfigsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 
 func (ec ExecutionConfigsAttributes) ArtifactStorage() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("artifact_storage"))
+	return terra.ReferenceAsString(ec.ref.Append("artifact_storage"))
 }
 
 func (ec ExecutionConfigsAttributes) ExecutionTimeout() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("execution_timeout"))
+	return terra.ReferenceAsString(ec.ref.Append("execution_timeout"))
 }
 
 func (ec ExecutionConfigsAttributes) ServiceAccount() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("service_account"))
+	return terra.ReferenceAsString(ec.ref.Append("service_account"))
 }
 
 func (ec ExecutionConfigsAttributes) Usages() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ec.ref.Append("usages"))
+	return terra.ReferenceAsList[terra.StringValue](ec.ref.Append("usages"))
 }
 
 func (ec ExecutionConfigsAttributes) WorkerPool() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("worker_pool"))
+	return terra.ReferenceAsString(ec.ref.Append("worker_pool"))
 }
 
 type GkeAttributes struct {
 	ref terra.Reference
 }
 
-func (g GkeAttributes) InternalRef() terra.Reference {
-	return g.ref
+func (g GkeAttributes) InternalRef() (terra.Reference, error) {
+	return g.ref, nil
 }
 
 func (g GkeAttributes) InternalWithRef(ref terra.Reference) GkeAttributes {
 	return GkeAttributes{ref: ref}
 }
 
-func (g GkeAttributes) InternalTokens() hclwrite.Tokens {
+func (g GkeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return g.ref.InternalTokens()
 }
 
 func (g GkeAttributes) Cluster() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("cluster"))
+	return terra.ReferenceAsString(g.ref.Append("cluster"))
 }
 
 func (g GkeAttributes) InternalIp() terra.BoolValue {
-	return terra.ReferenceBool(g.ref.Append("internal_ip"))
+	return terra.ReferenceAsBool(g.ref.Append("internal_ip"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AnthosClusterState struct {

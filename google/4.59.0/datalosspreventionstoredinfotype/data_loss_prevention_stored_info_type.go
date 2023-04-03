@@ -84,256 +84,256 @@ type DictionaryAttributes struct {
 	ref terra.Reference
 }
 
-func (d DictionaryAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DictionaryAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DictionaryAttributes) InternalWithRef(ref terra.Reference) DictionaryAttributes {
 	return DictionaryAttributes{ref: ref}
 }
 
-func (d DictionaryAttributes) InternalTokens() hclwrite.Tokens {
+func (d DictionaryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d DictionaryAttributes) CloudStoragePath() terra.ListValue[CloudStoragePathAttributes] {
-	return terra.ReferenceList[CloudStoragePathAttributes](d.ref.Append("cloud_storage_path"))
+	return terra.ReferenceAsList[CloudStoragePathAttributes](d.ref.Append("cloud_storage_path"))
 }
 
 func (d DictionaryAttributes) WordList() terra.ListValue[WordListAttributes] {
-	return terra.ReferenceList[WordListAttributes](d.ref.Append("word_list"))
+	return terra.ReferenceAsList[WordListAttributes](d.ref.Append("word_list"))
 }
 
 type CloudStoragePathAttributes struct {
 	ref terra.Reference
 }
 
-func (csp CloudStoragePathAttributes) InternalRef() terra.Reference {
-	return csp.ref
+func (csp CloudStoragePathAttributes) InternalRef() (terra.Reference, error) {
+	return csp.ref, nil
 }
 
 func (csp CloudStoragePathAttributes) InternalWithRef(ref terra.Reference) CloudStoragePathAttributes {
 	return CloudStoragePathAttributes{ref: ref}
 }
 
-func (csp CloudStoragePathAttributes) InternalTokens() hclwrite.Tokens {
+func (csp CloudStoragePathAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return csp.ref.InternalTokens()
 }
 
 func (csp CloudStoragePathAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("path"))
+	return terra.ReferenceAsString(csp.ref.Append("path"))
 }
 
 type WordListAttributes struct {
 	ref terra.Reference
 }
 
-func (wl WordListAttributes) InternalRef() terra.Reference {
-	return wl.ref
+func (wl WordListAttributes) InternalRef() (terra.Reference, error) {
+	return wl.ref, nil
 }
 
 func (wl WordListAttributes) InternalWithRef(ref terra.Reference) WordListAttributes {
 	return WordListAttributes{ref: ref}
 }
 
-func (wl WordListAttributes) InternalTokens() hclwrite.Tokens {
+func (wl WordListAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wl.ref.InternalTokens()
 }
 
 func (wl WordListAttributes) Words() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](wl.ref.Append("words"))
+	return terra.ReferenceAsList[terra.StringValue](wl.ref.Append("words"))
 }
 
 type LargeCustomDictionaryAttributes struct {
 	ref terra.Reference
 }
 
-func (lcd LargeCustomDictionaryAttributes) InternalRef() terra.Reference {
-	return lcd.ref
+func (lcd LargeCustomDictionaryAttributes) InternalRef() (terra.Reference, error) {
+	return lcd.ref, nil
 }
 
 func (lcd LargeCustomDictionaryAttributes) InternalWithRef(ref terra.Reference) LargeCustomDictionaryAttributes {
 	return LargeCustomDictionaryAttributes{ref: ref}
 }
 
-func (lcd LargeCustomDictionaryAttributes) InternalTokens() hclwrite.Tokens {
+func (lcd LargeCustomDictionaryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lcd.ref.InternalTokens()
 }
 
 func (lcd LargeCustomDictionaryAttributes) BigQueryField() terra.ListValue[BigQueryFieldAttributes] {
-	return terra.ReferenceList[BigQueryFieldAttributes](lcd.ref.Append("big_query_field"))
+	return terra.ReferenceAsList[BigQueryFieldAttributes](lcd.ref.Append("big_query_field"))
 }
 
 func (lcd LargeCustomDictionaryAttributes) CloudStorageFileSet() terra.ListValue[CloudStorageFileSetAttributes] {
-	return terra.ReferenceList[CloudStorageFileSetAttributes](lcd.ref.Append("cloud_storage_file_set"))
+	return terra.ReferenceAsList[CloudStorageFileSetAttributes](lcd.ref.Append("cloud_storage_file_set"))
 }
 
 func (lcd LargeCustomDictionaryAttributes) OutputPath() terra.ListValue[OutputPathAttributes] {
-	return terra.ReferenceList[OutputPathAttributes](lcd.ref.Append("output_path"))
+	return terra.ReferenceAsList[OutputPathAttributes](lcd.ref.Append("output_path"))
 }
 
 type BigQueryFieldAttributes struct {
 	ref terra.Reference
 }
 
-func (bqf BigQueryFieldAttributes) InternalRef() terra.Reference {
-	return bqf.ref
+func (bqf BigQueryFieldAttributes) InternalRef() (terra.Reference, error) {
+	return bqf.ref, nil
 }
 
 func (bqf BigQueryFieldAttributes) InternalWithRef(ref terra.Reference) BigQueryFieldAttributes {
 	return BigQueryFieldAttributes{ref: ref}
 }
 
-func (bqf BigQueryFieldAttributes) InternalTokens() hclwrite.Tokens {
+func (bqf BigQueryFieldAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bqf.ref.InternalTokens()
 }
 
 func (bqf BigQueryFieldAttributes) Field() terra.ListValue[FieldAttributes] {
-	return terra.ReferenceList[FieldAttributes](bqf.ref.Append("field"))
+	return terra.ReferenceAsList[FieldAttributes](bqf.ref.Append("field"))
 }
 
 func (bqf BigQueryFieldAttributes) Table() terra.ListValue[TableAttributes] {
-	return terra.ReferenceList[TableAttributes](bqf.ref.Append("table"))
+	return terra.ReferenceAsList[TableAttributes](bqf.ref.Append("table"))
 }
 
 type FieldAttributes struct {
 	ref terra.Reference
 }
 
-func (f FieldAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FieldAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FieldAttributes) InternalWithRef(ref terra.Reference) FieldAttributes {
 	return FieldAttributes{ref: ref}
 }
 
-func (f FieldAttributes) InternalTokens() hclwrite.Tokens {
+func (f FieldAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
 func (f FieldAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("name"))
+	return terra.ReferenceAsString(f.ref.Append("name"))
 }
 
 type TableAttributes struct {
 	ref terra.Reference
 }
 
-func (t TableAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TableAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TableAttributes) InternalWithRef(ref terra.Reference) TableAttributes {
 	return TableAttributes{ref: ref}
 }
 
-func (t TableAttributes) InternalTokens() hclwrite.Tokens {
+func (t TableAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TableAttributes) DatasetId() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("dataset_id"))
+	return terra.ReferenceAsString(t.ref.Append("dataset_id"))
 }
 
 func (t TableAttributes) ProjectId() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("project_id"))
+	return terra.ReferenceAsString(t.ref.Append("project_id"))
 }
 
 func (t TableAttributes) TableId() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("table_id"))
+	return terra.ReferenceAsString(t.ref.Append("table_id"))
 }
 
 type CloudStorageFileSetAttributes struct {
 	ref terra.Reference
 }
 
-func (csfs CloudStorageFileSetAttributes) InternalRef() terra.Reference {
-	return csfs.ref
+func (csfs CloudStorageFileSetAttributes) InternalRef() (terra.Reference, error) {
+	return csfs.ref, nil
 }
 
 func (csfs CloudStorageFileSetAttributes) InternalWithRef(ref terra.Reference) CloudStorageFileSetAttributes {
 	return CloudStorageFileSetAttributes{ref: ref}
 }
 
-func (csfs CloudStorageFileSetAttributes) InternalTokens() hclwrite.Tokens {
+func (csfs CloudStorageFileSetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return csfs.ref.InternalTokens()
 }
 
 func (csfs CloudStorageFileSetAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(csfs.ref.Append("url"))
+	return terra.ReferenceAsString(csfs.ref.Append("url"))
 }
 
 type OutputPathAttributes struct {
 	ref terra.Reference
 }
 
-func (op OutputPathAttributes) InternalRef() terra.Reference {
-	return op.ref
+func (op OutputPathAttributes) InternalRef() (terra.Reference, error) {
+	return op.ref, nil
 }
 
 func (op OutputPathAttributes) InternalWithRef(ref terra.Reference) OutputPathAttributes {
 	return OutputPathAttributes{ref: ref}
 }
 
-func (op OutputPathAttributes) InternalTokens() hclwrite.Tokens {
+func (op OutputPathAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return op.ref.InternalTokens()
 }
 
 func (op OutputPathAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(op.ref.Append("path"))
+	return terra.ReferenceAsString(op.ref.Append("path"))
 }
 
 type RegexAttributes struct {
 	ref terra.Reference
 }
 
-func (r RegexAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RegexAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RegexAttributes) InternalWithRef(ref terra.Reference) RegexAttributes {
 	return RegexAttributes{ref: ref}
 }
 
-func (r RegexAttributes) InternalTokens() hclwrite.Tokens {
+func (r RegexAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RegexAttributes) GroupIndexes() terra.ListValue[terra.NumberValue] {
-	return terra.ReferenceList[terra.NumberValue](r.ref.Append("group_indexes"))
+	return terra.ReferenceAsList[terra.NumberValue](r.ref.Append("group_indexes"))
 }
 
 func (r RegexAttributes) Pattern() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("pattern"))
+	return terra.ReferenceAsString(r.ref.Append("pattern"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type DictionaryState struct {

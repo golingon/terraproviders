@@ -49,7 +49,7 @@ func (ae AccessEndpointsAttributes) InternalWithRef(ref terra.Reference) AccessE
 	return AccessEndpointsAttributes{ref: ref}
 }
 
-func (ae AccessEndpointsAttributes) InternalTokens() hclwrite.Tokens {
+func (ae AccessEndpointsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ae.ref.InternalTokens()
 }
 
@@ -73,7 +73,7 @@ func (as ApplicationSettingsAttributes) InternalWithRef(ref terra.Reference) App
 	return ApplicationSettingsAttributes{ref: ref}
 }
 
-func (as ApplicationSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (as ApplicationSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return as.ref.InternalTokens()
 }
 
@@ -97,7 +97,7 @@ func (sc StorageConnectorsAttributes) InternalWithRef(ref terra.Reference) Stora
 	return StorageConnectorsAttributes{ref: ref}
 }
 
-func (sc StorageConnectorsAttributes) InternalTokens() hclwrite.Tokens {
+func (sc StorageConnectorsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -125,7 +125,7 @@ func (us UserSettingsAttributes) InternalWithRef(ref terra.Reference) UserSettin
 	return UserSettingsAttributes{ref: ref}
 }
 
-func (us UserSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (us UserSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return us.ref.InternalTokens()
 }
 

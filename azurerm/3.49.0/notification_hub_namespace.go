@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNotificationHubNamespace creates a new instance of [NotificationHubNamespace].
 func NewNotificationHubNamespace(name string, args NotificationHubNamespaceArgs) *NotificationHubNamespace {
 	return &NotificationHubNamespace{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNotificationHubNamespace(name string, args NotificationHubNamespaceArgs)
 
 var _ terra.Resource = (*NotificationHubNamespace)(nil)
 
+// NotificationHubNamespace represents the Terraform resource azurerm_notification_hub_namespace.
 type NotificationHubNamespace struct {
-	Name  string
-	Args  NotificationHubNamespaceArgs
-	state *notificationHubNamespaceState
+	Name      string
+	Args      NotificationHubNamespaceArgs
+	state     *notificationHubNamespaceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NotificationHubNamespace].
 func (nhn *NotificationHubNamespace) Type() string {
 	return "azurerm_notification_hub_namespace"
 }
 
+// LocalName returns the local name for [NotificationHubNamespace].
 func (nhn *NotificationHubNamespace) LocalName() string {
 	return nhn.Name
 }
 
+// Configuration returns the configuration (args) for [NotificationHubNamespace].
 func (nhn *NotificationHubNamespace) Configuration() interface{} {
 	return nhn.Args
 }
 
+// DependOn is used for other resources to depend on [NotificationHubNamespace].
+func (nhn *NotificationHubNamespace) DependOn() terra.Reference {
+	return terra.ReferenceResource(nhn)
+}
+
+// Dependencies returns the list of resources [NotificationHubNamespace] depends_on.
+func (nhn *NotificationHubNamespace) Dependencies() terra.Dependencies {
+	return nhn.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NotificationHubNamespace].
+func (nhn *NotificationHubNamespace) LifecycleManagement() *terra.Lifecycle {
+	return nhn.Lifecycle
+}
+
+// Attributes returns the attributes for [NotificationHubNamespace].
 func (nhn *NotificationHubNamespace) Attributes() notificationHubNamespaceAttributes {
 	return notificationHubNamespaceAttributes{ref: terra.ReferenceResource(nhn)}
 }
 
+// ImportState imports the given attribute values into [NotificationHubNamespace]'s state.
 func (nhn *NotificationHubNamespace) ImportState(av io.Reader) error {
 	nhn.state = &notificationHubNamespaceState{}
 	if err := json.NewDecoder(av).Decode(nhn.state); err != nil {
@@ -49,10 +73,12 @@ func (nhn *NotificationHubNamespace) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NotificationHubNamespace] has state.
 func (nhn *NotificationHubNamespace) State() (*notificationHubNamespaceState, bool) {
 	return nhn.state, nhn.state != nil
 }
 
+// StateMust returns the state for [NotificationHubNamespace]. Panics if the state is nil.
 func (nhn *NotificationHubNamespace) StateMust() *notificationHubNamespaceState {
 	if nhn.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", nhn.Type(), nhn.LocalName()))
@@ -60,10 +86,7 @@ func (nhn *NotificationHubNamespace) StateMust() *notificationHubNamespaceState 
 	return nhn.state
 }
 
-func (nhn *NotificationHubNamespace) DependOn() terra.Reference {
-	return terra.ReferenceResource(nhn)
-}
-
+// NotificationHubNamespaceArgs contains the configurations for azurerm_notification_hub_namespace.
 type NotificationHubNamespaceArgs struct {
 	// Enabled: bool, optional
 	Enabled terra.BoolValue `hcl:"enabled,attr"`
@@ -83,51 +106,58 @@ type NotificationHubNamespaceArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// Timeouts: optional
 	Timeouts *notificationhubnamespace.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that NotificationHubNamespace depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type notificationHubNamespaceAttributes struct {
 	ref terra.Reference
 }
 
+// Enabled returns a reference to field enabled of azurerm_notification_hub_namespace.
 func (nhn notificationHubNamespaceAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(nhn.ref.Append("enabled"))
+	return terra.ReferenceAsBool(nhn.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of azurerm_notification_hub_namespace.
 func (nhn notificationHubNamespaceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(nhn.ref.Append("id"))
+	return terra.ReferenceAsString(nhn.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_notification_hub_namespace.
 func (nhn notificationHubNamespaceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(nhn.ref.Append("location"))
+	return terra.ReferenceAsString(nhn.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_notification_hub_namespace.
 func (nhn notificationHubNamespaceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(nhn.ref.Append("name"))
+	return terra.ReferenceAsString(nhn.ref.Append("name"))
 }
 
+// NamespaceType returns a reference to field namespace_type of azurerm_notification_hub_namespace.
 func (nhn notificationHubNamespaceAttributes) NamespaceType() terra.StringValue {
-	return terra.ReferenceString(nhn.ref.Append("namespace_type"))
+	return terra.ReferenceAsString(nhn.ref.Append("namespace_type"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_notification_hub_namespace.
 func (nhn notificationHubNamespaceAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(nhn.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(nhn.ref.Append("resource_group_name"))
 }
 
+// ServicebusEndpoint returns a reference to field servicebus_endpoint of azurerm_notification_hub_namespace.
 func (nhn notificationHubNamespaceAttributes) ServicebusEndpoint() terra.StringValue {
-	return terra.ReferenceString(nhn.ref.Append("servicebus_endpoint"))
+	return terra.ReferenceAsString(nhn.ref.Append("servicebus_endpoint"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_notification_hub_namespace.
 func (nhn notificationHubNamespaceAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(nhn.ref.Append("sku_name"))
+	return terra.ReferenceAsString(nhn.ref.Append("sku_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_notification_hub_namespace.
 func (nhn notificationHubNamespaceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](nhn.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](nhn.ref.Append("tags"))
 }
 
 func (nhn notificationHubNamespaceAttributes) Timeouts() notificationhubnamespace.TimeoutsAttributes {
-	return terra.ReferenceSingle[notificationhubnamespace.TimeoutsAttributes](nhn.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[notificationhubnamespace.TimeoutsAttributes](nhn.ref.Append("timeouts"))
 }
 
 type notificationHubNamespaceState struct {

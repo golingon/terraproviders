@@ -26,7 +26,7 @@ func (ivc IngressVpcConfigurationAttributes) InternalWithRef(ref terra.Reference
 	return IngressVpcConfigurationAttributes{ref: ref}
 }
 
-func (ivc IngressVpcConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ivc IngressVpcConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ivc.ref.InternalTokens()
 }
 

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewPrivatecaCertificateTemplate creates a new instance of [PrivatecaCertificateTemplate].
 func NewPrivatecaCertificateTemplate(name string, args PrivatecaCertificateTemplateArgs) *PrivatecaCertificateTemplate {
 	return &PrivatecaCertificateTemplate{
 		Args: args,
@@ -19,28 +20,51 @@ func NewPrivatecaCertificateTemplate(name string, args PrivatecaCertificateTempl
 
 var _ terra.Resource = (*PrivatecaCertificateTemplate)(nil)
 
+// PrivatecaCertificateTemplate represents the Terraform resource google_privateca_certificate_template.
 type PrivatecaCertificateTemplate struct {
-	Name  string
-	Args  PrivatecaCertificateTemplateArgs
-	state *privatecaCertificateTemplateState
+	Name      string
+	Args      PrivatecaCertificateTemplateArgs
+	state     *privatecaCertificateTemplateState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PrivatecaCertificateTemplate].
 func (pct *PrivatecaCertificateTemplate) Type() string {
 	return "google_privateca_certificate_template"
 }
 
+// LocalName returns the local name for [PrivatecaCertificateTemplate].
 func (pct *PrivatecaCertificateTemplate) LocalName() string {
 	return pct.Name
 }
 
+// Configuration returns the configuration (args) for [PrivatecaCertificateTemplate].
 func (pct *PrivatecaCertificateTemplate) Configuration() interface{} {
 	return pct.Args
 }
 
+// DependOn is used for other resources to depend on [PrivatecaCertificateTemplate].
+func (pct *PrivatecaCertificateTemplate) DependOn() terra.Reference {
+	return terra.ReferenceResource(pct)
+}
+
+// Dependencies returns the list of resources [PrivatecaCertificateTemplate] depends_on.
+func (pct *PrivatecaCertificateTemplate) Dependencies() terra.Dependencies {
+	return pct.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PrivatecaCertificateTemplate].
+func (pct *PrivatecaCertificateTemplate) LifecycleManagement() *terra.Lifecycle {
+	return pct.Lifecycle
+}
+
+// Attributes returns the attributes for [PrivatecaCertificateTemplate].
 func (pct *PrivatecaCertificateTemplate) Attributes() privatecaCertificateTemplateAttributes {
 	return privatecaCertificateTemplateAttributes{ref: terra.ReferenceResource(pct)}
 }
 
+// ImportState imports the given attribute values into [PrivatecaCertificateTemplate]'s state.
 func (pct *PrivatecaCertificateTemplate) ImportState(av io.Reader) error {
 	pct.state = &privatecaCertificateTemplateState{}
 	if err := json.NewDecoder(av).Decode(pct.state); err != nil {
@@ -49,10 +73,12 @@ func (pct *PrivatecaCertificateTemplate) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PrivatecaCertificateTemplate] has state.
 func (pct *PrivatecaCertificateTemplate) State() (*privatecaCertificateTemplateState, bool) {
 	return pct.state, pct.state != nil
 }
 
+// StateMust returns the state for [PrivatecaCertificateTemplate]. Panics if the state is nil.
 func (pct *PrivatecaCertificateTemplate) StateMust() *privatecaCertificateTemplateState {
 	if pct.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pct.Type(), pct.LocalName()))
@@ -60,10 +86,7 @@ func (pct *PrivatecaCertificateTemplate) StateMust() *privatecaCertificateTempla
 	return pct.state
 }
 
-func (pct *PrivatecaCertificateTemplate) DependOn() terra.Reference {
-	return terra.ReferenceResource(pct)
-}
-
+// PrivatecaCertificateTemplateArgs contains the configurations for google_privateca_certificate_template.
 type PrivatecaCertificateTemplateArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -85,59 +108,65 @@ type PrivatecaCertificateTemplateArgs struct {
 	PredefinedValues *privatecacertificatetemplate.PredefinedValues `hcl:"predefined_values,block"`
 	// Timeouts: optional
 	Timeouts *privatecacertificatetemplate.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that PrivatecaCertificateTemplate depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type privatecaCertificateTemplateAttributes struct {
 	ref terra.Reference
 }
 
+// CreateTime returns a reference to field create_time of google_privateca_certificate_template.
 func (pct privatecaCertificateTemplateAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(pct.ref.Append("create_time"))
+	return terra.ReferenceAsString(pct.ref.Append("create_time"))
 }
 
+// Description returns a reference to field description of google_privateca_certificate_template.
 func (pct privatecaCertificateTemplateAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(pct.ref.Append("description"))
+	return terra.ReferenceAsString(pct.ref.Append("description"))
 }
 
+// Id returns a reference to field id of google_privateca_certificate_template.
 func (pct privatecaCertificateTemplateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pct.ref.Append("id"))
+	return terra.ReferenceAsString(pct.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_privateca_certificate_template.
 func (pct privatecaCertificateTemplateAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](pct.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](pct.ref.Append("labels"))
 }
 
+// Location returns a reference to field location of google_privateca_certificate_template.
 func (pct privatecaCertificateTemplateAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(pct.ref.Append("location"))
+	return terra.ReferenceAsString(pct.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_privateca_certificate_template.
 func (pct privatecaCertificateTemplateAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pct.ref.Append("name"))
+	return terra.ReferenceAsString(pct.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_privateca_certificate_template.
 func (pct privatecaCertificateTemplateAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(pct.ref.Append("project"))
+	return terra.ReferenceAsString(pct.ref.Append("project"))
 }
 
+// UpdateTime returns a reference to field update_time of google_privateca_certificate_template.
 func (pct privatecaCertificateTemplateAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(pct.ref.Append("update_time"))
+	return terra.ReferenceAsString(pct.ref.Append("update_time"))
 }
 
 func (pct privatecaCertificateTemplateAttributes) IdentityConstraints() terra.ListValue[privatecacertificatetemplate.IdentityConstraintsAttributes] {
-	return terra.ReferenceList[privatecacertificatetemplate.IdentityConstraintsAttributes](pct.ref.Append("identity_constraints"))
+	return terra.ReferenceAsList[privatecacertificatetemplate.IdentityConstraintsAttributes](pct.ref.Append("identity_constraints"))
 }
 
 func (pct privatecaCertificateTemplateAttributes) PassthroughExtensions() terra.ListValue[privatecacertificatetemplate.PassthroughExtensionsAttributes] {
-	return terra.ReferenceList[privatecacertificatetemplate.PassthroughExtensionsAttributes](pct.ref.Append("passthrough_extensions"))
+	return terra.ReferenceAsList[privatecacertificatetemplate.PassthroughExtensionsAttributes](pct.ref.Append("passthrough_extensions"))
 }
 
 func (pct privatecaCertificateTemplateAttributes) PredefinedValues() terra.ListValue[privatecacertificatetemplate.PredefinedValuesAttributes] {
-	return terra.ReferenceList[privatecacertificatetemplate.PredefinedValuesAttributes](pct.ref.Append("predefined_values"))
+	return terra.ReferenceAsList[privatecacertificatetemplate.PredefinedValuesAttributes](pct.ref.Append("predefined_values"))
 }
 
 func (pct privatecaCertificateTemplateAttributes) Timeouts() privatecacertificatetemplate.TimeoutsAttributes {
-	return terra.ReferenceSingle[privatecacertificatetemplate.TimeoutsAttributes](pct.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[privatecacertificatetemplate.TimeoutsAttributes](pct.ref.Append("timeouts"))
 }
 
 type privatecaCertificateTemplateState struct {

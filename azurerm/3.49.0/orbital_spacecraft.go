@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewOrbitalSpacecraft creates a new instance of [OrbitalSpacecraft].
 func NewOrbitalSpacecraft(name string, args OrbitalSpacecraftArgs) *OrbitalSpacecraft {
 	return &OrbitalSpacecraft{
 		Args: args,
@@ -19,28 +20,51 @@ func NewOrbitalSpacecraft(name string, args OrbitalSpacecraftArgs) *OrbitalSpace
 
 var _ terra.Resource = (*OrbitalSpacecraft)(nil)
 
+// OrbitalSpacecraft represents the Terraform resource azurerm_orbital_spacecraft.
 type OrbitalSpacecraft struct {
-	Name  string
-	Args  OrbitalSpacecraftArgs
-	state *orbitalSpacecraftState
+	Name      string
+	Args      OrbitalSpacecraftArgs
+	state     *orbitalSpacecraftState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [OrbitalSpacecraft].
 func (os *OrbitalSpacecraft) Type() string {
 	return "azurerm_orbital_spacecraft"
 }
 
+// LocalName returns the local name for [OrbitalSpacecraft].
 func (os *OrbitalSpacecraft) LocalName() string {
 	return os.Name
 }
 
+// Configuration returns the configuration (args) for [OrbitalSpacecraft].
 func (os *OrbitalSpacecraft) Configuration() interface{} {
 	return os.Args
 }
 
+// DependOn is used for other resources to depend on [OrbitalSpacecraft].
+func (os *OrbitalSpacecraft) DependOn() terra.Reference {
+	return terra.ReferenceResource(os)
+}
+
+// Dependencies returns the list of resources [OrbitalSpacecraft] depends_on.
+func (os *OrbitalSpacecraft) Dependencies() terra.Dependencies {
+	return os.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [OrbitalSpacecraft].
+func (os *OrbitalSpacecraft) LifecycleManagement() *terra.Lifecycle {
+	return os.Lifecycle
+}
+
+// Attributes returns the attributes for [OrbitalSpacecraft].
 func (os *OrbitalSpacecraft) Attributes() orbitalSpacecraftAttributes {
 	return orbitalSpacecraftAttributes{ref: terra.ReferenceResource(os)}
 }
 
+// ImportState imports the given attribute values into [OrbitalSpacecraft]'s state.
 func (os *OrbitalSpacecraft) ImportState(av io.Reader) error {
 	os.state = &orbitalSpacecraftState{}
 	if err := json.NewDecoder(av).Decode(os.state); err != nil {
@@ -49,10 +73,12 @@ func (os *OrbitalSpacecraft) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [OrbitalSpacecraft] has state.
 func (os *OrbitalSpacecraft) State() (*orbitalSpacecraftState, bool) {
 	return os.state, os.state != nil
 }
 
+// StateMust returns the state for [OrbitalSpacecraft]. Panics if the state is nil.
 func (os *OrbitalSpacecraft) StateMust() *orbitalSpacecraftState {
 	if os.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", os.Type(), os.LocalName()))
@@ -60,10 +86,7 @@ func (os *OrbitalSpacecraft) StateMust() *orbitalSpacecraftState {
 	return os.state
 }
 
-func (os *OrbitalSpacecraft) DependOn() terra.Reference {
-	return terra.ReferenceResource(os)
-}
-
+// OrbitalSpacecraftArgs contains the configurations for azurerm_orbital_spacecraft.
 type OrbitalSpacecraftArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -85,51 +108,57 @@ type OrbitalSpacecraftArgs struct {
 	Links []orbitalspacecraft.Links `hcl:"links,block" validate:"min=1"`
 	// Timeouts: optional
 	Timeouts *orbitalspacecraft.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that OrbitalSpacecraft depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type orbitalSpacecraftAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_orbital_spacecraft.
 func (os orbitalSpacecraftAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(os.ref.Append("id"))
+	return terra.ReferenceAsString(os.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_orbital_spacecraft.
 func (os orbitalSpacecraftAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(os.ref.Append("location"))
+	return terra.ReferenceAsString(os.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_orbital_spacecraft.
 func (os orbitalSpacecraftAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(os.ref.Append("name"))
+	return terra.ReferenceAsString(os.ref.Append("name"))
 }
 
+// NoradId returns a reference to field norad_id of azurerm_orbital_spacecraft.
 func (os orbitalSpacecraftAttributes) NoradId() terra.StringValue {
-	return terra.ReferenceString(os.ref.Append("norad_id"))
+	return terra.ReferenceAsString(os.ref.Append("norad_id"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_orbital_spacecraft.
 func (os orbitalSpacecraftAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(os.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(os.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_orbital_spacecraft.
 func (os orbitalSpacecraftAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](os.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](os.ref.Append("tags"))
 }
 
+// TitleLine returns a reference to field title_line of azurerm_orbital_spacecraft.
 func (os orbitalSpacecraftAttributes) TitleLine() terra.StringValue {
-	return terra.ReferenceString(os.ref.Append("title_line"))
+	return terra.ReferenceAsString(os.ref.Append("title_line"))
 }
 
+// TwoLineElements returns a reference to field two_line_elements of azurerm_orbital_spacecraft.
 func (os orbitalSpacecraftAttributes) TwoLineElements() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](os.ref.Append("two_line_elements"))
+	return terra.ReferenceAsList[terra.StringValue](os.ref.Append("two_line_elements"))
 }
 
 func (os orbitalSpacecraftAttributes) Links() terra.ListValue[orbitalspacecraft.LinksAttributes] {
-	return terra.ReferenceList[orbitalspacecraft.LinksAttributes](os.ref.Append("links"))
+	return terra.ReferenceAsList[orbitalspacecraft.LinksAttributes](os.ref.Append("links"))
 }
 
 func (os orbitalSpacecraftAttributes) Timeouts() orbitalspacecraft.TimeoutsAttributes {
-	return terra.ReferenceSingle[orbitalspacecraft.TimeoutsAttributes](os.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[orbitalspacecraft.TimeoutsAttributes](os.ref.Append("timeouts"))
 }
 
 type orbitalSpacecraftState struct {

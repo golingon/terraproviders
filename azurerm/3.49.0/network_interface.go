@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNetworkInterface creates a new instance of [NetworkInterface].
 func NewNetworkInterface(name string, args NetworkInterfaceArgs) *NetworkInterface {
 	return &NetworkInterface{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNetworkInterface(name string, args NetworkInterfaceArgs) *NetworkInterfa
 
 var _ terra.Resource = (*NetworkInterface)(nil)
 
+// NetworkInterface represents the Terraform resource azurerm_network_interface.
 type NetworkInterface struct {
-	Name  string
-	Args  NetworkInterfaceArgs
-	state *networkInterfaceState
+	Name      string
+	Args      NetworkInterfaceArgs
+	state     *networkInterfaceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NetworkInterface].
 func (ni *NetworkInterface) Type() string {
 	return "azurerm_network_interface"
 }
 
+// LocalName returns the local name for [NetworkInterface].
 func (ni *NetworkInterface) LocalName() string {
 	return ni.Name
 }
 
+// Configuration returns the configuration (args) for [NetworkInterface].
 func (ni *NetworkInterface) Configuration() interface{} {
 	return ni.Args
 }
 
+// DependOn is used for other resources to depend on [NetworkInterface].
+func (ni *NetworkInterface) DependOn() terra.Reference {
+	return terra.ReferenceResource(ni)
+}
+
+// Dependencies returns the list of resources [NetworkInterface] depends_on.
+func (ni *NetworkInterface) Dependencies() terra.Dependencies {
+	return ni.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NetworkInterface].
+func (ni *NetworkInterface) LifecycleManagement() *terra.Lifecycle {
+	return ni.Lifecycle
+}
+
+// Attributes returns the attributes for [NetworkInterface].
 func (ni *NetworkInterface) Attributes() networkInterfaceAttributes {
 	return networkInterfaceAttributes{ref: terra.ReferenceResource(ni)}
 }
 
+// ImportState imports the given attribute values into [NetworkInterface]'s state.
 func (ni *NetworkInterface) ImportState(av io.Reader) error {
 	ni.state = &networkInterfaceState{}
 	if err := json.NewDecoder(av).Decode(ni.state); err != nil {
@@ -49,10 +73,12 @@ func (ni *NetworkInterface) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NetworkInterface] has state.
 func (ni *NetworkInterface) State() (*networkInterfaceState, bool) {
 	return ni.state, ni.state != nil
 }
 
+// StateMust returns the state for [NetworkInterface]. Panics if the state is nil.
 func (ni *NetworkInterface) StateMust() *networkInterfaceState {
 	if ni.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ni.Type(), ni.LocalName()))
@@ -60,10 +86,7 @@ func (ni *NetworkInterface) StateMust() *networkInterfaceState {
 	return ni.state
 }
 
-func (ni *NetworkInterface) DependOn() terra.Reference {
-	return terra.ReferenceResource(ni)
-}
-
+// NetworkInterfaceArgs contains the configurations for azurerm_network_interface.
 type NetworkInterfaceArgs struct {
 	// DnsServers: list of string, optional
 	DnsServers terra.ListValue[terra.StringValue] `hcl:"dns_servers,attr"`
@@ -89,83 +112,97 @@ type NetworkInterfaceArgs struct {
 	IpConfiguration []networkinterface.IpConfiguration `hcl:"ip_configuration,block" validate:"min=1"`
 	// Timeouts: optional
 	Timeouts *networkinterface.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that NetworkInterface depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type networkInterfaceAttributes struct {
 	ref terra.Reference
 }
 
+// AppliedDnsServers returns a reference to field applied_dns_servers of azurerm_network_interface.
 func (ni networkInterfaceAttributes) AppliedDnsServers() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ni.ref.Append("applied_dns_servers"))
+	return terra.ReferenceAsList[terra.StringValue](ni.ref.Append("applied_dns_servers"))
 }
 
+// DnsServers returns a reference to field dns_servers of azurerm_network_interface.
 func (ni networkInterfaceAttributes) DnsServers() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ni.ref.Append("dns_servers"))
+	return terra.ReferenceAsList[terra.StringValue](ni.ref.Append("dns_servers"))
 }
 
+// EdgeZone returns a reference to field edge_zone of azurerm_network_interface.
 func (ni networkInterfaceAttributes) EdgeZone() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("edge_zone"))
+	return terra.ReferenceAsString(ni.ref.Append("edge_zone"))
 }
 
+// EnableAcceleratedNetworking returns a reference to field enable_accelerated_networking of azurerm_network_interface.
 func (ni networkInterfaceAttributes) EnableAcceleratedNetworking() terra.BoolValue {
-	return terra.ReferenceBool(ni.ref.Append("enable_accelerated_networking"))
+	return terra.ReferenceAsBool(ni.ref.Append("enable_accelerated_networking"))
 }
 
+// EnableIpForwarding returns a reference to field enable_ip_forwarding of azurerm_network_interface.
 func (ni networkInterfaceAttributes) EnableIpForwarding() terra.BoolValue {
-	return terra.ReferenceBool(ni.ref.Append("enable_ip_forwarding"))
+	return terra.ReferenceAsBool(ni.ref.Append("enable_ip_forwarding"))
 }
 
+// Id returns a reference to field id of azurerm_network_interface.
 func (ni networkInterfaceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("id"))
+	return terra.ReferenceAsString(ni.ref.Append("id"))
 }
 
+// InternalDnsNameLabel returns a reference to field internal_dns_name_label of azurerm_network_interface.
 func (ni networkInterfaceAttributes) InternalDnsNameLabel() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("internal_dns_name_label"))
+	return terra.ReferenceAsString(ni.ref.Append("internal_dns_name_label"))
 }
 
+// InternalDomainNameSuffix returns a reference to field internal_domain_name_suffix of azurerm_network_interface.
 func (ni networkInterfaceAttributes) InternalDomainNameSuffix() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("internal_domain_name_suffix"))
+	return terra.ReferenceAsString(ni.ref.Append("internal_domain_name_suffix"))
 }
 
+// Location returns a reference to field location of azurerm_network_interface.
 func (ni networkInterfaceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("location"))
+	return terra.ReferenceAsString(ni.ref.Append("location"))
 }
 
+// MacAddress returns a reference to field mac_address of azurerm_network_interface.
 func (ni networkInterfaceAttributes) MacAddress() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("mac_address"))
+	return terra.ReferenceAsString(ni.ref.Append("mac_address"))
 }
 
+// Name returns a reference to field name of azurerm_network_interface.
 func (ni networkInterfaceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("name"))
+	return terra.ReferenceAsString(ni.ref.Append("name"))
 }
 
+// PrivateIpAddress returns a reference to field private_ip_address of azurerm_network_interface.
 func (ni networkInterfaceAttributes) PrivateIpAddress() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("private_ip_address"))
+	return terra.ReferenceAsString(ni.ref.Append("private_ip_address"))
 }
 
+// PrivateIpAddresses returns a reference to field private_ip_addresses of azurerm_network_interface.
 func (ni networkInterfaceAttributes) PrivateIpAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ni.ref.Append("private_ip_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](ni.ref.Append("private_ip_addresses"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_network_interface.
 func (ni networkInterfaceAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ni.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_network_interface.
 func (ni networkInterfaceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ni.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ni.ref.Append("tags"))
 }
 
+// VirtualMachineId returns a reference to field virtual_machine_id of azurerm_network_interface.
 func (ni networkInterfaceAttributes) VirtualMachineId() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("virtual_machine_id"))
+	return terra.ReferenceAsString(ni.ref.Append("virtual_machine_id"))
 }
 
 func (ni networkInterfaceAttributes) IpConfiguration() terra.ListValue[networkinterface.IpConfigurationAttributes] {
-	return terra.ReferenceList[networkinterface.IpConfigurationAttributes](ni.ref.Append("ip_configuration"))
+	return terra.ReferenceAsList[networkinterface.IpConfigurationAttributes](ni.ref.Append("ip_configuration"))
 }
 
 func (ni networkInterfaceAttributes) Timeouts() networkinterface.TimeoutsAttributes {
-	return terra.ReferenceSingle[networkinterface.TimeoutsAttributes](ni.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[networkinterface.TimeoutsAttributes](ni.ref.Append("timeouts"))
 }
 
 type networkInterfaceState struct {

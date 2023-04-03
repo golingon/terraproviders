@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewLoggingProjectExclusion creates a new instance of [LoggingProjectExclusion].
 func NewLoggingProjectExclusion(name string, args LoggingProjectExclusionArgs) *LoggingProjectExclusion {
 	return &LoggingProjectExclusion{
 		Args: args,
@@ -18,28 +19,51 @@ func NewLoggingProjectExclusion(name string, args LoggingProjectExclusionArgs) *
 
 var _ terra.Resource = (*LoggingProjectExclusion)(nil)
 
+// LoggingProjectExclusion represents the Terraform resource google_logging_project_exclusion.
 type LoggingProjectExclusion struct {
-	Name  string
-	Args  LoggingProjectExclusionArgs
-	state *loggingProjectExclusionState
+	Name      string
+	Args      LoggingProjectExclusionArgs
+	state     *loggingProjectExclusionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LoggingProjectExclusion].
 func (lpe *LoggingProjectExclusion) Type() string {
 	return "google_logging_project_exclusion"
 }
 
+// LocalName returns the local name for [LoggingProjectExclusion].
 func (lpe *LoggingProjectExclusion) LocalName() string {
 	return lpe.Name
 }
 
+// Configuration returns the configuration (args) for [LoggingProjectExclusion].
 func (lpe *LoggingProjectExclusion) Configuration() interface{} {
 	return lpe.Args
 }
 
+// DependOn is used for other resources to depend on [LoggingProjectExclusion].
+func (lpe *LoggingProjectExclusion) DependOn() terra.Reference {
+	return terra.ReferenceResource(lpe)
+}
+
+// Dependencies returns the list of resources [LoggingProjectExclusion] depends_on.
+func (lpe *LoggingProjectExclusion) Dependencies() terra.Dependencies {
+	return lpe.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LoggingProjectExclusion].
+func (lpe *LoggingProjectExclusion) LifecycleManagement() *terra.Lifecycle {
+	return lpe.Lifecycle
+}
+
+// Attributes returns the attributes for [LoggingProjectExclusion].
 func (lpe *LoggingProjectExclusion) Attributes() loggingProjectExclusionAttributes {
 	return loggingProjectExclusionAttributes{ref: terra.ReferenceResource(lpe)}
 }
 
+// ImportState imports the given attribute values into [LoggingProjectExclusion]'s state.
 func (lpe *LoggingProjectExclusion) ImportState(av io.Reader) error {
 	lpe.state = &loggingProjectExclusionState{}
 	if err := json.NewDecoder(av).Decode(lpe.state); err != nil {
@@ -48,10 +72,12 @@ func (lpe *LoggingProjectExclusion) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LoggingProjectExclusion] has state.
 func (lpe *LoggingProjectExclusion) State() (*loggingProjectExclusionState, bool) {
 	return lpe.state, lpe.state != nil
 }
 
+// StateMust returns the state for [LoggingProjectExclusion]. Panics if the state is nil.
 func (lpe *LoggingProjectExclusion) StateMust() *loggingProjectExclusionState {
 	if lpe.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lpe.Type(), lpe.LocalName()))
@@ -59,10 +85,7 @@ func (lpe *LoggingProjectExclusion) StateMust() *loggingProjectExclusionState {
 	return lpe.state
 }
 
-func (lpe *LoggingProjectExclusion) DependOn() terra.Reference {
-	return terra.ReferenceResource(lpe)
-}
-
+// LoggingProjectExclusionArgs contains the configurations for google_logging_project_exclusion.
 type LoggingProjectExclusionArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -76,35 +99,39 @@ type LoggingProjectExclusionArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// Project: string, optional
 	Project terra.StringValue `hcl:"project,attr"`
-	// DependsOn contains resources that LoggingProjectExclusion depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type loggingProjectExclusionAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of google_logging_project_exclusion.
 func (lpe loggingProjectExclusionAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(lpe.ref.Append("description"))
+	return terra.ReferenceAsString(lpe.ref.Append("description"))
 }
 
+// Disabled returns a reference to field disabled of google_logging_project_exclusion.
 func (lpe loggingProjectExclusionAttributes) Disabled() terra.BoolValue {
-	return terra.ReferenceBool(lpe.ref.Append("disabled"))
+	return terra.ReferenceAsBool(lpe.ref.Append("disabled"))
 }
 
+// Filter returns a reference to field filter of google_logging_project_exclusion.
 func (lpe loggingProjectExclusionAttributes) Filter() terra.StringValue {
-	return terra.ReferenceString(lpe.ref.Append("filter"))
+	return terra.ReferenceAsString(lpe.ref.Append("filter"))
 }
 
+// Id returns a reference to field id of google_logging_project_exclusion.
 func (lpe loggingProjectExclusionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lpe.ref.Append("id"))
+	return terra.ReferenceAsString(lpe.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_logging_project_exclusion.
 func (lpe loggingProjectExclusionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lpe.ref.Append("name"))
+	return terra.ReferenceAsString(lpe.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_logging_project_exclusion.
 func (lpe loggingProjectExclusionAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(lpe.ref.Append("project"))
+	return terra.ReferenceAsString(lpe.ref.Append("project"))
 }
 
 type loggingProjectExclusionState struct {

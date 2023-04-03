@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewWindowsWebApp creates a new instance of [WindowsWebApp].
 func NewWindowsWebApp(name string, args WindowsWebAppArgs) *WindowsWebApp {
 	return &WindowsWebApp{
 		Args: args,
@@ -19,28 +20,51 @@ func NewWindowsWebApp(name string, args WindowsWebAppArgs) *WindowsWebApp {
 
 var _ terra.Resource = (*WindowsWebApp)(nil)
 
+// WindowsWebApp represents the Terraform resource azurerm_windows_web_app.
 type WindowsWebApp struct {
-	Name  string
-	Args  WindowsWebAppArgs
-	state *windowsWebAppState
+	Name      string
+	Args      WindowsWebAppArgs
+	state     *windowsWebAppState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [WindowsWebApp].
 func (wwa *WindowsWebApp) Type() string {
 	return "azurerm_windows_web_app"
 }
 
+// LocalName returns the local name for [WindowsWebApp].
 func (wwa *WindowsWebApp) LocalName() string {
 	return wwa.Name
 }
 
+// Configuration returns the configuration (args) for [WindowsWebApp].
 func (wwa *WindowsWebApp) Configuration() interface{} {
 	return wwa.Args
 }
 
+// DependOn is used for other resources to depend on [WindowsWebApp].
+func (wwa *WindowsWebApp) DependOn() terra.Reference {
+	return terra.ReferenceResource(wwa)
+}
+
+// Dependencies returns the list of resources [WindowsWebApp] depends_on.
+func (wwa *WindowsWebApp) Dependencies() terra.Dependencies {
+	return wwa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [WindowsWebApp].
+func (wwa *WindowsWebApp) LifecycleManagement() *terra.Lifecycle {
+	return wwa.Lifecycle
+}
+
+// Attributes returns the attributes for [WindowsWebApp].
 func (wwa *WindowsWebApp) Attributes() windowsWebAppAttributes {
 	return windowsWebAppAttributes{ref: terra.ReferenceResource(wwa)}
 }
 
+// ImportState imports the given attribute values into [WindowsWebApp]'s state.
 func (wwa *WindowsWebApp) ImportState(av io.Reader) error {
 	wwa.state = &windowsWebAppState{}
 	if err := json.NewDecoder(av).Decode(wwa.state); err != nil {
@@ -49,10 +73,12 @@ func (wwa *WindowsWebApp) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [WindowsWebApp] has state.
 func (wwa *WindowsWebApp) State() (*windowsWebAppState, bool) {
 	return wwa.state, wwa.state != nil
 }
 
+// StateMust returns the state for [WindowsWebApp]. Panics if the state is nil.
 func (wwa *WindowsWebApp) StateMust() *windowsWebAppState {
 	if wwa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", wwa.Type(), wwa.LocalName()))
@@ -60,10 +86,7 @@ func (wwa *WindowsWebApp) StateMust() *windowsWebAppState {
 	return wwa.state
 }
 
-func (wwa *WindowsWebApp) DependOn() terra.Reference {
-	return terra.ReferenceResource(wwa)
-}
-
+// WindowsWebAppArgs contains the configurations for azurerm_windows_web_app.
 type WindowsWebAppArgs struct {
 	// AppSettings: map of string, optional
 	AppSettings terra.MapValue[terra.StringValue] `hcl:"app_settings,attr"`
@@ -119,147 +142,168 @@ type WindowsWebAppArgs struct {
 	StorageAccount []windowswebapp.StorageAccount `hcl:"storage_account,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *windowswebapp.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that WindowsWebApp depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type windowsWebAppAttributes struct {
 	ref terra.Reference
 }
 
+// AppSettings returns a reference to field app_settings of azurerm_windows_web_app.
 func (wwa windowsWebAppAttributes) AppSettings() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](wwa.ref.Append("app_settings"))
+	return terra.ReferenceAsMap[terra.StringValue](wwa.ref.Append("app_settings"))
 }
 
+// ClientAffinityEnabled returns a reference to field client_affinity_enabled of azurerm_windows_web_app.
 func (wwa windowsWebAppAttributes) ClientAffinityEnabled() terra.BoolValue {
-	return terra.ReferenceBool(wwa.ref.Append("client_affinity_enabled"))
+	return terra.ReferenceAsBool(wwa.ref.Append("client_affinity_enabled"))
 }
 
+// ClientCertificateEnabled returns a reference to field client_certificate_enabled of azurerm_windows_web_app.
 func (wwa windowsWebAppAttributes) ClientCertificateEnabled() terra.BoolValue {
-	return terra.ReferenceBool(wwa.ref.Append("client_certificate_enabled"))
+	return terra.ReferenceAsBool(wwa.ref.Append("client_certificate_enabled"))
 }
 
+// ClientCertificateExclusionPaths returns a reference to field client_certificate_exclusion_paths of azurerm_windows_web_app.
 func (wwa windowsWebAppAttributes) ClientCertificateExclusionPaths() terra.StringValue {
-	return terra.ReferenceString(wwa.ref.Append("client_certificate_exclusion_paths"))
+	return terra.ReferenceAsString(wwa.ref.Append("client_certificate_exclusion_paths"))
 }
 
+// ClientCertificateMode returns a reference to field client_certificate_mode of azurerm_windows_web_app.
 func (wwa windowsWebAppAttributes) ClientCertificateMode() terra.StringValue {
-	return terra.ReferenceString(wwa.ref.Append("client_certificate_mode"))
+	return terra.ReferenceAsString(wwa.ref.Append("client_certificate_mode"))
 }
 
+// CustomDomainVerificationId returns a reference to field custom_domain_verification_id of azurerm_windows_web_app.
 func (wwa windowsWebAppAttributes) CustomDomainVerificationId() terra.StringValue {
-	return terra.ReferenceString(wwa.ref.Append("custom_domain_verification_id"))
+	return terra.ReferenceAsString(wwa.ref.Append("custom_domain_verification_id"))
 }
 
+// DefaultHostname returns a reference to field default_hostname of azurerm_windows_web_app.
 func (wwa windowsWebAppAttributes) DefaultHostname() terra.StringValue {
-	return terra.ReferenceString(wwa.ref.Append("default_hostname"))
+	return terra.ReferenceAsString(wwa.ref.Append("default_hostname"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_windows_web_app.
 func (wwa windowsWebAppAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(wwa.ref.Append("enabled"))
+	return terra.ReferenceAsBool(wwa.ref.Append("enabled"))
 }
 
+// HttpsOnly returns a reference to field https_only of azurerm_windows_web_app.
 func (wwa windowsWebAppAttributes) HttpsOnly() terra.BoolValue {
-	return terra.ReferenceBool(wwa.ref.Append("https_only"))
+	return terra.ReferenceAsBool(wwa.ref.Append("https_only"))
 }
 
+// Id returns a reference to field id of azurerm_windows_web_app.
 func (wwa windowsWebAppAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(wwa.ref.Append("id"))
+	return terra.ReferenceAsString(wwa.ref.Append("id"))
 }
 
+// KeyVaultReferenceIdentityId returns a reference to field key_vault_reference_identity_id of azurerm_windows_web_app.
 func (wwa windowsWebAppAttributes) KeyVaultReferenceIdentityId() terra.StringValue {
-	return terra.ReferenceString(wwa.ref.Append("key_vault_reference_identity_id"))
+	return terra.ReferenceAsString(wwa.ref.Append("key_vault_reference_identity_id"))
 }
 
+// Kind returns a reference to field kind of azurerm_windows_web_app.
 func (wwa windowsWebAppAttributes) Kind() terra.StringValue {
-	return terra.ReferenceString(wwa.ref.Append("kind"))
+	return terra.ReferenceAsString(wwa.ref.Append("kind"))
 }
 
+// Location returns a reference to field location of azurerm_windows_web_app.
 func (wwa windowsWebAppAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(wwa.ref.Append("location"))
+	return terra.ReferenceAsString(wwa.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_windows_web_app.
 func (wwa windowsWebAppAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(wwa.ref.Append("name"))
+	return terra.ReferenceAsString(wwa.ref.Append("name"))
 }
 
+// OutboundIpAddressList returns a reference to field outbound_ip_address_list of azurerm_windows_web_app.
 func (wwa windowsWebAppAttributes) OutboundIpAddressList() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](wwa.ref.Append("outbound_ip_address_list"))
+	return terra.ReferenceAsList[terra.StringValue](wwa.ref.Append("outbound_ip_address_list"))
 }
 
+// OutboundIpAddresses returns a reference to field outbound_ip_addresses of azurerm_windows_web_app.
 func (wwa windowsWebAppAttributes) OutboundIpAddresses() terra.StringValue {
-	return terra.ReferenceString(wwa.ref.Append("outbound_ip_addresses"))
+	return terra.ReferenceAsString(wwa.ref.Append("outbound_ip_addresses"))
 }
 
+// PossibleOutboundIpAddressList returns a reference to field possible_outbound_ip_address_list of azurerm_windows_web_app.
 func (wwa windowsWebAppAttributes) PossibleOutboundIpAddressList() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](wwa.ref.Append("possible_outbound_ip_address_list"))
+	return terra.ReferenceAsList[terra.StringValue](wwa.ref.Append("possible_outbound_ip_address_list"))
 }
 
+// PossibleOutboundIpAddresses returns a reference to field possible_outbound_ip_addresses of azurerm_windows_web_app.
 func (wwa windowsWebAppAttributes) PossibleOutboundIpAddresses() terra.StringValue {
-	return terra.ReferenceString(wwa.ref.Append("possible_outbound_ip_addresses"))
+	return terra.ReferenceAsString(wwa.ref.Append("possible_outbound_ip_addresses"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_windows_web_app.
 func (wwa windowsWebAppAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(wwa.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(wwa.ref.Append("resource_group_name"))
 }
 
+// ServicePlanId returns a reference to field service_plan_id of azurerm_windows_web_app.
 func (wwa windowsWebAppAttributes) ServicePlanId() terra.StringValue {
-	return terra.ReferenceString(wwa.ref.Append("service_plan_id"))
+	return terra.ReferenceAsString(wwa.ref.Append("service_plan_id"))
 }
 
+// Tags returns a reference to field tags of azurerm_windows_web_app.
 func (wwa windowsWebAppAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](wwa.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](wwa.ref.Append("tags"))
 }
 
+// VirtualNetworkSubnetId returns a reference to field virtual_network_subnet_id of azurerm_windows_web_app.
 func (wwa windowsWebAppAttributes) VirtualNetworkSubnetId() terra.StringValue {
-	return terra.ReferenceString(wwa.ref.Append("virtual_network_subnet_id"))
+	return terra.ReferenceAsString(wwa.ref.Append("virtual_network_subnet_id"))
 }
 
+// ZipDeployFile returns a reference to field zip_deploy_file of azurerm_windows_web_app.
 func (wwa windowsWebAppAttributes) ZipDeployFile() terra.StringValue {
-	return terra.ReferenceString(wwa.ref.Append("zip_deploy_file"))
+	return terra.ReferenceAsString(wwa.ref.Append("zip_deploy_file"))
 }
 
 func (wwa windowsWebAppAttributes) SiteCredential() terra.ListValue[windowswebapp.SiteCredentialAttributes] {
-	return terra.ReferenceList[windowswebapp.SiteCredentialAttributes](wwa.ref.Append("site_credential"))
+	return terra.ReferenceAsList[windowswebapp.SiteCredentialAttributes](wwa.ref.Append("site_credential"))
 }
 
 func (wwa windowsWebAppAttributes) AuthSettings() terra.ListValue[windowswebapp.AuthSettingsAttributes] {
-	return terra.ReferenceList[windowswebapp.AuthSettingsAttributes](wwa.ref.Append("auth_settings"))
+	return terra.ReferenceAsList[windowswebapp.AuthSettingsAttributes](wwa.ref.Append("auth_settings"))
 }
 
 func (wwa windowsWebAppAttributes) AuthSettingsV2() terra.ListValue[windowswebapp.AuthSettingsV2Attributes] {
-	return terra.ReferenceList[windowswebapp.AuthSettingsV2Attributes](wwa.ref.Append("auth_settings_v2"))
+	return terra.ReferenceAsList[windowswebapp.AuthSettingsV2Attributes](wwa.ref.Append("auth_settings_v2"))
 }
 
 func (wwa windowsWebAppAttributes) Backup() terra.ListValue[windowswebapp.BackupAttributes] {
-	return terra.ReferenceList[windowswebapp.BackupAttributes](wwa.ref.Append("backup"))
+	return terra.ReferenceAsList[windowswebapp.BackupAttributes](wwa.ref.Append("backup"))
 }
 
 func (wwa windowsWebAppAttributes) ConnectionString() terra.SetValue[windowswebapp.ConnectionStringAttributes] {
-	return terra.ReferenceSet[windowswebapp.ConnectionStringAttributes](wwa.ref.Append("connection_string"))
+	return terra.ReferenceAsSet[windowswebapp.ConnectionStringAttributes](wwa.ref.Append("connection_string"))
 }
 
 func (wwa windowsWebAppAttributes) Identity() terra.ListValue[windowswebapp.IdentityAttributes] {
-	return terra.ReferenceList[windowswebapp.IdentityAttributes](wwa.ref.Append("identity"))
+	return terra.ReferenceAsList[windowswebapp.IdentityAttributes](wwa.ref.Append("identity"))
 }
 
 func (wwa windowsWebAppAttributes) Logs() terra.ListValue[windowswebapp.LogsAttributes] {
-	return terra.ReferenceList[windowswebapp.LogsAttributes](wwa.ref.Append("logs"))
+	return terra.ReferenceAsList[windowswebapp.LogsAttributes](wwa.ref.Append("logs"))
 }
 
 func (wwa windowsWebAppAttributes) SiteConfig() terra.ListValue[windowswebapp.SiteConfigAttributes] {
-	return terra.ReferenceList[windowswebapp.SiteConfigAttributes](wwa.ref.Append("site_config"))
+	return terra.ReferenceAsList[windowswebapp.SiteConfigAttributes](wwa.ref.Append("site_config"))
 }
 
 func (wwa windowsWebAppAttributes) StickySettings() terra.ListValue[windowswebapp.StickySettingsAttributes] {
-	return terra.ReferenceList[windowswebapp.StickySettingsAttributes](wwa.ref.Append("sticky_settings"))
+	return terra.ReferenceAsList[windowswebapp.StickySettingsAttributes](wwa.ref.Append("sticky_settings"))
 }
 
 func (wwa windowsWebAppAttributes) StorageAccount() terra.SetValue[windowswebapp.StorageAccountAttributes] {
-	return terra.ReferenceSet[windowswebapp.StorageAccountAttributes](wwa.ref.Append("storage_account"))
+	return terra.ReferenceAsSet[windowswebapp.StorageAccountAttributes](wwa.ref.Append("storage_account"))
 }
 
 func (wwa windowsWebAppAttributes) Timeouts() windowswebapp.TimeoutsAttributes {
-	return terra.ReferenceSingle[windowswebapp.TimeoutsAttributes](wwa.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[windowswebapp.TimeoutsAttributes](wwa.ref.Append("timeouts"))
 }
 
 type windowsWebAppState struct {

@@ -176,7 +176,7 @@ func (s SubscriberAttributes) InternalWithRef(ref terra.Reference) SubscriberAtt
 	return SubscriberAttributes{ref: ref}
 }
 
-func (s SubscriberAttributes) InternalTokens() hclwrite.Tokens {
+func (s SubscriberAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -200,7 +200,7 @@ func (te ThresholdExpressionAttributes) InternalWithRef(ref terra.Reference) Thr
 	return ThresholdExpressionAttributes{ref: ref}
 }
 
-func (te ThresholdExpressionAttributes) InternalTokens() hclwrite.Tokens {
+func (te ThresholdExpressionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return te.ref.InternalTokens()
 }
 
@@ -240,7 +240,7 @@ func (a AndAttributes) InternalWithRef(ref terra.Reference) AndAttributes {
 	return AndAttributes{ref: ref}
 }
 
-func (a AndAttributes) InternalTokens() hclwrite.Tokens {
+func (a AndAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -268,7 +268,7 @@ func (cc AndCostCategoryAttributes) InternalWithRef(ref terra.Reference) AndCost
 	return AndCostCategoryAttributes{ref: ref}
 }
 
-func (cc AndCostCategoryAttributes) InternalTokens() hclwrite.Tokens {
+func (cc AndCostCategoryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -296,7 +296,7 @@ func (d AndDimensionAttributes) InternalWithRef(ref terra.Reference) AndDimensio
 	return AndDimensionAttributes{ref: ref}
 }
 
-func (d AndDimensionAttributes) InternalTokens() hclwrite.Tokens {
+func (d AndDimensionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -324,7 +324,7 @@ func (t AndTagsAttributes) InternalWithRef(ref terra.Reference) AndTagsAttribute
 	return AndTagsAttributes{ref: ref}
 }
 
-func (t AndTagsAttributes) InternalTokens() hclwrite.Tokens {
+func (t AndTagsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -352,7 +352,7 @@ func (cc ThresholdExpressionCostCategoryAttributes) InternalWithRef(ref terra.Re
 	return ThresholdExpressionCostCategoryAttributes{ref: ref}
 }
 
-func (cc ThresholdExpressionCostCategoryAttributes) InternalTokens() hclwrite.Tokens {
+func (cc ThresholdExpressionCostCategoryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -380,7 +380,7 @@ func (d ThresholdExpressionDimensionAttributes) InternalWithRef(ref terra.Refere
 	return ThresholdExpressionDimensionAttributes{ref: ref}
 }
 
-func (d ThresholdExpressionDimensionAttributes) InternalTokens() hclwrite.Tokens {
+func (d ThresholdExpressionDimensionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -408,7 +408,7 @@ func (n NotAttributes) InternalWithRef(ref terra.Reference) NotAttributes {
 	return NotAttributes{ref: ref}
 }
 
-func (n NotAttributes) InternalTokens() hclwrite.Tokens {
+func (n NotAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return n.ref.InternalTokens()
 }
 
@@ -436,7 +436,7 @@ func (cc NotCostCategoryAttributes) InternalWithRef(ref terra.Reference) NotCost
 	return NotCostCategoryAttributes{ref: ref}
 }
 
-func (cc NotCostCategoryAttributes) InternalTokens() hclwrite.Tokens {
+func (cc NotCostCategoryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -464,7 +464,7 @@ func (d NotDimensionAttributes) InternalWithRef(ref terra.Reference) NotDimensio
 	return NotDimensionAttributes{ref: ref}
 }
 
-func (d NotDimensionAttributes) InternalTokens() hclwrite.Tokens {
+func (d NotDimensionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -492,7 +492,7 @@ func (t NotTagsAttributes) InternalWithRef(ref terra.Reference) NotTagsAttribute
 	return NotTagsAttributes{ref: ref}
 }
 
-func (t NotTagsAttributes) InternalTokens() hclwrite.Tokens {
+func (t NotTagsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -520,7 +520,7 @@ func (o OrAttributes) InternalWithRef(ref terra.Reference) OrAttributes {
 	return OrAttributes{ref: ref}
 }
 
-func (o OrAttributes) InternalTokens() hclwrite.Tokens {
+func (o OrAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return o.ref.InternalTokens()
 }
 
@@ -548,7 +548,7 @@ func (cc OrCostCategoryAttributes) InternalWithRef(ref terra.Reference) OrCostCa
 	return OrCostCategoryAttributes{ref: ref}
 }
 
-func (cc OrCostCategoryAttributes) InternalTokens() hclwrite.Tokens {
+func (cc OrCostCategoryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -576,7 +576,7 @@ func (d OrDimensionAttributes) InternalWithRef(ref terra.Reference) OrDimensionA
 	return OrDimensionAttributes{ref: ref}
 }
 
-func (d OrDimensionAttributes) InternalTokens() hclwrite.Tokens {
+func (d OrDimensionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -604,7 +604,7 @@ func (t OrTagsAttributes) InternalWithRef(ref terra.Reference) OrTagsAttributes 
 	return OrTagsAttributes{ref: ref}
 }
 
-func (t OrTagsAttributes) InternalTokens() hclwrite.Tokens {
+func (t OrTagsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -632,7 +632,7 @@ func (t ThresholdExpressionTagsAttributes) InternalWithRef(ref terra.Reference) 
 	return ThresholdExpressionTagsAttributes{ref: ref}
 }
 
-func (t ThresholdExpressionTagsAttributes) InternalTokens() hclwrite.Tokens {
+func (t ThresholdExpressionTagsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

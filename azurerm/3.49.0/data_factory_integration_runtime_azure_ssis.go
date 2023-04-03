@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFactoryIntegrationRuntimeAzureSsis creates a new instance of [DataFactoryIntegrationRuntimeAzureSsis].
 func NewDataFactoryIntegrationRuntimeAzureSsis(name string, args DataFactoryIntegrationRuntimeAzureSsisArgs) *DataFactoryIntegrationRuntimeAzureSsis {
 	return &DataFactoryIntegrationRuntimeAzureSsis{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFactoryIntegrationRuntimeAzureSsis(name string, args DataFactoryInte
 
 var _ terra.Resource = (*DataFactoryIntegrationRuntimeAzureSsis)(nil)
 
+// DataFactoryIntegrationRuntimeAzureSsis represents the Terraform resource azurerm_data_factory_integration_runtime_azure_ssis.
 type DataFactoryIntegrationRuntimeAzureSsis struct {
-	Name  string
-	Args  DataFactoryIntegrationRuntimeAzureSsisArgs
-	state *dataFactoryIntegrationRuntimeAzureSsisState
+	Name      string
+	Args      DataFactoryIntegrationRuntimeAzureSsisArgs
+	state     *dataFactoryIntegrationRuntimeAzureSsisState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFactoryIntegrationRuntimeAzureSsis].
 func (dfiras *DataFactoryIntegrationRuntimeAzureSsis) Type() string {
 	return "azurerm_data_factory_integration_runtime_azure_ssis"
 }
 
+// LocalName returns the local name for [DataFactoryIntegrationRuntimeAzureSsis].
 func (dfiras *DataFactoryIntegrationRuntimeAzureSsis) LocalName() string {
 	return dfiras.Name
 }
 
+// Configuration returns the configuration (args) for [DataFactoryIntegrationRuntimeAzureSsis].
 func (dfiras *DataFactoryIntegrationRuntimeAzureSsis) Configuration() interface{} {
 	return dfiras.Args
 }
 
+// DependOn is used for other resources to depend on [DataFactoryIntegrationRuntimeAzureSsis].
+func (dfiras *DataFactoryIntegrationRuntimeAzureSsis) DependOn() terra.Reference {
+	return terra.ReferenceResource(dfiras)
+}
+
+// Dependencies returns the list of resources [DataFactoryIntegrationRuntimeAzureSsis] depends_on.
+func (dfiras *DataFactoryIntegrationRuntimeAzureSsis) Dependencies() terra.Dependencies {
+	return dfiras.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFactoryIntegrationRuntimeAzureSsis].
+func (dfiras *DataFactoryIntegrationRuntimeAzureSsis) LifecycleManagement() *terra.Lifecycle {
+	return dfiras.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFactoryIntegrationRuntimeAzureSsis].
 func (dfiras *DataFactoryIntegrationRuntimeAzureSsis) Attributes() dataFactoryIntegrationRuntimeAzureSsisAttributes {
 	return dataFactoryIntegrationRuntimeAzureSsisAttributes{ref: terra.ReferenceResource(dfiras)}
 }
 
+// ImportState imports the given attribute values into [DataFactoryIntegrationRuntimeAzureSsis]'s state.
 func (dfiras *DataFactoryIntegrationRuntimeAzureSsis) ImportState(av io.Reader) error {
 	dfiras.state = &dataFactoryIntegrationRuntimeAzureSsisState{}
 	if err := json.NewDecoder(av).Decode(dfiras.state); err != nil {
@@ -49,10 +73,12 @@ func (dfiras *DataFactoryIntegrationRuntimeAzureSsis) ImportState(av io.Reader) 
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFactoryIntegrationRuntimeAzureSsis] has state.
 func (dfiras *DataFactoryIntegrationRuntimeAzureSsis) State() (*dataFactoryIntegrationRuntimeAzureSsisState, bool) {
 	return dfiras.state, dfiras.state != nil
 }
 
+// StateMust returns the state for [DataFactoryIntegrationRuntimeAzureSsis]. Panics if the state is nil.
 func (dfiras *DataFactoryIntegrationRuntimeAzureSsis) StateMust() *dataFactoryIntegrationRuntimeAzureSsisState {
 	if dfiras.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dfiras.Type(), dfiras.LocalName()))
@@ -60,10 +86,7 @@ func (dfiras *DataFactoryIntegrationRuntimeAzureSsis) StateMust() *dataFactoryIn
 	return dfiras.state
 }
 
-func (dfiras *DataFactoryIntegrationRuntimeAzureSsis) DependOn() terra.Reference {
-	return terra.ReferenceResource(dfiras)
-}
-
+// DataFactoryIntegrationRuntimeAzureSsisArgs contains the configurations for azurerm_data_factory_integration_runtime_azure_ssis.
 type DataFactoryIntegrationRuntimeAzureSsisArgs struct {
 	// DataFactoryId: string, required
 	DataFactoryId terra.StringValue `hcl:"data_factory_id,attr" validate:"required"`
@@ -101,83 +124,91 @@ type DataFactoryIntegrationRuntimeAzureSsisArgs struct {
 	Timeouts *datafactoryintegrationruntimeazuressis.Timeouts `hcl:"timeouts,block"`
 	// VnetIntegration: optional
 	VnetIntegration *datafactoryintegrationruntimeazuressis.VnetIntegration `hcl:"vnet_integration,block"`
-	// DependsOn contains resources that DataFactoryIntegrationRuntimeAzureSsis depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFactoryIntegrationRuntimeAzureSsisAttributes struct {
 	ref terra.Reference
 }
 
+// DataFactoryId returns a reference to field data_factory_id of azurerm_data_factory_integration_runtime_azure_ssis.
 func (dfiras dataFactoryIntegrationRuntimeAzureSsisAttributes) DataFactoryId() terra.StringValue {
-	return terra.ReferenceString(dfiras.ref.Append("data_factory_id"))
+	return terra.ReferenceAsString(dfiras.ref.Append("data_factory_id"))
 }
 
+// Description returns a reference to field description of azurerm_data_factory_integration_runtime_azure_ssis.
 func (dfiras dataFactoryIntegrationRuntimeAzureSsisAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dfiras.ref.Append("description"))
+	return terra.ReferenceAsString(dfiras.ref.Append("description"))
 }
 
+// Edition returns a reference to field edition of azurerm_data_factory_integration_runtime_azure_ssis.
 func (dfiras dataFactoryIntegrationRuntimeAzureSsisAttributes) Edition() terra.StringValue {
-	return terra.ReferenceString(dfiras.ref.Append("edition"))
+	return terra.ReferenceAsString(dfiras.ref.Append("edition"))
 }
 
+// Id returns a reference to field id of azurerm_data_factory_integration_runtime_azure_ssis.
 func (dfiras dataFactoryIntegrationRuntimeAzureSsisAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dfiras.ref.Append("id"))
+	return terra.ReferenceAsString(dfiras.ref.Append("id"))
 }
 
+// LicenseType returns a reference to field license_type of azurerm_data_factory_integration_runtime_azure_ssis.
 func (dfiras dataFactoryIntegrationRuntimeAzureSsisAttributes) LicenseType() terra.StringValue {
-	return terra.ReferenceString(dfiras.ref.Append("license_type"))
+	return terra.ReferenceAsString(dfiras.ref.Append("license_type"))
 }
 
+// Location returns a reference to field location of azurerm_data_factory_integration_runtime_azure_ssis.
 func (dfiras dataFactoryIntegrationRuntimeAzureSsisAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(dfiras.ref.Append("location"))
+	return terra.ReferenceAsString(dfiras.ref.Append("location"))
 }
 
+// MaxParallelExecutionsPerNode returns a reference to field max_parallel_executions_per_node of azurerm_data_factory_integration_runtime_azure_ssis.
 func (dfiras dataFactoryIntegrationRuntimeAzureSsisAttributes) MaxParallelExecutionsPerNode() terra.NumberValue {
-	return terra.ReferenceNumber(dfiras.ref.Append("max_parallel_executions_per_node"))
+	return terra.ReferenceAsNumber(dfiras.ref.Append("max_parallel_executions_per_node"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory_integration_runtime_azure_ssis.
 func (dfiras dataFactoryIntegrationRuntimeAzureSsisAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dfiras.ref.Append("name"))
+	return terra.ReferenceAsString(dfiras.ref.Append("name"))
 }
 
+// NodeSize returns a reference to field node_size of azurerm_data_factory_integration_runtime_azure_ssis.
 func (dfiras dataFactoryIntegrationRuntimeAzureSsisAttributes) NodeSize() terra.StringValue {
-	return terra.ReferenceString(dfiras.ref.Append("node_size"))
+	return terra.ReferenceAsString(dfiras.ref.Append("node_size"))
 }
 
+// NumberOfNodes returns a reference to field number_of_nodes of azurerm_data_factory_integration_runtime_azure_ssis.
 func (dfiras dataFactoryIntegrationRuntimeAzureSsisAttributes) NumberOfNodes() terra.NumberValue {
-	return terra.ReferenceNumber(dfiras.ref.Append("number_of_nodes"))
+	return terra.ReferenceAsNumber(dfiras.ref.Append("number_of_nodes"))
 }
 
 func (dfiras dataFactoryIntegrationRuntimeAzureSsisAttributes) CatalogInfo() terra.ListValue[datafactoryintegrationruntimeazuressis.CatalogInfoAttributes] {
-	return terra.ReferenceList[datafactoryintegrationruntimeazuressis.CatalogInfoAttributes](dfiras.ref.Append("catalog_info"))
+	return terra.ReferenceAsList[datafactoryintegrationruntimeazuressis.CatalogInfoAttributes](dfiras.ref.Append("catalog_info"))
 }
 
 func (dfiras dataFactoryIntegrationRuntimeAzureSsisAttributes) CustomSetupScript() terra.ListValue[datafactoryintegrationruntimeazuressis.CustomSetupScriptAttributes] {
-	return terra.ReferenceList[datafactoryintegrationruntimeazuressis.CustomSetupScriptAttributes](dfiras.ref.Append("custom_setup_script"))
+	return terra.ReferenceAsList[datafactoryintegrationruntimeazuressis.CustomSetupScriptAttributes](dfiras.ref.Append("custom_setup_script"))
 }
 
 func (dfiras dataFactoryIntegrationRuntimeAzureSsisAttributes) ExpressCustomSetup() terra.ListValue[datafactoryintegrationruntimeazuressis.ExpressCustomSetupAttributes] {
-	return terra.ReferenceList[datafactoryintegrationruntimeazuressis.ExpressCustomSetupAttributes](dfiras.ref.Append("express_custom_setup"))
+	return terra.ReferenceAsList[datafactoryintegrationruntimeazuressis.ExpressCustomSetupAttributes](dfiras.ref.Append("express_custom_setup"))
 }
 
 func (dfiras dataFactoryIntegrationRuntimeAzureSsisAttributes) ExpressVnetIntegration() terra.ListValue[datafactoryintegrationruntimeazuressis.ExpressVnetIntegrationAttributes] {
-	return terra.ReferenceList[datafactoryintegrationruntimeazuressis.ExpressVnetIntegrationAttributes](dfiras.ref.Append("express_vnet_integration"))
+	return terra.ReferenceAsList[datafactoryintegrationruntimeazuressis.ExpressVnetIntegrationAttributes](dfiras.ref.Append("express_vnet_integration"))
 }
 
 func (dfiras dataFactoryIntegrationRuntimeAzureSsisAttributes) PackageStore() terra.ListValue[datafactoryintegrationruntimeazuressis.PackageStoreAttributes] {
-	return terra.ReferenceList[datafactoryintegrationruntimeazuressis.PackageStoreAttributes](dfiras.ref.Append("package_store"))
+	return terra.ReferenceAsList[datafactoryintegrationruntimeazuressis.PackageStoreAttributes](dfiras.ref.Append("package_store"))
 }
 
 func (dfiras dataFactoryIntegrationRuntimeAzureSsisAttributes) Proxy() terra.ListValue[datafactoryintegrationruntimeazuressis.ProxyAttributes] {
-	return terra.ReferenceList[datafactoryintegrationruntimeazuressis.ProxyAttributes](dfiras.ref.Append("proxy"))
+	return terra.ReferenceAsList[datafactoryintegrationruntimeazuressis.ProxyAttributes](dfiras.ref.Append("proxy"))
 }
 
 func (dfiras dataFactoryIntegrationRuntimeAzureSsisAttributes) Timeouts() datafactoryintegrationruntimeazuressis.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafactoryintegrationruntimeazuressis.TimeoutsAttributes](dfiras.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafactoryintegrationruntimeazuressis.TimeoutsAttributes](dfiras.ref.Append("timeouts"))
 }
 
 func (dfiras dataFactoryIntegrationRuntimeAzureSsisAttributes) VnetIntegration() terra.ListValue[datafactoryintegrationruntimeazuressis.VnetIntegrationAttributes] {
-	return terra.ReferenceList[datafactoryintegrationruntimeazuressis.VnetIntegrationAttributes](dfiras.ref.Append("vnet_integration"))
+	return terra.ReferenceAsList[datafactoryintegrationruntimeazuressis.VnetIntegrationAttributes](dfiras.ref.Append("vnet_integration"))
 }
 
 type dataFactoryIntegrationRuntimeAzureSsisState struct {

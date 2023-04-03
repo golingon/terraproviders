@@ -57,112 +57,112 @@ type SecurityRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (sr SecurityRuleAttributes) InternalRef() terra.Reference {
-	return sr.ref
+func (sr SecurityRuleAttributes) InternalRef() (terra.Reference, error) {
+	return sr.ref, nil
 }
 
 func (sr SecurityRuleAttributes) InternalWithRef(ref terra.Reference) SecurityRuleAttributes {
 	return SecurityRuleAttributes{ref: ref}
 }
 
-func (sr SecurityRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (sr SecurityRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sr.ref.InternalTokens()
 }
 
 func (sr SecurityRuleAttributes) Access() terra.StringValue {
-	return terra.ReferenceString(sr.ref.Append("access"))
+	return terra.ReferenceAsString(sr.ref.Append("access"))
 }
 
 func (sr SecurityRuleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(sr.ref.Append("description"))
+	return terra.ReferenceAsString(sr.ref.Append("description"))
 }
 
 func (sr SecurityRuleAttributes) DestinationAddressPrefix() terra.StringValue {
-	return terra.ReferenceString(sr.ref.Append("destination_address_prefix"))
+	return terra.ReferenceAsString(sr.ref.Append("destination_address_prefix"))
 }
 
 func (sr SecurityRuleAttributes) DestinationAddressPrefixes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sr.ref.Append("destination_address_prefixes"))
+	return terra.ReferenceAsSet[terra.StringValue](sr.ref.Append("destination_address_prefixes"))
 }
 
 func (sr SecurityRuleAttributes) DestinationApplicationSecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sr.ref.Append("destination_application_security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](sr.ref.Append("destination_application_security_group_ids"))
 }
 
 func (sr SecurityRuleAttributes) DestinationPortRange() terra.StringValue {
-	return terra.ReferenceString(sr.ref.Append("destination_port_range"))
+	return terra.ReferenceAsString(sr.ref.Append("destination_port_range"))
 }
 
 func (sr SecurityRuleAttributes) DestinationPortRanges() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sr.ref.Append("destination_port_ranges"))
+	return terra.ReferenceAsSet[terra.StringValue](sr.ref.Append("destination_port_ranges"))
 }
 
 func (sr SecurityRuleAttributes) Direction() terra.StringValue {
-	return terra.ReferenceString(sr.ref.Append("direction"))
+	return terra.ReferenceAsString(sr.ref.Append("direction"))
 }
 
 func (sr SecurityRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sr.ref.Append("name"))
+	return terra.ReferenceAsString(sr.ref.Append("name"))
 }
 
 func (sr SecurityRuleAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(sr.ref.Append("priority"))
+	return terra.ReferenceAsNumber(sr.ref.Append("priority"))
 }
 
 func (sr SecurityRuleAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(sr.ref.Append("protocol"))
+	return terra.ReferenceAsString(sr.ref.Append("protocol"))
 }
 
 func (sr SecurityRuleAttributes) SourceAddressPrefix() terra.StringValue {
-	return terra.ReferenceString(sr.ref.Append("source_address_prefix"))
+	return terra.ReferenceAsString(sr.ref.Append("source_address_prefix"))
 }
 
 func (sr SecurityRuleAttributes) SourceAddressPrefixes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sr.ref.Append("source_address_prefixes"))
+	return terra.ReferenceAsSet[terra.StringValue](sr.ref.Append("source_address_prefixes"))
 }
 
 func (sr SecurityRuleAttributes) SourceApplicationSecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sr.ref.Append("source_application_security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](sr.ref.Append("source_application_security_group_ids"))
 }
 
 func (sr SecurityRuleAttributes) SourcePortRange() terra.StringValue {
-	return terra.ReferenceString(sr.ref.Append("source_port_range"))
+	return terra.ReferenceAsString(sr.ref.Append("source_port_range"))
 }
 
 func (sr SecurityRuleAttributes) SourcePortRanges() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sr.ref.Append("source_port_ranges"))
+	return terra.ReferenceAsSet[terra.StringValue](sr.ref.Append("source_port_ranges"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type SecurityRuleState struct {

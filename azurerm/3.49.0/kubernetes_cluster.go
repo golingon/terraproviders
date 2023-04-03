@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewKubernetesCluster creates a new instance of [KubernetesCluster].
 func NewKubernetesCluster(name string, args KubernetesClusterArgs) *KubernetesCluster {
 	return &KubernetesCluster{
 		Args: args,
@@ -19,28 +20,51 @@ func NewKubernetesCluster(name string, args KubernetesClusterArgs) *KubernetesCl
 
 var _ terra.Resource = (*KubernetesCluster)(nil)
 
+// KubernetesCluster represents the Terraform resource azurerm_kubernetes_cluster.
 type KubernetesCluster struct {
-	Name  string
-	Args  KubernetesClusterArgs
-	state *kubernetesClusterState
+	Name      string
+	Args      KubernetesClusterArgs
+	state     *kubernetesClusterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [KubernetesCluster].
 func (kc *KubernetesCluster) Type() string {
 	return "azurerm_kubernetes_cluster"
 }
 
+// LocalName returns the local name for [KubernetesCluster].
 func (kc *KubernetesCluster) LocalName() string {
 	return kc.Name
 }
 
+// Configuration returns the configuration (args) for [KubernetesCluster].
 func (kc *KubernetesCluster) Configuration() interface{} {
 	return kc.Args
 }
 
+// DependOn is used for other resources to depend on [KubernetesCluster].
+func (kc *KubernetesCluster) DependOn() terra.Reference {
+	return terra.ReferenceResource(kc)
+}
+
+// Dependencies returns the list of resources [KubernetesCluster] depends_on.
+func (kc *KubernetesCluster) Dependencies() terra.Dependencies {
+	return kc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [KubernetesCluster].
+func (kc *KubernetesCluster) LifecycleManagement() *terra.Lifecycle {
+	return kc.Lifecycle
+}
+
+// Attributes returns the attributes for [KubernetesCluster].
 func (kc *KubernetesCluster) Attributes() kubernetesClusterAttributes {
 	return kubernetesClusterAttributes{ref: terra.ReferenceResource(kc)}
 }
 
+// ImportState imports the given attribute values into [KubernetesCluster]'s state.
 func (kc *KubernetesCluster) ImportState(av io.Reader) error {
 	kc.state = &kubernetesClusterState{}
 	if err := json.NewDecoder(av).Decode(kc.state); err != nil {
@@ -49,10 +73,12 @@ func (kc *KubernetesCluster) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [KubernetesCluster] has state.
 func (kc *KubernetesCluster) State() (*kubernetesClusterState, bool) {
 	return kc.state, kc.state != nil
 }
 
+// StateMust returns the state for [KubernetesCluster]. Panics if the state is nil.
 func (kc *KubernetesCluster) StateMust() *kubernetesClusterState {
 	if kc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", kc.Type(), kc.LocalName()))
@@ -60,10 +86,7 @@ func (kc *KubernetesCluster) StateMust() *kubernetesClusterState {
 	return kc.state
 }
 
-func (kc *KubernetesCluster) DependOn() terra.Reference {
-	return terra.ReferenceResource(kc)
-}
-
+// KubernetesClusterArgs contains the configurations for azurerm_kubernetes_cluster.
 type KubernetesClusterArgs struct {
 	// ApiServerAuthorizedIpRanges: set of string, optional
 	ApiServerAuthorizedIpRanges terra.SetValue[terra.StringValue] `hcl:"api_server_authorized_ip_ranges,attr"`
@@ -175,263 +198,298 @@ type KubernetesClusterArgs struct {
 	WindowsProfile *kubernetescluster.WindowsProfile `hcl:"windows_profile,block"`
 	// WorkloadAutoscalerProfile: optional
 	WorkloadAutoscalerProfile *kubernetescluster.WorkloadAutoscalerProfile `hcl:"workload_autoscaler_profile,block"`
-	// DependsOn contains resources that KubernetesCluster depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type kubernetesClusterAttributes struct {
 	ref terra.Reference
 }
 
+// ApiServerAuthorizedIpRanges returns a reference to field api_server_authorized_ip_ranges of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) ApiServerAuthorizedIpRanges() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](kc.ref.Append("api_server_authorized_ip_ranges"))
+	return terra.ReferenceAsSet[terra.StringValue](kc.ref.Append("api_server_authorized_ip_ranges"))
 }
 
+// AutomaticChannelUpgrade returns a reference to field automatic_channel_upgrade of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) AutomaticChannelUpgrade() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("automatic_channel_upgrade"))
+	return terra.ReferenceAsString(kc.ref.Append("automatic_channel_upgrade"))
 }
 
+// AzurePolicyEnabled returns a reference to field azure_policy_enabled of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) AzurePolicyEnabled() terra.BoolValue {
-	return terra.ReferenceBool(kc.ref.Append("azure_policy_enabled"))
+	return terra.ReferenceAsBool(kc.ref.Append("azure_policy_enabled"))
 }
 
+// DiskEncryptionSetId returns a reference to field disk_encryption_set_id of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) DiskEncryptionSetId() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("disk_encryption_set_id"))
+	return terra.ReferenceAsString(kc.ref.Append("disk_encryption_set_id"))
 }
 
+// DnsPrefix returns a reference to field dns_prefix of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) DnsPrefix() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("dns_prefix"))
+	return terra.ReferenceAsString(kc.ref.Append("dns_prefix"))
 }
 
+// DnsPrefixPrivateCluster returns a reference to field dns_prefix_private_cluster of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) DnsPrefixPrivateCluster() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("dns_prefix_private_cluster"))
+	return terra.ReferenceAsString(kc.ref.Append("dns_prefix_private_cluster"))
 }
 
+// EdgeZone returns a reference to field edge_zone of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) EdgeZone() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("edge_zone"))
+	return terra.ReferenceAsString(kc.ref.Append("edge_zone"))
 }
 
+// EnablePodSecurityPolicy returns a reference to field enable_pod_security_policy of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) EnablePodSecurityPolicy() terra.BoolValue {
-	return terra.ReferenceBool(kc.ref.Append("enable_pod_security_policy"))
+	return terra.ReferenceAsBool(kc.ref.Append("enable_pod_security_policy"))
 }
 
+// Fqdn returns a reference to field fqdn of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) Fqdn() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("fqdn"))
+	return terra.ReferenceAsString(kc.ref.Append("fqdn"))
 }
 
+// HttpApplicationRoutingEnabled returns a reference to field http_application_routing_enabled of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) HttpApplicationRoutingEnabled() terra.BoolValue {
-	return terra.ReferenceBool(kc.ref.Append("http_application_routing_enabled"))
+	return terra.ReferenceAsBool(kc.ref.Append("http_application_routing_enabled"))
 }
 
+// HttpApplicationRoutingZoneName returns a reference to field http_application_routing_zone_name of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) HttpApplicationRoutingZoneName() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("http_application_routing_zone_name"))
+	return terra.ReferenceAsString(kc.ref.Append("http_application_routing_zone_name"))
 }
 
+// Id returns a reference to field id of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("id"))
+	return terra.ReferenceAsString(kc.ref.Append("id"))
 }
 
+// ImageCleanerEnabled returns a reference to field image_cleaner_enabled of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) ImageCleanerEnabled() terra.BoolValue {
-	return terra.ReferenceBool(kc.ref.Append("image_cleaner_enabled"))
+	return terra.ReferenceAsBool(kc.ref.Append("image_cleaner_enabled"))
 }
 
+// ImageCleanerIntervalHours returns a reference to field image_cleaner_interval_hours of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) ImageCleanerIntervalHours() terra.NumberValue {
-	return terra.ReferenceNumber(kc.ref.Append("image_cleaner_interval_hours"))
+	return terra.ReferenceAsNumber(kc.ref.Append("image_cleaner_interval_hours"))
 }
 
+// KubeAdminConfigRaw returns a reference to field kube_admin_config_raw of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) KubeAdminConfigRaw() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("kube_admin_config_raw"))
+	return terra.ReferenceAsString(kc.ref.Append("kube_admin_config_raw"))
 }
 
+// KubeConfigRaw returns a reference to field kube_config_raw of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) KubeConfigRaw() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("kube_config_raw"))
+	return terra.ReferenceAsString(kc.ref.Append("kube_config_raw"))
 }
 
+// KubernetesVersion returns a reference to field kubernetes_version of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) KubernetesVersion() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("kubernetes_version"))
+	return terra.ReferenceAsString(kc.ref.Append("kubernetes_version"))
 }
 
+// LocalAccountDisabled returns a reference to field local_account_disabled of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) LocalAccountDisabled() terra.BoolValue {
-	return terra.ReferenceBool(kc.ref.Append("local_account_disabled"))
+	return terra.ReferenceAsBool(kc.ref.Append("local_account_disabled"))
 }
 
+// Location returns a reference to field location of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("location"))
+	return terra.ReferenceAsString(kc.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("name"))
+	return terra.ReferenceAsString(kc.ref.Append("name"))
 }
 
+// NodeResourceGroup returns a reference to field node_resource_group of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) NodeResourceGroup() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("node_resource_group"))
+	return terra.ReferenceAsString(kc.ref.Append("node_resource_group"))
 }
 
+// NodeResourceGroupId returns a reference to field node_resource_group_id of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) NodeResourceGroupId() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("node_resource_group_id"))
+	return terra.ReferenceAsString(kc.ref.Append("node_resource_group_id"))
 }
 
+// OidcIssuerEnabled returns a reference to field oidc_issuer_enabled of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) OidcIssuerEnabled() terra.BoolValue {
-	return terra.ReferenceBool(kc.ref.Append("oidc_issuer_enabled"))
+	return terra.ReferenceAsBool(kc.ref.Append("oidc_issuer_enabled"))
 }
 
+// OidcIssuerUrl returns a reference to field oidc_issuer_url of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) OidcIssuerUrl() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("oidc_issuer_url"))
+	return terra.ReferenceAsString(kc.ref.Append("oidc_issuer_url"))
 }
 
+// OpenServiceMeshEnabled returns a reference to field open_service_mesh_enabled of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) OpenServiceMeshEnabled() terra.BoolValue {
-	return terra.ReferenceBool(kc.ref.Append("open_service_mesh_enabled"))
+	return terra.ReferenceAsBool(kc.ref.Append("open_service_mesh_enabled"))
 }
 
+// PortalFqdn returns a reference to field portal_fqdn of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) PortalFqdn() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("portal_fqdn"))
+	return terra.ReferenceAsString(kc.ref.Append("portal_fqdn"))
 }
 
+// PrivateClusterEnabled returns a reference to field private_cluster_enabled of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) PrivateClusterEnabled() terra.BoolValue {
-	return terra.ReferenceBool(kc.ref.Append("private_cluster_enabled"))
+	return terra.ReferenceAsBool(kc.ref.Append("private_cluster_enabled"))
 }
 
+// PrivateClusterPublicFqdnEnabled returns a reference to field private_cluster_public_fqdn_enabled of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) PrivateClusterPublicFqdnEnabled() terra.BoolValue {
-	return terra.ReferenceBool(kc.ref.Append("private_cluster_public_fqdn_enabled"))
+	return terra.ReferenceAsBool(kc.ref.Append("private_cluster_public_fqdn_enabled"))
 }
 
+// PrivateDnsZoneId returns a reference to field private_dns_zone_id of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) PrivateDnsZoneId() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("private_dns_zone_id"))
+	return terra.ReferenceAsString(kc.ref.Append("private_dns_zone_id"))
 }
 
+// PrivateFqdn returns a reference to field private_fqdn of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) PrivateFqdn() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("private_fqdn"))
+	return terra.ReferenceAsString(kc.ref.Append("private_fqdn"))
 }
 
+// PublicNetworkAccessEnabled returns a reference to field public_network_access_enabled of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(kc.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(kc.ref.Append("public_network_access_enabled"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(kc.ref.Append("resource_group_name"))
 }
 
+// RoleBasedAccessControlEnabled returns a reference to field role_based_access_control_enabled of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) RoleBasedAccessControlEnabled() terra.BoolValue {
-	return terra.ReferenceBool(kc.ref.Append("role_based_access_control_enabled"))
+	return terra.ReferenceAsBool(kc.ref.Append("role_based_access_control_enabled"))
 }
 
+// RunCommandEnabled returns a reference to field run_command_enabled of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) RunCommandEnabled() terra.BoolValue {
-	return terra.ReferenceBool(kc.ref.Append("run_command_enabled"))
+	return terra.ReferenceAsBool(kc.ref.Append("run_command_enabled"))
 }
 
+// SkuTier returns a reference to field sku_tier of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) SkuTier() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("sku_tier"))
+	return terra.ReferenceAsString(kc.ref.Append("sku_tier"))
 }
 
+// Tags returns a reference to field tags of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](kc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](kc.ref.Append("tags"))
 }
 
+// WorkloadIdentityEnabled returns a reference to field workload_identity_enabled of azurerm_kubernetes_cluster.
 func (kc kubernetesClusterAttributes) WorkloadIdentityEnabled() terra.BoolValue {
-	return terra.ReferenceBool(kc.ref.Append("workload_identity_enabled"))
+	return terra.ReferenceAsBool(kc.ref.Append("workload_identity_enabled"))
 }
 
 func (kc kubernetesClusterAttributes) KubeAdminConfig() terra.ListValue[kubernetescluster.KubeAdminConfigAttributes] {
-	return terra.ReferenceList[kubernetescluster.KubeAdminConfigAttributes](kc.ref.Append("kube_admin_config"))
+	return terra.ReferenceAsList[kubernetescluster.KubeAdminConfigAttributes](kc.ref.Append("kube_admin_config"))
 }
 
 func (kc kubernetesClusterAttributes) KubeConfig() terra.ListValue[kubernetescluster.KubeConfigAttributes] {
-	return terra.ReferenceList[kubernetescluster.KubeConfigAttributes](kc.ref.Append("kube_config"))
+	return terra.ReferenceAsList[kubernetescluster.KubeConfigAttributes](kc.ref.Append("kube_config"))
 }
 
 func (kc kubernetesClusterAttributes) AciConnectorLinux() terra.ListValue[kubernetescluster.AciConnectorLinuxAttributes] {
-	return terra.ReferenceList[kubernetescluster.AciConnectorLinuxAttributes](kc.ref.Append("aci_connector_linux"))
+	return terra.ReferenceAsList[kubernetescluster.AciConnectorLinuxAttributes](kc.ref.Append("aci_connector_linux"))
 }
 
 func (kc kubernetesClusterAttributes) ApiServerAccessProfile() terra.ListValue[kubernetescluster.ApiServerAccessProfileAttributes] {
-	return terra.ReferenceList[kubernetescluster.ApiServerAccessProfileAttributes](kc.ref.Append("api_server_access_profile"))
+	return terra.ReferenceAsList[kubernetescluster.ApiServerAccessProfileAttributes](kc.ref.Append("api_server_access_profile"))
 }
 
 func (kc kubernetesClusterAttributes) AutoScalerProfile() terra.ListValue[kubernetescluster.AutoScalerProfileAttributes] {
-	return terra.ReferenceList[kubernetescluster.AutoScalerProfileAttributes](kc.ref.Append("auto_scaler_profile"))
+	return terra.ReferenceAsList[kubernetescluster.AutoScalerProfileAttributes](kc.ref.Append("auto_scaler_profile"))
 }
 
 func (kc kubernetesClusterAttributes) AzureActiveDirectoryRoleBasedAccessControl() terra.ListValue[kubernetescluster.AzureActiveDirectoryRoleBasedAccessControlAttributes] {
-	return terra.ReferenceList[kubernetescluster.AzureActiveDirectoryRoleBasedAccessControlAttributes](kc.ref.Append("azure_active_directory_role_based_access_control"))
+	return terra.ReferenceAsList[kubernetescluster.AzureActiveDirectoryRoleBasedAccessControlAttributes](kc.ref.Append("azure_active_directory_role_based_access_control"))
 }
 
 func (kc kubernetesClusterAttributes) ConfidentialComputing() terra.ListValue[kubernetescluster.ConfidentialComputingAttributes] {
-	return terra.ReferenceList[kubernetescluster.ConfidentialComputingAttributes](kc.ref.Append("confidential_computing"))
+	return terra.ReferenceAsList[kubernetescluster.ConfidentialComputingAttributes](kc.ref.Append("confidential_computing"))
 }
 
 func (kc kubernetesClusterAttributes) DefaultNodePool() terra.ListValue[kubernetescluster.DefaultNodePoolAttributes] {
-	return terra.ReferenceList[kubernetescluster.DefaultNodePoolAttributes](kc.ref.Append("default_node_pool"))
+	return terra.ReferenceAsList[kubernetescluster.DefaultNodePoolAttributes](kc.ref.Append("default_node_pool"))
 }
 
 func (kc kubernetesClusterAttributes) HttpProxyConfig() terra.ListValue[kubernetescluster.HttpProxyConfigAttributes] {
-	return terra.ReferenceList[kubernetescluster.HttpProxyConfigAttributes](kc.ref.Append("http_proxy_config"))
+	return terra.ReferenceAsList[kubernetescluster.HttpProxyConfigAttributes](kc.ref.Append("http_proxy_config"))
 }
 
 func (kc kubernetesClusterAttributes) Identity() terra.ListValue[kubernetescluster.IdentityAttributes] {
-	return terra.ReferenceList[kubernetescluster.IdentityAttributes](kc.ref.Append("identity"))
+	return terra.ReferenceAsList[kubernetescluster.IdentityAttributes](kc.ref.Append("identity"))
 }
 
 func (kc kubernetesClusterAttributes) IngressApplicationGateway() terra.ListValue[kubernetescluster.IngressApplicationGatewayAttributes] {
-	return terra.ReferenceList[kubernetescluster.IngressApplicationGatewayAttributes](kc.ref.Append("ingress_application_gateway"))
+	return terra.ReferenceAsList[kubernetescluster.IngressApplicationGatewayAttributes](kc.ref.Append("ingress_application_gateway"))
 }
 
 func (kc kubernetesClusterAttributes) KeyManagementService() terra.ListValue[kubernetescluster.KeyManagementServiceAttributes] {
-	return terra.ReferenceList[kubernetescluster.KeyManagementServiceAttributes](kc.ref.Append("key_management_service"))
+	return terra.ReferenceAsList[kubernetescluster.KeyManagementServiceAttributes](kc.ref.Append("key_management_service"))
 }
 
 func (kc kubernetesClusterAttributes) KeyVaultSecretsProvider() terra.ListValue[kubernetescluster.KeyVaultSecretsProviderAttributes] {
-	return terra.ReferenceList[kubernetescluster.KeyVaultSecretsProviderAttributes](kc.ref.Append("key_vault_secrets_provider"))
+	return terra.ReferenceAsList[kubernetescluster.KeyVaultSecretsProviderAttributes](kc.ref.Append("key_vault_secrets_provider"))
 }
 
 func (kc kubernetesClusterAttributes) KubeletIdentity() terra.ListValue[kubernetescluster.KubeletIdentityAttributes] {
-	return terra.ReferenceList[kubernetescluster.KubeletIdentityAttributes](kc.ref.Append("kubelet_identity"))
+	return terra.ReferenceAsList[kubernetescluster.KubeletIdentityAttributes](kc.ref.Append("kubelet_identity"))
 }
 
 func (kc kubernetesClusterAttributes) LinuxProfile() terra.ListValue[kubernetescluster.LinuxProfileAttributes] {
-	return terra.ReferenceList[kubernetescluster.LinuxProfileAttributes](kc.ref.Append("linux_profile"))
+	return terra.ReferenceAsList[kubernetescluster.LinuxProfileAttributes](kc.ref.Append("linux_profile"))
 }
 
 func (kc kubernetesClusterAttributes) MaintenanceWindow() terra.ListValue[kubernetescluster.MaintenanceWindowAttributes] {
-	return terra.ReferenceList[kubernetescluster.MaintenanceWindowAttributes](kc.ref.Append("maintenance_window"))
+	return terra.ReferenceAsList[kubernetescluster.MaintenanceWindowAttributes](kc.ref.Append("maintenance_window"))
 }
 
 func (kc kubernetesClusterAttributes) MicrosoftDefender() terra.ListValue[kubernetescluster.MicrosoftDefenderAttributes] {
-	return terra.ReferenceList[kubernetescluster.MicrosoftDefenderAttributes](kc.ref.Append("microsoft_defender"))
+	return terra.ReferenceAsList[kubernetescluster.MicrosoftDefenderAttributes](kc.ref.Append("microsoft_defender"))
 }
 
 func (kc kubernetesClusterAttributes) MonitorMetrics() terra.ListValue[kubernetescluster.MonitorMetricsAttributes] {
-	return terra.ReferenceList[kubernetescluster.MonitorMetricsAttributes](kc.ref.Append("monitor_metrics"))
+	return terra.ReferenceAsList[kubernetescluster.MonitorMetricsAttributes](kc.ref.Append("monitor_metrics"))
 }
 
 func (kc kubernetesClusterAttributes) NetworkProfile() terra.ListValue[kubernetescluster.NetworkProfileAttributes] {
-	return terra.ReferenceList[kubernetescluster.NetworkProfileAttributes](kc.ref.Append("network_profile"))
+	return terra.ReferenceAsList[kubernetescluster.NetworkProfileAttributes](kc.ref.Append("network_profile"))
 }
 
 func (kc kubernetesClusterAttributes) OmsAgent() terra.ListValue[kubernetescluster.OmsAgentAttributes] {
-	return terra.ReferenceList[kubernetescluster.OmsAgentAttributes](kc.ref.Append("oms_agent"))
+	return terra.ReferenceAsList[kubernetescluster.OmsAgentAttributes](kc.ref.Append("oms_agent"))
 }
 
 func (kc kubernetesClusterAttributes) ServicePrincipal() terra.ListValue[kubernetescluster.ServicePrincipalAttributes] {
-	return terra.ReferenceList[kubernetescluster.ServicePrincipalAttributes](kc.ref.Append("service_principal"))
+	return terra.ReferenceAsList[kubernetescluster.ServicePrincipalAttributes](kc.ref.Append("service_principal"))
 }
 
 func (kc kubernetesClusterAttributes) StorageProfile() terra.ListValue[kubernetescluster.StorageProfileAttributes] {
-	return terra.ReferenceList[kubernetescluster.StorageProfileAttributes](kc.ref.Append("storage_profile"))
+	return terra.ReferenceAsList[kubernetescluster.StorageProfileAttributes](kc.ref.Append("storage_profile"))
 }
 
 func (kc kubernetesClusterAttributes) Timeouts() kubernetescluster.TimeoutsAttributes {
-	return terra.ReferenceSingle[kubernetescluster.TimeoutsAttributes](kc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[kubernetescluster.TimeoutsAttributes](kc.ref.Append("timeouts"))
 }
 
 func (kc kubernetesClusterAttributes) WebAppRouting() terra.ListValue[kubernetescluster.WebAppRoutingAttributes] {
-	return terra.ReferenceList[kubernetescluster.WebAppRoutingAttributes](kc.ref.Append("web_app_routing"))
+	return terra.ReferenceAsList[kubernetescluster.WebAppRoutingAttributes](kc.ref.Append("web_app_routing"))
 }
 
 func (kc kubernetesClusterAttributes) WindowsProfile() terra.ListValue[kubernetescluster.WindowsProfileAttributes] {
-	return terra.ReferenceList[kubernetescluster.WindowsProfileAttributes](kc.ref.Append("windows_profile"))
+	return terra.ReferenceAsList[kubernetescluster.WindowsProfileAttributes](kc.ref.Append("windows_profile"))
 }
 
 func (kc kubernetesClusterAttributes) WorkloadAutoscalerProfile() terra.ListValue[kubernetescluster.WorkloadAutoscalerProfileAttributes] {
-	return terra.ReferenceList[kubernetescluster.WorkloadAutoscalerProfileAttributes](kc.ref.Append("workload_autoscaler_profile"))
+	return terra.ReferenceAsList[kubernetescluster.WorkloadAutoscalerProfileAttributes](kc.ref.Append("workload_autoscaler_profile"))
 }
 
 type kubernetesClusterState struct {

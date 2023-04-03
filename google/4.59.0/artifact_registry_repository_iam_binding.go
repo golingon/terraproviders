@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewArtifactRegistryRepositoryIamBinding creates a new instance of [ArtifactRegistryRepositoryIamBinding].
 func NewArtifactRegistryRepositoryIamBinding(name string, args ArtifactRegistryRepositoryIamBindingArgs) *ArtifactRegistryRepositoryIamBinding {
 	return &ArtifactRegistryRepositoryIamBinding{
 		Args: args,
@@ -19,28 +20,51 @@ func NewArtifactRegistryRepositoryIamBinding(name string, args ArtifactRegistryR
 
 var _ terra.Resource = (*ArtifactRegistryRepositoryIamBinding)(nil)
 
+// ArtifactRegistryRepositoryIamBinding represents the Terraform resource google_artifact_registry_repository_iam_binding.
 type ArtifactRegistryRepositoryIamBinding struct {
-	Name  string
-	Args  ArtifactRegistryRepositoryIamBindingArgs
-	state *artifactRegistryRepositoryIamBindingState
+	Name      string
+	Args      ArtifactRegistryRepositoryIamBindingArgs
+	state     *artifactRegistryRepositoryIamBindingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ArtifactRegistryRepositoryIamBinding].
 func (arrib *ArtifactRegistryRepositoryIamBinding) Type() string {
 	return "google_artifact_registry_repository_iam_binding"
 }
 
+// LocalName returns the local name for [ArtifactRegistryRepositoryIamBinding].
 func (arrib *ArtifactRegistryRepositoryIamBinding) LocalName() string {
 	return arrib.Name
 }
 
+// Configuration returns the configuration (args) for [ArtifactRegistryRepositoryIamBinding].
 func (arrib *ArtifactRegistryRepositoryIamBinding) Configuration() interface{} {
 	return arrib.Args
 }
 
+// DependOn is used for other resources to depend on [ArtifactRegistryRepositoryIamBinding].
+func (arrib *ArtifactRegistryRepositoryIamBinding) DependOn() terra.Reference {
+	return terra.ReferenceResource(arrib)
+}
+
+// Dependencies returns the list of resources [ArtifactRegistryRepositoryIamBinding] depends_on.
+func (arrib *ArtifactRegistryRepositoryIamBinding) Dependencies() terra.Dependencies {
+	return arrib.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ArtifactRegistryRepositoryIamBinding].
+func (arrib *ArtifactRegistryRepositoryIamBinding) LifecycleManagement() *terra.Lifecycle {
+	return arrib.Lifecycle
+}
+
+// Attributes returns the attributes for [ArtifactRegistryRepositoryIamBinding].
 func (arrib *ArtifactRegistryRepositoryIamBinding) Attributes() artifactRegistryRepositoryIamBindingAttributes {
 	return artifactRegistryRepositoryIamBindingAttributes{ref: terra.ReferenceResource(arrib)}
 }
 
+// ImportState imports the given attribute values into [ArtifactRegistryRepositoryIamBinding]'s state.
 func (arrib *ArtifactRegistryRepositoryIamBinding) ImportState(av io.Reader) error {
 	arrib.state = &artifactRegistryRepositoryIamBindingState{}
 	if err := json.NewDecoder(av).Decode(arrib.state); err != nil {
@@ -49,10 +73,12 @@ func (arrib *ArtifactRegistryRepositoryIamBinding) ImportState(av io.Reader) err
 	return nil
 }
 
+// State returns the state and a bool indicating if [ArtifactRegistryRepositoryIamBinding] has state.
 func (arrib *ArtifactRegistryRepositoryIamBinding) State() (*artifactRegistryRepositoryIamBindingState, bool) {
 	return arrib.state, arrib.state != nil
 }
 
+// StateMust returns the state for [ArtifactRegistryRepositoryIamBinding]. Panics if the state is nil.
 func (arrib *ArtifactRegistryRepositoryIamBinding) StateMust() *artifactRegistryRepositoryIamBindingState {
 	if arrib.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", arrib.Type(), arrib.LocalName()))
@@ -60,10 +86,7 @@ func (arrib *ArtifactRegistryRepositoryIamBinding) StateMust() *artifactRegistry
 	return arrib.state
 }
 
-func (arrib *ArtifactRegistryRepositoryIamBinding) DependOn() terra.Reference {
-	return terra.ReferenceResource(arrib)
-}
-
+// ArtifactRegistryRepositoryIamBindingArgs contains the configurations for google_artifact_registry_repository_iam_binding.
 type ArtifactRegistryRepositoryIamBindingArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,43 +102,48 @@ type ArtifactRegistryRepositoryIamBindingArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *artifactregistryrepositoryiambinding.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that ArtifactRegistryRepositoryIamBinding depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type artifactRegistryRepositoryIamBindingAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_artifact_registry_repository_iam_binding.
 func (arrib artifactRegistryRepositoryIamBindingAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(arrib.ref.Append("etag"))
+	return terra.ReferenceAsString(arrib.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_artifact_registry_repository_iam_binding.
 func (arrib artifactRegistryRepositoryIamBindingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(arrib.ref.Append("id"))
+	return terra.ReferenceAsString(arrib.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_artifact_registry_repository_iam_binding.
 func (arrib artifactRegistryRepositoryIamBindingAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(arrib.ref.Append("location"))
+	return terra.ReferenceAsString(arrib.ref.Append("location"))
 }
 
+// Members returns a reference to field members of google_artifact_registry_repository_iam_binding.
 func (arrib artifactRegistryRepositoryIamBindingAttributes) Members() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](arrib.ref.Append("members"))
+	return terra.ReferenceAsSet[terra.StringValue](arrib.ref.Append("members"))
 }
 
+// Project returns a reference to field project of google_artifact_registry_repository_iam_binding.
 func (arrib artifactRegistryRepositoryIamBindingAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(arrib.ref.Append("project"))
+	return terra.ReferenceAsString(arrib.ref.Append("project"))
 }
 
+// Repository returns a reference to field repository of google_artifact_registry_repository_iam_binding.
 func (arrib artifactRegistryRepositoryIamBindingAttributes) Repository() terra.StringValue {
-	return terra.ReferenceString(arrib.ref.Append("repository"))
+	return terra.ReferenceAsString(arrib.ref.Append("repository"))
 }
 
+// Role returns a reference to field role of google_artifact_registry_repository_iam_binding.
 func (arrib artifactRegistryRepositoryIamBindingAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(arrib.ref.Append("role"))
+	return terra.ReferenceAsString(arrib.ref.Append("role"))
 }
 
 func (arrib artifactRegistryRepositoryIamBindingAttributes) Condition() terra.ListValue[artifactregistryrepositoryiambinding.ConditionAttributes] {
-	return terra.ReferenceList[artifactregistryrepositoryiambinding.ConditionAttributes](arrib.ref.Append("condition"))
+	return terra.ReferenceAsList[artifactregistryrepositoryiambinding.ConditionAttributes](arrib.ref.Append("condition"))
 }
 
 type artifactRegistryRepositoryIamBindingState struct {

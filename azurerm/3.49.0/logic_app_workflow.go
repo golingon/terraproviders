@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLogicAppWorkflow creates a new instance of [LogicAppWorkflow].
 func NewLogicAppWorkflow(name string, args LogicAppWorkflowArgs) *LogicAppWorkflow {
 	return &LogicAppWorkflow{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLogicAppWorkflow(name string, args LogicAppWorkflowArgs) *LogicAppWorkfl
 
 var _ terra.Resource = (*LogicAppWorkflow)(nil)
 
+// LogicAppWorkflow represents the Terraform resource azurerm_logic_app_workflow.
 type LogicAppWorkflow struct {
-	Name  string
-	Args  LogicAppWorkflowArgs
-	state *logicAppWorkflowState
+	Name      string
+	Args      LogicAppWorkflowArgs
+	state     *logicAppWorkflowState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LogicAppWorkflow].
 func (law *LogicAppWorkflow) Type() string {
 	return "azurerm_logic_app_workflow"
 }
 
+// LocalName returns the local name for [LogicAppWorkflow].
 func (law *LogicAppWorkflow) LocalName() string {
 	return law.Name
 }
 
+// Configuration returns the configuration (args) for [LogicAppWorkflow].
 func (law *LogicAppWorkflow) Configuration() interface{} {
 	return law.Args
 }
 
+// DependOn is used for other resources to depend on [LogicAppWorkflow].
+func (law *LogicAppWorkflow) DependOn() terra.Reference {
+	return terra.ReferenceResource(law)
+}
+
+// Dependencies returns the list of resources [LogicAppWorkflow] depends_on.
+func (law *LogicAppWorkflow) Dependencies() terra.Dependencies {
+	return law.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LogicAppWorkflow].
+func (law *LogicAppWorkflow) LifecycleManagement() *terra.Lifecycle {
+	return law.Lifecycle
+}
+
+// Attributes returns the attributes for [LogicAppWorkflow].
 func (law *LogicAppWorkflow) Attributes() logicAppWorkflowAttributes {
 	return logicAppWorkflowAttributes{ref: terra.ReferenceResource(law)}
 }
 
+// ImportState imports the given attribute values into [LogicAppWorkflow]'s state.
 func (law *LogicAppWorkflow) ImportState(av io.Reader) error {
 	law.state = &logicAppWorkflowState{}
 	if err := json.NewDecoder(av).Decode(law.state); err != nil {
@@ -49,10 +73,12 @@ func (law *LogicAppWorkflow) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LogicAppWorkflow] has state.
 func (law *LogicAppWorkflow) State() (*logicAppWorkflowState, bool) {
 	return law.state, law.state != nil
 }
 
+// StateMust returns the state for [LogicAppWorkflow]. Panics if the state is nil.
 func (law *LogicAppWorkflow) StateMust() *logicAppWorkflowState {
 	if law.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", law.Type(), law.LocalName()))
@@ -60,10 +86,7 @@ func (law *LogicAppWorkflow) StateMust() *logicAppWorkflowState {
 	return law.state
 }
 
-func (law *LogicAppWorkflow) DependOn() terra.Reference {
-	return terra.ReferenceResource(law)
-}
-
+// LogicAppWorkflowArgs contains the configurations for azurerm_logic_app_workflow.
 type LogicAppWorkflowArgs struct {
 	// Enabled: bool, optional
 	Enabled terra.BoolValue `hcl:"enabled,attr"`
@@ -95,91 +118,106 @@ type LogicAppWorkflowArgs struct {
 	Identity *logicappworkflow.Identity `hcl:"identity,block"`
 	// Timeouts: optional
 	Timeouts *logicappworkflow.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LogicAppWorkflow depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type logicAppWorkflowAttributes struct {
 	ref terra.Reference
 }
 
+// AccessEndpoint returns a reference to field access_endpoint of azurerm_logic_app_workflow.
 func (law logicAppWorkflowAttributes) AccessEndpoint() terra.StringValue {
-	return terra.ReferenceString(law.ref.Append("access_endpoint"))
+	return terra.ReferenceAsString(law.ref.Append("access_endpoint"))
 }
 
+// ConnectorEndpointIpAddresses returns a reference to field connector_endpoint_ip_addresses of azurerm_logic_app_workflow.
 func (law logicAppWorkflowAttributes) ConnectorEndpointIpAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](law.ref.Append("connector_endpoint_ip_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](law.ref.Append("connector_endpoint_ip_addresses"))
 }
 
+// ConnectorOutboundIpAddresses returns a reference to field connector_outbound_ip_addresses of azurerm_logic_app_workflow.
 func (law logicAppWorkflowAttributes) ConnectorOutboundIpAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](law.ref.Append("connector_outbound_ip_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](law.ref.Append("connector_outbound_ip_addresses"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_logic_app_workflow.
 func (law logicAppWorkflowAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(law.ref.Append("enabled"))
+	return terra.ReferenceAsBool(law.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of azurerm_logic_app_workflow.
 func (law logicAppWorkflowAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(law.ref.Append("id"))
+	return terra.ReferenceAsString(law.ref.Append("id"))
 }
 
+// IntegrationServiceEnvironmentId returns a reference to field integration_service_environment_id of azurerm_logic_app_workflow.
 func (law logicAppWorkflowAttributes) IntegrationServiceEnvironmentId() terra.StringValue {
-	return terra.ReferenceString(law.ref.Append("integration_service_environment_id"))
+	return terra.ReferenceAsString(law.ref.Append("integration_service_environment_id"))
 }
 
+// Location returns a reference to field location of azurerm_logic_app_workflow.
 func (law logicAppWorkflowAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(law.ref.Append("location"))
+	return terra.ReferenceAsString(law.ref.Append("location"))
 }
 
+// LogicAppIntegrationAccountId returns a reference to field logic_app_integration_account_id of azurerm_logic_app_workflow.
 func (law logicAppWorkflowAttributes) LogicAppIntegrationAccountId() terra.StringValue {
-	return terra.ReferenceString(law.ref.Append("logic_app_integration_account_id"))
+	return terra.ReferenceAsString(law.ref.Append("logic_app_integration_account_id"))
 }
 
+// Name returns a reference to field name of azurerm_logic_app_workflow.
 func (law logicAppWorkflowAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(law.ref.Append("name"))
+	return terra.ReferenceAsString(law.ref.Append("name"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_logic_app_workflow.
 func (law logicAppWorkflowAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](law.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](law.ref.Append("parameters"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_logic_app_workflow.
 func (law logicAppWorkflowAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(law.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(law.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_logic_app_workflow.
 func (law logicAppWorkflowAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](law.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](law.ref.Append("tags"))
 }
 
+// WorkflowEndpointIpAddresses returns a reference to field workflow_endpoint_ip_addresses of azurerm_logic_app_workflow.
 func (law logicAppWorkflowAttributes) WorkflowEndpointIpAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](law.ref.Append("workflow_endpoint_ip_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](law.ref.Append("workflow_endpoint_ip_addresses"))
 }
 
+// WorkflowOutboundIpAddresses returns a reference to field workflow_outbound_ip_addresses of azurerm_logic_app_workflow.
 func (law logicAppWorkflowAttributes) WorkflowOutboundIpAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](law.ref.Append("workflow_outbound_ip_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](law.ref.Append("workflow_outbound_ip_addresses"))
 }
 
+// WorkflowParameters returns a reference to field workflow_parameters of azurerm_logic_app_workflow.
 func (law logicAppWorkflowAttributes) WorkflowParameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](law.ref.Append("workflow_parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](law.ref.Append("workflow_parameters"))
 }
 
+// WorkflowSchema returns a reference to field workflow_schema of azurerm_logic_app_workflow.
 func (law logicAppWorkflowAttributes) WorkflowSchema() terra.StringValue {
-	return terra.ReferenceString(law.ref.Append("workflow_schema"))
+	return terra.ReferenceAsString(law.ref.Append("workflow_schema"))
 }
 
+// WorkflowVersion returns a reference to field workflow_version of azurerm_logic_app_workflow.
 func (law logicAppWorkflowAttributes) WorkflowVersion() terra.StringValue {
-	return terra.ReferenceString(law.ref.Append("workflow_version"))
+	return terra.ReferenceAsString(law.ref.Append("workflow_version"))
 }
 
 func (law logicAppWorkflowAttributes) AccessControl() terra.ListValue[logicappworkflow.AccessControlAttributes] {
-	return terra.ReferenceList[logicappworkflow.AccessControlAttributes](law.ref.Append("access_control"))
+	return terra.ReferenceAsList[logicappworkflow.AccessControlAttributes](law.ref.Append("access_control"))
 }
 
 func (law logicAppWorkflowAttributes) Identity() terra.ListValue[logicappworkflow.IdentityAttributes] {
-	return terra.ReferenceList[logicappworkflow.IdentityAttributes](law.ref.Append("identity"))
+	return terra.ReferenceAsList[logicappworkflow.IdentityAttributes](law.ref.Append("identity"))
 }
 
 func (law logicAppWorkflowAttributes) Timeouts() logicappworkflow.TimeoutsAttributes {
-	return terra.ReferenceSingle[logicappworkflow.TimeoutsAttributes](law.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[logicappworkflow.TimeoutsAttributes](law.ref.Append("timeouts"))
 }
 
 type logicAppWorkflowState struct {

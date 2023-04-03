@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataDevTestVirtualNetwork creates a new instance of [DataDevTestVirtualNetwork].
 func NewDataDevTestVirtualNetwork(name string, args DataDevTestVirtualNetworkArgs) *DataDevTestVirtualNetwork {
 	return &DataDevTestVirtualNetwork{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataDevTestVirtualNetwork(name string, args DataDevTestVirtualNetworkArg
 
 var _ terra.DataResource = (*DataDevTestVirtualNetwork)(nil)
 
+// DataDevTestVirtualNetwork represents the Terraform data resource azurerm_dev_test_virtual_network.
 type DataDevTestVirtualNetwork struct {
 	Name string
 	Args DataDevTestVirtualNetworkArgs
 }
 
+// DataSource returns the Terraform object type for [DataDevTestVirtualNetwork].
 func (dtvn *DataDevTestVirtualNetwork) DataSource() string {
 	return "azurerm_dev_test_virtual_network"
 }
 
+// LocalName returns the local name for [DataDevTestVirtualNetwork].
 func (dtvn *DataDevTestVirtualNetwork) LocalName() string {
 	return dtvn.Name
 }
 
+// Configuration returns the configuration (args) for [DataDevTestVirtualNetwork].
 func (dtvn *DataDevTestVirtualNetwork) Configuration() interface{} {
 	return dtvn.Args
 }
 
+// Attributes returns the attributes for [DataDevTestVirtualNetwork].
 func (dtvn *DataDevTestVirtualNetwork) Attributes() dataDevTestVirtualNetworkAttributes {
 	return dataDevTestVirtualNetworkAttributes{ref: terra.ReferenceDataResource(dtvn)}
 }
 
+// DataDevTestVirtualNetworkArgs contains the configurations for azurerm_dev_test_virtual_network.
 type DataDevTestVirtualNetworkArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -57,34 +64,39 @@ type dataDevTestVirtualNetworkAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_dev_test_virtual_network.
 func (dtvn dataDevTestVirtualNetworkAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dtvn.ref.Append("id"))
+	return terra.ReferenceAsString(dtvn.ref.Append("id"))
 }
 
+// LabName returns a reference to field lab_name of azurerm_dev_test_virtual_network.
 func (dtvn dataDevTestVirtualNetworkAttributes) LabName() terra.StringValue {
-	return terra.ReferenceString(dtvn.ref.Append("lab_name"))
+	return terra.ReferenceAsString(dtvn.ref.Append("lab_name"))
 }
 
+// Name returns a reference to field name of azurerm_dev_test_virtual_network.
 func (dtvn dataDevTestVirtualNetworkAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dtvn.ref.Append("name"))
+	return terra.ReferenceAsString(dtvn.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_dev_test_virtual_network.
 func (dtvn dataDevTestVirtualNetworkAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(dtvn.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(dtvn.ref.Append("resource_group_name"))
 }
 
+// UniqueIdentifier returns a reference to field unique_identifier of azurerm_dev_test_virtual_network.
 func (dtvn dataDevTestVirtualNetworkAttributes) UniqueIdentifier() terra.StringValue {
-	return terra.ReferenceString(dtvn.ref.Append("unique_identifier"))
+	return terra.ReferenceAsString(dtvn.ref.Append("unique_identifier"))
 }
 
 func (dtvn dataDevTestVirtualNetworkAttributes) AllowedSubnets() terra.ListValue[datadevtestvirtualnetwork.AllowedSubnetsAttributes] {
-	return terra.ReferenceList[datadevtestvirtualnetwork.AllowedSubnetsAttributes](dtvn.ref.Append("allowed_subnets"))
+	return terra.ReferenceAsList[datadevtestvirtualnetwork.AllowedSubnetsAttributes](dtvn.ref.Append("allowed_subnets"))
 }
 
 func (dtvn dataDevTestVirtualNetworkAttributes) SubnetOverrides() terra.ListValue[datadevtestvirtualnetwork.SubnetOverridesAttributes] {
-	return terra.ReferenceList[datadevtestvirtualnetwork.SubnetOverridesAttributes](dtvn.ref.Append("subnet_overrides"))
+	return terra.ReferenceAsList[datadevtestvirtualnetwork.SubnetOverridesAttributes](dtvn.ref.Append("subnet_overrides"))
 }
 
 func (dtvn dataDevTestVirtualNetworkAttributes) Timeouts() datadevtestvirtualnetwork.TimeoutsAttributes {
-	return terra.ReferenceSingle[datadevtestvirtualnetwork.TimeoutsAttributes](dtvn.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datadevtestvirtualnetwork.TimeoutsAttributes](dtvn.ref.Append("timeouts"))
 }

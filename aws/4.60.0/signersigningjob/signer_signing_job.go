@@ -54,7 +54,7 @@ func (rr RevocationRecordAttributes) InternalWithRef(ref terra.Reference) Revoca
 	return RevocationRecordAttributes{ref: ref}
 }
 
-func (rr RevocationRecordAttributes) InternalTokens() hclwrite.Tokens {
+func (rr RevocationRecordAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rr.ref.InternalTokens()
 }
 
@@ -82,7 +82,7 @@ func (so SignedObjectAttributes) InternalWithRef(ref terra.Reference) SignedObje
 	return SignedObjectAttributes{ref: ref}
 }
 
-func (so SignedObjectAttributes) InternalTokens() hclwrite.Tokens {
+func (so SignedObjectAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return so.ref.InternalTokens()
 }
 
@@ -102,7 +102,7 @@ func (s SignedObjectS3Attributes) InternalWithRef(ref terra.Reference) SignedObj
 	return SignedObjectS3Attributes{ref: ref}
 }
 
-func (s SignedObjectS3Attributes) InternalTokens() hclwrite.Tokens {
+func (s SignedObjectS3Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -126,7 +126,7 @@ func (d DestinationAttributes) InternalWithRef(ref terra.Reference) DestinationA
 	return DestinationAttributes{ref: ref}
 }
 
-func (d DestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (d DestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -146,7 +146,7 @@ func (s DestinationS3Attributes) InternalWithRef(ref terra.Reference) Destinatio
 	return DestinationS3Attributes{ref: ref}
 }
 
-func (s DestinationS3Attributes) InternalTokens() hclwrite.Tokens {
+func (s DestinationS3Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -170,7 +170,7 @@ func (s SourceAttributes) InternalWithRef(ref terra.Reference) SourceAttributes 
 	return SourceAttributes{ref: ref}
 }
 
-func (s SourceAttributes) InternalTokens() hclwrite.Tokens {
+func (s SourceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -190,7 +190,7 @@ func (s SourceS3Attributes) InternalWithRef(ref terra.Reference) SourceS3Attribu
 	return SourceS3Attributes{ref: ref}
 }
 
-func (s SourceS3Attributes) InternalTokens() hclwrite.Tokens {
+func (s SourceS3Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDocumentAiProcessorDefaultVersion creates a new instance of [DocumentAiProcessorDefaultVersion].
 func NewDocumentAiProcessorDefaultVersion(name string, args DocumentAiProcessorDefaultVersionArgs) *DocumentAiProcessorDefaultVersion {
 	return &DocumentAiProcessorDefaultVersion{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDocumentAiProcessorDefaultVersion(name string, args DocumentAiProcessorD
 
 var _ terra.Resource = (*DocumentAiProcessorDefaultVersion)(nil)
 
+// DocumentAiProcessorDefaultVersion represents the Terraform resource google_document_ai_processor_default_version.
 type DocumentAiProcessorDefaultVersion struct {
-	Name  string
-	Args  DocumentAiProcessorDefaultVersionArgs
-	state *documentAiProcessorDefaultVersionState
+	Name      string
+	Args      DocumentAiProcessorDefaultVersionArgs
+	state     *documentAiProcessorDefaultVersionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DocumentAiProcessorDefaultVersion].
 func (dapdv *DocumentAiProcessorDefaultVersion) Type() string {
 	return "google_document_ai_processor_default_version"
 }
 
+// LocalName returns the local name for [DocumentAiProcessorDefaultVersion].
 func (dapdv *DocumentAiProcessorDefaultVersion) LocalName() string {
 	return dapdv.Name
 }
 
+// Configuration returns the configuration (args) for [DocumentAiProcessorDefaultVersion].
 func (dapdv *DocumentAiProcessorDefaultVersion) Configuration() interface{} {
 	return dapdv.Args
 }
 
+// DependOn is used for other resources to depend on [DocumentAiProcessorDefaultVersion].
+func (dapdv *DocumentAiProcessorDefaultVersion) DependOn() terra.Reference {
+	return terra.ReferenceResource(dapdv)
+}
+
+// Dependencies returns the list of resources [DocumentAiProcessorDefaultVersion] depends_on.
+func (dapdv *DocumentAiProcessorDefaultVersion) Dependencies() terra.Dependencies {
+	return dapdv.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DocumentAiProcessorDefaultVersion].
+func (dapdv *DocumentAiProcessorDefaultVersion) LifecycleManagement() *terra.Lifecycle {
+	return dapdv.Lifecycle
+}
+
+// Attributes returns the attributes for [DocumentAiProcessorDefaultVersion].
 func (dapdv *DocumentAiProcessorDefaultVersion) Attributes() documentAiProcessorDefaultVersionAttributes {
 	return documentAiProcessorDefaultVersionAttributes{ref: terra.ReferenceResource(dapdv)}
 }
 
+// ImportState imports the given attribute values into [DocumentAiProcessorDefaultVersion]'s state.
 func (dapdv *DocumentAiProcessorDefaultVersion) ImportState(av io.Reader) error {
 	dapdv.state = &documentAiProcessorDefaultVersionState{}
 	if err := json.NewDecoder(av).Decode(dapdv.state); err != nil {
@@ -49,10 +73,12 @@ func (dapdv *DocumentAiProcessorDefaultVersion) ImportState(av io.Reader) error 
 	return nil
 }
 
+// State returns the state and a bool indicating if [DocumentAiProcessorDefaultVersion] has state.
 func (dapdv *DocumentAiProcessorDefaultVersion) State() (*documentAiProcessorDefaultVersionState, bool) {
 	return dapdv.state, dapdv.state != nil
 }
 
+// StateMust returns the state for [DocumentAiProcessorDefaultVersion]. Panics if the state is nil.
 func (dapdv *DocumentAiProcessorDefaultVersion) StateMust() *documentAiProcessorDefaultVersionState {
 	if dapdv.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dapdv.Type(), dapdv.LocalName()))
@@ -60,10 +86,7 @@ func (dapdv *DocumentAiProcessorDefaultVersion) StateMust() *documentAiProcessor
 	return dapdv.state
 }
 
-func (dapdv *DocumentAiProcessorDefaultVersion) DependOn() terra.Reference {
-	return terra.ReferenceResource(dapdv)
-}
-
+// DocumentAiProcessorDefaultVersionArgs contains the configurations for google_document_ai_processor_default_version.
 type DocumentAiProcessorDefaultVersionArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -73,27 +96,28 @@ type DocumentAiProcessorDefaultVersionArgs struct {
 	Version terra.StringValue `hcl:"version,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *documentaiprocessordefaultversion.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DocumentAiProcessorDefaultVersion depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type documentAiProcessorDefaultVersionAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of google_document_ai_processor_default_version.
 func (dapdv documentAiProcessorDefaultVersionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dapdv.ref.Append("id"))
+	return terra.ReferenceAsString(dapdv.ref.Append("id"))
 }
 
+// Processor returns a reference to field processor of google_document_ai_processor_default_version.
 func (dapdv documentAiProcessorDefaultVersionAttributes) Processor() terra.StringValue {
-	return terra.ReferenceString(dapdv.ref.Append("processor"))
+	return terra.ReferenceAsString(dapdv.ref.Append("processor"))
 }
 
+// Version returns a reference to field version of google_document_ai_processor_default_version.
 func (dapdv documentAiProcessorDefaultVersionAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(dapdv.ref.Append("version"))
+	return terra.ReferenceAsString(dapdv.ref.Append("version"))
 }
 
 func (dapdv documentAiProcessorDefaultVersionAttributes) Timeouts() documentaiprocessordefaultversion.TimeoutsAttributes {
-	return terra.ReferenceSingle[documentaiprocessordefaultversion.TimeoutsAttributes](dapdv.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[documentaiprocessordefaultversion.TimeoutsAttributes](dapdv.ref.Append("timeouts"))
 }
 
 type documentAiProcessorDefaultVersionState struct {

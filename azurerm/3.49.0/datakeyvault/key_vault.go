@@ -20,96 +20,96 @@ type AccessPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (ap AccessPolicyAttributes) InternalRef() terra.Reference {
-	return ap.ref
+func (ap AccessPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return ap.ref, nil
 }
 
 func (ap AccessPolicyAttributes) InternalWithRef(ref terra.Reference) AccessPolicyAttributes {
 	return AccessPolicyAttributes{ref: ref}
 }
 
-func (ap AccessPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (ap AccessPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ap.ref.InternalTokens()
 }
 
 func (ap AccessPolicyAttributes) ApplicationId() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("application_id"))
+	return terra.ReferenceAsString(ap.ref.Append("application_id"))
 }
 
 func (ap AccessPolicyAttributes) CertificatePermissions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ap.ref.Append("certificate_permissions"))
+	return terra.ReferenceAsList[terra.StringValue](ap.ref.Append("certificate_permissions"))
 }
 
 func (ap AccessPolicyAttributes) KeyPermissions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ap.ref.Append("key_permissions"))
+	return terra.ReferenceAsList[terra.StringValue](ap.ref.Append("key_permissions"))
 }
 
 func (ap AccessPolicyAttributes) ObjectId() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("object_id"))
+	return terra.ReferenceAsString(ap.ref.Append("object_id"))
 }
 
 func (ap AccessPolicyAttributes) SecretPermissions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ap.ref.Append("secret_permissions"))
+	return terra.ReferenceAsList[terra.StringValue](ap.ref.Append("secret_permissions"))
 }
 
 func (ap AccessPolicyAttributes) StoragePermissions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ap.ref.Append("storage_permissions"))
+	return terra.ReferenceAsList[terra.StringValue](ap.ref.Append("storage_permissions"))
 }
 
 func (ap AccessPolicyAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(ap.ref.Append("tenant_id"))
 }
 
 type NetworkAclsAttributes struct {
 	ref terra.Reference
 }
 
-func (na NetworkAclsAttributes) InternalRef() terra.Reference {
-	return na.ref
+func (na NetworkAclsAttributes) InternalRef() (terra.Reference, error) {
+	return na.ref, nil
 }
 
 func (na NetworkAclsAttributes) InternalWithRef(ref terra.Reference) NetworkAclsAttributes {
 	return NetworkAclsAttributes{ref: ref}
 }
 
-func (na NetworkAclsAttributes) InternalTokens() hclwrite.Tokens {
+func (na NetworkAclsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return na.ref.InternalTokens()
 }
 
 func (na NetworkAclsAttributes) Bypass() terra.StringValue {
-	return terra.ReferenceString(na.ref.Append("bypass"))
+	return terra.ReferenceAsString(na.ref.Append("bypass"))
 }
 
 func (na NetworkAclsAttributes) DefaultAction() terra.StringValue {
-	return terra.ReferenceString(na.ref.Append("default_action"))
+	return terra.ReferenceAsString(na.ref.Append("default_action"))
 }
 
 func (na NetworkAclsAttributes) IpRules() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](na.ref.Append("ip_rules"))
+	return terra.ReferenceAsSet[terra.StringValue](na.ref.Append("ip_rules"))
 }
 
 func (na NetworkAclsAttributes) VirtualNetworkSubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](na.ref.Append("virtual_network_subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](na.ref.Append("virtual_network_subnet_ids"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type AccessPolicyState struct {

@@ -49,7 +49,7 @@ func (mhh MinimumHealthyHostsAttributes) InternalWithRef(ref terra.Reference) Mi
 	return MinimumHealthyHostsAttributes{ref: ref}
 }
 
-func (mhh MinimumHealthyHostsAttributes) InternalTokens() hclwrite.Tokens {
+func (mhh MinimumHealthyHostsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mhh.ref.InternalTokens()
 }
 
@@ -73,7 +73,7 @@ func (trc TrafficRoutingConfigAttributes) InternalWithRef(ref terra.Reference) T
 	return TrafficRoutingConfigAttributes{ref: ref}
 }
 
-func (trc TrafficRoutingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (trc TrafficRoutingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return trc.ref.InternalTokens()
 }
 
@@ -101,7 +101,7 @@ func (tbc TimeBasedCanaryAttributes) InternalWithRef(ref terra.Reference) TimeBa
 	return TimeBasedCanaryAttributes{ref: ref}
 }
 
-func (tbc TimeBasedCanaryAttributes) InternalTokens() hclwrite.Tokens {
+func (tbc TimeBasedCanaryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tbc.ref.InternalTokens()
 }
 
@@ -125,7 +125,7 @@ func (tbl TimeBasedLinearAttributes) InternalWithRef(ref terra.Reference) TimeBa
 	return TimeBasedLinearAttributes{ref: ref}
 }
 
-func (tbl TimeBasedLinearAttributes) InternalTokens() hclwrite.Tokens {
+func (tbl TimeBasedLinearAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tbl.ref.InternalTokens()
 }
 

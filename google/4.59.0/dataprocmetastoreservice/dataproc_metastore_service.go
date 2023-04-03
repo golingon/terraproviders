@@ -70,212 +70,212 @@ type EncryptionConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ec EncryptionConfigAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec EncryptionConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec EncryptionConfigAttributes) InternalWithRef(ref terra.Reference) EncryptionConfigAttributes {
 	return EncryptionConfigAttributes{ref: ref}
 }
 
-func (ec EncryptionConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ec EncryptionConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 
 func (ec EncryptionConfigAttributes) KmsKey() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("kms_key"))
+	return terra.ReferenceAsString(ec.ref.Append("kms_key"))
 }
 
 type HiveMetastoreConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (hmc HiveMetastoreConfigAttributes) InternalRef() terra.Reference {
-	return hmc.ref
+func (hmc HiveMetastoreConfigAttributes) InternalRef() (terra.Reference, error) {
+	return hmc.ref, nil
 }
 
 func (hmc HiveMetastoreConfigAttributes) InternalWithRef(ref terra.Reference) HiveMetastoreConfigAttributes {
 	return HiveMetastoreConfigAttributes{ref: ref}
 }
 
-func (hmc HiveMetastoreConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (hmc HiveMetastoreConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hmc.ref.InternalTokens()
 }
 
 func (hmc HiveMetastoreConfigAttributes) ConfigOverrides() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](hmc.ref.Append("config_overrides"))
+	return terra.ReferenceAsMap[terra.StringValue](hmc.ref.Append("config_overrides"))
 }
 
 func (hmc HiveMetastoreConfigAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(hmc.ref.Append("version"))
+	return terra.ReferenceAsString(hmc.ref.Append("version"))
 }
 
 func (hmc HiveMetastoreConfigAttributes) KerberosConfig() terra.ListValue[KerberosConfigAttributes] {
-	return terra.ReferenceList[KerberosConfigAttributes](hmc.ref.Append("kerberos_config"))
+	return terra.ReferenceAsList[KerberosConfigAttributes](hmc.ref.Append("kerberos_config"))
 }
 
 type KerberosConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (kc KerberosConfigAttributes) InternalRef() terra.Reference {
-	return kc.ref
+func (kc KerberosConfigAttributes) InternalRef() (terra.Reference, error) {
+	return kc.ref, nil
 }
 
 func (kc KerberosConfigAttributes) InternalWithRef(ref terra.Reference) KerberosConfigAttributes {
 	return KerberosConfigAttributes{ref: ref}
 }
 
-func (kc KerberosConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (kc KerberosConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kc.ref.InternalTokens()
 }
 
 func (kc KerberosConfigAttributes) Krb5ConfigGcsUri() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("krb5_config_gcs_uri"))
+	return terra.ReferenceAsString(kc.ref.Append("krb5_config_gcs_uri"))
 }
 
 func (kc KerberosConfigAttributes) Principal() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("principal"))
+	return terra.ReferenceAsString(kc.ref.Append("principal"))
 }
 
 func (kc KerberosConfigAttributes) Keytab() terra.ListValue[KeytabAttributes] {
-	return terra.ReferenceList[KeytabAttributes](kc.ref.Append("keytab"))
+	return terra.ReferenceAsList[KeytabAttributes](kc.ref.Append("keytab"))
 }
 
 type KeytabAttributes struct {
 	ref terra.Reference
 }
 
-func (k KeytabAttributes) InternalRef() terra.Reference {
-	return k.ref
+func (k KeytabAttributes) InternalRef() (terra.Reference, error) {
+	return k.ref, nil
 }
 
 func (k KeytabAttributes) InternalWithRef(ref terra.Reference) KeytabAttributes {
 	return KeytabAttributes{ref: ref}
 }
 
-func (k KeytabAttributes) InternalTokens() hclwrite.Tokens {
+func (k KeytabAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return k.ref.InternalTokens()
 }
 
 func (k KeytabAttributes) CloudSecret() terra.StringValue {
-	return terra.ReferenceString(k.ref.Append("cloud_secret"))
+	return terra.ReferenceAsString(k.ref.Append("cloud_secret"))
 }
 
 type MaintenanceWindowAttributes struct {
 	ref terra.Reference
 }
 
-func (mw MaintenanceWindowAttributes) InternalRef() terra.Reference {
-	return mw.ref
+func (mw MaintenanceWindowAttributes) InternalRef() (terra.Reference, error) {
+	return mw.ref, nil
 }
 
 func (mw MaintenanceWindowAttributes) InternalWithRef(ref terra.Reference) MaintenanceWindowAttributes {
 	return MaintenanceWindowAttributes{ref: ref}
 }
 
-func (mw MaintenanceWindowAttributes) InternalTokens() hclwrite.Tokens {
+func (mw MaintenanceWindowAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mw.ref.InternalTokens()
 }
 
 func (mw MaintenanceWindowAttributes) DayOfWeek() terra.StringValue {
-	return terra.ReferenceString(mw.ref.Append("day_of_week"))
+	return terra.ReferenceAsString(mw.ref.Append("day_of_week"))
 }
 
 func (mw MaintenanceWindowAttributes) HourOfDay() terra.NumberValue {
-	return terra.ReferenceNumber(mw.ref.Append("hour_of_day"))
+	return terra.ReferenceAsNumber(mw.ref.Append("hour_of_day"))
 }
 
 type NetworkConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (nc NetworkConfigAttributes) InternalRef() terra.Reference {
-	return nc.ref
+func (nc NetworkConfigAttributes) InternalRef() (terra.Reference, error) {
+	return nc.ref, nil
 }
 
 func (nc NetworkConfigAttributes) InternalWithRef(ref terra.Reference) NetworkConfigAttributes {
 	return NetworkConfigAttributes{ref: ref}
 }
 
-func (nc NetworkConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (nc NetworkConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nc.ref.InternalTokens()
 }
 
 func (nc NetworkConfigAttributes) Consumers() terra.ListValue[ConsumersAttributes] {
-	return terra.ReferenceList[ConsumersAttributes](nc.ref.Append("consumers"))
+	return terra.ReferenceAsList[ConsumersAttributes](nc.ref.Append("consumers"))
 }
 
 type ConsumersAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConsumersAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConsumersAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConsumersAttributes) InternalWithRef(ref terra.Reference) ConsumersAttributes {
 	return ConsumersAttributes{ref: ref}
 }
 
-func (c ConsumersAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConsumersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ConsumersAttributes) EndpointUri() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("endpoint_uri"))
+	return terra.ReferenceAsString(c.ref.Append("endpoint_uri"))
 }
 
 func (c ConsumersAttributes) Subnetwork() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("subnetwork"))
+	return terra.ReferenceAsString(c.ref.Append("subnetwork"))
 }
 
 type TelemetryConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (tc TelemetryConfigAttributes) InternalRef() terra.Reference {
-	return tc.ref
+func (tc TelemetryConfigAttributes) InternalRef() (terra.Reference, error) {
+	return tc.ref, nil
 }
 
 func (tc TelemetryConfigAttributes) InternalWithRef(ref terra.Reference) TelemetryConfigAttributes {
 	return TelemetryConfigAttributes{ref: ref}
 }
 
-func (tc TelemetryConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (tc TelemetryConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tc.ref.InternalTokens()
 }
 
 func (tc TelemetryConfigAttributes) LogFormat() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("log_format"))
+	return terra.ReferenceAsString(tc.ref.Append("log_format"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type EncryptionConfigState struct {

@@ -25,48 +25,48 @@ type NetworkSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ns NetworkSettingsAttributes) InternalRef() terra.Reference {
-	return ns.ref
+func (ns NetworkSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ns.ref, nil
 }
 
 func (ns NetworkSettingsAttributes) InternalWithRef(ref terra.Reference) NetworkSettingsAttributes {
 	return NetworkSettingsAttributes{ref: ref}
 }
 
-func (ns NetworkSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ns NetworkSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ns.ref.InternalTokens()
 }
 
 func (ns NetworkSettingsAttributes) IngressTrafficAllowed() terra.StringValue {
-	return terra.ReferenceString(ns.ref.Append("ingress_traffic_allowed"))
+	return terra.ReferenceAsString(ns.ref.Append("ingress_traffic_allowed"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type NetworkSettingsState struct {

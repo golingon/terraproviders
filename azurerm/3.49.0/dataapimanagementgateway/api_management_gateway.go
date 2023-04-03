@@ -18,52 +18,52 @@ type LocationDataAttributes struct {
 	ref terra.Reference
 }
 
-func (ld LocationDataAttributes) InternalRef() terra.Reference {
-	return ld.ref
+func (ld LocationDataAttributes) InternalRef() (terra.Reference, error) {
+	return ld.ref, nil
 }
 
 func (ld LocationDataAttributes) InternalWithRef(ref terra.Reference) LocationDataAttributes {
 	return LocationDataAttributes{ref: ref}
 }
 
-func (ld LocationDataAttributes) InternalTokens() hclwrite.Tokens {
+func (ld LocationDataAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ld.ref.InternalTokens()
 }
 
 func (ld LocationDataAttributes) City() terra.StringValue {
-	return terra.ReferenceString(ld.ref.Append("city"))
+	return terra.ReferenceAsString(ld.ref.Append("city"))
 }
 
 func (ld LocationDataAttributes) District() terra.StringValue {
-	return terra.ReferenceString(ld.ref.Append("district"))
+	return terra.ReferenceAsString(ld.ref.Append("district"))
 }
 
 func (ld LocationDataAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ld.ref.Append("name"))
+	return terra.ReferenceAsString(ld.ref.Append("name"))
 }
 
 func (ld LocationDataAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(ld.ref.Append("region"))
+	return terra.ReferenceAsString(ld.ref.Append("region"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type LocationDataState struct {

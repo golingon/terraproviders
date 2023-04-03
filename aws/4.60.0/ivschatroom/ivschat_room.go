@@ -35,7 +35,7 @@ func (mrh MessageReviewHandlerAttributes) InternalWithRef(ref terra.Reference) M
 	return MessageReviewHandlerAttributes{ref: ref}
 }
 
-func (mrh MessageReviewHandlerAttributes) InternalTokens() hclwrite.Tokens {
+func (mrh MessageReviewHandlerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mrh.ref.InternalTokens()
 }
 
@@ -59,7 +59,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

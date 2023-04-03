@@ -61,7 +61,7 @@ func (cp ConfigurationPropertyAttributes) InternalWithRef(ref terra.Reference) C
 	return ConfigurationPropertyAttributes{ref: ref}
 }
 
-func (cp ConfigurationPropertyAttributes) InternalTokens() hclwrite.Tokens {
+func (cp ConfigurationPropertyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cp.ref.InternalTokens()
 }
 
@@ -105,7 +105,7 @@ func (iad InputArtifactDetailsAttributes) InternalWithRef(ref terra.Reference) I
 	return InputArtifactDetailsAttributes{ref: ref}
 }
 
-func (iad InputArtifactDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (iad InputArtifactDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return iad.ref.InternalTokens()
 }
 
@@ -129,7 +129,7 @@ func (oad OutputArtifactDetailsAttributes) InternalWithRef(ref terra.Reference) 
 	return OutputArtifactDetailsAttributes{ref: ref}
 }
 
-func (oad OutputArtifactDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (oad OutputArtifactDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oad.ref.InternalTokens()
 }
 
@@ -153,7 +153,7 @@ func (s SettingsAttributes) InternalWithRef(ref terra.Reference) SettingsAttribu
 	return SettingsAttributes{ref: ref}
 }
 
-func (s SettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (s SettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 

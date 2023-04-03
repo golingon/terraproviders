@@ -13,44 +13,44 @@ type ProjectsAttributes struct {
 	ref terra.Reference
 }
 
-func (p ProjectsAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p ProjectsAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p ProjectsAttributes) InternalWithRef(ref terra.Reference) ProjectsAttributes {
 	return ProjectsAttributes{ref: ref}
 }
 
-func (p ProjectsAttributes) InternalTokens() hclwrite.Tokens {
+func (p ProjectsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
 func (p ProjectsAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("create_time"))
+	return terra.ReferenceAsString(p.ref.Append("create_time"))
 }
 
 func (p ProjectsAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](p.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](p.ref.Append("labels"))
 }
 
 func (p ProjectsAttributes) LifecycleState() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("lifecycle_state"))
+	return terra.ReferenceAsString(p.ref.Append("lifecycle_state"))
 }
 
 func (p ProjectsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("name"))
+	return terra.ReferenceAsString(p.ref.Append("name"))
 }
 
 func (p ProjectsAttributes) Number() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("number"))
+	return terra.ReferenceAsString(p.ref.Append("number"))
 }
 
 func (p ProjectsAttributes) Parent() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](p.ref.Append("parent"))
+	return terra.ReferenceAsMap[terra.StringValue](p.ref.Append("parent"))
 }
 
 func (p ProjectsAttributes) ProjectId() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("project_id"))
+	return terra.ReferenceAsString(p.ref.Append("project_id"))
 }
 
 type ProjectsState struct {

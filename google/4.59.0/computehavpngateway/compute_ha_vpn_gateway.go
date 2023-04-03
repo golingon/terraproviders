@@ -25,52 +25,52 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type VpnInterfacesAttributes struct {
 	ref terra.Reference
 }
 
-func (vi VpnInterfacesAttributes) InternalRef() terra.Reference {
-	return vi.ref
+func (vi VpnInterfacesAttributes) InternalRef() (terra.Reference, error) {
+	return vi.ref, nil
 }
 
 func (vi VpnInterfacesAttributes) InternalWithRef(ref terra.Reference) VpnInterfacesAttributes {
 	return VpnInterfacesAttributes{ref: ref}
 }
 
-func (vi VpnInterfacesAttributes) InternalTokens() hclwrite.Tokens {
+func (vi VpnInterfacesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vi.ref.InternalTokens()
 }
 
 func (vi VpnInterfacesAttributes) Id() terra.NumberValue {
-	return terra.ReferenceNumber(vi.ref.Append("id"))
+	return terra.ReferenceAsNumber(vi.ref.Append("id"))
 }
 
 func (vi VpnInterfacesAttributes) InterconnectAttachment() terra.StringValue {
-	return terra.ReferenceString(vi.ref.Append("interconnect_attachment"))
+	return terra.ReferenceAsString(vi.ref.Append("interconnect_attachment"))
 }
 
 func (vi VpnInterfacesAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(vi.ref.Append("ip_address"))
+	return terra.ReferenceAsString(vi.ref.Append("ip_address"))
 }
 
 type TimeoutsState struct {

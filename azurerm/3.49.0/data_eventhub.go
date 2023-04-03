@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataEventhub creates a new instance of [DataEventhub].
 func NewDataEventhub(name string, args DataEventhubArgs) *DataEventhub {
 	return &DataEventhub{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataEventhub(name string, args DataEventhubArgs) *DataEventhub {
 
 var _ terra.DataResource = (*DataEventhub)(nil)
 
+// DataEventhub represents the Terraform data resource azurerm_eventhub.
 type DataEventhub struct {
 	Name string
 	Args DataEventhubArgs
 }
 
+// DataSource returns the Terraform object type for [DataEventhub].
 func (e *DataEventhub) DataSource() string {
 	return "azurerm_eventhub"
 }
 
+// LocalName returns the local name for [DataEventhub].
 func (e *DataEventhub) LocalName() string {
 	return e.Name
 }
 
+// Configuration returns the configuration (args) for [DataEventhub].
 func (e *DataEventhub) Configuration() interface{} {
 	return e.Args
 }
 
+// Attributes returns the attributes for [DataEventhub].
 func (e *DataEventhub) Attributes() dataEventhubAttributes {
 	return dataEventhubAttributes{ref: terra.ReferenceDataResource(e)}
 }
 
+// DataEventhubArgs contains the configurations for azurerm_eventhub.
 type DataEventhubArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,30 +60,36 @@ type dataEventhubAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_eventhub.
 func (e dataEventhubAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("id"))
+	return terra.ReferenceAsString(e.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_eventhub.
 func (e dataEventhubAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("name"))
+	return terra.ReferenceAsString(e.ref.Append("name"))
 }
 
+// NamespaceName returns a reference to field namespace_name of azurerm_eventhub.
 func (e dataEventhubAttributes) NamespaceName() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("namespace_name"))
+	return terra.ReferenceAsString(e.ref.Append("namespace_name"))
 }
 
+// PartitionCount returns a reference to field partition_count of azurerm_eventhub.
 func (e dataEventhubAttributes) PartitionCount() terra.NumberValue {
-	return terra.ReferenceNumber(e.ref.Append("partition_count"))
+	return terra.ReferenceAsNumber(e.ref.Append("partition_count"))
 }
 
+// PartitionIds returns a reference to field partition_ids of azurerm_eventhub.
 func (e dataEventhubAttributes) PartitionIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](e.ref.Append("partition_ids"))
+	return terra.ReferenceAsList[terra.StringValue](e.ref.Append("partition_ids"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_eventhub.
 func (e dataEventhubAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(e.ref.Append("resource_group_name"))
 }
 
 func (e dataEventhubAttributes) Timeouts() dataeventhub.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataeventhub.TimeoutsAttributes](e.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataeventhub.TimeoutsAttributes](e.ref.Append("timeouts"))
 }

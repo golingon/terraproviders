@@ -44,7 +44,7 @@ func (ldi LocalDomainInfoAttributes) InternalWithRef(ref terra.Reference) LocalD
 	return LocalDomainInfoAttributes{ref: ref}
 }
 
-func (ldi LocalDomainInfoAttributes) InternalTokens() hclwrite.Tokens {
+func (ldi LocalDomainInfoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ldi.ref.InternalTokens()
 }
 
@@ -72,7 +72,7 @@ func (rdi RemoteDomainInfoAttributes) InternalWithRef(ref terra.Reference) Remot
 	return RemoteDomainInfoAttributes{ref: ref}
 }
 
-func (rdi RemoteDomainInfoAttributes) InternalTokens() hclwrite.Tokens {
+func (rdi RemoteDomainInfoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rdi.ref.InternalTokens()
 }
 
@@ -100,7 +100,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

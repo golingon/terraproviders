@@ -66,7 +66,7 @@ func (amkesc AmazonManagedKafkaEventSourceConfigAttributes) InternalWithRef(ref 
 	return AmazonManagedKafkaEventSourceConfigAttributes{ref: ref}
 }
 
-func (amkesc AmazonManagedKafkaEventSourceConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (amkesc AmazonManagedKafkaEventSourceConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return amkesc.ref.InternalTokens()
 }
 
@@ -86,7 +86,7 @@ func (dc DestinationConfigAttributes) InternalWithRef(ref terra.Reference) Desti
 	return DestinationConfigAttributes{ref: ref}
 }
 
-func (dc DestinationConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (dc DestinationConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dc.ref.InternalTokens()
 }
 
@@ -106,7 +106,7 @@ func (of OnFailureAttributes) InternalWithRef(ref terra.Reference) OnFailureAttr
 	return OnFailureAttributes{ref: ref}
 }
 
-func (of OnFailureAttributes) InternalTokens() hclwrite.Tokens {
+func (of OnFailureAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return of.ref.InternalTokens()
 }
 
@@ -126,7 +126,7 @@ func (fc FilterCriteriaAttributes) InternalWithRef(ref terra.Reference) FilterCr
 	return FilterCriteriaAttributes{ref: ref}
 }
 
-func (fc FilterCriteriaAttributes) InternalTokens() hclwrite.Tokens {
+func (fc FilterCriteriaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fc.ref.InternalTokens()
 }
 
@@ -146,7 +146,7 @@ func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes 
 	return FilterAttributes{ref: ref}
 }
 
-func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
+func (f FilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -166,7 +166,7 @@ func (sc ScalingConfigAttributes) InternalWithRef(ref terra.Reference) ScalingCo
 	return ScalingConfigAttributes{ref: ref}
 }
 
-func (sc ScalingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sc ScalingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -186,7 +186,7 @@ func (smes SelfManagedEventSourceAttributes) InternalWithRef(ref terra.Reference
 	return SelfManagedEventSourceAttributes{ref: ref}
 }
 
-func (smes SelfManagedEventSourceAttributes) InternalTokens() hclwrite.Tokens {
+func (smes SelfManagedEventSourceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return smes.ref.InternalTokens()
 }
 
@@ -206,7 +206,7 @@ func (smkesc SelfManagedKafkaEventSourceConfigAttributes) InternalWithRef(ref te
 	return SelfManagedKafkaEventSourceConfigAttributes{ref: ref}
 }
 
-func (smkesc SelfManagedKafkaEventSourceConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (smkesc SelfManagedKafkaEventSourceConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return smkesc.ref.InternalTokens()
 }
 
@@ -226,7 +226,7 @@ func (sac SourceAccessConfigurationAttributes) InternalWithRef(ref terra.Referen
 	return SourceAccessConfigurationAttributes{ref: ref}
 }
 
-func (sac SourceAccessConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (sac SourceAccessConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sac.ref.InternalTokens()
 }
 

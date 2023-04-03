@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDevTestGlobalVmShutdownSchedule creates a new instance of [DevTestGlobalVmShutdownSchedule].
 func NewDevTestGlobalVmShutdownSchedule(name string, args DevTestGlobalVmShutdownScheduleArgs) *DevTestGlobalVmShutdownSchedule {
 	return &DevTestGlobalVmShutdownSchedule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDevTestGlobalVmShutdownSchedule(name string, args DevTestGlobalVmShutdow
 
 var _ terra.Resource = (*DevTestGlobalVmShutdownSchedule)(nil)
 
+// DevTestGlobalVmShutdownSchedule represents the Terraform resource azurerm_dev_test_global_vm_shutdown_schedule.
 type DevTestGlobalVmShutdownSchedule struct {
-	Name  string
-	Args  DevTestGlobalVmShutdownScheduleArgs
-	state *devTestGlobalVmShutdownScheduleState
+	Name      string
+	Args      DevTestGlobalVmShutdownScheduleArgs
+	state     *devTestGlobalVmShutdownScheduleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DevTestGlobalVmShutdownSchedule].
 func (dtgvss *DevTestGlobalVmShutdownSchedule) Type() string {
 	return "azurerm_dev_test_global_vm_shutdown_schedule"
 }
 
+// LocalName returns the local name for [DevTestGlobalVmShutdownSchedule].
 func (dtgvss *DevTestGlobalVmShutdownSchedule) LocalName() string {
 	return dtgvss.Name
 }
 
+// Configuration returns the configuration (args) for [DevTestGlobalVmShutdownSchedule].
 func (dtgvss *DevTestGlobalVmShutdownSchedule) Configuration() interface{} {
 	return dtgvss.Args
 }
 
+// DependOn is used for other resources to depend on [DevTestGlobalVmShutdownSchedule].
+func (dtgvss *DevTestGlobalVmShutdownSchedule) DependOn() terra.Reference {
+	return terra.ReferenceResource(dtgvss)
+}
+
+// Dependencies returns the list of resources [DevTestGlobalVmShutdownSchedule] depends_on.
+func (dtgvss *DevTestGlobalVmShutdownSchedule) Dependencies() terra.Dependencies {
+	return dtgvss.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DevTestGlobalVmShutdownSchedule].
+func (dtgvss *DevTestGlobalVmShutdownSchedule) LifecycleManagement() *terra.Lifecycle {
+	return dtgvss.Lifecycle
+}
+
+// Attributes returns the attributes for [DevTestGlobalVmShutdownSchedule].
 func (dtgvss *DevTestGlobalVmShutdownSchedule) Attributes() devTestGlobalVmShutdownScheduleAttributes {
 	return devTestGlobalVmShutdownScheduleAttributes{ref: terra.ReferenceResource(dtgvss)}
 }
 
+// ImportState imports the given attribute values into [DevTestGlobalVmShutdownSchedule]'s state.
 func (dtgvss *DevTestGlobalVmShutdownSchedule) ImportState(av io.Reader) error {
 	dtgvss.state = &devTestGlobalVmShutdownScheduleState{}
 	if err := json.NewDecoder(av).Decode(dtgvss.state); err != nil {
@@ -49,10 +73,12 @@ func (dtgvss *DevTestGlobalVmShutdownSchedule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DevTestGlobalVmShutdownSchedule] has state.
 func (dtgvss *DevTestGlobalVmShutdownSchedule) State() (*devTestGlobalVmShutdownScheduleState, bool) {
 	return dtgvss.state, dtgvss.state != nil
 }
 
+// StateMust returns the state for [DevTestGlobalVmShutdownSchedule]. Panics if the state is nil.
 func (dtgvss *DevTestGlobalVmShutdownSchedule) StateMust() *devTestGlobalVmShutdownScheduleState {
 	if dtgvss.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dtgvss.Type(), dtgvss.LocalName()))
@@ -60,10 +86,7 @@ func (dtgvss *DevTestGlobalVmShutdownSchedule) StateMust() *devTestGlobalVmShutd
 	return dtgvss.state
 }
 
-func (dtgvss *DevTestGlobalVmShutdownSchedule) DependOn() terra.Reference {
-	return terra.ReferenceResource(dtgvss)
-}
-
+// DevTestGlobalVmShutdownScheduleArgs contains the configurations for azurerm_dev_test_global_vm_shutdown_schedule.
 type DevTestGlobalVmShutdownScheduleArgs struct {
 	// DailyRecurrenceTime: string, required
 	DailyRecurrenceTime terra.StringValue `hcl:"daily_recurrence_time,attr" validate:"required"`
@@ -83,47 +106,52 @@ type DevTestGlobalVmShutdownScheduleArgs struct {
 	NotificationSettings *devtestglobalvmshutdownschedule.NotificationSettings `hcl:"notification_settings,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *devtestglobalvmshutdownschedule.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DevTestGlobalVmShutdownSchedule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type devTestGlobalVmShutdownScheduleAttributes struct {
 	ref terra.Reference
 }
 
+// DailyRecurrenceTime returns a reference to field daily_recurrence_time of azurerm_dev_test_global_vm_shutdown_schedule.
 func (dtgvss devTestGlobalVmShutdownScheduleAttributes) DailyRecurrenceTime() terra.StringValue {
-	return terra.ReferenceString(dtgvss.ref.Append("daily_recurrence_time"))
+	return terra.ReferenceAsString(dtgvss.ref.Append("daily_recurrence_time"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_dev_test_global_vm_shutdown_schedule.
 func (dtgvss devTestGlobalVmShutdownScheduleAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(dtgvss.ref.Append("enabled"))
+	return terra.ReferenceAsBool(dtgvss.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of azurerm_dev_test_global_vm_shutdown_schedule.
 func (dtgvss devTestGlobalVmShutdownScheduleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dtgvss.ref.Append("id"))
+	return terra.ReferenceAsString(dtgvss.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_dev_test_global_vm_shutdown_schedule.
 func (dtgvss devTestGlobalVmShutdownScheduleAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(dtgvss.ref.Append("location"))
+	return terra.ReferenceAsString(dtgvss.ref.Append("location"))
 }
 
+// Tags returns a reference to field tags of azurerm_dev_test_global_vm_shutdown_schedule.
 func (dtgvss devTestGlobalVmShutdownScheduleAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dtgvss.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dtgvss.ref.Append("tags"))
 }
 
+// Timezone returns a reference to field timezone of azurerm_dev_test_global_vm_shutdown_schedule.
 func (dtgvss devTestGlobalVmShutdownScheduleAttributes) Timezone() terra.StringValue {
-	return terra.ReferenceString(dtgvss.ref.Append("timezone"))
+	return terra.ReferenceAsString(dtgvss.ref.Append("timezone"))
 }
 
+// VirtualMachineId returns a reference to field virtual_machine_id of azurerm_dev_test_global_vm_shutdown_schedule.
 func (dtgvss devTestGlobalVmShutdownScheduleAttributes) VirtualMachineId() terra.StringValue {
-	return terra.ReferenceString(dtgvss.ref.Append("virtual_machine_id"))
+	return terra.ReferenceAsString(dtgvss.ref.Append("virtual_machine_id"))
 }
 
 func (dtgvss devTestGlobalVmShutdownScheduleAttributes) NotificationSettings() terra.ListValue[devtestglobalvmshutdownschedule.NotificationSettingsAttributes] {
-	return terra.ReferenceList[devtestglobalvmshutdownschedule.NotificationSettingsAttributes](dtgvss.ref.Append("notification_settings"))
+	return terra.ReferenceAsList[devtestglobalvmshutdownschedule.NotificationSettingsAttributes](dtgvss.ref.Append("notification_settings"))
 }
 
 func (dtgvss devTestGlobalVmShutdownScheduleAttributes) Timeouts() devtestglobalvmshutdownschedule.TimeoutsAttributes {
-	return terra.ReferenceSingle[devtestglobalvmshutdownschedule.TimeoutsAttributes](dtgvss.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[devtestglobalvmshutdownschedule.TimeoutsAttributes](dtgvss.ref.Append("timeouts"))
 }
 
 type devTestGlobalVmShutdownScheduleState struct {

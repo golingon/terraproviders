@@ -43,132 +43,132 @@ type BgpSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (bs BgpSettingsAttributes) InternalRef() terra.Reference {
-	return bs.ref
+func (bs BgpSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return bs.ref, nil
 }
 
 func (bs BgpSettingsAttributes) InternalWithRef(ref terra.Reference) BgpSettingsAttributes {
 	return BgpSettingsAttributes{ref: ref}
 }
 
-func (bs BgpSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (bs BgpSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bs.ref.InternalTokens()
 }
 
 func (bs BgpSettingsAttributes) Asn() terra.NumberValue {
-	return terra.ReferenceNumber(bs.ref.Append("asn"))
+	return terra.ReferenceAsNumber(bs.ref.Append("asn"))
 }
 
 func (bs BgpSettingsAttributes) BgpPeeringAddress() terra.StringValue {
-	return terra.ReferenceString(bs.ref.Append("bgp_peering_address"))
+	return terra.ReferenceAsString(bs.ref.Append("bgp_peering_address"))
 }
 
 func (bs BgpSettingsAttributes) PeerWeight() terra.NumberValue {
-	return terra.ReferenceNumber(bs.ref.Append("peer_weight"))
+	return terra.ReferenceAsNumber(bs.ref.Append("peer_weight"))
 }
 
 func (bs BgpSettingsAttributes) Instance0BgpPeeringAddress() terra.ListValue[Instance0BgpPeeringAddressAttributes] {
-	return terra.ReferenceList[Instance0BgpPeeringAddressAttributes](bs.ref.Append("instance_0_bgp_peering_address"))
+	return terra.ReferenceAsList[Instance0BgpPeeringAddressAttributes](bs.ref.Append("instance_0_bgp_peering_address"))
 }
 
 func (bs BgpSettingsAttributes) Instance1BgpPeeringAddress() terra.ListValue[Instance1BgpPeeringAddressAttributes] {
-	return terra.ReferenceList[Instance1BgpPeeringAddressAttributes](bs.ref.Append("instance_1_bgp_peering_address"))
+	return terra.ReferenceAsList[Instance1BgpPeeringAddressAttributes](bs.ref.Append("instance_1_bgp_peering_address"))
 }
 
 type Instance0BgpPeeringAddressAttributes struct {
 	ref terra.Reference
 }
 
-func (i0bpa Instance0BgpPeeringAddressAttributes) InternalRef() terra.Reference {
-	return i0bpa.ref
+func (i0bpa Instance0BgpPeeringAddressAttributes) InternalRef() (terra.Reference, error) {
+	return i0bpa.ref, nil
 }
 
 func (i0bpa Instance0BgpPeeringAddressAttributes) InternalWithRef(ref terra.Reference) Instance0BgpPeeringAddressAttributes {
 	return Instance0BgpPeeringAddressAttributes{ref: ref}
 }
 
-func (i0bpa Instance0BgpPeeringAddressAttributes) InternalTokens() hclwrite.Tokens {
+func (i0bpa Instance0BgpPeeringAddressAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i0bpa.ref.InternalTokens()
 }
 
 func (i0bpa Instance0BgpPeeringAddressAttributes) CustomIps() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i0bpa.ref.Append("custom_ips"))
+	return terra.ReferenceAsSet[terra.StringValue](i0bpa.ref.Append("custom_ips"))
 }
 
 func (i0bpa Instance0BgpPeeringAddressAttributes) DefaultIps() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i0bpa.ref.Append("default_ips"))
+	return terra.ReferenceAsSet[terra.StringValue](i0bpa.ref.Append("default_ips"))
 }
 
 func (i0bpa Instance0BgpPeeringAddressAttributes) IpConfigurationId() terra.StringValue {
-	return terra.ReferenceString(i0bpa.ref.Append("ip_configuration_id"))
+	return terra.ReferenceAsString(i0bpa.ref.Append("ip_configuration_id"))
 }
 
 func (i0bpa Instance0BgpPeeringAddressAttributes) TunnelIps() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i0bpa.ref.Append("tunnel_ips"))
+	return terra.ReferenceAsSet[terra.StringValue](i0bpa.ref.Append("tunnel_ips"))
 }
 
 type Instance1BgpPeeringAddressAttributes struct {
 	ref terra.Reference
 }
 
-func (i1bpa Instance1BgpPeeringAddressAttributes) InternalRef() terra.Reference {
-	return i1bpa.ref
+func (i1bpa Instance1BgpPeeringAddressAttributes) InternalRef() (terra.Reference, error) {
+	return i1bpa.ref, nil
 }
 
 func (i1bpa Instance1BgpPeeringAddressAttributes) InternalWithRef(ref terra.Reference) Instance1BgpPeeringAddressAttributes {
 	return Instance1BgpPeeringAddressAttributes{ref: ref}
 }
 
-func (i1bpa Instance1BgpPeeringAddressAttributes) InternalTokens() hclwrite.Tokens {
+func (i1bpa Instance1BgpPeeringAddressAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i1bpa.ref.InternalTokens()
 }
 
 func (i1bpa Instance1BgpPeeringAddressAttributes) CustomIps() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i1bpa.ref.Append("custom_ips"))
+	return terra.ReferenceAsSet[terra.StringValue](i1bpa.ref.Append("custom_ips"))
 }
 
 func (i1bpa Instance1BgpPeeringAddressAttributes) DefaultIps() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i1bpa.ref.Append("default_ips"))
+	return terra.ReferenceAsSet[terra.StringValue](i1bpa.ref.Append("default_ips"))
 }
 
 func (i1bpa Instance1BgpPeeringAddressAttributes) IpConfigurationId() terra.StringValue {
-	return terra.ReferenceString(i1bpa.ref.Append("ip_configuration_id"))
+	return terra.ReferenceAsString(i1bpa.ref.Append("ip_configuration_id"))
 }
 
 func (i1bpa Instance1BgpPeeringAddressAttributes) TunnelIps() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i1bpa.ref.Append("tunnel_ips"))
+	return terra.ReferenceAsSet[terra.StringValue](i1bpa.ref.Append("tunnel_ips"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type BgpSettingsState struct {

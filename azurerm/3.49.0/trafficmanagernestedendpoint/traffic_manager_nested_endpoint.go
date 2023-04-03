@@ -38,84 +38,84 @@ type CustomHeaderAttributes struct {
 	ref terra.Reference
 }
 
-func (ch CustomHeaderAttributes) InternalRef() terra.Reference {
-	return ch.ref
+func (ch CustomHeaderAttributes) InternalRef() (terra.Reference, error) {
+	return ch.ref, nil
 }
 
 func (ch CustomHeaderAttributes) InternalWithRef(ref terra.Reference) CustomHeaderAttributes {
 	return CustomHeaderAttributes{ref: ref}
 }
 
-func (ch CustomHeaderAttributes) InternalTokens() hclwrite.Tokens {
+func (ch CustomHeaderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ch.ref.InternalTokens()
 }
 
 func (ch CustomHeaderAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ch.ref.Append("name"))
+	return terra.ReferenceAsString(ch.ref.Append("name"))
 }
 
 func (ch CustomHeaderAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(ch.ref.Append("value"))
+	return terra.ReferenceAsString(ch.ref.Append("value"))
 }
 
 type SubnetAttributes struct {
 	ref terra.Reference
 }
 
-func (s SubnetAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SubnetAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SubnetAttributes) InternalWithRef(ref terra.Reference) SubnetAttributes {
 	return SubnetAttributes{ref: ref}
 }
 
-func (s SubnetAttributes) InternalTokens() hclwrite.Tokens {
+func (s SubnetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SubnetAttributes) First() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("first"))
+	return terra.ReferenceAsString(s.ref.Append("first"))
 }
 
 func (s SubnetAttributes) Last() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("last"))
+	return terra.ReferenceAsString(s.ref.Append("last"))
 }
 
 func (s SubnetAttributes) Scope() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("scope"))
+	return terra.ReferenceAsNumber(s.ref.Append("scope"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type CustomHeaderState struct {

@@ -38,84 +38,84 @@ type PreservedStateAttributes struct {
 	ref terra.Reference
 }
 
-func (ps PreservedStateAttributes) InternalRef() terra.Reference {
-	return ps.ref
+func (ps PreservedStateAttributes) InternalRef() (terra.Reference, error) {
+	return ps.ref, nil
 }
 
 func (ps PreservedStateAttributes) InternalWithRef(ref terra.Reference) PreservedStateAttributes {
 	return PreservedStateAttributes{ref: ref}
 }
 
-func (ps PreservedStateAttributes) InternalTokens() hclwrite.Tokens {
+func (ps PreservedStateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ps.ref.InternalTokens()
 }
 
 func (ps PreservedStateAttributes) Metadata() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ps.ref.Append("metadata"))
+	return terra.ReferenceAsMap[terra.StringValue](ps.ref.Append("metadata"))
 }
 
 func (ps PreservedStateAttributes) Disk() terra.SetValue[DiskAttributes] {
-	return terra.ReferenceSet[DiskAttributes](ps.ref.Append("disk"))
+	return terra.ReferenceAsSet[DiskAttributes](ps.ref.Append("disk"))
 }
 
 type DiskAttributes struct {
 	ref terra.Reference
 }
 
-func (d DiskAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DiskAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DiskAttributes) InternalWithRef(ref terra.Reference) DiskAttributes {
 	return DiskAttributes{ref: ref}
 }
 
-func (d DiskAttributes) InternalTokens() hclwrite.Tokens {
+func (d DiskAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d DiskAttributes) DeleteRule() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("delete_rule"))
+	return terra.ReferenceAsString(d.ref.Append("delete_rule"))
 }
 
 func (d DiskAttributes) DeviceName() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("device_name"))
+	return terra.ReferenceAsString(d.ref.Append("device_name"))
 }
 
 func (d DiskAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("mode"))
+	return terra.ReferenceAsString(d.ref.Append("mode"))
 }
 
 func (d DiskAttributes) Source() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("source"))
+	return terra.ReferenceAsString(d.ref.Append("source"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type PreservedStateState struct {

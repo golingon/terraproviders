@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNotificationHubAuthorizationRule creates a new instance of [NotificationHubAuthorizationRule].
 func NewNotificationHubAuthorizationRule(name string, args NotificationHubAuthorizationRuleArgs) *NotificationHubAuthorizationRule {
 	return &NotificationHubAuthorizationRule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNotificationHubAuthorizationRule(name string, args NotificationHubAuthor
 
 var _ terra.Resource = (*NotificationHubAuthorizationRule)(nil)
 
+// NotificationHubAuthorizationRule represents the Terraform resource azurerm_notification_hub_authorization_rule.
 type NotificationHubAuthorizationRule struct {
-	Name  string
-	Args  NotificationHubAuthorizationRuleArgs
-	state *notificationHubAuthorizationRuleState
+	Name      string
+	Args      NotificationHubAuthorizationRuleArgs
+	state     *notificationHubAuthorizationRuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NotificationHubAuthorizationRule].
 func (nhar *NotificationHubAuthorizationRule) Type() string {
 	return "azurerm_notification_hub_authorization_rule"
 }
 
+// LocalName returns the local name for [NotificationHubAuthorizationRule].
 func (nhar *NotificationHubAuthorizationRule) LocalName() string {
 	return nhar.Name
 }
 
+// Configuration returns the configuration (args) for [NotificationHubAuthorizationRule].
 func (nhar *NotificationHubAuthorizationRule) Configuration() interface{} {
 	return nhar.Args
 }
 
+// DependOn is used for other resources to depend on [NotificationHubAuthorizationRule].
+func (nhar *NotificationHubAuthorizationRule) DependOn() terra.Reference {
+	return terra.ReferenceResource(nhar)
+}
+
+// Dependencies returns the list of resources [NotificationHubAuthorizationRule] depends_on.
+func (nhar *NotificationHubAuthorizationRule) Dependencies() terra.Dependencies {
+	return nhar.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NotificationHubAuthorizationRule].
+func (nhar *NotificationHubAuthorizationRule) LifecycleManagement() *terra.Lifecycle {
+	return nhar.Lifecycle
+}
+
+// Attributes returns the attributes for [NotificationHubAuthorizationRule].
 func (nhar *NotificationHubAuthorizationRule) Attributes() notificationHubAuthorizationRuleAttributes {
 	return notificationHubAuthorizationRuleAttributes{ref: terra.ReferenceResource(nhar)}
 }
 
+// ImportState imports the given attribute values into [NotificationHubAuthorizationRule]'s state.
 func (nhar *NotificationHubAuthorizationRule) ImportState(av io.Reader) error {
 	nhar.state = &notificationHubAuthorizationRuleState{}
 	if err := json.NewDecoder(av).Decode(nhar.state); err != nil {
@@ -49,10 +73,12 @@ func (nhar *NotificationHubAuthorizationRule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NotificationHubAuthorizationRule] has state.
 func (nhar *NotificationHubAuthorizationRule) State() (*notificationHubAuthorizationRuleState, bool) {
 	return nhar.state, nhar.state != nil
 }
 
+// StateMust returns the state for [NotificationHubAuthorizationRule]. Panics if the state is nil.
 func (nhar *NotificationHubAuthorizationRule) StateMust() *notificationHubAuthorizationRuleState {
 	if nhar.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", nhar.Type(), nhar.LocalName()))
@@ -60,10 +86,7 @@ func (nhar *NotificationHubAuthorizationRule) StateMust() *notificationHubAuthor
 	return nhar.state
 }
 
-func (nhar *NotificationHubAuthorizationRule) DependOn() terra.Reference {
-	return terra.ReferenceResource(nhar)
-}
-
+// NotificationHubAuthorizationRuleArgs contains the configurations for azurerm_notification_hub_authorization_rule.
 type NotificationHubAuthorizationRuleArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -83,55 +106,63 @@ type NotificationHubAuthorizationRuleArgs struct {
 	Send terra.BoolValue `hcl:"send,attr"`
 	// Timeouts: optional
 	Timeouts *notificationhubauthorizationrule.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that NotificationHubAuthorizationRule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type notificationHubAuthorizationRuleAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_notification_hub_authorization_rule.
 func (nhar notificationHubAuthorizationRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(nhar.ref.Append("id"))
+	return terra.ReferenceAsString(nhar.ref.Append("id"))
 }
 
+// Listen returns a reference to field listen of azurerm_notification_hub_authorization_rule.
 func (nhar notificationHubAuthorizationRuleAttributes) Listen() terra.BoolValue {
-	return terra.ReferenceBool(nhar.ref.Append("listen"))
+	return terra.ReferenceAsBool(nhar.ref.Append("listen"))
 }
 
+// Manage returns a reference to field manage of azurerm_notification_hub_authorization_rule.
 func (nhar notificationHubAuthorizationRuleAttributes) Manage() terra.BoolValue {
-	return terra.ReferenceBool(nhar.ref.Append("manage"))
+	return terra.ReferenceAsBool(nhar.ref.Append("manage"))
 }
 
+// Name returns a reference to field name of azurerm_notification_hub_authorization_rule.
 func (nhar notificationHubAuthorizationRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(nhar.ref.Append("name"))
+	return terra.ReferenceAsString(nhar.ref.Append("name"))
 }
 
+// NamespaceName returns a reference to field namespace_name of azurerm_notification_hub_authorization_rule.
 func (nhar notificationHubAuthorizationRuleAttributes) NamespaceName() terra.StringValue {
-	return terra.ReferenceString(nhar.ref.Append("namespace_name"))
+	return terra.ReferenceAsString(nhar.ref.Append("namespace_name"))
 }
 
+// NotificationHubName returns a reference to field notification_hub_name of azurerm_notification_hub_authorization_rule.
 func (nhar notificationHubAuthorizationRuleAttributes) NotificationHubName() terra.StringValue {
-	return terra.ReferenceString(nhar.ref.Append("notification_hub_name"))
+	return terra.ReferenceAsString(nhar.ref.Append("notification_hub_name"))
 }
 
+// PrimaryAccessKey returns a reference to field primary_access_key of azurerm_notification_hub_authorization_rule.
 func (nhar notificationHubAuthorizationRuleAttributes) PrimaryAccessKey() terra.StringValue {
-	return terra.ReferenceString(nhar.ref.Append("primary_access_key"))
+	return terra.ReferenceAsString(nhar.ref.Append("primary_access_key"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_notification_hub_authorization_rule.
 func (nhar notificationHubAuthorizationRuleAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(nhar.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(nhar.ref.Append("resource_group_name"))
 }
 
+// SecondaryAccessKey returns a reference to field secondary_access_key of azurerm_notification_hub_authorization_rule.
 func (nhar notificationHubAuthorizationRuleAttributes) SecondaryAccessKey() terra.StringValue {
-	return terra.ReferenceString(nhar.ref.Append("secondary_access_key"))
+	return terra.ReferenceAsString(nhar.ref.Append("secondary_access_key"))
 }
 
+// Send returns a reference to field send of azurerm_notification_hub_authorization_rule.
 func (nhar notificationHubAuthorizationRuleAttributes) Send() terra.BoolValue {
-	return terra.ReferenceBool(nhar.ref.Append("send"))
+	return terra.ReferenceAsBool(nhar.ref.Append("send"))
 }
 
 func (nhar notificationHubAuthorizationRuleAttributes) Timeouts() notificationhubauthorizationrule.TimeoutsAttributes {
-	return terra.ReferenceSingle[notificationhubauthorizationrule.TimeoutsAttributes](nhar.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[notificationhubauthorizationrule.TimeoutsAttributes](nhar.ref.Append("timeouts"))
 }
 
 type notificationHubAuthorizationRuleState struct {

@@ -117,7 +117,7 @@ func (atrc AccountTakeoverRiskConfigurationAttributes) InternalWithRef(ref terra
 	return AccountTakeoverRiskConfigurationAttributes{ref: ref}
 }
 
-func (atrc AccountTakeoverRiskConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (atrc AccountTakeoverRiskConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return atrc.ref.InternalTokens()
 }
 
@@ -141,7 +141,7 @@ func (a AccountTakeoverRiskConfigurationActionsAttributes) InternalWithRef(ref t
 	return AccountTakeoverRiskConfigurationActionsAttributes{ref: ref}
 }
 
-func (a AccountTakeoverRiskConfigurationActionsAttributes) InternalTokens() hclwrite.Tokens {
+func (a AccountTakeoverRiskConfigurationActionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -169,7 +169,7 @@ func (ha HighActionAttributes) InternalWithRef(ref terra.Reference) HighActionAt
 	return HighActionAttributes{ref: ref}
 }
 
-func (ha HighActionAttributes) InternalTokens() hclwrite.Tokens {
+func (ha HighActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ha.ref.InternalTokens()
 }
 
@@ -193,7 +193,7 @@ func (la LowActionAttributes) InternalWithRef(ref terra.Reference) LowActionAttr
 	return LowActionAttributes{ref: ref}
 }
 
-func (la LowActionAttributes) InternalTokens() hclwrite.Tokens {
+func (la LowActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return la.ref.InternalTokens()
 }
 
@@ -217,7 +217,7 @@ func (ma MediumActionAttributes) InternalWithRef(ref terra.Reference) MediumActi
 	return MediumActionAttributes{ref: ref}
 }
 
-func (ma MediumActionAttributes) InternalTokens() hclwrite.Tokens {
+func (ma MediumActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ma.ref.InternalTokens()
 }
 
@@ -241,7 +241,7 @@ func (nc NotifyConfigurationAttributes) InternalWithRef(ref terra.Reference) Not
 	return NotifyConfigurationAttributes{ref: ref}
 }
 
-func (nc NotifyConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (nc NotifyConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nc.ref.InternalTokens()
 }
 
@@ -281,7 +281,7 @@ func (be BlockEmailAttributes) InternalWithRef(ref terra.Reference) BlockEmailAt
 	return BlockEmailAttributes{ref: ref}
 }
 
-func (be BlockEmailAttributes) InternalTokens() hclwrite.Tokens {
+func (be BlockEmailAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return be.ref.InternalTokens()
 }
 
@@ -309,7 +309,7 @@ func (me MfaEmailAttributes) InternalWithRef(ref terra.Reference) MfaEmailAttrib
 	return MfaEmailAttributes{ref: ref}
 }
 
-func (me MfaEmailAttributes) InternalTokens() hclwrite.Tokens {
+func (me MfaEmailAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return me.ref.InternalTokens()
 }
 
@@ -337,7 +337,7 @@ func (nae NoActionEmailAttributes) InternalWithRef(ref terra.Reference) NoAction
 	return NoActionEmailAttributes{ref: ref}
 }
 
-func (nae NoActionEmailAttributes) InternalTokens() hclwrite.Tokens {
+func (nae NoActionEmailAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nae.ref.InternalTokens()
 }
 
@@ -365,7 +365,7 @@ func (ccrc CompromisedCredentialsRiskConfigurationAttributes) InternalWithRef(re
 	return CompromisedCredentialsRiskConfigurationAttributes{ref: ref}
 }
 
-func (ccrc CompromisedCredentialsRiskConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ccrc CompromisedCredentialsRiskConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ccrc.ref.InternalTokens()
 }
 
@@ -389,7 +389,7 @@ func (a CompromisedCredentialsRiskConfigurationActionsAttributes) InternalWithRe
 	return CompromisedCredentialsRiskConfigurationActionsAttributes{ref: ref}
 }
 
-func (a CompromisedCredentialsRiskConfigurationActionsAttributes) InternalTokens() hclwrite.Tokens {
+func (a CompromisedCredentialsRiskConfigurationActionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -409,7 +409,7 @@ func (rec RiskExceptionConfigurationAttributes) InternalWithRef(ref terra.Refere
 	return RiskExceptionConfigurationAttributes{ref: ref}
 }
 
-func (rec RiskExceptionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (rec RiskExceptionConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rec.ref.InternalTokens()
 }
 

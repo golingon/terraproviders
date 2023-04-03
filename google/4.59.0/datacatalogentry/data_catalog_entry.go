@@ -42,172 +42,172 @@ type BigqueryDateShardedSpecAttributes struct {
 	ref terra.Reference
 }
 
-func (bdss BigqueryDateShardedSpecAttributes) InternalRef() terra.Reference {
-	return bdss.ref
+func (bdss BigqueryDateShardedSpecAttributes) InternalRef() (terra.Reference, error) {
+	return bdss.ref, nil
 }
 
 func (bdss BigqueryDateShardedSpecAttributes) InternalWithRef(ref terra.Reference) BigqueryDateShardedSpecAttributes {
 	return BigqueryDateShardedSpecAttributes{ref: ref}
 }
 
-func (bdss BigqueryDateShardedSpecAttributes) InternalTokens() hclwrite.Tokens {
+func (bdss BigqueryDateShardedSpecAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bdss.ref.InternalTokens()
 }
 
 func (bdss BigqueryDateShardedSpecAttributes) Dataset() terra.StringValue {
-	return terra.ReferenceString(bdss.ref.Append("dataset"))
+	return terra.ReferenceAsString(bdss.ref.Append("dataset"))
 }
 
 func (bdss BigqueryDateShardedSpecAttributes) ShardCount() terra.NumberValue {
-	return terra.ReferenceNumber(bdss.ref.Append("shard_count"))
+	return terra.ReferenceAsNumber(bdss.ref.Append("shard_count"))
 }
 
 func (bdss BigqueryDateShardedSpecAttributes) TablePrefix() terra.StringValue {
-	return terra.ReferenceString(bdss.ref.Append("table_prefix"))
+	return terra.ReferenceAsString(bdss.ref.Append("table_prefix"))
 }
 
 type BigqueryTableSpecAttributes struct {
 	ref terra.Reference
 }
 
-func (bts BigqueryTableSpecAttributes) InternalRef() terra.Reference {
-	return bts.ref
+func (bts BigqueryTableSpecAttributes) InternalRef() (terra.Reference, error) {
+	return bts.ref, nil
 }
 
 func (bts BigqueryTableSpecAttributes) InternalWithRef(ref terra.Reference) BigqueryTableSpecAttributes {
 	return BigqueryTableSpecAttributes{ref: ref}
 }
 
-func (bts BigqueryTableSpecAttributes) InternalTokens() hclwrite.Tokens {
+func (bts BigqueryTableSpecAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bts.ref.InternalTokens()
 }
 
 func (bts BigqueryTableSpecAttributes) TableSourceType() terra.StringValue {
-	return terra.ReferenceString(bts.ref.Append("table_source_type"))
+	return terra.ReferenceAsString(bts.ref.Append("table_source_type"))
 }
 
 func (bts BigqueryTableSpecAttributes) TableSpec() terra.ListValue[TableSpecAttributes] {
-	return terra.ReferenceList[TableSpecAttributes](bts.ref.Append("table_spec"))
+	return terra.ReferenceAsList[TableSpecAttributes](bts.ref.Append("table_spec"))
 }
 
 func (bts BigqueryTableSpecAttributes) ViewSpec() terra.ListValue[ViewSpecAttributes] {
-	return terra.ReferenceList[ViewSpecAttributes](bts.ref.Append("view_spec"))
+	return terra.ReferenceAsList[ViewSpecAttributes](bts.ref.Append("view_spec"))
 }
 
 type TableSpecAttributes struct {
 	ref terra.Reference
 }
 
-func (ts TableSpecAttributes) InternalRef() terra.Reference {
-	return ts.ref
+func (ts TableSpecAttributes) InternalRef() (terra.Reference, error) {
+	return ts.ref, nil
 }
 
 func (ts TableSpecAttributes) InternalWithRef(ref terra.Reference) TableSpecAttributes {
 	return TableSpecAttributes{ref: ref}
 }
 
-func (ts TableSpecAttributes) InternalTokens() hclwrite.Tokens {
+func (ts TableSpecAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ts.ref.InternalTokens()
 }
 
 func (ts TableSpecAttributes) GroupedEntry() terra.StringValue {
-	return terra.ReferenceString(ts.ref.Append("grouped_entry"))
+	return terra.ReferenceAsString(ts.ref.Append("grouped_entry"))
 }
 
 type ViewSpecAttributes struct {
 	ref terra.Reference
 }
 
-func (vs ViewSpecAttributes) InternalRef() terra.Reference {
-	return vs.ref
+func (vs ViewSpecAttributes) InternalRef() (terra.Reference, error) {
+	return vs.ref, nil
 }
 
 func (vs ViewSpecAttributes) InternalWithRef(ref terra.Reference) ViewSpecAttributes {
 	return ViewSpecAttributes{ref: ref}
 }
 
-func (vs ViewSpecAttributes) InternalTokens() hclwrite.Tokens {
+func (vs ViewSpecAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vs.ref.InternalTokens()
 }
 
 func (vs ViewSpecAttributes) ViewQuery() terra.StringValue {
-	return terra.ReferenceString(vs.ref.Append("view_query"))
+	return terra.ReferenceAsString(vs.ref.Append("view_query"))
 }
 
 type GcsFilesetSpecAttributes struct {
 	ref terra.Reference
 }
 
-func (gfs GcsFilesetSpecAttributes) InternalRef() terra.Reference {
-	return gfs.ref
+func (gfs GcsFilesetSpecAttributes) InternalRef() (terra.Reference, error) {
+	return gfs.ref, nil
 }
 
 func (gfs GcsFilesetSpecAttributes) InternalWithRef(ref terra.Reference) GcsFilesetSpecAttributes {
 	return GcsFilesetSpecAttributes{ref: ref}
 }
 
-func (gfs GcsFilesetSpecAttributes) InternalTokens() hclwrite.Tokens {
+func (gfs GcsFilesetSpecAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gfs.ref.InternalTokens()
 }
 
 func (gfs GcsFilesetSpecAttributes) FilePatterns() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](gfs.ref.Append("file_patterns"))
+	return terra.ReferenceAsList[terra.StringValue](gfs.ref.Append("file_patterns"))
 }
 
 func (gfs GcsFilesetSpecAttributes) SampleGcsFileSpecs() terra.ListValue[SampleGcsFileSpecsAttributes] {
-	return terra.ReferenceList[SampleGcsFileSpecsAttributes](gfs.ref.Append("sample_gcs_file_specs"))
+	return terra.ReferenceAsList[SampleGcsFileSpecsAttributes](gfs.ref.Append("sample_gcs_file_specs"))
 }
 
 type SampleGcsFileSpecsAttributes struct {
 	ref terra.Reference
 }
 
-func (sgfs SampleGcsFileSpecsAttributes) InternalRef() terra.Reference {
-	return sgfs.ref
+func (sgfs SampleGcsFileSpecsAttributes) InternalRef() (terra.Reference, error) {
+	return sgfs.ref, nil
 }
 
 func (sgfs SampleGcsFileSpecsAttributes) InternalWithRef(ref terra.Reference) SampleGcsFileSpecsAttributes {
 	return SampleGcsFileSpecsAttributes{ref: ref}
 }
 
-func (sgfs SampleGcsFileSpecsAttributes) InternalTokens() hclwrite.Tokens {
+func (sgfs SampleGcsFileSpecsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sgfs.ref.InternalTokens()
 }
 
 func (sgfs SampleGcsFileSpecsAttributes) FilePath() terra.StringValue {
-	return terra.ReferenceString(sgfs.ref.Append("file_path"))
+	return terra.ReferenceAsString(sgfs.ref.Append("file_path"))
 }
 
 func (sgfs SampleGcsFileSpecsAttributes) SizeBytes() terra.NumberValue {
-	return terra.ReferenceNumber(sgfs.ref.Append("size_bytes"))
+	return terra.ReferenceAsNumber(sgfs.ref.Append("size_bytes"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type BigqueryDateShardedSpecState struct {

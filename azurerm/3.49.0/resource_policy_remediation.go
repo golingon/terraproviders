@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewResourcePolicyRemediation creates a new instance of [ResourcePolicyRemediation].
 func NewResourcePolicyRemediation(name string, args ResourcePolicyRemediationArgs) *ResourcePolicyRemediation {
 	return &ResourcePolicyRemediation{
 		Args: args,
@@ -19,28 +20,51 @@ func NewResourcePolicyRemediation(name string, args ResourcePolicyRemediationArg
 
 var _ terra.Resource = (*ResourcePolicyRemediation)(nil)
 
+// ResourcePolicyRemediation represents the Terraform resource azurerm_resource_policy_remediation.
 type ResourcePolicyRemediation struct {
-	Name  string
-	Args  ResourcePolicyRemediationArgs
-	state *resourcePolicyRemediationState
+	Name      string
+	Args      ResourcePolicyRemediationArgs
+	state     *resourcePolicyRemediationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ResourcePolicyRemediation].
 func (rpr *ResourcePolicyRemediation) Type() string {
 	return "azurerm_resource_policy_remediation"
 }
 
+// LocalName returns the local name for [ResourcePolicyRemediation].
 func (rpr *ResourcePolicyRemediation) LocalName() string {
 	return rpr.Name
 }
 
+// Configuration returns the configuration (args) for [ResourcePolicyRemediation].
 func (rpr *ResourcePolicyRemediation) Configuration() interface{} {
 	return rpr.Args
 }
 
+// DependOn is used for other resources to depend on [ResourcePolicyRemediation].
+func (rpr *ResourcePolicyRemediation) DependOn() terra.Reference {
+	return terra.ReferenceResource(rpr)
+}
+
+// Dependencies returns the list of resources [ResourcePolicyRemediation] depends_on.
+func (rpr *ResourcePolicyRemediation) Dependencies() terra.Dependencies {
+	return rpr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ResourcePolicyRemediation].
+func (rpr *ResourcePolicyRemediation) LifecycleManagement() *terra.Lifecycle {
+	return rpr.Lifecycle
+}
+
+// Attributes returns the attributes for [ResourcePolicyRemediation].
 func (rpr *ResourcePolicyRemediation) Attributes() resourcePolicyRemediationAttributes {
 	return resourcePolicyRemediationAttributes{ref: terra.ReferenceResource(rpr)}
 }
 
+// ImportState imports the given attribute values into [ResourcePolicyRemediation]'s state.
 func (rpr *ResourcePolicyRemediation) ImportState(av io.Reader) error {
 	rpr.state = &resourcePolicyRemediationState{}
 	if err := json.NewDecoder(av).Decode(rpr.state); err != nil {
@@ -49,10 +73,12 @@ func (rpr *ResourcePolicyRemediation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ResourcePolicyRemediation] has state.
 func (rpr *ResourcePolicyRemediation) State() (*resourcePolicyRemediationState, bool) {
 	return rpr.state, rpr.state != nil
 }
 
+// StateMust returns the state for [ResourcePolicyRemediation]. Panics if the state is nil.
 func (rpr *ResourcePolicyRemediation) StateMust() *resourcePolicyRemediationState {
 	if rpr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rpr.Type(), rpr.LocalName()))
@@ -60,10 +86,7 @@ func (rpr *ResourcePolicyRemediation) StateMust() *resourcePolicyRemediationStat
 	return rpr.state
 }
 
-func (rpr *ResourcePolicyRemediation) DependOn() terra.Reference {
-	return terra.ReferenceResource(rpr)
-}
-
+// ResourcePolicyRemediationArgs contains the configurations for azurerm_resource_policy_remediation.
 type ResourcePolicyRemediationArgs struct {
 	// FailurePercentage: number, optional
 	FailurePercentage terra.NumberValue `hcl:"failure_percentage,attr"`
@@ -89,59 +112,68 @@ type ResourcePolicyRemediationArgs struct {
 	ResourceId terra.StringValue `hcl:"resource_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *resourcepolicyremediation.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ResourcePolicyRemediation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type resourcePolicyRemediationAttributes struct {
 	ref terra.Reference
 }
 
+// FailurePercentage returns a reference to field failure_percentage of azurerm_resource_policy_remediation.
 func (rpr resourcePolicyRemediationAttributes) FailurePercentage() terra.NumberValue {
-	return terra.ReferenceNumber(rpr.ref.Append("failure_percentage"))
+	return terra.ReferenceAsNumber(rpr.ref.Append("failure_percentage"))
 }
 
+// Id returns a reference to field id of azurerm_resource_policy_remediation.
 func (rpr resourcePolicyRemediationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rpr.ref.Append("id"))
+	return terra.ReferenceAsString(rpr.ref.Append("id"))
 }
 
+// LocationFilters returns a reference to field location_filters of azurerm_resource_policy_remediation.
 func (rpr resourcePolicyRemediationAttributes) LocationFilters() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rpr.ref.Append("location_filters"))
+	return terra.ReferenceAsList[terra.StringValue](rpr.ref.Append("location_filters"))
 }
 
+// Name returns a reference to field name of azurerm_resource_policy_remediation.
 func (rpr resourcePolicyRemediationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rpr.ref.Append("name"))
+	return terra.ReferenceAsString(rpr.ref.Append("name"))
 }
 
+// ParallelDeployments returns a reference to field parallel_deployments of azurerm_resource_policy_remediation.
 func (rpr resourcePolicyRemediationAttributes) ParallelDeployments() terra.NumberValue {
-	return terra.ReferenceNumber(rpr.ref.Append("parallel_deployments"))
+	return terra.ReferenceAsNumber(rpr.ref.Append("parallel_deployments"))
 }
 
+// PolicyAssignmentId returns a reference to field policy_assignment_id of azurerm_resource_policy_remediation.
 func (rpr resourcePolicyRemediationAttributes) PolicyAssignmentId() terra.StringValue {
-	return terra.ReferenceString(rpr.ref.Append("policy_assignment_id"))
+	return terra.ReferenceAsString(rpr.ref.Append("policy_assignment_id"))
 }
 
+// PolicyDefinitionId returns a reference to field policy_definition_id of azurerm_resource_policy_remediation.
 func (rpr resourcePolicyRemediationAttributes) PolicyDefinitionId() terra.StringValue {
-	return terra.ReferenceString(rpr.ref.Append("policy_definition_id"))
+	return terra.ReferenceAsString(rpr.ref.Append("policy_definition_id"))
 }
 
+// PolicyDefinitionReferenceId returns a reference to field policy_definition_reference_id of azurerm_resource_policy_remediation.
 func (rpr resourcePolicyRemediationAttributes) PolicyDefinitionReferenceId() terra.StringValue {
-	return terra.ReferenceString(rpr.ref.Append("policy_definition_reference_id"))
+	return terra.ReferenceAsString(rpr.ref.Append("policy_definition_reference_id"))
 }
 
+// ResourceCount returns a reference to field resource_count of azurerm_resource_policy_remediation.
 func (rpr resourcePolicyRemediationAttributes) ResourceCount() terra.NumberValue {
-	return terra.ReferenceNumber(rpr.ref.Append("resource_count"))
+	return terra.ReferenceAsNumber(rpr.ref.Append("resource_count"))
 }
 
+// ResourceDiscoveryMode returns a reference to field resource_discovery_mode of azurerm_resource_policy_remediation.
 func (rpr resourcePolicyRemediationAttributes) ResourceDiscoveryMode() terra.StringValue {
-	return terra.ReferenceString(rpr.ref.Append("resource_discovery_mode"))
+	return terra.ReferenceAsString(rpr.ref.Append("resource_discovery_mode"))
 }
 
+// ResourceId returns a reference to field resource_id of azurerm_resource_policy_remediation.
 func (rpr resourcePolicyRemediationAttributes) ResourceId() terra.StringValue {
-	return terra.ReferenceString(rpr.ref.Append("resource_id"))
+	return terra.ReferenceAsString(rpr.ref.Append("resource_id"))
 }
 
 func (rpr resourcePolicyRemediationAttributes) Timeouts() resourcepolicyremediation.TimeoutsAttributes {
-	return terra.ReferenceSingle[resourcepolicyremediation.TimeoutsAttributes](rpr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[resourcepolicyremediation.TimeoutsAttributes](rpr.ref.Append("timeouts"))
 }
 
 type resourcePolicyRemediationState struct {

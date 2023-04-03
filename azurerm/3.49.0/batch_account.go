@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBatchAccount creates a new instance of [BatchAccount].
 func NewBatchAccount(name string, args BatchAccountArgs) *BatchAccount {
 	return &BatchAccount{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBatchAccount(name string, args BatchAccountArgs) *BatchAccount {
 
 var _ terra.Resource = (*BatchAccount)(nil)
 
+// BatchAccount represents the Terraform resource azurerm_batch_account.
 type BatchAccount struct {
-	Name  string
-	Args  BatchAccountArgs
-	state *batchAccountState
+	Name      string
+	Args      BatchAccountArgs
+	state     *batchAccountState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BatchAccount].
 func (ba *BatchAccount) Type() string {
 	return "azurerm_batch_account"
 }
 
+// LocalName returns the local name for [BatchAccount].
 func (ba *BatchAccount) LocalName() string {
 	return ba.Name
 }
 
+// Configuration returns the configuration (args) for [BatchAccount].
 func (ba *BatchAccount) Configuration() interface{} {
 	return ba.Args
 }
 
+// DependOn is used for other resources to depend on [BatchAccount].
+func (ba *BatchAccount) DependOn() terra.Reference {
+	return terra.ReferenceResource(ba)
+}
+
+// Dependencies returns the list of resources [BatchAccount] depends_on.
+func (ba *BatchAccount) Dependencies() terra.Dependencies {
+	return ba.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BatchAccount].
+func (ba *BatchAccount) LifecycleManagement() *terra.Lifecycle {
+	return ba.Lifecycle
+}
+
+// Attributes returns the attributes for [BatchAccount].
 func (ba *BatchAccount) Attributes() batchAccountAttributes {
 	return batchAccountAttributes{ref: terra.ReferenceResource(ba)}
 }
 
+// ImportState imports the given attribute values into [BatchAccount]'s state.
 func (ba *BatchAccount) ImportState(av io.Reader) error {
 	ba.state = &batchAccountState{}
 	if err := json.NewDecoder(av).Decode(ba.state); err != nil {
@@ -49,10 +73,12 @@ func (ba *BatchAccount) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BatchAccount] has state.
 func (ba *BatchAccount) State() (*batchAccountState, bool) {
 	return ba.state, ba.state != nil
 }
 
+// StateMust returns the state for [BatchAccount]. Panics if the state is nil.
 func (ba *BatchAccount) StateMust() *batchAccountState {
 	if ba.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ba.Type(), ba.LocalName()))
@@ -60,10 +86,7 @@ func (ba *BatchAccount) StateMust() *batchAccountState {
 	return ba.state
 }
 
-func (ba *BatchAccount) DependOn() terra.Reference {
-	return terra.ReferenceResource(ba)
-}
-
+// BatchAccountArgs contains the configurations for azurerm_batch_account.
 type BatchAccountArgs struct {
 	// AllowedAuthenticationModes: set of string, optional
 	AllowedAuthenticationModes terra.SetValue[terra.StringValue] `hcl:"allowed_authentication_modes,attr"`
@@ -95,83 +118,95 @@ type BatchAccountArgs struct {
 	KeyVaultReference *batchaccount.KeyVaultReference `hcl:"key_vault_reference,block"`
 	// Timeouts: optional
 	Timeouts *batchaccount.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that BatchAccount depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type batchAccountAttributes struct {
 	ref terra.Reference
 }
 
+// AccountEndpoint returns a reference to field account_endpoint of azurerm_batch_account.
 func (ba batchAccountAttributes) AccountEndpoint() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("account_endpoint"))
+	return terra.ReferenceAsString(ba.ref.Append("account_endpoint"))
 }
 
+// AllowedAuthenticationModes returns a reference to field allowed_authentication_modes of azurerm_batch_account.
 func (ba batchAccountAttributes) AllowedAuthenticationModes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ba.ref.Append("allowed_authentication_modes"))
+	return terra.ReferenceAsSet[terra.StringValue](ba.ref.Append("allowed_authentication_modes"))
 }
 
+// Id returns a reference to field id of azurerm_batch_account.
 func (ba batchAccountAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("id"))
+	return terra.ReferenceAsString(ba.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_batch_account.
 func (ba batchAccountAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("location"))
+	return terra.ReferenceAsString(ba.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_batch_account.
 func (ba batchAccountAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("name"))
+	return terra.ReferenceAsString(ba.ref.Append("name"))
 }
 
+// PoolAllocationMode returns a reference to field pool_allocation_mode of azurerm_batch_account.
 func (ba batchAccountAttributes) PoolAllocationMode() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("pool_allocation_mode"))
+	return terra.ReferenceAsString(ba.ref.Append("pool_allocation_mode"))
 }
 
+// PrimaryAccessKey returns a reference to field primary_access_key of azurerm_batch_account.
 func (ba batchAccountAttributes) PrimaryAccessKey() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("primary_access_key"))
+	return terra.ReferenceAsString(ba.ref.Append("primary_access_key"))
 }
 
+// PublicNetworkAccessEnabled returns a reference to field public_network_access_enabled of azurerm_batch_account.
 func (ba batchAccountAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ba.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(ba.ref.Append("public_network_access_enabled"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_batch_account.
 func (ba batchAccountAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ba.ref.Append("resource_group_name"))
 }
 
+// SecondaryAccessKey returns a reference to field secondary_access_key of azurerm_batch_account.
 func (ba batchAccountAttributes) SecondaryAccessKey() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("secondary_access_key"))
+	return terra.ReferenceAsString(ba.ref.Append("secondary_access_key"))
 }
 
+// StorageAccountAuthenticationMode returns a reference to field storage_account_authentication_mode of azurerm_batch_account.
 func (ba batchAccountAttributes) StorageAccountAuthenticationMode() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("storage_account_authentication_mode"))
+	return terra.ReferenceAsString(ba.ref.Append("storage_account_authentication_mode"))
 }
 
+// StorageAccountId returns a reference to field storage_account_id of azurerm_batch_account.
 func (ba batchAccountAttributes) StorageAccountId() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("storage_account_id"))
+	return terra.ReferenceAsString(ba.ref.Append("storage_account_id"))
 }
 
+// StorageAccountNodeIdentity returns a reference to field storage_account_node_identity of azurerm_batch_account.
 func (ba batchAccountAttributes) StorageAccountNodeIdentity() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("storage_account_node_identity"))
+	return terra.ReferenceAsString(ba.ref.Append("storage_account_node_identity"))
 }
 
+// Tags returns a reference to field tags of azurerm_batch_account.
 func (ba batchAccountAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ba.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ba.ref.Append("tags"))
 }
 
 func (ba batchAccountAttributes) Encryption() terra.ListValue[batchaccount.EncryptionAttributes] {
-	return terra.ReferenceList[batchaccount.EncryptionAttributes](ba.ref.Append("encryption"))
+	return terra.ReferenceAsList[batchaccount.EncryptionAttributes](ba.ref.Append("encryption"))
 }
 
 func (ba batchAccountAttributes) Identity() terra.ListValue[batchaccount.IdentityAttributes] {
-	return terra.ReferenceList[batchaccount.IdentityAttributes](ba.ref.Append("identity"))
+	return terra.ReferenceAsList[batchaccount.IdentityAttributes](ba.ref.Append("identity"))
 }
 
 func (ba batchAccountAttributes) KeyVaultReference() terra.ListValue[batchaccount.KeyVaultReferenceAttributes] {
-	return terra.ReferenceList[batchaccount.KeyVaultReferenceAttributes](ba.ref.Append("key_vault_reference"))
+	return terra.ReferenceAsList[batchaccount.KeyVaultReferenceAttributes](ba.ref.Append("key_vault_reference"))
 }
 
 func (ba batchAccountAttributes) Timeouts() batchaccount.TimeoutsAttributes {
-	return terra.ReferenceSingle[batchaccount.TimeoutsAttributes](ba.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[batchaccount.TimeoutsAttributes](ba.ref.Append("timeouts"))
 }
 
 type batchAccountState struct {

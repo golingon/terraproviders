@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataEventgridDomain creates a new instance of [DataEventgridDomain].
 func NewDataEventgridDomain(name string, args DataEventgridDomainArgs) *DataEventgridDomain {
 	return &DataEventgridDomain{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataEventgridDomain(name string, args DataEventgridDomainArgs) *DataEven
 
 var _ terra.DataResource = (*DataEventgridDomain)(nil)
 
+// DataEventgridDomain represents the Terraform data resource azurerm_eventgrid_domain.
 type DataEventgridDomain struct {
 	Name string
 	Args DataEventgridDomainArgs
 }
 
+// DataSource returns the Terraform object type for [DataEventgridDomain].
 func (ed *DataEventgridDomain) DataSource() string {
 	return "azurerm_eventgrid_domain"
 }
 
+// LocalName returns the local name for [DataEventgridDomain].
 func (ed *DataEventgridDomain) LocalName() string {
 	return ed.Name
 }
 
+// Configuration returns the configuration (args) for [DataEventgridDomain].
 func (ed *DataEventgridDomain) Configuration() interface{} {
 	return ed.Args
 }
 
+// Attributes returns the attributes for [DataEventgridDomain].
 func (ed *DataEventgridDomain) Attributes() dataEventgridDomainAttributes {
 	return dataEventgridDomainAttributes{ref: terra.ReferenceDataResource(ed)}
 }
 
+// DataEventgridDomainArgs contains the configurations for azurerm_eventgrid_domain.
 type DataEventgridDomainArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -61,58 +68,68 @@ type dataEventgridDomainAttributes struct {
 	ref terra.Reference
 }
 
+// Endpoint returns a reference to field endpoint of azurerm_eventgrid_domain.
 func (ed dataEventgridDomainAttributes) Endpoint() terra.StringValue {
-	return terra.ReferenceString(ed.ref.Append("endpoint"))
+	return terra.ReferenceAsString(ed.ref.Append("endpoint"))
 }
 
+// Id returns a reference to field id of azurerm_eventgrid_domain.
 func (ed dataEventgridDomainAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ed.ref.Append("id"))
+	return terra.ReferenceAsString(ed.ref.Append("id"))
 }
 
+// InputSchema returns a reference to field input_schema of azurerm_eventgrid_domain.
 func (ed dataEventgridDomainAttributes) InputSchema() terra.StringValue {
-	return terra.ReferenceString(ed.ref.Append("input_schema"))
+	return terra.ReferenceAsString(ed.ref.Append("input_schema"))
 }
 
+// Location returns a reference to field location of azurerm_eventgrid_domain.
 func (ed dataEventgridDomainAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ed.ref.Append("location"))
+	return terra.ReferenceAsString(ed.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_eventgrid_domain.
 func (ed dataEventgridDomainAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ed.ref.Append("name"))
+	return terra.ReferenceAsString(ed.ref.Append("name"))
 }
 
+// PrimaryAccessKey returns a reference to field primary_access_key of azurerm_eventgrid_domain.
 func (ed dataEventgridDomainAttributes) PrimaryAccessKey() terra.StringValue {
-	return terra.ReferenceString(ed.ref.Append("primary_access_key"))
+	return terra.ReferenceAsString(ed.ref.Append("primary_access_key"))
 }
 
+// PublicNetworkAccessEnabled returns a reference to field public_network_access_enabled of azurerm_eventgrid_domain.
 func (ed dataEventgridDomainAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ed.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(ed.ref.Append("public_network_access_enabled"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_eventgrid_domain.
 func (ed dataEventgridDomainAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ed.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ed.ref.Append("resource_group_name"))
 }
 
+// SecondaryAccessKey returns a reference to field secondary_access_key of azurerm_eventgrid_domain.
 func (ed dataEventgridDomainAttributes) SecondaryAccessKey() terra.StringValue {
-	return terra.ReferenceString(ed.ref.Append("secondary_access_key"))
+	return terra.ReferenceAsString(ed.ref.Append("secondary_access_key"))
 }
 
+// Tags returns a reference to field tags of azurerm_eventgrid_domain.
 func (ed dataEventgridDomainAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ed.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ed.ref.Append("tags"))
 }
 
 func (ed dataEventgridDomainAttributes) InboundIpRule() terra.ListValue[dataeventgriddomain.InboundIpRuleAttributes] {
-	return terra.ReferenceList[dataeventgriddomain.InboundIpRuleAttributes](ed.ref.Append("inbound_ip_rule"))
+	return terra.ReferenceAsList[dataeventgriddomain.InboundIpRuleAttributes](ed.ref.Append("inbound_ip_rule"))
 }
 
 func (ed dataEventgridDomainAttributes) InputMappingDefaultValues() terra.ListValue[dataeventgriddomain.InputMappingDefaultValuesAttributes] {
-	return terra.ReferenceList[dataeventgriddomain.InputMappingDefaultValuesAttributes](ed.ref.Append("input_mapping_default_values"))
+	return terra.ReferenceAsList[dataeventgriddomain.InputMappingDefaultValuesAttributes](ed.ref.Append("input_mapping_default_values"))
 }
 
 func (ed dataEventgridDomainAttributes) InputMappingFields() terra.ListValue[dataeventgriddomain.InputMappingFieldsAttributes] {
-	return terra.ReferenceList[dataeventgriddomain.InputMappingFieldsAttributes](ed.ref.Append("input_mapping_fields"))
+	return terra.ReferenceAsList[dataeventgriddomain.InputMappingFieldsAttributes](ed.ref.Append("input_mapping_fields"))
 }
 
 func (ed dataEventgridDomainAttributes) Timeouts() dataeventgriddomain.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataeventgriddomain.TimeoutsAttributes](ed.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataeventgriddomain.TimeoutsAttributes](ed.ref.Append("timeouts"))
 }

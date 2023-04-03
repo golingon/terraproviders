@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewContainerConnectedRegistry creates a new instance of [ContainerConnectedRegistry].
 func NewContainerConnectedRegistry(name string, args ContainerConnectedRegistryArgs) *ContainerConnectedRegistry {
 	return &ContainerConnectedRegistry{
 		Args: args,
@@ -19,28 +20,51 @@ func NewContainerConnectedRegistry(name string, args ContainerConnectedRegistryA
 
 var _ terra.Resource = (*ContainerConnectedRegistry)(nil)
 
+// ContainerConnectedRegistry represents the Terraform resource azurerm_container_connected_registry.
 type ContainerConnectedRegistry struct {
-	Name  string
-	Args  ContainerConnectedRegistryArgs
-	state *containerConnectedRegistryState
+	Name      string
+	Args      ContainerConnectedRegistryArgs
+	state     *containerConnectedRegistryState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ContainerConnectedRegistry].
 func (ccr *ContainerConnectedRegistry) Type() string {
 	return "azurerm_container_connected_registry"
 }
 
+// LocalName returns the local name for [ContainerConnectedRegistry].
 func (ccr *ContainerConnectedRegistry) LocalName() string {
 	return ccr.Name
 }
 
+// Configuration returns the configuration (args) for [ContainerConnectedRegistry].
 func (ccr *ContainerConnectedRegistry) Configuration() interface{} {
 	return ccr.Args
 }
 
+// DependOn is used for other resources to depend on [ContainerConnectedRegistry].
+func (ccr *ContainerConnectedRegistry) DependOn() terra.Reference {
+	return terra.ReferenceResource(ccr)
+}
+
+// Dependencies returns the list of resources [ContainerConnectedRegistry] depends_on.
+func (ccr *ContainerConnectedRegistry) Dependencies() terra.Dependencies {
+	return ccr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ContainerConnectedRegistry].
+func (ccr *ContainerConnectedRegistry) LifecycleManagement() *terra.Lifecycle {
+	return ccr.Lifecycle
+}
+
+// Attributes returns the attributes for [ContainerConnectedRegistry].
 func (ccr *ContainerConnectedRegistry) Attributes() containerConnectedRegistryAttributes {
 	return containerConnectedRegistryAttributes{ref: terra.ReferenceResource(ccr)}
 }
 
+// ImportState imports the given attribute values into [ContainerConnectedRegistry]'s state.
 func (ccr *ContainerConnectedRegistry) ImportState(av io.Reader) error {
 	ccr.state = &containerConnectedRegistryState{}
 	if err := json.NewDecoder(av).Decode(ccr.state); err != nil {
@@ -49,10 +73,12 @@ func (ccr *ContainerConnectedRegistry) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ContainerConnectedRegistry] has state.
 func (ccr *ContainerConnectedRegistry) State() (*containerConnectedRegistryState, bool) {
 	return ccr.state, ccr.state != nil
 }
 
+// StateMust returns the state for [ContainerConnectedRegistry]. Panics if the state is nil.
 func (ccr *ContainerConnectedRegistry) StateMust() *containerConnectedRegistryState {
 	if ccr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ccr.Type(), ccr.LocalName()))
@@ -60,10 +86,7 @@ func (ccr *ContainerConnectedRegistry) StateMust() *containerConnectedRegistrySt
 	return ccr.state
 }
 
-func (ccr *ContainerConnectedRegistry) DependOn() terra.Reference {
-	return terra.ReferenceResource(ccr)
-}
-
+// ContainerConnectedRegistryArgs contains the configurations for azurerm_container_connected_registry.
 type ContainerConnectedRegistryArgs struct {
 	// AuditLogEnabled: bool, optional
 	AuditLogEnabled terra.BoolValue `hcl:"audit_log_enabled,attr"`
@@ -93,67 +116,77 @@ type ContainerConnectedRegistryArgs struct {
 	Notification []containerconnectedregistry.Notification `hcl:"notification,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *containerconnectedregistry.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ContainerConnectedRegistry depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type containerConnectedRegistryAttributes struct {
 	ref terra.Reference
 }
 
+// AuditLogEnabled returns a reference to field audit_log_enabled of azurerm_container_connected_registry.
 func (ccr containerConnectedRegistryAttributes) AuditLogEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ccr.ref.Append("audit_log_enabled"))
+	return terra.ReferenceAsBool(ccr.ref.Append("audit_log_enabled"))
 }
 
+// ClientTokenIds returns a reference to field client_token_ids of azurerm_container_connected_registry.
 func (ccr containerConnectedRegistryAttributes) ClientTokenIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ccr.ref.Append("client_token_ids"))
+	return terra.ReferenceAsList[terra.StringValue](ccr.ref.Append("client_token_ids"))
 }
 
+// ContainerRegistryId returns a reference to field container_registry_id of azurerm_container_connected_registry.
 func (ccr containerConnectedRegistryAttributes) ContainerRegistryId() terra.StringValue {
-	return terra.ReferenceString(ccr.ref.Append("container_registry_id"))
+	return terra.ReferenceAsString(ccr.ref.Append("container_registry_id"))
 }
 
+// Id returns a reference to field id of azurerm_container_connected_registry.
 func (ccr containerConnectedRegistryAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ccr.ref.Append("id"))
+	return terra.ReferenceAsString(ccr.ref.Append("id"))
 }
 
+// LogLevel returns a reference to field log_level of azurerm_container_connected_registry.
 func (ccr containerConnectedRegistryAttributes) LogLevel() terra.StringValue {
-	return terra.ReferenceString(ccr.ref.Append("log_level"))
+	return terra.ReferenceAsString(ccr.ref.Append("log_level"))
 }
 
+// Mode returns a reference to field mode of azurerm_container_connected_registry.
 func (ccr containerConnectedRegistryAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(ccr.ref.Append("mode"))
+	return terra.ReferenceAsString(ccr.ref.Append("mode"))
 }
 
+// Name returns a reference to field name of azurerm_container_connected_registry.
 func (ccr containerConnectedRegistryAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ccr.ref.Append("name"))
+	return terra.ReferenceAsString(ccr.ref.Append("name"))
 }
 
+// ParentRegistryId returns a reference to field parent_registry_id of azurerm_container_connected_registry.
 func (ccr containerConnectedRegistryAttributes) ParentRegistryId() terra.StringValue {
-	return terra.ReferenceString(ccr.ref.Append("parent_registry_id"))
+	return terra.ReferenceAsString(ccr.ref.Append("parent_registry_id"))
 }
 
+// SyncMessageTtl returns a reference to field sync_message_ttl of azurerm_container_connected_registry.
 func (ccr containerConnectedRegistryAttributes) SyncMessageTtl() terra.StringValue {
-	return terra.ReferenceString(ccr.ref.Append("sync_message_ttl"))
+	return terra.ReferenceAsString(ccr.ref.Append("sync_message_ttl"))
 }
 
+// SyncSchedule returns a reference to field sync_schedule of azurerm_container_connected_registry.
 func (ccr containerConnectedRegistryAttributes) SyncSchedule() terra.StringValue {
-	return terra.ReferenceString(ccr.ref.Append("sync_schedule"))
+	return terra.ReferenceAsString(ccr.ref.Append("sync_schedule"))
 }
 
+// SyncTokenId returns a reference to field sync_token_id of azurerm_container_connected_registry.
 func (ccr containerConnectedRegistryAttributes) SyncTokenId() terra.StringValue {
-	return terra.ReferenceString(ccr.ref.Append("sync_token_id"))
+	return terra.ReferenceAsString(ccr.ref.Append("sync_token_id"))
 }
 
+// SyncWindow returns a reference to field sync_window of azurerm_container_connected_registry.
 func (ccr containerConnectedRegistryAttributes) SyncWindow() terra.StringValue {
-	return terra.ReferenceString(ccr.ref.Append("sync_window"))
+	return terra.ReferenceAsString(ccr.ref.Append("sync_window"))
 }
 
 func (ccr containerConnectedRegistryAttributes) Notification() terra.ListValue[containerconnectedregistry.NotificationAttributes] {
-	return terra.ReferenceList[containerconnectedregistry.NotificationAttributes](ccr.ref.Append("notification"))
+	return terra.ReferenceAsList[containerconnectedregistry.NotificationAttributes](ccr.ref.Append("notification"))
 }
 
 func (ccr containerConnectedRegistryAttributes) Timeouts() containerconnectedregistry.TimeoutsAttributes {
-	return terra.ReferenceSingle[containerconnectedregistry.TimeoutsAttributes](ccr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[containerconnectedregistry.TimeoutsAttributes](ccr.ref.Append("timeouts"))
 }
 
 type containerConnectedRegistryState struct {

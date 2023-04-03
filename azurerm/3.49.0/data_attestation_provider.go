@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataAttestationProvider creates a new instance of [DataAttestationProvider].
 func NewDataAttestationProvider(name string, args DataAttestationProviderArgs) *DataAttestationProvider {
 	return &DataAttestationProvider{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataAttestationProvider(name string, args DataAttestationProviderArgs) *
 
 var _ terra.DataResource = (*DataAttestationProvider)(nil)
 
+// DataAttestationProvider represents the Terraform data resource azurerm_attestation_provider.
 type DataAttestationProvider struct {
 	Name string
 	Args DataAttestationProviderArgs
 }
 
+// DataSource returns the Terraform object type for [DataAttestationProvider].
 func (ap *DataAttestationProvider) DataSource() string {
 	return "azurerm_attestation_provider"
 }
 
+// LocalName returns the local name for [DataAttestationProvider].
 func (ap *DataAttestationProvider) LocalName() string {
 	return ap.Name
 }
 
+// Configuration returns the configuration (args) for [DataAttestationProvider].
 func (ap *DataAttestationProvider) Configuration() interface{} {
 	return ap.Args
 }
 
+// Attributes returns the attributes for [DataAttestationProvider].
 func (ap *DataAttestationProvider) Attributes() dataAttestationProviderAttributes {
 	return dataAttestationProviderAttributes{ref: terra.ReferenceDataResource(ap)}
 }
 
+// DataAttestationProviderArgs contains the configurations for azurerm_attestation_provider.
 type DataAttestationProviderArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,34 +58,41 @@ type dataAttestationProviderAttributes struct {
 	ref terra.Reference
 }
 
+// AttestationUri returns a reference to field attestation_uri of azurerm_attestation_provider.
 func (ap dataAttestationProviderAttributes) AttestationUri() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("attestation_uri"))
+	return terra.ReferenceAsString(ap.ref.Append("attestation_uri"))
 }
 
+// Id returns a reference to field id of azurerm_attestation_provider.
 func (ap dataAttestationProviderAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("id"))
+	return terra.ReferenceAsString(ap.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_attestation_provider.
 func (ap dataAttestationProviderAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("location"))
+	return terra.ReferenceAsString(ap.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_attestation_provider.
 func (ap dataAttestationProviderAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("name"))
+	return terra.ReferenceAsString(ap.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_attestation_provider.
 func (ap dataAttestationProviderAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ap.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_attestation_provider.
 func (ap dataAttestationProviderAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ap.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ap.ref.Append("tags"))
 }
 
+// TrustModel returns a reference to field trust_model of azurerm_attestation_provider.
 func (ap dataAttestationProviderAttributes) TrustModel() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("trust_model"))
+	return terra.ReferenceAsString(ap.ref.Append("trust_model"))
 }
 
 func (ap dataAttestationProviderAttributes) Timeouts() dataattestationprovider.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataattestationprovider.TimeoutsAttributes](ap.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataattestationprovider.TimeoutsAttributes](ap.ref.Append("timeouts"))
 }

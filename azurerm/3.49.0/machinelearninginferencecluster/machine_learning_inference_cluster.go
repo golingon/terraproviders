@@ -42,100 +42,100 @@ type IdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (i IdentityAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IdentityAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IdentityAttributes) InternalWithRef(ref terra.Reference) IdentityAttributes {
 	return IdentityAttributes{ref: ref}
 }
 
-func (i IdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (i IdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IdentityAttributes) IdentityIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i.ref.Append("identity_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](i.ref.Append("identity_ids"))
 }
 
 func (i IdentityAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("principal_id"))
+	return terra.ReferenceAsString(i.ref.Append("principal_id"))
 }
 
 func (i IdentityAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(i.ref.Append("tenant_id"))
 }
 
 func (i IdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("type"))
+	return terra.ReferenceAsString(i.ref.Append("type"))
 }
 
 type SslAttributes struct {
 	ref terra.Reference
 }
 
-func (s SslAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SslAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SslAttributes) InternalWithRef(ref terra.Reference) SslAttributes {
 	return SslAttributes{ref: ref}
 }
 
-func (s SslAttributes) InternalTokens() hclwrite.Tokens {
+func (s SslAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SslAttributes) Cert() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("cert"))
+	return terra.ReferenceAsString(s.ref.Append("cert"))
 }
 
 func (s SslAttributes) Cname() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("cname"))
+	return terra.ReferenceAsString(s.ref.Append("cname"))
 }
 
 func (s SslAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("key"))
+	return terra.ReferenceAsString(s.ref.Append("key"))
 }
 
 func (s SslAttributes) LeafDomainLabel() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("leaf_domain_label"))
+	return terra.ReferenceAsString(s.ref.Append("leaf_domain_label"))
 }
 
 func (s SslAttributes) OverwriteExistingDomain() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("overwrite_existing_domain"))
+	return terra.ReferenceAsBool(s.ref.Append("overwrite_existing_domain"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type IdentityState struct {

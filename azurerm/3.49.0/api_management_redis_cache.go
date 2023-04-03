@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApiManagementRedisCache creates a new instance of [ApiManagementRedisCache].
 func NewApiManagementRedisCache(name string, args ApiManagementRedisCacheArgs) *ApiManagementRedisCache {
 	return &ApiManagementRedisCache{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApiManagementRedisCache(name string, args ApiManagementRedisCacheArgs) *
 
 var _ terra.Resource = (*ApiManagementRedisCache)(nil)
 
+// ApiManagementRedisCache represents the Terraform resource azurerm_api_management_redis_cache.
 type ApiManagementRedisCache struct {
-	Name  string
-	Args  ApiManagementRedisCacheArgs
-	state *apiManagementRedisCacheState
+	Name      string
+	Args      ApiManagementRedisCacheArgs
+	state     *apiManagementRedisCacheState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiManagementRedisCache].
 func (amrc *ApiManagementRedisCache) Type() string {
 	return "azurerm_api_management_redis_cache"
 }
 
+// LocalName returns the local name for [ApiManagementRedisCache].
 func (amrc *ApiManagementRedisCache) LocalName() string {
 	return amrc.Name
 }
 
+// Configuration returns the configuration (args) for [ApiManagementRedisCache].
 func (amrc *ApiManagementRedisCache) Configuration() interface{} {
 	return amrc.Args
 }
 
+// DependOn is used for other resources to depend on [ApiManagementRedisCache].
+func (amrc *ApiManagementRedisCache) DependOn() terra.Reference {
+	return terra.ReferenceResource(amrc)
+}
+
+// Dependencies returns the list of resources [ApiManagementRedisCache] depends_on.
+func (amrc *ApiManagementRedisCache) Dependencies() terra.Dependencies {
+	return amrc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiManagementRedisCache].
+func (amrc *ApiManagementRedisCache) LifecycleManagement() *terra.Lifecycle {
+	return amrc.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiManagementRedisCache].
 func (amrc *ApiManagementRedisCache) Attributes() apiManagementRedisCacheAttributes {
 	return apiManagementRedisCacheAttributes{ref: terra.ReferenceResource(amrc)}
 }
 
+// ImportState imports the given attribute values into [ApiManagementRedisCache]'s state.
 func (amrc *ApiManagementRedisCache) ImportState(av io.Reader) error {
 	amrc.state = &apiManagementRedisCacheState{}
 	if err := json.NewDecoder(av).Decode(amrc.state); err != nil {
@@ -49,10 +73,12 @@ func (amrc *ApiManagementRedisCache) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiManagementRedisCache] has state.
 func (amrc *ApiManagementRedisCache) State() (*apiManagementRedisCacheState, bool) {
 	return amrc.state, amrc.state != nil
 }
 
+// StateMust returns the state for [ApiManagementRedisCache]. Panics if the state is nil.
 func (amrc *ApiManagementRedisCache) StateMust() *apiManagementRedisCacheState {
 	if amrc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", amrc.Type(), amrc.LocalName()))
@@ -60,10 +86,7 @@ func (amrc *ApiManagementRedisCache) StateMust() *apiManagementRedisCacheState {
 	return amrc.state
 }
 
-func (amrc *ApiManagementRedisCache) DependOn() terra.Reference {
-	return terra.ReferenceResource(amrc)
-}
-
+// ApiManagementRedisCacheArgs contains the configurations for azurerm_api_management_redis_cache.
 type ApiManagementRedisCacheArgs struct {
 	// ApiManagementId: string, required
 	ApiManagementId terra.StringValue `hcl:"api_management_id,attr" validate:"required"`
@@ -81,43 +104,48 @@ type ApiManagementRedisCacheArgs struct {
 	RedisCacheId terra.StringValue `hcl:"redis_cache_id,attr"`
 	// Timeouts: optional
 	Timeouts *apimanagementrediscache.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ApiManagementRedisCache depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiManagementRedisCacheAttributes struct {
 	ref terra.Reference
 }
 
+// ApiManagementId returns a reference to field api_management_id of azurerm_api_management_redis_cache.
 func (amrc apiManagementRedisCacheAttributes) ApiManagementId() terra.StringValue {
-	return terra.ReferenceString(amrc.ref.Append("api_management_id"))
+	return terra.ReferenceAsString(amrc.ref.Append("api_management_id"))
 }
 
+// CacheLocation returns a reference to field cache_location of azurerm_api_management_redis_cache.
 func (amrc apiManagementRedisCacheAttributes) CacheLocation() terra.StringValue {
-	return terra.ReferenceString(amrc.ref.Append("cache_location"))
+	return terra.ReferenceAsString(amrc.ref.Append("cache_location"))
 }
 
+// ConnectionString returns a reference to field connection_string of azurerm_api_management_redis_cache.
 func (amrc apiManagementRedisCacheAttributes) ConnectionString() terra.StringValue {
-	return terra.ReferenceString(amrc.ref.Append("connection_string"))
+	return terra.ReferenceAsString(amrc.ref.Append("connection_string"))
 }
 
+// Description returns a reference to field description of azurerm_api_management_redis_cache.
 func (amrc apiManagementRedisCacheAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(amrc.ref.Append("description"))
+	return terra.ReferenceAsString(amrc.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_api_management_redis_cache.
 func (amrc apiManagementRedisCacheAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(amrc.ref.Append("id"))
+	return terra.ReferenceAsString(amrc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_api_management_redis_cache.
 func (amrc apiManagementRedisCacheAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(amrc.ref.Append("name"))
+	return terra.ReferenceAsString(amrc.ref.Append("name"))
 }
 
+// RedisCacheId returns a reference to field redis_cache_id of azurerm_api_management_redis_cache.
 func (amrc apiManagementRedisCacheAttributes) RedisCacheId() terra.StringValue {
-	return terra.ReferenceString(amrc.ref.Append("redis_cache_id"))
+	return terra.ReferenceAsString(amrc.ref.Append("redis_cache_id"))
 }
 
 func (amrc apiManagementRedisCacheAttributes) Timeouts() apimanagementrediscache.TimeoutsAttributes {
-	return terra.ReferenceSingle[apimanagementrediscache.TimeoutsAttributes](amrc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[apimanagementrediscache.TimeoutsAttributes](amrc.ref.Append("timeouts"))
 }
 
 type apiManagementRedisCacheState struct {

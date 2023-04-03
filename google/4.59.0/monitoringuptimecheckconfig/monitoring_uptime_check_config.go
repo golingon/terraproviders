@@ -94,256 +94,256 @@ type ContentMatchersAttributes struct {
 	ref terra.Reference
 }
 
-func (cm ContentMatchersAttributes) InternalRef() terra.Reference {
-	return cm.ref
+func (cm ContentMatchersAttributes) InternalRef() (terra.Reference, error) {
+	return cm.ref, nil
 }
 
 func (cm ContentMatchersAttributes) InternalWithRef(ref terra.Reference) ContentMatchersAttributes {
 	return ContentMatchersAttributes{ref: ref}
 }
 
-func (cm ContentMatchersAttributes) InternalTokens() hclwrite.Tokens {
+func (cm ContentMatchersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cm.ref.InternalTokens()
 }
 
 func (cm ContentMatchersAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(cm.ref.Append("content"))
+	return terra.ReferenceAsString(cm.ref.Append("content"))
 }
 
 func (cm ContentMatchersAttributes) Matcher() terra.StringValue {
-	return terra.ReferenceString(cm.ref.Append("matcher"))
+	return terra.ReferenceAsString(cm.ref.Append("matcher"))
 }
 
 func (cm ContentMatchersAttributes) JsonPathMatcher() terra.ListValue[JsonPathMatcherAttributes] {
-	return terra.ReferenceList[JsonPathMatcherAttributes](cm.ref.Append("json_path_matcher"))
+	return terra.ReferenceAsList[JsonPathMatcherAttributes](cm.ref.Append("json_path_matcher"))
 }
 
 type JsonPathMatcherAttributes struct {
 	ref terra.Reference
 }
 
-func (jpm JsonPathMatcherAttributes) InternalRef() terra.Reference {
-	return jpm.ref
+func (jpm JsonPathMatcherAttributes) InternalRef() (terra.Reference, error) {
+	return jpm.ref, nil
 }
 
 func (jpm JsonPathMatcherAttributes) InternalWithRef(ref terra.Reference) JsonPathMatcherAttributes {
 	return JsonPathMatcherAttributes{ref: ref}
 }
 
-func (jpm JsonPathMatcherAttributes) InternalTokens() hclwrite.Tokens {
+func (jpm JsonPathMatcherAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return jpm.ref.InternalTokens()
 }
 
 func (jpm JsonPathMatcherAttributes) JsonMatcher() terra.StringValue {
-	return terra.ReferenceString(jpm.ref.Append("json_matcher"))
+	return terra.ReferenceAsString(jpm.ref.Append("json_matcher"))
 }
 
 func (jpm JsonPathMatcherAttributes) JsonPath() terra.StringValue {
-	return terra.ReferenceString(jpm.ref.Append("json_path"))
+	return terra.ReferenceAsString(jpm.ref.Append("json_path"))
 }
 
 type HttpCheckAttributes struct {
 	ref terra.Reference
 }
 
-func (hc HttpCheckAttributes) InternalRef() terra.Reference {
-	return hc.ref
+func (hc HttpCheckAttributes) InternalRef() (terra.Reference, error) {
+	return hc.ref, nil
 }
 
 func (hc HttpCheckAttributes) InternalWithRef(ref terra.Reference) HttpCheckAttributes {
 	return HttpCheckAttributes{ref: ref}
 }
 
-func (hc HttpCheckAttributes) InternalTokens() hclwrite.Tokens {
+func (hc HttpCheckAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hc.ref.InternalTokens()
 }
 
 func (hc HttpCheckAttributes) Body() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("body"))
+	return terra.ReferenceAsString(hc.ref.Append("body"))
 }
 
 func (hc HttpCheckAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("content_type"))
+	return terra.ReferenceAsString(hc.ref.Append("content_type"))
 }
 
 func (hc HttpCheckAttributes) Headers() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](hc.ref.Append("headers"))
+	return terra.ReferenceAsMap[terra.StringValue](hc.ref.Append("headers"))
 }
 
 func (hc HttpCheckAttributes) MaskHeaders() terra.BoolValue {
-	return terra.ReferenceBool(hc.ref.Append("mask_headers"))
+	return terra.ReferenceAsBool(hc.ref.Append("mask_headers"))
 }
 
 func (hc HttpCheckAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("path"))
+	return terra.ReferenceAsString(hc.ref.Append("path"))
 }
 
 func (hc HttpCheckAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(hc.ref.Append("port"))
+	return terra.ReferenceAsNumber(hc.ref.Append("port"))
 }
 
 func (hc HttpCheckAttributes) RequestMethod() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("request_method"))
+	return terra.ReferenceAsString(hc.ref.Append("request_method"))
 }
 
 func (hc HttpCheckAttributes) UseSsl() terra.BoolValue {
-	return terra.ReferenceBool(hc.ref.Append("use_ssl"))
+	return terra.ReferenceAsBool(hc.ref.Append("use_ssl"))
 }
 
 func (hc HttpCheckAttributes) ValidateSsl() terra.BoolValue {
-	return terra.ReferenceBool(hc.ref.Append("validate_ssl"))
+	return terra.ReferenceAsBool(hc.ref.Append("validate_ssl"))
 }
 
 func (hc HttpCheckAttributes) AcceptedResponseStatusCodes() terra.ListValue[AcceptedResponseStatusCodesAttributes] {
-	return terra.ReferenceList[AcceptedResponseStatusCodesAttributes](hc.ref.Append("accepted_response_status_codes"))
+	return terra.ReferenceAsList[AcceptedResponseStatusCodesAttributes](hc.ref.Append("accepted_response_status_codes"))
 }
 
 func (hc HttpCheckAttributes) AuthInfo() terra.ListValue[AuthInfoAttributes] {
-	return terra.ReferenceList[AuthInfoAttributes](hc.ref.Append("auth_info"))
+	return terra.ReferenceAsList[AuthInfoAttributes](hc.ref.Append("auth_info"))
 }
 
 type AcceptedResponseStatusCodesAttributes struct {
 	ref terra.Reference
 }
 
-func (arsc AcceptedResponseStatusCodesAttributes) InternalRef() terra.Reference {
-	return arsc.ref
+func (arsc AcceptedResponseStatusCodesAttributes) InternalRef() (terra.Reference, error) {
+	return arsc.ref, nil
 }
 
 func (arsc AcceptedResponseStatusCodesAttributes) InternalWithRef(ref terra.Reference) AcceptedResponseStatusCodesAttributes {
 	return AcceptedResponseStatusCodesAttributes{ref: ref}
 }
 
-func (arsc AcceptedResponseStatusCodesAttributes) InternalTokens() hclwrite.Tokens {
+func (arsc AcceptedResponseStatusCodesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return arsc.ref.InternalTokens()
 }
 
 func (arsc AcceptedResponseStatusCodesAttributes) StatusClass() terra.StringValue {
-	return terra.ReferenceString(arsc.ref.Append("status_class"))
+	return terra.ReferenceAsString(arsc.ref.Append("status_class"))
 }
 
 func (arsc AcceptedResponseStatusCodesAttributes) StatusValue() terra.NumberValue {
-	return terra.ReferenceNumber(arsc.ref.Append("status_value"))
+	return terra.ReferenceAsNumber(arsc.ref.Append("status_value"))
 }
 
 type AuthInfoAttributes struct {
 	ref terra.Reference
 }
 
-func (ai AuthInfoAttributes) InternalRef() terra.Reference {
-	return ai.ref
+func (ai AuthInfoAttributes) InternalRef() (terra.Reference, error) {
+	return ai.ref, nil
 }
 
 func (ai AuthInfoAttributes) InternalWithRef(ref terra.Reference) AuthInfoAttributes {
 	return AuthInfoAttributes{ref: ref}
 }
 
-func (ai AuthInfoAttributes) InternalTokens() hclwrite.Tokens {
+func (ai AuthInfoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ai.ref.InternalTokens()
 }
 
 func (ai AuthInfoAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("password"))
+	return terra.ReferenceAsString(ai.ref.Append("password"))
 }
 
 func (ai AuthInfoAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("username"))
+	return terra.ReferenceAsString(ai.ref.Append("username"))
 }
 
 type MonitoredResourceAttributes struct {
 	ref terra.Reference
 }
 
-func (mr MonitoredResourceAttributes) InternalRef() terra.Reference {
-	return mr.ref
+func (mr MonitoredResourceAttributes) InternalRef() (terra.Reference, error) {
+	return mr.ref, nil
 }
 
 func (mr MonitoredResourceAttributes) InternalWithRef(ref terra.Reference) MonitoredResourceAttributes {
 	return MonitoredResourceAttributes{ref: ref}
 }
 
-func (mr MonitoredResourceAttributes) InternalTokens() hclwrite.Tokens {
+func (mr MonitoredResourceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mr.ref.InternalTokens()
 }
 
 func (mr MonitoredResourceAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mr.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](mr.ref.Append("labels"))
 }
 
 func (mr MonitoredResourceAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(mr.ref.Append("type"))
+	return terra.ReferenceAsString(mr.ref.Append("type"))
 }
 
 type ResourceGroupAttributes struct {
 	ref terra.Reference
 }
 
-func (rg ResourceGroupAttributes) InternalRef() terra.Reference {
-	return rg.ref
+func (rg ResourceGroupAttributes) InternalRef() (terra.Reference, error) {
+	return rg.ref, nil
 }
 
 func (rg ResourceGroupAttributes) InternalWithRef(ref terra.Reference) ResourceGroupAttributes {
 	return ResourceGroupAttributes{ref: ref}
 }
 
-func (rg ResourceGroupAttributes) InternalTokens() hclwrite.Tokens {
+func (rg ResourceGroupAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rg.ref.InternalTokens()
 }
 
 func (rg ResourceGroupAttributes) GroupId() terra.StringValue {
-	return terra.ReferenceString(rg.ref.Append("group_id"))
+	return terra.ReferenceAsString(rg.ref.Append("group_id"))
 }
 
 func (rg ResourceGroupAttributes) ResourceType() terra.StringValue {
-	return terra.ReferenceString(rg.ref.Append("resource_type"))
+	return terra.ReferenceAsString(rg.ref.Append("resource_type"))
 }
 
 type TcpCheckAttributes struct {
 	ref terra.Reference
 }
 
-func (tc TcpCheckAttributes) InternalRef() terra.Reference {
-	return tc.ref
+func (tc TcpCheckAttributes) InternalRef() (terra.Reference, error) {
+	return tc.ref, nil
 }
 
 func (tc TcpCheckAttributes) InternalWithRef(ref terra.Reference) TcpCheckAttributes {
 	return TcpCheckAttributes{ref: ref}
 }
 
-func (tc TcpCheckAttributes) InternalTokens() hclwrite.Tokens {
+func (tc TcpCheckAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tc.ref.InternalTokens()
 }
 
 func (tc TcpCheckAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(tc.ref.Append("port"))
+	return terra.ReferenceAsNumber(tc.ref.Append("port"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ContentMatchersState struct {

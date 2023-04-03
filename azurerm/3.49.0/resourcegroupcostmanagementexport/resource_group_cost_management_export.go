@@ -36,80 +36,80 @@ type ExportDataOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (edo ExportDataOptionsAttributes) InternalRef() terra.Reference {
-	return edo.ref
+func (edo ExportDataOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return edo.ref, nil
 }
 
 func (edo ExportDataOptionsAttributes) InternalWithRef(ref terra.Reference) ExportDataOptionsAttributes {
 	return ExportDataOptionsAttributes{ref: ref}
 }
 
-func (edo ExportDataOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (edo ExportDataOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return edo.ref.InternalTokens()
 }
 
 func (edo ExportDataOptionsAttributes) TimeFrame() terra.StringValue {
-	return terra.ReferenceString(edo.ref.Append("time_frame"))
+	return terra.ReferenceAsString(edo.ref.Append("time_frame"))
 }
 
 func (edo ExportDataOptionsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(edo.ref.Append("type"))
+	return terra.ReferenceAsString(edo.ref.Append("type"))
 }
 
 type ExportDataStorageLocationAttributes struct {
 	ref terra.Reference
 }
 
-func (edsl ExportDataStorageLocationAttributes) InternalRef() terra.Reference {
-	return edsl.ref
+func (edsl ExportDataStorageLocationAttributes) InternalRef() (terra.Reference, error) {
+	return edsl.ref, nil
 }
 
 func (edsl ExportDataStorageLocationAttributes) InternalWithRef(ref terra.Reference) ExportDataStorageLocationAttributes {
 	return ExportDataStorageLocationAttributes{ref: ref}
 }
 
-func (edsl ExportDataStorageLocationAttributes) InternalTokens() hclwrite.Tokens {
+func (edsl ExportDataStorageLocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return edsl.ref.InternalTokens()
 }
 
 func (edsl ExportDataStorageLocationAttributes) ContainerId() terra.StringValue {
-	return terra.ReferenceString(edsl.ref.Append("container_id"))
+	return terra.ReferenceAsString(edsl.ref.Append("container_id"))
 }
 
 func (edsl ExportDataStorageLocationAttributes) RootFolderPath() terra.StringValue {
-	return terra.ReferenceString(edsl.ref.Append("root_folder_path"))
+	return terra.ReferenceAsString(edsl.ref.Append("root_folder_path"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ExportDataOptionsState struct {

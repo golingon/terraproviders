@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAutomationVariableInt creates a new instance of [AutomationVariableInt].
 func NewAutomationVariableInt(name string, args AutomationVariableIntArgs) *AutomationVariableInt {
 	return &AutomationVariableInt{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAutomationVariableInt(name string, args AutomationVariableIntArgs) *Auto
 
 var _ terra.Resource = (*AutomationVariableInt)(nil)
 
+// AutomationVariableInt represents the Terraform resource azurerm_automation_variable_int.
 type AutomationVariableInt struct {
-	Name  string
-	Args  AutomationVariableIntArgs
-	state *automationVariableIntState
+	Name      string
+	Args      AutomationVariableIntArgs
+	state     *automationVariableIntState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AutomationVariableInt].
 func (avi *AutomationVariableInt) Type() string {
 	return "azurerm_automation_variable_int"
 }
 
+// LocalName returns the local name for [AutomationVariableInt].
 func (avi *AutomationVariableInt) LocalName() string {
 	return avi.Name
 }
 
+// Configuration returns the configuration (args) for [AutomationVariableInt].
 func (avi *AutomationVariableInt) Configuration() interface{} {
 	return avi.Args
 }
 
+// DependOn is used for other resources to depend on [AutomationVariableInt].
+func (avi *AutomationVariableInt) DependOn() terra.Reference {
+	return terra.ReferenceResource(avi)
+}
+
+// Dependencies returns the list of resources [AutomationVariableInt] depends_on.
+func (avi *AutomationVariableInt) Dependencies() terra.Dependencies {
+	return avi.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AutomationVariableInt].
+func (avi *AutomationVariableInt) LifecycleManagement() *terra.Lifecycle {
+	return avi.Lifecycle
+}
+
+// Attributes returns the attributes for [AutomationVariableInt].
 func (avi *AutomationVariableInt) Attributes() automationVariableIntAttributes {
 	return automationVariableIntAttributes{ref: terra.ReferenceResource(avi)}
 }
 
+// ImportState imports the given attribute values into [AutomationVariableInt]'s state.
 func (avi *AutomationVariableInt) ImportState(av io.Reader) error {
 	avi.state = &automationVariableIntState{}
 	if err := json.NewDecoder(av).Decode(avi.state); err != nil {
@@ -49,10 +73,12 @@ func (avi *AutomationVariableInt) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AutomationVariableInt] has state.
 func (avi *AutomationVariableInt) State() (*automationVariableIntState, bool) {
 	return avi.state, avi.state != nil
 }
 
+// StateMust returns the state for [AutomationVariableInt]. Panics if the state is nil.
 func (avi *AutomationVariableInt) StateMust() *automationVariableIntState {
 	if avi.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", avi.Type(), avi.LocalName()))
@@ -60,10 +86,7 @@ func (avi *AutomationVariableInt) StateMust() *automationVariableIntState {
 	return avi.state
 }
 
-func (avi *AutomationVariableInt) DependOn() terra.Reference {
-	return terra.ReferenceResource(avi)
-}
-
+// AutomationVariableIntArgs contains the configurations for azurerm_automation_variable_int.
 type AutomationVariableIntArgs struct {
 	// AutomationAccountName: string, required
 	AutomationAccountName terra.StringValue `hcl:"automation_account_name,attr" validate:"required"`
@@ -81,43 +104,48 @@ type AutomationVariableIntArgs struct {
 	Value terra.NumberValue `hcl:"value,attr"`
 	// Timeouts: optional
 	Timeouts *automationvariableint.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that AutomationVariableInt depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type automationVariableIntAttributes struct {
 	ref terra.Reference
 }
 
+// AutomationAccountName returns a reference to field automation_account_name of azurerm_automation_variable_int.
 func (avi automationVariableIntAttributes) AutomationAccountName() terra.StringValue {
-	return terra.ReferenceString(avi.ref.Append("automation_account_name"))
+	return terra.ReferenceAsString(avi.ref.Append("automation_account_name"))
 }
 
+// Description returns a reference to field description of azurerm_automation_variable_int.
 func (avi automationVariableIntAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(avi.ref.Append("description"))
+	return terra.ReferenceAsString(avi.ref.Append("description"))
 }
 
+// Encrypted returns a reference to field encrypted of azurerm_automation_variable_int.
 func (avi automationVariableIntAttributes) Encrypted() terra.BoolValue {
-	return terra.ReferenceBool(avi.ref.Append("encrypted"))
+	return terra.ReferenceAsBool(avi.ref.Append("encrypted"))
 }
 
+// Id returns a reference to field id of azurerm_automation_variable_int.
 func (avi automationVariableIntAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(avi.ref.Append("id"))
+	return terra.ReferenceAsString(avi.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_automation_variable_int.
 func (avi automationVariableIntAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(avi.ref.Append("name"))
+	return terra.ReferenceAsString(avi.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_automation_variable_int.
 func (avi automationVariableIntAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(avi.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(avi.ref.Append("resource_group_name"))
 }
 
+// Value returns a reference to field value of azurerm_automation_variable_int.
 func (avi automationVariableIntAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(avi.ref.Append("value"))
+	return terra.ReferenceAsNumber(avi.ref.Append("value"))
 }
 
 func (avi automationVariableIntAttributes) Timeouts() automationvariableint.TimeoutsAttributes {
-	return terra.ReferenceSingle[automationvariableint.TimeoutsAttributes](avi.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[automationvariableint.TimeoutsAttributes](avi.ref.Append("timeouts"))
 }
 
 type automationVariableIntState struct {

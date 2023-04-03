@@ -194,7 +194,7 @@ func (pd PolicyDetailsAttributes) InternalWithRef(ref terra.Reference) PolicyDet
 	return PolicyDetailsAttributes{ref: ref}
 }
 
-func (pd PolicyDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (pd PolicyDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pd.ref.InternalTokens()
 }
 
@@ -242,7 +242,7 @@ func (a ActionAttributes) InternalWithRef(ref terra.Reference) ActionAttributes 
 	return ActionAttributes{ref: ref}
 }
 
-func (a ActionAttributes) InternalTokens() hclwrite.Tokens {
+func (a ActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -266,7 +266,7 @@ func (crc CrossRegionCopyAttributes) InternalWithRef(ref terra.Reference) CrossR
 	return CrossRegionCopyAttributes{ref: ref}
 }
 
-func (crc CrossRegionCopyAttributes) InternalTokens() hclwrite.Tokens {
+func (crc CrossRegionCopyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return crc.ref.InternalTokens()
 }
 
@@ -294,7 +294,7 @@ func (ec EncryptionConfigurationAttributes) InternalWithRef(ref terra.Reference)
 	return EncryptionConfigurationAttributes{ref: ref}
 }
 
-func (ec EncryptionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ec EncryptionConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 
@@ -318,7 +318,7 @@ func (rr CrossRegionCopyRetainRuleAttributes) InternalWithRef(ref terra.Referenc
 	return CrossRegionCopyRetainRuleAttributes{ref: ref}
 }
 
-func (rr CrossRegionCopyRetainRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (rr CrossRegionCopyRetainRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rr.ref.InternalTokens()
 }
 
@@ -342,7 +342,7 @@ func (es EventSourceAttributes) InternalWithRef(ref terra.Reference) EventSource
 	return EventSourceAttributes{ref: ref}
 }
 
-func (es EventSourceAttributes) InternalTokens() hclwrite.Tokens {
+func (es EventSourceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return es.ref.InternalTokens()
 }
 
@@ -366,7 +366,7 @@ func (p EventSourceParametersAttributes) InternalWithRef(ref terra.Reference) Ev
 	return EventSourceParametersAttributes{ref: ref}
 }
 
-func (p EventSourceParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (p EventSourceParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -394,7 +394,7 @@ func (p PolicyDetailsParametersAttributes) InternalWithRef(ref terra.Reference) 
 	return PolicyDetailsParametersAttributes{ref: ref}
 }
 
-func (p PolicyDetailsParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (p PolicyDetailsParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -418,7 +418,7 @@ func (s ScheduleAttributes) InternalWithRef(ref terra.Reference) ScheduleAttribu
 	return ScheduleAttributes{ref: ref}
 }
 
-func (s ScheduleAttributes) InternalTokens() hclwrite.Tokens {
+func (s ScheduleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -474,7 +474,7 @@ func (cr CreateRuleAttributes) InternalWithRef(ref terra.Reference) CreateRuleAt
 	return CreateRuleAttributes{ref: ref}
 }
 
-func (cr CreateRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (cr CreateRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cr.ref.InternalTokens()
 }
 
@@ -510,7 +510,7 @@ func (crcr CrossRegionCopyRuleAttributes) InternalWithRef(ref terra.Reference) C
 	return CrossRegionCopyRuleAttributes{ref: ref}
 }
 
-func (crcr CrossRegionCopyRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (crcr CrossRegionCopyRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return crcr.ref.InternalTokens()
 }
 
@@ -550,7 +550,7 @@ func (dr CrossRegionCopyRuleDeprecateRuleAttributes) InternalWithRef(ref terra.R
 	return CrossRegionCopyRuleDeprecateRuleAttributes{ref: ref}
 }
 
-func (dr CrossRegionCopyRuleDeprecateRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (dr CrossRegionCopyRuleDeprecateRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dr.ref.InternalTokens()
 }
 
@@ -574,7 +574,7 @@ func (rr CrossRegionCopyRuleRetainRuleAttributes) InternalWithRef(ref terra.Refe
 	return CrossRegionCopyRuleRetainRuleAttributes{ref: ref}
 }
 
-func (rr CrossRegionCopyRuleRetainRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (rr CrossRegionCopyRuleRetainRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rr.ref.InternalTokens()
 }
 
@@ -598,7 +598,7 @@ func (dr ScheduleDeprecateRuleAttributes) InternalWithRef(ref terra.Reference) S
 	return ScheduleDeprecateRuleAttributes{ref: ref}
 }
 
-func (dr ScheduleDeprecateRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (dr ScheduleDeprecateRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dr.ref.InternalTokens()
 }
 
@@ -626,7 +626,7 @@ func (frr FastRestoreRuleAttributes) InternalWithRef(ref terra.Reference) FastRe
 	return FastRestoreRuleAttributes{ref: ref}
 }
 
-func (frr FastRestoreRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (frr FastRestoreRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return frr.ref.InternalTokens()
 }
 
@@ -658,7 +658,7 @@ func (rr ScheduleRetainRuleAttributes) InternalWithRef(ref terra.Reference) Sche
 	return ScheduleRetainRuleAttributes{ref: ref}
 }
 
-func (rr ScheduleRetainRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (rr ScheduleRetainRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rr.ref.InternalTokens()
 }
 
@@ -686,7 +686,7 @@ func (sr ShareRuleAttributes) InternalWithRef(ref terra.Reference) ShareRuleAttr
 	return ShareRuleAttributes{ref: ref}
 }
 
-func (sr ShareRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (sr ShareRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sr.ref.InternalTokens()
 }
 

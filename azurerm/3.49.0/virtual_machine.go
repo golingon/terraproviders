@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewVirtualMachine creates a new instance of [VirtualMachine].
 func NewVirtualMachine(name string, args VirtualMachineArgs) *VirtualMachine {
 	return &VirtualMachine{
 		Args: args,
@@ -19,28 +20,51 @@ func NewVirtualMachine(name string, args VirtualMachineArgs) *VirtualMachine {
 
 var _ terra.Resource = (*VirtualMachine)(nil)
 
+// VirtualMachine represents the Terraform resource azurerm_virtual_machine.
 type VirtualMachine struct {
-	Name  string
-	Args  VirtualMachineArgs
-	state *virtualMachineState
+	Name      string
+	Args      VirtualMachineArgs
+	state     *virtualMachineState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VirtualMachine].
 func (vm *VirtualMachine) Type() string {
 	return "azurerm_virtual_machine"
 }
 
+// LocalName returns the local name for [VirtualMachine].
 func (vm *VirtualMachine) LocalName() string {
 	return vm.Name
 }
 
+// Configuration returns the configuration (args) for [VirtualMachine].
 func (vm *VirtualMachine) Configuration() interface{} {
 	return vm.Args
 }
 
+// DependOn is used for other resources to depend on [VirtualMachine].
+func (vm *VirtualMachine) DependOn() terra.Reference {
+	return terra.ReferenceResource(vm)
+}
+
+// Dependencies returns the list of resources [VirtualMachine] depends_on.
+func (vm *VirtualMachine) Dependencies() terra.Dependencies {
+	return vm.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VirtualMachine].
+func (vm *VirtualMachine) LifecycleManagement() *terra.Lifecycle {
+	return vm.Lifecycle
+}
+
+// Attributes returns the attributes for [VirtualMachine].
 func (vm *VirtualMachine) Attributes() virtualMachineAttributes {
 	return virtualMachineAttributes{ref: terra.ReferenceResource(vm)}
 }
 
+// ImportState imports the given attribute values into [VirtualMachine]'s state.
 func (vm *VirtualMachine) ImportState(av io.Reader) error {
 	vm.state = &virtualMachineState{}
 	if err := json.NewDecoder(av).Decode(vm.state); err != nil {
@@ -49,10 +73,12 @@ func (vm *VirtualMachine) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [VirtualMachine] has state.
 func (vm *VirtualMachine) State() (*virtualMachineState, bool) {
 	return vm.state, vm.state != nil
 }
 
+// StateMust returns the state for [VirtualMachine]. Panics if the state is nil.
 func (vm *VirtualMachine) StateMust() *virtualMachineState {
 	if vm.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", vm.Type(), vm.LocalName()))
@@ -60,10 +86,7 @@ func (vm *VirtualMachine) StateMust() *virtualMachineState {
 	return vm.state
 }
 
-func (vm *VirtualMachine) DependOn() terra.Reference {
-	return terra.ReferenceResource(vm)
-}
-
+// VirtualMachineArgs contains the configurations for azurerm_virtual_machine.
 type VirtualMachineArgs struct {
 	// AvailabilitySetId: string, optional
 	AvailabilitySetId terra.StringValue `hcl:"availability_set_id,attr"`
@@ -117,115 +140,127 @@ type VirtualMachineArgs struct {
 	StorageOsDisk *virtualmachine.StorageOsDisk `hcl:"storage_os_disk,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *virtualmachine.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that VirtualMachine depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type virtualMachineAttributes struct {
 	ref terra.Reference
 }
 
+// AvailabilitySetId returns a reference to field availability_set_id of azurerm_virtual_machine.
 func (vm virtualMachineAttributes) AvailabilitySetId() terra.StringValue {
-	return terra.ReferenceString(vm.ref.Append("availability_set_id"))
+	return terra.ReferenceAsString(vm.ref.Append("availability_set_id"))
 }
 
+// DeleteDataDisksOnTermination returns a reference to field delete_data_disks_on_termination of azurerm_virtual_machine.
 func (vm virtualMachineAttributes) DeleteDataDisksOnTermination() terra.BoolValue {
-	return terra.ReferenceBool(vm.ref.Append("delete_data_disks_on_termination"))
+	return terra.ReferenceAsBool(vm.ref.Append("delete_data_disks_on_termination"))
 }
 
+// DeleteOsDiskOnTermination returns a reference to field delete_os_disk_on_termination of azurerm_virtual_machine.
 func (vm virtualMachineAttributes) DeleteOsDiskOnTermination() terra.BoolValue {
-	return terra.ReferenceBool(vm.ref.Append("delete_os_disk_on_termination"))
+	return terra.ReferenceAsBool(vm.ref.Append("delete_os_disk_on_termination"))
 }
 
+// Id returns a reference to field id of azurerm_virtual_machine.
 func (vm virtualMachineAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vm.ref.Append("id"))
+	return terra.ReferenceAsString(vm.ref.Append("id"))
 }
 
+// LicenseType returns a reference to field license_type of azurerm_virtual_machine.
 func (vm virtualMachineAttributes) LicenseType() terra.StringValue {
-	return terra.ReferenceString(vm.ref.Append("license_type"))
+	return terra.ReferenceAsString(vm.ref.Append("license_type"))
 }
 
+// Location returns a reference to field location of azurerm_virtual_machine.
 func (vm virtualMachineAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(vm.ref.Append("location"))
+	return terra.ReferenceAsString(vm.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_virtual_machine.
 func (vm virtualMachineAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(vm.ref.Append("name"))
+	return terra.ReferenceAsString(vm.ref.Append("name"))
 }
 
+// NetworkInterfaceIds returns a reference to field network_interface_ids of azurerm_virtual_machine.
 func (vm virtualMachineAttributes) NetworkInterfaceIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](vm.ref.Append("network_interface_ids"))
+	return terra.ReferenceAsList[terra.StringValue](vm.ref.Append("network_interface_ids"))
 }
 
+// PrimaryNetworkInterfaceId returns a reference to field primary_network_interface_id of azurerm_virtual_machine.
 func (vm virtualMachineAttributes) PrimaryNetworkInterfaceId() terra.StringValue {
-	return terra.ReferenceString(vm.ref.Append("primary_network_interface_id"))
+	return terra.ReferenceAsString(vm.ref.Append("primary_network_interface_id"))
 }
 
+// ProximityPlacementGroupId returns a reference to field proximity_placement_group_id of azurerm_virtual_machine.
 func (vm virtualMachineAttributes) ProximityPlacementGroupId() terra.StringValue {
-	return terra.ReferenceString(vm.ref.Append("proximity_placement_group_id"))
+	return terra.ReferenceAsString(vm.ref.Append("proximity_placement_group_id"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_virtual_machine.
 func (vm virtualMachineAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(vm.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(vm.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_virtual_machine.
 func (vm virtualMachineAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](vm.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](vm.ref.Append("tags"))
 }
 
+// VmSize returns a reference to field vm_size of azurerm_virtual_machine.
 func (vm virtualMachineAttributes) VmSize() terra.StringValue {
-	return terra.ReferenceString(vm.ref.Append("vm_size"))
+	return terra.ReferenceAsString(vm.ref.Append("vm_size"))
 }
 
+// Zones returns a reference to field zones of azurerm_virtual_machine.
 func (vm virtualMachineAttributes) Zones() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](vm.ref.Append("zones"))
+	return terra.ReferenceAsList[terra.StringValue](vm.ref.Append("zones"))
 }
 
 func (vm virtualMachineAttributes) AdditionalCapabilities() terra.ListValue[virtualmachine.AdditionalCapabilitiesAttributes] {
-	return terra.ReferenceList[virtualmachine.AdditionalCapabilitiesAttributes](vm.ref.Append("additional_capabilities"))
+	return terra.ReferenceAsList[virtualmachine.AdditionalCapabilitiesAttributes](vm.ref.Append("additional_capabilities"))
 }
 
 func (vm virtualMachineAttributes) BootDiagnostics() terra.ListValue[virtualmachine.BootDiagnosticsAttributes] {
-	return terra.ReferenceList[virtualmachine.BootDiagnosticsAttributes](vm.ref.Append("boot_diagnostics"))
+	return terra.ReferenceAsList[virtualmachine.BootDiagnosticsAttributes](vm.ref.Append("boot_diagnostics"))
 }
 
 func (vm virtualMachineAttributes) Identity() terra.ListValue[virtualmachine.IdentityAttributes] {
-	return terra.ReferenceList[virtualmachine.IdentityAttributes](vm.ref.Append("identity"))
+	return terra.ReferenceAsList[virtualmachine.IdentityAttributes](vm.ref.Append("identity"))
 }
 
 func (vm virtualMachineAttributes) OsProfile() terra.SetValue[virtualmachine.OsProfileAttributes] {
-	return terra.ReferenceSet[virtualmachine.OsProfileAttributes](vm.ref.Append("os_profile"))
+	return terra.ReferenceAsSet[virtualmachine.OsProfileAttributes](vm.ref.Append("os_profile"))
 }
 
 func (vm virtualMachineAttributes) OsProfileLinuxConfig() terra.SetValue[virtualmachine.OsProfileLinuxConfigAttributes] {
-	return terra.ReferenceSet[virtualmachine.OsProfileLinuxConfigAttributes](vm.ref.Append("os_profile_linux_config"))
+	return terra.ReferenceAsSet[virtualmachine.OsProfileLinuxConfigAttributes](vm.ref.Append("os_profile_linux_config"))
 }
 
 func (vm virtualMachineAttributes) OsProfileSecrets() terra.ListValue[virtualmachine.OsProfileSecretsAttributes] {
-	return terra.ReferenceList[virtualmachine.OsProfileSecretsAttributes](vm.ref.Append("os_profile_secrets"))
+	return terra.ReferenceAsList[virtualmachine.OsProfileSecretsAttributes](vm.ref.Append("os_profile_secrets"))
 }
 
 func (vm virtualMachineAttributes) OsProfileWindowsConfig() terra.SetValue[virtualmachine.OsProfileWindowsConfigAttributes] {
-	return terra.ReferenceSet[virtualmachine.OsProfileWindowsConfigAttributes](vm.ref.Append("os_profile_windows_config"))
+	return terra.ReferenceAsSet[virtualmachine.OsProfileWindowsConfigAttributes](vm.ref.Append("os_profile_windows_config"))
 }
 
 func (vm virtualMachineAttributes) Plan() terra.ListValue[virtualmachine.PlanAttributes] {
-	return terra.ReferenceList[virtualmachine.PlanAttributes](vm.ref.Append("plan"))
+	return terra.ReferenceAsList[virtualmachine.PlanAttributes](vm.ref.Append("plan"))
 }
 
 func (vm virtualMachineAttributes) StorageDataDisk() terra.ListValue[virtualmachine.StorageDataDiskAttributes] {
-	return terra.ReferenceList[virtualmachine.StorageDataDiskAttributes](vm.ref.Append("storage_data_disk"))
+	return terra.ReferenceAsList[virtualmachine.StorageDataDiskAttributes](vm.ref.Append("storage_data_disk"))
 }
 
 func (vm virtualMachineAttributes) StorageImageReference() terra.SetValue[virtualmachine.StorageImageReferenceAttributes] {
-	return terra.ReferenceSet[virtualmachine.StorageImageReferenceAttributes](vm.ref.Append("storage_image_reference"))
+	return terra.ReferenceAsSet[virtualmachine.StorageImageReferenceAttributes](vm.ref.Append("storage_image_reference"))
 }
 
 func (vm virtualMachineAttributes) StorageOsDisk() terra.ListValue[virtualmachine.StorageOsDiskAttributes] {
-	return terra.ReferenceList[virtualmachine.StorageOsDiskAttributes](vm.ref.Append("storage_os_disk"))
+	return terra.ReferenceAsList[virtualmachine.StorageOsDiskAttributes](vm.ref.Append("storage_os_disk"))
 }
 
 func (vm virtualMachineAttributes) Timeouts() virtualmachine.TimeoutsAttributes {
-	return terra.ReferenceSingle[virtualmachine.TimeoutsAttributes](vm.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[virtualmachine.TimeoutsAttributes](vm.ref.Append("timeouts"))
 }
 
 type virtualMachineState struct {

@@ -74,196 +74,196 @@ type BucketOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (bo BucketOptionsAttributes) InternalRef() terra.Reference {
-	return bo.ref
+func (bo BucketOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return bo.ref, nil
 }
 
 func (bo BucketOptionsAttributes) InternalWithRef(ref terra.Reference) BucketOptionsAttributes {
 	return BucketOptionsAttributes{ref: ref}
 }
 
-func (bo BucketOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (bo BucketOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bo.ref.InternalTokens()
 }
 
 func (bo BucketOptionsAttributes) ExplicitBuckets() terra.ListValue[ExplicitBucketsAttributes] {
-	return terra.ReferenceList[ExplicitBucketsAttributes](bo.ref.Append("explicit_buckets"))
+	return terra.ReferenceAsList[ExplicitBucketsAttributes](bo.ref.Append("explicit_buckets"))
 }
 
 func (bo BucketOptionsAttributes) ExponentialBuckets() terra.ListValue[ExponentialBucketsAttributes] {
-	return terra.ReferenceList[ExponentialBucketsAttributes](bo.ref.Append("exponential_buckets"))
+	return terra.ReferenceAsList[ExponentialBucketsAttributes](bo.ref.Append("exponential_buckets"))
 }
 
 func (bo BucketOptionsAttributes) LinearBuckets() terra.ListValue[LinearBucketsAttributes] {
-	return terra.ReferenceList[LinearBucketsAttributes](bo.ref.Append("linear_buckets"))
+	return terra.ReferenceAsList[LinearBucketsAttributes](bo.ref.Append("linear_buckets"))
 }
 
 type ExplicitBucketsAttributes struct {
 	ref terra.Reference
 }
 
-func (eb ExplicitBucketsAttributes) InternalRef() terra.Reference {
-	return eb.ref
+func (eb ExplicitBucketsAttributes) InternalRef() (terra.Reference, error) {
+	return eb.ref, nil
 }
 
 func (eb ExplicitBucketsAttributes) InternalWithRef(ref terra.Reference) ExplicitBucketsAttributes {
 	return ExplicitBucketsAttributes{ref: ref}
 }
 
-func (eb ExplicitBucketsAttributes) InternalTokens() hclwrite.Tokens {
+func (eb ExplicitBucketsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return eb.ref.InternalTokens()
 }
 
 func (eb ExplicitBucketsAttributes) Bounds() terra.ListValue[terra.NumberValue] {
-	return terra.ReferenceList[terra.NumberValue](eb.ref.Append("bounds"))
+	return terra.ReferenceAsList[terra.NumberValue](eb.ref.Append("bounds"))
 }
 
 type ExponentialBucketsAttributes struct {
 	ref terra.Reference
 }
 
-func (eb ExponentialBucketsAttributes) InternalRef() terra.Reference {
-	return eb.ref
+func (eb ExponentialBucketsAttributes) InternalRef() (terra.Reference, error) {
+	return eb.ref, nil
 }
 
 func (eb ExponentialBucketsAttributes) InternalWithRef(ref terra.Reference) ExponentialBucketsAttributes {
 	return ExponentialBucketsAttributes{ref: ref}
 }
 
-func (eb ExponentialBucketsAttributes) InternalTokens() hclwrite.Tokens {
+func (eb ExponentialBucketsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return eb.ref.InternalTokens()
 }
 
 func (eb ExponentialBucketsAttributes) GrowthFactor() terra.NumberValue {
-	return terra.ReferenceNumber(eb.ref.Append("growth_factor"))
+	return terra.ReferenceAsNumber(eb.ref.Append("growth_factor"))
 }
 
 func (eb ExponentialBucketsAttributes) NumFiniteBuckets() terra.NumberValue {
-	return terra.ReferenceNumber(eb.ref.Append("num_finite_buckets"))
+	return terra.ReferenceAsNumber(eb.ref.Append("num_finite_buckets"))
 }
 
 func (eb ExponentialBucketsAttributes) Scale() terra.NumberValue {
-	return terra.ReferenceNumber(eb.ref.Append("scale"))
+	return terra.ReferenceAsNumber(eb.ref.Append("scale"))
 }
 
 type LinearBucketsAttributes struct {
 	ref terra.Reference
 }
 
-func (lb LinearBucketsAttributes) InternalRef() terra.Reference {
-	return lb.ref
+func (lb LinearBucketsAttributes) InternalRef() (terra.Reference, error) {
+	return lb.ref, nil
 }
 
 func (lb LinearBucketsAttributes) InternalWithRef(ref terra.Reference) LinearBucketsAttributes {
 	return LinearBucketsAttributes{ref: ref}
 }
 
-func (lb LinearBucketsAttributes) InternalTokens() hclwrite.Tokens {
+func (lb LinearBucketsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lb.ref.InternalTokens()
 }
 
 func (lb LinearBucketsAttributes) NumFiniteBuckets() terra.NumberValue {
-	return terra.ReferenceNumber(lb.ref.Append("num_finite_buckets"))
+	return terra.ReferenceAsNumber(lb.ref.Append("num_finite_buckets"))
 }
 
 func (lb LinearBucketsAttributes) Offset() terra.NumberValue {
-	return terra.ReferenceNumber(lb.ref.Append("offset"))
+	return terra.ReferenceAsNumber(lb.ref.Append("offset"))
 }
 
 func (lb LinearBucketsAttributes) Width() terra.NumberValue {
-	return terra.ReferenceNumber(lb.ref.Append("width"))
+	return terra.ReferenceAsNumber(lb.ref.Append("width"))
 }
 
 type MetricDescriptorAttributes struct {
 	ref terra.Reference
 }
 
-func (md MetricDescriptorAttributes) InternalRef() terra.Reference {
-	return md.ref
+func (md MetricDescriptorAttributes) InternalRef() (terra.Reference, error) {
+	return md.ref, nil
 }
 
 func (md MetricDescriptorAttributes) InternalWithRef(ref terra.Reference) MetricDescriptorAttributes {
 	return MetricDescriptorAttributes{ref: ref}
 }
 
-func (md MetricDescriptorAttributes) InternalTokens() hclwrite.Tokens {
+func (md MetricDescriptorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return md.ref.InternalTokens()
 }
 
 func (md MetricDescriptorAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("display_name"))
+	return terra.ReferenceAsString(md.ref.Append("display_name"))
 }
 
 func (md MetricDescriptorAttributes) MetricKind() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("metric_kind"))
+	return terra.ReferenceAsString(md.ref.Append("metric_kind"))
 }
 
 func (md MetricDescriptorAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("unit"))
+	return terra.ReferenceAsString(md.ref.Append("unit"))
 }
 
 func (md MetricDescriptorAttributes) ValueType() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("value_type"))
+	return terra.ReferenceAsString(md.ref.Append("value_type"))
 }
 
 func (md MetricDescriptorAttributes) Labels() terra.SetValue[LabelsAttributes] {
-	return terra.ReferenceSet[LabelsAttributes](md.ref.Append("labels"))
+	return terra.ReferenceAsSet[LabelsAttributes](md.ref.Append("labels"))
 }
 
 type LabelsAttributes struct {
 	ref terra.Reference
 }
 
-func (l LabelsAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l LabelsAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l LabelsAttributes) InternalWithRef(ref terra.Reference) LabelsAttributes {
 	return LabelsAttributes{ref: ref}
 }
 
-func (l LabelsAttributes) InternalTokens() hclwrite.Tokens {
+func (l LabelsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 
 func (l LabelsAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("description"))
+	return terra.ReferenceAsString(l.ref.Append("description"))
 }
 
 func (l LabelsAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("key"))
+	return terra.ReferenceAsString(l.ref.Append("key"))
 }
 
 func (l LabelsAttributes) ValueType() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("value_type"))
+	return terra.ReferenceAsString(l.ref.Append("value_type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type BucketOptionsState struct {

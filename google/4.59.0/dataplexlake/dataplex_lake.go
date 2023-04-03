@@ -29,108 +29,108 @@ type AssetStatusAttributes struct {
 	ref terra.Reference
 }
 
-func (as AssetStatusAttributes) InternalRef() terra.Reference {
-	return as.ref
+func (as AssetStatusAttributes) InternalRef() (terra.Reference, error) {
+	return as.ref, nil
 }
 
 func (as AssetStatusAttributes) InternalWithRef(ref terra.Reference) AssetStatusAttributes {
 	return AssetStatusAttributes{ref: ref}
 }
 
-func (as AssetStatusAttributes) InternalTokens() hclwrite.Tokens {
+func (as AssetStatusAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return as.ref.InternalTokens()
 }
 
 func (as AssetStatusAttributes) ActiveAssets() terra.NumberValue {
-	return terra.ReferenceNumber(as.ref.Append("active_assets"))
+	return terra.ReferenceAsNumber(as.ref.Append("active_assets"))
 }
 
 func (as AssetStatusAttributes) SecurityPolicyApplyingAssets() terra.NumberValue {
-	return terra.ReferenceNumber(as.ref.Append("security_policy_applying_assets"))
+	return terra.ReferenceAsNumber(as.ref.Append("security_policy_applying_assets"))
 }
 
 func (as AssetStatusAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("update_time"))
+	return terra.ReferenceAsString(as.ref.Append("update_time"))
 }
 
 type MetastoreStatusAttributes struct {
 	ref terra.Reference
 }
 
-func (ms MetastoreStatusAttributes) InternalRef() terra.Reference {
-	return ms.ref
+func (ms MetastoreStatusAttributes) InternalRef() (terra.Reference, error) {
+	return ms.ref, nil
 }
 
 func (ms MetastoreStatusAttributes) InternalWithRef(ref terra.Reference) MetastoreStatusAttributes {
 	return MetastoreStatusAttributes{ref: ref}
 }
 
-func (ms MetastoreStatusAttributes) InternalTokens() hclwrite.Tokens {
+func (ms MetastoreStatusAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ms.ref.InternalTokens()
 }
 
 func (ms MetastoreStatusAttributes) Endpoint() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("endpoint"))
+	return terra.ReferenceAsString(ms.ref.Append("endpoint"))
 }
 
 func (ms MetastoreStatusAttributes) Message() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("message"))
+	return terra.ReferenceAsString(ms.ref.Append("message"))
 }
 
 func (ms MetastoreStatusAttributes) State() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("state"))
+	return terra.ReferenceAsString(ms.ref.Append("state"))
 }
 
 func (ms MetastoreStatusAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("update_time"))
+	return terra.ReferenceAsString(ms.ref.Append("update_time"))
 }
 
 type MetastoreAttributes struct {
 	ref terra.Reference
 }
 
-func (m MetastoreAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MetastoreAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MetastoreAttributes) InternalWithRef(ref terra.Reference) MetastoreAttributes {
 	return MetastoreAttributes{ref: ref}
 }
 
-func (m MetastoreAttributes) InternalTokens() hclwrite.Tokens {
+func (m MetastoreAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
 func (m MetastoreAttributes) Service() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("service"))
+	return terra.ReferenceAsString(m.ref.Append("service"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AssetStatusState struct {

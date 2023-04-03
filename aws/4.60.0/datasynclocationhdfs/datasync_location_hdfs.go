@@ -33,7 +33,7 @@ func (nn NameNodeAttributes) InternalWithRef(ref terra.Reference) NameNodeAttrib
 	return NameNodeAttributes{ref: ref}
 }
 
-func (nn NameNodeAttributes) InternalTokens() hclwrite.Tokens {
+func (nn NameNodeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nn.ref.InternalTokens()
 }
 
@@ -57,7 +57,7 @@ func (qc QopConfigurationAttributes) InternalWithRef(ref terra.Reference) QopCon
 	return QopConfigurationAttributes{ref: ref}
 }
 
-func (qc QopConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (qc QopConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return qc.ref.InternalTokens()
 }
 

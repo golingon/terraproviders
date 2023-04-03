@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeGlobalNetworkEndpoint creates a new instance of [ComputeGlobalNetworkEndpoint].
 func NewComputeGlobalNetworkEndpoint(name string, args ComputeGlobalNetworkEndpointArgs) *ComputeGlobalNetworkEndpoint {
 	return &ComputeGlobalNetworkEndpoint{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeGlobalNetworkEndpoint(name string, args ComputeGlobalNetworkEndpo
 
 var _ terra.Resource = (*ComputeGlobalNetworkEndpoint)(nil)
 
+// ComputeGlobalNetworkEndpoint represents the Terraform resource google_compute_global_network_endpoint.
 type ComputeGlobalNetworkEndpoint struct {
-	Name  string
-	Args  ComputeGlobalNetworkEndpointArgs
-	state *computeGlobalNetworkEndpointState
+	Name      string
+	Args      ComputeGlobalNetworkEndpointArgs
+	state     *computeGlobalNetworkEndpointState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeGlobalNetworkEndpoint].
 func (cgne *ComputeGlobalNetworkEndpoint) Type() string {
 	return "google_compute_global_network_endpoint"
 }
 
+// LocalName returns the local name for [ComputeGlobalNetworkEndpoint].
 func (cgne *ComputeGlobalNetworkEndpoint) LocalName() string {
 	return cgne.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeGlobalNetworkEndpoint].
 func (cgne *ComputeGlobalNetworkEndpoint) Configuration() interface{} {
 	return cgne.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeGlobalNetworkEndpoint].
+func (cgne *ComputeGlobalNetworkEndpoint) DependOn() terra.Reference {
+	return terra.ReferenceResource(cgne)
+}
+
+// Dependencies returns the list of resources [ComputeGlobalNetworkEndpoint] depends_on.
+func (cgne *ComputeGlobalNetworkEndpoint) Dependencies() terra.Dependencies {
+	return cgne.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeGlobalNetworkEndpoint].
+func (cgne *ComputeGlobalNetworkEndpoint) LifecycleManagement() *terra.Lifecycle {
+	return cgne.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeGlobalNetworkEndpoint].
 func (cgne *ComputeGlobalNetworkEndpoint) Attributes() computeGlobalNetworkEndpointAttributes {
 	return computeGlobalNetworkEndpointAttributes{ref: terra.ReferenceResource(cgne)}
 }
 
+// ImportState imports the given attribute values into [ComputeGlobalNetworkEndpoint]'s state.
 func (cgne *ComputeGlobalNetworkEndpoint) ImportState(av io.Reader) error {
 	cgne.state = &computeGlobalNetworkEndpointState{}
 	if err := json.NewDecoder(av).Decode(cgne.state); err != nil {
@@ -49,10 +73,12 @@ func (cgne *ComputeGlobalNetworkEndpoint) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeGlobalNetworkEndpoint] has state.
 func (cgne *ComputeGlobalNetworkEndpoint) State() (*computeGlobalNetworkEndpointState, bool) {
 	return cgne.state, cgne.state != nil
 }
 
+// StateMust returns the state for [ComputeGlobalNetworkEndpoint]. Panics if the state is nil.
 func (cgne *ComputeGlobalNetworkEndpoint) StateMust() *computeGlobalNetworkEndpointState {
 	if cgne.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cgne.Type(), cgne.LocalName()))
@@ -60,10 +86,7 @@ func (cgne *ComputeGlobalNetworkEndpoint) StateMust() *computeGlobalNetworkEndpo
 	return cgne.state
 }
 
-func (cgne *ComputeGlobalNetworkEndpoint) DependOn() terra.Reference {
-	return terra.ReferenceResource(cgne)
-}
-
+// ComputeGlobalNetworkEndpointArgs contains the configurations for google_compute_global_network_endpoint.
 type ComputeGlobalNetworkEndpointArgs struct {
 	// Fqdn: string, optional
 	Fqdn terra.StringValue `hcl:"fqdn,attr"`
@@ -79,39 +102,43 @@ type ComputeGlobalNetworkEndpointArgs struct {
 	Project terra.StringValue `hcl:"project,attr"`
 	// Timeouts: optional
 	Timeouts *computeglobalnetworkendpoint.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeGlobalNetworkEndpoint depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeGlobalNetworkEndpointAttributes struct {
 	ref terra.Reference
 }
 
+// Fqdn returns a reference to field fqdn of google_compute_global_network_endpoint.
 func (cgne computeGlobalNetworkEndpointAttributes) Fqdn() terra.StringValue {
-	return terra.ReferenceString(cgne.ref.Append("fqdn"))
+	return terra.ReferenceAsString(cgne.ref.Append("fqdn"))
 }
 
+// GlobalNetworkEndpointGroup returns a reference to field global_network_endpoint_group of google_compute_global_network_endpoint.
 func (cgne computeGlobalNetworkEndpointAttributes) GlobalNetworkEndpointGroup() terra.StringValue {
-	return terra.ReferenceString(cgne.ref.Append("global_network_endpoint_group"))
+	return terra.ReferenceAsString(cgne.ref.Append("global_network_endpoint_group"))
 }
 
+// Id returns a reference to field id of google_compute_global_network_endpoint.
 func (cgne computeGlobalNetworkEndpointAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cgne.ref.Append("id"))
+	return terra.ReferenceAsString(cgne.ref.Append("id"))
 }
 
+// IpAddress returns a reference to field ip_address of google_compute_global_network_endpoint.
 func (cgne computeGlobalNetworkEndpointAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(cgne.ref.Append("ip_address"))
+	return terra.ReferenceAsString(cgne.ref.Append("ip_address"))
 }
 
+// Port returns a reference to field port of google_compute_global_network_endpoint.
 func (cgne computeGlobalNetworkEndpointAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(cgne.ref.Append("port"))
+	return terra.ReferenceAsNumber(cgne.ref.Append("port"))
 }
 
+// Project returns a reference to field project of google_compute_global_network_endpoint.
 func (cgne computeGlobalNetworkEndpointAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cgne.ref.Append("project"))
+	return terra.ReferenceAsString(cgne.ref.Append("project"))
 }
 
 func (cgne computeGlobalNetworkEndpointAttributes) Timeouts() computeglobalnetworkendpoint.TimeoutsAttributes {
-	return terra.ReferenceSingle[computeglobalnetworkendpoint.TimeoutsAttributes](cgne.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computeglobalnetworkendpoint.TimeoutsAttributes](cgne.ref.Append("timeouts"))
 }
 
 type computeGlobalNetworkEndpointState struct {

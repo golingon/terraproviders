@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSynapseWorkspaceAadAdmin creates a new instance of [SynapseWorkspaceAadAdmin].
 func NewSynapseWorkspaceAadAdmin(name string, args SynapseWorkspaceAadAdminArgs) *SynapseWorkspaceAadAdmin {
 	return &SynapseWorkspaceAadAdmin{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSynapseWorkspaceAadAdmin(name string, args SynapseWorkspaceAadAdminArgs)
 
 var _ terra.Resource = (*SynapseWorkspaceAadAdmin)(nil)
 
+// SynapseWorkspaceAadAdmin represents the Terraform resource azurerm_synapse_workspace_aad_admin.
 type SynapseWorkspaceAadAdmin struct {
-	Name  string
-	Args  SynapseWorkspaceAadAdminArgs
-	state *synapseWorkspaceAadAdminState
+	Name      string
+	Args      SynapseWorkspaceAadAdminArgs
+	state     *synapseWorkspaceAadAdminState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SynapseWorkspaceAadAdmin].
 func (swaa *SynapseWorkspaceAadAdmin) Type() string {
 	return "azurerm_synapse_workspace_aad_admin"
 }
 
+// LocalName returns the local name for [SynapseWorkspaceAadAdmin].
 func (swaa *SynapseWorkspaceAadAdmin) LocalName() string {
 	return swaa.Name
 }
 
+// Configuration returns the configuration (args) for [SynapseWorkspaceAadAdmin].
 func (swaa *SynapseWorkspaceAadAdmin) Configuration() interface{} {
 	return swaa.Args
 }
 
+// DependOn is used for other resources to depend on [SynapseWorkspaceAadAdmin].
+func (swaa *SynapseWorkspaceAadAdmin) DependOn() terra.Reference {
+	return terra.ReferenceResource(swaa)
+}
+
+// Dependencies returns the list of resources [SynapseWorkspaceAadAdmin] depends_on.
+func (swaa *SynapseWorkspaceAadAdmin) Dependencies() terra.Dependencies {
+	return swaa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SynapseWorkspaceAadAdmin].
+func (swaa *SynapseWorkspaceAadAdmin) LifecycleManagement() *terra.Lifecycle {
+	return swaa.Lifecycle
+}
+
+// Attributes returns the attributes for [SynapseWorkspaceAadAdmin].
 func (swaa *SynapseWorkspaceAadAdmin) Attributes() synapseWorkspaceAadAdminAttributes {
 	return synapseWorkspaceAadAdminAttributes{ref: terra.ReferenceResource(swaa)}
 }
 
+// ImportState imports the given attribute values into [SynapseWorkspaceAadAdmin]'s state.
 func (swaa *SynapseWorkspaceAadAdmin) ImportState(av io.Reader) error {
 	swaa.state = &synapseWorkspaceAadAdminState{}
 	if err := json.NewDecoder(av).Decode(swaa.state); err != nil {
@@ -49,10 +73,12 @@ func (swaa *SynapseWorkspaceAadAdmin) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SynapseWorkspaceAadAdmin] has state.
 func (swaa *SynapseWorkspaceAadAdmin) State() (*synapseWorkspaceAadAdminState, bool) {
 	return swaa.state, swaa.state != nil
 }
 
+// StateMust returns the state for [SynapseWorkspaceAadAdmin]. Panics if the state is nil.
 func (swaa *SynapseWorkspaceAadAdmin) StateMust() *synapseWorkspaceAadAdminState {
 	if swaa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", swaa.Type(), swaa.LocalName()))
@@ -60,10 +86,7 @@ func (swaa *SynapseWorkspaceAadAdmin) StateMust() *synapseWorkspaceAadAdminState
 	return swaa.state
 }
 
-func (swaa *SynapseWorkspaceAadAdmin) DependOn() terra.Reference {
-	return terra.ReferenceResource(swaa)
-}
-
+// SynapseWorkspaceAadAdminArgs contains the configurations for azurerm_synapse_workspace_aad_admin.
 type SynapseWorkspaceAadAdminArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,35 +100,38 @@ type SynapseWorkspaceAadAdminArgs struct {
 	TenantId terra.StringValue `hcl:"tenant_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *synapseworkspaceaadadmin.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SynapseWorkspaceAadAdmin depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type synapseWorkspaceAadAdminAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_synapse_workspace_aad_admin.
 func (swaa synapseWorkspaceAadAdminAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(swaa.ref.Append("id"))
+	return terra.ReferenceAsString(swaa.ref.Append("id"))
 }
 
+// Login returns a reference to field login of azurerm_synapse_workspace_aad_admin.
 func (swaa synapseWorkspaceAadAdminAttributes) Login() terra.StringValue {
-	return terra.ReferenceString(swaa.ref.Append("login"))
+	return terra.ReferenceAsString(swaa.ref.Append("login"))
 }
 
+// ObjectId returns a reference to field object_id of azurerm_synapse_workspace_aad_admin.
 func (swaa synapseWorkspaceAadAdminAttributes) ObjectId() terra.StringValue {
-	return terra.ReferenceString(swaa.ref.Append("object_id"))
+	return terra.ReferenceAsString(swaa.ref.Append("object_id"))
 }
 
+// SynapseWorkspaceId returns a reference to field synapse_workspace_id of azurerm_synapse_workspace_aad_admin.
 func (swaa synapseWorkspaceAadAdminAttributes) SynapseWorkspaceId() terra.StringValue {
-	return terra.ReferenceString(swaa.ref.Append("synapse_workspace_id"))
+	return terra.ReferenceAsString(swaa.ref.Append("synapse_workspace_id"))
 }
 
+// TenantId returns a reference to field tenant_id of azurerm_synapse_workspace_aad_admin.
 func (swaa synapseWorkspaceAadAdminAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(swaa.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(swaa.ref.Append("tenant_id"))
 }
 
 func (swaa synapseWorkspaceAadAdminAttributes) Timeouts() synapseworkspaceaadadmin.TimeoutsAttributes {
-	return terra.ReferenceSingle[synapseworkspaceaadadmin.TimeoutsAttributes](swaa.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[synapseworkspaceaadadmin.TimeoutsAttributes](swaa.ref.Append("timeouts"))
 }
 
 type synapseWorkspaceAadAdminState struct {

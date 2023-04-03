@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSshPublicKey creates a new instance of [SshPublicKey].
 func NewSshPublicKey(name string, args SshPublicKeyArgs) *SshPublicKey {
 	return &SshPublicKey{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSshPublicKey(name string, args SshPublicKeyArgs) *SshPublicKey {
 
 var _ terra.Resource = (*SshPublicKey)(nil)
 
+// SshPublicKey represents the Terraform resource azurerm_ssh_public_key.
 type SshPublicKey struct {
-	Name  string
-	Args  SshPublicKeyArgs
-	state *sshPublicKeyState
+	Name      string
+	Args      SshPublicKeyArgs
+	state     *sshPublicKeyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SshPublicKey].
 func (spk *SshPublicKey) Type() string {
 	return "azurerm_ssh_public_key"
 }
 
+// LocalName returns the local name for [SshPublicKey].
 func (spk *SshPublicKey) LocalName() string {
 	return spk.Name
 }
 
+// Configuration returns the configuration (args) for [SshPublicKey].
 func (spk *SshPublicKey) Configuration() interface{} {
 	return spk.Args
 }
 
+// DependOn is used for other resources to depend on [SshPublicKey].
+func (spk *SshPublicKey) DependOn() terra.Reference {
+	return terra.ReferenceResource(spk)
+}
+
+// Dependencies returns the list of resources [SshPublicKey] depends_on.
+func (spk *SshPublicKey) Dependencies() terra.Dependencies {
+	return spk.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SshPublicKey].
+func (spk *SshPublicKey) LifecycleManagement() *terra.Lifecycle {
+	return spk.Lifecycle
+}
+
+// Attributes returns the attributes for [SshPublicKey].
 func (spk *SshPublicKey) Attributes() sshPublicKeyAttributes {
 	return sshPublicKeyAttributes{ref: terra.ReferenceResource(spk)}
 }
 
+// ImportState imports the given attribute values into [SshPublicKey]'s state.
 func (spk *SshPublicKey) ImportState(av io.Reader) error {
 	spk.state = &sshPublicKeyState{}
 	if err := json.NewDecoder(av).Decode(spk.state); err != nil {
@@ -49,10 +73,12 @@ func (spk *SshPublicKey) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SshPublicKey] has state.
 func (spk *SshPublicKey) State() (*sshPublicKeyState, bool) {
 	return spk.state, spk.state != nil
 }
 
+// StateMust returns the state for [SshPublicKey]. Panics if the state is nil.
 func (spk *SshPublicKey) StateMust() *sshPublicKeyState {
 	if spk.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", spk.Type(), spk.LocalName()))
@@ -60,10 +86,7 @@ func (spk *SshPublicKey) StateMust() *sshPublicKeyState {
 	return spk.state
 }
 
-func (spk *SshPublicKey) DependOn() terra.Reference {
-	return terra.ReferenceResource(spk)
-}
-
+// SshPublicKeyArgs contains the configurations for azurerm_ssh_public_key.
 type SshPublicKeyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,39 +102,43 @@ type SshPublicKeyArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// Timeouts: optional
 	Timeouts *sshpublickey.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SshPublicKey depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sshPublicKeyAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_ssh_public_key.
 func (spk sshPublicKeyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(spk.ref.Append("id"))
+	return terra.ReferenceAsString(spk.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_ssh_public_key.
 func (spk sshPublicKeyAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(spk.ref.Append("location"))
+	return terra.ReferenceAsString(spk.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_ssh_public_key.
 func (spk sshPublicKeyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(spk.ref.Append("name"))
+	return terra.ReferenceAsString(spk.ref.Append("name"))
 }
 
+// PublicKey returns a reference to field public_key of azurerm_ssh_public_key.
 func (spk sshPublicKeyAttributes) PublicKey() terra.StringValue {
-	return terra.ReferenceString(spk.ref.Append("public_key"))
+	return terra.ReferenceAsString(spk.ref.Append("public_key"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_ssh_public_key.
 func (spk sshPublicKeyAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(spk.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(spk.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_ssh_public_key.
 func (spk sshPublicKeyAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](spk.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](spk.ref.Append("tags"))
 }
 
 func (spk sshPublicKeyAttributes) Timeouts() sshpublickey.TimeoutsAttributes {
-	return terra.ReferenceSingle[sshpublickey.TimeoutsAttributes](spk.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[sshpublickey.TimeoutsAttributes](spk.ref.Append("timeouts"))
 }
 
 type sshPublicKeyState struct {

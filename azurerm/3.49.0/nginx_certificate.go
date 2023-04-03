@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNginxCertificate creates a new instance of [NginxCertificate].
 func NewNginxCertificate(name string, args NginxCertificateArgs) *NginxCertificate {
 	return &NginxCertificate{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNginxCertificate(name string, args NginxCertificateArgs) *NginxCertifica
 
 var _ terra.Resource = (*NginxCertificate)(nil)
 
+// NginxCertificate represents the Terraform resource azurerm_nginx_certificate.
 type NginxCertificate struct {
-	Name  string
-	Args  NginxCertificateArgs
-	state *nginxCertificateState
+	Name      string
+	Args      NginxCertificateArgs
+	state     *nginxCertificateState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NginxCertificate].
 func (nc *NginxCertificate) Type() string {
 	return "azurerm_nginx_certificate"
 }
 
+// LocalName returns the local name for [NginxCertificate].
 func (nc *NginxCertificate) LocalName() string {
 	return nc.Name
 }
 
+// Configuration returns the configuration (args) for [NginxCertificate].
 func (nc *NginxCertificate) Configuration() interface{} {
 	return nc.Args
 }
 
+// DependOn is used for other resources to depend on [NginxCertificate].
+func (nc *NginxCertificate) DependOn() terra.Reference {
+	return terra.ReferenceResource(nc)
+}
+
+// Dependencies returns the list of resources [NginxCertificate] depends_on.
+func (nc *NginxCertificate) Dependencies() terra.Dependencies {
+	return nc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NginxCertificate].
+func (nc *NginxCertificate) LifecycleManagement() *terra.Lifecycle {
+	return nc.Lifecycle
+}
+
+// Attributes returns the attributes for [NginxCertificate].
 func (nc *NginxCertificate) Attributes() nginxCertificateAttributes {
 	return nginxCertificateAttributes{ref: terra.ReferenceResource(nc)}
 }
 
+// ImportState imports the given attribute values into [NginxCertificate]'s state.
 func (nc *NginxCertificate) ImportState(av io.Reader) error {
 	nc.state = &nginxCertificateState{}
 	if err := json.NewDecoder(av).Decode(nc.state); err != nil {
@@ -49,10 +73,12 @@ func (nc *NginxCertificate) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NginxCertificate] has state.
 func (nc *NginxCertificate) State() (*nginxCertificateState, bool) {
 	return nc.state, nc.state != nil
 }
 
+// StateMust returns the state for [NginxCertificate]. Panics if the state is nil.
 func (nc *NginxCertificate) StateMust() *nginxCertificateState {
 	if nc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", nc.Type(), nc.LocalName()))
@@ -60,10 +86,7 @@ func (nc *NginxCertificate) StateMust() *nginxCertificateState {
 	return nc.state
 }
 
-func (nc *NginxCertificate) DependOn() terra.Reference {
-	return terra.ReferenceResource(nc)
-}
-
+// NginxCertificateArgs contains the configurations for azurerm_nginx_certificate.
 type NginxCertificateArgs struct {
 	// CertificateVirtualPath: string, required
 	CertificateVirtualPath terra.StringValue `hcl:"certificate_virtual_path,attr" validate:"required"`
@@ -79,39 +102,43 @@ type NginxCertificateArgs struct {
 	NginxDeploymentId terra.StringValue `hcl:"nginx_deployment_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *nginxcertificate.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that NginxCertificate depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type nginxCertificateAttributes struct {
 	ref terra.Reference
 }
 
+// CertificateVirtualPath returns a reference to field certificate_virtual_path of azurerm_nginx_certificate.
 func (nc nginxCertificateAttributes) CertificateVirtualPath() terra.StringValue {
-	return terra.ReferenceString(nc.ref.Append("certificate_virtual_path"))
+	return terra.ReferenceAsString(nc.ref.Append("certificate_virtual_path"))
 }
 
+// Id returns a reference to field id of azurerm_nginx_certificate.
 func (nc nginxCertificateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(nc.ref.Append("id"))
+	return terra.ReferenceAsString(nc.ref.Append("id"))
 }
 
+// KeyVaultSecretId returns a reference to field key_vault_secret_id of azurerm_nginx_certificate.
 func (nc nginxCertificateAttributes) KeyVaultSecretId() terra.StringValue {
-	return terra.ReferenceString(nc.ref.Append("key_vault_secret_id"))
+	return terra.ReferenceAsString(nc.ref.Append("key_vault_secret_id"))
 }
 
+// KeyVirtualPath returns a reference to field key_virtual_path of azurerm_nginx_certificate.
 func (nc nginxCertificateAttributes) KeyVirtualPath() terra.StringValue {
-	return terra.ReferenceString(nc.ref.Append("key_virtual_path"))
+	return terra.ReferenceAsString(nc.ref.Append("key_virtual_path"))
 }
 
+// Name returns a reference to field name of azurerm_nginx_certificate.
 func (nc nginxCertificateAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(nc.ref.Append("name"))
+	return terra.ReferenceAsString(nc.ref.Append("name"))
 }
 
+// NginxDeploymentId returns a reference to field nginx_deployment_id of azurerm_nginx_certificate.
 func (nc nginxCertificateAttributes) NginxDeploymentId() terra.StringValue {
-	return terra.ReferenceString(nc.ref.Append("nginx_deployment_id"))
+	return terra.ReferenceAsString(nc.ref.Append("nginx_deployment_id"))
 }
 
 func (nc nginxCertificateAttributes) Timeouts() nginxcertificate.TimeoutsAttributes {
-	return terra.ReferenceSingle[nginxcertificate.TimeoutsAttributes](nc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[nginxcertificate.TimeoutsAttributes](nc.ref.Append("timeouts"))
 }
 
 type nginxCertificateState struct {

@@ -34,76 +34,76 @@ type ModelAttributes struct {
 	ref terra.Reference
 }
 
-func (m ModelAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m ModelAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m ModelAttributes) InternalWithRef(ref terra.Reference) ModelAttributes {
 	return ModelAttributes{ref: ref}
 }
 
-func (m ModelAttributes) InternalTokens() hclwrite.Tokens {
+func (m ModelAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
 func (m ModelAttributes) Format() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("format"))
+	return terra.ReferenceAsString(m.ref.Append("format"))
 }
 
 func (m ModelAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("name"))
+	return terra.ReferenceAsString(m.ref.Append("name"))
 }
 
 func (m ModelAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("version"))
+	return terra.ReferenceAsString(m.ref.Append("version"))
 }
 
 type ScaleAttributes struct {
 	ref terra.Reference
 }
 
-func (s ScaleAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ScaleAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ScaleAttributes) InternalWithRef(ref terra.Reference) ScaleAttributes {
 	return ScaleAttributes{ref: ref}
 }
 
-func (s ScaleAttributes) InternalTokens() hclwrite.Tokens {
+func (s ScaleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s ScaleAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("type"))
+	return terra.ReferenceAsString(s.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type ModelState struct {

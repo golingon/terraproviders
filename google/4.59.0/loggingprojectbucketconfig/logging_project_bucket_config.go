@@ -16,32 +16,32 @@ type CmekSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (cs CmekSettingsAttributes) InternalRef() terra.Reference {
-	return cs.ref
+func (cs CmekSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return cs.ref, nil
 }
 
 func (cs CmekSettingsAttributes) InternalWithRef(ref terra.Reference) CmekSettingsAttributes {
 	return CmekSettingsAttributes{ref: ref}
 }
 
-func (cs CmekSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (cs CmekSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cs.ref.InternalTokens()
 }
 
 func (cs CmekSettingsAttributes) KmsKeyName() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("kms_key_name"))
+	return terra.ReferenceAsString(cs.ref.Append("kms_key_name"))
 }
 
 func (cs CmekSettingsAttributes) KmsKeyVersionName() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("kms_key_version_name"))
+	return terra.ReferenceAsString(cs.ref.Append("kms_key_version_name"))
 }
 
 func (cs CmekSettingsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("name"))
+	return terra.ReferenceAsString(cs.ref.Append("name"))
 }
 
 func (cs CmekSettingsAttributes) ServiceAccountId() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("service_account_id"))
+	return terra.ReferenceAsString(cs.ref.Append("service_account_id"))
 }
 
 type CmekSettingsState struct {

@@ -338,7 +338,7 @@ func (bdm BlockDeviceMappingsAttributes) InternalWithRef(ref terra.Reference) Bl
 	return BlockDeviceMappingsAttributes{ref: ref}
 }
 
-func (bdm BlockDeviceMappingsAttributes) InternalTokens() hclwrite.Tokens {
+func (bdm BlockDeviceMappingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bdm.ref.InternalTokens()
 }
 
@@ -370,7 +370,7 @@ func (e EbsAttributes) InternalWithRef(ref terra.Reference) EbsAttributes {
 	return EbsAttributes{ref: ref}
 }
 
-func (e EbsAttributes) InternalTokens() hclwrite.Tokens {
+func (e EbsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -418,7 +418,7 @@ func (crs CapacityReservationSpecificationAttributes) InternalWithRef(ref terra.
 	return CapacityReservationSpecificationAttributes{ref: ref}
 }
 
-func (crs CapacityReservationSpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (crs CapacityReservationSpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return crs.ref.InternalTokens()
 }
 
@@ -442,7 +442,7 @@ func (crt CapacityReservationTargetAttributes) InternalWithRef(ref terra.Referen
 	return CapacityReservationTargetAttributes{ref: ref}
 }
 
-func (crt CapacityReservationTargetAttributes) InternalTokens() hclwrite.Tokens {
+func (crt CapacityReservationTargetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return crt.ref.InternalTokens()
 }
 
@@ -466,7 +466,7 @@ func (co CpuOptionsAttributes) InternalWithRef(ref terra.Reference) CpuOptionsAt
 	return CpuOptionsAttributes{ref: ref}
 }
 
-func (co CpuOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (co CpuOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return co.ref.InternalTokens()
 }
 
@@ -490,7 +490,7 @@ func (cs CreditSpecificationAttributes) InternalWithRef(ref terra.Reference) Cre
 	return CreditSpecificationAttributes{ref: ref}
 }
 
-func (cs CreditSpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (cs CreditSpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cs.ref.InternalTokens()
 }
 
@@ -510,7 +510,7 @@ func (egs ElasticGpuSpecificationsAttributes) InternalWithRef(ref terra.Referenc
 	return ElasticGpuSpecificationsAttributes{ref: ref}
 }
 
-func (egs ElasticGpuSpecificationsAttributes) InternalTokens() hclwrite.Tokens {
+func (egs ElasticGpuSpecificationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return egs.ref.InternalTokens()
 }
 
@@ -530,7 +530,7 @@ func (eia ElasticInferenceAcceleratorAttributes) InternalWithRef(ref terra.Refer
 	return ElasticInferenceAcceleratorAttributes{ref: ref}
 }
 
-func (eia ElasticInferenceAcceleratorAttributes) InternalTokens() hclwrite.Tokens {
+func (eia ElasticInferenceAcceleratorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return eia.ref.InternalTokens()
 }
 
@@ -550,7 +550,7 @@ func (eo EnclaveOptionsAttributes) InternalWithRef(ref terra.Reference) EnclaveO
 	return EnclaveOptionsAttributes{ref: ref}
 }
 
-func (eo EnclaveOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (eo EnclaveOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return eo.ref.InternalTokens()
 }
 
@@ -570,7 +570,7 @@ func (ho HibernationOptionsAttributes) InternalWithRef(ref terra.Reference) Hibe
 	return HibernationOptionsAttributes{ref: ref}
 }
 
-func (ho HibernationOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (ho HibernationOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ho.ref.InternalTokens()
 }
 
@@ -590,7 +590,7 @@ func (iip IamInstanceProfileAttributes) InternalWithRef(ref terra.Reference) Iam
 	return IamInstanceProfileAttributes{ref: ref}
 }
 
-func (iip IamInstanceProfileAttributes) InternalTokens() hclwrite.Tokens {
+func (iip IamInstanceProfileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return iip.ref.InternalTokens()
 }
 
@@ -614,7 +614,7 @@ func (imo InstanceMarketOptionsAttributes) InternalWithRef(ref terra.Reference) 
 	return InstanceMarketOptionsAttributes{ref: ref}
 }
 
-func (imo InstanceMarketOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (imo InstanceMarketOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return imo.ref.InternalTokens()
 }
 
@@ -638,7 +638,7 @@ func (so SpotOptionsAttributes) InternalWithRef(ref terra.Reference) SpotOptions
 	return SpotOptionsAttributes{ref: ref}
 }
 
-func (so SpotOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (so SpotOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return so.ref.InternalTokens()
 }
 
@@ -674,7 +674,7 @@ func (ir InstanceRequirementsAttributes) InternalWithRef(ref terra.Reference) In
 	return InstanceRequirementsAttributes{ref: ref}
 }
 
-func (ir InstanceRequirementsAttributes) InternalTokens() hclwrite.Tokens {
+func (ir InstanceRequirementsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ir.ref.InternalTokens()
 }
 
@@ -782,7 +782,7 @@ func (ac AcceleratorCountAttributes) InternalWithRef(ref terra.Reference) Accele
 	return AcceleratorCountAttributes{ref: ref}
 }
 
-func (ac AcceleratorCountAttributes) InternalTokens() hclwrite.Tokens {
+func (ac AcceleratorCountAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
@@ -806,7 +806,7 @@ func (atmm AcceleratorTotalMemoryMibAttributes) InternalWithRef(ref terra.Refere
 	return AcceleratorTotalMemoryMibAttributes{ref: ref}
 }
 
-func (atmm AcceleratorTotalMemoryMibAttributes) InternalTokens() hclwrite.Tokens {
+func (atmm AcceleratorTotalMemoryMibAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return atmm.ref.InternalTokens()
 }
 
@@ -830,7 +830,7 @@ func (bebm BaselineEbsBandwidthMbpsAttributes) InternalWithRef(ref terra.Referen
 	return BaselineEbsBandwidthMbpsAttributes{ref: ref}
 }
 
-func (bebm BaselineEbsBandwidthMbpsAttributes) InternalTokens() hclwrite.Tokens {
+func (bebm BaselineEbsBandwidthMbpsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bebm.ref.InternalTokens()
 }
 
@@ -854,7 +854,7 @@ func (mgpv MemoryGibPerVcpuAttributes) InternalWithRef(ref terra.Reference) Memo
 	return MemoryGibPerVcpuAttributes{ref: ref}
 }
 
-func (mgpv MemoryGibPerVcpuAttributes) InternalTokens() hclwrite.Tokens {
+func (mgpv MemoryGibPerVcpuAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mgpv.ref.InternalTokens()
 }
 
@@ -878,7 +878,7 @@ func (mm MemoryMibAttributes) InternalWithRef(ref terra.Reference) MemoryMibAttr
 	return MemoryMibAttributes{ref: ref}
 }
 
-func (mm MemoryMibAttributes) InternalTokens() hclwrite.Tokens {
+func (mm MemoryMibAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mm.ref.InternalTokens()
 }
 
@@ -902,7 +902,7 @@ func (nbg NetworkBandwidthGbpsAttributes) InternalWithRef(ref terra.Reference) N
 	return NetworkBandwidthGbpsAttributes{ref: ref}
 }
 
-func (nbg NetworkBandwidthGbpsAttributes) InternalTokens() hclwrite.Tokens {
+func (nbg NetworkBandwidthGbpsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nbg.ref.InternalTokens()
 }
 
@@ -926,7 +926,7 @@ func (nic NetworkInterfaceCountAttributes) InternalWithRef(ref terra.Reference) 
 	return NetworkInterfaceCountAttributes{ref: ref}
 }
 
-func (nic NetworkInterfaceCountAttributes) InternalTokens() hclwrite.Tokens {
+func (nic NetworkInterfaceCountAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nic.ref.InternalTokens()
 }
 
@@ -950,7 +950,7 @@ func (tlsg TotalLocalStorageGbAttributes) InternalWithRef(ref terra.Reference) T
 	return TotalLocalStorageGbAttributes{ref: ref}
 }
 
-func (tlsg TotalLocalStorageGbAttributes) InternalTokens() hclwrite.Tokens {
+func (tlsg TotalLocalStorageGbAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tlsg.ref.InternalTokens()
 }
 
@@ -974,7 +974,7 @@ func (vc VcpuCountAttributes) InternalWithRef(ref terra.Reference) VcpuCountAttr
 	return VcpuCountAttributes{ref: ref}
 }
 
-func (vc VcpuCountAttributes) InternalTokens() hclwrite.Tokens {
+func (vc VcpuCountAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vc.ref.InternalTokens()
 }
 
@@ -998,7 +998,7 @@ func (ls LicenseSpecificationAttributes) InternalWithRef(ref terra.Reference) Li
 	return LicenseSpecificationAttributes{ref: ref}
 }
 
-func (ls LicenseSpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (ls LicenseSpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ls.ref.InternalTokens()
 }
 
@@ -1018,7 +1018,7 @@ func (mo MaintenanceOptionsAttributes) InternalWithRef(ref terra.Reference) Main
 	return MaintenanceOptionsAttributes{ref: ref}
 }
 
-func (mo MaintenanceOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (mo MaintenanceOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mo.ref.InternalTokens()
 }
 
@@ -1038,7 +1038,7 @@ func (mo MetadataOptionsAttributes) InternalWithRef(ref terra.Reference) Metadat
 	return MetadataOptionsAttributes{ref: ref}
 }
 
-func (mo MetadataOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (mo MetadataOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mo.ref.InternalTokens()
 }
 
@@ -1074,7 +1074,7 @@ func (m MonitoringAttributes) InternalWithRef(ref terra.Reference) MonitoringAtt
 	return MonitoringAttributes{ref: ref}
 }
 
-func (m MonitoringAttributes) InternalTokens() hclwrite.Tokens {
+func (m MonitoringAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -1094,7 +1094,7 @@ func (ni NetworkInterfacesAttributes) InternalWithRef(ref terra.Reference) Netwo
 	return NetworkInterfacesAttributes{ref: ref}
 }
 
-func (ni NetworkInterfacesAttributes) InternalTokens() hclwrite.Tokens {
+func (ni NetworkInterfacesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ni.ref.InternalTokens()
 }
 
@@ -1186,7 +1186,7 @@ func (p PlacementAttributes) InternalWithRef(ref terra.Reference) PlacementAttri
 	return PlacementAttributes{ref: ref}
 }
 
-func (p PlacementAttributes) InternalTokens() hclwrite.Tokens {
+func (p PlacementAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -1234,7 +1234,7 @@ func (pdno PrivateDnsNameOptionsAttributes) InternalWithRef(ref terra.Reference)
 	return PrivateDnsNameOptionsAttributes{ref: ref}
 }
 
-func (pdno PrivateDnsNameOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (pdno PrivateDnsNameOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pdno.ref.InternalTokens()
 }
 
@@ -1262,7 +1262,7 @@ func (ts TagSpecificationsAttributes) InternalWithRef(ref terra.Reference) TagSp
 	return TagSpecificationsAttributes{ref: ref}
 }
 
-func (ts TagSpecificationsAttributes) InternalTokens() hclwrite.Tokens {
+func (ts TagSpecificationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ts.ref.InternalTokens()
 }
 

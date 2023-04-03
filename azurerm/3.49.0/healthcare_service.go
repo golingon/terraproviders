@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewHealthcareService creates a new instance of [HealthcareService].
 func NewHealthcareService(name string, args HealthcareServiceArgs) *HealthcareService {
 	return &HealthcareService{
 		Args: args,
@@ -19,28 +20,51 @@ func NewHealthcareService(name string, args HealthcareServiceArgs) *HealthcareSe
 
 var _ terra.Resource = (*HealthcareService)(nil)
 
+// HealthcareService represents the Terraform resource azurerm_healthcare_service.
 type HealthcareService struct {
-	Name  string
-	Args  HealthcareServiceArgs
-	state *healthcareServiceState
+	Name      string
+	Args      HealthcareServiceArgs
+	state     *healthcareServiceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [HealthcareService].
 func (hs *HealthcareService) Type() string {
 	return "azurerm_healthcare_service"
 }
 
+// LocalName returns the local name for [HealthcareService].
 func (hs *HealthcareService) LocalName() string {
 	return hs.Name
 }
 
+// Configuration returns the configuration (args) for [HealthcareService].
 func (hs *HealthcareService) Configuration() interface{} {
 	return hs.Args
 }
 
+// DependOn is used for other resources to depend on [HealthcareService].
+func (hs *HealthcareService) DependOn() terra.Reference {
+	return terra.ReferenceResource(hs)
+}
+
+// Dependencies returns the list of resources [HealthcareService] depends_on.
+func (hs *HealthcareService) Dependencies() terra.Dependencies {
+	return hs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [HealthcareService].
+func (hs *HealthcareService) LifecycleManagement() *terra.Lifecycle {
+	return hs.Lifecycle
+}
+
+// Attributes returns the attributes for [HealthcareService].
 func (hs *HealthcareService) Attributes() healthcareServiceAttributes {
 	return healthcareServiceAttributes{ref: terra.ReferenceResource(hs)}
 }
 
+// ImportState imports the given attribute values into [HealthcareService]'s state.
 func (hs *HealthcareService) ImportState(av io.Reader) error {
 	hs.state = &healthcareServiceState{}
 	if err := json.NewDecoder(av).Decode(hs.state); err != nil {
@@ -49,10 +73,12 @@ func (hs *HealthcareService) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [HealthcareService] has state.
 func (hs *HealthcareService) State() (*healthcareServiceState, bool) {
 	return hs.state, hs.state != nil
 }
 
+// StateMust returns the state for [HealthcareService]. Panics if the state is nil.
 func (hs *HealthcareService) StateMust() *healthcareServiceState {
 	if hs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", hs.Type(), hs.LocalName()))
@@ -60,10 +86,7 @@ func (hs *HealthcareService) StateMust() *healthcareServiceState {
 	return hs.state
 }
 
-func (hs *HealthcareService) DependOn() terra.Reference {
-	return terra.ReferenceResource(hs)
-}
-
+// HealthcareServiceArgs contains the configurations for azurerm_healthcare_service.
 type HealthcareServiceArgs struct {
 	// AccessPolicyObjectIds: set of string, optional
 	AccessPolicyObjectIds terra.SetValue[terra.StringValue] `hcl:"access_policy_object_ids,attr"`
@@ -91,63 +114,71 @@ type HealthcareServiceArgs struct {
 	CorsConfiguration *healthcareservice.CorsConfiguration `hcl:"cors_configuration,block"`
 	// Timeouts: optional
 	Timeouts *healthcareservice.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that HealthcareService depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type healthcareServiceAttributes struct {
 	ref terra.Reference
 }
 
+// AccessPolicyObjectIds returns a reference to field access_policy_object_ids of azurerm_healthcare_service.
 func (hs healthcareServiceAttributes) AccessPolicyObjectIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](hs.ref.Append("access_policy_object_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](hs.ref.Append("access_policy_object_ids"))
 }
 
+// CosmosdbKeyVaultKeyVersionlessId returns a reference to field cosmosdb_key_vault_key_versionless_id of azurerm_healthcare_service.
 func (hs healthcareServiceAttributes) CosmosdbKeyVaultKeyVersionlessId() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("cosmosdb_key_vault_key_versionless_id"))
+	return terra.ReferenceAsString(hs.ref.Append("cosmosdb_key_vault_key_versionless_id"))
 }
 
+// CosmosdbThroughput returns a reference to field cosmosdb_throughput of azurerm_healthcare_service.
 func (hs healthcareServiceAttributes) CosmosdbThroughput() terra.NumberValue {
-	return terra.ReferenceNumber(hs.ref.Append("cosmosdb_throughput"))
+	return terra.ReferenceAsNumber(hs.ref.Append("cosmosdb_throughput"))
 }
 
+// Id returns a reference to field id of azurerm_healthcare_service.
 func (hs healthcareServiceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("id"))
+	return terra.ReferenceAsString(hs.ref.Append("id"))
 }
 
+// Kind returns a reference to field kind of azurerm_healthcare_service.
 func (hs healthcareServiceAttributes) Kind() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("kind"))
+	return terra.ReferenceAsString(hs.ref.Append("kind"))
 }
 
+// Location returns a reference to field location of azurerm_healthcare_service.
 func (hs healthcareServiceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("location"))
+	return terra.ReferenceAsString(hs.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_healthcare_service.
 func (hs healthcareServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("name"))
+	return terra.ReferenceAsString(hs.ref.Append("name"))
 }
 
+// PublicNetworkAccessEnabled returns a reference to field public_network_access_enabled of azurerm_healthcare_service.
 func (hs healthcareServiceAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(hs.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(hs.ref.Append("public_network_access_enabled"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_healthcare_service.
 func (hs healthcareServiceAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(hs.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_healthcare_service.
 func (hs healthcareServiceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](hs.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](hs.ref.Append("tags"))
 }
 
 func (hs healthcareServiceAttributes) AuthenticationConfiguration() terra.ListValue[healthcareservice.AuthenticationConfigurationAttributes] {
-	return terra.ReferenceList[healthcareservice.AuthenticationConfigurationAttributes](hs.ref.Append("authentication_configuration"))
+	return terra.ReferenceAsList[healthcareservice.AuthenticationConfigurationAttributes](hs.ref.Append("authentication_configuration"))
 }
 
 func (hs healthcareServiceAttributes) CorsConfiguration() terra.ListValue[healthcareservice.CorsConfigurationAttributes] {
-	return terra.ReferenceList[healthcareservice.CorsConfigurationAttributes](hs.ref.Append("cors_configuration"))
+	return terra.ReferenceAsList[healthcareservice.CorsConfigurationAttributes](hs.ref.Append("cors_configuration"))
 }
 
 func (hs healthcareServiceAttributes) Timeouts() healthcareservice.TimeoutsAttributes {
-	return terra.ReferenceSingle[healthcareservice.TimeoutsAttributes](hs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[healthcareservice.TimeoutsAttributes](hs.ref.Append("timeouts"))
 }
 
 type healthcareServiceState struct {

@@ -13,24 +13,24 @@ type PublicKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (pk PublicKeyAttributes) InternalRef() terra.Reference {
-	return pk.ref
+func (pk PublicKeyAttributes) InternalRef() (terra.Reference, error) {
+	return pk.ref, nil
 }
 
 func (pk PublicKeyAttributes) InternalWithRef(ref terra.Reference) PublicKeyAttributes {
 	return PublicKeyAttributes{ref: ref}
 }
 
-func (pk PublicKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (pk PublicKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pk.ref.InternalTokens()
 }
 
 func (pk PublicKeyAttributes) Algorithm() terra.StringValue {
-	return terra.ReferenceString(pk.ref.Append("algorithm"))
+	return terra.ReferenceAsString(pk.ref.Append("algorithm"))
 }
 
 func (pk PublicKeyAttributes) Pem() terra.StringValue {
-	return terra.ReferenceString(pk.ref.Append("pem"))
+	return terra.ReferenceAsString(pk.ref.Append("pem"))
 }
 
 type PublicKeyState struct {

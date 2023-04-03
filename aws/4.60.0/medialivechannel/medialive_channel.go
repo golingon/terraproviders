@@ -1522,7 +1522,7 @@ func (cis CdiInputSpecificationAttributes) InternalWithRef(ref terra.Reference) 
 	return CdiInputSpecificationAttributes{ref: ref}
 }
 
-func (cis CdiInputSpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (cis CdiInputSpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cis.ref.InternalTokens()
 }
 
@@ -1542,7 +1542,7 @@ func (d DestinationsAttributes) InternalWithRef(ref terra.Reference) Destination
 	return DestinationsAttributes{ref: ref}
 }
 
-func (d DestinationsAttributes) InternalTokens() hclwrite.Tokens {
+func (d DestinationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -1574,7 +1574,7 @@ func (mps MediaPackageSettingsAttributes) InternalWithRef(ref terra.Reference) M
 	return MediaPackageSettingsAttributes{ref: ref}
 }
 
-func (mps MediaPackageSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (mps MediaPackageSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mps.ref.InternalTokens()
 }
 
@@ -1594,7 +1594,7 @@ func (ms MultiplexSettingsAttributes) InternalWithRef(ref terra.Reference) Multi
 	return MultiplexSettingsAttributes{ref: ref}
 }
 
-func (ms MultiplexSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ms MultiplexSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ms.ref.InternalTokens()
 }
 
@@ -1618,7 +1618,7 @@ func (s SettingsAttributes) InternalWithRef(ref terra.Reference) SettingsAttribu
 	return SettingsAttributes{ref: ref}
 }
 
-func (s SettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (s SettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -1650,7 +1650,7 @@ func (es EncoderSettingsAttributes) InternalWithRef(ref terra.Reference) Encoder
 	return EncoderSettingsAttributes{ref: ref}
 }
 
-func (es EncoderSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (es EncoderSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return es.ref.InternalTokens()
 }
 
@@ -1686,7 +1686,7 @@ func (ad AudioDescriptionsAttributes) InternalWithRef(ref terra.Reference) Audio
 	return AudioDescriptionsAttributes{ref: ref}
 }
 
-func (ad AudioDescriptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (ad AudioDescriptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ad.ref.InternalTokens()
 }
 
@@ -1746,7 +1746,7 @@ func (ans AudioNormalizationSettingsAttributes) InternalWithRef(ref terra.Refere
 	return AudioNormalizationSettingsAttributes{ref: ref}
 }
 
-func (ans AudioNormalizationSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ans AudioNormalizationSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ans.ref.InternalTokens()
 }
 
@@ -1774,7 +1774,7 @@ func (aws AudioWatermarkSettingsAttributes) InternalWithRef(ref terra.Reference)
 	return AudioWatermarkSettingsAttributes{ref: ref}
 }
 
-func (aws AudioWatermarkSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (aws AudioWatermarkSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aws.ref.InternalTokens()
 }
 
@@ -1794,7 +1794,7 @@ func (nws NielsenWatermarksSettingsAttributes) InternalWithRef(ref terra.Referen
 	return NielsenWatermarksSettingsAttributes{ref: ref}
 }
 
-func (nws NielsenWatermarksSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (nws NielsenWatermarksSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nws.ref.InternalTokens()
 }
 
@@ -1822,7 +1822,7 @@ func (ncs NielsenCbetSettingsAttributes) InternalWithRef(ref terra.Reference) Ni
 	return NielsenCbetSettingsAttributes{ref: ref}
 }
 
-func (ncs NielsenCbetSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ncs NielsenCbetSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ncs.ref.InternalTokens()
 }
 
@@ -1850,7 +1850,7 @@ func (nnins NielsenNaesIiNwSettingsAttributes) InternalWithRef(ref terra.Referen
 	return NielsenNaesIiNwSettingsAttributes{ref: ref}
 }
 
-func (nnins NielsenNaesIiNwSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (nnins NielsenNaesIiNwSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nnins.ref.InternalTokens()
 }
 
@@ -1874,7 +1874,7 @@ func (cs AudioDescriptionsCodecSettingsAttributes) InternalWithRef(ref terra.Ref
 	return AudioDescriptionsCodecSettingsAttributes{ref: ref}
 }
 
-func (cs AudioDescriptionsCodecSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (cs AudioDescriptionsCodecSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cs.ref.InternalTokens()
 }
 
@@ -1918,7 +1918,7 @@ func (as AacSettingsAttributes) InternalWithRef(ref terra.Reference) AacSettings
 	return AacSettingsAttributes{ref: ref}
 }
 
-func (as AacSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (as AacSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return as.ref.InternalTokens()
 }
 
@@ -1970,7 +1970,7 @@ func (as Ac3SettingsAttributes) InternalWithRef(ref terra.Reference) Ac3Settings
 	return Ac3SettingsAttributes{ref: ref}
 }
 
-func (as Ac3SettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (as Ac3SettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return as.ref.InternalTokens()
 }
 
@@ -2014,7 +2014,7 @@ func (eas Eac3AtmosSettingsAttributes) InternalWithRef(ref terra.Reference) Eac3
 	return Eac3AtmosSettingsAttributes{ref: ref}
 }
 
-func (eas Eac3AtmosSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (eas Eac3AtmosSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return eas.ref.InternalTokens()
 }
 
@@ -2058,7 +2058,7 @@ func (es Eac3SettingsAttributes) InternalWithRef(ref terra.Reference) Eac3Settin
 	return Eac3SettingsAttributes{ref: ref}
 }
 
-func (es Eac3SettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (es Eac3SettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return es.ref.InternalTokens()
 }
 
@@ -2154,7 +2154,7 @@ func (ms Mp2SettingsAttributes) InternalWithRef(ref terra.Reference) Mp2Settings
 	return Mp2SettingsAttributes{ref: ref}
 }
 
-func (ms Mp2SettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ms Mp2SettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ms.ref.InternalTokens()
 }
 
@@ -2182,7 +2182,7 @@ func (pts PassThroughSettingsAttributes) InternalWithRef(ref terra.Reference) Pa
 	return PassThroughSettingsAttributes{ref: ref}
 }
 
-func (pts PassThroughSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (pts PassThroughSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pts.ref.InternalTokens()
 }
 
@@ -2198,7 +2198,7 @@ func (ws WavSettingsAttributes) InternalWithRef(ref terra.Reference) WavSettings
 	return WavSettingsAttributes{ref: ref}
 }
 
-func (ws WavSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ws WavSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ws.ref.InternalTokens()
 }
 
@@ -2226,7 +2226,7 @@ func (rs RemixSettingsAttributes) InternalWithRef(ref terra.Reference) RemixSett
 	return RemixSettingsAttributes{ref: ref}
 }
 
-func (rs RemixSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (rs RemixSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rs.ref.InternalTokens()
 }
 
@@ -2254,7 +2254,7 @@ func (cm ChannelMappingsAttributes) InternalWithRef(ref terra.Reference) Channel
 	return ChannelMappingsAttributes{ref: ref}
 }
 
-func (cm ChannelMappingsAttributes) InternalTokens() hclwrite.Tokens {
+func (cm ChannelMappingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cm.ref.InternalTokens()
 }
 
@@ -2278,7 +2278,7 @@ func (icl InputChannelLevelsAttributes) InternalWithRef(ref terra.Reference) Inp
 	return InputChannelLevelsAttributes{ref: ref}
 }
 
-func (icl InputChannelLevelsAttributes) InternalTokens() hclwrite.Tokens {
+func (icl InputChannelLevelsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return icl.ref.InternalTokens()
 }
 
@@ -2302,7 +2302,7 @@ func (ab AvailBlankingAttributes) InternalWithRef(ref terra.Reference) AvailBlan
 	return AvailBlankingAttributes{ref: ref}
 }
 
-func (ab AvailBlankingAttributes) InternalTokens() hclwrite.Tokens {
+func (ab AvailBlankingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ab.ref.InternalTokens()
 }
 
@@ -2326,7 +2326,7 @@ func (abi AvailBlankingImageAttributes) InternalWithRef(ref terra.Reference) Ava
 	return AvailBlankingImageAttributes{ref: ref}
 }
 
-func (abi AvailBlankingImageAttributes) InternalTokens() hclwrite.Tokens {
+func (abi AvailBlankingImageAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return abi.ref.InternalTokens()
 }
 
@@ -2354,7 +2354,7 @@ func (og OutputGroupsAttributes) InternalWithRef(ref terra.Reference) OutputGrou
 	return OutputGroupsAttributes{ref: ref}
 }
 
-func (og OutputGroupsAttributes) InternalTokens() hclwrite.Tokens {
+func (og OutputGroupsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return og.ref.InternalTokens()
 }
 
@@ -2382,7 +2382,7 @@ func (ogs OutputGroupSettingsAttributes) InternalWithRef(ref terra.Reference) Ou
 	return OutputGroupSettingsAttributes{ref: ref}
 }
 
-func (ogs OutputGroupSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ogs OutputGroupSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ogs.ref.InternalTokens()
 }
 
@@ -2430,7 +2430,7 @@ func (ags ArchiveGroupSettingsAttributes) InternalWithRef(ref terra.Reference) A
 	return ArchiveGroupSettingsAttributes{ref: ref}
 }
 
-func (ags ArchiveGroupSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ags ArchiveGroupSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ags.ref.InternalTokens()
 }
 
@@ -2458,7 +2458,7 @@ func (acs ArchiveCdnSettingsAttributes) InternalWithRef(ref terra.Reference) Arc
 	return ArchiveCdnSettingsAttributes{ref: ref}
 }
 
-func (acs ArchiveCdnSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (acs ArchiveCdnSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return acs.ref.InternalTokens()
 }
 
@@ -2478,7 +2478,7 @@ func (ass ArchiveS3SettingsAttributes) InternalWithRef(ref terra.Reference) Arch
 	return ArchiveS3SettingsAttributes{ref: ref}
 }
 
-func (ass ArchiveS3SettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ass ArchiveS3SettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ass.ref.InternalTokens()
 }
 
@@ -2498,7 +2498,7 @@ func (d ArchiveGroupSettingsDestinationAttributes) InternalWithRef(ref terra.Ref
 	return ArchiveGroupSettingsDestinationAttributes{ref: ref}
 }
 
-func (d ArchiveGroupSettingsDestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (d ArchiveGroupSettingsDestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -2518,7 +2518,7 @@ func (fcgs FrameCaptureGroupSettingsAttributes) InternalWithRef(ref terra.Refere
 	return FrameCaptureGroupSettingsAttributes{ref: ref}
 }
 
-func (fcgs FrameCaptureGroupSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (fcgs FrameCaptureGroupSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fcgs.ref.InternalTokens()
 }
 
@@ -2542,7 +2542,7 @@ func (d FrameCaptureGroupSettingsDestinationAttributes) InternalWithRef(ref terr
 	return FrameCaptureGroupSettingsDestinationAttributes{ref: ref}
 }
 
-func (d FrameCaptureGroupSettingsDestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (d FrameCaptureGroupSettingsDestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -2562,7 +2562,7 @@ func (fccs FrameCaptureCdnSettingsAttributes) InternalWithRef(ref terra.Referenc
 	return FrameCaptureCdnSettingsAttributes{ref: ref}
 }
 
-func (fccs FrameCaptureCdnSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (fccs FrameCaptureCdnSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fccs.ref.InternalTokens()
 }
 
@@ -2582,7 +2582,7 @@ func (fcss FrameCaptureS3SettingsAttributes) InternalWithRef(ref terra.Reference
 	return FrameCaptureS3SettingsAttributes{ref: ref}
 }
 
-func (fcss FrameCaptureS3SettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (fcss FrameCaptureS3SettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fcss.ref.InternalTokens()
 }
 
@@ -2602,7 +2602,7 @@ func (hgs HlsGroupSettingsAttributes) InternalWithRef(ref terra.Reference) HlsGr
 	return HlsGroupSettingsAttributes{ref: ref}
 }
 
-func (hgs HlsGroupSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (hgs HlsGroupSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hgs.ref.InternalTokens()
 }
 
@@ -2786,7 +2786,7 @@ func (clm CaptionLanguageMappingsAttributes) InternalWithRef(ref terra.Reference
 	return CaptionLanguageMappingsAttributes{ref: ref}
 }
 
-func (clm CaptionLanguageMappingsAttributes) InternalTokens() hclwrite.Tokens {
+func (clm CaptionLanguageMappingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return clm.ref.InternalTokens()
 }
 
@@ -2814,7 +2814,7 @@ func (d HlsGroupSettingsDestinationAttributes) InternalWithRef(ref terra.Referen
 	return HlsGroupSettingsDestinationAttributes{ref: ref}
 }
 
-func (d HlsGroupSettingsDestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (d HlsGroupSettingsDestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -2834,7 +2834,7 @@ func (hcs HlsCdnSettingsAttributes) InternalWithRef(ref terra.Reference) HlsCdnS
 	return HlsCdnSettingsAttributes{ref: ref}
 }
 
-func (hcs HlsCdnSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (hcs HlsCdnSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hcs.ref.InternalTokens()
 }
 
@@ -2870,7 +2870,7 @@ func (has HlsAkamaiSettingsAttributes) InternalWithRef(ref terra.Reference) HlsA
 	return HlsAkamaiSettingsAttributes{ref: ref}
 }
 
-func (has HlsAkamaiSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (has HlsAkamaiSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return has.ref.InternalTokens()
 }
 
@@ -2914,7 +2914,7 @@ func (hbps HlsBasicPutSettingsAttributes) InternalWithRef(ref terra.Reference) H
 	return HlsBasicPutSettingsAttributes{ref: ref}
 }
 
-func (hbps HlsBasicPutSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (hbps HlsBasicPutSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hbps.ref.InternalTokens()
 }
 
@@ -2946,7 +2946,7 @@ func (hmss HlsMediaStoreSettingsAttributes) InternalWithRef(ref terra.Reference)
 	return HlsMediaStoreSettingsAttributes{ref: ref}
 }
 
-func (hmss HlsMediaStoreSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (hmss HlsMediaStoreSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hmss.ref.InternalTokens()
 }
 
@@ -2982,7 +2982,7 @@ func (hss HlsS3SettingsAttributes) InternalWithRef(ref terra.Reference) HlsS3Set
 	return HlsS3SettingsAttributes{ref: ref}
 }
 
-func (hss HlsS3SettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (hss HlsS3SettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hss.ref.InternalTokens()
 }
 
@@ -3002,7 +3002,7 @@ func (hws HlsWebdavSettingsAttributes) InternalWithRef(ref terra.Reference) HlsW
 	return HlsWebdavSettingsAttributes{ref: ref}
 }
 
-func (hws HlsWebdavSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (hws HlsWebdavSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hws.ref.InternalTokens()
 }
 
@@ -3038,7 +3038,7 @@ func (kps KeyProviderSettingsAttributes) InternalWithRef(ref terra.Reference) Ke
 	return KeyProviderSettingsAttributes{ref: ref}
 }
 
-func (kps KeyProviderSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (kps KeyProviderSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kps.ref.InternalTokens()
 }
 
@@ -3058,7 +3058,7 @@ func (sks StaticKeySettingsAttributes) InternalWithRef(ref terra.Reference) Stat
 	return StaticKeySettingsAttributes{ref: ref}
 }
 
-func (sks StaticKeySettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (sks StaticKeySettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sks.ref.InternalTokens()
 }
 
@@ -3082,7 +3082,7 @@ func (kps KeyProviderServerAttributes) InternalWithRef(ref terra.Reference) KeyP
 	return KeyProviderServerAttributes{ref: ref}
 }
 
-func (kps KeyProviderServerAttributes) InternalTokens() hclwrite.Tokens {
+func (kps KeyProviderServerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kps.ref.InternalTokens()
 }
 
@@ -3110,7 +3110,7 @@ func (mpgs MediaPackageGroupSettingsAttributes) InternalWithRef(ref terra.Refere
 	return MediaPackageGroupSettingsAttributes{ref: ref}
 }
 
-func (mpgs MediaPackageGroupSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (mpgs MediaPackageGroupSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mpgs.ref.InternalTokens()
 }
 
@@ -3130,7 +3130,7 @@ func (d MediaPackageGroupSettingsDestinationAttributes) InternalWithRef(ref terr
 	return MediaPackageGroupSettingsDestinationAttributes{ref: ref}
 }
 
-func (d MediaPackageGroupSettingsDestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (d MediaPackageGroupSettingsDestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -3150,7 +3150,7 @@ func (msgs MsSmoothGroupSettingsAttributes) InternalWithRef(ref terra.Reference)
 	return MsSmoothGroupSettingsAttributes{ref: ref}
 }
 
-func (msgs MsSmoothGroupSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (msgs MsSmoothGroupSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return msgs.ref.InternalTokens()
 }
 
@@ -3242,7 +3242,7 @@ func (d MsSmoothGroupSettingsDestinationAttributes) InternalWithRef(ref terra.Re
 	return MsSmoothGroupSettingsDestinationAttributes{ref: ref}
 }
 
-func (d MsSmoothGroupSettingsDestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (d MsSmoothGroupSettingsDestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -3262,7 +3262,7 @@ func (mgs MultiplexGroupSettingsAttributes) InternalWithRef(ref terra.Reference)
 	return MultiplexGroupSettingsAttributes{ref: ref}
 }
 
-func (mgs MultiplexGroupSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (mgs MultiplexGroupSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mgs.ref.InternalTokens()
 }
 
@@ -3278,7 +3278,7 @@ func (rgs RtmpGroupSettingsAttributes) InternalWithRef(ref terra.Reference) Rtmp
 	return RtmpGroupSettingsAttributes{ref: ref}
 }
 
-func (rgs RtmpGroupSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (rgs RtmpGroupSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rgs.ref.InternalTokens()
 }
 
@@ -3322,7 +3322,7 @@ func (ugs UdpGroupSettingsAttributes) InternalWithRef(ref terra.Reference) UdpGr
 	return UdpGroupSettingsAttributes{ref: ref}
 }
 
-func (ugs UdpGroupSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ugs UdpGroupSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ugs.ref.InternalTokens()
 }
 
@@ -3350,7 +3350,7 @@ func (o OutputsAttributes) InternalWithRef(ref terra.Reference) OutputsAttribute
 	return OutputsAttributes{ref: ref}
 }
 
-func (o OutputsAttributes) InternalTokens() hclwrite.Tokens {
+func (o OutputsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return o.ref.InternalTokens()
 }
 
@@ -3386,7 +3386,7 @@ func (os OutputSettingsAttributes) InternalWithRef(ref terra.Reference) OutputSe
 	return OutputSettingsAttributes{ref: ref}
 }
 
-func (os OutputSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (os OutputSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return os.ref.InternalTokens()
 }
 
@@ -3434,7 +3434,7 @@ func (aos ArchiveOutputSettingsAttributes) InternalWithRef(ref terra.Reference) 
 	return ArchiveOutputSettingsAttributes{ref: ref}
 }
 
-func (aos ArchiveOutputSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (aos ArchiveOutputSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aos.ref.InternalTokens()
 }
 
@@ -3462,7 +3462,7 @@ func (cs ArchiveOutputSettingsContainerSettingsAttributes) InternalWithRef(ref t
 	return ArchiveOutputSettingsContainerSettingsAttributes{ref: ref}
 }
 
-func (cs ArchiveOutputSettingsContainerSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (cs ArchiveOutputSettingsContainerSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cs.ref.InternalTokens()
 }
 
@@ -3486,7 +3486,7 @@ func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) InternalW
 	return ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes{ref: ref}
 }
 
-func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ms.ref.InternalTokens()
 }
 
@@ -3690,7 +3690,7 @@ func (dns ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttrib
 	return ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes{ref: ref}
 }
 
-func (dns ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (dns ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dns.ref.InternalTokens()
 }
 
@@ -3718,7 +3718,7 @@ func (dss ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttrib
 	return ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes{ref: ref}
 }
 
-func (dss ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (dss ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dss.ref.InternalTokens()
 }
 
@@ -3750,7 +3750,7 @@ func (dts ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttrib
 	return ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes{ref: ref}
 }
 
-func (dts ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (dts ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dts.ref.InternalTokens()
 }
 
@@ -3770,7 +3770,7 @@ func (rs RawSettingsAttributes) InternalWithRef(ref terra.Reference) RawSettings
 	return RawSettingsAttributes{ref: ref}
 }
 
-func (rs RawSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (rs RawSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rs.ref.InternalTokens()
 }
 
@@ -3786,7 +3786,7 @@ func (fcos FrameCaptureOutputSettingsAttributes) InternalWithRef(ref terra.Refer
 	return FrameCaptureOutputSettingsAttributes{ref: ref}
 }
 
-func (fcos FrameCaptureOutputSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (fcos FrameCaptureOutputSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fcos.ref.InternalTokens()
 }
 
@@ -3806,7 +3806,7 @@ func (hos HlsOutputSettingsAttributes) InternalWithRef(ref terra.Reference) HlsO
 	return HlsOutputSettingsAttributes{ref: ref}
 }
 
-func (hos HlsOutputSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (hos HlsOutputSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hos.ref.InternalTokens()
 }
 
@@ -3838,7 +3838,7 @@ func (hs HlsSettingsAttributes) InternalWithRef(ref terra.Reference) HlsSettings
 	return HlsSettingsAttributes{ref: ref}
 }
 
-func (hs HlsSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (hs HlsSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hs.ref.InternalTokens()
 }
 
@@ -3870,7 +3870,7 @@ func (aohs AudioOnlyHlsSettingsAttributes) InternalWithRef(ref terra.Reference) 
 	return AudioOnlyHlsSettingsAttributes{ref: ref}
 }
 
-func (aohs AudioOnlyHlsSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (aohs AudioOnlyHlsSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aohs.ref.InternalTokens()
 }
 
@@ -3902,7 +3902,7 @@ func (aoi AudioOnlyImageAttributes) InternalWithRef(ref terra.Reference) AudioOn
 	return AudioOnlyImageAttributes{ref: ref}
 }
 
-func (aoi AudioOnlyImageAttributes) InternalTokens() hclwrite.Tokens {
+func (aoi AudioOnlyImageAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aoi.ref.InternalTokens()
 }
 
@@ -3930,7 +3930,7 @@ func (fhs Fmp4HlsSettingsAttributes) InternalWithRef(ref terra.Reference) Fmp4Hl
 	return Fmp4HlsSettingsAttributes{ref: ref}
 }
 
-func (fhs Fmp4HlsSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (fhs Fmp4HlsSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fhs.ref.InternalTokens()
 }
 
@@ -3958,7 +3958,7 @@ func (fchs FrameCaptureHlsSettingsAttributes) InternalWithRef(ref terra.Referenc
 	return FrameCaptureHlsSettingsAttributes{ref: ref}
 }
 
-func (fchs FrameCaptureHlsSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (fchs FrameCaptureHlsSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fchs.ref.InternalTokens()
 }
 
@@ -3974,7 +3974,7 @@ func (shs StandardHlsSettingsAttributes) InternalWithRef(ref terra.Reference) St
 	return StandardHlsSettingsAttributes{ref: ref}
 }
 
-func (shs StandardHlsSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (shs StandardHlsSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return shs.ref.InternalTokens()
 }
 
@@ -3998,7 +3998,7 @@ func (ms M3U8SettingsAttributes) InternalWithRef(ref terra.Reference) M3U8Settin
 	return M3U8SettingsAttributes{ref: ref}
 }
 
-func (ms M3U8SettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ms M3U8SettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ms.ref.InternalTokens()
 }
 
@@ -4082,7 +4082,7 @@ func (mpos MediaPackageOutputSettingsAttributes) InternalWithRef(ref terra.Refer
 	return MediaPackageOutputSettingsAttributes{ref: ref}
 }
 
-func (mpos MediaPackageOutputSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (mpos MediaPackageOutputSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mpos.ref.InternalTokens()
 }
 
@@ -4098,7 +4098,7 @@ func (msos MsSmoothOutputSettingsAttributes) InternalWithRef(ref terra.Reference
 	return MsSmoothOutputSettingsAttributes{ref: ref}
 }
 
-func (msos MsSmoothOutputSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (msos MsSmoothOutputSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return msos.ref.InternalTokens()
 }
 
@@ -4122,7 +4122,7 @@ func (mos MultiplexOutputSettingsAttributes) InternalWithRef(ref terra.Reference
 	return MultiplexOutputSettingsAttributes{ref: ref}
 }
 
-func (mos MultiplexOutputSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (mos MultiplexOutputSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mos.ref.InternalTokens()
 }
 
@@ -4142,7 +4142,7 @@ func (d MultiplexOutputSettingsDestinationAttributes) InternalWithRef(ref terra.
 	return MultiplexOutputSettingsDestinationAttributes{ref: ref}
 }
 
-func (d MultiplexOutputSettingsDestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (d MultiplexOutputSettingsDestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -4162,7 +4162,7 @@ func (ros RtmpOutputSettingsAttributes) InternalWithRef(ref terra.Reference) Rtm
 	return RtmpOutputSettingsAttributes{ref: ref}
 }
 
-func (ros RtmpOutputSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ros RtmpOutputSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ros.ref.InternalTokens()
 }
 
@@ -4194,7 +4194,7 @@ func (d RtmpOutputSettingsDestinationAttributes) InternalWithRef(ref terra.Refer
 	return RtmpOutputSettingsDestinationAttributes{ref: ref}
 }
 
-func (d RtmpOutputSettingsDestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (d RtmpOutputSettingsDestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -4214,7 +4214,7 @@ func (uos UdpOutputSettingsAttributes) InternalWithRef(ref terra.Reference) UdpO
 	return UdpOutputSettingsAttributes{ref: ref}
 }
 
-func (uos UdpOutputSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (uos UdpOutputSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return uos.ref.InternalTokens()
 }
 
@@ -4246,7 +4246,7 @@ func (cs UdpOutputSettingsContainerSettingsAttributes) InternalWithRef(ref terra
 	return UdpOutputSettingsContainerSettingsAttributes{ref: ref}
 }
 
-func (cs UdpOutputSettingsContainerSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (cs UdpOutputSettingsContainerSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cs.ref.InternalTokens()
 }
 
@@ -4266,7 +4266,7 @@ func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) InternalWithR
 	return UdpOutputSettingsContainerSettingsM2TsSettingsAttributes{ref: ref}
 }
 
-func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ms.ref.InternalTokens()
 }
 
@@ -4470,7 +4470,7 @@ func (dns UdpOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes
 	return UdpOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes{ref: ref}
 }
 
-func (dns UdpOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (dns UdpOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dns.ref.InternalTokens()
 }
 
@@ -4498,7 +4498,7 @@ func (dss UdpOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes
 	return UdpOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes{ref: ref}
 }
 
-func (dss UdpOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (dss UdpOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dss.ref.InternalTokens()
 }
 
@@ -4530,7 +4530,7 @@ func (dts UdpOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes
 	return UdpOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes{ref: ref}
 }
 
-func (dts UdpOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (dts UdpOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dts.ref.InternalTokens()
 }
 
@@ -4550,7 +4550,7 @@ func (d UdpOutputSettingsDestinationAttributes) InternalWithRef(ref terra.Refere
 	return UdpOutputSettingsDestinationAttributes{ref: ref}
 }
 
-func (d UdpOutputSettingsDestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (d UdpOutputSettingsDestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -4570,7 +4570,7 @@ func (fos FecOutputSettingsAttributes) InternalWithRef(ref terra.Reference) FecO
 	return FecOutputSettingsAttributes{ref: ref}
 }
 
-func (fos FecOutputSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (fos FecOutputSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fos.ref.InternalTokens()
 }
 
@@ -4598,7 +4598,7 @@ func (tc TimecodeConfigAttributes) InternalWithRef(ref terra.Reference) Timecode
 	return TimecodeConfigAttributes{ref: ref}
 }
 
-func (tc TimecodeConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (tc TimecodeConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tc.ref.InternalTokens()
 }
 
@@ -4622,7 +4622,7 @@ func (vd VideoDescriptionsAttributes) InternalWithRef(ref terra.Reference) Video
 	return VideoDescriptionsAttributes{ref: ref}
 }
 
-func (vd VideoDescriptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (vd VideoDescriptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vd.ref.InternalTokens()
 }
 
@@ -4666,7 +4666,7 @@ func (cs VideoDescriptionsCodecSettingsAttributes) InternalWithRef(ref terra.Ref
 	return VideoDescriptionsCodecSettingsAttributes{ref: ref}
 }
 
-func (cs VideoDescriptionsCodecSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (cs VideoDescriptionsCodecSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cs.ref.InternalTokens()
 }
 
@@ -4690,7 +4690,7 @@ func (fcs FrameCaptureSettingsAttributes) InternalWithRef(ref terra.Reference) F
 	return FrameCaptureSettingsAttributes{ref: ref}
 }
 
-func (fcs FrameCaptureSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (fcs FrameCaptureSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fcs.ref.InternalTokens()
 }
 
@@ -4714,7 +4714,7 @@ func (hs H264SettingsAttributes) InternalWithRef(ref terra.Reference) H264Settin
 	return H264SettingsAttributes{ref: ref}
 }
 
-func (hs H264SettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (hs H264SettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hs.ref.InternalTokens()
 }
 
@@ -4890,7 +4890,7 @@ func (fs FilterSettingsAttributes) InternalWithRef(ref terra.Reference) FilterSe
 	return FilterSettingsAttributes{ref: ref}
 }
 
-func (fs FilterSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (fs FilterSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fs.ref.InternalTokens()
 }
 
@@ -4910,7 +4910,7 @@ func (tfs TemporalFilterSettingsAttributes) InternalWithRef(ref terra.Reference)
 	return TemporalFilterSettingsAttributes{ref: ref}
 }
 
-func (tfs TemporalFilterSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (tfs TemporalFilterSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tfs.ref.InternalTokens()
 }
 
@@ -4934,7 +4934,7 @@ func (ia InputAttachmentsAttributes) InternalWithRef(ref terra.Reference) InputA
 	return InputAttachmentsAttributes{ref: ref}
 }
 
-func (ia InputAttachmentsAttributes) InternalTokens() hclwrite.Tokens {
+func (ia InputAttachmentsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ia.ref.InternalTokens()
 }
 
@@ -4966,7 +4966,7 @@ func (aifs AutomaticInputFailoverSettingsAttributes) InternalWithRef(ref terra.R
 	return AutomaticInputFailoverSettingsAttributes{ref: ref}
 }
 
-func (aifs AutomaticInputFailoverSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (aifs AutomaticInputFailoverSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aifs.ref.InternalTokens()
 }
 
@@ -4998,7 +4998,7 @@ func (fc FailoverConditionAttributes) InternalWithRef(ref terra.Reference) Failo
 	return FailoverConditionAttributes{ref: ref}
 }
 
-func (fc FailoverConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (fc FailoverConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fc.ref.InternalTokens()
 }
 
@@ -5018,7 +5018,7 @@ func (fcs FailoverConditionSettingsAttributes) InternalWithRef(ref terra.Referen
 	return FailoverConditionSettingsAttributes{ref: ref}
 }
 
-func (fcs FailoverConditionSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (fcs FailoverConditionSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fcs.ref.InternalTokens()
 }
 
@@ -5046,7 +5046,7 @@ func (ass AudioSilenceSettingsAttributes) InternalWithRef(ref terra.Reference) A
 	return AudioSilenceSettingsAttributes{ref: ref}
 }
 
-func (ass AudioSilenceSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ass AudioSilenceSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ass.ref.InternalTokens()
 }
 
@@ -5070,7 +5070,7 @@ func (ils InputLossSettingsAttributes) InternalWithRef(ref terra.Reference) Inpu
 	return InputLossSettingsAttributes{ref: ref}
 }
 
-func (ils InputLossSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ils InputLossSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ils.ref.InternalTokens()
 }
 
@@ -5090,7 +5090,7 @@ func (vbs VideoBlackSettingsAttributes) InternalWithRef(ref terra.Reference) Vid
 	return VideoBlackSettingsAttributes{ref: ref}
 }
 
-func (vbs VideoBlackSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (vbs VideoBlackSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vbs.ref.InternalTokens()
 }
 
@@ -5114,7 +5114,7 @@ func (is InputSettingsAttributes) InternalWithRef(ref terra.Reference) InputSett
 	return InputSettingsAttributes{ref: ref}
 }
 
-func (is InputSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (is InputSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return is.ref.InternalTokens()
 }
 
@@ -5174,7 +5174,7 @@ func (as AudioSelectorAttributes) InternalWithRef(ref terra.Reference) AudioSele
 	return AudioSelectorAttributes{ref: ref}
 }
 
-func (as AudioSelectorAttributes) InternalTokens() hclwrite.Tokens {
+func (as AudioSelectorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return as.ref.InternalTokens()
 }
 
@@ -5198,7 +5198,7 @@ func (ss AudioSelectorSelectorSettingsAttributes) InternalWithRef(ref terra.Refe
 	return AudioSelectorSelectorSettingsAttributes{ref: ref}
 }
 
-func (ss AudioSelectorSelectorSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ss AudioSelectorSelectorSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ss.ref.InternalTokens()
 }
 
@@ -5230,7 +5230,7 @@ func (ahrs AudioHlsRenditionSelectionAttributes) InternalWithRef(ref terra.Refer
 	return AudioHlsRenditionSelectionAttributes{ref: ref}
 }
 
-func (ahrs AudioHlsRenditionSelectionAttributes) InternalTokens() hclwrite.Tokens {
+func (ahrs AudioHlsRenditionSelectionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ahrs.ref.InternalTokens()
 }
 
@@ -5254,7 +5254,7 @@ func (als AudioLanguageSelectionAttributes) InternalWithRef(ref terra.Reference)
 	return AudioLanguageSelectionAttributes{ref: ref}
 }
 
-func (als AudioLanguageSelectionAttributes) InternalTokens() hclwrite.Tokens {
+func (als AudioLanguageSelectionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return als.ref.InternalTokens()
 }
 
@@ -5278,7 +5278,7 @@ func (aps AudioPidSelectionAttributes) InternalWithRef(ref terra.Reference) Audi
 	return AudioPidSelectionAttributes{ref: ref}
 }
 
-func (aps AudioPidSelectionAttributes) InternalTokens() hclwrite.Tokens {
+func (aps AudioPidSelectionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aps.ref.InternalTokens()
 }
 
@@ -5298,7 +5298,7 @@ func (ats AudioTrackSelectionAttributes) InternalWithRef(ref terra.Reference) Au
 	return AudioTrackSelectionAttributes{ref: ref}
 }
 
-func (ats AudioTrackSelectionAttributes) InternalTokens() hclwrite.Tokens {
+func (ats AudioTrackSelectionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ats.ref.InternalTokens()
 }
 
@@ -5318,7 +5318,7 @@ func (t TrackAttributes) InternalWithRef(ref terra.Reference) TrackAttributes {
 	return TrackAttributes{ref: ref}
 }
 
-func (t TrackAttributes) InternalTokens() hclwrite.Tokens {
+func (t TrackAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -5338,7 +5338,7 @@ func (cs CaptionSelectorAttributes) InternalWithRef(ref terra.Reference) Caption
 	return CaptionSelectorAttributes{ref: ref}
 }
 
-func (cs CaptionSelectorAttributes) InternalTokens() hclwrite.Tokens {
+func (cs CaptionSelectorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cs.ref.InternalTokens()
 }
 
@@ -5366,7 +5366,7 @@ func (ss CaptionSelectorSelectorSettingsAttributes) InternalWithRef(ref terra.Re
 	return CaptionSelectorSelectorSettingsAttributes{ref: ref}
 }
 
-func (ss CaptionSelectorSelectorSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ss CaptionSelectorSelectorSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ss.ref.InternalTokens()
 }
 
@@ -5406,7 +5406,7 @@ func (ass AncillarySourceSettingsAttributes) InternalWithRef(ref terra.Reference
 	return AncillarySourceSettingsAttributes{ref: ref}
 }
 
-func (ass AncillarySourceSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ass AncillarySourceSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ass.ref.InternalTokens()
 }
 
@@ -5426,7 +5426,7 @@ func (dts SelectorSettingsDvbTdtSettingsAttributes) InternalWithRef(ref terra.Re
 	return SelectorSettingsDvbTdtSettingsAttributes{ref: ref}
 }
 
-func (dts SelectorSettingsDvbTdtSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (dts SelectorSettingsDvbTdtSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dts.ref.InternalTokens()
 }
 
@@ -5450,7 +5450,7 @@ func (ess EmbeddedSourceSettingsAttributes) InternalWithRef(ref terra.Reference)
 	return EmbeddedSourceSettingsAttributes{ref: ref}
 }
 
-func (ess EmbeddedSourceSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ess EmbeddedSourceSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ess.ref.InternalTokens()
 }
 
@@ -5482,7 +5482,7 @@ func (sss Scte20SourceSettingsAttributes) InternalWithRef(ref terra.Reference) S
 	return Scte20SourceSettingsAttributes{ref: ref}
 }
 
-func (sss Scte20SourceSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (sss Scte20SourceSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sss.ref.InternalTokens()
 }
 
@@ -5506,7 +5506,7 @@ func (sss Scte27SourceSettingsAttributes) InternalWithRef(ref terra.Reference) S
 	return Scte27SourceSettingsAttributes{ref: ref}
 }
 
-func (sss Scte27SourceSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (sss Scte27SourceSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sss.ref.InternalTokens()
 }
 
@@ -5530,7 +5530,7 @@ func (tss TeletextSourceSettingsAttributes) InternalWithRef(ref terra.Reference)
 	return TeletextSourceSettingsAttributes{ref: ref}
 }
 
-func (tss TeletextSourceSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (tss TeletextSourceSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tss.ref.InternalTokens()
 }
 
@@ -5554,7 +5554,7 @@ func (or OutputRectangleAttributes) InternalWithRef(ref terra.Reference) OutputR
 	return OutputRectangleAttributes{ref: ref}
 }
 
-func (or OutputRectangleAttributes) InternalTokens() hclwrite.Tokens {
+func (or OutputRectangleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return or.ref.InternalTokens()
 }
 
@@ -5586,7 +5586,7 @@ func (nis NetworkInputSettingsAttributes) InternalWithRef(ref terra.Reference) N
 	return NetworkInputSettingsAttributes{ref: ref}
 }
 
-func (nis NetworkInputSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (nis NetworkInputSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nis.ref.InternalTokens()
 }
 
@@ -5610,7 +5610,7 @@ func (his HlsInputSettingsAttributes) InternalWithRef(ref terra.Reference) HlsIn
 	return HlsInputSettingsAttributes{ref: ref}
 }
 
-func (his HlsInputSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (his HlsInputSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return his.ref.InternalTokens()
 }
 
@@ -5646,7 +5646,7 @@ func (vs VideoSelectorAttributes) InternalWithRef(ref terra.Reference) VideoSele
 	return VideoSelectorAttributes{ref: ref}
 }
 
-func (vs VideoSelectorAttributes) InternalTokens() hclwrite.Tokens {
+func (vs VideoSelectorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vs.ref.InternalTokens()
 }
 
@@ -5670,7 +5670,7 @@ func (is InputSpecificationAttributes) InternalWithRef(ref terra.Reference) Inpu
 	return InputSpecificationAttributes{ref: ref}
 }
 
-func (is InputSpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (is InputSpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return is.ref.InternalTokens()
 }
 
@@ -5698,7 +5698,7 @@ func (m MaintenanceAttributes) InternalWithRef(ref terra.Reference) MaintenanceA
 	return MaintenanceAttributes{ref: ref}
 }
 
-func (m MaintenanceAttributes) InternalTokens() hclwrite.Tokens {
+func (m MaintenanceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -5722,7 +5722,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -5750,7 +5750,7 @@ func (v VpcAttributes) InternalWithRef(ref terra.Reference) VpcAttributes {
 	return VpcAttributes{ref: ref}
 }
 
-func (v VpcAttributes) InternalTokens() hclwrite.Tokens {
+func (v VpcAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 

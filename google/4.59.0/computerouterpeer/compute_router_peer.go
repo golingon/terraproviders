@@ -38,84 +38,84 @@ type AdvertisedIpRangesAttributes struct {
 	ref terra.Reference
 }
 
-func (air AdvertisedIpRangesAttributes) InternalRef() terra.Reference {
-	return air.ref
+func (air AdvertisedIpRangesAttributes) InternalRef() (terra.Reference, error) {
+	return air.ref, nil
 }
 
 func (air AdvertisedIpRangesAttributes) InternalWithRef(ref terra.Reference) AdvertisedIpRangesAttributes {
 	return AdvertisedIpRangesAttributes{ref: ref}
 }
 
-func (air AdvertisedIpRangesAttributes) InternalTokens() hclwrite.Tokens {
+func (air AdvertisedIpRangesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return air.ref.InternalTokens()
 }
 
 func (air AdvertisedIpRangesAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(air.ref.Append("description"))
+	return terra.ReferenceAsString(air.ref.Append("description"))
 }
 
 func (air AdvertisedIpRangesAttributes) Range() terra.StringValue {
-	return terra.ReferenceString(air.ref.Append("range"))
+	return terra.ReferenceAsString(air.ref.Append("range"))
 }
 
 type BfdAttributes struct {
 	ref terra.Reference
 }
 
-func (b BfdAttributes) InternalRef() terra.Reference {
-	return b.ref
+func (b BfdAttributes) InternalRef() (terra.Reference, error) {
+	return b.ref, nil
 }
 
 func (b BfdAttributes) InternalWithRef(ref terra.Reference) BfdAttributes {
 	return BfdAttributes{ref: ref}
 }
 
-func (b BfdAttributes) InternalTokens() hclwrite.Tokens {
+func (b BfdAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return b.ref.InternalTokens()
 }
 
 func (b BfdAttributes) MinReceiveInterval() terra.NumberValue {
-	return terra.ReferenceNumber(b.ref.Append("min_receive_interval"))
+	return terra.ReferenceAsNumber(b.ref.Append("min_receive_interval"))
 }
 
 func (b BfdAttributes) MinTransmitInterval() terra.NumberValue {
-	return terra.ReferenceNumber(b.ref.Append("min_transmit_interval"))
+	return terra.ReferenceAsNumber(b.ref.Append("min_transmit_interval"))
 }
 
 func (b BfdAttributes) Multiplier() terra.NumberValue {
-	return terra.ReferenceNumber(b.ref.Append("multiplier"))
+	return terra.ReferenceAsNumber(b.ref.Append("multiplier"))
 }
 
 func (b BfdAttributes) SessionInitializationMode() terra.StringValue {
-	return terra.ReferenceString(b.ref.Append("session_initialization_mode"))
+	return terra.ReferenceAsString(b.ref.Append("session_initialization_mode"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AdvertisedIpRangesState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAutomationDscConfiguration creates a new instance of [AutomationDscConfiguration].
 func NewAutomationDscConfiguration(name string, args AutomationDscConfigurationArgs) *AutomationDscConfiguration {
 	return &AutomationDscConfiguration{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAutomationDscConfiguration(name string, args AutomationDscConfigurationA
 
 var _ terra.Resource = (*AutomationDscConfiguration)(nil)
 
+// AutomationDscConfiguration represents the Terraform resource azurerm_automation_dsc_configuration.
 type AutomationDscConfiguration struct {
-	Name  string
-	Args  AutomationDscConfigurationArgs
-	state *automationDscConfigurationState
+	Name      string
+	Args      AutomationDscConfigurationArgs
+	state     *automationDscConfigurationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AutomationDscConfiguration].
 func (adc *AutomationDscConfiguration) Type() string {
 	return "azurerm_automation_dsc_configuration"
 }
 
+// LocalName returns the local name for [AutomationDscConfiguration].
 func (adc *AutomationDscConfiguration) LocalName() string {
 	return adc.Name
 }
 
+// Configuration returns the configuration (args) for [AutomationDscConfiguration].
 func (adc *AutomationDscConfiguration) Configuration() interface{} {
 	return adc.Args
 }
 
+// DependOn is used for other resources to depend on [AutomationDscConfiguration].
+func (adc *AutomationDscConfiguration) DependOn() terra.Reference {
+	return terra.ReferenceResource(adc)
+}
+
+// Dependencies returns the list of resources [AutomationDscConfiguration] depends_on.
+func (adc *AutomationDscConfiguration) Dependencies() terra.Dependencies {
+	return adc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AutomationDscConfiguration].
+func (adc *AutomationDscConfiguration) LifecycleManagement() *terra.Lifecycle {
+	return adc.Lifecycle
+}
+
+// Attributes returns the attributes for [AutomationDscConfiguration].
 func (adc *AutomationDscConfiguration) Attributes() automationDscConfigurationAttributes {
 	return automationDscConfigurationAttributes{ref: terra.ReferenceResource(adc)}
 }
 
+// ImportState imports the given attribute values into [AutomationDscConfiguration]'s state.
 func (adc *AutomationDscConfiguration) ImportState(av io.Reader) error {
 	adc.state = &automationDscConfigurationState{}
 	if err := json.NewDecoder(av).Decode(adc.state); err != nil {
@@ -49,10 +73,12 @@ func (adc *AutomationDscConfiguration) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AutomationDscConfiguration] has state.
 func (adc *AutomationDscConfiguration) State() (*automationDscConfigurationState, bool) {
 	return adc.state, adc.state != nil
 }
 
+// StateMust returns the state for [AutomationDscConfiguration]. Panics if the state is nil.
 func (adc *AutomationDscConfiguration) StateMust() *automationDscConfigurationState {
 	if adc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", adc.Type(), adc.LocalName()))
@@ -60,10 +86,7 @@ func (adc *AutomationDscConfiguration) StateMust() *automationDscConfigurationSt
 	return adc.state
 }
 
-func (adc *AutomationDscConfiguration) DependOn() terra.Reference {
-	return terra.ReferenceResource(adc)
-}
-
+// AutomationDscConfigurationArgs contains the configurations for azurerm_automation_dsc_configuration.
 type AutomationDscConfigurationArgs struct {
 	// AutomationAccountName: string, required
 	AutomationAccountName terra.StringValue `hcl:"automation_account_name,attr" validate:"required"`
@@ -85,55 +108,63 @@ type AutomationDscConfigurationArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// Timeouts: optional
 	Timeouts *automationdscconfiguration.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that AutomationDscConfiguration depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type automationDscConfigurationAttributes struct {
 	ref terra.Reference
 }
 
+// AutomationAccountName returns a reference to field automation_account_name of azurerm_automation_dsc_configuration.
 func (adc automationDscConfigurationAttributes) AutomationAccountName() terra.StringValue {
-	return terra.ReferenceString(adc.ref.Append("automation_account_name"))
+	return terra.ReferenceAsString(adc.ref.Append("automation_account_name"))
 }
 
+// ContentEmbedded returns a reference to field content_embedded of azurerm_automation_dsc_configuration.
 func (adc automationDscConfigurationAttributes) ContentEmbedded() terra.StringValue {
-	return terra.ReferenceString(adc.ref.Append("content_embedded"))
+	return terra.ReferenceAsString(adc.ref.Append("content_embedded"))
 }
 
+// Description returns a reference to field description of azurerm_automation_dsc_configuration.
 func (adc automationDscConfigurationAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(adc.ref.Append("description"))
+	return terra.ReferenceAsString(adc.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_automation_dsc_configuration.
 func (adc automationDscConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(adc.ref.Append("id"))
+	return terra.ReferenceAsString(adc.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_automation_dsc_configuration.
 func (adc automationDscConfigurationAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(adc.ref.Append("location"))
+	return terra.ReferenceAsString(adc.ref.Append("location"))
 }
 
+// LogVerbose returns a reference to field log_verbose of azurerm_automation_dsc_configuration.
 func (adc automationDscConfigurationAttributes) LogVerbose() terra.BoolValue {
-	return terra.ReferenceBool(adc.ref.Append("log_verbose"))
+	return terra.ReferenceAsBool(adc.ref.Append("log_verbose"))
 }
 
+// Name returns a reference to field name of azurerm_automation_dsc_configuration.
 func (adc automationDscConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(adc.ref.Append("name"))
+	return terra.ReferenceAsString(adc.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_automation_dsc_configuration.
 func (adc automationDscConfigurationAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(adc.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(adc.ref.Append("resource_group_name"))
 }
 
+// State returns a reference to field state of azurerm_automation_dsc_configuration.
 func (adc automationDscConfigurationAttributes) State() terra.StringValue {
-	return terra.ReferenceString(adc.ref.Append("state"))
+	return terra.ReferenceAsString(adc.ref.Append("state"))
 }
 
+// Tags returns a reference to field tags of azurerm_automation_dsc_configuration.
 func (adc automationDscConfigurationAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](adc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](adc.ref.Append("tags"))
 }
 
 func (adc automationDscConfigurationAttributes) Timeouts() automationdscconfiguration.TimeoutsAttributes {
-	return terra.ReferenceSingle[automationdscconfiguration.TimeoutsAttributes](adc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[automationdscconfiguration.TimeoutsAttributes](adc.ref.Append("timeouts"))
 }
 
 type automationDscConfigurationState struct {

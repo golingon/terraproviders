@@ -45,108 +45,108 @@ type TargetingFilterAttributes struct {
 	ref terra.Reference
 }
 
-func (tf TargetingFilterAttributes) InternalRef() terra.Reference {
-	return tf.ref
+func (tf TargetingFilterAttributes) InternalRef() (terra.Reference, error) {
+	return tf.ref, nil
 }
 
 func (tf TargetingFilterAttributes) InternalWithRef(ref terra.Reference) TargetingFilterAttributes {
 	return TargetingFilterAttributes{ref: ref}
 }
 
-func (tf TargetingFilterAttributes) InternalTokens() hclwrite.Tokens {
+func (tf TargetingFilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tf.ref.InternalTokens()
 }
 
 func (tf TargetingFilterAttributes) DefaultRolloutPercentage() terra.NumberValue {
-	return terra.ReferenceNumber(tf.ref.Append("default_rollout_percentage"))
+	return terra.ReferenceAsNumber(tf.ref.Append("default_rollout_percentage"))
 }
 
 func (tf TargetingFilterAttributes) Users() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](tf.ref.Append("users"))
+	return terra.ReferenceAsList[terra.StringValue](tf.ref.Append("users"))
 }
 
 func (tf TargetingFilterAttributes) Groups() terra.ListValue[GroupsAttributes] {
-	return terra.ReferenceList[GroupsAttributes](tf.ref.Append("groups"))
+	return terra.ReferenceAsList[GroupsAttributes](tf.ref.Append("groups"))
 }
 
 type GroupsAttributes struct {
 	ref terra.Reference
 }
 
-func (g GroupsAttributes) InternalRef() terra.Reference {
-	return g.ref
+func (g GroupsAttributes) InternalRef() (terra.Reference, error) {
+	return g.ref, nil
 }
 
 func (g GroupsAttributes) InternalWithRef(ref terra.Reference) GroupsAttributes {
 	return GroupsAttributes{ref: ref}
 }
 
-func (g GroupsAttributes) InternalTokens() hclwrite.Tokens {
+func (g GroupsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return g.ref.InternalTokens()
 }
 
 func (g GroupsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("name"))
+	return terra.ReferenceAsString(g.ref.Append("name"))
 }
 
 func (g GroupsAttributes) RolloutPercentage() terra.NumberValue {
-	return terra.ReferenceNumber(g.ref.Append("rollout_percentage"))
+	return terra.ReferenceAsNumber(g.ref.Append("rollout_percentage"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type TimewindowFilterAttributes struct {
 	ref terra.Reference
 }
 
-func (tf TimewindowFilterAttributes) InternalRef() terra.Reference {
-	return tf.ref
+func (tf TimewindowFilterAttributes) InternalRef() (terra.Reference, error) {
+	return tf.ref, nil
 }
 
 func (tf TimewindowFilterAttributes) InternalWithRef(ref terra.Reference) TimewindowFilterAttributes {
 	return TimewindowFilterAttributes{ref: ref}
 }
 
-func (tf TimewindowFilterAttributes) InternalTokens() hclwrite.Tokens {
+func (tf TimewindowFilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tf.ref.InternalTokens()
 }
 
 func (tf TimewindowFilterAttributes) End() terra.StringValue {
-	return terra.ReferenceString(tf.ref.Append("end"))
+	return terra.ReferenceAsString(tf.ref.Append("end"))
 }
 
 func (tf TimewindowFilterAttributes) Start() terra.StringValue {
-	return terra.ReferenceString(tf.ref.Append("start"))
+	return terra.ReferenceAsString(tf.ref.Append("start"))
 }
 
 type TargetingFilterState struct {

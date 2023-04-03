@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAutomationSoftwareUpdateConfiguration creates a new instance of [AutomationSoftwareUpdateConfiguration].
 func NewAutomationSoftwareUpdateConfiguration(name string, args AutomationSoftwareUpdateConfigurationArgs) *AutomationSoftwareUpdateConfiguration {
 	return &AutomationSoftwareUpdateConfiguration{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAutomationSoftwareUpdateConfiguration(name string, args AutomationSoftwa
 
 var _ terra.Resource = (*AutomationSoftwareUpdateConfiguration)(nil)
 
+// AutomationSoftwareUpdateConfiguration represents the Terraform resource azurerm_automation_software_update_configuration.
 type AutomationSoftwareUpdateConfiguration struct {
-	Name  string
-	Args  AutomationSoftwareUpdateConfigurationArgs
-	state *automationSoftwareUpdateConfigurationState
+	Name      string
+	Args      AutomationSoftwareUpdateConfigurationArgs
+	state     *automationSoftwareUpdateConfigurationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AutomationSoftwareUpdateConfiguration].
 func (asuc *AutomationSoftwareUpdateConfiguration) Type() string {
 	return "azurerm_automation_software_update_configuration"
 }
 
+// LocalName returns the local name for [AutomationSoftwareUpdateConfiguration].
 func (asuc *AutomationSoftwareUpdateConfiguration) LocalName() string {
 	return asuc.Name
 }
 
+// Configuration returns the configuration (args) for [AutomationSoftwareUpdateConfiguration].
 func (asuc *AutomationSoftwareUpdateConfiguration) Configuration() interface{} {
 	return asuc.Args
 }
 
+// DependOn is used for other resources to depend on [AutomationSoftwareUpdateConfiguration].
+func (asuc *AutomationSoftwareUpdateConfiguration) DependOn() terra.Reference {
+	return terra.ReferenceResource(asuc)
+}
+
+// Dependencies returns the list of resources [AutomationSoftwareUpdateConfiguration] depends_on.
+func (asuc *AutomationSoftwareUpdateConfiguration) Dependencies() terra.Dependencies {
+	return asuc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AutomationSoftwareUpdateConfiguration].
+func (asuc *AutomationSoftwareUpdateConfiguration) LifecycleManagement() *terra.Lifecycle {
+	return asuc.Lifecycle
+}
+
+// Attributes returns the attributes for [AutomationSoftwareUpdateConfiguration].
 func (asuc *AutomationSoftwareUpdateConfiguration) Attributes() automationSoftwareUpdateConfigurationAttributes {
 	return automationSoftwareUpdateConfigurationAttributes{ref: terra.ReferenceResource(asuc)}
 }
 
+// ImportState imports the given attribute values into [AutomationSoftwareUpdateConfiguration]'s state.
 func (asuc *AutomationSoftwareUpdateConfiguration) ImportState(av io.Reader) error {
 	asuc.state = &automationSoftwareUpdateConfigurationState{}
 	if err := json.NewDecoder(av).Decode(asuc.state); err != nil {
@@ -49,10 +73,12 @@ func (asuc *AutomationSoftwareUpdateConfiguration) ImportState(av io.Reader) err
 	return nil
 }
 
+// State returns the state and a bool indicating if [AutomationSoftwareUpdateConfiguration] has state.
 func (asuc *AutomationSoftwareUpdateConfiguration) State() (*automationSoftwareUpdateConfigurationState, bool) {
 	return asuc.state, asuc.state != nil
 }
 
+// StateMust returns the state for [AutomationSoftwareUpdateConfiguration]. Panics if the state is nil.
 func (asuc *AutomationSoftwareUpdateConfiguration) StateMust() *automationSoftwareUpdateConfigurationState {
 	if asuc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", asuc.Type(), asuc.LocalName()))
@@ -60,10 +86,7 @@ func (asuc *AutomationSoftwareUpdateConfiguration) StateMust() *automationSoftwa
 	return asuc.state
 }
 
-func (asuc *AutomationSoftwareUpdateConfiguration) DependOn() terra.Reference {
-	return terra.ReferenceResource(asuc)
-}
-
+// AutomationSoftwareUpdateConfigurationArgs contains the configurations for azurerm_automation_software_update_configuration.
 type AutomationSoftwareUpdateConfigurationArgs struct {
 	// AutomationAccountId: string, required
 	AutomationAccountId terra.StringValue `hcl:"automation_account_id,attr" validate:"required"`
@@ -93,79 +116,87 @@ type AutomationSoftwareUpdateConfigurationArgs struct {
 	Timeouts *automationsoftwareupdateconfiguration.Timeouts `hcl:"timeouts,block"`
 	// Windows: optional
 	Windows *automationsoftwareupdateconfiguration.Windows `hcl:"windows,block"`
-	// DependsOn contains resources that AutomationSoftwareUpdateConfiguration depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type automationSoftwareUpdateConfigurationAttributes struct {
 	ref terra.Reference
 }
 
+// AutomationAccountId returns a reference to field automation_account_id of azurerm_automation_software_update_configuration.
 func (asuc automationSoftwareUpdateConfigurationAttributes) AutomationAccountId() terra.StringValue {
-	return terra.ReferenceString(asuc.ref.Append("automation_account_id"))
+	return terra.ReferenceAsString(asuc.ref.Append("automation_account_id"))
 }
 
+// Duration returns a reference to field duration of azurerm_automation_software_update_configuration.
 func (asuc automationSoftwareUpdateConfigurationAttributes) Duration() terra.StringValue {
-	return terra.ReferenceString(asuc.ref.Append("duration"))
+	return terra.ReferenceAsString(asuc.ref.Append("duration"))
 }
 
+// ErrorCode returns a reference to field error_code of azurerm_automation_software_update_configuration.
 func (asuc automationSoftwareUpdateConfigurationAttributes) ErrorCode() terra.StringValue {
-	return terra.ReferenceString(asuc.ref.Append("error_code"))
+	return terra.ReferenceAsString(asuc.ref.Append("error_code"))
 }
 
+// ErrorMeesage returns a reference to field error_meesage of azurerm_automation_software_update_configuration.
 func (asuc automationSoftwareUpdateConfigurationAttributes) ErrorMeesage() terra.StringValue {
-	return terra.ReferenceString(asuc.ref.Append("error_meesage"))
+	return terra.ReferenceAsString(asuc.ref.Append("error_meesage"))
 }
 
+// ErrorMessage returns a reference to field error_message of azurerm_automation_software_update_configuration.
 func (asuc automationSoftwareUpdateConfigurationAttributes) ErrorMessage() terra.StringValue {
-	return terra.ReferenceString(asuc.ref.Append("error_message"))
+	return terra.ReferenceAsString(asuc.ref.Append("error_message"))
 }
 
+// Id returns a reference to field id of azurerm_automation_software_update_configuration.
 func (asuc automationSoftwareUpdateConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(asuc.ref.Append("id"))
+	return terra.ReferenceAsString(asuc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_automation_software_update_configuration.
 func (asuc automationSoftwareUpdateConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(asuc.ref.Append("name"))
+	return terra.ReferenceAsString(asuc.ref.Append("name"))
 }
 
+// NonAzureComputerNames returns a reference to field non_azure_computer_names of azurerm_automation_software_update_configuration.
 func (asuc automationSoftwareUpdateConfigurationAttributes) NonAzureComputerNames() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](asuc.ref.Append("non_azure_computer_names"))
+	return terra.ReferenceAsList[terra.StringValue](asuc.ref.Append("non_azure_computer_names"))
 }
 
+// OperatingSystem returns a reference to field operating_system of azurerm_automation_software_update_configuration.
 func (asuc automationSoftwareUpdateConfigurationAttributes) OperatingSystem() terra.StringValue {
-	return terra.ReferenceString(asuc.ref.Append("operating_system"))
+	return terra.ReferenceAsString(asuc.ref.Append("operating_system"))
 }
 
+// VirtualMachineIds returns a reference to field virtual_machine_ids of azurerm_automation_software_update_configuration.
 func (asuc automationSoftwareUpdateConfigurationAttributes) VirtualMachineIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](asuc.ref.Append("virtual_machine_ids"))
+	return terra.ReferenceAsList[terra.StringValue](asuc.ref.Append("virtual_machine_ids"))
 }
 
 func (asuc automationSoftwareUpdateConfigurationAttributes) Linux() terra.ListValue[automationsoftwareupdateconfiguration.LinuxAttributes] {
-	return terra.ReferenceList[automationsoftwareupdateconfiguration.LinuxAttributes](asuc.ref.Append("linux"))
+	return terra.ReferenceAsList[automationsoftwareupdateconfiguration.LinuxAttributes](asuc.ref.Append("linux"))
 }
 
 func (asuc automationSoftwareUpdateConfigurationAttributes) PostTask() terra.ListValue[automationsoftwareupdateconfiguration.PostTaskAttributes] {
-	return terra.ReferenceList[automationsoftwareupdateconfiguration.PostTaskAttributes](asuc.ref.Append("post_task"))
+	return terra.ReferenceAsList[automationsoftwareupdateconfiguration.PostTaskAttributes](asuc.ref.Append("post_task"))
 }
 
 func (asuc automationSoftwareUpdateConfigurationAttributes) PreTask() terra.ListValue[automationsoftwareupdateconfiguration.PreTaskAttributes] {
-	return terra.ReferenceList[automationsoftwareupdateconfiguration.PreTaskAttributes](asuc.ref.Append("pre_task"))
+	return terra.ReferenceAsList[automationsoftwareupdateconfiguration.PreTaskAttributes](asuc.ref.Append("pre_task"))
 }
 
 func (asuc automationSoftwareUpdateConfigurationAttributes) Schedule() terra.ListValue[automationsoftwareupdateconfiguration.ScheduleAttributes] {
-	return terra.ReferenceList[automationsoftwareupdateconfiguration.ScheduleAttributes](asuc.ref.Append("schedule"))
+	return terra.ReferenceAsList[automationsoftwareupdateconfiguration.ScheduleAttributes](asuc.ref.Append("schedule"))
 }
 
 func (asuc automationSoftwareUpdateConfigurationAttributes) Target() terra.ListValue[automationsoftwareupdateconfiguration.TargetAttributes] {
-	return terra.ReferenceList[automationsoftwareupdateconfiguration.TargetAttributes](asuc.ref.Append("target"))
+	return terra.ReferenceAsList[automationsoftwareupdateconfiguration.TargetAttributes](asuc.ref.Append("target"))
 }
 
 func (asuc automationSoftwareUpdateConfigurationAttributes) Timeouts() automationsoftwareupdateconfiguration.TimeoutsAttributes {
-	return terra.ReferenceSingle[automationsoftwareupdateconfiguration.TimeoutsAttributes](asuc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[automationsoftwareupdateconfiguration.TimeoutsAttributes](asuc.ref.Append("timeouts"))
 }
 
 func (asuc automationSoftwareUpdateConfigurationAttributes) Windows() terra.ListValue[automationsoftwareupdateconfiguration.WindowsAttributes] {
-	return terra.ReferenceList[automationsoftwareupdateconfiguration.WindowsAttributes](asuc.ref.Append("windows"))
+	return terra.ReferenceAsList[automationsoftwareupdateconfiguration.WindowsAttributes](asuc.ref.Append("windows"))
 }
 
 type automationSoftwareUpdateConfigurationState struct {

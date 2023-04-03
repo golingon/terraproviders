@@ -28,7 +28,7 @@ func (ao AddOnAttributes) InternalWithRef(ref terra.Reference) AddOnAttributes {
 	return AddOnAttributes{ref: ref}
 }
 
-func (ao AddOnAttributes) InternalTokens() hclwrite.Tokens {
+func (ao AddOnAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ao.ref.InternalTokens()
 }
 

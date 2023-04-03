@@ -21,7 +21,7 @@ func (ds DelegatedServicesAttributes) InternalWithRef(ref terra.Reference) Deleg
 	return DelegatedServicesAttributes{ref: ref}
 }
 
-func (ds DelegatedServicesAttributes) InternalTokens() hclwrite.Tokens {
+func (ds DelegatedServicesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ds.ref.InternalTokens()
 }
 

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataprocAutoscalingPolicyIamMember creates a new instance of [DataprocAutoscalingPolicyIamMember].
 func NewDataprocAutoscalingPolicyIamMember(name string, args DataprocAutoscalingPolicyIamMemberArgs) *DataprocAutoscalingPolicyIamMember {
 	return &DataprocAutoscalingPolicyIamMember{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataprocAutoscalingPolicyIamMember(name string, args DataprocAutoscaling
 
 var _ terra.Resource = (*DataprocAutoscalingPolicyIamMember)(nil)
 
+// DataprocAutoscalingPolicyIamMember represents the Terraform resource google_dataproc_autoscaling_policy_iam_member.
 type DataprocAutoscalingPolicyIamMember struct {
-	Name  string
-	Args  DataprocAutoscalingPolicyIamMemberArgs
-	state *dataprocAutoscalingPolicyIamMemberState
+	Name      string
+	Args      DataprocAutoscalingPolicyIamMemberArgs
+	state     *dataprocAutoscalingPolicyIamMemberState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataprocAutoscalingPolicyIamMember].
 func (dapim *DataprocAutoscalingPolicyIamMember) Type() string {
 	return "google_dataproc_autoscaling_policy_iam_member"
 }
 
+// LocalName returns the local name for [DataprocAutoscalingPolicyIamMember].
 func (dapim *DataprocAutoscalingPolicyIamMember) LocalName() string {
 	return dapim.Name
 }
 
+// Configuration returns the configuration (args) for [DataprocAutoscalingPolicyIamMember].
 func (dapim *DataprocAutoscalingPolicyIamMember) Configuration() interface{} {
 	return dapim.Args
 }
 
+// DependOn is used for other resources to depend on [DataprocAutoscalingPolicyIamMember].
+func (dapim *DataprocAutoscalingPolicyIamMember) DependOn() terra.Reference {
+	return terra.ReferenceResource(dapim)
+}
+
+// Dependencies returns the list of resources [DataprocAutoscalingPolicyIamMember] depends_on.
+func (dapim *DataprocAutoscalingPolicyIamMember) Dependencies() terra.Dependencies {
+	return dapim.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataprocAutoscalingPolicyIamMember].
+func (dapim *DataprocAutoscalingPolicyIamMember) LifecycleManagement() *terra.Lifecycle {
+	return dapim.Lifecycle
+}
+
+// Attributes returns the attributes for [DataprocAutoscalingPolicyIamMember].
 func (dapim *DataprocAutoscalingPolicyIamMember) Attributes() dataprocAutoscalingPolicyIamMemberAttributes {
 	return dataprocAutoscalingPolicyIamMemberAttributes{ref: terra.ReferenceResource(dapim)}
 }
 
+// ImportState imports the given attribute values into [DataprocAutoscalingPolicyIamMember]'s state.
 func (dapim *DataprocAutoscalingPolicyIamMember) ImportState(av io.Reader) error {
 	dapim.state = &dataprocAutoscalingPolicyIamMemberState{}
 	if err := json.NewDecoder(av).Decode(dapim.state); err != nil {
@@ -49,10 +73,12 @@ func (dapim *DataprocAutoscalingPolicyIamMember) ImportState(av io.Reader) error
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataprocAutoscalingPolicyIamMember] has state.
 func (dapim *DataprocAutoscalingPolicyIamMember) State() (*dataprocAutoscalingPolicyIamMemberState, bool) {
 	return dapim.state, dapim.state != nil
 }
 
+// StateMust returns the state for [DataprocAutoscalingPolicyIamMember]. Panics if the state is nil.
 func (dapim *DataprocAutoscalingPolicyIamMember) StateMust() *dataprocAutoscalingPolicyIamMemberState {
 	if dapim.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dapim.Type(), dapim.LocalName()))
@@ -60,10 +86,7 @@ func (dapim *DataprocAutoscalingPolicyIamMember) StateMust() *dataprocAutoscalin
 	return dapim.state
 }
 
-func (dapim *DataprocAutoscalingPolicyIamMember) DependOn() terra.Reference {
-	return terra.ReferenceResource(dapim)
-}
-
+// DataprocAutoscalingPolicyIamMemberArgs contains the configurations for google_dataproc_autoscaling_policy_iam_member.
 type DataprocAutoscalingPolicyIamMemberArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,43 +102,48 @@ type DataprocAutoscalingPolicyIamMemberArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *dataprocautoscalingpolicyiammember.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that DataprocAutoscalingPolicyIamMember depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataprocAutoscalingPolicyIamMemberAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_dataproc_autoscaling_policy_iam_member.
 func (dapim dataprocAutoscalingPolicyIamMemberAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(dapim.ref.Append("etag"))
+	return terra.ReferenceAsString(dapim.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_dataproc_autoscaling_policy_iam_member.
 func (dapim dataprocAutoscalingPolicyIamMemberAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dapim.ref.Append("id"))
+	return terra.ReferenceAsString(dapim.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_dataproc_autoscaling_policy_iam_member.
 func (dapim dataprocAutoscalingPolicyIamMemberAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(dapim.ref.Append("location"))
+	return terra.ReferenceAsString(dapim.ref.Append("location"))
 }
 
+// Member returns a reference to field member of google_dataproc_autoscaling_policy_iam_member.
 func (dapim dataprocAutoscalingPolicyIamMemberAttributes) Member() terra.StringValue {
-	return terra.ReferenceString(dapim.ref.Append("member"))
+	return terra.ReferenceAsString(dapim.ref.Append("member"))
 }
 
+// PolicyId returns a reference to field policy_id of google_dataproc_autoscaling_policy_iam_member.
 func (dapim dataprocAutoscalingPolicyIamMemberAttributes) PolicyId() terra.StringValue {
-	return terra.ReferenceString(dapim.ref.Append("policy_id"))
+	return terra.ReferenceAsString(dapim.ref.Append("policy_id"))
 }
 
+// Project returns a reference to field project of google_dataproc_autoscaling_policy_iam_member.
 func (dapim dataprocAutoscalingPolicyIamMemberAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(dapim.ref.Append("project"))
+	return terra.ReferenceAsString(dapim.ref.Append("project"))
 }
 
+// Role returns a reference to field role of google_dataproc_autoscaling_policy_iam_member.
 func (dapim dataprocAutoscalingPolicyIamMemberAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(dapim.ref.Append("role"))
+	return terra.ReferenceAsString(dapim.ref.Append("role"))
 }
 
 func (dapim dataprocAutoscalingPolicyIamMemberAttributes) Condition() terra.ListValue[dataprocautoscalingpolicyiammember.ConditionAttributes] {
-	return terra.ReferenceList[dataprocautoscalingpolicyiammember.ConditionAttributes](dapim.ref.Append("condition"))
+	return terra.ReferenceAsList[dataprocautoscalingpolicyiammember.ConditionAttributes](dapim.ref.Append("condition"))
 }
 
 type dataprocAutoscalingPolicyIamMemberState struct {

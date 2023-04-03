@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBastionHost creates a new instance of [BastionHost].
 func NewBastionHost(name string, args BastionHostArgs) *BastionHost {
 	return &BastionHost{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBastionHost(name string, args BastionHostArgs) *BastionHost {
 
 var _ terra.Resource = (*BastionHost)(nil)
 
+// BastionHost represents the Terraform resource azurerm_bastion_host.
 type BastionHost struct {
-	Name  string
-	Args  BastionHostArgs
-	state *bastionHostState
+	Name      string
+	Args      BastionHostArgs
+	state     *bastionHostState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BastionHost].
 func (bh *BastionHost) Type() string {
 	return "azurerm_bastion_host"
 }
 
+// LocalName returns the local name for [BastionHost].
 func (bh *BastionHost) LocalName() string {
 	return bh.Name
 }
 
+// Configuration returns the configuration (args) for [BastionHost].
 func (bh *BastionHost) Configuration() interface{} {
 	return bh.Args
 }
 
+// DependOn is used for other resources to depend on [BastionHost].
+func (bh *BastionHost) DependOn() terra.Reference {
+	return terra.ReferenceResource(bh)
+}
+
+// Dependencies returns the list of resources [BastionHost] depends_on.
+func (bh *BastionHost) Dependencies() terra.Dependencies {
+	return bh.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BastionHost].
+func (bh *BastionHost) LifecycleManagement() *terra.Lifecycle {
+	return bh.Lifecycle
+}
+
+// Attributes returns the attributes for [BastionHost].
 func (bh *BastionHost) Attributes() bastionHostAttributes {
 	return bastionHostAttributes{ref: terra.ReferenceResource(bh)}
 }
 
+// ImportState imports the given attribute values into [BastionHost]'s state.
 func (bh *BastionHost) ImportState(av io.Reader) error {
 	bh.state = &bastionHostState{}
 	if err := json.NewDecoder(av).Decode(bh.state); err != nil {
@@ -49,10 +73,12 @@ func (bh *BastionHost) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BastionHost] has state.
 func (bh *BastionHost) State() (*bastionHostState, bool) {
 	return bh.state, bh.state != nil
 }
 
+// StateMust returns the state for [BastionHost]. Panics if the state is nil.
 func (bh *BastionHost) StateMust() *bastionHostState {
 	if bh.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bh.Type(), bh.LocalName()))
@@ -60,10 +86,7 @@ func (bh *BastionHost) StateMust() *bastionHostState {
 	return bh.state
 }
 
-func (bh *BastionHost) DependOn() terra.Reference {
-	return terra.ReferenceResource(bh)
-}
-
+// BastionHostArgs contains the configurations for azurerm_bastion_host.
 type BastionHostArgs struct {
 	// CopyPasteEnabled: bool, optional
 	CopyPasteEnabled terra.BoolValue `hcl:"copy_paste_enabled,attr"`
@@ -93,71 +116,82 @@ type BastionHostArgs struct {
 	IpConfiguration *bastionhost.IpConfiguration `hcl:"ip_configuration,block"`
 	// Timeouts: optional
 	Timeouts *bastionhost.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that BastionHost depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type bastionHostAttributes struct {
 	ref terra.Reference
 }
 
+// CopyPasteEnabled returns a reference to field copy_paste_enabled of azurerm_bastion_host.
 func (bh bastionHostAttributes) CopyPasteEnabled() terra.BoolValue {
-	return terra.ReferenceBool(bh.ref.Append("copy_paste_enabled"))
+	return terra.ReferenceAsBool(bh.ref.Append("copy_paste_enabled"))
 }
 
+// DnsName returns a reference to field dns_name of azurerm_bastion_host.
 func (bh bastionHostAttributes) DnsName() terra.StringValue {
-	return terra.ReferenceString(bh.ref.Append("dns_name"))
+	return terra.ReferenceAsString(bh.ref.Append("dns_name"))
 }
 
+// FileCopyEnabled returns a reference to field file_copy_enabled of azurerm_bastion_host.
 func (bh bastionHostAttributes) FileCopyEnabled() terra.BoolValue {
-	return terra.ReferenceBool(bh.ref.Append("file_copy_enabled"))
+	return terra.ReferenceAsBool(bh.ref.Append("file_copy_enabled"))
 }
 
+// Id returns a reference to field id of azurerm_bastion_host.
 func (bh bastionHostAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bh.ref.Append("id"))
+	return terra.ReferenceAsString(bh.ref.Append("id"))
 }
 
+// IpConnectEnabled returns a reference to field ip_connect_enabled of azurerm_bastion_host.
 func (bh bastionHostAttributes) IpConnectEnabled() terra.BoolValue {
-	return terra.ReferenceBool(bh.ref.Append("ip_connect_enabled"))
+	return terra.ReferenceAsBool(bh.ref.Append("ip_connect_enabled"))
 }
 
+// Location returns a reference to field location of azurerm_bastion_host.
 func (bh bastionHostAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(bh.ref.Append("location"))
+	return terra.ReferenceAsString(bh.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_bastion_host.
 func (bh bastionHostAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(bh.ref.Append("name"))
+	return terra.ReferenceAsString(bh.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_bastion_host.
 func (bh bastionHostAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(bh.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(bh.ref.Append("resource_group_name"))
 }
 
+// ScaleUnits returns a reference to field scale_units of azurerm_bastion_host.
 func (bh bastionHostAttributes) ScaleUnits() terra.NumberValue {
-	return terra.ReferenceNumber(bh.ref.Append("scale_units"))
+	return terra.ReferenceAsNumber(bh.ref.Append("scale_units"))
 }
 
+// ShareableLinkEnabled returns a reference to field shareable_link_enabled of azurerm_bastion_host.
 func (bh bastionHostAttributes) ShareableLinkEnabled() terra.BoolValue {
-	return terra.ReferenceBool(bh.ref.Append("shareable_link_enabled"))
+	return terra.ReferenceAsBool(bh.ref.Append("shareable_link_enabled"))
 }
 
+// Sku returns a reference to field sku of azurerm_bastion_host.
 func (bh bastionHostAttributes) Sku() terra.StringValue {
-	return terra.ReferenceString(bh.ref.Append("sku"))
+	return terra.ReferenceAsString(bh.ref.Append("sku"))
 }
 
+// Tags returns a reference to field tags of azurerm_bastion_host.
 func (bh bastionHostAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bh.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](bh.ref.Append("tags"))
 }
 
+// TunnelingEnabled returns a reference to field tunneling_enabled of azurerm_bastion_host.
 func (bh bastionHostAttributes) TunnelingEnabled() terra.BoolValue {
-	return terra.ReferenceBool(bh.ref.Append("tunneling_enabled"))
+	return terra.ReferenceAsBool(bh.ref.Append("tunneling_enabled"))
 }
 
 func (bh bastionHostAttributes) IpConfiguration() terra.ListValue[bastionhost.IpConfigurationAttributes] {
-	return terra.ReferenceList[bastionhost.IpConfigurationAttributes](bh.ref.Append("ip_configuration"))
+	return terra.ReferenceAsList[bastionhost.IpConfigurationAttributes](bh.ref.Append("ip_configuration"))
 }
 
 func (bh bastionHostAttributes) Timeouts() bastionhost.TimeoutsAttributes {
-	return terra.ReferenceSingle[bastionhost.TimeoutsAttributes](bh.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[bastionhost.TimeoutsAttributes](bh.ref.Append("timeouts"))
 }
 
 type bastionHostState struct {

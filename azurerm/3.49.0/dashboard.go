@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDashboard creates a new instance of [Dashboard].
 func NewDashboard(name string, args DashboardArgs) *Dashboard {
 	return &Dashboard{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDashboard(name string, args DashboardArgs) *Dashboard {
 
 var _ terra.Resource = (*Dashboard)(nil)
 
+// Dashboard represents the Terraform resource azurerm_dashboard.
 type Dashboard struct {
-	Name  string
-	Args  DashboardArgs
-	state *dashboardState
+	Name      string
+	Args      DashboardArgs
+	state     *dashboardState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Dashboard].
 func (d *Dashboard) Type() string {
 	return "azurerm_dashboard"
 }
 
+// LocalName returns the local name for [Dashboard].
 func (d *Dashboard) LocalName() string {
 	return d.Name
 }
 
+// Configuration returns the configuration (args) for [Dashboard].
 func (d *Dashboard) Configuration() interface{} {
 	return d.Args
 }
 
+// DependOn is used for other resources to depend on [Dashboard].
+func (d *Dashboard) DependOn() terra.Reference {
+	return terra.ReferenceResource(d)
+}
+
+// Dependencies returns the list of resources [Dashboard] depends_on.
+func (d *Dashboard) Dependencies() terra.Dependencies {
+	return d.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Dashboard].
+func (d *Dashboard) LifecycleManagement() *terra.Lifecycle {
+	return d.Lifecycle
+}
+
+// Attributes returns the attributes for [Dashboard].
 func (d *Dashboard) Attributes() dashboardAttributes {
 	return dashboardAttributes{ref: terra.ReferenceResource(d)}
 }
 
+// ImportState imports the given attribute values into [Dashboard]'s state.
 func (d *Dashboard) ImportState(av io.Reader) error {
 	d.state = &dashboardState{}
 	if err := json.NewDecoder(av).Decode(d.state); err != nil {
@@ -49,10 +73,12 @@ func (d *Dashboard) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Dashboard] has state.
 func (d *Dashboard) State() (*dashboardState, bool) {
 	return d.state, d.state != nil
 }
 
+// StateMust returns the state for [Dashboard]. Panics if the state is nil.
 func (d *Dashboard) StateMust() *dashboardState {
 	if d.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", d.Type(), d.LocalName()))
@@ -60,10 +86,7 @@ func (d *Dashboard) StateMust() *dashboardState {
 	return d.state
 }
 
-func (d *Dashboard) DependOn() terra.Reference {
-	return terra.ReferenceResource(d)
-}
-
+// DashboardArgs contains the configurations for azurerm_dashboard.
 type DashboardArgs struct {
 	// DashboardProperties: string, optional
 	DashboardProperties terra.StringValue `hcl:"dashboard_properties,attr"`
@@ -79,39 +102,43 @@ type DashboardArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// Timeouts: optional
 	Timeouts *dashboard.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that Dashboard depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dashboardAttributes struct {
 	ref terra.Reference
 }
 
+// DashboardProperties returns a reference to field dashboard_properties of azurerm_dashboard.
 func (d dashboardAttributes) DashboardProperties() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("dashboard_properties"))
+	return terra.ReferenceAsString(d.ref.Append("dashboard_properties"))
 }
 
+// Id returns a reference to field id of azurerm_dashboard.
 func (d dashboardAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("id"))
+	return terra.ReferenceAsString(d.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_dashboard.
 func (d dashboardAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("location"))
+	return terra.ReferenceAsString(d.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_dashboard.
 func (d dashboardAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("name"))
+	return terra.ReferenceAsString(d.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_dashboard.
 func (d dashboardAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(d.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_dashboard.
 func (d dashboardAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](d.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](d.ref.Append("tags"))
 }
 
 func (d dashboardAttributes) Timeouts() dashboard.TimeoutsAttributes {
-	return terra.ReferenceSingle[dashboard.TimeoutsAttributes](d.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dashboard.TimeoutsAttributes](d.ref.Append("timeouts"))
 }
 
 type dashboardState struct {

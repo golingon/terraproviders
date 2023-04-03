@@ -60,148 +60,148 @@ type DailyScheduleAttributes struct {
 	ref terra.Reference
 }
 
-func (ds DailyScheduleAttributes) InternalRef() terra.Reference {
-	return ds.ref
+func (ds DailyScheduleAttributes) InternalRef() (terra.Reference, error) {
+	return ds.ref, nil
 }
 
 func (ds DailyScheduleAttributes) InternalWithRef(ref terra.Reference) DailyScheduleAttributes {
 	return DailyScheduleAttributes{ref: ref}
 }
 
-func (ds DailyScheduleAttributes) InternalTokens() hclwrite.Tokens {
+func (ds DailyScheduleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ds.ref.InternalTokens()
 }
 
 func (ds DailyScheduleAttributes) Hour() terra.NumberValue {
-	return terra.ReferenceNumber(ds.ref.Append("hour"))
+	return terra.ReferenceAsNumber(ds.ref.Append("hour"))
 }
 
 func (ds DailyScheduleAttributes) Minute() terra.NumberValue {
-	return terra.ReferenceNumber(ds.ref.Append("minute"))
+	return terra.ReferenceAsNumber(ds.ref.Append("minute"))
 }
 
 func (ds DailyScheduleAttributes) SnapshotsToKeep() terra.NumberValue {
-	return terra.ReferenceNumber(ds.ref.Append("snapshots_to_keep"))
+	return terra.ReferenceAsNumber(ds.ref.Append("snapshots_to_keep"))
 }
 
 type HourlyScheduleAttributes struct {
 	ref terra.Reference
 }
 
-func (hs HourlyScheduleAttributes) InternalRef() terra.Reference {
-	return hs.ref
+func (hs HourlyScheduleAttributes) InternalRef() (terra.Reference, error) {
+	return hs.ref, nil
 }
 
 func (hs HourlyScheduleAttributes) InternalWithRef(ref terra.Reference) HourlyScheduleAttributes {
 	return HourlyScheduleAttributes{ref: ref}
 }
 
-func (hs HourlyScheduleAttributes) InternalTokens() hclwrite.Tokens {
+func (hs HourlyScheduleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hs.ref.InternalTokens()
 }
 
 func (hs HourlyScheduleAttributes) Minute() terra.NumberValue {
-	return terra.ReferenceNumber(hs.ref.Append("minute"))
+	return terra.ReferenceAsNumber(hs.ref.Append("minute"))
 }
 
 func (hs HourlyScheduleAttributes) SnapshotsToKeep() terra.NumberValue {
-	return terra.ReferenceNumber(hs.ref.Append("snapshots_to_keep"))
+	return terra.ReferenceAsNumber(hs.ref.Append("snapshots_to_keep"))
 }
 
 type MonthlyScheduleAttributes struct {
 	ref terra.Reference
 }
 
-func (ms MonthlyScheduleAttributes) InternalRef() terra.Reference {
-	return ms.ref
+func (ms MonthlyScheduleAttributes) InternalRef() (terra.Reference, error) {
+	return ms.ref, nil
 }
 
 func (ms MonthlyScheduleAttributes) InternalWithRef(ref terra.Reference) MonthlyScheduleAttributes {
 	return MonthlyScheduleAttributes{ref: ref}
 }
 
-func (ms MonthlyScheduleAttributes) InternalTokens() hclwrite.Tokens {
+func (ms MonthlyScheduleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ms.ref.InternalTokens()
 }
 
 func (ms MonthlyScheduleAttributes) DaysOfMonth() terra.SetValue[terra.NumberValue] {
-	return terra.ReferenceSet[terra.NumberValue](ms.ref.Append("days_of_month"))
+	return terra.ReferenceAsSet[terra.NumberValue](ms.ref.Append("days_of_month"))
 }
 
 func (ms MonthlyScheduleAttributes) Hour() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("hour"))
+	return terra.ReferenceAsNumber(ms.ref.Append("hour"))
 }
 
 func (ms MonthlyScheduleAttributes) Minute() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("minute"))
+	return terra.ReferenceAsNumber(ms.ref.Append("minute"))
 }
 
 func (ms MonthlyScheduleAttributes) SnapshotsToKeep() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("snapshots_to_keep"))
+	return terra.ReferenceAsNumber(ms.ref.Append("snapshots_to_keep"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type WeeklyScheduleAttributes struct {
 	ref terra.Reference
 }
 
-func (ws WeeklyScheduleAttributes) InternalRef() terra.Reference {
-	return ws.ref
+func (ws WeeklyScheduleAttributes) InternalRef() (terra.Reference, error) {
+	return ws.ref, nil
 }
 
 func (ws WeeklyScheduleAttributes) InternalWithRef(ref terra.Reference) WeeklyScheduleAttributes {
 	return WeeklyScheduleAttributes{ref: ref}
 }
 
-func (ws WeeklyScheduleAttributes) InternalTokens() hclwrite.Tokens {
+func (ws WeeklyScheduleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ws.ref.InternalTokens()
 }
 
 func (ws WeeklyScheduleAttributes) DaysOfWeek() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ws.ref.Append("days_of_week"))
+	return terra.ReferenceAsSet[terra.StringValue](ws.ref.Append("days_of_week"))
 }
 
 func (ws WeeklyScheduleAttributes) Hour() terra.NumberValue {
-	return terra.ReferenceNumber(ws.ref.Append("hour"))
+	return terra.ReferenceAsNumber(ws.ref.Append("hour"))
 }
 
 func (ws WeeklyScheduleAttributes) Minute() terra.NumberValue {
-	return terra.ReferenceNumber(ws.ref.Append("minute"))
+	return terra.ReferenceAsNumber(ws.ref.Append("minute"))
 }
 
 func (ws WeeklyScheduleAttributes) SnapshotsToKeep() terra.NumberValue {
-	return terra.ReferenceNumber(ws.ref.Append("snapshots_to_keep"))
+	return terra.ReferenceAsNumber(ws.ref.Append("snapshots_to_keep"))
 }
 
 type DailyScheduleState struct {

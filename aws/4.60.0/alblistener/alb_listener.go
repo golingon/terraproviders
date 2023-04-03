@@ -132,7 +132,7 @@ func (da DefaultActionAttributes) InternalWithRef(ref terra.Reference) DefaultAc
 	return DefaultActionAttributes{ref: ref}
 }
 
-func (da DefaultActionAttributes) InternalTokens() hclwrite.Tokens {
+func (da DefaultActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return da.ref.InternalTokens()
 }
 
@@ -180,7 +180,7 @@ func (ac AuthenticateCognitoAttributes) InternalWithRef(ref terra.Reference) Aut
 	return AuthenticateCognitoAttributes{ref: ref}
 }
 
-func (ac AuthenticateCognitoAttributes) InternalTokens() hclwrite.Tokens {
+func (ac AuthenticateCognitoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
@@ -228,7 +228,7 @@ func (ao AuthenticateOidcAttributes) InternalWithRef(ref terra.Reference) Authen
 	return AuthenticateOidcAttributes{ref: ref}
 }
 
-func (ao AuthenticateOidcAttributes) InternalTokens() hclwrite.Tokens {
+func (ao AuthenticateOidcAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ao.ref.InternalTokens()
 }
 
@@ -288,7 +288,7 @@ func (fr FixedResponseAttributes) InternalWithRef(ref terra.Reference) FixedResp
 	return FixedResponseAttributes{ref: ref}
 }
 
-func (fr FixedResponseAttributes) InternalTokens() hclwrite.Tokens {
+func (fr FixedResponseAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fr.ref.InternalTokens()
 }
 
@@ -316,7 +316,7 @@ func (f ForwardAttributes) InternalWithRef(ref terra.Reference) ForwardAttribute
 	return ForwardAttributes{ref: ref}
 }
 
-func (f ForwardAttributes) InternalTokens() hclwrite.Tokens {
+func (f ForwardAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -340,7 +340,7 @@ func (s StickinessAttributes) InternalWithRef(ref terra.Reference) StickinessAtt
 	return StickinessAttributes{ref: ref}
 }
 
-func (s StickinessAttributes) InternalTokens() hclwrite.Tokens {
+func (s StickinessAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -364,7 +364,7 @@ func (tg TargetGroupAttributes) InternalWithRef(ref terra.Reference) TargetGroup
 	return TargetGroupAttributes{ref: ref}
 }
 
-func (tg TargetGroupAttributes) InternalTokens() hclwrite.Tokens {
+func (tg TargetGroupAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tg.ref.InternalTokens()
 }
 
@@ -388,7 +388,7 @@ func (r RedirectAttributes) InternalWithRef(ref terra.Reference) RedirectAttribu
 	return RedirectAttributes{ref: ref}
 }
 
-func (r RedirectAttributes) InternalTokens() hclwrite.Tokens {
+func (r RedirectAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -428,7 +428,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

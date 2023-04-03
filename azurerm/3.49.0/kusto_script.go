@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewKustoScript creates a new instance of [KustoScript].
 func NewKustoScript(name string, args KustoScriptArgs) *KustoScript {
 	return &KustoScript{
 		Args: args,
@@ -19,28 +20,51 @@ func NewKustoScript(name string, args KustoScriptArgs) *KustoScript {
 
 var _ terra.Resource = (*KustoScript)(nil)
 
+// KustoScript represents the Terraform resource azurerm_kusto_script.
 type KustoScript struct {
-	Name  string
-	Args  KustoScriptArgs
-	state *kustoScriptState
+	Name      string
+	Args      KustoScriptArgs
+	state     *kustoScriptState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [KustoScript].
 func (ks *KustoScript) Type() string {
 	return "azurerm_kusto_script"
 }
 
+// LocalName returns the local name for [KustoScript].
 func (ks *KustoScript) LocalName() string {
 	return ks.Name
 }
 
+// Configuration returns the configuration (args) for [KustoScript].
 func (ks *KustoScript) Configuration() interface{} {
 	return ks.Args
 }
 
+// DependOn is used for other resources to depend on [KustoScript].
+func (ks *KustoScript) DependOn() terra.Reference {
+	return terra.ReferenceResource(ks)
+}
+
+// Dependencies returns the list of resources [KustoScript] depends_on.
+func (ks *KustoScript) Dependencies() terra.Dependencies {
+	return ks.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [KustoScript].
+func (ks *KustoScript) LifecycleManagement() *terra.Lifecycle {
+	return ks.Lifecycle
+}
+
+// Attributes returns the attributes for [KustoScript].
 func (ks *KustoScript) Attributes() kustoScriptAttributes {
 	return kustoScriptAttributes{ref: terra.ReferenceResource(ks)}
 }
 
+// ImportState imports the given attribute values into [KustoScript]'s state.
 func (ks *KustoScript) ImportState(av io.Reader) error {
 	ks.state = &kustoScriptState{}
 	if err := json.NewDecoder(av).Decode(ks.state); err != nil {
@@ -49,10 +73,12 @@ func (ks *KustoScript) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [KustoScript] has state.
 func (ks *KustoScript) State() (*kustoScriptState, bool) {
 	return ks.state, ks.state != nil
 }
 
+// StateMust returns the state for [KustoScript]. Panics if the state is nil.
 func (ks *KustoScript) StateMust() *kustoScriptState {
 	if ks.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ks.Type(), ks.LocalName()))
@@ -60,10 +86,7 @@ func (ks *KustoScript) StateMust() *kustoScriptState {
 	return ks.state
 }
 
-func (ks *KustoScript) DependOn() terra.Reference {
-	return terra.ReferenceResource(ks)
-}
-
+// KustoScriptArgs contains the configurations for azurerm_kusto_script.
 type KustoScriptArgs struct {
 	// ContinueOnErrorsEnabled: bool, optional
 	ContinueOnErrorsEnabled terra.BoolValue `hcl:"continue_on_errors_enabled,attr"`
@@ -83,47 +106,53 @@ type KustoScriptArgs struct {
 	Url terra.StringValue `hcl:"url,attr"`
 	// Timeouts: optional
 	Timeouts *kustoscript.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that KustoScript depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type kustoScriptAttributes struct {
 	ref terra.Reference
 }
 
+// ContinueOnErrorsEnabled returns a reference to field continue_on_errors_enabled of azurerm_kusto_script.
 func (ks kustoScriptAttributes) ContinueOnErrorsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ks.ref.Append("continue_on_errors_enabled"))
+	return terra.ReferenceAsBool(ks.ref.Append("continue_on_errors_enabled"))
 }
 
+// DatabaseId returns a reference to field database_id of azurerm_kusto_script.
 func (ks kustoScriptAttributes) DatabaseId() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("database_id"))
+	return terra.ReferenceAsString(ks.ref.Append("database_id"))
 }
 
+// ForceAnUpdateWhenValueChanged returns a reference to field force_an_update_when_value_changed of azurerm_kusto_script.
 func (ks kustoScriptAttributes) ForceAnUpdateWhenValueChanged() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("force_an_update_when_value_changed"))
+	return terra.ReferenceAsString(ks.ref.Append("force_an_update_when_value_changed"))
 }
 
+// Id returns a reference to field id of azurerm_kusto_script.
 func (ks kustoScriptAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("id"))
+	return terra.ReferenceAsString(ks.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_kusto_script.
 func (ks kustoScriptAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("name"))
+	return terra.ReferenceAsString(ks.ref.Append("name"))
 }
 
+// SasToken returns a reference to field sas_token of azurerm_kusto_script.
 func (ks kustoScriptAttributes) SasToken() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("sas_token"))
+	return terra.ReferenceAsString(ks.ref.Append("sas_token"))
 }
 
+// ScriptContent returns a reference to field script_content of azurerm_kusto_script.
 func (ks kustoScriptAttributes) ScriptContent() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("script_content"))
+	return terra.ReferenceAsString(ks.ref.Append("script_content"))
 }
 
+// Url returns a reference to field url of azurerm_kusto_script.
 func (ks kustoScriptAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("url"))
+	return terra.ReferenceAsString(ks.ref.Append("url"))
 }
 
 func (ks kustoScriptAttributes) Timeouts() kustoscript.TimeoutsAttributes {
-	return terra.ReferenceSingle[kustoscript.TimeoutsAttributes](ks.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[kustoscript.TimeoutsAttributes](ks.ref.Append("timeouts"))
 }
 
 type kustoScriptState struct {

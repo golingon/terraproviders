@@ -18,52 +18,52 @@ type RuleAttributes struct {
 	ref terra.Reference
 }
 
-func (r RuleAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RuleAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RuleAttributes) InternalWithRef(ref terra.Reference) RuleAttributes {
 	return RuleAttributes{ref: ref}
 }
 
-func (r RuleAttributes) InternalTokens() hclwrite.Tokens {
+func (r RuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RuleAttributes) Access() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("access"))
+	return terra.ReferenceAsString(r.ref.Append("access"))
 }
 
 func (r RuleAttributes) Communities() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("communities"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("communities"))
 }
 
 func (r RuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("name"))
+	return terra.ReferenceAsString(r.ref.Append("name"))
 }
 
 func (r RuleAttributes) RuleType() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("rule_type"))
+	return terra.ReferenceAsString(r.ref.Append("rule_type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type RuleState struct {

@@ -13,24 +13,24 @@ type CustomerEncryptionAttributes struct {
 	ref terra.Reference
 }
 
-func (ce CustomerEncryptionAttributes) InternalRef() terra.Reference {
-	return ce.ref
+func (ce CustomerEncryptionAttributes) InternalRef() (terra.Reference, error) {
+	return ce.ref, nil
 }
 
 func (ce CustomerEncryptionAttributes) InternalWithRef(ref terra.Reference) CustomerEncryptionAttributes {
 	return CustomerEncryptionAttributes{ref: ref}
 }
 
-func (ce CustomerEncryptionAttributes) InternalTokens() hclwrite.Tokens {
+func (ce CustomerEncryptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ce.ref.InternalTokens()
 }
 
 func (ce CustomerEncryptionAttributes) EncryptionAlgorithm() terra.StringValue {
-	return terra.ReferenceString(ce.ref.Append("encryption_algorithm"))
+	return terra.ReferenceAsString(ce.ref.Append("encryption_algorithm"))
 }
 
 func (ce CustomerEncryptionAttributes) EncryptionKey() terra.StringValue {
-	return terra.ReferenceString(ce.ref.Append("encryption_key"))
+	return terra.ReferenceAsString(ce.ref.Append("encryption_key"))
 }
 
 type CustomerEncryptionState struct {

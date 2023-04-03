@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewStreamAnalyticsOutputMssql creates a new instance of [StreamAnalyticsOutputMssql].
 func NewStreamAnalyticsOutputMssql(name string, args StreamAnalyticsOutputMssqlArgs) *StreamAnalyticsOutputMssql {
 	return &StreamAnalyticsOutputMssql{
 		Args: args,
@@ -19,28 +20,51 @@ func NewStreamAnalyticsOutputMssql(name string, args StreamAnalyticsOutputMssqlA
 
 var _ terra.Resource = (*StreamAnalyticsOutputMssql)(nil)
 
+// StreamAnalyticsOutputMssql represents the Terraform resource azurerm_stream_analytics_output_mssql.
 type StreamAnalyticsOutputMssql struct {
-	Name  string
-	Args  StreamAnalyticsOutputMssqlArgs
-	state *streamAnalyticsOutputMssqlState
+	Name      string
+	Args      StreamAnalyticsOutputMssqlArgs
+	state     *streamAnalyticsOutputMssqlState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [StreamAnalyticsOutputMssql].
 func (saom *StreamAnalyticsOutputMssql) Type() string {
 	return "azurerm_stream_analytics_output_mssql"
 }
 
+// LocalName returns the local name for [StreamAnalyticsOutputMssql].
 func (saom *StreamAnalyticsOutputMssql) LocalName() string {
 	return saom.Name
 }
 
+// Configuration returns the configuration (args) for [StreamAnalyticsOutputMssql].
 func (saom *StreamAnalyticsOutputMssql) Configuration() interface{} {
 	return saom.Args
 }
 
+// DependOn is used for other resources to depend on [StreamAnalyticsOutputMssql].
+func (saom *StreamAnalyticsOutputMssql) DependOn() terra.Reference {
+	return terra.ReferenceResource(saom)
+}
+
+// Dependencies returns the list of resources [StreamAnalyticsOutputMssql] depends_on.
+func (saom *StreamAnalyticsOutputMssql) Dependencies() terra.Dependencies {
+	return saom.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [StreamAnalyticsOutputMssql].
+func (saom *StreamAnalyticsOutputMssql) LifecycleManagement() *terra.Lifecycle {
+	return saom.Lifecycle
+}
+
+// Attributes returns the attributes for [StreamAnalyticsOutputMssql].
 func (saom *StreamAnalyticsOutputMssql) Attributes() streamAnalyticsOutputMssqlAttributes {
 	return streamAnalyticsOutputMssqlAttributes{ref: terra.ReferenceResource(saom)}
 }
 
+// ImportState imports the given attribute values into [StreamAnalyticsOutputMssql]'s state.
 func (saom *StreamAnalyticsOutputMssql) ImportState(av io.Reader) error {
 	saom.state = &streamAnalyticsOutputMssqlState{}
 	if err := json.NewDecoder(av).Decode(saom.state); err != nil {
@@ -49,10 +73,12 @@ func (saom *StreamAnalyticsOutputMssql) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [StreamAnalyticsOutputMssql] has state.
 func (saom *StreamAnalyticsOutputMssql) State() (*streamAnalyticsOutputMssqlState, bool) {
 	return saom.state, saom.state != nil
 }
 
+// StateMust returns the state for [StreamAnalyticsOutputMssql]. Panics if the state is nil.
 func (saom *StreamAnalyticsOutputMssql) StateMust() *streamAnalyticsOutputMssqlState {
 	if saom.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", saom.Type(), saom.LocalName()))
@@ -60,10 +86,7 @@ func (saom *StreamAnalyticsOutputMssql) StateMust() *streamAnalyticsOutputMssqlS
 	return saom.state
 }
 
-func (saom *StreamAnalyticsOutputMssql) DependOn() terra.Reference {
-	return terra.ReferenceResource(saom)
-}
-
+// StreamAnalyticsOutputMssqlArgs contains the configurations for azurerm_stream_analytics_output_mssql.
 type StreamAnalyticsOutputMssqlArgs struct {
 	// AuthenticationMode: string, optional
 	AuthenticationMode terra.StringValue `hcl:"authentication_mode,attr"`
@@ -91,63 +114,73 @@ type StreamAnalyticsOutputMssqlArgs struct {
 	User terra.StringValue `hcl:"user,attr"`
 	// Timeouts: optional
 	Timeouts *streamanalyticsoutputmssql.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that StreamAnalyticsOutputMssql depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type streamAnalyticsOutputMssqlAttributes struct {
 	ref terra.Reference
 }
 
+// AuthenticationMode returns a reference to field authentication_mode of azurerm_stream_analytics_output_mssql.
 func (saom streamAnalyticsOutputMssqlAttributes) AuthenticationMode() terra.StringValue {
-	return terra.ReferenceString(saom.ref.Append("authentication_mode"))
+	return terra.ReferenceAsString(saom.ref.Append("authentication_mode"))
 }
 
+// Database returns a reference to field database of azurerm_stream_analytics_output_mssql.
 func (saom streamAnalyticsOutputMssqlAttributes) Database() terra.StringValue {
-	return terra.ReferenceString(saom.ref.Append("database"))
+	return terra.ReferenceAsString(saom.ref.Append("database"))
 }
 
+// Id returns a reference to field id of azurerm_stream_analytics_output_mssql.
 func (saom streamAnalyticsOutputMssqlAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(saom.ref.Append("id"))
+	return terra.ReferenceAsString(saom.ref.Append("id"))
 }
 
+// MaxBatchCount returns a reference to field max_batch_count of azurerm_stream_analytics_output_mssql.
 func (saom streamAnalyticsOutputMssqlAttributes) MaxBatchCount() terra.NumberValue {
-	return terra.ReferenceNumber(saom.ref.Append("max_batch_count"))
+	return terra.ReferenceAsNumber(saom.ref.Append("max_batch_count"))
 }
 
+// MaxWriterCount returns a reference to field max_writer_count of azurerm_stream_analytics_output_mssql.
 func (saom streamAnalyticsOutputMssqlAttributes) MaxWriterCount() terra.NumberValue {
-	return terra.ReferenceNumber(saom.ref.Append("max_writer_count"))
+	return terra.ReferenceAsNumber(saom.ref.Append("max_writer_count"))
 }
 
+// Name returns a reference to field name of azurerm_stream_analytics_output_mssql.
 func (saom streamAnalyticsOutputMssqlAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(saom.ref.Append("name"))
+	return terra.ReferenceAsString(saom.ref.Append("name"))
 }
 
+// Password returns a reference to field password of azurerm_stream_analytics_output_mssql.
 func (saom streamAnalyticsOutputMssqlAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(saom.ref.Append("password"))
+	return terra.ReferenceAsString(saom.ref.Append("password"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_stream_analytics_output_mssql.
 func (saom streamAnalyticsOutputMssqlAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(saom.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(saom.ref.Append("resource_group_name"))
 }
 
+// Server returns a reference to field server of azurerm_stream_analytics_output_mssql.
 func (saom streamAnalyticsOutputMssqlAttributes) Server() terra.StringValue {
-	return terra.ReferenceString(saom.ref.Append("server"))
+	return terra.ReferenceAsString(saom.ref.Append("server"))
 }
 
+// StreamAnalyticsJobName returns a reference to field stream_analytics_job_name of azurerm_stream_analytics_output_mssql.
 func (saom streamAnalyticsOutputMssqlAttributes) StreamAnalyticsJobName() terra.StringValue {
-	return terra.ReferenceString(saom.ref.Append("stream_analytics_job_name"))
+	return terra.ReferenceAsString(saom.ref.Append("stream_analytics_job_name"))
 }
 
+// Table returns a reference to field table of azurerm_stream_analytics_output_mssql.
 func (saom streamAnalyticsOutputMssqlAttributes) Table() terra.StringValue {
-	return terra.ReferenceString(saom.ref.Append("table"))
+	return terra.ReferenceAsString(saom.ref.Append("table"))
 }
 
+// User returns a reference to field user of azurerm_stream_analytics_output_mssql.
 func (saom streamAnalyticsOutputMssqlAttributes) User() terra.StringValue {
-	return terra.ReferenceString(saom.ref.Append("user"))
+	return terra.ReferenceAsString(saom.ref.Append("user"))
 }
 
 func (saom streamAnalyticsOutputMssqlAttributes) Timeouts() streamanalyticsoutputmssql.TimeoutsAttributes {
-	return terra.ReferenceSingle[streamanalyticsoutputmssql.TimeoutsAttributes](saom.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[streamanalyticsoutputmssql.TimeoutsAttributes](saom.ref.Append("timeouts"))
 }
 
 type streamAnalyticsOutputMssqlState struct {

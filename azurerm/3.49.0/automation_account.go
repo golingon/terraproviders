@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAutomationAccount creates a new instance of [AutomationAccount].
 func NewAutomationAccount(name string, args AutomationAccountArgs) *AutomationAccount {
 	return &AutomationAccount{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAutomationAccount(name string, args AutomationAccountArgs) *AutomationAc
 
 var _ terra.Resource = (*AutomationAccount)(nil)
 
+// AutomationAccount represents the Terraform resource azurerm_automation_account.
 type AutomationAccount struct {
-	Name  string
-	Args  AutomationAccountArgs
-	state *automationAccountState
+	Name      string
+	Args      AutomationAccountArgs
+	state     *automationAccountState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AutomationAccount].
 func (aa *AutomationAccount) Type() string {
 	return "azurerm_automation_account"
 }
 
+// LocalName returns the local name for [AutomationAccount].
 func (aa *AutomationAccount) LocalName() string {
 	return aa.Name
 }
 
+// Configuration returns the configuration (args) for [AutomationAccount].
 func (aa *AutomationAccount) Configuration() interface{} {
 	return aa.Args
 }
 
+// DependOn is used for other resources to depend on [AutomationAccount].
+func (aa *AutomationAccount) DependOn() terra.Reference {
+	return terra.ReferenceResource(aa)
+}
+
+// Dependencies returns the list of resources [AutomationAccount] depends_on.
+func (aa *AutomationAccount) Dependencies() terra.Dependencies {
+	return aa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AutomationAccount].
+func (aa *AutomationAccount) LifecycleManagement() *terra.Lifecycle {
+	return aa.Lifecycle
+}
+
+// Attributes returns the attributes for [AutomationAccount].
 func (aa *AutomationAccount) Attributes() automationAccountAttributes {
 	return automationAccountAttributes{ref: terra.ReferenceResource(aa)}
 }
 
+// ImportState imports the given attribute values into [AutomationAccount]'s state.
 func (aa *AutomationAccount) ImportState(av io.Reader) error {
 	aa.state = &automationAccountState{}
 	if err := json.NewDecoder(av).Decode(aa.state); err != nil {
@@ -49,10 +73,12 @@ func (aa *AutomationAccount) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AutomationAccount] has state.
 func (aa *AutomationAccount) State() (*automationAccountState, bool) {
 	return aa.state, aa.state != nil
 }
 
+// StateMust returns the state for [AutomationAccount]. Panics if the state is nil.
 func (aa *AutomationAccount) StateMust() *automationAccountState {
 	if aa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", aa.Type(), aa.LocalName()))
@@ -60,10 +86,7 @@ func (aa *AutomationAccount) StateMust() *automationAccountState {
 	return aa.state
 }
 
-func (aa *AutomationAccount) DependOn() terra.Reference {
-	return terra.ReferenceResource(aa)
-}
-
+// AutomationAccountArgs contains the configurations for azurerm_automation_account.
 type AutomationAccountArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -89,75 +112,85 @@ type AutomationAccountArgs struct {
 	Identity *automationaccount.Identity `hcl:"identity,block"`
 	// Timeouts: optional
 	Timeouts *automationaccount.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that AutomationAccount depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type automationAccountAttributes struct {
 	ref terra.Reference
 }
 
+// DscPrimaryAccessKey returns a reference to field dsc_primary_access_key of azurerm_automation_account.
 func (aa automationAccountAttributes) DscPrimaryAccessKey() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("dsc_primary_access_key"))
+	return terra.ReferenceAsString(aa.ref.Append("dsc_primary_access_key"))
 }
 
+// DscSecondaryAccessKey returns a reference to field dsc_secondary_access_key of azurerm_automation_account.
 func (aa automationAccountAttributes) DscSecondaryAccessKey() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("dsc_secondary_access_key"))
+	return terra.ReferenceAsString(aa.ref.Append("dsc_secondary_access_key"))
 }
 
+// DscServerEndpoint returns a reference to field dsc_server_endpoint of azurerm_automation_account.
 func (aa automationAccountAttributes) DscServerEndpoint() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("dsc_server_endpoint"))
+	return terra.ReferenceAsString(aa.ref.Append("dsc_server_endpoint"))
 }
 
+// HybridServiceUrl returns a reference to field hybrid_service_url of azurerm_automation_account.
 func (aa automationAccountAttributes) HybridServiceUrl() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("hybrid_service_url"))
+	return terra.ReferenceAsString(aa.ref.Append("hybrid_service_url"))
 }
 
+// Id returns a reference to field id of azurerm_automation_account.
 func (aa automationAccountAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("id"))
+	return terra.ReferenceAsString(aa.ref.Append("id"))
 }
 
+// LocalAuthenticationEnabled returns a reference to field local_authentication_enabled of azurerm_automation_account.
 func (aa automationAccountAttributes) LocalAuthenticationEnabled() terra.BoolValue {
-	return terra.ReferenceBool(aa.ref.Append("local_authentication_enabled"))
+	return terra.ReferenceAsBool(aa.ref.Append("local_authentication_enabled"))
 }
 
+// Location returns a reference to field location of azurerm_automation_account.
 func (aa automationAccountAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("location"))
+	return terra.ReferenceAsString(aa.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_automation_account.
 func (aa automationAccountAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("name"))
+	return terra.ReferenceAsString(aa.ref.Append("name"))
 }
 
+// PublicNetworkAccessEnabled returns a reference to field public_network_access_enabled of azurerm_automation_account.
 func (aa automationAccountAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(aa.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(aa.ref.Append("public_network_access_enabled"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_automation_account.
 func (aa automationAccountAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(aa.ref.Append("resource_group_name"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_automation_account.
 func (aa automationAccountAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("sku_name"))
+	return terra.ReferenceAsString(aa.ref.Append("sku_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_automation_account.
 func (aa automationAccountAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](aa.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](aa.ref.Append("tags"))
 }
 
 func (aa automationAccountAttributes) PrivateEndpointConnection() terra.ListValue[automationaccount.PrivateEndpointConnectionAttributes] {
-	return terra.ReferenceList[automationaccount.PrivateEndpointConnectionAttributes](aa.ref.Append("private_endpoint_connection"))
+	return terra.ReferenceAsList[automationaccount.PrivateEndpointConnectionAttributes](aa.ref.Append("private_endpoint_connection"))
 }
 
 func (aa automationAccountAttributes) Encryption() terra.ListValue[automationaccount.EncryptionAttributes] {
-	return terra.ReferenceList[automationaccount.EncryptionAttributes](aa.ref.Append("encryption"))
+	return terra.ReferenceAsList[automationaccount.EncryptionAttributes](aa.ref.Append("encryption"))
 }
 
 func (aa automationAccountAttributes) Identity() terra.ListValue[automationaccount.IdentityAttributes] {
-	return terra.ReferenceList[automationaccount.IdentityAttributes](aa.ref.Append("identity"))
+	return terra.ReferenceAsList[automationaccount.IdentityAttributes](aa.ref.Append("identity"))
 }
 
 func (aa automationAccountAttributes) Timeouts() automationaccount.TimeoutsAttributes {
-	return terra.ReferenceSingle[automationaccount.TimeoutsAttributes](aa.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[automationaccount.TimeoutsAttributes](aa.ref.Append("timeouts"))
 }
 
 type automationAccountState struct {

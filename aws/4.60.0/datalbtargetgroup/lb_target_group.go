@@ -28,7 +28,7 @@ func (hc HealthCheckAttributes) InternalWithRef(ref terra.Reference) HealthCheck
 	return HealthCheckAttributes{ref: ref}
 }
 
-func (hc HealthCheckAttributes) InternalTokens() hclwrite.Tokens {
+func (hc HealthCheckAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hc.ref.InternalTokens()
 }
 
@@ -80,7 +80,7 @@ func (s StickinessAttributes) InternalWithRef(ref terra.Reference) StickinessAtt
 	return StickinessAttributes{ref: ref}
 }
 
-func (s StickinessAttributes) InternalTokens() hclwrite.Tokens {
+func (s StickinessAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -112,7 +112,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

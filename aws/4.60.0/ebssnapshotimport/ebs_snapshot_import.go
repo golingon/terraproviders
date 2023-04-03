@@ -55,7 +55,7 @@ func (cd ClientDataAttributes) InternalWithRef(ref terra.Reference) ClientDataAt
 	return ClientDataAttributes{ref: ref}
 }
 
-func (cd ClientDataAttributes) InternalTokens() hclwrite.Tokens {
+func (cd ClientDataAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cd.ref.InternalTokens()
 }
 
@@ -87,7 +87,7 @@ func (dc DiskContainerAttributes) InternalWithRef(ref terra.Reference) DiskConta
 	return DiskContainerAttributes{ref: ref}
 }
 
-func (dc DiskContainerAttributes) InternalTokens() hclwrite.Tokens {
+func (dc DiskContainerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dc.ref.InternalTokens()
 }
 
@@ -119,7 +119,7 @@ func (ub UserBucketAttributes) InternalWithRef(ref terra.Reference) UserBucketAt
 	return UserBucketAttributes{ref: ref}
 }
 
-func (ub UserBucketAttributes) InternalTokens() hclwrite.Tokens {
+func (ub UserBucketAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ub.ref.InternalTokens()
 }
 
@@ -143,7 +143,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

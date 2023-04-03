@@ -44,7 +44,7 @@ func (ec EndpointConfigurationAttributes) InternalWithRef(ref terra.Reference) E
 	return EndpointConfigurationAttributes{ref: ref}
 }
 
-func (ec EndpointConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ec EndpointConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 
@@ -72,7 +72,7 @@ func (po PortOverrideAttributes) InternalWithRef(ref terra.Reference) PortOverri
 	return PortOverrideAttributes{ref: ref}
 }
 
-func (po PortOverrideAttributes) InternalTokens() hclwrite.Tokens {
+func (po PortOverrideAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return po.ref.InternalTokens()
 }
 
@@ -96,7 +96,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

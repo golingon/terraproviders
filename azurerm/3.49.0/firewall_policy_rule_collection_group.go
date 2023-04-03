@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewFirewallPolicyRuleCollectionGroup creates a new instance of [FirewallPolicyRuleCollectionGroup].
 func NewFirewallPolicyRuleCollectionGroup(name string, args FirewallPolicyRuleCollectionGroupArgs) *FirewallPolicyRuleCollectionGroup {
 	return &FirewallPolicyRuleCollectionGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewFirewallPolicyRuleCollectionGroup(name string, args FirewallPolicyRuleCo
 
 var _ terra.Resource = (*FirewallPolicyRuleCollectionGroup)(nil)
 
+// FirewallPolicyRuleCollectionGroup represents the Terraform resource azurerm_firewall_policy_rule_collection_group.
 type FirewallPolicyRuleCollectionGroup struct {
-	Name  string
-	Args  FirewallPolicyRuleCollectionGroupArgs
-	state *firewallPolicyRuleCollectionGroupState
+	Name      string
+	Args      FirewallPolicyRuleCollectionGroupArgs
+	state     *firewallPolicyRuleCollectionGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [FirewallPolicyRuleCollectionGroup].
 func (fprcg *FirewallPolicyRuleCollectionGroup) Type() string {
 	return "azurerm_firewall_policy_rule_collection_group"
 }
 
+// LocalName returns the local name for [FirewallPolicyRuleCollectionGroup].
 func (fprcg *FirewallPolicyRuleCollectionGroup) LocalName() string {
 	return fprcg.Name
 }
 
+// Configuration returns the configuration (args) for [FirewallPolicyRuleCollectionGroup].
 func (fprcg *FirewallPolicyRuleCollectionGroup) Configuration() interface{} {
 	return fprcg.Args
 }
 
+// DependOn is used for other resources to depend on [FirewallPolicyRuleCollectionGroup].
+func (fprcg *FirewallPolicyRuleCollectionGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(fprcg)
+}
+
+// Dependencies returns the list of resources [FirewallPolicyRuleCollectionGroup] depends_on.
+func (fprcg *FirewallPolicyRuleCollectionGroup) Dependencies() terra.Dependencies {
+	return fprcg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [FirewallPolicyRuleCollectionGroup].
+func (fprcg *FirewallPolicyRuleCollectionGroup) LifecycleManagement() *terra.Lifecycle {
+	return fprcg.Lifecycle
+}
+
+// Attributes returns the attributes for [FirewallPolicyRuleCollectionGroup].
 func (fprcg *FirewallPolicyRuleCollectionGroup) Attributes() firewallPolicyRuleCollectionGroupAttributes {
 	return firewallPolicyRuleCollectionGroupAttributes{ref: terra.ReferenceResource(fprcg)}
 }
 
+// ImportState imports the given attribute values into [FirewallPolicyRuleCollectionGroup]'s state.
 func (fprcg *FirewallPolicyRuleCollectionGroup) ImportState(av io.Reader) error {
 	fprcg.state = &firewallPolicyRuleCollectionGroupState{}
 	if err := json.NewDecoder(av).Decode(fprcg.state); err != nil {
@@ -49,10 +73,12 @@ func (fprcg *FirewallPolicyRuleCollectionGroup) ImportState(av io.Reader) error 
 	return nil
 }
 
+// State returns the state and a bool indicating if [FirewallPolicyRuleCollectionGroup] has state.
 func (fprcg *FirewallPolicyRuleCollectionGroup) State() (*firewallPolicyRuleCollectionGroupState, bool) {
 	return fprcg.state, fprcg.state != nil
 }
 
+// StateMust returns the state for [FirewallPolicyRuleCollectionGroup]. Panics if the state is nil.
 func (fprcg *FirewallPolicyRuleCollectionGroup) StateMust() *firewallPolicyRuleCollectionGroupState {
 	if fprcg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", fprcg.Type(), fprcg.LocalName()))
@@ -60,10 +86,7 @@ func (fprcg *FirewallPolicyRuleCollectionGroup) StateMust() *firewallPolicyRuleC
 	return fprcg.state
 }
 
-func (fprcg *FirewallPolicyRuleCollectionGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(fprcg)
-}
-
+// FirewallPolicyRuleCollectionGroupArgs contains the configurations for azurerm_firewall_policy_rule_collection_group.
 type FirewallPolicyRuleCollectionGroupArgs struct {
 	// FirewallPolicyId: string, required
 	FirewallPolicyId terra.StringValue `hcl:"firewall_policy_id,attr" validate:"required"`
@@ -81,43 +104,45 @@ type FirewallPolicyRuleCollectionGroupArgs struct {
 	NetworkRuleCollection []firewallpolicyrulecollectiongroup.NetworkRuleCollection `hcl:"network_rule_collection,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *firewallpolicyrulecollectiongroup.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that FirewallPolicyRuleCollectionGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type firewallPolicyRuleCollectionGroupAttributes struct {
 	ref terra.Reference
 }
 
+// FirewallPolicyId returns a reference to field firewall_policy_id of azurerm_firewall_policy_rule_collection_group.
 func (fprcg firewallPolicyRuleCollectionGroupAttributes) FirewallPolicyId() terra.StringValue {
-	return terra.ReferenceString(fprcg.ref.Append("firewall_policy_id"))
+	return terra.ReferenceAsString(fprcg.ref.Append("firewall_policy_id"))
 }
 
+// Id returns a reference to field id of azurerm_firewall_policy_rule_collection_group.
 func (fprcg firewallPolicyRuleCollectionGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(fprcg.ref.Append("id"))
+	return terra.ReferenceAsString(fprcg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_firewall_policy_rule_collection_group.
 func (fprcg firewallPolicyRuleCollectionGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(fprcg.ref.Append("name"))
+	return terra.ReferenceAsString(fprcg.ref.Append("name"))
 }
 
+// Priority returns a reference to field priority of azurerm_firewall_policy_rule_collection_group.
 func (fprcg firewallPolicyRuleCollectionGroupAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(fprcg.ref.Append("priority"))
+	return terra.ReferenceAsNumber(fprcg.ref.Append("priority"))
 }
 
 func (fprcg firewallPolicyRuleCollectionGroupAttributes) ApplicationRuleCollection() terra.ListValue[firewallpolicyrulecollectiongroup.ApplicationRuleCollectionAttributes] {
-	return terra.ReferenceList[firewallpolicyrulecollectiongroup.ApplicationRuleCollectionAttributes](fprcg.ref.Append("application_rule_collection"))
+	return terra.ReferenceAsList[firewallpolicyrulecollectiongroup.ApplicationRuleCollectionAttributes](fprcg.ref.Append("application_rule_collection"))
 }
 
 func (fprcg firewallPolicyRuleCollectionGroupAttributes) NatRuleCollection() terra.ListValue[firewallpolicyrulecollectiongroup.NatRuleCollectionAttributes] {
-	return terra.ReferenceList[firewallpolicyrulecollectiongroup.NatRuleCollectionAttributes](fprcg.ref.Append("nat_rule_collection"))
+	return terra.ReferenceAsList[firewallpolicyrulecollectiongroup.NatRuleCollectionAttributes](fprcg.ref.Append("nat_rule_collection"))
 }
 
 func (fprcg firewallPolicyRuleCollectionGroupAttributes) NetworkRuleCollection() terra.ListValue[firewallpolicyrulecollectiongroup.NetworkRuleCollectionAttributes] {
-	return terra.ReferenceList[firewallpolicyrulecollectiongroup.NetworkRuleCollectionAttributes](fprcg.ref.Append("network_rule_collection"))
+	return terra.ReferenceAsList[firewallpolicyrulecollectiongroup.NetworkRuleCollectionAttributes](fprcg.ref.Append("network_rule_collection"))
 }
 
 func (fprcg firewallPolicyRuleCollectionGroupAttributes) Timeouts() firewallpolicyrulecollectiongroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[firewallpolicyrulecollectiongroup.TimeoutsAttributes](fprcg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[firewallpolicyrulecollectiongroup.TimeoutsAttributes](fprcg.ref.Append("timeouts"))
 }
 
 type firewallPolicyRuleCollectionGroupState struct {

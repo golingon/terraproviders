@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMonitorDataCollectionRuleAssociation creates a new instance of [MonitorDataCollectionRuleAssociation].
 func NewMonitorDataCollectionRuleAssociation(name string, args MonitorDataCollectionRuleAssociationArgs) *MonitorDataCollectionRuleAssociation {
 	return &MonitorDataCollectionRuleAssociation{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMonitorDataCollectionRuleAssociation(name string, args MonitorDataCollec
 
 var _ terra.Resource = (*MonitorDataCollectionRuleAssociation)(nil)
 
+// MonitorDataCollectionRuleAssociation represents the Terraform resource azurerm_monitor_data_collection_rule_association.
 type MonitorDataCollectionRuleAssociation struct {
-	Name  string
-	Args  MonitorDataCollectionRuleAssociationArgs
-	state *monitorDataCollectionRuleAssociationState
+	Name      string
+	Args      MonitorDataCollectionRuleAssociationArgs
+	state     *monitorDataCollectionRuleAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MonitorDataCollectionRuleAssociation].
 func (mdcra *MonitorDataCollectionRuleAssociation) Type() string {
 	return "azurerm_monitor_data_collection_rule_association"
 }
 
+// LocalName returns the local name for [MonitorDataCollectionRuleAssociation].
 func (mdcra *MonitorDataCollectionRuleAssociation) LocalName() string {
 	return mdcra.Name
 }
 
+// Configuration returns the configuration (args) for [MonitorDataCollectionRuleAssociation].
 func (mdcra *MonitorDataCollectionRuleAssociation) Configuration() interface{} {
 	return mdcra.Args
 }
 
+// DependOn is used for other resources to depend on [MonitorDataCollectionRuleAssociation].
+func (mdcra *MonitorDataCollectionRuleAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(mdcra)
+}
+
+// Dependencies returns the list of resources [MonitorDataCollectionRuleAssociation] depends_on.
+func (mdcra *MonitorDataCollectionRuleAssociation) Dependencies() terra.Dependencies {
+	return mdcra.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MonitorDataCollectionRuleAssociation].
+func (mdcra *MonitorDataCollectionRuleAssociation) LifecycleManagement() *terra.Lifecycle {
+	return mdcra.Lifecycle
+}
+
+// Attributes returns the attributes for [MonitorDataCollectionRuleAssociation].
 func (mdcra *MonitorDataCollectionRuleAssociation) Attributes() monitorDataCollectionRuleAssociationAttributes {
 	return monitorDataCollectionRuleAssociationAttributes{ref: terra.ReferenceResource(mdcra)}
 }
 
+// ImportState imports the given attribute values into [MonitorDataCollectionRuleAssociation]'s state.
 func (mdcra *MonitorDataCollectionRuleAssociation) ImportState(av io.Reader) error {
 	mdcra.state = &monitorDataCollectionRuleAssociationState{}
 	if err := json.NewDecoder(av).Decode(mdcra.state); err != nil {
@@ -49,10 +73,12 @@ func (mdcra *MonitorDataCollectionRuleAssociation) ImportState(av io.Reader) err
 	return nil
 }
 
+// State returns the state and a bool indicating if [MonitorDataCollectionRuleAssociation] has state.
 func (mdcra *MonitorDataCollectionRuleAssociation) State() (*monitorDataCollectionRuleAssociationState, bool) {
 	return mdcra.state, mdcra.state != nil
 }
 
+// StateMust returns the state for [MonitorDataCollectionRuleAssociation]. Panics if the state is nil.
 func (mdcra *MonitorDataCollectionRuleAssociation) StateMust() *monitorDataCollectionRuleAssociationState {
 	if mdcra.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mdcra.Type(), mdcra.LocalName()))
@@ -60,10 +86,7 @@ func (mdcra *MonitorDataCollectionRuleAssociation) StateMust() *monitorDataColle
 	return mdcra.state
 }
 
-func (mdcra *MonitorDataCollectionRuleAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(mdcra)
-}
-
+// MonitorDataCollectionRuleAssociationArgs contains the configurations for azurerm_monitor_data_collection_rule_association.
 type MonitorDataCollectionRuleAssociationArgs struct {
 	// DataCollectionEndpointId: string, optional
 	DataCollectionEndpointId terra.StringValue `hcl:"data_collection_endpoint_id,attr"`
@@ -79,39 +102,43 @@ type MonitorDataCollectionRuleAssociationArgs struct {
 	TargetResourceId terra.StringValue `hcl:"target_resource_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *monitordatacollectionruleassociation.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MonitorDataCollectionRuleAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type monitorDataCollectionRuleAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// DataCollectionEndpointId returns a reference to field data_collection_endpoint_id of azurerm_monitor_data_collection_rule_association.
 func (mdcra monitorDataCollectionRuleAssociationAttributes) DataCollectionEndpointId() terra.StringValue {
-	return terra.ReferenceString(mdcra.ref.Append("data_collection_endpoint_id"))
+	return terra.ReferenceAsString(mdcra.ref.Append("data_collection_endpoint_id"))
 }
 
+// DataCollectionRuleId returns a reference to field data_collection_rule_id of azurerm_monitor_data_collection_rule_association.
 func (mdcra monitorDataCollectionRuleAssociationAttributes) DataCollectionRuleId() terra.StringValue {
-	return terra.ReferenceString(mdcra.ref.Append("data_collection_rule_id"))
+	return terra.ReferenceAsString(mdcra.ref.Append("data_collection_rule_id"))
 }
 
+// Description returns a reference to field description of azurerm_monitor_data_collection_rule_association.
 func (mdcra monitorDataCollectionRuleAssociationAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(mdcra.ref.Append("description"))
+	return terra.ReferenceAsString(mdcra.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_monitor_data_collection_rule_association.
 func (mdcra monitorDataCollectionRuleAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mdcra.ref.Append("id"))
+	return terra.ReferenceAsString(mdcra.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_monitor_data_collection_rule_association.
 func (mdcra monitorDataCollectionRuleAssociationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mdcra.ref.Append("name"))
+	return terra.ReferenceAsString(mdcra.ref.Append("name"))
 }
 
+// TargetResourceId returns a reference to field target_resource_id of azurerm_monitor_data_collection_rule_association.
 func (mdcra monitorDataCollectionRuleAssociationAttributes) TargetResourceId() terra.StringValue {
-	return terra.ReferenceString(mdcra.ref.Append("target_resource_id"))
+	return terra.ReferenceAsString(mdcra.ref.Append("target_resource_id"))
 }
 
 func (mdcra monitorDataCollectionRuleAssociationAttributes) Timeouts() monitordatacollectionruleassociation.TimeoutsAttributes {
-	return terra.ReferenceSingle[monitordatacollectionruleassociation.TimeoutsAttributes](mdcra.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[monitordatacollectionruleassociation.TimeoutsAttributes](mdcra.ref.Append("timeouts"))
 }
 
 type monitorDataCollectionRuleAssociationState struct {

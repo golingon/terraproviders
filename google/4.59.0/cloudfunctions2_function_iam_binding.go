@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCloudfunctions2FunctionIamBinding creates a new instance of [Cloudfunctions2FunctionIamBinding].
 func NewCloudfunctions2FunctionIamBinding(name string, args Cloudfunctions2FunctionIamBindingArgs) *Cloudfunctions2FunctionIamBinding {
 	return &Cloudfunctions2FunctionIamBinding{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCloudfunctions2FunctionIamBinding(name string, args Cloudfunctions2Funct
 
 var _ terra.Resource = (*Cloudfunctions2FunctionIamBinding)(nil)
 
+// Cloudfunctions2FunctionIamBinding represents the Terraform resource google_cloudfunctions2_function_iam_binding.
 type Cloudfunctions2FunctionIamBinding struct {
-	Name  string
-	Args  Cloudfunctions2FunctionIamBindingArgs
-	state *cloudfunctions2FunctionIamBindingState
+	Name      string
+	Args      Cloudfunctions2FunctionIamBindingArgs
+	state     *cloudfunctions2FunctionIamBindingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Cloudfunctions2FunctionIamBinding].
 func (cfib *Cloudfunctions2FunctionIamBinding) Type() string {
 	return "google_cloudfunctions2_function_iam_binding"
 }
 
+// LocalName returns the local name for [Cloudfunctions2FunctionIamBinding].
 func (cfib *Cloudfunctions2FunctionIamBinding) LocalName() string {
 	return cfib.Name
 }
 
+// Configuration returns the configuration (args) for [Cloudfunctions2FunctionIamBinding].
 func (cfib *Cloudfunctions2FunctionIamBinding) Configuration() interface{} {
 	return cfib.Args
 }
 
+// DependOn is used for other resources to depend on [Cloudfunctions2FunctionIamBinding].
+func (cfib *Cloudfunctions2FunctionIamBinding) DependOn() terra.Reference {
+	return terra.ReferenceResource(cfib)
+}
+
+// Dependencies returns the list of resources [Cloudfunctions2FunctionIamBinding] depends_on.
+func (cfib *Cloudfunctions2FunctionIamBinding) Dependencies() terra.Dependencies {
+	return cfib.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Cloudfunctions2FunctionIamBinding].
+func (cfib *Cloudfunctions2FunctionIamBinding) LifecycleManagement() *terra.Lifecycle {
+	return cfib.Lifecycle
+}
+
+// Attributes returns the attributes for [Cloudfunctions2FunctionIamBinding].
 func (cfib *Cloudfunctions2FunctionIamBinding) Attributes() cloudfunctions2FunctionIamBindingAttributes {
 	return cloudfunctions2FunctionIamBindingAttributes{ref: terra.ReferenceResource(cfib)}
 }
 
+// ImportState imports the given attribute values into [Cloudfunctions2FunctionIamBinding]'s state.
 func (cfib *Cloudfunctions2FunctionIamBinding) ImportState(av io.Reader) error {
 	cfib.state = &cloudfunctions2FunctionIamBindingState{}
 	if err := json.NewDecoder(av).Decode(cfib.state); err != nil {
@@ -49,10 +73,12 @@ func (cfib *Cloudfunctions2FunctionIamBinding) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Cloudfunctions2FunctionIamBinding] has state.
 func (cfib *Cloudfunctions2FunctionIamBinding) State() (*cloudfunctions2FunctionIamBindingState, bool) {
 	return cfib.state, cfib.state != nil
 }
 
+// StateMust returns the state for [Cloudfunctions2FunctionIamBinding]. Panics if the state is nil.
 func (cfib *Cloudfunctions2FunctionIamBinding) StateMust() *cloudfunctions2FunctionIamBindingState {
 	if cfib.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cfib.Type(), cfib.LocalName()))
@@ -60,10 +86,7 @@ func (cfib *Cloudfunctions2FunctionIamBinding) StateMust() *cloudfunctions2Funct
 	return cfib.state
 }
 
-func (cfib *Cloudfunctions2FunctionIamBinding) DependOn() terra.Reference {
-	return terra.ReferenceResource(cfib)
-}
-
+// Cloudfunctions2FunctionIamBindingArgs contains the configurations for google_cloudfunctions2_function_iam_binding.
 type Cloudfunctions2FunctionIamBindingArgs struct {
 	// CloudFunction: string, required
 	CloudFunction terra.StringValue `hcl:"cloud_function,attr" validate:"required"`
@@ -79,43 +102,48 @@ type Cloudfunctions2FunctionIamBindingArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *cloudfunctions2functioniambinding.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that Cloudfunctions2FunctionIamBinding depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudfunctions2FunctionIamBindingAttributes struct {
 	ref terra.Reference
 }
 
+// CloudFunction returns a reference to field cloud_function of google_cloudfunctions2_function_iam_binding.
 func (cfib cloudfunctions2FunctionIamBindingAttributes) CloudFunction() terra.StringValue {
-	return terra.ReferenceString(cfib.ref.Append("cloud_function"))
+	return terra.ReferenceAsString(cfib.ref.Append("cloud_function"))
 }
 
+// Etag returns a reference to field etag of google_cloudfunctions2_function_iam_binding.
 func (cfib cloudfunctions2FunctionIamBindingAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(cfib.ref.Append("etag"))
+	return terra.ReferenceAsString(cfib.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_cloudfunctions2_function_iam_binding.
 func (cfib cloudfunctions2FunctionIamBindingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cfib.ref.Append("id"))
+	return terra.ReferenceAsString(cfib.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_cloudfunctions2_function_iam_binding.
 func (cfib cloudfunctions2FunctionIamBindingAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(cfib.ref.Append("location"))
+	return terra.ReferenceAsString(cfib.ref.Append("location"))
 }
 
+// Members returns a reference to field members of google_cloudfunctions2_function_iam_binding.
 func (cfib cloudfunctions2FunctionIamBindingAttributes) Members() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cfib.ref.Append("members"))
+	return terra.ReferenceAsSet[terra.StringValue](cfib.ref.Append("members"))
 }
 
+// Project returns a reference to field project of google_cloudfunctions2_function_iam_binding.
 func (cfib cloudfunctions2FunctionIamBindingAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cfib.ref.Append("project"))
+	return terra.ReferenceAsString(cfib.ref.Append("project"))
 }
 
+// Role returns a reference to field role of google_cloudfunctions2_function_iam_binding.
 func (cfib cloudfunctions2FunctionIamBindingAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(cfib.ref.Append("role"))
+	return terra.ReferenceAsString(cfib.ref.Append("role"))
 }
 
 func (cfib cloudfunctions2FunctionIamBindingAttributes) Condition() terra.ListValue[cloudfunctions2functioniambinding.ConditionAttributes] {
-	return terra.ReferenceList[cloudfunctions2functioniambinding.ConditionAttributes](cfib.ref.Append("condition"))
+	return terra.ReferenceAsList[cloudfunctions2functioniambinding.ConditionAttributes](cfib.ref.Append("condition"))
 }
 
 type cloudfunctions2FunctionIamBindingState struct {

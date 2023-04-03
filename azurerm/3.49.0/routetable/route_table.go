@@ -33,64 +33,64 @@ type RouteAttributes struct {
 	ref terra.Reference
 }
 
-func (r RouteAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RouteAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RouteAttributes) InternalWithRef(ref terra.Reference) RouteAttributes {
 	return RouteAttributes{ref: ref}
 }
 
-func (r RouteAttributes) InternalTokens() hclwrite.Tokens {
+func (r RouteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RouteAttributes) AddressPrefix() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("address_prefix"))
+	return terra.ReferenceAsString(r.ref.Append("address_prefix"))
 }
 
 func (r RouteAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("name"))
+	return terra.ReferenceAsString(r.ref.Append("name"))
 }
 
 func (r RouteAttributes) NextHopInIpAddress() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("next_hop_in_ip_address"))
+	return terra.ReferenceAsString(r.ref.Append("next_hop_in_ip_address"))
 }
 
 func (r RouteAttributes) NextHopType() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("next_hop_type"))
+	return terra.ReferenceAsString(r.ref.Append("next_hop_type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type RouteState struct {

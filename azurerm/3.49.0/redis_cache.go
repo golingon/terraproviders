@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewRedisCache creates a new instance of [RedisCache].
 func NewRedisCache(name string, args RedisCacheArgs) *RedisCache {
 	return &RedisCache{
 		Args: args,
@@ -19,28 +20,51 @@ func NewRedisCache(name string, args RedisCacheArgs) *RedisCache {
 
 var _ terra.Resource = (*RedisCache)(nil)
 
+// RedisCache represents the Terraform resource azurerm_redis_cache.
 type RedisCache struct {
-	Name  string
-	Args  RedisCacheArgs
-	state *redisCacheState
+	Name      string
+	Args      RedisCacheArgs
+	state     *redisCacheState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RedisCache].
 func (rc *RedisCache) Type() string {
 	return "azurerm_redis_cache"
 }
 
+// LocalName returns the local name for [RedisCache].
 func (rc *RedisCache) LocalName() string {
 	return rc.Name
 }
 
+// Configuration returns the configuration (args) for [RedisCache].
 func (rc *RedisCache) Configuration() interface{} {
 	return rc.Args
 }
 
+// DependOn is used for other resources to depend on [RedisCache].
+func (rc *RedisCache) DependOn() terra.Reference {
+	return terra.ReferenceResource(rc)
+}
+
+// Dependencies returns the list of resources [RedisCache] depends_on.
+func (rc *RedisCache) Dependencies() terra.Dependencies {
+	return rc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RedisCache].
+func (rc *RedisCache) LifecycleManagement() *terra.Lifecycle {
+	return rc.Lifecycle
+}
+
+// Attributes returns the attributes for [RedisCache].
 func (rc *RedisCache) Attributes() redisCacheAttributes {
 	return redisCacheAttributes{ref: terra.ReferenceResource(rc)}
 }
 
+// ImportState imports the given attribute values into [RedisCache]'s state.
 func (rc *RedisCache) ImportState(av io.Reader) error {
 	rc.state = &redisCacheState{}
 	if err := json.NewDecoder(av).Decode(rc.state); err != nil {
@@ -49,10 +73,12 @@ func (rc *RedisCache) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RedisCache] has state.
 func (rc *RedisCache) State() (*redisCacheState, bool) {
 	return rc.state, rc.state != nil
 }
 
+// StateMust returns the state for [RedisCache]. Panics if the state is nil.
 func (rc *RedisCache) StateMust() *redisCacheState {
 	if rc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rc.Type(), rc.LocalName()))
@@ -60,10 +86,7 @@ func (rc *RedisCache) StateMust() *redisCacheState {
 	return rc.state
 }
 
-func (rc *RedisCache) DependOn() terra.Reference {
-	return terra.ReferenceResource(rc)
-}
-
+// RedisCacheArgs contains the configurations for azurerm_redis_cache.
 type RedisCacheArgs struct {
 	// Capacity: number, required
 	Capacity terra.NumberValue `hcl:"capacity,attr" validate:"required"`
@@ -111,131 +134,155 @@ type RedisCacheArgs struct {
 	RedisConfiguration *rediscache.RedisConfiguration `hcl:"redis_configuration,block"`
 	// Timeouts: optional
 	Timeouts *rediscache.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that RedisCache depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type redisCacheAttributes struct {
 	ref terra.Reference
 }
 
+// Capacity returns a reference to field capacity of azurerm_redis_cache.
 func (rc redisCacheAttributes) Capacity() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("capacity"))
+	return terra.ReferenceAsNumber(rc.ref.Append("capacity"))
 }
 
+// EnableNonSslPort returns a reference to field enable_non_ssl_port of azurerm_redis_cache.
 func (rc redisCacheAttributes) EnableNonSslPort() terra.BoolValue {
-	return terra.ReferenceBool(rc.ref.Append("enable_non_ssl_port"))
+	return terra.ReferenceAsBool(rc.ref.Append("enable_non_ssl_port"))
 }
 
+// Family returns a reference to field family of azurerm_redis_cache.
 func (rc redisCacheAttributes) Family() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("family"))
+	return terra.ReferenceAsString(rc.ref.Append("family"))
 }
 
+// Hostname returns a reference to field hostname of azurerm_redis_cache.
 func (rc redisCacheAttributes) Hostname() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("hostname"))
+	return terra.ReferenceAsString(rc.ref.Append("hostname"))
 }
 
+// Id returns a reference to field id of azurerm_redis_cache.
 func (rc redisCacheAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("id"))
+	return terra.ReferenceAsString(rc.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_redis_cache.
 func (rc redisCacheAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("location"))
+	return terra.ReferenceAsString(rc.ref.Append("location"))
 }
 
+// MinimumTlsVersion returns a reference to field minimum_tls_version of azurerm_redis_cache.
 func (rc redisCacheAttributes) MinimumTlsVersion() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("minimum_tls_version"))
+	return terra.ReferenceAsString(rc.ref.Append("minimum_tls_version"))
 }
 
+// Name returns a reference to field name of azurerm_redis_cache.
 func (rc redisCacheAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("name"))
+	return terra.ReferenceAsString(rc.ref.Append("name"))
 }
 
+// Port returns a reference to field port of azurerm_redis_cache.
 func (rc redisCacheAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("port"))
+	return terra.ReferenceAsNumber(rc.ref.Append("port"))
 }
 
+// PrimaryAccessKey returns a reference to field primary_access_key of azurerm_redis_cache.
 func (rc redisCacheAttributes) PrimaryAccessKey() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("primary_access_key"))
+	return terra.ReferenceAsString(rc.ref.Append("primary_access_key"))
 }
 
+// PrimaryConnectionString returns a reference to field primary_connection_string of azurerm_redis_cache.
 func (rc redisCacheAttributes) PrimaryConnectionString() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("primary_connection_string"))
+	return terra.ReferenceAsString(rc.ref.Append("primary_connection_string"))
 }
 
+// PrivateStaticIpAddress returns a reference to field private_static_ip_address of azurerm_redis_cache.
 func (rc redisCacheAttributes) PrivateStaticIpAddress() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("private_static_ip_address"))
+	return terra.ReferenceAsString(rc.ref.Append("private_static_ip_address"))
 }
 
+// PublicNetworkAccessEnabled returns a reference to field public_network_access_enabled of azurerm_redis_cache.
 func (rc redisCacheAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(rc.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(rc.ref.Append("public_network_access_enabled"))
 }
 
+// RedisVersion returns a reference to field redis_version of azurerm_redis_cache.
 func (rc redisCacheAttributes) RedisVersion() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("redis_version"))
+	return terra.ReferenceAsString(rc.ref.Append("redis_version"))
 }
 
+// ReplicasPerMaster returns a reference to field replicas_per_master of azurerm_redis_cache.
 func (rc redisCacheAttributes) ReplicasPerMaster() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("replicas_per_master"))
+	return terra.ReferenceAsNumber(rc.ref.Append("replicas_per_master"))
 }
 
+// ReplicasPerPrimary returns a reference to field replicas_per_primary of azurerm_redis_cache.
 func (rc redisCacheAttributes) ReplicasPerPrimary() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("replicas_per_primary"))
+	return terra.ReferenceAsNumber(rc.ref.Append("replicas_per_primary"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_redis_cache.
 func (rc redisCacheAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(rc.ref.Append("resource_group_name"))
 }
 
+// SecondaryAccessKey returns a reference to field secondary_access_key of azurerm_redis_cache.
 func (rc redisCacheAttributes) SecondaryAccessKey() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("secondary_access_key"))
+	return terra.ReferenceAsString(rc.ref.Append("secondary_access_key"))
 }
 
+// SecondaryConnectionString returns a reference to field secondary_connection_string of azurerm_redis_cache.
 func (rc redisCacheAttributes) SecondaryConnectionString() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("secondary_connection_string"))
+	return terra.ReferenceAsString(rc.ref.Append("secondary_connection_string"))
 }
 
+// ShardCount returns a reference to field shard_count of azurerm_redis_cache.
 func (rc redisCacheAttributes) ShardCount() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("shard_count"))
+	return terra.ReferenceAsNumber(rc.ref.Append("shard_count"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_redis_cache.
 func (rc redisCacheAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("sku_name"))
+	return terra.ReferenceAsString(rc.ref.Append("sku_name"))
 }
 
+// SslPort returns a reference to field ssl_port of azurerm_redis_cache.
 func (rc redisCacheAttributes) SslPort() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("ssl_port"))
+	return terra.ReferenceAsNumber(rc.ref.Append("ssl_port"))
 }
 
+// SubnetId returns a reference to field subnet_id of azurerm_redis_cache.
 func (rc redisCacheAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(rc.ref.Append("subnet_id"))
 }
 
+// Tags returns a reference to field tags of azurerm_redis_cache.
 func (rc redisCacheAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](rc.ref.Append("tags"))
 }
 
+// TenantSettings returns a reference to field tenant_settings of azurerm_redis_cache.
 func (rc redisCacheAttributes) TenantSettings() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rc.ref.Append("tenant_settings"))
+	return terra.ReferenceAsMap[terra.StringValue](rc.ref.Append("tenant_settings"))
 }
 
+// Zones returns a reference to field zones of azurerm_redis_cache.
 func (rc redisCacheAttributes) Zones() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rc.ref.Append("zones"))
+	return terra.ReferenceAsSet[terra.StringValue](rc.ref.Append("zones"))
 }
 
 func (rc redisCacheAttributes) Identity() terra.ListValue[rediscache.IdentityAttributes] {
-	return terra.ReferenceList[rediscache.IdentityAttributes](rc.ref.Append("identity"))
+	return terra.ReferenceAsList[rediscache.IdentityAttributes](rc.ref.Append("identity"))
 }
 
 func (rc redisCacheAttributes) PatchSchedule() terra.ListValue[rediscache.PatchScheduleAttributes] {
-	return terra.ReferenceList[rediscache.PatchScheduleAttributes](rc.ref.Append("patch_schedule"))
+	return terra.ReferenceAsList[rediscache.PatchScheduleAttributes](rc.ref.Append("patch_schedule"))
 }
 
 func (rc redisCacheAttributes) RedisConfiguration() terra.ListValue[rediscache.RedisConfigurationAttributes] {
-	return terra.ReferenceList[rediscache.RedisConfigurationAttributes](rc.ref.Append("redis_configuration"))
+	return terra.ReferenceAsList[rediscache.RedisConfigurationAttributes](rc.ref.Append("redis_configuration"))
 }
 
 func (rc redisCacheAttributes) Timeouts() rediscache.TimeoutsAttributes {
-	return terra.ReferenceSingle[rediscache.TimeoutsAttributes](rc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[rediscache.TimeoutsAttributes](rc.ref.Append("timeouts"))
 }
 
 type redisCacheState struct {

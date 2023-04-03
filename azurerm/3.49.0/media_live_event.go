@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMediaLiveEvent creates a new instance of [MediaLiveEvent].
 func NewMediaLiveEvent(name string, args MediaLiveEventArgs) *MediaLiveEvent {
 	return &MediaLiveEvent{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMediaLiveEvent(name string, args MediaLiveEventArgs) *MediaLiveEvent {
 
 var _ terra.Resource = (*MediaLiveEvent)(nil)
 
+// MediaLiveEvent represents the Terraform resource azurerm_media_live_event.
 type MediaLiveEvent struct {
-	Name  string
-	Args  MediaLiveEventArgs
-	state *mediaLiveEventState
+	Name      string
+	Args      MediaLiveEventArgs
+	state     *mediaLiveEventState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MediaLiveEvent].
 func (mle *MediaLiveEvent) Type() string {
 	return "azurerm_media_live_event"
 }
 
+// LocalName returns the local name for [MediaLiveEvent].
 func (mle *MediaLiveEvent) LocalName() string {
 	return mle.Name
 }
 
+// Configuration returns the configuration (args) for [MediaLiveEvent].
 func (mle *MediaLiveEvent) Configuration() interface{} {
 	return mle.Args
 }
 
+// DependOn is used for other resources to depend on [MediaLiveEvent].
+func (mle *MediaLiveEvent) DependOn() terra.Reference {
+	return terra.ReferenceResource(mle)
+}
+
+// Dependencies returns the list of resources [MediaLiveEvent] depends_on.
+func (mle *MediaLiveEvent) Dependencies() terra.Dependencies {
+	return mle.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MediaLiveEvent].
+func (mle *MediaLiveEvent) LifecycleManagement() *terra.Lifecycle {
+	return mle.Lifecycle
+}
+
+// Attributes returns the attributes for [MediaLiveEvent].
 func (mle *MediaLiveEvent) Attributes() mediaLiveEventAttributes {
 	return mediaLiveEventAttributes{ref: terra.ReferenceResource(mle)}
 }
 
+// ImportState imports the given attribute values into [MediaLiveEvent]'s state.
 func (mle *MediaLiveEvent) ImportState(av io.Reader) error {
 	mle.state = &mediaLiveEventState{}
 	if err := json.NewDecoder(av).Decode(mle.state); err != nil {
@@ -49,10 +73,12 @@ func (mle *MediaLiveEvent) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MediaLiveEvent] has state.
 func (mle *MediaLiveEvent) State() (*mediaLiveEventState, bool) {
 	return mle.state, mle.state != nil
 }
 
+// StateMust returns the state for [MediaLiveEvent]. Panics if the state is nil.
 func (mle *MediaLiveEvent) StateMust() *mediaLiveEventState {
 	if mle.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mle.Type(), mle.LocalName()))
@@ -60,10 +86,7 @@ func (mle *MediaLiveEvent) StateMust() *mediaLiveEventState {
 	return mle.state
 }
 
-func (mle *MediaLiveEvent) DependOn() terra.Reference {
-	return terra.ReferenceResource(mle)
-}
-
+// MediaLiveEventArgs contains the configurations for azurerm_media_live_event.
 type MediaLiveEventArgs struct {
 	// AutoStartEnabled: bool, optional
 	AutoStartEnabled terra.BoolValue `hcl:"auto_start_enabled,attr"`
@@ -99,79 +122,89 @@ type MediaLiveEventArgs struct {
 	Preview *medialiveevent.Preview `hcl:"preview,block"`
 	// Timeouts: optional
 	Timeouts *medialiveevent.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MediaLiveEvent depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mediaLiveEventAttributes struct {
 	ref terra.Reference
 }
 
+// AutoStartEnabled returns a reference to field auto_start_enabled of azurerm_media_live_event.
 func (mle mediaLiveEventAttributes) AutoStartEnabled() terra.BoolValue {
-	return terra.ReferenceBool(mle.ref.Append("auto_start_enabled"))
+	return terra.ReferenceAsBool(mle.ref.Append("auto_start_enabled"))
 }
 
+// Description returns a reference to field description of azurerm_media_live_event.
 func (mle mediaLiveEventAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(mle.ref.Append("description"))
+	return terra.ReferenceAsString(mle.ref.Append("description"))
 }
 
+// HostnamePrefix returns a reference to field hostname_prefix of azurerm_media_live_event.
 func (mle mediaLiveEventAttributes) HostnamePrefix() terra.StringValue {
-	return terra.ReferenceString(mle.ref.Append("hostname_prefix"))
+	return terra.ReferenceAsString(mle.ref.Append("hostname_prefix"))
 }
 
+// Id returns a reference to field id of azurerm_media_live_event.
 func (mle mediaLiveEventAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mle.ref.Append("id"))
+	return terra.ReferenceAsString(mle.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_media_live_event.
 func (mle mediaLiveEventAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(mle.ref.Append("location"))
+	return terra.ReferenceAsString(mle.ref.Append("location"))
 }
 
+// MediaServicesAccountName returns a reference to field media_services_account_name of azurerm_media_live_event.
 func (mle mediaLiveEventAttributes) MediaServicesAccountName() terra.StringValue {
-	return terra.ReferenceString(mle.ref.Append("media_services_account_name"))
+	return terra.ReferenceAsString(mle.ref.Append("media_services_account_name"))
 }
 
+// Name returns a reference to field name of azurerm_media_live_event.
 func (mle mediaLiveEventAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mle.ref.Append("name"))
+	return terra.ReferenceAsString(mle.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_media_live_event.
 func (mle mediaLiveEventAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(mle.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(mle.ref.Append("resource_group_name"))
 }
 
+// StreamOptions returns a reference to field stream_options of azurerm_media_live_event.
 func (mle mediaLiveEventAttributes) StreamOptions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](mle.ref.Append("stream_options"))
+	return terra.ReferenceAsList[terra.StringValue](mle.ref.Append("stream_options"))
 }
 
+// Tags returns a reference to field tags of azurerm_media_live_event.
 func (mle mediaLiveEventAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mle.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mle.ref.Append("tags"))
 }
 
+// TranscriptionLanguages returns a reference to field transcription_languages of azurerm_media_live_event.
 func (mle mediaLiveEventAttributes) TranscriptionLanguages() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](mle.ref.Append("transcription_languages"))
+	return terra.ReferenceAsList[terra.StringValue](mle.ref.Append("transcription_languages"))
 }
 
+// UseStaticHostname returns a reference to field use_static_hostname of azurerm_media_live_event.
 func (mle mediaLiveEventAttributes) UseStaticHostname() terra.BoolValue {
-	return terra.ReferenceBool(mle.ref.Append("use_static_hostname"))
+	return terra.ReferenceAsBool(mle.ref.Append("use_static_hostname"))
 }
 
 func (mle mediaLiveEventAttributes) CrossSiteAccessPolicy() terra.ListValue[medialiveevent.CrossSiteAccessPolicyAttributes] {
-	return terra.ReferenceList[medialiveevent.CrossSiteAccessPolicyAttributes](mle.ref.Append("cross_site_access_policy"))
+	return terra.ReferenceAsList[medialiveevent.CrossSiteAccessPolicyAttributes](mle.ref.Append("cross_site_access_policy"))
 }
 
 func (mle mediaLiveEventAttributes) Encoding() terra.ListValue[medialiveevent.EncodingAttributes] {
-	return terra.ReferenceList[medialiveevent.EncodingAttributes](mle.ref.Append("encoding"))
+	return terra.ReferenceAsList[medialiveevent.EncodingAttributes](mle.ref.Append("encoding"))
 }
 
 func (mle mediaLiveEventAttributes) Input() terra.ListValue[medialiveevent.InputAttributes] {
-	return terra.ReferenceList[medialiveevent.InputAttributes](mle.ref.Append("input"))
+	return terra.ReferenceAsList[medialiveevent.InputAttributes](mle.ref.Append("input"))
 }
 
 func (mle mediaLiveEventAttributes) Preview() terra.ListValue[medialiveevent.PreviewAttributes] {
-	return terra.ReferenceList[medialiveevent.PreviewAttributes](mle.ref.Append("preview"))
+	return terra.ReferenceAsList[medialiveevent.PreviewAttributes](mle.ref.Append("preview"))
 }
 
 func (mle mediaLiveEventAttributes) Timeouts() medialiveevent.TimeoutsAttributes {
-	return terra.ReferenceSingle[medialiveevent.TimeoutsAttributes](mle.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[medialiveevent.TimeoutsAttributes](mle.ref.Append("timeouts"))
 }
 
 type mediaLiveEventState struct {

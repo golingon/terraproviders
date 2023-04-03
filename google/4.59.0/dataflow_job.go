@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataflowJob creates a new instance of [DataflowJob].
 func NewDataflowJob(name string, args DataflowJobArgs) *DataflowJob {
 	return &DataflowJob{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataflowJob(name string, args DataflowJobArgs) *DataflowJob {
 
 var _ terra.Resource = (*DataflowJob)(nil)
 
+// DataflowJob represents the Terraform resource google_dataflow_job.
 type DataflowJob struct {
-	Name  string
-	Args  DataflowJobArgs
-	state *dataflowJobState
+	Name      string
+	Args      DataflowJobArgs
+	state     *dataflowJobState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataflowJob].
 func (dj *DataflowJob) Type() string {
 	return "google_dataflow_job"
 }
 
+// LocalName returns the local name for [DataflowJob].
 func (dj *DataflowJob) LocalName() string {
 	return dj.Name
 }
 
+// Configuration returns the configuration (args) for [DataflowJob].
 func (dj *DataflowJob) Configuration() interface{} {
 	return dj.Args
 }
 
+// DependOn is used for other resources to depend on [DataflowJob].
+func (dj *DataflowJob) DependOn() terra.Reference {
+	return terra.ReferenceResource(dj)
+}
+
+// Dependencies returns the list of resources [DataflowJob] depends_on.
+func (dj *DataflowJob) Dependencies() terra.Dependencies {
+	return dj.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataflowJob].
+func (dj *DataflowJob) LifecycleManagement() *terra.Lifecycle {
+	return dj.Lifecycle
+}
+
+// Attributes returns the attributes for [DataflowJob].
 func (dj *DataflowJob) Attributes() dataflowJobAttributes {
 	return dataflowJobAttributes{ref: terra.ReferenceResource(dj)}
 }
 
+// ImportState imports the given attribute values into [DataflowJob]'s state.
 func (dj *DataflowJob) ImportState(av io.Reader) error {
 	dj.state = &dataflowJobState{}
 	if err := json.NewDecoder(av).Decode(dj.state); err != nil {
@@ -49,10 +73,12 @@ func (dj *DataflowJob) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataflowJob] has state.
 func (dj *DataflowJob) State() (*dataflowJobState, bool) {
 	return dj.state, dj.state != nil
 }
 
+// StateMust returns the state for [DataflowJob]. Panics if the state is nil.
 func (dj *DataflowJob) StateMust() *dataflowJobState {
 	if dj.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dj.Type(), dj.LocalName()))
@@ -60,10 +86,7 @@ func (dj *DataflowJob) StateMust() *dataflowJobState {
 	return dj.state
 }
 
-func (dj *DataflowJob) DependOn() terra.Reference {
-	return terra.ReferenceResource(dj)
-}
-
+// DataflowJobArgs contains the configurations for google_dataflow_job.
 type DataflowJobArgs struct {
 	// AdditionalExperiments: set of string, optional
 	AdditionalExperiments terra.SetValue[terra.StringValue] `hcl:"additional_experiments,attr"`
@@ -109,111 +132,133 @@ type DataflowJobArgs struct {
 	Zone terra.StringValue `hcl:"zone,attr"`
 	// Timeouts: optional
 	Timeouts *dataflowjob.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataflowJob depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataflowJobAttributes struct {
 	ref terra.Reference
 }
 
+// AdditionalExperiments returns a reference to field additional_experiments of google_dataflow_job.
 func (dj dataflowJobAttributes) AdditionalExperiments() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dj.ref.Append("additional_experiments"))
+	return terra.ReferenceAsSet[terra.StringValue](dj.ref.Append("additional_experiments"))
 }
 
+// EnableStreamingEngine returns a reference to field enable_streaming_engine of google_dataflow_job.
 func (dj dataflowJobAttributes) EnableStreamingEngine() terra.BoolValue {
-	return terra.ReferenceBool(dj.ref.Append("enable_streaming_engine"))
+	return terra.ReferenceAsBool(dj.ref.Append("enable_streaming_engine"))
 }
 
+// Id returns a reference to field id of google_dataflow_job.
 func (dj dataflowJobAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dj.ref.Append("id"))
+	return terra.ReferenceAsString(dj.ref.Append("id"))
 }
 
+// IpConfiguration returns a reference to field ip_configuration of google_dataflow_job.
 func (dj dataflowJobAttributes) IpConfiguration() terra.StringValue {
-	return terra.ReferenceString(dj.ref.Append("ip_configuration"))
+	return terra.ReferenceAsString(dj.ref.Append("ip_configuration"))
 }
 
+// JobId returns a reference to field job_id of google_dataflow_job.
 func (dj dataflowJobAttributes) JobId() terra.StringValue {
-	return terra.ReferenceString(dj.ref.Append("job_id"))
+	return terra.ReferenceAsString(dj.ref.Append("job_id"))
 }
 
+// KmsKeyName returns a reference to field kms_key_name of google_dataflow_job.
 func (dj dataflowJobAttributes) KmsKeyName() terra.StringValue {
-	return terra.ReferenceString(dj.ref.Append("kms_key_name"))
+	return terra.ReferenceAsString(dj.ref.Append("kms_key_name"))
 }
 
+// Labels returns a reference to field labels of google_dataflow_job.
 func (dj dataflowJobAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dj.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](dj.ref.Append("labels"))
 }
 
+// MachineType returns a reference to field machine_type of google_dataflow_job.
 func (dj dataflowJobAttributes) MachineType() terra.StringValue {
-	return terra.ReferenceString(dj.ref.Append("machine_type"))
+	return terra.ReferenceAsString(dj.ref.Append("machine_type"))
 }
 
+// MaxWorkers returns a reference to field max_workers of google_dataflow_job.
 func (dj dataflowJobAttributes) MaxWorkers() terra.NumberValue {
-	return terra.ReferenceNumber(dj.ref.Append("max_workers"))
+	return terra.ReferenceAsNumber(dj.ref.Append("max_workers"))
 }
 
+// Name returns a reference to field name of google_dataflow_job.
 func (dj dataflowJobAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dj.ref.Append("name"))
+	return terra.ReferenceAsString(dj.ref.Append("name"))
 }
 
+// Network returns a reference to field network of google_dataflow_job.
 func (dj dataflowJobAttributes) Network() terra.StringValue {
-	return terra.ReferenceString(dj.ref.Append("network"))
+	return terra.ReferenceAsString(dj.ref.Append("network"))
 }
 
+// OnDelete returns a reference to field on_delete of google_dataflow_job.
 func (dj dataflowJobAttributes) OnDelete() terra.StringValue {
-	return terra.ReferenceString(dj.ref.Append("on_delete"))
+	return terra.ReferenceAsString(dj.ref.Append("on_delete"))
 }
 
+// Parameters returns a reference to field parameters of google_dataflow_job.
 func (dj dataflowJobAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dj.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](dj.ref.Append("parameters"))
 }
 
+// Project returns a reference to field project of google_dataflow_job.
 func (dj dataflowJobAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(dj.ref.Append("project"))
+	return terra.ReferenceAsString(dj.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_dataflow_job.
 func (dj dataflowJobAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(dj.ref.Append("region"))
+	return terra.ReferenceAsString(dj.ref.Append("region"))
 }
 
+// ServiceAccountEmail returns a reference to field service_account_email of google_dataflow_job.
 func (dj dataflowJobAttributes) ServiceAccountEmail() terra.StringValue {
-	return terra.ReferenceString(dj.ref.Append("service_account_email"))
+	return terra.ReferenceAsString(dj.ref.Append("service_account_email"))
 }
 
+// SkipWaitOnJobTermination returns a reference to field skip_wait_on_job_termination of google_dataflow_job.
 func (dj dataflowJobAttributes) SkipWaitOnJobTermination() terra.BoolValue {
-	return terra.ReferenceBool(dj.ref.Append("skip_wait_on_job_termination"))
+	return terra.ReferenceAsBool(dj.ref.Append("skip_wait_on_job_termination"))
 }
 
+// State returns a reference to field state of google_dataflow_job.
 func (dj dataflowJobAttributes) State() terra.StringValue {
-	return terra.ReferenceString(dj.ref.Append("state"))
+	return terra.ReferenceAsString(dj.ref.Append("state"))
 }
 
+// Subnetwork returns a reference to field subnetwork of google_dataflow_job.
 func (dj dataflowJobAttributes) Subnetwork() terra.StringValue {
-	return terra.ReferenceString(dj.ref.Append("subnetwork"))
+	return terra.ReferenceAsString(dj.ref.Append("subnetwork"))
 }
 
+// TempGcsLocation returns a reference to field temp_gcs_location of google_dataflow_job.
 func (dj dataflowJobAttributes) TempGcsLocation() terra.StringValue {
-	return terra.ReferenceString(dj.ref.Append("temp_gcs_location"))
+	return terra.ReferenceAsString(dj.ref.Append("temp_gcs_location"))
 }
 
+// TemplateGcsPath returns a reference to field template_gcs_path of google_dataflow_job.
 func (dj dataflowJobAttributes) TemplateGcsPath() terra.StringValue {
-	return terra.ReferenceString(dj.ref.Append("template_gcs_path"))
+	return terra.ReferenceAsString(dj.ref.Append("template_gcs_path"))
 }
 
+// TransformNameMapping returns a reference to field transform_name_mapping of google_dataflow_job.
 func (dj dataflowJobAttributes) TransformNameMapping() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dj.ref.Append("transform_name_mapping"))
+	return terra.ReferenceAsMap[terra.StringValue](dj.ref.Append("transform_name_mapping"))
 }
 
+// Type returns a reference to field type of google_dataflow_job.
 func (dj dataflowJobAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(dj.ref.Append("type"))
+	return terra.ReferenceAsString(dj.ref.Append("type"))
 }
 
+// Zone returns a reference to field zone of google_dataflow_job.
 func (dj dataflowJobAttributes) Zone() terra.StringValue {
-	return terra.ReferenceString(dj.ref.Append("zone"))
+	return terra.ReferenceAsString(dj.ref.Append("zone"))
 }
 
 func (dj dataflowJobAttributes) Timeouts() dataflowjob.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataflowjob.TimeoutsAttributes](dj.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataflowjob.TimeoutsAttributes](dj.ref.Append("timeouts"))
 }
 
 type dataflowJobState struct {

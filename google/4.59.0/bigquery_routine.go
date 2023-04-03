@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBigqueryRoutine creates a new instance of [BigqueryRoutine].
 func NewBigqueryRoutine(name string, args BigqueryRoutineArgs) *BigqueryRoutine {
 	return &BigqueryRoutine{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBigqueryRoutine(name string, args BigqueryRoutineArgs) *BigqueryRoutine 
 
 var _ terra.Resource = (*BigqueryRoutine)(nil)
 
+// BigqueryRoutine represents the Terraform resource google_bigquery_routine.
 type BigqueryRoutine struct {
-	Name  string
-	Args  BigqueryRoutineArgs
-	state *bigqueryRoutineState
+	Name      string
+	Args      BigqueryRoutineArgs
+	state     *bigqueryRoutineState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BigqueryRoutine].
 func (br *BigqueryRoutine) Type() string {
 	return "google_bigquery_routine"
 }
 
+// LocalName returns the local name for [BigqueryRoutine].
 func (br *BigqueryRoutine) LocalName() string {
 	return br.Name
 }
 
+// Configuration returns the configuration (args) for [BigqueryRoutine].
 func (br *BigqueryRoutine) Configuration() interface{} {
 	return br.Args
 }
 
+// DependOn is used for other resources to depend on [BigqueryRoutine].
+func (br *BigqueryRoutine) DependOn() terra.Reference {
+	return terra.ReferenceResource(br)
+}
+
+// Dependencies returns the list of resources [BigqueryRoutine] depends_on.
+func (br *BigqueryRoutine) Dependencies() terra.Dependencies {
+	return br.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BigqueryRoutine].
+func (br *BigqueryRoutine) LifecycleManagement() *terra.Lifecycle {
+	return br.Lifecycle
+}
+
+// Attributes returns the attributes for [BigqueryRoutine].
 func (br *BigqueryRoutine) Attributes() bigqueryRoutineAttributes {
 	return bigqueryRoutineAttributes{ref: terra.ReferenceResource(br)}
 }
 
+// ImportState imports the given attribute values into [BigqueryRoutine]'s state.
 func (br *BigqueryRoutine) ImportState(av io.Reader) error {
 	br.state = &bigqueryRoutineState{}
 	if err := json.NewDecoder(av).Decode(br.state); err != nil {
@@ -49,10 +73,12 @@ func (br *BigqueryRoutine) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BigqueryRoutine] has state.
 func (br *BigqueryRoutine) State() (*bigqueryRoutineState, bool) {
 	return br.state, br.state != nil
 }
 
+// StateMust returns the state for [BigqueryRoutine]. Panics if the state is nil.
 func (br *BigqueryRoutine) StateMust() *bigqueryRoutineState {
 	if br.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", br.Type(), br.LocalName()))
@@ -60,10 +86,7 @@ func (br *BigqueryRoutine) StateMust() *bigqueryRoutineState {
 	return br.state
 }
 
-func (br *BigqueryRoutine) DependOn() terra.Reference {
-	return terra.ReferenceResource(br)
-}
-
+// BigqueryRoutineArgs contains the configurations for google_bigquery_routine.
 type BigqueryRoutineArgs struct {
 	// DatasetId: string, required
 	DatasetId terra.StringValue `hcl:"dataset_id,attr" validate:"required"`
@@ -93,75 +116,87 @@ type BigqueryRoutineArgs struct {
 	Arguments []bigqueryroutine.Arguments `hcl:"arguments,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *bigqueryroutine.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that BigqueryRoutine depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type bigqueryRoutineAttributes struct {
 	ref terra.Reference
 }
 
+// CreationTime returns a reference to field creation_time of google_bigquery_routine.
 func (br bigqueryRoutineAttributes) CreationTime() terra.NumberValue {
-	return terra.ReferenceNumber(br.ref.Append("creation_time"))
+	return terra.ReferenceAsNumber(br.ref.Append("creation_time"))
 }
 
+// DatasetId returns a reference to field dataset_id of google_bigquery_routine.
 func (br bigqueryRoutineAttributes) DatasetId() terra.StringValue {
-	return terra.ReferenceString(br.ref.Append("dataset_id"))
+	return terra.ReferenceAsString(br.ref.Append("dataset_id"))
 }
 
+// DefinitionBody returns a reference to field definition_body of google_bigquery_routine.
 func (br bigqueryRoutineAttributes) DefinitionBody() terra.StringValue {
-	return terra.ReferenceString(br.ref.Append("definition_body"))
+	return terra.ReferenceAsString(br.ref.Append("definition_body"))
 }
 
+// Description returns a reference to field description of google_bigquery_routine.
 func (br bigqueryRoutineAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(br.ref.Append("description"))
+	return terra.ReferenceAsString(br.ref.Append("description"))
 }
 
+// DeterminismLevel returns a reference to field determinism_level of google_bigquery_routine.
 func (br bigqueryRoutineAttributes) DeterminismLevel() terra.StringValue {
-	return terra.ReferenceString(br.ref.Append("determinism_level"))
+	return terra.ReferenceAsString(br.ref.Append("determinism_level"))
 }
 
+// Id returns a reference to field id of google_bigquery_routine.
 func (br bigqueryRoutineAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(br.ref.Append("id"))
+	return terra.ReferenceAsString(br.ref.Append("id"))
 }
 
+// ImportedLibraries returns a reference to field imported_libraries of google_bigquery_routine.
 func (br bigqueryRoutineAttributes) ImportedLibraries() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](br.ref.Append("imported_libraries"))
+	return terra.ReferenceAsList[terra.StringValue](br.ref.Append("imported_libraries"))
 }
 
+// Language returns a reference to field language of google_bigquery_routine.
 func (br bigqueryRoutineAttributes) Language() terra.StringValue {
-	return terra.ReferenceString(br.ref.Append("language"))
+	return terra.ReferenceAsString(br.ref.Append("language"))
 }
 
+// LastModifiedTime returns a reference to field last_modified_time of google_bigquery_routine.
 func (br bigqueryRoutineAttributes) LastModifiedTime() terra.NumberValue {
-	return terra.ReferenceNumber(br.ref.Append("last_modified_time"))
+	return terra.ReferenceAsNumber(br.ref.Append("last_modified_time"))
 }
 
+// Project returns a reference to field project of google_bigquery_routine.
 func (br bigqueryRoutineAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(br.ref.Append("project"))
+	return terra.ReferenceAsString(br.ref.Append("project"))
 }
 
+// ReturnTableType returns a reference to field return_table_type of google_bigquery_routine.
 func (br bigqueryRoutineAttributes) ReturnTableType() terra.StringValue {
-	return terra.ReferenceString(br.ref.Append("return_table_type"))
+	return terra.ReferenceAsString(br.ref.Append("return_table_type"))
 }
 
+// ReturnType returns a reference to field return_type of google_bigquery_routine.
 func (br bigqueryRoutineAttributes) ReturnType() terra.StringValue {
-	return terra.ReferenceString(br.ref.Append("return_type"))
+	return terra.ReferenceAsString(br.ref.Append("return_type"))
 }
 
+// RoutineId returns a reference to field routine_id of google_bigquery_routine.
 func (br bigqueryRoutineAttributes) RoutineId() terra.StringValue {
-	return terra.ReferenceString(br.ref.Append("routine_id"))
+	return terra.ReferenceAsString(br.ref.Append("routine_id"))
 }
 
+// RoutineType returns a reference to field routine_type of google_bigquery_routine.
 func (br bigqueryRoutineAttributes) RoutineType() terra.StringValue {
-	return terra.ReferenceString(br.ref.Append("routine_type"))
+	return terra.ReferenceAsString(br.ref.Append("routine_type"))
 }
 
 func (br bigqueryRoutineAttributes) Arguments() terra.ListValue[bigqueryroutine.ArgumentsAttributes] {
-	return terra.ReferenceList[bigqueryroutine.ArgumentsAttributes](br.ref.Append("arguments"))
+	return terra.ReferenceAsList[bigqueryroutine.ArgumentsAttributes](br.ref.Append("arguments"))
 }
 
 func (br bigqueryRoutineAttributes) Timeouts() bigqueryroutine.TimeoutsAttributes {
-	return terra.ReferenceSingle[bigqueryroutine.TimeoutsAttributes](br.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[bigqueryroutine.TimeoutsAttributes](br.ref.Append("timeouts"))
 }
 
 type bigqueryRoutineState struct {

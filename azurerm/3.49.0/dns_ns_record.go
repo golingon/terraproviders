@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDnsNsRecord creates a new instance of [DnsNsRecord].
 func NewDnsNsRecord(name string, args DnsNsRecordArgs) *DnsNsRecord {
 	return &DnsNsRecord{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDnsNsRecord(name string, args DnsNsRecordArgs) *DnsNsRecord {
 
 var _ terra.Resource = (*DnsNsRecord)(nil)
 
+// DnsNsRecord represents the Terraform resource azurerm_dns_ns_record.
 type DnsNsRecord struct {
-	Name  string
-	Args  DnsNsRecordArgs
-	state *dnsNsRecordState
+	Name      string
+	Args      DnsNsRecordArgs
+	state     *dnsNsRecordState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DnsNsRecord].
 func (dnr *DnsNsRecord) Type() string {
 	return "azurerm_dns_ns_record"
 }
 
+// LocalName returns the local name for [DnsNsRecord].
 func (dnr *DnsNsRecord) LocalName() string {
 	return dnr.Name
 }
 
+// Configuration returns the configuration (args) for [DnsNsRecord].
 func (dnr *DnsNsRecord) Configuration() interface{} {
 	return dnr.Args
 }
 
+// DependOn is used for other resources to depend on [DnsNsRecord].
+func (dnr *DnsNsRecord) DependOn() terra.Reference {
+	return terra.ReferenceResource(dnr)
+}
+
+// Dependencies returns the list of resources [DnsNsRecord] depends_on.
+func (dnr *DnsNsRecord) Dependencies() terra.Dependencies {
+	return dnr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DnsNsRecord].
+func (dnr *DnsNsRecord) LifecycleManagement() *terra.Lifecycle {
+	return dnr.Lifecycle
+}
+
+// Attributes returns the attributes for [DnsNsRecord].
 func (dnr *DnsNsRecord) Attributes() dnsNsRecordAttributes {
 	return dnsNsRecordAttributes{ref: terra.ReferenceResource(dnr)}
 }
 
+// ImportState imports the given attribute values into [DnsNsRecord]'s state.
 func (dnr *DnsNsRecord) ImportState(av io.Reader) error {
 	dnr.state = &dnsNsRecordState{}
 	if err := json.NewDecoder(av).Decode(dnr.state); err != nil {
@@ -49,10 +73,12 @@ func (dnr *DnsNsRecord) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DnsNsRecord] has state.
 func (dnr *DnsNsRecord) State() (*dnsNsRecordState, bool) {
 	return dnr.state, dnr.state != nil
 }
 
+// StateMust returns the state for [DnsNsRecord]. Panics if the state is nil.
 func (dnr *DnsNsRecord) StateMust() *dnsNsRecordState {
 	if dnr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dnr.Type(), dnr.LocalName()))
@@ -60,10 +86,7 @@ func (dnr *DnsNsRecord) StateMust() *dnsNsRecordState {
 	return dnr.state
 }
 
-func (dnr *DnsNsRecord) DependOn() terra.Reference {
-	return terra.ReferenceResource(dnr)
-}
-
+// DnsNsRecordArgs contains the configurations for azurerm_dns_ns_record.
 type DnsNsRecordArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -81,47 +104,53 @@ type DnsNsRecordArgs struct {
 	ZoneName terra.StringValue `hcl:"zone_name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *dnsnsrecord.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DnsNsRecord depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dnsNsRecordAttributes struct {
 	ref terra.Reference
 }
 
+// Fqdn returns a reference to field fqdn of azurerm_dns_ns_record.
 func (dnr dnsNsRecordAttributes) Fqdn() terra.StringValue {
-	return terra.ReferenceString(dnr.ref.Append("fqdn"))
+	return terra.ReferenceAsString(dnr.ref.Append("fqdn"))
 }
 
+// Id returns a reference to field id of azurerm_dns_ns_record.
 func (dnr dnsNsRecordAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dnr.ref.Append("id"))
+	return terra.ReferenceAsString(dnr.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_dns_ns_record.
 func (dnr dnsNsRecordAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dnr.ref.Append("name"))
+	return terra.ReferenceAsString(dnr.ref.Append("name"))
 }
 
+// Records returns a reference to field records of azurerm_dns_ns_record.
 func (dnr dnsNsRecordAttributes) Records() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dnr.ref.Append("records"))
+	return terra.ReferenceAsList[terra.StringValue](dnr.ref.Append("records"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_dns_ns_record.
 func (dnr dnsNsRecordAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(dnr.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(dnr.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_dns_ns_record.
 func (dnr dnsNsRecordAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dnr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dnr.ref.Append("tags"))
 }
 
+// Ttl returns a reference to field ttl of azurerm_dns_ns_record.
 func (dnr dnsNsRecordAttributes) Ttl() terra.NumberValue {
-	return terra.ReferenceNumber(dnr.ref.Append("ttl"))
+	return terra.ReferenceAsNumber(dnr.ref.Append("ttl"))
 }
 
+// ZoneName returns a reference to field zone_name of azurerm_dns_ns_record.
 func (dnr dnsNsRecordAttributes) ZoneName() terra.StringValue {
-	return terra.ReferenceString(dnr.ref.Append("zone_name"))
+	return terra.ReferenceAsString(dnr.ref.Append("zone_name"))
 }
 
 func (dnr dnsNsRecordAttributes) Timeouts() dnsnsrecord.TimeoutsAttributes {
-	return terra.ReferenceSingle[dnsnsrecord.TimeoutsAttributes](dnr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dnsnsrecord.TimeoutsAttributes](dnr.ref.Append("timeouts"))
 }
 
 type dnsNsRecordState struct {

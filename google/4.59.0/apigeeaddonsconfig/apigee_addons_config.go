@@ -58,172 +58,172 @@ type AddonsConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ac AddonsConfigAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac AddonsConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac AddonsConfigAttributes) InternalWithRef(ref terra.Reference) AddonsConfigAttributes {
 	return AddonsConfigAttributes{ref: ref}
 }
 
-func (ac AddonsConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ac AddonsConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
 func (ac AddonsConfigAttributes) AdvancedApiOpsConfig() terra.ListValue[AdvancedApiOpsConfigAttributes] {
-	return terra.ReferenceList[AdvancedApiOpsConfigAttributes](ac.ref.Append("advanced_api_ops_config"))
+	return terra.ReferenceAsList[AdvancedApiOpsConfigAttributes](ac.ref.Append("advanced_api_ops_config"))
 }
 
 func (ac AddonsConfigAttributes) ApiSecurityConfig() terra.ListValue[ApiSecurityConfigAttributes] {
-	return terra.ReferenceList[ApiSecurityConfigAttributes](ac.ref.Append("api_security_config"))
+	return terra.ReferenceAsList[ApiSecurityConfigAttributes](ac.ref.Append("api_security_config"))
 }
 
 func (ac AddonsConfigAttributes) ConnectorsPlatformConfig() terra.ListValue[ConnectorsPlatformConfigAttributes] {
-	return terra.ReferenceList[ConnectorsPlatformConfigAttributes](ac.ref.Append("connectors_platform_config"))
+	return terra.ReferenceAsList[ConnectorsPlatformConfigAttributes](ac.ref.Append("connectors_platform_config"))
 }
 
 func (ac AddonsConfigAttributes) IntegrationConfig() terra.ListValue[IntegrationConfigAttributes] {
-	return terra.ReferenceList[IntegrationConfigAttributes](ac.ref.Append("integration_config"))
+	return terra.ReferenceAsList[IntegrationConfigAttributes](ac.ref.Append("integration_config"))
 }
 
 func (ac AddonsConfigAttributes) MonetizationConfig() terra.ListValue[MonetizationConfigAttributes] {
-	return terra.ReferenceList[MonetizationConfigAttributes](ac.ref.Append("monetization_config"))
+	return terra.ReferenceAsList[MonetizationConfigAttributes](ac.ref.Append("monetization_config"))
 }
 
 type AdvancedApiOpsConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (aaoc AdvancedApiOpsConfigAttributes) InternalRef() terra.Reference {
-	return aaoc.ref
+func (aaoc AdvancedApiOpsConfigAttributes) InternalRef() (terra.Reference, error) {
+	return aaoc.ref, nil
 }
 
 func (aaoc AdvancedApiOpsConfigAttributes) InternalWithRef(ref terra.Reference) AdvancedApiOpsConfigAttributes {
 	return AdvancedApiOpsConfigAttributes{ref: ref}
 }
 
-func (aaoc AdvancedApiOpsConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (aaoc AdvancedApiOpsConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aaoc.ref.InternalTokens()
 }
 
 func (aaoc AdvancedApiOpsConfigAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(aaoc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(aaoc.ref.Append("enabled"))
 }
 
 type ApiSecurityConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (asc ApiSecurityConfigAttributes) InternalRef() terra.Reference {
-	return asc.ref
+func (asc ApiSecurityConfigAttributes) InternalRef() (terra.Reference, error) {
+	return asc.ref, nil
 }
 
 func (asc ApiSecurityConfigAttributes) InternalWithRef(ref terra.Reference) ApiSecurityConfigAttributes {
 	return ApiSecurityConfigAttributes{ref: ref}
 }
 
-func (asc ApiSecurityConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (asc ApiSecurityConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return asc.ref.InternalTokens()
 }
 
 func (asc ApiSecurityConfigAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(asc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(asc.ref.Append("enabled"))
 }
 
 func (asc ApiSecurityConfigAttributes) ExpiresAt() terra.StringValue {
-	return terra.ReferenceString(asc.ref.Append("expires_at"))
+	return terra.ReferenceAsString(asc.ref.Append("expires_at"))
 }
 
 type ConnectorsPlatformConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (cpc ConnectorsPlatformConfigAttributes) InternalRef() terra.Reference {
-	return cpc.ref
+func (cpc ConnectorsPlatformConfigAttributes) InternalRef() (terra.Reference, error) {
+	return cpc.ref, nil
 }
 
 func (cpc ConnectorsPlatformConfigAttributes) InternalWithRef(ref terra.Reference) ConnectorsPlatformConfigAttributes {
 	return ConnectorsPlatformConfigAttributes{ref: ref}
 }
 
-func (cpc ConnectorsPlatformConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (cpc ConnectorsPlatformConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cpc.ref.InternalTokens()
 }
 
 func (cpc ConnectorsPlatformConfigAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(cpc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(cpc.ref.Append("enabled"))
 }
 
 func (cpc ConnectorsPlatformConfigAttributes) ExpiresAt() terra.StringValue {
-	return terra.ReferenceString(cpc.ref.Append("expires_at"))
+	return terra.ReferenceAsString(cpc.ref.Append("expires_at"))
 }
 
 type IntegrationConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ic IntegrationConfigAttributes) InternalRef() terra.Reference {
-	return ic.ref
+func (ic IntegrationConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ic.ref, nil
 }
 
 func (ic IntegrationConfigAttributes) InternalWithRef(ref terra.Reference) IntegrationConfigAttributes {
 	return IntegrationConfigAttributes{ref: ref}
 }
 
-func (ic IntegrationConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ic IntegrationConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ic.ref.InternalTokens()
 }
 
 func (ic IntegrationConfigAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(ic.ref.Append("enabled"))
+	return terra.ReferenceAsBool(ic.ref.Append("enabled"))
 }
 
 type MonetizationConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (mc MonetizationConfigAttributes) InternalRef() terra.Reference {
-	return mc.ref
+func (mc MonetizationConfigAttributes) InternalRef() (terra.Reference, error) {
+	return mc.ref, nil
 }
 
 func (mc MonetizationConfigAttributes) InternalWithRef(ref terra.Reference) MonetizationConfigAttributes {
 	return MonetizationConfigAttributes{ref: ref}
 }
 
-func (mc MonetizationConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (mc MonetizationConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mc.ref.InternalTokens()
 }
 
 func (mc MonetizationConfigAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(mc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(mc.ref.Append("enabled"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AddonsConfigState struct {

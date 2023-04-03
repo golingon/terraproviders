@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSentinelAlertRuleAnomalyBuiltIn creates a new instance of [SentinelAlertRuleAnomalyBuiltIn].
 func NewSentinelAlertRuleAnomalyBuiltIn(name string, args SentinelAlertRuleAnomalyBuiltInArgs) *SentinelAlertRuleAnomalyBuiltIn {
 	return &SentinelAlertRuleAnomalyBuiltIn{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSentinelAlertRuleAnomalyBuiltIn(name string, args SentinelAlertRuleAnoma
 
 var _ terra.Resource = (*SentinelAlertRuleAnomalyBuiltIn)(nil)
 
+// SentinelAlertRuleAnomalyBuiltIn represents the Terraform resource azurerm_sentinel_alert_rule_anomaly_built_in.
 type SentinelAlertRuleAnomalyBuiltIn struct {
-	Name  string
-	Args  SentinelAlertRuleAnomalyBuiltInArgs
-	state *sentinelAlertRuleAnomalyBuiltInState
+	Name      string
+	Args      SentinelAlertRuleAnomalyBuiltInArgs
+	state     *sentinelAlertRuleAnomalyBuiltInState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SentinelAlertRuleAnomalyBuiltIn].
 func (sarabi *SentinelAlertRuleAnomalyBuiltIn) Type() string {
 	return "azurerm_sentinel_alert_rule_anomaly_built_in"
 }
 
+// LocalName returns the local name for [SentinelAlertRuleAnomalyBuiltIn].
 func (sarabi *SentinelAlertRuleAnomalyBuiltIn) LocalName() string {
 	return sarabi.Name
 }
 
+// Configuration returns the configuration (args) for [SentinelAlertRuleAnomalyBuiltIn].
 func (sarabi *SentinelAlertRuleAnomalyBuiltIn) Configuration() interface{} {
 	return sarabi.Args
 }
 
+// DependOn is used for other resources to depend on [SentinelAlertRuleAnomalyBuiltIn].
+func (sarabi *SentinelAlertRuleAnomalyBuiltIn) DependOn() terra.Reference {
+	return terra.ReferenceResource(sarabi)
+}
+
+// Dependencies returns the list of resources [SentinelAlertRuleAnomalyBuiltIn] depends_on.
+func (sarabi *SentinelAlertRuleAnomalyBuiltIn) Dependencies() terra.Dependencies {
+	return sarabi.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SentinelAlertRuleAnomalyBuiltIn].
+func (sarabi *SentinelAlertRuleAnomalyBuiltIn) LifecycleManagement() *terra.Lifecycle {
+	return sarabi.Lifecycle
+}
+
+// Attributes returns the attributes for [SentinelAlertRuleAnomalyBuiltIn].
 func (sarabi *SentinelAlertRuleAnomalyBuiltIn) Attributes() sentinelAlertRuleAnomalyBuiltInAttributes {
 	return sentinelAlertRuleAnomalyBuiltInAttributes{ref: terra.ReferenceResource(sarabi)}
 }
 
+// ImportState imports the given attribute values into [SentinelAlertRuleAnomalyBuiltIn]'s state.
 func (sarabi *SentinelAlertRuleAnomalyBuiltIn) ImportState(av io.Reader) error {
 	sarabi.state = &sentinelAlertRuleAnomalyBuiltInState{}
 	if err := json.NewDecoder(av).Decode(sarabi.state); err != nil {
@@ -49,10 +73,12 @@ func (sarabi *SentinelAlertRuleAnomalyBuiltIn) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SentinelAlertRuleAnomalyBuiltIn] has state.
 func (sarabi *SentinelAlertRuleAnomalyBuiltIn) State() (*sentinelAlertRuleAnomalyBuiltInState, bool) {
 	return sarabi.state, sarabi.state != nil
 }
 
+// StateMust returns the state for [SentinelAlertRuleAnomalyBuiltIn]. Panics if the state is nil.
 func (sarabi *SentinelAlertRuleAnomalyBuiltIn) StateMust() *sentinelAlertRuleAnomalyBuiltInState {
 	if sarabi.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sarabi.Type(), sarabi.LocalName()))
@@ -60,10 +86,7 @@ func (sarabi *SentinelAlertRuleAnomalyBuiltIn) StateMust() *sentinelAlertRuleAno
 	return sarabi.state
 }
 
-func (sarabi *SentinelAlertRuleAnomalyBuiltIn) DependOn() terra.Reference {
-	return terra.ReferenceResource(sarabi)
-}
-
+// SentinelAlertRuleAnomalyBuiltInArgs contains the configurations for azurerm_sentinel_alert_rule_anomaly_built_in.
 type SentinelAlertRuleAnomalyBuiltInArgs struct {
 	// DisplayName: string, optional
 	DisplayName terra.StringValue `hcl:"display_name,attr"`
@@ -89,87 +112,98 @@ type SentinelAlertRuleAnomalyBuiltInArgs struct {
 	ThresholdObservation []sentinelalertruleanomalybuiltin.ThresholdObservation `hcl:"threshold_observation,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *sentinelalertruleanomalybuiltin.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SentinelAlertRuleAnomalyBuiltIn depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sentinelAlertRuleAnomalyBuiltInAttributes struct {
 	ref terra.Reference
 }
 
+// AnomalySettingsVersion returns a reference to field anomaly_settings_version of azurerm_sentinel_alert_rule_anomaly_built_in.
 func (sarabi sentinelAlertRuleAnomalyBuiltInAttributes) AnomalySettingsVersion() terra.NumberValue {
-	return terra.ReferenceNumber(sarabi.ref.Append("anomaly_settings_version"))
+	return terra.ReferenceAsNumber(sarabi.ref.Append("anomaly_settings_version"))
 }
 
+// AnomalyVersion returns a reference to field anomaly_version of azurerm_sentinel_alert_rule_anomaly_built_in.
 func (sarabi sentinelAlertRuleAnomalyBuiltInAttributes) AnomalyVersion() terra.StringValue {
-	return terra.ReferenceString(sarabi.ref.Append("anomaly_version"))
+	return terra.ReferenceAsString(sarabi.ref.Append("anomaly_version"))
 }
 
+// Description returns a reference to field description of azurerm_sentinel_alert_rule_anomaly_built_in.
 func (sarabi sentinelAlertRuleAnomalyBuiltInAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(sarabi.ref.Append("description"))
+	return terra.ReferenceAsString(sarabi.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_sentinel_alert_rule_anomaly_built_in.
 func (sarabi sentinelAlertRuleAnomalyBuiltInAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(sarabi.ref.Append("display_name"))
+	return terra.ReferenceAsString(sarabi.ref.Append("display_name"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_sentinel_alert_rule_anomaly_built_in.
 func (sarabi sentinelAlertRuleAnomalyBuiltInAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(sarabi.ref.Append("enabled"))
+	return terra.ReferenceAsBool(sarabi.ref.Append("enabled"))
 }
 
+// Frequency returns a reference to field frequency of azurerm_sentinel_alert_rule_anomaly_built_in.
 func (sarabi sentinelAlertRuleAnomalyBuiltInAttributes) Frequency() terra.StringValue {
-	return terra.ReferenceString(sarabi.ref.Append("frequency"))
+	return terra.ReferenceAsString(sarabi.ref.Append("frequency"))
 }
 
+// Id returns a reference to field id of azurerm_sentinel_alert_rule_anomaly_built_in.
 func (sarabi sentinelAlertRuleAnomalyBuiltInAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sarabi.ref.Append("id"))
+	return terra.ReferenceAsString(sarabi.ref.Append("id"))
 }
 
+// LogAnalyticsWorkspaceId returns a reference to field log_analytics_workspace_id of azurerm_sentinel_alert_rule_anomaly_built_in.
 func (sarabi sentinelAlertRuleAnomalyBuiltInAttributes) LogAnalyticsWorkspaceId() terra.StringValue {
-	return terra.ReferenceString(sarabi.ref.Append("log_analytics_workspace_id"))
+	return terra.ReferenceAsString(sarabi.ref.Append("log_analytics_workspace_id"))
 }
 
+// Mode returns a reference to field mode of azurerm_sentinel_alert_rule_anomaly_built_in.
 func (sarabi sentinelAlertRuleAnomalyBuiltInAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(sarabi.ref.Append("mode"))
+	return terra.ReferenceAsString(sarabi.ref.Append("mode"))
 }
 
+// Name returns a reference to field name of azurerm_sentinel_alert_rule_anomaly_built_in.
 func (sarabi sentinelAlertRuleAnomalyBuiltInAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sarabi.ref.Append("name"))
+	return terra.ReferenceAsString(sarabi.ref.Append("name"))
 }
 
+// SettingsDefinitionId returns a reference to field settings_definition_id of azurerm_sentinel_alert_rule_anomaly_built_in.
 func (sarabi sentinelAlertRuleAnomalyBuiltInAttributes) SettingsDefinitionId() terra.StringValue {
-	return terra.ReferenceString(sarabi.ref.Append("settings_definition_id"))
+	return terra.ReferenceAsString(sarabi.ref.Append("settings_definition_id"))
 }
 
+// Tactics returns a reference to field tactics of azurerm_sentinel_alert_rule_anomaly_built_in.
 func (sarabi sentinelAlertRuleAnomalyBuiltInAttributes) Tactics() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sarabi.ref.Append("tactics"))
+	return terra.ReferenceAsList[terra.StringValue](sarabi.ref.Append("tactics"))
 }
 
+// Techniques returns a reference to field techniques of azurerm_sentinel_alert_rule_anomaly_built_in.
 func (sarabi sentinelAlertRuleAnomalyBuiltInAttributes) Techniques() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sarabi.ref.Append("techniques"))
+	return terra.ReferenceAsList[terra.StringValue](sarabi.ref.Append("techniques"))
 }
 
 func (sarabi sentinelAlertRuleAnomalyBuiltInAttributes) MultiSelectObservation() terra.ListValue[sentinelalertruleanomalybuiltin.MultiSelectObservationAttributes] {
-	return terra.ReferenceList[sentinelalertruleanomalybuiltin.MultiSelectObservationAttributes](sarabi.ref.Append("multi_select_observation"))
+	return terra.ReferenceAsList[sentinelalertruleanomalybuiltin.MultiSelectObservationAttributes](sarabi.ref.Append("multi_select_observation"))
 }
 
 func (sarabi sentinelAlertRuleAnomalyBuiltInAttributes) PrioritizedExcludeObservation() terra.ListValue[sentinelalertruleanomalybuiltin.PrioritizedExcludeObservationAttributes] {
-	return terra.ReferenceList[sentinelalertruleanomalybuiltin.PrioritizedExcludeObservationAttributes](sarabi.ref.Append("prioritized_exclude_observation"))
+	return terra.ReferenceAsList[sentinelalertruleanomalybuiltin.PrioritizedExcludeObservationAttributes](sarabi.ref.Append("prioritized_exclude_observation"))
 }
 
 func (sarabi sentinelAlertRuleAnomalyBuiltInAttributes) RequiredDataConnector() terra.ListValue[sentinelalertruleanomalybuiltin.RequiredDataConnectorAttributes] {
-	return terra.ReferenceList[sentinelalertruleanomalybuiltin.RequiredDataConnectorAttributes](sarabi.ref.Append("required_data_connector"))
+	return terra.ReferenceAsList[sentinelalertruleanomalybuiltin.RequiredDataConnectorAttributes](sarabi.ref.Append("required_data_connector"))
 }
 
 func (sarabi sentinelAlertRuleAnomalyBuiltInAttributes) SingleSelectObservation() terra.ListValue[sentinelalertruleanomalybuiltin.SingleSelectObservationAttributes] {
-	return terra.ReferenceList[sentinelalertruleanomalybuiltin.SingleSelectObservationAttributes](sarabi.ref.Append("single_select_observation"))
+	return terra.ReferenceAsList[sentinelalertruleanomalybuiltin.SingleSelectObservationAttributes](sarabi.ref.Append("single_select_observation"))
 }
 
 func (sarabi sentinelAlertRuleAnomalyBuiltInAttributes) ThresholdObservation() terra.ListValue[sentinelalertruleanomalybuiltin.ThresholdObservationAttributes] {
-	return terra.ReferenceList[sentinelalertruleanomalybuiltin.ThresholdObservationAttributes](sarabi.ref.Append("threshold_observation"))
+	return terra.ReferenceAsList[sentinelalertruleanomalybuiltin.ThresholdObservationAttributes](sarabi.ref.Append("threshold_observation"))
 }
 
 func (sarabi sentinelAlertRuleAnomalyBuiltInAttributes) Timeouts() sentinelalertruleanomalybuiltin.TimeoutsAttributes {
-	return terra.ReferenceSingle[sentinelalertruleanomalybuiltin.TimeoutsAttributes](sarabi.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[sentinelalertruleanomalybuiltin.TimeoutsAttributes](sarabi.ref.Append("timeouts"))
 }
 
 type sentinelAlertRuleAnomalyBuiltInState struct {

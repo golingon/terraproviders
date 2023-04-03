@@ -51,7 +51,7 @@ func (r RoutesAttributes) InternalWithRef(ref terra.Reference) RoutesAttributes 
 	return RoutesAttributes{ref: ref}
 }
 
-func (r RoutesAttributes) InternalTokens() hclwrite.Tokens {
+func (r RoutesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -79,7 +79,7 @@ func (vt VgwTelemetryAttributes) InternalWithRef(ref terra.Reference) VgwTelemet
 	return VgwTelemetryAttributes{ref: ref}
 }
 
-func (vt VgwTelemetryAttributes) InternalTokens() hclwrite.Tokens {
+func (vt VgwTelemetryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vt.ref.InternalTokens()
 }
 
@@ -119,7 +119,7 @@ func (tlo Tunnel1LogOptionsAttributes) InternalWithRef(ref terra.Reference) Tunn
 	return Tunnel1LogOptionsAttributes{ref: ref}
 }
 
-func (tlo Tunnel1LogOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (tlo Tunnel1LogOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tlo.ref.InternalTokens()
 }
 
@@ -139,7 +139,7 @@ func (clo Tunnel1LogOptionsCloudwatchLogOptionsAttributes) InternalWithRef(ref t
 	return Tunnel1LogOptionsCloudwatchLogOptionsAttributes{ref: ref}
 }
 
-func (clo Tunnel1LogOptionsCloudwatchLogOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (clo Tunnel1LogOptionsCloudwatchLogOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return clo.ref.InternalTokens()
 }
 
@@ -167,7 +167,7 @@ func (tlo Tunnel2LogOptionsAttributes) InternalWithRef(ref terra.Reference) Tunn
 	return Tunnel2LogOptionsAttributes{ref: ref}
 }
 
-func (tlo Tunnel2LogOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (tlo Tunnel2LogOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tlo.ref.InternalTokens()
 }
 
@@ -187,7 +187,7 @@ func (clo Tunnel2LogOptionsCloudwatchLogOptionsAttributes) InternalWithRef(ref t
 	return Tunnel2LogOptionsCloudwatchLogOptionsAttributes{ref: ref}
 }
 
-func (clo Tunnel2LogOptionsCloudwatchLogOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (clo Tunnel2LogOptionsCloudwatchLogOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return clo.ref.InternalTokens()
 }
 

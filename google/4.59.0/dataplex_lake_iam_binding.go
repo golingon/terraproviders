@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataplexLakeIamBinding creates a new instance of [DataplexLakeIamBinding].
 func NewDataplexLakeIamBinding(name string, args DataplexLakeIamBindingArgs) *DataplexLakeIamBinding {
 	return &DataplexLakeIamBinding{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataplexLakeIamBinding(name string, args DataplexLakeIamBindingArgs) *Da
 
 var _ terra.Resource = (*DataplexLakeIamBinding)(nil)
 
+// DataplexLakeIamBinding represents the Terraform resource google_dataplex_lake_iam_binding.
 type DataplexLakeIamBinding struct {
-	Name  string
-	Args  DataplexLakeIamBindingArgs
-	state *dataplexLakeIamBindingState
+	Name      string
+	Args      DataplexLakeIamBindingArgs
+	state     *dataplexLakeIamBindingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataplexLakeIamBinding].
 func (dlib *DataplexLakeIamBinding) Type() string {
 	return "google_dataplex_lake_iam_binding"
 }
 
+// LocalName returns the local name for [DataplexLakeIamBinding].
 func (dlib *DataplexLakeIamBinding) LocalName() string {
 	return dlib.Name
 }
 
+// Configuration returns the configuration (args) for [DataplexLakeIamBinding].
 func (dlib *DataplexLakeIamBinding) Configuration() interface{} {
 	return dlib.Args
 }
 
+// DependOn is used for other resources to depend on [DataplexLakeIamBinding].
+func (dlib *DataplexLakeIamBinding) DependOn() terra.Reference {
+	return terra.ReferenceResource(dlib)
+}
+
+// Dependencies returns the list of resources [DataplexLakeIamBinding] depends_on.
+func (dlib *DataplexLakeIamBinding) Dependencies() terra.Dependencies {
+	return dlib.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataplexLakeIamBinding].
+func (dlib *DataplexLakeIamBinding) LifecycleManagement() *terra.Lifecycle {
+	return dlib.Lifecycle
+}
+
+// Attributes returns the attributes for [DataplexLakeIamBinding].
 func (dlib *DataplexLakeIamBinding) Attributes() dataplexLakeIamBindingAttributes {
 	return dataplexLakeIamBindingAttributes{ref: terra.ReferenceResource(dlib)}
 }
 
+// ImportState imports the given attribute values into [DataplexLakeIamBinding]'s state.
 func (dlib *DataplexLakeIamBinding) ImportState(av io.Reader) error {
 	dlib.state = &dataplexLakeIamBindingState{}
 	if err := json.NewDecoder(av).Decode(dlib.state); err != nil {
@@ -49,10 +73,12 @@ func (dlib *DataplexLakeIamBinding) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataplexLakeIamBinding] has state.
 func (dlib *DataplexLakeIamBinding) State() (*dataplexLakeIamBindingState, bool) {
 	return dlib.state, dlib.state != nil
 }
 
+// StateMust returns the state for [DataplexLakeIamBinding]. Panics if the state is nil.
 func (dlib *DataplexLakeIamBinding) StateMust() *dataplexLakeIamBindingState {
 	if dlib.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dlib.Type(), dlib.LocalName()))
@@ -60,10 +86,7 @@ func (dlib *DataplexLakeIamBinding) StateMust() *dataplexLakeIamBindingState {
 	return dlib.state
 }
 
-func (dlib *DataplexLakeIamBinding) DependOn() terra.Reference {
-	return terra.ReferenceResource(dlib)
-}
-
+// DataplexLakeIamBindingArgs contains the configurations for google_dataplex_lake_iam_binding.
 type DataplexLakeIamBindingArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,43 +102,48 @@ type DataplexLakeIamBindingArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *dataplexlakeiambinding.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that DataplexLakeIamBinding depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataplexLakeIamBindingAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_dataplex_lake_iam_binding.
 func (dlib dataplexLakeIamBindingAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(dlib.ref.Append("etag"))
+	return terra.ReferenceAsString(dlib.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_dataplex_lake_iam_binding.
 func (dlib dataplexLakeIamBindingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dlib.ref.Append("id"))
+	return terra.ReferenceAsString(dlib.ref.Append("id"))
 }
 
+// Lake returns a reference to field lake of google_dataplex_lake_iam_binding.
 func (dlib dataplexLakeIamBindingAttributes) Lake() terra.StringValue {
-	return terra.ReferenceString(dlib.ref.Append("lake"))
+	return terra.ReferenceAsString(dlib.ref.Append("lake"))
 }
 
+// Location returns a reference to field location of google_dataplex_lake_iam_binding.
 func (dlib dataplexLakeIamBindingAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(dlib.ref.Append("location"))
+	return terra.ReferenceAsString(dlib.ref.Append("location"))
 }
 
+// Members returns a reference to field members of google_dataplex_lake_iam_binding.
 func (dlib dataplexLakeIamBindingAttributes) Members() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dlib.ref.Append("members"))
+	return terra.ReferenceAsSet[terra.StringValue](dlib.ref.Append("members"))
 }
 
+// Project returns a reference to field project of google_dataplex_lake_iam_binding.
 func (dlib dataplexLakeIamBindingAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(dlib.ref.Append("project"))
+	return terra.ReferenceAsString(dlib.ref.Append("project"))
 }
 
+// Role returns a reference to field role of google_dataplex_lake_iam_binding.
 func (dlib dataplexLakeIamBindingAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(dlib.ref.Append("role"))
+	return terra.ReferenceAsString(dlib.ref.Append("role"))
 }
 
 func (dlib dataplexLakeIamBindingAttributes) Condition() terra.ListValue[dataplexlakeiambinding.ConditionAttributes] {
-	return terra.ReferenceList[dataplexlakeiambinding.ConditionAttributes](dlib.ref.Append("condition"))
+	return terra.ReferenceAsList[dataplexlakeiambinding.ConditionAttributes](dlib.ref.Append("condition"))
 }
 
 type dataplexLakeIamBindingState struct {

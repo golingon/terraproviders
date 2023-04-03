@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataDnsKeys creates a new instance of [DataDnsKeys].
 func NewDataDnsKeys(name string, args DataDnsKeysArgs) *DataDnsKeys {
 	return &DataDnsKeys{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataDnsKeys(name string, args DataDnsKeysArgs) *DataDnsKeys {
 
 var _ terra.DataResource = (*DataDnsKeys)(nil)
 
+// DataDnsKeys represents the Terraform data resource google_dns_keys.
 type DataDnsKeys struct {
 	Name string
 	Args DataDnsKeysArgs
 }
 
+// DataSource returns the Terraform object type for [DataDnsKeys].
 func (dk *DataDnsKeys) DataSource() string {
 	return "google_dns_keys"
 }
 
+// LocalName returns the local name for [DataDnsKeys].
 func (dk *DataDnsKeys) LocalName() string {
 	return dk.Name
 }
 
+// Configuration returns the configuration (args) for [DataDnsKeys].
 func (dk *DataDnsKeys) Configuration() interface{} {
 	return dk.Args
 }
 
+// Attributes returns the attributes for [DataDnsKeys].
 func (dk *DataDnsKeys) Attributes() dataDnsKeysAttributes {
 	return dataDnsKeysAttributes{ref: terra.ReferenceDataResource(dk)}
 }
 
+// DataDnsKeysArgs contains the configurations for google_dns_keys.
 type DataDnsKeysArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,22 +60,25 @@ type dataDnsKeysAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of google_dns_keys.
 func (dk dataDnsKeysAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dk.ref.Append("id"))
+	return terra.ReferenceAsString(dk.ref.Append("id"))
 }
 
+// ManagedZone returns a reference to field managed_zone of google_dns_keys.
 func (dk dataDnsKeysAttributes) ManagedZone() terra.StringValue {
-	return terra.ReferenceString(dk.ref.Append("managed_zone"))
+	return terra.ReferenceAsString(dk.ref.Append("managed_zone"))
 }
 
+// Project returns a reference to field project of google_dns_keys.
 func (dk dataDnsKeysAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(dk.ref.Append("project"))
+	return terra.ReferenceAsString(dk.ref.Append("project"))
 }
 
 func (dk dataDnsKeysAttributes) KeySigningKeys() terra.ListValue[datadnskeys.KeySigningKeysAttributes] {
-	return terra.ReferenceList[datadnskeys.KeySigningKeysAttributes](dk.ref.Append("key_signing_keys"))
+	return terra.ReferenceAsList[datadnskeys.KeySigningKeysAttributes](dk.ref.Append("key_signing_keys"))
 }
 
 func (dk dataDnsKeysAttributes) ZoneSigningKeys() terra.ListValue[datadnskeys.ZoneSigningKeysAttributes] {
-	return terra.ReferenceList[datadnskeys.ZoneSigningKeysAttributes](dk.ref.Append("zone_signing_keys"))
+	return terra.ReferenceAsList[datadnskeys.ZoneSigningKeysAttributes](dk.ref.Append("zone_signing_keys"))
 }

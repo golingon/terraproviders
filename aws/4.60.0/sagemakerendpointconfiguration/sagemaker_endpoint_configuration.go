@@ -152,7 +152,7 @@ func (aic AsyncInferenceConfigAttributes) InternalWithRef(ref terra.Reference) A
 	return AsyncInferenceConfigAttributes{ref: ref}
 }
 
-func (aic AsyncInferenceConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (aic AsyncInferenceConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aic.ref.InternalTokens()
 }
 
@@ -176,7 +176,7 @@ func (cc ClientConfigAttributes) InternalWithRef(ref terra.Reference) ClientConf
 	return ClientConfigAttributes{ref: ref}
 }
 
-func (cc ClientConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (cc ClientConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -196,7 +196,7 @@ func (oc OutputConfigAttributes) InternalWithRef(ref terra.Reference) OutputConf
 	return OutputConfigAttributes{ref: ref}
 }
 
-func (oc OutputConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (oc OutputConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oc.ref.InternalTokens()
 }
 
@@ -224,7 +224,7 @@ func (nc NotificationConfigAttributes) InternalWithRef(ref terra.Reference) Noti
 	return NotificationConfigAttributes{ref: ref}
 }
 
-func (nc NotificationConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (nc NotificationConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nc.ref.InternalTokens()
 }
 
@@ -248,7 +248,7 @@ func (dcc DataCaptureConfigAttributes) InternalWithRef(ref terra.Reference) Data
 	return DataCaptureConfigAttributes{ref: ref}
 }
 
-func (dcc DataCaptureConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (dcc DataCaptureConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dcc.ref.InternalTokens()
 }
 
@@ -288,7 +288,7 @@ func (ccth CaptureContentTypeHeaderAttributes) InternalWithRef(ref terra.Referen
 	return CaptureContentTypeHeaderAttributes{ref: ref}
 }
 
-func (ccth CaptureContentTypeHeaderAttributes) InternalTokens() hclwrite.Tokens {
+func (ccth CaptureContentTypeHeaderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ccth.ref.InternalTokens()
 }
 
@@ -312,7 +312,7 @@ func (co CaptureOptionsAttributes) InternalWithRef(ref terra.Reference) CaptureO
 	return CaptureOptionsAttributes{ref: ref}
 }
 
-func (co CaptureOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (co CaptureOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return co.ref.InternalTokens()
 }
 
@@ -332,7 +332,7 @@ func (pv ProductionVariantsAttributes) InternalWithRef(ref terra.Reference) Prod
 	return ProductionVariantsAttributes{ref: ref}
 }
 
-func (pv ProductionVariantsAttributes) InternalTokens() hclwrite.Tokens {
+func (pv ProductionVariantsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pv.ref.InternalTokens()
 }
 
@@ -392,7 +392,7 @@ func (cdc ProductionVariantsCoreDumpConfigAttributes) InternalWithRef(ref terra.
 	return ProductionVariantsCoreDumpConfigAttributes{ref: ref}
 }
 
-func (cdc ProductionVariantsCoreDumpConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (cdc ProductionVariantsCoreDumpConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cdc.ref.InternalTokens()
 }
 
@@ -416,7 +416,7 @@ func (sc ProductionVariantsServerlessConfigAttributes) InternalWithRef(ref terra
 	return ProductionVariantsServerlessConfigAttributes{ref: ref}
 }
 
-func (sc ProductionVariantsServerlessConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sc ProductionVariantsServerlessConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -440,7 +440,7 @@ func (spv ShadowProductionVariantsAttributes) InternalWithRef(ref terra.Referenc
 	return ShadowProductionVariantsAttributes{ref: ref}
 }
 
-func (spv ShadowProductionVariantsAttributes) InternalTokens() hclwrite.Tokens {
+func (spv ShadowProductionVariantsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return spv.ref.InternalTokens()
 }
 
@@ -500,7 +500,7 @@ func (cdc ShadowProductionVariantsCoreDumpConfigAttributes) InternalWithRef(ref 
 	return ShadowProductionVariantsCoreDumpConfigAttributes{ref: ref}
 }
 
-func (cdc ShadowProductionVariantsCoreDumpConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (cdc ShadowProductionVariantsCoreDumpConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cdc.ref.InternalTokens()
 }
 
@@ -524,7 +524,7 @@ func (sc ShadowProductionVariantsServerlessConfigAttributes) InternalWithRef(ref
 	return ShadowProductionVariantsServerlessConfigAttributes{ref: ref}
 }
 
-func (sc ShadowProductionVariantsServerlessConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sc ShadowProductionVariantsServerlessConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 

@@ -124,340 +124,340 @@ type EncryptionConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ec EncryptionConfigurationAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec EncryptionConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec EncryptionConfigurationAttributes) InternalWithRef(ref terra.Reference) EncryptionConfigurationAttributes {
 	return EncryptionConfigurationAttributes{ref: ref}
 }
 
-func (ec EncryptionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ec EncryptionConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 
 func (ec EncryptionConfigurationAttributes) KmsKeyName() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("kms_key_name"))
+	return terra.ReferenceAsString(ec.ref.Append("kms_key_name"))
 }
 
 func (ec EncryptionConfigurationAttributes) KmsKeyVersion() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("kms_key_version"))
+	return terra.ReferenceAsString(ec.ref.Append("kms_key_version"))
 }
 
 type ExternalDataConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (edc ExternalDataConfigurationAttributes) InternalRef() terra.Reference {
-	return edc.ref
+func (edc ExternalDataConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return edc.ref, nil
 }
 
 func (edc ExternalDataConfigurationAttributes) InternalWithRef(ref terra.Reference) ExternalDataConfigurationAttributes {
 	return ExternalDataConfigurationAttributes{ref: ref}
 }
 
-func (edc ExternalDataConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (edc ExternalDataConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return edc.ref.InternalTokens()
 }
 
 func (edc ExternalDataConfigurationAttributes) Autodetect() terra.BoolValue {
-	return terra.ReferenceBool(edc.ref.Append("autodetect"))
+	return terra.ReferenceAsBool(edc.ref.Append("autodetect"))
 }
 
 func (edc ExternalDataConfigurationAttributes) Compression() terra.StringValue {
-	return terra.ReferenceString(edc.ref.Append("compression"))
+	return terra.ReferenceAsString(edc.ref.Append("compression"))
 }
 
 func (edc ExternalDataConfigurationAttributes) ConnectionId() terra.StringValue {
-	return terra.ReferenceString(edc.ref.Append("connection_id"))
+	return terra.ReferenceAsString(edc.ref.Append("connection_id"))
 }
 
 func (edc ExternalDataConfigurationAttributes) IgnoreUnknownValues() terra.BoolValue {
-	return terra.ReferenceBool(edc.ref.Append("ignore_unknown_values"))
+	return terra.ReferenceAsBool(edc.ref.Append("ignore_unknown_values"))
 }
 
 func (edc ExternalDataConfigurationAttributes) MaxBadRecords() terra.NumberValue {
-	return terra.ReferenceNumber(edc.ref.Append("max_bad_records"))
+	return terra.ReferenceAsNumber(edc.ref.Append("max_bad_records"))
 }
 
 func (edc ExternalDataConfigurationAttributes) ReferenceFileSchemaUri() terra.StringValue {
-	return terra.ReferenceString(edc.ref.Append("reference_file_schema_uri"))
+	return terra.ReferenceAsString(edc.ref.Append("reference_file_schema_uri"))
 }
 
 func (edc ExternalDataConfigurationAttributes) Schema() terra.StringValue {
-	return terra.ReferenceString(edc.ref.Append("schema"))
+	return terra.ReferenceAsString(edc.ref.Append("schema"))
 }
 
 func (edc ExternalDataConfigurationAttributes) SourceFormat() terra.StringValue {
-	return terra.ReferenceString(edc.ref.Append("source_format"))
+	return terra.ReferenceAsString(edc.ref.Append("source_format"))
 }
 
 func (edc ExternalDataConfigurationAttributes) SourceUris() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](edc.ref.Append("source_uris"))
+	return terra.ReferenceAsList[terra.StringValue](edc.ref.Append("source_uris"))
 }
 
 func (edc ExternalDataConfigurationAttributes) AvroOptions() terra.ListValue[AvroOptionsAttributes] {
-	return terra.ReferenceList[AvroOptionsAttributes](edc.ref.Append("avro_options"))
+	return terra.ReferenceAsList[AvroOptionsAttributes](edc.ref.Append("avro_options"))
 }
 
 func (edc ExternalDataConfigurationAttributes) CsvOptions() terra.ListValue[CsvOptionsAttributes] {
-	return terra.ReferenceList[CsvOptionsAttributes](edc.ref.Append("csv_options"))
+	return terra.ReferenceAsList[CsvOptionsAttributes](edc.ref.Append("csv_options"))
 }
 
 func (edc ExternalDataConfigurationAttributes) GoogleSheetsOptions() terra.ListValue[GoogleSheetsOptionsAttributes] {
-	return terra.ReferenceList[GoogleSheetsOptionsAttributes](edc.ref.Append("google_sheets_options"))
+	return terra.ReferenceAsList[GoogleSheetsOptionsAttributes](edc.ref.Append("google_sheets_options"))
 }
 
 func (edc ExternalDataConfigurationAttributes) HivePartitioningOptions() terra.ListValue[HivePartitioningOptionsAttributes] {
-	return terra.ReferenceList[HivePartitioningOptionsAttributes](edc.ref.Append("hive_partitioning_options"))
+	return terra.ReferenceAsList[HivePartitioningOptionsAttributes](edc.ref.Append("hive_partitioning_options"))
 }
 
 type AvroOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (ao AvroOptionsAttributes) InternalRef() terra.Reference {
-	return ao.ref
+func (ao AvroOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return ao.ref, nil
 }
 
 func (ao AvroOptionsAttributes) InternalWithRef(ref terra.Reference) AvroOptionsAttributes {
 	return AvroOptionsAttributes{ref: ref}
 }
 
-func (ao AvroOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (ao AvroOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ao.ref.InternalTokens()
 }
 
 func (ao AvroOptionsAttributes) UseAvroLogicalTypes() terra.BoolValue {
-	return terra.ReferenceBool(ao.ref.Append("use_avro_logical_types"))
+	return terra.ReferenceAsBool(ao.ref.Append("use_avro_logical_types"))
 }
 
 type CsvOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (co CsvOptionsAttributes) InternalRef() terra.Reference {
-	return co.ref
+func (co CsvOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return co.ref, nil
 }
 
 func (co CsvOptionsAttributes) InternalWithRef(ref terra.Reference) CsvOptionsAttributes {
 	return CsvOptionsAttributes{ref: ref}
 }
 
-func (co CsvOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (co CsvOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return co.ref.InternalTokens()
 }
 
 func (co CsvOptionsAttributes) AllowJaggedRows() terra.BoolValue {
-	return terra.ReferenceBool(co.ref.Append("allow_jagged_rows"))
+	return terra.ReferenceAsBool(co.ref.Append("allow_jagged_rows"))
 }
 
 func (co CsvOptionsAttributes) AllowQuotedNewlines() terra.BoolValue {
-	return terra.ReferenceBool(co.ref.Append("allow_quoted_newlines"))
+	return terra.ReferenceAsBool(co.ref.Append("allow_quoted_newlines"))
 }
 
 func (co CsvOptionsAttributes) Encoding() terra.StringValue {
-	return terra.ReferenceString(co.ref.Append("encoding"))
+	return terra.ReferenceAsString(co.ref.Append("encoding"))
 }
 
 func (co CsvOptionsAttributes) FieldDelimiter() terra.StringValue {
-	return terra.ReferenceString(co.ref.Append("field_delimiter"))
+	return terra.ReferenceAsString(co.ref.Append("field_delimiter"))
 }
 
 func (co CsvOptionsAttributes) Quote() terra.StringValue {
-	return terra.ReferenceString(co.ref.Append("quote"))
+	return terra.ReferenceAsString(co.ref.Append("quote"))
 }
 
 func (co CsvOptionsAttributes) SkipLeadingRows() terra.NumberValue {
-	return terra.ReferenceNumber(co.ref.Append("skip_leading_rows"))
+	return terra.ReferenceAsNumber(co.ref.Append("skip_leading_rows"))
 }
 
 type GoogleSheetsOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (gso GoogleSheetsOptionsAttributes) InternalRef() terra.Reference {
-	return gso.ref
+func (gso GoogleSheetsOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return gso.ref, nil
 }
 
 func (gso GoogleSheetsOptionsAttributes) InternalWithRef(ref terra.Reference) GoogleSheetsOptionsAttributes {
 	return GoogleSheetsOptionsAttributes{ref: ref}
 }
 
-func (gso GoogleSheetsOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (gso GoogleSheetsOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gso.ref.InternalTokens()
 }
 
 func (gso GoogleSheetsOptionsAttributes) Range() terra.StringValue {
-	return terra.ReferenceString(gso.ref.Append("range"))
+	return terra.ReferenceAsString(gso.ref.Append("range"))
 }
 
 func (gso GoogleSheetsOptionsAttributes) SkipLeadingRows() terra.NumberValue {
-	return terra.ReferenceNumber(gso.ref.Append("skip_leading_rows"))
+	return terra.ReferenceAsNumber(gso.ref.Append("skip_leading_rows"))
 }
 
 type HivePartitioningOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (hpo HivePartitioningOptionsAttributes) InternalRef() terra.Reference {
-	return hpo.ref
+func (hpo HivePartitioningOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return hpo.ref, nil
 }
 
 func (hpo HivePartitioningOptionsAttributes) InternalWithRef(ref terra.Reference) HivePartitioningOptionsAttributes {
 	return HivePartitioningOptionsAttributes{ref: ref}
 }
 
-func (hpo HivePartitioningOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (hpo HivePartitioningOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hpo.ref.InternalTokens()
 }
 
 func (hpo HivePartitioningOptionsAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(hpo.ref.Append("mode"))
+	return terra.ReferenceAsString(hpo.ref.Append("mode"))
 }
 
 func (hpo HivePartitioningOptionsAttributes) RequirePartitionFilter() terra.BoolValue {
-	return terra.ReferenceBool(hpo.ref.Append("require_partition_filter"))
+	return terra.ReferenceAsBool(hpo.ref.Append("require_partition_filter"))
 }
 
 func (hpo HivePartitioningOptionsAttributes) SourceUriPrefix() terra.StringValue {
-	return terra.ReferenceString(hpo.ref.Append("source_uri_prefix"))
+	return terra.ReferenceAsString(hpo.ref.Append("source_uri_prefix"))
 }
 
 type MaterializedViewAttributes struct {
 	ref terra.Reference
 }
 
-func (mv MaterializedViewAttributes) InternalRef() terra.Reference {
-	return mv.ref
+func (mv MaterializedViewAttributes) InternalRef() (terra.Reference, error) {
+	return mv.ref, nil
 }
 
 func (mv MaterializedViewAttributes) InternalWithRef(ref terra.Reference) MaterializedViewAttributes {
 	return MaterializedViewAttributes{ref: ref}
 }
 
-func (mv MaterializedViewAttributes) InternalTokens() hclwrite.Tokens {
+func (mv MaterializedViewAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mv.ref.InternalTokens()
 }
 
 func (mv MaterializedViewAttributes) EnableRefresh() terra.BoolValue {
-	return terra.ReferenceBool(mv.ref.Append("enable_refresh"))
+	return terra.ReferenceAsBool(mv.ref.Append("enable_refresh"))
 }
 
 func (mv MaterializedViewAttributes) Query() terra.StringValue {
-	return terra.ReferenceString(mv.ref.Append("query"))
+	return terra.ReferenceAsString(mv.ref.Append("query"))
 }
 
 func (mv MaterializedViewAttributes) RefreshIntervalMs() terra.NumberValue {
-	return terra.ReferenceNumber(mv.ref.Append("refresh_interval_ms"))
+	return terra.ReferenceAsNumber(mv.ref.Append("refresh_interval_ms"))
 }
 
 type RangePartitioningAttributes struct {
 	ref terra.Reference
 }
 
-func (rp RangePartitioningAttributes) InternalRef() terra.Reference {
-	return rp.ref
+func (rp RangePartitioningAttributes) InternalRef() (terra.Reference, error) {
+	return rp.ref, nil
 }
 
 func (rp RangePartitioningAttributes) InternalWithRef(ref terra.Reference) RangePartitioningAttributes {
 	return RangePartitioningAttributes{ref: ref}
 }
 
-func (rp RangePartitioningAttributes) InternalTokens() hclwrite.Tokens {
+func (rp RangePartitioningAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rp.ref.InternalTokens()
 }
 
 func (rp RangePartitioningAttributes) Field() terra.StringValue {
-	return terra.ReferenceString(rp.ref.Append("field"))
+	return terra.ReferenceAsString(rp.ref.Append("field"))
 }
 
 func (rp RangePartitioningAttributes) Range() terra.ListValue[RangeAttributes] {
-	return terra.ReferenceList[RangeAttributes](rp.ref.Append("range"))
+	return terra.ReferenceAsList[RangeAttributes](rp.ref.Append("range"))
 }
 
 type RangeAttributes struct {
 	ref terra.Reference
 }
 
-func (r RangeAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RangeAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RangeAttributes) InternalWithRef(ref terra.Reference) RangeAttributes {
 	return RangeAttributes{ref: ref}
 }
 
-func (r RangeAttributes) InternalTokens() hclwrite.Tokens {
+func (r RangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RangeAttributes) End() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("end"))
+	return terra.ReferenceAsNumber(r.ref.Append("end"))
 }
 
 func (r RangeAttributes) Interval() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("interval"))
+	return terra.ReferenceAsNumber(r.ref.Append("interval"))
 }
 
 func (r RangeAttributes) Start() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("start"))
+	return terra.ReferenceAsNumber(r.ref.Append("start"))
 }
 
 type TimePartitioningAttributes struct {
 	ref terra.Reference
 }
 
-func (tp TimePartitioningAttributes) InternalRef() terra.Reference {
-	return tp.ref
+func (tp TimePartitioningAttributes) InternalRef() (terra.Reference, error) {
+	return tp.ref, nil
 }
 
 func (tp TimePartitioningAttributes) InternalWithRef(ref terra.Reference) TimePartitioningAttributes {
 	return TimePartitioningAttributes{ref: ref}
 }
 
-func (tp TimePartitioningAttributes) InternalTokens() hclwrite.Tokens {
+func (tp TimePartitioningAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tp.ref.InternalTokens()
 }
 
 func (tp TimePartitioningAttributes) ExpirationMs() terra.NumberValue {
-	return terra.ReferenceNumber(tp.ref.Append("expiration_ms"))
+	return terra.ReferenceAsNumber(tp.ref.Append("expiration_ms"))
 }
 
 func (tp TimePartitioningAttributes) Field() terra.StringValue {
-	return terra.ReferenceString(tp.ref.Append("field"))
+	return terra.ReferenceAsString(tp.ref.Append("field"))
 }
 
 func (tp TimePartitioningAttributes) RequirePartitionFilter() terra.BoolValue {
-	return terra.ReferenceBool(tp.ref.Append("require_partition_filter"))
+	return terra.ReferenceAsBool(tp.ref.Append("require_partition_filter"))
 }
 
 func (tp TimePartitioningAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(tp.ref.Append("type"))
+	return terra.ReferenceAsString(tp.ref.Append("type"))
 }
 
 type ViewAttributes struct {
 	ref terra.Reference
 }
 
-func (v ViewAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v ViewAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v ViewAttributes) InternalWithRef(ref terra.Reference) ViewAttributes {
 	return ViewAttributes{ref: ref}
 }
 
-func (v ViewAttributes) InternalTokens() hclwrite.Tokens {
+func (v ViewAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 
 func (v ViewAttributes) Query() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("query"))
+	return terra.ReferenceAsString(v.ref.Append("query"))
 }
 
 func (v ViewAttributes) UseLegacySql() terra.BoolValue {
-	return terra.ReferenceBool(v.ref.Append("use_legacy_sql"))
+	return terra.ReferenceAsBool(v.ref.Append("use_legacy_sql"))
 }
 
 type EncryptionConfigurationState struct {

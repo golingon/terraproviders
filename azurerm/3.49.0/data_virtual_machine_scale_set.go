@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataVirtualMachineScaleSet creates a new instance of [DataVirtualMachineScaleSet].
 func NewDataVirtualMachineScaleSet(name string, args DataVirtualMachineScaleSetArgs) *DataVirtualMachineScaleSet {
 	return &DataVirtualMachineScaleSet{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataVirtualMachineScaleSet(name string, args DataVirtualMachineScaleSetA
 
 var _ terra.DataResource = (*DataVirtualMachineScaleSet)(nil)
 
+// DataVirtualMachineScaleSet represents the Terraform data resource azurerm_virtual_machine_scale_set.
 type DataVirtualMachineScaleSet struct {
 	Name string
 	Args DataVirtualMachineScaleSetArgs
 }
 
+// DataSource returns the Terraform object type for [DataVirtualMachineScaleSet].
 func (vmss *DataVirtualMachineScaleSet) DataSource() string {
 	return "azurerm_virtual_machine_scale_set"
 }
 
+// LocalName returns the local name for [DataVirtualMachineScaleSet].
 func (vmss *DataVirtualMachineScaleSet) LocalName() string {
 	return vmss.Name
 }
 
+// Configuration returns the configuration (args) for [DataVirtualMachineScaleSet].
 func (vmss *DataVirtualMachineScaleSet) Configuration() interface{} {
 	return vmss.Args
 }
 
+// Attributes returns the attributes for [DataVirtualMachineScaleSet].
 func (vmss *DataVirtualMachineScaleSet) Attributes() dataVirtualMachineScaleSetAttributes {
 	return dataVirtualMachineScaleSetAttributes{ref: terra.ReferenceDataResource(vmss)}
 }
 
+// DataVirtualMachineScaleSetArgs contains the configurations for azurerm_virtual_machine_scale_set.
 type DataVirtualMachineScaleSetArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -57,34 +64,38 @@ type dataVirtualMachineScaleSetAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_virtual_machine_scale_set.
 func (vmss dataVirtualMachineScaleSetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vmss.ref.Append("id"))
+	return terra.ReferenceAsString(vmss.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_virtual_machine_scale_set.
 func (vmss dataVirtualMachineScaleSetAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(vmss.ref.Append("location"))
+	return terra.ReferenceAsString(vmss.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_virtual_machine_scale_set.
 func (vmss dataVirtualMachineScaleSetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(vmss.ref.Append("name"))
+	return terra.ReferenceAsString(vmss.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_virtual_machine_scale_set.
 func (vmss dataVirtualMachineScaleSetAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(vmss.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(vmss.ref.Append("resource_group_name"))
 }
 
 func (vmss dataVirtualMachineScaleSetAttributes) Identity() terra.ListValue[datavirtualmachinescaleset.IdentityAttributes] {
-	return terra.ReferenceList[datavirtualmachinescaleset.IdentityAttributes](vmss.ref.Append("identity"))
+	return terra.ReferenceAsList[datavirtualmachinescaleset.IdentityAttributes](vmss.ref.Append("identity"))
 }
 
 func (vmss dataVirtualMachineScaleSetAttributes) Instances() terra.ListValue[datavirtualmachinescaleset.InstancesAttributes] {
-	return terra.ReferenceList[datavirtualmachinescaleset.InstancesAttributes](vmss.ref.Append("instances"))
+	return terra.ReferenceAsList[datavirtualmachinescaleset.InstancesAttributes](vmss.ref.Append("instances"))
 }
 
 func (vmss dataVirtualMachineScaleSetAttributes) NetworkInterface() terra.ListValue[datavirtualmachinescaleset.NetworkInterfaceAttributes] {
-	return terra.ReferenceList[datavirtualmachinescaleset.NetworkInterfaceAttributes](vmss.ref.Append("network_interface"))
+	return terra.ReferenceAsList[datavirtualmachinescaleset.NetworkInterfaceAttributes](vmss.ref.Append("network_interface"))
 }
 
 func (vmss dataVirtualMachineScaleSetAttributes) Timeouts() datavirtualmachinescaleset.TimeoutsAttributes {
-	return terra.ReferenceSingle[datavirtualmachinescaleset.TimeoutsAttributes](vmss.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datavirtualmachinescaleset.TimeoutsAttributes](vmss.ref.Append("timeouts"))
 }

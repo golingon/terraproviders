@@ -33,64 +33,64 @@ type CacheAttributes struct {
 	ref terra.Reference
 }
 
-func (c CacheAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CacheAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CacheAttributes) InternalWithRef(ref terra.Reference) CacheAttributes {
 	return CacheAttributes{ref: ref}
 }
 
-func (c CacheAttributes) InternalTokens() hclwrite.Tokens {
+func (c CacheAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c CacheAttributes) CompressionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(c.ref.Append("compression_enabled"))
+	return terra.ReferenceAsBool(c.ref.Append("compression_enabled"))
 }
 
 func (c CacheAttributes) ContentTypesToCompress() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](c.ref.Append("content_types_to_compress"))
+	return terra.ReferenceAsList[terra.StringValue](c.ref.Append("content_types_to_compress"))
 }
 
 func (c CacheAttributes) QueryStringCachingBehavior() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("query_string_caching_behavior"))
+	return terra.ReferenceAsString(c.ref.Append("query_string_caching_behavior"))
 }
 
 func (c CacheAttributes) QueryStrings() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](c.ref.Append("query_strings"))
+	return terra.ReferenceAsList[terra.StringValue](c.ref.Append("query_strings"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type CacheState struct {

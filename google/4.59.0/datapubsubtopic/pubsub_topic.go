@@ -15,44 +15,44 @@ type MessageStoragePolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (msp MessageStoragePolicyAttributes) InternalRef() terra.Reference {
-	return msp.ref
+func (msp MessageStoragePolicyAttributes) InternalRef() (terra.Reference, error) {
+	return msp.ref, nil
 }
 
 func (msp MessageStoragePolicyAttributes) InternalWithRef(ref terra.Reference) MessageStoragePolicyAttributes {
 	return MessageStoragePolicyAttributes{ref: ref}
 }
 
-func (msp MessageStoragePolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (msp MessageStoragePolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return msp.ref.InternalTokens()
 }
 
 func (msp MessageStoragePolicyAttributes) AllowedPersistenceRegions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](msp.ref.Append("allowed_persistence_regions"))
+	return terra.ReferenceAsList[terra.StringValue](msp.ref.Append("allowed_persistence_regions"))
 }
 
 type SchemaSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ss SchemaSettingsAttributes) InternalRef() terra.Reference {
-	return ss.ref
+func (ss SchemaSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ss.ref, nil
 }
 
 func (ss SchemaSettingsAttributes) InternalWithRef(ref terra.Reference) SchemaSettingsAttributes {
 	return SchemaSettingsAttributes{ref: ref}
 }
 
-func (ss SchemaSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ss SchemaSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ss.ref.InternalTokens()
 }
 
 func (ss SchemaSettingsAttributes) Encoding() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("encoding"))
+	return terra.ReferenceAsString(ss.ref.Append("encoding"))
 }
 
 func (ss SchemaSettingsAttributes) Schema() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("schema"))
+	return terra.ReferenceAsString(ss.ref.Append("schema"))
 }
 
 type MessageStoragePolicyState struct {

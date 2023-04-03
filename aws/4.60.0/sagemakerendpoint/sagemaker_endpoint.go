@@ -70,7 +70,7 @@ func (dc DeploymentConfigAttributes) InternalWithRef(ref terra.Reference) Deploy
 	return DeploymentConfigAttributes{ref: ref}
 }
 
-func (dc DeploymentConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (dc DeploymentConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dc.ref.InternalTokens()
 }
 
@@ -94,7 +94,7 @@ func (arc AutoRollbackConfigurationAttributes) InternalWithRef(ref terra.Referen
 	return AutoRollbackConfigurationAttributes{ref: ref}
 }
 
-func (arc AutoRollbackConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (arc AutoRollbackConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return arc.ref.InternalTokens()
 }
 
@@ -114,7 +114,7 @@ func (a AlarmsAttributes) InternalWithRef(ref terra.Reference) AlarmsAttributes 
 	return AlarmsAttributes{ref: ref}
 }
 
-func (a AlarmsAttributes) InternalTokens() hclwrite.Tokens {
+func (a AlarmsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -134,7 +134,7 @@ func (bgup BlueGreenUpdatePolicyAttributes) InternalWithRef(ref terra.Reference)
 	return BlueGreenUpdatePolicyAttributes{ref: ref}
 }
 
-func (bgup BlueGreenUpdatePolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (bgup BlueGreenUpdatePolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bgup.ref.InternalTokens()
 }
 
@@ -162,7 +162,7 @@ func (trc TrafficRoutingConfigurationAttributes) InternalWithRef(ref terra.Refer
 	return TrafficRoutingConfigurationAttributes{ref: ref}
 }
 
-func (trc TrafficRoutingConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (trc TrafficRoutingConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return trc.ref.InternalTokens()
 }
 
@@ -194,7 +194,7 @@ func (cs CanarySizeAttributes) InternalWithRef(ref terra.Reference) CanarySizeAt
 	return CanarySizeAttributes{ref: ref}
 }
 
-func (cs CanarySizeAttributes) InternalTokens() hclwrite.Tokens {
+func (cs CanarySizeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cs.ref.InternalTokens()
 }
 
@@ -218,7 +218,7 @@ func (lss LinearStepSizeAttributes) InternalWithRef(ref terra.Reference) LinearS
 	return LinearStepSizeAttributes{ref: ref}
 }
 
-func (lss LinearStepSizeAttributes) InternalTokens() hclwrite.Tokens {
+func (lss LinearStepSizeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lss.ref.InternalTokens()
 }
 

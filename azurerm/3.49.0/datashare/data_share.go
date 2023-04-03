@@ -31,60 +31,60 @@ type SnapshotScheduleAttributes struct {
 	ref terra.Reference
 }
 
-func (ss SnapshotScheduleAttributes) InternalRef() terra.Reference {
-	return ss.ref
+func (ss SnapshotScheduleAttributes) InternalRef() (terra.Reference, error) {
+	return ss.ref, nil
 }
 
 func (ss SnapshotScheduleAttributes) InternalWithRef(ref terra.Reference) SnapshotScheduleAttributes {
 	return SnapshotScheduleAttributes{ref: ref}
 }
 
-func (ss SnapshotScheduleAttributes) InternalTokens() hclwrite.Tokens {
+func (ss SnapshotScheduleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ss.ref.InternalTokens()
 }
 
 func (ss SnapshotScheduleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("name"))
+	return terra.ReferenceAsString(ss.ref.Append("name"))
 }
 
 func (ss SnapshotScheduleAttributes) Recurrence() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("recurrence"))
+	return terra.ReferenceAsString(ss.ref.Append("recurrence"))
 }
 
 func (ss SnapshotScheduleAttributes) StartTime() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("start_time"))
+	return terra.ReferenceAsString(ss.ref.Append("start_time"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type SnapshotScheduleState struct {

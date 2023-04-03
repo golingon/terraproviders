@@ -44,96 +44,96 @@ type AllowRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (ar AllowRuleAttributes) InternalRef() terra.Reference {
-	return ar.ref
+func (ar AllowRuleAttributes) InternalRef() (terra.Reference, error) {
+	return ar.ref, nil
 }
 
 func (ar AllowRuleAttributes) InternalWithRef(ref terra.Reference) AllowRuleAttributes {
 	return AllowRuleAttributes{ref: ref}
 }
 
-func (ar AllowRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (ar AllowRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ar.ref.InternalTokens()
 }
 
 func (ar AllowRuleAttributes) ConnectionFromIpsNotAllowed() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ar.ref.Append("connection_from_ips_not_allowed"))
+	return terra.ReferenceAsSet[terra.StringValue](ar.ref.Append("connection_from_ips_not_allowed"))
 }
 
 func (ar AllowRuleAttributes) ConnectionToIpsNotAllowed() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ar.ref.Append("connection_to_ips_not_allowed"))
+	return terra.ReferenceAsSet[terra.StringValue](ar.ref.Append("connection_to_ips_not_allowed"))
 }
 
 func (ar AllowRuleAttributes) LocalUsersNotAllowed() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ar.ref.Append("local_users_not_allowed"))
+	return terra.ReferenceAsSet[terra.StringValue](ar.ref.Append("local_users_not_allowed"))
 }
 
 func (ar AllowRuleAttributes) ProcessesNotAllowed() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ar.ref.Append("processes_not_allowed"))
+	return terra.ReferenceAsSet[terra.StringValue](ar.ref.Append("processes_not_allowed"))
 }
 
 type RangeRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (rr RangeRuleAttributes) InternalRef() terra.Reference {
-	return rr.ref
+func (rr RangeRuleAttributes) InternalRef() (terra.Reference, error) {
+	return rr.ref, nil
 }
 
 func (rr RangeRuleAttributes) InternalWithRef(ref terra.Reference) RangeRuleAttributes {
 	return RangeRuleAttributes{ref: ref}
 }
 
-func (rr RangeRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (rr RangeRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rr.ref.InternalTokens()
 }
 
 func (rr RangeRuleAttributes) Duration() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("duration"))
+	return terra.ReferenceAsString(rr.ref.Append("duration"))
 }
 
 func (rr RangeRuleAttributes) Max() terra.NumberValue {
-	return terra.ReferenceNumber(rr.ref.Append("max"))
+	return terra.ReferenceAsNumber(rr.ref.Append("max"))
 }
 
 func (rr RangeRuleAttributes) Min() terra.NumberValue {
-	return terra.ReferenceNumber(rr.ref.Append("min"))
+	return terra.ReferenceAsNumber(rr.ref.Append("min"))
 }
 
 func (rr RangeRuleAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("type"))
+	return terra.ReferenceAsString(rr.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AllowRuleState struct {

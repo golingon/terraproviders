@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeTargetSslProxy creates a new instance of [ComputeTargetSslProxy].
 func NewComputeTargetSslProxy(name string, args ComputeTargetSslProxyArgs) *ComputeTargetSslProxy {
 	return &ComputeTargetSslProxy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeTargetSslProxy(name string, args ComputeTargetSslProxyArgs) *Comp
 
 var _ terra.Resource = (*ComputeTargetSslProxy)(nil)
 
+// ComputeTargetSslProxy represents the Terraform resource google_compute_target_ssl_proxy.
 type ComputeTargetSslProxy struct {
-	Name  string
-	Args  ComputeTargetSslProxyArgs
-	state *computeTargetSslProxyState
+	Name      string
+	Args      ComputeTargetSslProxyArgs
+	state     *computeTargetSslProxyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeTargetSslProxy].
 func (ctsp *ComputeTargetSslProxy) Type() string {
 	return "google_compute_target_ssl_proxy"
 }
 
+// LocalName returns the local name for [ComputeTargetSslProxy].
 func (ctsp *ComputeTargetSslProxy) LocalName() string {
 	return ctsp.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeTargetSslProxy].
 func (ctsp *ComputeTargetSslProxy) Configuration() interface{} {
 	return ctsp.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeTargetSslProxy].
+func (ctsp *ComputeTargetSslProxy) DependOn() terra.Reference {
+	return terra.ReferenceResource(ctsp)
+}
+
+// Dependencies returns the list of resources [ComputeTargetSslProxy] depends_on.
+func (ctsp *ComputeTargetSslProxy) Dependencies() terra.Dependencies {
+	return ctsp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeTargetSslProxy].
+func (ctsp *ComputeTargetSslProxy) LifecycleManagement() *terra.Lifecycle {
+	return ctsp.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeTargetSslProxy].
 func (ctsp *ComputeTargetSslProxy) Attributes() computeTargetSslProxyAttributes {
 	return computeTargetSslProxyAttributes{ref: terra.ReferenceResource(ctsp)}
 }
 
+// ImportState imports the given attribute values into [ComputeTargetSslProxy]'s state.
 func (ctsp *ComputeTargetSslProxy) ImportState(av io.Reader) error {
 	ctsp.state = &computeTargetSslProxyState{}
 	if err := json.NewDecoder(av).Decode(ctsp.state); err != nil {
@@ -49,10 +73,12 @@ func (ctsp *ComputeTargetSslProxy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeTargetSslProxy] has state.
 func (ctsp *ComputeTargetSslProxy) State() (*computeTargetSslProxyState, bool) {
 	return ctsp.state, ctsp.state != nil
 }
 
+// StateMust returns the state for [ComputeTargetSslProxy]. Panics if the state is nil.
 func (ctsp *ComputeTargetSslProxy) StateMust() *computeTargetSslProxyState {
 	if ctsp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ctsp.Type(), ctsp.LocalName()))
@@ -60,10 +86,7 @@ func (ctsp *ComputeTargetSslProxy) StateMust() *computeTargetSslProxyState {
 	return ctsp.state
 }
 
-func (ctsp *ComputeTargetSslProxy) DependOn() terra.Reference {
-	return terra.ReferenceResource(ctsp)
-}
-
+// ComputeTargetSslProxyArgs contains the configurations for google_compute_target_ssl_proxy.
 type ComputeTargetSslProxyArgs struct {
 	// BackendService: string, required
 	BackendService terra.StringValue `hcl:"backend_service,attr" validate:"required"`
@@ -85,63 +108,73 @@ type ComputeTargetSslProxyArgs struct {
 	SslPolicy terra.StringValue `hcl:"ssl_policy,attr"`
 	// Timeouts: optional
 	Timeouts *computetargetsslproxy.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeTargetSslProxy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeTargetSslProxyAttributes struct {
 	ref terra.Reference
 }
 
+// BackendService returns a reference to field backend_service of google_compute_target_ssl_proxy.
 func (ctsp computeTargetSslProxyAttributes) BackendService() terra.StringValue {
-	return terra.ReferenceString(ctsp.ref.Append("backend_service"))
+	return terra.ReferenceAsString(ctsp.ref.Append("backend_service"))
 }
 
+// CertificateMap returns a reference to field certificate_map of google_compute_target_ssl_proxy.
 func (ctsp computeTargetSslProxyAttributes) CertificateMap() terra.StringValue {
-	return terra.ReferenceString(ctsp.ref.Append("certificate_map"))
+	return terra.ReferenceAsString(ctsp.ref.Append("certificate_map"))
 }
 
+// CreationTimestamp returns a reference to field creation_timestamp of google_compute_target_ssl_proxy.
 func (ctsp computeTargetSslProxyAttributes) CreationTimestamp() terra.StringValue {
-	return terra.ReferenceString(ctsp.ref.Append("creation_timestamp"))
+	return terra.ReferenceAsString(ctsp.ref.Append("creation_timestamp"))
 }
 
+// Description returns a reference to field description of google_compute_target_ssl_proxy.
 func (ctsp computeTargetSslProxyAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ctsp.ref.Append("description"))
+	return terra.ReferenceAsString(ctsp.ref.Append("description"))
 }
 
+// Id returns a reference to field id of google_compute_target_ssl_proxy.
 func (ctsp computeTargetSslProxyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ctsp.ref.Append("id"))
+	return terra.ReferenceAsString(ctsp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_compute_target_ssl_proxy.
 func (ctsp computeTargetSslProxyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ctsp.ref.Append("name"))
+	return terra.ReferenceAsString(ctsp.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_compute_target_ssl_proxy.
 func (ctsp computeTargetSslProxyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ctsp.ref.Append("project"))
+	return terra.ReferenceAsString(ctsp.ref.Append("project"))
 }
 
+// ProxyHeader returns a reference to field proxy_header of google_compute_target_ssl_proxy.
 func (ctsp computeTargetSslProxyAttributes) ProxyHeader() terra.StringValue {
-	return terra.ReferenceString(ctsp.ref.Append("proxy_header"))
+	return terra.ReferenceAsString(ctsp.ref.Append("proxy_header"))
 }
 
+// ProxyId returns a reference to field proxy_id of google_compute_target_ssl_proxy.
 func (ctsp computeTargetSslProxyAttributes) ProxyId() terra.NumberValue {
-	return terra.ReferenceNumber(ctsp.ref.Append("proxy_id"))
+	return terra.ReferenceAsNumber(ctsp.ref.Append("proxy_id"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_target_ssl_proxy.
 func (ctsp computeTargetSslProxyAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(ctsp.ref.Append("self_link"))
+	return terra.ReferenceAsString(ctsp.ref.Append("self_link"))
 }
 
+// SslCertificates returns a reference to field ssl_certificates of google_compute_target_ssl_proxy.
 func (ctsp computeTargetSslProxyAttributes) SslCertificates() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ctsp.ref.Append("ssl_certificates"))
+	return terra.ReferenceAsList[terra.StringValue](ctsp.ref.Append("ssl_certificates"))
 }
 
+// SslPolicy returns a reference to field ssl_policy of google_compute_target_ssl_proxy.
 func (ctsp computeTargetSslProxyAttributes) SslPolicy() terra.StringValue {
-	return terra.ReferenceString(ctsp.ref.Append("ssl_policy"))
+	return terra.ReferenceAsString(ctsp.ref.Append("ssl_policy"))
 }
 
 func (ctsp computeTargetSslProxyAttributes) Timeouts() computetargetsslproxy.TimeoutsAttributes {
-	return terra.ReferenceSingle[computetargetsslproxy.TimeoutsAttributes](ctsp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computetargetsslproxy.TimeoutsAttributes](ctsp.ref.Append("timeouts"))
 }
 
 type computeTargetSslProxyState struct {

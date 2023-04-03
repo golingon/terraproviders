@@ -72,196 +72,196 @@ type DestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (d DestinationAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DestinationAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DestinationAttributes) InternalWithRef(ref terra.Reference) DestinationAttributes {
 	return DestinationAttributes{ref: ref}
 }
 
-func (d DestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (d DestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d DestinationAttributes) CloudFunction() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("cloud_function"))
+	return terra.ReferenceAsString(d.ref.Append("cloud_function"))
 }
 
 func (d DestinationAttributes) Workflow() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("workflow"))
+	return terra.ReferenceAsString(d.ref.Append("workflow"))
 }
 
 func (d DestinationAttributes) CloudRunService() terra.ListValue[CloudRunServiceAttributes] {
-	return terra.ReferenceList[CloudRunServiceAttributes](d.ref.Append("cloud_run_service"))
+	return terra.ReferenceAsList[CloudRunServiceAttributes](d.ref.Append("cloud_run_service"))
 }
 
 func (d DestinationAttributes) Gke() terra.ListValue[GkeAttributes] {
-	return terra.ReferenceList[GkeAttributes](d.ref.Append("gke"))
+	return terra.ReferenceAsList[GkeAttributes](d.ref.Append("gke"))
 }
 
 type CloudRunServiceAttributes struct {
 	ref terra.Reference
 }
 
-func (crs CloudRunServiceAttributes) InternalRef() terra.Reference {
-	return crs.ref
+func (crs CloudRunServiceAttributes) InternalRef() (terra.Reference, error) {
+	return crs.ref, nil
 }
 
 func (crs CloudRunServiceAttributes) InternalWithRef(ref terra.Reference) CloudRunServiceAttributes {
 	return CloudRunServiceAttributes{ref: ref}
 }
 
-func (crs CloudRunServiceAttributes) InternalTokens() hclwrite.Tokens {
+func (crs CloudRunServiceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return crs.ref.InternalTokens()
 }
 
 func (crs CloudRunServiceAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(crs.ref.Append("path"))
+	return terra.ReferenceAsString(crs.ref.Append("path"))
 }
 
 func (crs CloudRunServiceAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(crs.ref.Append("region"))
+	return terra.ReferenceAsString(crs.ref.Append("region"))
 }
 
 func (crs CloudRunServiceAttributes) Service() terra.StringValue {
-	return terra.ReferenceString(crs.ref.Append("service"))
+	return terra.ReferenceAsString(crs.ref.Append("service"))
 }
 
 type GkeAttributes struct {
 	ref terra.Reference
 }
 
-func (g GkeAttributes) InternalRef() terra.Reference {
-	return g.ref
+func (g GkeAttributes) InternalRef() (terra.Reference, error) {
+	return g.ref, nil
 }
 
 func (g GkeAttributes) InternalWithRef(ref terra.Reference) GkeAttributes {
 	return GkeAttributes{ref: ref}
 }
 
-func (g GkeAttributes) InternalTokens() hclwrite.Tokens {
+func (g GkeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return g.ref.InternalTokens()
 }
 
 func (g GkeAttributes) Cluster() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("cluster"))
+	return terra.ReferenceAsString(g.ref.Append("cluster"))
 }
 
 func (g GkeAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("location"))
+	return terra.ReferenceAsString(g.ref.Append("location"))
 }
 
 func (g GkeAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("namespace"))
+	return terra.ReferenceAsString(g.ref.Append("namespace"))
 }
 
 func (g GkeAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("path"))
+	return terra.ReferenceAsString(g.ref.Append("path"))
 }
 
 func (g GkeAttributes) Service() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("service"))
+	return terra.ReferenceAsString(g.ref.Append("service"))
 }
 
 type MatchingCriteriaAttributes struct {
 	ref terra.Reference
 }
 
-func (mc MatchingCriteriaAttributes) InternalRef() terra.Reference {
-	return mc.ref
+func (mc MatchingCriteriaAttributes) InternalRef() (terra.Reference, error) {
+	return mc.ref, nil
 }
 
 func (mc MatchingCriteriaAttributes) InternalWithRef(ref terra.Reference) MatchingCriteriaAttributes {
 	return MatchingCriteriaAttributes{ref: ref}
 }
 
-func (mc MatchingCriteriaAttributes) InternalTokens() hclwrite.Tokens {
+func (mc MatchingCriteriaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mc.ref.InternalTokens()
 }
 
 func (mc MatchingCriteriaAttributes) Attribute() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("attribute"))
+	return terra.ReferenceAsString(mc.ref.Append("attribute"))
 }
 
 func (mc MatchingCriteriaAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("operator"))
+	return terra.ReferenceAsString(mc.ref.Append("operator"))
 }
 
 func (mc MatchingCriteriaAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("value"))
+	return terra.ReferenceAsString(mc.ref.Append("value"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type TransportAttributes struct {
 	ref terra.Reference
 }
 
-func (t TransportAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TransportAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TransportAttributes) InternalWithRef(ref terra.Reference) TransportAttributes {
 	return TransportAttributes{ref: ref}
 }
 
-func (t TransportAttributes) InternalTokens() hclwrite.Tokens {
+func (t TransportAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TransportAttributes) Pubsub() terra.ListValue[PubsubAttributes] {
-	return terra.ReferenceList[PubsubAttributes](t.ref.Append("pubsub"))
+	return terra.ReferenceAsList[PubsubAttributes](t.ref.Append("pubsub"))
 }
 
 type PubsubAttributes struct {
 	ref terra.Reference
 }
 
-func (p PubsubAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p PubsubAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p PubsubAttributes) InternalWithRef(ref terra.Reference) PubsubAttributes {
 	return PubsubAttributes{ref: ref}
 }
 
-func (p PubsubAttributes) InternalTokens() hclwrite.Tokens {
+func (p PubsubAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
 func (p PubsubAttributes) Subscription() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("subscription"))
+	return terra.ReferenceAsString(p.ref.Append("subscription"))
 }
 
 func (p PubsubAttributes) Topic() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("topic"))
+	return terra.ReferenceAsString(p.ref.Append("topic"))
 }
 
 type DestinationState struct {

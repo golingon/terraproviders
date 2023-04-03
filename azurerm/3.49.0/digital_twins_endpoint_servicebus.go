@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDigitalTwinsEndpointServicebus creates a new instance of [DigitalTwinsEndpointServicebus].
 func NewDigitalTwinsEndpointServicebus(name string, args DigitalTwinsEndpointServicebusArgs) *DigitalTwinsEndpointServicebus {
 	return &DigitalTwinsEndpointServicebus{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDigitalTwinsEndpointServicebus(name string, args DigitalTwinsEndpointSer
 
 var _ terra.Resource = (*DigitalTwinsEndpointServicebus)(nil)
 
+// DigitalTwinsEndpointServicebus represents the Terraform resource azurerm_digital_twins_endpoint_servicebus.
 type DigitalTwinsEndpointServicebus struct {
-	Name  string
-	Args  DigitalTwinsEndpointServicebusArgs
-	state *digitalTwinsEndpointServicebusState
+	Name      string
+	Args      DigitalTwinsEndpointServicebusArgs
+	state     *digitalTwinsEndpointServicebusState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DigitalTwinsEndpointServicebus].
 func (dtes *DigitalTwinsEndpointServicebus) Type() string {
 	return "azurerm_digital_twins_endpoint_servicebus"
 }
 
+// LocalName returns the local name for [DigitalTwinsEndpointServicebus].
 func (dtes *DigitalTwinsEndpointServicebus) LocalName() string {
 	return dtes.Name
 }
 
+// Configuration returns the configuration (args) for [DigitalTwinsEndpointServicebus].
 func (dtes *DigitalTwinsEndpointServicebus) Configuration() interface{} {
 	return dtes.Args
 }
 
+// DependOn is used for other resources to depend on [DigitalTwinsEndpointServicebus].
+func (dtes *DigitalTwinsEndpointServicebus) DependOn() terra.Reference {
+	return terra.ReferenceResource(dtes)
+}
+
+// Dependencies returns the list of resources [DigitalTwinsEndpointServicebus] depends_on.
+func (dtes *DigitalTwinsEndpointServicebus) Dependencies() terra.Dependencies {
+	return dtes.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DigitalTwinsEndpointServicebus].
+func (dtes *DigitalTwinsEndpointServicebus) LifecycleManagement() *terra.Lifecycle {
+	return dtes.Lifecycle
+}
+
+// Attributes returns the attributes for [DigitalTwinsEndpointServicebus].
 func (dtes *DigitalTwinsEndpointServicebus) Attributes() digitalTwinsEndpointServicebusAttributes {
 	return digitalTwinsEndpointServicebusAttributes{ref: terra.ReferenceResource(dtes)}
 }
 
+// ImportState imports the given attribute values into [DigitalTwinsEndpointServicebus]'s state.
 func (dtes *DigitalTwinsEndpointServicebus) ImportState(av io.Reader) error {
 	dtes.state = &digitalTwinsEndpointServicebusState{}
 	if err := json.NewDecoder(av).Decode(dtes.state); err != nil {
@@ -49,10 +73,12 @@ func (dtes *DigitalTwinsEndpointServicebus) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DigitalTwinsEndpointServicebus] has state.
 func (dtes *DigitalTwinsEndpointServicebus) State() (*digitalTwinsEndpointServicebusState, bool) {
 	return dtes.state, dtes.state != nil
 }
 
+// StateMust returns the state for [DigitalTwinsEndpointServicebus]. Panics if the state is nil.
 func (dtes *DigitalTwinsEndpointServicebus) StateMust() *digitalTwinsEndpointServicebusState {
 	if dtes.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dtes.Type(), dtes.LocalName()))
@@ -60,10 +86,7 @@ func (dtes *DigitalTwinsEndpointServicebus) StateMust() *digitalTwinsEndpointSer
 	return dtes.state
 }
 
-func (dtes *DigitalTwinsEndpointServicebus) DependOn() terra.Reference {
-	return terra.ReferenceResource(dtes)
-}
-
+// DigitalTwinsEndpointServicebusArgs contains the configurations for azurerm_digital_twins_endpoint_servicebus.
 type DigitalTwinsEndpointServicebusArgs struct {
 	// DeadLetterStorageSecret: string, optional
 	DeadLetterStorageSecret terra.StringValue `hcl:"dead_letter_storage_secret,attr"`
@@ -79,39 +102,43 @@ type DigitalTwinsEndpointServicebusArgs struct {
 	ServicebusSecondaryConnectionString terra.StringValue `hcl:"servicebus_secondary_connection_string,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *digitaltwinsendpointservicebus.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DigitalTwinsEndpointServicebus depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type digitalTwinsEndpointServicebusAttributes struct {
 	ref terra.Reference
 }
 
+// DeadLetterStorageSecret returns a reference to field dead_letter_storage_secret of azurerm_digital_twins_endpoint_servicebus.
 func (dtes digitalTwinsEndpointServicebusAttributes) DeadLetterStorageSecret() terra.StringValue {
-	return terra.ReferenceString(dtes.ref.Append("dead_letter_storage_secret"))
+	return terra.ReferenceAsString(dtes.ref.Append("dead_letter_storage_secret"))
 }
 
+// DigitalTwinsId returns a reference to field digital_twins_id of azurerm_digital_twins_endpoint_servicebus.
 func (dtes digitalTwinsEndpointServicebusAttributes) DigitalTwinsId() terra.StringValue {
-	return terra.ReferenceString(dtes.ref.Append("digital_twins_id"))
+	return terra.ReferenceAsString(dtes.ref.Append("digital_twins_id"))
 }
 
+// Id returns a reference to field id of azurerm_digital_twins_endpoint_servicebus.
 func (dtes digitalTwinsEndpointServicebusAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dtes.ref.Append("id"))
+	return terra.ReferenceAsString(dtes.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_digital_twins_endpoint_servicebus.
 func (dtes digitalTwinsEndpointServicebusAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dtes.ref.Append("name"))
+	return terra.ReferenceAsString(dtes.ref.Append("name"))
 }
 
+// ServicebusPrimaryConnectionString returns a reference to field servicebus_primary_connection_string of azurerm_digital_twins_endpoint_servicebus.
 func (dtes digitalTwinsEndpointServicebusAttributes) ServicebusPrimaryConnectionString() terra.StringValue {
-	return terra.ReferenceString(dtes.ref.Append("servicebus_primary_connection_string"))
+	return terra.ReferenceAsString(dtes.ref.Append("servicebus_primary_connection_string"))
 }
 
+// ServicebusSecondaryConnectionString returns a reference to field servicebus_secondary_connection_string of azurerm_digital_twins_endpoint_servicebus.
 func (dtes digitalTwinsEndpointServicebusAttributes) ServicebusSecondaryConnectionString() terra.StringValue {
-	return terra.ReferenceString(dtes.ref.Append("servicebus_secondary_connection_string"))
+	return terra.ReferenceAsString(dtes.ref.Append("servicebus_secondary_connection_string"))
 }
 
 func (dtes digitalTwinsEndpointServicebusAttributes) Timeouts() digitaltwinsendpointservicebus.TimeoutsAttributes {
-	return terra.ReferenceSingle[digitaltwinsendpointservicebus.TimeoutsAttributes](dtes.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[digitaltwinsendpointservicebus.TimeoutsAttributes](dtes.ref.Append("timeouts"))
 }
 
 type digitalTwinsEndpointServicebusState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComposerEnvironment creates a new instance of [ComposerEnvironment].
 func NewComposerEnvironment(name string, args ComposerEnvironmentArgs) *ComposerEnvironment {
 	return &ComposerEnvironment{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComposerEnvironment(name string, args ComposerEnvironmentArgs) *Composer
 
 var _ terra.Resource = (*ComposerEnvironment)(nil)
 
+// ComposerEnvironment represents the Terraform resource google_composer_environment.
 type ComposerEnvironment struct {
-	Name  string
-	Args  ComposerEnvironmentArgs
-	state *composerEnvironmentState
+	Name      string
+	Args      ComposerEnvironmentArgs
+	state     *composerEnvironmentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComposerEnvironment].
 func (ce *ComposerEnvironment) Type() string {
 	return "google_composer_environment"
 }
 
+// LocalName returns the local name for [ComposerEnvironment].
 func (ce *ComposerEnvironment) LocalName() string {
 	return ce.Name
 }
 
+// Configuration returns the configuration (args) for [ComposerEnvironment].
 func (ce *ComposerEnvironment) Configuration() interface{} {
 	return ce.Args
 }
 
+// DependOn is used for other resources to depend on [ComposerEnvironment].
+func (ce *ComposerEnvironment) DependOn() terra.Reference {
+	return terra.ReferenceResource(ce)
+}
+
+// Dependencies returns the list of resources [ComposerEnvironment] depends_on.
+func (ce *ComposerEnvironment) Dependencies() terra.Dependencies {
+	return ce.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComposerEnvironment].
+func (ce *ComposerEnvironment) LifecycleManagement() *terra.Lifecycle {
+	return ce.Lifecycle
+}
+
+// Attributes returns the attributes for [ComposerEnvironment].
 func (ce *ComposerEnvironment) Attributes() composerEnvironmentAttributes {
 	return composerEnvironmentAttributes{ref: terra.ReferenceResource(ce)}
 }
 
+// ImportState imports the given attribute values into [ComposerEnvironment]'s state.
 func (ce *ComposerEnvironment) ImportState(av io.Reader) error {
 	ce.state = &composerEnvironmentState{}
 	if err := json.NewDecoder(av).Decode(ce.state); err != nil {
@@ -49,10 +73,12 @@ func (ce *ComposerEnvironment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComposerEnvironment] has state.
 func (ce *ComposerEnvironment) State() (*composerEnvironmentState, bool) {
 	return ce.state, ce.state != nil
 }
 
+// StateMust returns the state for [ComposerEnvironment]. Panics if the state is nil.
 func (ce *ComposerEnvironment) StateMust() *composerEnvironmentState {
 	if ce.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ce.Type(), ce.LocalName()))
@@ -60,10 +86,7 @@ func (ce *ComposerEnvironment) StateMust() *composerEnvironmentState {
 	return ce.state
 }
 
-func (ce *ComposerEnvironment) DependOn() terra.Reference {
-	return terra.ReferenceResource(ce)
-}
-
+// ComposerEnvironmentArgs contains the configurations for google_composer_environment.
 type ComposerEnvironmentArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,39 +102,42 @@ type ComposerEnvironmentArgs struct {
 	Config *composerenvironment.Config `hcl:"config,block"`
 	// Timeouts: optional
 	Timeouts *composerenvironment.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComposerEnvironment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type composerEnvironmentAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of google_composer_environment.
 func (ce composerEnvironmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ce.ref.Append("id"))
+	return terra.ReferenceAsString(ce.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_composer_environment.
 func (ce composerEnvironmentAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ce.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](ce.ref.Append("labels"))
 }
 
+// Name returns a reference to field name of google_composer_environment.
 func (ce composerEnvironmentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ce.ref.Append("name"))
+	return terra.ReferenceAsString(ce.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_composer_environment.
 func (ce composerEnvironmentAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ce.ref.Append("project"))
+	return terra.ReferenceAsString(ce.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_composer_environment.
 func (ce composerEnvironmentAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(ce.ref.Append("region"))
+	return terra.ReferenceAsString(ce.ref.Append("region"))
 }
 
 func (ce composerEnvironmentAttributes) Config() terra.ListValue[composerenvironment.ConfigAttributes] {
-	return terra.ReferenceList[composerenvironment.ConfigAttributes](ce.ref.Append("config"))
+	return terra.ReferenceAsList[composerenvironment.ConfigAttributes](ce.ref.Append("config"))
 }
 
 func (ce composerEnvironmentAttributes) Timeouts() composerenvironment.TimeoutsAttributes {
-	return terra.ReferenceSingle[composerenvironment.TimeoutsAttributes](ce.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[composerenvironment.TimeoutsAttributes](ce.ref.Append("timeouts"))
 }
 
 type composerEnvironmentState struct {

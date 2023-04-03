@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSiteRecoveryReplicationPolicy creates a new instance of [SiteRecoveryReplicationPolicy].
 func NewSiteRecoveryReplicationPolicy(name string, args SiteRecoveryReplicationPolicyArgs) *SiteRecoveryReplicationPolicy {
 	return &SiteRecoveryReplicationPolicy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSiteRecoveryReplicationPolicy(name string, args SiteRecoveryReplicationP
 
 var _ terra.Resource = (*SiteRecoveryReplicationPolicy)(nil)
 
+// SiteRecoveryReplicationPolicy represents the Terraform resource azurerm_site_recovery_replication_policy.
 type SiteRecoveryReplicationPolicy struct {
-	Name  string
-	Args  SiteRecoveryReplicationPolicyArgs
-	state *siteRecoveryReplicationPolicyState
+	Name      string
+	Args      SiteRecoveryReplicationPolicyArgs
+	state     *siteRecoveryReplicationPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SiteRecoveryReplicationPolicy].
 func (srrp *SiteRecoveryReplicationPolicy) Type() string {
 	return "azurerm_site_recovery_replication_policy"
 }
 
+// LocalName returns the local name for [SiteRecoveryReplicationPolicy].
 func (srrp *SiteRecoveryReplicationPolicy) LocalName() string {
 	return srrp.Name
 }
 
+// Configuration returns the configuration (args) for [SiteRecoveryReplicationPolicy].
 func (srrp *SiteRecoveryReplicationPolicy) Configuration() interface{} {
 	return srrp.Args
 }
 
+// DependOn is used for other resources to depend on [SiteRecoveryReplicationPolicy].
+func (srrp *SiteRecoveryReplicationPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(srrp)
+}
+
+// Dependencies returns the list of resources [SiteRecoveryReplicationPolicy] depends_on.
+func (srrp *SiteRecoveryReplicationPolicy) Dependencies() terra.Dependencies {
+	return srrp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SiteRecoveryReplicationPolicy].
+func (srrp *SiteRecoveryReplicationPolicy) LifecycleManagement() *terra.Lifecycle {
+	return srrp.Lifecycle
+}
+
+// Attributes returns the attributes for [SiteRecoveryReplicationPolicy].
 func (srrp *SiteRecoveryReplicationPolicy) Attributes() siteRecoveryReplicationPolicyAttributes {
 	return siteRecoveryReplicationPolicyAttributes{ref: terra.ReferenceResource(srrp)}
 }
 
+// ImportState imports the given attribute values into [SiteRecoveryReplicationPolicy]'s state.
 func (srrp *SiteRecoveryReplicationPolicy) ImportState(av io.Reader) error {
 	srrp.state = &siteRecoveryReplicationPolicyState{}
 	if err := json.NewDecoder(av).Decode(srrp.state); err != nil {
@@ -49,10 +73,12 @@ func (srrp *SiteRecoveryReplicationPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SiteRecoveryReplicationPolicy] has state.
 func (srrp *SiteRecoveryReplicationPolicy) State() (*siteRecoveryReplicationPolicyState, bool) {
 	return srrp.state, srrp.state != nil
 }
 
+// StateMust returns the state for [SiteRecoveryReplicationPolicy]. Panics if the state is nil.
 func (srrp *SiteRecoveryReplicationPolicy) StateMust() *siteRecoveryReplicationPolicyState {
 	if srrp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", srrp.Type(), srrp.LocalName()))
@@ -60,10 +86,7 @@ func (srrp *SiteRecoveryReplicationPolicy) StateMust() *siteRecoveryReplicationP
 	return srrp.state
 }
 
-func (srrp *SiteRecoveryReplicationPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(srrp)
-}
-
+// SiteRecoveryReplicationPolicyArgs contains the configurations for azurerm_site_recovery_replication_policy.
 type SiteRecoveryReplicationPolicyArgs struct {
 	// ApplicationConsistentSnapshotFrequencyInMinutes: number, required
 	ApplicationConsistentSnapshotFrequencyInMinutes terra.NumberValue `hcl:"application_consistent_snapshot_frequency_in_minutes,attr" validate:"required"`
@@ -79,39 +102,43 @@ type SiteRecoveryReplicationPolicyArgs struct {
 	ResourceGroupName terra.StringValue `hcl:"resource_group_name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *siterecoveryreplicationpolicy.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SiteRecoveryReplicationPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type siteRecoveryReplicationPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// ApplicationConsistentSnapshotFrequencyInMinutes returns a reference to field application_consistent_snapshot_frequency_in_minutes of azurerm_site_recovery_replication_policy.
 func (srrp siteRecoveryReplicationPolicyAttributes) ApplicationConsistentSnapshotFrequencyInMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(srrp.ref.Append("application_consistent_snapshot_frequency_in_minutes"))
+	return terra.ReferenceAsNumber(srrp.ref.Append("application_consistent_snapshot_frequency_in_minutes"))
 }
 
+// Id returns a reference to field id of azurerm_site_recovery_replication_policy.
 func (srrp siteRecoveryReplicationPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(srrp.ref.Append("id"))
+	return terra.ReferenceAsString(srrp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_site_recovery_replication_policy.
 func (srrp siteRecoveryReplicationPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(srrp.ref.Append("name"))
+	return terra.ReferenceAsString(srrp.ref.Append("name"))
 }
 
+// RecoveryPointRetentionInMinutes returns a reference to field recovery_point_retention_in_minutes of azurerm_site_recovery_replication_policy.
 func (srrp siteRecoveryReplicationPolicyAttributes) RecoveryPointRetentionInMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(srrp.ref.Append("recovery_point_retention_in_minutes"))
+	return terra.ReferenceAsNumber(srrp.ref.Append("recovery_point_retention_in_minutes"))
 }
 
+// RecoveryVaultName returns a reference to field recovery_vault_name of azurerm_site_recovery_replication_policy.
 func (srrp siteRecoveryReplicationPolicyAttributes) RecoveryVaultName() terra.StringValue {
-	return terra.ReferenceString(srrp.ref.Append("recovery_vault_name"))
+	return terra.ReferenceAsString(srrp.ref.Append("recovery_vault_name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_site_recovery_replication_policy.
 func (srrp siteRecoveryReplicationPolicyAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(srrp.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(srrp.ref.Append("resource_group_name"))
 }
 
 func (srrp siteRecoveryReplicationPolicyAttributes) Timeouts() siterecoveryreplicationpolicy.TimeoutsAttributes {
-	return terra.ReferenceSingle[siterecoveryreplicationpolicy.TimeoutsAttributes](srrp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[siterecoveryreplicationpolicy.TimeoutsAttributes](srrp.ref.Append("timeouts"))
 }
 
 type siteRecoveryReplicationPolicyState struct {

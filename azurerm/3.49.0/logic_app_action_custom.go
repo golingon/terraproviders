@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLogicAppActionCustom creates a new instance of [LogicAppActionCustom].
 func NewLogicAppActionCustom(name string, args LogicAppActionCustomArgs) *LogicAppActionCustom {
 	return &LogicAppActionCustom{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLogicAppActionCustom(name string, args LogicAppActionCustomArgs) *LogicA
 
 var _ terra.Resource = (*LogicAppActionCustom)(nil)
 
+// LogicAppActionCustom represents the Terraform resource azurerm_logic_app_action_custom.
 type LogicAppActionCustom struct {
-	Name  string
-	Args  LogicAppActionCustomArgs
-	state *logicAppActionCustomState
+	Name      string
+	Args      LogicAppActionCustomArgs
+	state     *logicAppActionCustomState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LogicAppActionCustom].
 func (laac *LogicAppActionCustom) Type() string {
 	return "azurerm_logic_app_action_custom"
 }
 
+// LocalName returns the local name for [LogicAppActionCustom].
 func (laac *LogicAppActionCustom) LocalName() string {
 	return laac.Name
 }
 
+// Configuration returns the configuration (args) for [LogicAppActionCustom].
 func (laac *LogicAppActionCustom) Configuration() interface{} {
 	return laac.Args
 }
 
+// DependOn is used for other resources to depend on [LogicAppActionCustom].
+func (laac *LogicAppActionCustom) DependOn() terra.Reference {
+	return terra.ReferenceResource(laac)
+}
+
+// Dependencies returns the list of resources [LogicAppActionCustom] depends_on.
+func (laac *LogicAppActionCustom) Dependencies() terra.Dependencies {
+	return laac.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LogicAppActionCustom].
+func (laac *LogicAppActionCustom) LifecycleManagement() *terra.Lifecycle {
+	return laac.Lifecycle
+}
+
+// Attributes returns the attributes for [LogicAppActionCustom].
 func (laac *LogicAppActionCustom) Attributes() logicAppActionCustomAttributes {
 	return logicAppActionCustomAttributes{ref: terra.ReferenceResource(laac)}
 }
 
+// ImportState imports the given attribute values into [LogicAppActionCustom]'s state.
 func (laac *LogicAppActionCustom) ImportState(av io.Reader) error {
 	laac.state = &logicAppActionCustomState{}
 	if err := json.NewDecoder(av).Decode(laac.state); err != nil {
@@ -49,10 +73,12 @@ func (laac *LogicAppActionCustom) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LogicAppActionCustom] has state.
 func (laac *LogicAppActionCustom) State() (*logicAppActionCustomState, bool) {
 	return laac.state, laac.state != nil
 }
 
+// StateMust returns the state for [LogicAppActionCustom]. Panics if the state is nil.
 func (laac *LogicAppActionCustom) StateMust() *logicAppActionCustomState {
 	if laac.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", laac.Type(), laac.LocalName()))
@@ -60,10 +86,7 @@ func (laac *LogicAppActionCustom) StateMust() *logicAppActionCustomState {
 	return laac.state
 }
 
-func (laac *LogicAppActionCustom) DependOn() terra.Reference {
-	return terra.ReferenceResource(laac)
-}
-
+// LogicAppActionCustomArgs contains the configurations for azurerm_logic_app_action_custom.
 type LogicAppActionCustomArgs struct {
 	// Body: string, required
 	Body terra.StringValue `hcl:"body,attr" validate:"required"`
@@ -75,31 +98,33 @@ type LogicAppActionCustomArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *logicappactioncustom.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LogicAppActionCustom depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type logicAppActionCustomAttributes struct {
 	ref terra.Reference
 }
 
+// Body returns a reference to field body of azurerm_logic_app_action_custom.
 func (laac logicAppActionCustomAttributes) Body() terra.StringValue {
-	return terra.ReferenceString(laac.ref.Append("body"))
+	return terra.ReferenceAsString(laac.ref.Append("body"))
 }
 
+// Id returns a reference to field id of azurerm_logic_app_action_custom.
 func (laac logicAppActionCustomAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(laac.ref.Append("id"))
+	return terra.ReferenceAsString(laac.ref.Append("id"))
 }
 
+// LogicAppId returns a reference to field logic_app_id of azurerm_logic_app_action_custom.
 func (laac logicAppActionCustomAttributes) LogicAppId() terra.StringValue {
-	return terra.ReferenceString(laac.ref.Append("logic_app_id"))
+	return terra.ReferenceAsString(laac.ref.Append("logic_app_id"))
 }
 
+// Name returns a reference to field name of azurerm_logic_app_action_custom.
 func (laac logicAppActionCustomAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(laac.ref.Append("name"))
+	return terra.ReferenceAsString(laac.ref.Append("name"))
 }
 
 func (laac logicAppActionCustomAttributes) Timeouts() logicappactioncustom.TimeoutsAttributes {
-	return terra.ReferenceSingle[logicappactioncustom.TimeoutsAttributes](laac.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[logicappactioncustom.TimeoutsAttributes](laac.ref.Append("timeouts"))
 }
 
 type logicAppActionCustomState struct {

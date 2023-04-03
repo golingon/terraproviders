@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewStorageDefaultObjectAcl creates a new instance of [StorageDefaultObjectAcl].
 func NewStorageDefaultObjectAcl(name string, args StorageDefaultObjectAclArgs) *StorageDefaultObjectAcl {
 	return &StorageDefaultObjectAcl{
 		Args: args,
@@ -18,28 +19,51 @@ func NewStorageDefaultObjectAcl(name string, args StorageDefaultObjectAclArgs) *
 
 var _ terra.Resource = (*StorageDefaultObjectAcl)(nil)
 
+// StorageDefaultObjectAcl represents the Terraform resource google_storage_default_object_acl.
 type StorageDefaultObjectAcl struct {
-	Name  string
-	Args  StorageDefaultObjectAclArgs
-	state *storageDefaultObjectAclState
+	Name      string
+	Args      StorageDefaultObjectAclArgs
+	state     *storageDefaultObjectAclState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [StorageDefaultObjectAcl].
 func (sdoa *StorageDefaultObjectAcl) Type() string {
 	return "google_storage_default_object_acl"
 }
 
+// LocalName returns the local name for [StorageDefaultObjectAcl].
 func (sdoa *StorageDefaultObjectAcl) LocalName() string {
 	return sdoa.Name
 }
 
+// Configuration returns the configuration (args) for [StorageDefaultObjectAcl].
 func (sdoa *StorageDefaultObjectAcl) Configuration() interface{} {
 	return sdoa.Args
 }
 
+// DependOn is used for other resources to depend on [StorageDefaultObjectAcl].
+func (sdoa *StorageDefaultObjectAcl) DependOn() terra.Reference {
+	return terra.ReferenceResource(sdoa)
+}
+
+// Dependencies returns the list of resources [StorageDefaultObjectAcl] depends_on.
+func (sdoa *StorageDefaultObjectAcl) Dependencies() terra.Dependencies {
+	return sdoa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [StorageDefaultObjectAcl].
+func (sdoa *StorageDefaultObjectAcl) LifecycleManagement() *terra.Lifecycle {
+	return sdoa.Lifecycle
+}
+
+// Attributes returns the attributes for [StorageDefaultObjectAcl].
 func (sdoa *StorageDefaultObjectAcl) Attributes() storageDefaultObjectAclAttributes {
 	return storageDefaultObjectAclAttributes{ref: terra.ReferenceResource(sdoa)}
 }
 
+// ImportState imports the given attribute values into [StorageDefaultObjectAcl]'s state.
 func (sdoa *StorageDefaultObjectAcl) ImportState(av io.Reader) error {
 	sdoa.state = &storageDefaultObjectAclState{}
 	if err := json.NewDecoder(av).Decode(sdoa.state); err != nil {
@@ -48,10 +72,12 @@ func (sdoa *StorageDefaultObjectAcl) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [StorageDefaultObjectAcl] has state.
 func (sdoa *StorageDefaultObjectAcl) State() (*storageDefaultObjectAclState, bool) {
 	return sdoa.state, sdoa.state != nil
 }
 
+// StateMust returns the state for [StorageDefaultObjectAcl]. Panics if the state is nil.
 func (sdoa *StorageDefaultObjectAcl) StateMust() *storageDefaultObjectAclState {
 	if sdoa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sdoa.Type(), sdoa.LocalName()))
@@ -59,10 +85,7 @@ func (sdoa *StorageDefaultObjectAcl) StateMust() *storageDefaultObjectAclState {
 	return sdoa.state
 }
 
-func (sdoa *StorageDefaultObjectAcl) DependOn() terra.Reference {
-	return terra.ReferenceResource(sdoa)
-}
-
+// StorageDefaultObjectAclArgs contains the configurations for google_storage_default_object_acl.
 type StorageDefaultObjectAclArgs struct {
 	// Bucket: string, required
 	Bucket terra.StringValue `hcl:"bucket,attr" validate:"required"`
@@ -70,23 +93,24 @@ type StorageDefaultObjectAclArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// RoleEntity: set of string, optional
 	RoleEntity terra.SetValue[terra.StringValue] `hcl:"role_entity,attr"`
-	// DependsOn contains resources that StorageDefaultObjectAcl depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type storageDefaultObjectAclAttributes struct {
 	ref terra.Reference
 }
 
+// Bucket returns a reference to field bucket of google_storage_default_object_acl.
 func (sdoa storageDefaultObjectAclAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(sdoa.ref.Append("bucket"))
+	return terra.ReferenceAsString(sdoa.ref.Append("bucket"))
 }
 
+// Id returns a reference to field id of google_storage_default_object_acl.
 func (sdoa storageDefaultObjectAclAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sdoa.ref.Append("id"))
+	return terra.ReferenceAsString(sdoa.ref.Append("id"))
 }
 
+// RoleEntity returns a reference to field role_entity of google_storage_default_object_acl.
 func (sdoa storageDefaultObjectAclAttributes) RoleEntity() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sdoa.ref.Append("role_entity"))
+	return terra.ReferenceAsSet[terra.StringValue](sdoa.ref.Append("role_entity"))
 }
 
 type storageDefaultObjectAclState struct {

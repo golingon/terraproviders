@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCdnFrontdoorSecret creates a new instance of [CdnFrontdoorSecret].
 func NewCdnFrontdoorSecret(name string, args CdnFrontdoorSecretArgs) *CdnFrontdoorSecret {
 	return &CdnFrontdoorSecret{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCdnFrontdoorSecret(name string, args CdnFrontdoorSecretArgs) *CdnFrontdo
 
 var _ terra.Resource = (*CdnFrontdoorSecret)(nil)
 
+// CdnFrontdoorSecret represents the Terraform resource azurerm_cdn_frontdoor_secret.
 type CdnFrontdoorSecret struct {
-	Name  string
-	Args  CdnFrontdoorSecretArgs
-	state *cdnFrontdoorSecretState
+	Name      string
+	Args      CdnFrontdoorSecretArgs
+	state     *cdnFrontdoorSecretState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CdnFrontdoorSecret].
 func (cfs *CdnFrontdoorSecret) Type() string {
 	return "azurerm_cdn_frontdoor_secret"
 }
 
+// LocalName returns the local name for [CdnFrontdoorSecret].
 func (cfs *CdnFrontdoorSecret) LocalName() string {
 	return cfs.Name
 }
 
+// Configuration returns the configuration (args) for [CdnFrontdoorSecret].
 func (cfs *CdnFrontdoorSecret) Configuration() interface{} {
 	return cfs.Args
 }
 
+// DependOn is used for other resources to depend on [CdnFrontdoorSecret].
+func (cfs *CdnFrontdoorSecret) DependOn() terra.Reference {
+	return terra.ReferenceResource(cfs)
+}
+
+// Dependencies returns the list of resources [CdnFrontdoorSecret] depends_on.
+func (cfs *CdnFrontdoorSecret) Dependencies() terra.Dependencies {
+	return cfs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CdnFrontdoorSecret].
+func (cfs *CdnFrontdoorSecret) LifecycleManagement() *terra.Lifecycle {
+	return cfs.Lifecycle
+}
+
+// Attributes returns the attributes for [CdnFrontdoorSecret].
 func (cfs *CdnFrontdoorSecret) Attributes() cdnFrontdoorSecretAttributes {
 	return cdnFrontdoorSecretAttributes{ref: terra.ReferenceResource(cfs)}
 }
 
+// ImportState imports the given attribute values into [CdnFrontdoorSecret]'s state.
 func (cfs *CdnFrontdoorSecret) ImportState(av io.Reader) error {
 	cfs.state = &cdnFrontdoorSecretState{}
 	if err := json.NewDecoder(av).Decode(cfs.state); err != nil {
@@ -49,10 +73,12 @@ func (cfs *CdnFrontdoorSecret) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CdnFrontdoorSecret] has state.
 func (cfs *CdnFrontdoorSecret) State() (*cdnFrontdoorSecretState, bool) {
 	return cfs.state, cfs.state != nil
 }
 
+// StateMust returns the state for [CdnFrontdoorSecret]. Panics if the state is nil.
 func (cfs *CdnFrontdoorSecret) StateMust() *cdnFrontdoorSecretState {
 	if cfs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cfs.Type(), cfs.LocalName()))
@@ -60,10 +86,7 @@ func (cfs *CdnFrontdoorSecret) StateMust() *cdnFrontdoorSecretState {
 	return cfs.state
 }
 
-func (cfs *CdnFrontdoorSecret) DependOn() terra.Reference {
-	return terra.ReferenceResource(cfs)
-}
-
+// CdnFrontdoorSecretArgs contains the configurations for azurerm_cdn_frontdoor_secret.
 type CdnFrontdoorSecretArgs struct {
 	// CdnFrontdoorProfileId: string, required
 	CdnFrontdoorProfileId terra.StringValue `hcl:"cdn_frontdoor_profile_id,attr" validate:"required"`
@@ -75,35 +98,37 @@ type CdnFrontdoorSecretArgs struct {
 	Secret *cdnfrontdoorsecret.Secret `hcl:"secret,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *cdnfrontdoorsecret.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that CdnFrontdoorSecret depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cdnFrontdoorSecretAttributes struct {
 	ref terra.Reference
 }
 
+// CdnFrontdoorProfileId returns a reference to field cdn_frontdoor_profile_id of azurerm_cdn_frontdoor_secret.
 func (cfs cdnFrontdoorSecretAttributes) CdnFrontdoorProfileId() terra.StringValue {
-	return terra.ReferenceString(cfs.ref.Append("cdn_frontdoor_profile_id"))
+	return terra.ReferenceAsString(cfs.ref.Append("cdn_frontdoor_profile_id"))
 }
 
+// CdnFrontdoorProfileName returns a reference to field cdn_frontdoor_profile_name of azurerm_cdn_frontdoor_secret.
 func (cfs cdnFrontdoorSecretAttributes) CdnFrontdoorProfileName() terra.StringValue {
-	return terra.ReferenceString(cfs.ref.Append("cdn_frontdoor_profile_name"))
+	return terra.ReferenceAsString(cfs.ref.Append("cdn_frontdoor_profile_name"))
 }
 
+// Id returns a reference to field id of azurerm_cdn_frontdoor_secret.
 func (cfs cdnFrontdoorSecretAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cfs.ref.Append("id"))
+	return terra.ReferenceAsString(cfs.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_cdn_frontdoor_secret.
 func (cfs cdnFrontdoorSecretAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cfs.ref.Append("name"))
+	return terra.ReferenceAsString(cfs.ref.Append("name"))
 }
 
 func (cfs cdnFrontdoorSecretAttributes) Secret() terra.ListValue[cdnfrontdoorsecret.SecretAttributes] {
-	return terra.ReferenceList[cdnfrontdoorsecret.SecretAttributes](cfs.ref.Append("secret"))
+	return terra.ReferenceAsList[cdnfrontdoorsecret.SecretAttributes](cfs.ref.Append("secret"))
 }
 
 func (cfs cdnFrontdoorSecretAttributes) Timeouts() cdnfrontdoorsecret.TimeoutsAttributes {
-	return terra.ReferenceSingle[cdnfrontdoorsecret.TimeoutsAttributes](cfs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cdnfrontdoorsecret.TimeoutsAttributes](cfs.ref.Append("timeouts"))
 }
 
 type cdnFrontdoorSecretState struct {

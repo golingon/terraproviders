@@ -306,7 +306,7 @@ func (tkg TrustedKeyGroupsAttributes) InternalWithRef(ref terra.Reference) Trust
 	return TrustedKeyGroupsAttributes{ref: ref}
 }
 
-func (tkg TrustedKeyGroupsAttributes) InternalTokens() hclwrite.Tokens {
+func (tkg TrustedKeyGroupsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tkg.ref.InternalTokens()
 }
 
@@ -330,7 +330,7 @@ func (i TrustedKeyGroupsItemsAttributes) InternalWithRef(ref terra.Reference) Tr
 	return TrustedKeyGroupsItemsAttributes{ref: ref}
 }
 
-func (i TrustedKeyGroupsItemsAttributes) InternalTokens() hclwrite.Tokens {
+func (i TrustedKeyGroupsItemsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -354,7 +354,7 @@ func (ts TrustedSignersAttributes) InternalWithRef(ref terra.Reference) TrustedS
 	return TrustedSignersAttributes{ref: ref}
 }
 
-func (ts TrustedSignersAttributes) InternalTokens() hclwrite.Tokens {
+func (ts TrustedSignersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ts.ref.InternalTokens()
 }
 
@@ -378,7 +378,7 @@ func (i TrustedSignersItemsAttributes) InternalWithRef(ref terra.Reference) Trus
 	return TrustedSignersItemsAttributes{ref: ref}
 }
 
-func (i TrustedSignersItemsAttributes) InternalTokens() hclwrite.Tokens {
+func (i TrustedSignersItemsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -402,7 +402,7 @@ func (cer CustomErrorResponseAttributes) InternalWithRef(ref terra.Reference) Cu
 	return CustomErrorResponseAttributes{ref: ref}
 }
 
-func (cer CustomErrorResponseAttributes) InternalTokens() hclwrite.Tokens {
+func (cer CustomErrorResponseAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cer.ref.InternalTokens()
 }
 
@@ -434,7 +434,7 @@ func (dcb DefaultCacheBehaviorAttributes) InternalWithRef(ref terra.Reference) D
 	return DefaultCacheBehaviorAttributes{ref: ref}
 }
 
-func (dcb DefaultCacheBehaviorAttributes) InternalTokens() hclwrite.Tokens {
+func (dcb DefaultCacheBehaviorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dcb.ref.InternalTokens()
 }
 
@@ -526,7 +526,7 @@ func (fv DefaultCacheBehaviorForwardedValuesAttributes) InternalWithRef(ref terr
 	return DefaultCacheBehaviorForwardedValuesAttributes{ref: ref}
 }
 
-func (fv DefaultCacheBehaviorForwardedValuesAttributes) InternalTokens() hclwrite.Tokens {
+func (fv DefaultCacheBehaviorForwardedValuesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fv.ref.InternalTokens()
 }
 
@@ -558,7 +558,7 @@ func (c DefaultCacheBehaviorForwardedValuesCookiesAttributes) InternalWithRef(re
 	return DefaultCacheBehaviorForwardedValuesCookiesAttributes{ref: ref}
 }
 
-func (c DefaultCacheBehaviorForwardedValuesCookiesAttributes) InternalTokens() hclwrite.Tokens {
+func (c DefaultCacheBehaviorForwardedValuesCookiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -582,7 +582,7 @@ func (fa DefaultCacheBehaviorFunctionAssociationAttributes) InternalWithRef(ref 
 	return DefaultCacheBehaviorFunctionAssociationAttributes{ref: ref}
 }
 
-func (fa DefaultCacheBehaviorFunctionAssociationAttributes) InternalTokens() hclwrite.Tokens {
+func (fa DefaultCacheBehaviorFunctionAssociationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fa.ref.InternalTokens()
 }
 
@@ -606,7 +606,7 @@ func (lfa DefaultCacheBehaviorLambdaFunctionAssociationAttributes) InternalWithR
 	return DefaultCacheBehaviorLambdaFunctionAssociationAttributes{ref: ref}
 }
 
-func (lfa DefaultCacheBehaviorLambdaFunctionAssociationAttributes) InternalTokens() hclwrite.Tokens {
+func (lfa DefaultCacheBehaviorLambdaFunctionAssociationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lfa.ref.InternalTokens()
 }
 
@@ -634,7 +634,7 @@ func (lc LoggingConfigAttributes) InternalWithRef(ref terra.Reference) LoggingCo
 	return LoggingConfigAttributes{ref: ref}
 }
 
-func (lc LoggingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (lc LoggingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lc.ref.InternalTokens()
 }
 
@@ -662,7 +662,7 @@ func (ocb OrderedCacheBehaviorAttributes) InternalWithRef(ref terra.Reference) O
 	return OrderedCacheBehaviorAttributes{ref: ref}
 }
 
-func (ocb OrderedCacheBehaviorAttributes) InternalTokens() hclwrite.Tokens {
+func (ocb OrderedCacheBehaviorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ocb.ref.InternalTokens()
 }
 
@@ -758,7 +758,7 @@ func (fv OrderedCacheBehaviorForwardedValuesAttributes) InternalWithRef(ref terr
 	return OrderedCacheBehaviorForwardedValuesAttributes{ref: ref}
 }
 
-func (fv OrderedCacheBehaviorForwardedValuesAttributes) InternalTokens() hclwrite.Tokens {
+func (fv OrderedCacheBehaviorForwardedValuesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fv.ref.InternalTokens()
 }
 
@@ -790,7 +790,7 @@ func (c OrderedCacheBehaviorForwardedValuesCookiesAttributes) InternalWithRef(re
 	return OrderedCacheBehaviorForwardedValuesCookiesAttributes{ref: ref}
 }
 
-func (c OrderedCacheBehaviorForwardedValuesCookiesAttributes) InternalTokens() hclwrite.Tokens {
+func (c OrderedCacheBehaviorForwardedValuesCookiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -814,7 +814,7 @@ func (fa OrderedCacheBehaviorFunctionAssociationAttributes) InternalWithRef(ref 
 	return OrderedCacheBehaviorFunctionAssociationAttributes{ref: ref}
 }
 
-func (fa OrderedCacheBehaviorFunctionAssociationAttributes) InternalTokens() hclwrite.Tokens {
+func (fa OrderedCacheBehaviorFunctionAssociationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fa.ref.InternalTokens()
 }
 
@@ -838,7 +838,7 @@ func (lfa OrderedCacheBehaviorLambdaFunctionAssociationAttributes) InternalWithR
 	return OrderedCacheBehaviorLambdaFunctionAssociationAttributes{ref: ref}
 }
 
-func (lfa OrderedCacheBehaviorLambdaFunctionAssociationAttributes) InternalTokens() hclwrite.Tokens {
+func (lfa OrderedCacheBehaviorLambdaFunctionAssociationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lfa.ref.InternalTokens()
 }
 
@@ -866,7 +866,7 @@ func (o OriginAttributes) InternalWithRef(ref terra.Reference) OriginAttributes 
 	return OriginAttributes{ref: ref}
 }
 
-func (o OriginAttributes) InternalTokens() hclwrite.Tokens {
+func (o OriginAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return o.ref.InternalTokens()
 }
 
@@ -922,7 +922,7 @@ func (ch CustomHeaderAttributes) InternalWithRef(ref terra.Reference) CustomHead
 	return CustomHeaderAttributes{ref: ref}
 }
 
-func (ch CustomHeaderAttributes) InternalTokens() hclwrite.Tokens {
+func (ch CustomHeaderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ch.ref.InternalTokens()
 }
 
@@ -946,7 +946,7 @@ func (coc CustomOriginConfigAttributes) InternalWithRef(ref terra.Reference) Cus
 	return CustomOriginConfigAttributes{ref: ref}
 }
 
-func (coc CustomOriginConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (coc CustomOriginConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return coc.ref.InternalTokens()
 }
 
@@ -986,7 +986,7 @@ func (os OriginShieldAttributes) InternalWithRef(ref terra.Reference) OriginShie
 	return OriginShieldAttributes{ref: ref}
 }
 
-func (os OriginShieldAttributes) InternalTokens() hclwrite.Tokens {
+func (os OriginShieldAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return os.ref.InternalTokens()
 }
 
@@ -1010,7 +1010,7 @@ func (soc S3OriginConfigAttributes) InternalWithRef(ref terra.Reference) S3Origi
 	return S3OriginConfigAttributes{ref: ref}
 }
 
-func (soc S3OriginConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (soc S3OriginConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return soc.ref.InternalTokens()
 }
 
@@ -1030,7 +1030,7 @@ func (og OriginGroupAttributes) InternalWithRef(ref terra.Reference) OriginGroup
 	return OriginGroupAttributes{ref: ref}
 }
 
-func (og OriginGroupAttributes) InternalTokens() hclwrite.Tokens {
+func (og OriginGroupAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return og.ref.InternalTokens()
 }
 
@@ -1058,7 +1058,7 @@ func (fc FailoverCriteriaAttributes) InternalWithRef(ref terra.Reference) Failov
 	return FailoverCriteriaAttributes{ref: ref}
 }
 
-func (fc FailoverCriteriaAttributes) InternalTokens() hclwrite.Tokens {
+func (fc FailoverCriteriaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fc.ref.InternalTokens()
 }
 
@@ -1078,7 +1078,7 @@ func (m MemberAttributes) InternalWithRef(ref terra.Reference) MemberAttributes 
 	return MemberAttributes{ref: ref}
 }
 
-func (m MemberAttributes) InternalTokens() hclwrite.Tokens {
+func (m MemberAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -1098,7 +1098,7 @@ func (r RestrictionsAttributes) InternalWithRef(ref terra.Reference) Restriction
 	return RestrictionsAttributes{ref: ref}
 }
 
-func (r RestrictionsAttributes) InternalTokens() hclwrite.Tokens {
+func (r RestrictionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -1118,7 +1118,7 @@ func (gr GeoRestrictionAttributes) InternalWithRef(ref terra.Reference) GeoRestr
 	return GeoRestrictionAttributes{ref: ref}
 }
 
-func (gr GeoRestrictionAttributes) InternalTokens() hclwrite.Tokens {
+func (gr GeoRestrictionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gr.ref.InternalTokens()
 }
 
@@ -1142,7 +1142,7 @@ func (vc ViewerCertificateAttributes) InternalWithRef(ref terra.Reference) Viewe
 	return ViewerCertificateAttributes{ref: ref}
 }
 
-func (vc ViewerCertificateAttributes) InternalTokens() hclwrite.Tokens {
+func (vc ViewerCertificateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vc.ref.InternalTokens()
 }
 

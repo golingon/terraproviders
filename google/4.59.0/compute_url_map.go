@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeUrlMap creates a new instance of [ComputeUrlMap].
 func NewComputeUrlMap(name string, args ComputeUrlMapArgs) *ComputeUrlMap {
 	return &ComputeUrlMap{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeUrlMap(name string, args ComputeUrlMapArgs) *ComputeUrlMap {
 
 var _ terra.Resource = (*ComputeUrlMap)(nil)
 
+// ComputeUrlMap represents the Terraform resource google_compute_url_map.
 type ComputeUrlMap struct {
-	Name  string
-	Args  ComputeUrlMapArgs
-	state *computeUrlMapState
+	Name      string
+	Args      ComputeUrlMapArgs
+	state     *computeUrlMapState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeUrlMap].
 func (cum *ComputeUrlMap) Type() string {
 	return "google_compute_url_map"
 }
 
+// LocalName returns the local name for [ComputeUrlMap].
 func (cum *ComputeUrlMap) LocalName() string {
 	return cum.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeUrlMap].
 func (cum *ComputeUrlMap) Configuration() interface{} {
 	return cum.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeUrlMap].
+func (cum *ComputeUrlMap) DependOn() terra.Reference {
+	return terra.ReferenceResource(cum)
+}
+
+// Dependencies returns the list of resources [ComputeUrlMap] depends_on.
+func (cum *ComputeUrlMap) Dependencies() terra.Dependencies {
+	return cum.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeUrlMap].
+func (cum *ComputeUrlMap) LifecycleManagement() *terra.Lifecycle {
+	return cum.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeUrlMap].
 func (cum *ComputeUrlMap) Attributes() computeUrlMapAttributes {
 	return computeUrlMapAttributes{ref: terra.ReferenceResource(cum)}
 }
 
+// ImportState imports the given attribute values into [ComputeUrlMap]'s state.
 func (cum *ComputeUrlMap) ImportState(av io.Reader) error {
 	cum.state = &computeUrlMapState{}
 	if err := json.NewDecoder(av).Decode(cum.state); err != nil {
@@ -49,10 +73,12 @@ func (cum *ComputeUrlMap) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeUrlMap] has state.
 func (cum *ComputeUrlMap) State() (*computeUrlMapState, bool) {
 	return cum.state, cum.state != nil
 }
 
+// StateMust returns the state for [ComputeUrlMap]. Panics if the state is nil.
 func (cum *ComputeUrlMap) StateMust() *computeUrlMapState {
 	if cum.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cum.Type(), cum.LocalName()))
@@ -60,10 +86,7 @@ func (cum *ComputeUrlMap) StateMust() *computeUrlMapState {
 	return cum.state
 }
 
-func (cum *ComputeUrlMap) DependOn() terra.Reference {
-	return terra.ReferenceResource(cum)
-}
-
+// ComputeUrlMapArgs contains the configurations for google_compute_url_map.
 type ComputeUrlMapArgs struct {
 	// DefaultService: string, optional
 	DefaultService terra.StringValue `hcl:"default_service,attr"`
@@ -89,75 +112,82 @@ type ComputeUrlMapArgs struct {
 	Test []computeurlmap.Test `hcl:"test,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *computeurlmap.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeUrlMap depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeUrlMapAttributes struct {
 	ref terra.Reference
 }
 
+// CreationTimestamp returns a reference to field creation_timestamp of google_compute_url_map.
 func (cum computeUrlMapAttributes) CreationTimestamp() terra.StringValue {
-	return terra.ReferenceString(cum.ref.Append("creation_timestamp"))
+	return terra.ReferenceAsString(cum.ref.Append("creation_timestamp"))
 }
 
+// DefaultService returns a reference to field default_service of google_compute_url_map.
 func (cum computeUrlMapAttributes) DefaultService() terra.StringValue {
-	return terra.ReferenceString(cum.ref.Append("default_service"))
+	return terra.ReferenceAsString(cum.ref.Append("default_service"))
 }
 
+// Description returns a reference to field description of google_compute_url_map.
 func (cum computeUrlMapAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cum.ref.Append("description"))
+	return terra.ReferenceAsString(cum.ref.Append("description"))
 }
 
+// Fingerprint returns a reference to field fingerprint of google_compute_url_map.
 func (cum computeUrlMapAttributes) Fingerprint() terra.StringValue {
-	return terra.ReferenceString(cum.ref.Append("fingerprint"))
+	return terra.ReferenceAsString(cum.ref.Append("fingerprint"))
 }
 
+// Id returns a reference to field id of google_compute_url_map.
 func (cum computeUrlMapAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cum.ref.Append("id"))
+	return terra.ReferenceAsString(cum.ref.Append("id"))
 }
 
+// MapId returns a reference to field map_id of google_compute_url_map.
 func (cum computeUrlMapAttributes) MapId() terra.NumberValue {
-	return terra.ReferenceNumber(cum.ref.Append("map_id"))
+	return terra.ReferenceAsNumber(cum.ref.Append("map_id"))
 }
 
+// Name returns a reference to field name of google_compute_url_map.
 func (cum computeUrlMapAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cum.ref.Append("name"))
+	return terra.ReferenceAsString(cum.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_compute_url_map.
 func (cum computeUrlMapAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cum.ref.Append("project"))
+	return terra.ReferenceAsString(cum.ref.Append("project"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_url_map.
 func (cum computeUrlMapAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(cum.ref.Append("self_link"))
+	return terra.ReferenceAsString(cum.ref.Append("self_link"))
 }
 
 func (cum computeUrlMapAttributes) DefaultRouteAction() terra.ListValue[computeurlmap.DefaultRouteActionAttributes] {
-	return terra.ReferenceList[computeurlmap.DefaultRouteActionAttributes](cum.ref.Append("default_route_action"))
+	return terra.ReferenceAsList[computeurlmap.DefaultRouteActionAttributes](cum.ref.Append("default_route_action"))
 }
 
 func (cum computeUrlMapAttributes) DefaultUrlRedirect() terra.ListValue[computeurlmap.DefaultUrlRedirectAttributes] {
-	return terra.ReferenceList[computeurlmap.DefaultUrlRedirectAttributes](cum.ref.Append("default_url_redirect"))
+	return terra.ReferenceAsList[computeurlmap.DefaultUrlRedirectAttributes](cum.ref.Append("default_url_redirect"))
 }
 
 func (cum computeUrlMapAttributes) HeaderAction() terra.ListValue[computeurlmap.HeaderActionAttributes] {
-	return terra.ReferenceList[computeurlmap.HeaderActionAttributes](cum.ref.Append("header_action"))
+	return terra.ReferenceAsList[computeurlmap.HeaderActionAttributes](cum.ref.Append("header_action"))
 }
 
 func (cum computeUrlMapAttributes) HostRule() terra.SetValue[computeurlmap.HostRuleAttributes] {
-	return terra.ReferenceSet[computeurlmap.HostRuleAttributes](cum.ref.Append("host_rule"))
+	return terra.ReferenceAsSet[computeurlmap.HostRuleAttributes](cum.ref.Append("host_rule"))
 }
 
 func (cum computeUrlMapAttributes) PathMatcher() terra.ListValue[computeurlmap.PathMatcherAttributes] {
-	return terra.ReferenceList[computeurlmap.PathMatcherAttributes](cum.ref.Append("path_matcher"))
+	return terra.ReferenceAsList[computeurlmap.PathMatcherAttributes](cum.ref.Append("path_matcher"))
 }
 
 func (cum computeUrlMapAttributes) Test() terra.ListValue[computeurlmap.TestAttributes] {
-	return terra.ReferenceList[computeurlmap.TestAttributes](cum.ref.Append("test"))
+	return terra.ReferenceAsList[computeurlmap.TestAttributes](cum.ref.Append("test"))
 }
 
 func (cum computeUrlMapAttributes) Timeouts() computeurlmap.TimeoutsAttributes {
-	return terra.ReferenceSingle[computeurlmap.TimeoutsAttributes](cum.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computeurlmap.TimeoutsAttributes](cum.ref.Append("timeouts"))
 }
 
 type computeUrlMapState struct {

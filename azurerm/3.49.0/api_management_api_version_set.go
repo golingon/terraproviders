@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApiManagementApiVersionSet creates a new instance of [ApiManagementApiVersionSet].
 func NewApiManagementApiVersionSet(name string, args ApiManagementApiVersionSetArgs) *ApiManagementApiVersionSet {
 	return &ApiManagementApiVersionSet{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApiManagementApiVersionSet(name string, args ApiManagementApiVersionSetA
 
 var _ terra.Resource = (*ApiManagementApiVersionSet)(nil)
 
+// ApiManagementApiVersionSet represents the Terraform resource azurerm_api_management_api_version_set.
 type ApiManagementApiVersionSet struct {
-	Name  string
-	Args  ApiManagementApiVersionSetArgs
-	state *apiManagementApiVersionSetState
+	Name      string
+	Args      ApiManagementApiVersionSetArgs
+	state     *apiManagementApiVersionSetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiManagementApiVersionSet].
 func (amavs *ApiManagementApiVersionSet) Type() string {
 	return "azurerm_api_management_api_version_set"
 }
 
+// LocalName returns the local name for [ApiManagementApiVersionSet].
 func (amavs *ApiManagementApiVersionSet) LocalName() string {
 	return amavs.Name
 }
 
+// Configuration returns the configuration (args) for [ApiManagementApiVersionSet].
 func (amavs *ApiManagementApiVersionSet) Configuration() interface{} {
 	return amavs.Args
 }
 
+// DependOn is used for other resources to depend on [ApiManagementApiVersionSet].
+func (amavs *ApiManagementApiVersionSet) DependOn() terra.Reference {
+	return terra.ReferenceResource(amavs)
+}
+
+// Dependencies returns the list of resources [ApiManagementApiVersionSet] depends_on.
+func (amavs *ApiManagementApiVersionSet) Dependencies() terra.Dependencies {
+	return amavs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiManagementApiVersionSet].
+func (amavs *ApiManagementApiVersionSet) LifecycleManagement() *terra.Lifecycle {
+	return amavs.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiManagementApiVersionSet].
 func (amavs *ApiManagementApiVersionSet) Attributes() apiManagementApiVersionSetAttributes {
 	return apiManagementApiVersionSetAttributes{ref: terra.ReferenceResource(amavs)}
 }
 
+// ImportState imports the given attribute values into [ApiManagementApiVersionSet]'s state.
 func (amavs *ApiManagementApiVersionSet) ImportState(av io.Reader) error {
 	amavs.state = &apiManagementApiVersionSetState{}
 	if err := json.NewDecoder(av).Decode(amavs.state); err != nil {
@@ -49,10 +73,12 @@ func (amavs *ApiManagementApiVersionSet) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiManagementApiVersionSet] has state.
 func (amavs *ApiManagementApiVersionSet) State() (*apiManagementApiVersionSetState, bool) {
 	return amavs.state, amavs.state != nil
 }
 
+// StateMust returns the state for [ApiManagementApiVersionSet]. Panics if the state is nil.
 func (amavs *ApiManagementApiVersionSet) StateMust() *apiManagementApiVersionSetState {
 	if amavs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", amavs.Type(), amavs.LocalName()))
@@ -60,10 +86,7 @@ func (amavs *ApiManagementApiVersionSet) StateMust() *apiManagementApiVersionSet
 	return amavs.state
 }
 
-func (amavs *ApiManagementApiVersionSet) DependOn() terra.Reference {
-	return terra.ReferenceResource(amavs)
-}
-
+// ApiManagementApiVersionSetArgs contains the configurations for azurerm_api_management_api_version_set.
 type ApiManagementApiVersionSetArgs struct {
 	// ApiManagementName: string, required
 	ApiManagementName terra.StringValue `hcl:"api_management_name,attr" validate:"required"`
@@ -85,51 +108,58 @@ type ApiManagementApiVersionSetArgs struct {
 	VersioningScheme terra.StringValue `hcl:"versioning_scheme,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *apimanagementapiversionset.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ApiManagementApiVersionSet depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiManagementApiVersionSetAttributes struct {
 	ref terra.Reference
 }
 
+// ApiManagementName returns a reference to field api_management_name of azurerm_api_management_api_version_set.
 func (amavs apiManagementApiVersionSetAttributes) ApiManagementName() terra.StringValue {
-	return terra.ReferenceString(amavs.ref.Append("api_management_name"))
+	return terra.ReferenceAsString(amavs.ref.Append("api_management_name"))
 }
 
+// Description returns a reference to field description of azurerm_api_management_api_version_set.
 func (amavs apiManagementApiVersionSetAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(amavs.ref.Append("description"))
+	return terra.ReferenceAsString(amavs.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_api_management_api_version_set.
 func (amavs apiManagementApiVersionSetAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(amavs.ref.Append("display_name"))
+	return terra.ReferenceAsString(amavs.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of azurerm_api_management_api_version_set.
 func (amavs apiManagementApiVersionSetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(amavs.ref.Append("id"))
+	return terra.ReferenceAsString(amavs.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_api_management_api_version_set.
 func (amavs apiManagementApiVersionSetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(amavs.ref.Append("name"))
+	return terra.ReferenceAsString(amavs.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_api_management_api_version_set.
 func (amavs apiManagementApiVersionSetAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(amavs.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(amavs.ref.Append("resource_group_name"))
 }
 
+// VersionHeaderName returns a reference to field version_header_name of azurerm_api_management_api_version_set.
 func (amavs apiManagementApiVersionSetAttributes) VersionHeaderName() terra.StringValue {
-	return terra.ReferenceString(amavs.ref.Append("version_header_name"))
+	return terra.ReferenceAsString(amavs.ref.Append("version_header_name"))
 }
 
+// VersionQueryName returns a reference to field version_query_name of azurerm_api_management_api_version_set.
 func (amavs apiManagementApiVersionSetAttributes) VersionQueryName() terra.StringValue {
-	return terra.ReferenceString(amavs.ref.Append("version_query_name"))
+	return terra.ReferenceAsString(amavs.ref.Append("version_query_name"))
 }
 
+// VersioningScheme returns a reference to field versioning_scheme of azurerm_api_management_api_version_set.
 func (amavs apiManagementApiVersionSetAttributes) VersioningScheme() terra.StringValue {
-	return terra.ReferenceString(amavs.ref.Append("versioning_scheme"))
+	return terra.ReferenceAsString(amavs.ref.Append("versioning_scheme"))
 }
 
 func (amavs apiManagementApiVersionSetAttributes) Timeouts() apimanagementapiversionset.TimeoutsAttributes {
-	return terra.ReferenceSingle[apimanagementapiversionset.TimeoutsAttributes](amavs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[apimanagementapiversionset.TimeoutsAttributes](amavs.ref.Append("timeouts"))
 }
 
 type apiManagementApiVersionSetState struct {

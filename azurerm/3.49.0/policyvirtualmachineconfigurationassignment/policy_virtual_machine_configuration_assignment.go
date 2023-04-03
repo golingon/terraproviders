@@ -42,92 +42,92 @@ type ConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConfigurationAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConfigurationAttributes) InternalWithRef(ref terra.Reference) ConfigurationAttributes {
 	return ConfigurationAttributes{ref: ref}
 }
 
-func (c ConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ConfigurationAttributes) AssignmentType() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("assignment_type"))
+	return terra.ReferenceAsString(c.ref.Append("assignment_type"))
 }
 
 func (c ConfigurationAttributes) ContentHash() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("content_hash"))
+	return terra.ReferenceAsString(c.ref.Append("content_hash"))
 }
 
 func (c ConfigurationAttributes) ContentUri() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("content_uri"))
+	return terra.ReferenceAsString(c.ref.Append("content_uri"))
 }
 
 func (c ConfigurationAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("version"))
+	return terra.ReferenceAsString(c.ref.Append("version"))
 }
 
 func (c ConfigurationAttributes) Parameter() terra.SetValue[ParameterAttributes] {
-	return terra.ReferenceSet[ParameterAttributes](c.ref.Append("parameter"))
+	return terra.ReferenceAsSet[ParameterAttributes](c.ref.Append("parameter"))
 }
 
 type ParameterAttributes struct {
 	ref terra.Reference
 }
 
-func (p ParameterAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p ParameterAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p ParameterAttributes) InternalWithRef(ref terra.Reference) ParameterAttributes {
 	return ParameterAttributes{ref: ref}
 }
 
-func (p ParameterAttributes) InternalTokens() hclwrite.Tokens {
+func (p ParameterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
 func (p ParameterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("name"))
+	return terra.ReferenceAsString(p.ref.Append("name"))
 }
 
 func (p ParameterAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("value"))
+	return terra.ReferenceAsString(p.ref.Append("value"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ConfigurationState struct {

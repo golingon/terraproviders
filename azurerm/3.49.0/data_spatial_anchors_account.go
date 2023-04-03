@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataSpatialAnchorsAccount creates a new instance of [DataSpatialAnchorsAccount].
 func NewDataSpatialAnchorsAccount(name string, args DataSpatialAnchorsAccountArgs) *DataSpatialAnchorsAccount {
 	return &DataSpatialAnchorsAccount{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataSpatialAnchorsAccount(name string, args DataSpatialAnchorsAccountArg
 
 var _ terra.DataResource = (*DataSpatialAnchorsAccount)(nil)
 
+// DataSpatialAnchorsAccount represents the Terraform data resource azurerm_spatial_anchors_account.
 type DataSpatialAnchorsAccount struct {
 	Name string
 	Args DataSpatialAnchorsAccountArgs
 }
 
+// DataSource returns the Terraform object type for [DataSpatialAnchorsAccount].
 func (saa *DataSpatialAnchorsAccount) DataSource() string {
 	return "azurerm_spatial_anchors_account"
 }
 
+// LocalName returns the local name for [DataSpatialAnchorsAccount].
 func (saa *DataSpatialAnchorsAccount) LocalName() string {
 	return saa.Name
 }
 
+// Configuration returns the configuration (args) for [DataSpatialAnchorsAccount].
 func (saa *DataSpatialAnchorsAccount) Configuration() interface{} {
 	return saa.Args
 }
 
+// Attributes returns the attributes for [DataSpatialAnchorsAccount].
 func (saa *DataSpatialAnchorsAccount) Attributes() dataSpatialAnchorsAccountAttributes {
 	return dataSpatialAnchorsAccountAttributes{ref: terra.ReferenceDataResource(saa)}
 }
 
+// DataSpatialAnchorsAccountArgs contains the configurations for azurerm_spatial_anchors_account.
 type DataSpatialAnchorsAccountArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,34 +58,41 @@ type dataSpatialAnchorsAccountAttributes struct {
 	ref terra.Reference
 }
 
+// AccountDomain returns a reference to field account_domain of azurerm_spatial_anchors_account.
 func (saa dataSpatialAnchorsAccountAttributes) AccountDomain() terra.StringValue {
-	return terra.ReferenceString(saa.ref.Append("account_domain"))
+	return terra.ReferenceAsString(saa.ref.Append("account_domain"))
 }
 
+// AccountId returns a reference to field account_id of azurerm_spatial_anchors_account.
 func (saa dataSpatialAnchorsAccountAttributes) AccountId() terra.StringValue {
-	return terra.ReferenceString(saa.ref.Append("account_id"))
+	return terra.ReferenceAsString(saa.ref.Append("account_id"))
 }
 
+// Id returns a reference to field id of azurerm_spatial_anchors_account.
 func (saa dataSpatialAnchorsAccountAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(saa.ref.Append("id"))
+	return terra.ReferenceAsString(saa.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_spatial_anchors_account.
 func (saa dataSpatialAnchorsAccountAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(saa.ref.Append("location"))
+	return terra.ReferenceAsString(saa.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_spatial_anchors_account.
 func (saa dataSpatialAnchorsAccountAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(saa.ref.Append("name"))
+	return terra.ReferenceAsString(saa.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_spatial_anchors_account.
 func (saa dataSpatialAnchorsAccountAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(saa.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(saa.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_spatial_anchors_account.
 func (saa dataSpatialAnchorsAccountAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](saa.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](saa.ref.Append("tags"))
 }
 
 func (saa dataSpatialAnchorsAccountAttributes) Timeouts() dataspatialanchorsaccount.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataspatialanchorsaccount.TimeoutsAttributes](saa.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataspatialanchorsaccount.TimeoutsAttributes](saa.ref.Append("timeouts"))
 }

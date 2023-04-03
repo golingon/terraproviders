@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFactoryLinkedServiceMysql creates a new instance of [DataFactoryLinkedServiceMysql].
 func NewDataFactoryLinkedServiceMysql(name string, args DataFactoryLinkedServiceMysqlArgs) *DataFactoryLinkedServiceMysql {
 	return &DataFactoryLinkedServiceMysql{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFactoryLinkedServiceMysql(name string, args DataFactoryLinkedService
 
 var _ terra.Resource = (*DataFactoryLinkedServiceMysql)(nil)
 
+// DataFactoryLinkedServiceMysql represents the Terraform resource azurerm_data_factory_linked_service_mysql.
 type DataFactoryLinkedServiceMysql struct {
-	Name  string
-	Args  DataFactoryLinkedServiceMysqlArgs
-	state *dataFactoryLinkedServiceMysqlState
+	Name      string
+	Args      DataFactoryLinkedServiceMysqlArgs
+	state     *dataFactoryLinkedServiceMysqlState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFactoryLinkedServiceMysql].
 func (dflsm *DataFactoryLinkedServiceMysql) Type() string {
 	return "azurerm_data_factory_linked_service_mysql"
 }
 
+// LocalName returns the local name for [DataFactoryLinkedServiceMysql].
 func (dflsm *DataFactoryLinkedServiceMysql) LocalName() string {
 	return dflsm.Name
 }
 
+// Configuration returns the configuration (args) for [DataFactoryLinkedServiceMysql].
 func (dflsm *DataFactoryLinkedServiceMysql) Configuration() interface{} {
 	return dflsm.Args
 }
 
+// DependOn is used for other resources to depend on [DataFactoryLinkedServiceMysql].
+func (dflsm *DataFactoryLinkedServiceMysql) DependOn() terra.Reference {
+	return terra.ReferenceResource(dflsm)
+}
+
+// Dependencies returns the list of resources [DataFactoryLinkedServiceMysql] depends_on.
+func (dflsm *DataFactoryLinkedServiceMysql) Dependencies() terra.Dependencies {
+	return dflsm.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFactoryLinkedServiceMysql].
+func (dflsm *DataFactoryLinkedServiceMysql) LifecycleManagement() *terra.Lifecycle {
+	return dflsm.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFactoryLinkedServiceMysql].
 func (dflsm *DataFactoryLinkedServiceMysql) Attributes() dataFactoryLinkedServiceMysqlAttributes {
 	return dataFactoryLinkedServiceMysqlAttributes{ref: terra.ReferenceResource(dflsm)}
 }
 
+// ImportState imports the given attribute values into [DataFactoryLinkedServiceMysql]'s state.
 func (dflsm *DataFactoryLinkedServiceMysql) ImportState(av io.Reader) error {
 	dflsm.state = &dataFactoryLinkedServiceMysqlState{}
 	if err := json.NewDecoder(av).Decode(dflsm.state); err != nil {
@@ -49,10 +73,12 @@ func (dflsm *DataFactoryLinkedServiceMysql) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFactoryLinkedServiceMysql] has state.
 func (dflsm *DataFactoryLinkedServiceMysql) State() (*dataFactoryLinkedServiceMysqlState, bool) {
 	return dflsm.state, dflsm.state != nil
 }
 
+// StateMust returns the state for [DataFactoryLinkedServiceMysql]. Panics if the state is nil.
 func (dflsm *DataFactoryLinkedServiceMysql) StateMust() *dataFactoryLinkedServiceMysqlState {
 	if dflsm.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dflsm.Type(), dflsm.LocalName()))
@@ -60,10 +86,7 @@ func (dflsm *DataFactoryLinkedServiceMysql) StateMust() *dataFactoryLinkedServic
 	return dflsm.state
 }
 
-func (dflsm *DataFactoryLinkedServiceMysql) DependOn() terra.Reference {
-	return terra.ReferenceResource(dflsm)
-}
-
+// DataFactoryLinkedServiceMysqlArgs contains the configurations for azurerm_data_factory_linked_service_mysql.
 type DataFactoryLinkedServiceMysqlArgs struct {
 	// AdditionalProperties: map of string, optional
 	AdditionalProperties terra.MapValue[terra.StringValue] `hcl:"additional_properties,attr"`
@@ -85,51 +108,58 @@ type DataFactoryLinkedServiceMysqlArgs struct {
 	Parameters terra.MapValue[terra.StringValue] `hcl:"parameters,attr"`
 	// Timeouts: optional
 	Timeouts *datafactorylinkedservicemysql.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataFactoryLinkedServiceMysql depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFactoryLinkedServiceMysqlAttributes struct {
 	ref terra.Reference
 }
 
+// AdditionalProperties returns a reference to field additional_properties of azurerm_data_factory_linked_service_mysql.
 func (dflsm dataFactoryLinkedServiceMysqlAttributes) AdditionalProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dflsm.ref.Append("additional_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](dflsm.ref.Append("additional_properties"))
 }
 
+// Annotations returns a reference to field annotations of azurerm_data_factory_linked_service_mysql.
 func (dflsm dataFactoryLinkedServiceMysqlAttributes) Annotations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dflsm.ref.Append("annotations"))
+	return terra.ReferenceAsList[terra.StringValue](dflsm.ref.Append("annotations"))
 }
 
+// ConnectionString returns a reference to field connection_string of azurerm_data_factory_linked_service_mysql.
 func (dflsm dataFactoryLinkedServiceMysqlAttributes) ConnectionString() terra.StringValue {
-	return terra.ReferenceString(dflsm.ref.Append("connection_string"))
+	return terra.ReferenceAsString(dflsm.ref.Append("connection_string"))
 }
 
+// DataFactoryId returns a reference to field data_factory_id of azurerm_data_factory_linked_service_mysql.
 func (dflsm dataFactoryLinkedServiceMysqlAttributes) DataFactoryId() terra.StringValue {
-	return terra.ReferenceString(dflsm.ref.Append("data_factory_id"))
+	return terra.ReferenceAsString(dflsm.ref.Append("data_factory_id"))
 }
 
+// Description returns a reference to field description of azurerm_data_factory_linked_service_mysql.
 func (dflsm dataFactoryLinkedServiceMysqlAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dflsm.ref.Append("description"))
+	return terra.ReferenceAsString(dflsm.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_data_factory_linked_service_mysql.
 func (dflsm dataFactoryLinkedServiceMysqlAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dflsm.ref.Append("id"))
+	return terra.ReferenceAsString(dflsm.ref.Append("id"))
 }
 
+// IntegrationRuntimeName returns a reference to field integration_runtime_name of azurerm_data_factory_linked_service_mysql.
 func (dflsm dataFactoryLinkedServiceMysqlAttributes) IntegrationRuntimeName() terra.StringValue {
-	return terra.ReferenceString(dflsm.ref.Append("integration_runtime_name"))
+	return terra.ReferenceAsString(dflsm.ref.Append("integration_runtime_name"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory_linked_service_mysql.
 func (dflsm dataFactoryLinkedServiceMysqlAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dflsm.ref.Append("name"))
+	return terra.ReferenceAsString(dflsm.ref.Append("name"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_data_factory_linked_service_mysql.
 func (dflsm dataFactoryLinkedServiceMysqlAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dflsm.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](dflsm.ref.Append("parameters"))
 }
 
 func (dflsm dataFactoryLinkedServiceMysqlAttributes) Timeouts() datafactorylinkedservicemysql.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafactorylinkedservicemysql.TimeoutsAttributes](dflsm.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafactorylinkedservicemysql.TimeoutsAttributes](dflsm.ref.Append("timeouts"))
 }
 
 type dataFactoryLinkedServiceMysqlState struct {

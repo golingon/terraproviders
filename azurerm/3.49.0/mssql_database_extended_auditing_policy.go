@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMssqlDatabaseExtendedAuditingPolicy creates a new instance of [MssqlDatabaseExtendedAuditingPolicy].
 func NewMssqlDatabaseExtendedAuditingPolicy(name string, args MssqlDatabaseExtendedAuditingPolicyArgs) *MssqlDatabaseExtendedAuditingPolicy {
 	return &MssqlDatabaseExtendedAuditingPolicy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMssqlDatabaseExtendedAuditingPolicy(name string, args MssqlDatabaseExten
 
 var _ terra.Resource = (*MssqlDatabaseExtendedAuditingPolicy)(nil)
 
+// MssqlDatabaseExtendedAuditingPolicy represents the Terraform resource azurerm_mssql_database_extended_auditing_policy.
 type MssqlDatabaseExtendedAuditingPolicy struct {
-	Name  string
-	Args  MssqlDatabaseExtendedAuditingPolicyArgs
-	state *mssqlDatabaseExtendedAuditingPolicyState
+	Name      string
+	Args      MssqlDatabaseExtendedAuditingPolicyArgs
+	state     *mssqlDatabaseExtendedAuditingPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MssqlDatabaseExtendedAuditingPolicy].
 func (mdeap *MssqlDatabaseExtendedAuditingPolicy) Type() string {
 	return "azurerm_mssql_database_extended_auditing_policy"
 }
 
+// LocalName returns the local name for [MssqlDatabaseExtendedAuditingPolicy].
 func (mdeap *MssqlDatabaseExtendedAuditingPolicy) LocalName() string {
 	return mdeap.Name
 }
 
+// Configuration returns the configuration (args) for [MssqlDatabaseExtendedAuditingPolicy].
 func (mdeap *MssqlDatabaseExtendedAuditingPolicy) Configuration() interface{} {
 	return mdeap.Args
 }
 
+// DependOn is used for other resources to depend on [MssqlDatabaseExtendedAuditingPolicy].
+func (mdeap *MssqlDatabaseExtendedAuditingPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(mdeap)
+}
+
+// Dependencies returns the list of resources [MssqlDatabaseExtendedAuditingPolicy] depends_on.
+func (mdeap *MssqlDatabaseExtendedAuditingPolicy) Dependencies() terra.Dependencies {
+	return mdeap.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MssqlDatabaseExtendedAuditingPolicy].
+func (mdeap *MssqlDatabaseExtendedAuditingPolicy) LifecycleManagement() *terra.Lifecycle {
+	return mdeap.Lifecycle
+}
+
+// Attributes returns the attributes for [MssqlDatabaseExtendedAuditingPolicy].
 func (mdeap *MssqlDatabaseExtendedAuditingPolicy) Attributes() mssqlDatabaseExtendedAuditingPolicyAttributes {
 	return mssqlDatabaseExtendedAuditingPolicyAttributes{ref: terra.ReferenceResource(mdeap)}
 }
 
+// ImportState imports the given attribute values into [MssqlDatabaseExtendedAuditingPolicy]'s state.
 func (mdeap *MssqlDatabaseExtendedAuditingPolicy) ImportState(av io.Reader) error {
 	mdeap.state = &mssqlDatabaseExtendedAuditingPolicyState{}
 	if err := json.NewDecoder(av).Decode(mdeap.state); err != nil {
@@ -49,10 +73,12 @@ func (mdeap *MssqlDatabaseExtendedAuditingPolicy) ImportState(av io.Reader) erro
 	return nil
 }
 
+// State returns the state and a bool indicating if [MssqlDatabaseExtendedAuditingPolicy] has state.
 func (mdeap *MssqlDatabaseExtendedAuditingPolicy) State() (*mssqlDatabaseExtendedAuditingPolicyState, bool) {
 	return mdeap.state, mdeap.state != nil
 }
 
+// StateMust returns the state for [MssqlDatabaseExtendedAuditingPolicy]. Panics if the state is nil.
 func (mdeap *MssqlDatabaseExtendedAuditingPolicy) StateMust() *mssqlDatabaseExtendedAuditingPolicyState {
 	if mdeap.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mdeap.Type(), mdeap.LocalName()))
@@ -60,10 +86,7 @@ func (mdeap *MssqlDatabaseExtendedAuditingPolicy) StateMust() *mssqlDatabaseExte
 	return mdeap.state
 }
 
-func (mdeap *MssqlDatabaseExtendedAuditingPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(mdeap)
-}
-
+// MssqlDatabaseExtendedAuditingPolicyArgs contains the configurations for azurerm_mssql_database_extended_auditing_policy.
 type MssqlDatabaseExtendedAuditingPolicyArgs struct {
 	// DatabaseId: string, required
 	DatabaseId terra.StringValue `hcl:"database_id,attr" validate:"required"`
@@ -83,47 +106,53 @@ type MssqlDatabaseExtendedAuditingPolicyArgs struct {
 	StorageEndpoint terra.StringValue `hcl:"storage_endpoint,attr"`
 	// Timeouts: optional
 	Timeouts *mssqldatabaseextendedauditingpolicy.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MssqlDatabaseExtendedAuditingPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mssqlDatabaseExtendedAuditingPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// DatabaseId returns a reference to field database_id of azurerm_mssql_database_extended_auditing_policy.
 func (mdeap mssqlDatabaseExtendedAuditingPolicyAttributes) DatabaseId() terra.StringValue {
-	return terra.ReferenceString(mdeap.ref.Append("database_id"))
+	return terra.ReferenceAsString(mdeap.ref.Append("database_id"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_mssql_database_extended_auditing_policy.
 func (mdeap mssqlDatabaseExtendedAuditingPolicyAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(mdeap.ref.Append("enabled"))
+	return terra.ReferenceAsBool(mdeap.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of azurerm_mssql_database_extended_auditing_policy.
 func (mdeap mssqlDatabaseExtendedAuditingPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mdeap.ref.Append("id"))
+	return terra.ReferenceAsString(mdeap.ref.Append("id"))
 }
 
+// LogMonitoringEnabled returns a reference to field log_monitoring_enabled of azurerm_mssql_database_extended_auditing_policy.
 func (mdeap mssqlDatabaseExtendedAuditingPolicyAttributes) LogMonitoringEnabled() terra.BoolValue {
-	return terra.ReferenceBool(mdeap.ref.Append("log_monitoring_enabled"))
+	return terra.ReferenceAsBool(mdeap.ref.Append("log_monitoring_enabled"))
 }
 
+// RetentionInDays returns a reference to field retention_in_days of azurerm_mssql_database_extended_auditing_policy.
 func (mdeap mssqlDatabaseExtendedAuditingPolicyAttributes) RetentionInDays() terra.NumberValue {
-	return terra.ReferenceNumber(mdeap.ref.Append("retention_in_days"))
+	return terra.ReferenceAsNumber(mdeap.ref.Append("retention_in_days"))
 }
 
+// StorageAccountAccessKey returns a reference to field storage_account_access_key of azurerm_mssql_database_extended_auditing_policy.
 func (mdeap mssqlDatabaseExtendedAuditingPolicyAttributes) StorageAccountAccessKey() terra.StringValue {
-	return terra.ReferenceString(mdeap.ref.Append("storage_account_access_key"))
+	return terra.ReferenceAsString(mdeap.ref.Append("storage_account_access_key"))
 }
 
+// StorageAccountAccessKeyIsSecondary returns a reference to field storage_account_access_key_is_secondary of azurerm_mssql_database_extended_auditing_policy.
 func (mdeap mssqlDatabaseExtendedAuditingPolicyAttributes) StorageAccountAccessKeyIsSecondary() terra.BoolValue {
-	return terra.ReferenceBool(mdeap.ref.Append("storage_account_access_key_is_secondary"))
+	return terra.ReferenceAsBool(mdeap.ref.Append("storage_account_access_key_is_secondary"))
 }
 
+// StorageEndpoint returns a reference to field storage_endpoint of azurerm_mssql_database_extended_auditing_policy.
 func (mdeap mssqlDatabaseExtendedAuditingPolicyAttributes) StorageEndpoint() terra.StringValue {
-	return terra.ReferenceString(mdeap.ref.Append("storage_endpoint"))
+	return terra.ReferenceAsString(mdeap.ref.Append("storage_endpoint"))
 }
 
 func (mdeap mssqlDatabaseExtendedAuditingPolicyAttributes) Timeouts() mssqldatabaseextendedauditingpolicy.TimeoutsAttributes {
-	return terra.ReferenceSingle[mssqldatabaseextendedauditingpolicy.TimeoutsAttributes](mdeap.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[mssqldatabaseextendedauditingpolicy.TimeoutsAttributes](mdeap.ref.Append("timeouts"))
 }
 
 type mssqlDatabaseExtendedAuditingPolicyState struct {

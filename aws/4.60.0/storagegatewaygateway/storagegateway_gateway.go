@@ -52,7 +52,7 @@ func (gni GatewayNetworkInterfaceAttributes) InternalWithRef(ref terra.Reference
 	return GatewayNetworkInterfaceAttributes{ref: ref}
 }
 
-func (gni GatewayNetworkInterfaceAttributes) InternalTokens() hclwrite.Tokens {
+func (gni GatewayNetworkInterfaceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gni.ref.InternalTokens()
 }
 
@@ -72,7 +72,7 @@ func (mst MaintenanceStartTimeAttributes) InternalWithRef(ref terra.Reference) M
 	return MaintenanceStartTimeAttributes{ref: ref}
 }
 
-func (mst MaintenanceStartTimeAttributes) InternalTokens() hclwrite.Tokens {
+func (mst MaintenanceStartTimeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mst.ref.InternalTokens()
 }
 
@@ -104,7 +104,7 @@ func (sads SmbActiveDirectorySettingsAttributes) InternalWithRef(ref terra.Refer
 	return SmbActiveDirectorySettingsAttributes{ref: ref}
 }
 
-func (sads SmbActiveDirectorySettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (sads SmbActiveDirectorySettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sads.ref.InternalTokens()
 }
 
@@ -148,7 +148,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFactoryLinkedServiceSqlServer creates a new instance of [DataFactoryLinkedServiceSqlServer].
 func NewDataFactoryLinkedServiceSqlServer(name string, args DataFactoryLinkedServiceSqlServerArgs) *DataFactoryLinkedServiceSqlServer {
 	return &DataFactoryLinkedServiceSqlServer{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFactoryLinkedServiceSqlServer(name string, args DataFactoryLinkedSer
 
 var _ terra.Resource = (*DataFactoryLinkedServiceSqlServer)(nil)
 
+// DataFactoryLinkedServiceSqlServer represents the Terraform resource azurerm_data_factory_linked_service_sql_server.
 type DataFactoryLinkedServiceSqlServer struct {
-	Name  string
-	Args  DataFactoryLinkedServiceSqlServerArgs
-	state *dataFactoryLinkedServiceSqlServerState
+	Name      string
+	Args      DataFactoryLinkedServiceSqlServerArgs
+	state     *dataFactoryLinkedServiceSqlServerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFactoryLinkedServiceSqlServer].
 func (dflsss *DataFactoryLinkedServiceSqlServer) Type() string {
 	return "azurerm_data_factory_linked_service_sql_server"
 }
 
+// LocalName returns the local name for [DataFactoryLinkedServiceSqlServer].
 func (dflsss *DataFactoryLinkedServiceSqlServer) LocalName() string {
 	return dflsss.Name
 }
 
+// Configuration returns the configuration (args) for [DataFactoryLinkedServiceSqlServer].
 func (dflsss *DataFactoryLinkedServiceSqlServer) Configuration() interface{} {
 	return dflsss.Args
 }
 
+// DependOn is used for other resources to depend on [DataFactoryLinkedServiceSqlServer].
+func (dflsss *DataFactoryLinkedServiceSqlServer) DependOn() terra.Reference {
+	return terra.ReferenceResource(dflsss)
+}
+
+// Dependencies returns the list of resources [DataFactoryLinkedServiceSqlServer] depends_on.
+func (dflsss *DataFactoryLinkedServiceSqlServer) Dependencies() terra.Dependencies {
+	return dflsss.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFactoryLinkedServiceSqlServer].
+func (dflsss *DataFactoryLinkedServiceSqlServer) LifecycleManagement() *terra.Lifecycle {
+	return dflsss.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFactoryLinkedServiceSqlServer].
 func (dflsss *DataFactoryLinkedServiceSqlServer) Attributes() dataFactoryLinkedServiceSqlServerAttributes {
 	return dataFactoryLinkedServiceSqlServerAttributes{ref: terra.ReferenceResource(dflsss)}
 }
 
+// ImportState imports the given attribute values into [DataFactoryLinkedServiceSqlServer]'s state.
 func (dflsss *DataFactoryLinkedServiceSqlServer) ImportState(av io.Reader) error {
 	dflsss.state = &dataFactoryLinkedServiceSqlServerState{}
 	if err := json.NewDecoder(av).Decode(dflsss.state); err != nil {
@@ -49,10 +73,12 @@ func (dflsss *DataFactoryLinkedServiceSqlServer) ImportState(av io.Reader) error
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFactoryLinkedServiceSqlServer] has state.
 func (dflsss *DataFactoryLinkedServiceSqlServer) State() (*dataFactoryLinkedServiceSqlServerState, bool) {
 	return dflsss.state, dflsss.state != nil
 }
 
+// StateMust returns the state for [DataFactoryLinkedServiceSqlServer]. Panics if the state is nil.
 func (dflsss *DataFactoryLinkedServiceSqlServer) StateMust() *dataFactoryLinkedServiceSqlServerState {
 	if dflsss.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dflsss.Type(), dflsss.LocalName()))
@@ -60,10 +86,7 @@ func (dflsss *DataFactoryLinkedServiceSqlServer) StateMust() *dataFactoryLinkedS
 	return dflsss.state
 }
 
-func (dflsss *DataFactoryLinkedServiceSqlServer) DependOn() terra.Reference {
-	return terra.ReferenceResource(dflsss)
-}
-
+// DataFactoryLinkedServiceSqlServerArgs contains the configurations for azurerm_data_factory_linked_service_sql_server.
 type DataFactoryLinkedServiceSqlServerArgs struct {
 	// AdditionalProperties: map of string, optional
 	AdditionalProperties terra.MapValue[terra.StringValue] `hcl:"additional_properties,attr"`
@@ -91,63 +114,71 @@ type DataFactoryLinkedServiceSqlServerArgs struct {
 	KeyVaultPassword *datafactorylinkedservicesqlserver.KeyVaultPassword `hcl:"key_vault_password,block"`
 	// Timeouts: optional
 	Timeouts *datafactorylinkedservicesqlserver.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataFactoryLinkedServiceSqlServer depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFactoryLinkedServiceSqlServerAttributes struct {
 	ref terra.Reference
 }
 
+// AdditionalProperties returns a reference to field additional_properties of azurerm_data_factory_linked_service_sql_server.
 func (dflsss dataFactoryLinkedServiceSqlServerAttributes) AdditionalProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dflsss.ref.Append("additional_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](dflsss.ref.Append("additional_properties"))
 }
 
+// Annotations returns a reference to field annotations of azurerm_data_factory_linked_service_sql_server.
 func (dflsss dataFactoryLinkedServiceSqlServerAttributes) Annotations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dflsss.ref.Append("annotations"))
+	return terra.ReferenceAsList[terra.StringValue](dflsss.ref.Append("annotations"))
 }
 
+// ConnectionString returns a reference to field connection_string of azurerm_data_factory_linked_service_sql_server.
 func (dflsss dataFactoryLinkedServiceSqlServerAttributes) ConnectionString() terra.StringValue {
-	return terra.ReferenceString(dflsss.ref.Append("connection_string"))
+	return terra.ReferenceAsString(dflsss.ref.Append("connection_string"))
 }
 
+// DataFactoryId returns a reference to field data_factory_id of azurerm_data_factory_linked_service_sql_server.
 func (dflsss dataFactoryLinkedServiceSqlServerAttributes) DataFactoryId() terra.StringValue {
-	return terra.ReferenceString(dflsss.ref.Append("data_factory_id"))
+	return terra.ReferenceAsString(dflsss.ref.Append("data_factory_id"))
 }
 
+// Description returns a reference to field description of azurerm_data_factory_linked_service_sql_server.
 func (dflsss dataFactoryLinkedServiceSqlServerAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dflsss.ref.Append("description"))
+	return terra.ReferenceAsString(dflsss.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_data_factory_linked_service_sql_server.
 func (dflsss dataFactoryLinkedServiceSqlServerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dflsss.ref.Append("id"))
+	return terra.ReferenceAsString(dflsss.ref.Append("id"))
 }
 
+// IntegrationRuntimeName returns a reference to field integration_runtime_name of azurerm_data_factory_linked_service_sql_server.
 func (dflsss dataFactoryLinkedServiceSqlServerAttributes) IntegrationRuntimeName() terra.StringValue {
-	return terra.ReferenceString(dflsss.ref.Append("integration_runtime_name"))
+	return terra.ReferenceAsString(dflsss.ref.Append("integration_runtime_name"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory_linked_service_sql_server.
 func (dflsss dataFactoryLinkedServiceSqlServerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dflsss.ref.Append("name"))
+	return terra.ReferenceAsString(dflsss.ref.Append("name"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_data_factory_linked_service_sql_server.
 func (dflsss dataFactoryLinkedServiceSqlServerAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dflsss.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](dflsss.ref.Append("parameters"))
 }
 
+// UserName returns a reference to field user_name of azurerm_data_factory_linked_service_sql_server.
 func (dflsss dataFactoryLinkedServiceSqlServerAttributes) UserName() terra.StringValue {
-	return terra.ReferenceString(dflsss.ref.Append("user_name"))
+	return terra.ReferenceAsString(dflsss.ref.Append("user_name"))
 }
 
 func (dflsss dataFactoryLinkedServiceSqlServerAttributes) KeyVaultConnectionString() terra.ListValue[datafactorylinkedservicesqlserver.KeyVaultConnectionStringAttributes] {
-	return terra.ReferenceList[datafactorylinkedservicesqlserver.KeyVaultConnectionStringAttributes](dflsss.ref.Append("key_vault_connection_string"))
+	return terra.ReferenceAsList[datafactorylinkedservicesqlserver.KeyVaultConnectionStringAttributes](dflsss.ref.Append("key_vault_connection_string"))
 }
 
 func (dflsss dataFactoryLinkedServiceSqlServerAttributes) KeyVaultPassword() terra.ListValue[datafactorylinkedservicesqlserver.KeyVaultPasswordAttributes] {
-	return terra.ReferenceList[datafactorylinkedservicesqlserver.KeyVaultPasswordAttributes](dflsss.ref.Append("key_vault_password"))
+	return terra.ReferenceAsList[datafactorylinkedservicesqlserver.KeyVaultPasswordAttributes](dflsss.ref.Append("key_vault_password"))
 }
 
 func (dflsss dataFactoryLinkedServiceSqlServerAttributes) Timeouts() datafactorylinkedservicesqlserver.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafactorylinkedservicesqlserver.TimeoutsAttributes](dflsss.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafactorylinkedservicesqlserver.TimeoutsAttributes](dflsss.ref.Append("timeouts"))
 }
 
 type dataFactoryLinkedServiceSqlServerState struct {

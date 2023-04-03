@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewPrivateDnsResolverVirtualNetworkLink creates a new instance of [PrivateDnsResolverVirtualNetworkLink].
 func NewPrivateDnsResolverVirtualNetworkLink(name string, args PrivateDnsResolverVirtualNetworkLinkArgs) *PrivateDnsResolverVirtualNetworkLink {
 	return &PrivateDnsResolverVirtualNetworkLink{
 		Args: args,
@@ -19,28 +20,51 @@ func NewPrivateDnsResolverVirtualNetworkLink(name string, args PrivateDnsResolve
 
 var _ terra.Resource = (*PrivateDnsResolverVirtualNetworkLink)(nil)
 
+// PrivateDnsResolverVirtualNetworkLink represents the Terraform resource azurerm_private_dns_resolver_virtual_network_link.
 type PrivateDnsResolverVirtualNetworkLink struct {
-	Name  string
-	Args  PrivateDnsResolverVirtualNetworkLinkArgs
-	state *privateDnsResolverVirtualNetworkLinkState
+	Name      string
+	Args      PrivateDnsResolverVirtualNetworkLinkArgs
+	state     *privateDnsResolverVirtualNetworkLinkState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PrivateDnsResolverVirtualNetworkLink].
 func (pdrvnl *PrivateDnsResolverVirtualNetworkLink) Type() string {
 	return "azurerm_private_dns_resolver_virtual_network_link"
 }
 
+// LocalName returns the local name for [PrivateDnsResolverVirtualNetworkLink].
 func (pdrvnl *PrivateDnsResolverVirtualNetworkLink) LocalName() string {
 	return pdrvnl.Name
 }
 
+// Configuration returns the configuration (args) for [PrivateDnsResolverVirtualNetworkLink].
 func (pdrvnl *PrivateDnsResolverVirtualNetworkLink) Configuration() interface{} {
 	return pdrvnl.Args
 }
 
+// DependOn is used for other resources to depend on [PrivateDnsResolverVirtualNetworkLink].
+func (pdrvnl *PrivateDnsResolverVirtualNetworkLink) DependOn() terra.Reference {
+	return terra.ReferenceResource(pdrvnl)
+}
+
+// Dependencies returns the list of resources [PrivateDnsResolverVirtualNetworkLink] depends_on.
+func (pdrvnl *PrivateDnsResolverVirtualNetworkLink) Dependencies() terra.Dependencies {
+	return pdrvnl.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PrivateDnsResolverVirtualNetworkLink].
+func (pdrvnl *PrivateDnsResolverVirtualNetworkLink) LifecycleManagement() *terra.Lifecycle {
+	return pdrvnl.Lifecycle
+}
+
+// Attributes returns the attributes for [PrivateDnsResolverVirtualNetworkLink].
 func (pdrvnl *PrivateDnsResolverVirtualNetworkLink) Attributes() privateDnsResolverVirtualNetworkLinkAttributes {
 	return privateDnsResolverVirtualNetworkLinkAttributes{ref: terra.ReferenceResource(pdrvnl)}
 }
 
+// ImportState imports the given attribute values into [PrivateDnsResolverVirtualNetworkLink]'s state.
 func (pdrvnl *PrivateDnsResolverVirtualNetworkLink) ImportState(av io.Reader) error {
 	pdrvnl.state = &privateDnsResolverVirtualNetworkLinkState{}
 	if err := json.NewDecoder(av).Decode(pdrvnl.state); err != nil {
@@ -49,10 +73,12 @@ func (pdrvnl *PrivateDnsResolverVirtualNetworkLink) ImportState(av io.Reader) er
 	return nil
 }
 
+// State returns the state and a bool indicating if [PrivateDnsResolverVirtualNetworkLink] has state.
 func (pdrvnl *PrivateDnsResolverVirtualNetworkLink) State() (*privateDnsResolverVirtualNetworkLinkState, bool) {
 	return pdrvnl.state, pdrvnl.state != nil
 }
 
+// StateMust returns the state for [PrivateDnsResolverVirtualNetworkLink]. Panics if the state is nil.
 func (pdrvnl *PrivateDnsResolverVirtualNetworkLink) StateMust() *privateDnsResolverVirtualNetworkLinkState {
 	if pdrvnl.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pdrvnl.Type(), pdrvnl.LocalName()))
@@ -60,10 +86,7 @@ func (pdrvnl *PrivateDnsResolverVirtualNetworkLink) StateMust() *privateDnsResol
 	return pdrvnl.state
 }
 
-func (pdrvnl *PrivateDnsResolverVirtualNetworkLink) DependOn() terra.Reference {
-	return terra.ReferenceResource(pdrvnl)
-}
-
+// PrivateDnsResolverVirtualNetworkLinkArgs contains the configurations for azurerm_private_dns_resolver_virtual_network_link.
 type PrivateDnsResolverVirtualNetworkLinkArgs struct {
 	// DnsForwardingRulesetId: string, required
 	DnsForwardingRulesetId terra.StringValue `hcl:"dns_forwarding_ruleset_id,attr" validate:"required"`
@@ -77,35 +100,38 @@ type PrivateDnsResolverVirtualNetworkLinkArgs struct {
 	VirtualNetworkId terra.StringValue `hcl:"virtual_network_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *privatednsresolvervirtualnetworklink.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that PrivateDnsResolverVirtualNetworkLink depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type privateDnsResolverVirtualNetworkLinkAttributes struct {
 	ref terra.Reference
 }
 
+// DnsForwardingRulesetId returns a reference to field dns_forwarding_ruleset_id of azurerm_private_dns_resolver_virtual_network_link.
 func (pdrvnl privateDnsResolverVirtualNetworkLinkAttributes) DnsForwardingRulesetId() terra.StringValue {
-	return terra.ReferenceString(pdrvnl.ref.Append("dns_forwarding_ruleset_id"))
+	return terra.ReferenceAsString(pdrvnl.ref.Append("dns_forwarding_ruleset_id"))
 }
 
+// Id returns a reference to field id of azurerm_private_dns_resolver_virtual_network_link.
 func (pdrvnl privateDnsResolverVirtualNetworkLinkAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pdrvnl.ref.Append("id"))
+	return terra.ReferenceAsString(pdrvnl.ref.Append("id"))
 }
 
+// Metadata returns a reference to field metadata of azurerm_private_dns_resolver_virtual_network_link.
 func (pdrvnl privateDnsResolverVirtualNetworkLinkAttributes) Metadata() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](pdrvnl.ref.Append("metadata"))
+	return terra.ReferenceAsMap[terra.StringValue](pdrvnl.ref.Append("metadata"))
 }
 
+// Name returns a reference to field name of azurerm_private_dns_resolver_virtual_network_link.
 func (pdrvnl privateDnsResolverVirtualNetworkLinkAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pdrvnl.ref.Append("name"))
+	return terra.ReferenceAsString(pdrvnl.ref.Append("name"))
 }
 
+// VirtualNetworkId returns a reference to field virtual_network_id of azurerm_private_dns_resolver_virtual_network_link.
 func (pdrvnl privateDnsResolverVirtualNetworkLinkAttributes) VirtualNetworkId() terra.StringValue {
-	return terra.ReferenceString(pdrvnl.ref.Append("virtual_network_id"))
+	return terra.ReferenceAsString(pdrvnl.ref.Append("virtual_network_id"))
 }
 
 func (pdrvnl privateDnsResolverVirtualNetworkLinkAttributes) Timeouts() privatednsresolvervirtualnetworklink.TimeoutsAttributes {
-	return terra.ReferenceSingle[privatednsresolvervirtualnetworklink.TimeoutsAttributes](pdrvnl.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[privatednsresolvervirtualnetworklink.TimeoutsAttributes](pdrvnl.ref.Append("timeouts"))
 }
 
 type privateDnsResolverVirtualNetworkLinkState struct {

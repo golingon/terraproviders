@@ -50,7 +50,7 @@ func (s SchemaAttributes) InternalWithRef(ref terra.Reference) SchemaAttributes 
 	return SchemaAttributes{ref: ref}
 }
 
-func (s SchemaAttributes) InternalTokens() hclwrite.Tokens {
+func (s SchemaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -74,7 +74,7 @@ func (irt InputRecordTablesAttributes) InternalWithRef(ref terra.Reference) Inpu
 	return InputRecordTablesAttributes{ref: ref}
 }
 
-func (irt InputRecordTablesAttributes) InternalTokens() hclwrite.Tokens {
+func (irt InputRecordTablesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return irt.ref.InternalTokens()
 }
 
@@ -106,7 +106,7 @@ func (p ParametersAttributes) InternalWithRef(ref terra.Reference) ParametersAtt
 	return ParametersAttributes{ref: ref}
 }
 
-func (p ParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (p ParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -130,7 +130,7 @@ func (fmp FindMatchesParametersAttributes) InternalWithRef(ref terra.Reference) 
 	return FindMatchesParametersAttributes{ref: ref}
 }
 
-func (fmp FindMatchesParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (fmp FindMatchesParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fmp.ref.InternalTokens()
 }
 

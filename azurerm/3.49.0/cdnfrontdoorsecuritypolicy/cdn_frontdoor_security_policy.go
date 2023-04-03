@@ -44,120 +44,120 @@ type SecurityPoliciesAttributes struct {
 	ref terra.Reference
 }
 
-func (sp SecurityPoliciesAttributes) InternalRef() terra.Reference {
-	return sp.ref
+func (sp SecurityPoliciesAttributes) InternalRef() (terra.Reference, error) {
+	return sp.ref, nil
 }
 
 func (sp SecurityPoliciesAttributes) InternalWithRef(ref terra.Reference) SecurityPoliciesAttributes {
 	return SecurityPoliciesAttributes{ref: ref}
 }
 
-func (sp SecurityPoliciesAttributes) InternalTokens() hclwrite.Tokens {
+func (sp SecurityPoliciesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sp.ref.InternalTokens()
 }
 
 func (sp SecurityPoliciesAttributes) Firewall() terra.ListValue[FirewallAttributes] {
-	return terra.ReferenceList[FirewallAttributes](sp.ref.Append("firewall"))
+	return terra.ReferenceAsList[FirewallAttributes](sp.ref.Append("firewall"))
 }
 
 type FirewallAttributes struct {
 	ref terra.Reference
 }
 
-func (f FirewallAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FirewallAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FirewallAttributes) InternalWithRef(ref terra.Reference) FirewallAttributes {
 	return FirewallAttributes{ref: ref}
 }
 
-func (f FirewallAttributes) InternalTokens() hclwrite.Tokens {
+func (f FirewallAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
 func (f FirewallAttributes) CdnFrontdoorFirewallPolicyId() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("cdn_frontdoor_firewall_policy_id"))
+	return terra.ReferenceAsString(f.ref.Append("cdn_frontdoor_firewall_policy_id"))
 }
 
 func (f FirewallAttributes) Association() terra.ListValue[AssociationAttributes] {
-	return terra.ReferenceList[AssociationAttributes](f.ref.Append("association"))
+	return terra.ReferenceAsList[AssociationAttributes](f.ref.Append("association"))
 }
 
 type AssociationAttributes struct {
 	ref terra.Reference
 }
 
-func (a AssociationAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AssociationAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AssociationAttributes) InternalWithRef(ref terra.Reference) AssociationAttributes {
 	return AssociationAttributes{ref: ref}
 }
 
-func (a AssociationAttributes) InternalTokens() hclwrite.Tokens {
+func (a AssociationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a AssociationAttributes) PatternsToMatch() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](a.ref.Append("patterns_to_match"))
+	return terra.ReferenceAsList[terra.StringValue](a.ref.Append("patterns_to_match"))
 }
 
 func (a AssociationAttributes) Domain() terra.ListValue[DomainAttributes] {
-	return terra.ReferenceList[DomainAttributes](a.ref.Append("domain"))
+	return terra.ReferenceAsList[DomainAttributes](a.ref.Append("domain"))
 }
 
 type DomainAttributes struct {
 	ref terra.Reference
 }
 
-func (d DomainAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DomainAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DomainAttributes) InternalWithRef(ref terra.Reference) DomainAttributes {
 	return DomainAttributes{ref: ref}
 }
 
-func (d DomainAttributes) InternalTokens() hclwrite.Tokens {
+func (d DomainAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d DomainAttributes) Active() terra.BoolValue {
-	return terra.ReferenceBool(d.ref.Append("active"))
+	return terra.ReferenceAsBool(d.ref.Append("active"))
 }
 
 func (d DomainAttributes) CdnFrontdoorDomainId() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("cdn_frontdoor_domain_id"))
+	return terra.ReferenceAsString(d.ref.Append("cdn_frontdoor_domain_id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type SecurityPoliciesState struct {

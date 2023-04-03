@@ -46,120 +46,120 @@ type AcceleratorsAttributes struct {
 	ref terra.Reference
 }
 
-func (a AcceleratorsAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AcceleratorsAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AcceleratorsAttributes) InternalWithRef(ref terra.Reference) AcceleratorsAttributes {
 	return AcceleratorsAttributes{ref: ref}
 }
 
-func (a AcceleratorsAttributes) InternalTokens() hclwrite.Tokens {
+func (a AcceleratorsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a AcceleratorsAttributes) AcceleratorType() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("accelerator_type"))
+	return terra.ReferenceAsString(a.ref.Append("accelerator_type"))
 }
 
 func (a AcceleratorsAttributes) State() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("state"))
+	return terra.ReferenceAsString(a.ref.Append("state"))
 }
 
 type CryptoKeyConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ckc CryptoKeyConfigAttributes) InternalRef() terra.Reference {
-	return ckc.ref
+func (ckc CryptoKeyConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ckc.ref, nil
 }
 
 func (ckc CryptoKeyConfigAttributes) InternalWithRef(ref terra.Reference) CryptoKeyConfigAttributes {
 	return CryptoKeyConfigAttributes{ref: ref}
 }
 
-func (ckc CryptoKeyConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ckc CryptoKeyConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ckc.ref.InternalTokens()
 }
 
 func (ckc CryptoKeyConfigAttributes) KeyReference() terra.StringValue {
-	return terra.ReferenceString(ckc.ref.Append("key_reference"))
+	return terra.ReferenceAsString(ckc.ref.Append("key_reference"))
 }
 
 type EventPublishConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (epc EventPublishConfigAttributes) InternalRef() terra.Reference {
-	return epc.ref
+func (epc EventPublishConfigAttributes) InternalRef() (terra.Reference, error) {
+	return epc.ref, nil
 }
 
 func (epc EventPublishConfigAttributes) InternalWithRef(ref terra.Reference) EventPublishConfigAttributes {
 	return EventPublishConfigAttributes{ref: ref}
 }
 
-func (epc EventPublishConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (epc EventPublishConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return epc.ref.InternalTokens()
 }
 
 func (epc EventPublishConfigAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(epc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(epc.ref.Append("enabled"))
 }
 
 func (epc EventPublishConfigAttributes) Topic() terra.StringValue {
-	return terra.ReferenceString(epc.ref.Append("topic"))
+	return terra.ReferenceAsString(epc.ref.Append("topic"))
 }
 
 type NetworkConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (nc NetworkConfigAttributes) InternalRef() terra.Reference {
-	return nc.ref
+func (nc NetworkConfigAttributes) InternalRef() (terra.Reference, error) {
+	return nc.ref, nil
 }
 
 func (nc NetworkConfigAttributes) InternalWithRef(ref terra.Reference) NetworkConfigAttributes {
 	return NetworkConfigAttributes{ref: ref}
 }
 
-func (nc NetworkConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (nc NetworkConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nc.ref.InternalTokens()
 }
 
 func (nc NetworkConfigAttributes) IpAllocation() terra.StringValue {
-	return terra.ReferenceString(nc.ref.Append("ip_allocation"))
+	return terra.ReferenceAsString(nc.ref.Append("ip_allocation"))
 }
 
 func (nc NetworkConfigAttributes) Network() terra.StringValue {
-	return terra.ReferenceString(nc.ref.Append("network"))
+	return terra.ReferenceAsString(nc.ref.Append("network"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AcceleratorsState struct {

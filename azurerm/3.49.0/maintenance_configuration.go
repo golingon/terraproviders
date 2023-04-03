@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMaintenanceConfiguration creates a new instance of [MaintenanceConfiguration].
 func NewMaintenanceConfiguration(name string, args MaintenanceConfigurationArgs) *MaintenanceConfiguration {
 	return &MaintenanceConfiguration{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMaintenanceConfiguration(name string, args MaintenanceConfigurationArgs)
 
 var _ terra.Resource = (*MaintenanceConfiguration)(nil)
 
+// MaintenanceConfiguration represents the Terraform resource azurerm_maintenance_configuration.
 type MaintenanceConfiguration struct {
-	Name  string
-	Args  MaintenanceConfigurationArgs
-	state *maintenanceConfigurationState
+	Name      string
+	Args      MaintenanceConfigurationArgs
+	state     *maintenanceConfigurationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MaintenanceConfiguration].
 func (mc *MaintenanceConfiguration) Type() string {
 	return "azurerm_maintenance_configuration"
 }
 
+// LocalName returns the local name for [MaintenanceConfiguration].
 func (mc *MaintenanceConfiguration) LocalName() string {
 	return mc.Name
 }
 
+// Configuration returns the configuration (args) for [MaintenanceConfiguration].
 func (mc *MaintenanceConfiguration) Configuration() interface{} {
 	return mc.Args
 }
 
+// DependOn is used for other resources to depend on [MaintenanceConfiguration].
+func (mc *MaintenanceConfiguration) DependOn() terra.Reference {
+	return terra.ReferenceResource(mc)
+}
+
+// Dependencies returns the list of resources [MaintenanceConfiguration] depends_on.
+func (mc *MaintenanceConfiguration) Dependencies() terra.Dependencies {
+	return mc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MaintenanceConfiguration].
+func (mc *MaintenanceConfiguration) LifecycleManagement() *terra.Lifecycle {
+	return mc.Lifecycle
+}
+
+// Attributes returns the attributes for [MaintenanceConfiguration].
 func (mc *MaintenanceConfiguration) Attributes() maintenanceConfigurationAttributes {
 	return maintenanceConfigurationAttributes{ref: terra.ReferenceResource(mc)}
 }
 
+// ImportState imports the given attribute values into [MaintenanceConfiguration]'s state.
 func (mc *MaintenanceConfiguration) ImportState(av io.Reader) error {
 	mc.state = &maintenanceConfigurationState{}
 	if err := json.NewDecoder(av).Decode(mc.state); err != nil {
@@ -49,10 +73,12 @@ func (mc *MaintenanceConfiguration) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MaintenanceConfiguration] has state.
 func (mc *MaintenanceConfiguration) State() (*maintenanceConfigurationState, bool) {
 	return mc.state, mc.state != nil
 }
 
+// StateMust returns the state for [MaintenanceConfiguration]. Panics if the state is nil.
 func (mc *MaintenanceConfiguration) StateMust() *maintenanceConfigurationState {
 	if mc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mc.Type(), mc.LocalName()))
@@ -60,10 +86,7 @@ func (mc *MaintenanceConfiguration) StateMust() *maintenanceConfigurationState {
 	return mc.state
 }
 
-func (mc *MaintenanceConfiguration) DependOn() terra.Reference {
-	return terra.ReferenceResource(mc)
-}
-
+// MaintenanceConfigurationArgs contains the configurations for azurerm_maintenance_configuration.
 type MaintenanceConfigurationArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -89,59 +112,66 @@ type MaintenanceConfigurationArgs struct {
 	Timeouts *maintenanceconfiguration.Timeouts `hcl:"timeouts,block"`
 	// Window: optional
 	Window *maintenanceconfiguration.Window `hcl:"window,block"`
-	// DependsOn contains resources that MaintenanceConfiguration depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type maintenanceConfigurationAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_maintenance_configuration.
 func (mc maintenanceConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("id"))
+	return terra.ReferenceAsString(mc.ref.Append("id"))
 }
 
+// InGuestUserPatchMode returns a reference to field in_guest_user_patch_mode of azurerm_maintenance_configuration.
 func (mc maintenanceConfigurationAttributes) InGuestUserPatchMode() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("in_guest_user_patch_mode"))
+	return terra.ReferenceAsString(mc.ref.Append("in_guest_user_patch_mode"))
 }
 
+// Location returns a reference to field location of azurerm_maintenance_configuration.
 func (mc maintenanceConfigurationAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("location"))
+	return terra.ReferenceAsString(mc.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_maintenance_configuration.
 func (mc maintenanceConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("name"))
+	return terra.ReferenceAsString(mc.ref.Append("name"))
 }
 
+// Properties returns a reference to field properties of azurerm_maintenance_configuration.
 func (mc maintenanceConfigurationAttributes) Properties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mc.ref.Append("properties"))
+	return terra.ReferenceAsMap[terra.StringValue](mc.ref.Append("properties"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_maintenance_configuration.
 func (mc maintenanceConfigurationAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(mc.ref.Append("resource_group_name"))
 }
 
+// Scope returns a reference to field scope of azurerm_maintenance_configuration.
 func (mc maintenanceConfigurationAttributes) Scope() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("scope"))
+	return terra.ReferenceAsString(mc.ref.Append("scope"))
 }
 
+// Tags returns a reference to field tags of azurerm_maintenance_configuration.
 func (mc maintenanceConfigurationAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mc.ref.Append("tags"))
 }
 
+// Visibility returns a reference to field visibility of azurerm_maintenance_configuration.
 func (mc maintenanceConfigurationAttributes) Visibility() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("visibility"))
+	return terra.ReferenceAsString(mc.ref.Append("visibility"))
 }
 
 func (mc maintenanceConfigurationAttributes) InstallPatches() terra.ListValue[maintenanceconfiguration.InstallPatchesAttributes] {
-	return terra.ReferenceList[maintenanceconfiguration.InstallPatchesAttributes](mc.ref.Append("install_patches"))
+	return terra.ReferenceAsList[maintenanceconfiguration.InstallPatchesAttributes](mc.ref.Append("install_patches"))
 }
 
 func (mc maintenanceConfigurationAttributes) Timeouts() maintenanceconfiguration.TimeoutsAttributes {
-	return terra.ReferenceSingle[maintenanceconfiguration.TimeoutsAttributes](mc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[maintenanceconfiguration.TimeoutsAttributes](mc.ref.Append("timeouts"))
 }
 
 func (mc maintenanceConfigurationAttributes) Window() terra.ListValue[maintenanceconfiguration.WindowAttributes] {
-	return terra.ReferenceList[maintenanceconfiguration.WindowAttributes](mc.ref.Append("window"))
+	return terra.ReferenceAsList[maintenanceconfiguration.WindowAttributes](mc.ref.Append("window"))
 }
 
 type maintenanceConfigurationState struct {

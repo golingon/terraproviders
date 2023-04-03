@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewHealthcareWorkspace creates a new instance of [HealthcareWorkspace].
 func NewHealthcareWorkspace(name string, args HealthcareWorkspaceArgs) *HealthcareWorkspace {
 	return &HealthcareWorkspace{
 		Args: args,
@@ -19,28 +20,51 @@ func NewHealthcareWorkspace(name string, args HealthcareWorkspaceArgs) *Healthca
 
 var _ terra.Resource = (*HealthcareWorkspace)(nil)
 
+// HealthcareWorkspace represents the Terraform resource azurerm_healthcare_workspace.
 type HealthcareWorkspace struct {
-	Name  string
-	Args  HealthcareWorkspaceArgs
-	state *healthcareWorkspaceState
+	Name      string
+	Args      HealthcareWorkspaceArgs
+	state     *healthcareWorkspaceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [HealthcareWorkspace].
 func (hw *HealthcareWorkspace) Type() string {
 	return "azurerm_healthcare_workspace"
 }
 
+// LocalName returns the local name for [HealthcareWorkspace].
 func (hw *HealthcareWorkspace) LocalName() string {
 	return hw.Name
 }
 
+// Configuration returns the configuration (args) for [HealthcareWorkspace].
 func (hw *HealthcareWorkspace) Configuration() interface{} {
 	return hw.Args
 }
 
+// DependOn is used for other resources to depend on [HealthcareWorkspace].
+func (hw *HealthcareWorkspace) DependOn() terra.Reference {
+	return terra.ReferenceResource(hw)
+}
+
+// Dependencies returns the list of resources [HealthcareWorkspace] depends_on.
+func (hw *HealthcareWorkspace) Dependencies() terra.Dependencies {
+	return hw.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [HealthcareWorkspace].
+func (hw *HealthcareWorkspace) LifecycleManagement() *terra.Lifecycle {
+	return hw.Lifecycle
+}
+
+// Attributes returns the attributes for [HealthcareWorkspace].
 func (hw *HealthcareWorkspace) Attributes() healthcareWorkspaceAttributes {
 	return healthcareWorkspaceAttributes{ref: terra.ReferenceResource(hw)}
 }
 
+// ImportState imports the given attribute values into [HealthcareWorkspace]'s state.
 func (hw *HealthcareWorkspace) ImportState(av io.Reader) error {
 	hw.state = &healthcareWorkspaceState{}
 	if err := json.NewDecoder(av).Decode(hw.state); err != nil {
@@ -49,10 +73,12 @@ func (hw *HealthcareWorkspace) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [HealthcareWorkspace] has state.
 func (hw *HealthcareWorkspace) State() (*healthcareWorkspaceState, bool) {
 	return hw.state, hw.state != nil
 }
 
+// StateMust returns the state for [HealthcareWorkspace]. Panics if the state is nil.
 func (hw *HealthcareWorkspace) StateMust() *healthcareWorkspaceState {
 	if hw.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", hw.Type(), hw.LocalName()))
@@ -60,10 +86,7 @@ func (hw *HealthcareWorkspace) StateMust() *healthcareWorkspaceState {
 	return hw.state
 }
 
-func (hw *HealthcareWorkspace) DependOn() terra.Reference {
-	return terra.ReferenceResource(hw)
-}
-
+// HealthcareWorkspaceArgs contains the configurations for azurerm_healthcare_workspace.
 type HealthcareWorkspaceArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,39 +102,42 @@ type HealthcareWorkspaceArgs struct {
 	PrivateEndpointConnection []healthcareworkspace.PrivateEndpointConnection `hcl:"private_endpoint_connection,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *healthcareworkspace.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that HealthcareWorkspace depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type healthcareWorkspaceAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_healthcare_workspace.
 func (hw healthcareWorkspaceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(hw.ref.Append("id"))
+	return terra.ReferenceAsString(hw.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_healthcare_workspace.
 func (hw healthcareWorkspaceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(hw.ref.Append("location"))
+	return terra.ReferenceAsString(hw.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_healthcare_workspace.
 func (hw healthcareWorkspaceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(hw.ref.Append("name"))
+	return terra.ReferenceAsString(hw.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_healthcare_workspace.
 func (hw healthcareWorkspaceAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(hw.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(hw.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_healthcare_workspace.
 func (hw healthcareWorkspaceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](hw.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](hw.ref.Append("tags"))
 }
 
 func (hw healthcareWorkspaceAttributes) PrivateEndpointConnection() terra.SetValue[healthcareworkspace.PrivateEndpointConnectionAttributes] {
-	return terra.ReferenceSet[healthcareworkspace.PrivateEndpointConnectionAttributes](hw.ref.Append("private_endpoint_connection"))
+	return terra.ReferenceAsSet[healthcareworkspace.PrivateEndpointConnectionAttributes](hw.ref.Append("private_endpoint_connection"))
 }
 
 func (hw healthcareWorkspaceAttributes) Timeouts() healthcareworkspace.TimeoutsAttributes {
-	return terra.ReferenceSingle[healthcareworkspace.TimeoutsAttributes](hw.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[healthcareworkspace.TimeoutsAttributes](hw.ref.Append("timeouts"))
 }
 
 type healthcareWorkspaceState struct {

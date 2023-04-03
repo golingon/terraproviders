@@ -18,24 +18,24 @@ type AuditLogConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (alc AuditLogConfigAttributes) InternalRef() terra.Reference {
-	return alc.ref
+func (alc AuditLogConfigAttributes) InternalRef() (terra.Reference, error) {
+	return alc.ref, nil
 }
 
 func (alc AuditLogConfigAttributes) InternalWithRef(ref terra.Reference) AuditLogConfigAttributes {
 	return AuditLogConfigAttributes{ref: ref}
 }
 
-func (alc AuditLogConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (alc AuditLogConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return alc.ref.InternalTokens()
 }
 
 func (alc AuditLogConfigAttributes) ExemptedMembers() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](alc.ref.Append("exempted_members"))
+	return terra.ReferenceAsSet[terra.StringValue](alc.ref.Append("exempted_members"))
 }
 
 func (alc AuditLogConfigAttributes) LogType() terra.StringValue {
-	return terra.ReferenceString(alc.ref.Append("log_type"))
+	return terra.ReferenceAsString(alc.ref.Append("log_type"))
 }
 
 type AuditLogConfigState struct {

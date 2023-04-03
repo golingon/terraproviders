@@ -21,7 +21,7 @@ func (ev EnumerationValueAttributes) InternalWithRef(ref terra.Reference) Enumer
 	return EnumerationValueAttributes{ref: ref}
 }
 
-func (ev EnumerationValueAttributes) InternalTokens() hclwrite.Tokens {
+func (ev EnumerationValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ev.ref.InternalTokens()
 }
 

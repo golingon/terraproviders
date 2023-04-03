@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApiManagementCustomDomain creates a new instance of [ApiManagementCustomDomain].
 func NewApiManagementCustomDomain(name string, args ApiManagementCustomDomainArgs) *ApiManagementCustomDomain {
 	return &ApiManagementCustomDomain{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApiManagementCustomDomain(name string, args ApiManagementCustomDomainArg
 
 var _ terra.Resource = (*ApiManagementCustomDomain)(nil)
 
+// ApiManagementCustomDomain represents the Terraform resource azurerm_api_management_custom_domain.
 type ApiManagementCustomDomain struct {
-	Name  string
-	Args  ApiManagementCustomDomainArgs
-	state *apiManagementCustomDomainState
+	Name      string
+	Args      ApiManagementCustomDomainArgs
+	state     *apiManagementCustomDomainState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiManagementCustomDomain].
 func (amcd *ApiManagementCustomDomain) Type() string {
 	return "azurerm_api_management_custom_domain"
 }
 
+// LocalName returns the local name for [ApiManagementCustomDomain].
 func (amcd *ApiManagementCustomDomain) LocalName() string {
 	return amcd.Name
 }
 
+// Configuration returns the configuration (args) for [ApiManagementCustomDomain].
 func (amcd *ApiManagementCustomDomain) Configuration() interface{} {
 	return amcd.Args
 }
 
+// DependOn is used for other resources to depend on [ApiManagementCustomDomain].
+func (amcd *ApiManagementCustomDomain) DependOn() terra.Reference {
+	return terra.ReferenceResource(amcd)
+}
+
+// Dependencies returns the list of resources [ApiManagementCustomDomain] depends_on.
+func (amcd *ApiManagementCustomDomain) Dependencies() terra.Dependencies {
+	return amcd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiManagementCustomDomain].
+func (amcd *ApiManagementCustomDomain) LifecycleManagement() *terra.Lifecycle {
+	return amcd.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiManagementCustomDomain].
 func (amcd *ApiManagementCustomDomain) Attributes() apiManagementCustomDomainAttributes {
 	return apiManagementCustomDomainAttributes{ref: terra.ReferenceResource(amcd)}
 }
 
+// ImportState imports the given attribute values into [ApiManagementCustomDomain]'s state.
 func (amcd *ApiManagementCustomDomain) ImportState(av io.Reader) error {
 	amcd.state = &apiManagementCustomDomainState{}
 	if err := json.NewDecoder(av).Decode(amcd.state); err != nil {
@@ -49,10 +73,12 @@ func (amcd *ApiManagementCustomDomain) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiManagementCustomDomain] has state.
 func (amcd *ApiManagementCustomDomain) State() (*apiManagementCustomDomainState, bool) {
 	return amcd.state, amcd.state != nil
 }
 
+// StateMust returns the state for [ApiManagementCustomDomain]. Panics if the state is nil.
 func (amcd *ApiManagementCustomDomain) StateMust() *apiManagementCustomDomainState {
 	if amcd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", amcd.Type(), amcd.LocalName()))
@@ -60,10 +86,7 @@ func (amcd *ApiManagementCustomDomain) StateMust() *apiManagementCustomDomainSta
 	return amcd.state
 }
 
-func (amcd *ApiManagementCustomDomain) DependOn() terra.Reference {
-	return terra.ReferenceResource(amcd)
-}
-
+// ApiManagementCustomDomainArgs contains the configurations for azurerm_api_management_custom_domain.
 type ApiManagementCustomDomainArgs struct {
 	// ApiManagementId: string, required
 	ApiManagementId terra.StringValue `hcl:"api_management_id,attr" validate:"required"`
@@ -81,43 +104,43 @@ type ApiManagementCustomDomainArgs struct {
 	Scm []apimanagementcustomdomain.Scm `hcl:"scm,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *apimanagementcustomdomain.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ApiManagementCustomDomain depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiManagementCustomDomainAttributes struct {
 	ref terra.Reference
 }
 
+// ApiManagementId returns a reference to field api_management_id of azurerm_api_management_custom_domain.
 func (amcd apiManagementCustomDomainAttributes) ApiManagementId() terra.StringValue {
-	return terra.ReferenceString(amcd.ref.Append("api_management_id"))
+	return terra.ReferenceAsString(amcd.ref.Append("api_management_id"))
 }
 
+// Id returns a reference to field id of azurerm_api_management_custom_domain.
 func (amcd apiManagementCustomDomainAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(amcd.ref.Append("id"))
+	return terra.ReferenceAsString(amcd.ref.Append("id"))
 }
 
 func (amcd apiManagementCustomDomainAttributes) DeveloperPortal() terra.ListValue[apimanagementcustomdomain.DeveloperPortalAttributes] {
-	return terra.ReferenceList[apimanagementcustomdomain.DeveloperPortalAttributes](amcd.ref.Append("developer_portal"))
+	return terra.ReferenceAsList[apimanagementcustomdomain.DeveloperPortalAttributes](amcd.ref.Append("developer_portal"))
 }
 
 func (amcd apiManagementCustomDomainAttributes) Gateway() terra.ListValue[apimanagementcustomdomain.GatewayAttributes] {
-	return terra.ReferenceList[apimanagementcustomdomain.GatewayAttributes](amcd.ref.Append("gateway"))
+	return terra.ReferenceAsList[apimanagementcustomdomain.GatewayAttributes](amcd.ref.Append("gateway"))
 }
 
 func (amcd apiManagementCustomDomainAttributes) Management() terra.ListValue[apimanagementcustomdomain.ManagementAttributes] {
-	return terra.ReferenceList[apimanagementcustomdomain.ManagementAttributes](amcd.ref.Append("management"))
+	return terra.ReferenceAsList[apimanagementcustomdomain.ManagementAttributes](amcd.ref.Append("management"))
 }
 
 func (amcd apiManagementCustomDomainAttributes) Portal() terra.ListValue[apimanagementcustomdomain.PortalAttributes] {
-	return terra.ReferenceList[apimanagementcustomdomain.PortalAttributes](amcd.ref.Append("portal"))
+	return terra.ReferenceAsList[apimanagementcustomdomain.PortalAttributes](amcd.ref.Append("portal"))
 }
 
 func (amcd apiManagementCustomDomainAttributes) Scm() terra.ListValue[apimanagementcustomdomain.ScmAttributes] {
-	return terra.ReferenceList[apimanagementcustomdomain.ScmAttributes](amcd.ref.Append("scm"))
+	return terra.ReferenceAsList[apimanagementcustomdomain.ScmAttributes](amcd.ref.Append("scm"))
 }
 
 func (amcd apiManagementCustomDomainAttributes) Timeouts() apimanagementcustomdomain.TimeoutsAttributes {
-	return terra.ReferenceSingle[apimanagementcustomdomain.TimeoutsAttributes](amcd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[apimanagementcustomdomain.TimeoutsAttributes](amcd.ref.Append("timeouts"))
 }
 
 type apiManagementCustomDomainState struct {

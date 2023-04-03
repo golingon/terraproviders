@@ -33,7 +33,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -61,7 +61,7 @@ func (wr WhitelistRulesAttributes) InternalWithRef(ref terra.Reference) Whitelis
 	return WhitelistRulesAttributes{ref: ref}
 }
 
-func (wr WhitelistRulesAttributes) InternalTokens() hclwrite.Tokens {
+func (wr WhitelistRulesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wr.ref.InternalTokens()
 }
 

@@ -42,7 +42,7 @@ func (rs RetryStrategyAttributes) InternalWithRef(ref terra.Reference) RetryStra
 	return RetryStrategyAttributes{ref: ref}
 }
 
-func (rs RetryStrategyAttributes) InternalTokens() hclwrite.Tokens {
+func (rs RetryStrategyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rs.ref.InternalTokens()
 }
 
@@ -66,7 +66,7 @@ func (eoe EvaluateOnExitAttributes) InternalWithRef(ref terra.Reference) Evaluat
 	return EvaluateOnExitAttributes{ref: ref}
 }
 
-func (eoe EvaluateOnExitAttributes) InternalTokens() hclwrite.Tokens {
+func (eoe EvaluateOnExitAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return eoe.ref.InternalTokens()
 }
 
@@ -98,7 +98,7 @@ func (t TimeoutAttributes) InternalWithRef(ref terra.Reference) TimeoutAttribute
 	return TimeoutAttributes{ref: ref}
 }
 
-func (t TimeoutAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

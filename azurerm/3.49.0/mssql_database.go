@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMssqlDatabase creates a new instance of [MssqlDatabase].
 func NewMssqlDatabase(name string, args MssqlDatabaseArgs) *MssqlDatabase {
 	return &MssqlDatabase{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMssqlDatabase(name string, args MssqlDatabaseArgs) *MssqlDatabase {
 
 var _ terra.Resource = (*MssqlDatabase)(nil)
 
+// MssqlDatabase represents the Terraform resource azurerm_mssql_database.
 type MssqlDatabase struct {
-	Name  string
-	Args  MssqlDatabaseArgs
-	state *mssqlDatabaseState
+	Name      string
+	Args      MssqlDatabaseArgs
+	state     *mssqlDatabaseState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MssqlDatabase].
 func (md *MssqlDatabase) Type() string {
 	return "azurerm_mssql_database"
 }
 
+// LocalName returns the local name for [MssqlDatabase].
 func (md *MssqlDatabase) LocalName() string {
 	return md.Name
 }
 
+// Configuration returns the configuration (args) for [MssqlDatabase].
 func (md *MssqlDatabase) Configuration() interface{} {
 	return md.Args
 }
 
+// DependOn is used for other resources to depend on [MssqlDatabase].
+func (md *MssqlDatabase) DependOn() terra.Reference {
+	return terra.ReferenceResource(md)
+}
+
+// Dependencies returns the list of resources [MssqlDatabase] depends_on.
+func (md *MssqlDatabase) Dependencies() terra.Dependencies {
+	return md.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MssqlDatabase].
+func (md *MssqlDatabase) LifecycleManagement() *terra.Lifecycle {
+	return md.Lifecycle
+}
+
+// Attributes returns the attributes for [MssqlDatabase].
 func (md *MssqlDatabase) Attributes() mssqlDatabaseAttributes {
 	return mssqlDatabaseAttributes{ref: terra.ReferenceResource(md)}
 }
 
+// ImportState imports the given attribute values into [MssqlDatabase]'s state.
 func (md *MssqlDatabase) ImportState(av io.Reader) error {
 	md.state = &mssqlDatabaseState{}
 	if err := json.NewDecoder(av).Decode(md.state); err != nil {
@@ -49,10 +73,12 @@ func (md *MssqlDatabase) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MssqlDatabase] has state.
 func (md *MssqlDatabase) State() (*mssqlDatabaseState, bool) {
 	return md.state, md.state != nil
 }
 
+// StateMust returns the state for [MssqlDatabase]. Panics if the state is nil.
 func (md *MssqlDatabase) StateMust() *mssqlDatabaseState {
 	if md.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", md.Type(), md.LocalName()))
@@ -60,10 +86,7 @@ func (md *MssqlDatabase) StateMust() *mssqlDatabaseState {
 	return md.state
 }
 
-func (md *MssqlDatabase) DependOn() terra.Reference {
-	return terra.ReferenceResource(md)
-}
-
+// MssqlDatabaseArgs contains the configurations for azurerm_mssql_database.
 type MssqlDatabaseArgs struct {
 	// AutoPauseDelayInMinutes: number, optional
 	AutoPauseDelayInMinutes terra.NumberValue `hcl:"auto_pause_delay_in_minutes,attr"`
@@ -125,131 +148,154 @@ type MssqlDatabaseArgs struct {
 	ThreatDetectionPolicy *mssqldatabase.ThreatDetectionPolicy `hcl:"threat_detection_policy,block"`
 	// Timeouts: optional
 	Timeouts *mssqldatabase.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MssqlDatabase depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mssqlDatabaseAttributes struct {
 	ref terra.Reference
 }
 
+// AutoPauseDelayInMinutes returns a reference to field auto_pause_delay_in_minutes of azurerm_mssql_database.
 func (md mssqlDatabaseAttributes) AutoPauseDelayInMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(md.ref.Append("auto_pause_delay_in_minutes"))
+	return terra.ReferenceAsNumber(md.ref.Append("auto_pause_delay_in_minutes"))
 }
 
+// Collation returns a reference to field collation of azurerm_mssql_database.
 func (md mssqlDatabaseAttributes) Collation() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("collation"))
+	return terra.ReferenceAsString(md.ref.Append("collation"))
 }
 
+// CreateMode returns a reference to field create_mode of azurerm_mssql_database.
 func (md mssqlDatabaseAttributes) CreateMode() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("create_mode"))
+	return terra.ReferenceAsString(md.ref.Append("create_mode"))
 }
 
+// CreationSourceDatabaseId returns a reference to field creation_source_database_id of azurerm_mssql_database.
 func (md mssqlDatabaseAttributes) CreationSourceDatabaseId() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("creation_source_database_id"))
+	return terra.ReferenceAsString(md.ref.Append("creation_source_database_id"))
 }
 
+// ElasticPoolId returns a reference to field elastic_pool_id of azurerm_mssql_database.
 func (md mssqlDatabaseAttributes) ElasticPoolId() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("elastic_pool_id"))
+	return terra.ReferenceAsString(md.ref.Append("elastic_pool_id"))
 }
 
+// GeoBackupEnabled returns a reference to field geo_backup_enabled of azurerm_mssql_database.
 func (md mssqlDatabaseAttributes) GeoBackupEnabled() terra.BoolValue {
-	return terra.ReferenceBool(md.ref.Append("geo_backup_enabled"))
+	return terra.ReferenceAsBool(md.ref.Append("geo_backup_enabled"))
 }
 
+// Id returns a reference to field id of azurerm_mssql_database.
 func (md mssqlDatabaseAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("id"))
+	return terra.ReferenceAsString(md.ref.Append("id"))
 }
 
+// LedgerEnabled returns a reference to field ledger_enabled of azurerm_mssql_database.
 func (md mssqlDatabaseAttributes) LedgerEnabled() terra.BoolValue {
-	return terra.ReferenceBool(md.ref.Append("ledger_enabled"))
+	return terra.ReferenceAsBool(md.ref.Append("ledger_enabled"))
 }
 
+// LicenseType returns a reference to field license_type of azurerm_mssql_database.
 func (md mssqlDatabaseAttributes) LicenseType() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("license_type"))
+	return terra.ReferenceAsString(md.ref.Append("license_type"))
 }
 
+// MaintenanceConfigurationName returns a reference to field maintenance_configuration_name of azurerm_mssql_database.
 func (md mssqlDatabaseAttributes) MaintenanceConfigurationName() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("maintenance_configuration_name"))
+	return terra.ReferenceAsString(md.ref.Append("maintenance_configuration_name"))
 }
 
+// MaxSizeGb returns a reference to field max_size_gb of azurerm_mssql_database.
 func (md mssqlDatabaseAttributes) MaxSizeGb() terra.NumberValue {
-	return terra.ReferenceNumber(md.ref.Append("max_size_gb"))
+	return terra.ReferenceAsNumber(md.ref.Append("max_size_gb"))
 }
 
+// MinCapacity returns a reference to field min_capacity of azurerm_mssql_database.
 func (md mssqlDatabaseAttributes) MinCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(md.ref.Append("min_capacity"))
+	return terra.ReferenceAsNumber(md.ref.Append("min_capacity"))
 }
 
+// Name returns a reference to field name of azurerm_mssql_database.
 func (md mssqlDatabaseAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("name"))
+	return terra.ReferenceAsString(md.ref.Append("name"))
 }
 
+// ReadReplicaCount returns a reference to field read_replica_count of azurerm_mssql_database.
 func (md mssqlDatabaseAttributes) ReadReplicaCount() terra.NumberValue {
-	return terra.ReferenceNumber(md.ref.Append("read_replica_count"))
+	return terra.ReferenceAsNumber(md.ref.Append("read_replica_count"))
 }
 
+// ReadScale returns a reference to field read_scale of azurerm_mssql_database.
 func (md mssqlDatabaseAttributes) ReadScale() terra.BoolValue {
-	return terra.ReferenceBool(md.ref.Append("read_scale"))
+	return terra.ReferenceAsBool(md.ref.Append("read_scale"))
 }
 
+// RecoverDatabaseId returns a reference to field recover_database_id of azurerm_mssql_database.
 func (md mssqlDatabaseAttributes) RecoverDatabaseId() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("recover_database_id"))
+	return terra.ReferenceAsString(md.ref.Append("recover_database_id"))
 }
 
+// RestoreDroppedDatabaseId returns a reference to field restore_dropped_database_id of azurerm_mssql_database.
 func (md mssqlDatabaseAttributes) RestoreDroppedDatabaseId() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("restore_dropped_database_id"))
+	return terra.ReferenceAsString(md.ref.Append("restore_dropped_database_id"))
 }
 
+// RestorePointInTime returns a reference to field restore_point_in_time of azurerm_mssql_database.
 func (md mssqlDatabaseAttributes) RestorePointInTime() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("restore_point_in_time"))
+	return terra.ReferenceAsString(md.ref.Append("restore_point_in_time"))
 }
 
+// SampleName returns a reference to field sample_name of azurerm_mssql_database.
 func (md mssqlDatabaseAttributes) SampleName() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("sample_name"))
+	return terra.ReferenceAsString(md.ref.Append("sample_name"))
 }
 
+// ServerId returns a reference to field server_id of azurerm_mssql_database.
 func (md mssqlDatabaseAttributes) ServerId() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("server_id"))
+	return terra.ReferenceAsString(md.ref.Append("server_id"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_mssql_database.
 func (md mssqlDatabaseAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("sku_name"))
+	return terra.ReferenceAsString(md.ref.Append("sku_name"))
 }
 
+// StorageAccountType returns a reference to field storage_account_type of azurerm_mssql_database.
 func (md mssqlDatabaseAttributes) StorageAccountType() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("storage_account_type"))
+	return terra.ReferenceAsString(md.ref.Append("storage_account_type"))
 }
 
+// Tags returns a reference to field tags of azurerm_mssql_database.
 func (md mssqlDatabaseAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](md.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](md.ref.Append("tags"))
 }
 
+// TransparentDataEncryptionEnabled returns a reference to field transparent_data_encryption_enabled of azurerm_mssql_database.
 func (md mssqlDatabaseAttributes) TransparentDataEncryptionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(md.ref.Append("transparent_data_encryption_enabled"))
+	return terra.ReferenceAsBool(md.ref.Append("transparent_data_encryption_enabled"))
 }
 
+// ZoneRedundant returns a reference to field zone_redundant of azurerm_mssql_database.
 func (md mssqlDatabaseAttributes) ZoneRedundant() terra.BoolValue {
-	return terra.ReferenceBool(md.ref.Append("zone_redundant"))
+	return terra.ReferenceAsBool(md.ref.Append("zone_redundant"))
 }
 
 func (md mssqlDatabaseAttributes) Import() terra.ListValue[mssqldatabase.ImportAttributes] {
-	return terra.ReferenceList[mssqldatabase.ImportAttributes](md.ref.Append("import"))
+	return terra.ReferenceAsList[mssqldatabase.ImportAttributes](md.ref.Append("import"))
 }
 
 func (md mssqlDatabaseAttributes) LongTermRetentionPolicy() terra.ListValue[mssqldatabase.LongTermRetentionPolicyAttributes] {
-	return terra.ReferenceList[mssqldatabase.LongTermRetentionPolicyAttributes](md.ref.Append("long_term_retention_policy"))
+	return terra.ReferenceAsList[mssqldatabase.LongTermRetentionPolicyAttributes](md.ref.Append("long_term_retention_policy"))
 }
 
 func (md mssqlDatabaseAttributes) ShortTermRetentionPolicy() terra.ListValue[mssqldatabase.ShortTermRetentionPolicyAttributes] {
-	return terra.ReferenceList[mssqldatabase.ShortTermRetentionPolicyAttributes](md.ref.Append("short_term_retention_policy"))
+	return terra.ReferenceAsList[mssqldatabase.ShortTermRetentionPolicyAttributes](md.ref.Append("short_term_retention_policy"))
 }
 
 func (md mssqlDatabaseAttributes) ThreatDetectionPolicy() terra.ListValue[mssqldatabase.ThreatDetectionPolicyAttributes] {
-	return terra.ReferenceList[mssqldatabase.ThreatDetectionPolicyAttributes](md.ref.Append("threat_detection_policy"))
+	return terra.ReferenceAsList[mssqldatabase.ThreatDetectionPolicyAttributes](md.ref.Append("threat_detection_policy"))
 }
 
 func (md mssqlDatabaseAttributes) Timeouts() mssqldatabase.TimeoutsAttributes {
-	return terra.ReferenceSingle[mssqldatabase.TimeoutsAttributes](md.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[mssqldatabase.TimeoutsAttributes](md.ref.Append("timeouts"))
 }
 
 type mssqlDatabaseState struct {

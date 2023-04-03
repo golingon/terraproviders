@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewPrivatecaCaPool creates a new instance of [PrivatecaCaPool].
 func NewPrivatecaCaPool(name string, args PrivatecaCaPoolArgs) *PrivatecaCaPool {
 	return &PrivatecaCaPool{
 		Args: args,
@@ -19,28 +20,51 @@ func NewPrivatecaCaPool(name string, args PrivatecaCaPoolArgs) *PrivatecaCaPool 
 
 var _ terra.Resource = (*PrivatecaCaPool)(nil)
 
+// PrivatecaCaPool represents the Terraform resource google_privateca_ca_pool.
 type PrivatecaCaPool struct {
-	Name  string
-	Args  PrivatecaCaPoolArgs
-	state *privatecaCaPoolState
+	Name      string
+	Args      PrivatecaCaPoolArgs
+	state     *privatecaCaPoolState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PrivatecaCaPool].
 func (pcp *PrivatecaCaPool) Type() string {
 	return "google_privateca_ca_pool"
 }
 
+// LocalName returns the local name for [PrivatecaCaPool].
 func (pcp *PrivatecaCaPool) LocalName() string {
 	return pcp.Name
 }
 
+// Configuration returns the configuration (args) for [PrivatecaCaPool].
 func (pcp *PrivatecaCaPool) Configuration() interface{} {
 	return pcp.Args
 }
 
+// DependOn is used for other resources to depend on [PrivatecaCaPool].
+func (pcp *PrivatecaCaPool) DependOn() terra.Reference {
+	return terra.ReferenceResource(pcp)
+}
+
+// Dependencies returns the list of resources [PrivatecaCaPool] depends_on.
+func (pcp *PrivatecaCaPool) Dependencies() terra.Dependencies {
+	return pcp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PrivatecaCaPool].
+func (pcp *PrivatecaCaPool) LifecycleManagement() *terra.Lifecycle {
+	return pcp.Lifecycle
+}
+
+// Attributes returns the attributes for [PrivatecaCaPool].
 func (pcp *PrivatecaCaPool) Attributes() privatecaCaPoolAttributes {
 	return privatecaCaPoolAttributes{ref: terra.ReferenceResource(pcp)}
 }
 
+// ImportState imports the given attribute values into [PrivatecaCaPool]'s state.
 func (pcp *PrivatecaCaPool) ImportState(av io.Reader) error {
 	pcp.state = &privatecaCaPoolState{}
 	if err := json.NewDecoder(av).Decode(pcp.state); err != nil {
@@ -49,10 +73,12 @@ func (pcp *PrivatecaCaPool) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PrivatecaCaPool] has state.
 func (pcp *PrivatecaCaPool) State() (*privatecaCaPoolState, bool) {
 	return pcp.state, pcp.state != nil
 }
 
+// StateMust returns the state for [PrivatecaCaPool]. Panics if the state is nil.
 func (pcp *PrivatecaCaPool) StateMust() *privatecaCaPoolState {
 	if pcp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pcp.Type(), pcp.LocalName()))
@@ -60,10 +86,7 @@ func (pcp *PrivatecaCaPool) StateMust() *privatecaCaPoolState {
 	return pcp.state
 }
 
-func (pcp *PrivatecaCaPool) DependOn() terra.Reference {
-	return terra.ReferenceResource(pcp)
-}
-
+// PrivatecaCaPoolArgs contains the configurations for google_privateca_ca_pool.
 type PrivatecaCaPoolArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -83,47 +106,51 @@ type PrivatecaCaPoolArgs struct {
 	PublishingOptions *privatecacapool.PublishingOptions `hcl:"publishing_options,block"`
 	// Timeouts: optional
 	Timeouts *privatecacapool.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that PrivatecaCaPool depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type privatecaCaPoolAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of google_privateca_ca_pool.
 func (pcp privatecaCaPoolAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pcp.ref.Append("id"))
+	return terra.ReferenceAsString(pcp.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_privateca_ca_pool.
 func (pcp privatecaCaPoolAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](pcp.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](pcp.ref.Append("labels"))
 }
 
+// Location returns a reference to field location of google_privateca_ca_pool.
 func (pcp privatecaCaPoolAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(pcp.ref.Append("location"))
+	return terra.ReferenceAsString(pcp.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_privateca_ca_pool.
 func (pcp privatecaCaPoolAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pcp.ref.Append("name"))
+	return terra.ReferenceAsString(pcp.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_privateca_ca_pool.
 func (pcp privatecaCaPoolAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(pcp.ref.Append("project"))
+	return terra.ReferenceAsString(pcp.ref.Append("project"))
 }
 
+// Tier returns a reference to field tier of google_privateca_ca_pool.
 func (pcp privatecaCaPoolAttributes) Tier() terra.StringValue {
-	return terra.ReferenceString(pcp.ref.Append("tier"))
+	return terra.ReferenceAsString(pcp.ref.Append("tier"))
 }
 
 func (pcp privatecaCaPoolAttributes) IssuancePolicy() terra.ListValue[privatecacapool.IssuancePolicyAttributes] {
-	return terra.ReferenceList[privatecacapool.IssuancePolicyAttributes](pcp.ref.Append("issuance_policy"))
+	return terra.ReferenceAsList[privatecacapool.IssuancePolicyAttributes](pcp.ref.Append("issuance_policy"))
 }
 
 func (pcp privatecaCaPoolAttributes) PublishingOptions() terra.ListValue[privatecacapool.PublishingOptionsAttributes] {
-	return terra.ReferenceList[privatecacapool.PublishingOptionsAttributes](pcp.ref.Append("publishing_options"))
+	return terra.ReferenceAsList[privatecacapool.PublishingOptionsAttributes](pcp.ref.Append("publishing_options"))
 }
 
 func (pcp privatecaCaPoolAttributes) Timeouts() privatecacapool.TimeoutsAttributes {
-	return terra.ReferenceSingle[privatecacapool.TimeoutsAttributes](pcp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[privatecacapool.TimeoutsAttributes](pcp.ref.Append("timeouts"))
 }
 
 type privatecaCaPoolState struct {

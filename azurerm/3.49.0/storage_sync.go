@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewStorageSync creates a new instance of [StorageSync].
 func NewStorageSync(name string, args StorageSyncArgs) *StorageSync {
 	return &StorageSync{
 		Args: args,
@@ -19,28 +20,51 @@ func NewStorageSync(name string, args StorageSyncArgs) *StorageSync {
 
 var _ terra.Resource = (*StorageSync)(nil)
 
+// StorageSync represents the Terraform resource azurerm_storage_sync.
 type StorageSync struct {
-	Name  string
-	Args  StorageSyncArgs
-	state *storageSyncState
+	Name      string
+	Args      StorageSyncArgs
+	state     *storageSyncState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [StorageSync].
 func (ss *StorageSync) Type() string {
 	return "azurerm_storage_sync"
 }
 
+// LocalName returns the local name for [StorageSync].
 func (ss *StorageSync) LocalName() string {
 	return ss.Name
 }
 
+// Configuration returns the configuration (args) for [StorageSync].
 func (ss *StorageSync) Configuration() interface{} {
 	return ss.Args
 }
 
+// DependOn is used for other resources to depend on [StorageSync].
+func (ss *StorageSync) DependOn() terra.Reference {
+	return terra.ReferenceResource(ss)
+}
+
+// Dependencies returns the list of resources [StorageSync] depends_on.
+func (ss *StorageSync) Dependencies() terra.Dependencies {
+	return ss.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [StorageSync].
+func (ss *StorageSync) LifecycleManagement() *terra.Lifecycle {
+	return ss.Lifecycle
+}
+
+// Attributes returns the attributes for [StorageSync].
 func (ss *StorageSync) Attributes() storageSyncAttributes {
 	return storageSyncAttributes{ref: terra.ReferenceResource(ss)}
 }
 
+// ImportState imports the given attribute values into [StorageSync]'s state.
 func (ss *StorageSync) ImportState(av io.Reader) error {
 	ss.state = &storageSyncState{}
 	if err := json.NewDecoder(av).Decode(ss.state); err != nil {
@@ -49,10 +73,12 @@ func (ss *StorageSync) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [StorageSync] has state.
 func (ss *StorageSync) State() (*storageSyncState, bool) {
 	return ss.state, ss.state != nil
 }
 
+// StateMust returns the state for [StorageSync]. Panics if the state is nil.
 func (ss *StorageSync) StateMust() *storageSyncState {
 	if ss.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ss.Type(), ss.LocalName()))
@@ -60,10 +86,7 @@ func (ss *StorageSync) StateMust() *storageSyncState {
 	return ss.state
 }
 
-func (ss *StorageSync) DependOn() terra.Reference {
-	return terra.ReferenceResource(ss)
-}
-
+// StorageSyncArgs contains the configurations for azurerm_storage_sync.
 type StorageSyncArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,39 +102,43 @@ type StorageSyncArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// Timeouts: optional
 	Timeouts *storagesync.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that StorageSync depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type storageSyncAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_storage_sync.
 func (ss storageSyncAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("id"))
+	return terra.ReferenceAsString(ss.ref.Append("id"))
 }
 
+// IncomingTrafficPolicy returns a reference to field incoming_traffic_policy of azurerm_storage_sync.
 func (ss storageSyncAttributes) IncomingTrafficPolicy() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("incoming_traffic_policy"))
+	return terra.ReferenceAsString(ss.ref.Append("incoming_traffic_policy"))
 }
 
+// Location returns a reference to field location of azurerm_storage_sync.
 func (ss storageSyncAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("location"))
+	return terra.ReferenceAsString(ss.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_storage_sync.
 func (ss storageSyncAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("name"))
+	return terra.ReferenceAsString(ss.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_storage_sync.
 func (ss storageSyncAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ss.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_storage_sync.
 func (ss storageSyncAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ss.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ss.ref.Append("tags"))
 }
 
 func (ss storageSyncAttributes) Timeouts() storagesync.TimeoutsAttributes {
-	return terra.ReferenceSingle[storagesync.TimeoutsAttributes](ss.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[storagesync.TimeoutsAttributes](ss.ref.Append("timeouts"))
 }
 
 type storageSyncState struct {

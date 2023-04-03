@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataProtectionBackupInstanceDisk creates a new instance of [DataProtectionBackupInstanceDisk].
 func NewDataProtectionBackupInstanceDisk(name string, args DataProtectionBackupInstanceDiskArgs) *DataProtectionBackupInstanceDisk {
 	return &DataProtectionBackupInstanceDisk{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataProtectionBackupInstanceDisk(name string, args DataProtectionBackupI
 
 var _ terra.Resource = (*DataProtectionBackupInstanceDisk)(nil)
 
+// DataProtectionBackupInstanceDisk represents the Terraform resource azurerm_data_protection_backup_instance_disk.
 type DataProtectionBackupInstanceDisk struct {
-	Name  string
-	Args  DataProtectionBackupInstanceDiskArgs
-	state *dataProtectionBackupInstanceDiskState
+	Name      string
+	Args      DataProtectionBackupInstanceDiskArgs
+	state     *dataProtectionBackupInstanceDiskState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataProtectionBackupInstanceDisk].
 func (dpbid *DataProtectionBackupInstanceDisk) Type() string {
 	return "azurerm_data_protection_backup_instance_disk"
 }
 
+// LocalName returns the local name for [DataProtectionBackupInstanceDisk].
 func (dpbid *DataProtectionBackupInstanceDisk) LocalName() string {
 	return dpbid.Name
 }
 
+// Configuration returns the configuration (args) for [DataProtectionBackupInstanceDisk].
 func (dpbid *DataProtectionBackupInstanceDisk) Configuration() interface{} {
 	return dpbid.Args
 }
 
+// DependOn is used for other resources to depend on [DataProtectionBackupInstanceDisk].
+func (dpbid *DataProtectionBackupInstanceDisk) DependOn() terra.Reference {
+	return terra.ReferenceResource(dpbid)
+}
+
+// Dependencies returns the list of resources [DataProtectionBackupInstanceDisk] depends_on.
+func (dpbid *DataProtectionBackupInstanceDisk) Dependencies() terra.Dependencies {
+	return dpbid.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataProtectionBackupInstanceDisk].
+func (dpbid *DataProtectionBackupInstanceDisk) LifecycleManagement() *terra.Lifecycle {
+	return dpbid.Lifecycle
+}
+
+// Attributes returns the attributes for [DataProtectionBackupInstanceDisk].
 func (dpbid *DataProtectionBackupInstanceDisk) Attributes() dataProtectionBackupInstanceDiskAttributes {
 	return dataProtectionBackupInstanceDiskAttributes{ref: terra.ReferenceResource(dpbid)}
 }
 
+// ImportState imports the given attribute values into [DataProtectionBackupInstanceDisk]'s state.
 func (dpbid *DataProtectionBackupInstanceDisk) ImportState(av io.Reader) error {
 	dpbid.state = &dataProtectionBackupInstanceDiskState{}
 	if err := json.NewDecoder(av).Decode(dpbid.state); err != nil {
@@ -49,10 +73,12 @@ func (dpbid *DataProtectionBackupInstanceDisk) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataProtectionBackupInstanceDisk] has state.
 func (dpbid *DataProtectionBackupInstanceDisk) State() (*dataProtectionBackupInstanceDiskState, bool) {
 	return dpbid.state, dpbid.state != nil
 }
 
+// StateMust returns the state for [DataProtectionBackupInstanceDisk]. Panics if the state is nil.
 func (dpbid *DataProtectionBackupInstanceDisk) StateMust() *dataProtectionBackupInstanceDiskState {
 	if dpbid.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dpbid.Type(), dpbid.LocalName()))
@@ -60,10 +86,7 @@ func (dpbid *DataProtectionBackupInstanceDisk) StateMust() *dataProtectionBackup
 	return dpbid.state
 }
 
-func (dpbid *DataProtectionBackupInstanceDisk) DependOn() terra.Reference {
-	return terra.ReferenceResource(dpbid)
-}
-
+// DataProtectionBackupInstanceDiskArgs contains the configurations for azurerm_data_protection_backup_instance_disk.
 type DataProtectionBackupInstanceDiskArgs struct {
 	// BackupPolicyId: string, required
 	BackupPolicyId terra.StringValue `hcl:"backup_policy_id,attr" validate:"required"`
@@ -81,43 +104,48 @@ type DataProtectionBackupInstanceDiskArgs struct {
 	VaultId terra.StringValue `hcl:"vault_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *dataprotectionbackupinstancedisk.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataProtectionBackupInstanceDisk depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataProtectionBackupInstanceDiskAttributes struct {
 	ref terra.Reference
 }
 
+// BackupPolicyId returns a reference to field backup_policy_id of azurerm_data_protection_backup_instance_disk.
 func (dpbid dataProtectionBackupInstanceDiskAttributes) BackupPolicyId() terra.StringValue {
-	return terra.ReferenceString(dpbid.ref.Append("backup_policy_id"))
+	return terra.ReferenceAsString(dpbid.ref.Append("backup_policy_id"))
 }
 
+// DiskId returns a reference to field disk_id of azurerm_data_protection_backup_instance_disk.
 func (dpbid dataProtectionBackupInstanceDiskAttributes) DiskId() terra.StringValue {
-	return terra.ReferenceString(dpbid.ref.Append("disk_id"))
+	return terra.ReferenceAsString(dpbid.ref.Append("disk_id"))
 }
 
+// Id returns a reference to field id of azurerm_data_protection_backup_instance_disk.
 func (dpbid dataProtectionBackupInstanceDiskAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dpbid.ref.Append("id"))
+	return terra.ReferenceAsString(dpbid.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_data_protection_backup_instance_disk.
 func (dpbid dataProtectionBackupInstanceDiskAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(dpbid.ref.Append("location"))
+	return terra.ReferenceAsString(dpbid.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_data_protection_backup_instance_disk.
 func (dpbid dataProtectionBackupInstanceDiskAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dpbid.ref.Append("name"))
+	return terra.ReferenceAsString(dpbid.ref.Append("name"))
 }
 
+// SnapshotResourceGroupName returns a reference to field snapshot_resource_group_name of azurerm_data_protection_backup_instance_disk.
 func (dpbid dataProtectionBackupInstanceDiskAttributes) SnapshotResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(dpbid.ref.Append("snapshot_resource_group_name"))
+	return terra.ReferenceAsString(dpbid.ref.Append("snapshot_resource_group_name"))
 }
 
+// VaultId returns a reference to field vault_id of azurerm_data_protection_backup_instance_disk.
 func (dpbid dataProtectionBackupInstanceDiskAttributes) VaultId() terra.StringValue {
-	return terra.ReferenceString(dpbid.ref.Append("vault_id"))
+	return terra.ReferenceAsString(dpbid.ref.Append("vault_id"))
 }
 
 func (dpbid dataProtectionBackupInstanceDiskAttributes) Timeouts() dataprotectionbackupinstancedisk.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataprotectionbackupinstancedisk.TimeoutsAttributes](dpbid.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataprotectionbackupinstancedisk.TimeoutsAttributes](dpbid.ref.Append("timeouts"))
 }
 
 type dataProtectionBackupInstanceDiskState struct {

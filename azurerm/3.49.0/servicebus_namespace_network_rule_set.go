@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewServicebusNamespaceNetworkRuleSet creates a new instance of [ServicebusNamespaceNetworkRuleSet].
 func NewServicebusNamespaceNetworkRuleSet(name string, args ServicebusNamespaceNetworkRuleSetArgs) *ServicebusNamespaceNetworkRuleSet {
 	return &ServicebusNamespaceNetworkRuleSet{
 		Args: args,
@@ -19,28 +20,51 @@ func NewServicebusNamespaceNetworkRuleSet(name string, args ServicebusNamespaceN
 
 var _ terra.Resource = (*ServicebusNamespaceNetworkRuleSet)(nil)
 
+// ServicebusNamespaceNetworkRuleSet represents the Terraform resource azurerm_servicebus_namespace_network_rule_set.
 type ServicebusNamespaceNetworkRuleSet struct {
-	Name  string
-	Args  ServicebusNamespaceNetworkRuleSetArgs
-	state *servicebusNamespaceNetworkRuleSetState
+	Name      string
+	Args      ServicebusNamespaceNetworkRuleSetArgs
+	state     *servicebusNamespaceNetworkRuleSetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ServicebusNamespaceNetworkRuleSet].
 func (snnrs *ServicebusNamespaceNetworkRuleSet) Type() string {
 	return "azurerm_servicebus_namespace_network_rule_set"
 }
 
+// LocalName returns the local name for [ServicebusNamespaceNetworkRuleSet].
 func (snnrs *ServicebusNamespaceNetworkRuleSet) LocalName() string {
 	return snnrs.Name
 }
 
+// Configuration returns the configuration (args) for [ServicebusNamespaceNetworkRuleSet].
 func (snnrs *ServicebusNamespaceNetworkRuleSet) Configuration() interface{} {
 	return snnrs.Args
 }
 
+// DependOn is used for other resources to depend on [ServicebusNamespaceNetworkRuleSet].
+func (snnrs *ServicebusNamespaceNetworkRuleSet) DependOn() terra.Reference {
+	return terra.ReferenceResource(snnrs)
+}
+
+// Dependencies returns the list of resources [ServicebusNamespaceNetworkRuleSet] depends_on.
+func (snnrs *ServicebusNamespaceNetworkRuleSet) Dependencies() terra.Dependencies {
+	return snnrs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ServicebusNamespaceNetworkRuleSet].
+func (snnrs *ServicebusNamespaceNetworkRuleSet) LifecycleManagement() *terra.Lifecycle {
+	return snnrs.Lifecycle
+}
+
+// Attributes returns the attributes for [ServicebusNamespaceNetworkRuleSet].
 func (snnrs *ServicebusNamespaceNetworkRuleSet) Attributes() servicebusNamespaceNetworkRuleSetAttributes {
 	return servicebusNamespaceNetworkRuleSetAttributes{ref: terra.ReferenceResource(snnrs)}
 }
 
+// ImportState imports the given attribute values into [ServicebusNamespaceNetworkRuleSet]'s state.
 func (snnrs *ServicebusNamespaceNetworkRuleSet) ImportState(av io.Reader) error {
 	snnrs.state = &servicebusNamespaceNetworkRuleSetState{}
 	if err := json.NewDecoder(av).Decode(snnrs.state); err != nil {
@@ -49,10 +73,12 @@ func (snnrs *ServicebusNamespaceNetworkRuleSet) ImportState(av io.Reader) error 
 	return nil
 }
 
+// State returns the state and a bool indicating if [ServicebusNamespaceNetworkRuleSet] has state.
 func (snnrs *ServicebusNamespaceNetworkRuleSet) State() (*servicebusNamespaceNetworkRuleSetState, bool) {
 	return snnrs.state, snnrs.state != nil
 }
 
+// StateMust returns the state for [ServicebusNamespaceNetworkRuleSet]. Panics if the state is nil.
 func (snnrs *ServicebusNamespaceNetworkRuleSet) StateMust() *servicebusNamespaceNetworkRuleSetState {
 	if snnrs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", snnrs.Type(), snnrs.LocalName()))
@@ -60,10 +86,7 @@ func (snnrs *ServicebusNamespaceNetworkRuleSet) StateMust() *servicebusNamespace
 	return snnrs.state
 }
 
-func (snnrs *ServicebusNamespaceNetworkRuleSet) DependOn() terra.Reference {
-	return terra.ReferenceResource(snnrs)
-}
-
+// ServicebusNamespaceNetworkRuleSetArgs contains the configurations for azurerm_servicebus_namespace_network_rule_set.
 type ServicebusNamespaceNetworkRuleSetArgs struct {
 	// DefaultAction: string, optional
 	DefaultAction terra.StringValue `hcl:"default_action,attr"`
@@ -81,43 +104,47 @@ type ServicebusNamespaceNetworkRuleSetArgs struct {
 	NetworkRules []servicebusnamespacenetworkruleset.NetworkRules `hcl:"network_rules,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *servicebusnamespacenetworkruleset.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ServicebusNamespaceNetworkRuleSet depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type servicebusNamespaceNetworkRuleSetAttributes struct {
 	ref terra.Reference
 }
 
+// DefaultAction returns a reference to field default_action of azurerm_servicebus_namespace_network_rule_set.
 func (snnrs servicebusNamespaceNetworkRuleSetAttributes) DefaultAction() terra.StringValue {
-	return terra.ReferenceString(snnrs.ref.Append("default_action"))
+	return terra.ReferenceAsString(snnrs.ref.Append("default_action"))
 }
 
+// Id returns a reference to field id of azurerm_servicebus_namespace_network_rule_set.
 func (snnrs servicebusNamespaceNetworkRuleSetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(snnrs.ref.Append("id"))
+	return terra.ReferenceAsString(snnrs.ref.Append("id"))
 }
 
+// IpRules returns a reference to field ip_rules of azurerm_servicebus_namespace_network_rule_set.
 func (snnrs servicebusNamespaceNetworkRuleSetAttributes) IpRules() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](snnrs.ref.Append("ip_rules"))
+	return terra.ReferenceAsSet[terra.StringValue](snnrs.ref.Append("ip_rules"))
 }
 
+// NamespaceId returns a reference to field namespace_id of azurerm_servicebus_namespace_network_rule_set.
 func (snnrs servicebusNamespaceNetworkRuleSetAttributes) NamespaceId() terra.StringValue {
-	return terra.ReferenceString(snnrs.ref.Append("namespace_id"))
+	return terra.ReferenceAsString(snnrs.ref.Append("namespace_id"))
 }
 
+// PublicNetworkAccessEnabled returns a reference to field public_network_access_enabled of azurerm_servicebus_namespace_network_rule_set.
 func (snnrs servicebusNamespaceNetworkRuleSetAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(snnrs.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(snnrs.ref.Append("public_network_access_enabled"))
 }
 
+// TrustedServicesAllowed returns a reference to field trusted_services_allowed of azurerm_servicebus_namespace_network_rule_set.
 func (snnrs servicebusNamespaceNetworkRuleSetAttributes) TrustedServicesAllowed() terra.BoolValue {
-	return terra.ReferenceBool(snnrs.ref.Append("trusted_services_allowed"))
+	return terra.ReferenceAsBool(snnrs.ref.Append("trusted_services_allowed"))
 }
 
 func (snnrs servicebusNamespaceNetworkRuleSetAttributes) NetworkRules() terra.SetValue[servicebusnamespacenetworkruleset.NetworkRulesAttributes] {
-	return terra.ReferenceSet[servicebusnamespacenetworkruleset.NetworkRulesAttributes](snnrs.ref.Append("network_rules"))
+	return terra.ReferenceAsSet[servicebusnamespacenetworkruleset.NetworkRulesAttributes](snnrs.ref.Append("network_rules"))
 }
 
 func (snnrs servicebusNamespaceNetworkRuleSetAttributes) Timeouts() servicebusnamespacenetworkruleset.TimeoutsAttributes {
-	return terra.ReferenceSingle[servicebusnamespacenetworkruleset.TimeoutsAttributes](snnrs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[servicebusnamespacenetworkruleset.TimeoutsAttributes](snnrs.ref.Append("timeouts"))
 }
 
 type servicebusNamespaceNetworkRuleSetState struct {

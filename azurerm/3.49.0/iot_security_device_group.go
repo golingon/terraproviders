@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewIotSecurityDeviceGroup creates a new instance of [IotSecurityDeviceGroup].
 func NewIotSecurityDeviceGroup(name string, args IotSecurityDeviceGroupArgs) *IotSecurityDeviceGroup {
 	return &IotSecurityDeviceGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewIotSecurityDeviceGroup(name string, args IotSecurityDeviceGroupArgs) *Io
 
 var _ terra.Resource = (*IotSecurityDeviceGroup)(nil)
 
+// IotSecurityDeviceGroup represents the Terraform resource azurerm_iot_security_device_group.
 type IotSecurityDeviceGroup struct {
-	Name  string
-	Args  IotSecurityDeviceGroupArgs
-	state *iotSecurityDeviceGroupState
+	Name      string
+	Args      IotSecurityDeviceGroupArgs
+	state     *iotSecurityDeviceGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IotSecurityDeviceGroup].
 func (isdg *IotSecurityDeviceGroup) Type() string {
 	return "azurerm_iot_security_device_group"
 }
 
+// LocalName returns the local name for [IotSecurityDeviceGroup].
 func (isdg *IotSecurityDeviceGroup) LocalName() string {
 	return isdg.Name
 }
 
+// Configuration returns the configuration (args) for [IotSecurityDeviceGroup].
 func (isdg *IotSecurityDeviceGroup) Configuration() interface{} {
 	return isdg.Args
 }
 
+// DependOn is used for other resources to depend on [IotSecurityDeviceGroup].
+func (isdg *IotSecurityDeviceGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(isdg)
+}
+
+// Dependencies returns the list of resources [IotSecurityDeviceGroup] depends_on.
+func (isdg *IotSecurityDeviceGroup) Dependencies() terra.Dependencies {
+	return isdg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IotSecurityDeviceGroup].
+func (isdg *IotSecurityDeviceGroup) LifecycleManagement() *terra.Lifecycle {
+	return isdg.Lifecycle
+}
+
+// Attributes returns the attributes for [IotSecurityDeviceGroup].
 func (isdg *IotSecurityDeviceGroup) Attributes() iotSecurityDeviceGroupAttributes {
 	return iotSecurityDeviceGroupAttributes{ref: terra.ReferenceResource(isdg)}
 }
 
+// ImportState imports the given attribute values into [IotSecurityDeviceGroup]'s state.
 func (isdg *IotSecurityDeviceGroup) ImportState(av io.Reader) error {
 	isdg.state = &iotSecurityDeviceGroupState{}
 	if err := json.NewDecoder(av).Decode(isdg.state); err != nil {
@@ -49,10 +73,12 @@ func (isdg *IotSecurityDeviceGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IotSecurityDeviceGroup] has state.
 func (isdg *IotSecurityDeviceGroup) State() (*iotSecurityDeviceGroupState, bool) {
 	return isdg.state, isdg.state != nil
 }
 
+// StateMust returns the state for [IotSecurityDeviceGroup]. Panics if the state is nil.
 func (isdg *IotSecurityDeviceGroup) StateMust() *iotSecurityDeviceGroupState {
 	if isdg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", isdg.Type(), isdg.LocalName()))
@@ -60,10 +86,7 @@ func (isdg *IotSecurityDeviceGroup) StateMust() *iotSecurityDeviceGroupState {
 	return isdg.state
 }
 
-func (isdg *IotSecurityDeviceGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(isdg)
-}
-
+// IotSecurityDeviceGroupArgs contains the configurations for azurerm_iot_security_device_group.
 type IotSecurityDeviceGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,35 +100,36 @@ type IotSecurityDeviceGroupArgs struct {
 	RangeRule []iotsecuritydevicegroup.RangeRule `hcl:"range_rule,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *iotsecuritydevicegroup.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that IotSecurityDeviceGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iotSecurityDeviceGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_iot_security_device_group.
 func (isdg iotSecurityDeviceGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(isdg.ref.Append("id"))
+	return terra.ReferenceAsString(isdg.ref.Append("id"))
 }
 
+// IothubId returns a reference to field iothub_id of azurerm_iot_security_device_group.
 func (isdg iotSecurityDeviceGroupAttributes) IothubId() terra.StringValue {
-	return terra.ReferenceString(isdg.ref.Append("iothub_id"))
+	return terra.ReferenceAsString(isdg.ref.Append("iothub_id"))
 }
 
+// Name returns a reference to field name of azurerm_iot_security_device_group.
 func (isdg iotSecurityDeviceGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(isdg.ref.Append("name"))
+	return terra.ReferenceAsString(isdg.ref.Append("name"))
 }
 
 func (isdg iotSecurityDeviceGroupAttributes) AllowRule() terra.ListValue[iotsecuritydevicegroup.AllowRuleAttributes] {
-	return terra.ReferenceList[iotsecuritydevicegroup.AllowRuleAttributes](isdg.ref.Append("allow_rule"))
+	return terra.ReferenceAsList[iotsecuritydevicegroup.AllowRuleAttributes](isdg.ref.Append("allow_rule"))
 }
 
 func (isdg iotSecurityDeviceGroupAttributes) RangeRule() terra.SetValue[iotsecuritydevicegroup.RangeRuleAttributes] {
-	return terra.ReferenceSet[iotsecuritydevicegroup.RangeRuleAttributes](isdg.ref.Append("range_rule"))
+	return terra.ReferenceAsSet[iotsecuritydevicegroup.RangeRuleAttributes](isdg.ref.Append("range_rule"))
 }
 
 func (isdg iotSecurityDeviceGroupAttributes) Timeouts() iotsecuritydevicegroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[iotsecuritydevicegroup.TimeoutsAttributes](isdg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[iotsecuritydevicegroup.TimeoutsAttributes](isdg.ref.Append("timeouts"))
 }
 
 type iotSecurityDeviceGroupState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCloudiotDevice creates a new instance of [CloudiotDevice].
 func NewCloudiotDevice(name string, args CloudiotDeviceArgs) *CloudiotDevice {
 	return &CloudiotDevice{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCloudiotDevice(name string, args CloudiotDeviceArgs) *CloudiotDevice {
 
 var _ terra.Resource = (*CloudiotDevice)(nil)
 
+// CloudiotDevice represents the Terraform resource google_cloudiot_device.
 type CloudiotDevice struct {
-	Name  string
-	Args  CloudiotDeviceArgs
-	state *cloudiotDeviceState
+	Name      string
+	Args      CloudiotDeviceArgs
+	state     *cloudiotDeviceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudiotDevice].
 func (cd *CloudiotDevice) Type() string {
 	return "google_cloudiot_device"
 }
 
+// LocalName returns the local name for [CloudiotDevice].
 func (cd *CloudiotDevice) LocalName() string {
 	return cd.Name
 }
 
+// Configuration returns the configuration (args) for [CloudiotDevice].
 func (cd *CloudiotDevice) Configuration() interface{} {
 	return cd.Args
 }
 
+// DependOn is used for other resources to depend on [CloudiotDevice].
+func (cd *CloudiotDevice) DependOn() terra.Reference {
+	return terra.ReferenceResource(cd)
+}
+
+// Dependencies returns the list of resources [CloudiotDevice] depends_on.
+func (cd *CloudiotDevice) Dependencies() terra.Dependencies {
+	return cd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudiotDevice].
+func (cd *CloudiotDevice) LifecycleManagement() *terra.Lifecycle {
+	return cd.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudiotDevice].
 func (cd *CloudiotDevice) Attributes() cloudiotDeviceAttributes {
 	return cloudiotDeviceAttributes{ref: terra.ReferenceResource(cd)}
 }
 
+// ImportState imports the given attribute values into [CloudiotDevice]'s state.
 func (cd *CloudiotDevice) ImportState(av io.Reader) error {
 	cd.state = &cloudiotDeviceState{}
 	if err := json.NewDecoder(av).Decode(cd.state); err != nil {
@@ -49,10 +73,12 @@ func (cd *CloudiotDevice) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudiotDevice] has state.
 func (cd *CloudiotDevice) State() (*cloudiotDeviceState, bool) {
 	return cd.state, cd.state != nil
 }
 
+// StateMust returns the state for [CloudiotDevice]. Panics if the state is nil.
 func (cd *CloudiotDevice) StateMust() *cloudiotDeviceState {
 	if cd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cd.Type(), cd.LocalName()))
@@ -60,10 +86,7 @@ func (cd *CloudiotDevice) StateMust() *cloudiotDeviceState {
 	return cd.state
 }
 
-func (cd *CloudiotDevice) DependOn() terra.Reference {
-	return terra.ReferenceResource(cd)
-}
-
+// CloudiotDeviceArgs contains the configurations for google_cloudiot_device.
 type CloudiotDeviceArgs struct {
 	// Blocked: bool, optional
 	Blocked terra.BoolValue `hcl:"blocked,attr"`
@@ -89,87 +112,98 @@ type CloudiotDeviceArgs struct {
 	GatewayConfig *cloudiotdevice.GatewayConfig `hcl:"gateway_config,block"`
 	// Timeouts: optional
 	Timeouts *cloudiotdevice.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that CloudiotDevice depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudiotDeviceAttributes struct {
 	ref terra.Reference
 }
 
+// Blocked returns a reference to field blocked of google_cloudiot_device.
 func (cd cloudiotDeviceAttributes) Blocked() terra.BoolValue {
-	return terra.ReferenceBool(cd.ref.Append("blocked"))
+	return terra.ReferenceAsBool(cd.ref.Append("blocked"))
 }
 
+// Id returns a reference to field id of google_cloudiot_device.
 func (cd cloudiotDeviceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("id"))
+	return terra.ReferenceAsString(cd.ref.Append("id"))
 }
 
+// LastConfigAckTime returns a reference to field last_config_ack_time of google_cloudiot_device.
 func (cd cloudiotDeviceAttributes) LastConfigAckTime() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("last_config_ack_time"))
+	return terra.ReferenceAsString(cd.ref.Append("last_config_ack_time"))
 }
 
+// LastConfigSendTime returns a reference to field last_config_send_time of google_cloudiot_device.
 func (cd cloudiotDeviceAttributes) LastConfigSendTime() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("last_config_send_time"))
+	return terra.ReferenceAsString(cd.ref.Append("last_config_send_time"))
 }
 
+// LastErrorTime returns a reference to field last_error_time of google_cloudiot_device.
 func (cd cloudiotDeviceAttributes) LastErrorTime() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("last_error_time"))
+	return terra.ReferenceAsString(cd.ref.Append("last_error_time"))
 }
 
+// LastEventTime returns a reference to field last_event_time of google_cloudiot_device.
 func (cd cloudiotDeviceAttributes) LastEventTime() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("last_event_time"))
+	return terra.ReferenceAsString(cd.ref.Append("last_event_time"))
 }
 
+// LastHeartbeatTime returns a reference to field last_heartbeat_time of google_cloudiot_device.
 func (cd cloudiotDeviceAttributes) LastHeartbeatTime() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("last_heartbeat_time"))
+	return terra.ReferenceAsString(cd.ref.Append("last_heartbeat_time"))
 }
 
+// LastStateTime returns a reference to field last_state_time of google_cloudiot_device.
 func (cd cloudiotDeviceAttributes) LastStateTime() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("last_state_time"))
+	return terra.ReferenceAsString(cd.ref.Append("last_state_time"))
 }
 
+// LogLevel returns a reference to field log_level of google_cloudiot_device.
 func (cd cloudiotDeviceAttributes) LogLevel() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("log_level"))
+	return terra.ReferenceAsString(cd.ref.Append("log_level"))
 }
 
+// Metadata returns a reference to field metadata of google_cloudiot_device.
 func (cd cloudiotDeviceAttributes) Metadata() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cd.ref.Append("metadata"))
+	return terra.ReferenceAsMap[terra.StringValue](cd.ref.Append("metadata"))
 }
 
+// Name returns a reference to field name of google_cloudiot_device.
 func (cd cloudiotDeviceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("name"))
+	return terra.ReferenceAsString(cd.ref.Append("name"))
 }
 
+// NumId returns a reference to field num_id of google_cloudiot_device.
 func (cd cloudiotDeviceAttributes) NumId() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("num_id"))
+	return terra.ReferenceAsString(cd.ref.Append("num_id"))
 }
 
+// Registry returns a reference to field registry of google_cloudiot_device.
 func (cd cloudiotDeviceAttributes) Registry() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("registry"))
+	return terra.ReferenceAsString(cd.ref.Append("registry"))
 }
 
 func (cd cloudiotDeviceAttributes) Config() terra.ListValue[cloudiotdevice.ConfigAttributes] {
-	return terra.ReferenceList[cloudiotdevice.ConfigAttributes](cd.ref.Append("config"))
+	return terra.ReferenceAsList[cloudiotdevice.ConfigAttributes](cd.ref.Append("config"))
 }
 
 func (cd cloudiotDeviceAttributes) LastErrorStatus() terra.ListValue[cloudiotdevice.LastErrorStatusAttributes] {
-	return terra.ReferenceList[cloudiotdevice.LastErrorStatusAttributes](cd.ref.Append("last_error_status"))
+	return terra.ReferenceAsList[cloudiotdevice.LastErrorStatusAttributes](cd.ref.Append("last_error_status"))
 }
 
 func (cd cloudiotDeviceAttributes) State() terra.ListValue[cloudiotdevice.StateAttributes] {
-	return terra.ReferenceList[cloudiotdevice.StateAttributes](cd.ref.Append("state"))
+	return terra.ReferenceAsList[cloudiotdevice.StateAttributes](cd.ref.Append("state"))
 }
 
 func (cd cloudiotDeviceAttributes) Credentials() terra.ListValue[cloudiotdevice.CredentialsAttributes] {
-	return terra.ReferenceList[cloudiotdevice.CredentialsAttributes](cd.ref.Append("credentials"))
+	return terra.ReferenceAsList[cloudiotdevice.CredentialsAttributes](cd.ref.Append("credentials"))
 }
 
 func (cd cloudiotDeviceAttributes) GatewayConfig() terra.ListValue[cloudiotdevice.GatewayConfigAttributes] {
-	return terra.ReferenceList[cloudiotdevice.GatewayConfigAttributes](cd.ref.Append("gateway_config"))
+	return terra.ReferenceAsList[cloudiotdevice.GatewayConfigAttributes](cd.ref.Append("gateway_config"))
 }
 
 func (cd cloudiotDeviceAttributes) Timeouts() cloudiotdevice.TimeoutsAttributes {
-	return terra.ReferenceSingle[cloudiotdevice.TimeoutsAttributes](cd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cloudiotdevice.TimeoutsAttributes](cd.ref.Append("timeouts"))
 }
 
 type cloudiotDeviceState struct {

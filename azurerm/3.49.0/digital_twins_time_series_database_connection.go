@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDigitalTwinsTimeSeriesDatabaseConnection creates a new instance of [DigitalTwinsTimeSeriesDatabaseConnection].
 func NewDigitalTwinsTimeSeriesDatabaseConnection(name string, args DigitalTwinsTimeSeriesDatabaseConnectionArgs) *DigitalTwinsTimeSeriesDatabaseConnection {
 	return &DigitalTwinsTimeSeriesDatabaseConnection{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDigitalTwinsTimeSeriesDatabaseConnection(name string, args DigitalTwinsT
 
 var _ terra.Resource = (*DigitalTwinsTimeSeriesDatabaseConnection)(nil)
 
+// DigitalTwinsTimeSeriesDatabaseConnection represents the Terraform resource azurerm_digital_twins_time_series_database_connection.
 type DigitalTwinsTimeSeriesDatabaseConnection struct {
-	Name  string
-	Args  DigitalTwinsTimeSeriesDatabaseConnectionArgs
-	state *digitalTwinsTimeSeriesDatabaseConnectionState
+	Name      string
+	Args      DigitalTwinsTimeSeriesDatabaseConnectionArgs
+	state     *digitalTwinsTimeSeriesDatabaseConnectionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DigitalTwinsTimeSeriesDatabaseConnection].
 func (dttsdc *DigitalTwinsTimeSeriesDatabaseConnection) Type() string {
 	return "azurerm_digital_twins_time_series_database_connection"
 }
 
+// LocalName returns the local name for [DigitalTwinsTimeSeriesDatabaseConnection].
 func (dttsdc *DigitalTwinsTimeSeriesDatabaseConnection) LocalName() string {
 	return dttsdc.Name
 }
 
+// Configuration returns the configuration (args) for [DigitalTwinsTimeSeriesDatabaseConnection].
 func (dttsdc *DigitalTwinsTimeSeriesDatabaseConnection) Configuration() interface{} {
 	return dttsdc.Args
 }
 
+// DependOn is used for other resources to depend on [DigitalTwinsTimeSeriesDatabaseConnection].
+func (dttsdc *DigitalTwinsTimeSeriesDatabaseConnection) DependOn() terra.Reference {
+	return terra.ReferenceResource(dttsdc)
+}
+
+// Dependencies returns the list of resources [DigitalTwinsTimeSeriesDatabaseConnection] depends_on.
+func (dttsdc *DigitalTwinsTimeSeriesDatabaseConnection) Dependencies() terra.Dependencies {
+	return dttsdc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DigitalTwinsTimeSeriesDatabaseConnection].
+func (dttsdc *DigitalTwinsTimeSeriesDatabaseConnection) LifecycleManagement() *terra.Lifecycle {
+	return dttsdc.Lifecycle
+}
+
+// Attributes returns the attributes for [DigitalTwinsTimeSeriesDatabaseConnection].
 func (dttsdc *DigitalTwinsTimeSeriesDatabaseConnection) Attributes() digitalTwinsTimeSeriesDatabaseConnectionAttributes {
 	return digitalTwinsTimeSeriesDatabaseConnectionAttributes{ref: terra.ReferenceResource(dttsdc)}
 }
 
+// ImportState imports the given attribute values into [DigitalTwinsTimeSeriesDatabaseConnection]'s state.
 func (dttsdc *DigitalTwinsTimeSeriesDatabaseConnection) ImportState(av io.Reader) error {
 	dttsdc.state = &digitalTwinsTimeSeriesDatabaseConnectionState{}
 	if err := json.NewDecoder(av).Decode(dttsdc.state); err != nil {
@@ -49,10 +73,12 @@ func (dttsdc *DigitalTwinsTimeSeriesDatabaseConnection) ImportState(av io.Reader
 	return nil
 }
 
+// State returns the state and a bool indicating if [DigitalTwinsTimeSeriesDatabaseConnection] has state.
 func (dttsdc *DigitalTwinsTimeSeriesDatabaseConnection) State() (*digitalTwinsTimeSeriesDatabaseConnectionState, bool) {
 	return dttsdc.state, dttsdc.state != nil
 }
 
+// StateMust returns the state for [DigitalTwinsTimeSeriesDatabaseConnection]. Panics if the state is nil.
 func (dttsdc *DigitalTwinsTimeSeriesDatabaseConnection) StateMust() *digitalTwinsTimeSeriesDatabaseConnectionState {
 	if dttsdc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dttsdc.Type(), dttsdc.LocalName()))
@@ -60,10 +86,7 @@ func (dttsdc *DigitalTwinsTimeSeriesDatabaseConnection) StateMust() *digitalTwin
 	return dttsdc.state
 }
 
-func (dttsdc *DigitalTwinsTimeSeriesDatabaseConnection) DependOn() terra.Reference {
-	return terra.ReferenceResource(dttsdc)
-}
-
+// DigitalTwinsTimeSeriesDatabaseConnectionArgs contains the configurations for azurerm_digital_twins_time_series_database_connection.
 type DigitalTwinsTimeSeriesDatabaseConnectionArgs struct {
 	// DigitalTwinsId: string, required
 	DigitalTwinsId terra.StringValue `hcl:"digital_twins_id,attr" validate:"required"`
@@ -89,59 +112,68 @@ type DigitalTwinsTimeSeriesDatabaseConnectionArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *digitaltwinstimeseriesdatabaseconnection.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DigitalTwinsTimeSeriesDatabaseConnection depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type digitalTwinsTimeSeriesDatabaseConnectionAttributes struct {
 	ref terra.Reference
 }
 
+// DigitalTwinsId returns a reference to field digital_twins_id of azurerm_digital_twins_time_series_database_connection.
 func (dttsdc digitalTwinsTimeSeriesDatabaseConnectionAttributes) DigitalTwinsId() terra.StringValue {
-	return terra.ReferenceString(dttsdc.ref.Append("digital_twins_id"))
+	return terra.ReferenceAsString(dttsdc.ref.Append("digital_twins_id"))
 }
 
+// EventhubConsumerGroupName returns a reference to field eventhub_consumer_group_name of azurerm_digital_twins_time_series_database_connection.
 func (dttsdc digitalTwinsTimeSeriesDatabaseConnectionAttributes) EventhubConsumerGroupName() terra.StringValue {
-	return terra.ReferenceString(dttsdc.ref.Append("eventhub_consumer_group_name"))
+	return terra.ReferenceAsString(dttsdc.ref.Append("eventhub_consumer_group_name"))
 }
 
+// EventhubName returns a reference to field eventhub_name of azurerm_digital_twins_time_series_database_connection.
 func (dttsdc digitalTwinsTimeSeriesDatabaseConnectionAttributes) EventhubName() terra.StringValue {
-	return terra.ReferenceString(dttsdc.ref.Append("eventhub_name"))
+	return terra.ReferenceAsString(dttsdc.ref.Append("eventhub_name"))
 }
 
+// EventhubNamespaceEndpointUri returns a reference to field eventhub_namespace_endpoint_uri of azurerm_digital_twins_time_series_database_connection.
 func (dttsdc digitalTwinsTimeSeriesDatabaseConnectionAttributes) EventhubNamespaceEndpointUri() terra.StringValue {
-	return terra.ReferenceString(dttsdc.ref.Append("eventhub_namespace_endpoint_uri"))
+	return terra.ReferenceAsString(dttsdc.ref.Append("eventhub_namespace_endpoint_uri"))
 }
 
+// EventhubNamespaceId returns a reference to field eventhub_namespace_id of azurerm_digital_twins_time_series_database_connection.
 func (dttsdc digitalTwinsTimeSeriesDatabaseConnectionAttributes) EventhubNamespaceId() terra.StringValue {
-	return terra.ReferenceString(dttsdc.ref.Append("eventhub_namespace_id"))
+	return terra.ReferenceAsString(dttsdc.ref.Append("eventhub_namespace_id"))
 }
 
+// Id returns a reference to field id of azurerm_digital_twins_time_series_database_connection.
 func (dttsdc digitalTwinsTimeSeriesDatabaseConnectionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dttsdc.ref.Append("id"))
+	return terra.ReferenceAsString(dttsdc.ref.Append("id"))
 }
 
+// KustoClusterId returns a reference to field kusto_cluster_id of azurerm_digital_twins_time_series_database_connection.
 func (dttsdc digitalTwinsTimeSeriesDatabaseConnectionAttributes) KustoClusterId() terra.StringValue {
-	return terra.ReferenceString(dttsdc.ref.Append("kusto_cluster_id"))
+	return terra.ReferenceAsString(dttsdc.ref.Append("kusto_cluster_id"))
 }
 
+// KustoClusterUri returns a reference to field kusto_cluster_uri of azurerm_digital_twins_time_series_database_connection.
 func (dttsdc digitalTwinsTimeSeriesDatabaseConnectionAttributes) KustoClusterUri() terra.StringValue {
-	return terra.ReferenceString(dttsdc.ref.Append("kusto_cluster_uri"))
+	return terra.ReferenceAsString(dttsdc.ref.Append("kusto_cluster_uri"))
 }
 
+// KustoDatabaseName returns a reference to field kusto_database_name of azurerm_digital_twins_time_series_database_connection.
 func (dttsdc digitalTwinsTimeSeriesDatabaseConnectionAttributes) KustoDatabaseName() terra.StringValue {
-	return terra.ReferenceString(dttsdc.ref.Append("kusto_database_name"))
+	return terra.ReferenceAsString(dttsdc.ref.Append("kusto_database_name"))
 }
 
+// KustoTableName returns a reference to field kusto_table_name of azurerm_digital_twins_time_series_database_connection.
 func (dttsdc digitalTwinsTimeSeriesDatabaseConnectionAttributes) KustoTableName() terra.StringValue {
-	return terra.ReferenceString(dttsdc.ref.Append("kusto_table_name"))
+	return terra.ReferenceAsString(dttsdc.ref.Append("kusto_table_name"))
 }
 
+// Name returns a reference to field name of azurerm_digital_twins_time_series_database_connection.
 func (dttsdc digitalTwinsTimeSeriesDatabaseConnectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dttsdc.ref.Append("name"))
+	return terra.ReferenceAsString(dttsdc.ref.Append("name"))
 }
 
 func (dttsdc digitalTwinsTimeSeriesDatabaseConnectionAttributes) Timeouts() digitaltwinstimeseriesdatabaseconnection.TimeoutsAttributes {
-	return terra.ReferenceSingle[digitaltwinstimeseriesdatabaseconnection.TimeoutsAttributes](dttsdc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[digitaltwinstimeseriesdatabaseconnection.TimeoutsAttributes](dttsdc.ref.Append("timeouts"))
 }
 
 type digitalTwinsTimeSeriesDatabaseConnectionState struct {

@@ -26,7 +26,7 @@ func (am AuthenticationModeAttributes) InternalWithRef(ref terra.Reference) Auth
 	return AuthenticationModeAttributes{ref: ref}
 }
 
-func (am AuthenticationModeAttributes) InternalTokens() hclwrite.Tokens {
+func (am AuthenticationModeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return am.ref.InternalTokens()
 }
 

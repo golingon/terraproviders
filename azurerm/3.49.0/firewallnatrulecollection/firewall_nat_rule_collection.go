@@ -43,84 +43,84 @@ type RuleAttributes struct {
 	ref terra.Reference
 }
 
-func (r RuleAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RuleAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RuleAttributes) InternalWithRef(ref terra.Reference) RuleAttributes {
 	return RuleAttributes{ref: ref}
 }
 
-func (r RuleAttributes) InternalTokens() hclwrite.Tokens {
+func (r RuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RuleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("description"))
+	return terra.ReferenceAsString(r.ref.Append("description"))
 }
 
 func (r RuleAttributes) DestinationAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("destination_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("destination_addresses"))
 }
 
 func (r RuleAttributes) DestinationPorts() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("destination_ports"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("destination_ports"))
 }
 
 func (r RuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("name"))
+	return terra.ReferenceAsString(r.ref.Append("name"))
 }
 
 func (r RuleAttributes) Protocols() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("protocols"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("protocols"))
 }
 
 func (r RuleAttributes) SourceAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("source_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("source_addresses"))
 }
 
 func (r RuleAttributes) SourceIpGroups() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("source_ip_groups"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("source_ip_groups"))
 }
 
 func (r RuleAttributes) TranslatedAddress() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("translated_address"))
+	return terra.ReferenceAsString(r.ref.Append("translated_address"))
 }
 
 func (r RuleAttributes) TranslatedPort() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("translated_port"))
+	return terra.ReferenceAsString(r.ref.Append("translated_port"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type RuleState struct {

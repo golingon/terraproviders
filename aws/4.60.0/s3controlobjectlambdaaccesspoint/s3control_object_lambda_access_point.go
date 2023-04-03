@@ -49,7 +49,7 @@ func (c ConfigurationAttributes) InternalWithRef(ref terra.Reference) Configurat
 	return ConfigurationAttributes{ref: ref}
 }
 
-func (c ConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -81,7 +81,7 @@ func (tc TransformationConfigurationAttributes) InternalWithRef(ref terra.Refere
 	return TransformationConfigurationAttributes{ref: ref}
 }
 
-func (tc TransformationConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (tc TransformationConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tc.ref.InternalTokens()
 }
 
@@ -105,7 +105,7 @@ func (ct ContentTransformationAttributes) InternalWithRef(ref terra.Reference) C
 	return ContentTransformationAttributes{ref: ref}
 }
 
-func (ct ContentTransformationAttributes) InternalTokens() hclwrite.Tokens {
+func (ct ContentTransformationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ct.ref.InternalTokens()
 }
 
@@ -125,7 +125,7 @@ func (al AwsLambdaAttributes) InternalWithRef(ref terra.Reference) AwsLambdaAttr
 	return AwsLambdaAttributes{ref: ref}
 }
 
-func (al AwsLambdaAttributes) InternalTokens() hclwrite.Tokens {
+func (al AwsLambdaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return al.ref.InternalTokens()
 }
 

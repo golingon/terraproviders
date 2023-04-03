@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewContainerRegistryAgentPool creates a new instance of [ContainerRegistryAgentPool].
 func NewContainerRegistryAgentPool(name string, args ContainerRegistryAgentPoolArgs) *ContainerRegistryAgentPool {
 	return &ContainerRegistryAgentPool{
 		Args: args,
@@ -19,28 +20,51 @@ func NewContainerRegistryAgentPool(name string, args ContainerRegistryAgentPoolA
 
 var _ terra.Resource = (*ContainerRegistryAgentPool)(nil)
 
+// ContainerRegistryAgentPool represents the Terraform resource azurerm_container_registry_agent_pool.
 type ContainerRegistryAgentPool struct {
-	Name  string
-	Args  ContainerRegistryAgentPoolArgs
-	state *containerRegistryAgentPoolState
+	Name      string
+	Args      ContainerRegistryAgentPoolArgs
+	state     *containerRegistryAgentPoolState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ContainerRegistryAgentPool].
 func (crap *ContainerRegistryAgentPool) Type() string {
 	return "azurerm_container_registry_agent_pool"
 }
 
+// LocalName returns the local name for [ContainerRegistryAgentPool].
 func (crap *ContainerRegistryAgentPool) LocalName() string {
 	return crap.Name
 }
 
+// Configuration returns the configuration (args) for [ContainerRegistryAgentPool].
 func (crap *ContainerRegistryAgentPool) Configuration() interface{} {
 	return crap.Args
 }
 
+// DependOn is used for other resources to depend on [ContainerRegistryAgentPool].
+func (crap *ContainerRegistryAgentPool) DependOn() terra.Reference {
+	return terra.ReferenceResource(crap)
+}
+
+// Dependencies returns the list of resources [ContainerRegistryAgentPool] depends_on.
+func (crap *ContainerRegistryAgentPool) Dependencies() terra.Dependencies {
+	return crap.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ContainerRegistryAgentPool].
+func (crap *ContainerRegistryAgentPool) LifecycleManagement() *terra.Lifecycle {
+	return crap.Lifecycle
+}
+
+// Attributes returns the attributes for [ContainerRegistryAgentPool].
 func (crap *ContainerRegistryAgentPool) Attributes() containerRegistryAgentPoolAttributes {
 	return containerRegistryAgentPoolAttributes{ref: terra.ReferenceResource(crap)}
 }
 
+// ImportState imports the given attribute values into [ContainerRegistryAgentPool]'s state.
 func (crap *ContainerRegistryAgentPool) ImportState(av io.Reader) error {
 	crap.state = &containerRegistryAgentPoolState{}
 	if err := json.NewDecoder(av).Decode(crap.state); err != nil {
@@ -49,10 +73,12 @@ func (crap *ContainerRegistryAgentPool) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ContainerRegistryAgentPool] has state.
 func (crap *ContainerRegistryAgentPool) State() (*containerRegistryAgentPoolState, bool) {
 	return crap.state, crap.state != nil
 }
 
+// StateMust returns the state for [ContainerRegistryAgentPool]. Panics if the state is nil.
 func (crap *ContainerRegistryAgentPool) StateMust() *containerRegistryAgentPoolState {
 	if crap.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", crap.Type(), crap.LocalName()))
@@ -60,10 +86,7 @@ func (crap *ContainerRegistryAgentPool) StateMust() *containerRegistryAgentPoolS
 	return crap.state
 }
 
-func (crap *ContainerRegistryAgentPool) DependOn() terra.Reference {
-	return terra.ReferenceResource(crap)
-}
-
+// ContainerRegistryAgentPoolArgs contains the configurations for azurerm_container_registry_agent_pool.
 type ContainerRegistryAgentPoolArgs struct {
 	// ContainerRegistryName: string, required
 	ContainerRegistryName terra.StringValue `hcl:"container_registry_name,attr" validate:"required"`
@@ -85,51 +108,58 @@ type ContainerRegistryAgentPoolArgs struct {
 	VirtualNetworkSubnetId terra.StringValue `hcl:"virtual_network_subnet_id,attr"`
 	// Timeouts: optional
 	Timeouts *containerregistryagentpool.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ContainerRegistryAgentPool depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type containerRegistryAgentPoolAttributes struct {
 	ref terra.Reference
 }
 
+// ContainerRegistryName returns a reference to field container_registry_name of azurerm_container_registry_agent_pool.
 func (crap containerRegistryAgentPoolAttributes) ContainerRegistryName() terra.StringValue {
-	return terra.ReferenceString(crap.ref.Append("container_registry_name"))
+	return terra.ReferenceAsString(crap.ref.Append("container_registry_name"))
 }
 
+// Id returns a reference to field id of azurerm_container_registry_agent_pool.
 func (crap containerRegistryAgentPoolAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(crap.ref.Append("id"))
+	return terra.ReferenceAsString(crap.ref.Append("id"))
 }
 
+// InstanceCount returns a reference to field instance_count of azurerm_container_registry_agent_pool.
 func (crap containerRegistryAgentPoolAttributes) InstanceCount() terra.NumberValue {
-	return terra.ReferenceNumber(crap.ref.Append("instance_count"))
+	return terra.ReferenceAsNumber(crap.ref.Append("instance_count"))
 }
 
+// Location returns a reference to field location of azurerm_container_registry_agent_pool.
 func (crap containerRegistryAgentPoolAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(crap.ref.Append("location"))
+	return terra.ReferenceAsString(crap.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_container_registry_agent_pool.
 func (crap containerRegistryAgentPoolAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(crap.ref.Append("name"))
+	return terra.ReferenceAsString(crap.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_container_registry_agent_pool.
 func (crap containerRegistryAgentPoolAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(crap.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(crap.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_container_registry_agent_pool.
 func (crap containerRegistryAgentPoolAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](crap.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](crap.ref.Append("tags"))
 }
 
+// Tier returns a reference to field tier of azurerm_container_registry_agent_pool.
 func (crap containerRegistryAgentPoolAttributes) Tier() terra.StringValue {
-	return terra.ReferenceString(crap.ref.Append("tier"))
+	return terra.ReferenceAsString(crap.ref.Append("tier"))
 }
 
+// VirtualNetworkSubnetId returns a reference to field virtual_network_subnet_id of azurerm_container_registry_agent_pool.
 func (crap containerRegistryAgentPoolAttributes) VirtualNetworkSubnetId() terra.StringValue {
-	return terra.ReferenceString(crap.ref.Append("virtual_network_subnet_id"))
+	return terra.ReferenceAsString(crap.ref.Append("virtual_network_subnet_id"))
 }
 
 func (crap containerRegistryAgentPoolAttributes) Timeouts() containerregistryagentpool.TimeoutsAttributes {
-	return terra.ReferenceSingle[containerregistryagentpool.TimeoutsAttributes](crap.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[containerregistryagentpool.TimeoutsAttributes](crap.ref.Append("timeouts"))
 }
 
 type containerRegistryAgentPoolState struct {

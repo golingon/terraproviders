@@ -24,64 +24,64 @@ type CertificatesAttributes struct {
 	ref terra.Reference
 }
 
-func (c CertificatesAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CertificatesAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CertificatesAttributes) InternalWithRef(ref terra.Reference) CertificatesAttributes {
 	return CertificatesAttributes{ref: ref}
 }
 
-func (c CertificatesAttributes) InternalTokens() hclwrite.Tokens {
+func (c CertificatesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c CertificatesAttributes) CertificateName() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("certificate_name"))
+	return terra.ReferenceAsString(c.ref.Append("certificate_name"))
 }
 
 func (c CertificatesAttributes) KeyVaultId() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("key_vault_id"))
+	return terra.ReferenceAsString(c.ref.Append("key_vault_id"))
 }
 
 func (c CertificatesAttributes) KeyVaultSecretName() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("key_vault_secret_name"))
+	return terra.ReferenceAsString(c.ref.Append("key_vault_secret_name"))
 }
 
 func (c CertificatesAttributes) ProvisioningState() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("provisioning_state"))
+	return terra.ReferenceAsString(c.ref.Append("provisioning_state"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type CertificatesState struct {

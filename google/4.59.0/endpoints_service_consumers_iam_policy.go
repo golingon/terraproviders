@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewEndpointsServiceConsumersIamPolicy creates a new instance of [EndpointsServiceConsumersIamPolicy].
 func NewEndpointsServiceConsumersIamPolicy(name string, args EndpointsServiceConsumersIamPolicyArgs) *EndpointsServiceConsumersIamPolicy {
 	return &EndpointsServiceConsumersIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewEndpointsServiceConsumersIamPolicy(name string, args EndpointsServiceCon
 
 var _ terra.Resource = (*EndpointsServiceConsumersIamPolicy)(nil)
 
+// EndpointsServiceConsumersIamPolicy represents the Terraform resource google_endpoints_service_consumers_iam_policy.
 type EndpointsServiceConsumersIamPolicy struct {
-	Name  string
-	Args  EndpointsServiceConsumersIamPolicyArgs
-	state *endpointsServiceConsumersIamPolicyState
+	Name      string
+	Args      EndpointsServiceConsumersIamPolicyArgs
+	state     *endpointsServiceConsumersIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EndpointsServiceConsumersIamPolicy].
 func (escip *EndpointsServiceConsumersIamPolicy) Type() string {
 	return "google_endpoints_service_consumers_iam_policy"
 }
 
+// LocalName returns the local name for [EndpointsServiceConsumersIamPolicy].
 func (escip *EndpointsServiceConsumersIamPolicy) LocalName() string {
 	return escip.Name
 }
 
+// Configuration returns the configuration (args) for [EndpointsServiceConsumersIamPolicy].
 func (escip *EndpointsServiceConsumersIamPolicy) Configuration() interface{} {
 	return escip.Args
 }
 
+// DependOn is used for other resources to depend on [EndpointsServiceConsumersIamPolicy].
+func (escip *EndpointsServiceConsumersIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(escip)
+}
+
+// Dependencies returns the list of resources [EndpointsServiceConsumersIamPolicy] depends_on.
+func (escip *EndpointsServiceConsumersIamPolicy) Dependencies() terra.Dependencies {
+	return escip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EndpointsServiceConsumersIamPolicy].
+func (escip *EndpointsServiceConsumersIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return escip.Lifecycle
+}
+
+// Attributes returns the attributes for [EndpointsServiceConsumersIamPolicy].
 func (escip *EndpointsServiceConsumersIamPolicy) Attributes() endpointsServiceConsumersIamPolicyAttributes {
 	return endpointsServiceConsumersIamPolicyAttributes{ref: terra.ReferenceResource(escip)}
 }
 
+// ImportState imports the given attribute values into [EndpointsServiceConsumersIamPolicy]'s state.
 func (escip *EndpointsServiceConsumersIamPolicy) ImportState(av io.Reader) error {
 	escip.state = &endpointsServiceConsumersIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(escip.state); err != nil {
@@ -48,10 +72,12 @@ func (escip *EndpointsServiceConsumersIamPolicy) ImportState(av io.Reader) error
 	return nil
 }
 
+// State returns the state and a bool indicating if [EndpointsServiceConsumersIamPolicy] has state.
 func (escip *EndpointsServiceConsumersIamPolicy) State() (*endpointsServiceConsumersIamPolicyState, bool) {
 	return escip.state, escip.state != nil
 }
 
+// StateMust returns the state for [EndpointsServiceConsumersIamPolicy]. Panics if the state is nil.
 func (escip *EndpointsServiceConsumersIamPolicy) StateMust() *endpointsServiceConsumersIamPolicyState {
 	if escip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", escip.Type(), escip.LocalName()))
@@ -59,10 +85,7 @@ func (escip *EndpointsServiceConsumersIamPolicy) StateMust() *endpointsServiceCo
 	return escip.state
 }
 
-func (escip *EndpointsServiceConsumersIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(escip)
-}
-
+// EndpointsServiceConsumersIamPolicyArgs contains the configurations for google_endpoints_service_consumers_iam_policy.
 type EndpointsServiceConsumersIamPolicyArgs struct {
 	// ConsumerProject: string, required
 	ConsumerProject terra.StringValue `hcl:"consumer_project,attr" validate:"required"`
@@ -72,31 +95,34 @@ type EndpointsServiceConsumersIamPolicyArgs struct {
 	PolicyData terra.StringValue `hcl:"policy_data,attr" validate:"required"`
 	// ServiceName: string, required
 	ServiceName terra.StringValue `hcl:"service_name,attr" validate:"required"`
-	// DependsOn contains resources that EndpointsServiceConsumersIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type endpointsServiceConsumersIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// ConsumerProject returns a reference to field consumer_project of google_endpoints_service_consumers_iam_policy.
 func (escip endpointsServiceConsumersIamPolicyAttributes) ConsumerProject() terra.StringValue {
-	return terra.ReferenceString(escip.ref.Append("consumer_project"))
+	return terra.ReferenceAsString(escip.ref.Append("consumer_project"))
 }
 
+// Etag returns a reference to field etag of google_endpoints_service_consumers_iam_policy.
 func (escip endpointsServiceConsumersIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(escip.ref.Append("etag"))
+	return terra.ReferenceAsString(escip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_endpoints_service_consumers_iam_policy.
 func (escip endpointsServiceConsumersIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(escip.ref.Append("id"))
+	return terra.ReferenceAsString(escip.ref.Append("id"))
 }
 
+// PolicyData returns a reference to field policy_data of google_endpoints_service_consumers_iam_policy.
 func (escip endpointsServiceConsumersIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(escip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(escip.ref.Append("policy_data"))
 }
 
+// ServiceName returns a reference to field service_name of google_endpoints_service_consumers_iam_policy.
 func (escip endpointsServiceConsumersIamPolicyAttributes) ServiceName() terra.StringValue {
-	return terra.ReferenceString(escip.ref.Append("service_name"))
+	return terra.ReferenceAsString(escip.ref.Append("service_name"))
 }
 
 type endpointsServiceConsumersIamPolicyState struct {

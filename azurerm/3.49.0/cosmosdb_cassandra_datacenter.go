@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCosmosdbCassandraDatacenter creates a new instance of [CosmosdbCassandraDatacenter].
 func NewCosmosdbCassandraDatacenter(name string, args CosmosdbCassandraDatacenterArgs) *CosmosdbCassandraDatacenter {
 	return &CosmosdbCassandraDatacenter{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCosmosdbCassandraDatacenter(name string, args CosmosdbCassandraDatacente
 
 var _ terra.Resource = (*CosmosdbCassandraDatacenter)(nil)
 
+// CosmosdbCassandraDatacenter represents the Terraform resource azurerm_cosmosdb_cassandra_datacenter.
 type CosmosdbCassandraDatacenter struct {
-	Name  string
-	Args  CosmosdbCassandraDatacenterArgs
-	state *cosmosdbCassandraDatacenterState
+	Name      string
+	Args      CosmosdbCassandraDatacenterArgs
+	state     *cosmosdbCassandraDatacenterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CosmosdbCassandraDatacenter].
 func (ccd *CosmosdbCassandraDatacenter) Type() string {
 	return "azurerm_cosmosdb_cassandra_datacenter"
 }
 
+// LocalName returns the local name for [CosmosdbCassandraDatacenter].
 func (ccd *CosmosdbCassandraDatacenter) LocalName() string {
 	return ccd.Name
 }
 
+// Configuration returns the configuration (args) for [CosmosdbCassandraDatacenter].
 func (ccd *CosmosdbCassandraDatacenter) Configuration() interface{} {
 	return ccd.Args
 }
 
+// DependOn is used for other resources to depend on [CosmosdbCassandraDatacenter].
+func (ccd *CosmosdbCassandraDatacenter) DependOn() terra.Reference {
+	return terra.ReferenceResource(ccd)
+}
+
+// Dependencies returns the list of resources [CosmosdbCassandraDatacenter] depends_on.
+func (ccd *CosmosdbCassandraDatacenter) Dependencies() terra.Dependencies {
+	return ccd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CosmosdbCassandraDatacenter].
+func (ccd *CosmosdbCassandraDatacenter) LifecycleManagement() *terra.Lifecycle {
+	return ccd.Lifecycle
+}
+
+// Attributes returns the attributes for [CosmosdbCassandraDatacenter].
 func (ccd *CosmosdbCassandraDatacenter) Attributes() cosmosdbCassandraDatacenterAttributes {
 	return cosmosdbCassandraDatacenterAttributes{ref: terra.ReferenceResource(ccd)}
 }
 
+// ImportState imports the given attribute values into [CosmosdbCassandraDatacenter]'s state.
 func (ccd *CosmosdbCassandraDatacenter) ImportState(av io.Reader) error {
 	ccd.state = &cosmosdbCassandraDatacenterState{}
 	if err := json.NewDecoder(av).Decode(ccd.state); err != nil {
@@ -49,10 +73,12 @@ func (ccd *CosmosdbCassandraDatacenter) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CosmosdbCassandraDatacenter] has state.
 func (ccd *CosmosdbCassandraDatacenter) State() (*cosmosdbCassandraDatacenterState, bool) {
 	return ccd.state, ccd.state != nil
 }
 
+// StateMust returns the state for [CosmosdbCassandraDatacenter]. Panics if the state is nil.
 func (ccd *CosmosdbCassandraDatacenter) StateMust() *cosmosdbCassandraDatacenterState {
 	if ccd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ccd.Type(), ccd.LocalName()))
@@ -60,10 +86,7 @@ func (ccd *CosmosdbCassandraDatacenter) StateMust() *cosmosdbCassandraDatacenter
 	return ccd.state
 }
 
-func (ccd *CosmosdbCassandraDatacenter) DependOn() terra.Reference {
-	return terra.ReferenceResource(ccd)
-}
-
+// CosmosdbCassandraDatacenterArgs contains the configurations for azurerm_cosmosdb_cassandra_datacenter.
 type CosmosdbCassandraDatacenterArgs struct {
 	// AvailabilityZonesEnabled: bool, optional
 	AvailabilityZonesEnabled terra.BoolValue `hcl:"availability_zones_enabled,attr"`
@@ -93,67 +116,78 @@ type CosmosdbCassandraDatacenterArgs struct {
 	SkuName terra.StringValue `hcl:"sku_name,attr"`
 	// Timeouts: optional
 	Timeouts *cosmosdbcassandradatacenter.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that CosmosdbCassandraDatacenter depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cosmosdbCassandraDatacenterAttributes struct {
 	ref terra.Reference
 }
 
+// AvailabilityZonesEnabled returns a reference to field availability_zones_enabled of azurerm_cosmosdb_cassandra_datacenter.
 func (ccd cosmosdbCassandraDatacenterAttributes) AvailabilityZonesEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ccd.ref.Append("availability_zones_enabled"))
+	return terra.ReferenceAsBool(ccd.ref.Append("availability_zones_enabled"))
 }
 
+// BackupStorageCustomerKeyUri returns a reference to field backup_storage_customer_key_uri of azurerm_cosmosdb_cassandra_datacenter.
 func (ccd cosmosdbCassandraDatacenterAttributes) BackupStorageCustomerKeyUri() terra.StringValue {
-	return terra.ReferenceString(ccd.ref.Append("backup_storage_customer_key_uri"))
+	return terra.ReferenceAsString(ccd.ref.Append("backup_storage_customer_key_uri"))
 }
 
+// Base64EncodedYamlFragment returns a reference to field base64_encoded_yaml_fragment of azurerm_cosmosdb_cassandra_datacenter.
 func (ccd cosmosdbCassandraDatacenterAttributes) Base64EncodedYamlFragment() terra.StringValue {
-	return terra.ReferenceString(ccd.ref.Append("base64_encoded_yaml_fragment"))
+	return terra.ReferenceAsString(ccd.ref.Append("base64_encoded_yaml_fragment"))
 }
 
+// CassandraClusterId returns a reference to field cassandra_cluster_id of azurerm_cosmosdb_cassandra_datacenter.
 func (ccd cosmosdbCassandraDatacenterAttributes) CassandraClusterId() terra.StringValue {
-	return terra.ReferenceString(ccd.ref.Append("cassandra_cluster_id"))
+	return terra.ReferenceAsString(ccd.ref.Append("cassandra_cluster_id"))
 }
 
+// DelegatedManagementSubnetId returns a reference to field delegated_management_subnet_id of azurerm_cosmosdb_cassandra_datacenter.
 func (ccd cosmosdbCassandraDatacenterAttributes) DelegatedManagementSubnetId() terra.StringValue {
-	return terra.ReferenceString(ccd.ref.Append("delegated_management_subnet_id"))
+	return terra.ReferenceAsString(ccd.ref.Append("delegated_management_subnet_id"))
 }
 
+// DiskCount returns a reference to field disk_count of azurerm_cosmosdb_cassandra_datacenter.
 func (ccd cosmosdbCassandraDatacenterAttributes) DiskCount() terra.NumberValue {
-	return terra.ReferenceNumber(ccd.ref.Append("disk_count"))
+	return terra.ReferenceAsNumber(ccd.ref.Append("disk_count"))
 }
 
+// DiskSku returns a reference to field disk_sku of azurerm_cosmosdb_cassandra_datacenter.
 func (ccd cosmosdbCassandraDatacenterAttributes) DiskSku() terra.StringValue {
-	return terra.ReferenceString(ccd.ref.Append("disk_sku"))
+	return terra.ReferenceAsString(ccd.ref.Append("disk_sku"))
 }
 
+// Id returns a reference to field id of azurerm_cosmosdb_cassandra_datacenter.
 func (ccd cosmosdbCassandraDatacenterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ccd.ref.Append("id"))
+	return terra.ReferenceAsString(ccd.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_cosmosdb_cassandra_datacenter.
 func (ccd cosmosdbCassandraDatacenterAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ccd.ref.Append("location"))
+	return terra.ReferenceAsString(ccd.ref.Append("location"))
 }
 
+// ManagedDiskCustomerKeyUri returns a reference to field managed_disk_customer_key_uri of azurerm_cosmosdb_cassandra_datacenter.
 func (ccd cosmosdbCassandraDatacenterAttributes) ManagedDiskCustomerKeyUri() terra.StringValue {
-	return terra.ReferenceString(ccd.ref.Append("managed_disk_customer_key_uri"))
+	return terra.ReferenceAsString(ccd.ref.Append("managed_disk_customer_key_uri"))
 }
 
+// Name returns a reference to field name of azurerm_cosmosdb_cassandra_datacenter.
 func (ccd cosmosdbCassandraDatacenterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ccd.ref.Append("name"))
+	return terra.ReferenceAsString(ccd.ref.Append("name"))
 }
 
+// NodeCount returns a reference to field node_count of azurerm_cosmosdb_cassandra_datacenter.
 func (ccd cosmosdbCassandraDatacenterAttributes) NodeCount() terra.NumberValue {
-	return terra.ReferenceNumber(ccd.ref.Append("node_count"))
+	return terra.ReferenceAsNumber(ccd.ref.Append("node_count"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_cosmosdb_cassandra_datacenter.
 func (ccd cosmosdbCassandraDatacenterAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(ccd.ref.Append("sku_name"))
+	return terra.ReferenceAsString(ccd.ref.Append("sku_name"))
 }
 
 func (ccd cosmosdbCassandraDatacenterAttributes) Timeouts() cosmosdbcassandradatacenter.TimeoutsAttributes {
-	return terra.ReferenceSingle[cosmosdbcassandradatacenter.TimeoutsAttributes](ccd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cosmosdbcassandradatacenter.TimeoutsAttributes](ccd.ref.Append("timeouts"))
 }
 
 type cosmosdbCassandraDatacenterState struct {

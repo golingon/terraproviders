@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNetworkManagerScopeConnection creates a new instance of [NetworkManagerScopeConnection].
 func NewNetworkManagerScopeConnection(name string, args NetworkManagerScopeConnectionArgs) *NetworkManagerScopeConnection {
 	return &NetworkManagerScopeConnection{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNetworkManagerScopeConnection(name string, args NetworkManagerScopeConne
 
 var _ terra.Resource = (*NetworkManagerScopeConnection)(nil)
 
+// NetworkManagerScopeConnection represents the Terraform resource azurerm_network_manager_scope_connection.
 type NetworkManagerScopeConnection struct {
-	Name  string
-	Args  NetworkManagerScopeConnectionArgs
-	state *networkManagerScopeConnectionState
+	Name      string
+	Args      NetworkManagerScopeConnectionArgs
+	state     *networkManagerScopeConnectionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NetworkManagerScopeConnection].
 func (nmsc *NetworkManagerScopeConnection) Type() string {
 	return "azurerm_network_manager_scope_connection"
 }
 
+// LocalName returns the local name for [NetworkManagerScopeConnection].
 func (nmsc *NetworkManagerScopeConnection) LocalName() string {
 	return nmsc.Name
 }
 
+// Configuration returns the configuration (args) for [NetworkManagerScopeConnection].
 func (nmsc *NetworkManagerScopeConnection) Configuration() interface{} {
 	return nmsc.Args
 }
 
+// DependOn is used for other resources to depend on [NetworkManagerScopeConnection].
+func (nmsc *NetworkManagerScopeConnection) DependOn() terra.Reference {
+	return terra.ReferenceResource(nmsc)
+}
+
+// Dependencies returns the list of resources [NetworkManagerScopeConnection] depends_on.
+func (nmsc *NetworkManagerScopeConnection) Dependencies() terra.Dependencies {
+	return nmsc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NetworkManagerScopeConnection].
+func (nmsc *NetworkManagerScopeConnection) LifecycleManagement() *terra.Lifecycle {
+	return nmsc.Lifecycle
+}
+
+// Attributes returns the attributes for [NetworkManagerScopeConnection].
 func (nmsc *NetworkManagerScopeConnection) Attributes() networkManagerScopeConnectionAttributes {
 	return networkManagerScopeConnectionAttributes{ref: terra.ReferenceResource(nmsc)}
 }
 
+// ImportState imports the given attribute values into [NetworkManagerScopeConnection]'s state.
 func (nmsc *NetworkManagerScopeConnection) ImportState(av io.Reader) error {
 	nmsc.state = &networkManagerScopeConnectionState{}
 	if err := json.NewDecoder(av).Decode(nmsc.state); err != nil {
@@ -49,10 +73,12 @@ func (nmsc *NetworkManagerScopeConnection) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NetworkManagerScopeConnection] has state.
 func (nmsc *NetworkManagerScopeConnection) State() (*networkManagerScopeConnectionState, bool) {
 	return nmsc.state, nmsc.state != nil
 }
 
+// StateMust returns the state for [NetworkManagerScopeConnection]. Panics if the state is nil.
 func (nmsc *NetworkManagerScopeConnection) StateMust() *networkManagerScopeConnectionState {
 	if nmsc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", nmsc.Type(), nmsc.LocalName()))
@@ -60,10 +86,7 @@ func (nmsc *NetworkManagerScopeConnection) StateMust() *networkManagerScopeConne
 	return nmsc.state
 }
 
-func (nmsc *NetworkManagerScopeConnection) DependOn() terra.Reference {
-	return terra.ReferenceResource(nmsc)
-}
-
+// NetworkManagerScopeConnectionArgs contains the configurations for azurerm_network_manager_scope_connection.
 type NetworkManagerScopeConnectionArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -79,43 +102,48 @@ type NetworkManagerScopeConnectionArgs struct {
 	TenantId terra.StringValue `hcl:"tenant_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *networkmanagerscopeconnection.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that NetworkManagerScopeConnection depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type networkManagerScopeConnectionAttributes struct {
 	ref terra.Reference
 }
 
+// ConnectionState returns a reference to field connection_state of azurerm_network_manager_scope_connection.
 func (nmsc networkManagerScopeConnectionAttributes) ConnectionState() terra.StringValue {
-	return terra.ReferenceString(nmsc.ref.Append("connection_state"))
+	return terra.ReferenceAsString(nmsc.ref.Append("connection_state"))
 }
 
+// Description returns a reference to field description of azurerm_network_manager_scope_connection.
 func (nmsc networkManagerScopeConnectionAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(nmsc.ref.Append("description"))
+	return terra.ReferenceAsString(nmsc.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_network_manager_scope_connection.
 func (nmsc networkManagerScopeConnectionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(nmsc.ref.Append("id"))
+	return terra.ReferenceAsString(nmsc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_network_manager_scope_connection.
 func (nmsc networkManagerScopeConnectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(nmsc.ref.Append("name"))
+	return terra.ReferenceAsString(nmsc.ref.Append("name"))
 }
 
+// NetworkManagerId returns a reference to field network_manager_id of azurerm_network_manager_scope_connection.
 func (nmsc networkManagerScopeConnectionAttributes) NetworkManagerId() terra.StringValue {
-	return terra.ReferenceString(nmsc.ref.Append("network_manager_id"))
+	return terra.ReferenceAsString(nmsc.ref.Append("network_manager_id"))
 }
 
+// TargetScopeId returns a reference to field target_scope_id of azurerm_network_manager_scope_connection.
 func (nmsc networkManagerScopeConnectionAttributes) TargetScopeId() terra.StringValue {
-	return terra.ReferenceString(nmsc.ref.Append("target_scope_id"))
+	return terra.ReferenceAsString(nmsc.ref.Append("target_scope_id"))
 }
 
+// TenantId returns a reference to field tenant_id of azurerm_network_manager_scope_connection.
 func (nmsc networkManagerScopeConnectionAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(nmsc.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(nmsc.ref.Append("tenant_id"))
 }
 
 func (nmsc networkManagerScopeConnectionAttributes) Timeouts() networkmanagerscopeconnection.TimeoutsAttributes {
-	return terra.ReferenceSingle[networkmanagerscopeconnection.TimeoutsAttributes](nmsc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[networkmanagerscopeconnection.TimeoutsAttributes](nmsc.ref.Append("timeouts"))
 }
 
 type networkManagerScopeConnectionState struct {

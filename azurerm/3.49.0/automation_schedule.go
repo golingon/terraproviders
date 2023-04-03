@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAutomationSchedule creates a new instance of [AutomationSchedule].
 func NewAutomationSchedule(name string, args AutomationScheduleArgs) *AutomationSchedule {
 	return &AutomationSchedule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAutomationSchedule(name string, args AutomationScheduleArgs) *Automation
 
 var _ terra.Resource = (*AutomationSchedule)(nil)
 
+// AutomationSchedule represents the Terraform resource azurerm_automation_schedule.
 type AutomationSchedule struct {
-	Name  string
-	Args  AutomationScheduleArgs
-	state *automationScheduleState
+	Name      string
+	Args      AutomationScheduleArgs
+	state     *automationScheduleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AutomationSchedule].
 func (as *AutomationSchedule) Type() string {
 	return "azurerm_automation_schedule"
 }
 
+// LocalName returns the local name for [AutomationSchedule].
 func (as *AutomationSchedule) LocalName() string {
 	return as.Name
 }
 
+// Configuration returns the configuration (args) for [AutomationSchedule].
 func (as *AutomationSchedule) Configuration() interface{} {
 	return as.Args
 }
 
+// DependOn is used for other resources to depend on [AutomationSchedule].
+func (as *AutomationSchedule) DependOn() terra.Reference {
+	return terra.ReferenceResource(as)
+}
+
+// Dependencies returns the list of resources [AutomationSchedule] depends_on.
+func (as *AutomationSchedule) Dependencies() terra.Dependencies {
+	return as.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AutomationSchedule].
+func (as *AutomationSchedule) LifecycleManagement() *terra.Lifecycle {
+	return as.Lifecycle
+}
+
+// Attributes returns the attributes for [AutomationSchedule].
 func (as *AutomationSchedule) Attributes() automationScheduleAttributes {
 	return automationScheduleAttributes{ref: terra.ReferenceResource(as)}
 }
 
+// ImportState imports the given attribute values into [AutomationSchedule]'s state.
 func (as *AutomationSchedule) ImportState(av io.Reader) error {
 	as.state = &automationScheduleState{}
 	if err := json.NewDecoder(av).Decode(as.state); err != nil {
@@ -49,10 +73,12 @@ func (as *AutomationSchedule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AutomationSchedule] has state.
 func (as *AutomationSchedule) State() (*automationScheduleState, bool) {
 	return as.state, as.state != nil
 }
 
+// StateMust returns the state for [AutomationSchedule]. Panics if the state is nil.
 func (as *AutomationSchedule) StateMust() *automationScheduleState {
 	if as.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", as.Type(), as.LocalName()))
@@ -60,10 +86,7 @@ func (as *AutomationSchedule) StateMust() *automationScheduleState {
 	return as.state
 }
 
-func (as *AutomationSchedule) DependOn() terra.Reference {
-	return terra.ReferenceResource(as)
-}
-
+// AutomationScheduleArgs contains the configurations for azurerm_automation_schedule.
 type AutomationScheduleArgs struct {
 	// AutomationAccountName: string, required
 	AutomationAccountName terra.StringValue `hcl:"automation_account_name,attr" validate:"required"`
@@ -93,67 +116,77 @@ type AutomationScheduleArgs struct {
 	MonthlyOccurrence []automationschedule.MonthlyOccurrence `hcl:"monthly_occurrence,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *automationschedule.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that AutomationSchedule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type automationScheduleAttributes struct {
 	ref terra.Reference
 }
 
+// AutomationAccountName returns a reference to field automation_account_name of azurerm_automation_schedule.
 func (as automationScheduleAttributes) AutomationAccountName() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("automation_account_name"))
+	return terra.ReferenceAsString(as.ref.Append("automation_account_name"))
 }
 
+// Description returns a reference to field description of azurerm_automation_schedule.
 func (as automationScheduleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("description"))
+	return terra.ReferenceAsString(as.ref.Append("description"))
 }
 
+// ExpiryTime returns a reference to field expiry_time of azurerm_automation_schedule.
 func (as automationScheduleAttributes) ExpiryTime() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("expiry_time"))
+	return terra.ReferenceAsString(as.ref.Append("expiry_time"))
 }
 
+// Frequency returns a reference to field frequency of azurerm_automation_schedule.
 func (as automationScheduleAttributes) Frequency() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("frequency"))
+	return terra.ReferenceAsString(as.ref.Append("frequency"))
 }
 
+// Id returns a reference to field id of azurerm_automation_schedule.
 func (as automationScheduleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("id"))
+	return terra.ReferenceAsString(as.ref.Append("id"))
 }
 
+// Interval returns a reference to field interval of azurerm_automation_schedule.
 func (as automationScheduleAttributes) Interval() terra.NumberValue {
-	return terra.ReferenceNumber(as.ref.Append("interval"))
+	return terra.ReferenceAsNumber(as.ref.Append("interval"))
 }
 
+// MonthDays returns a reference to field month_days of azurerm_automation_schedule.
 func (as automationScheduleAttributes) MonthDays() terra.SetValue[terra.NumberValue] {
-	return terra.ReferenceSet[terra.NumberValue](as.ref.Append("month_days"))
+	return terra.ReferenceAsSet[terra.NumberValue](as.ref.Append("month_days"))
 }
 
+// Name returns a reference to field name of azurerm_automation_schedule.
 func (as automationScheduleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("name"))
+	return terra.ReferenceAsString(as.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_automation_schedule.
 func (as automationScheduleAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(as.ref.Append("resource_group_name"))
 }
 
+// StartTime returns a reference to field start_time of azurerm_automation_schedule.
 func (as automationScheduleAttributes) StartTime() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("start_time"))
+	return terra.ReferenceAsString(as.ref.Append("start_time"))
 }
 
+// Timezone returns a reference to field timezone of azurerm_automation_schedule.
 func (as automationScheduleAttributes) Timezone() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("timezone"))
+	return terra.ReferenceAsString(as.ref.Append("timezone"))
 }
 
+// WeekDays returns a reference to field week_days of azurerm_automation_schedule.
 func (as automationScheduleAttributes) WeekDays() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](as.ref.Append("week_days"))
+	return terra.ReferenceAsSet[terra.StringValue](as.ref.Append("week_days"))
 }
 
 func (as automationScheduleAttributes) MonthlyOccurrence() terra.ListValue[automationschedule.MonthlyOccurrenceAttributes] {
-	return terra.ReferenceList[automationschedule.MonthlyOccurrenceAttributes](as.ref.Append("monthly_occurrence"))
+	return terra.ReferenceAsList[automationschedule.MonthlyOccurrenceAttributes](as.ref.Append("monthly_occurrence"))
 }
 
 func (as automationScheduleAttributes) Timeouts() automationschedule.TimeoutsAttributes {
-	return terra.ReferenceSingle[automationschedule.TimeoutsAttributes](as.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[automationschedule.TimeoutsAttributes](as.ref.Append("timeouts"))
 }
 
 type automationScheduleState struct {

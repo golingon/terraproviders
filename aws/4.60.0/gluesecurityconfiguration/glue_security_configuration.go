@@ -49,7 +49,7 @@ func (ec EncryptionConfigurationAttributes) InternalWithRef(ref terra.Reference)
 	return EncryptionConfigurationAttributes{ref: ref}
 }
 
-func (ec EncryptionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ec EncryptionConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 
@@ -77,7 +77,7 @@ func (ce CloudwatchEncryptionAttributes) InternalWithRef(ref terra.Reference) Cl
 	return CloudwatchEncryptionAttributes{ref: ref}
 }
 
-func (ce CloudwatchEncryptionAttributes) InternalTokens() hclwrite.Tokens {
+func (ce CloudwatchEncryptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ce.ref.InternalTokens()
 }
 
@@ -101,7 +101,7 @@ func (jbe JobBookmarksEncryptionAttributes) InternalWithRef(ref terra.Reference)
 	return JobBookmarksEncryptionAttributes{ref: ref}
 }
 
-func (jbe JobBookmarksEncryptionAttributes) InternalTokens() hclwrite.Tokens {
+func (jbe JobBookmarksEncryptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return jbe.ref.InternalTokens()
 }
 
@@ -125,7 +125,7 @@ func (se S3EncryptionAttributes) InternalWithRef(ref terra.Reference) S3Encrypti
 	return S3EncryptionAttributes{ref: ref}
 }
 
-func (se S3EncryptionAttributes) InternalTokens() hclwrite.Tokens {
+func (se S3EncryptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return se.ref.InternalTokens()
 }
 

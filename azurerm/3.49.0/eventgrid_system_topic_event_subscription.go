@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEventgridSystemTopicEventSubscription creates a new instance of [EventgridSystemTopicEventSubscription].
 func NewEventgridSystemTopicEventSubscription(name string, args EventgridSystemTopicEventSubscriptionArgs) *EventgridSystemTopicEventSubscription {
 	return &EventgridSystemTopicEventSubscription{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEventgridSystemTopicEventSubscription(name string, args EventgridSystemT
 
 var _ terra.Resource = (*EventgridSystemTopicEventSubscription)(nil)
 
+// EventgridSystemTopicEventSubscription represents the Terraform resource azurerm_eventgrid_system_topic_event_subscription.
 type EventgridSystemTopicEventSubscription struct {
-	Name  string
-	Args  EventgridSystemTopicEventSubscriptionArgs
-	state *eventgridSystemTopicEventSubscriptionState
+	Name      string
+	Args      EventgridSystemTopicEventSubscriptionArgs
+	state     *eventgridSystemTopicEventSubscriptionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EventgridSystemTopicEventSubscription].
 func (estes *EventgridSystemTopicEventSubscription) Type() string {
 	return "azurerm_eventgrid_system_topic_event_subscription"
 }
 
+// LocalName returns the local name for [EventgridSystemTopicEventSubscription].
 func (estes *EventgridSystemTopicEventSubscription) LocalName() string {
 	return estes.Name
 }
 
+// Configuration returns the configuration (args) for [EventgridSystemTopicEventSubscription].
 func (estes *EventgridSystemTopicEventSubscription) Configuration() interface{} {
 	return estes.Args
 }
 
+// DependOn is used for other resources to depend on [EventgridSystemTopicEventSubscription].
+func (estes *EventgridSystemTopicEventSubscription) DependOn() terra.Reference {
+	return terra.ReferenceResource(estes)
+}
+
+// Dependencies returns the list of resources [EventgridSystemTopicEventSubscription] depends_on.
+func (estes *EventgridSystemTopicEventSubscription) Dependencies() terra.Dependencies {
+	return estes.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EventgridSystemTopicEventSubscription].
+func (estes *EventgridSystemTopicEventSubscription) LifecycleManagement() *terra.Lifecycle {
+	return estes.Lifecycle
+}
+
+// Attributes returns the attributes for [EventgridSystemTopicEventSubscription].
 func (estes *EventgridSystemTopicEventSubscription) Attributes() eventgridSystemTopicEventSubscriptionAttributes {
 	return eventgridSystemTopicEventSubscriptionAttributes{ref: terra.ReferenceResource(estes)}
 }
 
+// ImportState imports the given attribute values into [EventgridSystemTopicEventSubscription]'s state.
 func (estes *EventgridSystemTopicEventSubscription) ImportState(av io.Reader) error {
 	estes.state = &eventgridSystemTopicEventSubscriptionState{}
 	if err := json.NewDecoder(av).Decode(estes.state); err != nil {
@@ -49,10 +73,12 @@ func (estes *EventgridSystemTopicEventSubscription) ImportState(av io.Reader) er
 	return nil
 }
 
+// State returns the state and a bool indicating if [EventgridSystemTopicEventSubscription] has state.
 func (estes *EventgridSystemTopicEventSubscription) State() (*eventgridSystemTopicEventSubscriptionState, bool) {
 	return estes.state, estes.state != nil
 }
 
+// StateMust returns the state for [EventgridSystemTopicEventSubscription]. Panics if the state is nil.
 func (estes *EventgridSystemTopicEventSubscription) StateMust() *eventgridSystemTopicEventSubscriptionState {
 	if estes.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", estes.Type(), estes.LocalName()))
@@ -60,10 +86,7 @@ func (estes *EventgridSystemTopicEventSubscription) StateMust() *eventgridSystem
 	return estes.state
 }
 
-func (estes *EventgridSystemTopicEventSubscription) DependOn() terra.Reference {
-	return terra.ReferenceResource(estes)
-}
-
+// EventgridSystemTopicEventSubscriptionArgs contains the configurations for azurerm_eventgrid_system_topic_event_subscription.
 type EventgridSystemTopicEventSubscriptionArgs struct {
 	// AdvancedFilteringOnArraysEnabled: bool, optional
 	AdvancedFilteringOnArraysEnabled terra.BoolValue `hcl:"advanced_filtering_on_arrays_enabled,attr"`
@@ -113,107 +136,118 @@ type EventgridSystemTopicEventSubscriptionArgs struct {
 	Timeouts *eventgridsystemtopiceventsubscription.Timeouts `hcl:"timeouts,block"`
 	// WebhookEndpoint: optional
 	WebhookEndpoint *eventgridsystemtopiceventsubscription.WebhookEndpoint `hcl:"webhook_endpoint,block"`
-	// DependsOn contains resources that EventgridSystemTopicEventSubscription depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type eventgridSystemTopicEventSubscriptionAttributes struct {
 	ref terra.Reference
 }
 
+// AdvancedFilteringOnArraysEnabled returns a reference to field advanced_filtering_on_arrays_enabled of azurerm_eventgrid_system_topic_event_subscription.
 func (estes eventgridSystemTopicEventSubscriptionAttributes) AdvancedFilteringOnArraysEnabled() terra.BoolValue {
-	return terra.ReferenceBool(estes.ref.Append("advanced_filtering_on_arrays_enabled"))
+	return terra.ReferenceAsBool(estes.ref.Append("advanced_filtering_on_arrays_enabled"))
 }
 
+// EventDeliverySchema returns a reference to field event_delivery_schema of azurerm_eventgrid_system_topic_event_subscription.
 func (estes eventgridSystemTopicEventSubscriptionAttributes) EventDeliverySchema() terra.StringValue {
-	return terra.ReferenceString(estes.ref.Append("event_delivery_schema"))
+	return terra.ReferenceAsString(estes.ref.Append("event_delivery_schema"))
 }
 
+// EventhubEndpointId returns a reference to field eventhub_endpoint_id of azurerm_eventgrid_system_topic_event_subscription.
 func (estes eventgridSystemTopicEventSubscriptionAttributes) EventhubEndpointId() terra.StringValue {
-	return terra.ReferenceString(estes.ref.Append("eventhub_endpoint_id"))
+	return terra.ReferenceAsString(estes.ref.Append("eventhub_endpoint_id"))
 }
 
+// ExpirationTimeUtc returns a reference to field expiration_time_utc of azurerm_eventgrid_system_topic_event_subscription.
 func (estes eventgridSystemTopicEventSubscriptionAttributes) ExpirationTimeUtc() terra.StringValue {
-	return terra.ReferenceString(estes.ref.Append("expiration_time_utc"))
+	return terra.ReferenceAsString(estes.ref.Append("expiration_time_utc"))
 }
 
+// HybridConnectionEndpointId returns a reference to field hybrid_connection_endpoint_id of azurerm_eventgrid_system_topic_event_subscription.
 func (estes eventgridSystemTopicEventSubscriptionAttributes) HybridConnectionEndpointId() terra.StringValue {
-	return terra.ReferenceString(estes.ref.Append("hybrid_connection_endpoint_id"))
+	return terra.ReferenceAsString(estes.ref.Append("hybrid_connection_endpoint_id"))
 }
 
+// Id returns a reference to field id of azurerm_eventgrid_system_topic_event_subscription.
 func (estes eventgridSystemTopicEventSubscriptionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(estes.ref.Append("id"))
+	return terra.ReferenceAsString(estes.ref.Append("id"))
 }
 
+// IncludedEventTypes returns a reference to field included_event_types of azurerm_eventgrid_system_topic_event_subscription.
 func (estes eventgridSystemTopicEventSubscriptionAttributes) IncludedEventTypes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](estes.ref.Append("included_event_types"))
+	return terra.ReferenceAsList[terra.StringValue](estes.ref.Append("included_event_types"))
 }
 
+// Labels returns a reference to field labels of azurerm_eventgrid_system_topic_event_subscription.
 func (estes eventgridSystemTopicEventSubscriptionAttributes) Labels() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](estes.ref.Append("labels"))
+	return terra.ReferenceAsList[terra.StringValue](estes.ref.Append("labels"))
 }
 
+// Name returns a reference to field name of azurerm_eventgrid_system_topic_event_subscription.
 func (estes eventgridSystemTopicEventSubscriptionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(estes.ref.Append("name"))
+	return terra.ReferenceAsString(estes.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_eventgrid_system_topic_event_subscription.
 func (estes eventgridSystemTopicEventSubscriptionAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(estes.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(estes.ref.Append("resource_group_name"))
 }
 
+// ServiceBusQueueEndpointId returns a reference to field service_bus_queue_endpoint_id of azurerm_eventgrid_system_topic_event_subscription.
 func (estes eventgridSystemTopicEventSubscriptionAttributes) ServiceBusQueueEndpointId() terra.StringValue {
-	return terra.ReferenceString(estes.ref.Append("service_bus_queue_endpoint_id"))
+	return terra.ReferenceAsString(estes.ref.Append("service_bus_queue_endpoint_id"))
 }
 
+// ServiceBusTopicEndpointId returns a reference to field service_bus_topic_endpoint_id of azurerm_eventgrid_system_topic_event_subscription.
 func (estes eventgridSystemTopicEventSubscriptionAttributes) ServiceBusTopicEndpointId() terra.StringValue {
-	return terra.ReferenceString(estes.ref.Append("service_bus_topic_endpoint_id"))
+	return terra.ReferenceAsString(estes.ref.Append("service_bus_topic_endpoint_id"))
 }
 
+// SystemTopic returns a reference to field system_topic of azurerm_eventgrid_system_topic_event_subscription.
 func (estes eventgridSystemTopicEventSubscriptionAttributes) SystemTopic() terra.StringValue {
-	return terra.ReferenceString(estes.ref.Append("system_topic"))
+	return terra.ReferenceAsString(estes.ref.Append("system_topic"))
 }
 
 func (estes eventgridSystemTopicEventSubscriptionAttributes) AdvancedFilter() terra.ListValue[eventgridsystemtopiceventsubscription.AdvancedFilterAttributes] {
-	return terra.ReferenceList[eventgridsystemtopiceventsubscription.AdvancedFilterAttributes](estes.ref.Append("advanced_filter"))
+	return terra.ReferenceAsList[eventgridsystemtopiceventsubscription.AdvancedFilterAttributes](estes.ref.Append("advanced_filter"))
 }
 
 func (estes eventgridSystemTopicEventSubscriptionAttributes) AzureFunctionEndpoint() terra.ListValue[eventgridsystemtopiceventsubscription.AzureFunctionEndpointAttributes] {
-	return terra.ReferenceList[eventgridsystemtopiceventsubscription.AzureFunctionEndpointAttributes](estes.ref.Append("azure_function_endpoint"))
+	return terra.ReferenceAsList[eventgridsystemtopiceventsubscription.AzureFunctionEndpointAttributes](estes.ref.Append("azure_function_endpoint"))
 }
 
 func (estes eventgridSystemTopicEventSubscriptionAttributes) DeadLetterIdentity() terra.ListValue[eventgridsystemtopiceventsubscription.DeadLetterIdentityAttributes] {
-	return terra.ReferenceList[eventgridsystemtopiceventsubscription.DeadLetterIdentityAttributes](estes.ref.Append("dead_letter_identity"))
+	return terra.ReferenceAsList[eventgridsystemtopiceventsubscription.DeadLetterIdentityAttributes](estes.ref.Append("dead_letter_identity"))
 }
 
 func (estes eventgridSystemTopicEventSubscriptionAttributes) DeliveryIdentity() terra.ListValue[eventgridsystemtopiceventsubscription.DeliveryIdentityAttributes] {
-	return terra.ReferenceList[eventgridsystemtopiceventsubscription.DeliveryIdentityAttributes](estes.ref.Append("delivery_identity"))
+	return terra.ReferenceAsList[eventgridsystemtopiceventsubscription.DeliveryIdentityAttributes](estes.ref.Append("delivery_identity"))
 }
 
 func (estes eventgridSystemTopicEventSubscriptionAttributes) DeliveryProperty() terra.ListValue[eventgridsystemtopiceventsubscription.DeliveryPropertyAttributes] {
-	return terra.ReferenceList[eventgridsystemtopiceventsubscription.DeliveryPropertyAttributes](estes.ref.Append("delivery_property"))
+	return terra.ReferenceAsList[eventgridsystemtopiceventsubscription.DeliveryPropertyAttributes](estes.ref.Append("delivery_property"))
 }
 
 func (estes eventgridSystemTopicEventSubscriptionAttributes) RetryPolicy() terra.ListValue[eventgridsystemtopiceventsubscription.RetryPolicyAttributes] {
-	return terra.ReferenceList[eventgridsystemtopiceventsubscription.RetryPolicyAttributes](estes.ref.Append("retry_policy"))
+	return terra.ReferenceAsList[eventgridsystemtopiceventsubscription.RetryPolicyAttributes](estes.ref.Append("retry_policy"))
 }
 
 func (estes eventgridSystemTopicEventSubscriptionAttributes) StorageBlobDeadLetterDestination() terra.ListValue[eventgridsystemtopiceventsubscription.StorageBlobDeadLetterDestinationAttributes] {
-	return terra.ReferenceList[eventgridsystemtopiceventsubscription.StorageBlobDeadLetterDestinationAttributes](estes.ref.Append("storage_blob_dead_letter_destination"))
+	return terra.ReferenceAsList[eventgridsystemtopiceventsubscription.StorageBlobDeadLetterDestinationAttributes](estes.ref.Append("storage_blob_dead_letter_destination"))
 }
 
 func (estes eventgridSystemTopicEventSubscriptionAttributes) StorageQueueEndpoint() terra.ListValue[eventgridsystemtopiceventsubscription.StorageQueueEndpointAttributes] {
-	return terra.ReferenceList[eventgridsystemtopiceventsubscription.StorageQueueEndpointAttributes](estes.ref.Append("storage_queue_endpoint"))
+	return terra.ReferenceAsList[eventgridsystemtopiceventsubscription.StorageQueueEndpointAttributes](estes.ref.Append("storage_queue_endpoint"))
 }
 
 func (estes eventgridSystemTopicEventSubscriptionAttributes) SubjectFilter() terra.ListValue[eventgridsystemtopiceventsubscription.SubjectFilterAttributes] {
-	return terra.ReferenceList[eventgridsystemtopiceventsubscription.SubjectFilterAttributes](estes.ref.Append("subject_filter"))
+	return terra.ReferenceAsList[eventgridsystemtopiceventsubscription.SubjectFilterAttributes](estes.ref.Append("subject_filter"))
 }
 
 func (estes eventgridSystemTopicEventSubscriptionAttributes) Timeouts() eventgridsystemtopiceventsubscription.TimeoutsAttributes {
-	return terra.ReferenceSingle[eventgridsystemtopiceventsubscription.TimeoutsAttributes](estes.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[eventgridsystemtopiceventsubscription.TimeoutsAttributes](estes.ref.Append("timeouts"))
 }
 
 func (estes eventgridSystemTopicEventSubscriptionAttributes) WebhookEndpoint() terra.ListValue[eventgridsystemtopiceventsubscription.WebhookEndpointAttributes] {
-	return terra.ReferenceList[eventgridsystemtopiceventsubscription.WebhookEndpointAttributes](estes.ref.Append("webhook_endpoint"))
+	return terra.ReferenceAsList[eventgridsystemtopiceventsubscription.WebhookEndpointAttributes](estes.ref.Append("webhook_endpoint"))
 }
 
 type eventgridSystemTopicEventSubscriptionState struct {

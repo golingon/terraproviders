@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewStreamAnalyticsOutputPowerbi creates a new instance of [StreamAnalyticsOutputPowerbi].
 func NewStreamAnalyticsOutputPowerbi(name string, args StreamAnalyticsOutputPowerbiArgs) *StreamAnalyticsOutputPowerbi {
 	return &StreamAnalyticsOutputPowerbi{
 		Args: args,
@@ -19,28 +20,51 @@ func NewStreamAnalyticsOutputPowerbi(name string, args StreamAnalyticsOutputPowe
 
 var _ terra.Resource = (*StreamAnalyticsOutputPowerbi)(nil)
 
+// StreamAnalyticsOutputPowerbi represents the Terraform resource azurerm_stream_analytics_output_powerbi.
 type StreamAnalyticsOutputPowerbi struct {
-	Name  string
-	Args  StreamAnalyticsOutputPowerbiArgs
-	state *streamAnalyticsOutputPowerbiState
+	Name      string
+	Args      StreamAnalyticsOutputPowerbiArgs
+	state     *streamAnalyticsOutputPowerbiState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [StreamAnalyticsOutputPowerbi].
 func (saop *StreamAnalyticsOutputPowerbi) Type() string {
 	return "azurerm_stream_analytics_output_powerbi"
 }
 
+// LocalName returns the local name for [StreamAnalyticsOutputPowerbi].
 func (saop *StreamAnalyticsOutputPowerbi) LocalName() string {
 	return saop.Name
 }
 
+// Configuration returns the configuration (args) for [StreamAnalyticsOutputPowerbi].
 func (saop *StreamAnalyticsOutputPowerbi) Configuration() interface{} {
 	return saop.Args
 }
 
+// DependOn is used for other resources to depend on [StreamAnalyticsOutputPowerbi].
+func (saop *StreamAnalyticsOutputPowerbi) DependOn() terra.Reference {
+	return terra.ReferenceResource(saop)
+}
+
+// Dependencies returns the list of resources [StreamAnalyticsOutputPowerbi] depends_on.
+func (saop *StreamAnalyticsOutputPowerbi) Dependencies() terra.Dependencies {
+	return saop.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [StreamAnalyticsOutputPowerbi].
+func (saop *StreamAnalyticsOutputPowerbi) LifecycleManagement() *terra.Lifecycle {
+	return saop.Lifecycle
+}
+
+// Attributes returns the attributes for [StreamAnalyticsOutputPowerbi].
 func (saop *StreamAnalyticsOutputPowerbi) Attributes() streamAnalyticsOutputPowerbiAttributes {
 	return streamAnalyticsOutputPowerbiAttributes{ref: terra.ReferenceResource(saop)}
 }
 
+// ImportState imports the given attribute values into [StreamAnalyticsOutputPowerbi]'s state.
 func (saop *StreamAnalyticsOutputPowerbi) ImportState(av io.Reader) error {
 	saop.state = &streamAnalyticsOutputPowerbiState{}
 	if err := json.NewDecoder(av).Decode(saop.state); err != nil {
@@ -49,10 +73,12 @@ func (saop *StreamAnalyticsOutputPowerbi) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [StreamAnalyticsOutputPowerbi] has state.
 func (saop *StreamAnalyticsOutputPowerbi) State() (*streamAnalyticsOutputPowerbiState, bool) {
 	return saop.state, saop.state != nil
 }
 
+// StateMust returns the state for [StreamAnalyticsOutputPowerbi]. Panics if the state is nil.
 func (saop *StreamAnalyticsOutputPowerbi) StateMust() *streamAnalyticsOutputPowerbiState {
 	if saop.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", saop.Type(), saop.LocalName()))
@@ -60,10 +86,7 @@ func (saop *StreamAnalyticsOutputPowerbi) StateMust() *streamAnalyticsOutputPowe
 	return saop.state
 }
 
-func (saop *StreamAnalyticsOutputPowerbi) DependOn() terra.Reference {
-	return terra.ReferenceResource(saop)
-}
-
+// StreamAnalyticsOutputPowerbiArgs contains the configurations for azurerm_stream_analytics_output_powerbi.
 type StreamAnalyticsOutputPowerbiArgs struct {
 	// Dataset: string, required
 	Dataset terra.StringValue `hcl:"dataset,attr" validate:"required"`
@@ -85,51 +108,58 @@ type StreamAnalyticsOutputPowerbiArgs struct {
 	TokenUserPrincipalName terra.StringValue `hcl:"token_user_principal_name,attr"`
 	// Timeouts: optional
 	Timeouts *streamanalyticsoutputpowerbi.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that StreamAnalyticsOutputPowerbi depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type streamAnalyticsOutputPowerbiAttributes struct {
 	ref terra.Reference
 }
 
+// Dataset returns a reference to field dataset of azurerm_stream_analytics_output_powerbi.
 func (saop streamAnalyticsOutputPowerbiAttributes) Dataset() terra.StringValue {
-	return terra.ReferenceString(saop.ref.Append("dataset"))
+	return terra.ReferenceAsString(saop.ref.Append("dataset"))
 }
 
+// GroupId returns a reference to field group_id of azurerm_stream_analytics_output_powerbi.
 func (saop streamAnalyticsOutputPowerbiAttributes) GroupId() terra.StringValue {
-	return terra.ReferenceString(saop.ref.Append("group_id"))
+	return terra.ReferenceAsString(saop.ref.Append("group_id"))
 }
 
+// GroupName returns a reference to field group_name of azurerm_stream_analytics_output_powerbi.
 func (saop streamAnalyticsOutputPowerbiAttributes) GroupName() terra.StringValue {
-	return terra.ReferenceString(saop.ref.Append("group_name"))
+	return terra.ReferenceAsString(saop.ref.Append("group_name"))
 }
 
+// Id returns a reference to field id of azurerm_stream_analytics_output_powerbi.
 func (saop streamAnalyticsOutputPowerbiAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(saop.ref.Append("id"))
+	return terra.ReferenceAsString(saop.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_stream_analytics_output_powerbi.
 func (saop streamAnalyticsOutputPowerbiAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(saop.ref.Append("name"))
+	return terra.ReferenceAsString(saop.ref.Append("name"))
 }
 
+// StreamAnalyticsJobId returns a reference to field stream_analytics_job_id of azurerm_stream_analytics_output_powerbi.
 func (saop streamAnalyticsOutputPowerbiAttributes) StreamAnalyticsJobId() terra.StringValue {
-	return terra.ReferenceString(saop.ref.Append("stream_analytics_job_id"))
+	return terra.ReferenceAsString(saop.ref.Append("stream_analytics_job_id"))
 }
 
+// Table returns a reference to field table of azurerm_stream_analytics_output_powerbi.
 func (saop streamAnalyticsOutputPowerbiAttributes) Table() terra.StringValue {
-	return terra.ReferenceString(saop.ref.Append("table"))
+	return terra.ReferenceAsString(saop.ref.Append("table"))
 }
 
+// TokenUserDisplayName returns a reference to field token_user_display_name of azurerm_stream_analytics_output_powerbi.
 func (saop streamAnalyticsOutputPowerbiAttributes) TokenUserDisplayName() terra.StringValue {
-	return terra.ReferenceString(saop.ref.Append("token_user_display_name"))
+	return terra.ReferenceAsString(saop.ref.Append("token_user_display_name"))
 }
 
+// TokenUserPrincipalName returns a reference to field token_user_principal_name of azurerm_stream_analytics_output_powerbi.
 func (saop streamAnalyticsOutputPowerbiAttributes) TokenUserPrincipalName() terra.StringValue {
-	return terra.ReferenceString(saop.ref.Append("token_user_principal_name"))
+	return terra.ReferenceAsString(saop.ref.Append("token_user_principal_name"))
 }
 
 func (saop streamAnalyticsOutputPowerbiAttributes) Timeouts() streamanalyticsoutputpowerbi.TimeoutsAttributes {
-	return terra.ReferenceSingle[streamanalyticsoutputpowerbi.TimeoutsAttributes](saop.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[streamanalyticsoutputpowerbi.TimeoutsAttributes](saop.ref.Append("timeouts"))
 }
 
 type streamAnalyticsOutputPowerbiState struct {

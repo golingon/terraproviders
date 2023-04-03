@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBatchApplication creates a new instance of [BatchApplication].
 func NewBatchApplication(name string, args BatchApplicationArgs) *BatchApplication {
 	return &BatchApplication{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBatchApplication(name string, args BatchApplicationArgs) *BatchApplicati
 
 var _ terra.Resource = (*BatchApplication)(nil)
 
+// BatchApplication represents the Terraform resource azurerm_batch_application.
 type BatchApplication struct {
-	Name  string
-	Args  BatchApplicationArgs
-	state *batchApplicationState
+	Name      string
+	Args      BatchApplicationArgs
+	state     *batchApplicationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BatchApplication].
 func (ba *BatchApplication) Type() string {
 	return "azurerm_batch_application"
 }
 
+// LocalName returns the local name for [BatchApplication].
 func (ba *BatchApplication) LocalName() string {
 	return ba.Name
 }
 
+// Configuration returns the configuration (args) for [BatchApplication].
 func (ba *BatchApplication) Configuration() interface{} {
 	return ba.Args
 }
 
+// DependOn is used for other resources to depend on [BatchApplication].
+func (ba *BatchApplication) DependOn() terra.Reference {
+	return terra.ReferenceResource(ba)
+}
+
+// Dependencies returns the list of resources [BatchApplication] depends_on.
+func (ba *BatchApplication) Dependencies() terra.Dependencies {
+	return ba.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BatchApplication].
+func (ba *BatchApplication) LifecycleManagement() *terra.Lifecycle {
+	return ba.Lifecycle
+}
+
+// Attributes returns the attributes for [BatchApplication].
 func (ba *BatchApplication) Attributes() batchApplicationAttributes {
 	return batchApplicationAttributes{ref: terra.ReferenceResource(ba)}
 }
 
+// ImportState imports the given attribute values into [BatchApplication]'s state.
 func (ba *BatchApplication) ImportState(av io.Reader) error {
 	ba.state = &batchApplicationState{}
 	if err := json.NewDecoder(av).Decode(ba.state); err != nil {
@@ -49,10 +73,12 @@ func (ba *BatchApplication) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BatchApplication] has state.
 func (ba *BatchApplication) State() (*batchApplicationState, bool) {
 	return ba.state, ba.state != nil
 }
 
+// StateMust returns the state for [BatchApplication]. Panics if the state is nil.
 func (ba *BatchApplication) StateMust() *batchApplicationState {
 	if ba.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ba.Type(), ba.LocalName()))
@@ -60,10 +86,7 @@ func (ba *BatchApplication) StateMust() *batchApplicationState {
 	return ba.state
 }
 
-func (ba *BatchApplication) DependOn() terra.Reference {
-	return terra.ReferenceResource(ba)
-}
-
+// BatchApplicationArgs contains the configurations for azurerm_batch_application.
 type BatchApplicationArgs struct {
 	// AccountName: string, required
 	AccountName terra.StringValue `hcl:"account_name,attr" validate:"required"`
@@ -81,43 +104,48 @@ type BatchApplicationArgs struct {
 	ResourceGroupName terra.StringValue `hcl:"resource_group_name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *batchapplication.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that BatchApplication depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type batchApplicationAttributes struct {
 	ref terra.Reference
 }
 
+// AccountName returns a reference to field account_name of azurerm_batch_application.
 func (ba batchApplicationAttributes) AccountName() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("account_name"))
+	return terra.ReferenceAsString(ba.ref.Append("account_name"))
 }
 
+// AllowUpdates returns a reference to field allow_updates of azurerm_batch_application.
 func (ba batchApplicationAttributes) AllowUpdates() terra.BoolValue {
-	return terra.ReferenceBool(ba.ref.Append("allow_updates"))
+	return terra.ReferenceAsBool(ba.ref.Append("allow_updates"))
 }
 
+// DefaultVersion returns a reference to field default_version of azurerm_batch_application.
 func (ba batchApplicationAttributes) DefaultVersion() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("default_version"))
+	return terra.ReferenceAsString(ba.ref.Append("default_version"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_batch_application.
 func (ba batchApplicationAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("display_name"))
+	return terra.ReferenceAsString(ba.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of azurerm_batch_application.
 func (ba batchApplicationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("id"))
+	return terra.ReferenceAsString(ba.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_batch_application.
 func (ba batchApplicationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("name"))
+	return terra.ReferenceAsString(ba.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_batch_application.
 func (ba batchApplicationAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ba.ref.Append("resource_group_name"))
 }
 
 func (ba batchApplicationAttributes) Timeouts() batchapplication.TimeoutsAttributes {
-	return terra.ReferenceSingle[batchapplication.TimeoutsAttributes](ba.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[batchapplication.TimeoutsAttributes](ba.ref.Append("timeouts"))
 }
 
 type batchApplicationState struct {

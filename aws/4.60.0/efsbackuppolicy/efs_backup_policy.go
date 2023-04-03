@@ -24,7 +24,7 @@ func (bp BackupPolicyAttributes) InternalWithRef(ref terra.Reference) BackupPoli
 	return BackupPolicyAttributes{ref: ref}
 }
 
-func (bp BackupPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (bp BackupPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bp.ref.InternalTokens()
 }
 

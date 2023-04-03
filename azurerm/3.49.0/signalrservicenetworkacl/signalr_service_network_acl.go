@@ -38,84 +38,84 @@ type PrivateEndpointAttributes struct {
 	ref terra.Reference
 }
 
-func (pe PrivateEndpointAttributes) InternalRef() terra.Reference {
-	return pe.ref
+func (pe PrivateEndpointAttributes) InternalRef() (terra.Reference, error) {
+	return pe.ref, nil
 }
 
 func (pe PrivateEndpointAttributes) InternalWithRef(ref terra.Reference) PrivateEndpointAttributes {
 	return PrivateEndpointAttributes{ref: ref}
 }
 
-func (pe PrivateEndpointAttributes) InternalTokens() hclwrite.Tokens {
+func (pe PrivateEndpointAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pe.ref.InternalTokens()
 }
 
 func (pe PrivateEndpointAttributes) AllowedRequestTypes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](pe.ref.Append("allowed_request_types"))
+	return terra.ReferenceAsSet[terra.StringValue](pe.ref.Append("allowed_request_types"))
 }
 
 func (pe PrivateEndpointAttributes) DeniedRequestTypes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](pe.ref.Append("denied_request_types"))
+	return terra.ReferenceAsSet[terra.StringValue](pe.ref.Append("denied_request_types"))
 }
 
 func (pe PrivateEndpointAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pe.ref.Append("id"))
+	return terra.ReferenceAsString(pe.ref.Append("id"))
 }
 
 type PublicNetworkAttributes struct {
 	ref terra.Reference
 }
 
-func (pn PublicNetworkAttributes) InternalRef() terra.Reference {
-	return pn.ref
+func (pn PublicNetworkAttributes) InternalRef() (terra.Reference, error) {
+	return pn.ref, nil
 }
 
 func (pn PublicNetworkAttributes) InternalWithRef(ref terra.Reference) PublicNetworkAttributes {
 	return PublicNetworkAttributes{ref: ref}
 }
 
-func (pn PublicNetworkAttributes) InternalTokens() hclwrite.Tokens {
+func (pn PublicNetworkAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pn.ref.InternalTokens()
 }
 
 func (pn PublicNetworkAttributes) AllowedRequestTypes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](pn.ref.Append("allowed_request_types"))
+	return terra.ReferenceAsSet[terra.StringValue](pn.ref.Append("allowed_request_types"))
 }
 
 func (pn PublicNetworkAttributes) DeniedRequestTypes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](pn.ref.Append("denied_request_types"))
+	return terra.ReferenceAsSet[terra.StringValue](pn.ref.Append("denied_request_types"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type PrivateEndpointState struct {

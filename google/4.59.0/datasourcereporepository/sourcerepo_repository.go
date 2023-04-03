@@ -13,28 +13,28 @@ type PubsubConfigsAttributes struct {
 	ref terra.Reference
 }
 
-func (pc PubsubConfigsAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc PubsubConfigsAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc PubsubConfigsAttributes) InternalWithRef(ref terra.Reference) PubsubConfigsAttributes {
 	return PubsubConfigsAttributes{ref: ref}
 }
 
-func (pc PubsubConfigsAttributes) InternalTokens() hclwrite.Tokens {
+func (pc PubsubConfigsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
 func (pc PubsubConfigsAttributes) MessageFormat() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("message_format"))
+	return terra.ReferenceAsString(pc.ref.Append("message_format"))
 }
 
 func (pc PubsubConfigsAttributes) ServiceAccountEmail() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("service_account_email"))
+	return terra.ReferenceAsString(pc.ref.Append("service_account_email"))
 }
 
 func (pc PubsubConfigsAttributes) Topic() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("topic"))
+	return terra.ReferenceAsString(pc.ref.Append("topic"))
 }
 
 type PubsubConfigsState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCloudRunService creates a new instance of [CloudRunService].
 func NewCloudRunService(name string, args CloudRunServiceArgs) *CloudRunService {
 	return &CloudRunService{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCloudRunService(name string, args CloudRunServiceArgs) *CloudRunService 
 
 var _ terra.Resource = (*CloudRunService)(nil)
 
+// CloudRunService represents the Terraform resource google_cloud_run_service.
 type CloudRunService struct {
-	Name  string
-	Args  CloudRunServiceArgs
-	state *cloudRunServiceState
+	Name      string
+	Args      CloudRunServiceArgs
+	state     *cloudRunServiceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudRunService].
 func (crs *CloudRunService) Type() string {
 	return "google_cloud_run_service"
 }
 
+// LocalName returns the local name for [CloudRunService].
 func (crs *CloudRunService) LocalName() string {
 	return crs.Name
 }
 
+// Configuration returns the configuration (args) for [CloudRunService].
 func (crs *CloudRunService) Configuration() interface{} {
 	return crs.Args
 }
 
+// DependOn is used for other resources to depend on [CloudRunService].
+func (crs *CloudRunService) DependOn() terra.Reference {
+	return terra.ReferenceResource(crs)
+}
+
+// Dependencies returns the list of resources [CloudRunService] depends_on.
+func (crs *CloudRunService) Dependencies() terra.Dependencies {
+	return crs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudRunService].
+func (crs *CloudRunService) LifecycleManagement() *terra.Lifecycle {
+	return crs.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudRunService].
 func (crs *CloudRunService) Attributes() cloudRunServiceAttributes {
 	return cloudRunServiceAttributes{ref: terra.ReferenceResource(crs)}
 }
 
+// ImportState imports the given attribute values into [CloudRunService]'s state.
 func (crs *CloudRunService) ImportState(av io.Reader) error {
 	crs.state = &cloudRunServiceState{}
 	if err := json.NewDecoder(av).Decode(crs.state); err != nil {
@@ -49,10 +73,12 @@ func (crs *CloudRunService) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudRunService] has state.
 func (crs *CloudRunService) State() (*cloudRunServiceState, bool) {
 	return crs.state, crs.state != nil
 }
 
+// StateMust returns the state for [CloudRunService]. Panics if the state is nil.
 func (crs *CloudRunService) StateMust() *cloudRunServiceState {
 	if crs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", crs.Type(), crs.LocalName()))
@@ -60,10 +86,7 @@ func (crs *CloudRunService) StateMust() *cloudRunServiceState {
 	return crs.state
 }
 
-func (crs *CloudRunService) DependOn() terra.Reference {
-	return terra.ReferenceResource(crs)
-}
-
+// CloudRunServiceArgs contains the configurations for google_cloud_run_service.
 type CloudRunServiceArgs struct {
 	// AutogenerateRevisionName: bool, optional
 	AutogenerateRevisionName terra.BoolValue `hcl:"autogenerate_revision_name,attr"`
@@ -85,51 +108,54 @@ type CloudRunServiceArgs struct {
 	Timeouts *cloudrunservice.Timeouts `hcl:"timeouts,block"`
 	// Traffic: min=0
 	Traffic []cloudrunservice.Traffic `hcl:"traffic,block" validate:"min=0"`
-	// DependsOn contains resources that CloudRunService depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudRunServiceAttributes struct {
 	ref terra.Reference
 }
 
+// AutogenerateRevisionName returns a reference to field autogenerate_revision_name of google_cloud_run_service.
 func (crs cloudRunServiceAttributes) AutogenerateRevisionName() terra.BoolValue {
-	return terra.ReferenceBool(crs.ref.Append("autogenerate_revision_name"))
+	return terra.ReferenceAsBool(crs.ref.Append("autogenerate_revision_name"))
 }
 
+// Id returns a reference to field id of google_cloud_run_service.
 func (crs cloudRunServiceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(crs.ref.Append("id"))
+	return terra.ReferenceAsString(crs.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_cloud_run_service.
 func (crs cloudRunServiceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(crs.ref.Append("location"))
+	return terra.ReferenceAsString(crs.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_cloud_run_service.
 func (crs cloudRunServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(crs.ref.Append("name"))
+	return terra.ReferenceAsString(crs.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_cloud_run_service.
 func (crs cloudRunServiceAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(crs.ref.Append("project"))
+	return terra.ReferenceAsString(crs.ref.Append("project"))
 }
 
 func (crs cloudRunServiceAttributes) Status() terra.ListValue[cloudrunservice.StatusAttributes] {
-	return terra.ReferenceList[cloudrunservice.StatusAttributes](crs.ref.Append("status"))
+	return terra.ReferenceAsList[cloudrunservice.StatusAttributes](crs.ref.Append("status"))
 }
 
 func (crs cloudRunServiceAttributes) Metadata() terra.ListValue[cloudrunservice.MetadataAttributes] {
-	return terra.ReferenceList[cloudrunservice.MetadataAttributes](crs.ref.Append("metadata"))
+	return terra.ReferenceAsList[cloudrunservice.MetadataAttributes](crs.ref.Append("metadata"))
 }
 
 func (crs cloudRunServiceAttributes) Template() terra.ListValue[cloudrunservice.TemplateAttributes] {
-	return terra.ReferenceList[cloudrunservice.TemplateAttributes](crs.ref.Append("template"))
+	return terra.ReferenceAsList[cloudrunservice.TemplateAttributes](crs.ref.Append("template"))
 }
 
 func (crs cloudRunServiceAttributes) Timeouts() cloudrunservice.TimeoutsAttributes {
-	return terra.ReferenceSingle[cloudrunservice.TimeoutsAttributes](crs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cloudrunservice.TimeoutsAttributes](crs.ref.Append("timeouts"))
 }
 
 func (crs cloudRunServiceAttributes) Traffic() terra.ListValue[cloudrunservice.TrafficAttributes] {
-	return terra.ReferenceList[cloudrunservice.TrafficAttributes](crs.ref.Append("traffic"))
+	return terra.ReferenceAsList[cloudrunservice.TrafficAttributes](crs.ref.Append("traffic"))
 }
 
 type cloudRunServiceState struct {

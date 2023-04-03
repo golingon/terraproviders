@@ -21,7 +21,7 @@ func (dvr DomainValidationRecordsAttributes) InternalWithRef(ref terra.Reference
 	return DomainValidationRecordsAttributes{ref: ref}
 }
 
-func (dvr DomainValidationRecordsAttributes) InternalTokens() hclwrite.Tokens {
+func (dvr DomainValidationRecordsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dvr.ref.InternalTokens()
 }
 

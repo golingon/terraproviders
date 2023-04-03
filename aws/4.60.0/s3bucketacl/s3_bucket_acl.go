@@ -51,7 +51,7 @@ func (acp AccessControlPolicyAttributes) InternalWithRef(ref terra.Reference) Ac
 	return AccessControlPolicyAttributes{ref: ref}
 }
 
-func (acp AccessControlPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (acp AccessControlPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return acp.ref.InternalTokens()
 }
 
@@ -75,7 +75,7 @@ func (g GrantAttributes) InternalWithRef(ref terra.Reference) GrantAttributes {
 	return GrantAttributes{ref: ref}
 }
 
-func (g GrantAttributes) InternalTokens() hclwrite.Tokens {
+func (g GrantAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return g.ref.InternalTokens()
 }
 
@@ -99,7 +99,7 @@ func (g GranteeAttributes) InternalWithRef(ref terra.Reference) GranteeAttribute
 	return GranteeAttributes{ref: ref}
 }
 
-func (g GranteeAttributes) InternalTokens() hclwrite.Tokens {
+func (g GranteeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return g.ref.InternalTokens()
 }
 
@@ -135,7 +135,7 @@ func (o OwnerAttributes) InternalWithRef(ref terra.Reference) OwnerAttributes {
 	return OwnerAttributes{ref: ref}
 }
 
-func (o OwnerAttributes) InternalTokens() hclwrite.Tokens {
+func (o OwnerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return o.ref.InternalTokens()
 }
 

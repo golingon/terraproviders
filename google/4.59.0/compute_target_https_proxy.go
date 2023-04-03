@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeTargetHttpsProxy creates a new instance of [ComputeTargetHttpsProxy].
 func NewComputeTargetHttpsProxy(name string, args ComputeTargetHttpsProxyArgs) *ComputeTargetHttpsProxy {
 	return &ComputeTargetHttpsProxy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeTargetHttpsProxy(name string, args ComputeTargetHttpsProxyArgs) *
 
 var _ terra.Resource = (*ComputeTargetHttpsProxy)(nil)
 
+// ComputeTargetHttpsProxy represents the Terraform resource google_compute_target_https_proxy.
 type ComputeTargetHttpsProxy struct {
-	Name  string
-	Args  ComputeTargetHttpsProxyArgs
-	state *computeTargetHttpsProxyState
+	Name      string
+	Args      ComputeTargetHttpsProxyArgs
+	state     *computeTargetHttpsProxyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeTargetHttpsProxy].
 func (cthp *ComputeTargetHttpsProxy) Type() string {
 	return "google_compute_target_https_proxy"
 }
 
+// LocalName returns the local name for [ComputeTargetHttpsProxy].
 func (cthp *ComputeTargetHttpsProxy) LocalName() string {
 	return cthp.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeTargetHttpsProxy].
 func (cthp *ComputeTargetHttpsProxy) Configuration() interface{} {
 	return cthp.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeTargetHttpsProxy].
+func (cthp *ComputeTargetHttpsProxy) DependOn() terra.Reference {
+	return terra.ReferenceResource(cthp)
+}
+
+// Dependencies returns the list of resources [ComputeTargetHttpsProxy] depends_on.
+func (cthp *ComputeTargetHttpsProxy) Dependencies() terra.Dependencies {
+	return cthp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeTargetHttpsProxy].
+func (cthp *ComputeTargetHttpsProxy) LifecycleManagement() *terra.Lifecycle {
+	return cthp.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeTargetHttpsProxy].
 func (cthp *ComputeTargetHttpsProxy) Attributes() computeTargetHttpsProxyAttributes {
 	return computeTargetHttpsProxyAttributes{ref: terra.ReferenceResource(cthp)}
 }
 
+// ImportState imports the given attribute values into [ComputeTargetHttpsProxy]'s state.
 func (cthp *ComputeTargetHttpsProxy) ImportState(av io.Reader) error {
 	cthp.state = &computeTargetHttpsProxyState{}
 	if err := json.NewDecoder(av).Decode(cthp.state); err != nil {
@@ -49,10 +73,12 @@ func (cthp *ComputeTargetHttpsProxy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeTargetHttpsProxy] has state.
 func (cthp *ComputeTargetHttpsProxy) State() (*computeTargetHttpsProxyState, bool) {
 	return cthp.state, cthp.state != nil
 }
 
+// StateMust returns the state for [ComputeTargetHttpsProxy]. Panics if the state is nil.
 func (cthp *ComputeTargetHttpsProxy) StateMust() *computeTargetHttpsProxyState {
 	if cthp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cthp.Type(), cthp.LocalName()))
@@ -60,10 +86,7 @@ func (cthp *ComputeTargetHttpsProxy) StateMust() *computeTargetHttpsProxyState {
 	return cthp.state
 }
 
-func (cthp *ComputeTargetHttpsProxy) DependOn() terra.Reference {
-	return terra.ReferenceResource(cthp)
-}
-
+// ComputeTargetHttpsProxyArgs contains the configurations for google_compute_target_https_proxy.
 type ComputeTargetHttpsProxyArgs struct {
 	// CertificateMap: string, optional
 	CertificateMap terra.StringValue `hcl:"certificate_map,attr"`
@@ -87,67 +110,78 @@ type ComputeTargetHttpsProxyArgs struct {
 	UrlMap terra.StringValue `hcl:"url_map,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *computetargethttpsproxy.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeTargetHttpsProxy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeTargetHttpsProxyAttributes struct {
 	ref terra.Reference
 }
 
+// CertificateMap returns a reference to field certificate_map of google_compute_target_https_proxy.
 func (cthp computeTargetHttpsProxyAttributes) CertificateMap() terra.StringValue {
-	return terra.ReferenceString(cthp.ref.Append("certificate_map"))
+	return terra.ReferenceAsString(cthp.ref.Append("certificate_map"))
 }
 
+// CreationTimestamp returns a reference to field creation_timestamp of google_compute_target_https_proxy.
 func (cthp computeTargetHttpsProxyAttributes) CreationTimestamp() terra.StringValue {
-	return terra.ReferenceString(cthp.ref.Append("creation_timestamp"))
+	return terra.ReferenceAsString(cthp.ref.Append("creation_timestamp"))
 }
 
+// Description returns a reference to field description of google_compute_target_https_proxy.
 func (cthp computeTargetHttpsProxyAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cthp.ref.Append("description"))
+	return terra.ReferenceAsString(cthp.ref.Append("description"))
 }
 
+// Id returns a reference to field id of google_compute_target_https_proxy.
 func (cthp computeTargetHttpsProxyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cthp.ref.Append("id"))
+	return terra.ReferenceAsString(cthp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_compute_target_https_proxy.
 func (cthp computeTargetHttpsProxyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cthp.ref.Append("name"))
+	return terra.ReferenceAsString(cthp.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_compute_target_https_proxy.
 func (cthp computeTargetHttpsProxyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cthp.ref.Append("project"))
+	return terra.ReferenceAsString(cthp.ref.Append("project"))
 }
 
+// ProxyBind returns a reference to field proxy_bind of google_compute_target_https_proxy.
 func (cthp computeTargetHttpsProxyAttributes) ProxyBind() terra.BoolValue {
-	return terra.ReferenceBool(cthp.ref.Append("proxy_bind"))
+	return terra.ReferenceAsBool(cthp.ref.Append("proxy_bind"))
 }
 
+// ProxyId returns a reference to field proxy_id of google_compute_target_https_proxy.
 func (cthp computeTargetHttpsProxyAttributes) ProxyId() terra.NumberValue {
-	return terra.ReferenceNumber(cthp.ref.Append("proxy_id"))
+	return terra.ReferenceAsNumber(cthp.ref.Append("proxy_id"))
 }
 
+// QuicOverride returns a reference to field quic_override of google_compute_target_https_proxy.
 func (cthp computeTargetHttpsProxyAttributes) QuicOverride() terra.StringValue {
-	return terra.ReferenceString(cthp.ref.Append("quic_override"))
+	return terra.ReferenceAsString(cthp.ref.Append("quic_override"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_target_https_proxy.
 func (cthp computeTargetHttpsProxyAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(cthp.ref.Append("self_link"))
+	return terra.ReferenceAsString(cthp.ref.Append("self_link"))
 }
 
+// SslCertificates returns a reference to field ssl_certificates of google_compute_target_https_proxy.
 func (cthp computeTargetHttpsProxyAttributes) SslCertificates() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cthp.ref.Append("ssl_certificates"))
+	return terra.ReferenceAsList[terra.StringValue](cthp.ref.Append("ssl_certificates"))
 }
 
+// SslPolicy returns a reference to field ssl_policy of google_compute_target_https_proxy.
 func (cthp computeTargetHttpsProxyAttributes) SslPolicy() terra.StringValue {
-	return terra.ReferenceString(cthp.ref.Append("ssl_policy"))
+	return terra.ReferenceAsString(cthp.ref.Append("ssl_policy"))
 }
 
+// UrlMap returns a reference to field url_map of google_compute_target_https_proxy.
 func (cthp computeTargetHttpsProxyAttributes) UrlMap() terra.StringValue {
-	return terra.ReferenceString(cthp.ref.Append("url_map"))
+	return terra.ReferenceAsString(cthp.ref.Append("url_map"))
 }
 
 func (cthp computeTargetHttpsProxyAttributes) Timeouts() computetargethttpsproxy.TimeoutsAttributes {
-	return terra.ReferenceSingle[computetargethttpsproxy.TimeoutsAttributes](cthp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computetargethttpsproxy.TimeoutsAttributes](cthp.ref.Append("timeouts"))
 }
 
 type computeTargetHttpsProxyState struct {

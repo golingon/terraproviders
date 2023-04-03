@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewIapAppEngineServiceIamBinding creates a new instance of [IapAppEngineServiceIamBinding].
 func NewIapAppEngineServiceIamBinding(name string, args IapAppEngineServiceIamBindingArgs) *IapAppEngineServiceIamBinding {
 	return &IapAppEngineServiceIamBinding{
 		Args: args,
@@ -19,28 +20,51 @@ func NewIapAppEngineServiceIamBinding(name string, args IapAppEngineServiceIamBi
 
 var _ terra.Resource = (*IapAppEngineServiceIamBinding)(nil)
 
+// IapAppEngineServiceIamBinding represents the Terraform resource google_iap_app_engine_service_iam_binding.
 type IapAppEngineServiceIamBinding struct {
-	Name  string
-	Args  IapAppEngineServiceIamBindingArgs
-	state *iapAppEngineServiceIamBindingState
+	Name      string
+	Args      IapAppEngineServiceIamBindingArgs
+	state     *iapAppEngineServiceIamBindingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IapAppEngineServiceIamBinding].
 func (iaesib *IapAppEngineServiceIamBinding) Type() string {
 	return "google_iap_app_engine_service_iam_binding"
 }
 
+// LocalName returns the local name for [IapAppEngineServiceIamBinding].
 func (iaesib *IapAppEngineServiceIamBinding) LocalName() string {
 	return iaesib.Name
 }
 
+// Configuration returns the configuration (args) for [IapAppEngineServiceIamBinding].
 func (iaesib *IapAppEngineServiceIamBinding) Configuration() interface{} {
 	return iaesib.Args
 }
 
+// DependOn is used for other resources to depend on [IapAppEngineServiceIamBinding].
+func (iaesib *IapAppEngineServiceIamBinding) DependOn() terra.Reference {
+	return terra.ReferenceResource(iaesib)
+}
+
+// Dependencies returns the list of resources [IapAppEngineServiceIamBinding] depends_on.
+func (iaesib *IapAppEngineServiceIamBinding) Dependencies() terra.Dependencies {
+	return iaesib.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IapAppEngineServiceIamBinding].
+func (iaesib *IapAppEngineServiceIamBinding) LifecycleManagement() *terra.Lifecycle {
+	return iaesib.Lifecycle
+}
+
+// Attributes returns the attributes for [IapAppEngineServiceIamBinding].
 func (iaesib *IapAppEngineServiceIamBinding) Attributes() iapAppEngineServiceIamBindingAttributes {
 	return iapAppEngineServiceIamBindingAttributes{ref: terra.ReferenceResource(iaesib)}
 }
 
+// ImportState imports the given attribute values into [IapAppEngineServiceIamBinding]'s state.
 func (iaesib *IapAppEngineServiceIamBinding) ImportState(av io.Reader) error {
 	iaesib.state = &iapAppEngineServiceIamBindingState{}
 	if err := json.NewDecoder(av).Decode(iaesib.state); err != nil {
@@ -49,10 +73,12 @@ func (iaesib *IapAppEngineServiceIamBinding) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IapAppEngineServiceIamBinding] has state.
 func (iaesib *IapAppEngineServiceIamBinding) State() (*iapAppEngineServiceIamBindingState, bool) {
 	return iaesib.state, iaesib.state != nil
 }
 
+// StateMust returns the state for [IapAppEngineServiceIamBinding]. Panics if the state is nil.
 func (iaesib *IapAppEngineServiceIamBinding) StateMust() *iapAppEngineServiceIamBindingState {
 	if iaesib.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", iaesib.Type(), iaesib.LocalName()))
@@ -60,10 +86,7 @@ func (iaesib *IapAppEngineServiceIamBinding) StateMust() *iapAppEngineServiceIam
 	return iaesib.state
 }
 
-func (iaesib *IapAppEngineServiceIamBinding) DependOn() terra.Reference {
-	return terra.ReferenceResource(iaesib)
-}
-
+// IapAppEngineServiceIamBindingArgs contains the configurations for google_iap_app_engine_service_iam_binding.
 type IapAppEngineServiceIamBindingArgs struct {
 	// AppId: string, required
 	AppId terra.StringValue `hcl:"app_id,attr" validate:"required"`
@@ -79,43 +102,48 @@ type IapAppEngineServiceIamBindingArgs struct {
 	Service terra.StringValue `hcl:"service,attr" validate:"required"`
 	// Condition: optional
 	Condition *iapappengineserviceiambinding.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that IapAppEngineServiceIamBinding depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iapAppEngineServiceIamBindingAttributes struct {
 	ref terra.Reference
 }
 
+// AppId returns a reference to field app_id of google_iap_app_engine_service_iam_binding.
 func (iaesib iapAppEngineServiceIamBindingAttributes) AppId() terra.StringValue {
-	return terra.ReferenceString(iaesib.ref.Append("app_id"))
+	return terra.ReferenceAsString(iaesib.ref.Append("app_id"))
 }
 
+// Etag returns a reference to field etag of google_iap_app_engine_service_iam_binding.
 func (iaesib iapAppEngineServiceIamBindingAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(iaesib.ref.Append("etag"))
+	return terra.ReferenceAsString(iaesib.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_iap_app_engine_service_iam_binding.
 func (iaesib iapAppEngineServiceIamBindingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(iaesib.ref.Append("id"))
+	return terra.ReferenceAsString(iaesib.ref.Append("id"))
 }
 
+// Members returns a reference to field members of google_iap_app_engine_service_iam_binding.
 func (iaesib iapAppEngineServiceIamBindingAttributes) Members() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](iaesib.ref.Append("members"))
+	return terra.ReferenceAsSet[terra.StringValue](iaesib.ref.Append("members"))
 }
 
+// Project returns a reference to field project of google_iap_app_engine_service_iam_binding.
 func (iaesib iapAppEngineServiceIamBindingAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(iaesib.ref.Append("project"))
+	return terra.ReferenceAsString(iaesib.ref.Append("project"))
 }
 
+// Role returns a reference to field role of google_iap_app_engine_service_iam_binding.
 func (iaesib iapAppEngineServiceIamBindingAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(iaesib.ref.Append("role"))
+	return terra.ReferenceAsString(iaesib.ref.Append("role"))
 }
 
+// Service returns a reference to field service of google_iap_app_engine_service_iam_binding.
 func (iaesib iapAppEngineServiceIamBindingAttributes) Service() terra.StringValue {
-	return terra.ReferenceString(iaesib.ref.Append("service"))
+	return terra.ReferenceAsString(iaesib.ref.Append("service"))
 }
 
 func (iaesib iapAppEngineServiceIamBindingAttributes) Condition() terra.ListValue[iapappengineserviceiambinding.ConditionAttributes] {
-	return terra.ReferenceList[iapappengineserviceiambinding.ConditionAttributes](iaesib.ref.Append("condition"))
+	return terra.ReferenceAsList[iapappengineserviceiambinding.ConditionAttributes](iaesib.ref.Append("condition"))
 }
 
 type iapAppEngineServiceIamBindingState struct {

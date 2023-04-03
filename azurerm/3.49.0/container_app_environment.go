@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewContainerAppEnvironment creates a new instance of [ContainerAppEnvironment].
 func NewContainerAppEnvironment(name string, args ContainerAppEnvironmentArgs) *ContainerAppEnvironment {
 	return &ContainerAppEnvironment{
 		Args: args,
@@ -19,28 +20,51 @@ func NewContainerAppEnvironment(name string, args ContainerAppEnvironmentArgs) *
 
 var _ terra.Resource = (*ContainerAppEnvironment)(nil)
 
+// ContainerAppEnvironment represents the Terraform resource azurerm_container_app_environment.
 type ContainerAppEnvironment struct {
-	Name  string
-	Args  ContainerAppEnvironmentArgs
-	state *containerAppEnvironmentState
+	Name      string
+	Args      ContainerAppEnvironmentArgs
+	state     *containerAppEnvironmentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ContainerAppEnvironment].
 func (cae *ContainerAppEnvironment) Type() string {
 	return "azurerm_container_app_environment"
 }
 
+// LocalName returns the local name for [ContainerAppEnvironment].
 func (cae *ContainerAppEnvironment) LocalName() string {
 	return cae.Name
 }
 
+// Configuration returns the configuration (args) for [ContainerAppEnvironment].
 func (cae *ContainerAppEnvironment) Configuration() interface{} {
 	return cae.Args
 }
 
+// DependOn is used for other resources to depend on [ContainerAppEnvironment].
+func (cae *ContainerAppEnvironment) DependOn() terra.Reference {
+	return terra.ReferenceResource(cae)
+}
+
+// Dependencies returns the list of resources [ContainerAppEnvironment] depends_on.
+func (cae *ContainerAppEnvironment) Dependencies() terra.Dependencies {
+	return cae.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ContainerAppEnvironment].
+func (cae *ContainerAppEnvironment) LifecycleManagement() *terra.Lifecycle {
+	return cae.Lifecycle
+}
+
+// Attributes returns the attributes for [ContainerAppEnvironment].
 func (cae *ContainerAppEnvironment) Attributes() containerAppEnvironmentAttributes {
 	return containerAppEnvironmentAttributes{ref: terra.ReferenceResource(cae)}
 }
 
+// ImportState imports the given attribute values into [ContainerAppEnvironment]'s state.
 func (cae *ContainerAppEnvironment) ImportState(av io.Reader) error {
 	cae.state = &containerAppEnvironmentState{}
 	if err := json.NewDecoder(av).Decode(cae.state); err != nil {
@@ -49,10 +73,12 @@ func (cae *ContainerAppEnvironment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ContainerAppEnvironment] has state.
 func (cae *ContainerAppEnvironment) State() (*containerAppEnvironmentState, bool) {
 	return cae.state, cae.state != nil
 }
 
+// StateMust returns the state for [ContainerAppEnvironment]. Panics if the state is nil.
 func (cae *ContainerAppEnvironment) StateMust() *containerAppEnvironmentState {
 	if cae.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cae.Type(), cae.LocalName()))
@@ -60,10 +86,7 @@ func (cae *ContainerAppEnvironment) StateMust() *containerAppEnvironmentState {
 	return cae.state
 }
 
-func (cae *ContainerAppEnvironment) DependOn() terra.Reference {
-	return terra.ReferenceResource(cae)
-}
-
+// ContainerAppEnvironmentArgs contains the configurations for azurerm_container_app_environment.
 type ContainerAppEnvironmentArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -83,67 +106,78 @@ type ContainerAppEnvironmentArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// Timeouts: optional
 	Timeouts *containerappenvironment.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ContainerAppEnvironment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type containerAppEnvironmentAttributes struct {
 	ref terra.Reference
 }
 
+// DefaultDomain returns a reference to field default_domain of azurerm_container_app_environment.
 func (cae containerAppEnvironmentAttributes) DefaultDomain() terra.StringValue {
-	return terra.ReferenceString(cae.ref.Append("default_domain"))
+	return terra.ReferenceAsString(cae.ref.Append("default_domain"))
 }
 
+// DockerBridgeCidr returns a reference to field docker_bridge_cidr of azurerm_container_app_environment.
 func (cae containerAppEnvironmentAttributes) DockerBridgeCidr() terra.StringValue {
-	return terra.ReferenceString(cae.ref.Append("docker_bridge_cidr"))
+	return terra.ReferenceAsString(cae.ref.Append("docker_bridge_cidr"))
 }
 
+// Id returns a reference to field id of azurerm_container_app_environment.
 func (cae containerAppEnvironmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cae.ref.Append("id"))
+	return terra.ReferenceAsString(cae.ref.Append("id"))
 }
 
+// InfrastructureSubnetId returns a reference to field infrastructure_subnet_id of azurerm_container_app_environment.
 func (cae containerAppEnvironmentAttributes) InfrastructureSubnetId() terra.StringValue {
-	return terra.ReferenceString(cae.ref.Append("infrastructure_subnet_id"))
+	return terra.ReferenceAsString(cae.ref.Append("infrastructure_subnet_id"))
 }
 
+// InternalLoadBalancerEnabled returns a reference to field internal_load_balancer_enabled of azurerm_container_app_environment.
 func (cae containerAppEnvironmentAttributes) InternalLoadBalancerEnabled() terra.BoolValue {
-	return terra.ReferenceBool(cae.ref.Append("internal_load_balancer_enabled"))
+	return terra.ReferenceAsBool(cae.ref.Append("internal_load_balancer_enabled"))
 }
 
+// Location returns a reference to field location of azurerm_container_app_environment.
 func (cae containerAppEnvironmentAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(cae.ref.Append("location"))
+	return terra.ReferenceAsString(cae.ref.Append("location"))
 }
 
+// LogAnalyticsWorkspaceId returns a reference to field log_analytics_workspace_id of azurerm_container_app_environment.
 func (cae containerAppEnvironmentAttributes) LogAnalyticsWorkspaceId() terra.StringValue {
-	return terra.ReferenceString(cae.ref.Append("log_analytics_workspace_id"))
+	return terra.ReferenceAsString(cae.ref.Append("log_analytics_workspace_id"))
 }
 
+// Name returns a reference to field name of azurerm_container_app_environment.
 func (cae containerAppEnvironmentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cae.ref.Append("name"))
+	return terra.ReferenceAsString(cae.ref.Append("name"))
 }
 
+// PlatformReservedCidr returns a reference to field platform_reserved_cidr of azurerm_container_app_environment.
 func (cae containerAppEnvironmentAttributes) PlatformReservedCidr() terra.StringValue {
-	return terra.ReferenceString(cae.ref.Append("platform_reserved_cidr"))
+	return terra.ReferenceAsString(cae.ref.Append("platform_reserved_cidr"))
 }
 
+// PlatformReservedDnsIpAddress returns a reference to field platform_reserved_dns_ip_address of azurerm_container_app_environment.
 func (cae containerAppEnvironmentAttributes) PlatformReservedDnsIpAddress() terra.StringValue {
-	return terra.ReferenceString(cae.ref.Append("platform_reserved_dns_ip_address"))
+	return terra.ReferenceAsString(cae.ref.Append("platform_reserved_dns_ip_address"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_container_app_environment.
 func (cae containerAppEnvironmentAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(cae.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(cae.ref.Append("resource_group_name"))
 }
 
+// StaticIpAddress returns a reference to field static_ip_address of azurerm_container_app_environment.
 func (cae containerAppEnvironmentAttributes) StaticIpAddress() terra.StringValue {
-	return terra.ReferenceString(cae.ref.Append("static_ip_address"))
+	return terra.ReferenceAsString(cae.ref.Append("static_ip_address"))
 }
 
+// Tags returns a reference to field tags of azurerm_container_app_environment.
 func (cae containerAppEnvironmentAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cae.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](cae.ref.Append("tags"))
 }
 
 func (cae containerAppEnvironmentAttributes) Timeouts() containerappenvironment.TimeoutsAttributes {
-	return terra.ReferenceSingle[containerappenvironment.TimeoutsAttributes](cae.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[containerappenvironment.TimeoutsAttributes](cae.ref.Append("timeouts"))
 }
 
 type containerAppEnvironmentState struct {

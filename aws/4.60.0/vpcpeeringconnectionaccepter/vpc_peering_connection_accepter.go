@@ -44,7 +44,7 @@ func (a AccepterAttributes) InternalWithRef(ref terra.Reference) AccepterAttribu
 	return AccepterAttributes{ref: ref}
 }
 
-func (a AccepterAttributes) InternalTokens() hclwrite.Tokens {
+func (a AccepterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -72,7 +72,7 @@ func (r RequesterAttributes) InternalWithRef(ref terra.Reference) RequesterAttri
 	return RequesterAttributes{ref: ref}
 }
 
-func (r RequesterAttributes) InternalTokens() hclwrite.Tokens {
+func (r RequesterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -100,7 +100,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

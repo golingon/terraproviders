@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataApplicationSecurityGroup creates a new instance of [DataApplicationSecurityGroup].
 func NewDataApplicationSecurityGroup(name string, args DataApplicationSecurityGroupArgs) *DataApplicationSecurityGroup {
 	return &DataApplicationSecurityGroup{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataApplicationSecurityGroup(name string, args DataApplicationSecurityGr
 
 var _ terra.DataResource = (*DataApplicationSecurityGroup)(nil)
 
+// DataApplicationSecurityGroup represents the Terraform data resource azurerm_application_security_group.
 type DataApplicationSecurityGroup struct {
 	Name string
 	Args DataApplicationSecurityGroupArgs
 }
 
+// DataSource returns the Terraform object type for [DataApplicationSecurityGroup].
 func (asg *DataApplicationSecurityGroup) DataSource() string {
 	return "azurerm_application_security_group"
 }
 
+// LocalName returns the local name for [DataApplicationSecurityGroup].
 func (asg *DataApplicationSecurityGroup) LocalName() string {
 	return asg.Name
 }
 
+// Configuration returns the configuration (args) for [DataApplicationSecurityGroup].
 func (asg *DataApplicationSecurityGroup) Configuration() interface{} {
 	return asg.Args
 }
 
+// Attributes returns the attributes for [DataApplicationSecurityGroup].
 func (asg *DataApplicationSecurityGroup) Attributes() dataApplicationSecurityGroupAttributes {
 	return dataApplicationSecurityGroupAttributes{ref: terra.ReferenceDataResource(asg)}
 }
 
+// DataApplicationSecurityGroupArgs contains the configurations for azurerm_application_security_group.
 type DataApplicationSecurityGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,26 +58,31 @@ type dataApplicationSecurityGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_application_security_group.
 func (asg dataApplicationSecurityGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(asg.ref.Append("id"))
+	return terra.ReferenceAsString(asg.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_application_security_group.
 func (asg dataApplicationSecurityGroupAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(asg.ref.Append("location"))
+	return terra.ReferenceAsString(asg.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_application_security_group.
 func (asg dataApplicationSecurityGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(asg.ref.Append("name"))
+	return terra.ReferenceAsString(asg.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_application_security_group.
 func (asg dataApplicationSecurityGroupAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(asg.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(asg.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_application_security_group.
 func (asg dataApplicationSecurityGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](asg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](asg.ref.Append("tags"))
 }
 
 func (asg dataApplicationSecurityGroupAttributes) Timeouts() dataapplicationsecuritygroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataapplicationsecuritygroup.TimeoutsAttributes](asg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataapplicationsecuritygroup.TimeoutsAttributes](asg.ref.Append("timeouts"))
 }

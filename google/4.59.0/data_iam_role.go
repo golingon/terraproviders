@@ -4,6 +4,7 @@ package google
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataIamRole creates a new instance of [DataIamRole].
 func NewDataIamRole(name string, args DataIamRoleArgs) *DataIamRole {
 	return &DataIamRole{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataIamRole(name string, args DataIamRoleArgs) *DataIamRole {
 
 var _ terra.DataResource = (*DataIamRole)(nil)
 
+// DataIamRole represents the Terraform data resource google_iam_role.
 type DataIamRole struct {
 	Name string
 	Args DataIamRoleArgs
 }
 
+// DataSource returns the Terraform object type for [DataIamRole].
 func (ir *DataIamRole) DataSource() string {
 	return "google_iam_role"
 }
 
+// LocalName returns the local name for [DataIamRole].
 func (ir *DataIamRole) LocalName() string {
 	return ir.Name
 }
 
+// Configuration returns the configuration (args) for [DataIamRole].
 func (ir *DataIamRole) Configuration() interface{} {
 	return ir.Args
 }
 
+// Attributes returns the attributes for [DataIamRole].
 func (ir *DataIamRole) Attributes() dataIamRoleAttributes {
 	return dataIamRoleAttributes{ref: terra.ReferenceDataResource(ir)}
 }
 
+// DataIamRoleArgs contains the configurations for google_iam_role.
 type DataIamRoleArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,22 +51,27 @@ type dataIamRoleAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of google_iam_role.
 func (ir dataIamRoleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ir.ref.Append("id"))
+	return terra.ReferenceAsString(ir.ref.Append("id"))
 }
 
+// IncludedPermissions returns a reference to field included_permissions of google_iam_role.
 func (ir dataIamRoleAttributes) IncludedPermissions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ir.ref.Append("included_permissions"))
+	return terra.ReferenceAsList[terra.StringValue](ir.ref.Append("included_permissions"))
 }
 
+// Name returns a reference to field name of google_iam_role.
 func (ir dataIamRoleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ir.ref.Append("name"))
+	return terra.ReferenceAsString(ir.ref.Append("name"))
 }
 
+// Stage returns a reference to field stage of google_iam_role.
 func (ir dataIamRoleAttributes) Stage() terra.StringValue {
-	return terra.ReferenceString(ir.ref.Append("stage"))
+	return terra.ReferenceAsString(ir.ref.Append("stage"))
 }
 
+// Title returns a reference to field title of google_iam_role.
 func (ir dataIamRoleAttributes) Title() terra.StringValue {
-	return terra.ReferenceString(ir.ref.Append("title"))
+	return terra.ReferenceAsString(ir.ref.Append("title"))
 }

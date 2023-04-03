@@ -21,7 +21,7 @@ func (ldc LogDeliveryConfigurationAttributes) InternalWithRef(ref terra.Referenc
 	return LogDeliveryConfigurationAttributes{ref: ref}
 }
 
-func (ldc LogDeliveryConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ldc LogDeliveryConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ldc.ref.InternalTokens()
 }
 

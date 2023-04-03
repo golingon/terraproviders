@@ -36,80 +36,80 @@ type NetworkConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (nc NetworkConfigAttributes) InternalRef() terra.Reference {
-	return nc.ref
+func (nc NetworkConfigAttributes) InternalRef() (terra.Reference, error) {
+	return nc.ref, nil
 }
 
 func (nc NetworkConfigAttributes) InternalWithRef(ref terra.Reference) NetworkConfigAttributes {
 	return NetworkConfigAttributes{ref: ref}
 }
 
-func (nc NetworkConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (nc NetworkConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nc.ref.InternalTokens()
 }
 
 func (nc NetworkConfigAttributes) PeeredNetwork() terra.StringValue {
-	return terra.ReferenceString(nc.ref.Append("peered_network"))
+	return terra.ReferenceAsString(nc.ref.Append("peered_network"))
 }
 
 func (nc NetworkConfigAttributes) PeeredNetworkIpRange() terra.StringValue {
-	return terra.ReferenceString(nc.ref.Append("peered_network_ip_range"))
+	return terra.ReferenceAsString(nc.ref.Append("peered_network_ip_range"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type WorkerConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (wc WorkerConfigAttributes) InternalRef() terra.Reference {
-	return wc.ref
+func (wc WorkerConfigAttributes) InternalRef() (terra.Reference, error) {
+	return wc.ref, nil
 }
 
 func (wc WorkerConfigAttributes) InternalWithRef(ref terra.Reference) WorkerConfigAttributes {
 	return WorkerConfigAttributes{ref: ref}
 }
 
-func (wc WorkerConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (wc WorkerConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wc.ref.InternalTokens()
 }
 
 func (wc WorkerConfigAttributes) DiskSizeGb() terra.NumberValue {
-	return terra.ReferenceNumber(wc.ref.Append("disk_size_gb"))
+	return terra.ReferenceAsNumber(wc.ref.Append("disk_size_gb"))
 }
 
 func (wc WorkerConfigAttributes) MachineType() terra.StringValue {
-	return terra.ReferenceString(wc.ref.Append("machine_type"))
+	return terra.ReferenceAsString(wc.ref.Append("machine_type"))
 }
 
 func (wc WorkerConfigAttributes) NoExternalIp() terra.BoolValue {
-	return terra.ReferenceBool(wc.ref.Append("no_external_ip"))
+	return terra.ReferenceAsBool(wc.ref.Append("no_external_ip"))
 }
 
 type NetworkConfigState struct {

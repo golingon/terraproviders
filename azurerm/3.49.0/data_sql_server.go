@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataSqlServer creates a new instance of [DataSqlServer].
 func NewDataSqlServer(name string, args DataSqlServerArgs) *DataSqlServer {
 	return &DataSqlServer{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataSqlServer(name string, args DataSqlServerArgs) *DataSqlServer {
 
 var _ terra.DataResource = (*DataSqlServer)(nil)
 
+// DataSqlServer represents the Terraform data resource azurerm_sql_server.
 type DataSqlServer struct {
 	Name string
 	Args DataSqlServerArgs
 }
 
+// DataSource returns the Terraform object type for [DataSqlServer].
 func (ss *DataSqlServer) DataSource() string {
 	return "azurerm_sql_server"
 }
 
+// LocalName returns the local name for [DataSqlServer].
 func (ss *DataSqlServer) LocalName() string {
 	return ss.Name
 }
 
+// Configuration returns the configuration (args) for [DataSqlServer].
 func (ss *DataSqlServer) Configuration() interface{} {
 	return ss.Args
 }
 
+// Attributes returns the attributes for [DataSqlServer].
 func (ss *DataSqlServer) Attributes() dataSqlServerAttributes {
 	return dataSqlServerAttributes{ref: terra.ReferenceDataResource(ss)}
 }
 
+// DataSqlServerArgs contains the configurations for azurerm_sql_server.
 type DataSqlServerArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,42 +60,50 @@ type dataSqlServerAttributes struct {
 	ref terra.Reference
 }
 
+// AdministratorLogin returns a reference to field administrator_login of azurerm_sql_server.
 func (ss dataSqlServerAttributes) AdministratorLogin() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("administrator_login"))
+	return terra.ReferenceAsString(ss.ref.Append("administrator_login"))
 }
 
+// Fqdn returns a reference to field fqdn of azurerm_sql_server.
 func (ss dataSqlServerAttributes) Fqdn() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("fqdn"))
+	return terra.ReferenceAsString(ss.ref.Append("fqdn"))
 }
 
+// Id returns a reference to field id of azurerm_sql_server.
 func (ss dataSqlServerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("id"))
+	return terra.ReferenceAsString(ss.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_sql_server.
 func (ss dataSqlServerAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("location"))
+	return terra.ReferenceAsString(ss.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_sql_server.
 func (ss dataSqlServerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("name"))
+	return terra.ReferenceAsString(ss.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_sql_server.
 func (ss dataSqlServerAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ss.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_sql_server.
 func (ss dataSqlServerAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ss.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ss.ref.Append("tags"))
 }
 
+// Version returns a reference to field version of azurerm_sql_server.
 func (ss dataSqlServerAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("version"))
+	return terra.ReferenceAsString(ss.ref.Append("version"))
 }
 
 func (ss dataSqlServerAttributes) Identity() terra.ListValue[datasqlserver.IdentityAttributes] {
-	return terra.ReferenceList[datasqlserver.IdentityAttributes](ss.ref.Append("identity"))
+	return terra.ReferenceAsList[datasqlserver.IdentityAttributes](ss.ref.Append("identity"))
 }
 
 func (ss dataSqlServerAttributes) Timeouts() datasqlserver.TimeoutsAttributes {
-	return terra.ReferenceSingle[datasqlserver.TimeoutsAttributes](ss.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datasqlserver.TimeoutsAttributes](ss.ref.Append("timeouts"))
 }

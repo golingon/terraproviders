@@ -31,60 +31,60 @@ type TagFilterAttributes struct {
 	ref terra.Reference
 }
 
-func (tf TagFilterAttributes) InternalRef() terra.Reference {
-	return tf.ref
+func (tf TagFilterAttributes) InternalRef() (terra.Reference, error) {
+	return tf.ref, nil
 }
 
 func (tf TagFilterAttributes) InternalWithRef(ref terra.Reference) TagFilterAttributes {
 	return TagFilterAttributes{ref: ref}
 }
 
-func (tf TagFilterAttributes) InternalTokens() hclwrite.Tokens {
+func (tf TagFilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tf.ref.InternalTokens()
 }
 
 func (tf TagFilterAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(tf.ref.Append("action"))
+	return terra.ReferenceAsString(tf.ref.Append("action"))
 }
 
 func (tf TagFilterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(tf.ref.Append("name"))
+	return terra.ReferenceAsString(tf.ref.Append("name"))
 }
 
 func (tf TagFilterAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(tf.ref.Append("value"))
+	return terra.ReferenceAsString(tf.ref.Append("value"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type TagFilterState struct {

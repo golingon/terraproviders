@@ -30,7 +30,7 @@ func (al AppversionLifecycleAttributes) InternalWithRef(ref terra.Reference) App
 	return AppversionLifecycleAttributes{ref: ref}
 }
 
-func (al AppversionLifecycleAttributes) InternalTokens() hclwrite.Tokens {
+func (al AppversionLifecycleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return al.ref.InternalTokens()
 }
 

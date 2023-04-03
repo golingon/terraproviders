@@ -4,6 +4,7 @@ package google
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataKmsSecretCiphertext creates a new instance of [DataKmsSecretCiphertext].
 func NewDataKmsSecretCiphertext(name string, args DataKmsSecretCiphertextArgs) *DataKmsSecretCiphertext {
 	return &DataKmsSecretCiphertext{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataKmsSecretCiphertext(name string, args DataKmsSecretCiphertextArgs) *
 
 var _ terra.DataResource = (*DataKmsSecretCiphertext)(nil)
 
+// DataKmsSecretCiphertext represents the Terraform data resource google_kms_secret_ciphertext.
 type DataKmsSecretCiphertext struct {
 	Name string
 	Args DataKmsSecretCiphertextArgs
 }
 
+// DataSource returns the Terraform object type for [DataKmsSecretCiphertext].
 func (ksc *DataKmsSecretCiphertext) DataSource() string {
 	return "google_kms_secret_ciphertext"
 }
 
+// LocalName returns the local name for [DataKmsSecretCiphertext].
 func (ksc *DataKmsSecretCiphertext) LocalName() string {
 	return ksc.Name
 }
 
+// Configuration returns the configuration (args) for [DataKmsSecretCiphertext].
 func (ksc *DataKmsSecretCiphertext) Configuration() interface{} {
 	return ksc.Args
 }
 
+// Attributes returns the attributes for [DataKmsSecretCiphertext].
 func (ksc *DataKmsSecretCiphertext) Attributes() dataKmsSecretCiphertextAttributes {
 	return dataKmsSecretCiphertextAttributes{ref: terra.ReferenceDataResource(ksc)}
 }
 
+// DataKmsSecretCiphertextArgs contains the configurations for google_kms_secret_ciphertext.
 type DataKmsSecretCiphertextArgs struct {
 	// CryptoKey: string, required
 	CryptoKey terra.StringValue `hcl:"crypto_key,attr" validate:"required"`
@@ -46,18 +53,22 @@ type dataKmsSecretCiphertextAttributes struct {
 	ref terra.Reference
 }
 
+// Ciphertext returns a reference to field ciphertext of google_kms_secret_ciphertext.
 func (ksc dataKmsSecretCiphertextAttributes) Ciphertext() terra.StringValue {
-	return terra.ReferenceString(ksc.ref.Append("ciphertext"))
+	return terra.ReferenceAsString(ksc.ref.Append("ciphertext"))
 }
 
+// CryptoKey returns a reference to field crypto_key of google_kms_secret_ciphertext.
 func (ksc dataKmsSecretCiphertextAttributes) CryptoKey() terra.StringValue {
-	return terra.ReferenceString(ksc.ref.Append("crypto_key"))
+	return terra.ReferenceAsString(ksc.ref.Append("crypto_key"))
 }
 
+// Id returns a reference to field id of google_kms_secret_ciphertext.
 func (ksc dataKmsSecretCiphertextAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ksc.ref.Append("id"))
+	return terra.ReferenceAsString(ksc.ref.Append("id"))
 }
 
+// Plaintext returns a reference to field plaintext of google_kms_secret_ciphertext.
 func (ksc dataKmsSecretCiphertextAttributes) Plaintext() terra.StringValue {
-	return terra.ReferenceString(ksc.ref.Append("plaintext"))
+	return terra.ReferenceAsString(ksc.ref.Append("plaintext"))
 }

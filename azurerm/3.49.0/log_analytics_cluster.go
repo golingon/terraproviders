@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLogAnalyticsCluster creates a new instance of [LogAnalyticsCluster].
 func NewLogAnalyticsCluster(name string, args LogAnalyticsClusterArgs) *LogAnalyticsCluster {
 	return &LogAnalyticsCluster{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLogAnalyticsCluster(name string, args LogAnalyticsClusterArgs) *LogAnaly
 
 var _ terra.Resource = (*LogAnalyticsCluster)(nil)
 
+// LogAnalyticsCluster represents the Terraform resource azurerm_log_analytics_cluster.
 type LogAnalyticsCluster struct {
-	Name  string
-	Args  LogAnalyticsClusterArgs
-	state *logAnalyticsClusterState
+	Name      string
+	Args      LogAnalyticsClusterArgs
+	state     *logAnalyticsClusterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LogAnalyticsCluster].
 func (lac *LogAnalyticsCluster) Type() string {
 	return "azurerm_log_analytics_cluster"
 }
 
+// LocalName returns the local name for [LogAnalyticsCluster].
 func (lac *LogAnalyticsCluster) LocalName() string {
 	return lac.Name
 }
 
+// Configuration returns the configuration (args) for [LogAnalyticsCluster].
 func (lac *LogAnalyticsCluster) Configuration() interface{} {
 	return lac.Args
 }
 
+// DependOn is used for other resources to depend on [LogAnalyticsCluster].
+func (lac *LogAnalyticsCluster) DependOn() terra.Reference {
+	return terra.ReferenceResource(lac)
+}
+
+// Dependencies returns the list of resources [LogAnalyticsCluster] depends_on.
+func (lac *LogAnalyticsCluster) Dependencies() terra.Dependencies {
+	return lac.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LogAnalyticsCluster].
+func (lac *LogAnalyticsCluster) LifecycleManagement() *terra.Lifecycle {
+	return lac.Lifecycle
+}
+
+// Attributes returns the attributes for [LogAnalyticsCluster].
 func (lac *LogAnalyticsCluster) Attributes() logAnalyticsClusterAttributes {
 	return logAnalyticsClusterAttributes{ref: terra.ReferenceResource(lac)}
 }
 
+// ImportState imports the given attribute values into [LogAnalyticsCluster]'s state.
 func (lac *LogAnalyticsCluster) ImportState(av io.Reader) error {
 	lac.state = &logAnalyticsClusterState{}
 	if err := json.NewDecoder(av).Decode(lac.state); err != nil {
@@ -49,10 +73,12 @@ func (lac *LogAnalyticsCluster) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LogAnalyticsCluster] has state.
 func (lac *LogAnalyticsCluster) State() (*logAnalyticsClusterState, bool) {
 	return lac.state, lac.state != nil
 }
 
+// StateMust returns the state for [LogAnalyticsCluster]. Panics if the state is nil.
 func (lac *LogAnalyticsCluster) StateMust() *logAnalyticsClusterState {
 	if lac.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lac.Type(), lac.LocalName()))
@@ -60,10 +86,7 @@ func (lac *LogAnalyticsCluster) StateMust() *logAnalyticsClusterState {
 	return lac.state
 }
 
-func (lac *LogAnalyticsCluster) DependOn() terra.Reference {
-	return terra.ReferenceResource(lac)
-}
-
+// LogAnalyticsClusterArgs contains the configurations for azurerm_log_analytics_cluster.
 type LogAnalyticsClusterArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -81,47 +104,52 @@ type LogAnalyticsClusterArgs struct {
 	Identity *loganalyticscluster.Identity `hcl:"identity,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *loganalyticscluster.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LogAnalyticsCluster depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type logAnalyticsClusterAttributes struct {
 	ref terra.Reference
 }
 
+// ClusterId returns a reference to field cluster_id of azurerm_log_analytics_cluster.
 func (lac logAnalyticsClusterAttributes) ClusterId() terra.StringValue {
-	return terra.ReferenceString(lac.ref.Append("cluster_id"))
+	return terra.ReferenceAsString(lac.ref.Append("cluster_id"))
 }
 
+// Id returns a reference to field id of azurerm_log_analytics_cluster.
 func (lac logAnalyticsClusterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lac.ref.Append("id"))
+	return terra.ReferenceAsString(lac.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_log_analytics_cluster.
 func (lac logAnalyticsClusterAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(lac.ref.Append("location"))
+	return terra.ReferenceAsString(lac.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_log_analytics_cluster.
 func (lac logAnalyticsClusterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lac.ref.Append("name"))
+	return terra.ReferenceAsString(lac.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_log_analytics_cluster.
 func (lac logAnalyticsClusterAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(lac.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(lac.ref.Append("resource_group_name"))
 }
 
+// SizeGb returns a reference to field size_gb of azurerm_log_analytics_cluster.
 func (lac logAnalyticsClusterAttributes) SizeGb() terra.NumberValue {
-	return terra.ReferenceNumber(lac.ref.Append("size_gb"))
+	return terra.ReferenceAsNumber(lac.ref.Append("size_gb"))
 }
 
+// Tags returns a reference to field tags of azurerm_log_analytics_cluster.
 func (lac logAnalyticsClusterAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lac.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](lac.ref.Append("tags"))
 }
 
 func (lac logAnalyticsClusterAttributes) Identity() terra.ListValue[loganalyticscluster.IdentityAttributes] {
-	return terra.ReferenceList[loganalyticscluster.IdentityAttributes](lac.ref.Append("identity"))
+	return terra.ReferenceAsList[loganalyticscluster.IdentityAttributes](lac.ref.Append("identity"))
 }
 
 func (lac logAnalyticsClusterAttributes) Timeouts() loganalyticscluster.TimeoutsAttributes {
-	return terra.ReferenceSingle[loganalyticscluster.TimeoutsAttributes](lac.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[loganalyticscluster.TimeoutsAttributes](lac.ref.Append("timeouts"))
 }
 
 type logAnalyticsClusterState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataCatalogEntryGroupIamMember creates a new instance of [DataCatalogEntryGroupIamMember].
 func NewDataCatalogEntryGroupIamMember(name string, args DataCatalogEntryGroupIamMemberArgs) *DataCatalogEntryGroupIamMember {
 	return &DataCatalogEntryGroupIamMember{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataCatalogEntryGroupIamMember(name string, args DataCatalogEntryGroupIa
 
 var _ terra.Resource = (*DataCatalogEntryGroupIamMember)(nil)
 
+// DataCatalogEntryGroupIamMember represents the Terraform resource google_data_catalog_entry_group_iam_member.
 type DataCatalogEntryGroupIamMember struct {
-	Name  string
-	Args  DataCatalogEntryGroupIamMemberArgs
-	state *dataCatalogEntryGroupIamMemberState
+	Name      string
+	Args      DataCatalogEntryGroupIamMemberArgs
+	state     *dataCatalogEntryGroupIamMemberState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataCatalogEntryGroupIamMember].
 func (dcegim *DataCatalogEntryGroupIamMember) Type() string {
 	return "google_data_catalog_entry_group_iam_member"
 }
 
+// LocalName returns the local name for [DataCatalogEntryGroupIamMember].
 func (dcegim *DataCatalogEntryGroupIamMember) LocalName() string {
 	return dcegim.Name
 }
 
+// Configuration returns the configuration (args) for [DataCatalogEntryGroupIamMember].
 func (dcegim *DataCatalogEntryGroupIamMember) Configuration() interface{} {
 	return dcegim.Args
 }
 
+// DependOn is used for other resources to depend on [DataCatalogEntryGroupIamMember].
+func (dcegim *DataCatalogEntryGroupIamMember) DependOn() terra.Reference {
+	return terra.ReferenceResource(dcegim)
+}
+
+// Dependencies returns the list of resources [DataCatalogEntryGroupIamMember] depends_on.
+func (dcegim *DataCatalogEntryGroupIamMember) Dependencies() terra.Dependencies {
+	return dcegim.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataCatalogEntryGroupIamMember].
+func (dcegim *DataCatalogEntryGroupIamMember) LifecycleManagement() *terra.Lifecycle {
+	return dcegim.Lifecycle
+}
+
+// Attributes returns the attributes for [DataCatalogEntryGroupIamMember].
 func (dcegim *DataCatalogEntryGroupIamMember) Attributes() dataCatalogEntryGroupIamMemberAttributes {
 	return dataCatalogEntryGroupIamMemberAttributes{ref: terra.ReferenceResource(dcegim)}
 }
 
+// ImportState imports the given attribute values into [DataCatalogEntryGroupIamMember]'s state.
 func (dcegim *DataCatalogEntryGroupIamMember) ImportState(av io.Reader) error {
 	dcegim.state = &dataCatalogEntryGroupIamMemberState{}
 	if err := json.NewDecoder(av).Decode(dcegim.state); err != nil {
@@ -49,10 +73,12 @@ func (dcegim *DataCatalogEntryGroupIamMember) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataCatalogEntryGroupIamMember] has state.
 func (dcegim *DataCatalogEntryGroupIamMember) State() (*dataCatalogEntryGroupIamMemberState, bool) {
 	return dcegim.state, dcegim.state != nil
 }
 
+// StateMust returns the state for [DataCatalogEntryGroupIamMember]. Panics if the state is nil.
 func (dcegim *DataCatalogEntryGroupIamMember) StateMust() *dataCatalogEntryGroupIamMemberState {
 	if dcegim.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dcegim.Type(), dcegim.LocalName()))
@@ -60,10 +86,7 @@ func (dcegim *DataCatalogEntryGroupIamMember) StateMust() *dataCatalogEntryGroup
 	return dcegim.state
 }
 
-func (dcegim *DataCatalogEntryGroupIamMember) DependOn() terra.Reference {
-	return terra.ReferenceResource(dcegim)
-}
-
+// DataCatalogEntryGroupIamMemberArgs contains the configurations for google_data_catalog_entry_group_iam_member.
 type DataCatalogEntryGroupIamMemberArgs struct {
 	// EntryGroup: string, required
 	EntryGroup terra.StringValue `hcl:"entry_group,attr" validate:"required"`
@@ -79,43 +102,48 @@ type DataCatalogEntryGroupIamMemberArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *datacatalogentrygroupiammember.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that DataCatalogEntryGroupIamMember depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataCatalogEntryGroupIamMemberAttributes struct {
 	ref terra.Reference
 }
 
+// EntryGroup returns a reference to field entry_group of google_data_catalog_entry_group_iam_member.
 func (dcegim dataCatalogEntryGroupIamMemberAttributes) EntryGroup() terra.StringValue {
-	return terra.ReferenceString(dcegim.ref.Append("entry_group"))
+	return terra.ReferenceAsString(dcegim.ref.Append("entry_group"))
 }
 
+// Etag returns a reference to field etag of google_data_catalog_entry_group_iam_member.
 func (dcegim dataCatalogEntryGroupIamMemberAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(dcegim.ref.Append("etag"))
+	return terra.ReferenceAsString(dcegim.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_data_catalog_entry_group_iam_member.
 func (dcegim dataCatalogEntryGroupIamMemberAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dcegim.ref.Append("id"))
+	return terra.ReferenceAsString(dcegim.ref.Append("id"))
 }
 
+// Member returns a reference to field member of google_data_catalog_entry_group_iam_member.
 func (dcegim dataCatalogEntryGroupIamMemberAttributes) Member() terra.StringValue {
-	return terra.ReferenceString(dcegim.ref.Append("member"))
+	return terra.ReferenceAsString(dcegim.ref.Append("member"))
 }
 
+// Project returns a reference to field project of google_data_catalog_entry_group_iam_member.
 func (dcegim dataCatalogEntryGroupIamMemberAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(dcegim.ref.Append("project"))
+	return terra.ReferenceAsString(dcegim.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_data_catalog_entry_group_iam_member.
 func (dcegim dataCatalogEntryGroupIamMemberAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(dcegim.ref.Append("region"))
+	return terra.ReferenceAsString(dcegim.ref.Append("region"))
 }
 
+// Role returns a reference to field role of google_data_catalog_entry_group_iam_member.
 func (dcegim dataCatalogEntryGroupIamMemberAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(dcegim.ref.Append("role"))
+	return terra.ReferenceAsString(dcegim.ref.Append("role"))
 }
 
 func (dcegim dataCatalogEntryGroupIamMemberAttributes) Condition() terra.ListValue[datacatalogentrygroupiammember.ConditionAttributes] {
-	return terra.ReferenceList[datacatalogentrygroupiammember.ConditionAttributes](dcegim.ref.Append("condition"))
+	return terra.ReferenceAsList[datacatalogentrygroupiammember.ConditionAttributes](dcegim.ref.Append("condition"))
 }
 
 type dataCatalogEntryGroupIamMemberState struct {

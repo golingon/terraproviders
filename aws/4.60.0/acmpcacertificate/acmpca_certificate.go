@@ -26,7 +26,7 @@ func (v ValidityAttributes) InternalWithRef(ref terra.Reference) ValidityAttribu
 	return ValidityAttributes{ref: ref}
 }
 
-func (v ValidityAttributes) InternalTokens() hclwrite.Tokens {
+func (v ValidityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 

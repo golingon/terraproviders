@@ -26,7 +26,7 @@ func (bio BrokerInstanceOptionsAttributes) InternalWithRef(ref terra.Reference) 
 	return BrokerInstanceOptionsAttributes{ref: ref}
 }
 
-func (bio BrokerInstanceOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (bio BrokerInstanceOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bio.ref.InternalTokens()
 }
 
@@ -66,7 +66,7 @@ func (az AvailabilityZonesAttributes) InternalWithRef(ref terra.Reference) Avail
 	return AvailabilityZonesAttributes{ref: ref}
 }
 
-func (az AvailabilityZonesAttributes) InternalTokens() hclwrite.Tokens {
+func (az AvailabilityZonesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return az.ref.InternalTokens()
 }
 

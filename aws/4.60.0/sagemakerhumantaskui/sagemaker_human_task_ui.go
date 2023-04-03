@@ -24,7 +24,7 @@ func (ut UiTemplateAttributes) InternalWithRef(ref terra.Reference) UiTemplateAt
 	return UiTemplateAttributes{ref: ref}
 }
 
-func (ut UiTemplateAttributes) InternalTokens() hclwrite.Tokens {
+func (ut UiTemplateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ut.ref.InternalTokens()
 }
 

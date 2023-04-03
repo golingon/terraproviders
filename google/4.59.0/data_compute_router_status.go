@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataComputeRouterStatus creates a new instance of [DataComputeRouterStatus].
 func NewDataComputeRouterStatus(name string, args DataComputeRouterStatusArgs) *DataComputeRouterStatus {
 	return &DataComputeRouterStatus{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataComputeRouterStatus(name string, args DataComputeRouterStatusArgs) *
 
 var _ terra.DataResource = (*DataComputeRouterStatus)(nil)
 
+// DataComputeRouterStatus represents the Terraform data resource google_compute_router_status.
 type DataComputeRouterStatus struct {
 	Name string
 	Args DataComputeRouterStatusArgs
 }
 
+// DataSource returns the Terraform object type for [DataComputeRouterStatus].
 func (crs *DataComputeRouterStatus) DataSource() string {
 	return "google_compute_router_status"
 }
 
+// LocalName returns the local name for [DataComputeRouterStatus].
 func (crs *DataComputeRouterStatus) LocalName() string {
 	return crs.Name
 }
 
+// Configuration returns the configuration (args) for [DataComputeRouterStatus].
 func (crs *DataComputeRouterStatus) Configuration() interface{} {
 	return crs.Args
 }
 
+// Attributes returns the attributes for [DataComputeRouterStatus].
 func (crs *DataComputeRouterStatus) Attributes() dataComputeRouterStatusAttributes {
 	return dataComputeRouterStatusAttributes{ref: terra.ReferenceDataResource(crs)}
 }
 
+// DataComputeRouterStatusArgs contains the configurations for google_compute_router_status.
 type DataComputeRouterStatusArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -55,30 +62,35 @@ type dataComputeRouterStatusAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of google_compute_router_status.
 func (crs dataComputeRouterStatusAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(crs.ref.Append("id"))
+	return terra.ReferenceAsString(crs.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_compute_router_status.
 func (crs dataComputeRouterStatusAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(crs.ref.Append("name"))
+	return terra.ReferenceAsString(crs.ref.Append("name"))
 }
 
+// Network returns a reference to field network of google_compute_router_status.
 func (crs dataComputeRouterStatusAttributes) Network() terra.StringValue {
-	return terra.ReferenceString(crs.ref.Append("network"))
+	return terra.ReferenceAsString(crs.ref.Append("network"))
 }
 
+// Project returns a reference to field project of google_compute_router_status.
 func (crs dataComputeRouterStatusAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(crs.ref.Append("project"))
+	return terra.ReferenceAsString(crs.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_compute_router_status.
 func (crs dataComputeRouterStatusAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(crs.ref.Append("region"))
+	return terra.ReferenceAsString(crs.ref.Append("region"))
 }
 
 func (crs dataComputeRouterStatusAttributes) BestRoutes() terra.ListValue[datacomputerouterstatus.BestRoutesAttributes] {
-	return terra.ReferenceList[datacomputerouterstatus.BestRoutesAttributes](crs.ref.Append("best_routes"))
+	return terra.ReferenceAsList[datacomputerouterstatus.BestRoutesAttributes](crs.ref.Append("best_routes"))
 }
 
 func (crs dataComputeRouterStatusAttributes) BestRoutesForRouter() terra.ListValue[datacomputerouterstatus.BestRoutesForRouterAttributes] {
-	return terra.ReferenceList[datacomputerouterstatus.BestRoutesForRouterAttributes](crs.ref.Append("best_routes_for_router"))
+	return terra.ReferenceAsList[datacomputerouterstatus.BestRoutesForRouterAttributes](crs.ref.Append("best_routes_for_router"))
 }

@@ -29,7 +29,7 @@ func (mo MountOptionsAttributes) InternalWithRef(ref terra.Reference) MountOptio
 	return MountOptionsAttributes{ref: ref}
 }
 
-func (mo MountOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (mo MountOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mo.ref.InternalTokens()
 }
 
@@ -49,7 +49,7 @@ func (opc OnPremConfigAttributes) InternalWithRef(ref terra.Reference) OnPremCon
 	return OnPremConfigAttributes{ref: ref}
 }
 
-func (opc OnPremConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (opc OnPremConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return opc.ref.InternalTokens()
 }
 

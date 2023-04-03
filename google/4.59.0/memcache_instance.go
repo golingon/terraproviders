@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMemcacheInstance creates a new instance of [MemcacheInstance].
 func NewMemcacheInstance(name string, args MemcacheInstanceArgs) *MemcacheInstance {
 	return &MemcacheInstance{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMemcacheInstance(name string, args MemcacheInstanceArgs) *MemcacheInstan
 
 var _ terra.Resource = (*MemcacheInstance)(nil)
 
+// MemcacheInstance represents the Terraform resource google_memcache_instance.
 type MemcacheInstance struct {
-	Name  string
-	Args  MemcacheInstanceArgs
-	state *memcacheInstanceState
+	Name      string
+	Args      MemcacheInstanceArgs
+	state     *memcacheInstanceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MemcacheInstance].
 func (mi *MemcacheInstance) Type() string {
 	return "google_memcache_instance"
 }
 
+// LocalName returns the local name for [MemcacheInstance].
 func (mi *MemcacheInstance) LocalName() string {
 	return mi.Name
 }
 
+// Configuration returns the configuration (args) for [MemcacheInstance].
 func (mi *MemcacheInstance) Configuration() interface{} {
 	return mi.Args
 }
 
+// DependOn is used for other resources to depend on [MemcacheInstance].
+func (mi *MemcacheInstance) DependOn() terra.Reference {
+	return terra.ReferenceResource(mi)
+}
+
+// Dependencies returns the list of resources [MemcacheInstance] depends_on.
+func (mi *MemcacheInstance) Dependencies() terra.Dependencies {
+	return mi.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MemcacheInstance].
+func (mi *MemcacheInstance) LifecycleManagement() *terra.Lifecycle {
+	return mi.Lifecycle
+}
+
+// Attributes returns the attributes for [MemcacheInstance].
 func (mi *MemcacheInstance) Attributes() memcacheInstanceAttributes {
 	return memcacheInstanceAttributes{ref: terra.ReferenceResource(mi)}
 }
 
+// ImportState imports the given attribute values into [MemcacheInstance]'s state.
 func (mi *MemcacheInstance) ImportState(av io.Reader) error {
 	mi.state = &memcacheInstanceState{}
 	if err := json.NewDecoder(av).Decode(mi.state); err != nil {
@@ -49,10 +73,12 @@ func (mi *MemcacheInstance) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MemcacheInstance] has state.
 func (mi *MemcacheInstance) State() (*memcacheInstanceState, bool) {
 	return mi.state, mi.state != nil
 }
 
+// StateMust returns the state for [MemcacheInstance]. Panics if the state is nil.
 func (mi *MemcacheInstance) StateMust() *memcacheInstanceState {
 	if mi.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mi.Type(), mi.LocalName()))
@@ -60,10 +86,7 @@ func (mi *MemcacheInstance) StateMust() *memcacheInstanceState {
 	return mi.state
 }
 
-func (mi *MemcacheInstance) DependOn() terra.Reference {
-	return terra.ReferenceResource(mi)
-}
-
+// MemcacheInstanceArgs contains the configurations for google_memcache_instance.
 type MemcacheInstanceArgs struct {
 	// AuthorizedNetwork: string, optional
 	AuthorizedNetwork terra.StringValue `hcl:"authorized_network,attr"`
@@ -97,87 +120,98 @@ type MemcacheInstanceArgs struct {
 	NodeConfig *memcacheinstance.NodeConfig `hcl:"node_config,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *memcacheinstance.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MemcacheInstance depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type memcacheInstanceAttributes struct {
 	ref terra.Reference
 }
 
+// AuthorizedNetwork returns a reference to field authorized_network of google_memcache_instance.
 func (mi memcacheInstanceAttributes) AuthorizedNetwork() terra.StringValue {
-	return terra.ReferenceString(mi.ref.Append("authorized_network"))
+	return terra.ReferenceAsString(mi.ref.Append("authorized_network"))
 }
 
+// CreateTime returns a reference to field create_time of google_memcache_instance.
 func (mi memcacheInstanceAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(mi.ref.Append("create_time"))
+	return terra.ReferenceAsString(mi.ref.Append("create_time"))
 }
 
+// DiscoveryEndpoint returns a reference to field discovery_endpoint of google_memcache_instance.
 func (mi memcacheInstanceAttributes) DiscoveryEndpoint() terra.StringValue {
-	return terra.ReferenceString(mi.ref.Append("discovery_endpoint"))
+	return terra.ReferenceAsString(mi.ref.Append("discovery_endpoint"))
 }
 
+// DisplayName returns a reference to field display_name of google_memcache_instance.
 func (mi memcacheInstanceAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(mi.ref.Append("display_name"))
+	return terra.ReferenceAsString(mi.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of google_memcache_instance.
 func (mi memcacheInstanceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mi.ref.Append("id"))
+	return terra.ReferenceAsString(mi.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_memcache_instance.
 func (mi memcacheInstanceAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mi.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](mi.ref.Append("labels"))
 }
 
+// MemcacheFullVersion returns a reference to field memcache_full_version of google_memcache_instance.
 func (mi memcacheInstanceAttributes) MemcacheFullVersion() terra.StringValue {
-	return terra.ReferenceString(mi.ref.Append("memcache_full_version"))
+	return terra.ReferenceAsString(mi.ref.Append("memcache_full_version"))
 }
 
+// MemcacheVersion returns a reference to field memcache_version of google_memcache_instance.
 func (mi memcacheInstanceAttributes) MemcacheVersion() terra.StringValue {
-	return terra.ReferenceString(mi.ref.Append("memcache_version"))
+	return terra.ReferenceAsString(mi.ref.Append("memcache_version"))
 }
 
+// Name returns a reference to field name of google_memcache_instance.
 func (mi memcacheInstanceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mi.ref.Append("name"))
+	return terra.ReferenceAsString(mi.ref.Append("name"))
 }
 
+// NodeCount returns a reference to field node_count of google_memcache_instance.
 func (mi memcacheInstanceAttributes) NodeCount() terra.NumberValue {
-	return terra.ReferenceNumber(mi.ref.Append("node_count"))
+	return terra.ReferenceAsNumber(mi.ref.Append("node_count"))
 }
 
+// Project returns a reference to field project of google_memcache_instance.
 func (mi memcacheInstanceAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(mi.ref.Append("project"))
+	return terra.ReferenceAsString(mi.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_memcache_instance.
 func (mi memcacheInstanceAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(mi.ref.Append("region"))
+	return terra.ReferenceAsString(mi.ref.Append("region"))
 }
 
+// Zones returns a reference to field zones of google_memcache_instance.
 func (mi memcacheInstanceAttributes) Zones() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](mi.ref.Append("zones"))
+	return terra.ReferenceAsSet[terra.StringValue](mi.ref.Append("zones"))
 }
 
 func (mi memcacheInstanceAttributes) MaintenanceSchedule() terra.ListValue[memcacheinstance.MaintenanceScheduleAttributes] {
-	return terra.ReferenceList[memcacheinstance.MaintenanceScheduleAttributes](mi.ref.Append("maintenance_schedule"))
+	return terra.ReferenceAsList[memcacheinstance.MaintenanceScheduleAttributes](mi.ref.Append("maintenance_schedule"))
 }
 
 func (mi memcacheInstanceAttributes) MemcacheNodes() terra.ListValue[memcacheinstance.MemcacheNodesAttributes] {
-	return terra.ReferenceList[memcacheinstance.MemcacheNodesAttributes](mi.ref.Append("memcache_nodes"))
+	return terra.ReferenceAsList[memcacheinstance.MemcacheNodesAttributes](mi.ref.Append("memcache_nodes"))
 }
 
 func (mi memcacheInstanceAttributes) MaintenancePolicy() terra.ListValue[memcacheinstance.MaintenancePolicyAttributes] {
-	return terra.ReferenceList[memcacheinstance.MaintenancePolicyAttributes](mi.ref.Append("maintenance_policy"))
+	return terra.ReferenceAsList[memcacheinstance.MaintenancePolicyAttributes](mi.ref.Append("maintenance_policy"))
 }
 
 func (mi memcacheInstanceAttributes) MemcacheParameters() terra.ListValue[memcacheinstance.MemcacheParametersAttributes] {
-	return terra.ReferenceList[memcacheinstance.MemcacheParametersAttributes](mi.ref.Append("memcache_parameters"))
+	return terra.ReferenceAsList[memcacheinstance.MemcacheParametersAttributes](mi.ref.Append("memcache_parameters"))
 }
 
 func (mi memcacheInstanceAttributes) NodeConfig() terra.ListValue[memcacheinstance.NodeConfigAttributes] {
-	return terra.ReferenceList[memcacheinstance.NodeConfigAttributes](mi.ref.Append("node_config"))
+	return terra.ReferenceAsList[memcacheinstance.NodeConfigAttributes](mi.ref.Append("node_config"))
 }
 
 func (mi memcacheInstanceAttributes) Timeouts() memcacheinstance.TimeoutsAttributes {
-	return terra.ReferenceSingle[memcacheinstance.TimeoutsAttributes](mi.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[memcacheinstance.TimeoutsAttributes](mi.ref.Append("timeouts"))
 }
 
 type memcacheInstanceState struct {

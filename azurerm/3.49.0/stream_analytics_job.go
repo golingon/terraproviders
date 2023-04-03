@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewStreamAnalyticsJob creates a new instance of [StreamAnalyticsJob].
 func NewStreamAnalyticsJob(name string, args StreamAnalyticsJobArgs) *StreamAnalyticsJob {
 	return &StreamAnalyticsJob{
 		Args: args,
@@ -19,28 +20,51 @@ func NewStreamAnalyticsJob(name string, args StreamAnalyticsJobArgs) *StreamAnal
 
 var _ terra.Resource = (*StreamAnalyticsJob)(nil)
 
+// StreamAnalyticsJob represents the Terraform resource azurerm_stream_analytics_job.
 type StreamAnalyticsJob struct {
-	Name  string
-	Args  StreamAnalyticsJobArgs
-	state *streamAnalyticsJobState
+	Name      string
+	Args      StreamAnalyticsJobArgs
+	state     *streamAnalyticsJobState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [StreamAnalyticsJob].
 func (saj *StreamAnalyticsJob) Type() string {
 	return "azurerm_stream_analytics_job"
 }
 
+// LocalName returns the local name for [StreamAnalyticsJob].
 func (saj *StreamAnalyticsJob) LocalName() string {
 	return saj.Name
 }
 
+// Configuration returns the configuration (args) for [StreamAnalyticsJob].
 func (saj *StreamAnalyticsJob) Configuration() interface{} {
 	return saj.Args
 }
 
+// DependOn is used for other resources to depend on [StreamAnalyticsJob].
+func (saj *StreamAnalyticsJob) DependOn() terra.Reference {
+	return terra.ReferenceResource(saj)
+}
+
+// Dependencies returns the list of resources [StreamAnalyticsJob] depends_on.
+func (saj *StreamAnalyticsJob) Dependencies() terra.Dependencies {
+	return saj.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [StreamAnalyticsJob].
+func (saj *StreamAnalyticsJob) LifecycleManagement() *terra.Lifecycle {
+	return saj.Lifecycle
+}
+
+// Attributes returns the attributes for [StreamAnalyticsJob].
 func (saj *StreamAnalyticsJob) Attributes() streamAnalyticsJobAttributes {
 	return streamAnalyticsJobAttributes{ref: terra.ReferenceResource(saj)}
 }
 
+// ImportState imports the given attribute values into [StreamAnalyticsJob]'s state.
 func (saj *StreamAnalyticsJob) ImportState(av io.Reader) error {
 	saj.state = &streamAnalyticsJobState{}
 	if err := json.NewDecoder(av).Decode(saj.state); err != nil {
@@ -49,10 +73,12 @@ func (saj *StreamAnalyticsJob) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [StreamAnalyticsJob] has state.
 func (saj *StreamAnalyticsJob) State() (*streamAnalyticsJobState, bool) {
 	return saj.state, saj.state != nil
 }
 
+// StateMust returns the state for [StreamAnalyticsJob]. Panics if the state is nil.
 func (saj *StreamAnalyticsJob) StateMust() *streamAnalyticsJobState {
 	if saj.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", saj.Type(), saj.LocalName()))
@@ -60,10 +86,7 @@ func (saj *StreamAnalyticsJob) StateMust() *streamAnalyticsJobState {
 	return saj.state
 }
 
-func (saj *StreamAnalyticsJob) DependOn() terra.Reference {
-	return terra.ReferenceResource(saj)
-}
-
+// StreamAnalyticsJobArgs contains the configurations for azurerm_stream_analytics_job.
 type StreamAnalyticsJobArgs struct {
 	// CompatibilityLevel: string, optional
 	CompatibilityLevel terra.StringValue `hcl:"compatibility_level,attr"`
@@ -103,91 +126,106 @@ type StreamAnalyticsJobArgs struct {
 	JobStorageAccount []streamanalyticsjob.JobStorageAccount `hcl:"job_storage_account,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *streamanalyticsjob.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that StreamAnalyticsJob depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type streamAnalyticsJobAttributes struct {
 	ref terra.Reference
 }
 
+// CompatibilityLevel returns a reference to field compatibility_level of azurerm_stream_analytics_job.
 func (saj streamAnalyticsJobAttributes) CompatibilityLevel() terra.StringValue {
-	return terra.ReferenceString(saj.ref.Append("compatibility_level"))
+	return terra.ReferenceAsString(saj.ref.Append("compatibility_level"))
 }
 
+// ContentStoragePolicy returns a reference to field content_storage_policy of azurerm_stream_analytics_job.
 func (saj streamAnalyticsJobAttributes) ContentStoragePolicy() terra.StringValue {
-	return terra.ReferenceString(saj.ref.Append("content_storage_policy"))
+	return terra.ReferenceAsString(saj.ref.Append("content_storage_policy"))
 }
 
+// DataLocale returns a reference to field data_locale of azurerm_stream_analytics_job.
 func (saj streamAnalyticsJobAttributes) DataLocale() terra.StringValue {
-	return terra.ReferenceString(saj.ref.Append("data_locale"))
+	return terra.ReferenceAsString(saj.ref.Append("data_locale"))
 }
 
+// EventsLateArrivalMaxDelayInSeconds returns a reference to field events_late_arrival_max_delay_in_seconds of azurerm_stream_analytics_job.
 func (saj streamAnalyticsJobAttributes) EventsLateArrivalMaxDelayInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(saj.ref.Append("events_late_arrival_max_delay_in_seconds"))
+	return terra.ReferenceAsNumber(saj.ref.Append("events_late_arrival_max_delay_in_seconds"))
 }
 
+// EventsOutOfOrderMaxDelayInSeconds returns a reference to field events_out_of_order_max_delay_in_seconds of azurerm_stream_analytics_job.
 func (saj streamAnalyticsJobAttributes) EventsOutOfOrderMaxDelayInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(saj.ref.Append("events_out_of_order_max_delay_in_seconds"))
+	return terra.ReferenceAsNumber(saj.ref.Append("events_out_of_order_max_delay_in_seconds"))
 }
 
+// EventsOutOfOrderPolicy returns a reference to field events_out_of_order_policy of azurerm_stream_analytics_job.
 func (saj streamAnalyticsJobAttributes) EventsOutOfOrderPolicy() terra.StringValue {
-	return terra.ReferenceString(saj.ref.Append("events_out_of_order_policy"))
+	return terra.ReferenceAsString(saj.ref.Append("events_out_of_order_policy"))
 }
 
+// Id returns a reference to field id of azurerm_stream_analytics_job.
 func (saj streamAnalyticsJobAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(saj.ref.Append("id"))
+	return terra.ReferenceAsString(saj.ref.Append("id"))
 }
 
+// JobId returns a reference to field job_id of azurerm_stream_analytics_job.
 func (saj streamAnalyticsJobAttributes) JobId() terra.StringValue {
-	return terra.ReferenceString(saj.ref.Append("job_id"))
+	return terra.ReferenceAsString(saj.ref.Append("job_id"))
 }
 
+// Location returns a reference to field location of azurerm_stream_analytics_job.
 func (saj streamAnalyticsJobAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(saj.ref.Append("location"))
+	return terra.ReferenceAsString(saj.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_stream_analytics_job.
 func (saj streamAnalyticsJobAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(saj.ref.Append("name"))
+	return terra.ReferenceAsString(saj.ref.Append("name"))
 }
 
+// OutputErrorPolicy returns a reference to field output_error_policy of azurerm_stream_analytics_job.
 func (saj streamAnalyticsJobAttributes) OutputErrorPolicy() terra.StringValue {
-	return terra.ReferenceString(saj.ref.Append("output_error_policy"))
+	return terra.ReferenceAsString(saj.ref.Append("output_error_policy"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_stream_analytics_job.
 func (saj streamAnalyticsJobAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(saj.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(saj.ref.Append("resource_group_name"))
 }
 
+// StreamAnalyticsClusterId returns a reference to field stream_analytics_cluster_id of azurerm_stream_analytics_job.
 func (saj streamAnalyticsJobAttributes) StreamAnalyticsClusterId() terra.StringValue {
-	return terra.ReferenceString(saj.ref.Append("stream_analytics_cluster_id"))
+	return terra.ReferenceAsString(saj.ref.Append("stream_analytics_cluster_id"))
 }
 
+// StreamingUnits returns a reference to field streaming_units of azurerm_stream_analytics_job.
 func (saj streamAnalyticsJobAttributes) StreamingUnits() terra.NumberValue {
-	return terra.ReferenceNumber(saj.ref.Append("streaming_units"))
+	return terra.ReferenceAsNumber(saj.ref.Append("streaming_units"))
 }
 
+// Tags returns a reference to field tags of azurerm_stream_analytics_job.
 func (saj streamAnalyticsJobAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](saj.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](saj.ref.Append("tags"))
 }
 
+// TransformationQuery returns a reference to field transformation_query of azurerm_stream_analytics_job.
 func (saj streamAnalyticsJobAttributes) TransformationQuery() terra.StringValue {
-	return terra.ReferenceString(saj.ref.Append("transformation_query"))
+	return terra.ReferenceAsString(saj.ref.Append("transformation_query"))
 }
 
+// Type returns a reference to field type of azurerm_stream_analytics_job.
 func (saj streamAnalyticsJobAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(saj.ref.Append("type"))
+	return terra.ReferenceAsString(saj.ref.Append("type"))
 }
 
 func (saj streamAnalyticsJobAttributes) Identity() terra.ListValue[streamanalyticsjob.IdentityAttributes] {
-	return terra.ReferenceList[streamanalyticsjob.IdentityAttributes](saj.ref.Append("identity"))
+	return terra.ReferenceAsList[streamanalyticsjob.IdentityAttributes](saj.ref.Append("identity"))
 }
 
 func (saj streamAnalyticsJobAttributes) JobStorageAccount() terra.ListValue[streamanalyticsjob.JobStorageAccountAttributes] {
-	return terra.ReferenceList[streamanalyticsjob.JobStorageAccountAttributes](saj.ref.Append("job_storage_account"))
+	return terra.ReferenceAsList[streamanalyticsjob.JobStorageAccountAttributes](saj.ref.Append("job_storage_account"))
 }
 
 func (saj streamAnalyticsJobAttributes) Timeouts() streamanalyticsjob.TimeoutsAttributes {
-	return terra.ReferenceSingle[streamanalyticsjob.TimeoutsAttributes](saj.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[streamanalyticsjob.TimeoutsAttributes](saj.ref.Append("timeouts"))
 }
 
 type streamAnalyticsJobState struct {

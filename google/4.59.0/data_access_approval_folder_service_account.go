@@ -4,6 +4,7 @@ package google
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataAccessApprovalFolderServiceAccount creates a new instance of [DataAccessApprovalFolderServiceAccount].
 func NewDataAccessApprovalFolderServiceAccount(name string, args DataAccessApprovalFolderServiceAccountArgs) *DataAccessApprovalFolderServiceAccount {
 	return &DataAccessApprovalFolderServiceAccount{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataAccessApprovalFolderServiceAccount(name string, args DataAccessAppro
 
 var _ terra.DataResource = (*DataAccessApprovalFolderServiceAccount)(nil)
 
+// DataAccessApprovalFolderServiceAccount represents the Terraform data resource google_access_approval_folder_service_account.
 type DataAccessApprovalFolderServiceAccount struct {
 	Name string
 	Args DataAccessApprovalFolderServiceAccountArgs
 }
 
+// DataSource returns the Terraform object type for [DataAccessApprovalFolderServiceAccount].
 func (aafsa *DataAccessApprovalFolderServiceAccount) DataSource() string {
 	return "google_access_approval_folder_service_account"
 }
 
+// LocalName returns the local name for [DataAccessApprovalFolderServiceAccount].
 func (aafsa *DataAccessApprovalFolderServiceAccount) LocalName() string {
 	return aafsa.Name
 }
 
+// Configuration returns the configuration (args) for [DataAccessApprovalFolderServiceAccount].
 func (aafsa *DataAccessApprovalFolderServiceAccount) Configuration() interface{} {
 	return aafsa.Args
 }
 
+// Attributes returns the attributes for [DataAccessApprovalFolderServiceAccount].
 func (aafsa *DataAccessApprovalFolderServiceAccount) Attributes() dataAccessApprovalFolderServiceAccountAttributes {
 	return dataAccessApprovalFolderServiceAccountAttributes{ref: terra.ReferenceDataResource(aafsa)}
 }
 
+// DataAccessApprovalFolderServiceAccountArgs contains the configurations for google_access_approval_folder_service_account.
 type DataAccessApprovalFolderServiceAccountArgs struct {
 	// FolderId: string, required
 	FolderId terra.StringValue `hcl:"folder_id,attr" validate:"required"`
@@ -44,18 +51,22 @@ type dataAccessApprovalFolderServiceAccountAttributes struct {
 	ref terra.Reference
 }
 
+// AccountEmail returns a reference to field account_email of google_access_approval_folder_service_account.
 func (aafsa dataAccessApprovalFolderServiceAccountAttributes) AccountEmail() terra.StringValue {
-	return terra.ReferenceString(aafsa.ref.Append("account_email"))
+	return terra.ReferenceAsString(aafsa.ref.Append("account_email"))
 }
 
+// FolderId returns a reference to field folder_id of google_access_approval_folder_service_account.
 func (aafsa dataAccessApprovalFolderServiceAccountAttributes) FolderId() terra.StringValue {
-	return terra.ReferenceString(aafsa.ref.Append("folder_id"))
+	return terra.ReferenceAsString(aafsa.ref.Append("folder_id"))
 }
 
+// Id returns a reference to field id of google_access_approval_folder_service_account.
 func (aafsa dataAccessApprovalFolderServiceAccountAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(aafsa.ref.Append("id"))
+	return terra.ReferenceAsString(aafsa.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_access_approval_folder_service_account.
 func (aafsa dataAccessApprovalFolderServiceAccountAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(aafsa.ref.Append("name"))
+	return terra.ReferenceAsString(aafsa.ref.Append("name"))
 }

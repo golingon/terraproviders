@@ -38,7 +38,7 @@ func (c CommandAttributes) InternalWithRef(ref terra.Reference) CommandAttribute
 	return CommandAttributes{ref: ref}
 }
 
-func (c CommandAttributes) InternalTokens() hclwrite.Tokens {
+func (c CommandAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -66,7 +66,7 @@ func (ep ExecutionPropertyAttributes) InternalWithRef(ref terra.Reference) Execu
 	return ExecutionPropertyAttributes{ref: ref}
 }
 
-func (ep ExecutionPropertyAttributes) InternalTokens() hclwrite.Tokens {
+func (ep ExecutionPropertyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ep.ref.InternalTokens()
 }
 
@@ -86,7 +86,7 @@ func (np NotificationPropertyAttributes) InternalWithRef(ref terra.Reference) No
 	return NotificationPropertyAttributes{ref: ref}
 }
 
-func (np NotificationPropertyAttributes) InternalTokens() hclwrite.Tokens {
+func (np NotificationPropertyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return np.ref.InternalTokens()
 }
 

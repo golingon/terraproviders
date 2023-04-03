@@ -26,7 +26,7 @@ func (ic InsightsConfigurationAttributes) InternalWithRef(ref terra.Reference) I
 	return InsightsConfigurationAttributes{ref: ref}
 }
 
-func (ic InsightsConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ic InsightsConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ic.ref.InternalTokens()
 }
 

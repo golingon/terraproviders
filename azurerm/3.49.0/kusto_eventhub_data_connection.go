@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewKustoEventhubDataConnection creates a new instance of [KustoEventhubDataConnection].
 func NewKustoEventhubDataConnection(name string, args KustoEventhubDataConnectionArgs) *KustoEventhubDataConnection {
 	return &KustoEventhubDataConnection{
 		Args: args,
@@ -19,28 +20,51 @@ func NewKustoEventhubDataConnection(name string, args KustoEventhubDataConnectio
 
 var _ terra.Resource = (*KustoEventhubDataConnection)(nil)
 
+// KustoEventhubDataConnection represents the Terraform resource azurerm_kusto_eventhub_data_connection.
 type KustoEventhubDataConnection struct {
-	Name  string
-	Args  KustoEventhubDataConnectionArgs
-	state *kustoEventhubDataConnectionState
+	Name      string
+	Args      KustoEventhubDataConnectionArgs
+	state     *kustoEventhubDataConnectionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [KustoEventhubDataConnection].
 func (kedc *KustoEventhubDataConnection) Type() string {
 	return "azurerm_kusto_eventhub_data_connection"
 }
 
+// LocalName returns the local name for [KustoEventhubDataConnection].
 func (kedc *KustoEventhubDataConnection) LocalName() string {
 	return kedc.Name
 }
 
+// Configuration returns the configuration (args) for [KustoEventhubDataConnection].
 func (kedc *KustoEventhubDataConnection) Configuration() interface{} {
 	return kedc.Args
 }
 
+// DependOn is used for other resources to depend on [KustoEventhubDataConnection].
+func (kedc *KustoEventhubDataConnection) DependOn() terra.Reference {
+	return terra.ReferenceResource(kedc)
+}
+
+// Dependencies returns the list of resources [KustoEventhubDataConnection] depends_on.
+func (kedc *KustoEventhubDataConnection) Dependencies() terra.Dependencies {
+	return kedc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [KustoEventhubDataConnection].
+func (kedc *KustoEventhubDataConnection) LifecycleManagement() *terra.Lifecycle {
+	return kedc.Lifecycle
+}
+
+// Attributes returns the attributes for [KustoEventhubDataConnection].
 func (kedc *KustoEventhubDataConnection) Attributes() kustoEventhubDataConnectionAttributes {
 	return kustoEventhubDataConnectionAttributes{ref: terra.ReferenceResource(kedc)}
 }
 
+// ImportState imports the given attribute values into [KustoEventhubDataConnection]'s state.
 func (kedc *KustoEventhubDataConnection) ImportState(av io.Reader) error {
 	kedc.state = &kustoEventhubDataConnectionState{}
 	if err := json.NewDecoder(av).Decode(kedc.state); err != nil {
@@ -49,10 +73,12 @@ func (kedc *KustoEventhubDataConnection) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [KustoEventhubDataConnection] has state.
 func (kedc *KustoEventhubDataConnection) State() (*kustoEventhubDataConnectionState, bool) {
 	return kedc.state, kedc.state != nil
 }
 
+// StateMust returns the state for [KustoEventhubDataConnection]. Panics if the state is nil.
 func (kedc *KustoEventhubDataConnection) StateMust() *kustoEventhubDataConnectionState {
 	if kedc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", kedc.Type(), kedc.LocalName()))
@@ -60,10 +86,7 @@ func (kedc *KustoEventhubDataConnection) StateMust() *kustoEventhubDataConnectio
 	return kedc.state
 }
 
-func (kedc *KustoEventhubDataConnection) DependOn() terra.Reference {
-	return terra.ReferenceResource(kedc)
-}
-
+// KustoEventhubDataConnectionArgs contains the configurations for azurerm_kusto_eventhub_data_connection.
 type KustoEventhubDataConnectionArgs struct {
 	// ClusterName: string, required
 	ClusterName terra.StringValue `hcl:"cluster_name,attr" validate:"required"`
@@ -97,75 +120,88 @@ type KustoEventhubDataConnectionArgs struct {
 	TableName terra.StringValue `hcl:"table_name,attr"`
 	// Timeouts: optional
 	Timeouts *kustoeventhubdataconnection.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that KustoEventhubDataConnection depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type kustoEventhubDataConnectionAttributes struct {
 	ref terra.Reference
 }
 
+// ClusterName returns a reference to field cluster_name of azurerm_kusto_eventhub_data_connection.
 func (kedc kustoEventhubDataConnectionAttributes) ClusterName() terra.StringValue {
-	return terra.ReferenceString(kedc.ref.Append("cluster_name"))
+	return terra.ReferenceAsString(kedc.ref.Append("cluster_name"))
 }
 
+// Compression returns a reference to field compression of azurerm_kusto_eventhub_data_connection.
 func (kedc kustoEventhubDataConnectionAttributes) Compression() terra.StringValue {
-	return terra.ReferenceString(kedc.ref.Append("compression"))
+	return terra.ReferenceAsString(kedc.ref.Append("compression"))
 }
 
+// ConsumerGroup returns a reference to field consumer_group of azurerm_kusto_eventhub_data_connection.
 func (kedc kustoEventhubDataConnectionAttributes) ConsumerGroup() terra.StringValue {
-	return terra.ReferenceString(kedc.ref.Append("consumer_group"))
+	return terra.ReferenceAsString(kedc.ref.Append("consumer_group"))
 }
 
+// DataFormat returns a reference to field data_format of azurerm_kusto_eventhub_data_connection.
 func (kedc kustoEventhubDataConnectionAttributes) DataFormat() terra.StringValue {
-	return terra.ReferenceString(kedc.ref.Append("data_format"))
+	return terra.ReferenceAsString(kedc.ref.Append("data_format"))
 }
 
+// DatabaseName returns a reference to field database_name of azurerm_kusto_eventhub_data_connection.
 func (kedc kustoEventhubDataConnectionAttributes) DatabaseName() terra.StringValue {
-	return terra.ReferenceString(kedc.ref.Append("database_name"))
+	return terra.ReferenceAsString(kedc.ref.Append("database_name"))
 }
 
+// DatabaseRoutingType returns a reference to field database_routing_type of azurerm_kusto_eventhub_data_connection.
 func (kedc kustoEventhubDataConnectionAttributes) DatabaseRoutingType() terra.StringValue {
-	return terra.ReferenceString(kedc.ref.Append("database_routing_type"))
+	return terra.ReferenceAsString(kedc.ref.Append("database_routing_type"))
 }
 
+// EventSystemProperties returns a reference to field event_system_properties of azurerm_kusto_eventhub_data_connection.
 func (kedc kustoEventhubDataConnectionAttributes) EventSystemProperties() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](kedc.ref.Append("event_system_properties"))
+	return terra.ReferenceAsList[terra.StringValue](kedc.ref.Append("event_system_properties"))
 }
 
+// EventhubId returns a reference to field eventhub_id of azurerm_kusto_eventhub_data_connection.
 func (kedc kustoEventhubDataConnectionAttributes) EventhubId() terra.StringValue {
-	return terra.ReferenceString(kedc.ref.Append("eventhub_id"))
+	return terra.ReferenceAsString(kedc.ref.Append("eventhub_id"))
 }
 
+// Id returns a reference to field id of azurerm_kusto_eventhub_data_connection.
 func (kedc kustoEventhubDataConnectionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kedc.ref.Append("id"))
+	return terra.ReferenceAsString(kedc.ref.Append("id"))
 }
 
+// IdentityId returns a reference to field identity_id of azurerm_kusto_eventhub_data_connection.
 func (kedc kustoEventhubDataConnectionAttributes) IdentityId() terra.StringValue {
-	return terra.ReferenceString(kedc.ref.Append("identity_id"))
+	return terra.ReferenceAsString(kedc.ref.Append("identity_id"))
 }
 
+// Location returns a reference to field location of azurerm_kusto_eventhub_data_connection.
 func (kedc kustoEventhubDataConnectionAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(kedc.ref.Append("location"))
+	return terra.ReferenceAsString(kedc.ref.Append("location"))
 }
 
+// MappingRuleName returns a reference to field mapping_rule_name of azurerm_kusto_eventhub_data_connection.
 func (kedc kustoEventhubDataConnectionAttributes) MappingRuleName() terra.StringValue {
-	return terra.ReferenceString(kedc.ref.Append("mapping_rule_name"))
+	return terra.ReferenceAsString(kedc.ref.Append("mapping_rule_name"))
 }
 
+// Name returns a reference to field name of azurerm_kusto_eventhub_data_connection.
 func (kedc kustoEventhubDataConnectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(kedc.ref.Append("name"))
+	return terra.ReferenceAsString(kedc.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_kusto_eventhub_data_connection.
 func (kedc kustoEventhubDataConnectionAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(kedc.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(kedc.ref.Append("resource_group_name"))
 }
 
+// TableName returns a reference to field table_name of azurerm_kusto_eventhub_data_connection.
 func (kedc kustoEventhubDataConnectionAttributes) TableName() terra.StringValue {
-	return terra.ReferenceString(kedc.ref.Append("table_name"))
+	return terra.ReferenceAsString(kedc.ref.Append("table_name"))
 }
 
 func (kedc kustoEventhubDataConnectionAttributes) Timeouts() kustoeventhubdataconnection.TimeoutsAttributes {
-	return terra.ReferenceSingle[kustoeventhubdataconnection.TimeoutsAttributes](kedc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[kustoeventhubdataconnection.TimeoutsAttributes](kedc.ref.Append("timeouts"))
 }
 
 type kustoEventhubDataConnectionState struct {

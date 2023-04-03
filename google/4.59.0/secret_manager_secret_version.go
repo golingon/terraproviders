@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSecretManagerSecretVersion creates a new instance of [SecretManagerSecretVersion].
 func NewSecretManagerSecretVersion(name string, args SecretManagerSecretVersionArgs) *SecretManagerSecretVersion {
 	return &SecretManagerSecretVersion{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSecretManagerSecretVersion(name string, args SecretManagerSecretVersionA
 
 var _ terra.Resource = (*SecretManagerSecretVersion)(nil)
 
+// SecretManagerSecretVersion represents the Terraform resource google_secret_manager_secret_version.
 type SecretManagerSecretVersion struct {
-	Name  string
-	Args  SecretManagerSecretVersionArgs
-	state *secretManagerSecretVersionState
+	Name      string
+	Args      SecretManagerSecretVersionArgs
+	state     *secretManagerSecretVersionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SecretManagerSecretVersion].
 func (smsv *SecretManagerSecretVersion) Type() string {
 	return "google_secret_manager_secret_version"
 }
 
+// LocalName returns the local name for [SecretManagerSecretVersion].
 func (smsv *SecretManagerSecretVersion) LocalName() string {
 	return smsv.Name
 }
 
+// Configuration returns the configuration (args) for [SecretManagerSecretVersion].
 func (smsv *SecretManagerSecretVersion) Configuration() interface{} {
 	return smsv.Args
 }
 
+// DependOn is used for other resources to depend on [SecretManagerSecretVersion].
+func (smsv *SecretManagerSecretVersion) DependOn() terra.Reference {
+	return terra.ReferenceResource(smsv)
+}
+
+// Dependencies returns the list of resources [SecretManagerSecretVersion] depends_on.
+func (smsv *SecretManagerSecretVersion) Dependencies() terra.Dependencies {
+	return smsv.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SecretManagerSecretVersion].
+func (smsv *SecretManagerSecretVersion) LifecycleManagement() *terra.Lifecycle {
+	return smsv.Lifecycle
+}
+
+// Attributes returns the attributes for [SecretManagerSecretVersion].
 func (smsv *SecretManagerSecretVersion) Attributes() secretManagerSecretVersionAttributes {
 	return secretManagerSecretVersionAttributes{ref: terra.ReferenceResource(smsv)}
 }
 
+// ImportState imports the given attribute values into [SecretManagerSecretVersion]'s state.
 func (smsv *SecretManagerSecretVersion) ImportState(av io.Reader) error {
 	smsv.state = &secretManagerSecretVersionState{}
 	if err := json.NewDecoder(av).Decode(smsv.state); err != nil {
@@ -49,10 +73,12 @@ func (smsv *SecretManagerSecretVersion) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SecretManagerSecretVersion] has state.
 func (smsv *SecretManagerSecretVersion) State() (*secretManagerSecretVersionState, bool) {
 	return smsv.state, smsv.state != nil
 }
 
+// StateMust returns the state for [SecretManagerSecretVersion]. Panics if the state is nil.
 func (smsv *SecretManagerSecretVersion) StateMust() *secretManagerSecretVersionState {
 	if smsv.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", smsv.Type(), smsv.LocalName()))
@@ -60,10 +86,7 @@ func (smsv *SecretManagerSecretVersion) StateMust() *secretManagerSecretVersionS
 	return smsv.state
 }
 
-func (smsv *SecretManagerSecretVersion) DependOn() terra.Reference {
-	return terra.ReferenceResource(smsv)
-}
-
+// SecretManagerSecretVersionArgs contains the configurations for google_secret_manager_secret_version.
 type SecretManagerSecretVersionArgs struct {
 	// Enabled: bool, optional
 	Enabled terra.BoolValue `hcl:"enabled,attr"`
@@ -75,47 +98,53 @@ type SecretManagerSecretVersionArgs struct {
 	SecretData terra.StringValue `hcl:"secret_data,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *secretmanagersecretversion.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SecretManagerSecretVersion depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type secretManagerSecretVersionAttributes struct {
 	ref terra.Reference
 }
 
+// CreateTime returns a reference to field create_time of google_secret_manager_secret_version.
 func (smsv secretManagerSecretVersionAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(smsv.ref.Append("create_time"))
+	return terra.ReferenceAsString(smsv.ref.Append("create_time"))
 }
 
+// DestroyTime returns a reference to field destroy_time of google_secret_manager_secret_version.
 func (smsv secretManagerSecretVersionAttributes) DestroyTime() terra.StringValue {
-	return terra.ReferenceString(smsv.ref.Append("destroy_time"))
+	return terra.ReferenceAsString(smsv.ref.Append("destroy_time"))
 }
 
+// Enabled returns a reference to field enabled of google_secret_manager_secret_version.
 func (smsv secretManagerSecretVersionAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(smsv.ref.Append("enabled"))
+	return terra.ReferenceAsBool(smsv.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of google_secret_manager_secret_version.
 func (smsv secretManagerSecretVersionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(smsv.ref.Append("id"))
+	return terra.ReferenceAsString(smsv.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_secret_manager_secret_version.
 func (smsv secretManagerSecretVersionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(smsv.ref.Append("name"))
+	return terra.ReferenceAsString(smsv.ref.Append("name"))
 }
 
+// Secret returns a reference to field secret of google_secret_manager_secret_version.
 func (smsv secretManagerSecretVersionAttributes) Secret() terra.StringValue {
-	return terra.ReferenceString(smsv.ref.Append("secret"))
+	return terra.ReferenceAsString(smsv.ref.Append("secret"))
 }
 
+// SecretData returns a reference to field secret_data of google_secret_manager_secret_version.
 func (smsv secretManagerSecretVersionAttributes) SecretData() terra.StringValue {
-	return terra.ReferenceString(smsv.ref.Append("secret_data"))
+	return terra.ReferenceAsString(smsv.ref.Append("secret_data"))
 }
 
+// Version returns a reference to field version of google_secret_manager_secret_version.
 func (smsv secretManagerSecretVersionAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(smsv.ref.Append("version"))
+	return terra.ReferenceAsString(smsv.ref.Append("version"))
 }
 
 func (smsv secretManagerSecretVersionAttributes) Timeouts() secretmanagersecretversion.TimeoutsAttributes {
-	return terra.ReferenceSingle[secretmanagersecretversion.TimeoutsAttributes](smsv.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[secretmanagersecretversion.TimeoutsAttributes](smsv.ref.Append("timeouts"))
 }
 
 type secretManagerSecretVersionState struct {

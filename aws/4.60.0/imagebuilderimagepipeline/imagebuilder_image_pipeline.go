@@ -35,7 +35,7 @@ func (itc ImageTestsConfigurationAttributes) InternalWithRef(ref terra.Reference
 	return ImageTestsConfigurationAttributes{ref: ref}
 }
 
-func (itc ImageTestsConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (itc ImageTestsConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return itc.ref.InternalTokens()
 }
 
@@ -59,7 +59,7 @@ func (s ScheduleAttributes) InternalWithRef(ref terra.Reference) ScheduleAttribu
 	return ScheduleAttributes{ref: ref}
 }
 
-func (s ScheduleAttributes) InternalTokens() hclwrite.Tokens {
+func (s ScheduleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 

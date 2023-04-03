@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewServicebusSubscriptionRule creates a new instance of [ServicebusSubscriptionRule].
 func NewServicebusSubscriptionRule(name string, args ServicebusSubscriptionRuleArgs) *ServicebusSubscriptionRule {
 	return &ServicebusSubscriptionRule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewServicebusSubscriptionRule(name string, args ServicebusSubscriptionRuleA
 
 var _ terra.Resource = (*ServicebusSubscriptionRule)(nil)
 
+// ServicebusSubscriptionRule represents the Terraform resource azurerm_servicebus_subscription_rule.
 type ServicebusSubscriptionRule struct {
-	Name  string
-	Args  ServicebusSubscriptionRuleArgs
-	state *servicebusSubscriptionRuleState
+	Name      string
+	Args      ServicebusSubscriptionRuleArgs
+	state     *servicebusSubscriptionRuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ServicebusSubscriptionRule].
 func (ssr *ServicebusSubscriptionRule) Type() string {
 	return "azurerm_servicebus_subscription_rule"
 }
 
+// LocalName returns the local name for [ServicebusSubscriptionRule].
 func (ssr *ServicebusSubscriptionRule) LocalName() string {
 	return ssr.Name
 }
 
+// Configuration returns the configuration (args) for [ServicebusSubscriptionRule].
 func (ssr *ServicebusSubscriptionRule) Configuration() interface{} {
 	return ssr.Args
 }
 
+// DependOn is used for other resources to depend on [ServicebusSubscriptionRule].
+func (ssr *ServicebusSubscriptionRule) DependOn() terra.Reference {
+	return terra.ReferenceResource(ssr)
+}
+
+// Dependencies returns the list of resources [ServicebusSubscriptionRule] depends_on.
+func (ssr *ServicebusSubscriptionRule) Dependencies() terra.Dependencies {
+	return ssr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ServicebusSubscriptionRule].
+func (ssr *ServicebusSubscriptionRule) LifecycleManagement() *terra.Lifecycle {
+	return ssr.Lifecycle
+}
+
+// Attributes returns the attributes for [ServicebusSubscriptionRule].
 func (ssr *ServicebusSubscriptionRule) Attributes() servicebusSubscriptionRuleAttributes {
 	return servicebusSubscriptionRuleAttributes{ref: terra.ReferenceResource(ssr)}
 }
 
+// ImportState imports the given attribute values into [ServicebusSubscriptionRule]'s state.
 func (ssr *ServicebusSubscriptionRule) ImportState(av io.Reader) error {
 	ssr.state = &servicebusSubscriptionRuleState{}
 	if err := json.NewDecoder(av).Decode(ssr.state); err != nil {
@@ -49,10 +73,12 @@ func (ssr *ServicebusSubscriptionRule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ServicebusSubscriptionRule] has state.
 func (ssr *ServicebusSubscriptionRule) State() (*servicebusSubscriptionRuleState, bool) {
 	return ssr.state, ssr.state != nil
 }
 
+// StateMust returns the state for [ServicebusSubscriptionRule]. Panics if the state is nil.
 func (ssr *ServicebusSubscriptionRule) StateMust() *servicebusSubscriptionRuleState {
 	if ssr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ssr.Type(), ssr.LocalName()))
@@ -60,10 +86,7 @@ func (ssr *ServicebusSubscriptionRule) StateMust() *servicebusSubscriptionRuleSt
 	return ssr.state
 }
 
-func (ssr *ServicebusSubscriptionRule) DependOn() terra.Reference {
-	return terra.ReferenceResource(ssr)
-}
-
+// ServicebusSubscriptionRuleArgs contains the configurations for azurerm_servicebus_subscription_rule.
 type ServicebusSubscriptionRuleArgs struct {
 	// Action: string, optional
 	Action terra.StringValue `hcl:"action,attr"`
@@ -81,47 +104,52 @@ type ServicebusSubscriptionRuleArgs struct {
 	CorrelationFilter *servicebussubscriptionrule.CorrelationFilter `hcl:"correlation_filter,block"`
 	// Timeouts: optional
 	Timeouts *servicebussubscriptionrule.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ServicebusSubscriptionRule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type servicebusSubscriptionRuleAttributes struct {
 	ref terra.Reference
 }
 
+// Action returns a reference to field action of azurerm_servicebus_subscription_rule.
 func (ssr servicebusSubscriptionRuleAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(ssr.ref.Append("action"))
+	return terra.ReferenceAsString(ssr.ref.Append("action"))
 }
 
+// FilterType returns a reference to field filter_type of azurerm_servicebus_subscription_rule.
 func (ssr servicebusSubscriptionRuleAttributes) FilterType() terra.StringValue {
-	return terra.ReferenceString(ssr.ref.Append("filter_type"))
+	return terra.ReferenceAsString(ssr.ref.Append("filter_type"))
 }
 
+// Id returns a reference to field id of azurerm_servicebus_subscription_rule.
 func (ssr servicebusSubscriptionRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ssr.ref.Append("id"))
+	return terra.ReferenceAsString(ssr.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_servicebus_subscription_rule.
 func (ssr servicebusSubscriptionRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ssr.ref.Append("name"))
+	return terra.ReferenceAsString(ssr.ref.Append("name"))
 }
 
+// SqlFilter returns a reference to field sql_filter of azurerm_servicebus_subscription_rule.
 func (ssr servicebusSubscriptionRuleAttributes) SqlFilter() terra.StringValue {
-	return terra.ReferenceString(ssr.ref.Append("sql_filter"))
+	return terra.ReferenceAsString(ssr.ref.Append("sql_filter"))
 }
 
+// SqlFilterCompatibilityLevel returns a reference to field sql_filter_compatibility_level of azurerm_servicebus_subscription_rule.
 func (ssr servicebusSubscriptionRuleAttributes) SqlFilterCompatibilityLevel() terra.NumberValue {
-	return terra.ReferenceNumber(ssr.ref.Append("sql_filter_compatibility_level"))
+	return terra.ReferenceAsNumber(ssr.ref.Append("sql_filter_compatibility_level"))
 }
 
+// SubscriptionId returns a reference to field subscription_id of azurerm_servicebus_subscription_rule.
 func (ssr servicebusSubscriptionRuleAttributes) SubscriptionId() terra.StringValue {
-	return terra.ReferenceString(ssr.ref.Append("subscription_id"))
+	return terra.ReferenceAsString(ssr.ref.Append("subscription_id"))
 }
 
 func (ssr servicebusSubscriptionRuleAttributes) CorrelationFilter() terra.ListValue[servicebussubscriptionrule.CorrelationFilterAttributes] {
-	return terra.ReferenceList[servicebussubscriptionrule.CorrelationFilterAttributes](ssr.ref.Append("correlation_filter"))
+	return terra.ReferenceAsList[servicebussubscriptionrule.CorrelationFilterAttributes](ssr.ref.Append("correlation_filter"))
 }
 
 func (ssr servicebusSubscriptionRuleAttributes) Timeouts() servicebussubscriptionrule.TimeoutsAttributes {
-	return terra.ReferenceSingle[servicebussubscriptionrule.TimeoutsAttributes](ssr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[servicebussubscriptionrule.TimeoutsAttributes](ssr.ref.Append("timeouts"))
 }
 
 type servicebusSubscriptionRuleState struct {

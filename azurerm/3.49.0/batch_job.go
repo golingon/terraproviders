@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBatchJob creates a new instance of [BatchJob].
 func NewBatchJob(name string, args BatchJobArgs) *BatchJob {
 	return &BatchJob{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBatchJob(name string, args BatchJobArgs) *BatchJob {
 
 var _ terra.Resource = (*BatchJob)(nil)
 
+// BatchJob represents the Terraform resource azurerm_batch_job.
 type BatchJob struct {
-	Name  string
-	Args  BatchJobArgs
-	state *batchJobState
+	Name      string
+	Args      BatchJobArgs
+	state     *batchJobState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BatchJob].
 func (bj *BatchJob) Type() string {
 	return "azurerm_batch_job"
 }
 
+// LocalName returns the local name for [BatchJob].
 func (bj *BatchJob) LocalName() string {
 	return bj.Name
 }
 
+// Configuration returns the configuration (args) for [BatchJob].
 func (bj *BatchJob) Configuration() interface{} {
 	return bj.Args
 }
 
+// DependOn is used for other resources to depend on [BatchJob].
+func (bj *BatchJob) DependOn() terra.Reference {
+	return terra.ReferenceResource(bj)
+}
+
+// Dependencies returns the list of resources [BatchJob] depends_on.
+func (bj *BatchJob) Dependencies() terra.Dependencies {
+	return bj.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BatchJob].
+func (bj *BatchJob) LifecycleManagement() *terra.Lifecycle {
+	return bj.Lifecycle
+}
+
+// Attributes returns the attributes for [BatchJob].
 func (bj *BatchJob) Attributes() batchJobAttributes {
 	return batchJobAttributes{ref: terra.ReferenceResource(bj)}
 }
 
+// ImportState imports the given attribute values into [BatchJob]'s state.
 func (bj *BatchJob) ImportState(av io.Reader) error {
 	bj.state = &batchJobState{}
 	if err := json.NewDecoder(av).Decode(bj.state); err != nil {
@@ -49,10 +73,12 @@ func (bj *BatchJob) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BatchJob] has state.
 func (bj *BatchJob) State() (*batchJobState, bool) {
 	return bj.state, bj.state != nil
 }
 
+// StateMust returns the state for [BatchJob]. Panics if the state is nil.
 func (bj *BatchJob) StateMust() *batchJobState {
 	if bj.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bj.Type(), bj.LocalName()))
@@ -60,10 +86,7 @@ func (bj *BatchJob) StateMust() *batchJobState {
 	return bj.state
 }
 
-func (bj *BatchJob) DependOn() terra.Reference {
-	return terra.ReferenceResource(bj)
-}
-
+// BatchJobArgs contains the configurations for azurerm_batch_job.
 type BatchJobArgs struct {
 	// BatchPoolId: string, required
 	BatchPoolId terra.StringValue `hcl:"batch_pool_id,attr" validate:"required"`
@@ -81,43 +104,48 @@ type BatchJobArgs struct {
 	TaskRetryMaximum terra.NumberValue `hcl:"task_retry_maximum,attr"`
 	// Timeouts: optional
 	Timeouts *batchjob.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that BatchJob depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type batchJobAttributes struct {
 	ref terra.Reference
 }
 
+// BatchPoolId returns a reference to field batch_pool_id of azurerm_batch_job.
 func (bj batchJobAttributes) BatchPoolId() terra.StringValue {
-	return terra.ReferenceString(bj.ref.Append("batch_pool_id"))
+	return terra.ReferenceAsString(bj.ref.Append("batch_pool_id"))
 }
 
+// CommonEnvironmentProperties returns a reference to field common_environment_properties of azurerm_batch_job.
 func (bj batchJobAttributes) CommonEnvironmentProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bj.ref.Append("common_environment_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](bj.ref.Append("common_environment_properties"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_batch_job.
 func (bj batchJobAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(bj.ref.Append("display_name"))
+	return terra.ReferenceAsString(bj.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of azurerm_batch_job.
 func (bj batchJobAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bj.ref.Append("id"))
+	return terra.ReferenceAsString(bj.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_batch_job.
 func (bj batchJobAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(bj.ref.Append("name"))
+	return terra.ReferenceAsString(bj.ref.Append("name"))
 }
 
+// Priority returns a reference to field priority of azurerm_batch_job.
 func (bj batchJobAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(bj.ref.Append("priority"))
+	return terra.ReferenceAsNumber(bj.ref.Append("priority"))
 }
 
+// TaskRetryMaximum returns a reference to field task_retry_maximum of azurerm_batch_job.
 func (bj batchJobAttributes) TaskRetryMaximum() terra.NumberValue {
-	return terra.ReferenceNumber(bj.ref.Append("task_retry_maximum"))
+	return terra.ReferenceAsNumber(bj.ref.Append("task_retry_maximum"))
 }
 
 func (bj batchJobAttributes) Timeouts() batchjob.TimeoutsAttributes {
-	return terra.ReferenceSingle[batchjob.TimeoutsAttributes](bj.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[batchjob.TimeoutsAttributes](bj.ref.Append("timeouts"))
 }
 
 type batchJobState struct {

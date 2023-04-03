@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCloudAssetFolderFeed creates a new instance of [CloudAssetFolderFeed].
 func NewCloudAssetFolderFeed(name string, args CloudAssetFolderFeedArgs) *CloudAssetFolderFeed {
 	return &CloudAssetFolderFeed{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCloudAssetFolderFeed(name string, args CloudAssetFolderFeedArgs) *CloudA
 
 var _ terra.Resource = (*CloudAssetFolderFeed)(nil)
 
+// CloudAssetFolderFeed represents the Terraform resource google_cloud_asset_folder_feed.
 type CloudAssetFolderFeed struct {
-	Name  string
-	Args  CloudAssetFolderFeedArgs
-	state *cloudAssetFolderFeedState
+	Name      string
+	Args      CloudAssetFolderFeedArgs
+	state     *cloudAssetFolderFeedState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudAssetFolderFeed].
 func (caff *CloudAssetFolderFeed) Type() string {
 	return "google_cloud_asset_folder_feed"
 }
 
+// LocalName returns the local name for [CloudAssetFolderFeed].
 func (caff *CloudAssetFolderFeed) LocalName() string {
 	return caff.Name
 }
 
+// Configuration returns the configuration (args) for [CloudAssetFolderFeed].
 func (caff *CloudAssetFolderFeed) Configuration() interface{} {
 	return caff.Args
 }
 
+// DependOn is used for other resources to depend on [CloudAssetFolderFeed].
+func (caff *CloudAssetFolderFeed) DependOn() terra.Reference {
+	return terra.ReferenceResource(caff)
+}
+
+// Dependencies returns the list of resources [CloudAssetFolderFeed] depends_on.
+func (caff *CloudAssetFolderFeed) Dependencies() terra.Dependencies {
+	return caff.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudAssetFolderFeed].
+func (caff *CloudAssetFolderFeed) LifecycleManagement() *terra.Lifecycle {
+	return caff.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudAssetFolderFeed].
 func (caff *CloudAssetFolderFeed) Attributes() cloudAssetFolderFeedAttributes {
 	return cloudAssetFolderFeedAttributes{ref: terra.ReferenceResource(caff)}
 }
 
+// ImportState imports the given attribute values into [CloudAssetFolderFeed]'s state.
 func (caff *CloudAssetFolderFeed) ImportState(av io.Reader) error {
 	caff.state = &cloudAssetFolderFeedState{}
 	if err := json.NewDecoder(av).Decode(caff.state); err != nil {
@@ -49,10 +73,12 @@ func (caff *CloudAssetFolderFeed) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudAssetFolderFeed] has state.
 func (caff *CloudAssetFolderFeed) State() (*cloudAssetFolderFeedState, bool) {
 	return caff.state, caff.state != nil
 }
 
+// StateMust returns the state for [CloudAssetFolderFeed]. Panics if the state is nil.
 func (caff *CloudAssetFolderFeed) StateMust() *cloudAssetFolderFeedState {
 	if caff.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", caff.Type(), caff.LocalName()))
@@ -60,10 +86,7 @@ func (caff *CloudAssetFolderFeed) StateMust() *cloudAssetFolderFeedState {
 	return caff.state
 }
 
-func (caff *CloudAssetFolderFeed) DependOn() terra.Reference {
-	return terra.ReferenceResource(caff)
-}
-
+// CloudAssetFolderFeedArgs contains the configurations for google_cloud_asset_folder_feed.
 type CloudAssetFolderFeedArgs struct {
 	// AssetNames: list of string, optional
 	AssetNames terra.ListValue[terra.StringValue] `hcl:"asset_names,attr"`
@@ -85,59 +108,66 @@ type CloudAssetFolderFeedArgs struct {
 	FeedOutputConfig *cloudassetfolderfeed.FeedOutputConfig `hcl:"feed_output_config,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *cloudassetfolderfeed.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that CloudAssetFolderFeed depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudAssetFolderFeedAttributes struct {
 	ref terra.Reference
 }
 
+// AssetNames returns a reference to field asset_names of google_cloud_asset_folder_feed.
 func (caff cloudAssetFolderFeedAttributes) AssetNames() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](caff.ref.Append("asset_names"))
+	return terra.ReferenceAsList[terra.StringValue](caff.ref.Append("asset_names"))
 }
 
+// AssetTypes returns a reference to field asset_types of google_cloud_asset_folder_feed.
 func (caff cloudAssetFolderFeedAttributes) AssetTypes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](caff.ref.Append("asset_types"))
+	return terra.ReferenceAsList[terra.StringValue](caff.ref.Append("asset_types"))
 }
 
+// BillingProject returns a reference to field billing_project of google_cloud_asset_folder_feed.
 func (caff cloudAssetFolderFeedAttributes) BillingProject() terra.StringValue {
-	return terra.ReferenceString(caff.ref.Append("billing_project"))
+	return terra.ReferenceAsString(caff.ref.Append("billing_project"))
 }
 
+// ContentType returns a reference to field content_type of google_cloud_asset_folder_feed.
 func (caff cloudAssetFolderFeedAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(caff.ref.Append("content_type"))
+	return terra.ReferenceAsString(caff.ref.Append("content_type"))
 }
 
+// FeedId returns a reference to field feed_id of google_cloud_asset_folder_feed.
 func (caff cloudAssetFolderFeedAttributes) FeedId() terra.StringValue {
-	return terra.ReferenceString(caff.ref.Append("feed_id"))
+	return terra.ReferenceAsString(caff.ref.Append("feed_id"))
 }
 
+// Folder returns a reference to field folder of google_cloud_asset_folder_feed.
 func (caff cloudAssetFolderFeedAttributes) Folder() terra.StringValue {
-	return terra.ReferenceString(caff.ref.Append("folder"))
+	return terra.ReferenceAsString(caff.ref.Append("folder"))
 }
 
+// FolderId returns a reference to field folder_id of google_cloud_asset_folder_feed.
 func (caff cloudAssetFolderFeedAttributes) FolderId() terra.StringValue {
-	return terra.ReferenceString(caff.ref.Append("folder_id"))
+	return terra.ReferenceAsString(caff.ref.Append("folder_id"))
 }
 
+// Id returns a reference to field id of google_cloud_asset_folder_feed.
 func (caff cloudAssetFolderFeedAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(caff.ref.Append("id"))
+	return terra.ReferenceAsString(caff.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_cloud_asset_folder_feed.
 func (caff cloudAssetFolderFeedAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(caff.ref.Append("name"))
+	return terra.ReferenceAsString(caff.ref.Append("name"))
 }
 
 func (caff cloudAssetFolderFeedAttributes) Condition() terra.ListValue[cloudassetfolderfeed.ConditionAttributes] {
-	return terra.ReferenceList[cloudassetfolderfeed.ConditionAttributes](caff.ref.Append("condition"))
+	return terra.ReferenceAsList[cloudassetfolderfeed.ConditionAttributes](caff.ref.Append("condition"))
 }
 
 func (caff cloudAssetFolderFeedAttributes) FeedOutputConfig() terra.ListValue[cloudassetfolderfeed.FeedOutputConfigAttributes] {
-	return terra.ReferenceList[cloudassetfolderfeed.FeedOutputConfigAttributes](caff.ref.Append("feed_output_config"))
+	return terra.ReferenceAsList[cloudassetfolderfeed.FeedOutputConfigAttributes](caff.ref.Append("feed_output_config"))
 }
 
 func (caff cloudAssetFolderFeedAttributes) Timeouts() cloudassetfolderfeed.TimeoutsAttributes {
-	return terra.ReferenceSingle[cloudassetfolderfeed.TimeoutsAttributes](caff.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cloudassetfolderfeed.TimeoutsAttributes](caff.ref.Append("timeouts"))
 }
 
 type cloudAssetFolderFeedState struct {

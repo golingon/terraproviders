@@ -38,7 +38,7 @@ func (ee EncryptionEntitiesAttributes) InternalWithRef(ref terra.Reference) Encr
 	return EncryptionEntitiesAttributes{ref: ref}
 }
 
-func (ee EncryptionEntitiesAttributes) InternalTokens() hclwrite.Tokens {
+func (ee EncryptionEntitiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ee.ref.InternalTokens()
 }
 
@@ -58,7 +58,7 @@ func (i ItemsAttributes) InternalWithRef(ref terra.Reference) ItemsAttributes {
 	return ItemsAttributes{ref: ref}
 }
 
-func (i ItemsAttributes) InternalTokens() hclwrite.Tokens {
+func (i ItemsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -86,7 +86,7 @@ func (fp FieldPatternsAttributes) InternalWithRef(ref terra.Reference) FieldPatt
 	return FieldPatternsAttributes{ref: ref}
 }
 
-func (fp FieldPatternsAttributes) InternalTokens() hclwrite.Tokens {
+func (fp FieldPatternsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fp.ref.InternalTokens()
 }
 

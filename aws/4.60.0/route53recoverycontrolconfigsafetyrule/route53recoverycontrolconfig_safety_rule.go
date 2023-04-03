@@ -28,7 +28,7 @@ func (rc RuleConfigAttributes) InternalWithRef(ref terra.Reference) RuleConfigAt
 	return RuleConfigAttributes{ref: ref}
 }
 
-func (rc RuleConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (rc RuleConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rc.ref.InternalTokens()
 }
 

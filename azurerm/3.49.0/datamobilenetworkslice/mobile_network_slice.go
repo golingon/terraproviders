@@ -18,44 +18,44 @@ type SingleNetworkSliceSelectionAssistanceInformationAttributes struct {
 	ref terra.Reference
 }
 
-func (snssai SingleNetworkSliceSelectionAssistanceInformationAttributes) InternalRef() terra.Reference {
-	return snssai.ref
+func (snssai SingleNetworkSliceSelectionAssistanceInformationAttributes) InternalRef() (terra.Reference, error) {
+	return snssai.ref, nil
 }
 
 func (snssai SingleNetworkSliceSelectionAssistanceInformationAttributes) InternalWithRef(ref terra.Reference) SingleNetworkSliceSelectionAssistanceInformationAttributes {
 	return SingleNetworkSliceSelectionAssistanceInformationAttributes{ref: ref}
 }
 
-func (snssai SingleNetworkSliceSelectionAssistanceInformationAttributes) InternalTokens() hclwrite.Tokens {
+func (snssai SingleNetworkSliceSelectionAssistanceInformationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return snssai.ref.InternalTokens()
 }
 
 func (snssai SingleNetworkSliceSelectionAssistanceInformationAttributes) SliceDifferentiator() terra.StringValue {
-	return terra.ReferenceString(snssai.ref.Append("slice_differentiator"))
+	return terra.ReferenceAsString(snssai.ref.Append("slice_differentiator"))
 }
 
 func (snssai SingleNetworkSliceSelectionAssistanceInformationAttributes) SliceServiceType() terra.NumberValue {
-	return terra.ReferenceNumber(snssai.ref.Append("slice_service_type"))
+	return terra.ReferenceAsNumber(snssai.ref.Append("slice_service_type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type SingleNetworkSliceSelectionAssistanceInformationState struct {

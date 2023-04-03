@@ -74,7 +74,7 @@ func (e ExcludesAttributes) InternalWithRef(ref terra.Reference) ExcludesAttribu
 	return ExcludesAttributes{ref: ref}
 }
 
-func (e ExcludesAttributes) InternalTokens() hclwrite.Tokens {
+func (e ExcludesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -98,7 +98,7 @@ func (i IncludesAttributes) InternalWithRef(ref terra.Reference) IncludesAttribu
 	return IncludesAttributes{ref: ref}
 }
 
-func (i IncludesAttributes) InternalTokens() hclwrite.Tokens {
+func (i IncludesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -122,7 +122,7 @@ func (o OptionsAttributes) InternalWithRef(ref terra.Reference) OptionsAttribute
 	return OptionsAttributes{ref: ref}
 }
 
-func (o OptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (o OptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return o.ref.InternalTokens()
 }
 
@@ -194,7 +194,7 @@ func (s ScheduleAttributes) InternalWithRef(ref terra.Reference) ScheduleAttribu
 	return ScheduleAttributes{ref: ref}
 }
 
-func (s ScheduleAttributes) InternalTokens() hclwrite.Tokens {
+func (s ScheduleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -214,7 +214,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

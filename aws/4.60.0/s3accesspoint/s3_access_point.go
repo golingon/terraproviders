@@ -35,7 +35,7 @@ func (pabc PublicAccessBlockConfigurationAttributes) InternalWithRef(ref terra.R
 	return PublicAccessBlockConfigurationAttributes{ref: ref}
 }
 
-func (pabc PublicAccessBlockConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (pabc PublicAccessBlockConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pabc.ref.InternalTokens()
 }
 
@@ -67,7 +67,7 @@ func (vc VpcConfigurationAttributes) InternalWithRef(ref terra.Reference) VpcCon
 	return VpcConfigurationAttributes{ref: ref}
 }
 
-func (vc VpcConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (vc VpcConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vc.ref.InternalTokens()
 }
 

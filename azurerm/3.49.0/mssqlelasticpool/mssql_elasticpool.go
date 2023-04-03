@@ -40,88 +40,88 @@ type PerDatabaseSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (pds PerDatabaseSettingsAttributes) InternalRef() terra.Reference {
-	return pds.ref
+func (pds PerDatabaseSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return pds.ref, nil
 }
 
 func (pds PerDatabaseSettingsAttributes) InternalWithRef(ref terra.Reference) PerDatabaseSettingsAttributes {
 	return PerDatabaseSettingsAttributes{ref: ref}
 }
 
-func (pds PerDatabaseSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (pds PerDatabaseSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pds.ref.InternalTokens()
 }
 
 func (pds PerDatabaseSettingsAttributes) MaxCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(pds.ref.Append("max_capacity"))
+	return terra.ReferenceAsNumber(pds.ref.Append("max_capacity"))
 }
 
 func (pds PerDatabaseSettingsAttributes) MinCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(pds.ref.Append("min_capacity"))
+	return terra.ReferenceAsNumber(pds.ref.Append("min_capacity"))
 }
 
 type SkuAttributes struct {
 	ref terra.Reference
 }
 
-func (s SkuAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SkuAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SkuAttributes) InternalWithRef(ref terra.Reference) SkuAttributes {
 	return SkuAttributes{ref: ref}
 }
 
-func (s SkuAttributes) InternalTokens() hclwrite.Tokens {
+func (s SkuAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SkuAttributes) Capacity() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("capacity"))
+	return terra.ReferenceAsNumber(s.ref.Append("capacity"))
 }
 
 func (s SkuAttributes) Family() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("family"))
+	return terra.ReferenceAsString(s.ref.Append("family"))
 }
 
 func (s SkuAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 func (s SkuAttributes) Tier() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("tier"))
+	return terra.ReferenceAsString(s.ref.Append("tier"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type PerDatabaseSettingsState struct {

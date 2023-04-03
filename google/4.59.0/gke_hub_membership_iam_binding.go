@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewGkeHubMembershipIamBinding creates a new instance of [GkeHubMembershipIamBinding].
 func NewGkeHubMembershipIamBinding(name string, args GkeHubMembershipIamBindingArgs) *GkeHubMembershipIamBinding {
 	return &GkeHubMembershipIamBinding{
 		Args: args,
@@ -19,28 +20,51 @@ func NewGkeHubMembershipIamBinding(name string, args GkeHubMembershipIamBindingA
 
 var _ terra.Resource = (*GkeHubMembershipIamBinding)(nil)
 
+// GkeHubMembershipIamBinding represents the Terraform resource google_gke_hub_membership_iam_binding.
 type GkeHubMembershipIamBinding struct {
-	Name  string
-	Args  GkeHubMembershipIamBindingArgs
-	state *gkeHubMembershipIamBindingState
+	Name      string
+	Args      GkeHubMembershipIamBindingArgs
+	state     *gkeHubMembershipIamBindingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GkeHubMembershipIamBinding].
 func (ghmib *GkeHubMembershipIamBinding) Type() string {
 	return "google_gke_hub_membership_iam_binding"
 }
 
+// LocalName returns the local name for [GkeHubMembershipIamBinding].
 func (ghmib *GkeHubMembershipIamBinding) LocalName() string {
 	return ghmib.Name
 }
 
+// Configuration returns the configuration (args) for [GkeHubMembershipIamBinding].
 func (ghmib *GkeHubMembershipIamBinding) Configuration() interface{} {
 	return ghmib.Args
 }
 
+// DependOn is used for other resources to depend on [GkeHubMembershipIamBinding].
+func (ghmib *GkeHubMembershipIamBinding) DependOn() terra.Reference {
+	return terra.ReferenceResource(ghmib)
+}
+
+// Dependencies returns the list of resources [GkeHubMembershipIamBinding] depends_on.
+func (ghmib *GkeHubMembershipIamBinding) Dependencies() terra.Dependencies {
+	return ghmib.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GkeHubMembershipIamBinding].
+func (ghmib *GkeHubMembershipIamBinding) LifecycleManagement() *terra.Lifecycle {
+	return ghmib.Lifecycle
+}
+
+// Attributes returns the attributes for [GkeHubMembershipIamBinding].
 func (ghmib *GkeHubMembershipIamBinding) Attributes() gkeHubMembershipIamBindingAttributes {
 	return gkeHubMembershipIamBindingAttributes{ref: terra.ReferenceResource(ghmib)}
 }
 
+// ImportState imports the given attribute values into [GkeHubMembershipIamBinding]'s state.
 func (ghmib *GkeHubMembershipIamBinding) ImportState(av io.Reader) error {
 	ghmib.state = &gkeHubMembershipIamBindingState{}
 	if err := json.NewDecoder(av).Decode(ghmib.state); err != nil {
@@ -49,10 +73,12 @@ func (ghmib *GkeHubMembershipIamBinding) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GkeHubMembershipIamBinding] has state.
 func (ghmib *GkeHubMembershipIamBinding) State() (*gkeHubMembershipIamBindingState, bool) {
 	return ghmib.state, ghmib.state != nil
 }
 
+// StateMust returns the state for [GkeHubMembershipIamBinding]. Panics if the state is nil.
 func (ghmib *GkeHubMembershipIamBinding) StateMust() *gkeHubMembershipIamBindingState {
 	if ghmib.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ghmib.Type(), ghmib.LocalName()))
@@ -60,10 +86,7 @@ func (ghmib *GkeHubMembershipIamBinding) StateMust() *gkeHubMembershipIamBinding
 	return ghmib.state
 }
 
-func (ghmib *GkeHubMembershipIamBinding) DependOn() terra.Reference {
-	return terra.ReferenceResource(ghmib)
-}
-
+// GkeHubMembershipIamBindingArgs contains the configurations for google_gke_hub_membership_iam_binding.
 type GkeHubMembershipIamBindingArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,39 +100,43 @@ type GkeHubMembershipIamBindingArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *gkehubmembershipiambinding.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that GkeHubMembershipIamBinding depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type gkeHubMembershipIamBindingAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_gke_hub_membership_iam_binding.
 func (ghmib gkeHubMembershipIamBindingAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(ghmib.ref.Append("etag"))
+	return terra.ReferenceAsString(ghmib.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_gke_hub_membership_iam_binding.
 func (ghmib gkeHubMembershipIamBindingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ghmib.ref.Append("id"))
+	return terra.ReferenceAsString(ghmib.ref.Append("id"))
 }
 
+// Members returns a reference to field members of google_gke_hub_membership_iam_binding.
 func (ghmib gkeHubMembershipIamBindingAttributes) Members() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ghmib.ref.Append("members"))
+	return terra.ReferenceAsSet[terra.StringValue](ghmib.ref.Append("members"))
 }
 
+// MembershipId returns a reference to field membership_id of google_gke_hub_membership_iam_binding.
 func (ghmib gkeHubMembershipIamBindingAttributes) MembershipId() terra.StringValue {
-	return terra.ReferenceString(ghmib.ref.Append("membership_id"))
+	return terra.ReferenceAsString(ghmib.ref.Append("membership_id"))
 }
 
+// Project returns a reference to field project of google_gke_hub_membership_iam_binding.
 func (ghmib gkeHubMembershipIamBindingAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ghmib.ref.Append("project"))
+	return terra.ReferenceAsString(ghmib.ref.Append("project"))
 }
 
+// Role returns a reference to field role of google_gke_hub_membership_iam_binding.
 func (ghmib gkeHubMembershipIamBindingAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(ghmib.ref.Append("role"))
+	return terra.ReferenceAsString(ghmib.ref.Append("role"))
 }
 
 func (ghmib gkeHubMembershipIamBindingAttributes) Condition() terra.ListValue[gkehubmembershipiambinding.ConditionAttributes] {
-	return terra.ReferenceList[gkehubmembershipiambinding.ConditionAttributes](ghmib.ref.Append("condition"))
+	return terra.ReferenceAsList[gkehubmembershipiambinding.ConditionAttributes](ghmib.ref.Append("condition"))
 }
 
 type gkeHubMembershipIamBindingState struct {

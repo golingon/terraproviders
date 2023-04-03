@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataDataFactory creates a new instance of [DataDataFactory].
 func NewDataDataFactory(name string, args DataDataFactoryArgs) *DataDataFactory {
 	return &DataDataFactory{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataDataFactory(name string, args DataDataFactoryArgs) *DataDataFactory 
 
 var _ terra.DataResource = (*DataDataFactory)(nil)
 
+// DataDataFactory represents the Terraform data resource azurerm_data_factory.
 type DataDataFactory struct {
 	Name string
 	Args DataDataFactoryArgs
 }
 
+// DataSource returns the Terraform object type for [DataDataFactory].
 func (df *DataDataFactory) DataSource() string {
 	return "azurerm_data_factory"
 }
 
+// LocalName returns the local name for [DataDataFactory].
 func (df *DataDataFactory) LocalName() string {
 	return df.Name
 }
 
+// Configuration returns the configuration (args) for [DataDataFactory].
 func (df *DataDataFactory) Configuration() interface{} {
 	return df.Args
 }
 
+// Attributes returns the attributes for [DataDataFactory].
 func (df *DataDataFactory) Attributes() dataDataFactoryAttributes {
 	return dataDataFactoryAttributes{ref: terra.ReferenceDataResource(df)}
 }
 
+// DataDataFactoryArgs contains the configurations for azurerm_data_factory.
 type DataDataFactoryArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -57,38 +64,43 @@ type dataDataFactoryAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_data_factory.
 func (df dataDataFactoryAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(df.ref.Append("id"))
+	return terra.ReferenceAsString(df.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_data_factory.
 func (df dataDataFactoryAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(df.ref.Append("location"))
+	return terra.ReferenceAsString(df.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory.
 func (df dataDataFactoryAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(df.ref.Append("name"))
+	return terra.ReferenceAsString(df.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_data_factory.
 func (df dataDataFactoryAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(df.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(df.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_data_factory.
 func (df dataDataFactoryAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](df.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](df.ref.Append("tags"))
 }
 
 func (df dataDataFactoryAttributes) GithubConfiguration() terra.ListValue[datadatafactory.GithubConfigurationAttributes] {
-	return terra.ReferenceList[datadatafactory.GithubConfigurationAttributes](df.ref.Append("github_configuration"))
+	return terra.ReferenceAsList[datadatafactory.GithubConfigurationAttributes](df.ref.Append("github_configuration"))
 }
 
 func (df dataDataFactoryAttributes) Identity() terra.ListValue[datadatafactory.IdentityAttributes] {
-	return terra.ReferenceList[datadatafactory.IdentityAttributes](df.ref.Append("identity"))
+	return terra.ReferenceAsList[datadatafactory.IdentityAttributes](df.ref.Append("identity"))
 }
 
 func (df dataDataFactoryAttributes) VstsConfiguration() terra.ListValue[datadatafactory.VstsConfigurationAttributes] {
-	return terra.ReferenceList[datadatafactory.VstsConfigurationAttributes](df.ref.Append("vsts_configuration"))
+	return terra.ReferenceAsList[datadatafactory.VstsConfigurationAttributes](df.ref.Append("vsts_configuration"))
 }
 
 func (df dataDataFactoryAttributes) Timeouts() datadatafactory.TimeoutsAttributes {
-	return terra.ReferenceSingle[datadatafactory.TimeoutsAttributes](df.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datadatafactory.TimeoutsAttributes](df.ref.Append("timeouts"))
 }

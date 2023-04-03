@@ -4,6 +4,7 @@ package google
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataBillingAccount creates a new instance of [DataBillingAccount].
 func NewDataBillingAccount(name string, args DataBillingAccountArgs) *DataBillingAccount {
 	return &DataBillingAccount{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataBillingAccount(name string, args DataBillingAccountArgs) *DataBillin
 
 var _ terra.DataResource = (*DataBillingAccount)(nil)
 
+// DataBillingAccount represents the Terraform data resource google_billing_account.
 type DataBillingAccount struct {
 	Name string
 	Args DataBillingAccountArgs
 }
 
+// DataSource returns the Terraform object type for [DataBillingAccount].
 func (ba *DataBillingAccount) DataSource() string {
 	return "google_billing_account"
 }
 
+// LocalName returns the local name for [DataBillingAccount].
 func (ba *DataBillingAccount) LocalName() string {
 	return ba.Name
 }
 
+// Configuration returns the configuration (args) for [DataBillingAccount].
 func (ba *DataBillingAccount) Configuration() interface{} {
 	return ba.Args
 }
 
+// Attributes returns the attributes for [DataBillingAccount].
 func (ba *DataBillingAccount) Attributes() dataBillingAccountAttributes {
 	return dataBillingAccountAttributes{ref: terra.ReferenceDataResource(ba)}
 }
 
+// DataBillingAccountArgs contains the configurations for google_billing_account.
 type DataBillingAccountArgs struct {
 	// BillingAccount: string, optional
 	BillingAccount terra.StringValue `hcl:"billing_account,attr"`
@@ -48,26 +55,32 @@ type dataBillingAccountAttributes struct {
 	ref terra.Reference
 }
 
+// BillingAccount returns a reference to field billing_account of google_billing_account.
 func (ba dataBillingAccountAttributes) BillingAccount() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("billing_account"))
+	return terra.ReferenceAsString(ba.ref.Append("billing_account"))
 }
 
+// DisplayName returns a reference to field display_name of google_billing_account.
 func (ba dataBillingAccountAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("display_name"))
+	return terra.ReferenceAsString(ba.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of google_billing_account.
 func (ba dataBillingAccountAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("id"))
+	return terra.ReferenceAsString(ba.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_billing_account.
 func (ba dataBillingAccountAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("name"))
+	return terra.ReferenceAsString(ba.ref.Append("name"))
 }
 
+// Open returns a reference to field open of google_billing_account.
 func (ba dataBillingAccountAttributes) Open() terra.BoolValue {
-	return terra.ReferenceBool(ba.ref.Append("open"))
+	return terra.ReferenceAsBool(ba.ref.Append("open"))
 }
 
+// ProjectIds returns a reference to field project_ids of google_billing_account.
 func (ba dataBillingAccountAttributes) ProjectIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ba.ref.Append("project_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](ba.ref.Append("project_ids"))
 }

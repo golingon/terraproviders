@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBigqueryCapacityCommitment creates a new instance of [BigqueryCapacityCommitment].
 func NewBigqueryCapacityCommitment(name string, args BigqueryCapacityCommitmentArgs) *BigqueryCapacityCommitment {
 	return &BigqueryCapacityCommitment{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBigqueryCapacityCommitment(name string, args BigqueryCapacityCommitmentA
 
 var _ terra.Resource = (*BigqueryCapacityCommitment)(nil)
 
+// BigqueryCapacityCommitment represents the Terraform resource google_bigquery_capacity_commitment.
 type BigqueryCapacityCommitment struct {
-	Name  string
-	Args  BigqueryCapacityCommitmentArgs
-	state *bigqueryCapacityCommitmentState
+	Name      string
+	Args      BigqueryCapacityCommitmentArgs
+	state     *bigqueryCapacityCommitmentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BigqueryCapacityCommitment].
 func (bcc *BigqueryCapacityCommitment) Type() string {
 	return "google_bigquery_capacity_commitment"
 }
 
+// LocalName returns the local name for [BigqueryCapacityCommitment].
 func (bcc *BigqueryCapacityCommitment) LocalName() string {
 	return bcc.Name
 }
 
+// Configuration returns the configuration (args) for [BigqueryCapacityCommitment].
 func (bcc *BigqueryCapacityCommitment) Configuration() interface{} {
 	return bcc.Args
 }
 
+// DependOn is used for other resources to depend on [BigqueryCapacityCommitment].
+func (bcc *BigqueryCapacityCommitment) DependOn() terra.Reference {
+	return terra.ReferenceResource(bcc)
+}
+
+// Dependencies returns the list of resources [BigqueryCapacityCommitment] depends_on.
+func (bcc *BigqueryCapacityCommitment) Dependencies() terra.Dependencies {
+	return bcc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BigqueryCapacityCommitment].
+func (bcc *BigqueryCapacityCommitment) LifecycleManagement() *terra.Lifecycle {
+	return bcc.Lifecycle
+}
+
+// Attributes returns the attributes for [BigqueryCapacityCommitment].
 func (bcc *BigqueryCapacityCommitment) Attributes() bigqueryCapacityCommitmentAttributes {
 	return bigqueryCapacityCommitmentAttributes{ref: terra.ReferenceResource(bcc)}
 }
 
+// ImportState imports the given attribute values into [BigqueryCapacityCommitment]'s state.
 func (bcc *BigqueryCapacityCommitment) ImportState(av io.Reader) error {
 	bcc.state = &bigqueryCapacityCommitmentState{}
 	if err := json.NewDecoder(av).Decode(bcc.state); err != nil {
@@ -49,10 +73,12 @@ func (bcc *BigqueryCapacityCommitment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BigqueryCapacityCommitment] has state.
 func (bcc *BigqueryCapacityCommitment) State() (*bigqueryCapacityCommitmentState, bool) {
 	return bcc.state, bcc.state != nil
 }
 
+// StateMust returns the state for [BigqueryCapacityCommitment]. Panics if the state is nil.
 func (bcc *BigqueryCapacityCommitment) StateMust() *bigqueryCapacityCommitmentState {
 	if bcc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bcc.Type(), bcc.LocalName()))
@@ -60,10 +86,7 @@ func (bcc *BigqueryCapacityCommitment) StateMust() *bigqueryCapacityCommitmentSt
 	return bcc.state
 }
 
-func (bcc *BigqueryCapacityCommitment) DependOn() terra.Reference {
-	return terra.ReferenceResource(bcc)
-}
-
+// BigqueryCapacityCommitmentArgs contains the configurations for google_bigquery_capacity_commitment.
 type BigqueryCapacityCommitmentArgs struct {
 	// CapacityCommitmentId: string, optional
 	CapacityCommitmentId terra.StringValue `hcl:"capacity_commitment_id,attr"`
@@ -83,63 +106,73 @@ type BigqueryCapacityCommitmentArgs struct {
 	SlotCount terra.NumberValue `hcl:"slot_count,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *bigquerycapacitycommitment.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that BigqueryCapacityCommitment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type bigqueryCapacityCommitmentAttributes struct {
 	ref terra.Reference
 }
 
+// CapacityCommitmentId returns a reference to field capacity_commitment_id of google_bigquery_capacity_commitment.
 func (bcc bigqueryCapacityCommitmentAttributes) CapacityCommitmentId() terra.StringValue {
-	return terra.ReferenceString(bcc.ref.Append("capacity_commitment_id"))
+	return terra.ReferenceAsString(bcc.ref.Append("capacity_commitment_id"))
 }
 
+// CommitmentEndTime returns a reference to field commitment_end_time of google_bigquery_capacity_commitment.
 func (bcc bigqueryCapacityCommitmentAttributes) CommitmentEndTime() terra.StringValue {
-	return terra.ReferenceString(bcc.ref.Append("commitment_end_time"))
+	return terra.ReferenceAsString(bcc.ref.Append("commitment_end_time"))
 }
 
+// CommitmentStartTime returns a reference to field commitment_start_time of google_bigquery_capacity_commitment.
 func (bcc bigqueryCapacityCommitmentAttributes) CommitmentStartTime() terra.StringValue {
-	return terra.ReferenceString(bcc.ref.Append("commitment_start_time"))
+	return terra.ReferenceAsString(bcc.ref.Append("commitment_start_time"))
 }
 
+// EnforceSingleAdminProjectPerOrg returns a reference to field enforce_single_admin_project_per_org of google_bigquery_capacity_commitment.
 func (bcc bigqueryCapacityCommitmentAttributes) EnforceSingleAdminProjectPerOrg() terra.StringValue {
-	return terra.ReferenceString(bcc.ref.Append("enforce_single_admin_project_per_org"))
+	return terra.ReferenceAsString(bcc.ref.Append("enforce_single_admin_project_per_org"))
 }
 
+// Id returns a reference to field id of google_bigquery_capacity_commitment.
 func (bcc bigqueryCapacityCommitmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bcc.ref.Append("id"))
+	return terra.ReferenceAsString(bcc.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_bigquery_capacity_commitment.
 func (bcc bigqueryCapacityCommitmentAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(bcc.ref.Append("location"))
+	return terra.ReferenceAsString(bcc.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_bigquery_capacity_commitment.
 func (bcc bigqueryCapacityCommitmentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(bcc.ref.Append("name"))
+	return terra.ReferenceAsString(bcc.ref.Append("name"))
 }
 
+// Plan returns a reference to field plan of google_bigquery_capacity_commitment.
 func (bcc bigqueryCapacityCommitmentAttributes) Plan() terra.StringValue {
-	return terra.ReferenceString(bcc.ref.Append("plan"))
+	return terra.ReferenceAsString(bcc.ref.Append("plan"))
 }
 
+// Project returns a reference to field project of google_bigquery_capacity_commitment.
 func (bcc bigqueryCapacityCommitmentAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(bcc.ref.Append("project"))
+	return terra.ReferenceAsString(bcc.ref.Append("project"))
 }
 
+// RenewalPlan returns a reference to field renewal_plan of google_bigquery_capacity_commitment.
 func (bcc bigqueryCapacityCommitmentAttributes) RenewalPlan() terra.StringValue {
-	return terra.ReferenceString(bcc.ref.Append("renewal_plan"))
+	return terra.ReferenceAsString(bcc.ref.Append("renewal_plan"))
 }
 
+// SlotCount returns a reference to field slot_count of google_bigquery_capacity_commitment.
 func (bcc bigqueryCapacityCommitmentAttributes) SlotCount() terra.NumberValue {
-	return terra.ReferenceNumber(bcc.ref.Append("slot_count"))
+	return terra.ReferenceAsNumber(bcc.ref.Append("slot_count"))
 }
 
+// State returns a reference to field state of google_bigquery_capacity_commitment.
 func (bcc bigqueryCapacityCommitmentAttributes) State() terra.StringValue {
-	return terra.ReferenceString(bcc.ref.Append("state"))
+	return terra.ReferenceAsString(bcc.ref.Append("state"))
 }
 
 func (bcc bigqueryCapacityCommitmentAttributes) Timeouts() bigquerycapacitycommitment.TimeoutsAttributes {
-	return terra.ReferenceSingle[bigquerycapacitycommitment.TimeoutsAttributes](bcc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[bigquerycapacitycommitment.TimeoutsAttributes](bcc.ref.Append("timeouts"))
 }
 
 type bigqueryCapacityCommitmentState struct {

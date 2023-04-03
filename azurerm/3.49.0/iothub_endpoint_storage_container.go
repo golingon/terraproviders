@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewIothubEndpointStorageContainer creates a new instance of [IothubEndpointStorageContainer].
 func NewIothubEndpointStorageContainer(name string, args IothubEndpointStorageContainerArgs) *IothubEndpointStorageContainer {
 	return &IothubEndpointStorageContainer{
 		Args: args,
@@ -19,28 +20,51 @@ func NewIothubEndpointStorageContainer(name string, args IothubEndpointStorageCo
 
 var _ terra.Resource = (*IothubEndpointStorageContainer)(nil)
 
+// IothubEndpointStorageContainer represents the Terraform resource azurerm_iothub_endpoint_storage_container.
 type IothubEndpointStorageContainer struct {
-	Name  string
-	Args  IothubEndpointStorageContainerArgs
-	state *iothubEndpointStorageContainerState
+	Name      string
+	Args      IothubEndpointStorageContainerArgs
+	state     *iothubEndpointStorageContainerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IothubEndpointStorageContainer].
 func (iesc *IothubEndpointStorageContainer) Type() string {
 	return "azurerm_iothub_endpoint_storage_container"
 }
 
+// LocalName returns the local name for [IothubEndpointStorageContainer].
 func (iesc *IothubEndpointStorageContainer) LocalName() string {
 	return iesc.Name
 }
 
+// Configuration returns the configuration (args) for [IothubEndpointStorageContainer].
 func (iesc *IothubEndpointStorageContainer) Configuration() interface{} {
 	return iesc.Args
 }
 
+// DependOn is used for other resources to depend on [IothubEndpointStorageContainer].
+func (iesc *IothubEndpointStorageContainer) DependOn() terra.Reference {
+	return terra.ReferenceResource(iesc)
+}
+
+// Dependencies returns the list of resources [IothubEndpointStorageContainer] depends_on.
+func (iesc *IothubEndpointStorageContainer) Dependencies() terra.Dependencies {
+	return iesc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IothubEndpointStorageContainer].
+func (iesc *IothubEndpointStorageContainer) LifecycleManagement() *terra.Lifecycle {
+	return iesc.Lifecycle
+}
+
+// Attributes returns the attributes for [IothubEndpointStorageContainer].
 func (iesc *IothubEndpointStorageContainer) Attributes() iothubEndpointStorageContainerAttributes {
 	return iothubEndpointStorageContainerAttributes{ref: terra.ReferenceResource(iesc)}
 }
 
+// ImportState imports the given attribute values into [IothubEndpointStorageContainer]'s state.
 func (iesc *IothubEndpointStorageContainer) ImportState(av io.Reader) error {
 	iesc.state = &iothubEndpointStorageContainerState{}
 	if err := json.NewDecoder(av).Decode(iesc.state); err != nil {
@@ -49,10 +73,12 @@ func (iesc *IothubEndpointStorageContainer) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IothubEndpointStorageContainer] has state.
 func (iesc *IothubEndpointStorageContainer) State() (*iothubEndpointStorageContainerState, bool) {
 	return iesc.state, iesc.state != nil
 }
 
+// StateMust returns the state for [IothubEndpointStorageContainer]. Panics if the state is nil.
 func (iesc *IothubEndpointStorageContainer) StateMust() *iothubEndpointStorageContainerState {
 	if iesc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", iesc.Type(), iesc.LocalName()))
@@ -60,10 +86,7 @@ func (iesc *IothubEndpointStorageContainer) StateMust() *iothubEndpointStorageCo
 	return iesc.state
 }
 
-func (iesc *IothubEndpointStorageContainer) DependOn() terra.Reference {
-	return terra.ReferenceResource(iesc)
-}
-
+// IothubEndpointStorageContainerArgs contains the configurations for azurerm_iothub_endpoint_storage_container.
 type IothubEndpointStorageContainerArgs struct {
 	// AuthenticationType: string, optional
 	AuthenticationType terra.StringValue `hcl:"authentication_type,attr"`
@@ -93,67 +116,78 @@ type IothubEndpointStorageContainerArgs struct {
 	ResourceGroupName terra.StringValue `hcl:"resource_group_name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *iothubendpointstoragecontainer.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that IothubEndpointStorageContainer depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iothubEndpointStorageContainerAttributes struct {
 	ref terra.Reference
 }
 
+// AuthenticationType returns a reference to field authentication_type of azurerm_iothub_endpoint_storage_container.
 func (iesc iothubEndpointStorageContainerAttributes) AuthenticationType() terra.StringValue {
-	return terra.ReferenceString(iesc.ref.Append("authentication_type"))
+	return terra.ReferenceAsString(iesc.ref.Append("authentication_type"))
 }
 
+// BatchFrequencyInSeconds returns a reference to field batch_frequency_in_seconds of azurerm_iothub_endpoint_storage_container.
 func (iesc iothubEndpointStorageContainerAttributes) BatchFrequencyInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(iesc.ref.Append("batch_frequency_in_seconds"))
+	return terra.ReferenceAsNumber(iesc.ref.Append("batch_frequency_in_seconds"))
 }
 
+// ConnectionString returns a reference to field connection_string of azurerm_iothub_endpoint_storage_container.
 func (iesc iothubEndpointStorageContainerAttributes) ConnectionString() terra.StringValue {
-	return terra.ReferenceString(iesc.ref.Append("connection_string"))
+	return terra.ReferenceAsString(iesc.ref.Append("connection_string"))
 }
 
+// ContainerName returns a reference to field container_name of azurerm_iothub_endpoint_storage_container.
 func (iesc iothubEndpointStorageContainerAttributes) ContainerName() terra.StringValue {
-	return terra.ReferenceString(iesc.ref.Append("container_name"))
+	return terra.ReferenceAsString(iesc.ref.Append("container_name"))
 }
 
+// Encoding returns a reference to field encoding of azurerm_iothub_endpoint_storage_container.
 func (iesc iothubEndpointStorageContainerAttributes) Encoding() terra.StringValue {
-	return terra.ReferenceString(iesc.ref.Append("encoding"))
+	return terra.ReferenceAsString(iesc.ref.Append("encoding"))
 }
 
+// EndpointUri returns a reference to field endpoint_uri of azurerm_iothub_endpoint_storage_container.
 func (iesc iothubEndpointStorageContainerAttributes) EndpointUri() terra.StringValue {
-	return terra.ReferenceString(iesc.ref.Append("endpoint_uri"))
+	return terra.ReferenceAsString(iesc.ref.Append("endpoint_uri"))
 }
 
+// FileNameFormat returns a reference to field file_name_format of azurerm_iothub_endpoint_storage_container.
 func (iesc iothubEndpointStorageContainerAttributes) FileNameFormat() terra.StringValue {
-	return terra.ReferenceString(iesc.ref.Append("file_name_format"))
+	return terra.ReferenceAsString(iesc.ref.Append("file_name_format"))
 }
 
+// Id returns a reference to field id of azurerm_iothub_endpoint_storage_container.
 func (iesc iothubEndpointStorageContainerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(iesc.ref.Append("id"))
+	return terra.ReferenceAsString(iesc.ref.Append("id"))
 }
 
+// IdentityId returns a reference to field identity_id of azurerm_iothub_endpoint_storage_container.
 func (iesc iothubEndpointStorageContainerAttributes) IdentityId() terra.StringValue {
-	return terra.ReferenceString(iesc.ref.Append("identity_id"))
+	return terra.ReferenceAsString(iesc.ref.Append("identity_id"))
 }
 
+// IothubId returns a reference to field iothub_id of azurerm_iothub_endpoint_storage_container.
 func (iesc iothubEndpointStorageContainerAttributes) IothubId() terra.StringValue {
-	return terra.ReferenceString(iesc.ref.Append("iothub_id"))
+	return terra.ReferenceAsString(iesc.ref.Append("iothub_id"))
 }
 
+// MaxChunkSizeInBytes returns a reference to field max_chunk_size_in_bytes of azurerm_iothub_endpoint_storage_container.
 func (iesc iothubEndpointStorageContainerAttributes) MaxChunkSizeInBytes() terra.NumberValue {
-	return terra.ReferenceNumber(iesc.ref.Append("max_chunk_size_in_bytes"))
+	return terra.ReferenceAsNumber(iesc.ref.Append("max_chunk_size_in_bytes"))
 }
 
+// Name returns a reference to field name of azurerm_iothub_endpoint_storage_container.
 func (iesc iothubEndpointStorageContainerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(iesc.ref.Append("name"))
+	return terra.ReferenceAsString(iesc.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_iothub_endpoint_storage_container.
 func (iesc iothubEndpointStorageContainerAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(iesc.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(iesc.ref.Append("resource_group_name"))
 }
 
 func (iesc iothubEndpointStorageContainerAttributes) Timeouts() iothubendpointstoragecontainer.TimeoutsAttributes {
-	return terra.ReferenceSingle[iothubendpointstoragecontainer.TimeoutsAttributes](iesc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[iothubendpointstoragecontainer.TimeoutsAttributes](iesc.ref.Append("timeouts"))
 }
 
 type iothubEndpointStorageContainerState struct {

@@ -45,108 +45,108 @@ type GenericWebServiceAttributes struct {
 	ref terra.Reference
 }
 
-func (gws GenericWebServiceAttributes) InternalRef() terra.Reference {
-	return gws.ref
+func (gws GenericWebServiceAttributes) InternalRef() (terra.Reference, error) {
+	return gws.ref, nil
 }
 
 func (gws GenericWebServiceAttributes) InternalWithRef(ref terra.Reference) GenericWebServiceAttributes {
 	return GenericWebServiceAttributes{ref: ref}
 }
 
-func (gws GenericWebServiceAttributes) InternalTokens() hclwrite.Tokens {
+func (gws GenericWebServiceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gws.ref.InternalTokens()
 }
 
 func (gws GenericWebServiceAttributes) AllowedCaCerts() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](gws.ref.Append("allowed_ca_certs"))
+	return terra.ReferenceAsList[terra.StringValue](gws.ref.Append("allowed_ca_certs"))
 }
 
 func (gws GenericWebServiceAttributes) RequestHeaders() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gws.ref.Append("request_headers"))
+	return terra.ReferenceAsMap[terra.StringValue](gws.ref.Append("request_headers"))
 }
 
 func (gws GenericWebServiceAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(gws.ref.Append("uri"))
+	return terra.ReferenceAsString(gws.ref.Append("uri"))
 }
 
 type ServiceDirectoryAttributes struct {
 	ref terra.Reference
 }
 
-func (sd ServiceDirectoryAttributes) InternalRef() terra.Reference {
-	return sd.ref
+func (sd ServiceDirectoryAttributes) InternalRef() (terra.Reference, error) {
+	return sd.ref, nil
 }
 
 func (sd ServiceDirectoryAttributes) InternalWithRef(ref terra.Reference) ServiceDirectoryAttributes {
 	return ServiceDirectoryAttributes{ref: ref}
 }
 
-func (sd ServiceDirectoryAttributes) InternalTokens() hclwrite.Tokens {
+func (sd ServiceDirectoryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sd.ref.InternalTokens()
 }
 
 func (sd ServiceDirectoryAttributes) Service() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("service"))
+	return terra.ReferenceAsString(sd.ref.Append("service"))
 }
 
 func (sd ServiceDirectoryAttributes) GenericWebService() terra.ListValue[ServiceDirectoryGenericWebServiceAttributes] {
-	return terra.ReferenceList[ServiceDirectoryGenericWebServiceAttributes](sd.ref.Append("generic_web_service"))
+	return terra.ReferenceAsList[ServiceDirectoryGenericWebServiceAttributes](sd.ref.Append("generic_web_service"))
 }
 
 type ServiceDirectoryGenericWebServiceAttributes struct {
 	ref terra.Reference
 }
 
-func (gws ServiceDirectoryGenericWebServiceAttributes) InternalRef() terra.Reference {
-	return gws.ref
+func (gws ServiceDirectoryGenericWebServiceAttributes) InternalRef() (terra.Reference, error) {
+	return gws.ref, nil
 }
 
 func (gws ServiceDirectoryGenericWebServiceAttributes) InternalWithRef(ref terra.Reference) ServiceDirectoryGenericWebServiceAttributes {
 	return ServiceDirectoryGenericWebServiceAttributes{ref: ref}
 }
 
-func (gws ServiceDirectoryGenericWebServiceAttributes) InternalTokens() hclwrite.Tokens {
+func (gws ServiceDirectoryGenericWebServiceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gws.ref.InternalTokens()
 }
 
 func (gws ServiceDirectoryGenericWebServiceAttributes) AllowedCaCerts() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](gws.ref.Append("allowed_ca_certs"))
+	return terra.ReferenceAsList[terra.StringValue](gws.ref.Append("allowed_ca_certs"))
 }
 
 func (gws ServiceDirectoryGenericWebServiceAttributes) RequestHeaders() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gws.ref.Append("request_headers"))
+	return terra.ReferenceAsMap[terra.StringValue](gws.ref.Append("request_headers"))
 }
 
 func (gws ServiceDirectoryGenericWebServiceAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(gws.ref.Append("uri"))
+	return terra.ReferenceAsString(gws.ref.Append("uri"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type GenericWebServiceState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSpringCloudBuildDeployment creates a new instance of [SpringCloudBuildDeployment].
 func NewSpringCloudBuildDeployment(name string, args SpringCloudBuildDeploymentArgs) *SpringCloudBuildDeployment {
 	return &SpringCloudBuildDeployment{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSpringCloudBuildDeployment(name string, args SpringCloudBuildDeploymentA
 
 var _ terra.Resource = (*SpringCloudBuildDeployment)(nil)
 
+// SpringCloudBuildDeployment represents the Terraform resource azurerm_spring_cloud_build_deployment.
 type SpringCloudBuildDeployment struct {
-	Name  string
-	Args  SpringCloudBuildDeploymentArgs
-	state *springCloudBuildDeploymentState
+	Name      string
+	Args      SpringCloudBuildDeploymentArgs
+	state     *springCloudBuildDeploymentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SpringCloudBuildDeployment].
 func (scbd *SpringCloudBuildDeployment) Type() string {
 	return "azurerm_spring_cloud_build_deployment"
 }
 
+// LocalName returns the local name for [SpringCloudBuildDeployment].
 func (scbd *SpringCloudBuildDeployment) LocalName() string {
 	return scbd.Name
 }
 
+// Configuration returns the configuration (args) for [SpringCloudBuildDeployment].
 func (scbd *SpringCloudBuildDeployment) Configuration() interface{} {
 	return scbd.Args
 }
 
+// DependOn is used for other resources to depend on [SpringCloudBuildDeployment].
+func (scbd *SpringCloudBuildDeployment) DependOn() terra.Reference {
+	return terra.ReferenceResource(scbd)
+}
+
+// Dependencies returns the list of resources [SpringCloudBuildDeployment] depends_on.
+func (scbd *SpringCloudBuildDeployment) Dependencies() terra.Dependencies {
+	return scbd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SpringCloudBuildDeployment].
+func (scbd *SpringCloudBuildDeployment) LifecycleManagement() *terra.Lifecycle {
+	return scbd.Lifecycle
+}
+
+// Attributes returns the attributes for [SpringCloudBuildDeployment].
 func (scbd *SpringCloudBuildDeployment) Attributes() springCloudBuildDeploymentAttributes {
 	return springCloudBuildDeploymentAttributes{ref: terra.ReferenceResource(scbd)}
 }
 
+// ImportState imports the given attribute values into [SpringCloudBuildDeployment]'s state.
 func (scbd *SpringCloudBuildDeployment) ImportState(av io.Reader) error {
 	scbd.state = &springCloudBuildDeploymentState{}
 	if err := json.NewDecoder(av).Decode(scbd.state); err != nil {
@@ -49,10 +73,12 @@ func (scbd *SpringCloudBuildDeployment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SpringCloudBuildDeployment] has state.
 func (scbd *SpringCloudBuildDeployment) State() (*springCloudBuildDeploymentState, bool) {
 	return scbd.state, scbd.state != nil
 }
 
+// StateMust returns the state for [SpringCloudBuildDeployment]. Panics if the state is nil.
 func (scbd *SpringCloudBuildDeployment) StateMust() *springCloudBuildDeploymentState {
 	if scbd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", scbd.Type(), scbd.LocalName()))
@@ -60,10 +86,7 @@ func (scbd *SpringCloudBuildDeployment) StateMust() *springCloudBuildDeploymentS
 	return scbd.state
 }
 
-func (scbd *SpringCloudBuildDeployment) DependOn() terra.Reference {
-	return terra.ReferenceResource(scbd)
-}
-
+// SpringCloudBuildDeploymentArgs contains the configurations for azurerm_spring_cloud_build_deployment.
 type SpringCloudBuildDeploymentArgs struct {
 	// AddonJson: string, optional
 	AddonJson terra.StringValue `hcl:"addon_json,attr"`
@@ -83,47 +106,52 @@ type SpringCloudBuildDeploymentArgs struct {
 	Quota *springcloudbuilddeployment.Quota `hcl:"quota,block"`
 	// Timeouts: optional
 	Timeouts *springcloudbuilddeployment.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SpringCloudBuildDeployment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type springCloudBuildDeploymentAttributes struct {
 	ref terra.Reference
 }
 
+// AddonJson returns a reference to field addon_json of azurerm_spring_cloud_build_deployment.
 func (scbd springCloudBuildDeploymentAttributes) AddonJson() terra.StringValue {
-	return terra.ReferenceString(scbd.ref.Append("addon_json"))
+	return terra.ReferenceAsString(scbd.ref.Append("addon_json"))
 }
 
+// BuildResultId returns a reference to field build_result_id of azurerm_spring_cloud_build_deployment.
 func (scbd springCloudBuildDeploymentAttributes) BuildResultId() terra.StringValue {
-	return terra.ReferenceString(scbd.ref.Append("build_result_id"))
+	return terra.ReferenceAsString(scbd.ref.Append("build_result_id"))
 }
 
+// EnvironmentVariables returns a reference to field environment_variables of azurerm_spring_cloud_build_deployment.
 func (scbd springCloudBuildDeploymentAttributes) EnvironmentVariables() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](scbd.ref.Append("environment_variables"))
+	return terra.ReferenceAsMap[terra.StringValue](scbd.ref.Append("environment_variables"))
 }
 
+// Id returns a reference to field id of azurerm_spring_cloud_build_deployment.
 func (scbd springCloudBuildDeploymentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(scbd.ref.Append("id"))
+	return terra.ReferenceAsString(scbd.ref.Append("id"))
 }
 
+// InstanceCount returns a reference to field instance_count of azurerm_spring_cloud_build_deployment.
 func (scbd springCloudBuildDeploymentAttributes) InstanceCount() terra.NumberValue {
-	return terra.ReferenceNumber(scbd.ref.Append("instance_count"))
+	return terra.ReferenceAsNumber(scbd.ref.Append("instance_count"))
 }
 
+// Name returns a reference to field name of azurerm_spring_cloud_build_deployment.
 func (scbd springCloudBuildDeploymentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(scbd.ref.Append("name"))
+	return terra.ReferenceAsString(scbd.ref.Append("name"))
 }
 
+// SpringCloudAppId returns a reference to field spring_cloud_app_id of azurerm_spring_cloud_build_deployment.
 func (scbd springCloudBuildDeploymentAttributes) SpringCloudAppId() terra.StringValue {
-	return terra.ReferenceString(scbd.ref.Append("spring_cloud_app_id"))
+	return terra.ReferenceAsString(scbd.ref.Append("spring_cloud_app_id"))
 }
 
 func (scbd springCloudBuildDeploymentAttributes) Quota() terra.ListValue[springcloudbuilddeployment.QuotaAttributes] {
-	return terra.ReferenceList[springcloudbuilddeployment.QuotaAttributes](scbd.ref.Append("quota"))
+	return terra.ReferenceAsList[springcloudbuilddeployment.QuotaAttributes](scbd.ref.Append("quota"))
 }
 
 func (scbd springCloudBuildDeploymentAttributes) Timeouts() springcloudbuilddeployment.TimeoutsAttributes {
-	return terra.ReferenceSingle[springcloudbuilddeployment.TimeoutsAttributes](scbd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[springcloudbuilddeployment.TimeoutsAttributes](scbd.ref.Append("timeouts"))
 }
 
 type springCloudBuildDeploymentState struct {

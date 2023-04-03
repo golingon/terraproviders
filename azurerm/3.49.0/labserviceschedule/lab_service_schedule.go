@@ -33,64 +33,64 @@ type RecurrenceAttributes struct {
 	ref terra.Reference
 }
 
-func (r RecurrenceAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RecurrenceAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RecurrenceAttributes) InternalWithRef(ref terra.Reference) RecurrenceAttributes {
 	return RecurrenceAttributes{ref: ref}
 }
 
-func (r RecurrenceAttributes) InternalTokens() hclwrite.Tokens {
+func (r RecurrenceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RecurrenceAttributes) ExpirationDate() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("expiration_date"))
+	return terra.ReferenceAsString(r.ref.Append("expiration_date"))
 }
 
 func (r RecurrenceAttributes) Frequency() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("frequency"))
+	return terra.ReferenceAsString(r.ref.Append("frequency"))
 }
 
 func (r RecurrenceAttributes) Interval() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("interval"))
+	return terra.ReferenceAsNumber(r.ref.Append("interval"))
 }
 
 func (r RecurrenceAttributes) WeekDays() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("week_days"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("week_days"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type RecurrenceState struct {

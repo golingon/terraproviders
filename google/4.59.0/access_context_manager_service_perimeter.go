@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAccessContextManagerServicePerimeter creates a new instance of [AccessContextManagerServicePerimeter].
 func NewAccessContextManagerServicePerimeter(name string, args AccessContextManagerServicePerimeterArgs) *AccessContextManagerServicePerimeter {
 	return &AccessContextManagerServicePerimeter{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAccessContextManagerServicePerimeter(name string, args AccessContextMana
 
 var _ terra.Resource = (*AccessContextManagerServicePerimeter)(nil)
 
+// AccessContextManagerServicePerimeter represents the Terraform resource google_access_context_manager_service_perimeter.
 type AccessContextManagerServicePerimeter struct {
-	Name  string
-	Args  AccessContextManagerServicePerimeterArgs
-	state *accessContextManagerServicePerimeterState
+	Name      string
+	Args      AccessContextManagerServicePerimeterArgs
+	state     *accessContextManagerServicePerimeterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AccessContextManagerServicePerimeter].
 func (acmsp *AccessContextManagerServicePerimeter) Type() string {
 	return "google_access_context_manager_service_perimeter"
 }
 
+// LocalName returns the local name for [AccessContextManagerServicePerimeter].
 func (acmsp *AccessContextManagerServicePerimeter) LocalName() string {
 	return acmsp.Name
 }
 
+// Configuration returns the configuration (args) for [AccessContextManagerServicePerimeter].
 func (acmsp *AccessContextManagerServicePerimeter) Configuration() interface{} {
 	return acmsp.Args
 }
 
+// DependOn is used for other resources to depend on [AccessContextManagerServicePerimeter].
+func (acmsp *AccessContextManagerServicePerimeter) DependOn() terra.Reference {
+	return terra.ReferenceResource(acmsp)
+}
+
+// Dependencies returns the list of resources [AccessContextManagerServicePerimeter] depends_on.
+func (acmsp *AccessContextManagerServicePerimeter) Dependencies() terra.Dependencies {
+	return acmsp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AccessContextManagerServicePerimeter].
+func (acmsp *AccessContextManagerServicePerimeter) LifecycleManagement() *terra.Lifecycle {
+	return acmsp.Lifecycle
+}
+
+// Attributes returns the attributes for [AccessContextManagerServicePerimeter].
 func (acmsp *AccessContextManagerServicePerimeter) Attributes() accessContextManagerServicePerimeterAttributes {
 	return accessContextManagerServicePerimeterAttributes{ref: terra.ReferenceResource(acmsp)}
 }
 
+// ImportState imports the given attribute values into [AccessContextManagerServicePerimeter]'s state.
 func (acmsp *AccessContextManagerServicePerimeter) ImportState(av io.Reader) error {
 	acmsp.state = &accessContextManagerServicePerimeterState{}
 	if err := json.NewDecoder(av).Decode(acmsp.state); err != nil {
@@ -49,10 +73,12 @@ func (acmsp *AccessContextManagerServicePerimeter) ImportState(av io.Reader) err
 	return nil
 }
 
+// State returns the state and a bool indicating if [AccessContextManagerServicePerimeter] has state.
 func (acmsp *AccessContextManagerServicePerimeter) State() (*accessContextManagerServicePerimeterState, bool) {
 	return acmsp.state, acmsp.state != nil
 }
 
+// StateMust returns the state for [AccessContextManagerServicePerimeter]. Panics if the state is nil.
 func (acmsp *AccessContextManagerServicePerimeter) StateMust() *accessContextManagerServicePerimeterState {
 	if acmsp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", acmsp.Type(), acmsp.LocalName()))
@@ -60,10 +86,7 @@ func (acmsp *AccessContextManagerServicePerimeter) StateMust() *accessContextMan
 	return acmsp.state
 }
 
-func (acmsp *AccessContextManagerServicePerimeter) DependOn() terra.Reference {
-	return terra.ReferenceResource(acmsp)
-}
-
+// AccessContextManagerServicePerimeterArgs contains the configurations for google_access_context_manager_service_perimeter.
 type AccessContextManagerServicePerimeterArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -85,59 +108,66 @@ type AccessContextManagerServicePerimeterArgs struct {
 	Status *accesscontextmanagerserviceperimeter.Status `hcl:"status,block"`
 	// Timeouts: optional
 	Timeouts *accesscontextmanagerserviceperimeter.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that AccessContextManagerServicePerimeter depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type accessContextManagerServicePerimeterAttributes struct {
 	ref terra.Reference
 }
 
+// CreateTime returns a reference to field create_time of google_access_context_manager_service_perimeter.
 func (acmsp accessContextManagerServicePerimeterAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(acmsp.ref.Append("create_time"))
+	return terra.ReferenceAsString(acmsp.ref.Append("create_time"))
 }
 
+// Description returns a reference to field description of google_access_context_manager_service_perimeter.
 func (acmsp accessContextManagerServicePerimeterAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(acmsp.ref.Append("description"))
+	return terra.ReferenceAsString(acmsp.ref.Append("description"))
 }
 
+// Id returns a reference to field id of google_access_context_manager_service_perimeter.
 func (acmsp accessContextManagerServicePerimeterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(acmsp.ref.Append("id"))
+	return terra.ReferenceAsString(acmsp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_access_context_manager_service_perimeter.
 func (acmsp accessContextManagerServicePerimeterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(acmsp.ref.Append("name"))
+	return terra.ReferenceAsString(acmsp.ref.Append("name"))
 }
 
+// Parent returns a reference to field parent of google_access_context_manager_service_perimeter.
 func (acmsp accessContextManagerServicePerimeterAttributes) Parent() terra.StringValue {
-	return terra.ReferenceString(acmsp.ref.Append("parent"))
+	return terra.ReferenceAsString(acmsp.ref.Append("parent"))
 }
 
+// PerimeterType returns a reference to field perimeter_type of google_access_context_manager_service_perimeter.
 func (acmsp accessContextManagerServicePerimeterAttributes) PerimeterType() terra.StringValue {
-	return terra.ReferenceString(acmsp.ref.Append("perimeter_type"))
+	return terra.ReferenceAsString(acmsp.ref.Append("perimeter_type"))
 }
 
+// Title returns a reference to field title of google_access_context_manager_service_perimeter.
 func (acmsp accessContextManagerServicePerimeterAttributes) Title() terra.StringValue {
-	return terra.ReferenceString(acmsp.ref.Append("title"))
+	return terra.ReferenceAsString(acmsp.ref.Append("title"))
 }
 
+// UpdateTime returns a reference to field update_time of google_access_context_manager_service_perimeter.
 func (acmsp accessContextManagerServicePerimeterAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(acmsp.ref.Append("update_time"))
+	return terra.ReferenceAsString(acmsp.ref.Append("update_time"))
 }
 
+// UseExplicitDryRunSpec returns a reference to field use_explicit_dry_run_spec of google_access_context_manager_service_perimeter.
 func (acmsp accessContextManagerServicePerimeterAttributes) UseExplicitDryRunSpec() terra.BoolValue {
-	return terra.ReferenceBool(acmsp.ref.Append("use_explicit_dry_run_spec"))
+	return terra.ReferenceAsBool(acmsp.ref.Append("use_explicit_dry_run_spec"))
 }
 
 func (acmsp accessContextManagerServicePerimeterAttributes) Spec() terra.ListValue[accesscontextmanagerserviceperimeter.SpecAttributes] {
-	return terra.ReferenceList[accesscontextmanagerserviceperimeter.SpecAttributes](acmsp.ref.Append("spec"))
+	return terra.ReferenceAsList[accesscontextmanagerserviceperimeter.SpecAttributes](acmsp.ref.Append("spec"))
 }
 
 func (acmsp accessContextManagerServicePerimeterAttributes) Status() terra.ListValue[accesscontextmanagerserviceperimeter.StatusAttributes] {
-	return terra.ReferenceList[accesscontextmanagerserviceperimeter.StatusAttributes](acmsp.ref.Append("status"))
+	return terra.ReferenceAsList[accesscontextmanagerserviceperimeter.StatusAttributes](acmsp.ref.Append("status"))
 }
 
 func (acmsp accessContextManagerServicePerimeterAttributes) Timeouts() accesscontextmanagerserviceperimeter.TimeoutsAttributes {
-	return terra.ReferenceSingle[accesscontextmanagerserviceperimeter.TimeoutsAttributes](acmsp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[accesscontextmanagerserviceperimeter.TimeoutsAttributes](acmsp.ref.Append("timeouts"))
 }
 
 type accessContextManagerServicePerimeterState struct {

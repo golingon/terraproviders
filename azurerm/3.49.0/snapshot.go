@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSnapshot creates a new instance of [Snapshot].
 func NewSnapshot(name string, args SnapshotArgs) *Snapshot {
 	return &Snapshot{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSnapshot(name string, args SnapshotArgs) *Snapshot {
 
 var _ terra.Resource = (*Snapshot)(nil)
 
+// Snapshot represents the Terraform resource azurerm_snapshot.
 type Snapshot struct {
-	Name  string
-	Args  SnapshotArgs
-	state *snapshotState
+	Name      string
+	Args      SnapshotArgs
+	state     *snapshotState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Snapshot].
 func (s *Snapshot) Type() string {
 	return "azurerm_snapshot"
 }
 
+// LocalName returns the local name for [Snapshot].
 func (s *Snapshot) LocalName() string {
 	return s.Name
 }
 
+// Configuration returns the configuration (args) for [Snapshot].
 func (s *Snapshot) Configuration() interface{} {
 	return s.Args
 }
 
+// DependOn is used for other resources to depend on [Snapshot].
+func (s *Snapshot) DependOn() terra.Reference {
+	return terra.ReferenceResource(s)
+}
+
+// Dependencies returns the list of resources [Snapshot] depends_on.
+func (s *Snapshot) Dependencies() terra.Dependencies {
+	return s.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Snapshot].
+func (s *Snapshot) LifecycleManagement() *terra.Lifecycle {
+	return s.Lifecycle
+}
+
+// Attributes returns the attributes for [Snapshot].
 func (s *Snapshot) Attributes() snapshotAttributes {
 	return snapshotAttributes{ref: terra.ReferenceResource(s)}
 }
 
+// ImportState imports the given attribute values into [Snapshot]'s state.
 func (s *Snapshot) ImportState(av io.Reader) error {
 	s.state = &snapshotState{}
 	if err := json.NewDecoder(av).Decode(s.state); err != nil {
@@ -49,10 +73,12 @@ func (s *Snapshot) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Snapshot] has state.
 func (s *Snapshot) State() (*snapshotState, bool) {
 	return s.state, s.state != nil
 }
 
+// StateMust returns the state for [Snapshot]. Panics if the state is nil.
 func (s *Snapshot) StateMust() *snapshotState {
 	if s.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", s.Type(), s.LocalName()))
@@ -60,10 +86,7 @@ func (s *Snapshot) StateMust() *snapshotState {
 	return s.state
 }
 
-func (s *Snapshot) DependOn() terra.Reference {
-	return terra.ReferenceResource(s)
-}
-
+// SnapshotArgs contains the configurations for azurerm_snapshot.
 type SnapshotArgs struct {
 	// CreateOption: string, required
 	CreateOption terra.StringValue `hcl:"create_option,attr" validate:"required"`
@@ -89,63 +112,72 @@ type SnapshotArgs struct {
 	EncryptionSettings *snapshot.EncryptionSettings `hcl:"encryption_settings,block"`
 	// Timeouts: optional
 	Timeouts *snapshot.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that Snapshot depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type snapshotAttributes struct {
 	ref terra.Reference
 }
 
+// CreateOption returns a reference to field create_option of azurerm_snapshot.
 func (s snapshotAttributes) CreateOption() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("create_option"))
+	return terra.ReferenceAsString(s.ref.Append("create_option"))
 }
 
+// DiskSizeGb returns a reference to field disk_size_gb of azurerm_snapshot.
 func (s snapshotAttributes) DiskSizeGb() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("disk_size_gb"))
+	return terra.ReferenceAsNumber(s.ref.Append("disk_size_gb"))
 }
 
+// Id returns a reference to field id of azurerm_snapshot.
 func (s snapshotAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("id"))
+	return terra.ReferenceAsString(s.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_snapshot.
 func (s snapshotAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("location"))
+	return terra.ReferenceAsString(s.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_snapshot.
 func (s snapshotAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_snapshot.
 func (s snapshotAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(s.ref.Append("resource_group_name"))
 }
 
+// SourceResourceId returns a reference to field source_resource_id of azurerm_snapshot.
 func (s snapshotAttributes) SourceResourceId() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("source_resource_id"))
+	return terra.ReferenceAsString(s.ref.Append("source_resource_id"))
 }
 
+// SourceUri returns a reference to field source_uri of azurerm_snapshot.
 func (s snapshotAttributes) SourceUri() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("source_uri"))
+	return terra.ReferenceAsString(s.ref.Append("source_uri"))
 }
 
+// StorageAccountId returns a reference to field storage_account_id of azurerm_snapshot.
 func (s snapshotAttributes) StorageAccountId() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("storage_account_id"))
+	return terra.ReferenceAsString(s.ref.Append("storage_account_id"))
 }
 
+// Tags returns a reference to field tags of azurerm_snapshot.
 func (s snapshotAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](s.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](s.ref.Append("tags"))
 }
 
+// TrustedLaunchEnabled returns a reference to field trusted_launch_enabled of azurerm_snapshot.
 func (s snapshotAttributes) TrustedLaunchEnabled() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("trusted_launch_enabled"))
+	return terra.ReferenceAsBool(s.ref.Append("trusted_launch_enabled"))
 }
 
 func (s snapshotAttributes) EncryptionSettings() terra.ListValue[snapshot.EncryptionSettingsAttributes] {
-	return terra.ReferenceList[snapshot.EncryptionSettingsAttributes](s.ref.Append("encryption_settings"))
+	return terra.ReferenceAsList[snapshot.EncryptionSettingsAttributes](s.ref.Append("encryption_settings"))
 }
 
 func (s snapshotAttributes) Timeouts() snapshot.TimeoutsAttributes {
-	return terra.ReferenceSingle[snapshot.TimeoutsAttributes](s.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[snapshot.TimeoutsAttributes](s.ref.Append("timeouts"))
 }
 
 type snapshotState struct {

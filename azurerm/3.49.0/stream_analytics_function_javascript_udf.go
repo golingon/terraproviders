@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewStreamAnalyticsFunctionJavascriptUdf creates a new instance of [StreamAnalyticsFunctionJavascriptUdf].
 func NewStreamAnalyticsFunctionJavascriptUdf(name string, args StreamAnalyticsFunctionJavascriptUdfArgs) *StreamAnalyticsFunctionJavascriptUdf {
 	return &StreamAnalyticsFunctionJavascriptUdf{
 		Args: args,
@@ -19,28 +20,51 @@ func NewStreamAnalyticsFunctionJavascriptUdf(name string, args StreamAnalyticsFu
 
 var _ terra.Resource = (*StreamAnalyticsFunctionJavascriptUdf)(nil)
 
+// StreamAnalyticsFunctionJavascriptUdf represents the Terraform resource azurerm_stream_analytics_function_javascript_udf.
 type StreamAnalyticsFunctionJavascriptUdf struct {
-	Name  string
-	Args  StreamAnalyticsFunctionJavascriptUdfArgs
-	state *streamAnalyticsFunctionJavascriptUdfState
+	Name      string
+	Args      StreamAnalyticsFunctionJavascriptUdfArgs
+	state     *streamAnalyticsFunctionJavascriptUdfState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [StreamAnalyticsFunctionJavascriptUdf].
 func (safju *StreamAnalyticsFunctionJavascriptUdf) Type() string {
 	return "azurerm_stream_analytics_function_javascript_udf"
 }
 
+// LocalName returns the local name for [StreamAnalyticsFunctionJavascriptUdf].
 func (safju *StreamAnalyticsFunctionJavascriptUdf) LocalName() string {
 	return safju.Name
 }
 
+// Configuration returns the configuration (args) for [StreamAnalyticsFunctionJavascriptUdf].
 func (safju *StreamAnalyticsFunctionJavascriptUdf) Configuration() interface{} {
 	return safju.Args
 }
 
+// DependOn is used for other resources to depend on [StreamAnalyticsFunctionJavascriptUdf].
+func (safju *StreamAnalyticsFunctionJavascriptUdf) DependOn() terra.Reference {
+	return terra.ReferenceResource(safju)
+}
+
+// Dependencies returns the list of resources [StreamAnalyticsFunctionJavascriptUdf] depends_on.
+func (safju *StreamAnalyticsFunctionJavascriptUdf) Dependencies() terra.Dependencies {
+	return safju.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [StreamAnalyticsFunctionJavascriptUdf].
+func (safju *StreamAnalyticsFunctionJavascriptUdf) LifecycleManagement() *terra.Lifecycle {
+	return safju.Lifecycle
+}
+
+// Attributes returns the attributes for [StreamAnalyticsFunctionJavascriptUdf].
 func (safju *StreamAnalyticsFunctionJavascriptUdf) Attributes() streamAnalyticsFunctionJavascriptUdfAttributes {
 	return streamAnalyticsFunctionJavascriptUdfAttributes{ref: terra.ReferenceResource(safju)}
 }
 
+// ImportState imports the given attribute values into [StreamAnalyticsFunctionJavascriptUdf]'s state.
 func (safju *StreamAnalyticsFunctionJavascriptUdf) ImportState(av io.Reader) error {
 	safju.state = &streamAnalyticsFunctionJavascriptUdfState{}
 	if err := json.NewDecoder(av).Decode(safju.state); err != nil {
@@ -49,10 +73,12 @@ func (safju *StreamAnalyticsFunctionJavascriptUdf) ImportState(av io.Reader) err
 	return nil
 }
 
+// State returns the state and a bool indicating if [StreamAnalyticsFunctionJavascriptUdf] has state.
 func (safju *StreamAnalyticsFunctionJavascriptUdf) State() (*streamAnalyticsFunctionJavascriptUdfState, bool) {
 	return safju.state, safju.state != nil
 }
 
+// StateMust returns the state for [StreamAnalyticsFunctionJavascriptUdf]. Panics if the state is nil.
 func (safju *StreamAnalyticsFunctionJavascriptUdf) StateMust() *streamAnalyticsFunctionJavascriptUdfState {
 	if safju.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", safju.Type(), safju.LocalName()))
@@ -60,10 +86,7 @@ func (safju *StreamAnalyticsFunctionJavascriptUdf) StateMust() *streamAnalyticsF
 	return safju.state
 }
 
-func (safju *StreamAnalyticsFunctionJavascriptUdf) DependOn() terra.Reference {
-	return terra.ReferenceResource(safju)
-}
-
+// StreamAnalyticsFunctionJavascriptUdfArgs contains the configurations for azurerm_stream_analytics_function_javascript_udf.
 type StreamAnalyticsFunctionJavascriptUdfArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -81,43 +104,46 @@ type StreamAnalyticsFunctionJavascriptUdfArgs struct {
 	Output *streamanalyticsfunctionjavascriptudf.Output `hcl:"output,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *streamanalyticsfunctionjavascriptudf.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that StreamAnalyticsFunctionJavascriptUdf depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type streamAnalyticsFunctionJavascriptUdfAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_stream_analytics_function_javascript_udf.
 func (safju streamAnalyticsFunctionJavascriptUdfAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(safju.ref.Append("id"))
+	return terra.ReferenceAsString(safju.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_stream_analytics_function_javascript_udf.
 func (safju streamAnalyticsFunctionJavascriptUdfAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(safju.ref.Append("name"))
+	return terra.ReferenceAsString(safju.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_stream_analytics_function_javascript_udf.
 func (safju streamAnalyticsFunctionJavascriptUdfAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(safju.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(safju.ref.Append("resource_group_name"))
 }
 
+// Script returns a reference to field script of azurerm_stream_analytics_function_javascript_udf.
 func (safju streamAnalyticsFunctionJavascriptUdfAttributes) Script() terra.StringValue {
-	return terra.ReferenceString(safju.ref.Append("script"))
+	return terra.ReferenceAsString(safju.ref.Append("script"))
 }
 
+// StreamAnalyticsJobName returns a reference to field stream_analytics_job_name of azurerm_stream_analytics_function_javascript_udf.
 func (safju streamAnalyticsFunctionJavascriptUdfAttributes) StreamAnalyticsJobName() terra.StringValue {
-	return terra.ReferenceString(safju.ref.Append("stream_analytics_job_name"))
+	return terra.ReferenceAsString(safju.ref.Append("stream_analytics_job_name"))
 }
 
 func (safju streamAnalyticsFunctionJavascriptUdfAttributes) Input() terra.ListValue[streamanalyticsfunctionjavascriptudf.InputAttributes] {
-	return terra.ReferenceList[streamanalyticsfunctionjavascriptudf.InputAttributes](safju.ref.Append("input"))
+	return terra.ReferenceAsList[streamanalyticsfunctionjavascriptudf.InputAttributes](safju.ref.Append("input"))
 }
 
 func (safju streamAnalyticsFunctionJavascriptUdfAttributes) Output() terra.ListValue[streamanalyticsfunctionjavascriptudf.OutputAttributes] {
-	return terra.ReferenceList[streamanalyticsfunctionjavascriptudf.OutputAttributes](safju.ref.Append("output"))
+	return terra.ReferenceAsList[streamanalyticsfunctionjavascriptudf.OutputAttributes](safju.ref.Append("output"))
 }
 
 func (safju streamAnalyticsFunctionJavascriptUdfAttributes) Timeouts() streamanalyticsfunctionjavascriptudf.TimeoutsAttributes {
-	return terra.ReferenceSingle[streamanalyticsfunctionjavascriptudf.TimeoutsAttributes](safju.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[streamanalyticsfunctionjavascriptudf.TimeoutsAttributes](safju.ref.Append("timeouts"))
 }
 
 type streamAnalyticsFunctionJavascriptUdfState struct {

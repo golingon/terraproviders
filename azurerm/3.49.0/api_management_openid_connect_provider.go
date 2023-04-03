@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApiManagementOpenidConnectProvider creates a new instance of [ApiManagementOpenidConnectProvider].
 func NewApiManagementOpenidConnectProvider(name string, args ApiManagementOpenidConnectProviderArgs) *ApiManagementOpenidConnectProvider {
 	return &ApiManagementOpenidConnectProvider{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApiManagementOpenidConnectProvider(name string, args ApiManagementOpenid
 
 var _ terra.Resource = (*ApiManagementOpenidConnectProvider)(nil)
 
+// ApiManagementOpenidConnectProvider represents the Terraform resource azurerm_api_management_openid_connect_provider.
 type ApiManagementOpenidConnectProvider struct {
-	Name  string
-	Args  ApiManagementOpenidConnectProviderArgs
-	state *apiManagementOpenidConnectProviderState
+	Name      string
+	Args      ApiManagementOpenidConnectProviderArgs
+	state     *apiManagementOpenidConnectProviderState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiManagementOpenidConnectProvider].
 func (amocp *ApiManagementOpenidConnectProvider) Type() string {
 	return "azurerm_api_management_openid_connect_provider"
 }
 
+// LocalName returns the local name for [ApiManagementOpenidConnectProvider].
 func (amocp *ApiManagementOpenidConnectProvider) LocalName() string {
 	return amocp.Name
 }
 
+// Configuration returns the configuration (args) for [ApiManagementOpenidConnectProvider].
 func (amocp *ApiManagementOpenidConnectProvider) Configuration() interface{} {
 	return amocp.Args
 }
 
+// DependOn is used for other resources to depend on [ApiManagementOpenidConnectProvider].
+func (amocp *ApiManagementOpenidConnectProvider) DependOn() terra.Reference {
+	return terra.ReferenceResource(amocp)
+}
+
+// Dependencies returns the list of resources [ApiManagementOpenidConnectProvider] depends_on.
+func (amocp *ApiManagementOpenidConnectProvider) Dependencies() terra.Dependencies {
+	return amocp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiManagementOpenidConnectProvider].
+func (amocp *ApiManagementOpenidConnectProvider) LifecycleManagement() *terra.Lifecycle {
+	return amocp.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiManagementOpenidConnectProvider].
 func (amocp *ApiManagementOpenidConnectProvider) Attributes() apiManagementOpenidConnectProviderAttributes {
 	return apiManagementOpenidConnectProviderAttributes{ref: terra.ReferenceResource(amocp)}
 }
 
+// ImportState imports the given attribute values into [ApiManagementOpenidConnectProvider]'s state.
 func (amocp *ApiManagementOpenidConnectProvider) ImportState(av io.Reader) error {
 	amocp.state = &apiManagementOpenidConnectProviderState{}
 	if err := json.NewDecoder(av).Decode(amocp.state); err != nil {
@@ -49,10 +73,12 @@ func (amocp *ApiManagementOpenidConnectProvider) ImportState(av io.Reader) error
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiManagementOpenidConnectProvider] has state.
 func (amocp *ApiManagementOpenidConnectProvider) State() (*apiManagementOpenidConnectProviderState, bool) {
 	return amocp.state, amocp.state != nil
 }
 
+// StateMust returns the state for [ApiManagementOpenidConnectProvider]. Panics if the state is nil.
 func (amocp *ApiManagementOpenidConnectProvider) StateMust() *apiManagementOpenidConnectProviderState {
 	if amocp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", amocp.Type(), amocp.LocalName()))
@@ -60,10 +86,7 @@ func (amocp *ApiManagementOpenidConnectProvider) StateMust() *apiManagementOpeni
 	return amocp.state
 }
 
-func (amocp *ApiManagementOpenidConnectProvider) DependOn() terra.Reference {
-	return terra.ReferenceResource(amocp)
-}
-
+// ApiManagementOpenidConnectProviderArgs contains the configurations for azurerm_api_management_openid_connect_provider.
 type ApiManagementOpenidConnectProviderArgs struct {
 	// ApiManagementName: string, required
 	ApiManagementName terra.StringValue `hcl:"api_management_name,attr" validate:"required"`
@@ -85,51 +108,58 @@ type ApiManagementOpenidConnectProviderArgs struct {
 	ResourceGroupName terra.StringValue `hcl:"resource_group_name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *apimanagementopenidconnectprovider.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ApiManagementOpenidConnectProvider depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiManagementOpenidConnectProviderAttributes struct {
 	ref terra.Reference
 }
 
+// ApiManagementName returns a reference to field api_management_name of azurerm_api_management_openid_connect_provider.
 func (amocp apiManagementOpenidConnectProviderAttributes) ApiManagementName() terra.StringValue {
-	return terra.ReferenceString(amocp.ref.Append("api_management_name"))
+	return terra.ReferenceAsString(amocp.ref.Append("api_management_name"))
 }
 
+// ClientId returns a reference to field client_id of azurerm_api_management_openid_connect_provider.
 func (amocp apiManagementOpenidConnectProviderAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(amocp.ref.Append("client_id"))
+	return terra.ReferenceAsString(amocp.ref.Append("client_id"))
 }
 
+// ClientSecret returns a reference to field client_secret of azurerm_api_management_openid_connect_provider.
 func (amocp apiManagementOpenidConnectProviderAttributes) ClientSecret() terra.StringValue {
-	return terra.ReferenceString(amocp.ref.Append("client_secret"))
+	return terra.ReferenceAsString(amocp.ref.Append("client_secret"))
 }
 
+// Description returns a reference to field description of azurerm_api_management_openid_connect_provider.
 func (amocp apiManagementOpenidConnectProviderAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(amocp.ref.Append("description"))
+	return terra.ReferenceAsString(amocp.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_api_management_openid_connect_provider.
 func (amocp apiManagementOpenidConnectProviderAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(amocp.ref.Append("display_name"))
+	return terra.ReferenceAsString(amocp.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of azurerm_api_management_openid_connect_provider.
 func (amocp apiManagementOpenidConnectProviderAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(amocp.ref.Append("id"))
+	return terra.ReferenceAsString(amocp.ref.Append("id"))
 }
 
+// MetadataEndpoint returns a reference to field metadata_endpoint of azurerm_api_management_openid_connect_provider.
 func (amocp apiManagementOpenidConnectProviderAttributes) MetadataEndpoint() terra.StringValue {
-	return terra.ReferenceString(amocp.ref.Append("metadata_endpoint"))
+	return terra.ReferenceAsString(amocp.ref.Append("metadata_endpoint"))
 }
 
+// Name returns a reference to field name of azurerm_api_management_openid_connect_provider.
 func (amocp apiManagementOpenidConnectProviderAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(amocp.ref.Append("name"))
+	return terra.ReferenceAsString(amocp.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_api_management_openid_connect_provider.
 func (amocp apiManagementOpenidConnectProviderAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(amocp.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(amocp.ref.Append("resource_group_name"))
 }
 
 func (amocp apiManagementOpenidConnectProviderAttributes) Timeouts() apimanagementopenidconnectprovider.TimeoutsAttributes {
-	return terra.ReferenceSingle[apimanagementopenidconnectprovider.TimeoutsAttributes](amocp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[apimanagementopenidconnectprovider.TimeoutsAttributes](amocp.ref.Append("timeouts"))
 }
 
 type apiManagementOpenidConnectProviderState struct {

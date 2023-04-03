@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMonitorActionRuleActionGroup creates a new instance of [MonitorActionRuleActionGroup].
 func NewMonitorActionRuleActionGroup(name string, args MonitorActionRuleActionGroupArgs) *MonitorActionRuleActionGroup {
 	return &MonitorActionRuleActionGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMonitorActionRuleActionGroup(name string, args MonitorActionRuleActionGr
 
 var _ terra.Resource = (*MonitorActionRuleActionGroup)(nil)
 
+// MonitorActionRuleActionGroup represents the Terraform resource azurerm_monitor_action_rule_action_group.
 type MonitorActionRuleActionGroup struct {
-	Name  string
-	Args  MonitorActionRuleActionGroupArgs
-	state *monitorActionRuleActionGroupState
+	Name      string
+	Args      MonitorActionRuleActionGroupArgs
+	state     *monitorActionRuleActionGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MonitorActionRuleActionGroup].
 func (marag *MonitorActionRuleActionGroup) Type() string {
 	return "azurerm_monitor_action_rule_action_group"
 }
 
+// LocalName returns the local name for [MonitorActionRuleActionGroup].
 func (marag *MonitorActionRuleActionGroup) LocalName() string {
 	return marag.Name
 }
 
+// Configuration returns the configuration (args) for [MonitorActionRuleActionGroup].
 func (marag *MonitorActionRuleActionGroup) Configuration() interface{} {
 	return marag.Args
 }
 
+// DependOn is used for other resources to depend on [MonitorActionRuleActionGroup].
+func (marag *MonitorActionRuleActionGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(marag)
+}
+
+// Dependencies returns the list of resources [MonitorActionRuleActionGroup] depends_on.
+func (marag *MonitorActionRuleActionGroup) Dependencies() terra.Dependencies {
+	return marag.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MonitorActionRuleActionGroup].
+func (marag *MonitorActionRuleActionGroup) LifecycleManagement() *terra.Lifecycle {
+	return marag.Lifecycle
+}
+
+// Attributes returns the attributes for [MonitorActionRuleActionGroup].
 func (marag *MonitorActionRuleActionGroup) Attributes() monitorActionRuleActionGroupAttributes {
 	return monitorActionRuleActionGroupAttributes{ref: terra.ReferenceResource(marag)}
 }
 
+// ImportState imports the given attribute values into [MonitorActionRuleActionGroup]'s state.
 func (marag *MonitorActionRuleActionGroup) ImportState(av io.Reader) error {
 	marag.state = &monitorActionRuleActionGroupState{}
 	if err := json.NewDecoder(av).Decode(marag.state); err != nil {
@@ -49,10 +73,12 @@ func (marag *MonitorActionRuleActionGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MonitorActionRuleActionGroup] has state.
 func (marag *MonitorActionRuleActionGroup) State() (*monitorActionRuleActionGroupState, bool) {
 	return marag.state, marag.state != nil
 }
 
+// StateMust returns the state for [MonitorActionRuleActionGroup]. Panics if the state is nil.
 func (marag *MonitorActionRuleActionGroup) StateMust() *monitorActionRuleActionGroupState {
 	if marag.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", marag.Type(), marag.LocalName()))
@@ -60,10 +86,7 @@ func (marag *MonitorActionRuleActionGroup) StateMust() *monitorActionRuleActionG
 	return marag.state
 }
 
-func (marag *MonitorActionRuleActionGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(marag)
-}
-
+// MonitorActionRuleActionGroupArgs contains the configurations for azurerm_monitor_action_rule_action_group.
 type MonitorActionRuleActionGroupArgs struct {
 	// ActionGroupId: string, required
 	ActionGroupId terra.StringValue `hcl:"action_group_id,attr" validate:"required"`
@@ -85,51 +108,56 @@ type MonitorActionRuleActionGroupArgs struct {
 	Scope *monitoractionruleactiongroup.Scope `hcl:"scope,block"`
 	// Timeouts: optional
 	Timeouts *monitoractionruleactiongroup.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MonitorActionRuleActionGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type monitorActionRuleActionGroupAttributes struct {
 	ref terra.Reference
 }
 
+// ActionGroupId returns a reference to field action_group_id of azurerm_monitor_action_rule_action_group.
 func (marag monitorActionRuleActionGroupAttributes) ActionGroupId() terra.StringValue {
-	return terra.ReferenceString(marag.ref.Append("action_group_id"))
+	return terra.ReferenceAsString(marag.ref.Append("action_group_id"))
 }
 
+// Description returns a reference to field description of azurerm_monitor_action_rule_action_group.
 func (marag monitorActionRuleActionGroupAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(marag.ref.Append("description"))
+	return terra.ReferenceAsString(marag.ref.Append("description"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_monitor_action_rule_action_group.
 func (marag monitorActionRuleActionGroupAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(marag.ref.Append("enabled"))
+	return terra.ReferenceAsBool(marag.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of azurerm_monitor_action_rule_action_group.
 func (marag monitorActionRuleActionGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(marag.ref.Append("id"))
+	return terra.ReferenceAsString(marag.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_monitor_action_rule_action_group.
 func (marag monitorActionRuleActionGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(marag.ref.Append("name"))
+	return terra.ReferenceAsString(marag.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_monitor_action_rule_action_group.
 func (marag monitorActionRuleActionGroupAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(marag.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(marag.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_monitor_action_rule_action_group.
 func (marag monitorActionRuleActionGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](marag.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](marag.ref.Append("tags"))
 }
 
 func (marag monitorActionRuleActionGroupAttributes) Condition() terra.ListValue[monitoractionruleactiongroup.ConditionAttributes] {
-	return terra.ReferenceList[monitoractionruleactiongroup.ConditionAttributes](marag.ref.Append("condition"))
+	return terra.ReferenceAsList[monitoractionruleactiongroup.ConditionAttributes](marag.ref.Append("condition"))
 }
 
 func (marag monitorActionRuleActionGroupAttributes) Scope() terra.ListValue[monitoractionruleactiongroup.ScopeAttributes] {
-	return terra.ReferenceList[monitoractionruleactiongroup.ScopeAttributes](marag.ref.Append("scope"))
+	return terra.ReferenceAsList[monitoractionruleactiongroup.ScopeAttributes](marag.ref.Append("scope"))
 }
 
 func (marag monitorActionRuleActionGroupAttributes) Timeouts() monitoractionruleactiongroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[monitoractionruleactiongroup.TimeoutsAttributes](marag.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[monitoractionruleactiongroup.TimeoutsAttributes](marag.ref.Append("timeouts"))
 }
 
 type monitorActionRuleActionGroupState struct {

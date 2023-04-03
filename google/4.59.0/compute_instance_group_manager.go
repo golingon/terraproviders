@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeInstanceGroupManager creates a new instance of [ComputeInstanceGroupManager].
 func NewComputeInstanceGroupManager(name string, args ComputeInstanceGroupManagerArgs) *ComputeInstanceGroupManager {
 	return &ComputeInstanceGroupManager{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeInstanceGroupManager(name string, args ComputeInstanceGroupManage
 
 var _ terra.Resource = (*ComputeInstanceGroupManager)(nil)
 
+// ComputeInstanceGroupManager represents the Terraform resource google_compute_instance_group_manager.
 type ComputeInstanceGroupManager struct {
-	Name  string
-	Args  ComputeInstanceGroupManagerArgs
-	state *computeInstanceGroupManagerState
+	Name      string
+	Args      ComputeInstanceGroupManagerArgs
+	state     *computeInstanceGroupManagerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeInstanceGroupManager].
 func (cigm *ComputeInstanceGroupManager) Type() string {
 	return "google_compute_instance_group_manager"
 }
 
+// LocalName returns the local name for [ComputeInstanceGroupManager].
 func (cigm *ComputeInstanceGroupManager) LocalName() string {
 	return cigm.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeInstanceGroupManager].
 func (cigm *ComputeInstanceGroupManager) Configuration() interface{} {
 	return cigm.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeInstanceGroupManager].
+func (cigm *ComputeInstanceGroupManager) DependOn() terra.Reference {
+	return terra.ReferenceResource(cigm)
+}
+
+// Dependencies returns the list of resources [ComputeInstanceGroupManager] depends_on.
+func (cigm *ComputeInstanceGroupManager) Dependencies() terra.Dependencies {
+	return cigm.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeInstanceGroupManager].
+func (cigm *ComputeInstanceGroupManager) LifecycleManagement() *terra.Lifecycle {
+	return cigm.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeInstanceGroupManager].
 func (cigm *ComputeInstanceGroupManager) Attributes() computeInstanceGroupManagerAttributes {
 	return computeInstanceGroupManagerAttributes{ref: terra.ReferenceResource(cigm)}
 }
 
+// ImportState imports the given attribute values into [ComputeInstanceGroupManager]'s state.
 func (cigm *ComputeInstanceGroupManager) ImportState(av io.Reader) error {
 	cigm.state = &computeInstanceGroupManagerState{}
 	if err := json.NewDecoder(av).Decode(cigm.state); err != nil {
@@ -49,10 +73,12 @@ func (cigm *ComputeInstanceGroupManager) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeInstanceGroupManager] has state.
 func (cigm *ComputeInstanceGroupManager) State() (*computeInstanceGroupManagerState, bool) {
 	return cigm.state, cigm.state != nil
 }
 
+// StateMust returns the state for [ComputeInstanceGroupManager]. Panics if the state is nil.
 func (cigm *ComputeInstanceGroupManager) StateMust() *computeInstanceGroupManagerState {
 	if cigm.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cigm.Type(), cigm.LocalName()))
@@ -60,10 +86,7 @@ func (cigm *ComputeInstanceGroupManager) StateMust() *computeInstanceGroupManage
 	return cigm.state
 }
 
-func (cigm *ComputeInstanceGroupManager) DependOn() terra.Reference {
-	return terra.ReferenceResource(cigm)
-}
-
+// ComputeInstanceGroupManagerArgs contains the configurations for google_compute_instance_group_manager.
 type ComputeInstanceGroupManagerArgs struct {
 	// BaseInstanceName: string, required
 	BaseInstanceName terra.StringValue `hcl:"base_instance_name,attr" validate:"required"`
@@ -101,99 +124,112 @@ type ComputeInstanceGroupManagerArgs struct {
 	UpdatePolicy *computeinstancegroupmanager.UpdatePolicy `hcl:"update_policy,block"`
 	// Version: min=1
 	Version []computeinstancegroupmanager.Version `hcl:"version,block" validate:"min=1"`
-	// DependsOn contains resources that ComputeInstanceGroupManager depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeInstanceGroupManagerAttributes struct {
 	ref terra.Reference
 }
 
+// BaseInstanceName returns a reference to field base_instance_name of google_compute_instance_group_manager.
 func (cigm computeInstanceGroupManagerAttributes) BaseInstanceName() terra.StringValue {
-	return terra.ReferenceString(cigm.ref.Append("base_instance_name"))
+	return terra.ReferenceAsString(cigm.ref.Append("base_instance_name"))
 }
 
+// Description returns a reference to field description of google_compute_instance_group_manager.
 func (cigm computeInstanceGroupManagerAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cigm.ref.Append("description"))
+	return terra.ReferenceAsString(cigm.ref.Append("description"))
 }
 
+// Fingerprint returns a reference to field fingerprint of google_compute_instance_group_manager.
 func (cigm computeInstanceGroupManagerAttributes) Fingerprint() terra.StringValue {
-	return terra.ReferenceString(cigm.ref.Append("fingerprint"))
+	return terra.ReferenceAsString(cigm.ref.Append("fingerprint"))
 }
 
+// Id returns a reference to field id of google_compute_instance_group_manager.
 func (cigm computeInstanceGroupManagerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cigm.ref.Append("id"))
+	return terra.ReferenceAsString(cigm.ref.Append("id"))
 }
 
+// InstanceGroup returns a reference to field instance_group of google_compute_instance_group_manager.
 func (cigm computeInstanceGroupManagerAttributes) InstanceGroup() terra.StringValue {
-	return terra.ReferenceString(cigm.ref.Append("instance_group"))
+	return terra.ReferenceAsString(cigm.ref.Append("instance_group"))
 }
 
+// ListManagedInstancesResults returns a reference to field list_managed_instances_results of google_compute_instance_group_manager.
 func (cigm computeInstanceGroupManagerAttributes) ListManagedInstancesResults() terra.StringValue {
-	return terra.ReferenceString(cigm.ref.Append("list_managed_instances_results"))
+	return terra.ReferenceAsString(cigm.ref.Append("list_managed_instances_results"))
 }
 
+// Name returns a reference to field name of google_compute_instance_group_manager.
 func (cigm computeInstanceGroupManagerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cigm.ref.Append("name"))
+	return terra.ReferenceAsString(cigm.ref.Append("name"))
 }
 
+// Operation returns a reference to field operation of google_compute_instance_group_manager.
 func (cigm computeInstanceGroupManagerAttributes) Operation() terra.StringValue {
-	return terra.ReferenceString(cigm.ref.Append("operation"))
+	return terra.ReferenceAsString(cigm.ref.Append("operation"))
 }
 
+// Project returns a reference to field project of google_compute_instance_group_manager.
 func (cigm computeInstanceGroupManagerAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cigm.ref.Append("project"))
+	return terra.ReferenceAsString(cigm.ref.Append("project"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_instance_group_manager.
 func (cigm computeInstanceGroupManagerAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(cigm.ref.Append("self_link"))
+	return terra.ReferenceAsString(cigm.ref.Append("self_link"))
 }
 
+// TargetPools returns a reference to field target_pools of google_compute_instance_group_manager.
 func (cigm computeInstanceGroupManagerAttributes) TargetPools() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cigm.ref.Append("target_pools"))
+	return terra.ReferenceAsSet[terra.StringValue](cigm.ref.Append("target_pools"))
 }
 
+// TargetSize returns a reference to field target_size of google_compute_instance_group_manager.
 func (cigm computeInstanceGroupManagerAttributes) TargetSize() terra.NumberValue {
-	return terra.ReferenceNumber(cigm.ref.Append("target_size"))
+	return terra.ReferenceAsNumber(cigm.ref.Append("target_size"))
 }
 
+// WaitForInstances returns a reference to field wait_for_instances of google_compute_instance_group_manager.
 func (cigm computeInstanceGroupManagerAttributes) WaitForInstances() terra.BoolValue {
-	return terra.ReferenceBool(cigm.ref.Append("wait_for_instances"))
+	return terra.ReferenceAsBool(cigm.ref.Append("wait_for_instances"))
 }
 
+// WaitForInstancesStatus returns a reference to field wait_for_instances_status of google_compute_instance_group_manager.
 func (cigm computeInstanceGroupManagerAttributes) WaitForInstancesStatus() terra.StringValue {
-	return terra.ReferenceString(cigm.ref.Append("wait_for_instances_status"))
+	return terra.ReferenceAsString(cigm.ref.Append("wait_for_instances_status"))
 }
 
+// Zone returns a reference to field zone of google_compute_instance_group_manager.
 func (cigm computeInstanceGroupManagerAttributes) Zone() terra.StringValue {
-	return terra.ReferenceString(cigm.ref.Append("zone"))
+	return terra.ReferenceAsString(cigm.ref.Append("zone"))
 }
 
 func (cigm computeInstanceGroupManagerAttributes) Status() terra.ListValue[computeinstancegroupmanager.StatusAttributes] {
-	return terra.ReferenceList[computeinstancegroupmanager.StatusAttributes](cigm.ref.Append("status"))
+	return terra.ReferenceAsList[computeinstancegroupmanager.StatusAttributes](cigm.ref.Append("status"))
 }
 
 func (cigm computeInstanceGroupManagerAttributes) AutoHealingPolicies() terra.ListValue[computeinstancegroupmanager.AutoHealingPoliciesAttributes] {
-	return terra.ReferenceList[computeinstancegroupmanager.AutoHealingPoliciesAttributes](cigm.ref.Append("auto_healing_policies"))
+	return terra.ReferenceAsList[computeinstancegroupmanager.AutoHealingPoliciesAttributes](cigm.ref.Append("auto_healing_policies"))
 }
 
 func (cigm computeInstanceGroupManagerAttributes) NamedPort() terra.SetValue[computeinstancegroupmanager.NamedPortAttributes] {
-	return terra.ReferenceSet[computeinstancegroupmanager.NamedPortAttributes](cigm.ref.Append("named_port"))
+	return terra.ReferenceAsSet[computeinstancegroupmanager.NamedPortAttributes](cigm.ref.Append("named_port"))
 }
 
 func (cigm computeInstanceGroupManagerAttributes) StatefulDisk() terra.SetValue[computeinstancegroupmanager.StatefulDiskAttributes] {
-	return terra.ReferenceSet[computeinstancegroupmanager.StatefulDiskAttributes](cigm.ref.Append("stateful_disk"))
+	return terra.ReferenceAsSet[computeinstancegroupmanager.StatefulDiskAttributes](cigm.ref.Append("stateful_disk"))
 }
 
 func (cigm computeInstanceGroupManagerAttributes) Timeouts() computeinstancegroupmanager.TimeoutsAttributes {
-	return terra.ReferenceSingle[computeinstancegroupmanager.TimeoutsAttributes](cigm.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computeinstancegroupmanager.TimeoutsAttributes](cigm.ref.Append("timeouts"))
 }
 
 func (cigm computeInstanceGroupManagerAttributes) UpdatePolicy() terra.ListValue[computeinstancegroupmanager.UpdatePolicyAttributes] {
-	return terra.ReferenceList[computeinstancegroupmanager.UpdatePolicyAttributes](cigm.ref.Append("update_policy"))
+	return terra.ReferenceAsList[computeinstancegroupmanager.UpdatePolicyAttributes](cigm.ref.Append("update_policy"))
 }
 
 func (cigm computeInstanceGroupManagerAttributes) Version() terra.ListValue[computeinstancegroupmanager.VersionAttributes] {
-	return terra.ReferenceList[computeinstancegroupmanager.VersionAttributes](cigm.ref.Append("version"))
+	return terra.ReferenceAsList[computeinstancegroupmanager.VersionAttributes](cigm.ref.Append("version"))
 }
 
 type computeInstanceGroupManagerState struct {

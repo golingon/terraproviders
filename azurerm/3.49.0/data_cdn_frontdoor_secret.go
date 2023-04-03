@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataCdnFrontdoorSecret creates a new instance of [DataCdnFrontdoorSecret].
 func NewDataCdnFrontdoorSecret(name string, args DataCdnFrontdoorSecretArgs) *DataCdnFrontdoorSecret {
 	return &DataCdnFrontdoorSecret{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataCdnFrontdoorSecret(name string, args DataCdnFrontdoorSecretArgs) *Da
 
 var _ terra.DataResource = (*DataCdnFrontdoorSecret)(nil)
 
+// DataCdnFrontdoorSecret represents the Terraform data resource azurerm_cdn_frontdoor_secret.
 type DataCdnFrontdoorSecret struct {
 	Name string
 	Args DataCdnFrontdoorSecretArgs
 }
 
+// DataSource returns the Terraform object type for [DataCdnFrontdoorSecret].
 func (cfs *DataCdnFrontdoorSecret) DataSource() string {
 	return "azurerm_cdn_frontdoor_secret"
 }
 
+// LocalName returns the local name for [DataCdnFrontdoorSecret].
 func (cfs *DataCdnFrontdoorSecret) LocalName() string {
 	return cfs.Name
 }
 
+// Configuration returns the configuration (args) for [DataCdnFrontdoorSecret].
 func (cfs *DataCdnFrontdoorSecret) Configuration() interface{} {
 	return cfs.Args
 }
 
+// Attributes returns the attributes for [DataCdnFrontdoorSecret].
 func (cfs *DataCdnFrontdoorSecret) Attributes() dataCdnFrontdoorSecretAttributes {
 	return dataCdnFrontdoorSecretAttributes{ref: terra.ReferenceDataResource(cfs)}
 }
 
+// DataCdnFrontdoorSecretArgs contains the configurations for azurerm_cdn_frontdoor_secret.
 type DataCdnFrontdoorSecretArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -55,30 +62,35 @@ type dataCdnFrontdoorSecretAttributes struct {
 	ref terra.Reference
 }
 
+// CdnFrontdoorProfileId returns a reference to field cdn_frontdoor_profile_id of azurerm_cdn_frontdoor_secret.
 func (cfs dataCdnFrontdoorSecretAttributes) CdnFrontdoorProfileId() terra.StringValue {
-	return terra.ReferenceString(cfs.ref.Append("cdn_frontdoor_profile_id"))
+	return terra.ReferenceAsString(cfs.ref.Append("cdn_frontdoor_profile_id"))
 }
 
+// Id returns a reference to field id of azurerm_cdn_frontdoor_secret.
 func (cfs dataCdnFrontdoorSecretAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cfs.ref.Append("id"))
+	return terra.ReferenceAsString(cfs.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_cdn_frontdoor_secret.
 func (cfs dataCdnFrontdoorSecretAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cfs.ref.Append("name"))
+	return terra.ReferenceAsString(cfs.ref.Append("name"))
 }
 
+// ProfileName returns a reference to field profile_name of azurerm_cdn_frontdoor_secret.
 func (cfs dataCdnFrontdoorSecretAttributes) ProfileName() terra.StringValue {
-	return terra.ReferenceString(cfs.ref.Append("profile_name"))
+	return terra.ReferenceAsString(cfs.ref.Append("profile_name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_cdn_frontdoor_secret.
 func (cfs dataCdnFrontdoorSecretAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(cfs.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(cfs.ref.Append("resource_group_name"))
 }
 
 func (cfs dataCdnFrontdoorSecretAttributes) Secret() terra.ListValue[datacdnfrontdoorsecret.SecretAttributes] {
-	return terra.ReferenceList[datacdnfrontdoorsecret.SecretAttributes](cfs.ref.Append("secret"))
+	return terra.ReferenceAsList[datacdnfrontdoorsecret.SecretAttributes](cfs.ref.Append("secret"))
 }
 
 func (cfs dataCdnFrontdoorSecretAttributes) Timeouts() datacdnfrontdoorsecret.TimeoutsAttributes {
-	return terra.ReferenceSingle[datacdnfrontdoorsecret.TimeoutsAttributes](cfs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datacdnfrontdoorsecret.TimeoutsAttributes](cfs.ref.Append("timeouts"))
 }

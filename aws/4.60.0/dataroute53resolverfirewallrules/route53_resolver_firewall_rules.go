@@ -21,7 +21,7 @@ func (fr FirewallRulesAttributes) InternalWithRef(ref terra.Reference) FirewallR
 	return FirewallRulesAttributes{ref: ref}
 }
 
-func (fr FirewallRulesAttributes) InternalTokens() hclwrite.Tokens {
+func (fr FirewallRulesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fr.ref.InternalTokens()
 }
 

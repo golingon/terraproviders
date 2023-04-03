@@ -58,7 +58,7 @@ func (t TimelineAttributes) InternalWithRef(ref terra.Reference) TimelineAttribu
 	return TimelineAttributes{ref: ref}
 }
 
-func (t TimelineAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimelineAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -90,7 +90,7 @@ func (ac ArtifactConfigAttributes) InternalWithRef(ref terra.Reference) Artifact
 	return ArtifactConfigAttributes{ref: ref}
 }
 
-func (ac ArtifactConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ac ArtifactConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
@@ -110,7 +110,7 @@ func (se S3EncryptionAttributes) InternalWithRef(ref terra.Reference) S3Encrypti
 	return S3EncryptionAttributes{ref: ref}
 }
 
-func (se S3EncryptionAttributes) InternalTokens() hclwrite.Tokens {
+func (se S3EncryptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return se.ref.InternalTokens()
 }
 
@@ -134,7 +134,7 @@ func (rc RunConfigAttributes) InternalWithRef(ref terra.Reference) RunConfigAttr
 	return RunConfigAttributes{ref: ref}
 }
 
-func (rc RunConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (rc RunConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rc.ref.InternalTokens()
 }
 
@@ -166,7 +166,7 @@ func (s ScheduleAttributes) InternalWithRef(ref terra.Reference) ScheduleAttribu
 	return ScheduleAttributes{ref: ref}
 }
 
-func (s ScheduleAttributes) InternalTokens() hclwrite.Tokens {
+func (s ScheduleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -190,7 +190,7 @@ func (vc VpcConfigAttributes) InternalWithRef(ref terra.Reference) VpcConfigAttr
 	return VpcConfigAttributes{ref: ref}
 }
 
-func (vc VpcConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (vc VpcConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vc.ref.InternalTokens()
 }
 

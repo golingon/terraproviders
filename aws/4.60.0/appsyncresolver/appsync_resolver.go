@@ -52,7 +52,7 @@ func (cc CachingConfigAttributes) InternalWithRef(ref terra.Reference) CachingCo
 	return CachingConfigAttributes{ref: ref}
 }
 
-func (cc CachingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (cc CachingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -76,7 +76,7 @@ func (pc PipelineConfigAttributes) InternalWithRef(ref terra.Reference) Pipeline
 	return PipelineConfigAttributes{ref: ref}
 }
 
-func (pc PipelineConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (pc PipelineConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
@@ -96,7 +96,7 @@ func (r RuntimeAttributes) InternalWithRef(ref terra.Reference) RuntimeAttribute
 	return RuntimeAttributes{ref: ref}
 }
 
-func (r RuntimeAttributes) InternalTokens() hclwrite.Tokens {
+func (r RuntimeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -120,7 +120,7 @@ func (sc SyncConfigAttributes) InternalWithRef(ref terra.Reference) SyncConfigAt
 	return SyncConfigAttributes{ref: ref}
 }
 
-func (sc SyncConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sc SyncConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -148,7 +148,7 @@ func (lchc LambdaConflictHandlerConfigAttributes) InternalWithRef(ref terra.Refe
 	return LambdaConflictHandlerConfigAttributes{ref: ref}
 }
 
-func (lchc LambdaConflictHandlerConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (lchc LambdaConflictHandlerConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lchc.ref.InternalTokens()
 }
 

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBigtableGcPolicy creates a new instance of [BigtableGcPolicy].
 func NewBigtableGcPolicy(name string, args BigtableGcPolicyArgs) *BigtableGcPolicy {
 	return &BigtableGcPolicy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBigtableGcPolicy(name string, args BigtableGcPolicyArgs) *BigtableGcPoli
 
 var _ terra.Resource = (*BigtableGcPolicy)(nil)
 
+// BigtableGcPolicy represents the Terraform resource google_bigtable_gc_policy.
 type BigtableGcPolicy struct {
-	Name  string
-	Args  BigtableGcPolicyArgs
-	state *bigtableGcPolicyState
+	Name      string
+	Args      BigtableGcPolicyArgs
+	state     *bigtableGcPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BigtableGcPolicy].
 func (bgp *BigtableGcPolicy) Type() string {
 	return "google_bigtable_gc_policy"
 }
 
+// LocalName returns the local name for [BigtableGcPolicy].
 func (bgp *BigtableGcPolicy) LocalName() string {
 	return bgp.Name
 }
 
+// Configuration returns the configuration (args) for [BigtableGcPolicy].
 func (bgp *BigtableGcPolicy) Configuration() interface{} {
 	return bgp.Args
 }
 
+// DependOn is used for other resources to depend on [BigtableGcPolicy].
+func (bgp *BigtableGcPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(bgp)
+}
+
+// Dependencies returns the list of resources [BigtableGcPolicy] depends_on.
+func (bgp *BigtableGcPolicy) Dependencies() terra.Dependencies {
+	return bgp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BigtableGcPolicy].
+func (bgp *BigtableGcPolicy) LifecycleManagement() *terra.Lifecycle {
+	return bgp.Lifecycle
+}
+
+// Attributes returns the attributes for [BigtableGcPolicy].
 func (bgp *BigtableGcPolicy) Attributes() bigtableGcPolicyAttributes {
 	return bigtableGcPolicyAttributes{ref: terra.ReferenceResource(bgp)}
 }
 
+// ImportState imports the given attribute values into [BigtableGcPolicy]'s state.
 func (bgp *BigtableGcPolicy) ImportState(av io.Reader) error {
 	bgp.state = &bigtableGcPolicyState{}
 	if err := json.NewDecoder(av).Decode(bgp.state); err != nil {
@@ -49,10 +73,12 @@ func (bgp *BigtableGcPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BigtableGcPolicy] has state.
 func (bgp *BigtableGcPolicy) State() (*bigtableGcPolicyState, bool) {
 	return bgp.state, bgp.state != nil
 }
 
+// StateMust returns the state for [BigtableGcPolicy]. Panics if the state is nil.
 func (bgp *BigtableGcPolicy) StateMust() *bigtableGcPolicyState {
 	if bgp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bgp.Type(), bgp.LocalName()))
@@ -60,10 +86,7 @@ func (bgp *BigtableGcPolicy) StateMust() *bigtableGcPolicyState {
 	return bgp.state
 }
 
-func (bgp *BigtableGcPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(bgp)
-}
-
+// BigtableGcPolicyArgs contains the configurations for google_bigtable_gc_policy.
 type BigtableGcPolicyArgs struct {
 	// ColumnFamily: string, required
 	ColumnFamily terra.StringValue `hcl:"column_family,attr" validate:"required"`
@@ -85,51 +108,57 @@ type BigtableGcPolicyArgs struct {
 	MaxAge *bigtablegcpolicy.MaxAge `hcl:"max_age,block"`
 	// MaxVersion: min=0
 	MaxVersion []bigtablegcpolicy.MaxVersion `hcl:"max_version,block" validate:"min=0"`
-	// DependsOn contains resources that BigtableGcPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type bigtableGcPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// ColumnFamily returns a reference to field column_family of google_bigtable_gc_policy.
 func (bgp bigtableGcPolicyAttributes) ColumnFamily() terra.StringValue {
-	return terra.ReferenceString(bgp.ref.Append("column_family"))
+	return terra.ReferenceAsString(bgp.ref.Append("column_family"))
 }
 
+// DeletionPolicy returns a reference to field deletion_policy of google_bigtable_gc_policy.
 func (bgp bigtableGcPolicyAttributes) DeletionPolicy() terra.StringValue {
-	return terra.ReferenceString(bgp.ref.Append("deletion_policy"))
+	return terra.ReferenceAsString(bgp.ref.Append("deletion_policy"))
 }
 
+// GcRules returns a reference to field gc_rules of google_bigtable_gc_policy.
 func (bgp bigtableGcPolicyAttributes) GcRules() terra.StringValue {
-	return terra.ReferenceString(bgp.ref.Append("gc_rules"))
+	return terra.ReferenceAsString(bgp.ref.Append("gc_rules"))
 }
 
+// Id returns a reference to field id of google_bigtable_gc_policy.
 func (bgp bigtableGcPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bgp.ref.Append("id"))
+	return terra.ReferenceAsString(bgp.ref.Append("id"))
 }
 
+// InstanceName returns a reference to field instance_name of google_bigtable_gc_policy.
 func (bgp bigtableGcPolicyAttributes) InstanceName() terra.StringValue {
-	return terra.ReferenceString(bgp.ref.Append("instance_name"))
+	return terra.ReferenceAsString(bgp.ref.Append("instance_name"))
 }
 
+// Mode returns a reference to field mode of google_bigtable_gc_policy.
 func (bgp bigtableGcPolicyAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(bgp.ref.Append("mode"))
+	return terra.ReferenceAsString(bgp.ref.Append("mode"))
 }
 
+// Project returns a reference to field project of google_bigtable_gc_policy.
 func (bgp bigtableGcPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(bgp.ref.Append("project"))
+	return terra.ReferenceAsString(bgp.ref.Append("project"))
 }
 
+// Table returns a reference to field table of google_bigtable_gc_policy.
 func (bgp bigtableGcPolicyAttributes) Table() terra.StringValue {
-	return terra.ReferenceString(bgp.ref.Append("table"))
+	return terra.ReferenceAsString(bgp.ref.Append("table"))
 }
 
 func (bgp bigtableGcPolicyAttributes) MaxAge() terra.ListValue[bigtablegcpolicy.MaxAgeAttributes] {
-	return terra.ReferenceList[bigtablegcpolicy.MaxAgeAttributes](bgp.ref.Append("max_age"))
+	return terra.ReferenceAsList[bigtablegcpolicy.MaxAgeAttributes](bgp.ref.Append("max_age"))
 }
 
 func (bgp bigtableGcPolicyAttributes) MaxVersion() terra.ListValue[bigtablegcpolicy.MaxVersionAttributes] {
-	return terra.ReferenceList[bigtablegcpolicy.MaxVersionAttributes](bgp.ref.Append("max_version"))
+	return terra.ReferenceAsList[bigtablegcpolicy.MaxVersionAttributes](bgp.ref.Append("max_version"))
 }
 
 type bigtableGcPolicyState struct {

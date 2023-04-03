@@ -37,7 +37,7 @@ func (bmt ByteMatchTuplesAttributes) InternalWithRef(ref terra.Reference) ByteMa
 	return ByteMatchTuplesAttributes{ref: ref}
 }
 
-func (bmt ByteMatchTuplesAttributes) InternalTokens() hclwrite.Tokens {
+func (bmt ByteMatchTuplesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bmt.ref.InternalTokens()
 }
 
@@ -69,7 +69,7 @@ func (ftm FieldToMatchAttributes) InternalWithRef(ref terra.Reference) FieldToMa
 	return FieldToMatchAttributes{ref: ref}
 }
 
-func (ftm FieldToMatchAttributes) InternalTokens() hclwrite.Tokens {
+func (ftm FieldToMatchAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ftm.ref.InternalTokens()
 }
 

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataAppConfigurationKeys creates a new instance of [DataAppConfigurationKeys].
 func NewDataAppConfigurationKeys(name string, args DataAppConfigurationKeysArgs) *DataAppConfigurationKeys {
 	return &DataAppConfigurationKeys{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataAppConfigurationKeys(name string, args DataAppConfigurationKeysArgs)
 
 var _ terra.DataResource = (*DataAppConfigurationKeys)(nil)
 
+// DataAppConfigurationKeys represents the Terraform data resource azurerm_app_configuration_keys.
 type DataAppConfigurationKeys struct {
 	Name string
 	Args DataAppConfigurationKeysArgs
 }
 
+// DataSource returns the Terraform object type for [DataAppConfigurationKeys].
 func (ack *DataAppConfigurationKeys) DataSource() string {
 	return "azurerm_app_configuration_keys"
 }
 
+// LocalName returns the local name for [DataAppConfigurationKeys].
 func (ack *DataAppConfigurationKeys) LocalName() string {
 	return ack.Name
 }
 
+// Configuration returns the configuration (args) for [DataAppConfigurationKeys].
 func (ack *DataAppConfigurationKeys) Configuration() interface{} {
 	return ack.Args
 }
 
+// Attributes returns the attributes for [DataAppConfigurationKeys].
 func (ack *DataAppConfigurationKeys) Attributes() dataAppConfigurationKeysAttributes {
 	return dataAppConfigurationKeysAttributes{ref: terra.ReferenceDataResource(ack)}
 }
 
+// DataAppConfigurationKeysArgs contains the configurations for azurerm_app_configuration_keys.
 type DataAppConfigurationKeysArgs struct {
 	// ConfigurationStoreId: string, required
 	ConfigurationStoreId terra.StringValue `hcl:"configuration_store_id,attr" validate:"required"`
@@ -55,26 +62,30 @@ type dataAppConfigurationKeysAttributes struct {
 	ref terra.Reference
 }
 
+// ConfigurationStoreId returns a reference to field configuration_store_id of azurerm_app_configuration_keys.
 func (ack dataAppConfigurationKeysAttributes) ConfigurationStoreId() terra.StringValue {
-	return terra.ReferenceString(ack.ref.Append("configuration_store_id"))
+	return terra.ReferenceAsString(ack.ref.Append("configuration_store_id"))
 }
 
+// Id returns a reference to field id of azurerm_app_configuration_keys.
 func (ack dataAppConfigurationKeysAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ack.ref.Append("id"))
+	return terra.ReferenceAsString(ack.ref.Append("id"))
 }
 
+// Key returns a reference to field key of azurerm_app_configuration_keys.
 func (ack dataAppConfigurationKeysAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(ack.ref.Append("key"))
+	return terra.ReferenceAsString(ack.ref.Append("key"))
 }
 
+// Label returns a reference to field label of azurerm_app_configuration_keys.
 func (ack dataAppConfigurationKeysAttributes) Label() terra.StringValue {
-	return terra.ReferenceString(ack.ref.Append("label"))
+	return terra.ReferenceAsString(ack.ref.Append("label"))
 }
 
 func (ack dataAppConfigurationKeysAttributes) Items() terra.ListValue[dataappconfigurationkeys.ItemsAttributes] {
-	return terra.ReferenceList[dataappconfigurationkeys.ItemsAttributes](ack.ref.Append("items"))
+	return terra.ReferenceAsList[dataappconfigurationkeys.ItemsAttributes](ack.ref.Append("items"))
 }
 
 func (ack dataAppConfigurationKeysAttributes) Timeouts() dataappconfigurationkeys.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataappconfigurationkeys.TimeoutsAttributes](ack.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataappconfigurationkeys.TimeoutsAttributes](ack.ref.Append("timeouts"))
 }

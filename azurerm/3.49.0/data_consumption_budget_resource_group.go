@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataConsumptionBudgetResourceGroup creates a new instance of [DataConsumptionBudgetResourceGroup].
 func NewDataConsumptionBudgetResourceGroup(name string, args DataConsumptionBudgetResourceGroupArgs) *DataConsumptionBudgetResourceGroup {
 	return &DataConsumptionBudgetResourceGroup{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataConsumptionBudgetResourceGroup(name string, args DataConsumptionBudg
 
 var _ terra.DataResource = (*DataConsumptionBudgetResourceGroup)(nil)
 
+// DataConsumptionBudgetResourceGroup represents the Terraform data resource azurerm_consumption_budget_resource_group.
 type DataConsumptionBudgetResourceGroup struct {
 	Name string
 	Args DataConsumptionBudgetResourceGroupArgs
 }
 
+// DataSource returns the Terraform object type for [DataConsumptionBudgetResourceGroup].
 func (cbrg *DataConsumptionBudgetResourceGroup) DataSource() string {
 	return "azurerm_consumption_budget_resource_group"
 }
 
+// LocalName returns the local name for [DataConsumptionBudgetResourceGroup].
 func (cbrg *DataConsumptionBudgetResourceGroup) LocalName() string {
 	return cbrg.Name
 }
 
+// Configuration returns the configuration (args) for [DataConsumptionBudgetResourceGroup].
 func (cbrg *DataConsumptionBudgetResourceGroup) Configuration() interface{} {
 	return cbrg.Args
 }
 
+// Attributes returns the attributes for [DataConsumptionBudgetResourceGroup].
 func (cbrg *DataConsumptionBudgetResourceGroup) Attributes() dataConsumptionBudgetResourceGroupAttributes {
 	return dataConsumptionBudgetResourceGroupAttributes{ref: terra.ReferenceDataResource(cbrg)}
 }
 
+// DataConsumptionBudgetResourceGroupArgs contains the configurations for azurerm_consumption_budget_resource_group.
 type DataConsumptionBudgetResourceGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -57,38 +64,43 @@ type dataConsumptionBudgetResourceGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Amount returns a reference to field amount of azurerm_consumption_budget_resource_group.
 func (cbrg dataConsumptionBudgetResourceGroupAttributes) Amount() terra.NumberValue {
-	return terra.ReferenceNumber(cbrg.ref.Append("amount"))
+	return terra.ReferenceAsNumber(cbrg.ref.Append("amount"))
 }
 
+// Id returns a reference to field id of azurerm_consumption_budget_resource_group.
 func (cbrg dataConsumptionBudgetResourceGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cbrg.ref.Append("id"))
+	return terra.ReferenceAsString(cbrg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_consumption_budget_resource_group.
 func (cbrg dataConsumptionBudgetResourceGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cbrg.ref.Append("name"))
+	return terra.ReferenceAsString(cbrg.ref.Append("name"))
 }
 
+// ResourceGroupId returns a reference to field resource_group_id of azurerm_consumption_budget_resource_group.
 func (cbrg dataConsumptionBudgetResourceGroupAttributes) ResourceGroupId() terra.StringValue {
-	return terra.ReferenceString(cbrg.ref.Append("resource_group_id"))
+	return terra.ReferenceAsString(cbrg.ref.Append("resource_group_id"))
 }
 
+// TimeGrain returns a reference to field time_grain of azurerm_consumption_budget_resource_group.
 func (cbrg dataConsumptionBudgetResourceGroupAttributes) TimeGrain() terra.StringValue {
-	return terra.ReferenceString(cbrg.ref.Append("time_grain"))
+	return terra.ReferenceAsString(cbrg.ref.Append("time_grain"))
 }
 
 func (cbrg dataConsumptionBudgetResourceGroupAttributes) Filter() terra.ListValue[dataconsumptionbudgetresourcegroup.FilterAttributes] {
-	return terra.ReferenceList[dataconsumptionbudgetresourcegroup.FilterAttributes](cbrg.ref.Append("filter"))
+	return terra.ReferenceAsList[dataconsumptionbudgetresourcegroup.FilterAttributes](cbrg.ref.Append("filter"))
 }
 
 func (cbrg dataConsumptionBudgetResourceGroupAttributes) Notification() terra.ListValue[dataconsumptionbudgetresourcegroup.NotificationAttributes] {
-	return terra.ReferenceList[dataconsumptionbudgetresourcegroup.NotificationAttributes](cbrg.ref.Append("notification"))
+	return terra.ReferenceAsList[dataconsumptionbudgetresourcegroup.NotificationAttributes](cbrg.ref.Append("notification"))
 }
 
 func (cbrg dataConsumptionBudgetResourceGroupAttributes) TimePeriod() terra.ListValue[dataconsumptionbudgetresourcegroup.TimePeriodAttributes] {
-	return terra.ReferenceList[dataconsumptionbudgetresourcegroup.TimePeriodAttributes](cbrg.ref.Append("time_period"))
+	return terra.ReferenceAsList[dataconsumptionbudgetresourcegroup.TimePeriodAttributes](cbrg.ref.Append("time_period"))
 }
 
 func (cbrg dataConsumptionBudgetResourceGroupAttributes) Timeouts() dataconsumptionbudgetresourcegroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataconsumptionbudgetresourcegroup.TimeoutsAttributes](cbrg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataconsumptionbudgetresourcegroup.TimeoutsAttributes](cbrg.ref.Append("timeouts"))
 }

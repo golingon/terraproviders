@@ -22,124 +22,124 @@ type NrtTemplateAttributes struct {
 	ref terra.Reference
 }
 
-func (nt NrtTemplateAttributes) InternalRef() terra.Reference {
-	return nt.ref
+func (nt NrtTemplateAttributes) InternalRef() (terra.Reference, error) {
+	return nt.ref, nil
 }
 
 func (nt NrtTemplateAttributes) InternalWithRef(ref terra.Reference) NrtTemplateAttributes {
 	return NrtTemplateAttributes{ref: ref}
 }
 
-func (nt NrtTemplateAttributes) InternalTokens() hclwrite.Tokens {
+func (nt NrtTemplateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nt.ref.InternalTokens()
 }
 
 func (nt NrtTemplateAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(nt.ref.Append("description"))
+	return terra.ReferenceAsString(nt.ref.Append("description"))
 }
 
 func (nt NrtTemplateAttributes) Query() terra.StringValue {
-	return terra.ReferenceString(nt.ref.Append("query"))
+	return terra.ReferenceAsString(nt.ref.Append("query"))
 }
 
 func (nt NrtTemplateAttributes) Severity() terra.StringValue {
-	return terra.ReferenceString(nt.ref.Append("severity"))
+	return terra.ReferenceAsString(nt.ref.Append("severity"))
 }
 
 func (nt NrtTemplateAttributes) Tactics() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](nt.ref.Append("tactics"))
+	return terra.ReferenceAsList[terra.StringValue](nt.ref.Append("tactics"))
 }
 
 type ScheduledTemplateAttributes struct {
 	ref terra.Reference
 }
 
-func (st ScheduledTemplateAttributes) InternalRef() terra.Reference {
-	return st.ref
+func (st ScheduledTemplateAttributes) InternalRef() (terra.Reference, error) {
+	return st.ref, nil
 }
 
 func (st ScheduledTemplateAttributes) InternalWithRef(ref terra.Reference) ScheduledTemplateAttributes {
 	return ScheduledTemplateAttributes{ref: ref}
 }
 
-func (st ScheduledTemplateAttributes) InternalTokens() hclwrite.Tokens {
+func (st ScheduledTemplateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return st.ref.InternalTokens()
 }
 
 func (st ScheduledTemplateAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("description"))
+	return terra.ReferenceAsString(st.ref.Append("description"))
 }
 
 func (st ScheduledTemplateAttributes) Query() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("query"))
+	return terra.ReferenceAsString(st.ref.Append("query"))
 }
 
 func (st ScheduledTemplateAttributes) QueryFrequency() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("query_frequency"))
+	return terra.ReferenceAsString(st.ref.Append("query_frequency"))
 }
 
 func (st ScheduledTemplateAttributes) QueryPeriod() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("query_period"))
+	return terra.ReferenceAsString(st.ref.Append("query_period"))
 }
 
 func (st ScheduledTemplateAttributes) Severity() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("severity"))
+	return terra.ReferenceAsString(st.ref.Append("severity"))
 }
 
 func (st ScheduledTemplateAttributes) Tactics() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](st.ref.Append("tactics"))
+	return terra.ReferenceAsList[terra.StringValue](st.ref.Append("tactics"))
 }
 
 func (st ScheduledTemplateAttributes) TriggerOperator() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("trigger_operator"))
+	return terra.ReferenceAsString(st.ref.Append("trigger_operator"))
 }
 
 func (st ScheduledTemplateAttributes) TriggerThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(st.ref.Append("trigger_threshold"))
+	return terra.ReferenceAsNumber(st.ref.Append("trigger_threshold"))
 }
 
 type SecurityIncidentTemplateAttributes struct {
 	ref terra.Reference
 }
 
-func (sit SecurityIncidentTemplateAttributes) InternalRef() terra.Reference {
-	return sit.ref
+func (sit SecurityIncidentTemplateAttributes) InternalRef() (terra.Reference, error) {
+	return sit.ref, nil
 }
 
 func (sit SecurityIncidentTemplateAttributes) InternalWithRef(ref terra.Reference) SecurityIncidentTemplateAttributes {
 	return SecurityIncidentTemplateAttributes{ref: ref}
 }
 
-func (sit SecurityIncidentTemplateAttributes) InternalTokens() hclwrite.Tokens {
+func (sit SecurityIncidentTemplateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sit.ref.InternalTokens()
 }
 
 func (sit SecurityIncidentTemplateAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(sit.ref.Append("description"))
+	return terra.ReferenceAsString(sit.ref.Append("description"))
 }
 
 func (sit SecurityIncidentTemplateAttributes) ProductFilter() terra.StringValue {
-	return terra.ReferenceString(sit.ref.Append("product_filter"))
+	return terra.ReferenceAsString(sit.ref.Append("product_filter"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type NrtTemplateState struct {

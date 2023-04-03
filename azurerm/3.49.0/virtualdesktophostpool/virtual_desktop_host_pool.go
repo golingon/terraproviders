@@ -40,88 +40,88 @@ type ScheduledAgentUpdatesAttributes struct {
 	ref terra.Reference
 }
 
-func (sau ScheduledAgentUpdatesAttributes) InternalRef() terra.Reference {
-	return sau.ref
+func (sau ScheduledAgentUpdatesAttributes) InternalRef() (terra.Reference, error) {
+	return sau.ref, nil
 }
 
 func (sau ScheduledAgentUpdatesAttributes) InternalWithRef(ref terra.Reference) ScheduledAgentUpdatesAttributes {
 	return ScheduledAgentUpdatesAttributes{ref: ref}
 }
 
-func (sau ScheduledAgentUpdatesAttributes) InternalTokens() hclwrite.Tokens {
+func (sau ScheduledAgentUpdatesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sau.ref.InternalTokens()
 }
 
 func (sau ScheduledAgentUpdatesAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(sau.ref.Append("enabled"))
+	return terra.ReferenceAsBool(sau.ref.Append("enabled"))
 }
 
 func (sau ScheduledAgentUpdatesAttributes) Timezone() terra.StringValue {
-	return terra.ReferenceString(sau.ref.Append("timezone"))
+	return terra.ReferenceAsString(sau.ref.Append("timezone"))
 }
 
 func (sau ScheduledAgentUpdatesAttributes) UseSessionHostTimezone() terra.BoolValue {
-	return terra.ReferenceBool(sau.ref.Append("use_session_host_timezone"))
+	return terra.ReferenceAsBool(sau.ref.Append("use_session_host_timezone"))
 }
 
 func (sau ScheduledAgentUpdatesAttributes) Schedule() terra.ListValue[ScheduleAttributes] {
-	return terra.ReferenceList[ScheduleAttributes](sau.ref.Append("schedule"))
+	return terra.ReferenceAsList[ScheduleAttributes](sau.ref.Append("schedule"))
 }
 
 type ScheduleAttributes struct {
 	ref terra.Reference
 }
 
-func (s ScheduleAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ScheduleAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ScheduleAttributes) InternalWithRef(ref terra.Reference) ScheduleAttributes {
 	return ScheduleAttributes{ref: ref}
 }
 
-func (s ScheduleAttributes) InternalTokens() hclwrite.Tokens {
+func (s ScheduleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s ScheduleAttributes) DayOfWeek() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("day_of_week"))
+	return terra.ReferenceAsString(s.ref.Append("day_of_week"))
 }
 
 func (s ScheduleAttributes) HourOfDay() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("hour_of_day"))
+	return terra.ReferenceAsNumber(s.ref.Append("hour_of_day"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ScheduledAgentUpdatesState struct {

@@ -53,7 +53,7 @@ func (r RuleAttributes) InternalWithRef(ref terra.Reference) RuleAttributes {
 	return RuleAttributes{ref: ref}
 }
 
-func (r RuleAttributes) InternalTokens() hclwrite.Tokens {
+func (r RuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -89,7 +89,7 @@ func (aimu AbortIncompleteMultipartUploadAttributes) InternalWithRef(ref terra.R
 	return AbortIncompleteMultipartUploadAttributes{ref: ref}
 }
 
-func (aimu AbortIncompleteMultipartUploadAttributes) InternalTokens() hclwrite.Tokens {
+func (aimu AbortIncompleteMultipartUploadAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aimu.ref.InternalTokens()
 }
 
@@ -109,7 +109,7 @@ func (e ExpirationAttributes) InternalWithRef(ref terra.Reference) ExpirationAtt
 	return ExpirationAttributes{ref: ref}
 }
 
-func (e ExpirationAttributes) InternalTokens() hclwrite.Tokens {
+func (e ExpirationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -137,7 +137,7 @@ func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes 
 	return FilterAttributes{ref: ref}
 }
 
-func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
+func (f FilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 

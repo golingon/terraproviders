@@ -57,132 +57,132 @@ type ActionIncidentAttributes struct {
 	ref terra.Reference
 }
 
-func (ai ActionIncidentAttributes) InternalRef() terra.Reference {
-	return ai.ref
+func (ai ActionIncidentAttributes) InternalRef() (terra.Reference, error) {
+	return ai.ref, nil
 }
 
 func (ai ActionIncidentAttributes) InternalWithRef(ref terra.Reference) ActionIncidentAttributes {
 	return ActionIncidentAttributes{ref: ref}
 }
 
-func (ai ActionIncidentAttributes) InternalTokens() hclwrite.Tokens {
+func (ai ActionIncidentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ai.ref.InternalTokens()
 }
 
 func (ai ActionIncidentAttributes) Classification() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("classification"))
+	return terra.ReferenceAsString(ai.ref.Append("classification"))
 }
 
 func (ai ActionIncidentAttributes) ClassificationComment() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("classification_comment"))
+	return terra.ReferenceAsString(ai.ref.Append("classification_comment"))
 }
 
 func (ai ActionIncidentAttributes) Labels() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ai.ref.Append("labels"))
+	return terra.ReferenceAsList[terra.StringValue](ai.ref.Append("labels"))
 }
 
 func (ai ActionIncidentAttributes) Order() terra.NumberValue {
-	return terra.ReferenceNumber(ai.ref.Append("order"))
+	return terra.ReferenceAsNumber(ai.ref.Append("order"))
 }
 
 func (ai ActionIncidentAttributes) OwnerId() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("owner_id"))
+	return terra.ReferenceAsString(ai.ref.Append("owner_id"))
 }
 
 func (ai ActionIncidentAttributes) Severity() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("severity"))
+	return terra.ReferenceAsString(ai.ref.Append("severity"))
 }
 
 func (ai ActionIncidentAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("status"))
+	return terra.ReferenceAsString(ai.ref.Append("status"))
 }
 
 type ActionPlaybookAttributes struct {
 	ref terra.Reference
 }
 
-func (ap ActionPlaybookAttributes) InternalRef() terra.Reference {
-	return ap.ref
+func (ap ActionPlaybookAttributes) InternalRef() (terra.Reference, error) {
+	return ap.ref, nil
 }
 
 func (ap ActionPlaybookAttributes) InternalWithRef(ref terra.Reference) ActionPlaybookAttributes {
 	return ActionPlaybookAttributes{ref: ref}
 }
 
-func (ap ActionPlaybookAttributes) InternalTokens() hclwrite.Tokens {
+func (ap ActionPlaybookAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ap.ref.InternalTokens()
 }
 
 func (ap ActionPlaybookAttributes) LogicAppId() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("logic_app_id"))
+	return terra.ReferenceAsString(ap.ref.Append("logic_app_id"))
 }
 
 func (ap ActionPlaybookAttributes) Order() terra.NumberValue {
-	return terra.ReferenceNumber(ap.ref.Append("order"))
+	return terra.ReferenceAsNumber(ap.ref.Append("order"))
 }
 
 func (ap ActionPlaybookAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(ap.ref.Append("tenant_id"))
 }
 
 type ConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConditionAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConditionAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConditionAttributes) InternalWithRef(ref terra.Reference) ConditionAttributes {
 	return ConditionAttributes{ref: ref}
 }
 
-func (c ConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("operator"))
+	return terra.ReferenceAsString(c.ref.Append("operator"))
 }
 
 func (c ConditionAttributes) Property() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("property"))
+	return terra.ReferenceAsString(c.ref.Append("property"))
 }
 
 func (c ConditionAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](c.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](c.ref.Append("values"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ActionIncidentState struct {

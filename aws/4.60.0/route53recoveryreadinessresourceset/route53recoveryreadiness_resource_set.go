@@ -65,7 +65,7 @@ func (r ResourcesAttributes) InternalWithRef(ref terra.Reference) ResourcesAttri
 	return ResourcesAttributes{ref: ref}
 }
 
-func (r ResourcesAttributes) InternalTokens() hclwrite.Tokens {
+func (r ResourcesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -97,7 +97,7 @@ func (dtr DnsTargetResourceAttributes) InternalWithRef(ref terra.Reference) DnsT
 	return DnsTargetResourceAttributes{ref: ref}
 }
 
-func (dtr DnsTargetResourceAttributes) InternalTokens() hclwrite.Tokens {
+func (dtr DnsTargetResourceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dtr.ref.InternalTokens()
 }
 
@@ -133,7 +133,7 @@ func (tr TargetResourceAttributes) InternalWithRef(ref terra.Reference) TargetRe
 	return TargetResourceAttributes{ref: ref}
 }
 
-func (tr TargetResourceAttributes) InternalTokens() hclwrite.Tokens {
+func (tr TargetResourceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tr.ref.InternalTokens()
 }
 
@@ -157,7 +157,7 @@ func (nr NlbResourceAttributes) InternalWithRef(ref terra.Reference) NlbResource
 	return NlbResourceAttributes{ref: ref}
 }
 
-func (nr NlbResourceAttributes) InternalTokens() hclwrite.Tokens {
+func (nr NlbResourceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nr.ref.InternalTokens()
 }
 
@@ -177,7 +177,7 @@ func (rr R53ResourceAttributes) InternalWithRef(ref terra.Reference) R53Resource
 	return R53ResourceAttributes{ref: ref}
 }
 
-func (rr R53ResourceAttributes) InternalTokens() hclwrite.Tokens {
+func (rr R53ResourceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rr.ref.InternalTokens()
 }
 
@@ -201,7 +201,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

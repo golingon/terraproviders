@@ -28,7 +28,7 @@ func (sd S3DestinationAttributes) InternalWithRef(ref terra.Reference) S3Destina
 	return S3DestinationAttributes{ref: ref}
 }
 
-func (sd S3DestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (sd S3DestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sd.ref.InternalTokens()
 }
 

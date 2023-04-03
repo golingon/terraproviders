@@ -76,7 +76,7 @@ func (dlc DeadLetterConfigAttributes) InternalWithRef(ref terra.Reference) DeadL
 	return DeadLetterConfigAttributes{ref: ref}
 }
 
-func (dlc DeadLetterConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (dlc DeadLetterConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dlc.ref.InternalTokens()
 }
 
@@ -96,7 +96,7 @@ func (e EnvironmentAttributes) InternalWithRef(ref terra.Reference) EnvironmentA
 	return EnvironmentAttributes{ref: ref}
 }
 
-func (e EnvironmentAttributes) InternalTokens() hclwrite.Tokens {
+func (e EnvironmentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -116,7 +116,7 @@ func (es EphemeralStorageAttributes) InternalWithRef(ref terra.Reference) Epheme
 	return EphemeralStorageAttributes{ref: ref}
 }
 
-func (es EphemeralStorageAttributes) InternalTokens() hclwrite.Tokens {
+func (es EphemeralStorageAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return es.ref.InternalTokens()
 }
 
@@ -136,7 +136,7 @@ func (fsc FileSystemConfigAttributes) InternalWithRef(ref terra.Reference) FileS
 	return FileSystemConfigAttributes{ref: ref}
 }
 
-func (fsc FileSystemConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (fsc FileSystemConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fsc.ref.InternalTokens()
 }
 
@@ -160,7 +160,7 @@ func (ic ImageConfigAttributes) InternalWithRef(ref terra.Reference) ImageConfig
 	return ImageConfigAttributes{ref: ref}
 }
 
-func (ic ImageConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ic ImageConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ic.ref.InternalTokens()
 }
 
@@ -188,7 +188,7 @@ func (ss SnapStartAttributes) InternalWithRef(ref terra.Reference) SnapStartAttr
 	return SnapStartAttributes{ref: ref}
 }
 
-func (ss SnapStartAttributes) InternalTokens() hclwrite.Tokens {
+func (ss SnapStartAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ss.ref.InternalTokens()
 }
 
@@ -212,7 +212,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -240,7 +240,7 @@ func (tc TracingConfigAttributes) InternalWithRef(ref terra.Reference) TracingCo
 	return TracingConfigAttributes{ref: ref}
 }
 
-func (tc TracingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (tc TracingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tc.ref.InternalTokens()
 }
 
@@ -260,7 +260,7 @@ func (vc VpcConfigAttributes) InternalWithRef(ref terra.Reference) VpcConfigAttr
 	return VpcConfigAttributes{ref: ref}
 }
 
-func (vc VpcConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (vc VpcConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vc.ref.InternalTokens()
 }
 

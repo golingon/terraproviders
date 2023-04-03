@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNetworkManagerAdminRule creates a new instance of [NetworkManagerAdminRule].
 func NewNetworkManagerAdminRule(name string, args NetworkManagerAdminRuleArgs) *NetworkManagerAdminRule {
 	return &NetworkManagerAdminRule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNetworkManagerAdminRule(name string, args NetworkManagerAdminRuleArgs) *
 
 var _ terra.Resource = (*NetworkManagerAdminRule)(nil)
 
+// NetworkManagerAdminRule represents the Terraform resource azurerm_network_manager_admin_rule.
 type NetworkManagerAdminRule struct {
-	Name  string
-	Args  NetworkManagerAdminRuleArgs
-	state *networkManagerAdminRuleState
+	Name      string
+	Args      NetworkManagerAdminRuleArgs
+	state     *networkManagerAdminRuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NetworkManagerAdminRule].
 func (nmar *NetworkManagerAdminRule) Type() string {
 	return "azurerm_network_manager_admin_rule"
 }
 
+// LocalName returns the local name for [NetworkManagerAdminRule].
 func (nmar *NetworkManagerAdminRule) LocalName() string {
 	return nmar.Name
 }
 
+// Configuration returns the configuration (args) for [NetworkManagerAdminRule].
 func (nmar *NetworkManagerAdminRule) Configuration() interface{} {
 	return nmar.Args
 }
 
+// DependOn is used for other resources to depend on [NetworkManagerAdminRule].
+func (nmar *NetworkManagerAdminRule) DependOn() terra.Reference {
+	return terra.ReferenceResource(nmar)
+}
+
+// Dependencies returns the list of resources [NetworkManagerAdminRule] depends_on.
+func (nmar *NetworkManagerAdminRule) Dependencies() terra.Dependencies {
+	return nmar.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NetworkManagerAdminRule].
+func (nmar *NetworkManagerAdminRule) LifecycleManagement() *terra.Lifecycle {
+	return nmar.Lifecycle
+}
+
+// Attributes returns the attributes for [NetworkManagerAdminRule].
 func (nmar *NetworkManagerAdminRule) Attributes() networkManagerAdminRuleAttributes {
 	return networkManagerAdminRuleAttributes{ref: terra.ReferenceResource(nmar)}
 }
 
+// ImportState imports the given attribute values into [NetworkManagerAdminRule]'s state.
 func (nmar *NetworkManagerAdminRule) ImportState(av io.Reader) error {
 	nmar.state = &networkManagerAdminRuleState{}
 	if err := json.NewDecoder(av).Decode(nmar.state); err != nil {
@@ -49,10 +73,12 @@ func (nmar *NetworkManagerAdminRule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NetworkManagerAdminRule] has state.
 func (nmar *NetworkManagerAdminRule) State() (*networkManagerAdminRuleState, bool) {
 	return nmar.state, nmar.state != nil
 }
 
+// StateMust returns the state for [NetworkManagerAdminRule]. Panics if the state is nil.
 func (nmar *NetworkManagerAdminRule) StateMust() *networkManagerAdminRuleState {
 	if nmar.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", nmar.Type(), nmar.LocalName()))
@@ -60,10 +86,7 @@ func (nmar *NetworkManagerAdminRule) StateMust() *networkManagerAdminRuleState {
 	return nmar.state
 }
 
-func (nmar *NetworkManagerAdminRule) DependOn() terra.Reference {
-	return terra.ReferenceResource(nmar)
-}
-
+// NetworkManagerAdminRuleArgs contains the configurations for azurerm_network_manager_admin_rule.
 type NetworkManagerAdminRuleArgs struct {
 	// Action: string, required
 	Action terra.StringValue `hcl:"action,attr" validate:"required"`
@@ -91,63 +114,71 @@ type NetworkManagerAdminRuleArgs struct {
 	Source []networkmanageradminrule.Source `hcl:"source,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *networkmanageradminrule.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that NetworkManagerAdminRule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type networkManagerAdminRuleAttributes struct {
 	ref terra.Reference
 }
 
+// Action returns a reference to field action of azurerm_network_manager_admin_rule.
 func (nmar networkManagerAdminRuleAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(nmar.ref.Append("action"))
+	return terra.ReferenceAsString(nmar.ref.Append("action"))
 }
 
+// AdminRuleCollectionId returns a reference to field admin_rule_collection_id of azurerm_network_manager_admin_rule.
 func (nmar networkManagerAdminRuleAttributes) AdminRuleCollectionId() terra.StringValue {
-	return terra.ReferenceString(nmar.ref.Append("admin_rule_collection_id"))
+	return terra.ReferenceAsString(nmar.ref.Append("admin_rule_collection_id"))
 }
 
+// Description returns a reference to field description of azurerm_network_manager_admin_rule.
 func (nmar networkManagerAdminRuleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(nmar.ref.Append("description"))
+	return terra.ReferenceAsString(nmar.ref.Append("description"))
 }
 
+// DestinationPortRanges returns a reference to field destination_port_ranges of azurerm_network_manager_admin_rule.
 func (nmar networkManagerAdminRuleAttributes) DestinationPortRanges() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](nmar.ref.Append("destination_port_ranges"))
+	return terra.ReferenceAsList[terra.StringValue](nmar.ref.Append("destination_port_ranges"))
 }
 
+// Direction returns a reference to field direction of azurerm_network_manager_admin_rule.
 func (nmar networkManagerAdminRuleAttributes) Direction() terra.StringValue {
-	return terra.ReferenceString(nmar.ref.Append("direction"))
+	return terra.ReferenceAsString(nmar.ref.Append("direction"))
 }
 
+// Id returns a reference to field id of azurerm_network_manager_admin_rule.
 func (nmar networkManagerAdminRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(nmar.ref.Append("id"))
+	return terra.ReferenceAsString(nmar.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_network_manager_admin_rule.
 func (nmar networkManagerAdminRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(nmar.ref.Append("name"))
+	return terra.ReferenceAsString(nmar.ref.Append("name"))
 }
 
+// Priority returns a reference to field priority of azurerm_network_manager_admin_rule.
 func (nmar networkManagerAdminRuleAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(nmar.ref.Append("priority"))
+	return terra.ReferenceAsNumber(nmar.ref.Append("priority"))
 }
 
+// Protocol returns a reference to field protocol of azurerm_network_manager_admin_rule.
 func (nmar networkManagerAdminRuleAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(nmar.ref.Append("protocol"))
+	return terra.ReferenceAsString(nmar.ref.Append("protocol"))
 }
 
+// SourcePortRanges returns a reference to field source_port_ranges of azurerm_network_manager_admin_rule.
 func (nmar networkManagerAdminRuleAttributes) SourcePortRanges() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](nmar.ref.Append("source_port_ranges"))
+	return terra.ReferenceAsList[terra.StringValue](nmar.ref.Append("source_port_ranges"))
 }
 
 func (nmar networkManagerAdminRuleAttributes) Destination() terra.ListValue[networkmanageradminrule.DestinationAttributes] {
-	return terra.ReferenceList[networkmanageradminrule.DestinationAttributes](nmar.ref.Append("destination"))
+	return terra.ReferenceAsList[networkmanageradminrule.DestinationAttributes](nmar.ref.Append("destination"))
 }
 
 func (nmar networkManagerAdminRuleAttributes) Source() terra.ListValue[networkmanageradminrule.SourceAttributes] {
-	return terra.ReferenceList[networkmanageradminrule.SourceAttributes](nmar.ref.Append("source"))
+	return terra.ReferenceAsList[networkmanageradminrule.SourceAttributes](nmar.ref.Append("source"))
 }
 
 func (nmar networkManagerAdminRuleAttributes) Timeouts() networkmanageradminrule.TimeoutsAttributes {
-	return terra.ReferenceSingle[networkmanageradminrule.TimeoutsAttributes](nmar.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[networkmanageradminrule.TimeoutsAttributes](nmar.ref.Append("timeouts"))
 }
 
 type networkManagerAdminRuleState struct {

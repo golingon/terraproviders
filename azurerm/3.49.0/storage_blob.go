@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewStorageBlob creates a new instance of [StorageBlob].
 func NewStorageBlob(name string, args StorageBlobArgs) *StorageBlob {
 	return &StorageBlob{
 		Args: args,
@@ -19,28 +20,51 @@ func NewStorageBlob(name string, args StorageBlobArgs) *StorageBlob {
 
 var _ terra.Resource = (*StorageBlob)(nil)
 
+// StorageBlob represents the Terraform resource azurerm_storage_blob.
 type StorageBlob struct {
-	Name  string
-	Args  StorageBlobArgs
-	state *storageBlobState
+	Name      string
+	Args      StorageBlobArgs
+	state     *storageBlobState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [StorageBlob].
 func (sb *StorageBlob) Type() string {
 	return "azurerm_storage_blob"
 }
 
+// LocalName returns the local name for [StorageBlob].
 func (sb *StorageBlob) LocalName() string {
 	return sb.Name
 }
 
+// Configuration returns the configuration (args) for [StorageBlob].
 func (sb *StorageBlob) Configuration() interface{} {
 	return sb.Args
 }
 
+// DependOn is used for other resources to depend on [StorageBlob].
+func (sb *StorageBlob) DependOn() terra.Reference {
+	return terra.ReferenceResource(sb)
+}
+
+// Dependencies returns the list of resources [StorageBlob] depends_on.
+func (sb *StorageBlob) Dependencies() terra.Dependencies {
+	return sb.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [StorageBlob].
+func (sb *StorageBlob) LifecycleManagement() *terra.Lifecycle {
+	return sb.Lifecycle
+}
+
+// Attributes returns the attributes for [StorageBlob].
 func (sb *StorageBlob) Attributes() storageBlobAttributes {
 	return storageBlobAttributes{ref: terra.ReferenceResource(sb)}
 }
 
+// ImportState imports the given attribute values into [StorageBlob]'s state.
 func (sb *StorageBlob) ImportState(av io.Reader) error {
 	sb.state = &storageBlobState{}
 	if err := json.NewDecoder(av).Decode(sb.state); err != nil {
@@ -49,10 +73,12 @@ func (sb *StorageBlob) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [StorageBlob] has state.
 func (sb *StorageBlob) State() (*storageBlobState, bool) {
 	return sb.state, sb.state != nil
 }
 
+// StateMust returns the state for [StorageBlob]. Panics if the state is nil.
 func (sb *StorageBlob) StateMust() *storageBlobState {
 	if sb.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sb.Type(), sb.LocalName()))
@@ -60,10 +86,7 @@ func (sb *StorageBlob) StateMust() *storageBlobState {
 	return sb.state
 }
 
-func (sb *StorageBlob) DependOn() terra.Reference {
-	return terra.ReferenceResource(sb)
-}
-
+// StorageBlobArgs contains the configurations for azurerm_storage_blob.
 type StorageBlobArgs struct {
 	// AccessTier: string, optional
 	AccessTier terra.StringValue `hcl:"access_tier,attr"`
@@ -97,79 +120,93 @@ type StorageBlobArgs struct {
 	Type terra.StringValue `hcl:"type,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *storageblob.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that StorageBlob depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type storageBlobAttributes struct {
 	ref terra.Reference
 }
 
+// AccessTier returns a reference to field access_tier of azurerm_storage_blob.
 func (sb storageBlobAttributes) AccessTier() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("access_tier"))
+	return terra.ReferenceAsString(sb.ref.Append("access_tier"))
 }
 
+// CacheControl returns a reference to field cache_control of azurerm_storage_blob.
 func (sb storageBlobAttributes) CacheControl() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("cache_control"))
+	return terra.ReferenceAsString(sb.ref.Append("cache_control"))
 }
 
+// ContentMd5 returns a reference to field content_md5 of azurerm_storage_blob.
 func (sb storageBlobAttributes) ContentMd5() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("content_md5"))
+	return terra.ReferenceAsString(sb.ref.Append("content_md5"))
 }
 
+// ContentType returns a reference to field content_type of azurerm_storage_blob.
 func (sb storageBlobAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("content_type"))
+	return terra.ReferenceAsString(sb.ref.Append("content_type"))
 }
 
+// Id returns a reference to field id of azurerm_storage_blob.
 func (sb storageBlobAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("id"))
+	return terra.ReferenceAsString(sb.ref.Append("id"))
 }
 
+// Metadata returns a reference to field metadata of azurerm_storage_blob.
 func (sb storageBlobAttributes) Metadata() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sb.ref.Append("metadata"))
+	return terra.ReferenceAsMap[terra.StringValue](sb.ref.Append("metadata"))
 }
 
+// Name returns a reference to field name of azurerm_storage_blob.
 func (sb storageBlobAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("name"))
+	return terra.ReferenceAsString(sb.ref.Append("name"))
 }
 
+// Parallelism returns a reference to field parallelism of azurerm_storage_blob.
 func (sb storageBlobAttributes) Parallelism() terra.NumberValue {
-	return terra.ReferenceNumber(sb.ref.Append("parallelism"))
+	return terra.ReferenceAsNumber(sb.ref.Append("parallelism"))
 }
 
+// Size returns a reference to field size of azurerm_storage_blob.
 func (sb storageBlobAttributes) Size() terra.NumberValue {
-	return terra.ReferenceNumber(sb.ref.Append("size"))
+	return terra.ReferenceAsNumber(sb.ref.Append("size"))
 }
 
+// Source returns a reference to field source of azurerm_storage_blob.
 func (sb storageBlobAttributes) Source() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("source"))
+	return terra.ReferenceAsString(sb.ref.Append("source"))
 }
 
+// SourceContent returns a reference to field source_content of azurerm_storage_blob.
 func (sb storageBlobAttributes) SourceContent() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("source_content"))
+	return terra.ReferenceAsString(sb.ref.Append("source_content"))
 }
 
+// SourceUri returns a reference to field source_uri of azurerm_storage_blob.
 func (sb storageBlobAttributes) SourceUri() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("source_uri"))
+	return terra.ReferenceAsString(sb.ref.Append("source_uri"))
 }
 
+// StorageAccountName returns a reference to field storage_account_name of azurerm_storage_blob.
 func (sb storageBlobAttributes) StorageAccountName() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("storage_account_name"))
+	return terra.ReferenceAsString(sb.ref.Append("storage_account_name"))
 }
 
+// StorageContainerName returns a reference to field storage_container_name of azurerm_storage_blob.
 func (sb storageBlobAttributes) StorageContainerName() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("storage_container_name"))
+	return terra.ReferenceAsString(sb.ref.Append("storage_container_name"))
 }
 
+// Type returns a reference to field type of azurerm_storage_blob.
 func (sb storageBlobAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("type"))
+	return terra.ReferenceAsString(sb.ref.Append("type"))
 }
 
+// Url returns a reference to field url of azurerm_storage_blob.
 func (sb storageBlobAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("url"))
+	return terra.ReferenceAsString(sb.ref.Append("url"))
 }
 
 func (sb storageBlobAttributes) Timeouts() storageblob.TimeoutsAttributes {
-	return terra.ReferenceSingle[storageblob.TimeoutsAttributes](sb.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[storageblob.TimeoutsAttributes](sb.ref.Append("timeouts"))
 }
 
 type storageBlobState struct {

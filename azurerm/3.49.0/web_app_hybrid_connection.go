@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewWebAppHybridConnection creates a new instance of [WebAppHybridConnection].
 func NewWebAppHybridConnection(name string, args WebAppHybridConnectionArgs) *WebAppHybridConnection {
 	return &WebAppHybridConnection{
 		Args: args,
@@ -19,28 +20,51 @@ func NewWebAppHybridConnection(name string, args WebAppHybridConnectionArgs) *We
 
 var _ terra.Resource = (*WebAppHybridConnection)(nil)
 
+// WebAppHybridConnection represents the Terraform resource azurerm_web_app_hybrid_connection.
 type WebAppHybridConnection struct {
-	Name  string
-	Args  WebAppHybridConnectionArgs
-	state *webAppHybridConnectionState
+	Name      string
+	Args      WebAppHybridConnectionArgs
+	state     *webAppHybridConnectionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [WebAppHybridConnection].
 func (wahc *WebAppHybridConnection) Type() string {
 	return "azurerm_web_app_hybrid_connection"
 }
 
+// LocalName returns the local name for [WebAppHybridConnection].
 func (wahc *WebAppHybridConnection) LocalName() string {
 	return wahc.Name
 }
 
+// Configuration returns the configuration (args) for [WebAppHybridConnection].
 func (wahc *WebAppHybridConnection) Configuration() interface{} {
 	return wahc.Args
 }
 
+// DependOn is used for other resources to depend on [WebAppHybridConnection].
+func (wahc *WebAppHybridConnection) DependOn() terra.Reference {
+	return terra.ReferenceResource(wahc)
+}
+
+// Dependencies returns the list of resources [WebAppHybridConnection] depends_on.
+func (wahc *WebAppHybridConnection) Dependencies() terra.Dependencies {
+	return wahc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [WebAppHybridConnection].
+func (wahc *WebAppHybridConnection) LifecycleManagement() *terra.Lifecycle {
+	return wahc.Lifecycle
+}
+
+// Attributes returns the attributes for [WebAppHybridConnection].
 func (wahc *WebAppHybridConnection) Attributes() webAppHybridConnectionAttributes {
 	return webAppHybridConnectionAttributes{ref: terra.ReferenceResource(wahc)}
 }
 
+// ImportState imports the given attribute values into [WebAppHybridConnection]'s state.
 func (wahc *WebAppHybridConnection) ImportState(av io.Reader) error {
 	wahc.state = &webAppHybridConnectionState{}
 	if err := json.NewDecoder(av).Decode(wahc.state); err != nil {
@@ -49,10 +73,12 @@ func (wahc *WebAppHybridConnection) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [WebAppHybridConnection] has state.
 func (wahc *WebAppHybridConnection) State() (*webAppHybridConnectionState, bool) {
 	return wahc.state, wahc.state != nil
 }
 
+// StateMust returns the state for [WebAppHybridConnection]. Panics if the state is nil.
 func (wahc *WebAppHybridConnection) StateMust() *webAppHybridConnectionState {
 	if wahc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", wahc.Type(), wahc.LocalName()))
@@ -60,10 +86,7 @@ func (wahc *WebAppHybridConnection) StateMust() *webAppHybridConnectionState {
 	return wahc.state
 }
 
-func (wahc *WebAppHybridConnection) DependOn() terra.Reference {
-	return terra.ReferenceResource(wahc)
-}
-
+// WebAppHybridConnectionArgs contains the configurations for azurerm_web_app_hybrid_connection.
 type WebAppHybridConnectionArgs struct {
 	// Hostname: string, required
 	Hostname terra.StringValue `hcl:"hostname,attr" validate:"required"`
@@ -79,59 +102,68 @@ type WebAppHybridConnectionArgs struct {
 	WebAppId terra.StringValue `hcl:"web_app_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *webapphybridconnection.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that WebAppHybridConnection depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type webAppHybridConnectionAttributes struct {
 	ref terra.Reference
 }
 
+// Hostname returns a reference to field hostname of azurerm_web_app_hybrid_connection.
 func (wahc webAppHybridConnectionAttributes) Hostname() terra.StringValue {
-	return terra.ReferenceString(wahc.ref.Append("hostname"))
+	return terra.ReferenceAsString(wahc.ref.Append("hostname"))
 }
 
+// Id returns a reference to field id of azurerm_web_app_hybrid_connection.
 func (wahc webAppHybridConnectionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(wahc.ref.Append("id"))
+	return terra.ReferenceAsString(wahc.ref.Append("id"))
 }
 
+// NamespaceName returns a reference to field namespace_name of azurerm_web_app_hybrid_connection.
 func (wahc webAppHybridConnectionAttributes) NamespaceName() terra.StringValue {
-	return terra.ReferenceString(wahc.ref.Append("namespace_name"))
+	return terra.ReferenceAsString(wahc.ref.Append("namespace_name"))
 }
 
+// Port returns a reference to field port of azurerm_web_app_hybrid_connection.
 func (wahc webAppHybridConnectionAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(wahc.ref.Append("port"))
+	return terra.ReferenceAsNumber(wahc.ref.Append("port"))
 }
 
+// RelayId returns a reference to field relay_id of azurerm_web_app_hybrid_connection.
 func (wahc webAppHybridConnectionAttributes) RelayId() terra.StringValue {
-	return terra.ReferenceString(wahc.ref.Append("relay_id"))
+	return terra.ReferenceAsString(wahc.ref.Append("relay_id"))
 }
 
+// RelayName returns a reference to field relay_name of azurerm_web_app_hybrid_connection.
 func (wahc webAppHybridConnectionAttributes) RelayName() terra.StringValue {
-	return terra.ReferenceString(wahc.ref.Append("relay_name"))
+	return terra.ReferenceAsString(wahc.ref.Append("relay_name"))
 }
 
+// SendKeyName returns a reference to field send_key_name of azurerm_web_app_hybrid_connection.
 func (wahc webAppHybridConnectionAttributes) SendKeyName() terra.StringValue {
-	return terra.ReferenceString(wahc.ref.Append("send_key_name"))
+	return terra.ReferenceAsString(wahc.ref.Append("send_key_name"))
 }
 
+// SendKeyValue returns a reference to field send_key_value of azurerm_web_app_hybrid_connection.
 func (wahc webAppHybridConnectionAttributes) SendKeyValue() terra.StringValue {
-	return terra.ReferenceString(wahc.ref.Append("send_key_value"))
+	return terra.ReferenceAsString(wahc.ref.Append("send_key_value"))
 }
 
+// ServiceBusNamespace returns a reference to field service_bus_namespace of azurerm_web_app_hybrid_connection.
 func (wahc webAppHybridConnectionAttributes) ServiceBusNamespace() terra.StringValue {
-	return terra.ReferenceString(wahc.ref.Append("service_bus_namespace"))
+	return terra.ReferenceAsString(wahc.ref.Append("service_bus_namespace"))
 }
 
+// ServiceBusSuffix returns a reference to field service_bus_suffix of azurerm_web_app_hybrid_connection.
 func (wahc webAppHybridConnectionAttributes) ServiceBusSuffix() terra.StringValue {
-	return terra.ReferenceString(wahc.ref.Append("service_bus_suffix"))
+	return terra.ReferenceAsString(wahc.ref.Append("service_bus_suffix"))
 }
 
+// WebAppId returns a reference to field web_app_id of azurerm_web_app_hybrid_connection.
 func (wahc webAppHybridConnectionAttributes) WebAppId() terra.StringValue {
-	return terra.ReferenceString(wahc.ref.Append("web_app_id"))
+	return terra.ReferenceAsString(wahc.ref.Append("web_app_id"))
 }
 
 func (wahc webAppHybridConnectionAttributes) Timeouts() webapphybridconnection.TimeoutsAttributes {
-	return terra.ReferenceSingle[webapphybridconnection.TimeoutsAttributes](wahc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[webapphybridconnection.TimeoutsAttributes](wahc.ref.Append("timeouts"))
 }
 
 type webAppHybridConnectionState struct {

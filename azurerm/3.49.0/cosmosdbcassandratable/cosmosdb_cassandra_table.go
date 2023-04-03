@@ -55,148 +55,148 @@ type AutoscaleSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (as AutoscaleSettingsAttributes) InternalRef() terra.Reference {
-	return as.ref
+func (as AutoscaleSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return as.ref, nil
 }
 
 func (as AutoscaleSettingsAttributes) InternalWithRef(ref terra.Reference) AutoscaleSettingsAttributes {
 	return AutoscaleSettingsAttributes{ref: ref}
 }
 
-func (as AutoscaleSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (as AutoscaleSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return as.ref.InternalTokens()
 }
 
 func (as AutoscaleSettingsAttributes) MaxThroughput() terra.NumberValue {
-	return terra.ReferenceNumber(as.ref.Append("max_throughput"))
+	return terra.ReferenceAsNumber(as.ref.Append("max_throughput"))
 }
 
 type SchemaAttributes struct {
 	ref terra.Reference
 }
 
-func (s SchemaAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SchemaAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SchemaAttributes) InternalWithRef(ref terra.Reference) SchemaAttributes {
 	return SchemaAttributes{ref: ref}
 }
 
-func (s SchemaAttributes) InternalTokens() hclwrite.Tokens {
+func (s SchemaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SchemaAttributes) ClusterKey() terra.ListValue[ClusterKeyAttributes] {
-	return terra.ReferenceList[ClusterKeyAttributes](s.ref.Append("cluster_key"))
+	return terra.ReferenceAsList[ClusterKeyAttributes](s.ref.Append("cluster_key"))
 }
 
 func (s SchemaAttributes) Column() terra.ListValue[ColumnAttributes] {
-	return terra.ReferenceList[ColumnAttributes](s.ref.Append("column"))
+	return terra.ReferenceAsList[ColumnAttributes](s.ref.Append("column"))
 }
 
 func (s SchemaAttributes) PartitionKey() terra.ListValue[PartitionKeyAttributes] {
-	return terra.ReferenceList[PartitionKeyAttributes](s.ref.Append("partition_key"))
+	return terra.ReferenceAsList[PartitionKeyAttributes](s.ref.Append("partition_key"))
 }
 
 type ClusterKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (ck ClusterKeyAttributes) InternalRef() terra.Reference {
-	return ck.ref
+func (ck ClusterKeyAttributes) InternalRef() (terra.Reference, error) {
+	return ck.ref, nil
 }
 
 func (ck ClusterKeyAttributes) InternalWithRef(ref terra.Reference) ClusterKeyAttributes {
 	return ClusterKeyAttributes{ref: ref}
 }
 
-func (ck ClusterKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (ck ClusterKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ck.ref.InternalTokens()
 }
 
 func (ck ClusterKeyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ck.ref.Append("name"))
+	return terra.ReferenceAsString(ck.ref.Append("name"))
 }
 
 func (ck ClusterKeyAttributes) OrderBy() terra.StringValue {
-	return terra.ReferenceString(ck.ref.Append("order_by"))
+	return terra.ReferenceAsString(ck.ref.Append("order_by"))
 }
 
 type ColumnAttributes struct {
 	ref terra.Reference
 }
 
-func (c ColumnAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ColumnAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ColumnAttributes) InternalWithRef(ref terra.Reference) ColumnAttributes {
 	return ColumnAttributes{ref: ref}
 }
 
-func (c ColumnAttributes) InternalTokens() hclwrite.Tokens {
+func (c ColumnAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ColumnAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("name"))
+	return terra.ReferenceAsString(c.ref.Append("name"))
 }
 
 func (c ColumnAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("type"))
+	return terra.ReferenceAsString(c.ref.Append("type"))
 }
 
 type PartitionKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (pk PartitionKeyAttributes) InternalRef() terra.Reference {
-	return pk.ref
+func (pk PartitionKeyAttributes) InternalRef() (terra.Reference, error) {
+	return pk.ref, nil
 }
 
 func (pk PartitionKeyAttributes) InternalWithRef(ref terra.Reference) PartitionKeyAttributes {
 	return PartitionKeyAttributes{ref: ref}
 }
 
-func (pk PartitionKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (pk PartitionKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pk.ref.InternalTokens()
 }
 
 func (pk PartitionKeyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pk.ref.Append("name"))
+	return terra.ReferenceAsString(pk.ref.Append("name"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AutoscaleSettingsState struct {

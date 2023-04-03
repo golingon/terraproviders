@@ -48,7 +48,7 @@ func (de DagEdgeAttributes) InternalWithRef(ref terra.Reference) DagEdgeAttribut
 	return DagEdgeAttributes{ref: ref}
 }
 
-func (de DagEdgeAttributes) InternalTokens() hclwrite.Tokens {
+func (de DagEdgeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return de.ref.InternalTokens()
 }
 
@@ -76,7 +76,7 @@ func (dn DagNodeAttributes) InternalWithRef(ref terra.Reference) DagNodeAttribut
 	return DagNodeAttributes{ref: ref}
 }
 
-func (dn DagNodeAttributes) InternalTokens() hclwrite.Tokens {
+func (dn DagNodeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dn.ref.InternalTokens()
 }
 
@@ -108,7 +108,7 @@ func (a ArgsAttributes) InternalWithRef(ref terra.Reference) ArgsAttributes {
 	return ArgsAttributes{ref: ref}
 }
 
-func (a ArgsAttributes) InternalTokens() hclwrite.Tokens {
+func (a ArgsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 

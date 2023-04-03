@@ -29,60 +29,60 @@ type ModuleAttributes struct {
 	ref terra.Reference
 }
 
-func (m ModuleAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m ModuleAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m ModuleAttributes) InternalWithRef(ref terra.Reference) ModuleAttributes {
 	return ModuleAttributes{ref: ref}
 }
 
-func (m ModuleAttributes) InternalTokens() hclwrite.Tokens {
+func (m ModuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
 func (m ModuleAttributes) Args() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("args"))
+	return terra.ReferenceAsString(m.ref.Append("args"))
 }
 
 func (m ModuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("name"))
+	return terra.ReferenceAsString(m.ref.Append("name"))
 }
 
 func (m ModuleAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("version"))
+	return terra.ReferenceAsString(m.ref.Append("version"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ModuleState struct {

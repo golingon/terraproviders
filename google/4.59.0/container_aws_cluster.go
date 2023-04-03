@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewContainerAwsCluster creates a new instance of [ContainerAwsCluster].
 func NewContainerAwsCluster(name string, args ContainerAwsClusterArgs) *ContainerAwsCluster {
 	return &ContainerAwsCluster{
 		Args: args,
@@ -19,28 +20,51 @@ func NewContainerAwsCluster(name string, args ContainerAwsClusterArgs) *Containe
 
 var _ terra.Resource = (*ContainerAwsCluster)(nil)
 
+// ContainerAwsCluster represents the Terraform resource google_container_aws_cluster.
 type ContainerAwsCluster struct {
-	Name  string
-	Args  ContainerAwsClusterArgs
-	state *containerAwsClusterState
+	Name      string
+	Args      ContainerAwsClusterArgs
+	state     *containerAwsClusterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ContainerAwsCluster].
 func (cac *ContainerAwsCluster) Type() string {
 	return "google_container_aws_cluster"
 }
 
+// LocalName returns the local name for [ContainerAwsCluster].
 func (cac *ContainerAwsCluster) LocalName() string {
 	return cac.Name
 }
 
+// Configuration returns the configuration (args) for [ContainerAwsCluster].
 func (cac *ContainerAwsCluster) Configuration() interface{} {
 	return cac.Args
 }
 
+// DependOn is used for other resources to depend on [ContainerAwsCluster].
+func (cac *ContainerAwsCluster) DependOn() terra.Reference {
+	return terra.ReferenceResource(cac)
+}
+
+// Dependencies returns the list of resources [ContainerAwsCluster] depends_on.
+func (cac *ContainerAwsCluster) Dependencies() terra.Dependencies {
+	return cac.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ContainerAwsCluster].
+func (cac *ContainerAwsCluster) LifecycleManagement() *terra.Lifecycle {
+	return cac.Lifecycle
+}
+
+// Attributes returns the attributes for [ContainerAwsCluster].
 func (cac *ContainerAwsCluster) Attributes() containerAwsClusterAttributes {
 	return containerAwsClusterAttributes{ref: terra.ReferenceResource(cac)}
 }
 
+// ImportState imports the given attribute values into [ContainerAwsCluster]'s state.
 func (cac *ContainerAwsCluster) ImportState(av io.Reader) error {
 	cac.state = &containerAwsClusterState{}
 	if err := json.NewDecoder(av).Decode(cac.state); err != nil {
@@ -49,10 +73,12 @@ func (cac *ContainerAwsCluster) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ContainerAwsCluster] has state.
 func (cac *ContainerAwsCluster) State() (*containerAwsClusterState, bool) {
 	return cac.state, cac.state != nil
 }
 
+// StateMust returns the state for [ContainerAwsCluster]. Panics if the state is nil.
 func (cac *ContainerAwsCluster) StateMust() *containerAwsClusterState {
 	if cac.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cac.Type(), cac.LocalName()))
@@ -60,10 +86,7 @@ func (cac *ContainerAwsCluster) StateMust() *containerAwsClusterState {
 	return cac.state
 }
 
-func (cac *ContainerAwsCluster) DependOn() terra.Reference {
-	return terra.ReferenceResource(cac)
-}
-
+// ContainerAwsClusterArgs contains the configurations for google_container_aws_cluster.
 type ContainerAwsClusterArgs struct {
 	// Annotations: map of string, optional
 	Annotations terra.MapValue[terra.StringValue] `hcl:"annotations,attr"`
@@ -91,91 +114,103 @@ type ContainerAwsClusterArgs struct {
 	Networking *containerawscluster.Networking `hcl:"networking,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *containerawscluster.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ContainerAwsCluster depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type containerAwsClusterAttributes struct {
 	ref terra.Reference
 }
 
+// Annotations returns a reference to field annotations of google_container_aws_cluster.
 func (cac containerAwsClusterAttributes) Annotations() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cac.ref.Append("annotations"))
+	return terra.ReferenceAsMap[terra.StringValue](cac.ref.Append("annotations"))
 }
 
+// AwsRegion returns a reference to field aws_region of google_container_aws_cluster.
 func (cac containerAwsClusterAttributes) AwsRegion() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("aws_region"))
+	return terra.ReferenceAsString(cac.ref.Append("aws_region"))
 }
 
+// CreateTime returns a reference to field create_time of google_container_aws_cluster.
 func (cac containerAwsClusterAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("create_time"))
+	return terra.ReferenceAsString(cac.ref.Append("create_time"))
 }
 
+// Description returns a reference to field description of google_container_aws_cluster.
 func (cac containerAwsClusterAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("description"))
+	return terra.ReferenceAsString(cac.ref.Append("description"))
 }
 
+// Endpoint returns a reference to field endpoint of google_container_aws_cluster.
 func (cac containerAwsClusterAttributes) Endpoint() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("endpoint"))
+	return terra.ReferenceAsString(cac.ref.Append("endpoint"))
 }
 
+// Etag returns a reference to field etag of google_container_aws_cluster.
 func (cac containerAwsClusterAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("etag"))
+	return terra.ReferenceAsString(cac.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_container_aws_cluster.
 func (cac containerAwsClusterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("id"))
+	return terra.ReferenceAsString(cac.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_container_aws_cluster.
 func (cac containerAwsClusterAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("location"))
+	return terra.ReferenceAsString(cac.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_container_aws_cluster.
 func (cac containerAwsClusterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("name"))
+	return terra.ReferenceAsString(cac.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_container_aws_cluster.
 func (cac containerAwsClusterAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("project"))
+	return terra.ReferenceAsString(cac.ref.Append("project"))
 }
 
+// Reconciling returns a reference to field reconciling of google_container_aws_cluster.
 func (cac containerAwsClusterAttributes) Reconciling() terra.BoolValue {
-	return terra.ReferenceBool(cac.ref.Append("reconciling"))
+	return terra.ReferenceAsBool(cac.ref.Append("reconciling"))
 }
 
+// State returns a reference to field state of google_container_aws_cluster.
 func (cac containerAwsClusterAttributes) State() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("state"))
+	return terra.ReferenceAsString(cac.ref.Append("state"))
 }
 
+// Uid returns a reference to field uid of google_container_aws_cluster.
 func (cac containerAwsClusterAttributes) Uid() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("uid"))
+	return terra.ReferenceAsString(cac.ref.Append("uid"))
 }
 
+// UpdateTime returns a reference to field update_time of google_container_aws_cluster.
 func (cac containerAwsClusterAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("update_time"))
+	return terra.ReferenceAsString(cac.ref.Append("update_time"))
 }
 
 func (cac containerAwsClusterAttributes) WorkloadIdentityConfig() terra.ListValue[containerawscluster.WorkloadIdentityConfigAttributes] {
-	return terra.ReferenceList[containerawscluster.WorkloadIdentityConfigAttributes](cac.ref.Append("workload_identity_config"))
+	return terra.ReferenceAsList[containerawscluster.WorkloadIdentityConfigAttributes](cac.ref.Append("workload_identity_config"))
 }
 
 func (cac containerAwsClusterAttributes) Authorization() terra.ListValue[containerawscluster.AuthorizationAttributes] {
-	return terra.ReferenceList[containerawscluster.AuthorizationAttributes](cac.ref.Append("authorization"))
+	return terra.ReferenceAsList[containerawscluster.AuthorizationAttributes](cac.ref.Append("authorization"))
 }
 
 func (cac containerAwsClusterAttributes) ControlPlane() terra.ListValue[containerawscluster.ControlPlaneAttributes] {
-	return terra.ReferenceList[containerawscluster.ControlPlaneAttributes](cac.ref.Append("control_plane"))
+	return terra.ReferenceAsList[containerawscluster.ControlPlaneAttributes](cac.ref.Append("control_plane"))
 }
 
 func (cac containerAwsClusterAttributes) Fleet() terra.ListValue[containerawscluster.FleetAttributes] {
-	return terra.ReferenceList[containerawscluster.FleetAttributes](cac.ref.Append("fleet"))
+	return terra.ReferenceAsList[containerawscluster.FleetAttributes](cac.ref.Append("fleet"))
 }
 
 func (cac containerAwsClusterAttributes) Networking() terra.ListValue[containerawscluster.NetworkingAttributes] {
-	return terra.ReferenceList[containerawscluster.NetworkingAttributes](cac.ref.Append("networking"))
+	return terra.ReferenceAsList[containerawscluster.NetworkingAttributes](cac.ref.Append("networking"))
 }
 
 func (cac containerAwsClusterAttributes) Timeouts() containerawscluster.TimeoutsAttributes {
-	return terra.ReferenceSingle[containerawscluster.TimeoutsAttributes](cac.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[containerawscluster.TimeoutsAttributes](cac.ref.Append("timeouts"))
 }
 
 type containerAwsClusterState struct {

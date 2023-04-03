@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataPrivateDnsResolverDnsForwardingRuleset creates a new instance of [DataPrivateDnsResolverDnsForwardingRuleset].
 func NewDataPrivateDnsResolverDnsForwardingRuleset(name string, args DataPrivateDnsResolverDnsForwardingRulesetArgs) *DataPrivateDnsResolverDnsForwardingRuleset {
 	return &DataPrivateDnsResolverDnsForwardingRuleset{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataPrivateDnsResolverDnsForwardingRuleset(name string, args DataPrivate
 
 var _ terra.DataResource = (*DataPrivateDnsResolverDnsForwardingRuleset)(nil)
 
+// DataPrivateDnsResolverDnsForwardingRuleset represents the Terraform data resource azurerm_private_dns_resolver_dns_forwarding_ruleset.
 type DataPrivateDnsResolverDnsForwardingRuleset struct {
 	Name string
 	Args DataPrivateDnsResolverDnsForwardingRulesetArgs
 }
 
+// DataSource returns the Terraform object type for [DataPrivateDnsResolverDnsForwardingRuleset].
 func (pdrdfr *DataPrivateDnsResolverDnsForwardingRuleset) DataSource() string {
 	return "azurerm_private_dns_resolver_dns_forwarding_ruleset"
 }
 
+// LocalName returns the local name for [DataPrivateDnsResolverDnsForwardingRuleset].
 func (pdrdfr *DataPrivateDnsResolverDnsForwardingRuleset) LocalName() string {
 	return pdrdfr.Name
 }
 
+// Configuration returns the configuration (args) for [DataPrivateDnsResolverDnsForwardingRuleset].
 func (pdrdfr *DataPrivateDnsResolverDnsForwardingRuleset) Configuration() interface{} {
 	return pdrdfr.Args
 }
 
+// Attributes returns the attributes for [DataPrivateDnsResolverDnsForwardingRuleset].
 func (pdrdfr *DataPrivateDnsResolverDnsForwardingRuleset) Attributes() dataPrivateDnsResolverDnsForwardingRulesetAttributes {
 	return dataPrivateDnsResolverDnsForwardingRulesetAttributes{ref: terra.ReferenceDataResource(pdrdfr)}
 }
 
+// DataPrivateDnsResolverDnsForwardingRulesetArgs contains the configurations for azurerm_private_dns_resolver_dns_forwarding_ruleset.
 type DataPrivateDnsResolverDnsForwardingRulesetArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,30 +58,36 @@ type dataPrivateDnsResolverDnsForwardingRulesetAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_private_dns_resolver_dns_forwarding_ruleset.
 func (pdrdfr dataPrivateDnsResolverDnsForwardingRulesetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pdrdfr.ref.Append("id"))
+	return terra.ReferenceAsString(pdrdfr.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_private_dns_resolver_dns_forwarding_ruleset.
 func (pdrdfr dataPrivateDnsResolverDnsForwardingRulesetAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(pdrdfr.ref.Append("location"))
+	return terra.ReferenceAsString(pdrdfr.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_private_dns_resolver_dns_forwarding_ruleset.
 func (pdrdfr dataPrivateDnsResolverDnsForwardingRulesetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pdrdfr.ref.Append("name"))
+	return terra.ReferenceAsString(pdrdfr.ref.Append("name"))
 }
 
+// PrivateDnsResolverOutboundEndpointIds returns a reference to field private_dns_resolver_outbound_endpoint_ids of azurerm_private_dns_resolver_dns_forwarding_ruleset.
 func (pdrdfr dataPrivateDnsResolverDnsForwardingRulesetAttributes) PrivateDnsResolverOutboundEndpointIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](pdrdfr.ref.Append("private_dns_resolver_outbound_endpoint_ids"))
+	return terra.ReferenceAsList[terra.StringValue](pdrdfr.ref.Append("private_dns_resolver_outbound_endpoint_ids"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_private_dns_resolver_dns_forwarding_ruleset.
 func (pdrdfr dataPrivateDnsResolverDnsForwardingRulesetAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(pdrdfr.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(pdrdfr.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_private_dns_resolver_dns_forwarding_ruleset.
 func (pdrdfr dataPrivateDnsResolverDnsForwardingRulesetAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](pdrdfr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](pdrdfr.ref.Append("tags"))
 }
 
 func (pdrdfr dataPrivateDnsResolverDnsForwardingRulesetAttributes) Timeouts() dataprivatednsresolverdnsforwardingruleset.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataprivatednsresolverdnsforwardingruleset.TimeoutsAttributes](pdrdfr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataprivatednsresolverdnsforwardingruleset.TimeoutsAttributes](pdrdfr.ref.Append("timeouts"))
 }

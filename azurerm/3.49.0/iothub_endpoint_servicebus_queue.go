@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewIothubEndpointServicebusQueue creates a new instance of [IothubEndpointServicebusQueue].
 func NewIothubEndpointServicebusQueue(name string, args IothubEndpointServicebusQueueArgs) *IothubEndpointServicebusQueue {
 	return &IothubEndpointServicebusQueue{
 		Args: args,
@@ -19,28 +20,51 @@ func NewIothubEndpointServicebusQueue(name string, args IothubEndpointServicebus
 
 var _ terra.Resource = (*IothubEndpointServicebusQueue)(nil)
 
+// IothubEndpointServicebusQueue represents the Terraform resource azurerm_iothub_endpoint_servicebus_queue.
 type IothubEndpointServicebusQueue struct {
-	Name  string
-	Args  IothubEndpointServicebusQueueArgs
-	state *iothubEndpointServicebusQueueState
+	Name      string
+	Args      IothubEndpointServicebusQueueArgs
+	state     *iothubEndpointServicebusQueueState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IothubEndpointServicebusQueue].
 func (iesq *IothubEndpointServicebusQueue) Type() string {
 	return "azurerm_iothub_endpoint_servicebus_queue"
 }
 
+// LocalName returns the local name for [IothubEndpointServicebusQueue].
 func (iesq *IothubEndpointServicebusQueue) LocalName() string {
 	return iesq.Name
 }
 
+// Configuration returns the configuration (args) for [IothubEndpointServicebusQueue].
 func (iesq *IothubEndpointServicebusQueue) Configuration() interface{} {
 	return iesq.Args
 }
 
+// DependOn is used for other resources to depend on [IothubEndpointServicebusQueue].
+func (iesq *IothubEndpointServicebusQueue) DependOn() terra.Reference {
+	return terra.ReferenceResource(iesq)
+}
+
+// Dependencies returns the list of resources [IothubEndpointServicebusQueue] depends_on.
+func (iesq *IothubEndpointServicebusQueue) Dependencies() terra.Dependencies {
+	return iesq.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IothubEndpointServicebusQueue].
+func (iesq *IothubEndpointServicebusQueue) LifecycleManagement() *terra.Lifecycle {
+	return iesq.Lifecycle
+}
+
+// Attributes returns the attributes for [IothubEndpointServicebusQueue].
 func (iesq *IothubEndpointServicebusQueue) Attributes() iothubEndpointServicebusQueueAttributes {
 	return iothubEndpointServicebusQueueAttributes{ref: terra.ReferenceResource(iesq)}
 }
 
+// ImportState imports the given attribute values into [IothubEndpointServicebusQueue]'s state.
 func (iesq *IothubEndpointServicebusQueue) ImportState(av io.Reader) error {
 	iesq.state = &iothubEndpointServicebusQueueState{}
 	if err := json.NewDecoder(av).Decode(iesq.state); err != nil {
@@ -49,10 +73,12 @@ func (iesq *IothubEndpointServicebusQueue) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IothubEndpointServicebusQueue] has state.
 func (iesq *IothubEndpointServicebusQueue) State() (*iothubEndpointServicebusQueueState, bool) {
 	return iesq.state, iesq.state != nil
 }
 
+// StateMust returns the state for [IothubEndpointServicebusQueue]. Panics if the state is nil.
 func (iesq *IothubEndpointServicebusQueue) StateMust() *iothubEndpointServicebusQueueState {
 	if iesq.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", iesq.Type(), iesq.LocalName()))
@@ -60,10 +86,7 @@ func (iesq *IothubEndpointServicebusQueue) StateMust() *iothubEndpointServicebus
 	return iesq.state
 }
 
-func (iesq *IothubEndpointServicebusQueue) DependOn() terra.Reference {
-	return terra.ReferenceResource(iesq)
-}
-
+// IothubEndpointServicebusQueueArgs contains the configurations for azurerm_iothub_endpoint_servicebus_queue.
 type IothubEndpointServicebusQueueArgs struct {
 	// AuthenticationType: string, optional
 	AuthenticationType terra.StringValue `hcl:"authentication_type,attr"`
@@ -85,51 +108,58 @@ type IothubEndpointServicebusQueueArgs struct {
 	ResourceGroupName terra.StringValue `hcl:"resource_group_name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *iothubendpointservicebusqueue.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that IothubEndpointServicebusQueue depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iothubEndpointServicebusQueueAttributes struct {
 	ref terra.Reference
 }
 
+// AuthenticationType returns a reference to field authentication_type of azurerm_iothub_endpoint_servicebus_queue.
 func (iesq iothubEndpointServicebusQueueAttributes) AuthenticationType() terra.StringValue {
-	return terra.ReferenceString(iesq.ref.Append("authentication_type"))
+	return terra.ReferenceAsString(iesq.ref.Append("authentication_type"))
 }
 
+// ConnectionString returns a reference to field connection_string of azurerm_iothub_endpoint_servicebus_queue.
 func (iesq iothubEndpointServicebusQueueAttributes) ConnectionString() terra.StringValue {
-	return terra.ReferenceString(iesq.ref.Append("connection_string"))
+	return terra.ReferenceAsString(iesq.ref.Append("connection_string"))
 }
 
+// EndpointUri returns a reference to field endpoint_uri of azurerm_iothub_endpoint_servicebus_queue.
 func (iesq iothubEndpointServicebusQueueAttributes) EndpointUri() terra.StringValue {
-	return terra.ReferenceString(iesq.ref.Append("endpoint_uri"))
+	return terra.ReferenceAsString(iesq.ref.Append("endpoint_uri"))
 }
 
+// EntityPath returns a reference to field entity_path of azurerm_iothub_endpoint_servicebus_queue.
 func (iesq iothubEndpointServicebusQueueAttributes) EntityPath() terra.StringValue {
-	return terra.ReferenceString(iesq.ref.Append("entity_path"))
+	return terra.ReferenceAsString(iesq.ref.Append("entity_path"))
 }
 
+// Id returns a reference to field id of azurerm_iothub_endpoint_servicebus_queue.
 func (iesq iothubEndpointServicebusQueueAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(iesq.ref.Append("id"))
+	return terra.ReferenceAsString(iesq.ref.Append("id"))
 }
 
+// IdentityId returns a reference to field identity_id of azurerm_iothub_endpoint_servicebus_queue.
 func (iesq iothubEndpointServicebusQueueAttributes) IdentityId() terra.StringValue {
-	return terra.ReferenceString(iesq.ref.Append("identity_id"))
+	return terra.ReferenceAsString(iesq.ref.Append("identity_id"))
 }
 
+// IothubId returns a reference to field iothub_id of azurerm_iothub_endpoint_servicebus_queue.
 func (iesq iothubEndpointServicebusQueueAttributes) IothubId() terra.StringValue {
-	return terra.ReferenceString(iesq.ref.Append("iothub_id"))
+	return terra.ReferenceAsString(iesq.ref.Append("iothub_id"))
 }
 
+// Name returns a reference to field name of azurerm_iothub_endpoint_servicebus_queue.
 func (iesq iothubEndpointServicebusQueueAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(iesq.ref.Append("name"))
+	return terra.ReferenceAsString(iesq.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_iothub_endpoint_servicebus_queue.
 func (iesq iothubEndpointServicebusQueueAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(iesq.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(iesq.ref.Append("resource_group_name"))
 }
 
 func (iesq iothubEndpointServicebusQueueAttributes) Timeouts() iothubendpointservicebusqueue.TimeoutsAttributes {
-	return terra.ReferenceSingle[iothubendpointservicebusqueue.TimeoutsAttributes](iesq.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[iothubendpointservicebusqueue.TimeoutsAttributes](iesq.ref.Append("timeouts"))
 }
 
 type iothubEndpointServicebusQueueState struct {

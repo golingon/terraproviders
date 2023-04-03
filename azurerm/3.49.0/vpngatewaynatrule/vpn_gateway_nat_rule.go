@@ -36,80 +36,80 @@ type ExternalMappingAttributes struct {
 	ref terra.Reference
 }
 
-func (em ExternalMappingAttributes) InternalRef() terra.Reference {
-	return em.ref
+func (em ExternalMappingAttributes) InternalRef() (terra.Reference, error) {
+	return em.ref, nil
 }
 
 func (em ExternalMappingAttributes) InternalWithRef(ref terra.Reference) ExternalMappingAttributes {
 	return ExternalMappingAttributes{ref: ref}
 }
 
-func (em ExternalMappingAttributes) InternalTokens() hclwrite.Tokens {
+func (em ExternalMappingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return em.ref.InternalTokens()
 }
 
 func (em ExternalMappingAttributes) AddressSpace() terra.StringValue {
-	return terra.ReferenceString(em.ref.Append("address_space"))
+	return terra.ReferenceAsString(em.ref.Append("address_space"))
 }
 
 func (em ExternalMappingAttributes) PortRange() terra.StringValue {
-	return terra.ReferenceString(em.ref.Append("port_range"))
+	return terra.ReferenceAsString(em.ref.Append("port_range"))
 }
 
 type InternalMappingAttributes struct {
 	ref terra.Reference
 }
 
-func (im InternalMappingAttributes) InternalRef() terra.Reference {
-	return im.ref
+func (im InternalMappingAttributes) InternalRef() (terra.Reference, error) {
+	return im.ref, nil
 }
 
 func (im InternalMappingAttributes) InternalWithRef(ref terra.Reference) InternalMappingAttributes {
 	return InternalMappingAttributes{ref: ref}
 }
 
-func (im InternalMappingAttributes) InternalTokens() hclwrite.Tokens {
+func (im InternalMappingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return im.ref.InternalTokens()
 }
 
 func (im InternalMappingAttributes) AddressSpace() terra.StringValue {
-	return terra.ReferenceString(im.ref.Append("address_space"))
+	return terra.ReferenceAsString(im.ref.Append("address_space"))
 }
 
 func (im InternalMappingAttributes) PortRange() terra.StringValue {
-	return terra.ReferenceString(im.ref.Append("port_range"))
+	return terra.ReferenceAsString(im.ref.Append("port_range"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ExternalMappingState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBigtableAppProfile creates a new instance of [BigtableAppProfile].
 func NewBigtableAppProfile(name string, args BigtableAppProfileArgs) *BigtableAppProfile {
 	return &BigtableAppProfile{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBigtableAppProfile(name string, args BigtableAppProfileArgs) *BigtableAp
 
 var _ terra.Resource = (*BigtableAppProfile)(nil)
 
+// BigtableAppProfile represents the Terraform resource google_bigtable_app_profile.
 type BigtableAppProfile struct {
-	Name  string
-	Args  BigtableAppProfileArgs
-	state *bigtableAppProfileState
+	Name      string
+	Args      BigtableAppProfileArgs
+	state     *bigtableAppProfileState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BigtableAppProfile].
 func (bap *BigtableAppProfile) Type() string {
 	return "google_bigtable_app_profile"
 }
 
+// LocalName returns the local name for [BigtableAppProfile].
 func (bap *BigtableAppProfile) LocalName() string {
 	return bap.Name
 }
 
+// Configuration returns the configuration (args) for [BigtableAppProfile].
 func (bap *BigtableAppProfile) Configuration() interface{} {
 	return bap.Args
 }
 
+// DependOn is used for other resources to depend on [BigtableAppProfile].
+func (bap *BigtableAppProfile) DependOn() terra.Reference {
+	return terra.ReferenceResource(bap)
+}
+
+// Dependencies returns the list of resources [BigtableAppProfile] depends_on.
+func (bap *BigtableAppProfile) Dependencies() terra.Dependencies {
+	return bap.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BigtableAppProfile].
+func (bap *BigtableAppProfile) LifecycleManagement() *terra.Lifecycle {
+	return bap.Lifecycle
+}
+
+// Attributes returns the attributes for [BigtableAppProfile].
 func (bap *BigtableAppProfile) Attributes() bigtableAppProfileAttributes {
 	return bigtableAppProfileAttributes{ref: terra.ReferenceResource(bap)}
 }
 
+// ImportState imports the given attribute values into [BigtableAppProfile]'s state.
 func (bap *BigtableAppProfile) ImportState(av io.Reader) error {
 	bap.state = &bigtableAppProfileState{}
 	if err := json.NewDecoder(av).Decode(bap.state); err != nil {
@@ -49,10 +73,12 @@ func (bap *BigtableAppProfile) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BigtableAppProfile] has state.
 func (bap *BigtableAppProfile) State() (*bigtableAppProfileState, bool) {
 	return bap.state, bap.state != nil
 }
 
+// StateMust returns the state for [BigtableAppProfile]. Panics if the state is nil.
 func (bap *BigtableAppProfile) StateMust() *bigtableAppProfileState {
 	if bap.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bap.Type(), bap.LocalName()))
@@ -60,10 +86,7 @@ func (bap *BigtableAppProfile) StateMust() *bigtableAppProfileState {
 	return bap.state
 }
 
-func (bap *BigtableAppProfile) DependOn() terra.Reference {
-	return terra.ReferenceResource(bap)
-}
-
+// BigtableAppProfileArgs contains the configurations for google_bigtable_app_profile.
 type BigtableAppProfileArgs struct {
 	// AppProfileId: string, required
 	AppProfileId terra.StringValue `hcl:"app_profile_id,attr" validate:"required"`
@@ -85,55 +108,62 @@ type BigtableAppProfileArgs struct {
 	SingleClusterRouting *bigtableappprofile.SingleClusterRouting `hcl:"single_cluster_routing,block"`
 	// Timeouts: optional
 	Timeouts *bigtableappprofile.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that BigtableAppProfile depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type bigtableAppProfileAttributes struct {
 	ref terra.Reference
 }
 
+// AppProfileId returns a reference to field app_profile_id of google_bigtable_app_profile.
 func (bap bigtableAppProfileAttributes) AppProfileId() terra.StringValue {
-	return terra.ReferenceString(bap.ref.Append("app_profile_id"))
+	return terra.ReferenceAsString(bap.ref.Append("app_profile_id"))
 }
 
+// Description returns a reference to field description of google_bigtable_app_profile.
 func (bap bigtableAppProfileAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(bap.ref.Append("description"))
+	return terra.ReferenceAsString(bap.ref.Append("description"))
 }
 
+// Id returns a reference to field id of google_bigtable_app_profile.
 func (bap bigtableAppProfileAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bap.ref.Append("id"))
+	return terra.ReferenceAsString(bap.ref.Append("id"))
 }
 
+// IgnoreWarnings returns a reference to field ignore_warnings of google_bigtable_app_profile.
 func (bap bigtableAppProfileAttributes) IgnoreWarnings() terra.BoolValue {
-	return terra.ReferenceBool(bap.ref.Append("ignore_warnings"))
+	return terra.ReferenceAsBool(bap.ref.Append("ignore_warnings"))
 }
 
+// Instance returns a reference to field instance of google_bigtable_app_profile.
 func (bap bigtableAppProfileAttributes) Instance() terra.StringValue {
-	return terra.ReferenceString(bap.ref.Append("instance"))
+	return terra.ReferenceAsString(bap.ref.Append("instance"))
 }
 
+// MultiClusterRoutingClusterIds returns a reference to field multi_cluster_routing_cluster_ids of google_bigtable_app_profile.
 func (bap bigtableAppProfileAttributes) MultiClusterRoutingClusterIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](bap.ref.Append("multi_cluster_routing_cluster_ids"))
+	return terra.ReferenceAsList[terra.StringValue](bap.ref.Append("multi_cluster_routing_cluster_ids"))
 }
 
+// MultiClusterRoutingUseAny returns a reference to field multi_cluster_routing_use_any of google_bigtable_app_profile.
 func (bap bigtableAppProfileAttributes) MultiClusterRoutingUseAny() terra.BoolValue {
-	return terra.ReferenceBool(bap.ref.Append("multi_cluster_routing_use_any"))
+	return terra.ReferenceAsBool(bap.ref.Append("multi_cluster_routing_use_any"))
 }
 
+// Name returns a reference to field name of google_bigtable_app_profile.
 func (bap bigtableAppProfileAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(bap.ref.Append("name"))
+	return terra.ReferenceAsString(bap.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_bigtable_app_profile.
 func (bap bigtableAppProfileAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(bap.ref.Append("project"))
+	return terra.ReferenceAsString(bap.ref.Append("project"))
 }
 
 func (bap bigtableAppProfileAttributes) SingleClusterRouting() terra.ListValue[bigtableappprofile.SingleClusterRoutingAttributes] {
-	return terra.ReferenceList[bigtableappprofile.SingleClusterRoutingAttributes](bap.ref.Append("single_cluster_routing"))
+	return terra.ReferenceAsList[bigtableappprofile.SingleClusterRoutingAttributes](bap.ref.Append("single_cluster_routing"))
 }
 
 func (bap bigtableAppProfileAttributes) Timeouts() bigtableappprofile.TimeoutsAttributes {
-	return terra.ReferenceSingle[bigtableappprofile.TimeoutsAttributes](bap.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[bigtableappprofile.TimeoutsAttributes](bap.ref.Append("timeouts"))
 }
 
 type bigtableAppProfileState struct {

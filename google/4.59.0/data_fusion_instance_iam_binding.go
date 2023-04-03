@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFusionInstanceIamBinding creates a new instance of [DataFusionInstanceIamBinding].
 func NewDataFusionInstanceIamBinding(name string, args DataFusionInstanceIamBindingArgs) *DataFusionInstanceIamBinding {
 	return &DataFusionInstanceIamBinding{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFusionInstanceIamBinding(name string, args DataFusionInstanceIamBind
 
 var _ terra.Resource = (*DataFusionInstanceIamBinding)(nil)
 
+// DataFusionInstanceIamBinding represents the Terraform resource google_data_fusion_instance_iam_binding.
 type DataFusionInstanceIamBinding struct {
-	Name  string
-	Args  DataFusionInstanceIamBindingArgs
-	state *dataFusionInstanceIamBindingState
+	Name      string
+	Args      DataFusionInstanceIamBindingArgs
+	state     *dataFusionInstanceIamBindingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFusionInstanceIamBinding].
 func (dfiib *DataFusionInstanceIamBinding) Type() string {
 	return "google_data_fusion_instance_iam_binding"
 }
 
+// LocalName returns the local name for [DataFusionInstanceIamBinding].
 func (dfiib *DataFusionInstanceIamBinding) LocalName() string {
 	return dfiib.Name
 }
 
+// Configuration returns the configuration (args) for [DataFusionInstanceIamBinding].
 func (dfiib *DataFusionInstanceIamBinding) Configuration() interface{} {
 	return dfiib.Args
 }
 
+// DependOn is used for other resources to depend on [DataFusionInstanceIamBinding].
+func (dfiib *DataFusionInstanceIamBinding) DependOn() terra.Reference {
+	return terra.ReferenceResource(dfiib)
+}
+
+// Dependencies returns the list of resources [DataFusionInstanceIamBinding] depends_on.
+func (dfiib *DataFusionInstanceIamBinding) Dependencies() terra.Dependencies {
+	return dfiib.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFusionInstanceIamBinding].
+func (dfiib *DataFusionInstanceIamBinding) LifecycleManagement() *terra.Lifecycle {
+	return dfiib.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFusionInstanceIamBinding].
 func (dfiib *DataFusionInstanceIamBinding) Attributes() dataFusionInstanceIamBindingAttributes {
 	return dataFusionInstanceIamBindingAttributes{ref: terra.ReferenceResource(dfiib)}
 }
 
+// ImportState imports the given attribute values into [DataFusionInstanceIamBinding]'s state.
 func (dfiib *DataFusionInstanceIamBinding) ImportState(av io.Reader) error {
 	dfiib.state = &dataFusionInstanceIamBindingState{}
 	if err := json.NewDecoder(av).Decode(dfiib.state); err != nil {
@@ -49,10 +73,12 @@ func (dfiib *DataFusionInstanceIamBinding) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFusionInstanceIamBinding] has state.
 func (dfiib *DataFusionInstanceIamBinding) State() (*dataFusionInstanceIamBindingState, bool) {
 	return dfiib.state, dfiib.state != nil
 }
 
+// StateMust returns the state for [DataFusionInstanceIamBinding]. Panics if the state is nil.
 func (dfiib *DataFusionInstanceIamBinding) StateMust() *dataFusionInstanceIamBindingState {
 	if dfiib.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dfiib.Type(), dfiib.LocalName()))
@@ -60,10 +86,7 @@ func (dfiib *DataFusionInstanceIamBinding) StateMust() *dataFusionInstanceIamBin
 	return dfiib.state
 }
 
-func (dfiib *DataFusionInstanceIamBinding) DependOn() terra.Reference {
-	return terra.ReferenceResource(dfiib)
-}
-
+// DataFusionInstanceIamBindingArgs contains the configurations for google_data_fusion_instance_iam_binding.
 type DataFusionInstanceIamBindingArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,43 +102,48 @@ type DataFusionInstanceIamBindingArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *datafusioninstanceiambinding.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that DataFusionInstanceIamBinding depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFusionInstanceIamBindingAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_data_fusion_instance_iam_binding.
 func (dfiib dataFusionInstanceIamBindingAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(dfiib.ref.Append("etag"))
+	return terra.ReferenceAsString(dfiib.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_data_fusion_instance_iam_binding.
 func (dfiib dataFusionInstanceIamBindingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dfiib.ref.Append("id"))
+	return terra.ReferenceAsString(dfiib.ref.Append("id"))
 }
 
+// Members returns a reference to field members of google_data_fusion_instance_iam_binding.
 func (dfiib dataFusionInstanceIamBindingAttributes) Members() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dfiib.ref.Append("members"))
+	return terra.ReferenceAsSet[terra.StringValue](dfiib.ref.Append("members"))
 }
 
+// Name returns a reference to field name of google_data_fusion_instance_iam_binding.
 func (dfiib dataFusionInstanceIamBindingAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dfiib.ref.Append("name"))
+	return terra.ReferenceAsString(dfiib.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_data_fusion_instance_iam_binding.
 func (dfiib dataFusionInstanceIamBindingAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(dfiib.ref.Append("project"))
+	return terra.ReferenceAsString(dfiib.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_data_fusion_instance_iam_binding.
 func (dfiib dataFusionInstanceIamBindingAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(dfiib.ref.Append("region"))
+	return terra.ReferenceAsString(dfiib.ref.Append("region"))
 }
 
+// Role returns a reference to field role of google_data_fusion_instance_iam_binding.
 func (dfiib dataFusionInstanceIamBindingAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(dfiib.ref.Append("role"))
+	return terra.ReferenceAsString(dfiib.ref.Append("role"))
 }
 
 func (dfiib dataFusionInstanceIamBindingAttributes) Condition() terra.ListValue[datafusioninstanceiambinding.ConditionAttributes] {
-	return terra.ReferenceList[datafusioninstanceiambinding.ConditionAttributes](dfiib.ref.Append("condition"))
+	return terra.ReferenceAsList[datafusioninstanceiambinding.ConditionAttributes](dfiib.ref.Append("condition"))
 }
 
 type dataFusionInstanceIamBindingState struct {

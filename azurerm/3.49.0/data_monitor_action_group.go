@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataMonitorActionGroup creates a new instance of [DataMonitorActionGroup].
 func NewDataMonitorActionGroup(name string, args DataMonitorActionGroupArgs) *DataMonitorActionGroup {
 	return &DataMonitorActionGroup{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataMonitorActionGroup(name string, args DataMonitorActionGroupArgs) *Da
 
 var _ terra.DataResource = (*DataMonitorActionGroup)(nil)
 
+// DataMonitorActionGroup represents the Terraform data resource azurerm_monitor_action_group.
 type DataMonitorActionGroup struct {
 	Name string
 	Args DataMonitorActionGroupArgs
 }
 
+// DataSource returns the Terraform object type for [DataMonitorActionGroup].
 func (mag *DataMonitorActionGroup) DataSource() string {
 	return "azurerm_monitor_action_group"
 }
 
+// LocalName returns the local name for [DataMonitorActionGroup].
 func (mag *DataMonitorActionGroup) LocalName() string {
 	return mag.Name
 }
 
+// Configuration returns the configuration (args) for [DataMonitorActionGroup].
 func (mag *DataMonitorActionGroup) Configuration() interface{} {
 	return mag.Args
 }
 
+// Attributes returns the attributes for [DataMonitorActionGroup].
 func (mag *DataMonitorActionGroup) Attributes() dataMonitorActionGroupAttributes {
 	return dataMonitorActionGroupAttributes{ref: terra.ReferenceDataResource(mag)}
 }
 
+// DataMonitorActionGroupArgs contains the configurations for azurerm_monitor_action_group.
 type DataMonitorActionGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -73,70 +80,75 @@ type dataMonitorActionGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Enabled returns a reference to field enabled of azurerm_monitor_action_group.
 func (mag dataMonitorActionGroupAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(mag.ref.Append("enabled"))
+	return terra.ReferenceAsBool(mag.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of azurerm_monitor_action_group.
 func (mag dataMonitorActionGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mag.ref.Append("id"))
+	return terra.ReferenceAsString(mag.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_monitor_action_group.
 func (mag dataMonitorActionGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mag.ref.Append("name"))
+	return terra.ReferenceAsString(mag.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_monitor_action_group.
 func (mag dataMonitorActionGroupAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(mag.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(mag.ref.Append("resource_group_name"))
 }
 
+// ShortName returns a reference to field short_name of azurerm_monitor_action_group.
 func (mag dataMonitorActionGroupAttributes) ShortName() terra.StringValue {
-	return terra.ReferenceString(mag.ref.Append("short_name"))
+	return terra.ReferenceAsString(mag.ref.Append("short_name"))
 }
 
 func (mag dataMonitorActionGroupAttributes) ArmRoleReceiver() terra.ListValue[datamonitoractiongroup.ArmRoleReceiverAttributes] {
-	return terra.ReferenceList[datamonitoractiongroup.ArmRoleReceiverAttributes](mag.ref.Append("arm_role_receiver"))
+	return terra.ReferenceAsList[datamonitoractiongroup.ArmRoleReceiverAttributes](mag.ref.Append("arm_role_receiver"))
 }
 
 func (mag dataMonitorActionGroupAttributes) AutomationRunbookReceiver() terra.ListValue[datamonitoractiongroup.AutomationRunbookReceiverAttributes] {
-	return terra.ReferenceList[datamonitoractiongroup.AutomationRunbookReceiverAttributes](mag.ref.Append("automation_runbook_receiver"))
+	return terra.ReferenceAsList[datamonitoractiongroup.AutomationRunbookReceiverAttributes](mag.ref.Append("automation_runbook_receiver"))
 }
 
 func (mag dataMonitorActionGroupAttributes) AzureAppPushReceiver() terra.ListValue[datamonitoractiongroup.AzureAppPushReceiverAttributes] {
-	return terra.ReferenceList[datamonitoractiongroup.AzureAppPushReceiverAttributes](mag.ref.Append("azure_app_push_receiver"))
+	return terra.ReferenceAsList[datamonitoractiongroup.AzureAppPushReceiverAttributes](mag.ref.Append("azure_app_push_receiver"))
 }
 
 func (mag dataMonitorActionGroupAttributes) AzureFunctionReceiver() terra.ListValue[datamonitoractiongroup.AzureFunctionReceiverAttributes] {
-	return terra.ReferenceList[datamonitoractiongroup.AzureFunctionReceiverAttributes](mag.ref.Append("azure_function_receiver"))
+	return terra.ReferenceAsList[datamonitoractiongroup.AzureFunctionReceiverAttributes](mag.ref.Append("azure_function_receiver"))
 }
 
 func (mag dataMonitorActionGroupAttributes) EmailReceiver() terra.ListValue[datamonitoractiongroup.EmailReceiverAttributes] {
-	return terra.ReferenceList[datamonitoractiongroup.EmailReceiverAttributes](mag.ref.Append("email_receiver"))
+	return terra.ReferenceAsList[datamonitoractiongroup.EmailReceiverAttributes](mag.ref.Append("email_receiver"))
 }
 
 func (mag dataMonitorActionGroupAttributes) EventHubReceiver() terra.ListValue[datamonitoractiongroup.EventHubReceiverAttributes] {
-	return terra.ReferenceList[datamonitoractiongroup.EventHubReceiverAttributes](mag.ref.Append("event_hub_receiver"))
+	return terra.ReferenceAsList[datamonitoractiongroup.EventHubReceiverAttributes](mag.ref.Append("event_hub_receiver"))
 }
 
 func (mag dataMonitorActionGroupAttributes) ItsmReceiver() terra.ListValue[datamonitoractiongroup.ItsmReceiverAttributes] {
-	return terra.ReferenceList[datamonitoractiongroup.ItsmReceiverAttributes](mag.ref.Append("itsm_receiver"))
+	return terra.ReferenceAsList[datamonitoractiongroup.ItsmReceiverAttributes](mag.ref.Append("itsm_receiver"))
 }
 
 func (mag dataMonitorActionGroupAttributes) LogicAppReceiver() terra.ListValue[datamonitoractiongroup.LogicAppReceiverAttributes] {
-	return terra.ReferenceList[datamonitoractiongroup.LogicAppReceiverAttributes](mag.ref.Append("logic_app_receiver"))
+	return terra.ReferenceAsList[datamonitoractiongroup.LogicAppReceiverAttributes](mag.ref.Append("logic_app_receiver"))
 }
 
 func (mag dataMonitorActionGroupAttributes) SmsReceiver() terra.ListValue[datamonitoractiongroup.SmsReceiverAttributes] {
-	return terra.ReferenceList[datamonitoractiongroup.SmsReceiverAttributes](mag.ref.Append("sms_receiver"))
+	return terra.ReferenceAsList[datamonitoractiongroup.SmsReceiverAttributes](mag.ref.Append("sms_receiver"))
 }
 
 func (mag dataMonitorActionGroupAttributes) VoiceReceiver() terra.ListValue[datamonitoractiongroup.VoiceReceiverAttributes] {
-	return terra.ReferenceList[datamonitoractiongroup.VoiceReceiverAttributes](mag.ref.Append("voice_receiver"))
+	return terra.ReferenceAsList[datamonitoractiongroup.VoiceReceiverAttributes](mag.ref.Append("voice_receiver"))
 }
 
 func (mag dataMonitorActionGroupAttributes) WebhookReceiver() terra.ListValue[datamonitoractiongroup.WebhookReceiverAttributes] {
-	return terra.ReferenceList[datamonitoractiongroup.WebhookReceiverAttributes](mag.ref.Append("webhook_receiver"))
+	return terra.ReferenceAsList[datamonitoractiongroup.WebhookReceiverAttributes](mag.ref.Append("webhook_receiver"))
 }
 
 func (mag dataMonitorActionGroupAttributes) Timeouts() datamonitoractiongroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[datamonitoractiongroup.TimeoutsAttributes](mag.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datamonitoractiongroup.TimeoutsAttributes](mag.ref.Append("timeouts"))
 }

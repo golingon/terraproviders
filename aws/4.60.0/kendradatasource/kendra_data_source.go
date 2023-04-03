@@ -241,7 +241,7 @@ func (c ConfigurationAttributes) InternalWithRef(ref terra.Reference) Configurat
 	return ConfigurationAttributes{ref: ref}
 }
 
-func (c ConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -265,7 +265,7 @@ func (sc S3ConfigurationAttributes) InternalWithRef(ref terra.Reference) S3Confi
 	return S3ConfigurationAttributes{ref: ref}
 }
 
-func (sc S3ConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (sc S3ConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -305,7 +305,7 @@ func (aclc AccessControlListConfigurationAttributes) InternalWithRef(ref terra.R
 	return AccessControlListConfigurationAttributes{ref: ref}
 }
 
-func (aclc AccessControlListConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (aclc AccessControlListConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aclc.ref.InternalTokens()
 }
 
@@ -325,7 +325,7 @@ func (dmc DocumentsMetadataConfigurationAttributes) InternalWithRef(ref terra.Re
 	return DocumentsMetadataConfigurationAttributes{ref: ref}
 }
 
-func (dmc DocumentsMetadataConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (dmc DocumentsMetadataConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dmc.ref.InternalTokens()
 }
 
@@ -345,7 +345,7 @@ func (wcc WebCrawlerConfigurationAttributes) InternalWithRef(ref terra.Reference
 	return WebCrawlerConfigurationAttributes{ref: ref}
 }
 
-func (wcc WebCrawlerConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (wcc WebCrawlerConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wcc.ref.InternalTokens()
 }
 
@@ -397,7 +397,7 @@ func (ac AuthenticationConfigurationAttributes) InternalWithRef(ref terra.Refere
 	return AuthenticationConfigurationAttributes{ref: ref}
 }
 
-func (ac AuthenticationConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ac AuthenticationConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
@@ -417,7 +417,7 @@ func (ba BasicAuthenticationAttributes) InternalWithRef(ref terra.Reference) Bas
 	return BasicAuthenticationAttributes{ref: ref}
 }
 
-func (ba BasicAuthenticationAttributes) InternalTokens() hclwrite.Tokens {
+func (ba BasicAuthenticationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ba.ref.InternalTokens()
 }
 
@@ -445,7 +445,7 @@ func (pc ProxyConfigurationAttributes) InternalWithRef(ref terra.Reference) Prox
 	return ProxyConfigurationAttributes{ref: ref}
 }
 
-func (pc ProxyConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (pc ProxyConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
@@ -473,7 +473,7 @@ func (u UrlsAttributes) InternalWithRef(ref terra.Reference) UrlsAttributes {
 	return UrlsAttributes{ref: ref}
 }
 
-func (u UrlsAttributes) InternalTokens() hclwrite.Tokens {
+func (u UrlsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return u.ref.InternalTokens()
 }
 
@@ -497,7 +497,7 @@ func (suc SeedUrlConfigurationAttributes) InternalWithRef(ref terra.Reference) S
 	return SeedUrlConfigurationAttributes{ref: ref}
 }
 
-func (suc SeedUrlConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (suc SeedUrlConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return suc.ref.InternalTokens()
 }
 
@@ -521,7 +521,7 @@ func (smc SiteMapsConfigurationAttributes) InternalWithRef(ref terra.Reference) 
 	return SiteMapsConfigurationAttributes{ref: ref}
 }
 
-func (smc SiteMapsConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (smc SiteMapsConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return smc.ref.InternalTokens()
 }
 
@@ -541,7 +541,7 @@ func (cdec CustomDocumentEnrichmentConfigurationAttributes) InternalWithRef(ref 
 	return CustomDocumentEnrichmentConfigurationAttributes{ref: ref}
 }
 
-func (cdec CustomDocumentEnrichmentConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (cdec CustomDocumentEnrichmentConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cdec.ref.InternalTokens()
 }
 
@@ -573,7 +573,7 @@ func (ic InlineConfigurationsAttributes) InternalWithRef(ref terra.Reference) In
 	return InlineConfigurationsAttributes{ref: ref}
 }
 
-func (ic InlineConfigurationsAttributes) InternalTokens() hclwrite.Tokens {
+func (ic InlineConfigurationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ic.ref.InternalTokens()
 }
 
@@ -601,7 +601,7 @@ func (c ConditionAttributes) InternalWithRef(ref terra.Reference) ConditionAttri
 	return ConditionAttributes{ref: ref}
 }
 
-func (c ConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -629,7 +629,7 @@ func (cov ConditionConditionOnValueAttributes) InternalWithRef(ref terra.Referen
 	return ConditionConditionOnValueAttributes{ref: ref}
 }
 
-func (cov ConditionConditionOnValueAttributes) InternalTokens() hclwrite.Tokens {
+func (cov ConditionConditionOnValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cov.ref.InternalTokens()
 }
 
@@ -661,7 +661,7 @@ func (t TargetAttributes) InternalWithRef(ref terra.Reference) TargetAttributes 
 	return TargetAttributes{ref: ref}
 }
 
-func (t TargetAttributes) InternalTokens() hclwrite.Tokens {
+func (t TargetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -689,7 +689,7 @@ func (tdav TargetDocumentAttributeValueAttributes) InternalWithRef(ref terra.Ref
 	return TargetDocumentAttributeValueAttributes{ref: ref}
 }
 
-func (tdav TargetDocumentAttributeValueAttributes) InternalTokens() hclwrite.Tokens {
+func (tdav TargetDocumentAttributeValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tdav.ref.InternalTokens()
 }
 
@@ -721,7 +721,7 @@ func (pehc PostExtractionHookConfigurationAttributes) InternalWithRef(ref terra.
 	return PostExtractionHookConfigurationAttributes{ref: ref}
 }
 
-func (pehc PostExtractionHookConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (pehc PostExtractionHookConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pehc.ref.InternalTokens()
 }
 
@@ -749,7 +749,7 @@ func (ic PostExtractionHookConfigurationInvocationConditionAttributes) InternalW
 	return PostExtractionHookConfigurationInvocationConditionAttributes{ref: ref}
 }
 
-func (ic PostExtractionHookConfigurationInvocationConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (ic PostExtractionHookConfigurationInvocationConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ic.ref.InternalTokens()
 }
 
@@ -777,7 +777,7 @@ func (cov PostExtractionHookConfigurationInvocationConditionConditionOnValueAttr
 	return PostExtractionHookConfigurationInvocationConditionConditionOnValueAttributes{ref: ref}
 }
 
-func (cov PostExtractionHookConfigurationInvocationConditionConditionOnValueAttributes) InternalTokens() hclwrite.Tokens {
+func (cov PostExtractionHookConfigurationInvocationConditionConditionOnValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cov.ref.InternalTokens()
 }
 
@@ -809,7 +809,7 @@ func (pehc PreExtractionHookConfigurationAttributes) InternalWithRef(ref terra.R
 	return PreExtractionHookConfigurationAttributes{ref: ref}
 }
 
-func (pehc PreExtractionHookConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (pehc PreExtractionHookConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pehc.ref.InternalTokens()
 }
 
@@ -837,7 +837,7 @@ func (ic PreExtractionHookConfigurationInvocationConditionAttributes) InternalWi
 	return PreExtractionHookConfigurationInvocationConditionAttributes{ref: ref}
 }
 
-func (ic PreExtractionHookConfigurationInvocationConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (ic PreExtractionHookConfigurationInvocationConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ic.ref.InternalTokens()
 }
 
@@ -865,7 +865,7 @@ func (cov PreExtractionHookConfigurationInvocationConditionConditionOnValueAttri
 	return PreExtractionHookConfigurationInvocationConditionConditionOnValueAttributes{ref: ref}
 }
 
-func (cov PreExtractionHookConfigurationInvocationConditionConditionOnValueAttributes) InternalTokens() hclwrite.Tokens {
+func (cov PreExtractionHookConfigurationInvocationConditionConditionOnValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cov.ref.InternalTokens()
 }
 
@@ -897,7 +897,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

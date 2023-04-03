@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewWindowsFunctionApp creates a new instance of [WindowsFunctionApp].
 func NewWindowsFunctionApp(name string, args WindowsFunctionAppArgs) *WindowsFunctionApp {
 	return &WindowsFunctionApp{
 		Args: args,
@@ -19,28 +20,51 @@ func NewWindowsFunctionApp(name string, args WindowsFunctionAppArgs) *WindowsFun
 
 var _ terra.Resource = (*WindowsFunctionApp)(nil)
 
+// WindowsFunctionApp represents the Terraform resource azurerm_windows_function_app.
 type WindowsFunctionApp struct {
-	Name  string
-	Args  WindowsFunctionAppArgs
-	state *windowsFunctionAppState
+	Name      string
+	Args      WindowsFunctionAppArgs
+	state     *windowsFunctionAppState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [WindowsFunctionApp].
 func (wfa *WindowsFunctionApp) Type() string {
 	return "azurerm_windows_function_app"
 }
 
+// LocalName returns the local name for [WindowsFunctionApp].
 func (wfa *WindowsFunctionApp) LocalName() string {
 	return wfa.Name
 }
 
+// Configuration returns the configuration (args) for [WindowsFunctionApp].
 func (wfa *WindowsFunctionApp) Configuration() interface{} {
 	return wfa.Args
 }
 
+// DependOn is used for other resources to depend on [WindowsFunctionApp].
+func (wfa *WindowsFunctionApp) DependOn() terra.Reference {
+	return terra.ReferenceResource(wfa)
+}
+
+// Dependencies returns the list of resources [WindowsFunctionApp] depends_on.
+func (wfa *WindowsFunctionApp) Dependencies() terra.Dependencies {
+	return wfa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [WindowsFunctionApp].
+func (wfa *WindowsFunctionApp) LifecycleManagement() *terra.Lifecycle {
+	return wfa.Lifecycle
+}
+
+// Attributes returns the attributes for [WindowsFunctionApp].
 func (wfa *WindowsFunctionApp) Attributes() windowsFunctionAppAttributes {
 	return windowsFunctionAppAttributes{ref: terra.ReferenceResource(wfa)}
 }
 
+// ImportState imports the given attribute values into [WindowsFunctionApp]'s state.
 func (wfa *WindowsFunctionApp) ImportState(av io.Reader) error {
 	wfa.state = &windowsFunctionAppState{}
 	if err := json.NewDecoder(av).Decode(wfa.state); err != nil {
@@ -49,10 +73,12 @@ func (wfa *WindowsFunctionApp) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [WindowsFunctionApp] has state.
 func (wfa *WindowsFunctionApp) State() (*windowsFunctionAppState, bool) {
 	return wfa.state, wfa.state != nil
 }
 
+// StateMust returns the state for [WindowsFunctionApp]. Panics if the state is nil.
 func (wfa *WindowsFunctionApp) StateMust() *windowsFunctionAppState {
 	if wfa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", wfa.Type(), wfa.LocalName()))
@@ -60,10 +86,7 @@ func (wfa *WindowsFunctionApp) StateMust() *windowsFunctionAppState {
 	return wfa.state
 }
 
-func (wfa *WindowsFunctionApp) DependOn() terra.Reference {
-	return terra.ReferenceResource(wfa)
-}
-
+// WindowsFunctionAppArgs contains the configurations for azurerm_windows_function_app.
 type WindowsFunctionAppArgs struct {
 	// AppSettings: map of string, optional
 	AppSettings terra.MapValue[terra.StringValue] `hcl:"app_settings,attr"`
@@ -129,167 +152,194 @@ type WindowsFunctionAppArgs struct {
 	StorageAccount []windowsfunctionapp.StorageAccount `hcl:"storage_account,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *windowsfunctionapp.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that WindowsFunctionApp depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type windowsFunctionAppAttributes struct {
 	ref terra.Reference
 }
 
+// AppSettings returns a reference to field app_settings of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) AppSettings() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](wfa.ref.Append("app_settings"))
+	return terra.ReferenceAsMap[terra.StringValue](wfa.ref.Append("app_settings"))
 }
 
+// BuiltinLoggingEnabled returns a reference to field builtin_logging_enabled of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) BuiltinLoggingEnabled() terra.BoolValue {
-	return terra.ReferenceBool(wfa.ref.Append("builtin_logging_enabled"))
+	return terra.ReferenceAsBool(wfa.ref.Append("builtin_logging_enabled"))
 }
 
+// ClientCertificateEnabled returns a reference to field client_certificate_enabled of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) ClientCertificateEnabled() terra.BoolValue {
-	return terra.ReferenceBool(wfa.ref.Append("client_certificate_enabled"))
+	return terra.ReferenceAsBool(wfa.ref.Append("client_certificate_enabled"))
 }
 
+// ClientCertificateExclusionPaths returns a reference to field client_certificate_exclusion_paths of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) ClientCertificateExclusionPaths() terra.StringValue {
-	return terra.ReferenceString(wfa.ref.Append("client_certificate_exclusion_paths"))
+	return terra.ReferenceAsString(wfa.ref.Append("client_certificate_exclusion_paths"))
 }
 
+// ClientCertificateMode returns a reference to field client_certificate_mode of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) ClientCertificateMode() terra.StringValue {
-	return terra.ReferenceString(wfa.ref.Append("client_certificate_mode"))
+	return terra.ReferenceAsString(wfa.ref.Append("client_certificate_mode"))
 }
 
+// ContentShareForceDisabled returns a reference to field content_share_force_disabled of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) ContentShareForceDisabled() terra.BoolValue {
-	return terra.ReferenceBool(wfa.ref.Append("content_share_force_disabled"))
+	return terra.ReferenceAsBool(wfa.ref.Append("content_share_force_disabled"))
 }
 
+// CustomDomainVerificationId returns a reference to field custom_domain_verification_id of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) CustomDomainVerificationId() terra.StringValue {
-	return terra.ReferenceString(wfa.ref.Append("custom_domain_verification_id"))
+	return terra.ReferenceAsString(wfa.ref.Append("custom_domain_verification_id"))
 }
 
+// DailyMemoryTimeQuota returns a reference to field daily_memory_time_quota of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) DailyMemoryTimeQuota() terra.NumberValue {
-	return terra.ReferenceNumber(wfa.ref.Append("daily_memory_time_quota"))
+	return terra.ReferenceAsNumber(wfa.ref.Append("daily_memory_time_quota"))
 }
 
+// DefaultHostname returns a reference to field default_hostname of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) DefaultHostname() terra.StringValue {
-	return terra.ReferenceString(wfa.ref.Append("default_hostname"))
+	return terra.ReferenceAsString(wfa.ref.Append("default_hostname"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(wfa.ref.Append("enabled"))
+	return terra.ReferenceAsBool(wfa.ref.Append("enabled"))
 }
 
+// FunctionsExtensionVersion returns a reference to field functions_extension_version of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) FunctionsExtensionVersion() terra.StringValue {
-	return terra.ReferenceString(wfa.ref.Append("functions_extension_version"))
+	return terra.ReferenceAsString(wfa.ref.Append("functions_extension_version"))
 }
 
+// HttpsOnly returns a reference to field https_only of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) HttpsOnly() terra.BoolValue {
-	return terra.ReferenceBool(wfa.ref.Append("https_only"))
+	return terra.ReferenceAsBool(wfa.ref.Append("https_only"))
 }
 
+// Id returns a reference to field id of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(wfa.ref.Append("id"))
+	return terra.ReferenceAsString(wfa.ref.Append("id"))
 }
 
+// KeyVaultReferenceIdentityId returns a reference to field key_vault_reference_identity_id of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) KeyVaultReferenceIdentityId() terra.StringValue {
-	return terra.ReferenceString(wfa.ref.Append("key_vault_reference_identity_id"))
+	return terra.ReferenceAsString(wfa.ref.Append("key_vault_reference_identity_id"))
 }
 
+// Kind returns a reference to field kind of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) Kind() terra.StringValue {
-	return terra.ReferenceString(wfa.ref.Append("kind"))
+	return terra.ReferenceAsString(wfa.ref.Append("kind"))
 }
 
+// Location returns a reference to field location of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(wfa.ref.Append("location"))
+	return terra.ReferenceAsString(wfa.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(wfa.ref.Append("name"))
+	return terra.ReferenceAsString(wfa.ref.Append("name"))
 }
 
+// OutboundIpAddressList returns a reference to field outbound_ip_address_list of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) OutboundIpAddressList() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](wfa.ref.Append("outbound_ip_address_list"))
+	return terra.ReferenceAsList[terra.StringValue](wfa.ref.Append("outbound_ip_address_list"))
 }
 
+// OutboundIpAddresses returns a reference to field outbound_ip_addresses of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) OutboundIpAddresses() terra.StringValue {
-	return terra.ReferenceString(wfa.ref.Append("outbound_ip_addresses"))
+	return terra.ReferenceAsString(wfa.ref.Append("outbound_ip_addresses"))
 }
 
+// PossibleOutboundIpAddressList returns a reference to field possible_outbound_ip_address_list of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) PossibleOutboundIpAddressList() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](wfa.ref.Append("possible_outbound_ip_address_list"))
+	return terra.ReferenceAsList[terra.StringValue](wfa.ref.Append("possible_outbound_ip_address_list"))
 }
 
+// PossibleOutboundIpAddresses returns a reference to field possible_outbound_ip_addresses of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) PossibleOutboundIpAddresses() terra.StringValue {
-	return terra.ReferenceString(wfa.ref.Append("possible_outbound_ip_addresses"))
+	return terra.ReferenceAsString(wfa.ref.Append("possible_outbound_ip_addresses"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(wfa.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(wfa.ref.Append("resource_group_name"))
 }
 
+// ServicePlanId returns a reference to field service_plan_id of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) ServicePlanId() terra.StringValue {
-	return terra.ReferenceString(wfa.ref.Append("service_plan_id"))
+	return terra.ReferenceAsString(wfa.ref.Append("service_plan_id"))
 }
 
+// StorageAccountAccessKey returns a reference to field storage_account_access_key of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) StorageAccountAccessKey() terra.StringValue {
-	return terra.ReferenceString(wfa.ref.Append("storage_account_access_key"))
+	return terra.ReferenceAsString(wfa.ref.Append("storage_account_access_key"))
 }
 
+// StorageAccountName returns a reference to field storage_account_name of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) StorageAccountName() terra.StringValue {
-	return terra.ReferenceString(wfa.ref.Append("storage_account_name"))
+	return terra.ReferenceAsString(wfa.ref.Append("storage_account_name"))
 }
 
+// StorageKeyVaultSecretId returns a reference to field storage_key_vault_secret_id of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) StorageKeyVaultSecretId() terra.StringValue {
-	return terra.ReferenceString(wfa.ref.Append("storage_key_vault_secret_id"))
+	return terra.ReferenceAsString(wfa.ref.Append("storage_key_vault_secret_id"))
 }
 
+// StorageUsesManagedIdentity returns a reference to field storage_uses_managed_identity of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) StorageUsesManagedIdentity() terra.BoolValue {
-	return terra.ReferenceBool(wfa.ref.Append("storage_uses_managed_identity"))
+	return terra.ReferenceAsBool(wfa.ref.Append("storage_uses_managed_identity"))
 }
 
+// Tags returns a reference to field tags of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](wfa.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](wfa.ref.Append("tags"))
 }
 
+// VirtualNetworkSubnetId returns a reference to field virtual_network_subnet_id of azurerm_windows_function_app.
 func (wfa windowsFunctionAppAttributes) VirtualNetworkSubnetId() terra.StringValue {
-	return terra.ReferenceString(wfa.ref.Append("virtual_network_subnet_id"))
+	return terra.ReferenceAsString(wfa.ref.Append("virtual_network_subnet_id"))
 }
 
 func (wfa windowsFunctionAppAttributes) SiteCredential() terra.ListValue[windowsfunctionapp.SiteCredentialAttributes] {
-	return terra.ReferenceList[windowsfunctionapp.SiteCredentialAttributes](wfa.ref.Append("site_credential"))
+	return terra.ReferenceAsList[windowsfunctionapp.SiteCredentialAttributes](wfa.ref.Append("site_credential"))
 }
 
 func (wfa windowsFunctionAppAttributes) AuthSettings() terra.ListValue[windowsfunctionapp.AuthSettingsAttributes] {
-	return terra.ReferenceList[windowsfunctionapp.AuthSettingsAttributes](wfa.ref.Append("auth_settings"))
+	return terra.ReferenceAsList[windowsfunctionapp.AuthSettingsAttributes](wfa.ref.Append("auth_settings"))
 }
 
 func (wfa windowsFunctionAppAttributes) AuthSettingsV2() terra.ListValue[windowsfunctionapp.AuthSettingsV2Attributes] {
-	return terra.ReferenceList[windowsfunctionapp.AuthSettingsV2Attributes](wfa.ref.Append("auth_settings_v2"))
+	return terra.ReferenceAsList[windowsfunctionapp.AuthSettingsV2Attributes](wfa.ref.Append("auth_settings_v2"))
 }
 
 func (wfa windowsFunctionAppAttributes) Backup() terra.ListValue[windowsfunctionapp.BackupAttributes] {
-	return terra.ReferenceList[windowsfunctionapp.BackupAttributes](wfa.ref.Append("backup"))
+	return terra.ReferenceAsList[windowsfunctionapp.BackupAttributes](wfa.ref.Append("backup"))
 }
 
 func (wfa windowsFunctionAppAttributes) ConnectionString() terra.SetValue[windowsfunctionapp.ConnectionStringAttributes] {
-	return terra.ReferenceSet[windowsfunctionapp.ConnectionStringAttributes](wfa.ref.Append("connection_string"))
+	return terra.ReferenceAsSet[windowsfunctionapp.ConnectionStringAttributes](wfa.ref.Append("connection_string"))
 }
 
 func (wfa windowsFunctionAppAttributes) Identity() terra.ListValue[windowsfunctionapp.IdentityAttributes] {
-	return terra.ReferenceList[windowsfunctionapp.IdentityAttributes](wfa.ref.Append("identity"))
+	return terra.ReferenceAsList[windowsfunctionapp.IdentityAttributes](wfa.ref.Append("identity"))
 }
 
 func (wfa windowsFunctionAppAttributes) SiteConfig() terra.ListValue[windowsfunctionapp.SiteConfigAttributes] {
-	return terra.ReferenceList[windowsfunctionapp.SiteConfigAttributes](wfa.ref.Append("site_config"))
+	return terra.ReferenceAsList[windowsfunctionapp.SiteConfigAttributes](wfa.ref.Append("site_config"))
 }
 
 func (wfa windowsFunctionAppAttributes) StickySettings() terra.ListValue[windowsfunctionapp.StickySettingsAttributes] {
-	return terra.ReferenceList[windowsfunctionapp.StickySettingsAttributes](wfa.ref.Append("sticky_settings"))
+	return terra.ReferenceAsList[windowsfunctionapp.StickySettingsAttributes](wfa.ref.Append("sticky_settings"))
 }
 
 func (wfa windowsFunctionAppAttributes) StorageAccount() terra.SetValue[windowsfunctionapp.StorageAccountAttributes] {
-	return terra.ReferenceSet[windowsfunctionapp.StorageAccountAttributes](wfa.ref.Append("storage_account"))
+	return terra.ReferenceAsSet[windowsfunctionapp.StorageAccountAttributes](wfa.ref.Append("storage_account"))
 }
 
 func (wfa windowsFunctionAppAttributes) Timeouts() windowsfunctionapp.TimeoutsAttributes {
-	return terra.ReferenceSingle[windowsfunctionapp.TimeoutsAttributes](wfa.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[windowsfunctionapp.TimeoutsAttributes](wfa.ref.Append("timeouts"))
 }
 
 type windowsFunctionAppState struct {

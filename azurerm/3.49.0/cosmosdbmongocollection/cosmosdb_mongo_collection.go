@@ -36,100 +36,100 @@ type SystemIndexesAttributes struct {
 	ref terra.Reference
 }
 
-func (si SystemIndexesAttributes) InternalRef() terra.Reference {
-	return si.ref
+func (si SystemIndexesAttributes) InternalRef() (terra.Reference, error) {
+	return si.ref, nil
 }
 
 func (si SystemIndexesAttributes) InternalWithRef(ref terra.Reference) SystemIndexesAttributes {
 	return SystemIndexesAttributes{ref: ref}
 }
 
-func (si SystemIndexesAttributes) InternalTokens() hclwrite.Tokens {
+func (si SystemIndexesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return si.ref.InternalTokens()
 }
 
 func (si SystemIndexesAttributes) Keys() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](si.ref.Append("keys"))
+	return terra.ReferenceAsList[terra.StringValue](si.ref.Append("keys"))
 }
 
 func (si SystemIndexesAttributes) Unique() terra.BoolValue {
-	return terra.ReferenceBool(si.ref.Append("unique"))
+	return terra.ReferenceAsBool(si.ref.Append("unique"))
 }
 
 type AutoscaleSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (as AutoscaleSettingsAttributes) InternalRef() terra.Reference {
-	return as.ref
+func (as AutoscaleSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return as.ref, nil
 }
 
 func (as AutoscaleSettingsAttributes) InternalWithRef(ref terra.Reference) AutoscaleSettingsAttributes {
 	return AutoscaleSettingsAttributes{ref: ref}
 }
 
-func (as AutoscaleSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (as AutoscaleSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return as.ref.InternalTokens()
 }
 
 func (as AutoscaleSettingsAttributes) MaxThroughput() terra.NumberValue {
-	return terra.ReferenceNumber(as.ref.Append("max_throughput"))
+	return terra.ReferenceAsNumber(as.ref.Append("max_throughput"))
 }
 
 type IndexAttributes struct {
 	ref terra.Reference
 }
 
-func (i IndexAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IndexAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IndexAttributes) InternalWithRef(ref terra.Reference) IndexAttributes {
 	return IndexAttributes{ref: ref}
 }
 
-func (i IndexAttributes) InternalTokens() hclwrite.Tokens {
+func (i IndexAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IndexAttributes) Keys() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](i.ref.Append("keys"))
+	return terra.ReferenceAsList[terra.StringValue](i.ref.Append("keys"))
 }
 
 func (i IndexAttributes) Unique() terra.BoolValue {
-	return terra.ReferenceBool(i.ref.Append("unique"))
+	return terra.ReferenceAsBool(i.ref.Append("unique"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type SystemIndexesState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMachineLearningComputeCluster creates a new instance of [MachineLearningComputeCluster].
 func NewMachineLearningComputeCluster(name string, args MachineLearningComputeClusterArgs) *MachineLearningComputeCluster {
 	return &MachineLearningComputeCluster{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMachineLearningComputeCluster(name string, args MachineLearningComputeCl
 
 var _ terra.Resource = (*MachineLearningComputeCluster)(nil)
 
+// MachineLearningComputeCluster represents the Terraform resource azurerm_machine_learning_compute_cluster.
 type MachineLearningComputeCluster struct {
-	Name  string
-	Args  MachineLearningComputeClusterArgs
-	state *machineLearningComputeClusterState
+	Name      string
+	Args      MachineLearningComputeClusterArgs
+	state     *machineLearningComputeClusterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MachineLearningComputeCluster].
 func (mlcc *MachineLearningComputeCluster) Type() string {
 	return "azurerm_machine_learning_compute_cluster"
 }
 
+// LocalName returns the local name for [MachineLearningComputeCluster].
 func (mlcc *MachineLearningComputeCluster) LocalName() string {
 	return mlcc.Name
 }
 
+// Configuration returns the configuration (args) for [MachineLearningComputeCluster].
 func (mlcc *MachineLearningComputeCluster) Configuration() interface{} {
 	return mlcc.Args
 }
 
+// DependOn is used for other resources to depend on [MachineLearningComputeCluster].
+func (mlcc *MachineLearningComputeCluster) DependOn() terra.Reference {
+	return terra.ReferenceResource(mlcc)
+}
+
+// Dependencies returns the list of resources [MachineLearningComputeCluster] depends_on.
+func (mlcc *MachineLearningComputeCluster) Dependencies() terra.Dependencies {
+	return mlcc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MachineLearningComputeCluster].
+func (mlcc *MachineLearningComputeCluster) LifecycleManagement() *terra.Lifecycle {
+	return mlcc.Lifecycle
+}
+
+// Attributes returns the attributes for [MachineLearningComputeCluster].
 func (mlcc *MachineLearningComputeCluster) Attributes() machineLearningComputeClusterAttributes {
 	return machineLearningComputeClusterAttributes{ref: terra.ReferenceResource(mlcc)}
 }
 
+// ImportState imports the given attribute values into [MachineLearningComputeCluster]'s state.
 func (mlcc *MachineLearningComputeCluster) ImportState(av io.Reader) error {
 	mlcc.state = &machineLearningComputeClusterState{}
 	if err := json.NewDecoder(av).Decode(mlcc.state); err != nil {
@@ -49,10 +73,12 @@ func (mlcc *MachineLearningComputeCluster) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MachineLearningComputeCluster] has state.
 func (mlcc *MachineLearningComputeCluster) State() (*machineLearningComputeClusterState, bool) {
 	return mlcc.state, mlcc.state != nil
 }
 
+// StateMust returns the state for [MachineLearningComputeCluster]. Panics if the state is nil.
 func (mlcc *MachineLearningComputeCluster) StateMust() *machineLearningComputeClusterState {
 	if mlcc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mlcc.Type(), mlcc.LocalName()))
@@ -60,10 +86,7 @@ func (mlcc *MachineLearningComputeCluster) StateMust() *machineLearningComputeCl
 	return mlcc.state
 }
 
-func (mlcc *MachineLearningComputeCluster) DependOn() terra.Reference {
-	return terra.ReferenceResource(mlcc)
-}
-
+// MachineLearningComputeClusterArgs contains the configurations for azurerm_machine_learning_compute_cluster.
 type MachineLearningComputeClusterArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -95,71 +118,80 @@ type MachineLearningComputeClusterArgs struct {
 	Ssh *machinelearningcomputecluster.Ssh `hcl:"ssh,block"`
 	// Timeouts: optional
 	Timeouts *machinelearningcomputecluster.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MachineLearningComputeCluster depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type machineLearningComputeClusterAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of azurerm_machine_learning_compute_cluster.
 func (mlcc machineLearningComputeClusterAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(mlcc.ref.Append("description"))
+	return terra.ReferenceAsString(mlcc.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_machine_learning_compute_cluster.
 func (mlcc machineLearningComputeClusterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mlcc.ref.Append("id"))
+	return terra.ReferenceAsString(mlcc.ref.Append("id"))
 }
 
+// LocalAuthEnabled returns a reference to field local_auth_enabled of azurerm_machine_learning_compute_cluster.
 func (mlcc machineLearningComputeClusterAttributes) LocalAuthEnabled() terra.BoolValue {
-	return terra.ReferenceBool(mlcc.ref.Append("local_auth_enabled"))
+	return terra.ReferenceAsBool(mlcc.ref.Append("local_auth_enabled"))
 }
 
+// Location returns a reference to field location of azurerm_machine_learning_compute_cluster.
 func (mlcc machineLearningComputeClusterAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(mlcc.ref.Append("location"))
+	return terra.ReferenceAsString(mlcc.ref.Append("location"))
 }
 
+// MachineLearningWorkspaceId returns a reference to field machine_learning_workspace_id of azurerm_machine_learning_compute_cluster.
 func (mlcc machineLearningComputeClusterAttributes) MachineLearningWorkspaceId() terra.StringValue {
-	return terra.ReferenceString(mlcc.ref.Append("machine_learning_workspace_id"))
+	return terra.ReferenceAsString(mlcc.ref.Append("machine_learning_workspace_id"))
 }
 
+// Name returns a reference to field name of azurerm_machine_learning_compute_cluster.
 func (mlcc machineLearningComputeClusterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mlcc.ref.Append("name"))
+	return terra.ReferenceAsString(mlcc.ref.Append("name"))
 }
 
+// SshPublicAccessEnabled returns a reference to field ssh_public_access_enabled of azurerm_machine_learning_compute_cluster.
 func (mlcc machineLearningComputeClusterAttributes) SshPublicAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(mlcc.ref.Append("ssh_public_access_enabled"))
+	return terra.ReferenceAsBool(mlcc.ref.Append("ssh_public_access_enabled"))
 }
 
+// SubnetResourceId returns a reference to field subnet_resource_id of azurerm_machine_learning_compute_cluster.
 func (mlcc machineLearningComputeClusterAttributes) SubnetResourceId() terra.StringValue {
-	return terra.ReferenceString(mlcc.ref.Append("subnet_resource_id"))
+	return terra.ReferenceAsString(mlcc.ref.Append("subnet_resource_id"))
 }
 
+// Tags returns a reference to field tags of azurerm_machine_learning_compute_cluster.
 func (mlcc machineLearningComputeClusterAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mlcc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mlcc.ref.Append("tags"))
 }
 
+// VmPriority returns a reference to field vm_priority of azurerm_machine_learning_compute_cluster.
 func (mlcc machineLearningComputeClusterAttributes) VmPriority() terra.StringValue {
-	return terra.ReferenceString(mlcc.ref.Append("vm_priority"))
+	return terra.ReferenceAsString(mlcc.ref.Append("vm_priority"))
 }
 
+// VmSize returns a reference to field vm_size of azurerm_machine_learning_compute_cluster.
 func (mlcc machineLearningComputeClusterAttributes) VmSize() terra.StringValue {
-	return terra.ReferenceString(mlcc.ref.Append("vm_size"))
+	return terra.ReferenceAsString(mlcc.ref.Append("vm_size"))
 }
 
 func (mlcc machineLearningComputeClusterAttributes) Identity() terra.ListValue[machinelearningcomputecluster.IdentityAttributes] {
-	return terra.ReferenceList[machinelearningcomputecluster.IdentityAttributes](mlcc.ref.Append("identity"))
+	return terra.ReferenceAsList[machinelearningcomputecluster.IdentityAttributes](mlcc.ref.Append("identity"))
 }
 
 func (mlcc machineLearningComputeClusterAttributes) ScaleSettings() terra.ListValue[machinelearningcomputecluster.ScaleSettingsAttributes] {
-	return terra.ReferenceList[machinelearningcomputecluster.ScaleSettingsAttributes](mlcc.ref.Append("scale_settings"))
+	return terra.ReferenceAsList[machinelearningcomputecluster.ScaleSettingsAttributes](mlcc.ref.Append("scale_settings"))
 }
 
 func (mlcc machineLearningComputeClusterAttributes) Ssh() terra.ListValue[machinelearningcomputecluster.SshAttributes] {
-	return terra.ReferenceList[machinelearningcomputecluster.SshAttributes](mlcc.ref.Append("ssh"))
+	return terra.ReferenceAsList[machinelearningcomputecluster.SshAttributes](mlcc.ref.Append("ssh"))
 }
 
 func (mlcc machineLearningComputeClusterAttributes) Timeouts() machinelearningcomputecluster.TimeoutsAttributes {
-	return terra.ReferenceSingle[machinelearningcomputecluster.TimeoutsAttributes](mlcc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[machinelearningcomputecluster.TimeoutsAttributes](mlcc.ref.Append("timeouts"))
 }
 
 type machineLearningComputeClusterState struct {

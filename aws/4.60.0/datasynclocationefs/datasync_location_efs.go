@@ -26,7 +26,7 @@ func (ec Ec2ConfigAttributes) InternalWithRef(ref terra.Reference) Ec2ConfigAttr
 	return Ec2ConfigAttributes{ref: ref}
 }
 
-func (ec Ec2ConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ec Ec2ConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 

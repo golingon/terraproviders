@@ -29,56 +29,56 @@ type RecordAttributes struct {
 	ref terra.Reference
 }
 
-func (r RecordAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RecordAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RecordAttributes) InternalWithRef(ref terra.Reference) RecordAttributes {
 	return RecordAttributes{ref: ref}
 }
 
-func (r RecordAttributes) InternalTokens() hclwrite.Tokens {
+func (r RecordAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RecordAttributes) Exchange() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("exchange"))
+	return terra.ReferenceAsString(r.ref.Append("exchange"))
 }
 
 func (r RecordAttributes) Preference() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("preference"))
+	return terra.ReferenceAsString(r.ref.Append("preference"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type RecordState struct {

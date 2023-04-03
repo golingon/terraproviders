@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataExpressRouteCircuit creates a new instance of [DataExpressRouteCircuit].
 func NewDataExpressRouteCircuit(name string, args DataExpressRouteCircuitArgs) *DataExpressRouteCircuit {
 	return &DataExpressRouteCircuit{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataExpressRouteCircuit(name string, args DataExpressRouteCircuitArgs) *
 
 var _ terra.DataResource = (*DataExpressRouteCircuit)(nil)
 
+// DataExpressRouteCircuit represents the Terraform data resource azurerm_express_route_circuit.
 type DataExpressRouteCircuit struct {
 	Name string
 	Args DataExpressRouteCircuitArgs
 }
 
+// DataSource returns the Terraform object type for [DataExpressRouteCircuit].
 func (erc *DataExpressRouteCircuit) DataSource() string {
 	return "azurerm_express_route_circuit"
 }
 
+// LocalName returns the local name for [DataExpressRouteCircuit].
 func (erc *DataExpressRouteCircuit) LocalName() string {
 	return erc.Name
 }
 
+// Configuration returns the configuration (args) for [DataExpressRouteCircuit].
 func (erc *DataExpressRouteCircuit) Configuration() interface{} {
 	return erc.Args
 }
 
+// Attributes returns the attributes for [DataExpressRouteCircuit].
 func (erc *DataExpressRouteCircuit) Attributes() dataExpressRouteCircuitAttributes {
 	return dataExpressRouteCircuitAttributes{ref: terra.ReferenceDataResource(erc)}
 }
 
+// DataExpressRouteCircuitArgs contains the configurations for azurerm_express_route_circuit.
 type DataExpressRouteCircuitArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -57,42 +64,48 @@ type dataExpressRouteCircuitAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_express_route_circuit.
 func (erc dataExpressRouteCircuitAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(erc.ref.Append("id"))
+	return terra.ReferenceAsString(erc.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_express_route_circuit.
 func (erc dataExpressRouteCircuitAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(erc.ref.Append("location"))
+	return terra.ReferenceAsString(erc.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_express_route_circuit.
 func (erc dataExpressRouteCircuitAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(erc.ref.Append("name"))
+	return terra.ReferenceAsString(erc.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_express_route_circuit.
 func (erc dataExpressRouteCircuitAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(erc.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(erc.ref.Append("resource_group_name"))
 }
 
+// ServiceKey returns a reference to field service_key of azurerm_express_route_circuit.
 func (erc dataExpressRouteCircuitAttributes) ServiceKey() terra.StringValue {
-	return terra.ReferenceString(erc.ref.Append("service_key"))
+	return terra.ReferenceAsString(erc.ref.Append("service_key"))
 }
 
+// ServiceProviderProvisioningState returns a reference to field service_provider_provisioning_state of azurerm_express_route_circuit.
 func (erc dataExpressRouteCircuitAttributes) ServiceProviderProvisioningState() terra.StringValue {
-	return terra.ReferenceString(erc.ref.Append("service_provider_provisioning_state"))
+	return terra.ReferenceAsString(erc.ref.Append("service_provider_provisioning_state"))
 }
 
 func (erc dataExpressRouteCircuitAttributes) Peerings() terra.ListValue[dataexpressroutecircuit.PeeringsAttributes] {
-	return terra.ReferenceList[dataexpressroutecircuit.PeeringsAttributes](erc.ref.Append("peerings"))
+	return terra.ReferenceAsList[dataexpressroutecircuit.PeeringsAttributes](erc.ref.Append("peerings"))
 }
 
 func (erc dataExpressRouteCircuitAttributes) ServiceProviderProperties() terra.ListValue[dataexpressroutecircuit.ServiceProviderPropertiesAttributes] {
-	return terra.ReferenceList[dataexpressroutecircuit.ServiceProviderPropertiesAttributes](erc.ref.Append("service_provider_properties"))
+	return terra.ReferenceAsList[dataexpressroutecircuit.ServiceProviderPropertiesAttributes](erc.ref.Append("service_provider_properties"))
 }
 
 func (erc dataExpressRouteCircuitAttributes) Sku() terra.ListValue[dataexpressroutecircuit.SkuAttributes] {
-	return terra.ReferenceList[dataexpressroutecircuit.SkuAttributes](erc.ref.Append("sku"))
+	return terra.ReferenceAsList[dataexpressroutecircuit.SkuAttributes](erc.ref.Append("sku"))
 }
 
 func (erc dataExpressRouteCircuitAttributes) Timeouts() dataexpressroutecircuit.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataexpressroutecircuit.TimeoutsAttributes](erc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataexpressroutecircuit.TimeoutsAttributes](erc.ref.Append("timeouts"))
 }

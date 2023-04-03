@@ -24,7 +24,7 @@ func (tc TlsConfigAttributes) InternalWithRef(ref terra.Reference) TlsConfigAttr
 	return TlsConfigAttributes{ref: ref}
 }
 
-func (tc TlsConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (tc TlsConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tc.ref.InternalTokens()
 }
 

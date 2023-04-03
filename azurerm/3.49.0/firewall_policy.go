@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewFirewallPolicy creates a new instance of [FirewallPolicy].
 func NewFirewallPolicy(name string, args FirewallPolicyArgs) *FirewallPolicy {
 	return &FirewallPolicy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewFirewallPolicy(name string, args FirewallPolicyArgs) *FirewallPolicy {
 
 var _ terra.Resource = (*FirewallPolicy)(nil)
 
+// FirewallPolicy represents the Terraform resource azurerm_firewall_policy.
 type FirewallPolicy struct {
-	Name  string
-	Args  FirewallPolicyArgs
-	state *firewallPolicyState
+	Name      string
+	Args      FirewallPolicyArgs
+	state     *firewallPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [FirewallPolicy].
 func (fp *FirewallPolicy) Type() string {
 	return "azurerm_firewall_policy"
 }
 
+// LocalName returns the local name for [FirewallPolicy].
 func (fp *FirewallPolicy) LocalName() string {
 	return fp.Name
 }
 
+// Configuration returns the configuration (args) for [FirewallPolicy].
 func (fp *FirewallPolicy) Configuration() interface{} {
 	return fp.Args
 }
 
+// DependOn is used for other resources to depend on [FirewallPolicy].
+func (fp *FirewallPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(fp)
+}
+
+// Dependencies returns the list of resources [FirewallPolicy] depends_on.
+func (fp *FirewallPolicy) Dependencies() terra.Dependencies {
+	return fp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [FirewallPolicy].
+func (fp *FirewallPolicy) LifecycleManagement() *terra.Lifecycle {
+	return fp.Lifecycle
+}
+
+// Attributes returns the attributes for [FirewallPolicy].
 func (fp *FirewallPolicy) Attributes() firewallPolicyAttributes {
 	return firewallPolicyAttributes{ref: terra.ReferenceResource(fp)}
 }
 
+// ImportState imports the given attribute values into [FirewallPolicy]'s state.
 func (fp *FirewallPolicy) ImportState(av io.Reader) error {
 	fp.state = &firewallPolicyState{}
 	if err := json.NewDecoder(av).Decode(fp.state); err != nil {
@@ -49,10 +73,12 @@ func (fp *FirewallPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [FirewallPolicy] has state.
 func (fp *FirewallPolicy) State() (*firewallPolicyState, bool) {
 	return fp.state, fp.state != nil
 }
 
+// StateMust returns the state for [FirewallPolicy]. Panics if the state is nil.
 func (fp *FirewallPolicy) StateMust() *firewallPolicyState {
 	if fp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", fp.Type(), fp.LocalName()))
@@ -60,10 +86,7 @@ func (fp *FirewallPolicy) StateMust() *firewallPolicyState {
 	return fp.state
 }
 
-func (fp *FirewallPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(fp)
-}
-
+// FirewallPolicyArgs contains the configurations for azurerm_firewall_policy.
 type FirewallPolicyArgs struct {
 	// AutoLearnPrivateRangesEnabled: bool, optional
 	AutoLearnPrivateRangesEnabled terra.BoolValue `hcl:"auto_learn_private_ranges_enabled,attr"`
@@ -103,99 +126,111 @@ type FirewallPolicyArgs struct {
 	Timeouts *firewallpolicy.Timeouts `hcl:"timeouts,block"`
 	// TlsCertificate: optional
 	TlsCertificate *firewallpolicy.TlsCertificate `hcl:"tls_certificate,block"`
-	// DependsOn contains resources that FirewallPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type firewallPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// AutoLearnPrivateRangesEnabled returns a reference to field auto_learn_private_ranges_enabled of azurerm_firewall_policy.
 func (fp firewallPolicyAttributes) AutoLearnPrivateRangesEnabled() terra.BoolValue {
-	return terra.ReferenceBool(fp.ref.Append("auto_learn_private_ranges_enabled"))
+	return terra.ReferenceAsBool(fp.ref.Append("auto_learn_private_ranges_enabled"))
 }
 
+// BasePolicyId returns a reference to field base_policy_id of azurerm_firewall_policy.
 func (fp firewallPolicyAttributes) BasePolicyId() terra.StringValue {
-	return terra.ReferenceString(fp.ref.Append("base_policy_id"))
+	return terra.ReferenceAsString(fp.ref.Append("base_policy_id"))
 }
 
+// ChildPolicies returns a reference to field child_policies of azurerm_firewall_policy.
 func (fp firewallPolicyAttributes) ChildPolicies() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](fp.ref.Append("child_policies"))
+	return terra.ReferenceAsList[terra.StringValue](fp.ref.Append("child_policies"))
 }
 
+// Firewalls returns a reference to field firewalls of azurerm_firewall_policy.
 func (fp firewallPolicyAttributes) Firewalls() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](fp.ref.Append("firewalls"))
+	return terra.ReferenceAsList[terra.StringValue](fp.ref.Append("firewalls"))
 }
 
+// Id returns a reference to field id of azurerm_firewall_policy.
 func (fp firewallPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(fp.ref.Append("id"))
+	return terra.ReferenceAsString(fp.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_firewall_policy.
 func (fp firewallPolicyAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(fp.ref.Append("location"))
+	return terra.ReferenceAsString(fp.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_firewall_policy.
 func (fp firewallPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(fp.ref.Append("name"))
+	return terra.ReferenceAsString(fp.ref.Append("name"))
 }
 
+// PrivateIpRanges returns a reference to field private_ip_ranges of azurerm_firewall_policy.
 func (fp firewallPolicyAttributes) PrivateIpRanges() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](fp.ref.Append("private_ip_ranges"))
+	return terra.ReferenceAsList[terra.StringValue](fp.ref.Append("private_ip_ranges"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_firewall_policy.
 func (fp firewallPolicyAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(fp.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(fp.ref.Append("resource_group_name"))
 }
 
+// RuleCollectionGroups returns a reference to field rule_collection_groups of azurerm_firewall_policy.
 func (fp firewallPolicyAttributes) RuleCollectionGroups() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](fp.ref.Append("rule_collection_groups"))
+	return terra.ReferenceAsList[terra.StringValue](fp.ref.Append("rule_collection_groups"))
 }
 
+// Sku returns a reference to field sku of azurerm_firewall_policy.
 func (fp firewallPolicyAttributes) Sku() terra.StringValue {
-	return terra.ReferenceString(fp.ref.Append("sku"))
+	return terra.ReferenceAsString(fp.ref.Append("sku"))
 }
 
+// SqlRedirectAllowed returns a reference to field sql_redirect_allowed of azurerm_firewall_policy.
 func (fp firewallPolicyAttributes) SqlRedirectAllowed() terra.BoolValue {
-	return terra.ReferenceBool(fp.ref.Append("sql_redirect_allowed"))
+	return terra.ReferenceAsBool(fp.ref.Append("sql_redirect_allowed"))
 }
 
+// Tags returns a reference to field tags of azurerm_firewall_policy.
 func (fp firewallPolicyAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](fp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](fp.ref.Append("tags"))
 }
 
+// ThreatIntelligenceMode returns a reference to field threat_intelligence_mode of azurerm_firewall_policy.
 func (fp firewallPolicyAttributes) ThreatIntelligenceMode() terra.StringValue {
-	return terra.ReferenceString(fp.ref.Append("threat_intelligence_mode"))
+	return terra.ReferenceAsString(fp.ref.Append("threat_intelligence_mode"))
 }
 
 func (fp firewallPolicyAttributes) Dns() terra.ListValue[firewallpolicy.DnsAttributes] {
-	return terra.ReferenceList[firewallpolicy.DnsAttributes](fp.ref.Append("dns"))
+	return terra.ReferenceAsList[firewallpolicy.DnsAttributes](fp.ref.Append("dns"))
 }
 
 func (fp firewallPolicyAttributes) ExplicitProxy() terra.ListValue[firewallpolicy.ExplicitProxyAttributes] {
-	return terra.ReferenceList[firewallpolicy.ExplicitProxyAttributes](fp.ref.Append("explicit_proxy"))
+	return terra.ReferenceAsList[firewallpolicy.ExplicitProxyAttributes](fp.ref.Append("explicit_proxy"))
 }
 
 func (fp firewallPolicyAttributes) Identity() terra.ListValue[firewallpolicy.IdentityAttributes] {
-	return terra.ReferenceList[firewallpolicy.IdentityAttributes](fp.ref.Append("identity"))
+	return terra.ReferenceAsList[firewallpolicy.IdentityAttributes](fp.ref.Append("identity"))
 }
 
 func (fp firewallPolicyAttributes) Insights() terra.ListValue[firewallpolicy.InsightsAttributes] {
-	return terra.ReferenceList[firewallpolicy.InsightsAttributes](fp.ref.Append("insights"))
+	return terra.ReferenceAsList[firewallpolicy.InsightsAttributes](fp.ref.Append("insights"))
 }
 
 func (fp firewallPolicyAttributes) IntrusionDetection() terra.ListValue[firewallpolicy.IntrusionDetectionAttributes] {
-	return terra.ReferenceList[firewallpolicy.IntrusionDetectionAttributes](fp.ref.Append("intrusion_detection"))
+	return terra.ReferenceAsList[firewallpolicy.IntrusionDetectionAttributes](fp.ref.Append("intrusion_detection"))
 }
 
 func (fp firewallPolicyAttributes) ThreatIntelligenceAllowlist() terra.ListValue[firewallpolicy.ThreatIntelligenceAllowlistAttributes] {
-	return terra.ReferenceList[firewallpolicy.ThreatIntelligenceAllowlistAttributes](fp.ref.Append("threat_intelligence_allowlist"))
+	return terra.ReferenceAsList[firewallpolicy.ThreatIntelligenceAllowlistAttributes](fp.ref.Append("threat_intelligence_allowlist"))
 }
 
 func (fp firewallPolicyAttributes) Timeouts() firewallpolicy.TimeoutsAttributes {
-	return terra.ReferenceSingle[firewallpolicy.TimeoutsAttributes](fp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[firewallpolicy.TimeoutsAttributes](fp.ref.Append("timeouts"))
 }
 
 func (fp firewallPolicyAttributes) TlsCertificate() terra.ListValue[firewallpolicy.TlsCertificateAttributes] {
-	return terra.ReferenceList[firewallpolicy.TlsCertificateAttributes](fp.ref.Append("tls_certificate"))
+	return terra.ReferenceAsList[firewallpolicy.TlsCertificateAttributes](fp.ref.Append("tls_certificate"))
 }
 
 type firewallPolicyState struct {

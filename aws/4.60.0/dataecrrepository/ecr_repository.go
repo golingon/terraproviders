@@ -23,7 +23,7 @@ func (ec EncryptionConfigurationAttributes) InternalWithRef(ref terra.Reference)
 	return EncryptionConfigurationAttributes{ref: ref}
 }
 
-func (ec EncryptionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ec EncryptionConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 
@@ -47,7 +47,7 @@ func (isc ImageScanningConfigurationAttributes) InternalWithRef(ref terra.Refere
 	return ImageScanningConfigurationAttributes{ref: ref}
 }
 
-func (isc ImageScanningConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (isc ImageScanningConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return isc.ref.InternalTokens()
 }
 

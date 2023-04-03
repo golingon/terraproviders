@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataplexAssetIamBinding creates a new instance of [DataplexAssetIamBinding].
 func NewDataplexAssetIamBinding(name string, args DataplexAssetIamBindingArgs) *DataplexAssetIamBinding {
 	return &DataplexAssetIamBinding{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataplexAssetIamBinding(name string, args DataplexAssetIamBindingArgs) *
 
 var _ terra.Resource = (*DataplexAssetIamBinding)(nil)
 
+// DataplexAssetIamBinding represents the Terraform resource google_dataplex_asset_iam_binding.
 type DataplexAssetIamBinding struct {
-	Name  string
-	Args  DataplexAssetIamBindingArgs
-	state *dataplexAssetIamBindingState
+	Name      string
+	Args      DataplexAssetIamBindingArgs
+	state     *dataplexAssetIamBindingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataplexAssetIamBinding].
 func (daib *DataplexAssetIamBinding) Type() string {
 	return "google_dataplex_asset_iam_binding"
 }
 
+// LocalName returns the local name for [DataplexAssetIamBinding].
 func (daib *DataplexAssetIamBinding) LocalName() string {
 	return daib.Name
 }
 
+// Configuration returns the configuration (args) for [DataplexAssetIamBinding].
 func (daib *DataplexAssetIamBinding) Configuration() interface{} {
 	return daib.Args
 }
 
+// DependOn is used for other resources to depend on [DataplexAssetIamBinding].
+func (daib *DataplexAssetIamBinding) DependOn() terra.Reference {
+	return terra.ReferenceResource(daib)
+}
+
+// Dependencies returns the list of resources [DataplexAssetIamBinding] depends_on.
+func (daib *DataplexAssetIamBinding) Dependencies() terra.Dependencies {
+	return daib.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataplexAssetIamBinding].
+func (daib *DataplexAssetIamBinding) LifecycleManagement() *terra.Lifecycle {
+	return daib.Lifecycle
+}
+
+// Attributes returns the attributes for [DataplexAssetIamBinding].
 func (daib *DataplexAssetIamBinding) Attributes() dataplexAssetIamBindingAttributes {
 	return dataplexAssetIamBindingAttributes{ref: terra.ReferenceResource(daib)}
 }
 
+// ImportState imports the given attribute values into [DataplexAssetIamBinding]'s state.
 func (daib *DataplexAssetIamBinding) ImportState(av io.Reader) error {
 	daib.state = &dataplexAssetIamBindingState{}
 	if err := json.NewDecoder(av).Decode(daib.state); err != nil {
@@ -49,10 +73,12 @@ func (daib *DataplexAssetIamBinding) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataplexAssetIamBinding] has state.
 func (daib *DataplexAssetIamBinding) State() (*dataplexAssetIamBindingState, bool) {
 	return daib.state, daib.state != nil
 }
 
+// StateMust returns the state for [DataplexAssetIamBinding]. Panics if the state is nil.
 func (daib *DataplexAssetIamBinding) StateMust() *dataplexAssetIamBindingState {
 	if daib.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", daib.Type(), daib.LocalName()))
@@ -60,10 +86,7 @@ func (daib *DataplexAssetIamBinding) StateMust() *dataplexAssetIamBindingState {
 	return daib.state
 }
 
-func (daib *DataplexAssetIamBinding) DependOn() terra.Reference {
-	return terra.ReferenceResource(daib)
-}
-
+// DataplexAssetIamBindingArgs contains the configurations for google_dataplex_asset_iam_binding.
 type DataplexAssetIamBindingArgs struct {
 	// Asset: string, required
 	Asset terra.StringValue `hcl:"asset,attr" validate:"required"`
@@ -83,51 +106,58 @@ type DataplexAssetIamBindingArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *dataplexassetiambinding.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that DataplexAssetIamBinding depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataplexAssetIamBindingAttributes struct {
 	ref terra.Reference
 }
 
+// Asset returns a reference to field asset of google_dataplex_asset_iam_binding.
 func (daib dataplexAssetIamBindingAttributes) Asset() terra.StringValue {
-	return terra.ReferenceString(daib.ref.Append("asset"))
+	return terra.ReferenceAsString(daib.ref.Append("asset"))
 }
 
+// DataplexZone returns a reference to field dataplex_zone of google_dataplex_asset_iam_binding.
 func (daib dataplexAssetIamBindingAttributes) DataplexZone() terra.StringValue {
-	return terra.ReferenceString(daib.ref.Append("dataplex_zone"))
+	return terra.ReferenceAsString(daib.ref.Append("dataplex_zone"))
 }
 
+// Etag returns a reference to field etag of google_dataplex_asset_iam_binding.
 func (daib dataplexAssetIamBindingAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(daib.ref.Append("etag"))
+	return terra.ReferenceAsString(daib.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_dataplex_asset_iam_binding.
 func (daib dataplexAssetIamBindingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(daib.ref.Append("id"))
+	return terra.ReferenceAsString(daib.ref.Append("id"))
 }
 
+// Lake returns a reference to field lake of google_dataplex_asset_iam_binding.
 func (daib dataplexAssetIamBindingAttributes) Lake() terra.StringValue {
-	return terra.ReferenceString(daib.ref.Append("lake"))
+	return terra.ReferenceAsString(daib.ref.Append("lake"))
 }
 
+// Location returns a reference to field location of google_dataplex_asset_iam_binding.
 func (daib dataplexAssetIamBindingAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(daib.ref.Append("location"))
+	return terra.ReferenceAsString(daib.ref.Append("location"))
 }
 
+// Members returns a reference to field members of google_dataplex_asset_iam_binding.
 func (daib dataplexAssetIamBindingAttributes) Members() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](daib.ref.Append("members"))
+	return terra.ReferenceAsSet[terra.StringValue](daib.ref.Append("members"))
 }
 
+// Project returns a reference to field project of google_dataplex_asset_iam_binding.
 func (daib dataplexAssetIamBindingAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(daib.ref.Append("project"))
+	return terra.ReferenceAsString(daib.ref.Append("project"))
 }
 
+// Role returns a reference to field role of google_dataplex_asset_iam_binding.
 func (daib dataplexAssetIamBindingAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(daib.ref.Append("role"))
+	return terra.ReferenceAsString(daib.ref.Append("role"))
 }
 
 func (daib dataplexAssetIamBindingAttributes) Condition() terra.ListValue[dataplexassetiambinding.ConditionAttributes] {
-	return terra.ReferenceList[dataplexassetiambinding.ConditionAttributes](daib.ref.Append("condition"))
+	return terra.ReferenceAsList[dataplexassetiambinding.ConditionAttributes](daib.ref.Append("condition"))
 }
 
 type dataplexAssetIamBindingState struct {

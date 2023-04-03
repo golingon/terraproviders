@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNetworkManagerConnectivityConfiguration creates a new instance of [NetworkManagerConnectivityConfiguration].
 func NewNetworkManagerConnectivityConfiguration(name string, args NetworkManagerConnectivityConfigurationArgs) *NetworkManagerConnectivityConfiguration {
 	return &NetworkManagerConnectivityConfiguration{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNetworkManagerConnectivityConfiguration(name string, args NetworkManager
 
 var _ terra.Resource = (*NetworkManagerConnectivityConfiguration)(nil)
 
+// NetworkManagerConnectivityConfiguration represents the Terraform resource azurerm_network_manager_connectivity_configuration.
 type NetworkManagerConnectivityConfiguration struct {
-	Name  string
-	Args  NetworkManagerConnectivityConfigurationArgs
-	state *networkManagerConnectivityConfigurationState
+	Name      string
+	Args      NetworkManagerConnectivityConfigurationArgs
+	state     *networkManagerConnectivityConfigurationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NetworkManagerConnectivityConfiguration].
 func (nmcc *NetworkManagerConnectivityConfiguration) Type() string {
 	return "azurerm_network_manager_connectivity_configuration"
 }
 
+// LocalName returns the local name for [NetworkManagerConnectivityConfiguration].
 func (nmcc *NetworkManagerConnectivityConfiguration) LocalName() string {
 	return nmcc.Name
 }
 
+// Configuration returns the configuration (args) for [NetworkManagerConnectivityConfiguration].
 func (nmcc *NetworkManagerConnectivityConfiguration) Configuration() interface{} {
 	return nmcc.Args
 }
 
+// DependOn is used for other resources to depend on [NetworkManagerConnectivityConfiguration].
+func (nmcc *NetworkManagerConnectivityConfiguration) DependOn() terra.Reference {
+	return terra.ReferenceResource(nmcc)
+}
+
+// Dependencies returns the list of resources [NetworkManagerConnectivityConfiguration] depends_on.
+func (nmcc *NetworkManagerConnectivityConfiguration) Dependencies() terra.Dependencies {
+	return nmcc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NetworkManagerConnectivityConfiguration].
+func (nmcc *NetworkManagerConnectivityConfiguration) LifecycleManagement() *terra.Lifecycle {
+	return nmcc.Lifecycle
+}
+
+// Attributes returns the attributes for [NetworkManagerConnectivityConfiguration].
 func (nmcc *NetworkManagerConnectivityConfiguration) Attributes() networkManagerConnectivityConfigurationAttributes {
 	return networkManagerConnectivityConfigurationAttributes{ref: terra.ReferenceResource(nmcc)}
 }
 
+// ImportState imports the given attribute values into [NetworkManagerConnectivityConfiguration]'s state.
 func (nmcc *NetworkManagerConnectivityConfiguration) ImportState(av io.Reader) error {
 	nmcc.state = &networkManagerConnectivityConfigurationState{}
 	if err := json.NewDecoder(av).Decode(nmcc.state); err != nil {
@@ -49,10 +73,12 @@ func (nmcc *NetworkManagerConnectivityConfiguration) ImportState(av io.Reader) e
 	return nil
 }
 
+// State returns the state and a bool indicating if [NetworkManagerConnectivityConfiguration] has state.
 func (nmcc *NetworkManagerConnectivityConfiguration) State() (*networkManagerConnectivityConfigurationState, bool) {
 	return nmcc.state, nmcc.state != nil
 }
 
+// StateMust returns the state for [NetworkManagerConnectivityConfiguration]. Panics if the state is nil.
 func (nmcc *NetworkManagerConnectivityConfiguration) StateMust() *networkManagerConnectivityConfigurationState {
 	if nmcc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", nmcc.Type(), nmcc.LocalName()))
@@ -60,10 +86,7 @@ func (nmcc *NetworkManagerConnectivityConfiguration) StateMust() *networkManager
 	return nmcc.state
 }
 
-func (nmcc *NetworkManagerConnectivityConfiguration) DependOn() terra.Reference {
-	return terra.ReferenceResource(nmcc)
-}
-
+// NetworkManagerConnectivityConfigurationArgs contains the configurations for azurerm_network_manager_connectivity_configuration.
 type NetworkManagerConnectivityConfigurationArgs struct {
 	// ConnectivityTopology: string, required
 	ConnectivityTopology terra.StringValue `hcl:"connectivity_topology,attr" validate:"required"`
@@ -85,51 +108,56 @@ type NetworkManagerConnectivityConfigurationArgs struct {
 	Hub *networkmanagerconnectivityconfiguration.Hub `hcl:"hub,block"`
 	// Timeouts: optional
 	Timeouts *networkmanagerconnectivityconfiguration.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that NetworkManagerConnectivityConfiguration depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type networkManagerConnectivityConfigurationAttributes struct {
 	ref terra.Reference
 }
 
+// ConnectivityTopology returns a reference to field connectivity_topology of azurerm_network_manager_connectivity_configuration.
 func (nmcc networkManagerConnectivityConfigurationAttributes) ConnectivityTopology() terra.StringValue {
-	return terra.ReferenceString(nmcc.ref.Append("connectivity_topology"))
+	return terra.ReferenceAsString(nmcc.ref.Append("connectivity_topology"))
 }
 
+// DeleteExistingPeeringEnabled returns a reference to field delete_existing_peering_enabled of azurerm_network_manager_connectivity_configuration.
 func (nmcc networkManagerConnectivityConfigurationAttributes) DeleteExistingPeeringEnabled() terra.BoolValue {
-	return terra.ReferenceBool(nmcc.ref.Append("delete_existing_peering_enabled"))
+	return terra.ReferenceAsBool(nmcc.ref.Append("delete_existing_peering_enabled"))
 }
 
+// Description returns a reference to field description of azurerm_network_manager_connectivity_configuration.
 func (nmcc networkManagerConnectivityConfigurationAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(nmcc.ref.Append("description"))
+	return terra.ReferenceAsString(nmcc.ref.Append("description"))
 }
 
+// GlobalMeshEnabled returns a reference to field global_mesh_enabled of azurerm_network_manager_connectivity_configuration.
 func (nmcc networkManagerConnectivityConfigurationAttributes) GlobalMeshEnabled() terra.BoolValue {
-	return terra.ReferenceBool(nmcc.ref.Append("global_mesh_enabled"))
+	return terra.ReferenceAsBool(nmcc.ref.Append("global_mesh_enabled"))
 }
 
+// Id returns a reference to field id of azurerm_network_manager_connectivity_configuration.
 func (nmcc networkManagerConnectivityConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(nmcc.ref.Append("id"))
+	return terra.ReferenceAsString(nmcc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_network_manager_connectivity_configuration.
 func (nmcc networkManagerConnectivityConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(nmcc.ref.Append("name"))
+	return terra.ReferenceAsString(nmcc.ref.Append("name"))
 }
 
+// NetworkManagerId returns a reference to field network_manager_id of azurerm_network_manager_connectivity_configuration.
 func (nmcc networkManagerConnectivityConfigurationAttributes) NetworkManagerId() terra.StringValue {
-	return terra.ReferenceString(nmcc.ref.Append("network_manager_id"))
+	return terra.ReferenceAsString(nmcc.ref.Append("network_manager_id"))
 }
 
 func (nmcc networkManagerConnectivityConfigurationAttributes) AppliesToGroup() terra.ListValue[networkmanagerconnectivityconfiguration.AppliesToGroupAttributes] {
-	return terra.ReferenceList[networkmanagerconnectivityconfiguration.AppliesToGroupAttributes](nmcc.ref.Append("applies_to_group"))
+	return terra.ReferenceAsList[networkmanagerconnectivityconfiguration.AppliesToGroupAttributes](nmcc.ref.Append("applies_to_group"))
 }
 
 func (nmcc networkManagerConnectivityConfigurationAttributes) Hub() terra.ListValue[networkmanagerconnectivityconfiguration.HubAttributes] {
-	return terra.ReferenceList[networkmanagerconnectivityconfiguration.HubAttributes](nmcc.ref.Append("hub"))
+	return terra.ReferenceAsList[networkmanagerconnectivityconfiguration.HubAttributes](nmcc.ref.Append("hub"))
 }
 
 func (nmcc networkManagerConnectivityConfigurationAttributes) Timeouts() networkmanagerconnectivityconfiguration.TimeoutsAttributes {
-	return terra.ReferenceSingle[networkmanagerconnectivityconfiguration.TimeoutsAttributes](nmcc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[networkmanagerconnectivityconfiguration.TimeoutsAttributes](nmcc.ref.Append("timeouts"))
 }
 
 type networkManagerConnectivityConfigurationState struct {

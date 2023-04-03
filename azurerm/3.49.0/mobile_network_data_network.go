@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMobileNetworkDataNetwork creates a new instance of [MobileNetworkDataNetwork].
 func NewMobileNetworkDataNetwork(name string, args MobileNetworkDataNetworkArgs) *MobileNetworkDataNetwork {
 	return &MobileNetworkDataNetwork{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMobileNetworkDataNetwork(name string, args MobileNetworkDataNetworkArgs)
 
 var _ terra.Resource = (*MobileNetworkDataNetwork)(nil)
 
+// MobileNetworkDataNetwork represents the Terraform resource azurerm_mobile_network_data_network.
 type MobileNetworkDataNetwork struct {
-	Name  string
-	Args  MobileNetworkDataNetworkArgs
-	state *mobileNetworkDataNetworkState
+	Name      string
+	Args      MobileNetworkDataNetworkArgs
+	state     *mobileNetworkDataNetworkState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MobileNetworkDataNetwork].
 func (mndn *MobileNetworkDataNetwork) Type() string {
 	return "azurerm_mobile_network_data_network"
 }
 
+// LocalName returns the local name for [MobileNetworkDataNetwork].
 func (mndn *MobileNetworkDataNetwork) LocalName() string {
 	return mndn.Name
 }
 
+// Configuration returns the configuration (args) for [MobileNetworkDataNetwork].
 func (mndn *MobileNetworkDataNetwork) Configuration() interface{} {
 	return mndn.Args
 }
 
+// DependOn is used for other resources to depend on [MobileNetworkDataNetwork].
+func (mndn *MobileNetworkDataNetwork) DependOn() terra.Reference {
+	return terra.ReferenceResource(mndn)
+}
+
+// Dependencies returns the list of resources [MobileNetworkDataNetwork] depends_on.
+func (mndn *MobileNetworkDataNetwork) Dependencies() terra.Dependencies {
+	return mndn.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MobileNetworkDataNetwork].
+func (mndn *MobileNetworkDataNetwork) LifecycleManagement() *terra.Lifecycle {
+	return mndn.Lifecycle
+}
+
+// Attributes returns the attributes for [MobileNetworkDataNetwork].
 func (mndn *MobileNetworkDataNetwork) Attributes() mobileNetworkDataNetworkAttributes {
 	return mobileNetworkDataNetworkAttributes{ref: terra.ReferenceResource(mndn)}
 }
 
+// ImportState imports the given attribute values into [MobileNetworkDataNetwork]'s state.
 func (mndn *MobileNetworkDataNetwork) ImportState(av io.Reader) error {
 	mndn.state = &mobileNetworkDataNetworkState{}
 	if err := json.NewDecoder(av).Decode(mndn.state); err != nil {
@@ -49,10 +73,12 @@ func (mndn *MobileNetworkDataNetwork) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MobileNetworkDataNetwork] has state.
 func (mndn *MobileNetworkDataNetwork) State() (*mobileNetworkDataNetworkState, bool) {
 	return mndn.state, mndn.state != nil
 }
 
+// StateMust returns the state for [MobileNetworkDataNetwork]. Panics if the state is nil.
 func (mndn *MobileNetworkDataNetwork) StateMust() *mobileNetworkDataNetworkState {
 	if mndn.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mndn.Type(), mndn.LocalName()))
@@ -60,10 +86,7 @@ func (mndn *MobileNetworkDataNetwork) StateMust() *mobileNetworkDataNetworkState
 	return mndn.state
 }
 
-func (mndn *MobileNetworkDataNetwork) DependOn() terra.Reference {
-	return terra.ReferenceResource(mndn)
-}
-
+// MobileNetworkDataNetworkArgs contains the configurations for azurerm_mobile_network_data_network.
 type MobileNetworkDataNetworkArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -79,39 +102,43 @@ type MobileNetworkDataNetworkArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// Timeouts: optional
 	Timeouts *mobilenetworkdatanetwork.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MobileNetworkDataNetwork depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mobileNetworkDataNetworkAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of azurerm_mobile_network_data_network.
 func (mndn mobileNetworkDataNetworkAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(mndn.ref.Append("description"))
+	return terra.ReferenceAsString(mndn.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_mobile_network_data_network.
 func (mndn mobileNetworkDataNetworkAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mndn.ref.Append("id"))
+	return terra.ReferenceAsString(mndn.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_mobile_network_data_network.
 func (mndn mobileNetworkDataNetworkAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(mndn.ref.Append("location"))
+	return terra.ReferenceAsString(mndn.ref.Append("location"))
 }
 
+// MobileNetworkId returns a reference to field mobile_network_id of azurerm_mobile_network_data_network.
 func (mndn mobileNetworkDataNetworkAttributes) MobileNetworkId() terra.StringValue {
-	return terra.ReferenceString(mndn.ref.Append("mobile_network_id"))
+	return terra.ReferenceAsString(mndn.ref.Append("mobile_network_id"))
 }
 
+// Name returns a reference to field name of azurerm_mobile_network_data_network.
 func (mndn mobileNetworkDataNetworkAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mndn.ref.Append("name"))
+	return terra.ReferenceAsString(mndn.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of azurerm_mobile_network_data_network.
 func (mndn mobileNetworkDataNetworkAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mndn.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mndn.ref.Append("tags"))
 }
 
 func (mndn mobileNetworkDataNetworkAttributes) Timeouts() mobilenetworkdatanetwork.TimeoutsAttributes {
-	return terra.ReferenceSingle[mobilenetworkdatanetwork.TimeoutsAttributes](mndn.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[mobilenetworkdatanetwork.TimeoutsAttributes](mndn.ref.Append("timeouts"))
 }
 
 type mobileNetworkDataNetworkState struct {

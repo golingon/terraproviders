@@ -64,156 +64,156 @@ type RequestAttributes struct {
 	ref terra.Reference
 }
 
-func (r RequestAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RequestAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RequestAttributes) InternalWithRef(ref terra.Reference) RequestAttributes {
 	return RequestAttributes{ref: ref}
 }
 
-func (r RequestAttributes) InternalTokens() hclwrite.Tokens {
+func (r RequestAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RequestAttributes) Body() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("body"))
+	return terra.ReferenceAsString(r.ref.Append("body"))
 }
 
 func (r RequestAttributes) FollowRedirectsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(r.ref.Append("follow_redirects_enabled"))
+	return terra.ReferenceAsBool(r.ref.Append("follow_redirects_enabled"))
 }
 
 func (r RequestAttributes) HttpVerb() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("http_verb"))
+	return terra.ReferenceAsString(r.ref.Append("http_verb"))
 }
 
 func (r RequestAttributes) ParseDependentRequestsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(r.ref.Append("parse_dependent_requests_enabled"))
+	return terra.ReferenceAsBool(r.ref.Append("parse_dependent_requests_enabled"))
 }
 
 func (r RequestAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("url"))
+	return terra.ReferenceAsString(r.ref.Append("url"))
 }
 
 func (r RequestAttributes) Header() terra.ListValue[HeaderAttributes] {
-	return terra.ReferenceList[HeaderAttributes](r.ref.Append("header"))
+	return terra.ReferenceAsList[HeaderAttributes](r.ref.Append("header"))
 }
 
 type HeaderAttributes struct {
 	ref terra.Reference
 }
 
-func (h HeaderAttributes) InternalRef() terra.Reference {
-	return h.ref
+func (h HeaderAttributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h HeaderAttributes) InternalWithRef(ref terra.Reference) HeaderAttributes {
 	return HeaderAttributes{ref: ref}
 }
 
-func (h HeaderAttributes) InternalTokens() hclwrite.Tokens {
+func (h HeaderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 
 func (h HeaderAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("name"))
+	return terra.ReferenceAsString(h.ref.Append("name"))
 }
 
 func (h HeaderAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("value"))
+	return terra.ReferenceAsString(h.ref.Append("value"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ValidationRulesAttributes struct {
 	ref terra.Reference
 }
 
-func (vr ValidationRulesAttributes) InternalRef() terra.Reference {
-	return vr.ref
+func (vr ValidationRulesAttributes) InternalRef() (terra.Reference, error) {
+	return vr.ref, nil
 }
 
 func (vr ValidationRulesAttributes) InternalWithRef(ref terra.Reference) ValidationRulesAttributes {
 	return ValidationRulesAttributes{ref: ref}
 }
 
-func (vr ValidationRulesAttributes) InternalTokens() hclwrite.Tokens {
+func (vr ValidationRulesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vr.ref.InternalTokens()
 }
 
 func (vr ValidationRulesAttributes) ExpectedStatusCode() terra.NumberValue {
-	return terra.ReferenceNumber(vr.ref.Append("expected_status_code"))
+	return terra.ReferenceAsNumber(vr.ref.Append("expected_status_code"))
 }
 
 func (vr ValidationRulesAttributes) SslCertRemainingLifetime() terra.NumberValue {
-	return terra.ReferenceNumber(vr.ref.Append("ssl_cert_remaining_lifetime"))
+	return terra.ReferenceAsNumber(vr.ref.Append("ssl_cert_remaining_lifetime"))
 }
 
 func (vr ValidationRulesAttributes) SslCheckEnabled() terra.BoolValue {
-	return terra.ReferenceBool(vr.ref.Append("ssl_check_enabled"))
+	return terra.ReferenceAsBool(vr.ref.Append("ssl_check_enabled"))
 }
 
 func (vr ValidationRulesAttributes) Content() terra.ListValue[ContentAttributes] {
-	return terra.ReferenceList[ContentAttributes](vr.ref.Append("content"))
+	return terra.ReferenceAsList[ContentAttributes](vr.ref.Append("content"))
 }
 
 type ContentAttributes struct {
 	ref terra.Reference
 }
 
-func (c ContentAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ContentAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ContentAttributes) InternalWithRef(ref terra.Reference) ContentAttributes {
 	return ContentAttributes{ref: ref}
 }
 
-func (c ContentAttributes) InternalTokens() hclwrite.Tokens {
+func (c ContentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ContentAttributes) ContentMatch() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("content_match"))
+	return terra.ReferenceAsString(c.ref.Append("content_match"))
 }
 
 func (c ContentAttributes) IgnoreCase() terra.BoolValue {
-	return terra.ReferenceBool(c.ref.Append("ignore_case"))
+	return terra.ReferenceAsBool(c.ref.Append("ignore_case"))
 }
 
 func (c ContentAttributes) PassIfTextFound() terra.BoolValue {
-	return terra.ReferenceBool(c.ref.Append("pass_if_text_found"))
+	return terra.ReferenceAsBool(c.ref.Append("pass_if_text_found"))
 }
 
 type RequestState struct {

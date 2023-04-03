@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLinuxVirtualMachineScaleSet creates a new instance of [LinuxVirtualMachineScaleSet].
 func NewLinuxVirtualMachineScaleSet(name string, args LinuxVirtualMachineScaleSetArgs) *LinuxVirtualMachineScaleSet {
 	return &LinuxVirtualMachineScaleSet{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLinuxVirtualMachineScaleSet(name string, args LinuxVirtualMachineScaleSe
 
 var _ terra.Resource = (*LinuxVirtualMachineScaleSet)(nil)
 
+// LinuxVirtualMachineScaleSet represents the Terraform resource azurerm_linux_virtual_machine_scale_set.
 type LinuxVirtualMachineScaleSet struct {
-	Name  string
-	Args  LinuxVirtualMachineScaleSetArgs
-	state *linuxVirtualMachineScaleSetState
+	Name      string
+	Args      LinuxVirtualMachineScaleSetArgs
+	state     *linuxVirtualMachineScaleSetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LinuxVirtualMachineScaleSet].
 func (lvmss *LinuxVirtualMachineScaleSet) Type() string {
 	return "azurerm_linux_virtual_machine_scale_set"
 }
 
+// LocalName returns the local name for [LinuxVirtualMachineScaleSet].
 func (lvmss *LinuxVirtualMachineScaleSet) LocalName() string {
 	return lvmss.Name
 }
 
+// Configuration returns the configuration (args) for [LinuxVirtualMachineScaleSet].
 func (lvmss *LinuxVirtualMachineScaleSet) Configuration() interface{} {
 	return lvmss.Args
 }
 
+// DependOn is used for other resources to depend on [LinuxVirtualMachineScaleSet].
+func (lvmss *LinuxVirtualMachineScaleSet) DependOn() terra.Reference {
+	return terra.ReferenceResource(lvmss)
+}
+
+// Dependencies returns the list of resources [LinuxVirtualMachineScaleSet] depends_on.
+func (lvmss *LinuxVirtualMachineScaleSet) Dependencies() terra.Dependencies {
+	return lvmss.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LinuxVirtualMachineScaleSet].
+func (lvmss *LinuxVirtualMachineScaleSet) LifecycleManagement() *terra.Lifecycle {
+	return lvmss.Lifecycle
+}
+
+// Attributes returns the attributes for [LinuxVirtualMachineScaleSet].
 func (lvmss *LinuxVirtualMachineScaleSet) Attributes() linuxVirtualMachineScaleSetAttributes {
 	return linuxVirtualMachineScaleSetAttributes{ref: terra.ReferenceResource(lvmss)}
 }
 
+// ImportState imports the given attribute values into [LinuxVirtualMachineScaleSet]'s state.
 func (lvmss *LinuxVirtualMachineScaleSet) ImportState(av io.Reader) error {
 	lvmss.state = &linuxVirtualMachineScaleSetState{}
 	if err := json.NewDecoder(av).Decode(lvmss.state); err != nil {
@@ -49,10 +73,12 @@ func (lvmss *LinuxVirtualMachineScaleSet) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LinuxVirtualMachineScaleSet] has state.
 func (lvmss *LinuxVirtualMachineScaleSet) State() (*linuxVirtualMachineScaleSetState, bool) {
 	return lvmss.state, lvmss.state != nil
 }
 
+// StateMust returns the state for [LinuxVirtualMachineScaleSet]. Panics if the state is nil.
 func (lvmss *LinuxVirtualMachineScaleSet) StateMust() *linuxVirtualMachineScaleSetState {
 	if lvmss.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lvmss.Type(), lvmss.LocalName()))
@@ -60,10 +86,7 @@ func (lvmss *LinuxVirtualMachineScaleSet) StateMust() *linuxVirtualMachineScaleS
 	return lvmss.state
 }
 
-func (lvmss *LinuxVirtualMachineScaleSet) DependOn() terra.Reference {
-	return terra.ReferenceResource(lvmss)
-}
-
+// LinuxVirtualMachineScaleSetArgs contains the configurations for azurerm_linux_virtual_machine_scale_set.
 type LinuxVirtualMachineScaleSetArgs struct {
 	// AdminPassword: string, optional
 	AdminPassword terra.StringValue `hcl:"admin_password,attr"`
@@ -179,243 +202,278 @@ type LinuxVirtualMachineScaleSetArgs struct {
 	TerminationNotification *linuxvirtualmachinescaleset.TerminationNotification `hcl:"termination_notification,block"`
 	// Timeouts: optional
 	Timeouts *linuxvirtualmachinescaleset.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LinuxVirtualMachineScaleSet depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type linuxVirtualMachineScaleSetAttributes struct {
 	ref terra.Reference
 }
 
+// AdminPassword returns a reference to field admin_password of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) AdminPassword() terra.StringValue {
-	return terra.ReferenceString(lvmss.ref.Append("admin_password"))
+	return terra.ReferenceAsString(lvmss.ref.Append("admin_password"))
 }
 
+// AdminUsername returns a reference to field admin_username of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) AdminUsername() terra.StringValue {
-	return terra.ReferenceString(lvmss.ref.Append("admin_username"))
+	return terra.ReferenceAsString(lvmss.ref.Append("admin_username"))
 }
 
+// CapacityReservationGroupId returns a reference to field capacity_reservation_group_id of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) CapacityReservationGroupId() terra.StringValue {
-	return terra.ReferenceString(lvmss.ref.Append("capacity_reservation_group_id"))
+	return terra.ReferenceAsString(lvmss.ref.Append("capacity_reservation_group_id"))
 }
 
+// ComputerNamePrefix returns a reference to field computer_name_prefix of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) ComputerNamePrefix() terra.StringValue {
-	return terra.ReferenceString(lvmss.ref.Append("computer_name_prefix"))
+	return terra.ReferenceAsString(lvmss.ref.Append("computer_name_prefix"))
 }
 
+// CustomData returns a reference to field custom_data of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) CustomData() terra.StringValue {
-	return terra.ReferenceString(lvmss.ref.Append("custom_data"))
+	return terra.ReferenceAsString(lvmss.ref.Append("custom_data"))
 }
 
+// DisablePasswordAuthentication returns a reference to field disable_password_authentication of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) DisablePasswordAuthentication() terra.BoolValue {
-	return terra.ReferenceBool(lvmss.ref.Append("disable_password_authentication"))
+	return terra.ReferenceAsBool(lvmss.ref.Append("disable_password_authentication"))
 }
 
+// DoNotRunExtensionsOnOverprovisionedMachines returns a reference to field do_not_run_extensions_on_overprovisioned_machines of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) DoNotRunExtensionsOnOverprovisionedMachines() terra.BoolValue {
-	return terra.ReferenceBool(lvmss.ref.Append("do_not_run_extensions_on_overprovisioned_machines"))
+	return terra.ReferenceAsBool(lvmss.ref.Append("do_not_run_extensions_on_overprovisioned_machines"))
 }
 
+// EdgeZone returns a reference to field edge_zone of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) EdgeZone() terra.StringValue {
-	return terra.ReferenceString(lvmss.ref.Append("edge_zone"))
+	return terra.ReferenceAsString(lvmss.ref.Append("edge_zone"))
 }
 
+// EncryptionAtHostEnabled returns a reference to field encryption_at_host_enabled of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) EncryptionAtHostEnabled() terra.BoolValue {
-	return terra.ReferenceBool(lvmss.ref.Append("encryption_at_host_enabled"))
+	return terra.ReferenceAsBool(lvmss.ref.Append("encryption_at_host_enabled"))
 }
 
+// EvictionPolicy returns a reference to field eviction_policy of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) EvictionPolicy() terra.StringValue {
-	return terra.ReferenceString(lvmss.ref.Append("eviction_policy"))
+	return terra.ReferenceAsString(lvmss.ref.Append("eviction_policy"))
 }
 
+// ExtensionOperationsEnabled returns a reference to field extension_operations_enabled of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) ExtensionOperationsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(lvmss.ref.Append("extension_operations_enabled"))
+	return terra.ReferenceAsBool(lvmss.ref.Append("extension_operations_enabled"))
 }
 
+// ExtensionsTimeBudget returns a reference to field extensions_time_budget of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) ExtensionsTimeBudget() terra.StringValue {
-	return terra.ReferenceString(lvmss.ref.Append("extensions_time_budget"))
+	return terra.ReferenceAsString(lvmss.ref.Append("extensions_time_budget"))
 }
 
+// HealthProbeId returns a reference to field health_probe_id of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) HealthProbeId() terra.StringValue {
-	return terra.ReferenceString(lvmss.ref.Append("health_probe_id"))
+	return terra.ReferenceAsString(lvmss.ref.Append("health_probe_id"))
 }
 
+// HostGroupId returns a reference to field host_group_id of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) HostGroupId() terra.StringValue {
-	return terra.ReferenceString(lvmss.ref.Append("host_group_id"))
+	return terra.ReferenceAsString(lvmss.ref.Append("host_group_id"))
 }
 
+// Id returns a reference to field id of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lvmss.ref.Append("id"))
+	return terra.ReferenceAsString(lvmss.ref.Append("id"))
 }
 
+// Instances returns a reference to field instances of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) Instances() terra.NumberValue {
-	return terra.ReferenceNumber(lvmss.ref.Append("instances"))
+	return terra.ReferenceAsNumber(lvmss.ref.Append("instances"))
 }
 
+// Location returns a reference to field location of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(lvmss.ref.Append("location"))
+	return terra.ReferenceAsString(lvmss.ref.Append("location"))
 }
 
+// MaxBidPrice returns a reference to field max_bid_price of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) MaxBidPrice() terra.NumberValue {
-	return terra.ReferenceNumber(lvmss.ref.Append("max_bid_price"))
+	return terra.ReferenceAsNumber(lvmss.ref.Append("max_bid_price"))
 }
 
+// Name returns a reference to field name of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lvmss.ref.Append("name"))
+	return terra.ReferenceAsString(lvmss.ref.Append("name"))
 }
 
+// Overprovision returns a reference to field overprovision of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) Overprovision() terra.BoolValue {
-	return terra.ReferenceBool(lvmss.ref.Append("overprovision"))
+	return terra.ReferenceAsBool(lvmss.ref.Append("overprovision"))
 }
 
+// PlatformFaultDomainCount returns a reference to field platform_fault_domain_count of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) PlatformFaultDomainCount() terra.NumberValue {
-	return terra.ReferenceNumber(lvmss.ref.Append("platform_fault_domain_count"))
+	return terra.ReferenceAsNumber(lvmss.ref.Append("platform_fault_domain_count"))
 }
 
+// Priority returns a reference to field priority of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) Priority() terra.StringValue {
-	return terra.ReferenceString(lvmss.ref.Append("priority"))
+	return terra.ReferenceAsString(lvmss.ref.Append("priority"))
 }
 
+// ProvisionVmAgent returns a reference to field provision_vm_agent of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) ProvisionVmAgent() terra.BoolValue {
-	return terra.ReferenceBool(lvmss.ref.Append("provision_vm_agent"))
+	return terra.ReferenceAsBool(lvmss.ref.Append("provision_vm_agent"))
 }
 
+// ProximityPlacementGroupId returns a reference to field proximity_placement_group_id of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) ProximityPlacementGroupId() terra.StringValue {
-	return terra.ReferenceString(lvmss.ref.Append("proximity_placement_group_id"))
+	return terra.ReferenceAsString(lvmss.ref.Append("proximity_placement_group_id"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(lvmss.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(lvmss.ref.Append("resource_group_name"))
 }
 
+// ScaleInPolicy returns a reference to field scale_in_policy of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) ScaleInPolicy() terra.StringValue {
-	return terra.ReferenceString(lvmss.ref.Append("scale_in_policy"))
+	return terra.ReferenceAsString(lvmss.ref.Append("scale_in_policy"))
 }
 
+// SecureBootEnabled returns a reference to field secure_boot_enabled of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) SecureBootEnabled() terra.BoolValue {
-	return terra.ReferenceBool(lvmss.ref.Append("secure_boot_enabled"))
+	return terra.ReferenceAsBool(lvmss.ref.Append("secure_boot_enabled"))
 }
 
+// SinglePlacementGroup returns a reference to field single_placement_group of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) SinglePlacementGroup() terra.BoolValue {
-	return terra.ReferenceBool(lvmss.ref.Append("single_placement_group"))
+	return terra.ReferenceAsBool(lvmss.ref.Append("single_placement_group"))
 }
 
+// Sku returns a reference to field sku of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) Sku() terra.StringValue {
-	return terra.ReferenceString(lvmss.ref.Append("sku"))
+	return terra.ReferenceAsString(lvmss.ref.Append("sku"))
 }
 
+// SourceImageId returns a reference to field source_image_id of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) SourceImageId() terra.StringValue {
-	return terra.ReferenceString(lvmss.ref.Append("source_image_id"))
+	return terra.ReferenceAsString(lvmss.ref.Append("source_image_id"))
 }
 
+// Tags returns a reference to field tags of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lvmss.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](lvmss.ref.Append("tags"))
 }
 
+// UniqueId returns a reference to field unique_id of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) UniqueId() terra.StringValue {
-	return terra.ReferenceString(lvmss.ref.Append("unique_id"))
+	return terra.ReferenceAsString(lvmss.ref.Append("unique_id"))
 }
 
+// UpgradeMode returns a reference to field upgrade_mode of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) UpgradeMode() terra.StringValue {
-	return terra.ReferenceString(lvmss.ref.Append("upgrade_mode"))
+	return terra.ReferenceAsString(lvmss.ref.Append("upgrade_mode"))
 }
 
+// UserData returns a reference to field user_data of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) UserData() terra.StringValue {
-	return terra.ReferenceString(lvmss.ref.Append("user_data"))
+	return terra.ReferenceAsString(lvmss.ref.Append("user_data"))
 }
 
+// VtpmEnabled returns a reference to field vtpm_enabled of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) VtpmEnabled() terra.BoolValue {
-	return terra.ReferenceBool(lvmss.ref.Append("vtpm_enabled"))
+	return terra.ReferenceAsBool(lvmss.ref.Append("vtpm_enabled"))
 }
 
+// ZoneBalance returns a reference to field zone_balance of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) ZoneBalance() terra.BoolValue {
-	return terra.ReferenceBool(lvmss.ref.Append("zone_balance"))
+	return terra.ReferenceAsBool(lvmss.ref.Append("zone_balance"))
 }
 
+// Zones returns a reference to field zones of azurerm_linux_virtual_machine_scale_set.
 func (lvmss linuxVirtualMachineScaleSetAttributes) Zones() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](lvmss.ref.Append("zones"))
+	return terra.ReferenceAsSet[terra.StringValue](lvmss.ref.Append("zones"))
 }
 
 func (lvmss linuxVirtualMachineScaleSetAttributes) AdditionalCapabilities() terra.ListValue[linuxvirtualmachinescaleset.AdditionalCapabilitiesAttributes] {
-	return terra.ReferenceList[linuxvirtualmachinescaleset.AdditionalCapabilitiesAttributes](lvmss.ref.Append("additional_capabilities"))
+	return terra.ReferenceAsList[linuxvirtualmachinescaleset.AdditionalCapabilitiesAttributes](lvmss.ref.Append("additional_capabilities"))
 }
 
 func (lvmss linuxVirtualMachineScaleSetAttributes) AdminSshKey() terra.SetValue[linuxvirtualmachinescaleset.AdminSshKeyAttributes] {
-	return terra.ReferenceSet[linuxvirtualmachinescaleset.AdminSshKeyAttributes](lvmss.ref.Append("admin_ssh_key"))
+	return terra.ReferenceAsSet[linuxvirtualmachinescaleset.AdminSshKeyAttributes](lvmss.ref.Append("admin_ssh_key"))
 }
 
 func (lvmss linuxVirtualMachineScaleSetAttributes) AutomaticInstanceRepair() terra.ListValue[linuxvirtualmachinescaleset.AutomaticInstanceRepairAttributes] {
-	return terra.ReferenceList[linuxvirtualmachinescaleset.AutomaticInstanceRepairAttributes](lvmss.ref.Append("automatic_instance_repair"))
+	return terra.ReferenceAsList[linuxvirtualmachinescaleset.AutomaticInstanceRepairAttributes](lvmss.ref.Append("automatic_instance_repair"))
 }
 
 func (lvmss linuxVirtualMachineScaleSetAttributes) AutomaticOsUpgradePolicy() terra.ListValue[linuxvirtualmachinescaleset.AutomaticOsUpgradePolicyAttributes] {
-	return terra.ReferenceList[linuxvirtualmachinescaleset.AutomaticOsUpgradePolicyAttributes](lvmss.ref.Append("automatic_os_upgrade_policy"))
+	return terra.ReferenceAsList[linuxvirtualmachinescaleset.AutomaticOsUpgradePolicyAttributes](lvmss.ref.Append("automatic_os_upgrade_policy"))
 }
 
 func (lvmss linuxVirtualMachineScaleSetAttributes) BootDiagnostics() terra.ListValue[linuxvirtualmachinescaleset.BootDiagnosticsAttributes] {
-	return terra.ReferenceList[linuxvirtualmachinescaleset.BootDiagnosticsAttributes](lvmss.ref.Append("boot_diagnostics"))
+	return terra.ReferenceAsList[linuxvirtualmachinescaleset.BootDiagnosticsAttributes](lvmss.ref.Append("boot_diagnostics"))
 }
 
 func (lvmss linuxVirtualMachineScaleSetAttributes) DataDisk() terra.ListValue[linuxvirtualmachinescaleset.DataDiskAttributes] {
-	return terra.ReferenceList[linuxvirtualmachinescaleset.DataDiskAttributes](lvmss.ref.Append("data_disk"))
+	return terra.ReferenceAsList[linuxvirtualmachinescaleset.DataDiskAttributes](lvmss.ref.Append("data_disk"))
 }
 
 func (lvmss linuxVirtualMachineScaleSetAttributes) Extension() terra.SetValue[linuxvirtualmachinescaleset.ExtensionAttributes] {
-	return terra.ReferenceSet[linuxvirtualmachinescaleset.ExtensionAttributes](lvmss.ref.Append("extension"))
+	return terra.ReferenceAsSet[linuxvirtualmachinescaleset.ExtensionAttributes](lvmss.ref.Append("extension"))
 }
 
 func (lvmss linuxVirtualMachineScaleSetAttributes) GalleryApplication() terra.ListValue[linuxvirtualmachinescaleset.GalleryApplicationAttributes] {
-	return terra.ReferenceList[linuxvirtualmachinescaleset.GalleryApplicationAttributes](lvmss.ref.Append("gallery_application"))
+	return terra.ReferenceAsList[linuxvirtualmachinescaleset.GalleryApplicationAttributes](lvmss.ref.Append("gallery_application"))
 }
 
 func (lvmss linuxVirtualMachineScaleSetAttributes) GalleryApplications() terra.ListValue[linuxvirtualmachinescaleset.GalleryApplicationsAttributes] {
-	return terra.ReferenceList[linuxvirtualmachinescaleset.GalleryApplicationsAttributes](lvmss.ref.Append("gallery_applications"))
+	return terra.ReferenceAsList[linuxvirtualmachinescaleset.GalleryApplicationsAttributes](lvmss.ref.Append("gallery_applications"))
 }
 
 func (lvmss linuxVirtualMachineScaleSetAttributes) Identity() terra.ListValue[linuxvirtualmachinescaleset.IdentityAttributes] {
-	return terra.ReferenceList[linuxvirtualmachinescaleset.IdentityAttributes](lvmss.ref.Append("identity"))
+	return terra.ReferenceAsList[linuxvirtualmachinescaleset.IdentityAttributes](lvmss.ref.Append("identity"))
 }
 
 func (lvmss linuxVirtualMachineScaleSetAttributes) NetworkInterface() terra.ListValue[linuxvirtualmachinescaleset.NetworkInterfaceAttributes] {
-	return terra.ReferenceList[linuxvirtualmachinescaleset.NetworkInterfaceAttributes](lvmss.ref.Append("network_interface"))
+	return terra.ReferenceAsList[linuxvirtualmachinescaleset.NetworkInterfaceAttributes](lvmss.ref.Append("network_interface"))
 }
 
 func (lvmss linuxVirtualMachineScaleSetAttributes) OsDisk() terra.ListValue[linuxvirtualmachinescaleset.OsDiskAttributes] {
-	return terra.ReferenceList[linuxvirtualmachinescaleset.OsDiskAttributes](lvmss.ref.Append("os_disk"))
+	return terra.ReferenceAsList[linuxvirtualmachinescaleset.OsDiskAttributes](lvmss.ref.Append("os_disk"))
 }
 
 func (lvmss linuxVirtualMachineScaleSetAttributes) Plan() terra.ListValue[linuxvirtualmachinescaleset.PlanAttributes] {
-	return terra.ReferenceList[linuxvirtualmachinescaleset.PlanAttributes](lvmss.ref.Append("plan"))
+	return terra.ReferenceAsList[linuxvirtualmachinescaleset.PlanAttributes](lvmss.ref.Append("plan"))
 }
 
 func (lvmss linuxVirtualMachineScaleSetAttributes) RollingUpgradePolicy() terra.ListValue[linuxvirtualmachinescaleset.RollingUpgradePolicyAttributes] {
-	return terra.ReferenceList[linuxvirtualmachinescaleset.RollingUpgradePolicyAttributes](lvmss.ref.Append("rolling_upgrade_policy"))
+	return terra.ReferenceAsList[linuxvirtualmachinescaleset.RollingUpgradePolicyAttributes](lvmss.ref.Append("rolling_upgrade_policy"))
 }
 
 func (lvmss linuxVirtualMachineScaleSetAttributes) ScaleIn() terra.ListValue[linuxvirtualmachinescaleset.ScaleInAttributes] {
-	return terra.ReferenceList[linuxvirtualmachinescaleset.ScaleInAttributes](lvmss.ref.Append("scale_in"))
+	return terra.ReferenceAsList[linuxvirtualmachinescaleset.ScaleInAttributes](lvmss.ref.Append("scale_in"))
 }
 
 func (lvmss linuxVirtualMachineScaleSetAttributes) Secret() terra.ListValue[linuxvirtualmachinescaleset.SecretAttributes] {
-	return terra.ReferenceList[linuxvirtualmachinescaleset.SecretAttributes](lvmss.ref.Append("secret"))
+	return terra.ReferenceAsList[linuxvirtualmachinescaleset.SecretAttributes](lvmss.ref.Append("secret"))
 }
 
 func (lvmss linuxVirtualMachineScaleSetAttributes) SourceImageReference() terra.ListValue[linuxvirtualmachinescaleset.SourceImageReferenceAttributes] {
-	return terra.ReferenceList[linuxvirtualmachinescaleset.SourceImageReferenceAttributes](lvmss.ref.Append("source_image_reference"))
+	return terra.ReferenceAsList[linuxvirtualmachinescaleset.SourceImageReferenceAttributes](lvmss.ref.Append("source_image_reference"))
 }
 
 func (lvmss linuxVirtualMachineScaleSetAttributes) SpotRestore() terra.ListValue[linuxvirtualmachinescaleset.SpotRestoreAttributes] {
-	return terra.ReferenceList[linuxvirtualmachinescaleset.SpotRestoreAttributes](lvmss.ref.Append("spot_restore"))
+	return terra.ReferenceAsList[linuxvirtualmachinescaleset.SpotRestoreAttributes](lvmss.ref.Append("spot_restore"))
 }
 
 func (lvmss linuxVirtualMachineScaleSetAttributes) TerminateNotification() terra.ListValue[linuxvirtualmachinescaleset.TerminateNotificationAttributes] {
-	return terra.ReferenceList[linuxvirtualmachinescaleset.TerminateNotificationAttributes](lvmss.ref.Append("terminate_notification"))
+	return terra.ReferenceAsList[linuxvirtualmachinescaleset.TerminateNotificationAttributes](lvmss.ref.Append("terminate_notification"))
 }
 
 func (lvmss linuxVirtualMachineScaleSetAttributes) TerminationNotification() terra.ListValue[linuxvirtualmachinescaleset.TerminationNotificationAttributes] {
-	return terra.ReferenceList[linuxvirtualmachinescaleset.TerminationNotificationAttributes](lvmss.ref.Append("termination_notification"))
+	return terra.ReferenceAsList[linuxvirtualmachinescaleset.TerminationNotificationAttributes](lvmss.ref.Append("termination_notification"))
 }
 
 func (lvmss linuxVirtualMachineScaleSetAttributes) Timeouts() linuxvirtualmachinescaleset.TimeoutsAttributes {
-	return terra.ReferenceSingle[linuxvirtualmachinescaleset.TimeoutsAttributes](lvmss.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[linuxvirtualmachinescaleset.TimeoutsAttributes](lvmss.ref.Append("timeouts"))
 }
 
 type linuxVirtualMachineScaleSetState struct {

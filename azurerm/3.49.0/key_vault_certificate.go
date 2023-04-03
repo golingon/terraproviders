@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewKeyVaultCertificate creates a new instance of [KeyVaultCertificate].
 func NewKeyVaultCertificate(name string, args KeyVaultCertificateArgs) *KeyVaultCertificate {
 	return &KeyVaultCertificate{
 		Args: args,
@@ -19,28 +20,51 @@ func NewKeyVaultCertificate(name string, args KeyVaultCertificateArgs) *KeyVault
 
 var _ terra.Resource = (*KeyVaultCertificate)(nil)
 
+// KeyVaultCertificate represents the Terraform resource azurerm_key_vault_certificate.
 type KeyVaultCertificate struct {
-	Name  string
-	Args  KeyVaultCertificateArgs
-	state *keyVaultCertificateState
+	Name      string
+	Args      KeyVaultCertificateArgs
+	state     *keyVaultCertificateState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [KeyVaultCertificate].
 func (kvc *KeyVaultCertificate) Type() string {
 	return "azurerm_key_vault_certificate"
 }
 
+// LocalName returns the local name for [KeyVaultCertificate].
 func (kvc *KeyVaultCertificate) LocalName() string {
 	return kvc.Name
 }
 
+// Configuration returns the configuration (args) for [KeyVaultCertificate].
 func (kvc *KeyVaultCertificate) Configuration() interface{} {
 	return kvc.Args
 }
 
+// DependOn is used for other resources to depend on [KeyVaultCertificate].
+func (kvc *KeyVaultCertificate) DependOn() terra.Reference {
+	return terra.ReferenceResource(kvc)
+}
+
+// Dependencies returns the list of resources [KeyVaultCertificate] depends_on.
+func (kvc *KeyVaultCertificate) Dependencies() terra.Dependencies {
+	return kvc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [KeyVaultCertificate].
+func (kvc *KeyVaultCertificate) LifecycleManagement() *terra.Lifecycle {
+	return kvc.Lifecycle
+}
+
+// Attributes returns the attributes for [KeyVaultCertificate].
 func (kvc *KeyVaultCertificate) Attributes() keyVaultCertificateAttributes {
 	return keyVaultCertificateAttributes{ref: terra.ReferenceResource(kvc)}
 }
 
+// ImportState imports the given attribute values into [KeyVaultCertificate]'s state.
 func (kvc *KeyVaultCertificate) ImportState(av io.Reader) error {
 	kvc.state = &keyVaultCertificateState{}
 	if err := json.NewDecoder(av).Decode(kvc.state); err != nil {
@@ -49,10 +73,12 @@ func (kvc *KeyVaultCertificate) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [KeyVaultCertificate] has state.
 func (kvc *KeyVaultCertificate) State() (*keyVaultCertificateState, bool) {
 	return kvc.state, kvc.state != nil
 }
 
+// StateMust returns the state for [KeyVaultCertificate]. Panics if the state is nil.
 func (kvc *KeyVaultCertificate) StateMust() *keyVaultCertificateState {
 	if kvc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", kvc.Type(), kvc.LocalName()))
@@ -60,10 +86,7 @@ func (kvc *KeyVaultCertificate) StateMust() *keyVaultCertificateState {
 	return kvc.state
 }
 
-func (kvc *KeyVaultCertificate) DependOn() terra.Reference {
-	return terra.ReferenceResource(kvc)
-}
-
+// KeyVaultCertificateArgs contains the configurations for azurerm_key_vault_certificate.
 type KeyVaultCertificateArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -81,71 +104,80 @@ type KeyVaultCertificateArgs struct {
 	CertificatePolicy *keyvaultcertificate.CertificatePolicy `hcl:"certificate_policy,block"`
 	// Timeouts: optional
 	Timeouts *keyvaultcertificate.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that KeyVaultCertificate depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type keyVaultCertificateAttributes struct {
 	ref terra.Reference
 }
 
+// CertificateData returns a reference to field certificate_data of azurerm_key_vault_certificate.
 func (kvc keyVaultCertificateAttributes) CertificateData() terra.StringValue {
-	return terra.ReferenceString(kvc.ref.Append("certificate_data"))
+	return terra.ReferenceAsString(kvc.ref.Append("certificate_data"))
 }
 
+// CertificateDataBase64 returns a reference to field certificate_data_base64 of azurerm_key_vault_certificate.
 func (kvc keyVaultCertificateAttributes) CertificateDataBase64() terra.StringValue {
-	return terra.ReferenceString(kvc.ref.Append("certificate_data_base64"))
+	return terra.ReferenceAsString(kvc.ref.Append("certificate_data_base64"))
 }
 
+// Id returns a reference to field id of azurerm_key_vault_certificate.
 func (kvc keyVaultCertificateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kvc.ref.Append("id"))
+	return terra.ReferenceAsString(kvc.ref.Append("id"))
 }
 
+// KeyVaultId returns a reference to field key_vault_id of azurerm_key_vault_certificate.
 func (kvc keyVaultCertificateAttributes) KeyVaultId() terra.StringValue {
-	return terra.ReferenceString(kvc.ref.Append("key_vault_id"))
+	return terra.ReferenceAsString(kvc.ref.Append("key_vault_id"))
 }
 
+// Name returns a reference to field name of azurerm_key_vault_certificate.
 func (kvc keyVaultCertificateAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(kvc.ref.Append("name"))
+	return terra.ReferenceAsString(kvc.ref.Append("name"))
 }
 
+// SecretId returns a reference to field secret_id of azurerm_key_vault_certificate.
 func (kvc keyVaultCertificateAttributes) SecretId() terra.StringValue {
-	return terra.ReferenceString(kvc.ref.Append("secret_id"))
+	return terra.ReferenceAsString(kvc.ref.Append("secret_id"))
 }
 
+// Tags returns a reference to field tags of azurerm_key_vault_certificate.
 func (kvc keyVaultCertificateAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](kvc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](kvc.ref.Append("tags"))
 }
 
+// Thumbprint returns a reference to field thumbprint of azurerm_key_vault_certificate.
 func (kvc keyVaultCertificateAttributes) Thumbprint() terra.StringValue {
-	return terra.ReferenceString(kvc.ref.Append("thumbprint"))
+	return terra.ReferenceAsString(kvc.ref.Append("thumbprint"))
 }
 
+// Version returns a reference to field version of azurerm_key_vault_certificate.
 func (kvc keyVaultCertificateAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(kvc.ref.Append("version"))
+	return terra.ReferenceAsString(kvc.ref.Append("version"))
 }
 
+// VersionlessId returns a reference to field versionless_id of azurerm_key_vault_certificate.
 func (kvc keyVaultCertificateAttributes) VersionlessId() terra.StringValue {
-	return terra.ReferenceString(kvc.ref.Append("versionless_id"))
+	return terra.ReferenceAsString(kvc.ref.Append("versionless_id"))
 }
 
+// VersionlessSecretId returns a reference to field versionless_secret_id of azurerm_key_vault_certificate.
 func (kvc keyVaultCertificateAttributes) VersionlessSecretId() terra.StringValue {
-	return terra.ReferenceString(kvc.ref.Append("versionless_secret_id"))
+	return terra.ReferenceAsString(kvc.ref.Append("versionless_secret_id"))
 }
 
 func (kvc keyVaultCertificateAttributes) CertificateAttribute() terra.ListValue[keyvaultcertificate.CertificateAttributeAttributes] {
-	return terra.ReferenceList[keyvaultcertificate.CertificateAttributeAttributes](kvc.ref.Append("certificate_attribute"))
+	return terra.ReferenceAsList[keyvaultcertificate.CertificateAttributeAttributes](kvc.ref.Append("certificate_attribute"))
 }
 
 func (kvc keyVaultCertificateAttributes) Certificate() terra.ListValue[keyvaultcertificate.CertificateAttributes] {
-	return terra.ReferenceList[keyvaultcertificate.CertificateAttributes](kvc.ref.Append("certificate"))
+	return terra.ReferenceAsList[keyvaultcertificate.CertificateAttributes](kvc.ref.Append("certificate"))
 }
 
 func (kvc keyVaultCertificateAttributes) CertificatePolicy() terra.ListValue[keyvaultcertificate.CertificatePolicyAttributes] {
-	return terra.ReferenceList[keyvaultcertificate.CertificatePolicyAttributes](kvc.ref.Append("certificate_policy"))
+	return terra.ReferenceAsList[keyvaultcertificate.CertificatePolicyAttributes](kvc.ref.Append("certificate_policy"))
 }
 
 func (kvc keyVaultCertificateAttributes) Timeouts() keyvaultcertificate.TimeoutsAttributes {
-	return terra.ReferenceSingle[keyvaultcertificate.TimeoutsAttributes](kvc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[keyvaultcertificate.TimeoutsAttributes](kvc.ref.Append("timeouts"))
 }
 
 type keyVaultCertificateState struct {

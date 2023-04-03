@@ -20,72 +20,72 @@ type ClusterSettingAttributes struct {
 	ref terra.Reference
 }
 
-func (cs ClusterSettingAttributes) InternalRef() terra.Reference {
-	return cs.ref
+func (cs ClusterSettingAttributes) InternalRef() (terra.Reference, error) {
+	return cs.ref, nil
 }
 
 func (cs ClusterSettingAttributes) InternalWithRef(ref terra.Reference) ClusterSettingAttributes {
 	return ClusterSettingAttributes{ref: ref}
 }
 
-func (cs ClusterSettingAttributes) InternalTokens() hclwrite.Tokens {
+func (cs ClusterSettingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cs.ref.InternalTokens()
 }
 
 func (cs ClusterSettingAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("name"))
+	return terra.ReferenceAsString(cs.ref.Append("name"))
 }
 
 func (cs ClusterSettingAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("value"))
+	return terra.ReferenceAsString(cs.ref.Append("value"))
 }
 
 type InboundNetworkDependenciesAttributes struct {
 	ref terra.Reference
 }
 
-func (ind InboundNetworkDependenciesAttributes) InternalRef() terra.Reference {
-	return ind.ref
+func (ind InboundNetworkDependenciesAttributes) InternalRef() (terra.Reference, error) {
+	return ind.ref, nil
 }
 
 func (ind InboundNetworkDependenciesAttributes) InternalWithRef(ref terra.Reference) InboundNetworkDependenciesAttributes {
 	return InboundNetworkDependenciesAttributes{ref: ref}
 }
 
-func (ind InboundNetworkDependenciesAttributes) InternalTokens() hclwrite.Tokens {
+func (ind InboundNetworkDependenciesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ind.ref.InternalTokens()
 }
 
 func (ind InboundNetworkDependenciesAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ind.ref.Append("description"))
+	return terra.ReferenceAsString(ind.ref.Append("description"))
 }
 
 func (ind InboundNetworkDependenciesAttributes) IpAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ind.ref.Append("ip_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](ind.ref.Append("ip_addresses"))
 }
 
 func (ind InboundNetworkDependenciesAttributes) Ports() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ind.ref.Append("ports"))
+	return terra.ReferenceAsList[terra.StringValue](ind.ref.Append("ports"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type ClusterSettingState struct {

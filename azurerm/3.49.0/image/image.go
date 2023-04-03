@@ -50,108 +50,108 @@ type DataDiskAttributes struct {
 	ref terra.Reference
 }
 
-func (dd DataDiskAttributes) InternalRef() terra.Reference {
-	return dd.ref
+func (dd DataDiskAttributes) InternalRef() (terra.Reference, error) {
+	return dd.ref, nil
 }
 
 func (dd DataDiskAttributes) InternalWithRef(ref terra.Reference) DataDiskAttributes {
 	return DataDiskAttributes{ref: ref}
 }
 
-func (dd DataDiskAttributes) InternalTokens() hclwrite.Tokens {
+func (dd DataDiskAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dd.ref.InternalTokens()
 }
 
 func (dd DataDiskAttributes) BlobUri() terra.StringValue {
-	return terra.ReferenceString(dd.ref.Append("blob_uri"))
+	return terra.ReferenceAsString(dd.ref.Append("blob_uri"))
 }
 
 func (dd DataDiskAttributes) Caching() terra.StringValue {
-	return terra.ReferenceString(dd.ref.Append("caching"))
+	return terra.ReferenceAsString(dd.ref.Append("caching"))
 }
 
 func (dd DataDiskAttributes) Lun() terra.NumberValue {
-	return terra.ReferenceNumber(dd.ref.Append("lun"))
+	return terra.ReferenceAsNumber(dd.ref.Append("lun"))
 }
 
 func (dd DataDiskAttributes) ManagedDiskId() terra.StringValue {
-	return terra.ReferenceString(dd.ref.Append("managed_disk_id"))
+	return terra.ReferenceAsString(dd.ref.Append("managed_disk_id"))
 }
 
 func (dd DataDiskAttributes) SizeGb() terra.NumberValue {
-	return terra.ReferenceNumber(dd.ref.Append("size_gb"))
+	return terra.ReferenceAsNumber(dd.ref.Append("size_gb"))
 }
 
 type OsDiskAttributes struct {
 	ref terra.Reference
 }
 
-func (od OsDiskAttributes) InternalRef() terra.Reference {
-	return od.ref
+func (od OsDiskAttributes) InternalRef() (terra.Reference, error) {
+	return od.ref, nil
 }
 
 func (od OsDiskAttributes) InternalWithRef(ref terra.Reference) OsDiskAttributes {
 	return OsDiskAttributes{ref: ref}
 }
 
-func (od OsDiskAttributes) InternalTokens() hclwrite.Tokens {
+func (od OsDiskAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return od.ref.InternalTokens()
 }
 
 func (od OsDiskAttributes) BlobUri() terra.StringValue {
-	return terra.ReferenceString(od.ref.Append("blob_uri"))
+	return terra.ReferenceAsString(od.ref.Append("blob_uri"))
 }
 
 func (od OsDiskAttributes) Caching() terra.StringValue {
-	return terra.ReferenceString(od.ref.Append("caching"))
+	return terra.ReferenceAsString(od.ref.Append("caching"))
 }
 
 func (od OsDiskAttributes) ManagedDiskId() terra.StringValue {
-	return terra.ReferenceString(od.ref.Append("managed_disk_id"))
+	return terra.ReferenceAsString(od.ref.Append("managed_disk_id"))
 }
 
 func (od OsDiskAttributes) OsState() terra.StringValue {
-	return terra.ReferenceString(od.ref.Append("os_state"))
+	return terra.ReferenceAsString(od.ref.Append("os_state"))
 }
 
 func (od OsDiskAttributes) OsType() terra.StringValue {
-	return terra.ReferenceString(od.ref.Append("os_type"))
+	return terra.ReferenceAsString(od.ref.Append("os_type"))
 }
 
 func (od OsDiskAttributes) SizeGb() terra.NumberValue {
-	return terra.ReferenceNumber(od.ref.Append("size_gb"))
+	return terra.ReferenceAsNumber(od.ref.Append("size_gb"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type DataDiskState struct {

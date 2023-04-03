@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMariadbServer creates a new instance of [MariadbServer].
 func NewMariadbServer(name string, args MariadbServerArgs) *MariadbServer {
 	return &MariadbServer{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMariadbServer(name string, args MariadbServerArgs) *MariadbServer {
 
 var _ terra.Resource = (*MariadbServer)(nil)
 
+// MariadbServer represents the Terraform resource azurerm_mariadb_server.
 type MariadbServer struct {
-	Name  string
-	Args  MariadbServerArgs
-	state *mariadbServerState
+	Name      string
+	Args      MariadbServerArgs
+	state     *mariadbServerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MariadbServer].
 func (ms *MariadbServer) Type() string {
 	return "azurerm_mariadb_server"
 }
 
+// LocalName returns the local name for [MariadbServer].
 func (ms *MariadbServer) LocalName() string {
 	return ms.Name
 }
 
+// Configuration returns the configuration (args) for [MariadbServer].
 func (ms *MariadbServer) Configuration() interface{} {
 	return ms.Args
 }
 
+// DependOn is used for other resources to depend on [MariadbServer].
+func (ms *MariadbServer) DependOn() terra.Reference {
+	return terra.ReferenceResource(ms)
+}
+
+// Dependencies returns the list of resources [MariadbServer] depends_on.
+func (ms *MariadbServer) Dependencies() terra.Dependencies {
+	return ms.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MariadbServer].
+func (ms *MariadbServer) LifecycleManagement() *terra.Lifecycle {
+	return ms.Lifecycle
+}
+
+// Attributes returns the attributes for [MariadbServer].
 func (ms *MariadbServer) Attributes() mariadbServerAttributes {
 	return mariadbServerAttributes{ref: terra.ReferenceResource(ms)}
 }
 
+// ImportState imports the given attribute values into [MariadbServer]'s state.
 func (ms *MariadbServer) ImportState(av io.Reader) error {
 	ms.state = &mariadbServerState{}
 	if err := json.NewDecoder(av).Decode(ms.state); err != nil {
@@ -49,10 +73,12 @@ func (ms *MariadbServer) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MariadbServer] has state.
 func (ms *MariadbServer) State() (*mariadbServerState, bool) {
 	return ms.state, ms.state != nil
 }
 
+// StateMust returns the state for [MariadbServer]. Panics if the state is nil.
 func (ms *MariadbServer) StateMust() *mariadbServerState {
 	if ms.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ms.Type(), ms.LocalName()))
@@ -60,10 +86,7 @@ func (ms *MariadbServer) StateMust() *mariadbServerState {
 	return ms.state
 }
 
-func (ms *MariadbServer) DependOn() terra.Reference {
-	return terra.ReferenceResource(ms)
-}
-
+// MariadbServerArgs contains the configurations for azurerm_mariadb_server.
 type MariadbServerArgs struct {
 	// AdministratorLogin: string, optional
 	AdministratorLogin terra.StringValue `hcl:"administrator_login,attr"`
@@ -105,95 +128,113 @@ type MariadbServerArgs struct {
 	Version terra.StringValue `hcl:"version,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *mariadbserver.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MariadbServer depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mariadbServerAttributes struct {
 	ref terra.Reference
 }
 
+// AdministratorLogin returns a reference to field administrator_login of azurerm_mariadb_server.
 func (ms mariadbServerAttributes) AdministratorLogin() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("administrator_login"))
+	return terra.ReferenceAsString(ms.ref.Append("administrator_login"))
 }
 
+// AdministratorLoginPassword returns a reference to field administrator_login_password of azurerm_mariadb_server.
 func (ms mariadbServerAttributes) AdministratorLoginPassword() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("administrator_login_password"))
+	return terra.ReferenceAsString(ms.ref.Append("administrator_login_password"))
 }
 
+// AutoGrowEnabled returns a reference to field auto_grow_enabled of azurerm_mariadb_server.
 func (ms mariadbServerAttributes) AutoGrowEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ms.ref.Append("auto_grow_enabled"))
+	return terra.ReferenceAsBool(ms.ref.Append("auto_grow_enabled"))
 }
 
+// BackupRetentionDays returns a reference to field backup_retention_days of azurerm_mariadb_server.
 func (ms mariadbServerAttributes) BackupRetentionDays() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("backup_retention_days"))
+	return terra.ReferenceAsNumber(ms.ref.Append("backup_retention_days"))
 }
 
+// CreateMode returns a reference to field create_mode of azurerm_mariadb_server.
 func (ms mariadbServerAttributes) CreateMode() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("create_mode"))
+	return terra.ReferenceAsString(ms.ref.Append("create_mode"))
 }
 
+// CreationSourceServerId returns a reference to field creation_source_server_id of azurerm_mariadb_server.
 func (ms mariadbServerAttributes) CreationSourceServerId() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("creation_source_server_id"))
+	return terra.ReferenceAsString(ms.ref.Append("creation_source_server_id"))
 }
 
+// Fqdn returns a reference to field fqdn of azurerm_mariadb_server.
 func (ms mariadbServerAttributes) Fqdn() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("fqdn"))
+	return terra.ReferenceAsString(ms.ref.Append("fqdn"))
 }
 
+// GeoRedundantBackupEnabled returns a reference to field geo_redundant_backup_enabled of azurerm_mariadb_server.
 func (ms mariadbServerAttributes) GeoRedundantBackupEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ms.ref.Append("geo_redundant_backup_enabled"))
+	return terra.ReferenceAsBool(ms.ref.Append("geo_redundant_backup_enabled"))
 }
 
+// Id returns a reference to field id of azurerm_mariadb_server.
 func (ms mariadbServerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("id"))
+	return terra.ReferenceAsString(ms.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_mariadb_server.
 func (ms mariadbServerAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("location"))
+	return terra.ReferenceAsString(ms.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_mariadb_server.
 func (ms mariadbServerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("name"))
+	return terra.ReferenceAsString(ms.ref.Append("name"))
 }
 
+// PublicNetworkAccessEnabled returns a reference to field public_network_access_enabled of azurerm_mariadb_server.
 func (ms mariadbServerAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ms.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(ms.ref.Append("public_network_access_enabled"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_mariadb_server.
 func (ms mariadbServerAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ms.ref.Append("resource_group_name"))
 }
 
+// RestorePointInTime returns a reference to field restore_point_in_time of azurerm_mariadb_server.
 func (ms mariadbServerAttributes) RestorePointInTime() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("restore_point_in_time"))
+	return terra.ReferenceAsString(ms.ref.Append("restore_point_in_time"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_mariadb_server.
 func (ms mariadbServerAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("sku_name"))
+	return terra.ReferenceAsString(ms.ref.Append("sku_name"))
 }
 
+// SslEnforcementEnabled returns a reference to field ssl_enforcement_enabled of azurerm_mariadb_server.
 func (ms mariadbServerAttributes) SslEnforcementEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ms.ref.Append("ssl_enforcement_enabled"))
+	return terra.ReferenceAsBool(ms.ref.Append("ssl_enforcement_enabled"))
 }
 
+// SslMinimalTlsVersionEnforced returns a reference to field ssl_minimal_tls_version_enforced of azurerm_mariadb_server.
 func (ms mariadbServerAttributes) SslMinimalTlsVersionEnforced() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("ssl_minimal_tls_version_enforced"))
+	return terra.ReferenceAsString(ms.ref.Append("ssl_minimal_tls_version_enforced"))
 }
 
+// StorageMb returns a reference to field storage_mb of azurerm_mariadb_server.
 func (ms mariadbServerAttributes) StorageMb() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("storage_mb"))
+	return terra.ReferenceAsNumber(ms.ref.Append("storage_mb"))
 }
 
+// Tags returns a reference to field tags of azurerm_mariadb_server.
 func (ms mariadbServerAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ms.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ms.ref.Append("tags"))
 }
 
+// Version returns a reference to field version of azurerm_mariadb_server.
 func (ms mariadbServerAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("version"))
+	return terra.ReferenceAsString(ms.ref.Append("version"))
 }
 
 func (ms mariadbServerAttributes) Timeouts() mariadbserver.TimeoutsAttributes {
-	return terra.ReferenceSingle[mariadbserver.TimeoutsAttributes](ms.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[mariadbserver.TimeoutsAttributes](ms.ref.Append("timeouts"))
 }
 
 type mariadbServerState struct {

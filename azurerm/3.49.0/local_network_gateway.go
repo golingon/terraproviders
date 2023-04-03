@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLocalNetworkGateway creates a new instance of [LocalNetworkGateway].
 func NewLocalNetworkGateway(name string, args LocalNetworkGatewayArgs) *LocalNetworkGateway {
 	return &LocalNetworkGateway{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLocalNetworkGateway(name string, args LocalNetworkGatewayArgs) *LocalNet
 
 var _ terra.Resource = (*LocalNetworkGateway)(nil)
 
+// LocalNetworkGateway represents the Terraform resource azurerm_local_network_gateway.
 type LocalNetworkGateway struct {
-	Name  string
-	Args  LocalNetworkGatewayArgs
-	state *localNetworkGatewayState
+	Name      string
+	Args      LocalNetworkGatewayArgs
+	state     *localNetworkGatewayState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LocalNetworkGateway].
 func (lng *LocalNetworkGateway) Type() string {
 	return "azurerm_local_network_gateway"
 }
 
+// LocalName returns the local name for [LocalNetworkGateway].
 func (lng *LocalNetworkGateway) LocalName() string {
 	return lng.Name
 }
 
+// Configuration returns the configuration (args) for [LocalNetworkGateway].
 func (lng *LocalNetworkGateway) Configuration() interface{} {
 	return lng.Args
 }
 
+// DependOn is used for other resources to depend on [LocalNetworkGateway].
+func (lng *LocalNetworkGateway) DependOn() terra.Reference {
+	return terra.ReferenceResource(lng)
+}
+
+// Dependencies returns the list of resources [LocalNetworkGateway] depends_on.
+func (lng *LocalNetworkGateway) Dependencies() terra.Dependencies {
+	return lng.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LocalNetworkGateway].
+func (lng *LocalNetworkGateway) LifecycleManagement() *terra.Lifecycle {
+	return lng.Lifecycle
+}
+
+// Attributes returns the attributes for [LocalNetworkGateway].
 func (lng *LocalNetworkGateway) Attributes() localNetworkGatewayAttributes {
 	return localNetworkGatewayAttributes{ref: terra.ReferenceResource(lng)}
 }
 
+// ImportState imports the given attribute values into [LocalNetworkGateway]'s state.
 func (lng *LocalNetworkGateway) ImportState(av io.Reader) error {
 	lng.state = &localNetworkGatewayState{}
 	if err := json.NewDecoder(av).Decode(lng.state); err != nil {
@@ -49,10 +73,12 @@ func (lng *LocalNetworkGateway) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LocalNetworkGateway] has state.
 func (lng *LocalNetworkGateway) State() (*localNetworkGatewayState, bool) {
 	return lng.state, lng.state != nil
 }
 
+// StateMust returns the state for [LocalNetworkGateway]. Panics if the state is nil.
 func (lng *LocalNetworkGateway) StateMust() *localNetworkGatewayState {
 	if lng.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lng.Type(), lng.LocalName()))
@@ -60,10 +86,7 @@ func (lng *LocalNetworkGateway) StateMust() *localNetworkGatewayState {
 	return lng.state
 }
 
-func (lng *LocalNetworkGateway) DependOn() terra.Reference {
-	return terra.ReferenceResource(lng)
-}
-
+// LocalNetworkGatewayArgs contains the configurations for azurerm_local_network_gateway.
 type LocalNetworkGatewayArgs struct {
 	// AddressSpace: list of string, optional
 	AddressSpace terra.ListValue[terra.StringValue] `hcl:"address_space,attr"`
@@ -85,51 +108,57 @@ type LocalNetworkGatewayArgs struct {
 	BgpSettings *localnetworkgateway.BgpSettings `hcl:"bgp_settings,block"`
 	// Timeouts: optional
 	Timeouts *localnetworkgateway.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LocalNetworkGateway depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type localNetworkGatewayAttributes struct {
 	ref terra.Reference
 }
 
+// AddressSpace returns a reference to field address_space of azurerm_local_network_gateway.
 func (lng localNetworkGatewayAttributes) AddressSpace() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lng.ref.Append("address_space"))
+	return terra.ReferenceAsList[terra.StringValue](lng.ref.Append("address_space"))
 }
 
+// GatewayAddress returns a reference to field gateway_address of azurerm_local_network_gateway.
 func (lng localNetworkGatewayAttributes) GatewayAddress() terra.StringValue {
-	return terra.ReferenceString(lng.ref.Append("gateway_address"))
+	return terra.ReferenceAsString(lng.ref.Append("gateway_address"))
 }
 
+// GatewayFqdn returns a reference to field gateway_fqdn of azurerm_local_network_gateway.
 func (lng localNetworkGatewayAttributes) GatewayFqdn() terra.StringValue {
-	return terra.ReferenceString(lng.ref.Append("gateway_fqdn"))
+	return terra.ReferenceAsString(lng.ref.Append("gateway_fqdn"))
 }
 
+// Id returns a reference to field id of azurerm_local_network_gateway.
 func (lng localNetworkGatewayAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lng.ref.Append("id"))
+	return terra.ReferenceAsString(lng.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_local_network_gateway.
 func (lng localNetworkGatewayAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(lng.ref.Append("location"))
+	return terra.ReferenceAsString(lng.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_local_network_gateway.
 func (lng localNetworkGatewayAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lng.ref.Append("name"))
+	return terra.ReferenceAsString(lng.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_local_network_gateway.
 func (lng localNetworkGatewayAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(lng.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(lng.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_local_network_gateway.
 func (lng localNetworkGatewayAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lng.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](lng.ref.Append("tags"))
 }
 
 func (lng localNetworkGatewayAttributes) BgpSettings() terra.ListValue[localnetworkgateway.BgpSettingsAttributes] {
-	return terra.ReferenceList[localnetworkgateway.BgpSettingsAttributes](lng.ref.Append("bgp_settings"))
+	return terra.ReferenceAsList[localnetworkgateway.BgpSettingsAttributes](lng.ref.Append("bgp_settings"))
 }
 
 func (lng localNetworkGatewayAttributes) Timeouts() localnetworkgateway.TimeoutsAttributes {
-	return terra.ReferenceSingle[localnetworkgateway.TimeoutsAttributes](lng.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[localnetworkgateway.TimeoutsAttributes](lng.ref.Append("timeouts"))
 }
 
 type localNetworkGatewayState struct {

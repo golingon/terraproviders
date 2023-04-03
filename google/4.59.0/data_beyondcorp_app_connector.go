@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataBeyondcorpAppConnector creates a new instance of [DataBeyondcorpAppConnector].
 func NewDataBeyondcorpAppConnector(name string, args DataBeyondcorpAppConnectorArgs) *DataBeyondcorpAppConnector {
 	return &DataBeyondcorpAppConnector{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataBeyondcorpAppConnector(name string, args DataBeyondcorpAppConnectorA
 
 var _ terra.DataResource = (*DataBeyondcorpAppConnector)(nil)
 
+// DataBeyondcorpAppConnector represents the Terraform data resource google_beyondcorp_app_connector.
 type DataBeyondcorpAppConnector struct {
 	Name string
 	Args DataBeyondcorpAppConnectorArgs
 }
 
+// DataSource returns the Terraform object type for [DataBeyondcorpAppConnector].
 func (bac *DataBeyondcorpAppConnector) DataSource() string {
 	return "google_beyondcorp_app_connector"
 }
 
+// LocalName returns the local name for [DataBeyondcorpAppConnector].
 func (bac *DataBeyondcorpAppConnector) LocalName() string {
 	return bac.Name
 }
 
+// Configuration returns the configuration (args) for [DataBeyondcorpAppConnector].
 func (bac *DataBeyondcorpAppConnector) Configuration() interface{} {
 	return bac.Args
 }
 
+// Attributes returns the attributes for [DataBeyondcorpAppConnector].
 func (bac *DataBeyondcorpAppConnector) Attributes() dataBeyondcorpAppConnectorAttributes {
 	return dataBeyondcorpAppConnectorAttributes{ref: terra.ReferenceDataResource(bac)}
 }
 
+// DataBeyondcorpAppConnectorArgs contains the configurations for google_beyondcorp_app_connector.
 type DataBeyondcorpAppConnectorArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,34 +60,41 @@ type dataBeyondcorpAppConnectorAttributes struct {
 	ref terra.Reference
 }
 
+// DisplayName returns a reference to field display_name of google_beyondcorp_app_connector.
 func (bac dataBeyondcorpAppConnectorAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(bac.ref.Append("display_name"))
+	return terra.ReferenceAsString(bac.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of google_beyondcorp_app_connector.
 func (bac dataBeyondcorpAppConnectorAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bac.ref.Append("id"))
+	return terra.ReferenceAsString(bac.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_beyondcorp_app_connector.
 func (bac dataBeyondcorpAppConnectorAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bac.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](bac.ref.Append("labels"))
 }
 
+// Name returns a reference to field name of google_beyondcorp_app_connector.
 func (bac dataBeyondcorpAppConnectorAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(bac.ref.Append("name"))
+	return terra.ReferenceAsString(bac.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_beyondcorp_app_connector.
 func (bac dataBeyondcorpAppConnectorAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(bac.ref.Append("project"))
+	return terra.ReferenceAsString(bac.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_beyondcorp_app_connector.
 func (bac dataBeyondcorpAppConnectorAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(bac.ref.Append("region"))
+	return terra.ReferenceAsString(bac.ref.Append("region"))
 }
 
+// State returns a reference to field state of google_beyondcorp_app_connector.
 func (bac dataBeyondcorpAppConnectorAttributes) State() terra.StringValue {
-	return terra.ReferenceString(bac.ref.Append("state"))
+	return terra.ReferenceAsString(bac.ref.Append("state"))
 }
 
 func (bac dataBeyondcorpAppConnectorAttributes) PrincipalInfo() terra.ListValue[databeyondcorpappconnector.PrincipalInfoAttributes] {
-	return terra.ReferenceList[databeyondcorpappconnector.PrincipalInfoAttributes](bac.ref.Append("principal_info"))
+	return terra.ReferenceAsList[databeyondcorpappconnector.PrincipalInfoAttributes](bac.ref.Append("principal_info"))
 }

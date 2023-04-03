@@ -47,92 +47,92 @@ type RepositoryAttributes struct {
 	ref terra.Reference
 }
 
-func (r RepositoryAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RepositoryAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RepositoryAttributes) InternalWithRef(ref terra.Reference) RepositoryAttributes {
 	return RepositoryAttributes{ref: ref}
 }
 
-func (r RepositoryAttributes) InternalTokens() hclwrite.Tokens {
+func (r RepositoryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RepositoryAttributes) HostKey() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("host_key"))
+	return terra.ReferenceAsString(r.ref.Append("host_key"))
 }
 
 func (r RepositoryAttributes) HostKeyAlgorithm() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("host_key_algorithm"))
+	return terra.ReferenceAsString(r.ref.Append("host_key_algorithm"))
 }
 
 func (r RepositoryAttributes) Label() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("label"))
+	return terra.ReferenceAsString(r.ref.Append("label"))
 }
 
 func (r RepositoryAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("name"))
+	return terra.ReferenceAsString(r.ref.Append("name"))
 }
 
 func (r RepositoryAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("password"))
+	return terra.ReferenceAsString(r.ref.Append("password"))
 }
 
 func (r RepositoryAttributes) Patterns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](r.ref.Append("patterns"))
+	return terra.ReferenceAsSet[terra.StringValue](r.ref.Append("patterns"))
 }
 
 func (r RepositoryAttributes) PrivateKey() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("private_key"))
+	return terra.ReferenceAsString(r.ref.Append("private_key"))
 }
 
 func (r RepositoryAttributes) SearchPaths() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](r.ref.Append("search_paths"))
+	return terra.ReferenceAsSet[terra.StringValue](r.ref.Append("search_paths"))
 }
 
 func (r RepositoryAttributes) StrictHostKeyChecking() terra.BoolValue {
-	return terra.ReferenceBool(r.ref.Append("strict_host_key_checking"))
+	return terra.ReferenceAsBool(r.ref.Append("strict_host_key_checking"))
 }
 
 func (r RepositoryAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("uri"))
+	return terra.ReferenceAsString(r.ref.Append("uri"))
 }
 
 func (r RepositoryAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("username"))
+	return terra.ReferenceAsString(r.ref.Append("username"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type RepositoryState struct {

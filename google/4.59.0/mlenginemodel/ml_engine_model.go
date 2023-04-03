@@ -23,44 +23,44 @@ type DefaultVersionAttributes struct {
 	ref terra.Reference
 }
 
-func (dv DefaultVersionAttributes) InternalRef() terra.Reference {
-	return dv.ref
+func (dv DefaultVersionAttributes) InternalRef() (terra.Reference, error) {
+	return dv.ref, nil
 }
 
 func (dv DefaultVersionAttributes) InternalWithRef(ref terra.Reference) DefaultVersionAttributes {
 	return DefaultVersionAttributes{ref: ref}
 }
 
-func (dv DefaultVersionAttributes) InternalTokens() hclwrite.Tokens {
+func (dv DefaultVersionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dv.ref.InternalTokens()
 }
 
 func (dv DefaultVersionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dv.ref.Append("name"))
+	return terra.ReferenceAsString(dv.ref.Append("name"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type DefaultVersionState struct {

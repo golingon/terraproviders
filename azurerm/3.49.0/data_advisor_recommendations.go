@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataAdvisorRecommendations creates a new instance of [DataAdvisorRecommendations].
 func NewDataAdvisorRecommendations(name string, args DataAdvisorRecommendationsArgs) *DataAdvisorRecommendations {
 	return &DataAdvisorRecommendations{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataAdvisorRecommendations(name string, args DataAdvisorRecommendationsA
 
 var _ terra.DataResource = (*DataAdvisorRecommendations)(nil)
 
+// DataAdvisorRecommendations represents the Terraform data resource azurerm_advisor_recommendations.
 type DataAdvisorRecommendations struct {
 	Name string
 	Args DataAdvisorRecommendationsArgs
 }
 
+// DataSource returns the Terraform object type for [DataAdvisorRecommendations].
 func (ar *DataAdvisorRecommendations) DataSource() string {
 	return "azurerm_advisor_recommendations"
 }
 
+// LocalName returns the local name for [DataAdvisorRecommendations].
 func (ar *DataAdvisorRecommendations) LocalName() string {
 	return ar.Name
 }
 
+// Configuration returns the configuration (args) for [DataAdvisorRecommendations].
 func (ar *DataAdvisorRecommendations) Configuration() interface{} {
 	return ar.Args
 }
 
+// Attributes returns the attributes for [DataAdvisorRecommendations].
 func (ar *DataAdvisorRecommendations) Attributes() dataAdvisorRecommendationsAttributes {
 	return dataAdvisorRecommendationsAttributes{ref: terra.ReferenceDataResource(ar)}
 }
 
+// DataAdvisorRecommendationsArgs contains the configurations for azurerm_advisor_recommendations.
 type DataAdvisorRecommendationsArgs struct {
 	// FilterByCategory: set of string, optional
 	FilterByCategory terra.SetValue[terra.StringValue] `hcl:"filter_by_category,attr"`
@@ -53,22 +60,25 @@ type dataAdvisorRecommendationsAttributes struct {
 	ref terra.Reference
 }
 
+// FilterByCategory returns a reference to field filter_by_category of azurerm_advisor_recommendations.
 func (ar dataAdvisorRecommendationsAttributes) FilterByCategory() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ar.ref.Append("filter_by_category"))
+	return terra.ReferenceAsSet[terra.StringValue](ar.ref.Append("filter_by_category"))
 }
 
+// FilterByResourceGroups returns a reference to field filter_by_resource_groups of azurerm_advisor_recommendations.
 func (ar dataAdvisorRecommendationsAttributes) FilterByResourceGroups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ar.ref.Append("filter_by_resource_groups"))
+	return terra.ReferenceAsSet[terra.StringValue](ar.ref.Append("filter_by_resource_groups"))
 }
 
+// Id returns a reference to field id of azurerm_advisor_recommendations.
 func (ar dataAdvisorRecommendationsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("id"))
+	return terra.ReferenceAsString(ar.ref.Append("id"))
 }
 
 func (ar dataAdvisorRecommendationsAttributes) Recommendations() terra.ListValue[dataadvisorrecommendations.RecommendationsAttributes] {
-	return terra.ReferenceList[dataadvisorrecommendations.RecommendationsAttributes](ar.ref.Append("recommendations"))
+	return terra.ReferenceAsList[dataadvisorrecommendations.RecommendationsAttributes](ar.ref.Append("recommendations"))
 }
 
 func (ar dataAdvisorRecommendationsAttributes) Timeouts() dataadvisorrecommendations.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataadvisorrecommendations.TimeoutsAttributes](ar.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataadvisorrecommendations.TimeoutsAttributes](ar.ref.Append("timeouts"))
 }

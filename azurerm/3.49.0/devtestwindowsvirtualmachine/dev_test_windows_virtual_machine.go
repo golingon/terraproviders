@@ -40,92 +40,92 @@ type GalleryImageReferenceAttributes struct {
 	ref terra.Reference
 }
 
-func (gir GalleryImageReferenceAttributes) InternalRef() terra.Reference {
-	return gir.ref
+func (gir GalleryImageReferenceAttributes) InternalRef() (terra.Reference, error) {
+	return gir.ref, nil
 }
 
 func (gir GalleryImageReferenceAttributes) InternalWithRef(ref terra.Reference) GalleryImageReferenceAttributes {
 	return GalleryImageReferenceAttributes{ref: ref}
 }
 
-func (gir GalleryImageReferenceAttributes) InternalTokens() hclwrite.Tokens {
+func (gir GalleryImageReferenceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gir.ref.InternalTokens()
 }
 
 func (gir GalleryImageReferenceAttributes) Offer() terra.StringValue {
-	return terra.ReferenceString(gir.ref.Append("offer"))
+	return terra.ReferenceAsString(gir.ref.Append("offer"))
 }
 
 func (gir GalleryImageReferenceAttributes) Publisher() terra.StringValue {
-	return terra.ReferenceString(gir.ref.Append("publisher"))
+	return terra.ReferenceAsString(gir.ref.Append("publisher"))
 }
 
 func (gir GalleryImageReferenceAttributes) Sku() terra.StringValue {
-	return terra.ReferenceString(gir.ref.Append("sku"))
+	return terra.ReferenceAsString(gir.ref.Append("sku"))
 }
 
 func (gir GalleryImageReferenceAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(gir.ref.Append("version"))
+	return terra.ReferenceAsString(gir.ref.Append("version"))
 }
 
 type InboundNatRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (inr InboundNatRuleAttributes) InternalRef() terra.Reference {
-	return inr.ref
+func (inr InboundNatRuleAttributes) InternalRef() (terra.Reference, error) {
+	return inr.ref, nil
 }
 
 func (inr InboundNatRuleAttributes) InternalWithRef(ref terra.Reference) InboundNatRuleAttributes {
 	return InboundNatRuleAttributes{ref: ref}
 }
 
-func (inr InboundNatRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (inr InboundNatRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return inr.ref.InternalTokens()
 }
 
 func (inr InboundNatRuleAttributes) BackendPort() terra.NumberValue {
-	return terra.ReferenceNumber(inr.ref.Append("backend_port"))
+	return terra.ReferenceAsNumber(inr.ref.Append("backend_port"))
 }
 
 func (inr InboundNatRuleAttributes) FrontendPort() terra.NumberValue {
-	return terra.ReferenceNumber(inr.ref.Append("frontend_port"))
+	return terra.ReferenceAsNumber(inr.ref.Append("frontend_port"))
 }
 
 func (inr InboundNatRuleAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(inr.ref.Append("protocol"))
+	return terra.ReferenceAsString(inr.ref.Append("protocol"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type GalleryImageReferenceState struct {

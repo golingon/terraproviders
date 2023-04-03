@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataNotificationHub creates a new instance of [DataNotificationHub].
 func NewDataNotificationHub(name string, args DataNotificationHubArgs) *DataNotificationHub {
 	return &DataNotificationHub{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataNotificationHub(name string, args DataNotificationHubArgs) *DataNoti
 
 var _ terra.DataResource = (*DataNotificationHub)(nil)
 
+// DataNotificationHub represents the Terraform data resource azurerm_notification_hub.
 type DataNotificationHub struct {
 	Name string
 	Args DataNotificationHubArgs
 }
 
+// DataSource returns the Terraform object type for [DataNotificationHub].
 func (nh *DataNotificationHub) DataSource() string {
 	return "azurerm_notification_hub"
 }
 
+// LocalName returns the local name for [DataNotificationHub].
 func (nh *DataNotificationHub) LocalName() string {
 	return nh.Name
 }
 
+// Configuration returns the configuration (args) for [DataNotificationHub].
 func (nh *DataNotificationHub) Configuration() interface{} {
 	return nh.Args
 }
 
+// Attributes returns the attributes for [DataNotificationHub].
 func (nh *DataNotificationHub) Attributes() dataNotificationHubAttributes {
 	return dataNotificationHubAttributes{ref: terra.ReferenceDataResource(nh)}
 }
 
+// DataNotificationHubArgs contains the configurations for azurerm_notification_hub.
 type DataNotificationHubArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -57,38 +64,44 @@ type dataNotificationHubAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_notification_hub.
 func (nh dataNotificationHubAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(nh.ref.Append("id"))
+	return terra.ReferenceAsString(nh.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_notification_hub.
 func (nh dataNotificationHubAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(nh.ref.Append("location"))
+	return terra.ReferenceAsString(nh.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_notification_hub.
 func (nh dataNotificationHubAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(nh.ref.Append("name"))
+	return terra.ReferenceAsString(nh.ref.Append("name"))
 }
 
+// NamespaceName returns a reference to field namespace_name of azurerm_notification_hub.
 func (nh dataNotificationHubAttributes) NamespaceName() terra.StringValue {
-	return terra.ReferenceString(nh.ref.Append("namespace_name"))
+	return terra.ReferenceAsString(nh.ref.Append("namespace_name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_notification_hub.
 func (nh dataNotificationHubAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(nh.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(nh.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_notification_hub.
 func (nh dataNotificationHubAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](nh.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](nh.ref.Append("tags"))
 }
 
 func (nh dataNotificationHubAttributes) ApnsCredential() terra.ListValue[datanotificationhub.ApnsCredentialAttributes] {
-	return terra.ReferenceList[datanotificationhub.ApnsCredentialAttributes](nh.ref.Append("apns_credential"))
+	return terra.ReferenceAsList[datanotificationhub.ApnsCredentialAttributes](nh.ref.Append("apns_credential"))
 }
 
 func (nh dataNotificationHubAttributes) GcmCredential() terra.ListValue[datanotificationhub.GcmCredentialAttributes] {
-	return terra.ReferenceList[datanotificationhub.GcmCredentialAttributes](nh.ref.Append("gcm_credential"))
+	return terra.ReferenceAsList[datanotificationhub.GcmCredentialAttributes](nh.ref.Append("gcm_credential"))
 }
 
 func (nh dataNotificationHubAttributes) Timeouts() datanotificationhub.TimeoutsAttributes {
-	return terra.ReferenceSingle[datanotificationhub.TimeoutsAttributes](nh.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datanotificationhub.TimeoutsAttributes](nh.ref.Append("timeouts"))
 }

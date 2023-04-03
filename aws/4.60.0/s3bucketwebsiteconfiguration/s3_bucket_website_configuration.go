@@ -63,7 +63,7 @@ func (ed ErrorDocumentAttributes) InternalWithRef(ref terra.Reference) ErrorDocu
 	return ErrorDocumentAttributes{ref: ref}
 }
 
-func (ed ErrorDocumentAttributes) InternalTokens() hclwrite.Tokens {
+func (ed ErrorDocumentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ed.ref.InternalTokens()
 }
 
@@ -83,7 +83,7 @@ func (id IndexDocumentAttributes) InternalWithRef(ref terra.Reference) IndexDocu
 	return IndexDocumentAttributes{ref: ref}
 }
 
-func (id IndexDocumentAttributes) InternalTokens() hclwrite.Tokens {
+func (id IndexDocumentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return id.ref.InternalTokens()
 }
 
@@ -103,7 +103,7 @@ func (rart RedirectAllRequestsToAttributes) InternalWithRef(ref terra.Reference)
 	return RedirectAllRequestsToAttributes{ref: ref}
 }
 
-func (rart RedirectAllRequestsToAttributes) InternalTokens() hclwrite.Tokens {
+func (rart RedirectAllRequestsToAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rart.ref.InternalTokens()
 }
 
@@ -127,7 +127,7 @@ func (rr RoutingRuleAttributes) InternalWithRef(ref terra.Reference) RoutingRule
 	return RoutingRuleAttributes{ref: ref}
 }
 
-func (rr RoutingRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (rr RoutingRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rr.ref.InternalTokens()
 }
 
@@ -151,7 +151,7 @@ func (c ConditionAttributes) InternalWithRef(ref terra.Reference) ConditionAttri
 	return ConditionAttributes{ref: ref}
 }
 
-func (c ConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -175,7 +175,7 @@ func (r RedirectAttributes) InternalWithRef(ref terra.Reference) RedirectAttribu
 	return RedirectAttributes{ref: ref}
 }
 
-func (r RedirectAttributes) InternalTokens() hclwrite.Tokens {
+func (r RedirectAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewTrafficManagerExternalEndpoint creates a new instance of [TrafficManagerExternalEndpoint].
 func NewTrafficManagerExternalEndpoint(name string, args TrafficManagerExternalEndpointArgs) *TrafficManagerExternalEndpoint {
 	return &TrafficManagerExternalEndpoint{
 		Args: args,
@@ -19,28 +20,51 @@ func NewTrafficManagerExternalEndpoint(name string, args TrafficManagerExternalE
 
 var _ terra.Resource = (*TrafficManagerExternalEndpoint)(nil)
 
+// TrafficManagerExternalEndpoint represents the Terraform resource azurerm_traffic_manager_external_endpoint.
 type TrafficManagerExternalEndpoint struct {
-	Name  string
-	Args  TrafficManagerExternalEndpointArgs
-	state *trafficManagerExternalEndpointState
+	Name      string
+	Args      TrafficManagerExternalEndpointArgs
+	state     *trafficManagerExternalEndpointState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [TrafficManagerExternalEndpoint].
 func (tmee *TrafficManagerExternalEndpoint) Type() string {
 	return "azurerm_traffic_manager_external_endpoint"
 }
 
+// LocalName returns the local name for [TrafficManagerExternalEndpoint].
 func (tmee *TrafficManagerExternalEndpoint) LocalName() string {
 	return tmee.Name
 }
 
+// Configuration returns the configuration (args) for [TrafficManagerExternalEndpoint].
 func (tmee *TrafficManagerExternalEndpoint) Configuration() interface{} {
 	return tmee.Args
 }
 
+// DependOn is used for other resources to depend on [TrafficManagerExternalEndpoint].
+func (tmee *TrafficManagerExternalEndpoint) DependOn() terra.Reference {
+	return terra.ReferenceResource(tmee)
+}
+
+// Dependencies returns the list of resources [TrafficManagerExternalEndpoint] depends_on.
+func (tmee *TrafficManagerExternalEndpoint) Dependencies() terra.Dependencies {
+	return tmee.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [TrafficManagerExternalEndpoint].
+func (tmee *TrafficManagerExternalEndpoint) LifecycleManagement() *terra.Lifecycle {
+	return tmee.Lifecycle
+}
+
+// Attributes returns the attributes for [TrafficManagerExternalEndpoint].
 func (tmee *TrafficManagerExternalEndpoint) Attributes() trafficManagerExternalEndpointAttributes {
 	return trafficManagerExternalEndpointAttributes{ref: terra.ReferenceResource(tmee)}
 }
 
+// ImportState imports the given attribute values into [TrafficManagerExternalEndpoint]'s state.
 func (tmee *TrafficManagerExternalEndpoint) ImportState(av io.Reader) error {
 	tmee.state = &trafficManagerExternalEndpointState{}
 	if err := json.NewDecoder(av).Decode(tmee.state); err != nil {
@@ -49,10 +73,12 @@ func (tmee *TrafficManagerExternalEndpoint) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [TrafficManagerExternalEndpoint] has state.
 func (tmee *TrafficManagerExternalEndpoint) State() (*trafficManagerExternalEndpointState, bool) {
 	return tmee.state, tmee.state != nil
 }
 
+// StateMust returns the state for [TrafficManagerExternalEndpoint]. Panics if the state is nil.
 func (tmee *TrafficManagerExternalEndpoint) StateMust() *trafficManagerExternalEndpointState {
 	if tmee.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", tmee.Type(), tmee.LocalName()))
@@ -60,10 +86,7 @@ func (tmee *TrafficManagerExternalEndpoint) StateMust() *trafficManagerExternalE
 	return tmee.state
 }
 
-func (tmee *TrafficManagerExternalEndpoint) DependOn() terra.Reference {
-	return terra.ReferenceResource(tmee)
-}
-
+// TrafficManagerExternalEndpointArgs contains the configurations for azurerm_traffic_manager_external_endpoint.
 type TrafficManagerExternalEndpointArgs struct {
 	// Enabled: bool, optional
 	Enabled terra.BoolValue `hcl:"enabled,attr"`
@@ -89,59 +112,66 @@ type TrafficManagerExternalEndpointArgs struct {
 	Subnet []trafficmanagerexternalendpoint.Subnet `hcl:"subnet,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *trafficmanagerexternalendpoint.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that TrafficManagerExternalEndpoint depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type trafficManagerExternalEndpointAttributes struct {
 	ref terra.Reference
 }
 
+// Enabled returns a reference to field enabled of azurerm_traffic_manager_external_endpoint.
 func (tmee trafficManagerExternalEndpointAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(tmee.ref.Append("enabled"))
+	return terra.ReferenceAsBool(tmee.ref.Append("enabled"))
 }
 
+// EndpointLocation returns a reference to field endpoint_location of azurerm_traffic_manager_external_endpoint.
 func (tmee trafficManagerExternalEndpointAttributes) EndpointLocation() terra.StringValue {
-	return terra.ReferenceString(tmee.ref.Append("endpoint_location"))
+	return terra.ReferenceAsString(tmee.ref.Append("endpoint_location"))
 }
 
+// GeoMappings returns a reference to field geo_mappings of azurerm_traffic_manager_external_endpoint.
 func (tmee trafficManagerExternalEndpointAttributes) GeoMappings() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](tmee.ref.Append("geo_mappings"))
+	return terra.ReferenceAsList[terra.StringValue](tmee.ref.Append("geo_mappings"))
 }
 
+// Id returns a reference to field id of azurerm_traffic_manager_external_endpoint.
 func (tmee trafficManagerExternalEndpointAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(tmee.ref.Append("id"))
+	return terra.ReferenceAsString(tmee.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_traffic_manager_external_endpoint.
 func (tmee trafficManagerExternalEndpointAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(tmee.ref.Append("name"))
+	return terra.ReferenceAsString(tmee.ref.Append("name"))
 }
 
+// Priority returns a reference to field priority of azurerm_traffic_manager_external_endpoint.
 func (tmee trafficManagerExternalEndpointAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(tmee.ref.Append("priority"))
+	return terra.ReferenceAsNumber(tmee.ref.Append("priority"))
 }
 
+// ProfileId returns a reference to field profile_id of azurerm_traffic_manager_external_endpoint.
 func (tmee trafficManagerExternalEndpointAttributes) ProfileId() terra.StringValue {
-	return terra.ReferenceString(tmee.ref.Append("profile_id"))
+	return terra.ReferenceAsString(tmee.ref.Append("profile_id"))
 }
 
+// Target returns a reference to field target of azurerm_traffic_manager_external_endpoint.
 func (tmee trafficManagerExternalEndpointAttributes) Target() terra.StringValue {
-	return terra.ReferenceString(tmee.ref.Append("target"))
+	return terra.ReferenceAsString(tmee.ref.Append("target"))
 }
 
+// Weight returns a reference to field weight of azurerm_traffic_manager_external_endpoint.
 func (tmee trafficManagerExternalEndpointAttributes) Weight() terra.NumberValue {
-	return terra.ReferenceNumber(tmee.ref.Append("weight"))
+	return terra.ReferenceAsNumber(tmee.ref.Append("weight"))
 }
 
 func (tmee trafficManagerExternalEndpointAttributes) CustomHeader() terra.ListValue[trafficmanagerexternalendpoint.CustomHeaderAttributes] {
-	return terra.ReferenceList[trafficmanagerexternalendpoint.CustomHeaderAttributes](tmee.ref.Append("custom_header"))
+	return terra.ReferenceAsList[trafficmanagerexternalendpoint.CustomHeaderAttributes](tmee.ref.Append("custom_header"))
 }
 
 func (tmee trafficManagerExternalEndpointAttributes) Subnet() terra.ListValue[trafficmanagerexternalendpoint.SubnetAttributes] {
-	return terra.ReferenceList[trafficmanagerexternalendpoint.SubnetAttributes](tmee.ref.Append("subnet"))
+	return terra.ReferenceAsList[trafficmanagerexternalendpoint.SubnetAttributes](tmee.ref.Append("subnet"))
 }
 
 func (tmee trafficManagerExternalEndpointAttributes) Timeouts() trafficmanagerexternalendpoint.TimeoutsAttributes {
-	return terra.ReferenceSingle[trafficmanagerexternalendpoint.TimeoutsAttributes](tmee.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[trafficmanagerexternalendpoint.TimeoutsAttributes](tmee.ref.Append("timeouts"))
 }
 
 type trafficManagerExternalEndpointState struct {

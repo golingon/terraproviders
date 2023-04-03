@@ -49,7 +49,7 @@ func (pickafto ParametersInCacheKeyAndForwardedToOriginAttributes) InternalWithR
 	return ParametersInCacheKeyAndForwardedToOriginAttributes{ref: ref}
 }
 
-func (pickafto ParametersInCacheKeyAndForwardedToOriginAttributes) InternalTokens() hclwrite.Tokens {
+func (pickafto ParametersInCacheKeyAndForwardedToOriginAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pickafto.ref.InternalTokens()
 }
 
@@ -85,7 +85,7 @@ func (cc CookiesConfigAttributes) InternalWithRef(ref terra.Reference) CookiesCo
 	return CookiesConfigAttributes{ref: ref}
 }
 
-func (cc CookiesConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (cc CookiesConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -109,7 +109,7 @@ func (c CookiesAttributes) InternalWithRef(ref terra.Reference) CookiesAttribute
 	return CookiesAttributes{ref: ref}
 }
 
-func (c CookiesAttributes) InternalTokens() hclwrite.Tokens {
+func (c CookiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -129,7 +129,7 @@ func (hc HeadersConfigAttributes) InternalWithRef(ref terra.Reference) HeadersCo
 	return HeadersConfigAttributes{ref: ref}
 }
 
-func (hc HeadersConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (hc HeadersConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hc.ref.InternalTokens()
 }
 
@@ -153,7 +153,7 @@ func (h HeadersAttributes) InternalWithRef(ref terra.Reference) HeadersAttribute
 	return HeadersAttributes{ref: ref}
 }
 
-func (h HeadersAttributes) InternalTokens() hclwrite.Tokens {
+func (h HeadersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 
@@ -173,7 +173,7 @@ func (qsc QueryStringsConfigAttributes) InternalWithRef(ref terra.Reference) Que
 	return QueryStringsConfigAttributes{ref: ref}
 }
 
-func (qsc QueryStringsConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (qsc QueryStringsConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return qsc.ref.InternalTokens()
 }
 
@@ -197,7 +197,7 @@ func (qs QueryStringsAttributes) InternalWithRef(ref terra.Reference) QueryStrin
 	return QueryStringsAttributes{ref: ref}
 }
 
-func (qs QueryStringsAttributes) InternalTokens() hclwrite.Tokens {
+func (qs QueryStringsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return qs.ref.InternalTokens()
 }
 

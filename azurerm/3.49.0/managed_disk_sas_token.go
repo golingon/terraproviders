@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewManagedDiskSasToken creates a new instance of [ManagedDiskSasToken].
 func NewManagedDiskSasToken(name string, args ManagedDiskSasTokenArgs) *ManagedDiskSasToken {
 	return &ManagedDiskSasToken{
 		Args: args,
@@ -19,28 +20,51 @@ func NewManagedDiskSasToken(name string, args ManagedDiskSasTokenArgs) *ManagedD
 
 var _ terra.Resource = (*ManagedDiskSasToken)(nil)
 
+// ManagedDiskSasToken represents the Terraform resource azurerm_managed_disk_sas_token.
 type ManagedDiskSasToken struct {
-	Name  string
-	Args  ManagedDiskSasTokenArgs
-	state *managedDiskSasTokenState
+	Name      string
+	Args      ManagedDiskSasTokenArgs
+	state     *managedDiskSasTokenState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ManagedDiskSasToken].
 func (mdst *ManagedDiskSasToken) Type() string {
 	return "azurerm_managed_disk_sas_token"
 }
 
+// LocalName returns the local name for [ManagedDiskSasToken].
 func (mdst *ManagedDiskSasToken) LocalName() string {
 	return mdst.Name
 }
 
+// Configuration returns the configuration (args) for [ManagedDiskSasToken].
 func (mdst *ManagedDiskSasToken) Configuration() interface{} {
 	return mdst.Args
 }
 
+// DependOn is used for other resources to depend on [ManagedDiskSasToken].
+func (mdst *ManagedDiskSasToken) DependOn() terra.Reference {
+	return terra.ReferenceResource(mdst)
+}
+
+// Dependencies returns the list of resources [ManagedDiskSasToken] depends_on.
+func (mdst *ManagedDiskSasToken) Dependencies() terra.Dependencies {
+	return mdst.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ManagedDiskSasToken].
+func (mdst *ManagedDiskSasToken) LifecycleManagement() *terra.Lifecycle {
+	return mdst.Lifecycle
+}
+
+// Attributes returns the attributes for [ManagedDiskSasToken].
 func (mdst *ManagedDiskSasToken) Attributes() managedDiskSasTokenAttributes {
 	return managedDiskSasTokenAttributes{ref: terra.ReferenceResource(mdst)}
 }
 
+// ImportState imports the given attribute values into [ManagedDiskSasToken]'s state.
 func (mdst *ManagedDiskSasToken) ImportState(av io.Reader) error {
 	mdst.state = &managedDiskSasTokenState{}
 	if err := json.NewDecoder(av).Decode(mdst.state); err != nil {
@@ -49,10 +73,12 @@ func (mdst *ManagedDiskSasToken) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ManagedDiskSasToken] has state.
 func (mdst *ManagedDiskSasToken) State() (*managedDiskSasTokenState, bool) {
 	return mdst.state, mdst.state != nil
 }
 
+// StateMust returns the state for [ManagedDiskSasToken]. Panics if the state is nil.
 func (mdst *ManagedDiskSasToken) StateMust() *managedDiskSasTokenState {
 	if mdst.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mdst.Type(), mdst.LocalName()))
@@ -60,10 +86,7 @@ func (mdst *ManagedDiskSasToken) StateMust() *managedDiskSasTokenState {
 	return mdst.state
 }
 
-func (mdst *ManagedDiskSasToken) DependOn() terra.Reference {
-	return terra.ReferenceResource(mdst)
-}
-
+// ManagedDiskSasTokenArgs contains the configurations for azurerm_managed_disk_sas_token.
 type ManagedDiskSasTokenArgs struct {
 	// AccessLevel: string, required
 	AccessLevel terra.StringValue `hcl:"access_level,attr" validate:"required"`
@@ -75,35 +98,38 @@ type ManagedDiskSasTokenArgs struct {
 	ManagedDiskId terra.StringValue `hcl:"managed_disk_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *manageddisksastoken.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ManagedDiskSasToken depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type managedDiskSasTokenAttributes struct {
 	ref terra.Reference
 }
 
+// AccessLevel returns a reference to field access_level of azurerm_managed_disk_sas_token.
 func (mdst managedDiskSasTokenAttributes) AccessLevel() terra.StringValue {
-	return terra.ReferenceString(mdst.ref.Append("access_level"))
+	return terra.ReferenceAsString(mdst.ref.Append("access_level"))
 }
 
+// DurationInSeconds returns a reference to field duration_in_seconds of azurerm_managed_disk_sas_token.
 func (mdst managedDiskSasTokenAttributes) DurationInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(mdst.ref.Append("duration_in_seconds"))
+	return terra.ReferenceAsNumber(mdst.ref.Append("duration_in_seconds"))
 }
 
+// Id returns a reference to field id of azurerm_managed_disk_sas_token.
 func (mdst managedDiskSasTokenAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mdst.ref.Append("id"))
+	return terra.ReferenceAsString(mdst.ref.Append("id"))
 }
 
+// ManagedDiskId returns a reference to field managed_disk_id of azurerm_managed_disk_sas_token.
 func (mdst managedDiskSasTokenAttributes) ManagedDiskId() terra.StringValue {
-	return terra.ReferenceString(mdst.ref.Append("managed_disk_id"))
+	return terra.ReferenceAsString(mdst.ref.Append("managed_disk_id"))
 }
 
+// SasUrl returns a reference to field sas_url of azurerm_managed_disk_sas_token.
 func (mdst managedDiskSasTokenAttributes) SasUrl() terra.StringValue {
-	return terra.ReferenceString(mdst.ref.Append("sas_url"))
+	return terra.ReferenceAsString(mdst.ref.Append("sas_url"))
 }
 
 func (mdst managedDiskSasTokenAttributes) Timeouts() manageddisksastoken.TimeoutsAttributes {
-	return terra.ReferenceSingle[manageddisksastoken.TimeoutsAttributes](mdst.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[manageddisksastoken.TimeoutsAttributes](mdst.ref.Append("timeouts"))
 }
 
 type managedDiskSasTokenState struct {

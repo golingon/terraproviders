@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewVirtualHubSecurityPartnerProvider creates a new instance of [VirtualHubSecurityPartnerProvider].
 func NewVirtualHubSecurityPartnerProvider(name string, args VirtualHubSecurityPartnerProviderArgs) *VirtualHubSecurityPartnerProvider {
 	return &VirtualHubSecurityPartnerProvider{
 		Args: args,
@@ -19,28 +20,51 @@ func NewVirtualHubSecurityPartnerProvider(name string, args VirtualHubSecurityPa
 
 var _ terra.Resource = (*VirtualHubSecurityPartnerProvider)(nil)
 
+// VirtualHubSecurityPartnerProvider represents the Terraform resource azurerm_virtual_hub_security_partner_provider.
 type VirtualHubSecurityPartnerProvider struct {
-	Name  string
-	Args  VirtualHubSecurityPartnerProviderArgs
-	state *virtualHubSecurityPartnerProviderState
+	Name      string
+	Args      VirtualHubSecurityPartnerProviderArgs
+	state     *virtualHubSecurityPartnerProviderState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VirtualHubSecurityPartnerProvider].
 func (vhspp *VirtualHubSecurityPartnerProvider) Type() string {
 	return "azurerm_virtual_hub_security_partner_provider"
 }
 
+// LocalName returns the local name for [VirtualHubSecurityPartnerProvider].
 func (vhspp *VirtualHubSecurityPartnerProvider) LocalName() string {
 	return vhspp.Name
 }
 
+// Configuration returns the configuration (args) for [VirtualHubSecurityPartnerProvider].
 func (vhspp *VirtualHubSecurityPartnerProvider) Configuration() interface{} {
 	return vhspp.Args
 }
 
+// DependOn is used for other resources to depend on [VirtualHubSecurityPartnerProvider].
+func (vhspp *VirtualHubSecurityPartnerProvider) DependOn() terra.Reference {
+	return terra.ReferenceResource(vhspp)
+}
+
+// Dependencies returns the list of resources [VirtualHubSecurityPartnerProvider] depends_on.
+func (vhspp *VirtualHubSecurityPartnerProvider) Dependencies() terra.Dependencies {
+	return vhspp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VirtualHubSecurityPartnerProvider].
+func (vhspp *VirtualHubSecurityPartnerProvider) LifecycleManagement() *terra.Lifecycle {
+	return vhspp.Lifecycle
+}
+
+// Attributes returns the attributes for [VirtualHubSecurityPartnerProvider].
 func (vhspp *VirtualHubSecurityPartnerProvider) Attributes() virtualHubSecurityPartnerProviderAttributes {
 	return virtualHubSecurityPartnerProviderAttributes{ref: terra.ReferenceResource(vhspp)}
 }
 
+// ImportState imports the given attribute values into [VirtualHubSecurityPartnerProvider]'s state.
 func (vhspp *VirtualHubSecurityPartnerProvider) ImportState(av io.Reader) error {
 	vhspp.state = &virtualHubSecurityPartnerProviderState{}
 	if err := json.NewDecoder(av).Decode(vhspp.state); err != nil {
@@ -49,10 +73,12 @@ func (vhspp *VirtualHubSecurityPartnerProvider) ImportState(av io.Reader) error 
 	return nil
 }
 
+// State returns the state and a bool indicating if [VirtualHubSecurityPartnerProvider] has state.
 func (vhspp *VirtualHubSecurityPartnerProvider) State() (*virtualHubSecurityPartnerProviderState, bool) {
 	return vhspp.state, vhspp.state != nil
 }
 
+// StateMust returns the state for [VirtualHubSecurityPartnerProvider]. Panics if the state is nil.
 func (vhspp *VirtualHubSecurityPartnerProvider) StateMust() *virtualHubSecurityPartnerProviderState {
 	if vhspp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", vhspp.Type(), vhspp.LocalName()))
@@ -60,10 +86,7 @@ func (vhspp *VirtualHubSecurityPartnerProvider) StateMust() *virtualHubSecurityP
 	return vhspp.state
 }
 
-func (vhspp *VirtualHubSecurityPartnerProvider) DependOn() terra.Reference {
-	return terra.ReferenceResource(vhspp)
-}
-
+// VirtualHubSecurityPartnerProviderArgs contains the configurations for azurerm_virtual_hub_security_partner_provider.
 type VirtualHubSecurityPartnerProviderArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -81,43 +104,48 @@ type VirtualHubSecurityPartnerProviderArgs struct {
 	VirtualHubId terra.StringValue `hcl:"virtual_hub_id,attr"`
 	// Timeouts: optional
 	Timeouts *virtualhubsecuritypartnerprovider.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that VirtualHubSecurityPartnerProvider depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type virtualHubSecurityPartnerProviderAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_virtual_hub_security_partner_provider.
 func (vhspp virtualHubSecurityPartnerProviderAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vhspp.ref.Append("id"))
+	return terra.ReferenceAsString(vhspp.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_virtual_hub_security_partner_provider.
 func (vhspp virtualHubSecurityPartnerProviderAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(vhspp.ref.Append("location"))
+	return terra.ReferenceAsString(vhspp.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_virtual_hub_security_partner_provider.
 func (vhspp virtualHubSecurityPartnerProviderAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(vhspp.ref.Append("name"))
+	return terra.ReferenceAsString(vhspp.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_virtual_hub_security_partner_provider.
 func (vhspp virtualHubSecurityPartnerProviderAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(vhspp.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(vhspp.ref.Append("resource_group_name"))
 }
 
+// SecurityProviderName returns a reference to field security_provider_name of azurerm_virtual_hub_security_partner_provider.
 func (vhspp virtualHubSecurityPartnerProviderAttributes) SecurityProviderName() terra.StringValue {
-	return terra.ReferenceString(vhspp.ref.Append("security_provider_name"))
+	return terra.ReferenceAsString(vhspp.ref.Append("security_provider_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_virtual_hub_security_partner_provider.
 func (vhspp virtualHubSecurityPartnerProviderAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](vhspp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](vhspp.ref.Append("tags"))
 }
 
+// VirtualHubId returns a reference to field virtual_hub_id of azurerm_virtual_hub_security_partner_provider.
 func (vhspp virtualHubSecurityPartnerProviderAttributes) VirtualHubId() terra.StringValue {
-	return terra.ReferenceString(vhspp.ref.Append("virtual_hub_id"))
+	return terra.ReferenceAsString(vhspp.ref.Append("virtual_hub_id"))
 }
 
 func (vhspp virtualHubSecurityPartnerProviderAttributes) Timeouts() virtualhubsecuritypartnerprovider.TimeoutsAttributes {
-	return terra.ReferenceSingle[virtualhubsecuritypartnerprovider.TimeoutsAttributes](vhspp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[virtualhubsecuritypartnerprovider.TimeoutsAttributes](vhspp.ref.Append("timeouts"))
 }
 
 type virtualHubSecurityPartnerProviderState struct {

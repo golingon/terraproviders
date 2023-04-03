@@ -66,7 +66,7 @@ func (cps CapacityProviderStrategyAttributes) InternalWithRef(ref terra.Referenc
 	return CapacityProviderStrategyAttributes{ref: ref}
 }
 
-func (cps CapacityProviderStrategyAttributes) InternalTokens() hclwrite.Tokens {
+func (cps CapacityProviderStrategyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cps.ref.InternalTokens()
 }
 
@@ -94,7 +94,7 @@ func (lb LoadBalancerAttributes) InternalWithRef(ref terra.Reference) LoadBalanc
 	return LoadBalancerAttributes{ref: ref}
 }
 
-func (lb LoadBalancerAttributes) InternalTokens() hclwrite.Tokens {
+func (lb LoadBalancerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lb.ref.InternalTokens()
 }
 
@@ -126,7 +126,7 @@ func (nc NetworkConfigurationAttributes) InternalWithRef(ref terra.Reference) Ne
 	return NetworkConfigurationAttributes{ref: ref}
 }
 
-func (nc NetworkConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (nc NetworkConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nc.ref.InternalTokens()
 }
 
@@ -154,7 +154,7 @@ func (s ScaleAttributes) InternalWithRef(ref terra.Reference) ScaleAttributes {
 	return ScaleAttributes{ref: ref}
 }
 
-func (s ScaleAttributes) InternalTokens() hclwrite.Tokens {
+func (s ScaleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -178,7 +178,7 @@ func (sr ServiceRegistriesAttributes) InternalWithRef(ref terra.Reference) Servi
 	return ServiceRegistriesAttributes{ref: ref}
 }
 
-func (sr ServiceRegistriesAttributes) InternalTokens() hclwrite.Tokens {
+func (sr ServiceRegistriesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sr.ref.InternalTokens()
 }
 

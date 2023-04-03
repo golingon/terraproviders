@@ -67,164 +67,164 @@ type IdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (i IdentityAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IdentityAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IdentityAttributes) InternalWithRef(ref terra.Reference) IdentityAttributes {
 	return IdentityAttributes{ref: ref}
 }
 
-func (i IdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (i IdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IdentityAttributes) IdentityIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i.ref.Append("identity_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](i.ref.Append("identity_ids"))
 }
 
 func (i IdentityAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("principal_id"))
+	return terra.ReferenceAsString(i.ref.Append("principal_id"))
 }
 
 func (i IdentityAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(i.ref.Append("tenant_id"))
 }
 
 func (i IdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("type"))
+	return terra.ReferenceAsString(i.ref.Append("type"))
 }
 
 type PatchScheduleAttributes struct {
 	ref terra.Reference
 }
 
-func (ps PatchScheduleAttributes) InternalRef() terra.Reference {
-	return ps.ref
+func (ps PatchScheduleAttributes) InternalRef() (terra.Reference, error) {
+	return ps.ref, nil
 }
 
 func (ps PatchScheduleAttributes) InternalWithRef(ref terra.Reference) PatchScheduleAttributes {
 	return PatchScheduleAttributes{ref: ref}
 }
 
-func (ps PatchScheduleAttributes) InternalTokens() hclwrite.Tokens {
+func (ps PatchScheduleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ps.ref.InternalTokens()
 }
 
 func (ps PatchScheduleAttributes) DayOfWeek() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("day_of_week"))
+	return terra.ReferenceAsString(ps.ref.Append("day_of_week"))
 }
 
 func (ps PatchScheduleAttributes) MaintenanceWindow() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("maintenance_window"))
+	return terra.ReferenceAsString(ps.ref.Append("maintenance_window"))
 }
 
 func (ps PatchScheduleAttributes) StartHourUtc() terra.NumberValue {
-	return terra.ReferenceNumber(ps.ref.Append("start_hour_utc"))
+	return terra.ReferenceAsNumber(ps.ref.Append("start_hour_utc"))
 }
 
 type RedisConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (rc RedisConfigurationAttributes) InternalRef() terra.Reference {
-	return rc.ref
+func (rc RedisConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return rc.ref, nil
 }
 
 func (rc RedisConfigurationAttributes) InternalWithRef(ref terra.Reference) RedisConfigurationAttributes {
 	return RedisConfigurationAttributes{ref: ref}
 }
 
-func (rc RedisConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (rc RedisConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rc.ref.InternalTokens()
 }
 
 func (rc RedisConfigurationAttributes) AofBackupEnabled() terra.BoolValue {
-	return terra.ReferenceBool(rc.ref.Append("aof_backup_enabled"))
+	return terra.ReferenceAsBool(rc.ref.Append("aof_backup_enabled"))
 }
 
 func (rc RedisConfigurationAttributes) AofStorageConnectionString0() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("aof_storage_connection_string_0"))
+	return terra.ReferenceAsString(rc.ref.Append("aof_storage_connection_string_0"))
 }
 
 func (rc RedisConfigurationAttributes) AofStorageConnectionString1() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("aof_storage_connection_string_1"))
+	return terra.ReferenceAsString(rc.ref.Append("aof_storage_connection_string_1"))
 }
 
 func (rc RedisConfigurationAttributes) EnableAuthentication() terra.BoolValue {
-	return terra.ReferenceBool(rc.ref.Append("enable_authentication"))
+	return terra.ReferenceAsBool(rc.ref.Append("enable_authentication"))
 }
 
 func (rc RedisConfigurationAttributes) Maxclients() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("maxclients"))
+	return terra.ReferenceAsNumber(rc.ref.Append("maxclients"))
 }
 
 func (rc RedisConfigurationAttributes) MaxfragmentationmemoryReserved() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("maxfragmentationmemory_reserved"))
+	return terra.ReferenceAsNumber(rc.ref.Append("maxfragmentationmemory_reserved"))
 }
 
 func (rc RedisConfigurationAttributes) MaxmemoryDelta() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("maxmemory_delta"))
+	return terra.ReferenceAsNumber(rc.ref.Append("maxmemory_delta"))
 }
 
 func (rc RedisConfigurationAttributes) MaxmemoryPolicy() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("maxmemory_policy"))
+	return terra.ReferenceAsString(rc.ref.Append("maxmemory_policy"))
 }
 
 func (rc RedisConfigurationAttributes) MaxmemoryReserved() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("maxmemory_reserved"))
+	return terra.ReferenceAsNumber(rc.ref.Append("maxmemory_reserved"))
 }
 
 func (rc RedisConfigurationAttributes) NotifyKeyspaceEvents() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("notify_keyspace_events"))
+	return terra.ReferenceAsString(rc.ref.Append("notify_keyspace_events"))
 }
 
 func (rc RedisConfigurationAttributes) RdbBackupEnabled() terra.BoolValue {
-	return terra.ReferenceBool(rc.ref.Append("rdb_backup_enabled"))
+	return terra.ReferenceAsBool(rc.ref.Append("rdb_backup_enabled"))
 }
 
 func (rc RedisConfigurationAttributes) RdbBackupFrequency() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("rdb_backup_frequency"))
+	return terra.ReferenceAsNumber(rc.ref.Append("rdb_backup_frequency"))
 }
 
 func (rc RedisConfigurationAttributes) RdbBackupMaxSnapshotCount() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("rdb_backup_max_snapshot_count"))
+	return terra.ReferenceAsNumber(rc.ref.Append("rdb_backup_max_snapshot_count"))
 }
 
 func (rc RedisConfigurationAttributes) RdbStorageConnectionString() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("rdb_storage_connection_string"))
+	return terra.ReferenceAsString(rc.ref.Append("rdb_storage_connection_string"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type IdentityState struct {

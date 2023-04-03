@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeRegionUrlMap creates a new instance of [ComputeRegionUrlMap].
 func NewComputeRegionUrlMap(name string, args ComputeRegionUrlMapArgs) *ComputeRegionUrlMap {
 	return &ComputeRegionUrlMap{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeRegionUrlMap(name string, args ComputeRegionUrlMapArgs) *ComputeR
 
 var _ terra.Resource = (*ComputeRegionUrlMap)(nil)
 
+// ComputeRegionUrlMap represents the Terraform resource google_compute_region_url_map.
 type ComputeRegionUrlMap struct {
-	Name  string
-	Args  ComputeRegionUrlMapArgs
-	state *computeRegionUrlMapState
+	Name      string
+	Args      ComputeRegionUrlMapArgs
+	state     *computeRegionUrlMapState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeRegionUrlMap].
 func (crum *ComputeRegionUrlMap) Type() string {
 	return "google_compute_region_url_map"
 }
 
+// LocalName returns the local name for [ComputeRegionUrlMap].
 func (crum *ComputeRegionUrlMap) LocalName() string {
 	return crum.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeRegionUrlMap].
 func (crum *ComputeRegionUrlMap) Configuration() interface{} {
 	return crum.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeRegionUrlMap].
+func (crum *ComputeRegionUrlMap) DependOn() terra.Reference {
+	return terra.ReferenceResource(crum)
+}
+
+// Dependencies returns the list of resources [ComputeRegionUrlMap] depends_on.
+func (crum *ComputeRegionUrlMap) Dependencies() terra.Dependencies {
+	return crum.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeRegionUrlMap].
+func (crum *ComputeRegionUrlMap) LifecycleManagement() *terra.Lifecycle {
+	return crum.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeRegionUrlMap].
 func (crum *ComputeRegionUrlMap) Attributes() computeRegionUrlMapAttributes {
 	return computeRegionUrlMapAttributes{ref: terra.ReferenceResource(crum)}
 }
 
+// ImportState imports the given attribute values into [ComputeRegionUrlMap]'s state.
 func (crum *ComputeRegionUrlMap) ImportState(av io.Reader) error {
 	crum.state = &computeRegionUrlMapState{}
 	if err := json.NewDecoder(av).Decode(crum.state); err != nil {
@@ -49,10 +73,12 @@ func (crum *ComputeRegionUrlMap) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeRegionUrlMap] has state.
 func (crum *ComputeRegionUrlMap) State() (*computeRegionUrlMapState, bool) {
 	return crum.state, crum.state != nil
 }
 
+// StateMust returns the state for [ComputeRegionUrlMap]. Panics if the state is nil.
 func (crum *ComputeRegionUrlMap) StateMust() *computeRegionUrlMapState {
 	if crum.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", crum.Type(), crum.LocalName()))
@@ -60,10 +86,7 @@ func (crum *ComputeRegionUrlMap) StateMust() *computeRegionUrlMapState {
 	return crum.state
 }
 
-func (crum *ComputeRegionUrlMap) DependOn() terra.Reference {
-	return terra.ReferenceResource(crum)
-}
-
+// ComputeRegionUrlMapArgs contains the configurations for google_compute_region_url_map.
 type ComputeRegionUrlMapArgs struct {
 	// DefaultService: string, optional
 	DefaultService terra.StringValue `hcl:"default_service,attr"`
@@ -89,75 +112,83 @@ type ComputeRegionUrlMapArgs struct {
 	Test []computeregionurlmap.Test `hcl:"test,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *computeregionurlmap.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeRegionUrlMap depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeRegionUrlMapAttributes struct {
 	ref terra.Reference
 }
 
+// CreationTimestamp returns a reference to field creation_timestamp of google_compute_region_url_map.
 func (crum computeRegionUrlMapAttributes) CreationTimestamp() terra.StringValue {
-	return terra.ReferenceString(crum.ref.Append("creation_timestamp"))
+	return terra.ReferenceAsString(crum.ref.Append("creation_timestamp"))
 }
 
+// DefaultService returns a reference to field default_service of google_compute_region_url_map.
 func (crum computeRegionUrlMapAttributes) DefaultService() terra.StringValue {
-	return terra.ReferenceString(crum.ref.Append("default_service"))
+	return terra.ReferenceAsString(crum.ref.Append("default_service"))
 }
 
+// Description returns a reference to field description of google_compute_region_url_map.
 func (crum computeRegionUrlMapAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(crum.ref.Append("description"))
+	return terra.ReferenceAsString(crum.ref.Append("description"))
 }
 
+// Fingerprint returns a reference to field fingerprint of google_compute_region_url_map.
 func (crum computeRegionUrlMapAttributes) Fingerprint() terra.StringValue {
-	return terra.ReferenceString(crum.ref.Append("fingerprint"))
+	return terra.ReferenceAsString(crum.ref.Append("fingerprint"))
 }
 
+// Id returns a reference to field id of google_compute_region_url_map.
 func (crum computeRegionUrlMapAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(crum.ref.Append("id"))
+	return terra.ReferenceAsString(crum.ref.Append("id"))
 }
 
+// MapId returns a reference to field map_id of google_compute_region_url_map.
 func (crum computeRegionUrlMapAttributes) MapId() terra.NumberValue {
-	return terra.ReferenceNumber(crum.ref.Append("map_id"))
+	return terra.ReferenceAsNumber(crum.ref.Append("map_id"))
 }
 
+// Name returns a reference to field name of google_compute_region_url_map.
 func (crum computeRegionUrlMapAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(crum.ref.Append("name"))
+	return terra.ReferenceAsString(crum.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_compute_region_url_map.
 func (crum computeRegionUrlMapAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(crum.ref.Append("project"))
+	return terra.ReferenceAsString(crum.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_compute_region_url_map.
 func (crum computeRegionUrlMapAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(crum.ref.Append("region"))
+	return terra.ReferenceAsString(crum.ref.Append("region"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_region_url_map.
 func (crum computeRegionUrlMapAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(crum.ref.Append("self_link"))
+	return terra.ReferenceAsString(crum.ref.Append("self_link"))
 }
 
 func (crum computeRegionUrlMapAttributes) DefaultRouteAction() terra.ListValue[computeregionurlmap.DefaultRouteActionAttributes] {
-	return terra.ReferenceList[computeregionurlmap.DefaultRouteActionAttributes](crum.ref.Append("default_route_action"))
+	return terra.ReferenceAsList[computeregionurlmap.DefaultRouteActionAttributes](crum.ref.Append("default_route_action"))
 }
 
 func (crum computeRegionUrlMapAttributes) DefaultUrlRedirect() terra.ListValue[computeregionurlmap.DefaultUrlRedirectAttributes] {
-	return terra.ReferenceList[computeregionurlmap.DefaultUrlRedirectAttributes](crum.ref.Append("default_url_redirect"))
+	return terra.ReferenceAsList[computeregionurlmap.DefaultUrlRedirectAttributes](crum.ref.Append("default_url_redirect"))
 }
 
 func (crum computeRegionUrlMapAttributes) HostRule() terra.SetValue[computeregionurlmap.HostRuleAttributes] {
-	return terra.ReferenceSet[computeregionurlmap.HostRuleAttributes](crum.ref.Append("host_rule"))
+	return terra.ReferenceAsSet[computeregionurlmap.HostRuleAttributes](crum.ref.Append("host_rule"))
 }
 
 func (crum computeRegionUrlMapAttributes) PathMatcher() terra.ListValue[computeregionurlmap.PathMatcherAttributes] {
-	return terra.ReferenceList[computeregionurlmap.PathMatcherAttributes](crum.ref.Append("path_matcher"))
+	return terra.ReferenceAsList[computeregionurlmap.PathMatcherAttributes](crum.ref.Append("path_matcher"))
 }
 
 func (crum computeRegionUrlMapAttributes) Test() terra.ListValue[computeregionurlmap.TestAttributes] {
-	return terra.ReferenceList[computeregionurlmap.TestAttributes](crum.ref.Append("test"))
+	return terra.ReferenceAsList[computeregionurlmap.TestAttributes](crum.ref.Append("test"))
 }
 
 func (crum computeRegionUrlMapAttributes) Timeouts() computeregionurlmap.TimeoutsAttributes {
-	return terra.ReferenceSingle[computeregionurlmap.TimeoutsAttributes](crum.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computeregionurlmap.TimeoutsAttributes](crum.ref.Append("timeouts"))
 }
 
 type computeRegionUrlMapState struct {

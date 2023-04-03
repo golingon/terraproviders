@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLogzTagRule creates a new instance of [LogzTagRule].
 func NewLogzTagRule(name string, args LogzTagRuleArgs) *LogzTagRule {
 	return &LogzTagRule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLogzTagRule(name string, args LogzTagRuleArgs) *LogzTagRule {
 
 var _ terra.Resource = (*LogzTagRule)(nil)
 
+// LogzTagRule represents the Terraform resource azurerm_logz_tag_rule.
 type LogzTagRule struct {
-	Name  string
-	Args  LogzTagRuleArgs
-	state *logzTagRuleState
+	Name      string
+	Args      LogzTagRuleArgs
+	state     *logzTagRuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LogzTagRule].
 func (ltr *LogzTagRule) Type() string {
 	return "azurerm_logz_tag_rule"
 }
 
+// LocalName returns the local name for [LogzTagRule].
 func (ltr *LogzTagRule) LocalName() string {
 	return ltr.Name
 }
 
+// Configuration returns the configuration (args) for [LogzTagRule].
 func (ltr *LogzTagRule) Configuration() interface{} {
 	return ltr.Args
 }
 
+// DependOn is used for other resources to depend on [LogzTagRule].
+func (ltr *LogzTagRule) DependOn() terra.Reference {
+	return terra.ReferenceResource(ltr)
+}
+
+// Dependencies returns the list of resources [LogzTagRule] depends_on.
+func (ltr *LogzTagRule) Dependencies() terra.Dependencies {
+	return ltr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LogzTagRule].
+func (ltr *LogzTagRule) LifecycleManagement() *terra.Lifecycle {
+	return ltr.Lifecycle
+}
+
+// Attributes returns the attributes for [LogzTagRule].
 func (ltr *LogzTagRule) Attributes() logzTagRuleAttributes {
 	return logzTagRuleAttributes{ref: terra.ReferenceResource(ltr)}
 }
 
+// ImportState imports the given attribute values into [LogzTagRule]'s state.
 func (ltr *LogzTagRule) ImportState(av io.Reader) error {
 	ltr.state = &logzTagRuleState{}
 	if err := json.NewDecoder(av).Decode(ltr.state); err != nil {
@@ -49,10 +73,12 @@ func (ltr *LogzTagRule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LogzTagRule] has state.
 func (ltr *LogzTagRule) State() (*logzTagRuleState, bool) {
 	return ltr.state, ltr.state != nil
 }
 
+// StateMust returns the state for [LogzTagRule]. Panics if the state is nil.
 func (ltr *LogzTagRule) StateMust() *logzTagRuleState {
 	if ltr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ltr.Type(), ltr.LocalName()))
@@ -60,10 +86,7 @@ func (ltr *LogzTagRule) StateMust() *logzTagRuleState {
 	return ltr.state
 }
 
-func (ltr *LogzTagRule) DependOn() terra.Reference {
-	return terra.ReferenceResource(ltr)
-}
-
+// LogzTagRuleArgs contains the configurations for azurerm_logz_tag_rule.
 type LogzTagRuleArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,39 +102,42 @@ type LogzTagRuleArgs struct {
 	TagFilter []logztagrule.TagFilter `hcl:"tag_filter,block" validate:"min=0,max=10"`
 	// Timeouts: optional
 	Timeouts *logztagrule.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LogzTagRule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type logzTagRuleAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_logz_tag_rule.
 func (ltr logzTagRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ltr.ref.Append("id"))
+	return terra.ReferenceAsString(ltr.ref.Append("id"))
 }
 
+// LogzMonitorId returns a reference to field logz_monitor_id of azurerm_logz_tag_rule.
 func (ltr logzTagRuleAttributes) LogzMonitorId() terra.StringValue {
-	return terra.ReferenceString(ltr.ref.Append("logz_monitor_id"))
+	return terra.ReferenceAsString(ltr.ref.Append("logz_monitor_id"))
 }
 
+// SendAadLogs returns a reference to field send_aad_logs of azurerm_logz_tag_rule.
 func (ltr logzTagRuleAttributes) SendAadLogs() terra.BoolValue {
-	return terra.ReferenceBool(ltr.ref.Append("send_aad_logs"))
+	return terra.ReferenceAsBool(ltr.ref.Append("send_aad_logs"))
 }
 
+// SendActivityLogs returns a reference to field send_activity_logs of azurerm_logz_tag_rule.
 func (ltr logzTagRuleAttributes) SendActivityLogs() terra.BoolValue {
-	return terra.ReferenceBool(ltr.ref.Append("send_activity_logs"))
+	return terra.ReferenceAsBool(ltr.ref.Append("send_activity_logs"))
 }
 
+// SendSubscriptionLogs returns a reference to field send_subscription_logs of azurerm_logz_tag_rule.
 func (ltr logzTagRuleAttributes) SendSubscriptionLogs() terra.BoolValue {
-	return terra.ReferenceBool(ltr.ref.Append("send_subscription_logs"))
+	return terra.ReferenceAsBool(ltr.ref.Append("send_subscription_logs"))
 }
 
 func (ltr logzTagRuleAttributes) TagFilter() terra.ListValue[logztagrule.TagFilterAttributes] {
-	return terra.ReferenceList[logztagrule.TagFilterAttributes](ltr.ref.Append("tag_filter"))
+	return terra.ReferenceAsList[logztagrule.TagFilterAttributes](ltr.ref.Append("tag_filter"))
 }
 
 func (ltr logzTagRuleAttributes) Timeouts() logztagrule.TimeoutsAttributes {
-	return terra.ReferenceSingle[logztagrule.TimeoutsAttributes](ltr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[logztagrule.TimeoutsAttributes](ltr.ref.Append("timeouts"))
 }
 
 type logzTagRuleState struct {

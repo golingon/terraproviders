@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMssqlManagedInstanceSecurityAlertPolicy creates a new instance of [MssqlManagedInstanceSecurityAlertPolicy].
 func NewMssqlManagedInstanceSecurityAlertPolicy(name string, args MssqlManagedInstanceSecurityAlertPolicyArgs) *MssqlManagedInstanceSecurityAlertPolicy {
 	return &MssqlManagedInstanceSecurityAlertPolicy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMssqlManagedInstanceSecurityAlertPolicy(name string, args MssqlManagedIn
 
 var _ terra.Resource = (*MssqlManagedInstanceSecurityAlertPolicy)(nil)
 
+// MssqlManagedInstanceSecurityAlertPolicy represents the Terraform resource azurerm_mssql_managed_instance_security_alert_policy.
 type MssqlManagedInstanceSecurityAlertPolicy struct {
-	Name  string
-	Args  MssqlManagedInstanceSecurityAlertPolicyArgs
-	state *mssqlManagedInstanceSecurityAlertPolicyState
+	Name      string
+	Args      MssqlManagedInstanceSecurityAlertPolicyArgs
+	state     *mssqlManagedInstanceSecurityAlertPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MssqlManagedInstanceSecurityAlertPolicy].
 func (mmisap *MssqlManagedInstanceSecurityAlertPolicy) Type() string {
 	return "azurerm_mssql_managed_instance_security_alert_policy"
 }
 
+// LocalName returns the local name for [MssqlManagedInstanceSecurityAlertPolicy].
 func (mmisap *MssqlManagedInstanceSecurityAlertPolicy) LocalName() string {
 	return mmisap.Name
 }
 
+// Configuration returns the configuration (args) for [MssqlManagedInstanceSecurityAlertPolicy].
 func (mmisap *MssqlManagedInstanceSecurityAlertPolicy) Configuration() interface{} {
 	return mmisap.Args
 }
 
+// DependOn is used for other resources to depend on [MssqlManagedInstanceSecurityAlertPolicy].
+func (mmisap *MssqlManagedInstanceSecurityAlertPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(mmisap)
+}
+
+// Dependencies returns the list of resources [MssqlManagedInstanceSecurityAlertPolicy] depends_on.
+func (mmisap *MssqlManagedInstanceSecurityAlertPolicy) Dependencies() terra.Dependencies {
+	return mmisap.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MssqlManagedInstanceSecurityAlertPolicy].
+func (mmisap *MssqlManagedInstanceSecurityAlertPolicy) LifecycleManagement() *terra.Lifecycle {
+	return mmisap.Lifecycle
+}
+
+// Attributes returns the attributes for [MssqlManagedInstanceSecurityAlertPolicy].
 func (mmisap *MssqlManagedInstanceSecurityAlertPolicy) Attributes() mssqlManagedInstanceSecurityAlertPolicyAttributes {
 	return mssqlManagedInstanceSecurityAlertPolicyAttributes{ref: terra.ReferenceResource(mmisap)}
 }
 
+// ImportState imports the given attribute values into [MssqlManagedInstanceSecurityAlertPolicy]'s state.
 func (mmisap *MssqlManagedInstanceSecurityAlertPolicy) ImportState(av io.Reader) error {
 	mmisap.state = &mssqlManagedInstanceSecurityAlertPolicyState{}
 	if err := json.NewDecoder(av).Decode(mmisap.state); err != nil {
@@ -49,10 +73,12 @@ func (mmisap *MssqlManagedInstanceSecurityAlertPolicy) ImportState(av io.Reader)
 	return nil
 }
 
+// State returns the state and a bool indicating if [MssqlManagedInstanceSecurityAlertPolicy] has state.
 func (mmisap *MssqlManagedInstanceSecurityAlertPolicy) State() (*mssqlManagedInstanceSecurityAlertPolicyState, bool) {
 	return mmisap.state, mmisap.state != nil
 }
 
+// StateMust returns the state for [MssqlManagedInstanceSecurityAlertPolicy]. Panics if the state is nil.
 func (mmisap *MssqlManagedInstanceSecurityAlertPolicy) StateMust() *mssqlManagedInstanceSecurityAlertPolicyState {
 	if mmisap.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mmisap.Type(), mmisap.LocalName()))
@@ -60,10 +86,7 @@ func (mmisap *MssqlManagedInstanceSecurityAlertPolicy) StateMust() *mssqlManaged
 	return mmisap.state
 }
 
-func (mmisap *MssqlManagedInstanceSecurityAlertPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(mmisap)
-}
-
+// MssqlManagedInstanceSecurityAlertPolicyArgs contains the configurations for azurerm_mssql_managed_instance_security_alert_policy.
 type MssqlManagedInstanceSecurityAlertPolicyArgs struct {
 	// DisabledAlerts: set of string, optional
 	DisabledAlerts terra.SetValue[terra.StringValue] `hcl:"disabled_alerts,attr"`
@@ -87,55 +110,63 @@ type MssqlManagedInstanceSecurityAlertPolicyArgs struct {
 	StorageEndpoint terra.StringValue `hcl:"storage_endpoint,attr"`
 	// Timeouts: optional
 	Timeouts *mssqlmanagedinstancesecurityalertpolicy.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MssqlManagedInstanceSecurityAlertPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mssqlManagedInstanceSecurityAlertPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// DisabledAlerts returns a reference to field disabled_alerts of azurerm_mssql_managed_instance_security_alert_policy.
 func (mmisap mssqlManagedInstanceSecurityAlertPolicyAttributes) DisabledAlerts() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](mmisap.ref.Append("disabled_alerts"))
+	return terra.ReferenceAsSet[terra.StringValue](mmisap.ref.Append("disabled_alerts"))
 }
 
+// EmailAccountAdminsEnabled returns a reference to field email_account_admins_enabled of azurerm_mssql_managed_instance_security_alert_policy.
 func (mmisap mssqlManagedInstanceSecurityAlertPolicyAttributes) EmailAccountAdminsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(mmisap.ref.Append("email_account_admins_enabled"))
+	return terra.ReferenceAsBool(mmisap.ref.Append("email_account_admins_enabled"))
 }
 
+// EmailAddresses returns a reference to field email_addresses of azurerm_mssql_managed_instance_security_alert_policy.
 func (mmisap mssqlManagedInstanceSecurityAlertPolicyAttributes) EmailAddresses() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](mmisap.ref.Append("email_addresses"))
+	return terra.ReferenceAsSet[terra.StringValue](mmisap.ref.Append("email_addresses"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_mssql_managed_instance_security_alert_policy.
 func (mmisap mssqlManagedInstanceSecurityAlertPolicyAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(mmisap.ref.Append("enabled"))
+	return terra.ReferenceAsBool(mmisap.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of azurerm_mssql_managed_instance_security_alert_policy.
 func (mmisap mssqlManagedInstanceSecurityAlertPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mmisap.ref.Append("id"))
+	return terra.ReferenceAsString(mmisap.ref.Append("id"))
 }
 
+// ManagedInstanceName returns a reference to field managed_instance_name of azurerm_mssql_managed_instance_security_alert_policy.
 func (mmisap mssqlManagedInstanceSecurityAlertPolicyAttributes) ManagedInstanceName() terra.StringValue {
-	return terra.ReferenceString(mmisap.ref.Append("managed_instance_name"))
+	return terra.ReferenceAsString(mmisap.ref.Append("managed_instance_name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_mssql_managed_instance_security_alert_policy.
 func (mmisap mssqlManagedInstanceSecurityAlertPolicyAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(mmisap.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(mmisap.ref.Append("resource_group_name"))
 }
 
+// RetentionDays returns a reference to field retention_days of azurerm_mssql_managed_instance_security_alert_policy.
 func (mmisap mssqlManagedInstanceSecurityAlertPolicyAttributes) RetentionDays() terra.NumberValue {
-	return terra.ReferenceNumber(mmisap.ref.Append("retention_days"))
+	return terra.ReferenceAsNumber(mmisap.ref.Append("retention_days"))
 }
 
+// StorageAccountAccessKey returns a reference to field storage_account_access_key of azurerm_mssql_managed_instance_security_alert_policy.
 func (mmisap mssqlManagedInstanceSecurityAlertPolicyAttributes) StorageAccountAccessKey() terra.StringValue {
-	return terra.ReferenceString(mmisap.ref.Append("storage_account_access_key"))
+	return terra.ReferenceAsString(mmisap.ref.Append("storage_account_access_key"))
 }
 
+// StorageEndpoint returns a reference to field storage_endpoint of azurerm_mssql_managed_instance_security_alert_policy.
 func (mmisap mssqlManagedInstanceSecurityAlertPolicyAttributes) StorageEndpoint() terra.StringValue {
-	return terra.ReferenceString(mmisap.ref.Append("storage_endpoint"))
+	return terra.ReferenceAsString(mmisap.ref.Append("storage_endpoint"))
 }
 
 func (mmisap mssqlManagedInstanceSecurityAlertPolicyAttributes) Timeouts() mssqlmanagedinstancesecurityalertpolicy.TimeoutsAttributes {
-	return terra.ReferenceSingle[mssqlmanagedinstancesecurityalertpolicy.TimeoutsAttributes](mmisap.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[mssqlmanagedinstancesecurityalertpolicy.TimeoutsAttributes](mmisap.ref.Append("timeouts"))
 }
 
 type mssqlManagedInstanceSecurityAlertPolicyState struct {

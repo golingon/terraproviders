@@ -41,7 +41,7 @@ func (asgp AutoScalingGroupProviderAttributes) InternalWithRef(ref terra.Referen
 	return AutoScalingGroupProviderAttributes{ref: ref}
 }
 
-func (asgp AutoScalingGroupProviderAttributes) InternalTokens() hclwrite.Tokens {
+func (asgp AutoScalingGroupProviderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return asgp.ref.InternalTokens()
 }
 
@@ -69,7 +69,7 @@ func (ms ManagedScalingAttributes) InternalWithRef(ref terra.Reference) ManagedS
 	return ManagedScalingAttributes{ref: ref}
 }
 
-func (ms ManagedScalingAttributes) InternalTokens() hclwrite.Tokens {
+func (ms ManagedScalingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ms.ref.InternalTokens()
 }
 

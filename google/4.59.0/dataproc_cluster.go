@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataprocCluster creates a new instance of [DataprocCluster].
 func NewDataprocCluster(name string, args DataprocClusterArgs) *DataprocCluster {
 	return &DataprocCluster{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataprocCluster(name string, args DataprocClusterArgs) *DataprocCluster 
 
 var _ terra.Resource = (*DataprocCluster)(nil)
 
+// DataprocCluster represents the Terraform resource google_dataproc_cluster.
 type DataprocCluster struct {
-	Name  string
-	Args  DataprocClusterArgs
-	state *dataprocClusterState
+	Name      string
+	Args      DataprocClusterArgs
+	state     *dataprocClusterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataprocCluster].
 func (dc *DataprocCluster) Type() string {
 	return "google_dataproc_cluster"
 }
 
+// LocalName returns the local name for [DataprocCluster].
 func (dc *DataprocCluster) LocalName() string {
 	return dc.Name
 }
 
+// Configuration returns the configuration (args) for [DataprocCluster].
 func (dc *DataprocCluster) Configuration() interface{} {
 	return dc.Args
 }
 
+// DependOn is used for other resources to depend on [DataprocCluster].
+func (dc *DataprocCluster) DependOn() terra.Reference {
+	return terra.ReferenceResource(dc)
+}
+
+// Dependencies returns the list of resources [DataprocCluster] depends_on.
+func (dc *DataprocCluster) Dependencies() terra.Dependencies {
+	return dc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataprocCluster].
+func (dc *DataprocCluster) LifecycleManagement() *terra.Lifecycle {
+	return dc.Lifecycle
+}
+
+// Attributes returns the attributes for [DataprocCluster].
 func (dc *DataprocCluster) Attributes() dataprocClusterAttributes {
 	return dataprocClusterAttributes{ref: terra.ReferenceResource(dc)}
 }
 
+// ImportState imports the given attribute values into [DataprocCluster]'s state.
 func (dc *DataprocCluster) ImportState(av io.Reader) error {
 	dc.state = &dataprocClusterState{}
 	if err := json.NewDecoder(av).Decode(dc.state); err != nil {
@@ -49,10 +73,12 @@ func (dc *DataprocCluster) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataprocCluster] has state.
 func (dc *DataprocCluster) State() (*dataprocClusterState, bool) {
 	return dc.state, dc.state != nil
 }
 
+// StateMust returns the state for [DataprocCluster]. Panics if the state is nil.
 func (dc *DataprocCluster) StateMust() *dataprocClusterState {
 	if dc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dc.Type(), dc.LocalName()))
@@ -60,10 +86,7 @@ func (dc *DataprocCluster) StateMust() *dataprocClusterState {
 	return dc.state
 }
 
-func (dc *DataprocCluster) DependOn() terra.Reference {
-	return terra.ReferenceResource(dc)
-}
-
+// DataprocClusterArgs contains the configurations for google_dataproc_cluster.
 type DataprocClusterArgs struct {
 	// GracefulDecommissionTimeout: string, optional
 	GracefulDecommissionTimeout terra.StringValue `hcl:"graceful_decommission_timeout,attr"`
@@ -83,47 +106,51 @@ type DataprocClusterArgs struct {
 	Timeouts *dataproccluster.Timeouts `hcl:"timeouts,block"`
 	// VirtualClusterConfig: optional
 	VirtualClusterConfig *dataproccluster.VirtualClusterConfig `hcl:"virtual_cluster_config,block"`
-	// DependsOn contains resources that DataprocCluster depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataprocClusterAttributes struct {
 	ref terra.Reference
 }
 
+// GracefulDecommissionTimeout returns a reference to field graceful_decommission_timeout of google_dataproc_cluster.
 func (dc dataprocClusterAttributes) GracefulDecommissionTimeout() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("graceful_decommission_timeout"))
+	return terra.ReferenceAsString(dc.ref.Append("graceful_decommission_timeout"))
 }
 
+// Id returns a reference to field id of google_dataproc_cluster.
 func (dc dataprocClusterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("id"))
+	return terra.ReferenceAsString(dc.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_dataproc_cluster.
 func (dc dataprocClusterAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dc.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](dc.ref.Append("labels"))
 }
 
+// Name returns a reference to field name of google_dataproc_cluster.
 func (dc dataprocClusterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("name"))
+	return terra.ReferenceAsString(dc.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_dataproc_cluster.
 func (dc dataprocClusterAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("project"))
+	return terra.ReferenceAsString(dc.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_dataproc_cluster.
 func (dc dataprocClusterAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("region"))
+	return terra.ReferenceAsString(dc.ref.Append("region"))
 }
 
 func (dc dataprocClusterAttributes) ClusterConfig() terra.ListValue[dataproccluster.ClusterConfigAttributes] {
-	return terra.ReferenceList[dataproccluster.ClusterConfigAttributes](dc.ref.Append("cluster_config"))
+	return terra.ReferenceAsList[dataproccluster.ClusterConfigAttributes](dc.ref.Append("cluster_config"))
 }
 
 func (dc dataprocClusterAttributes) Timeouts() dataproccluster.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataproccluster.TimeoutsAttributes](dc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataproccluster.TimeoutsAttributes](dc.ref.Append("timeouts"))
 }
 
 func (dc dataprocClusterAttributes) VirtualClusterConfig() terra.ListValue[dataproccluster.VirtualClusterConfigAttributes] {
-	return terra.ReferenceList[dataproccluster.VirtualClusterConfigAttributes](dc.ref.Append("virtual_cluster_config"))
+	return terra.ReferenceAsList[dataproccluster.VirtualClusterConfigAttributes](dc.ref.Append("virtual_cluster_config"))
 }
 
 type dataprocClusterState struct {

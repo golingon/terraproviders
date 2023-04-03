@@ -35,7 +35,7 @@ func (b BandwidthAttributes) InternalWithRef(ref terra.Reference) BandwidthAttri
 	return BandwidthAttributes{ref: ref}
 }
 
-func (b BandwidthAttributes) InternalTokens() hclwrite.Tokens {
+func (b BandwidthAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return b.ref.InternalTokens()
 }
 
@@ -59,7 +59,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

@@ -30,72 +30,72 @@ type SecretAttributes struct {
 	ref terra.Reference
 }
 
-func (s SecretAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SecretAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SecretAttributes) InternalWithRef(ref terra.Reference) SecretAttributes {
 	return SecretAttributes{ref: ref}
 }
 
-func (s SecretAttributes) InternalTokens() hclwrite.Tokens {
+func (s SecretAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SecretAttributes) CustomerCertificate() terra.ListValue[CustomerCertificateAttributes] {
-	return terra.ReferenceList[CustomerCertificateAttributes](s.ref.Append("customer_certificate"))
+	return terra.ReferenceAsList[CustomerCertificateAttributes](s.ref.Append("customer_certificate"))
 }
 
 type CustomerCertificateAttributes struct {
 	ref terra.Reference
 }
 
-func (cc CustomerCertificateAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc CustomerCertificateAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc CustomerCertificateAttributes) InternalWithRef(ref terra.Reference) CustomerCertificateAttributes {
 	return CustomerCertificateAttributes{ref: ref}
 }
 
-func (cc CustomerCertificateAttributes) InternalTokens() hclwrite.Tokens {
+func (cc CustomerCertificateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
 func (cc CustomerCertificateAttributes) KeyVaultCertificateId() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("key_vault_certificate_id"))
+	return terra.ReferenceAsString(cc.ref.Append("key_vault_certificate_id"))
 }
 
 func (cc CustomerCertificateAttributes) SubjectAlternativeNames() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cc.ref.Append("subject_alternative_names"))
+	return terra.ReferenceAsList[terra.StringValue](cc.ref.Append("subject_alternative_names"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type SecretState struct {

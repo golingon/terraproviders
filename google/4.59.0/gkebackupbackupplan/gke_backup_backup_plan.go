@@ -73,204 +73,204 @@ type BackupConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (bc BackupConfigAttributes) InternalRef() terra.Reference {
-	return bc.ref
+func (bc BackupConfigAttributes) InternalRef() (terra.Reference, error) {
+	return bc.ref, nil
 }
 
 func (bc BackupConfigAttributes) InternalWithRef(ref terra.Reference) BackupConfigAttributes {
 	return BackupConfigAttributes{ref: ref}
 }
 
-func (bc BackupConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (bc BackupConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bc.ref.InternalTokens()
 }
 
 func (bc BackupConfigAttributes) AllNamespaces() terra.BoolValue {
-	return terra.ReferenceBool(bc.ref.Append("all_namespaces"))
+	return terra.ReferenceAsBool(bc.ref.Append("all_namespaces"))
 }
 
 func (bc BackupConfigAttributes) IncludeSecrets() terra.BoolValue {
-	return terra.ReferenceBool(bc.ref.Append("include_secrets"))
+	return terra.ReferenceAsBool(bc.ref.Append("include_secrets"))
 }
 
 func (bc BackupConfigAttributes) IncludeVolumeData() terra.BoolValue {
-	return terra.ReferenceBool(bc.ref.Append("include_volume_data"))
+	return terra.ReferenceAsBool(bc.ref.Append("include_volume_data"))
 }
 
 func (bc BackupConfigAttributes) EncryptionKey() terra.ListValue[EncryptionKeyAttributes] {
-	return terra.ReferenceList[EncryptionKeyAttributes](bc.ref.Append("encryption_key"))
+	return terra.ReferenceAsList[EncryptionKeyAttributes](bc.ref.Append("encryption_key"))
 }
 
 func (bc BackupConfigAttributes) SelectedApplications() terra.ListValue[SelectedApplicationsAttributes] {
-	return terra.ReferenceList[SelectedApplicationsAttributes](bc.ref.Append("selected_applications"))
+	return terra.ReferenceAsList[SelectedApplicationsAttributes](bc.ref.Append("selected_applications"))
 }
 
 func (bc BackupConfigAttributes) SelectedNamespaces() terra.ListValue[SelectedNamespacesAttributes] {
-	return terra.ReferenceList[SelectedNamespacesAttributes](bc.ref.Append("selected_namespaces"))
+	return terra.ReferenceAsList[SelectedNamespacesAttributes](bc.ref.Append("selected_namespaces"))
 }
 
 type EncryptionKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (ek EncryptionKeyAttributes) InternalRef() terra.Reference {
-	return ek.ref
+func (ek EncryptionKeyAttributes) InternalRef() (terra.Reference, error) {
+	return ek.ref, nil
 }
 
 func (ek EncryptionKeyAttributes) InternalWithRef(ref terra.Reference) EncryptionKeyAttributes {
 	return EncryptionKeyAttributes{ref: ref}
 }
 
-func (ek EncryptionKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (ek EncryptionKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ek.ref.InternalTokens()
 }
 
 func (ek EncryptionKeyAttributes) GcpKmsEncryptionKey() terra.StringValue {
-	return terra.ReferenceString(ek.ref.Append("gcp_kms_encryption_key"))
+	return terra.ReferenceAsString(ek.ref.Append("gcp_kms_encryption_key"))
 }
 
 type SelectedApplicationsAttributes struct {
 	ref terra.Reference
 }
 
-func (sa SelectedApplicationsAttributes) InternalRef() terra.Reference {
-	return sa.ref
+func (sa SelectedApplicationsAttributes) InternalRef() (terra.Reference, error) {
+	return sa.ref, nil
 }
 
 func (sa SelectedApplicationsAttributes) InternalWithRef(ref terra.Reference) SelectedApplicationsAttributes {
 	return SelectedApplicationsAttributes{ref: ref}
 }
 
-func (sa SelectedApplicationsAttributes) InternalTokens() hclwrite.Tokens {
+func (sa SelectedApplicationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sa.ref.InternalTokens()
 }
 
 func (sa SelectedApplicationsAttributes) NamespacedNames() terra.ListValue[NamespacedNamesAttributes] {
-	return terra.ReferenceList[NamespacedNamesAttributes](sa.ref.Append("namespaced_names"))
+	return terra.ReferenceAsList[NamespacedNamesAttributes](sa.ref.Append("namespaced_names"))
 }
 
 type NamespacedNamesAttributes struct {
 	ref terra.Reference
 }
 
-func (nn NamespacedNamesAttributes) InternalRef() terra.Reference {
-	return nn.ref
+func (nn NamespacedNamesAttributes) InternalRef() (terra.Reference, error) {
+	return nn.ref, nil
 }
 
 func (nn NamespacedNamesAttributes) InternalWithRef(ref terra.Reference) NamespacedNamesAttributes {
 	return NamespacedNamesAttributes{ref: ref}
 }
 
-func (nn NamespacedNamesAttributes) InternalTokens() hclwrite.Tokens {
+func (nn NamespacedNamesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nn.ref.InternalTokens()
 }
 
 func (nn NamespacedNamesAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(nn.ref.Append("name"))
+	return terra.ReferenceAsString(nn.ref.Append("name"))
 }
 
 func (nn NamespacedNamesAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(nn.ref.Append("namespace"))
+	return terra.ReferenceAsString(nn.ref.Append("namespace"))
 }
 
 type SelectedNamespacesAttributes struct {
 	ref terra.Reference
 }
 
-func (sn SelectedNamespacesAttributes) InternalRef() terra.Reference {
-	return sn.ref
+func (sn SelectedNamespacesAttributes) InternalRef() (terra.Reference, error) {
+	return sn.ref, nil
 }
 
 func (sn SelectedNamespacesAttributes) InternalWithRef(ref terra.Reference) SelectedNamespacesAttributes {
 	return SelectedNamespacesAttributes{ref: ref}
 }
 
-func (sn SelectedNamespacesAttributes) InternalTokens() hclwrite.Tokens {
+func (sn SelectedNamespacesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sn.ref.InternalTokens()
 }
 
 func (sn SelectedNamespacesAttributes) Namespaces() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sn.ref.Append("namespaces"))
+	return terra.ReferenceAsList[terra.StringValue](sn.ref.Append("namespaces"))
 }
 
 type BackupScheduleAttributes struct {
 	ref terra.Reference
 }
 
-func (bs BackupScheduleAttributes) InternalRef() terra.Reference {
-	return bs.ref
+func (bs BackupScheduleAttributes) InternalRef() (terra.Reference, error) {
+	return bs.ref, nil
 }
 
 func (bs BackupScheduleAttributes) InternalWithRef(ref terra.Reference) BackupScheduleAttributes {
 	return BackupScheduleAttributes{ref: ref}
 }
 
-func (bs BackupScheduleAttributes) InternalTokens() hclwrite.Tokens {
+func (bs BackupScheduleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bs.ref.InternalTokens()
 }
 
 func (bs BackupScheduleAttributes) CronSchedule() terra.StringValue {
-	return terra.ReferenceString(bs.ref.Append("cron_schedule"))
+	return terra.ReferenceAsString(bs.ref.Append("cron_schedule"))
 }
 
 func (bs BackupScheduleAttributes) Paused() terra.BoolValue {
-	return terra.ReferenceBool(bs.ref.Append("paused"))
+	return terra.ReferenceAsBool(bs.ref.Append("paused"))
 }
 
 type RetentionPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (rp RetentionPolicyAttributes) InternalRef() terra.Reference {
-	return rp.ref
+func (rp RetentionPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return rp.ref, nil
 }
 
 func (rp RetentionPolicyAttributes) InternalWithRef(ref terra.Reference) RetentionPolicyAttributes {
 	return RetentionPolicyAttributes{ref: ref}
 }
 
-func (rp RetentionPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (rp RetentionPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rp.ref.InternalTokens()
 }
 
 func (rp RetentionPolicyAttributes) BackupDeleteLockDays() terra.NumberValue {
-	return terra.ReferenceNumber(rp.ref.Append("backup_delete_lock_days"))
+	return terra.ReferenceAsNumber(rp.ref.Append("backup_delete_lock_days"))
 }
 
 func (rp RetentionPolicyAttributes) BackupRetainDays() terra.NumberValue {
-	return terra.ReferenceNumber(rp.ref.Append("backup_retain_days"))
+	return terra.ReferenceAsNumber(rp.ref.Append("backup_retain_days"))
 }
 
 func (rp RetentionPolicyAttributes) Locked() terra.BoolValue {
-	return terra.ReferenceBool(rp.ref.Append("locked"))
+	return terra.ReferenceAsBool(rp.ref.Append("locked"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type BackupConfigState struct {

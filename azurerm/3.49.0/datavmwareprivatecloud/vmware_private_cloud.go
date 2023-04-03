@@ -20,80 +20,80 @@ type CircuitAttributes struct {
 	ref terra.Reference
 }
 
-func (c CircuitAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CircuitAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CircuitAttributes) InternalWithRef(ref terra.Reference) CircuitAttributes {
 	return CircuitAttributes{ref: ref}
 }
 
-func (c CircuitAttributes) InternalTokens() hclwrite.Tokens {
+func (c CircuitAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c CircuitAttributes) ExpressRouteId() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("express_route_id"))
+	return terra.ReferenceAsString(c.ref.Append("express_route_id"))
 }
 
 func (c CircuitAttributes) ExpressRoutePrivatePeeringId() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("express_route_private_peering_id"))
+	return terra.ReferenceAsString(c.ref.Append("express_route_private_peering_id"))
 }
 
 func (c CircuitAttributes) PrimarySubnetCidr() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("primary_subnet_cidr"))
+	return terra.ReferenceAsString(c.ref.Append("primary_subnet_cidr"))
 }
 
 func (c CircuitAttributes) SecondarySubnetCidr() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("secondary_subnet_cidr"))
+	return terra.ReferenceAsString(c.ref.Append("secondary_subnet_cidr"))
 }
 
 type ManagementClusterAttributes struct {
 	ref terra.Reference
 }
 
-func (mc ManagementClusterAttributes) InternalRef() terra.Reference {
-	return mc.ref
+func (mc ManagementClusterAttributes) InternalRef() (terra.Reference, error) {
+	return mc.ref, nil
 }
 
 func (mc ManagementClusterAttributes) InternalWithRef(ref terra.Reference) ManagementClusterAttributes {
 	return ManagementClusterAttributes{ref: ref}
 }
 
-func (mc ManagementClusterAttributes) InternalTokens() hclwrite.Tokens {
+func (mc ManagementClusterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mc.ref.InternalTokens()
 }
 
 func (mc ManagementClusterAttributes) Hosts() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](mc.ref.Append("hosts"))
+	return terra.ReferenceAsList[terra.StringValue](mc.ref.Append("hosts"))
 }
 
 func (mc ManagementClusterAttributes) Id() terra.NumberValue {
-	return terra.ReferenceNumber(mc.ref.Append("id"))
+	return terra.ReferenceAsNumber(mc.ref.Append("id"))
 }
 
 func (mc ManagementClusterAttributes) Size() terra.NumberValue {
-	return terra.ReferenceNumber(mc.ref.Append("size"))
+	return terra.ReferenceAsNumber(mc.ref.Append("size"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type CircuitState struct {

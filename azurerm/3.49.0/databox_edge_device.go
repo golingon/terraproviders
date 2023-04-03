@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataboxEdgeDevice creates a new instance of [DataboxEdgeDevice].
 func NewDataboxEdgeDevice(name string, args DataboxEdgeDeviceArgs) *DataboxEdgeDevice {
 	return &DataboxEdgeDevice{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataboxEdgeDevice(name string, args DataboxEdgeDeviceArgs) *DataboxEdgeD
 
 var _ terra.Resource = (*DataboxEdgeDevice)(nil)
 
+// DataboxEdgeDevice represents the Terraform resource azurerm_databox_edge_device.
 type DataboxEdgeDevice struct {
-	Name  string
-	Args  DataboxEdgeDeviceArgs
-	state *databoxEdgeDeviceState
+	Name      string
+	Args      DataboxEdgeDeviceArgs
+	state     *databoxEdgeDeviceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataboxEdgeDevice].
 func (ded *DataboxEdgeDevice) Type() string {
 	return "azurerm_databox_edge_device"
 }
 
+// LocalName returns the local name for [DataboxEdgeDevice].
 func (ded *DataboxEdgeDevice) LocalName() string {
 	return ded.Name
 }
 
+// Configuration returns the configuration (args) for [DataboxEdgeDevice].
 func (ded *DataboxEdgeDevice) Configuration() interface{} {
 	return ded.Args
 }
 
+// DependOn is used for other resources to depend on [DataboxEdgeDevice].
+func (ded *DataboxEdgeDevice) DependOn() terra.Reference {
+	return terra.ReferenceResource(ded)
+}
+
+// Dependencies returns the list of resources [DataboxEdgeDevice] depends_on.
+func (ded *DataboxEdgeDevice) Dependencies() terra.Dependencies {
+	return ded.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataboxEdgeDevice].
+func (ded *DataboxEdgeDevice) LifecycleManagement() *terra.Lifecycle {
+	return ded.Lifecycle
+}
+
+// Attributes returns the attributes for [DataboxEdgeDevice].
 func (ded *DataboxEdgeDevice) Attributes() databoxEdgeDeviceAttributes {
 	return databoxEdgeDeviceAttributes{ref: terra.ReferenceResource(ded)}
 }
 
+// ImportState imports the given attribute values into [DataboxEdgeDevice]'s state.
 func (ded *DataboxEdgeDevice) ImportState(av io.Reader) error {
 	ded.state = &databoxEdgeDeviceState{}
 	if err := json.NewDecoder(av).Decode(ded.state); err != nil {
@@ -49,10 +73,12 @@ func (ded *DataboxEdgeDevice) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataboxEdgeDevice] has state.
 func (ded *DataboxEdgeDevice) State() (*databoxEdgeDeviceState, bool) {
 	return ded.state, ded.state != nil
 }
 
+// StateMust returns the state for [DataboxEdgeDevice]. Panics if the state is nil.
 func (ded *DataboxEdgeDevice) StateMust() *databoxEdgeDeviceState {
 	if ded.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ded.Type(), ded.LocalName()))
@@ -60,10 +86,7 @@ func (ded *DataboxEdgeDevice) StateMust() *databoxEdgeDeviceState {
 	return ded.state
 }
 
-func (ded *DataboxEdgeDevice) DependOn() terra.Reference {
-	return terra.ReferenceResource(ded)
-}
-
+// DataboxEdgeDeviceArgs contains the configurations for azurerm_databox_edge_device.
 type DataboxEdgeDeviceArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -81,43 +104,47 @@ type DataboxEdgeDeviceArgs struct {
 	DeviceProperties []databoxedgedevice.DeviceProperties `hcl:"device_properties,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *databoxedgedevice.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataboxEdgeDevice depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type databoxEdgeDeviceAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_databox_edge_device.
 func (ded databoxEdgeDeviceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ded.ref.Append("id"))
+	return terra.ReferenceAsString(ded.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_databox_edge_device.
 func (ded databoxEdgeDeviceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ded.ref.Append("location"))
+	return terra.ReferenceAsString(ded.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_databox_edge_device.
 func (ded databoxEdgeDeviceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ded.ref.Append("name"))
+	return terra.ReferenceAsString(ded.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_databox_edge_device.
 func (ded databoxEdgeDeviceAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ded.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ded.ref.Append("resource_group_name"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_databox_edge_device.
 func (ded databoxEdgeDeviceAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(ded.ref.Append("sku_name"))
+	return terra.ReferenceAsString(ded.ref.Append("sku_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_databox_edge_device.
 func (ded databoxEdgeDeviceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ded.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ded.ref.Append("tags"))
 }
 
 func (ded databoxEdgeDeviceAttributes) DeviceProperties() terra.ListValue[databoxedgedevice.DevicePropertiesAttributes] {
-	return terra.ReferenceList[databoxedgedevice.DevicePropertiesAttributes](ded.ref.Append("device_properties"))
+	return terra.ReferenceAsList[databoxedgedevice.DevicePropertiesAttributes](ded.ref.Append("device_properties"))
 }
 
 func (ded databoxEdgeDeviceAttributes) Timeouts() databoxedgedevice.TimeoutsAttributes {
-	return terra.ReferenceSingle[databoxedgedevice.TimeoutsAttributes](ded.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[databoxedgedevice.TimeoutsAttributes](ded.ref.Append("timeouts"))
 }
 
 type databoxEdgeDeviceState struct {

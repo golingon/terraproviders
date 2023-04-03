@@ -13,36 +13,36 @@ type PermissionsAttributes struct {
 	ref terra.Reference
 }
 
-func (p PermissionsAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p PermissionsAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p PermissionsAttributes) InternalWithRef(ref terra.Reference) PermissionsAttributes {
 	return PermissionsAttributes{ref: ref}
 }
 
-func (p PermissionsAttributes) InternalTokens() hclwrite.Tokens {
+func (p PermissionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
 func (p PermissionsAttributes) ApiDisabled() terra.BoolValue {
-	return terra.ReferenceBool(p.ref.Append("api_disabled"))
+	return terra.ReferenceAsBool(p.ref.Append("api_disabled"))
 }
 
 func (p PermissionsAttributes) CustomSupportLevel() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("custom_support_level"))
+	return terra.ReferenceAsString(p.ref.Append("custom_support_level"))
 }
 
 func (p PermissionsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("name"))
+	return terra.ReferenceAsString(p.ref.Append("name"))
 }
 
 func (p PermissionsAttributes) Stage() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("stage"))
+	return terra.ReferenceAsString(p.ref.Append("stage"))
 }
 
 func (p PermissionsAttributes) Title() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("title"))
+	return terra.ReferenceAsString(p.ref.Append("title"))
 }
 
 type PermissionsState struct {

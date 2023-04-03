@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataResourceGroupTemplateDeployment creates a new instance of [DataResourceGroupTemplateDeployment].
 func NewDataResourceGroupTemplateDeployment(name string, args DataResourceGroupTemplateDeploymentArgs) *DataResourceGroupTemplateDeployment {
 	return &DataResourceGroupTemplateDeployment{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataResourceGroupTemplateDeployment(name string, args DataResourceGroupT
 
 var _ terra.DataResource = (*DataResourceGroupTemplateDeployment)(nil)
 
+// DataResourceGroupTemplateDeployment represents the Terraform data resource azurerm_resource_group_template_deployment.
 type DataResourceGroupTemplateDeployment struct {
 	Name string
 	Args DataResourceGroupTemplateDeploymentArgs
 }
 
+// DataSource returns the Terraform object type for [DataResourceGroupTemplateDeployment].
 func (rgtd *DataResourceGroupTemplateDeployment) DataSource() string {
 	return "azurerm_resource_group_template_deployment"
 }
 
+// LocalName returns the local name for [DataResourceGroupTemplateDeployment].
 func (rgtd *DataResourceGroupTemplateDeployment) LocalName() string {
 	return rgtd.Name
 }
 
+// Configuration returns the configuration (args) for [DataResourceGroupTemplateDeployment].
 func (rgtd *DataResourceGroupTemplateDeployment) Configuration() interface{} {
 	return rgtd.Args
 }
 
+// Attributes returns the attributes for [DataResourceGroupTemplateDeployment].
 func (rgtd *DataResourceGroupTemplateDeployment) Attributes() dataResourceGroupTemplateDeploymentAttributes {
 	return dataResourceGroupTemplateDeploymentAttributes{ref: terra.ReferenceDataResource(rgtd)}
 }
 
+// DataResourceGroupTemplateDeploymentArgs contains the configurations for azurerm_resource_group_template_deployment.
 type DataResourceGroupTemplateDeploymentArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,22 +58,26 @@ type dataResourceGroupTemplateDeploymentAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_resource_group_template_deployment.
 func (rgtd dataResourceGroupTemplateDeploymentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rgtd.ref.Append("id"))
+	return terra.ReferenceAsString(rgtd.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_resource_group_template_deployment.
 func (rgtd dataResourceGroupTemplateDeploymentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rgtd.ref.Append("name"))
+	return terra.ReferenceAsString(rgtd.ref.Append("name"))
 }
 
+// OutputContent returns a reference to field output_content of azurerm_resource_group_template_deployment.
 func (rgtd dataResourceGroupTemplateDeploymentAttributes) OutputContent() terra.StringValue {
-	return terra.ReferenceString(rgtd.ref.Append("output_content"))
+	return terra.ReferenceAsString(rgtd.ref.Append("output_content"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_resource_group_template_deployment.
 func (rgtd dataResourceGroupTemplateDeploymentAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(rgtd.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(rgtd.ref.Append("resource_group_name"))
 }
 
 func (rgtd dataResourceGroupTemplateDeploymentAttributes) Timeouts() dataresourcegrouptemplatedeployment.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataresourcegrouptemplatedeployment.TimeoutsAttributes](rgtd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataresourcegrouptemplatedeployment.TimeoutsAttributes](rgtd.ref.Append("timeouts"))
 }

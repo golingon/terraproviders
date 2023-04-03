@@ -24,7 +24,7 @@ func (ef EventFilterAttributes) InternalWithRef(ref terra.Reference) EventFilter
 	return EventFilterAttributes{ref: ref}
 }
 
-func (ef EventFilterAttributes) InternalTokens() hclwrite.Tokens {
+func (ef EventFilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ef.ref.InternalTokens()
 }
 

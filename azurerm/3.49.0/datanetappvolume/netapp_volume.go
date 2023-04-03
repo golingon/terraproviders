@@ -18,52 +18,52 @@ type DataProtectionReplicationAttributes struct {
 	ref terra.Reference
 }
 
-func (dpr DataProtectionReplicationAttributes) InternalRef() terra.Reference {
-	return dpr.ref
+func (dpr DataProtectionReplicationAttributes) InternalRef() (terra.Reference, error) {
+	return dpr.ref, nil
 }
 
 func (dpr DataProtectionReplicationAttributes) InternalWithRef(ref terra.Reference) DataProtectionReplicationAttributes {
 	return DataProtectionReplicationAttributes{ref: ref}
 }
 
-func (dpr DataProtectionReplicationAttributes) InternalTokens() hclwrite.Tokens {
+func (dpr DataProtectionReplicationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dpr.ref.InternalTokens()
 }
 
 func (dpr DataProtectionReplicationAttributes) EndpointType() terra.StringValue {
-	return terra.ReferenceString(dpr.ref.Append("endpoint_type"))
+	return terra.ReferenceAsString(dpr.ref.Append("endpoint_type"))
 }
 
 func (dpr DataProtectionReplicationAttributes) RemoteVolumeLocation() terra.StringValue {
-	return terra.ReferenceString(dpr.ref.Append("remote_volume_location"))
+	return terra.ReferenceAsString(dpr.ref.Append("remote_volume_location"))
 }
 
 func (dpr DataProtectionReplicationAttributes) RemoteVolumeResourceId() terra.StringValue {
-	return terra.ReferenceString(dpr.ref.Append("remote_volume_resource_id"))
+	return terra.ReferenceAsString(dpr.ref.Append("remote_volume_resource_id"))
 }
 
 func (dpr DataProtectionReplicationAttributes) ReplicationFrequency() terra.StringValue {
-	return terra.ReferenceString(dpr.ref.Append("replication_frequency"))
+	return terra.ReferenceAsString(dpr.ref.Append("replication_frequency"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type DataProtectionReplicationState struct {

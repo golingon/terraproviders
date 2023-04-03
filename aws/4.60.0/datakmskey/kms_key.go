@@ -30,7 +30,7 @@ func (mrc MultiRegionConfigurationAttributes) InternalWithRef(ref terra.Referenc
 	return MultiRegionConfigurationAttributes{ref: ref}
 }
 
-func (mrc MultiRegionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (mrc MultiRegionConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mrc.ref.InternalTokens()
 }
 
@@ -58,7 +58,7 @@ func (pk PrimaryKeyAttributes) InternalWithRef(ref terra.Reference) PrimaryKeyAt
 	return PrimaryKeyAttributes{ref: ref}
 }
 
-func (pk PrimaryKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (pk PrimaryKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pk.ref.InternalTokens()
 }
 
@@ -82,7 +82,7 @@ func (rk ReplicaKeysAttributes) InternalWithRef(ref terra.Reference) ReplicaKeys
 	return ReplicaKeysAttributes{ref: ref}
 }
 
-func (rk ReplicaKeysAttributes) InternalTokens() hclwrite.Tokens {
+func (rk ReplicaKeysAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rk.ref.InternalTokens()
 }
 

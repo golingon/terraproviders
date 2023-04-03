@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataComputeSnapshot creates a new instance of [DataComputeSnapshot].
 func NewDataComputeSnapshot(name string, args DataComputeSnapshotArgs) *DataComputeSnapshot {
 	return &DataComputeSnapshot{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataComputeSnapshot(name string, args DataComputeSnapshotArgs) *DataComp
 
 var _ terra.DataResource = (*DataComputeSnapshot)(nil)
 
+// DataComputeSnapshot represents the Terraform data resource google_compute_snapshot.
 type DataComputeSnapshot struct {
 	Name string
 	Args DataComputeSnapshotArgs
 }
 
+// DataSource returns the Terraform object type for [DataComputeSnapshot].
 func (cs *DataComputeSnapshot) DataSource() string {
 	return "google_compute_snapshot"
 }
 
+// LocalName returns the local name for [DataComputeSnapshot].
 func (cs *DataComputeSnapshot) LocalName() string {
 	return cs.Name
 }
 
+// Configuration returns the configuration (args) for [DataComputeSnapshot].
 func (cs *DataComputeSnapshot) Configuration() interface{} {
 	return cs.Args
 }
 
+// Attributes returns the attributes for [DataComputeSnapshot].
 func (cs *DataComputeSnapshot) Attributes() dataComputeSnapshotAttributes {
 	return dataComputeSnapshotAttributes{ref: terra.ReferenceDataResource(cs)}
 }
 
+// DataComputeSnapshotArgs contains the configurations for google_compute_snapshot.
 type DataComputeSnapshotArgs struct {
 	// Filter: string, optional
 	Filter terra.StringValue `hcl:"filter,attr"`
@@ -57,82 +64,100 @@ type dataComputeSnapshotAttributes struct {
 	ref terra.Reference
 }
 
+// ChainName returns a reference to field chain_name of google_compute_snapshot.
 func (cs dataComputeSnapshotAttributes) ChainName() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("chain_name"))
+	return terra.ReferenceAsString(cs.ref.Append("chain_name"))
 }
 
+// CreationTimestamp returns a reference to field creation_timestamp of google_compute_snapshot.
 func (cs dataComputeSnapshotAttributes) CreationTimestamp() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("creation_timestamp"))
+	return terra.ReferenceAsString(cs.ref.Append("creation_timestamp"))
 }
 
+// Description returns a reference to field description of google_compute_snapshot.
 func (cs dataComputeSnapshotAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("description"))
+	return terra.ReferenceAsString(cs.ref.Append("description"))
 }
 
+// DiskSizeGb returns a reference to field disk_size_gb of google_compute_snapshot.
 func (cs dataComputeSnapshotAttributes) DiskSizeGb() terra.NumberValue {
-	return terra.ReferenceNumber(cs.ref.Append("disk_size_gb"))
+	return terra.ReferenceAsNumber(cs.ref.Append("disk_size_gb"))
 }
 
+// Filter returns a reference to field filter of google_compute_snapshot.
 func (cs dataComputeSnapshotAttributes) Filter() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("filter"))
+	return terra.ReferenceAsString(cs.ref.Append("filter"))
 }
 
+// Id returns a reference to field id of google_compute_snapshot.
 func (cs dataComputeSnapshotAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("id"))
+	return terra.ReferenceAsString(cs.ref.Append("id"))
 }
 
+// LabelFingerprint returns a reference to field label_fingerprint of google_compute_snapshot.
 func (cs dataComputeSnapshotAttributes) LabelFingerprint() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("label_fingerprint"))
+	return terra.ReferenceAsString(cs.ref.Append("label_fingerprint"))
 }
 
+// Labels returns a reference to field labels of google_compute_snapshot.
 func (cs dataComputeSnapshotAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cs.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](cs.ref.Append("labels"))
 }
 
+// Licenses returns a reference to field licenses of google_compute_snapshot.
 func (cs dataComputeSnapshotAttributes) Licenses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cs.ref.Append("licenses"))
+	return terra.ReferenceAsList[terra.StringValue](cs.ref.Append("licenses"))
 }
 
+// MostRecent returns a reference to field most_recent of google_compute_snapshot.
 func (cs dataComputeSnapshotAttributes) MostRecent() terra.BoolValue {
-	return terra.ReferenceBool(cs.ref.Append("most_recent"))
+	return terra.ReferenceAsBool(cs.ref.Append("most_recent"))
 }
 
+// Name returns a reference to field name of google_compute_snapshot.
 func (cs dataComputeSnapshotAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("name"))
+	return terra.ReferenceAsString(cs.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_compute_snapshot.
 func (cs dataComputeSnapshotAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("project"))
+	return terra.ReferenceAsString(cs.ref.Append("project"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_snapshot.
 func (cs dataComputeSnapshotAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("self_link"))
+	return terra.ReferenceAsString(cs.ref.Append("self_link"))
 }
 
+// SnapshotId returns a reference to field snapshot_id of google_compute_snapshot.
 func (cs dataComputeSnapshotAttributes) SnapshotId() terra.NumberValue {
-	return terra.ReferenceNumber(cs.ref.Append("snapshot_id"))
+	return terra.ReferenceAsNumber(cs.ref.Append("snapshot_id"))
 }
 
+// SourceDisk returns a reference to field source_disk of google_compute_snapshot.
 func (cs dataComputeSnapshotAttributes) SourceDisk() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("source_disk"))
+	return terra.ReferenceAsString(cs.ref.Append("source_disk"))
 }
 
+// StorageBytes returns a reference to field storage_bytes of google_compute_snapshot.
 func (cs dataComputeSnapshotAttributes) StorageBytes() terra.NumberValue {
-	return terra.ReferenceNumber(cs.ref.Append("storage_bytes"))
+	return terra.ReferenceAsNumber(cs.ref.Append("storage_bytes"))
 }
 
+// StorageLocations returns a reference to field storage_locations of google_compute_snapshot.
 func (cs dataComputeSnapshotAttributes) StorageLocations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cs.ref.Append("storage_locations"))
+	return terra.ReferenceAsList[terra.StringValue](cs.ref.Append("storage_locations"))
 }
 
+// Zone returns a reference to field zone of google_compute_snapshot.
 func (cs dataComputeSnapshotAttributes) Zone() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("zone"))
+	return terra.ReferenceAsString(cs.ref.Append("zone"))
 }
 
 func (cs dataComputeSnapshotAttributes) SnapshotEncryptionKey() terra.ListValue[datacomputesnapshot.SnapshotEncryptionKeyAttributes] {
-	return terra.ReferenceList[datacomputesnapshot.SnapshotEncryptionKeyAttributes](cs.ref.Append("snapshot_encryption_key"))
+	return terra.ReferenceAsList[datacomputesnapshot.SnapshotEncryptionKeyAttributes](cs.ref.Append("snapshot_encryption_key"))
 }
 
 func (cs dataComputeSnapshotAttributes) SourceDiskEncryptionKey() terra.ListValue[datacomputesnapshot.SourceDiskEncryptionKeyAttributes] {
-	return terra.ReferenceList[datacomputesnapshot.SourceDiskEncryptionKeyAttributes](cs.ref.Append("source_disk_encryption_key"))
+	return terra.ReferenceAsList[datacomputesnapshot.SourceDiskEncryptionKeyAttributes](cs.ref.Append("source_disk_encryption_key"))
 }

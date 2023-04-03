@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewIothubRoute creates a new instance of [IothubRoute].
 func NewIothubRoute(name string, args IothubRouteArgs) *IothubRoute {
 	return &IothubRoute{
 		Args: args,
@@ -19,28 +20,51 @@ func NewIothubRoute(name string, args IothubRouteArgs) *IothubRoute {
 
 var _ terra.Resource = (*IothubRoute)(nil)
 
+// IothubRoute represents the Terraform resource azurerm_iothub_route.
 type IothubRoute struct {
-	Name  string
-	Args  IothubRouteArgs
-	state *iothubRouteState
+	Name      string
+	Args      IothubRouteArgs
+	state     *iothubRouteState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IothubRoute].
 func (ir *IothubRoute) Type() string {
 	return "azurerm_iothub_route"
 }
 
+// LocalName returns the local name for [IothubRoute].
 func (ir *IothubRoute) LocalName() string {
 	return ir.Name
 }
 
+// Configuration returns the configuration (args) for [IothubRoute].
 func (ir *IothubRoute) Configuration() interface{} {
 	return ir.Args
 }
 
+// DependOn is used for other resources to depend on [IothubRoute].
+func (ir *IothubRoute) DependOn() terra.Reference {
+	return terra.ReferenceResource(ir)
+}
+
+// Dependencies returns the list of resources [IothubRoute] depends_on.
+func (ir *IothubRoute) Dependencies() terra.Dependencies {
+	return ir.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IothubRoute].
+func (ir *IothubRoute) LifecycleManagement() *terra.Lifecycle {
+	return ir.Lifecycle
+}
+
+// Attributes returns the attributes for [IothubRoute].
 func (ir *IothubRoute) Attributes() iothubRouteAttributes {
 	return iothubRouteAttributes{ref: terra.ReferenceResource(ir)}
 }
 
+// ImportState imports the given attribute values into [IothubRoute]'s state.
 func (ir *IothubRoute) ImportState(av io.Reader) error {
 	ir.state = &iothubRouteState{}
 	if err := json.NewDecoder(av).Decode(ir.state); err != nil {
@@ -49,10 +73,12 @@ func (ir *IothubRoute) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IothubRoute] has state.
 func (ir *IothubRoute) State() (*iothubRouteState, bool) {
 	return ir.state, ir.state != nil
 }
 
+// StateMust returns the state for [IothubRoute]. Panics if the state is nil.
 func (ir *IothubRoute) StateMust() *iothubRouteState {
 	if ir.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ir.Type(), ir.LocalName()))
@@ -60,10 +86,7 @@ func (ir *IothubRoute) StateMust() *iothubRouteState {
 	return ir.state
 }
 
-func (ir *IothubRoute) DependOn() terra.Reference {
-	return terra.ReferenceResource(ir)
-}
-
+// IothubRouteArgs contains the configurations for azurerm_iothub_route.
 type IothubRouteArgs struct {
 	// Condition: string, optional
 	Condition terra.StringValue `hcl:"condition,attr"`
@@ -83,47 +106,53 @@ type IothubRouteArgs struct {
 	Source terra.StringValue `hcl:"source,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *iothubroute.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that IothubRoute depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iothubRouteAttributes struct {
 	ref terra.Reference
 }
 
+// Condition returns a reference to field condition of azurerm_iothub_route.
 func (ir iothubRouteAttributes) Condition() terra.StringValue {
-	return terra.ReferenceString(ir.ref.Append("condition"))
+	return terra.ReferenceAsString(ir.ref.Append("condition"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_iothub_route.
 func (ir iothubRouteAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(ir.ref.Append("enabled"))
+	return terra.ReferenceAsBool(ir.ref.Append("enabled"))
 }
 
+// EndpointNames returns a reference to field endpoint_names of azurerm_iothub_route.
 func (ir iothubRouteAttributes) EndpointNames() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ir.ref.Append("endpoint_names"))
+	return terra.ReferenceAsList[terra.StringValue](ir.ref.Append("endpoint_names"))
 }
 
+// Id returns a reference to field id of azurerm_iothub_route.
 func (ir iothubRouteAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ir.ref.Append("id"))
+	return terra.ReferenceAsString(ir.ref.Append("id"))
 }
 
+// IothubName returns a reference to field iothub_name of azurerm_iothub_route.
 func (ir iothubRouteAttributes) IothubName() terra.StringValue {
-	return terra.ReferenceString(ir.ref.Append("iothub_name"))
+	return terra.ReferenceAsString(ir.ref.Append("iothub_name"))
 }
 
+// Name returns a reference to field name of azurerm_iothub_route.
 func (ir iothubRouteAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ir.ref.Append("name"))
+	return terra.ReferenceAsString(ir.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_iothub_route.
 func (ir iothubRouteAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ir.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ir.ref.Append("resource_group_name"))
 }
 
+// Source returns a reference to field source of azurerm_iothub_route.
 func (ir iothubRouteAttributes) Source() terra.StringValue {
-	return terra.ReferenceString(ir.ref.Append("source"))
+	return terra.ReferenceAsString(ir.ref.Append("source"))
 }
 
 func (ir iothubRouteAttributes) Timeouts() iothubroute.TimeoutsAttributes {
-	return terra.ReferenceSingle[iothubroute.TimeoutsAttributes](ir.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[iothubroute.TimeoutsAttributes](ir.ref.Append("timeouts"))
 }
 
 type iothubRouteState struct {

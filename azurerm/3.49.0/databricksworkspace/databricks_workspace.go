@@ -53,152 +53,152 @@ type ManagedDiskIdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (mdi ManagedDiskIdentityAttributes) InternalRef() terra.Reference {
-	return mdi.ref
+func (mdi ManagedDiskIdentityAttributes) InternalRef() (terra.Reference, error) {
+	return mdi.ref, nil
 }
 
 func (mdi ManagedDiskIdentityAttributes) InternalWithRef(ref terra.Reference) ManagedDiskIdentityAttributes {
 	return ManagedDiskIdentityAttributes{ref: ref}
 }
 
-func (mdi ManagedDiskIdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (mdi ManagedDiskIdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mdi.ref.InternalTokens()
 }
 
 func (mdi ManagedDiskIdentityAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(mdi.ref.Append("principal_id"))
+	return terra.ReferenceAsString(mdi.ref.Append("principal_id"))
 }
 
 func (mdi ManagedDiskIdentityAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(mdi.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(mdi.ref.Append("tenant_id"))
 }
 
 func (mdi ManagedDiskIdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(mdi.ref.Append("type"))
+	return terra.ReferenceAsString(mdi.ref.Append("type"))
 }
 
 type StorageAccountIdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (sai StorageAccountIdentityAttributes) InternalRef() terra.Reference {
-	return sai.ref
+func (sai StorageAccountIdentityAttributes) InternalRef() (terra.Reference, error) {
+	return sai.ref, nil
 }
 
 func (sai StorageAccountIdentityAttributes) InternalWithRef(ref terra.Reference) StorageAccountIdentityAttributes {
 	return StorageAccountIdentityAttributes{ref: ref}
 }
 
-func (sai StorageAccountIdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (sai StorageAccountIdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sai.ref.InternalTokens()
 }
 
 func (sai StorageAccountIdentityAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(sai.ref.Append("principal_id"))
+	return terra.ReferenceAsString(sai.ref.Append("principal_id"))
 }
 
 func (sai StorageAccountIdentityAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(sai.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(sai.ref.Append("tenant_id"))
 }
 
 func (sai StorageAccountIdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(sai.ref.Append("type"))
+	return terra.ReferenceAsString(sai.ref.Append("type"))
 }
 
 type CustomParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (cp CustomParametersAttributes) InternalRef() terra.Reference {
-	return cp.ref
+func (cp CustomParametersAttributes) InternalRef() (terra.Reference, error) {
+	return cp.ref, nil
 }
 
 func (cp CustomParametersAttributes) InternalWithRef(ref terra.Reference) CustomParametersAttributes {
 	return CustomParametersAttributes{ref: ref}
 }
 
-func (cp CustomParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (cp CustomParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cp.ref.InternalTokens()
 }
 
 func (cp CustomParametersAttributes) MachineLearningWorkspaceId() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("machine_learning_workspace_id"))
+	return terra.ReferenceAsString(cp.ref.Append("machine_learning_workspace_id"))
 }
 
 func (cp CustomParametersAttributes) NatGatewayName() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("nat_gateway_name"))
+	return terra.ReferenceAsString(cp.ref.Append("nat_gateway_name"))
 }
 
 func (cp CustomParametersAttributes) NoPublicIp() terra.BoolValue {
-	return terra.ReferenceBool(cp.ref.Append("no_public_ip"))
+	return terra.ReferenceAsBool(cp.ref.Append("no_public_ip"))
 }
 
 func (cp CustomParametersAttributes) PrivateSubnetName() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("private_subnet_name"))
+	return terra.ReferenceAsString(cp.ref.Append("private_subnet_name"))
 }
 
 func (cp CustomParametersAttributes) PrivateSubnetNetworkSecurityGroupAssociationId() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("private_subnet_network_security_group_association_id"))
+	return terra.ReferenceAsString(cp.ref.Append("private_subnet_network_security_group_association_id"))
 }
 
 func (cp CustomParametersAttributes) PublicIpName() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("public_ip_name"))
+	return terra.ReferenceAsString(cp.ref.Append("public_ip_name"))
 }
 
 func (cp CustomParametersAttributes) PublicSubnetName() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("public_subnet_name"))
+	return terra.ReferenceAsString(cp.ref.Append("public_subnet_name"))
 }
 
 func (cp CustomParametersAttributes) PublicSubnetNetworkSecurityGroupAssociationId() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("public_subnet_network_security_group_association_id"))
+	return terra.ReferenceAsString(cp.ref.Append("public_subnet_network_security_group_association_id"))
 }
 
 func (cp CustomParametersAttributes) StorageAccountName() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("storage_account_name"))
+	return terra.ReferenceAsString(cp.ref.Append("storage_account_name"))
 }
 
 func (cp CustomParametersAttributes) StorageAccountSkuName() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("storage_account_sku_name"))
+	return terra.ReferenceAsString(cp.ref.Append("storage_account_sku_name"))
 }
 
 func (cp CustomParametersAttributes) VirtualNetworkId() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("virtual_network_id"))
+	return terra.ReferenceAsString(cp.ref.Append("virtual_network_id"))
 }
 
 func (cp CustomParametersAttributes) VnetAddressPrefix() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("vnet_address_prefix"))
+	return terra.ReferenceAsString(cp.ref.Append("vnet_address_prefix"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ManagedDiskIdentityState struct {

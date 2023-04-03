@@ -54,7 +54,7 @@ func (als AccessLogSettingsAttributes) InternalWithRef(ref terra.Reference) Acce
 	return AccessLogSettingsAttributes{ref: ref}
 }
 
-func (als AccessLogSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (als AccessLogSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return als.ref.InternalTokens()
 }
 
@@ -78,7 +78,7 @@ func (drs DefaultRouteSettingsAttributes) InternalWithRef(ref terra.Reference) D
 	return DefaultRouteSettingsAttributes{ref: ref}
 }
 
-func (drs DefaultRouteSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (drs DefaultRouteSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return drs.ref.InternalTokens()
 }
 
@@ -114,7 +114,7 @@ func (rs RouteSettingsAttributes) InternalWithRef(ref terra.Reference) RouteSett
 	return RouteSettingsAttributes{ref: ref}
 }
 
-func (rs RouteSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (rs RouteSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rs.ref.InternalTokens()
 }
 

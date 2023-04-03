@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAppService creates a new instance of [AppService].
 func NewAppService(name string, args AppServiceArgs) *AppService {
 	return &AppService{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAppService(name string, args AppServiceArgs) *AppService {
 
 var _ terra.Resource = (*AppService)(nil)
 
+// AppService represents the Terraform resource azurerm_app_service.
 type AppService struct {
-	Name  string
-	Args  AppServiceArgs
-	state *appServiceState
+	Name      string
+	Args      AppServiceArgs
+	state     *appServiceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AppService].
 func (as *AppService) Type() string {
 	return "azurerm_app_service"
 }
 
+// LocalName returns the local name for [AppService].
 func (as *AppService) LocalName() string {
 	return as.Name
 }
 
+// Configuration returns the configuration (args) for [AppService].
 func (as *AppService) Configuration() interface{} {
 	return as.Args
 }
 
+// DependOn is used for other resources to depend on [AppService].
+func (as *AppService) DependOn() terra.Reference {
+	return terra.ReferenceResource(as)
+}
+
+// Dependencies returns the list of resources [AppService] depends_on.
+func (as *AppService) Dependencies() terra.Dependencies {
+	return as.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AppService].
+func (as *AppService) LifecycleManagement() *terra.Lifecycle {
+	return as.Lifecycle
+}
+
+// Attributes returns the attributes for [AppService].
 func (as *AppService) Attributes() appServiceAttributes {
 	return appServiceAttributes{ref: terra.ReferenceResource(as)}
 }
 
+// ImportState imports the given attribute values into [AppService]'s state.
 func (as *AppService) ImportState(av io.Reader) error {
 	as.state = &appServiceState{}
 	if err := json.NewDecoder(av).Decode(as.state); err != nil {
@@ -49,10 +73,12 @@ func (as *AppService) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AppService] has state.
 func (as *AppService) State() (*appServiceState, bool) {
 	return as.state, as.state != nil
 }
 
+// StateMust returns the state for [AppService]. Panics if the state is nil.
 func (as *AppService) StateMust() *appServiceState {
 	if as.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", as.Type(), as.LocalName()))
@@ -60,10 +86,7 @@ func (as *AppService) StateMust() *appServiceState {
 	return as.state
 }
 
-func (as *AppService) DependOn() terra.Reference {
-	return terra.ReferenceResource(as)
-}
-
+// AppServiceArgs contains the configurations for azurerm_app_service.
 type AppServiceArgs struct {
 	// AppServicePlanId: string, required
 	AppServicePlanId terra.StringValue `hcl:"app_service_plan_id,attr" validate:"required"`
@@ -111,127 +134,144 @@ type AppServiceArgs struct {
 	StorageAccount []appservice.StorageAccount `hcl:"storage_account,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *appservice.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that AppService depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type appServiceAttributes struct {
 	ref terra.Reference
 }
 
+// AppServicePlanId returns a reference to field app_service_plan_id of azurerm_app_service.
 func (as appServiceAttributes) AppServicePlanId() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("app_service_plan_id"))
+	return terra.ReferenceAsString(as.ref.Append("app_service_plan_id"))
 }
 
+// AppSettings returns a reference to field app_settings of azurerm_app_service.
 func (as appServiceAttributes) AppSettings() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](as.ref.Append("app_settings"))
+	return terra.ReferenceAsMap[terra.StringValue](as.ref.Append("app_settings"))
 }
 
+// ClientAffinityEnabled returns a reference to field client_affinity_enabled of azurerm_app_service.
 func (as appServiceAttributes) ClientAffinityEnabled() terra.BoolValue {
-	return terra.ReferenceBool(as.ref.Append("client_affinity_enabled"))
+	return terra.ReferenceAsBool(as.ref.Append("client_affinity_enabled"))
 }
 
+// ClientCertEnabled returns a reference to field client_cert_enabled of azurerm_app_service.
 func (as appServiceAttributes) ClientCertEnabled() terra.BoolValue {
-	return terra.ReferenceBool(as.ref.Append("client_cert_enabled"))
+	return terra.ReferenceAsBool(as.ref.Append("client_cert_enabled"))
 }
 
+// ClientCertMode returns a reference to field client_cert_mode of azurerm_app_service.
 func (as appServiceAttributes) ClientCertMode() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("client_cert_mode"))
+	return terra.ReferenceAsString(as.ref.Append("client_cert_mode"))
 }
 
+// CustomDomainVerificationId returns a reference to field custom_domain_verification_id of azurerm_app_service.
 func (as appServiceAttributes) CustomDomainVerificationId() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("custom_domain_verification_id"))
+	return terra.ReferenceAsString(as.ref.Append("custom_domain_verification_id"))
 }
 
+// DefaultSiteHostname returns a reference to field default_site_hostname of azurerm_app_service.
 func (as appServiceAttributes) DefaultSiteHostname() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("default_site_hostname"))
+	return terra.ReferenceAsString(as.ref.Append("default_site_hostname"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_app_service.
 func (as appServiceAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(as.ref.Append("enabled"))
+	return terra.ReferenceAsBool(as.ref.Append("enabled"))
 }
 
+// HttpsOnly returns a reference to field https_only of azurerm_app_service.
 func (as appServiceAttributes) HttpsOnly() terra.BoolValue {
-	return terra.ReferenceBool(as.ref.Append("https_only"))
+	return terra.ReferenceAsBool(as.ref.Append("https_only"))
 }
 
+// Id returns a reference to field id of azurerm_app_service.
 func (as appServiceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("id"))
+	return terra.ReferenceAsString(as.ref.Append("id"))
 }
 
+// KeyVaultReferenceIdentityId returns a reference to field key_vault_reference_identity_id of azurerm_app_service.
 func (as appServiceAttributes) KeyVaultReferenceIdentityId() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("key_vault_reference_identity_id"))
+	return terra.ReferenceAsString(as.ref.Append("key_vault_reference_identity_id"))
 }
 
+// Location returns a reference to field location of azurerm_app_service.
 func (as appServiceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("location"))
+	return terra.ReferenceAsString(as.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_app_service.
 func (as appServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("name"))
+	return terra.ReferenceAsString(as.ref.Append("name"))
 }
 
+// OutboundIpAddressList returns a reference to field outbound_ip_address_list of azurerm_app_service.
 func (as appServiceAttributes) OutboundIpAddressList() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](as.ref.Append("outbound_ip_address_list"))
+	return terra.ReferenceAsList[terra.StringValue](as.ref.Append("outbound_ip_address_list"))
 }
 
+// OutboundIpAddresses returns a reference to field outbound_ip_addresses of azurerm_app_service.
 func (as appServiceAttributes) OutboundIpAddresses() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("outbound_ip_addresses"))
+	return terra.ReferenceAsString(as.ref.Append("outbound_ip_addresses"))
 }
 
+// PossibleOutboundIpAddressList returns a reference to field possible_outbound_ip_address_list of azurerm_app_service.
 func (as appServiceAttributes) PossibleOutboundIpAddressList() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](as.ref.Append("possible_outbound_ip_address_list"))
+	return terra.ReferenceAsList[terra.StringValue](as.ref.Append("possible_outbound_ip_address_list"))
 }
 
+// PossibleOutboundIpAddresses returns a reference to field possible_outbound_ip_addresses of azurerm_app_service.
 func (as appServiceAttributes) PossibleOutboundIpAddresses() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("possible_outbound_ip_addresses"))
+	return terra.ReferenceAsString(as.ref.Append("possible_outbound_ip_addresses"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_app_service.
 func (as appServiceAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(as.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_app_service.
 func (as appServiceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](as.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](as.ref.Append("tags"))
 }
 
 func (as appServiceAttributes) SiteCredential() terra.ListValue[appservice.SiteCredentialAttributes] {
-	return terra.ReferenceList[appservice.SiteCredentialAttributes](as.ref.Append("site_credential"))
+	return terra.ReferenceAsList[appservice.SiteCredentialAttributes](as.ref.Append("site_credential"))
 }
 
 func (as appServiceAttributes) AuthSettings() terra.ListValue[appservice.AuthSettingsAttributes] {
-	return terra.ReferenceList[appservice.AuthSettingsAttributes](as.ref.Append("auth_settings"))
+	return terra.ReferenceAsList[appservice.AuthSettingsAttributes](as.ref.Append("auth_settings"))
 }
 
 func (as appServiceAttributes) Backup() terra.ListValue[appservice.BackupAttributes] {
-	return terra.ReferenceList[appservice.BackupAttributes](as.ref.Append("backup"))
+	return terra.ReferenceAsList[appservice.BackupAttributes](as.ref.Append("backup"))
 }
 
 func (as appServiceAttributes) ConnectionString() terra.SetValue[appservice.ConnectionStringAttributes] {
-	return terra.ReferenceSet[appservice.ConnectionStringAttributes](as.ref.Append("connection_string"))
+	return terra.ReferenceAsSet[appservice.ConnectionStringAttributes](as.ref.Append("connection_string"))
 }
 
 func (as appServiceAttributes) Identity() terra.ListValue[appservice.IdentityAttributes] {
-	return terra.ReferenceList[appservice.IdentityAttributes](as.ref.Append("identity"))
+	return terra.ReferenceAsList[appservice.IdentityAttributes](as.ref.Append("identity"))
 }
 
 func (as appServiceAttributes) Logs() terra.ListValue[appservice.LogsAttributes] {
-	return terra.ReferenceList[appservice.LogsAttributes](as.ref.Append("logs"))
+	return terra.ReferenceAsList[appservice.LogsAttributes](as.ref.Append("logs"))
 }
 
 func (as appServiceAttributes) SiteConfig() terra.ListValue[appservice.SiteConfigAttributes] {
-	return terra.ReferenceList[appservice.SiteConfigAttributes](as.ref.Append("site_config"))
+	return terra.ReferenceAsList[appservice.SiteConfigAttributes](as.ref.Append("site_config"))
 }
 
 func (as appServiceAttributes) SourceControl() terra.ListValue[appservice.SourceControlAttributes] {
-	return terra.ReferenceList[appservice.SourceControlAttributes](as.ref.Append("source_control"))
+	return terra.ReferenceAsList[appservice.SourceControlAttributes](as.ref.Append("source_control"))
 }
 
 func (as appServiceAttributes) StorageAccount() terra.SetValue[appservice.StorageAccountAttributes] {
-	return terra.ReferenceSet[appservice.StorageAccountAttributes](as.ref.Append("storage_account"))
+	return terra.ReferenceAsSet[appservice.StorageAccountAttributes](as.ref.Append("storage_account"))
 }
 
 func (as appServiceAttributes) Timeouts() appservice.TimeoutsAttributes {
-	return terra.ReferenceSingle[appservice.TimeoutsAttributes](as.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[appservice.TimeoutsAttributes](as.ref.Append("timeouts"))
 }
 
 type appServiceState struct {

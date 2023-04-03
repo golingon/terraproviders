@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEventhubNamespaceSchemaGroup creates a new instance of [EventhubNamespaceSchemaGroup].
 func NewEventhubNamespaceSchemaGroup(name string, args EventhubNamespaceSchemaGroupArgs) *EventhubNamespaceSchemaGroup {
 	return &EventhubNamespaceSchemaGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEventhubNamespaceSchemaGroup(name string, args EventhubNamespaceSchemaGr
 
 var _ terra.Resource = (*EventhubNamespaceSchemaGroup)(nil)
 
+// EventhubNamespaceSchemaGroup represents the Terraform resource azurerm_eventhub_namespace_schema_group.
 type EventhubNamespaceSchemaGroup struct {
-	Name  string
-	Args  EventhubNamespaceSchemaGroupArgs
-	state *eventhubNamespaceSchemaGroupState
+	Name      string
+	Args      EventhubNamespaceSchemaGroupArgs
+	state     *eventhubNamespaceSchemaGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EventhubNamespaceSchemaGroup].
 func (ensg *EventhubNamespaceSchemaGroup) Type() string {
 	return "azurerm_eventhub_namespace_schema_group"
 }
 
+// LocalName returns the local name for [EventhubNamespaceSchemaGroup].
 func (ensg *EventhubNamespaceSchemaGroup) LocalName() string {
 	return ensg.Name
 }
 
+// Configuration returns the configuration (args) for [EventhubNamespaceSchemaGroup].
 func (ensg *EventhubNamespaceSchemaGroup) Configuration() interface{} {
 	return ensg.Args
 }
 
+// DependOn is used for other resources to depend on [EventhubNamespaceSchemaGroup].
+func (ensg *EventhubNamespaceSchemaGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(ensg)
+}
+
+// Dependencies returns the list of resources [EventhubNamespaceSchemaGroup] depends_on.
+func (ensg *EventhubNamespaceSchemaGroup) Dependencies() terra.Dependencies {
+	return ensg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EventhubNamespaceSchemaGroup].
+func (ensg *EventhubNamespaceSchemaGroup) LifecycleManagement() *terra.Lifecycle {
+	return ensg.Lifecycle
+}
+
+// Attributes returns the attributes for [EventhubNamespaceSchemaGroup].
 func (ensg *EventhubNamespaceSchemaGroup) Attributes() eventhubNamespaceSchemaGroupAttributes {
 	return eventhubNamespaceSchemaGroupAttributes{ref: terra.ReferenceResource(ensg)}
 }
 
+// ImportState imports the given attribute values into [EventhubNamespaceSchemaGroup]'s state.
 func (ensg *EventhubNamespaceSchemaGroup) ImportState(av io.Reader) error {
 	ensg.state = &eventhubNamespaceSchemaGroupState{}
 	if err := json.NewDecoder(av).Decode(ensg.state); err != nil {
@@ -49,10 +73,12 @@ func (ensg *EventhubNamespaceSchemaGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EventhubNamespaceSchemaGroup] has state.
 func (ensg *EventhubNamespaceSchemaGroup) State() (*eventhubNamespaceSchemaGroupState, bool) {
 	return ensg.state, ensg.state != nil
 }
 
+// StateMust returns the state for [EventhubNamespaceSchemaGroup]. Panics if the state is nil.
 func (ensg *EventhubNamespaceSchemaGroup) StateMust() *eventhubNamespaceSchemaGroupState {
 	if ensg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ensg.Type(), ensg.LocalName()))
@@ -60,10 +86,7 @@ func (ensg *EventhubNamespaceSchemaGroup) StateMust() *eventhubNamespaceSchemaGr
 	return ensg.state
 }
 
-func (ensg *EventhubNamespaceSchemaGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(ensg)
-}
-
+// EventhubNamespaceSchemaGroupArgs contains the configurations for azurerm_eventhub_namespace_schema_group.
 type EventhubNamespaceSchemaGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,35 +100,38 @@ type EventhubNamespaceSchemaGroupArgs struct {
 	SchemaType terra.StringValue `hcl:"schema_type,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *eventhubnamespaceschemagroup.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that EventhubNamespaceSchemaGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type eventhubNamespaceSchemaGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_eventhub_namespace_schema_group.
 func (ensg eventhubNamespaceSchemaGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ensg.ref.Append("id"))
+	return terra.ReferenceAsString(ensg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_eventhub_namespace_schema_group.
 func (ensg eventhubNamespaceSchemaGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ensg.ref.Append("name"))
+	return terra.ReferenceAsString(ensg.ref.Append("name"))
 }
 
+// NamespaceId returns a reference to field namespace_id of azurerm_eventhub_namespace_schema_group.
 func (ensg eventhubNamespaceSchemaGroupAttributes) NamespaceId() terra.StringValue {
-	return terra.ReferenceString(ensg.ref.Append("namespace_id"))
+	return terra.ReferenceAsString(ensg.ref.Append("namespace_id"))
 }
 
+// SchemaCompatibility returns a reference to field schema_compatibility of azurerm_eventhub_namespace_schema_group.
 func (ensg eventhubNamespaceSchemaGroupAttributes) SchemaCompatibility() terra.StringValue {
-	return terra.ReferenceString(ensg.ref.Append("schema_compatibility"))
+	return terra.ReferenceAsString(ensg.ref.Append("schema_compatibility"))
 }
 
+// SchemaType returns a reference to field schema_type of azurerm_eventhub_namespace_schema_group.
 func (ensg eventhubNamespaceSchemaGroupAttributes) SchemaType() terra.StringValue {
-	return terra.ReferenceString(ensg.ref.Append("schema_type"))
+	return terra.ReferenceAsString(ensg.ref.Append("schema_type"))
 }
 
 func (ensg eventhubNamespaceSchemaGroupAttributes) Timeouts() eventhubnamespaceschemagroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[eventhubnamespaceschemagroup.TimeoutsAttributes](ensg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[eventhubnamespaceschemagroup.TimeoutsAttributes](ensg.ref.Append("timeouts"))
 }
 
 type eventhubNamespaceSchemaGroupState struct {

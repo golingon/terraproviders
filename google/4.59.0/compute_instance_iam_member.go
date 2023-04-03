@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeInstanceIamMember creates a new instance of [ComputeInstanceIamMember].
 func NewComputeInstanceIamMember(name string, args ComputeInstanceIamMemberArgs) *ComputeInstanceIamMember {
 	return &ComputeInstanceIamMember{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeInstanceIamMember(name string, args ComputeInstanceIamMemberArgs)
 
 var _ terra.Resource = (*ComputeInstanceIamMember)(nil)
 
+// ComputeInstanceIamMember represents the Terraform resource google_compute_instance_iam_member.
 type ComputeInstanceIamMember struct {
-	Name  string
-	Args  ComputeInstanceIamMemberArgs
-	state *computeInstanceIamMemberState
+	Name      string
+	Args      ComputeInstanceIamMemberArgs
+	state     *computeInstanceIamMemberState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeInstanceIamMember].
 func (ciim *ComputeInstanceIamMember) Type() string {
 	return "google_compute_instance_iam_member"
 }
 
+// LocalName returns the local name for [ComputeInstanceIamMember].
 func (ciim *ComputeInstanceIamMember) LocalName() string {
 	return ciim.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeInstanceIamMember].
 func (ciim *ComputeInstanceIamMember) Configuration() interface{} {
 	return ciim.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeInstanceIamMember].
+func (ciim *ComputeInstanceIamMember) DependOn() terra.Reference {
+	return terra.ReferenceResource(ciim)
+}
+
+// Dependencies returns the list of resources [ComputeInstanceIamMember] depends_on.
+func (ciim *ComputeInstanceIamMember) Dependencies() terra.Dependencies {
+	return ciim.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeInstanceIamMember].
+func (ciim *ComputeInstanceIamMember) LifecycleManagement() *terra.Lifecycle {
+	return ciim.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeInstanceIamMember].
 func (ciim *ComputeInstanceIamMember) Attributes() computeInstanceIamMemberAttributes {
 	return computeInstanceIamMemberAttributes{ref: terra.ReferenceResource(ciim)}
 }
 
+// ImportState imports the given attribute values into [ComputeInstanceIamMember]'s state.
 func (ciim *ComputeInstanceIamMember) ImportState(av io.Reader) error {
 	ciim.state = &computeInstanceIamMemberState{}
 	if err := json.NewDecoder(av).Decode(ciim.state); err != nil {
@@ -49,10 +73,12 @@ func (ciim *ComputeInstanceIamMember) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeInstanceIamMember] has state.
 func (ciim *ComputeInstanceIamMember) State() (*computeInstanceIamMemberState, bool) {
 	return ciim.state, ciim.state != nil
 }
 
+// StateMust returns the state for [ComputeInstanceIamMember]. Panics if the state is nil.
 func (ciim *ComputeInstanceIamMember) StateMust() *computeInstanceIamMemberState {
 	if ciim.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ciim.Type(), ciim.LocalName()))
@@ -60,10 +86,7 @@ func (ciim *ComputeInstanceIamMember) StateMust() *computeInstanceIamMemberState
 	return ciim.state
 }
 
-func (ciim *ComputeInstanceIamMember) DependOn() terra.Reference {
-	return terra.ReferenceResource(ciim)
-}
-
+// ComputeInstanceIamMemberArgs contains the configurations for google_compute_instance_iam_member.
 type ComputeInstanceIamMemberArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,43 +102,48 @@ type ComputeInstanceIamMemberArgs struct {
 	Zone terra.StringValue `hcl:"zone,attr"`
 	// Condition: optional
 	Condition *computeinstanceiammember.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that ComputeInstanceIamMember depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeInstanceIamMemberAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_compute_instance_iam_member.
 func (ciim computeInstanceIamMemberAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(ciim.ref.Append("etag"))
+	return terra.ReferenceAsString(ciim.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_compute_instance_iam_member.
 func (ciim computeInstanceIamMemberAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ciim.ref.Append("id"))
+	return terra.ReferenceAsString(ciim.ref.Append("id"))
 }
 
+// InstanceName returns a reference to field instance_name of google_compute_instance_iam_member.
 func (ciim computeInstanceIamMemberAttributes) InstanceName() terra.StringValue {
-	return terra.ReferenceString(ciim.ref.Append("instance_name"))
+	return terra.ReferenceAsString(ciim.ref.Append("instance_name"))
 }
 
+// Member returns a reference to field member of google_compute_instance_iam_member.
 func (ciim computeInstanceIamMemberAttributes) Member() terra.StringValue {
-	return terra.ReferenceString(ciim.ref.Append("member"))
+	return terra.ReferenceAsString(ciim.ref.Append("member"))
 }
 
+// Project returns a reference to field project of google_compute_instance_iam_member.
 func (ciim computeInstanceIamMemberAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ciim.ref.Append("project"))
+	return terra.ReferenceAsString(ciim.ref.Append("project"))
 }
 
+// Role returns a reference to field role of google_compute_instance_iam_member.
 func (ciim computeInstanceIamMemberAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(ciim.ref.Append("role"))
+	return terra.ReferenceAsString(ciim.ref.Append("role"))
 }
 
+// Zone returns a reference to field zone of google_compute_instance_iam_member.
 func (ciim computeInstanceIamMemberAttributes) Zone() terra.StringValue {
-	return terra.ReferenceString(ciim.ref.Append("zone"))
+	return terra.ReferenceAsString(ciim.ref.Append("zone"))
 }
 
 func (ciim computeInstanceIamMemberAttributes) Condition() terra.ListValue[computeinstanceiammember.ConditionAttributes] {
-	return terra.ReferenceList[computeinstanceiammember.ConditionAttributes](ciim.ref.Append("condition"))
+	return terra.ReferenceAsList[computeinstanceiammember.ConditionAttributes](ciim.ref.Append("condition"))
 }
 
 type computeInstanceIamMemberState struct {

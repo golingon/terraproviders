@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewIapTunnelIamBinding creates a new instance of [IapTunnelIamBinding].
 func NewIapTunnelIamBinding(name string, args IapTunnelIamBindingArgs) *IapTunnelIamBinding {
 	return &IapTunnelIamBinding{
 		Args: args,
@@ -19,28 +20,51 @@ func NewIapTunnelIamBinding(name string, args IapTunnelIamBindingArgs) *IapTunne
 
 var _ terra.Resource = (*IapTunnelIamBinding)(nil)
 
+// IapTunnelIamBinding represents the Terraform resource google_iap_tunnel_iam_binding.
 type IapTunnelIamBinding struct {
-	Name  string
-	Args  IapTunnelIamBindingArgs
-	state *iapTunnelIamBindingState
+	Name      string
+	Args      IapTunnelIamBindingArgs
+	state     *iapTunnelIamBindingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IapTunnelIamBinding].
 func (itib *IapTunnelIamBinding) Type() string {
 	return "google_iap_tunnel_iam_binding"
 }
 
+// LocalName returns the local name for [IapTunnelIamBinding].
 func (itib *IapTunnelIamBinding) LocalName() string {
 	return itib.Name
 }
 
+// Configuration returns the configuration (args) for [IapTunnelIamBinding].
 func (itib *IapTunnelIamBinding) Configuration() interface{} {
 	return itib.Args
 }
 
+// DependOn is used for other resources to depend on [IapTunnelIamBinding].
+func (itib *IapTunnelIamBinding) DependOn() terra.Reference {
+	return terra.ReferenceResource(itib)
+}
+
+// Dependencies returns the list of resources [IapTunnelIamBinding] depends_on.
+func (itib *IapTunnelIamBinding) Dependencies() terra.Dependencies {
+	return itib.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IapTunnelIamBinding].
+func (itib *IapTunnelIamBinding) LifecycleManagement() *terra.Lifecycle {
+	return itib.Lifecycle
+}
+
+// Attributes returns the attributes for [IapTunnelIamBinding].
 func (itib *IapTunnelIamBinding) Attributes() iapTunnelIamBindingAttributes {
 	return iapTunnelIamBindingAttributes{ref: terra.ReferenceResource(itib)}
 }
 
+// ImportState imports the given attribute values into [IapTunnelIamBinding]'s state.
 func (itib *IapTunnelIamBinding) ImportState(av io.Reader) error {
 	itib.state = &iapTunnelIamBindingState{}
 	if err := json.NewDecoder(av).Decode(itib.state); err != nil {
@@ -49,10 +73,12 @@ func (itib *IapTunnelIamBinding) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IapTunnelIamBinding] has state.
 func (itib *IapTunnelIamBinding) State() (*iapTunnelIamBindingState, bool) {
 	return itib.state, itib.state != nil
 }
 
+// StateMust returns the state for [IapTunnelIamBinding]. Panics if the state is nil.
 func (itib *IapTunnelIamBinding) StateMust() *iapTunnelIamBindingState {
 	if itib.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", itib.Type(), itib.LocalName()))
@@ -60,10 +86,7 @@ func (itib *IapTunnelIamBinding) StateMust() *iapTunnelIamBindingState {
 	return itib.state
 }
 
-func (itib *IapTunnelIamBinding) DependOn() terra.Reference {
-	return terra.ReferenceResource(itib)
-}
-
+// IapTunnelIamBindingArgs contains the configurations for google_iap_tunnel_iam_binding.
 type IapTunnelIamBindingArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -75,35 +98,38 @@ type IapTunnelIamBindingArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *iaptunneliambinding.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that IapTunnelIamBinding depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iapTunnelIamBindingAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_iap_tunnel_iam_binding.
 func (itib iapTunnelIamBindingAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(itib.ref.Append("etag"))
+	return terra.ReferenceAsString(itib.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_iap_tunnel_iam_binding.
 func (itib iapTunnelIamBindingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(itib.ref.Append("id"))
+	return terra.ReferenceAsString(itib.ref.Append("id"))
 }
 
+// Members returns a reference to field members of google_iap_tunnel_iam_binding.
 func (itib iapTunnelIamBindingAttributes) Members() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](itib.ref.Append("members"))
+	return terra.ReferenceAsSet[terra.StringValue](itib.ref.Append("members"))
 }
 
+// Project returns a reference to field project of google_iap_tunnel_iam_binding.
 func (itib iapTunnelIamBindingAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(itib.ref.Append("project"))
+	return terra.ReferenceAsString(itib.ref.Append("project"))
 }
 
+// Role returns a reference to field role of google_iap_tunnel_iam_binding.
 func (itib iapTunnelIamBindingAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(itib.ref.Append("role"))
+	return terra.ReferenceAsString(itib.ref.Append("role"))
 }
 
 func (itib iapTunnelIamBindingAttributes) Condition() terra.ListValue[iaptunneliambinding.ConditionAttributes] {
-	return terra.ReferenceList[iaptunneliambinding.ConditionAttributes](itib.ref.Append("condition"))
+	return terra.ReferenceAsList[iaptunneliambinding.ConditionAttributes](itib.ref.Append("condition"))
 }
 
 type iapTunnelIamBindingState struct {

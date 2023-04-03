@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataMonitoringNotificationChannel creates a new instance of [DataMonitoringNotificationChannel].
 func NewDataMonitoringNotificationChannel(name string, args DataMonitoringNotificationChannelArgs) *DataMonitoringNotificationChannel {
 	return &DataMonitoringNotificationChannel{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataMonitoringNotificationChannel(name string, args DataMonitoringNotifi
 
 var _ terra.DataResource = (*DataMonitoringNotificationChannel)(nil)
 
+// DataMonitoringNotificationChannel represents the Terraform data resource google_monitoring_notification_channel.
 type DataMonitoringNotificationChannel struct {
 	Name string
 	Args DataMonitoringNotificationChannelArgs
 }
 
+// DataSource returns the Terraform object type for [DataMonitoringNotificationChannel].
 func (mnc *DataMonitoringNotificationChannel) DataSource() string {
 	return "google_monitoring_notification_channel"
 }
 
+// LocalName returns the local name for [DataMonitoringNotificationChannel].
 func (mnc *DataMonitoringNotificationChannel) LocalName() string {
 	return mnc.Name
 }
 
+// Configuration returns the configuration (args) for [DataMonitoringNotificationChannel].
 func (mnc *DataMonitoringNotificationChannel) Configuration() interface{} {
 	return mnc.Args
 }
 
+// Attributes returns the attributes for [DataMonitoringNotificationChannel].
 func (mnc *DataMonitoringNotificationChannel) Attributes() dataMonitoringNotificationChannelAttributes {
 	return dataMonitoringNotificationChannelAttributes{ref: terra.ReferenceDataResource(mnc)}
 }
 
+// DataMonitoringNotificationChannelArgs contains the configurations for google_monitoring_notification_channel.
 type DataMonitoringNotificationChannelArgs struct {
 	// DisplayName: string, optional
 	DisplayName terra.StringValue `hcl:"display_name,attr"`
@@ -57,50 +64,61 @@ type dataMonitoringNotificationChannelAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of google_monitoring_notification_channel.
 func (mnc dataMonitoringNotificationChannelAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(mnc.ref.Append("description"))
+	return terra.ReferenceAsString(mnc.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of google_monitoring_notification_channel.
 func (mnc dataMonitoringNotificationChannelAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(mnc.ref.Append("display_name"))
+	return terra.ReferenceAsString(mnc.ref.Append("display_name"))
 }
 
+// Enabled returns a reference to field enabled of google_monitoring_notification_channel.
 func (mnc dataMonitoringNotificationChannelAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(mnc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(mnc.ref.Append("enabled"))
 }
 
+// ForceDelete returns a reference to field force_delete of google_monitoring_notification_channel.
 func (mnc dataMonitoringNotificationChannelAttributes) ForceDelete() terra.BoolValue {
-	return terra.ReferenceBool(mnc.ref.Append("force_delete"))
+	return terra.ReferenceAsBool(mnc.ref.Append("force_delete"))
 }
 
+// Id returns a reference to field id of google_monitoring_notification_channel.
 func (mnc dataMonitoringNotificationChannelAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mnc.ref.Append("id"))
+	return terra.ReferenceAsString(mnc.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_monitoring_notification_channel.
 func (mnc dataMonitoringNotificationChannelAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mnc.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](mnc.ref.Append("labels"))
 }
 
+// Name returns a reference to field name of google_monitoring_notification_channel.
 func (mnc dataMonitoringNotificationChannelAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mnc.ref.Append("name"))
+	return terra.ReferenceAsString(mnc.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_monitoring_notification_channel.
 func (mnc dataMonitoringNotificationChannelAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(mnc.ref.Append("project"))
+	return terra.ReferenceAsString(mnc.ref.Append("project"))
 }
 
+// Type returns a reference to field type of google_monitoring_notification_channel.
 func (mnc dataMonitoringNotificationChannelAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(mnc.ref.Append("type"))
+	return terra.ReferenceAsString(mnc.ref.Append("type"))
 }
 
+// UserLabels returns a reference to field user_labels of google_monitoring_notification_channel.
 func (mnc dataMonitoringNotificationChannelAttributes) UserLabels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mnc.ref.Append("user_labels"))
+	return terra.ReferenceAsMap[terra.StringValue](mnc.ref.Append("user_labels"))
 }
 
+// VerificationStatus returns a reference to field verification_status of google_monitoring_notification_channel.
 func (mnc dataMonitoringNotificationChannelAttributes) VerificationStatus() terra.StringValue {
-	return terra.ReferenceString(mnc.ref.Append("verification_status"))
+	return terra.ReferenceAsString(mnc.ref.Append("verification_status"))
 }
 
 func (mnc dataMonitoringNotificationChannelAttributes) SensitiveLabels() terra.ListValue[datamonitoringnotificationchannel.SensitiveLabelsAttributes] {
-	return terra.ReferenceList[datamonitoringnotificationchannel.SensitiveLabelsAttributes](mnc.ref.Append("sensitive_labels"))
+	return terra.ReferenceAsList[datamonitoringnotificationchannel.SensitiveLabelsAttributes](mnc.ref.Append("sensitive_labels"))
 }

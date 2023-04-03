@@ -32,80 +32,80 @@ type Password1Attributes struct {
 	ref terra.Reference
 }
 
-func (p Password1Attributes) InternalRef() terra.Reference {
-	return p.ref
+func (p Password1Attributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p Password1Attributes) InternalWithRef(ref terra.Reference) Password1Attributes {
 	return Password1Attributes{ref: ref}
 }
 
-func (p Password1Attributes) InternalTokens() hclwrite.Tokens {
+func (p Password1Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
 func (p Password1Attributes) Expiry() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("expiry"))
+	return terra.ReferenceAsString(p.ref.Append("expiry"))
 }
 
 func (p Password1Attributes) Value() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("value"))
+	return terra.ReferenceAsString(p.ref.Append("value"))
 }
 
 type Password2Attributes struct {
 	ref terra.Reference
 }
 
-func (p Password2Attributes) InternalRef() terra.Reference {
-	return p.ref
+func (p Password2Attributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p Password2Attributes) InternalWithRef(ref terra.Reference) Password2Attributes {
 	return Password2Attributes{ref: ref}
 }
 
-func (p Password2Attributes) InternalTokens() hclwrite.Tokens {
+func (p Password2Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
 func (p Password2Attributes) Expiry() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("expiry"))
+	return terra.ReferenceAsString(p.ref.Append("expiry"))
 }
 
 func (p Password2Attributes) Value() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("value"))
+	return terra.ReferenceAsString(p.ref.Append("value"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type Password1State struct {

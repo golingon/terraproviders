@@ -32,7 +32,7 @@ func (cl ComputeLimitsAttributes) InternalWithRef(ref terra.Reference) ComputeLi
 	return ComputeLimitsAttributes{ref: ref}
 }
 
-func (cl ComputeLimitsAttributes) InternalTokens() hclwrite.Tokens {
+func (cl ComputeLimitsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cl.ref.InternalTokens()
 }
 

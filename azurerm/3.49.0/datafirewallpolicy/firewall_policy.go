@@ -20,72 +20,72 @@ type DnsAttributes struct {
 	ref terra.Reference
 }
 
-func (d DnsAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DnsAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DnsAttributes) InternalWithRef(ref terra.Reference) DnsAttributes {
 	return DnsAttributes{ref: ref}
 }
 
-func (d DnsAttributes) InternalTokens() hclwrite.Tokens {
+func (d DnsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d DnsAttributes) NetworkRuleFqdnEnabled() terra.BoolValue {
-	return terra.ReferenceBool(d.ref.Append("network_rule_fqdn_enabled"))
+	return terra.ReferenceAsBool(d.ref.Append("network_rule_fqdn_enabled"))
 }
 
 func (d DnsAttributes) ProxyEnabled() terra.BoolValue {
-	return terra.ReferenceBool(d.ref.Append("proxy_enabled"))
+	return terra.ReferenceAsBool(d.ref.Append("proxy_enabled"))
 }
 
 func (d DnsAttributes) Servers() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](d.ref.Append("servers"))
+	return terra.ReferenceAsList[terra.StringValue](d.ref.Append("servers"))
 }
 
 type ThreatIntelligenceAllowlistAttributes struct {
 	ref terra.Reference
 }
 
-func (tia ThreatIntelligenceAllowlistAttributes) InternalRef() terra.Reference {
-	return tia.ref
+func (tia ThreatIntelligenceAllowlistAttributes) InternalRef() (terra.Reference, error) {
+	return tia.ref, nil
 }
 
 func (tia ThreatIntelligenceAllowlistAttributes) InternalWithRef(ref terra.Reference) ThreatIntelligenceAllowlistAttributes {
 	return ThreatIntelligenceAllowlistAttributes{ref: ref}
 }
 
-func (tia ThreatIntelligenceAllowlistAttributes) InternalTokens() hclwrite.Tokens {
+func (tia ThreatIntelligenceAllowlistAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tia.ref.InternalTokens()
 }
 
 func (tia ThreatIntelligenceAllowlistAttributes) Fqdns() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](tia.ref.Append("fqdns"))
+	return terra.ReferenceAsList[terra.StringValue](tia.ref.Append("fqdns"))
 }
 
 func (tia ThreatIntelligenceAllowlistAttributes) IpAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](tia.ref.Append("ip_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](tia.ref.Append("ip_addresses"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type DnsState struct {

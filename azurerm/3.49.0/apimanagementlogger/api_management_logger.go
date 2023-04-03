@@ -34,76 +34,76 @@ type ApplicationInsightsAttributes struct {
 	ref terra.Reference
 }
 
-func (ai ApplicationInsightsAttributes) InternalRef() terra.Reference {
-	return ai.ref
+func (ai ApplicationInsightsAttributes) InternalRef() (terra.Reference, error) {
+	return ai.ref, nil
 }
 
 func (ai ApplicationInsightsAttributes) InternalWithRef(ref terra.Reference) ApplicationInsightsAttributes {
 	return ApplicationInsightsAttributes{ref: ref}
 }
 
-func (ai ApplicationInsightsAttributes) InternalTokens() hclwrite.Tokens {
+func (ai ApplicationInsightsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ai.ref.InternalTokens()
 }
 
 func (ai ApplicationInsightsAttributes) InstrumentationKey() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("instrumentation_key"))
+	return terra.ReferenceAsString(ai.ref.Append("instrumentation_key"))
 }
 
 type EventhubAttributes struct {
 	ref terra.Reference
 }
 
-func (e EventhubAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EventhubAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EventhubAttributes) InternalWithRef(ref terra.Reference) EventhubAttributes {
 	return EventhubAttributes{ref: ref}
 }
 
-func (e EventhubAttributes) InternalTokens() hclwrite.Tokens {
+func (e EventhubAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
 func (e EventhubAttributes) ConnectionString() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("connection_string"))
+	return terra.ReferenceAsString(e.ref.Append("connection_string"))
 }
 
 func (e EventhubAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("name"))
+	return terra.ReferenceAsString(e.ref.Append("name"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ApplicationInsightsState struct {

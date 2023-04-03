@@ -32,7 +32,7 @@ func (c ConfigurationAttributes) InternalWithRef(ref terra.Reference) Configurat
 	return ConfigurationAttributes{ref: ref}
 }
 
-func (c ConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -56,7 +56,7 @@ func (csc ContentSourceConfigurationAttributes) InternalWithRef(ref terra.Refere
 	return ContentSourceConfigurationAttributes{ref: ref}
 }
 
-func (csc ContentSourceConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (csc ContentSourceConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return csc.ref.InternalTokens()
 }
 
@@ -84,7 +84,7 @@ func (uic UserIdentityConfigurationAttributes) InternalWithRef(ref terra.Referen
 	return UserIdentityConfigurationAttributes{ref: ref}
 }
 
-func (uic UserIdentityConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (uic UserIdentityConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return uic.ref.InternalTokens()
 }
 
@@ -104,7 +104,7 @@ func (e EndpointsAttributes) InternalWithRef(ref terra.Reference) EndpointsAttri
 	return EndpointsAttributes{ref: ref}
 }
 
-func (e EndpointsAttributes) InternalTokens() hclwrite.Tokens {
+func (e EndpointsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 

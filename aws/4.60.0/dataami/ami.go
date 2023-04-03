@@ -35,7 +35,7 @@ func (bdm BlockDeviceMappingsAttributes) InternalWithRef(ref terra.Reference) Bl
 	return BlockDeviceMappingsAttributes{ref: ref}
 }
 
-func (bdm BlockDeviceMappingsAttributes) InternalTokens() hclwrite.Tokens {
+func (bdm BlockDeviceMappingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bdm.ref.InternalTokens()
 }
 
@@ -67,7 +67,7 @@ func (pc ProductCodesAttributes) InternalWithRef(ref terra.Reference) ProductCod
 	return ProductCodesAttributes{ref: ref}
 }
 
-func (pc ProductCodesAttributes) InternalTokens() hclwrite.Tokens {
+func (pc ProductCodesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
@@ -91,7 +91,7 @@ func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes 
 	return FilterAttributes{ref: ref}
 }
 
-func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
+func (f FilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -115,7 +115,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

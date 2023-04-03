@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSynapseSqlPool creates a new instance of [SynapseSqlPool].
 func NewSynapseSqlPool(name string, args SynapseSqlPoolArgs) *SynapseSqlPool {
 	return &SynapseSqlPool{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSynapseSqlPool(name string, args SynapseSqlPoolArgs) *SynapseSqlPool {
 
 var _ terra.Resource = (*SynapseSqlPool)(nil)
 
+// SynapseSqlPool represents the Terraform resource azurerm_synapse_sql_pool.
 type SynapseSqlPool struct {
-	Name  string
-	Args  SynapseSqlPoolArgs
-	state *synapseSqlPoolState
+	Name      string
+	Args      SynapseSqlPoolArgs
+	state     *synapseSqlPoolState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SynapseSqlPool].
 func (ssp *SynapseSqlPool) Type() string {
 	return "azurerm_synapse_sql_pool"
 }
 
+// LocalName returns the local name for [SynapseSqlPool].
 func (ssp *SynapseSqlPool) LocalName() string {
 	return ssp.Name
 }
 
+// Configuration returns the configuration (args) for [SynapseSqlPool].
 func (ssp *SynapseSqlPool) Configuration() interface{} {
 	return ssp.Args
 }
 
+// DependOn is used for other resources to depend on [SynapseSqlPool].
+func (ssp *SynapseSqlPool) DependOn() terra.Reference {
+	return terra.ReferenceResource(ssp)
+}
+
+// Dependencies returns the list of resources [SynapseSqlPool] depends_on.
+func (ssp *SynapseSqlPool) Dependencies() terra.Dependencies {
+	return ssp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SynapseSqlPool].
+func (ssp *SynapseSqlPool) LifecycleManagement() *terra.Lifecycle {
+	return ssp.Lifecycle
+}
+
+// Attributes returns the attributes for [SynapseSqlPool].
 func (ssp *SynapseSqlPool) Attributes() synapseSqlPoolAttributes {
 	return synapseSqlPoolAttributes{ref: terra.ReferenceResource(ssp)}
 }
 
+// ImportState imports the given attribute values into [SynapseSqlPool]'s state.
 func (ssp *SynapseSqlPool) ImportState(av io.Reader) error {
 	ssp.state = &synapseSqlPoolState{}
 	if err := json.NewDecoder(av).Decode(ssp.state); err != nil {
@@ -49,10 +73,12 @@ func (ssp *SynapseSqlPool) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SynapseSqlPool] has state.
 func (ssp *SynapseSqlPool) State() (*synapseSqlPoolState, bool) {
 	return ssp.state, ssp.state != nil
 }
 
+// StateMust returns the state for [SynapseSqlPool]. Panics if the state is nil.
 func (ssp *SynapseSqlPool) StateMust() *synapseSqlPoolState {
 	if ssp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ssp.Type(), ssp.LocalName()))
@@ -60,10 +86,7 @@ func (ssp *SynapseSqlPool) StateMust() *synapseSqlPoolState {
 	return ssp.state
 }
 
-func (ssp *SynapseSqlPool) DependOn() terra.Reference {
-	return terra.ReferenceResource(ssp)
-}
-
+// SynapseSqlPoolArgs contains the configurations for azurerm_synapse_sql_pool.
 type SynapseSqlPoolArgs struct {
 	// Collation: string, optional
 	Collation terra.StringValue `hcl:"collation,attr"`
@@ -89,59 +112,67 @@ type SynapseSqlPoolArgs struct {
 	Restore *synapsesqlpool.Restore `hcl:"restore,block"`
 	// Timeouts: optional
 	Timeouts *synapsesqlpool.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SynapseSqlPool depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type synapseSqlPoolAttributes struct {
 	ref terra.Reference
 }
 
+// Collation returns a reference to field collation of azurerm_synapse_sql_pool.
 func (ssp synapseSqlPoolAttributes) Collation() terra.StringValue {
-	return terra.ReferenceString(ssp.ref.Append("collation"))
+	return terra.ReferenceAsString(ssp.ref.Append("collation"))
 }
 
+// CreateMode returns a reference to field create_mode of azurerm_synapse_sql_pool.
 func (ssp synapseSqlPoolAttributes) CreateMode() terra.StringValue {
-	return terra.ReferenceString(ssp.ref.Append("create_mode"))
+	return terra.ReferenceAsString(ssp.ref.Append("create_mode"))
 }
 
+// DataEncrypted returns a reference to field data_encrypted of azurerm_synapse_sql_pool.
 func (ssp synapseSqlPoolAttributes) DataEncrypted() terra.BoolValue {
-	return terra.ReferenceBool(ssp.ref.Append("data_encrypted"))
+	return terra.ReferenceAsBool(ssp.ref.Append("data_encrypted"))
 }
 
+// GeoBackupPolicyEnabled returns a reference to field geo_backup_policy_enabled of azurerm_synapse_sql_pool.
 func (ssp synapseSqlPoolAttributes) GeoBackupPolicyEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ssp.ref.Append("geo_backup_policy_enabled"))
+	return terra.ReferenceAsBool(ssp.ref.Append("geo_backup_policy_enabled"))
 }
 
+// Id returns a reference to field id of azurerm_synapse_sql_pool.
 func (ssp synapseSqlPoolAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ssp.ref.Append("id"))
+	return terra.ReferenceAsString(ssp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_synapse_sql_pool.
 func (ssp synapseSqlPoolAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ssp.ref.Append("name"))
+	return terra.ReferenceAsString(ssp.ref.Append("name"))
 }
 
+// RecoveryDatabaseId returns a reference to field recovery_database_id of azurerm_synapse_sql_pool.
 func (ssp synapseSqlPoolAttributes) RecoveryDatabaseId() terra.StringValue {
-	return terra.ReferenceString(ssp.ref.Append("recovery_database_id"))
+	return terra.ReferenceAsString(ssp.ref.Append("recovery_database_id"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_synapse_sql_pool.
 func (ssp synapseSqlPoolAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(ssp.ref.Append("sku_name"))
+	return terra.ReferenceAsString(ssp.ref.Append("sku_name"))
 }
 
+// SynapseWorkspaceId returns a reference to field synapse_workspace_id of azurerm_synapse_sql_pool.
 func (ssp synapseSqlPoolAttributes) SynapseWorkspaceId() terra.StringValue {
-	return terra.ReferenceString(ssp.ref.Append("synapse_workspace_id"))
+	return terra.ReferenceAsString(ssp.ref.Append("synapse_workspace_id"))
 }
 
+// Tags returns a reference to field tags of azurerm_synapse_sql_pool.
 func (ssp synapseSqlPoolAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ssp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ssp.ref.Append("tags"))
 }
 
 func (ssp synapseSqlPoolAttributes) Restore() terra.ListValue[synapsesqlpool.RestoreAttributes] {
-	return terra.ReferenceList[synapsesqlpool.RestoreAttributes](ssp.ref.Append("restore"))
+	return terra.ReferenceAsList[synapsesqlpool.RestoreAttributes](ssp.ref.Append("restore"))
 }
 
 func (ssp synapseSqlPoolAttributes) Timeouts() synapsesqlpool.TimeoutsAttributes {
-	return terra.ReferenceSingle[synapsesqlpool.TimeoutsAttributes](ssp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[synapsesqlpool.TimeoutsAttributes](ssp.ref.Append("timeouts"))
 }
 
 type synapseSqlPoolState struct {

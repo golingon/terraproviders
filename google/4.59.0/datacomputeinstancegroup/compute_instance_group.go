@@ -13,24 +13,24 @@ type NamedPortAttributes struct {
 	ref terra.Reference
 }
 
-func (np NamedPortAttributes) InternalRef() terra.Reference {
-	return np.ref
+func (np NamedPortAttributes) InternalRef() (terra.Reference, error) {
+	return np.ref, nil
 }
 
 func (np NamedPortAttributes) InternalWithRef(ref terra.Reference) NamedPortAttributes {
 	return NamedPortAttributes{ref: ref}
 }
 
-func (np NamedPortAttributes) InternalTokens() hclwrite.Tokens {
+func (np NamedPortAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return np.ref.InternalTokens()
 }
 
 func (np NamedPortAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("name"))
+	return terra.ReferenceAsString(np.ref.Append("name"))
 }
 
 func (np NamedPortAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(np.ref.Append("port"))
+	return terra.ReferenceAsNumber(np.ref.Append("port"))
 }
 
 type NamedPortState struct {

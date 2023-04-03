@@ -26,7 +26,7 @@ func (isd IpSetDescriptorAttributes) InternalWithRef(ref terra.Reference) IpSetD
 	return IpSetDescriptorAttributes{ref: ref}
 }
 
-func (isd IpSetDescriptorAttributes) InternalTokens() hclwrite.Tokens {
+func (isd IpSetDescriptorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return isd.ref.InternalTokens()
 }
 

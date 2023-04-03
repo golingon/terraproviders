@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewBillingSubaccount creates a new instance of [BillingSubaccount].
 func NewBillingSubaccount(name string, args BillingSubaccountArgs) *BillingSubaccount {
 	return &BillingSubaccount{
 		Args: args,
@@ -18,28 +19,51 @@ func NewBillingSubaccount(name string, args BillingSubaccountArgs) *BillingSubac
 
 var _ terra.Resource = (*BillingSubaccount)(nil)
 
+// BillingSubaccount represents the Terraform resource google_billing_subaccount.
 type BillingSubaccount struct {
-	Name  string
-	Args  BillingSubaccountArgs
-	state *billingSubaccountState
+	Name      string
+	Args      BillingSubaccountArgs
+	state     *billingSubaccountState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BillingSubaccount].
 func (bs *BillingSubaccount) Type() string {
 	return "google_billing_subaccount"
 }
 
+// LocalName returns the local name for [BillingSubaccount].
 func (bs *BillingSubaccount) LocalName() string {
 	return bs.Name
 }
 
+// Configuration returns the configuration (args) for [BillingSubaccount].
 func (bs *BillingSubaccount) Configuration() interface{} {
 	return bs.Args
 }
 
+// DependOn is used for other resources to depend on [BillingSubaccount].
+func (bs *BillingSubaccount) DependOn() terra.Reference {
+	return terra.ReferenceResource(bs)
+}
+
+// Dependencies returns the list of resources [BillingSubaccount] depends_on.
+func (bs *BillingSubaccount) Dependencies() terra.Dependencies {
+	return bs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BillingSubaccount].
+func (bs *BillingSubaccount) LifecycleManagement() *terra.Lifecycle {
+	return bs.Lifecycle
+}
+
+// Attributes returns the attributes for [BillingSubaccount].
 func (bs *BillingSubaccount) Attributes() billingSubaccountAttributes {
 	return billingSubaccountAttributes{ref: terra.ReferenceResource(bs)}
 }
 
+// ImportState imports the given attribute values into [BillingSubaccount]'s state.
 func (bs *BillingSubaccount) ImportState(av io.Reader) error {
 	bs.state = &billingSubaccountState{}
 	if err := json.NewDecoder(av).Decode(bs.state); err != nil {
@@ -48,10 +72,12 @@ func (bs *BillingSubaccount) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BillingSubaccount] has state.
 func (bs *BillingSubaccount) State() (*billingSubaccountState, bool) {
 	return bs.state, bs.state != nil
 }
 
+// StateMust returns the state for [BillingSubaccount]. Panics if the state is nil.
 func (bs *BillingSubaccount) StateMust() *billingSubaccountState {
 	if bs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bs.Type(), bs.LocalName()))
@@ -59,10 +85,7 @@ func (bs *BillingSubaccount) StateMust() *billingSubaccountState {
 	return bs.state
 }
 
-func (bs *BillingSubaccount) DependOn() terra.Reference {
-	return terra.ReferenceResource(bs)
-}
-
+// BillingSubaccountArgs contains the configurations for google_billing_subaccount.
 type BillingSubaccountArgs struct {
 	// DeletionPolicy: string, optional
 	DeletionPolicy terra.StringValue `hcl:"deletion_policy,attr"`
@@ -72,39 +95,44 @@ type BillingSubaccountArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// MasterBillingAccount: string, required
 	MasterBillingAccount terra.StringValue `hcl:"master_billing_account,attr" validate:"required"`
-	// DependsOn contains resources that BillingSubaccount depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type billingSubaccountAttributes struct {
 	ref terra.Reference
 }
 
+// BillingAccountId returns a reference to field billing_account_id of google_billing_subaccount.
 func (bs billingSubaccountAttributes) BillingAccountId() terra.StringValue {
-	return terra.ReferenceString(bs.ref.Append("billing_account_id"))
+	return terra.ReferenceAsString(bs.ref.Append("billing_account_id"))
 }
 
+// DeletionPolicy returns a reference to field deletion_policy of google_billing_subaccount.
 func (bs billingSubaccountAttributes) DeletionPolicy() terra.StringValue {
-	return terra.ReferenceString(bs.ref.Append("deletion_policy"))
+	return terra.ReferenceAsString(bs.ref.Append("deletion_policy"))
 }
 
+// DisplayName returns a reference to field display_name of google_billing_subaccount.
 func (bs billingSubaccountAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(bs.ref.Append("display_name"))
+	return terra.ReferenceAsString(bs.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of google_billing_subaccount.
 func (bs billingSubaccountAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bs.ref.Append("id"))
+	return terra.ReferenceAsString(bs.ref.Append("id"))
 }
 
+// MasterBillingAccount returns a reference to field master_billing_account of google_billing_subaccount.
 func (bs billingSubaccountAttributes) MasterBillingAccount() terra.StringValue {
-	return terra.ReferenceString(bs.ref.Append("master_billing_account"))
+	return terra.ReferenceAsString(bs.ref.Append("master_billing_account"))
 }
 
+// Name returns a reference to field name of google_billing_subaccount.
 func (bs billingSubaccountAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(bs.ref.Append("name"))
+	return terra.ReferenceAsString(bs.ref.Append("name"))
 }
 
+// Open returns a reference to field open of google_billing_subaccount.
 func (bs billingSubaccountAttributes) Open() terra.BoolValue {
-	return terra.ReferenceBool(bs.ref.Append("open"))
+	return terra.ReferenceAsBool(bs.ref.Append("open"))
 }
 
 type billingSubaccountState struct {

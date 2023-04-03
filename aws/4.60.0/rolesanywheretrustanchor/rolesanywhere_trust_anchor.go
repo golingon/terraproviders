@@ -33,7 +33,7 @@ func (s SourceAttributes) InternalWithRef(ref terra.Reference) SourceAttributes 
 	return SourceAttributes{ref: ref}
 }
 
-func (s SourceAttributes) InternalTokens() hclwrite.Tokens {
+func (s SourceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -57,7 +57,7 @@ func (sd SourceDataAttributes) InternalWithRef(ref terra.Reference) SourceDataAt
 	return SourceDataAttributes{ref: ref}
 }
 
-func (sd SourceDataAttributes) InternalTokens() hclwrite.Tokens {
+func (sd SourceDataAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sd.ref.InternalTokens()
 }
 

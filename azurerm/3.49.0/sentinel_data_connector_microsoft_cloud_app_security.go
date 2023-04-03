@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSentinelDataConnectorMicrosoftCloudAppSecurity creates a new instance of [SentinelDataConnectorMicrosoftCloudAppSecurity].
 func NewSentinelDataConnectorMicrosoftCloudAppSecurity(name string, args SentinelDataConnectorMicrosoftCloudAppSecurityArgs) *SentinelDataConnectorMicrosoftCloudAppSecurity {
 	return &SentinelDataConnectorMicrosoftCloudAppSecurity{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSentinelDataConnectorMicrosoftCloudAppSecurity(name string, args Sentine
 
 var _ terra.Resource = (*SentinelDataConnectorMicrosoftCloudAppSecurity)(nil)
 
+// SentinelDataConnectorMicrosoftCloudAppSecurity represents the Terraform resource azurerm_sentinel_data_connector_microsoft_cloud_app_security.
 type SentinelDataConnectorMicrosoftCloudAppSecurity struct {
-	Name  string
-	Args  SentinelDataConnectorMicrosoftCloudAppSecurityArgs
-	state *sentinelDataConnectorMicrosoftCloudAppSecurityState
+	Name      string
+	Args      SentinelDataConnectorMicrosoftCloudAppSecurityArgs
+	state     *sentinelDataConnectorMicrosoftCloudAppSecurityState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SentinelDataConnectorMicrosoftCloudAppSecurity].
 func (sdcmcas *SentinelDataConnectorMicrosoftCloudAppSecurity) Type() string {
 	return "azurerm_sentinel_data_connector_microsoft_cloud_app_security"
 }
 
+// LocalName returns the local name for [SentinelDataConnectorMicrosoftCloudAppSecurity].
 func (sdcmcas *SentinelDataConnectorMicrosoftCloudAppSecurity) LocalName() string {
 	return sdcmcas.Name
 }
 
+// Configuration returns the configuration (args) for [SentinelDataConnectorMicrosoftCloudAppSecurity].
 func (sdcmcas *SentinelDataConnectorMicrosoftCloudAppSecurity) Configuration() interface{} {
 	return sdcmcas.Args
 }
 
+// DependOn is used for other resources to depend on [SentinelDataConnectorMicrosoftCloudAppSecurity].
+func (sdcmcas *SentinelDataConnectorMicrosoftCloudAppSecurity) DependOn() terra.Reference {
+	return terra.ReferenceResource(sdcmcas)
+}
+
+// Dependencies returns the list of resources [SentinelDataConnectorMicrosoftCloudAppSecurity] depends_on.
+func (sdcmcas *SentinelDataConnectorMicrosoftCloudAppSecurity) Dependencies() terra.Dependencies {
+	return sdcmcas.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SentinelDataConnectorMicrosoftCloudAppSecurity].
+func (sdcmcas *SentinelDataConnectorMicrosoftCloudAppSecurity) LifecycleManagement() *terra.Lifecycle {
+	return sdcmcas.Lifecycle
+}
+
+// Attributes returns the attributes for [SentinelDataConnectorMicrosoftCloudAppSecurity].
 func (sdcmcas *SentinelDataConnectorMicrosoftCloudAppSecurity) Attributes() sentinelDataConnectorMicrosoftCloudAppSecurityAttributes {
 	return sentinelDataConnectorMicrosoftCloudAppSecurityAttributes{ref: terra.ReferenceResource(sdcmcas)}
 }
 
+// ImportState imports the given attribute values into [SentinelDataConnectorMicrosoftCloudAppSecurity]'s state.
 func (sdcmcas *SentinelDataConnectorMicrosoftCloudAppSecurity) ImportState(av io.Reader) error {
 	sdcmcas.state = &sentinelDataConnectorMicrosoftCloudAppSecurityState{}
 	if err := json.NewDecoder(av).Decode(sdcmcas.state); err != nil {
@@ -49,10 +73,12 @@ func (sdcmcas *SentinelDataConnectorMicrosoftCloudAppSecurity) ImportState(av io
 	return nil
 }
 
+// State returns the state and a bool indicating if [SentinelDataConnectorMicrosoftCloudAppSecurity] has state.
 func (sdcmcas *SentinelDataConnectorMicrosoftCloudAppSecurity) State() (*sentinelDataConnectorMicrosoftCloudAppSecurityState, bool) {
 	return sdcmcas.state, sdcmcas.state != nil
 }
 
+// StateMust returns the state for [SentinelDataConnectorMicrosoftCloudAppSecurity]. Panics if the state is nil.
 func (sdcmcas *SentinelDataConnectorMicrosoftCloudAppSecurity) StateMust() *sentinelDataConnectorMicrosoftCloudAppSecurityState {
 	if sdcmcas.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sdcmcas.Type(), sdcmcas.LocalName()))
@@ -60,10 +86,7 @@ func (sdcmcas *SentinelDataConnectorMicrosoftCloudAppSecurity) StateMust() *sent
 	return sdcmcas.state
 }
 
-func (sdcmcas *SentinelDataConnectorMicrosoftCloudAppSecurity) DependOn() terra.Reference {
-	return terra.ReferenceResource(sdcmcas)
-}
-
+// SentinelDataConnectorMicrosoftCloudAppSecurityArgs contains the configurations for azurerm_sentinel_data_connector_microsoft_cloud_app_security.
 type SentinelDataConnectorMicrosoftCloudAppSecurityArgs struct {
 	// AlertsEnabled: bool, optional
 	AlertsEnabled terra.BoolValue `hcl:"alerts_enabled,attr"`
@@ -79,39 +102,43 @@ type SentinelDataConnectorMicrosoftCloudAppSecurityArgs struct {
 	TenantId terra.StringValue `hcl:"tenant_id,attr"`
 	// Timeouts: optional
 	Timeouts *sentineldataconnectormicrosoftcloudappsecurity.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SentinelDataConnectorMicrosoftCloudAppSecurity depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sentinelDataConnectorMicrosoftCloudAppSecurityAttributes struct {
 	ref terra.Reference
 }
 
+// AlertsEnabled returns a reference to field alerts_enabled of azurerm_sentinel_data_connector_microsoft_cloud_app_security.
 func (sdcmcas sentinelDataConnectorMicrosoftCloudAppSecurityAttributes) AlertsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(sdcmcas.ref.Append("alerts_enabled"))
+	return terra.ReferenceAsBool(sdcmcas.ref.Append("alerts_enabled"))
 }
 
+// DiscoveryLogsEnabled returns a reference to field discovery_logs_enabled of azurerm_sentinel_data_connector_microsoft_cloud_app_security.
 func (sdcmcas sentinelDataConnectorMicrosoftCloudAppSecurityAttributes) DiscoveryLogsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(sdcmcas.ref.Append("discovery_logs_enabled"))
+	return terra.ReferenceAsBool(sdcmcas.ref.Append("discovery_logs_enabled"))
 }
 
+// Id returns a reference to field id of azurerm_sentinel_data_connector_microsoft_cloud_app_security.
 func (sdcmcas sentinelDataConnectorMicrosoftCloudAppSecurityAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sdcmcas.ref.Append("id"))
+	return terra.ReferenceAsString(sdcmcas.ref.Append("id"))
 }
 
+// LogAnalyticsWorkspaceId returns a reference to field log_analytics_workspace_id of azurerm_sentinel_data_connector_microsoft_cloud_app_security.
 func (sdcmcas sentinelDataConnectorMicrosoftCloudAppSecurityAttributes) LogAnalyticsWorkspaceId() terra.StringValue {
-	return terra.ReferenceString(sdcmcas.ref.Append("log_analytics_workspace_id"))
+	return terra.ReferenceAsString(sdcmcas.ref.Append("log_analytics_workspace_id"))
 }
 
+// Name returns a reference to field name of azurerm_sentinel_data_connector_microsoft_cloud_app_security.
 func (sdcmcas sentinelDataConnectorMicrosoftCloudAppSecurityAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sdcmcas.ref.Append("name"))
+	return terra.ReferenceAsString(sdcmcas.ref.Append("name"))
 }
 
+// TenantId returns a reference to field tenant_id of azurerm_sentinel_data_connector_microsoft_cloud_app_security.
 func (sdcmcas sentinelDataConnectorMicrosoftCloudAppSecurityAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(sdcmcas.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(sdcmcas.ref.Append("tenant_id"))
 }
 
 func (sdcmcas sentinelDataConnectorMicrosoftCloudAppSecurityAttributes) Timeouts() sentineldataconnectormicrosoftcloudappsecurity.TimeoutsAttributes {
-	return terra.ReferenceSingle[sentineldataconnectormicrosoftcloudappsecurity.TimeoutsAttributes](sdcmcas.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[sentineldataconnectormicrosoftcloudappsecurity.TimeoutsAttributes](sdcmcas.ref.Append("timeouts"))
 }
 
 type sentinelDataConnectorMicrosoftCloudAppSecurityState struct {

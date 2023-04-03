@@ -4,6 +4,7 @@ package google
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataComputeAddress creates a new instance of [DataComputeAddress].
 func NewDataComputeAddress(name string, args DataComputeAddressArgs) *DataComputeAddress {
 	return &DataComputeAddress{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataComputeAddress(name string, args DataComputeAddressArgs) *DataComput
 
 var _ terra.DataResource = (*DataComputeAddress)(nil)
 
+// DataComputeAddress represents the Terraform data resource google_compute_address.
 type DataComputeAddress struct {
 	Name string
 	Args DataComputeAddressArgs
 }
 
+// DataSource returns the Terraform object type for [DataComputeAddress].
 func (ca *DataComputeAddress) DataSource() string {
 	return "google_compute_address"
 }
 
+// LocalName returns the local name for [DataComputeAddress].
 func (ca *DataComputeAddress) LocalName() string {
 	return ca.Name
 }
 
+// Configuration returns the configuration (args) for [DataComputeAddress].
 func (ca *DataComputeAddress) Configuration() interface{} {
 	return ca.Args
 }
 
+// Attributes returns the attributes for [DataComputeAddress].
 func (ca *DataComputeAddress) Attributes() dataComputeAddressAttributes {
 	return dataComputeAddressAttributes{ref: terra.ReferenceDataResource(ca)}
 }
 
+// DataComputeAddressArgs contains the configurations for google_compute_address.
 type DataComputeAddressArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -48,30 +55,37 @@ type dataComputeAddressAttributes struct {
 	ref terra.Reference
 }
 
+// Address returns a reference to field address of google_compute_address.
 func (ca dataComputeAddressAttributes) Address() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("address"))
+	return terra.ReferenceAsString(ca.ref.Append("address"))
 }
 
+// Id returns a reference to field id of google_compute_address.
 func (ca dataComputeAddressAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("id"))
+	return terra.ReferenceAsString(ca.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_compute_address.
 func (ca dataComputeAddressAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("name"))
+	return terra.ReferenceAsString(ca.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_compute_address.
 func (ca dataComputeAddressAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("project"))
+	return terra.ReferenceAsString(ca.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_compute_address.
 func (ca dataComputeAddressAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("region"))
+	return terra.ReferenceAsString(ca.ref.Append("region"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_address.
 func (ca dataComputeAddressAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("self_link"))
+	return terra.ReferenceAsString(ca.ref.Append("self_link"))
 }
 
+// Status returns a reference to field status of google_compute_address.
 func (ca dataComputeAddressAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("status"))
+	return terra.ReferenceAsString(ca.ref.Append("status"))
 }

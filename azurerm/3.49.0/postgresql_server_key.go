@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewPostgresqlServerKey creates a new instance of [PostgresqlServerKey].
 func NewPostgresqlServerKey(name string, args PostgresqlServerKeyArgs) *PostgresqlServerKey {
 	return &PostgresqlServerKey{
 		Args: args,
@@ -19,28 +20,51 @@ func NewPostgresqlServerKey(name string, args PostgresqlServerKeyArgs) *Postgres
 
 var _ terra.Resource = (*PostgresqlServerKey)(nil)
 
+// PostgresqlServerKey represents the Terraform resource azurerm_postgresql_server_key.
 type PostgresqlServerKey struct {
-	Name  string
-	Args  PostgresqlServerKeyArgs
-	state *postgresqlServerKeyState
+	Name      string
+	Args      PostgresqlServerKeyArgs
+	state     *postgresqlServerKeyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PostgresqlServerKey].
 func (psk *PostgresqlServerKey) Type() string {
 	return "azurerm_postgresql_server_key"
 }
 
+// LocalName returns the local name for [PostgresqlServerKey].
 func (psk *PostgresqlServerKey) LocalName() string {
 	return psk.Name
 }
 
+// Configuration returns the configuration (args) for [PostgresqlServerKey].
 func (psk *PostgresqlServerKey) Configuration() interface{} {
 	return psk.Args
 }
 
+// DependOn is used for other resources to depend on [PostgresqlServerKey].
+func (psk *PostgresqlServerKey) DependOn() terra.Reference {
+	return terra.ReferenceResource(psk)
+}
+
+// Dependencies returns the list of resources [PostgresqlServerKey] depends_on.
+func (psk *PostgresqlServerKey) Dependencies() terra.Dependencies {
+	return psk.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PostgresqlServerKey].
+func (psk *PostgresqlServerKey) LifecycleManagement() *terra.Lifecycle {
+	return psk.Lifecycle
+}
+
+// Attributes returns the attributes for [PostgresqlServerKey].
 func (psk *PostgresqlServerKey) Attributes() postgresqlServerKeyAttributes {
 	return postgresqlServerKeyAttributes{ref: terra.ReferenceResource(psk)}
 }
 
+// ImportState imports the given attribute values into [PostgresqlServerKey]'s state.
 func (psk *PostgresqlServerKey) ImportState(av io.Reader) error {
 	psk.state = &postgresqlServerKeyState{}
 	if err := json.NewDecoder(av).Decode(psk.state); err != nil {
@@ -49,10 +73,12 @@ func (psk *PostgresqlServerKey) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PostgresqlServerKey] has state.
 func (psk *PostgresqlServerKey) State() (*postgresqlServerKeyState, bool) {
 	return psk.state, psk.state != nil
 }
 
+// StateMust returns the state for [PostgresqlServerKey]. Panics if the state is nil.
 func (psk *PostgresqlServerKey) StateMust() *postgresqlServerKeyState {
 	if psk.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", psk.Type(), psk.LocalName()))
@@ -60,10 +86,7 @@ func (psk *PostgresqlServerKey) StateMust() *postgresqlServerKeyState {
 	return psk.state
 }
 
-func (psk *PostgresqlServerKey) DependOn() terra.Reference {
-	return terra.ReferenceResource(psk)
-}
-
+// PostgresqlServerKeyArgs contains the configurations for azurerm_postgresql_server_key.
 type PostgresqlServerKeyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -73,27 +96,28 @@ type PostgresqlServerKeyArgs struct {
 	ServerId terra.StringValue `hcl:"server_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *postgresqlserverkey.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that PostgresqlServerKey depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type postgresqlServerKeyAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_postgresql_server_key.
 func (psk postgresqlServerKeyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(psk.ref.Append("id"))
+	return terra.ReferenceAsString(psk.ref.Append("id"))
 }
 
+// KeyVaultKeyId returns a reference to field key_vault_key_id of azurerm_postgresql_server_key.
 func (psk postgresqlServerKeyAttributes) KeyVaultKeyId() terra.StringValue {
-	return terra.ReferenceString(psk.ref.Append("key_vault_key_id"))
+	return terra.ReferenceAsString(psk.ref.Append("key_vault_key_id"))
 }
 
+// ServerId returns a reference to field server_id of azurerm_postgresql_server_key.
 func (psk postgresqlServerKeyAttributes) ServerId() terra.StringValue {
-	return terra.ReferenceString(psk.ref.Append("server_id"))
+	return terra.ReferenceAsString(psk.ref.Append("server_id"))
 }
 
 func (psk postgresqlServerKeyAttributes) Timeouts() postgresqlserverkey.TimeoutsAttributes {
-	return terra.ReferenceSingle[postgresqlserverkey.TimeoutsAttributes](psk.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[postgresqlserverkey.TimeoutsAttributes](psk.ref.Append("timeouts"))
 }
 
 type postgresqlServerKeyState struct {

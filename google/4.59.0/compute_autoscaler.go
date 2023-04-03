@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeAutoscaler creates a new instance of [ComputeAutoscaler].
 func NewComputeAutoscaler(name string, args ComputeAutoscalerArgs) *ComputeAutoscaler {
 	return &ComputeAutoscaler{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeAutoscaler(name string, args ComputeAutoscalerArgs) *ComputeAutos
 
 var _ terra.Resource = (*ComputeAutoscaler)(nil)
 
+// ComputeAutoscaler represents the Terraform resource google_compute_autoscaler.
 type ComputeAutoscaler struct {
-	Name  string
-	Args  ComputeAutoscalerArgs
-	state *computeAutoscalerState
+	Name      string
+	Args      ComputeAutoscalerArgs
+	state     *computeAutoscalerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeAutoscaler].
 func (ca *ComputeAutoscaler) Type() string {
 	return "google_compute_autoscaler"
 }
 
+// LocalName returns the local name for [ComputeAutoscaler].
 func (ca *ComputeAutoscaler) LocalName() string {
 	return ca.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeAutoscaler].
 func (ca *ComputeAutoscaler) Configuration() interface{} {
 	return ca.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeAutoscaler].
+func (ca *ComputeAutoscaler) DependOn() terra.Reference {
+	return terra.ReferenceResource(ca)
+}
+
+// Dependencies returns the list of resources [ComputeAutoscaler] depends_on.
+func (ca *ComputeAutoscaler) Dependencies() terra.Dependencies {
+	return ca.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeAutoscaler].
+func (ca *ComputeAutoscaler) LifecycleManagement() *terra.Lifecycle {
+	return ca.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeAutoscaler].
 func (ca *ComputeAutoscaler) Attributes() computeAutoscalerAttributes {
 	return computeAutoscalerAttributes{ref: terra.ReferenceResource(ca)}
 }
 
+// ImportState imports the given attribute values into [ComputeAutoscaler]'s state.
 func (ca *ComputeAutoscaler) ImportState(av io.Reader) error {
 	ca.state = &computeAutoscalerState{}
 	if err := json.NewDecoder(av).Decode(ca.state); err != nil {
@@ -49,10 +73,12 @@ func (ca *ComputeAutoscaler) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeAutoscaler] has state.
 func (ca *ComputeAutoscaler) State() (*computeAutoscalerState, bool) {
 	return ca.state, ca.state != nil
 }
 
+// StateMust returns the state for [ComputeAutoscaler]. Panics if the state is nil.
 func (ca *ComputeAutoscaler) StateMust() *computeAutoscalerState {
 	if ca.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ca.Type(), ca.LocalName()))
@@ -60,10 +86,7 @@ func (ca *ComputeAutoscaler) StateMust() *computeAutoscalerState {
 	return ca.state
 }
 
-func (ca *ComputeAutoscaler) DependOn() terra.Reference {
-	return terra.ReferenceResource(ca)
-}
-
+// ComputeAutoscalerArgs contains the configurations for google_compute_autoscaler.
 type ComputeAutoscalerArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -81,51 +104,57 @@ type ComputeAutoscalerArgs struct {
 	AutoscalingPolicy *computeautoscaler.AutoscalingPolicy `hcl:"autoscaling_policy,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *computeautoscaler.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeAutoscaler depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeAutoscalerAttributes struct {
 	ref terra.Reference
 }
 
+// CreationTimestamp returns a reference to field creation_timestamp of google_compute_autoscaler.
 func (ca computeAutoscalerAttributes) CreationTimestamp() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("creation_timestamp"))
+	return terra.ReferenceAsString(ca.ref.Append("creation_timestamp"))
 }
 
+// Description returns a reference to field description of google_compute_autoscaler.
 func (ca computeAutoscalerAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("description"))
+	return terra.ReferenceAsString(ca.ref.Append("description"))
 }
 
+// Id returns a reference to field id of google_compute_autoscaler.
 func (ca computeAutoscalerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("id"))
+	return terra.ReferenceAsString(ca.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_compute_autoscaler.
 func (ca computeAutoscalerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("name"))
+	return terra.ReferenceAsString(ca.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_compute_autoscaler.
 func (ca computeAutoscalerAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("project"))
+	return terra.ReferenceAsString(ca.ref.Append("project"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_autoscaler.
 func (ca computeAutoscalerAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("self_link"))
+	return terra.ReferenceAsString(ca.ref.Append("self_link"))
 }
 
+// Target returns a reference to field target of google_compute_autoscaler.
 func (ca computeAutoscalerAttributes) Target() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("target"))
+	return terra.ReferenceAsString(ca.ref.Append("target"))
 }
 
+// Zone returns a reference to field zone of google_compute_autoscaler.
 func (ca computeAutoscalerAttributes) Zone() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("zone"))
+	return terra.ReferenceAsString(ca.ref.Append("zone"))
 }
 
 func (ca computeAutoscalerAttributes) AutoscalingPolicy() terra.ListValue[computeautoscaler.AutoscalingPolicyAttributes] {
-	return terra.ReferenceList[computeautoscaler.AutoscalingPolicyAttributes](ca.ref.Append("autoscaling_policy"))
+	return terra.ReferenceAsList[computeautoscaler.AutoscalingPolicyAttributes](ca.ref.Append("autoscaling_policy"))
 }
 
 func (ca computeAutoscalerAttributes) Timeouts() computeautoscaler.TimeoutsAttributes {
-	return terra.ReferenceSingle[computeautoscaler.TimeoutsAttributes](ca.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computeautoscaler.TimeoutsAttributes](ca.ref.Append("timeouts"))
 }
 
 type computeAutoscalerState struct {

@@ -37,72 +37,72 @@ type ActiveDirectoryAttributes struct {
 	ref terra.Reference
 }
 
-func (ad ActiveDirectoryAttributes) InternalRef() terra.Reference {
-	return ad.ref
+func (ad ActiveDirectoryAttributes) InternalRef() (terra.Reference, error) {
+	return ad.ref, nil
 }
 
 func (ad ActiveDirectoryAttributes) InternalWithRef(ref terra.Reference) ActiveDirectoryAttributes {
 	return ActiveDirectoryAttributes{ref: ref}
 }
 
-func (ad ActiveDirectoryAttributes) InternalTokens() hclwrite.Tokens {
+func (ad ActiveDirectoryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ad.ref.InternalTokens()
 }
 
 func (ad ActiveDirectoryAttributes) DnsServers() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ad.ref.Append("dns_servers"))
+	return terra.ReferenceAsList[terra.StringValue](ad.ref.Append("dns_servers"))
 }
 
 func (ad ActiveDirectoryAttributes) Domain() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("domain"))
+	return terra.ReferenceAsString(ad.ref.Append("domain"))
 }
 
 func (ad ActiveDirectoryAttributes) OrganizationalUnit() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("organizational_unit"))
+	return terra.ReferenceAsString(ad.ref.Append("organizational_unit"))
 }
 
 func (ad ActiveDirectoryAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("password"))
+	return terra.ReferenceAsString(ad.ref.Append("password"))
 }
 
 func (ad ActiveDirectoryAttributes) SmbServerName() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("smb_server_name"))
+	return terra.ReferenceAsString(ad.ref.Append("smb_server_name"))
 }
 
 func (ad ActiveDirectoryAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("username"))
+	return terra.ReferenceAsString(ad.ref.Append("username"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ActiveDirectoryState struct {

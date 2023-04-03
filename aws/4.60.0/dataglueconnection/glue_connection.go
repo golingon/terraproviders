@@ -21,7 +21,7 @@ func (pcr PhysicalConnectionRequirementsAttributes) InternalWithRef(ref terra.Re
 	return PhysicalConnectionRequirementsAttributes{ref: ref}
 }
 
-func (pcr PhysicalConnectionRequirementsAttributes) InternalTokens() hclwrite.Tokens {
+func (pcr PhysicalConnectionRequirementsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pcr.ref.InternalTokens()
 }
 

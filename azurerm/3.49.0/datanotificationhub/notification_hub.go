@@ -20,76 +20,76 @@ type ApnsCredentialAttributes struct {
 	ref terra.Reference
 }
 
-func (ac ApnsCredentialAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac ApnsCredentialAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac ApnsCredentialAttributes) InternalWithRef(ref terra.Reference) ApnsCredentialAttributes {
 	return ApnsCredentialAttributes{ref: ref}
 }
 
-func (ac ApnsCredentialAttributes) InternalTokens() hclwrite.Tokens {
+func (ac ApnsCredentialAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
 func (ac ApnsCredentialAttributes) ApplicationMode() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("application_mode"))
+	return terra.ReferenceAsString(ac.ref.Append("application_mode"))
 }
 
 func (ac ApnsCredentialAttributes) BundleId() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("bundle_id"))
+	return terra.ReferenceAsString(ac.ref.Append("bundle_id"))
 }
 
 func (ac ApnsCredentialAttributes) KeyId() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("key_id"))
+	return terra.ReferenceAsString(ac.ref.Append("key_id"))
 }
 
 func (ac ApnsCredentialAttributes) TeamId() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("team_id"))
+	return terra.ReferenceAsString(ac.ref.Append("team_id"))
 }
 
 func (ac ApnsCredentialAttributes) Token() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("token"))
+	return terra.ReferenceAsString(ac.ref.Append("token"))
 }
 
 type GcmCredentialAttributes struct {
 	ref terra.Reference
 }
 
-func (gc GcmCredentialAttributes) InternalRef() terra.Reference {
-	return gc.ref
+func (gc GcmCredentialAttributes) InternalRef() (terra.Reference, error) {
+	return gc.ref, nil
 }
 
 func (gc GcmCredentialAttributes) InternalWithRef(ref terra.Reference) GcmCredentialAttributes {
 	return GcmCredentialAttributes{ref: ref}
 }
 
-func (gc GcmCredentialAttributes) InternalTokens() hclwrite.Tokens {
+func (gc GcmCredentialAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gc.ref.InternalTokens()
 }
 
 func (gc GcmCredentialAttributes) ApiKey() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("api_key"))
+	return terra.ReferenceAsString(gc.ref.Append("api_key"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type ApnsCredentialState struct {

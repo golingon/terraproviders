@@ -26,7 +26,7 @@ func (c CredentialsAttributes) InternalWithRef(ref terra.Reference) CredentialsA
 	return CredentialsAttributes{ref: ref}
 }
 
-func (c CredentialsAttributes) InternalTokens() hclwrite.Tokens {
+func (c CredentialsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 

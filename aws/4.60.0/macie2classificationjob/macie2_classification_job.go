@@ -208,7 +208,7 @@ func (upd UserPausedDetailsAttributes) InternalWithRef(ref terra.Reference) User
 	return UserPausedDetailsAttributes{ref: ref}
 }
 
-func (upd UserPausedDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (upd UserPausedDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return upd.ref.InternalTokens()
 }
 
@@ -236,7 +236,7 @@ func (sjd S3JobDefinitionAttributes) InternalWithRef(ref terra.Reference) S3JobD
 	return S3JobDefinitionAttributes{ref: ref}
 }
 
-func (sjd S3JobDefinitionAttributes) InternalTokens() hclwrite.Tokens {
+func (sjd S3JobDefinitionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sjd.ref.InternalTokens()
 }
 
@@ -264,7 +264,7 @@ func (bc BucketCriteriaAttributes) InternalWithRef(ref terra.Reference) BucketCr
 	return BucketCriteriaAttributes{ref: ref}
 }
 
-func (bc BucketCriteriaAttributes) InternalTokens() hclwrite.Tokens {
+func (bc BucketCriteriaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bc.ref.InternalTokens()
 }
 
@@ -288,7 +288,7 @@ func (e BucketCriteriaExcludesAttributes) InternalWithRef(ref terra.Reference) B
 	return BucketCriteriaExcludesAttributes{ref: ref}
 }
 
-func (e BucketCriteriaExcludesAttributes) InternalTokens() hclwrite.Tokens {
+func (e BucketCriteriaExcludesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -308,7 +308,7 @@ func (a BucketCriteriaExcludesAndAttributes) InternalWithRef(ref terra.Reference
 	return BucketCriteriaExcludesAndAttributes{ref: ref}
 }
 
-func (a BucketCriteriaExcludesAndAttributes) InternalTokens() hclwrite.Tokens {
+func (a BucketCriteriaExcludesAndAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -332,7 +332,7 @@ func (sc ExcludesAndSimpleCriterionAttributes) InternalWithRef(ref terra.Referen
 	return ExcludesAndSimpleCriterionAttributes{ref: ref}
 }
 
-func (sc ExcludesAndSimpleCriterionAttributes) InternalTokens() hclwrite.Tokens {
+func (sc ExcludesAndSimpleCriterionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -360,7 +360,7 @@ func (tc ExcludesAndTagCriterionAttributes) InternalWithRef(ref terra.Reference)
 	return ExcludesAndTagCriterionAttributes{ref: ref}
 }
 
-func (tc ExcludesAndTagCriterionAttributes) InternalTokens() hclwrite.Tokens {
+func (tc ExcludesAndTagCriterionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tc.ref.InternalTokens()
 }
 
@@ -384,7 +384,7 @@ func (tv ExcludesAndTagCriterionTagValuesAttributes) InternalWithRef(ref terra.R
 	return ExcludesAndTagCriterionTagValuesAttributes{ref: ref}
 }
 
-func (tv ExcludesAndTagCriterionTagValuesAttributes) InternalTokens() hclwrite.Tokens {
+func (tv ExcludesAndTagCriterionTagValuesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tv.ref.InternalTokens()
 }
 
@@ -408,7 +408,7 @@ func (i BucketCriteriaIncludesAttributes) InternalWithRef(ref terra.Reference) B
 	return BucketCriteriaIncludesAttributes{ref: ref}
 }
 
-func (i BucketCriteriaIncludesAttributes) InternalTokens() hclwrite.Tokens {
+func (i BucketCriteriaIncludesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -428,7 +428,7 @@ func (a BucketCriteriaIncludesAndAttributes) InternalWithRef(ref terra.Reference
 	return BucketCriteriaIncludesAndAttributes{ref: ref}
 }
 
-func (a BucketCriteriaIncludesAndAttributes) InternalTokens() hclwrite.Tokens {
+func (a BucketCriteriaIncludesAndAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -452,7 +452,7 @@ func (sc IncludesAndSimpleCriterionAttributes) InternalWithRef(ref terra.Referen
 	return IncludesAndSimpleCriterionAttributes{ref: ref}
 }
 
-func (sc IncludesAndSimpleCriterionAttributes) InternalTokens() hclwrite.Tokens {
+func (sc IncludesAndSimpleCriterionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -480,7 +480,7 @@ func (tc IncludesAndTagCriterionAttributes) InternalWithRef(ref terra.Reference)
 	return IncludesAndTagCriterionAttributes{ref: ref}
 }
 
-func (tc IncludesAndTagCriterionAttributes) InternalTokens() hclwrite.Tokens {
+func (tc IncludesAndTagCriterionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tc.ref.InternalTokens()
 }
 
@@ -504,7 +504,7 @@ func (tv IncludesAndTagCriterionTagValuesAttributes) InternalWithRef(ref terra.R
 	return IncludesAndTagCriterionTagValuesAttributes{ref: ref}
 }
 
-func (tv IncludesAndTagCriterionTagValuesAttributes) InternalTokens() hclwrite.Tokens {
+func (tv IncludesAndTagCriterionTagValuesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tv.ref.InternalTokens()
 }
 
@@ -528,7 +528,7 @@ func (bd BucketDefinitionsAttributes) InternalWithRef(ref terra.Reference) Bucke
 	return BucketDefinitionsAttributes{ref: ref}
 }
 
-func (bd BucketDefinitionsAttributes) InternalTokens() hclwrite.Tokens {
+func (bd BucketDefinitionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bd.ref.InternalTokens()
 }
 
@@ -552,7 +552,7 @@ func (s ScopingAttributes) InternalWithRef(ref terra.Reference) ScopingAttribute
 	return ScopingAttributes{ref: ref}
 }
 
-func (s ScopingAttributes) InternalTokens() hclwrite.Tokens {
+func (s ScopingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -576,7 +576,7 @@ func (e ScopingExcludesAttributes) InternalWithRef(ref terra.Reference) ScopingE
 	return ScopingExcludesAttributes{ref: ref}
 }
 
-func (e ScopingExcludesAttributes) InternalTokens() hclwrite.Tokens {
+func (e ScopingExcludesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -596,7 +596,7 @@ func (a ScopingExcludesAndAttributes) InternalWithRef(ref terra.Reference) Scopi
 	return ScopingExcludesAndAttributes{ref: ref}
 }
 
-func (a ScopingExcludesAndAttributes) InternalTokens() hclwrite.Tokens {
+func (a ScopingExcludesAndAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -620,7 +620,7 @@ func (sst ExcludesAndSimpleScopeTermAttributes) InternalWithRef(ref terra.Refere
 	return ExcludesAndSimpleScopeTermAttributes{ref: ref}
 }
 
-func (sst ExcludesAndSimpleScopeTermAttributes) InternalTokens() hclwrite.Tokens {
+func (sst ExcludesAndSimpleScopeTermAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sst.ref.InternalTokens()
 }
 
@@ -648,7 +648,7 @@ func (tst ExcludesAndTagScopeTermAttributes) InternalWithRef(ref terra.Reference
 	return ExcludesAndTagScopeTermAttributes{ref: ref}
 }
 
-func (tst ExcludesAndTagScopeTermAttributes) InternalTokens() hclwrite.Tokens {
+func (tst ExcludesAndTagScopeTermAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tst.ref.InternalTokens()
 }
 
@@ -680,7 +680,7 @@ func (tv ExcludesAndTagScopeTermTagValuesAttributes) InternalWithRef(ref terra.R
 	return ExcludesAndTagScopeTermTagValuesAttributes{ref: ref}
 }
 
-func (tv ExcludesAndTagScopeTermTagValuesAttributes) InternalTokens() hclwrite.Tokens {
+func (tv ExcludesAndTagScopeTermTagValuesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tv.ref.InternalTokens()
 }
 
@@ -704,7 +704,7 @@ func (i ScopingIncludesAttributes) InternalWithRef(ref terra.Reference) ScopingI
 	return ScopingIncludesAttributes{ref: ref}
 }
 
-func (i ScopingIncludesAttributes) InternalTokens() hclwrite.Tokens {
+func (i ScopingIncludesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -724,7 +724,7 @@ func (a ScopingIncludesAndAttributes) InternalWithRef(ref terra.Reference) Scopi
 	return ScopingIncludesAndAttributes{ref: ref}
 }
 
-func (a ScopingIncludesAndAttributes) InternalTokens() hclwrite.Tokens {
+func (a ScopingIncludesAndAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -748,7 +748,7 @@ func (sst IncludesAndSimpleScopeTermAttributes) InternalWithRef(ref terra.Refere
 	return IncludesAndSimpleScopeTermAttributes{ref: ref}
 }
 
-func (sst IncludesAndSimpleScopeTermAttributes) InternalTokens() hclwrite.Tokens {
+func (sst IncludesAndSimpleScopeTermAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sst.ref.InternalTokens()
 }
 
@@ -776,7 +776,7 @@ func (tst IncludesAndTagScopeTermAttributes) InternalWithRef(ref terra.Reference
 	return IncludesAndTagScopeTermAttributes{ref: ref}
 }
 
-func (tst IncludesAndTagScopeTermAttributes) InternalTokens() hclwrite.Tokens {
+func (tst IncludesAndTagScopeTermAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tst.ref.InternalTokens()
 }
 
@@ -808,7 +808,7 @@ func (tv IncludesAndTagScopeTermTagValuesAttributes) InternalWithRef(ref terra.R
 	return IncludesAndTagScopeTermTagValuesAttributes{ref: ref}
 }
 
-func (tv IncludesAndTagScopeTermTagValuesAttributes) InternalTokens() hclwrite.Tokens {
+func (tv IncludesAndTagScopeTermTagValuesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tv.ref.InternalTokens()
 }
 
@@ -832,7 +832,7 @@ func (sf ScheduleFrequencyAttributes) InternalWithRef(ref terra.Reference) Sched
 	return ScheduleFrequencyAttributes{ref: ref}
 }
 
-func (sf ScheduleFrequencyAttributes) InternalTokens() hclwrite.Tokens {
+func (sf ScheduleFrequencyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sf.ref.InternalTokens()
 }
 

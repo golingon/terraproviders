@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAutomationConnectionClassicCertificate creates a new instance of [AutomationConnectionClassicCertificate].
 func NewAutomationConnectionClassicCertificate(name string, args AutomationConnectionClassicCertificateArgs) *AutomationConnectionClassicCertificate {
 	return &AutomationConnectionClassicCertificate{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAutomationConnectionClassicCertificate(name string, args AutomationConne
 
 var _ terra.Resource = (*AutomationConnectionClassicCertificate)(nil)
 
+// AutomationConnectionClassicCertificate represents the Terraform resource azurerm_automation_connection_classic_certificate.
 type AutomationConnectionClassicCertificate struct {
-	Name  string
-	Args  AutomationConnectionClassicCertificateArgs
-	state *automationConnectionClassicCertificateState
+	Name      string
+	Args      AutomationConnectionClassicCertificateArgs
+	state     *automationConnectionClassicCertificateState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AutomationConnectionClassicCertificate].
 func (accc *AutomationConnectionClassicCertificate) Type() string {
 	return "azurerm_automation_connection_classic_certificate"
 }
 
+// LocalName returns the local name for [AutomationConnectionClassicCertificate].
 func (accc *AutomationConnectionClassicCertificate) LocalName() string {
 	return accc.Name
 }
 
+// Configuration returns the configuration (args) for [AutomationConnectionClassicCertificate].
 func (accc *AutomationConnectionClassicCertificate) Configuration() interface{} {
 	return accc.Args
 }
 
+// DependOn is used for other resources to depend on [AutomationConnectionClassicCertificate].
+func (accc *AutomationConnectionClassicCertificate) DependOn() terra.Reference {
+	return terra.ReferenceResource(accc)
+}
+
+// Dependencies returns the list of resources [AutomationConnectionClassicCertificate] depends_on.
+func (accc *AutomationConnectionClassicCertificate) Dependencies() terra.Dependencies {
+	return accc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AutomationConnectionClassicCertificate].
+func (accc *AutomationConnectionClassicCertificate) LifecycleManagement() *terra.Lifecycle {
+	return accc.Lifecycle
+}
+
+// Attributes returns the attributes for [AutomationConnectionClassicCertificate].
 func (accc *AutomationConnectionClassicCertificate) Attributes() automationConnectionClassicCertificateAttributes {
 	return automationConnectionClassicCertificateAttributes{ref: terra.ReferenceResource(accc)}
 }
 
+// ImportState imports the given attribute values into [AutomationConnectionClassicCertificate]'s state.
 func (accc *AutomationConnectionClassicCertificate) ImportState(av io.Reader) error {
 	accc.state = &automationConnectionClassicCertificateState{}
 	if err := json.NewDecoder(av).Decode(accc.state); err != nil {
@@ -49,10 +73,12 @@ func (accc *AutomationConnectionClassicCertificate) ImportState(av io.Reader) er
 	return nil
 }
 
+// State returns the state and a bool indicating if [AutomationConnectionClassicCertificate] has state.
 func (accc *AutomationConnectionClassicCertificate) State() (*automationConnectionClassicCertificateState, bool) {
 	return accc.state, accc.state != nil
 }
 
+// StateMust returns the state for [AutomationConnectionClassicCertificate]. Panics if the state is nil.
 func (accc *AutomationConnectionClassicCertificate) StateMust() *automationConnectionClassicCertificateState {
 	if accc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", accc.Type(), accc.LocalName()))
@@ -60,10 +86,7 @@ func (accc *AutomationConnectionClassicCertificate) StateMust() *automationConne
 	return accc.state
 }
 
-func (accc *AutomationConnectionClassicCertificate) DependOn() terra.Reference {
-	return terra.ReferenceResource(accc)
-}
-
+// AutomationConnectionClassicCertificateArgs contains the configurations for azurerm_automation_connection_classic_certificate.
 type AutomationConnectionClassicCertificateArgs struct {
 	// AutomationAccountName: string, required
 	AutomationAccountName terra.StringValue `hcl:"automation_account_name,attr" validate:"required"`
@@ -83,47 +106,53 @@ type AutomationConnectionClassicCertificateArgs struct {
 	SubscriptionName terra.StringValue `hcl:"subscription_name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *automationconnectionclassiccertificate.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that AutomationConnectionClassicCertificate depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type automationConnectionClassicCertificateAttributes struct {
 	ref terra.Reference
 }
 
+// AutomationAccountName returns a reference to field automation_account_name of azurerm_automation_connection_classic_certificate.
 func (accc automationConnectionClassicCertificateAttributes) AutomationAccountName() terra.StringValue {
-	return terra.ReferenceString(accc.ref.Append("automation_account_name"))
+	return terra.ReferenceAsString(accc.ref.Append("automation_account_name"))
 }
 
+// CertificateAssetName returns a reference to field certificate_asset_name of azurerm_automation_connection_classic_certificate.
 func (accc automationConnectionClassicCertificateAttributes) CertificateAssetName() terra.StringValue {
-	return terra.ReferenceString(accc.ref.Append("certificate_asset_name"))
+	return terra.ReferenceAsString(accc.ref.Append("certificate_asset_name"))
 }
 
+// Description returns a reference to field description of azurerm_automation_connection_classic_certificate.
 func (accc automationConnectionClassicCertificateAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(accc.ref.Append("description"))
+	return terra.ReferenceAsString(accc.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_automation_connection_classic_certificate.
 func (accc automationConnectionClassicCertificateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(accc.ref.Append("id"))
+	return terra.ReferenceAsString(accc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_automation_connection_classic_certificate.
 func (accc automationConnectionClassicCertificateAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(accc.ref.Append("name"))
+	return terra.ReferenceAsString(accc.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_automation_connection_classic_certificate.
 func (accc automationConnectionClassicCertificateAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(accc.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(accc.ref.Append("resource_group_name"))
 }
 
+// SubscriptionId returns a reference to field subscription_id of azurerm_automation_connection_classic_certificate.
 func (accc automationConnectionClassicCertificateAttributes) SubscriptionId() terra.StringValue {
-	return terra.ReferenceString(accc.ref.Append("subscription_id"))
+	return terra.ReferenceAsString(accc.ref.Append("subscription_id"))
 }
 
+// SubscriptionName returns a reference to field subscription_name of azurerm_automation_connection_classic_certificate.
 func (accc automationConnectionClassicCertificateAttributes) SubscriptionName() terra.StringValue {
-	return terra.ReferenceString(accc.ref.Append("subscription_name"))
+	return terra.ReferenceAsString(accc.ref.Append("subscription_name"))
 }
 
 func (accc automationConnectionClassicCertificateAttributes) Timeouts() automationconnectionclassiccertificate.TimeoutsAttributes {
-	return terra.ReferenceSingle[automationconnectionclassiccertificate.TimeoutsAttributes](accc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[automationconnectionclassiccertificate.TimeoutsAttributes](accc.ref.Append("timeouts"))
 }
 
 type automationConnectionClassicCertificateState struct {

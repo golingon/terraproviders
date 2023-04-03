@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewIothubDeviceUpdateInstance creates a new instance of [IothubDeviceUpdateInstance].
 func NewIothubDeviceUpdateInstance(name string, args IothubDeviceUpdateInstanceArgs) *IothubDeviceUpdateInstance {
 	return &IothubDeviceUpdateInstance{
 		Args: args,
@@ -19,28 +20,51 @@ func NewIothubDeviceUpdateInstance(name string, args IothubDeviceUpdateInstanceA
 
 var _ terra.Resource = (*IothubDeviceUpdateInstance)(nil)
 
+// IothubDeviceUpdateInstance represents the Terraform resource azurerm_iothub_device_update_instance.
 type IothubDeviceUpdateInstance struct {
-	Name  string
-	Args  IothubDeviceUpdateInstanceArgs
-	state *iothubDeviceUpdateInstanceState
+	Name      string
+	Args      IothubDeviceUpdateInstanceArgs
+	state     *iothubDeviceUpdateInstanceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IothubDeviceUpdateInstance].
 func (idui *IothubDeviceUpdateInstance) Type() string {
 	return "azurerm_iothub_device_update_instance"
 }
 
+// LocalName returns the local name for [IothubDeviceUpdateInstance].
 func (idui *IothubDeviceUpdateInstance) LocalName() string {
 	return idui.Name
 }
 
+// Configuration returns the configuration (args) for [IothubDeviceUpdateInstance].
 func (idui *IothubDeviceUpdateInstance) Configuration() interface{} {
 	return idui.Args
 }
 
+// DependOn is used for other resources to depend on [IothubDeviceUpdateInstance].
+func (idui *IothubDeviceUpdateInstance) DependOn() terra.Reference {
+	return terra.ReferenceResource(idui)
+}
+
+// Dependencies returns the list of resources [IothubDeviceUpdateInstance] depends_on.
+func (idui *IothubDeviceUpdateInstance) Dependencies() terra.Dependencies {
+	return idui.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IothubDeviceUpdateInstance].
+func (idui *IothubDeviceUpdateInstance) LifecycleManagement() *terra.Lifecycle {
+	return idui.Lifecycle
+}
+
+// Attributes returns the attributes for [IothubDeviceUpdateInstance].
 func (idui *IothubDeviceUpdateInstance) Attributes() iothubDeviceUpdateInstanceAttributes {
 	return iothubDeviceUpdateInstanceAttributes{ref: terra.ReferenceResource(idui)}
 }
 
+// ImportState imports the given attribute values into [IothubDeviceUpdateInstance]'s state.
 func (idui *IothubDeviceUpdateInstance) ImportState(av io.Reader) error {
 	idui.state = &iothubDeviceUpdateInstanceState{}
 	if err := json.NewDecoder(av).Decode(idui.state); err != nil {
@@ -49,10 +73,12 @@ func (idui *IothubDeviceUpdateInstance) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IothubDeviceUpdateInstance] has state.
 func (idui *IothubDeviceUpdateInstance) State() (*iothubDeviceUpdateInstanceState, bool) {
 	return idui.state, idui.state != nil
 }
 
+// StateMust returns the state for [IothubDeviceUpdateInstance]. Panics if the state is nil.
 func (idui *IothubDeviceUpdateInstance) StateMust() *iothubDeviceUpdateInstanceState {
 	if idui.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", idui.Type(), idui.LocalName()))
@@ -60,10 +86,7 @@ func (idui *IothubDeviceUpdateInstance) StateMust() *iothubDeviceUpdateInstanceS
 	return idui.state
 }
 
-func (idui *IothubDeviceUpdateInstance) DependOn() terra.Reference {
-	return terra.ReferenceResource(idui)
-}
-
+// IothubDeviceUpdateInstanceArgs contains the configurations for azurerm_iothub_device_update_instance.
 type IothubDeviceUpdateInstanceArgs struct {
 	// DeviceUpdateAccountId: string, required
 	DeviceUpdateAccountId terra.StringValue `hcl:"device_update_account_id,attr" validate:"required"`
@@ -81,43 +104,47 @@ type IothubDeviceUpdateInstanceArgs struct {
 	DiagnosticStorageAccount *iothubdeviceupdateinstance.DiagnosticStorageAccount `hcl:"diagnostic_storage_account,block"`
 	// Timeouts: optional
 	Timeouts *iothubdeviceupdateinstance.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that IothubDeviceUpdateInstance depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iothubDeviceUpdateInstanceAttributes struct {
 	ref terra.Reference
 }
 
+// DeviceUpdateAccountId returns a reference to field device_update_account_id of azurerm_iothub_device_update_instance.
 func (idui iothubDeviceUpdateInstanceAttributes) DeviceUpdateAccountId() terra.StringValue {
-	return terra.ReferenceString(idui.ref.Append("device_update_account_id"))
+	return terra.ReferenceAsString(idui.ref.Append("device_update_account_id"))
 }
 
+// DiagnosticEnabled returns a reference to field diagnostic_enabled of azurerm_iothub_device_update_instance.
 func (idui iothubDeviceUpdateInstanceAttributes) DiagnosticEnabled() terra.BoolValue {
-	return terra.ReferenceBool(idui.ref.Append("diagnostic_enabled"))
+	return terra.ReferenceAsBool(idui.ref.Append("diagnostic_enabled"))
 }
 
+// Id returns a reference to field id of azurerm_iothub_device_update_instance.
 func (idui iothubDeviceUpdateInstanceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(idui.ref.Append("id"))
+	return terra.ReferenceAsString(idui.ref.Append("id"))
 }
 
+// IothubId returns a reference to field iothub_id of azurerm_iothub_device_update_instance.
 func (idui iothubDeviceUpdateInstanceAttributes) IothubId() terra.StringValue {
-	return terra.ReferenceString(idui.ref.Append("iothub_id"))
+	return terra.ReferenceAsString(idui.ref.Append("iothub_id"))
 }
 
+// Name returns a reference to field name of azurerm_iothub_device_update_instance.
 func (idui iothubDeviceUpdateInstanceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(idui.ref.Append("name"))
+	return terra.ReferenceAsString(idui.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of azurerm_iothub_device_update_instance.
 func (idui iothubDeviceUpdateInstanceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](idui.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](idui.ref.Append("tags"))
 }
 
 func (idui iothubDeviceUpdateInstanceAttributes) DiagnosticStorageAccount() terra.ListValue[iothubdeviceupdateinstance.DiagnosticStorageAccountAttributes] {
-	return terra.ReferenceList[iothubdeviceupdateinstance.DiagnosticStorageAccountAttributes](idui.ref.Append("diagnostic_storage_account"))
+	return terra.ReferenceAsList[iothubdeviceupdateinstance.DiagnosticStorageAccountAttributes](idui.ref.Append("diagnostic_storage_account"))
 }
 
 func (idui iothubDeviceUpdateInstanceAttributes) Timeouts() iothubdeviceupdateinstance.TimeoutsAttributes {
-	return terra.ReferenceSingle[iothubdeviceupdateinstance.TimeoutsAttributes](idui.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[iothubdeviceupdateinstance.TimeoutsAttributes](idui.ref.Append("timeouts"))
 }
 
 type iothubDeviceUpdateInstanceState struct {

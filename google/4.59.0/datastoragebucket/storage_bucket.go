@@ -38,292 +38,292 @@ type AutoclassAttributes struct {
 	ref terra.Reference
 }
 
-func (a AutoclassAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AutoclassAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AutoclassAttributes) InternalWithRef(ref terra.Reference) AutoclassAttributes {
 	return AutoclassAttributes{ref: ref}
 }
 
-func (a AutoclassAttributes) InternalTokens() hclwrite.Tokens {
+func (a AutoclassAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a AutoclassAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(a.ref.Append("enabled"))
+	return terra.ReferenceAsBool(a.ref.Append("enabled"))
 }
 
 type CorsAttributes struct {
 	ref terra.Reference
 }
 
-func (c CorsAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CorsAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CorsAttributes) InternalWithRef(ref terra.Reference) CorsAttributes {
 	return CorsAttributes{ref: ref}
 }
 
-func (c CorsAttributes) InternalTokens() hclwrite.Tokens {
+func (c CorsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c CorsAttributes) MaxAgeSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(c.ref.Append("max_age_seconds"))
+	return terra.ReferenceAsNumber(c.ref.Append("max_age_seconds"))
 }
 
 func (c CorsAttributes) Method() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](c.ref.Append("method"))
+	return terra.ReferenceAsList[terra.StringValue](c.ref.Append("method"))
 }
 
 func (c CorsAttributes) Origin() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](c.ref.Append("origin"))
+	return terra.ReferenceAsList[terra.StringValue](c.ref.Append("origin"))
 }
 
 func (c CorsAttributes) ResponseHeader() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](c.ref.Append("response_header"))
+	return terra.ReferenceAsList[terra.StringValue](c.ref.Append("response_header"))
 }
 
 type CustomPlacementConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (cpc CustomPlacementConfigAttributes) InternalRef() terra.Reference {
-	return cpc.ref
+func (cpc CustomPlacementConfigAttributes) InternalRef() (terra.Reference, error) {
+	return cpc.ref, nil
 }
 
 func (cpc CustomPlacementConfigAttributes) InternalWithRef(ref terra.Reference) CustomPlacementConfigAttributes {
 	return CustomPlacementConfigAttributes{ref: ref}
 }
 
-func (cpc CustomPlacementConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (cpc CustomPlacementConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cpc.ref.InternalTokens()
 }
 
 func (cpc CustomPlacementConfigAttributes) DataLocations() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cpc.ref.Append("data_locations"))
+	return terra.ReferenceAsSet[terra.StringValue](cpc.ref.Append("data_locations"))
 }
 
 type EncryptionAttributes struct {
 	ref terra.Reference
 }
 
-func (e EncryptionAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EncryptionAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EncryptionAttributes) InternalWithRef(ref terra.Reference) EncryptionAttributes {
 	return EncryptionAttributes{ref: ref}
 }
 
-func (e EncryptionAttributes) InternalTokens() hclwrite.Tokens {
+func (e EncryptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
 func (e EncryptionAttributes) DefaultKmsKeyName() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("default_kms_key_name"))
+	return terra.ReferenceAsString(e.ref.Append("default_kms_key_name"))
 }
 
 type LifecycleRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (lr LifecycleRuleAttributes) InternalRef() terra.Reference {
-	return lr.ref
+func (lr LifecycleRuleAttributes) InternalRef() (terra.Reference, error) {
+	return lr.ref, nil
 }
 
 func (lr LifecycleRuleAttributes) InternalWithRef(ref terra.Reference) LifecycleRuleAttributes {
 	return LifecycleRuleAttributes{ref: ref}
 }
 
-func (lr LifecycleRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (lr LifecycleRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lr.ref.InternalTokens()
 }
 
 func (lr LifecycleRuleAttributes) Action() terra.SetValue[ActionAttributes] {
-	return terra.ReferenceSet[ActionAttributes](lr.ref.Append("action"))
+	return terra.ReferenceAsSet[ActionAttributes](lr.ref.Append("action"))
 }
 
 func (lr LifecycleRuleAttributes) Condition() terra.SetValue[ConditionAttributes] {
-	return terra.ReferenceSet[ConditionAttributes](lr.ref.Append("condition"))
+	return terra.ReferenceAsSet[ConditionAttributes](lr.ref.Append("condition"))
 }
 
 type ActionAttributes struct {
 	ref terra.Reference
 }
 
-func (a ActionAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a ActionAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a ActionAttributes) InternalWithRef(ref terra.Reference) ActionAttributes {
 	return ActionAttributes{ref: ref}
 }
 
-func (a ActionAttributes) InternalTokens() hclwrite.Tokens {
+func (a ActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a ActionAttributes) StorageClass() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("storage_class"))
+	return terra.ReferenceAsString(a.ref.Append("storage_class"))
 }
 
 func (a ActionAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("type"))
+	return terra.ReferenceAsString(a.ref.Append("type"))
 }
 
 type ConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConditionAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConditionAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConditionAttributes) InternalWithRef(ref terra.Reference) ConditionAttributes {
 	return ConditionAttributes{ref: ref}
 }
 
-func (c ConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ConditionAttributes) Age() terra.NumberValue {
-	return terra.ReferenceNumber(c.ref.Append("age"))
+	return terra.ReferenceAsNumber(c.ref.Append("age"))
 }
 
 func (c ConditionAttributes) CreatedBefore() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("created_before"))
+	return terra.ReferenceAsString(c.ref.Append("created_before"))
 }
 
 func (c ConditionAttributes) CustomTimeBefore() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("custom_time_before"))
+	return terra.ReferenceAsString(c.ref.Append("custom_time_before"))
 }
 
 func (c ConditionAttributes) DaysSinceCustomTime() terra.NumberValue {
-	return terra.ReferenceNumber(c.ref.Append("days_since_custom_time"))
+	return terra.ReferenceAsNumber(c.ref.Append("days_since_custom_time"))
 }
 
 func (c ConditionAttributes) DaysSinceNoncurrentTime() terra.NumberValue {
-	return terra.ReferenceNumber(c.ref.Append("days_since_noncurrent_time"))
+	return terra.ReferenceAsNumber(c.ref.Append("days_since_noncurrent_time"))
 }
 
 func (c ConditionAttributes) MatchesPrefix() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](c.ref.Append("matches_prefix"))
+	return terra.ReferenceAsList[terra.StringValue](c.ref.Append("matches_prefix"))
 }
 
 func (c ConditionAttributes) MatchesStorageClass() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](c.ref.Append("matches_storage_class"))
+	return terra.ReferenceAsList[terra.StringValue](c.ref.Append("matches_storage_class"))
 }
 
 func (c ConditionAttributes) MatchesSuffix() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](c.ref.Append("matches_suffix"))
+	return terra.ReferenceAsList[terra.StringValue](c.ref.Append("matches_suffix"))
 }
 
 func (c ConditionAttributes) NoncurrentTimeBefore() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("noncurrent_time_before"))
+	return terra.ReferenceAsString(c.ref.Append("noncurrent_time_before"))
 }
 
 func (c ConditionAttributes) NumNewerVersions() terra.NumberValue {
-	return terra.ReferenceNumber(c.ref.Append("num_newer_versions"))
+	return terra.ReferenceAsNumber(c.ref.Append("num_newer_versions"))
 }
 
 func (c ConditionAttributes) WithState() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("with_state"))
+	return terra.ReferenceAsString(c.ref.Append("with_state"))
 }
 
 type LoggingAttributes struct {
 	ref terra.Reference
 }
 
-func (l LoggingAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l LoggingAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l LoggingAttributes) InternalWithRef(ref terra.Reference) LoggingAttributes {
 	return LoggingAttributes{ref: ref}
 }
 
-func (l LoggingAttributes) InternalTokens() hclwrite.Tokens {
+func (l LoggingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 
 func (l LoggingAttributes) LogBucket() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("log_bucket"))
+	return terra.ReferenceAsString(l.ref.Append("log_bucket"))
 }
 
 func (l LoggingAttributes) LogObjectPrefix() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("log_object_prefix"))
+	return terra.ReferenceAsString(l.ref.Append("log_object_prefix"))
 }
 
 type RetentionPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (rp RetentionPolicyAttributes) InternalRef() terra.Reference {
-	return rp.ref
+func (rp RetentionPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return rp.ref, nil
 }
 
 func (rp RetentionPolicyAttributes) InternalWithRef(ref terra.Reference) RetentionPolicyAttributes {
 	return RetentionPolicyAttributes{ref: ref}
 }
 
-func (rp RetentionPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (rp RetentionPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rp.ref.InternalTokens()
 }
 
 func (rp RetentionPolicyAttributes) IsLocked() terra.BoolValue {
-	return terra.ReferenceBool(rp.ref.Append("is_locked"))
+	return terra.ReferenceAsBool(rp.ref.Append("is_locked"))
 }
 
 func (rp RetentionPolicyAttributes) RetentionPeriod() terra.NumberValue {
-	return terra.ReferenceNumber(rp.ref.Append("retention_period"))
+	return terra.ReferenceAsNumber(rp.ref.Append("retention_period"))
 }
 
 type VersioningAttributes struct {
 	ref terra.Reference
 }
 
-func (v VersioningAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v VersioningAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v VersioningAttributes) InternalWithRef(ref terra.Reference) VersioningAttributes {
 	return VersioningAttributes{ref: ref}
 }
 
-func (v VersioningAttributes) InternalTokens() hclwrite.Tokens {
+func (v VersioningAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 
 func (v VersioningAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(v.ref.Append("enabled"))
+	return terra.ReferenceAsBool(v.ref.Append("enabled"))
 }
 
 type WebsiteAttributes struct {
 	ref terra.Reference
 }
 
-func (w WebsiteAttributes) InternalRef() terra.Reference {
-	return w.ref
+func (w WebsiteAttributes) InternalRef() (terra.Reference, error) {
+	return w.ref, nil
 }
 
 func (w WebsiteAttributes) InternalWithRef(ref terra.Reference) WebsiteAttributes {
 	return WebsiteAttributes{ref: ref}
 }
 
-func (w WebsiteAttributes) InternalTokens() hclwrite.Tokens {
+func (w WebsiteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return w.ref.InternalTokens()
 }
 
 func (w WebsiteAttributes) MainPageSuffix() terra.StringValue {
-	return terra.ReferenceString(w.ref.Append("main_page_suffix"))
+	return terra.ReferenceAsString(w.ref.Append("main_page_suffix"))
 }
 
 func (w WebsiteAttributes) NotFoundPage() terra.StringValue {
-	return terra.ReferenceString(w.ref.Append("not_found_page"))
+	return terra.ReferenceAsString(w.ref.Append("not_found_page"))
 }
 
 type AutoclassState struct {

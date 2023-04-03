@@ -21,7 +21,7 @@ func (wp WorkspacePropertiesAttributes) InternalWithRef(ref terra.Reference) Wor
 	return WorkspacePropertiesAttributes{ref: ref}
 }
 
-func (wp WorkspacePropertiesAttributes) InternalTokens() hclwrite.Tokens {
+func (wp WorkspacePropertiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wp.ref.InternalTokens()
 }
 

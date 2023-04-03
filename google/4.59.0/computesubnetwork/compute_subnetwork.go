@@ -40,88 +40,88 @@ type SecondaryIpRangeAttributes struct {
 	ref terra.Reference
 }
 
-func (sir SecondaryIpRangeAttributes) InternalRef() terra.Reference {
-	return sir.ref
+func (sir SecondaryIpRangeAttributes) InternalRef() (terra.Reference, error) {
+	return sir.ref, nil
 }
 
 func (sir SecondaryIpRangeAttributes) InternalWithRef(ref terra.Reference) SecondaryIpRangeAttributes {
 	return SecondaryIpRangeAttributes{ref: ref}
 }
 
-func (sir SecondaryIpRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (sir SecondaryIpRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sir.ref.InternalTokens()
 }
 
 func (sir SecondaryIpRangeAttributes) IpCidrRange() terra.StringValue {
-	return terra.ReferenceString(sir.ref.Append("ip_cidr_range"))
+	return terra.ReferenceAsString(sir.ref.Append("ip_cidr_range"))
 }
 
 func (sir SecondaryIpRangeAttributes) RangeName() terra.StringValue {
-	return terra.ReferenceString(sir.ref.Append("range_name"))
+	return terra.ReferenceAsString(sir.ref.Append("range_name"))
 }
 
 type LogConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (lc LogConfigAttributes) InternalRef() terra.Reference {
-	return lc.ref
+func (lc LogConfigAttributes) InternalRef() (terra.Reference, error) {
+	return lc.ref, nil
 }
 
 func (lc LogConfigAttributes) InternalWithRef(ref terra.Reference) LogConfigAttributes {
 	return LogConfigAttributes{ref: ref}
 }
 
-func (lc LogConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (lc LogConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lc.ref.InternalTokens()
 }
 
 func (lc LogConfigAttributes) AggregationInterval() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("aggregation_interval"))
+	return terra.ReferenceAsString(lc.ref.Append("aggregation_interval"))
 }
 
 func (lc LogConfigAttributes) FilterExpr() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("filter_expr"))
+	return terra.ReferenceAsString(lc.ref.Append("filter_expr"))
 }
 
 func (lc LogConfigAttributes) FlowSampling() terra.NumberValue {
-	return terra.ReferenceNumber(lc.ref.Append("flow_sampling"))
+	return terra.ReferenceAsNumber(lc.ref.Append("flow_sampling"))
 }
 
 func (lc LogConfigAttributes) Metadata() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("metadata"))
+	return terra.ReferenceAsString(lc.ref.Append("metadata"))
 }
 
 func (lc LogConfigAttributes) MetadataFields() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](lc.ref.Append("metadata_fields"))
+	return terra.ReferenceAsSet[terra.StringValue](lc.ref.Append("metadata_fields"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type SecondaryIpRangeState struct {

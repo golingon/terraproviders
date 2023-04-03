@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLogicAppIntegrationAccountAgreement creates a new instance of [LogicAppIntegrationAccountAgreement].
 func NewLogicAppIntegrationAccountAgreement(name string, args LogicAppIntegrationAccountAgreementArgs) *LogicAppIntegrationAccountAgreement {
 	return &LogicAppIntegrationAccountAgreement{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLogicAppIntegrationAccountAgreement(name string, args LogicAppIntegratio
 
 var _ terra.Resource = (*LogicAppIntegrationAccountAgreement)(nil)
 
+// LogicAppIntegrationAccountAgreement represents the Terraform resource azurerm_logic_app_integration_account_agreement.
 type LogicAppIntegrationAccountAgreement struct {
-	Name  string
-	Args  LogicAppIntegrationAccountAgreementArgs
-	state *logicAppIntegrationAccountAgreementState
+	Name      string
+	Args      LogicAppIntegrationAccountAgreementArgs
+	state     *logicAppIntegrationAccountAgreementState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LogicAppIntegrationAccountAgreement].
 func (laiaa *LogicAppIntegrationAccountAgreement) Type() string {
 	return "azurerm_logic_app_integration_account_agreement"
 }
 
+// LocalName returns the local name for [LogicAppIntegrationAccountAgreement].
 func (laiaa *LogicAppIntegrationAccountAgreement) LocalName() string {
 	return laiaa.Name
 }
 
+// Configuration returns the configuration (args) for [LogicAppIntegrationAccountAgreement].
 func (laiaa *LogicAppIntegrationAccountAgreement) Configuration() interface{} {
 	return laiaa.Args
 }
 
+// DependOn is used for other resources to depend on [LogicAppIntegrationAccountAgreement].
+func (laiaa *LogicAppIntegrationAccountAgreement) DependOn() terra.Reference {
+	return terra.ReferenceResource(laiaa)
+}
+
+// Dependencies returns the list of resources [LogicAppIntegrationAccountAgreement] depends_on.
+func (laiaa *LogicAppIntegrationAccountAgreement) Dependencies() terra.Dependencies {
+	return laiaa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LogicAppIntegrationAccountAgreement].
+func (laiaa *LogicAppIntegrationAccountAgreement) LifecycleManagement() *terra.Lifecycle {
+	return laiaa.Lifecycle
+}
+
+// Attributes returns the attributes for [LogicAppIntegrationAccountAgreement].
 func (laiaa *LogicAppIntegrationAccountAgreement) Attributes() logicAppIntegrationAccountAgreementAttributes {
 	return logicAppIntegrationAccountAgreementAttributes{ref: terra.ReferenceResource(laiaa)}
 }
 
+// ImportState imports the given attribute values into [LogicAppIntegrationAccountAgreement]'s state.
 func (laiaa *LogicAppIntegrationAccountAgreement) ImportState(av io.Reader) error {
 	laiaa.state = &logicAppIntegrationAccountAgreementState{}
 	if err := json.NewDecoder(av).Decode(laiaa.state); err != nil {
@@ -49,10 +73,12 @@ func (laiaa *LogicAppIntegrationAccountAgreement) ImportState(av io.Reader) erro
 	return nil
 }
 
+// State returns the state and a bool indicating if [LogicAppIntegrationAccountAgreement] has state.
 func (laiaa *LogicAppIntegrationAccountAgreement) State() (*logicAppIntegrationAccountAgreementState, bool) {
 	return laiaa.state, laiaa.state != nil
 }
 
+// StateMust returns the state for [LogicAppIntegrationAccountAgreement]. Panics if the state is nil.
 func (laiaa *LogicAppIntegrationAccountAgreement) StateMust() *logicAppIntegrationAccountAgreementState {
 	if laiaa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", laiaa.Type(), laiaa.LocalName()))
@@ -60,10 +86,7 @@ func (laiaa *LogicAppIntegrationAccountAgreement) StateMust() *logicAppIntegrati
 	return laiaa.state
 }
 
-func (laiaa *LogicAppIntegrationAccountAgreement) DependOn() terra.Reference {
-	return terra.ReferenceResource(laiaa)
-}
-
+// LogicAppIntegrationAccountAgreementArgs contains the configurations for azurerm_logic_app_integration_account_agreement.
 type LogicAppIntegrationAccountAgreementArgs struct {
 	// AgreementType: string, required
 	AgreementType terra.StringValue `hcl:"agreement_type,attr" validate:"required"`
@@ -89,59 +112,66 @@ type LogicAppIntegrationAccountAgreementArgs struct {
 	HostIdentity *logicappintegrationaccountagreement.HostIdentity `hcl:"host_identity,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *logicappintegrationaccountagreement.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LogicAppIntegrationAccountAgreement depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type logicAppIntegrationAccountAgreementAttributes struct {
 	ref terra.Reference
 }
 
+// AgreementType returns a reference to field agreement_type of azurerm_logic_app_integration_account_agreement.
 func (laiaa logicAppIntegrationAccountAgreementAttributes) AgreementType() terra.StringValue {
-	return terra.ReferenceString(laiaa.ref.Append("agreement_type"))
+	return terra.ReferenceAsString(laiaa.ref.Append("agreement_type"))
 }
 
+// Content returns a reference to field content of azurerm_logic_app_integration_account_agreement.
 func (laiaa logicAppIntegrationAccountAgreementAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(laiaa.ref.Append("content"))
+	return terra.ReferenceAsString(laiaa.ref.Append("content"))
 }
 
+// GuestPartnerName returns a reference to field guest_partner_name of azurerm_logic_app_integration_account_agreement.
 func (laiaa logicAppIntegrationAccountAgreementAttributes) GuestPartnerName() terra.StringValue {
-	return terra.ReferenceString(laiaa.ref.Append("guest_partner_name"))
+	return terra.ReferenceAsString(laiaa.ref.Append("guest_partner_name"))
 }
 
+// HostPartnerName returns a reference to field host_partner_name of azurerm_logic_app_integration_account_agreement.
 func (laiaa logicAppIntegrationAccountAgreementAttributes) HostPartnerName() terra.StringValue {
-	return terra.ReferenceString(laiaa.ref.Append("host_partner_name"))
+	return terra.ReferenceAsString(laiaa.ref.Append("host_partner_name"))
 }
 
+// Id returns a reference to field id of azurerm_logic_app_integration_account_agreement.
 func (laiaa logicAppIntegrationAccountAgreementAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(laiaa.ref.Append("id"))
+	return terra.ReferenceAsString(laiaa.ref.Append("id"))
 }
 
+// IntegrationAccountName returns a reference to field integration_account_name of azurerm_logic_app_integration_account_agreement.
 func (laiaa logicAppIntegrationAccountAgreementAttributes) IntegrationAccountName() terra.StringValue {
-	return terra.ReferenceString(laiaa.ref.Append("integration_account_name"))
+	return terra.ReferenceAsString(laiaa.ref.Append("integration_account_name"))
 }
 
+// Metadata returns a reference to field metadata of azurerm_logic_app_integration_account_agreement.
 func (laiaa logicAppIntegrationAccountAgreementAttributes) Metadata() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](laiaa.ref.Append("metadata"))
+	return terra.ReferenceAsMap[terra.StringValue](laiaa.ref.Append("metadata"))
 }
 
+// Name returns a reference to field name of azurerm_logic_app_integration_account_agreement.
 func (laiaa logicAppIntegrationAccountAgreementAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(laiaa.ref.Append("name"))
+	return terra.ReferenceAsString(laiaa.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_logic_app_integration_account_agreement.
 func (laiaa logicAppIntegrationAccountAgreementAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(laiaa.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(laiaa.ref.Append("resource_group_name"))
 }
 
 func (laiaa logicAppIntegrationAccountAgreementAttributes) GuestIdentity() terra.ListValue[logicappintegrationaccountagreement.GuestIdentityAttributes] {
-	return terra.ReferenceList[logicappintegrationaccountagreement.GuestIdentityAttributes](laiaa.ref.Append("guest_identity"))
+	return terra.ReferenceAsList[logicappintegrationaccountagreement.GuestIdentityAttributes](laiaa.ref.Append("guest_identity"))
 }
 
 func (laiaa logicAppIntegrationAccountAgreementAttributes) HostIdentity() terra.ListValue[logicappintegrationaccountagreement.HostIdentityAttributes] {
-	return terra.ReferenceList[logicappintegrationaccountagreement.HostIdentityAttributes](laiaa.ref.Append("host_identity"))
+	return terra.ReferenceAsList[logicappintegrationaccountagreement.HostIdentityAttributes](laiaa.ref.Append("host_identity"))
 }
 
 func (laiaa logicAppIntegrationAccountAgreementAttributes) Timeouts() logicappintegrationaccountagreement.TimeoutsAttributes {
-	return terra.ReferenceSingle[logicappintegrationaccountagreement.TimeoutsAttributes](laiaa.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[logicappintegrationaccountagreement.TimeoutsAttributes](laiaa.ref.Append("timeouts"))
 }
 
 type logicAppIntegrationAccountAgreementState struct {

@@ -37,7 +37,7 @@ func (a AssociationsAttributes) InternalWithRef(ref terra.Reference) Association
 	return AssociationsAttributes{ref: ref}
 }
 
-func (a AssociationsAttributes) InternalTokens() hclwrite.Tokens {
+func (a AssociationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -61,7 +61,7 @@ func (m MembersAttributes) InternalWithRef(ref terra.Reference) MembersAttribute
 	return MembersAttributes{ref: ref}
 }
 
-func (m MembersAttributes) InternalTokens() hclwrite.Tokens {
+func (m MembersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -85,7 +85,7 @@ func (s SourcesAttributes) InternalWithRef(ref terra.Reference) SourcesAttribute
 	return SourcesAttributes{ref: ref}
 }
 
-func (s SourcesAttributes) InternalTokens() hclwrite.Tokens {
+func (s SourcesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -109,7 +109,7 @@ func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes 
 	return FilterAttributes{ref: ref}
 }
 
-func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
+func (f FilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -133,7 +133,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

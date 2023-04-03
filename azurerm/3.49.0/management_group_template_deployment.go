@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewManagementGroupTemplateDeployment creates a new instance of [ManagementGroupTemplateDeployment].
 func NewManagementGroupTemplateDeployment(name string, args ManagementGroupTemplateDeploymentArgs) *ManagementGroupTemplateDeployment {
 	return &ManagementGroupTemplateDeployment{
 		Args: args,
@@ -19,28 +20,51 @@ func NewManagementGroupTemplateDeployment(name string, args ManagementGroupTempl
 
 var _ terra.Resource = (*ManagementGroupTemplateDeployment)(nil)
 
+// ManagementGroupTemplateDeployment represents the Terraform resource azurerm_management_group_template_deployment.
 type ManagementGroupTemplateDeployment struct {
-	Name  string
-	Args  ManagementGroupTemplateDeploymentArgs
-	state *managementGroupTemplateDeploymentState
+	Name      string
+	Args      ManagementGroupTemplateDeploymentArgs
+	state     *managementGroupTemplateDeploymentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ManagementGroupTemplateDeployment].
 func (mgtd *ManagementGroupTemplateDeployment) Type() string {
 	return "azurerm_management_group_template_deployment"
 }
 
+// LocalName returns the local name for [ManagementGroupTemplateDeployment].
 func (mgtd *ManagementGroupTemplateDeployment) LocalName() string {
 	return mgtd.Name
 }
 
+// Configuration returns the configuration (args) for [ManagementGroupTemplateDeployment].
 func (mgtd *ManagementGroupTemplateDeployment) Configuration() interface{} {
 	return mgtd.Args
 }
 
+// DependOn is used for other resources to depend on [ManagementGroupTemplateDeployment].
+func (mgtd *ManagementGroupTemplateDeployment) DependOn() terra.Reference {
+	return terra.ReferenceResource(mgtd)
+}
+
+// Dependencies returns the list of resources [ManagementGroupTemplateDeployment] depends_on.
+func (mgtd *ManagementGroupTemplateDeployment) Dependencies() terra.Dependencies {
+	return mgtd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ManagementGroupTemplateDeployment].
+func (mgtd *ManagementGroupTemplateDeployment) LifecycleManagement() *terra.Lifecycle {
+	return mgtd.Lifecycle
+}
+
+// Attributes returns the attributes for [ManagementGroupTemplateDeployment].
 func (mgtd *ManagementGroupTemplateDeployment) Attributes() managementGroupTemplateDeploymentAttributes {
 	return managementGroupTemplateDeploymentAttributes{ref: terra.ReferenceResource(mgtd)}
 }
 
+// ImportState imports the given attribute values into [ManagementGroupTemplateDeployment]'s state.
 func (mgtd *ManagementGroupTemplateDeployment) ImportState(av io.Reader) error {
 	mgtd.state = &managementGroupTemplateDeploymentState{}
 	if err := json.NewDecoder(av).Decode(mgtd.state); err != nil {
@@ -49,10 +73,12 @@ func (mgtd *ManagementGroupTemplateDeployment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ManagementGroupTemplateDeployment] has state.
 func (mgtd *ManagementGroupTemplateDeployment) State() (*managementGroupTemplateDeploymentState, bool) {
 	return mgtd.state, mgtd.state != nil
 }
 
+// StateMust returns the state for [ManagementGroupTemplateDeployment]. Panics if the state is nil.
 func (mgtd *ManagementGroupTemplateDeployment) StateMust() *managementGroupTemplateDeploymentState {
 	if mgtd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mgtd.Type(), mgtd.LocalName()))
@@ -60,10 +86,7 @@ func (mgtd *ManagementGroupTemplateDeployment) StateMust() *managementGroupTempl
 	return mgtd.state
 }
 
-func (mgtd *ManagementGroupTemplateDeployment) DependOn() terra.Reference {
-	return terra.ReferenceResource(mgtd)
-}
-
+// ManagementGroupTemplateDeploymentArgs contains the configurations for azurerm_management_group_template_deployment.
 type ManagementGroupTemplateDeploymentArgs struct {
 	// DebugLevel: string, optional
 	DebugLevel terra.StringValue `hcl:"debug_level,attr"`
@@ -85,55 +108,63 @@ type ManagementGroupTemplateDeploymentArgs struct {
 	TemplateSpecVersionId terra.StringValue `hcl:"template_spec_version_id,attr"`
 	// Timeouts: optional
 	Timeouts *managementgrouptemplatedeployment.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ManagementGroupTemplateDeployment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type managementGroupTemplateDeploymentAttributes struct {
 	ref terra.Reference
 }
 
+// DebugLevel returns a reference to field debug_level of azurerm_management_group_template_deployment.
 func (mgtd managementGroupTemplateDeploymentAttributes) DebugLevel() terra.StringValue {
-	return terra.ReferenceString(mgtd.ref.Append("debug_level"))
+	return terra.ReferenceAsString(mgtd.ref.Append("debug_level"))
 }
 
+// Id returns a reference to field id of azurerm_management_group_template_deployment.
 func (mgtd managementGroupTemplateDeploymentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mgtd.ref.Append("id"))
+	return terra.ReferenceAsString(mgtd.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_management_group_template_deployment.
 func (mgtd managementGroupTemplateDeploymentAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(mgtd.ref.Append("location"))
+	return terra.ReferenceAsString(mgtd.ref.Append("location"))
 }
 
+// ManagementGroupId returns a reference to field management_group_id of azurerm_management_group_template_deployment.
 func (mgtd managementGroupTemplateDeploymentAttributes) ManagementGroupId() terra.StringValue {
-	return terra.ReferenceString(mgtd.ref.Append("management_group_id"))
+	return terra.ReferenceAsString(mgtd.ref.Append("management_group_id"))
 }
 
+// Name returns a reference to field name of azurerm_management_group_template_deployment.
 func (mgtd managementGroupTemplateDeploymentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mgtd.ref.Append("name"))
+	return terra.ReferenceAsString(mgtd.ref.Append("name"))
 }
 
+// OutputContent returns a reference to field output_content of azurerm_management_group_template_deployment.
 func (mgtd managementGroupTemplateDeploymentAttributes) OutputContent() terra.StringValue {
-	return terra.ReferenceString(mgtd.ref.Append("output_content"))
+	return terra.ReferenceAsString(mgtd.ref.Append("output_content"))
 }
 
+// ParametersContent returns a reference to field parameters_content of azurerm_management_group_template_deployment.
 func (mgtd managementGroupTemplateDeploymentAttributes) ParametersContent() terra.StringValue {
-	return terra.ReferenceString(mgtd.ref.Append("parameters_content"))
+	return terra.ReferenceAsString(mgtd.ref.Append("parameters_content"))
 }
 
+// Tags returns a reference to field tags of azurerm_management_group_template_deployment.
 func (mgtd managementGroupTemplateDeploymentAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mgtd.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mgtd.ref.Append("tags"))
 }
 
+// TemplateContent returns a reference to field template_content of azurerm_management_group_template_deployment.
 func (mgtd managementGroupTemplateDeploymentAttributes) TemplateContent() terra.StringValue {
-	return terra.ReferenceString(mgtd.ref.Append("template_content"))
+	return terra.ReferenceAsString(mgtd.ref.Append("template_content"))
 }
 
+// TemplateSpecVersionId returns a reference to field template_spec_version_id of azurerm_management_group_template_deployment.
 func (mgtd managementGroupTemplateDeploymentAttributes) TemplateSpecVersionId() terra.StringValue {
-	return terra.ReferenceString(mgtd.ref.Append("template_spec_version_id"))
+	return terra.ReferenceAsString(mgtd.ref.Append("template_spec_version_id"))
 }
 
 func (mgtd managementGroupTemplateDeploymentAttributes) Timeouts() managementgrouptemplatedeployment.TimeoutsAttributes {
-	return terra.ReferenceSingle[managementgrouptemplatedeployment.TimeoutsAttributes](mgtd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[managementgrouptemplatedeployment.TimeoutsAttributes](mgtd.ref.Append("timeouts"))
 }
 
 type managementGroupTemplateDeploymentState struct {

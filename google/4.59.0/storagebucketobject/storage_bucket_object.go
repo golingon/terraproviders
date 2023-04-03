@@ -27,52 +27,52 @@ type CustomerEncryptionAttributes struct {
 	ref terra.Reference
 }
 
-func (ce CustomerEncryptionAttributes) InternalRef() terra.Reference {
-	return ce.ref
+func (ce CustomerEncryptionAttributes) InternalRef() (terra.Reference, error) {
+	return ce.ref, nil
 }
 
 func (ce CustomerEncryptionAttributes) InternalWithRef(ref terra.Reference) CustomerEncryptionAttributes {
 	return CustomerEncryptionAttributes{ref: ref}
 }
 
-func (ce CustomerEncryptionAttributes) InternalTokens() hclwrite.Tokens {
+func (ce CustomerEncryptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ce.ref.InternalTokens()
 }
 
 func (ce CustomerEncryptionAttributes) EncryptionAlgorithm() terra.StringValue {
-	return terra.ReferenceString(ce.ref.Append("encryption_algorithm"))
+	return terra.ReferenceAsString(ce.ref.Append("encryption_algorithm"))
 }
 
 func (ce CustomerEncryptionAttributes) EncryptionKey() terra.StringValue {
-	return terra.ReferenceString(ce.ref.Append("encryption_key"))
+	return terra.ReferenceAsString(ce.ref.Append("encryption_key"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type CustomerEncryptionState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNginxDeployment creates a new instance of [NginxDeployment].
 func NewNginxDeployment(name string, args NginxDeploymentArgs) *NginxDeployment {
 	return &NginxDeployment{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNginxDeployment(name string, args NginxDeploymentArgs) *NginxDeployment 
 
 var _ terra.Resource = (*NginxDeployment)(nil)
 
+// NginxDeployment represents the Terraform resource azurerm_nginx_deployment.
 type NginxDeployment struct {
-	Name  string
-	Args  NginxDeploymentArgs
-	state *nginxDeploymentState
+	Name      string
+	Args      NginxDeploymentArgs
+	state     *nginxDeploymentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NginxDeployment].
 func (nd *NginxDeployment) Type() string {
 	return "azurerm_nginx_deployment"
 }
 
+// LocalName returns the local name for [NginxDeployment].
 func (nd *NginxDeployment) LocalName() string {
 	return nd.Name
 }
 
+// Configuration returns the configuration (args) for [NginxDeployment].
 func (nd *NginxDeployment) Configuration() interface{} {
 	return nd.Args
 }
 
+// DependOn is used for other resources to depend on [NginxDeployment].
+func (nd *NginxDeployment) DependOn() terra.Reference {
+	return terra.ReferenceResource(nd)
+}
+
+// Dependencies returns the list of resources [NginxDeployment] depends_on.
+func (nd *NginxDeployment) Dependencies() terra.Dependencies {
+	return nd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NginxDeployment].
+func (nd *NginxDeployment) LifecycleManagement() *terra.Lifecycle {
+	return nd.Lifecycle
+}
+
+// Attributes returns the attributes for [NginxDeployment].
 func (nd *NginxDeployment) Attributes() nginxDeploymentAttributes {
 	return nginxDeploymentAttributes{ref: terra.ReferenceResource(nd)}
 }
 
+// ImportState imports the given attribute values into [NginxDeployment]'s state.
 func (nd *NginxDeployment) ImportState(av io.Reader) error {
 	nd.state = &nginxDeploymentState{}
 	if err := json.NewDecoder(av).Decode(nd.state); err != nil {
@@ -49,10 +73,12 @@ func (nd *NginxDeployment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NginxDeployment] has state.
 func (nd *NginxDeployment) State() (*nginxDeploymentState, bool) {
 	return nd.state, nd.state != nil
 }
 
+// StateMust returns the state for [NginxDeployment]. Panics if the state is nil.
 func (nd *NginxDeployment) StateMust() *nginxDeploymentState {
 	if nd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", nd.Type(), nd.LocalName()))
@@ -60,10 +86,7 @@ func (nd *NginxDeployment) StateMust() *nginxDeploymentState {
 	return nd.state
 }
 
-func (nd *NginxDeployment) DependOn() terra.Reference {
-	return terra.ReferenceResource(nd)
-}
-
+// NginxDeploymentArgs contains the configurations for azurerm_nginx_deployment.
 type NginxDeploymentArgs struct {
 	// DiagnoseSupportEnabled: bool, optional
 	DiagnoseSupportEnabled terra.BoolValue `hcl:"diagnose_support_enabled,attr"`
@@ -93,75 +116,83 @@ type NginxDeploymentArgs struct {
 	NetworkInterface []nginxdeployment.NetworkInterface `hcl:"network_interface,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *nginxdeployment.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that NginxDeployment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type nginxDeploymentAttributes struct {
 	ref terra.Reference
 }
 
+// DiagnoseSupportEnabled returns a reference to field diagnose_support_enabled of azurerm_nginx_deployment.
 func (nd nginxDeploymentAttributes) DiagnoseSupportEnabled() terra.BoolValue {
-	return terra.ReferenceBool(nd.ref.Append("diagnose_support_enabled"))
+	return terra.ReferenceAsBool(nd.ref.Append("diagnose_support_enabled"))
 }
 
+// Id returns a reference to field id of azurerm_nginx_deployment.
 func (nd nginxDeploymentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(nd.ref.Append("id"))
+	return terra.ReferenceAsString(nd.ref.Append("id"))
 }
 
+// IpAddress returns a reference to field ip_address of azurerm_nginx_deployment.
 func (nd nginxDeploymentAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(nd.ref.Append("ip_address"))
+	return terra.ReferenceAsString(nd.ref.Append("ip_address"))
 }
 
+// Location returns a reference to field location of azurerm_nginx_deployment.
 func (nd nginxDeploymentAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(nd.ref.Append("location"))
+	return terra.ReferenceAsString(nd.ref.Append("location"))
 }
 
+// ManagedResourceGroup returns a reference to field managed_resource_group of azurerm_nginx_deployment.
 func (nd nginxDeploymentAttributes) ManagedResourceGroup() terra.StringValue {
-	return terra.ReferenceString(nd.ref.Append("managed_resource_group"))
+	return terra.ReferenceAsString(nd.ref.Append("managed_resource_group"))
 }
 
+// Name returns a reference to field name of azurerm_nginx_deployment.
 func (nd nginxDeploymentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(nd.ref.Append("name"))
+	return terra.ReferenceAsString(nd.ref.Append("name"))
 }
 
+// NginxVersion returns a reference to field nginx_version of azurerm_nginx_deployment.
 func (nd nginxDeploymentAttributes) NginxVersion() terra.StringValue {
-	return terra.ReferenceString(nd.ref.Append("nginx_version"))
+	return terra.ReferenceAsString(nd.ref.Append("nginx_version"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_nginx_deployment.
 func (nd nginxDeploymentAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(nd.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(nd.ref.Append("resource_group_name"))
 }
 
+// Sku returns a reference to field sku of azurerm_nginx_deployment.
 func (nd nginxDeploymentAttributes) Sku() terra.StringValue {
-	return terra.ReferenceString(nd.ref.Append("sku"))
+	return terra.ReferenceAsString(nd.ref.Append("sku"))
 }
 
+// Tags returns a reference to field tags of azurerm_nginx_deployment.
 func (nd nginxDeploymentAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](nd.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](nd.ref.Append("tags"))
 }
 
 func (nd nginxDeploymentAttributes) FrontendPrivate() terra.ListValue[nginxdeployment.FrontendPrivateAttributes] {
-	return terra.ReferenceList[nginxdeployment.FrontendPrivateAttributes](nd.ref.Append("frontend_private"))
+	return terra.ReferenceAsList[nginxdeployment.FrontendPrivateAttributes](nd.ref.Append("frontend_private"))
 }
 
 func (nd nginxDeploymentAttributes) FrontendPublic() terra.ListValue[nginxdeployment.FrontendPublicAttributes] {
-	return terra.ReferenceList[nginxdeployment.FrontendPublicAttributes](nd.ref.Append("frontend_public"))
+	return terra.ReferenceAsList[nginxdeployment.FrontendPublicAttributes](nd.ref.Append("frontend_public"))
 }
 
 func (nd nginxDeploymentAttributes) Identity() terra.ListValue[nginxdeployment.IdentityAttributes] {
-	return terra.ReferenceList[nginxdeployment.IdentityAttributes](nd.ref.Append("identity"))
+	return terra.ReferenceAsList[nginxdeployment.IdentityAttributes](nd.ref.Append("identity"))
 }
 
 func (nd nginxDeploymentAttributes) LoggingStorageAccount() terra.ListValue[nginxdeployment.LoggingStorageAccountAttributes] {
-	return terra.ReferenceList[nginxdeployment.LoggingStorageAccountAttributes](nd.ref.Append("logging_storage_account"))
+	return terra.ReferenceAsList[nginxdeployment.LoggingStorageAccountAttributes](nd.ref.Append("logging_storage_account"))
 }
 
 func (nd nginxDeploymentAttributes) NetworkInterface() terra.ListValue[nginxdeployment.NetworkInterfaceAttributes] {
-	return terra.ReferenceList[nginxdeployment.NetworkInterfaceAttributes](nd.ref.Append("network_interface"))
+	return terra.ReferenceAsList[nginxdeployment.NetworkInterfaceAttributes](nd.ref.Append("network_interface"))
 }
 
 func (nd nginxDeploymentAttributes) Timeouts() nginxdeployment.TimeoutsAttributes {
-	return terra.ReferenceSingle[nginxdeployment.TimeoutsAttributes](nd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[nginxdeployment.TimeoutsAttributes](nd.ref.Append("timeouts"))
 }
 
 type nginxDeploymentState struct {

@@ -51,120 +51,120 @@ type PresentationTimeRangeAttributes struct {
 	ref terra.Reference
 }
 
-func (ptr PresentationTimeRangeAttributes) InternalRef() terra.Reference {
-	return ptr.ref
+func (ptr PresentationTimeRangeAttributes) InternalRef() (terra.Reference, error) {
+	return ptr.ref, nil
 }
 
 func (ptr PresentationTimeRangeAttributes) InternalWithRef(ref terra.Reference) PresentationTimeRangeAttributes {
 	return PresentationTimeRangeAttributes{ref: ref}
 }
 
-func (ptr PresentationTimeRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (ptr PresentationTimeRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ptr.ref.InternalTokens()
 }
 
 func (ptr PresentationTimeRangeAttributes) EndInUnits() terra.NumberValue {
-	return terra.ReferenceNumber(ptr.ref.Append("end_in_units"))
+	return terra.ReferenceAsNumber(ptr.ref.Append("end_in_units"))
 }
 
 func (ptr PresentationTimeRangeAttributes) ForceEnd() terra.BoolValue {
-	return terra.ReferenceBool(ptr.ref.Append("force_end"))
+	return terra.ReferenceAsBool(ptr.ref.Append("force_end"))
 }
 
 func (ptr PresentationTimeRangeAttributes) LiveBackoffInUnits() terra.NumberValue {
-	return terra.ReferenceNumber(ptr.ref.Append("live_backoff_in_units"))
+	return terra.ReferenceAsNumber(ptr.ref.Append("live_backoff_in_units"))
 }
 
 func (ptr PresentationTimeRangeAttributes) PresentationWindowInUnits() terra.NumberValue {
-	return terra.ReferenceNumber(ptr.ref.Append("presentation_window_in_units"))
+	return terra.ReferenceAsNumber(ptr.ref.Append("presentation_window_in_units"))
 }
 
 func (ptr PresentationTimeRangeAttributes) StartInUnits() terra.NumberValue {
-	return terra.ReferenceNumber(ptr.ref.Append("start_in_units"))
+	return terra.ReferenceAsNumber(ptr.ref.Append("start_in_units"))
 }
 
 func (ptr PresentationTimeRangeAttributes) UnitTimescaleInMiliseconds() terra.NumberValue {
-	return terra.ReferenceNumber(ptr.ref.Append("unit_timescale_in_miliseconds"))
+	return terra.ReferenceAsNumber(ptr.ref.Append("unit_timescale_in_miliseconds"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type TrackSelectionAttributes struct {
 	ref terra.Reference
 }
 
-func (ts TrackSelectionAttributes) InternalRef() terra.Reference {
-	return ts.ref
+func (ts TrackSelectionAttributes) InternalRef() (terra.Reference, error) {
+	return ts.ref, nil
 }
 
 func (ts TrackSelectionAttributes) InternalWithRef(ref terra.Reference) TrackSelectionAttributes {
 	return TrackSelectionAttributes{ref: ref}
 }
 
-func (ts TrackSelectionAttributes) InternalTokens() hclwrite.Tokens {
+func (ts TrackSelectionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ts.ref.InternalTokens()
 }
 
 func (ts TrackSelectionAttributes) Condition() terra.ListValue[ConditionAttributes] {
-	return terra.ReferenceList[ConditionAttributes](ts.ref.Append("condition"))
+	return terra.ReferenceAsList[ConditionAttributes](ts.ref.Append("condition"))
 }
 
 type ConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConditionAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConditionAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConditionAttributes) InternalWithRef(ref terra.Reference) ConditionAttributes {
 	return ConditionAttributes{ref: ref}
 }
 
-func (c ConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ConditionAttributes) Operation() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("operation"))
+	return terra.ReferenceAsString(c.ref.Append("operation"))
 }
 
 func (c ConditionAttributes) Property() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("property"))
+	return terra.ReferenceAsString(c.ref.Append("property"))
 }
 
 func (c ConditionAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("value"))
+	return terra.ReferenceAsString(c.ref.Append("value"))
 }
 
 type PresentationTimeRangeState struct {

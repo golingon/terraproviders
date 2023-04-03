@@ -150,7 +150,7 @@ func (ec EncryptionConfigurationAttributes) InternalWithRef(ref terra.Reference)
 	return EncryptionConfigurationAttributes{ref: ref}
 }
 
-func (ec EncryptionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ec EncryptionConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 
@@ -170,7 +170,7 @@ func (hcc HealthCheckConfigurationAttributes) InternalWithRef(ref terra.Referenc
 	return HealthCheckConfigurationAttributes{ref: ref}
 }
 
-func (hcc HealthCheckConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (hcc HealthCheckConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hcc.ref.InternalTokens()
 }
 
@@ -210,7 +210,7 @@ func (ic InstanceConfigurationAttributes) InternalWithRef(ref terra.Reference) I
 	return InstanceConfigurationAttributes{ref: ref}
 }
 
-func (ic InstanceConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ic InstanceConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ic.ref.InternalTokens()
 }
 
@@ -238,7 +238,7 @@ func (nc NetworkConfigurationAttributes) InternalWithRef(ref terra.Reference) Ne
 	return NetworkConfigurationAttributes{ref: ref}
 }
 
-func (nc NetworkConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (nc NetworkConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nc.ref.InternalTokens()
 }
 
@@ -262,7 +262,7 @@ func (ec EgressConfigurationAttributes) InternalWithRef(ref terra.Reference) Egr
 	return EgressConfigurationAttributes{ref: ref}
 }
 
-func (ec EgressConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ec EgressConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 
@@ -286,7 +286,7 @@ func (ic IngressConfigurationAttributes) InternalWithRef(ref terra.Reference) In
 	return IngressConfigurationAttributes{ref: ref}
 }
 
-func (ic IngressConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ic IngressConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ic.ref.InternalTokens()
 }
 
@@ -306,7 +306,7 @@ func (oc ObservabilityConfigurationAttributes) InternalWithRef(ref terra.Referen
 	return ObservabilityConfigurationAttributes{ref: ref}
 }
 
-func (oc ObservabilityConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (oc ObservabilityConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oc.ref.InternalTokens()
 }
 
@@ -330,7 +330,7 @@ func (sc SourceConfigurationAttributes) InternalWithRef(ref terra.Reference) Sou
 	return SourceConfigurationAttributes{ref: ref}
 }
 
-func (sc SourceConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (sc SourceConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -362,7 +362,7 @@ func (ac AuthenticationConfigurationAttributes) InternalWithRef(ref terra.Refere
 	return AuthenticationConfigurationAttributes{ref: ref}
 }
 
-func (ac AuthenticationConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ac AuthenticationConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
@@ -386,7 +386,7 @@ func (cr CodeRepositoryAttributes) InternalWithRef(ref terra.Reference) CodeRepo
 	return CodeRepositoryAttributes{ref: ref}
 }
 
-func (cr CodeRepositoryAttributes) InternalTokens() hclwrite.Tokens {
+func (cr CodeRepositoryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cr.ref.InternalTokens()
 }
 
@@ -414,7 +414,7 @@ func (cc CodeConfigurationAttributes) InternalWithRef(ref terra.Reference) CodeC
 	return CodeConfigurationAttributes{ref: ref}
 }
 
-func (cc CodeConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (cc CodeConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -438,7 +438,7 @@ func (ccv CodeConfigurationValuesAttributes) InternalWithRef(ref terra.Reference
 	return CodeConfigurationValuesAttributes{ref: ref}
 }
 
-func (ccv CodeConfigurationValuesAttributes) InternalTokens() hclwrite.Tokens {
+func (ccv CodeConfigurationValuesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ccv.ref.InternalTokens()
 }
 
@@ -478,7 +478,7 @@ func (scv SourceCodeVersionAttributes) InternalWithRef(ref terra.Reference) Sour
 	return SourceCodeVersionAttributes{ref: ref}
 }
 
-func (scv SourceCodeVersionAttributes) InternalTokens() hclwrite.Tokens {
+func (scv SourceCodeVersionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return scv.ref.InternalTokens()
 }
 
@@ -502,7 +502,7 @@ func (ir ImageRepositoryAttributes) InternalWithRef(ref terra.Reference) ImageRe
 	return ImageRepositoryAttributes{ref: ref}
 }
 
-func (ir ImageRepositoryAttributes) InternalTokens() hclwrite.Tokens {
+func (ir ImageRepositoryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ir.ref.InternalTokens()
 }
 
@@ -530,7 +530,7 @@ func (ic ImageConfigurationAttributes) InternalWithRef(ref terra.Reference) Imag
 	return ImageConfigurationAttributes{ref: ref}
 }
 
-func (ic ImageConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ic ImageConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ic.ref.InternalTokens()
 }
 

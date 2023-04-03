@@ -13,36 +13,36 @@ type CertsAttributes struct {
 	ref terra.Reference
 }
 
-func (c CertsAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CertsAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CertsAttributes) InternalWithRef(ref terra.Reference) CertsAttributes {
 	return CertsAttributes{ref: ref}
 }
 
-func (c CertsAttributes) InternalTokens() hclwrite.Tokens {
+func (c CertsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c CertsAttributes) Cert() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("cert"))
+	return terra.ReferenceAsString(c.ref.Append("cert"))
 }
 
 func (c CertsAttributes) CommonName() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("common_name"))
+	return terra.ReferenceAsString(c.ref.Append("common_name"))
 }
 
 func (c CertsAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("create_time"))
+	return terra.ReferenceAsString(c.ref.Append("create_time"))
 }
 
 func (c CertsAttributes) ExpirationTime() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("expiration_time"))
+	return terra.ReferenceAsString(c.ref.Append("expiration_time"))
 }
 
 func (c CertsAttributes) Sha1Fingerprint() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("sha1_fingerprint"))
+	return terra.ReferenceAsString(c.ref.Append("sha1_fingerprint"))
 }
 
 type CertsState struct {

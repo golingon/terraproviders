@@ -37,7 +37,7 @@ func (ae AutoEnableAttributes) InternalWithRef(ref terra.Reference) AutoEnableAt
 	return AutoEnableAttributes{ref: ref}
 }
 
-func (ae AutoEnableAttributes) InternalTokens() hclwrite.Tokens {
+func (ae AutoEnableAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ae.ref.InternalTokens()
 }
 
@@ -65,7 +65,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

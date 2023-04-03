@@ -69,7 +69,7 @@ func (e EndpointsAttributes) InternalWithRef(ref terra.Reference) EndpointsAttri
 	return EndpointsAttributes{ref: ref}
 }
 
-func (e EndpointsAttributes) InternalTokens() hclwrite.Tokens {
+func (e EndpointsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -101,7 +101,7 @@ func (i IscsiAttributes) InternalWithRef(ref terra.Reference) IscsiAttributes {
 	return IscsiAttributes{ref: ref}
 }
 
-func (i IscsiAttributes) InternalTokens() hclwrite.Tokens {
+func (i IscsiAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -125,7 +125,7 @@ func (m ManagementAttributes) InternalWithRef(ref terra.Reference) ManagementAtt
 	return ManagementAttributes{ref: ref}
 }
 
-func (m ManagementAttributes) InternalTokens() hclwrite.Tokens {
+func (m ManagementAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -149,7 +149,7 @@ func (n NfsAttributes) InternalWithRef(ref terra.Reference) NfsAttributes {
 	return NfsAttributes{ref: ref}
 }
 
-func (n NfsAttributes) InternalTokens() hclwrite.Tokens {
+func (n NfsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return n.ref.InternalTokens()
 }
 
@@ -173,7 +173,7 @@ func (s SmbAttributes) InternalWithRef(ref terra.Reference) SmbAttributes {
 	return SmbAttributes{ref: ref}
 }
 
-func (s SmbAttributes) InternalTokens() hclwrite.Tokens {
+func (s SmbAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -197,7 +197,7 @@ func (adc ActiveDirectoryConfigurationAttributes) InternalWithRef(ref terra.Refe
 	return ActiveDirectoryConfigurationAttributes{ref: ref}
 }
 
-func (adc ActiveDirectoryConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (adc ActiveDirectoryConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return adc.ref.InternalTokens()
 }
 
@@ -221,7 +221,7 @@ func (smadc SelfManagedActiveDirectoryConfigurationAttributes) InternalWithRef(r
 	return SelfManagedActiveDirectoryConfigurationAttributes{ref: ref}
 }
 
-func (smadc SelfManagedActiveDirectoryConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (smadc SelfManagedActiveDirectoryConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return smadc.ref.InternalTokens()
 }
 
@@ -261,7 +261,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

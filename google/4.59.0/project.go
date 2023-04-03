@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewProject creates a new instance of [Project].
 func NewProject(name string, args ProjectArgs) *Project {
 	return &Project{
 		Args: args,
@@ -19,28 +20,51 @@ func NewProject(name string, args ProjectArgs) *Project {
 
 var _ terra.Resource = (*Project)(nil)
 
+// Project represents the Terraform resource google_project.
 type Project struct {
-	Name  string
-	Args  ProjectArgs
-	state *projectState
+	Name      string
+	Args      ProjectArgs
+	state     *projectState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Project].
 func (p *Project) Type() string {
 	return "google_project"
 }
 
+// LocalName returns the local name for [Project].
 func (p *Project) LocalName() string {
 	return p.Name
 }
 
+// Configuration returns the configuration (args) for [Project].
 func (p *Project) Configuration() interface{} {
 	return p.Args
 }
 
+// DependOn is used for other resources to depend on [Project].
+func (p *Project) DependOn() terra.Reference {
+	return terra.ReferenceResource(p)
+}
+
+// Dependencies returns the list of resources [Project] depends_on.
+func (p *Project) Dependencies() terra.Dependencies {
+	return p.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Project].
+func (p *Project) LifecycleManagement() *terra.Lifecycle {
+	return p.Lifecycle
+}
+
+// Attributes returns the attributes for [Project].
 func (p *Project) Attributes() projectAttributes {
 	return projectAttributes{ref: terra.ReferenceResource(p)}
 }
 
+// ImportState imports the given attribute values into [Project]'s state.
 func (p *Project) ImportState(av io.Reader) error {
 	p.state = &projectState{}
 	if err := json.NewDecoder(av).Decode(p.state); err != nil {
@@ -49,10 +73,12 @@ func (p *Project) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Project] has state.
 func (p *Project) State() (*projectState, bool) {
 	return p.state, p.state != nil
 }
 
+// StateMust returns the state for [Project]. Panics if the state is nil.
 func (p *Project) StateMust() *projectState {
 	if p.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", p.Type(), p.LocalName()))
@@ -60,10 +86,7 @@ func (p *Project) StateMust() *projectState {
 	return p.state
 }
 
-func (p *Project) DependOn() terra.Reference {
-	return terra.ReferenceResource(p)
-}
-
+// ProjectArgs contains the configurations for google_project.
 type ProjectArgs struct {
 	// AutoCreateNetwork: bool, optional
 	AutoCreateNetwork terra.BoolValue `hcl:"auto_create_network,attr"`
@@ -85,55 +108,63 @@ type ProjectArgs struct {
 	SkipDelete terra.BoolValue `hcl:"skip_delete,attr"`
 	// Timeouts: optional
 	Timeouts *project.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that Project depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type projectAttributes struct {
 	ref terra.Reference
 }
 
+// AutoCreateNetwork returns a reference to field auto_create_network of google_project.
 func (p projectAttributes) AutoCreateNetwork() terra.BoolValue {
-	return terra.ReferenceBool(p.ref.Append("auto_create_network"))
+	return terra.ReferenceAsBool(p.ref.Append("auto_create_network"))
 }
 
+// BillingAccount returns a reference to field billing_account of google_project.
 func (p projectAttributes) BillingAccount() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("billing_account"))
+	return terra.ReferenceAsString(p.ref.Append("billing_account"))
 }
 
+// FolderId returns a reference to field folder_id of google_project.
 func (p projectAttributes) FolderId() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("folder_id"))
+	return terra.ReferenceAsString(p.ref.Append("folder_id"))
 }
 
+// Id returns a reference to field id of google_project.
 func (p projectAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("id"))
+	return terra.ReferenceAsString(p.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_project.
 func (p projectAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](p.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](p.ref.Append("labels"))
 }
 
+// Name returns a reference to field name of google_project.
 func (p projectAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("name"))
+	return terra.ReferenceAsString(p.ref.Append("name"))
 }
 
+// Number returns a reference to field number of google_project.
 func (p projectAttributes) Number() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("number"))
+	return terra.ReferenceAsString(p.ref.Append("number"))
 }
 
+// OrgId returns a reference to field org_id of google_project.
 func (p projectAttributes) OrgId() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("org_id"))
+	return terra.ReferenceAsString(p.ref.Append("org_id"))
 }
 
+// ProjectId returns a reference to field project_id of google_project.
 func (p projectAttributes) ProjectId() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("project_id"))
+	return terra.ReferenceAsString(p.ref.Append("project_id"))
 }
 
+// SkipDelete returns a reference to field skip_delete of google_project.
 func (p projectAttributes) SkipDelete() terra.BoolValue {
-	return terra.ReferenceBool(p.ref.Append("skip_delete"))
+	return terra.ReferenceAsBool(p.ref.Append("skip_delete"))
 }
 
 func (p projectAttributes) Timeouts() project.TimeoutsAttributes {
-	return terra.ReferenceSingle[project.TimeoutsAttributes](p.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[project.TimeoutsAttributes](p.ref.Append("timeouts"))
 }
 
 type projectState struct {

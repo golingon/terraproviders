@@ -33,7 +33,7 @@ func (simt SqlInjectionMatchTupleAttributes) InternalWithRef(ref terra.Reference
 	return SqlInjectionMatchTupleAttributes{ref: ref}
 }
 
-func (simt SqlInjectionMatchTupleAttributes) InternalTokens() hclwrite.Tokens {
+func (simt SqlInjectionMatchTupleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return simt.ref.InternalTokens()
 }
 
@@ -57,7 +57,7 @@ func (ftm FieldToMatchAttributes) InternalWithRef(ref terra.Reference) FieldToMa
 	return FieldToMatchAttributes{ref: ref}
 }
 
-func (ftm FieldToMatchAttributes) InternalTokens() hclwrite.Tokens {
+func (ftm FieldToMatchAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ftm.ref.InternalTokens()
 }
 

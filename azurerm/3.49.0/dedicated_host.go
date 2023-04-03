@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDedicatedHost creates a new instance of [DedicatedHost].
 func NewDedicatedHost(name string, args DedicatedHostArgs) *DedicatedHost {
 	return &DedicatedHost{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDedicatedHost(name string, args DedicatedHostArgs) *DedicatedHost {
 
 var _ terra.Resource = (*DedicatedHost)(nil)
 
+// DedicatedHost represents the Terraform resource azurerm_dedicated_host.
 type DedicatedHost struct {
-	Name  string
-	Args  DedicatedHostArgs
-	state *dedicatedHostState
+	Name      string
+	Args      DedicatedHostArgs
+	state     *dedicatedHostState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DedicatedHost].
 func (dh *DedicatedHost) Type() string {
 	return "azurerm_dedicated_host"
 }
 
+// LocalName returns the local name for [DedicatedHost].
 func (dh *DedicatedHost) LocalName() string {
 	return dh.Name
 }
 
+// Configuration returns the configuration (args) for [DedicatedHost].
 func (dh *DedicatedHost) Configuration() interface{} {
 	return dh.Args
 }
 
+// DependOn is used for other resources to depend on [DedicatedHost].
+func (dh *DedicatedHost) DependOn() terra.Reference {
+	return terra.ReferenceResource(dh)
+}
+
+// Dependencies returns the list of resources [DedicatedHost] depends_on.
+func (dh *DedicatedHost) Dependencies() terra.Dependencies {
+	return dh.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DedicatedHost].
+func (dh *DedicatedHost) LifecycleManagement() *terra.Lifecycle {
+	return dh.Lifecycle
+}
+
+// Attributes returns the attributes for [DedicatedHost].
 func (dh *DedicatedHost) Attributes() dedicatedHostAttributes {
 	return dedicatedHostAttributes{ref: terra.ReferenceResource(dh)}
 }
 
+// ImportState imports the given attribute values into [DedicatedHost]'s state.
 func (dh *DedicatedHost) ImportState(av io.Reader) error {
 	dh.state = &dedicatedHostState{}
 	if err := json.NewDecoder(av).Decode(dh.state); err != nil {
@@ -49,10 +73,12 @@ func (dh *DedicatedHost) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DedicatedHost] has state.
 func (dh *DedicatedHost) State() (*dedicatedHostState, bool) {
 	return dh.state, dh.state != nil
 }
 
+// StateMust returns the state for [DedicatedHost]. Panics if the state is nil.
 func (dh *DedicatedHost) StateMust() *dedicatedHostState {
 	if dh.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dh.Type(), dh.LocalName()))
@@ -60,10 +86,7 @@ func (dh *DedicatedHost) StateMust() *dedicatedHostState {
 	return dh.state
 }
 
-func (dh *DedicatedHost) DependOn() terra.Reference {
-	return terra.ReferenceResource(dh)
-}
-
+// DedicatedHostArgs contains the configurations for azurerm_dedicated_host.
 type DedicatedHostArgs struct {
 	// AutoReplaceOnFailure: bool, optional
 	AutoReplaceOnFailure terra.BoolValue `hcl:"auto_replace_on_failure,attr"`
@@ -85,51 +108,58 @@ type DedicatedHostArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// Timeouts: optional
 	Timeouts *dedicatedhost.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DedicatedHost depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dedicatedHostAttributes struct {
 	ref terra.Reference
 }
 
+// AutoReplaceOnFailure returns a reference to field auto_replace_on_failure of azurerm_dedicated_host.
 func (dh dedicatedHostAttributes) AutoReplaceOnFailure() terra.BoolValue {
-	return terra.ReferenceBool(dh.ref.Append("auto_replace_on_failure"))
+	return terra.ReferenceAsBool(dh.ref.Append("auto_replace_on_failure"))
 }
 
+// DedicatedHostGroupId returns a reference to field dedicated_host_group_id of azurerm_dedicated_host.
 func (dh dedicatedHostAttributes) DedicatedHostGroupId() terra.StringValue {
-	return terra.ReferenceString(dh.ref.Append("dedicated_host_group_id"))
+	return terra.ReferenceAsString(dh.ref.Append("dedicated_host_group_id"))
 }
 
+// Id returns a reference to field id of azurerm_dedicated_host.
 func (dh dedicatedHostAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dh.ref.Append("id"))
+	return terra.ReferenceAsString(dh.ref.Append("id"))
 }
 
+// LicenseType returns a reference to field license_type of azurerm_dedicated_host.
 func (dh dedicatedHostAttributes) LicenseType() terra.StringValue {
-	return terra.ReferenceString(dh.ref.Append("license_type"))
+	return terra.ReferenceAsString(dh.ref.Append("license_type"))
 }
 
+// Location returns a reference to field location of azurerm_dedicated_host.
 func (dh dedicatedHostAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(dh.ref.Append("location"))
+	return terra.ReferenceAsString(dh.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_dedicated_host.
 func (dh dedicatedHostAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dh.ref.Append("name"))
+	return terra.ReferenceAsString(dh.ref.Append("name"))
 }
 
+// PlatformFaultDomain returns a reference to field platform_fault_domain of azurerm_dedicated_host.
 func (dh dedicatedHostAttributes) PlatformFaultDomain() terra.NumberValue {
-	return terra.ReferenceNumber(dh.ref.Append("platform_fault_domain"))
+	return terra.ReferenceAsNumber(dh.ref.Append("platform_fault_domain"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_dedicated_host.
 func (dh dedicatedHostAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(dh.ref.Append("sku_name"))
+	return terra.ReferenceAsString(dh.ref.Append("sku_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_dedicated_host.
 func (dh dedicatedHostAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dh.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dh.ref.Append("tags"))
 }
 
 func (dh dedicatedHostAttributes) Timeouts() dedicatedhost.TimeoutsAttributes {
-	return terra.ReferenceSingle[dedicatedhost.TimeoutsAttributes](dh.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dedicatedhost.TimeoutsAttributes](dh.ref.Append("timeouts"))
 }
 
 type dedicatedHostState struct {

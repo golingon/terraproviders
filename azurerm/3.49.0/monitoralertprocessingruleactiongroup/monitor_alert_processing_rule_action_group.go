@@ -169,496 +169,496 @@ type ConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConditionAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConditionAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConditionAttributes) InternalWithRef(ref terra.Reference) ConditionAttributes {
 	return ConditionAttributes{ref: ref}
 }
 
-func (c ConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ConditionAttributes) AlertContext() terra.ListValue[AlertContextAttributes] {
-	return terra.ReferenceList[AlertContextAttributes](c.ref.Append("alert_context"))
+	return terra.ReferenceAsList[AlertContextAttributes](c.ref.Append("alert_context"))
 }
 
 func (c ConditionAttributes) AlertRuleId() terra.ListValue[AlertRuleIdAttributes] {
-	return terra.ReferenceList[AlertRuleIdAttributes](c.ref.Append("alert_rule_id"))
+	return terra.ReferenceAsList[AlertRuleIdAttributes](c.ref.Append("alert_rule_id"))
 }
 
 func (c ConditionAttributes) AlertRuleName() terra.ListValue[AlertRuleNameAttributes] {
-	return terra.ReferenceList[AlertRuleNameAttributes](c.ref.Append("alert_rule_name"))
+	return terra.ReferenceAsList[AlertRuleNameAttributes](c.ref.Append("alert_rule_name"))
 }
 
 func (c ConditionAttributes) Description() terra.ListValue[DescriptionAttributes] {
-	return terra.ReferenceList[DescriptionAttributes](c.ref.Append("description"))
+	return terra.ReferenceAsList[DescriptionAttributes](c.ref.Append("description"))
 }
 
 func (c ConditionAttributes) MonitorCondition() terra.ListValue[MonitorConditionAttributes] {
-	return terra.ReferenceList[MonitorConditionAttributes](c.ref.Append("monitor_condition"))
+	return terra.ReferenceAsList[MonitorConditionAttributes](c.ref.Append("monitor_condition"))
 }
 
 func (c ConditionAttributes) MonitorService() terra.ListValue[MonitorServiceAttributes] {
-	return terra.ReferenceList[MonitorServiceAttributes](c.ref.Append("monitor_service"))
+	return terra.ReferenceAsList[MonitorServiceAttributes](c.ref.Append("monitor_service"))
 }
 
 func (c ConditionAttributes) Severity() terra.ListValue[SeverityAttributes] {
-	return terra.ReferenceList[SeverityAttributes](c.ref.Append("severity"))
+	return terra.ReferenceAsList[SeverityAttributes](c.ref.Append("severity"))
 }
 
 func (c ConditionAttributes) SignalType() terra.ListValue[SignalTypeAttributes] {
-	return terra.ReferenceList[SignalTypeAttributes](c.ref.Append("signal_type"))
+	return terra.ReferenceAsList[SignalTypeAttributes](c.ref.Append("signal_type"))
 }
 
 func (c ConditionAttributes) TargetResource() terra.ListValue[TargetResourceAttributes] {
-	return terra.ReferenceList[TargetResourceAttributes](c.ref.Append("target_resource"))
+	return terra.ReferenceAsList[TargetResourceAttributes](c.ref.Append("target_resource"))
 }
 
 func (c ConditionAttributes) TargetResourceGroup() terra.ListValue[TargetResourceGroupAttributes] {
-	return terra.ReferenceList[TargetResourceGroupAttributes](c.ref.Append("target_resource_group"))
+	return terra.ReferenceAsList[TargetResourceGroupAttributes](c.ref.Append("target_resource_group"))
 }
 
 func (c ConditionAttributes) TargetResourceType() terra.ListValue[TargetResourceTypeAttributes] {
-	return terra.ReferenceList[TargetResourceTypeAttributes](c.ref.Append("target_resource_type"))
+	return terra.ReferenceAsList[TargetResourceTypeAttributes](c.ref.Append("target_resource_type"))
 }
 
 type AlertContextAttributes struct {
 	ref terra.Reference
 }
 
-func (ac AlertContextAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac AlertContextAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac AlertContextAttributes) InternalWithRef(ref terra.Reference) AlertContextAttributes {
 	return AlertContextAttributes{ref: ref}
 }
 
-func (ac AlertContextAttributes) InternalTokens() hclwrite.Tokens {
+func (ac AlertContextAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
 func (ac AlertContextAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("operator"))
+	return terra.ReferenceAsString(ac.ref.Append("operator"))
 }
 
 func (ac AlertContextAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ac.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](ac.ref.Append("values"))
 }
 
 type AlertRuleIdAttributes struct {
 	ref terra.Reference
 }
 
-func (ari AlertRuleIdAttributes) InternalRef() terra.Reference {
-	return ari.ref
+func (ari AlertRuleIdAttributes) InternalRef() (terra.Reference, error) {
+	return ari.ref, nil
 }
 
 func (ari AlertRuleIdAttributes) InternalWithRef(ref terra.Reference) AlertRuleIdAttributes {
 	return AlertRuleIdAttributes{ref: ref}
 }
 
-func (ari AlertRuleIdAttributes) InternalTokens() hclwrite.Tokens {
+func (ari AlertRuleIdAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ari.ref.InternalTokens()
 }
 
 func (ari AlertRuleIdAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(ari.ref.Append("operator"))
+	return terra.ReferenceAsString(ari.ref.Append("operator"))
 }
 
 func (ari AlertRuleIdAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ari.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](ari.ref.Append("values"))
 }
 
 type AlertRuleNameAttributes struct {
 	ref terra.Reference
 }
 
-func (arn AlertRuleNameAttributes) InternalRef() terra.Reference {
-	return arn.ref
+func (arn AlertRuleNameAttributes) InternalRef() (terra.Reference, error) {
+	return arn.ref, nil
 }
 
 func (arn AlertRuleNameAttributes) InternalWithRef(ref terra.Reference) AlertRuleNameAttributes {
 	return AlertRuleNameAttributes{ref: ref}
 }
 
-func (arn AlertRuleNameAttributes) InternalTokens() hclwrite.Tokens {
+func (arn AlertRuleNameAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return arn.ref.InternalTokens()
 }
 
 func (arn AlertRuleNameAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(arn.ref.Append("operator"))
+	return terra.ReferenceAsString(arn.ref.Append("operator"))
 }
 
 func (arn AlertRuleNameAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](arn.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](arn.ref.Append("values"))
 }
 
 type DescriptionAttributes struct {
 	ref terra.Reference
 }
 
-func (d DescriptionAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DescriptionAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DescriptionAttributes) InternalWithRef(ref terra.Reference) DescriptionAttributes {
 	return DescriptionAttributes{ref: ref}
 }
 
-func (d DescriptionAttributes) InternalTokens() hclwrite.Tokens {
+func (d DescriptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d DescriptionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("operator"))
+	return terra.ReferenceAsString(d.ref.Append("operator"))
 }
 
 func (d DescriptionAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](d.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](d.ref.Append("values"))
 }
 
 type MonitorConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (mc MonitorConditionAttributes) InternalRef() terra.Reference {
-	return mc.ref
+func (mc MonitorConditionAttributes) InternalRef() (terra.Reference, error) {
+	return mc.ref, nil
 }
 
 func (mc MonitorConditionAttributes) InternalWithRef(ref terra.Reference) MonitorConditionAttributes {
 	return MonitorConditionAttributes{ref: ref}
 }
 
-func (mc MonitorConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (mc MonitorConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mc.ref.InternalTokens()
 }
 
 func (mc MonitorConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("operator"))
+	return terra.ReferenceAsString(mc.ref.Append("operator"))
 }
 
 func (mc MonitorConditionAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](mc.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](mc.ref.Append("values"))
 }
 
 type MonitorServiceAttributes struct {
 	ref terra.Reference
 }
 
-func (ms MonitorServiceAttributes) InternalRef() terra.Reference {
-	return ms.ref
+func (ms MonitorServiceAttributes) InternalRef() (terra.Reference, error) {
+	return ms.ref, nil
 }
 
 func (ms MonitorServiceAttributes) InternalWithRef(ref terra.Reference) MonitorServiceAttributes {
 	return MonitorServiceAttributes{ref: ref}
 }
 
-func (ms MonitorServiceAttributes) InternalTokens() hclwrite.Tokens {
+func (ms MonitorServiceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ms.ref.InternalTokens()
 }
 
 func (ms MonitorServiceAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("operator"))
+	return terra.ReferenceAsString(ms.ref.Append("operator"))
 }
 
 func (ms MonitorServiceAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ms.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](ms.ref.Append("values"))
 }
 
 type SeverityAttributes struct {
 	ref terra.Reference
 }
 
-func (s SeverityAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SeverityAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SeverityAttributes) InternalWithRef(ref terra.Reference) SeverityAttributes {
 	return SeverityAttributes{ref: ref}
 }
 
-func (s SeverityAttributes) InternalTokens() hclwrite.Tokens {
+func (s SeverityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SeverityAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("operator"))
+	return terra.ReferenceAsString(s.ref.Append("operator"))
 }
 
 func (s SeverityAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](s.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](s.ref.Append("values"))
 }
 
 type SignalTypeAttributes struct {
 	ref terra.Reference
 }
 
-func (st SignalTypeAttributes) InternalRef() terra.Reference {
-	return st.ref
+func (st SignalTypeAttributes) InternalRef() (terra.Reference, error) {
+	return st.ref, nil
 }
 
 func (st SignalTypeAttributes) InternalWithRef(ref terra.Reference) SignalTypeAttributes {
 	return SignalTypeAttributes{ref: ref}
 }
 
-func (st SignalTypeAttributes) InternalTokens() hclwrite.Tokens {
+func (st SignalTypeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return st.ref.InternalTokens()
 }
 
 func (st SignalTypeAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("operator"))
+	return terra.ReferenceAsString(st.ref.Append("operator"))
 }
 
 func (st SignalTypeAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](st.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](st.ref.Append("values"))
 }
 
 type TargetResourceAttributes struct {
 	ref terra.Reference
 }
 
-func (tr TargetResourceAttributes) InternalRef() terra.Reference {
-	return tr.ref
+func (tr TargetResourceAttributes) InternalRef() (terra.Reference, error) {
+	return tr.ref, nil
 }
 
 func (tr TargetResourceAttributes) InternalWithRef(ref terra.Reference) TargetResourceAttributes {
 	return TargetResourceAttributes{ref: ref}
 }
 
-func (tr TargetResourceAttributes) InternalTokens() hclwrite.Tokens {
+func (tr TargetResourceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tr.ref.InternalTokens()
 }
 
 func (tr TargetResourceAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(tr.ref.Append("operator"))
+	return terra.ReferenceAsString(tr.ref.Append("operator"))
 }
 
 func (tr TargetResourceAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](tr.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](tr.ref.Append("values"))
 }
 
 type TargetResourceGroupAttributes struct {
 	ref terra.Reference
 }
 
-func (trg TargetResourceGroupAttributes) InternalRef() terra.Reference {
-	return trg.ref
+func (trg TargetResourceGroupAttributes) InternalRef() (terra.Reference, error) {
+	return trg.ref, nil
 }
 
 func (trg TargetResourceGroupAttributes) InternalWithRef(ref terra.Reference) TargetResourceGroupAttributes {
 	return TargetResourceGroupAttributes{ref: ref}
 }
 
-func (trg TargetResourceGroupAttributes) InternalTokens() hclwrite.Tokens {
+func (trg TargetResourceGroupAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return trg.ref.InternalTokens()
 }
 
 func (trg TargetResourceGroupAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(trg.ref.Append("operator"))
+	return terra.ReferenceAsString(trg.ref.Append("operator"))
 }
 
 func (trg TargetResourceGroupAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](trg.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](trg.ref.Append("values"))
 }
 
 type TargetResourceTypeAttributes struct {
 	ref terra.Reference
 }
 
-func (trt TargetResourceTypeAttributes) InternalRef() terra.Reference {
-	return trt.ref
+func (trt TargetResourceTypeAttributes) InternalRef() (terra.Reference, error) {
+	return trt.ref, nil
 }
 
 func (trt TargetResourceTypeAttributes) InternalWithRef(ref terra.Reference) TargetResourceTypeAttributes {
 	return TargetResourceTypeAttributes{ref: ref}
 }
 
-func (trt TargetResourceTypeAttributes) InternalTokens() hclwrite.Tokens {
+func (trt TargetResourceTypeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return trt.ref.InternalTokens()
 }
 
 func (trt TargetResourceTypeAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(trt.ref.Append("operator"))
+	return terra.ReferenceAsString(trt.ref.Append("operator"))
 }
 
 func (trt TargetResourceTypeAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](trt.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](trt.ref.Append("values"))
 }
 
 type ScheduleAttributes struct {
 	ref terra.Reference
 }
 
-func (s ScheduleAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ScheduleAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ScheduleAttributes) InternalWithRef(ref terra.Reference) ScheduleAttributes {
 	return ScheduleAttributes{ref: ref}
 }
 
-func (s ScheduleAttributes) InternalTokens() hclwrite.Tokens {
+func (s ScheduleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s ScheduleAttributes) EffectiveFrom() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("effective_from"))
+	return terra.ReferenceAsString(s.ref.Append("effective_from"))
 }
 
 func (s ScheduleAttributes) EffectiveUntil() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("effective_until"))
+	return terra.ReferenceAsString(s.ref.Append("effective_until"))
 }
 
 func (s ScheduleAttributes) TimeZone() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("time_zone"))
+	return terra.ReferenceAsString(s.ref.Append("time_zone"))
 }
 
 func (s ScheduleAttributes) Recurrence() terra.ListValue[RecurrenceAttributes] {
-	return terra.ReferenceList[RecurrenceAttributes](s.ref.Append("recurrence"))
+	return terra.ReferenceAsList[RecurrenceAttributes](s.ref.Append("recurrence"))
 }
 
 type RecurrenceAttributes struct {
 	ref terra.Reference
 }
 
-func (r RecurrenceAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RecurrenceAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RecurrenceAttributes) InternalWithRef(ref terra.Reference) RecurrenceAttributes {
 	return RecurrenceAttributes{ref: ref}
 }
 
-func (r RecurrenceAttributes) InternalTokens() hclwrite.Tokens {
+func (r RecurrenceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RecurrenceAttributes) Daily() terra.ListValue[DailyAttributes] {
-	return terra.ReferenceList[DailyAttributes](r.ref.Append("daily"))
+	return terra.ReferenceAsList[DailyAttributes](r.ref.Append("daily"))
 }
 
 func (r RecurrenceAttributes) Monthly() terra.ListValue[MonthlyAttributes] {
-	return terra.ReferenceList[MonthlyAttributes](r.ref.Append("monthly"))
+	return terra.ReferenceAsList[MonthlyAttributes](r.ref.Append("monthly"))
 }
 
 func (r RecurrenceAttributes) Weekly() terra.ListValue[WeeklyAttributes] {
-	return terra.ReferenceList[WeeklyAttributes](r.ref.Append("weekly"))
+	return terra.ReferenceAsList[WeeklyAttributes](r.ref.Append("weekly"))
 }
 
 type DailyAttributes struct {
 	ref terra.Reference
 }
 
-func (d DailyAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DailyAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DailyAttributes) InternalWithRef(ref terra.Reference) DailyAttributes {
 	return DailyAttributes{ref: ref}
 }
 
-func (d DailyAttributes) InternalTokens() hclwrite.Tokens {
+func (d DailyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d DailyAttributes) EndTime() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("end_time"))
+	return terra.ReferenceAsString(d.ref.Append("end_time"))
 }
 
 func (d DailyAttributes) StartTime() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("start_time"))
+	return terra.ReferenceAsString(d.ref.Append("start_time"))
 }
 
 type MonthlyAttributes struct {
 	ref terra.Reference
 }
 
-func (m MonthlyAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MonthlyAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MonthlyAttributes) InternalWithRef(ref terra.Reference) MonthlyAttributes {
 	return MonthlyAttributes{ref: ref}
 }
 
-func (m MonthlyAttributes) InternalTokens() hclwrite.Tokens {
+func (m MonthlyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
 func (m MonthlyAttributes) DaysOfMonth() terra.ListValue[terra.NumberValue] {
-	return terra.ReferenceList[terra.NumberValue](m.ref.Append("days_of_month"))
+	return terra.ReferenceAsList[terra.NumberValue](m.ref.Append("days_of_month"))
 }
 
 func (m MonthlyAttributes) EndTime() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("end_time"))
+	return terra.ReferenceAsString(m.ref.Append("end_time"))
 }
 
 func (m MonthlyAttributes) StartTime() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("start_time"))
+	return terra.ReferenceAsString(m.ref.Append("start_time"))
 }
 
 type WeeklyAttributes struct {
 	ref terra.Reference
 }
 
-func (w WeeklyAttributes) InternalRef() terra.Reference {
-	return w.ref
+func (w WeeklyAttributes) InternalRef() (terra.Reference, error) {
+	return w.ref, nil
 }
 
 func (w WeeklyAttributes) InternalWithRef(ref terra.Reference) WeeklyAttributes {
 	return WeeklyAttributes{ref: ref}
 }
 
-func (w WeeklyAttributes) InternalTokens() hclwrite.Tokens {
+func (w WeeklyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return w.ref.InternalTokens()
 }
 
 func (w WeeklyAttributes) DaysOfWeek() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](w.ref.Append("days_of_week"))
+	return terra.ReferenceAsList[terra.StringValue](w.ref.Append("days_of_week"))
 }
 
 func (w WeeklyAttributes) EndTime() terra.StringValue {
-	return terra.ReferenceString(w.ref.Append("end_time"))
+	return terra.ReferenceAsString(w.ref.Append("end_time"))
 }
 
 func (w WeeklyAttributes) StartTime() terra.StringValue {
-	return terra.ReferenceString(w.ref.Append("start_time"))
+	return terra.ReferenceAsString(w.ref.Append("start_time"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ConditionState struct {

@@ -67,7 +67,7 @@ func (c ConfigurationAttributes) InternalWithRef(ref terra.Reference) Configurat
 	return ConfigurationAttributes{ref: ref}
 }
 
-func (c ConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -87,7 +87,7 @@ func (ecc ExecuteCommandConfigurationAttributes) InternalWithRef(ref terra.Refer
 	return ExecuteCommandConfigurationAttributes{ref: ref}
 }
 
-func (ecc ExecuteCommandConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ecc ExecuteCommandConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ecc.ref.InternalTokens()
 }
 
@@ -115,7 +115,7 @@ func (lc LogConfigurationAttributes) InternalWithRef(ref terra.Reference) LogCon
 	return LogConfigurationAttributes{ref: ref}
 }
 
-func (lc LogConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (lc LogConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lc.ref.InternalTokens()
 }
 
@@ -151,7 +151,7 @@ func (dcps DefaultCapacityProviderStrategyAttributes) InternalWithRef(ref terra.
 	return DefaultCapacityProviderStrategyAttributes{ref: ref}
 }
 
-func (dcps DefaultCapacityProviderStrategyAttributes) InternalTokens() hclwrite.Tokens {
+func (dcps DefaultCapacityProviderStrategyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dcps.ref.InternalTokens()
 }
 
@@ -179,7 +179,7 @@ func (scd ServiceConnectDefaultsAttributes) InternalWithRef(ref terra.Reference)
 	return ServiceConnectDefaultsAttributes{ref: ref}
 }
 
-func (scd ServiceConnectDefaultsAttributes) InternalTokens() hclwrite.Tokens {
+func (scd ServiceConnectDefaultsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return scd.ref.InternalTokens()
 }
 
@@ -199,7 +199,7 @@ func (s SettingAttributes) InternalWithRef(ref terra.Reference) SettingAttribute
 	return SettingAttributes{ref: ref}
 }
 
-func (s SettingAttributes) InternalTokens() hclwrite.Tokens {
+func (s SettingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 

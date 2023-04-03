@@ -18,56 +18,56 @@ type PublicIpsAttributes struct {
 	ref terra.Reference
 }
 
-func (pi PublicIpsAttributes) InternalRef() terra.Reference {
-	return pi.ref
+func (pi PublicIpsAttributes) InternalRef() (terra.Reference, error) {
+	return pi.ref, nil
 }
 
 func (pi PublicIpsAttributes) InternalWithRef(ref terra.Reference) PublicIpsAttributes {
 	return PublicIpsAttributes{ref: ref}
 }
 
-func (pi PublicIpsAttributes) InternalTokens() hclwrite.Tokens {
+func (pi PublicIpsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pi.ref.InternalTokens()
 }
 
 func (pi PublicIpsAttributes) DomainNameLabel() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("domain_name_label"))
+	return terra.ReferenceAsString(pi.ref.Append("domain_name_label"))
 }
 
 func (pi PublicIpsAttributes) Fqdn() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("fqdn"))
+	return terra.ReferenceAsString(pi.ref.Append("fqdn"))
 }
 
 func (pi PublicIpsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("id"))
+	return terra.ReferenceAsString(pi.ref.Append("id"))
 }
 
 func (pi PublicIpsAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("ip_address"))
+	return terra.ReferenceAsString(pi.ref.Append("ip_address"))
 }
 
 func (pi PublicIpsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("name"))
+	return terra.ReferenceAsString(pi.ref.Append("name"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type PublicIpsState struct {

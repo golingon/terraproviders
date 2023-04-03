@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataShareDatasetKustoDatabase creates a new instance of [DataShareDatasetKustoDatabase].
 func NewDataShareDatasetKustoDatabase(name string, args DataShareDatasetKustoDatabaseArgs) *DataShareDatasetKustoDatabase {
 	return &DataShareDatasetKustoDatabase{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataShareDatasetKustoDatabase(name string, args DataShareDatasetKustoDat
 
 var _ terra.Resource = (*DataShareDatasetKustoDatabase)(nil)
 
+// DataShareDatasetKustoDatabase represents the Terraform resource azurerm_data_share_dataset_kusto_database.
 type DataShareDatasetKustoDatabase struct {
-	Name  string
-	Args  DataShareDatasetKustoDatabaseArgs
-	state *dataShareDatasetKustoDatabaseState
+	Name      string
+	Args      DataShareDatasetKustoDatabaseArgs
+	state     *dataShareDatasetKustoDatabaseState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataShareDatasetKustoDatabase].
 func (dsdkd *DataShareDatasetKustoDatabase) Type() string {
 	return "azurerm_data_share_dataset_kusto_database"
 }
 
+// LocalName returns the local name for [DataShareDatasetKustoDatabase].
 func (dsdkd *DataShareDatasetKustoDatabase) LocalName() string {
 	return dsdkd.Name
 }
 
+// Configuration returns the configuration (args) for [DataShareDatasetKustoDatabase].
 func (dsdkd *DataShareDatasetKustoDatabase) Configuration() interface{} {
 	return dsdkd.Args
 }
 
+// DependOn is used for other resources to depend on [DataShareDatasetKustoDatabase].
+func (dsdkd *DataShareDatasetKustoDatabase) DependOn() terra.Reference {
+	return terra.ReferenceResource(dsdkd)
+}
+
+// Dependencies returns the list of resources [DataShareDatasetKustoDatabase] depends_on.
+func (dsdkd *DataShareDatasetKustoDatabase) Dependencies() terra.Dependencies {
+	return dsdkd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataShareDatasetKustoDatabase].
+func (dsdkd *DataShareDatasetKustoDatabase) LifecycleManagement() *terra.Lifecycle {
+	return dsdkd.Lifecycle
+}
+
+// Attributes returns the attributes for [DataShareDatasetKustoDatabase].
 func (dsdkd *DataShareDatasetKustoDatabase) Attributes() dataShareDatasetKustoDatabaseAttributes {
 	return dataShareDatasetKustoDatabaseAttributes{ref: terra.ReferenceResource(dsdkd)}
 }
 
+// ImportState imports the given attribute values into [DataShareDatasetKustoDatabase]'s state.
 func (dsdkd *DataShareDatasetKustoDatabase) ImportState(av io.Reader) error {
 	dsdkd.state = &dataShareDatasetKustoDatabaseState{}
 	if err := json.NewDecoder(av).Decode(dsdkd.state); err != nil {
@@ -49,10 +73,12 @@ func (dsdkd *DataShareDatasetKustoDatabase) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataShareDatasetKustoDatabase] has state.
 func (dsdkd *DataShareDatasetKustoDatabase) State() (*dataShareDatasetKustoDatabaseState, bool) {
 	return dsdkd.state, dsdkd.state != nil
 }
 
+// StateMust returns the state for [DataShareDatasetKustoDatabase]. Panics if the state is nil.
 func (dsdkd *DataShareDatasetKustoDatabase) StateMust() *dataShareDatasetKustoDatabaseState {
 	if dsdkd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dsdkd.Type(), dsdkd.LocalName()))
@@ -60,10 +86,7 @@ func (dsdkd *DataShareDatasetKustoDatabase) StateMust() *dataShareDatasetKustoDa
 	return dsdkd.state
 }
 
-func (dsdkd *DataShareDatasetKustoDatabase) DependOn() terra.Reference {
-	return terra.ReferenceResource(dsdkd)
-}
-
+// DataShareDatasetKustoDatabaseArgs contains the configurations for azurerm_data_share_dataset_kusto_database.
 type DataShareDatasetKustoDatabaseArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -75,39 +98,43 @@ type DataShareDatasetKustoDatabaseArgs struct {
 	ShareId terra.StringValue `hcl:"share_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *datasharedatasetkustodatabase.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataShareDatasetKustoDatabase depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataShareDatasetKustoDatabaseAttributes struct {
 	ref terra.Reference
 }
 
+// DisplayName returns a reference to field display_name of azurerm_data_share_dataset_kusto_database.
 func (dsdkd dataShareDatasetKustoDatabaseAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(dsdkd.ref.Append("display_name"))
+	return terra.ReferenceAsString(dsdkd.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of azurerm_data_share_dataset_kusto_database.
 func (dsdkd dataShareDatasetKustoDatabaseAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dsdkd.ref.Append("id"))
+	return terra.ReferenceAsString(dsdkd.ref.Append("id"))
 }
 
+// KustoClusterLocation returns a reference to field kusto_cluster_location of azurerm_data_share_dataset_kusto_database.
 func (dsdkd dataShareDatasetKustoDatabaseAttributes) KustoClusterLocation() terra.StringValue {
-	return terra.ReferenceString(dsdkd.ref.Append("kusto_cluster_location"))
+	return terra.ReferenceAsString(dsdkd.ref.Append("kusto_cluster_location"))
 }
 
+// KustoDatabaseId returns a reference to field kusto_database_id of azurerm_data_share_dataset_kusto_database.
 func (dsdkd dataShareDatasetKustoDatabaseAttributes) KustoDatabaseId() terra.StringValue {
-	return terra.ReferenceString(dsdkd.ref.Append("kusto_database_id"))
+	return terra.ReferenceAsString(dsdkd.ref.Append("kusto_database_id"))
 }
 
+// Name returns a reference to field name of azurerm_data_share_dataset_kusto_database.
 func (dsdkd dataShareDatasetKustoDatabaseAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dsdkd.ref.Append("name"))
+	return terra.ReferenceAsString(dsdkd.ref.Append("name"))
 }
 
+// ShareId returns a reference to field share_id of azurerm_data_share_dataset_kusto_database.
 func (dsdkd dataShareDatasetKustoDatabaseAttributes) ShareId() terra.StringValue {
-	return terra.ReferenceString(dsdkd.ref.Append("share_id"))
+	return terra.ReferenceAsString(dsdkd.ref.Append("share_id"))
 }
 
 func (dsdkd dataShareDatasetKustoDatabaseAttributes) Timeouts() datasharedatasetkustodatabase.TimeoutsAttributes {
-	return terra.ReferenceSingle[datasharedatasetkustodatabase.TimeoutsAttributes](dsdkd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datasharedatasetkustodatabase.TimeoutsAttributes](dsdkd.ref.Append("timeouts"))
 }
 
 type dataShareDatasetKustoDatabaseState struct {

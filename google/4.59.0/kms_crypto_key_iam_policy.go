@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewKmsCryptoKeyIamPolicy creates a new instance of [KmsCryptoKeyIamPolicy].
 func NewKmsCryptoKeyIamPolicy(name string, args KmsCryptoKeyIamPolicyArgs) *KmsCryptoKeyIamPolicy {
 	return &KmsCryptoKeyIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewKmsCryptoKeyIamPolicy(name string, args KmsCryptoKeyIamPolicyArgs) *KmsC
 
 var _ terra.Resource = (*KmsCryptoKeyIamPolicy)(nil)
 
+// KmsCryptoKeyIamPolicy represents the Terraform resource google_kms_crypto_key_iam_policy.
 type KmsCryptoKeyIamPolicy struct {
-	Name  string
-	Args  KmsCryptoKeyIamPolicyArgs
-	state *kmsCryptoKeyIamPolicyState
+	Name      string
+	Args      KmsCryptoKeyIamPolicyArgs
+	state     *kmsCryptoKeyIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [KmsCryptoKeyIamPolicy].
 func (kckip *KmsCryptoKeyIamPolicy) Type() string {
 	return "google_kms_crypto_key_iam_policy"
 }
 
+// LocalName returns the local name for [KmsCryptoKeyIamPolicy].
 func (kckip *KmsCryptoKeyIamPolicy) LocalName() string {
 	return kckip.Name
 }
 
+// Configuration returns the configuration (args) for [KmsCryptoKeyIamPolicy].
 func (kckip *KmsCryptoKeyIamPolicy) Configuration() interface{} {
 	return kckip.Args
 }
 
+// DependOn is used for other resources to depend on [KmsCryptoKeyIamPolicy].
+func (kckip *KmsCryptoKeyIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(kckip)
+}
+
+// Dependencies returns the list of resources [KmsCryptoKeyIamPolicy] depends_on.
+func (kckip *KmsCryptoKeyIamPolicy) Dependencies() terra.Dependencies {
+	return kckip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [KmsCryptoKeyIamPolicy].
+func (kckip *KmsCryptoKeyIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return kckip.Lifecycle
+}
+
+// Attributes returns the attributes for [KmsCryptoKeyIamPolicy].
 func (kckip *KmsCryptoKeyIamPolicy) Attributes() kmsCryptoKeyIamPolicyAttributes {
 	return kmsCryptoKeyIamPolicyAttributes{ref: terra.ReferenceResource(kckip)}
 }
 
+// ImportState imports the given attribute values into [KmsCryptoKeyIamPolicy]'s state.
 func (kckip *KmsCryptoKeyIamPolicy) ImportState(av io.Reader) error {
 	kckip.state = &kmsCryptoKeyIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(kckip.state); err != nil {
@@ -48,10 +72,12 @@ func (kckip *KmsCryptoKeyIamPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [KmsCryptoKeyIamPolicy] has state.
 func (kckip *KmsCryptoKeyIamPolicy) State() (*kmsCryptoKeyIamPolicyState, bool) {
 	return kckip.state, kckip.state != nil
 }
 
+// StateMust returns the state for [KmsCryptoKeyIamPolicy]. Panics if the state is nil.
 func (kckip *KmsCryptoKeyIamPolicy) StateMust() *kmsCryptoKeyIamPolicyState {
 	if kckip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", kckip.Type(), kckip.LocalName()))
@@ -59,10 +85,7 @@ func (kckip *KmsCryptoKeyIamPolicy) StateMust() *kmsCryptoKeyIamPolicyState {
 	return kckip.state
 }
 
-func (kckip *KmsCryptoKeyIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(kckip)
-}
-
+// KmsCryptoKeyIamPolicyArgs contains the configurations for google_kms_crypto_key_iam_policy.
 type KmsCryptoKeyIamPolicyArgs struct {
 	// CryptoKeyId: string, required
 	CryptoKeyId terra.StringValue `hcl:"crypto_key_id,attr" validate:"required"`
@@ -70,27 +93,29 @@ type KmsCryptoKeyIamPolicyArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// PolicyData: string, required
 	PolicyData terra.StringValue `hcl:"policy_data,attr" validate:"required"`
-	// DependsOn contains resources that KmsCryptoKeyIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type kmsCryptoKeyIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// CryptoKeyId returns a reference to field crypto_key_id of google_kms_crypto_key_iam_policy.
 func (kckip kmsCryptoKeyIamPolicyAttributes) CryptoKeyId() terra.StringValue {
-	return terra.ReferenceString(kckip.ref.Append("crypto_key_id"))
+	return terra.ReferenceAsString(kckip.ref.Append("crypto_key_id"))
 }
 
+// Etag returns a reference to field etag of google_kms_crypto_key_iam_policy.
 func (kckip kmsCryptoKeyIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(kckip.ref.Append("etag"))
+	return terra.ReferenceAsString(kckip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_kms_crypto_key_iam_policy.
 func (kckip kmsCryptoKeyIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kckip.ref.Append("id"))
+	return terra.ReferenceAsString(kckip.ref.Append("id"))
 }
 
+// PolicyData returns a reference to field policy_data of google_kms_crypto_key_iam_policy.
 func (kckip kmsCryptoKeyIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(kckip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(kckip.ref.Append("policy_data"))
 }
 
 type kmsCryptoKeyIamPolicyState struct {

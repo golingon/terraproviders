@@ -115,7 +115,7 @@ func (t TargetsAttributes) InternalWithRef(ref terra.Reference) TargetsAttribute
 	return TargetsAttributes{ref: ref}
 }
 
-func (t TargetsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TargetsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -139,7 +139,7 @@ func (tip TaskInvocationParametersAttributes) InternalWithRef(ref terra.Referenc
 	return TaskInvocationParametersAttributes{ref: ref}
 }
 
-func (tip TaskInvocationParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (tip TaskInvocationParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tip.ref.InternalTokens()
 }
 
@@ -171,7 +171,7 @@ func (ap AutomationParametersAttributes) InternalWithRef(ref terra.Reference) Au
 	return AutomationParametersAttributes{ref: ref}
 }
 
-func (ap AutomationParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (ap AutomationParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ap.ref.InternalTokens()
 }
 
@@ -195,7 +195,7 @@ func (p AutomationParametersParameterAttributes) InternalWithRef(ref terra.Refer
 	return AutomationParametersParameterAttributes{ref: ref}
 }
 
-func (p AutomationParametersParameterAttributes) InternalTokens() hclwrite.Tokens {
+func (p AutomationParametersParameterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -219,7 +219,7 @@ func (lp LambdaParametersAttributes) InternalWithRef(ref terra.Reference) Lambda
 	return LambdaParametersAttributes{ref: ref}
 }
 
-func (lp LambdaParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (lp LambdaParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lp.ref.InternalTokens()
 }
 
@@ -247,7 +247,7 @@ func (rcp RunCommandParametersAttributes) InternalWithRef(ref terra.Reference) R
 	return RunCommandParametersAttributes{ref: ref}
 }
 
-func (rcp RunCommandParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (rcp RunCommandParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rcp.ref.InternalTokens()
 }
 
@@ -307,7 +307,7 @@ func (cc CloudwatchConfigAttributes) InternalWithRef(ref terra.Reference) Cloudw
 	return CloudwatchConfigAttributes{ref: ref}
 }
 
-func (cc CloudwatchConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (cc CloudwatchConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -331,7 +331,7 @@ func (nc NotificationConfigAttributes) InternalWithRef(ref terra.Reference) Noti
 	return NotificationConfigAttributes{ref: ref}
 }
 
-func (nc NotificationConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (nc NotificationConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nc.ref.InternalTokens()
 }
 
@@ -359,7 +359,7 @@ func (p RunCommandParametersParameterAttributes) InternalWithRef(ref terra.Refer
 	return RunCommandParametersParameterAttributes{ref: ref}
 }
 
-func (p RunCommandParametersParameterAttributes) InternalTokens() hclwrite.Tokens {
+func (p RunCommandParametersParameterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -383,7 +383,7 @@ func (sfp StepFunctionsParametersAttributes) InternalWithRef(ref terra.Reference
 	return StepFunctionsParametersAttributes{ref: ref}
 }
 
-func (sfp StepFunctionsParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (sfp StepFunctionsParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sfp.ref.InternalTokens()
 }
 

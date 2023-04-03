@@ -37,92 +37,92 @@ type AttestationAuthorityAttributes struct {
 	ref terra.Reference
 }
 
-func (aa AttestationAuthorityAttributes) InternalRef() terra.Reference {
-	return aa.ref
+func (aa AttestationAuthorityAttributes) InternalRef() (terra.Reference, error) {
+	return aa.ref, nil
 }
 
 func (aa AttestationAuthorityAttributes) InternalWithRef(ref terra.Reference) AttestationAuthorityAttributes {
 	return AttestationAuthorityAttributes{ref: ref}
 }
 
-func (aa AttestationAuthorityAttributes) InternalTokens() hclwrite.Tokens {
+func (aa AttestationAuthorityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aa.ref.InternalTokens()
 }
 
 func (aa AttestationAuthorityAttributes) Hint() terra.ListValue[HintAttributes] {
-	return terra.ReferenceList[HintAttributes](aa.ref.Append("hint"))
+	return terra.ReferenceAsList[HintAttributes](aa.ref.Append("hint"))
 }
 
 type HintAttributes struct {
 	ref terra.Reference
 }
 
-func (h HintAttributes) InternalRef() terra.Reference {
-	return h.ref
+func (h HintAttributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h HintAttributes) InternalWithRef(ref terra.Reference) HintAttributes {
 	return HintAttributes{ref: ref}
 }
 
-func (h HintAttributes) InternalTokens() hclwrite.Tokens {
+func (h HintAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 
 func (h HintAttributes) HumanReadableName() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("human_readable_name"))
+	return terra.ReferenceAsString(h.ref.Append("human_readable_name"))
 }
 
 type RelatedUrlAttributes struct {
 	ref terra.Reference
 }
 
-func (ru RelatedUrlAttributes) InternalRef() terra.Reference {
-	return ru.ref
+func (ru RelatedUrlAttributes) InternalRef() (terra.Reference, error) {
+	return ru.ref, nil
 }
 
 func (ru RelatedUrlAttributes) InternalWithRef(ref terra.Reference) RelatedUrlAttributes {
 	return RelatedUrlAttributes{ref: ref}
 }
 
-func (ru RelatedUrlAttributes) InternalTokens() hclwrite.Tokens {
+func (ru RelatedUrlAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ru.ref.InternalTokens()
 }
 
 func (ru RelatedUrlAttributes) Label() terra.StringValue {
-	return terra.ReferenceString(ru.ref.Append("label"))
+	return terra.ReferenceAsString(ru.ref.Append("label"))
 }
 
 func (ru RelatedUrlAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(ru.ref.Append("url"))
+	return terra.ReferenceAsString(ru.ref.Append("url"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AttestationAuthorityState struct {

@@ -59,136 +59,136 @@ type PermissionsAttributes struct {
 	ref terra.Reference
 }
 
-func (p PermissionsAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p PermissionsAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p PermissionsAttributes) InternalWithRef(ref terra.Reference) PermissionsAttributes {
 	return PermissionsAttributes{ref: ref}
 }
 
-func (p PermissionsAttributes) InternalTokens() hclwrite.Tokens {
+func (p PermissionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
 func (p PermissionsAttributes) Add() terra.BoolValue {
-	return terra.ReferenceBool(p.ref.Append("add"))
+	return terra.ReferenceAsBool(p.ref.Append("add"))
 }
 
 func (p PermissionsAttributes) Create() terra.BoolValue {
-	return terra.ReferenceBool(p.ref.Append("create"))
+	return terra.ReferenceAsBool(p.ref.Append("create"))
 }
 
 func (p PermissionsAttributes) Delete() terra.BoolValue {
-	return terra.ReferenceBool(p.ref.Append("delete"))
+	return terra.ReferenceAsBool(p.ref.Append("delete"))
 }
 
 func (p PermissionsAttributes) Filter() terra.BoolValue {
-	return terra.ReferenceBool(p.ref.Append("filter"))
+	return terra.ReferenceAsBool(p.ref.Append("filter"))
 }
 
 func (p PermissionsAttributes) List() terra.BoolValue {
-	return terra.ReferenceBool(p.ref.Append("list"))
+	return terra.ReferenceAsBool(p.ref.Append("list"))
 }
 
 func (p PermissionsAttributes) Process() terra.BoolValue {
-	return terra.ReferenceBool(p.ref.Append("process"))
+	return terra.ReferenceAsBool(p.ref.Append("process"))
 }
 
 func (p PermissionsAttributes) Read() terra.BoolValue {
-	return terra.ReferenceBool(p.ref.Append("read"))
+	return terra.ReferenceAsBool(p.ref.Append("read"))
 }
 
 func (p PermissionsAttributes) Tag() terra.BoolValue {
-	return terra.ReferenceBool(p.ref.Append("tag"))
+	return terra.ReferenceAsBool(p.ref.Append("tag"))
 }
 
 func (p PermissionsAttributes) Update() terra.BoolValue {
-	return terra.ReferenceBool(p.ref.Append("update"))
+	return terra.ReferenceAsBool(p.ref.Append("update"))
 }
 
 func (p PermissionsAttributes) Write() terra.BoolValue {
-	return terra.ReferenceBool(p.ref.Append("write"))
+	return terra.ReferenceAsBool(p.ref.Append("write"))
 }
 
 type ResourceTypesAttributes struct {
 	ref terra.Reference
 }
 
-func (rt ResourceTypesAttributes) InternalRef() terra.Reference {
-	return rt.ref
+func (rt ResourceTypesAttributes) InternalRef() (terra.Reference, error) {
+	return rt.ref, nil
 }
 
 func (rt ResourceTypesAttributes) InternalWithRef(ref terra.Reference) ResourceTypesAttributes {
 	return ResourceTypesAttributes{ref: ref}
 }
 
-func (rt ResourceTypesAttributes) InternalTokens() hclwrite.Tokens {
+func (rt ResourceTypesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rt.ref.InternalTokens()
 }
 
 func (rt ResourceTypesAttributes) Container() terra.BoolValue {
-	return terra.ReferenceBool(rt.ref.Append("container"))
+	return terra.ReferenceAsBool(rt.ref.Append("container"))
 }
 
 func (rt ResourceTypesAttributes) Object() terra.BoolValue {
-	return terra.ReferenceBool(rt.ref.Append("object"))
+	return terra.ReferenceAsBool(rt.ref.Append("object"))
 }
 
 func (rt ResourceTypesAttributes) Service() terra.BoolValue {
-	return terra.ReferenceBool(rt.ref.Append("service"))
+	return terra.ReferenceAsBool(rt.ref.Append("service"))
 }
 
 type ServicesAttributes struct {
 	ref terra.Reference
 }
 
-func (s ServicesAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ServicesAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ServicesAttributes) InternalWithRef(ref terra.Reference) ServicesAttributes {
 	return ServicesAttributes{ref: ref}
 }
 
-func (s ServicesAttributes) InternalTokens() hclwrite.Tokens {
+func (s ServicesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s ServicesAttributes) Blob() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("blob"))
+	return terra.ReferenceAsBool(s.ref.Append("blob"))
 }
 
 func (s ServicesAttributes) File() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("file"))
+	return terra.ReferenceAsBool(s.ref.Append("file"))
 }
 
 func (s ServicesAttributes) Queue() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("queue"))
+	return terra.ReferenceAsBool(s.ref.Append("queue"))
 }
 
 func (s ServicesAttributes) Table() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("table"))
+	return terra.ReferenceAsBool(s.ref.Append("table"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type PermissionsState struct {

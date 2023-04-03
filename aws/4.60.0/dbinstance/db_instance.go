@@ -61,7 +61,7 @@ func (le ListenerEndpointAttributes) InternalWithRef(ref terra.Reference) Listen
 	return ListenerEndpointAttributes{ref: ref}
 }
 
-func (le ListenerEndpointAttributes) InternalTokens() hclwrite.Tokens {
+func (le ListenerEndpointAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return le.ref.InternalTokens()
 }
 
@@ -89,7 +89,7 @@ func (bgu BlueGreenUpdateAttributes) InternalWithRef(ref terra.Reference) BlueGr
 	return BlueGreenUpdateAttributes{ref: ref}
 }
 
-func (bgu BlueGreenUpdateAttributes) InternalTokens() hclwrite.Tokens {
+func (bgu BlueGreenUpdateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bgu.ref.InternalTokens()
 }
 
@@ -109,7 +109,7 @@ func (rtpit RestoreToPointInTimeAttributes) InternalWithRef(ref terra.Reference)
 	return RestoreToPointInTimeAttributes{ref: ref}
 }
 
-func (rtpit RestoreToPointInTimeAttributes) InternalTokens() hclwrite.Tokens {
+func (rtpit RestoreToPointInTimeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rtpit.ref.InternalTokens()
 }
 
@@ -145,7 +145,7 @@ func (si S3ImportAttributes) InternalWithRef(ref terra.Reference) S3ImportAttrib
 	return S3ImportAttributes{ref: ref}
 }
 
-func (si S3ImportAttributes) InternalTokens() hclwrite.Tokens {
+func (si S3ImportAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return si.ref.InternalTokens()
 }
 
@@ -181,7 +181,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

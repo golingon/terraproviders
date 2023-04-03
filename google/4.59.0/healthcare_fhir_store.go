@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewHealthcareFhirStore creates a new instance of [HealthcareFhirStore].
 func NewHealthcareFhirStore(name string, args HealthcareFhirStoreArgs) *HealthcareFhirStore {
 	return &HealthcareFhirStore{
 		Args: args,
@@ -19,28 +20,51 @@ func NewHealthcareFhirStore(name string, args HealthcareFhirStoreArgs) *Healthca
 
 var _ terra.Resource = (*HealthcareFhirStore)(nil)
 
+// HealthcareFhirStore represents the Terraform resource google_healthcare_fhir_store.
 type HealthcareFhirStore struct {
-	Name  string
-	Args  HealthcareFhirStoreArgs
-	state *healthcareFhirStoreState
+	Name      string
+	Args      HealthcareFhirStoreArgs
+	state     *healthcareFhirStoreState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [HealthcareFhirStore].
 func (hfs *HealthcareFhirStore) Type() string {
 	return "google_healthcare_fhir_store"
 }
 
+// LocalName returns the local name for [HealthcareFhirStore].
 func (hfs *HealthcareFhirStore) LocalName() string {
 	return hfs.Name
 }
 
+// Configuration returns the configuration (args) for [HealthcareFhirStore].
 func (hfs *HealthcareFhirStore) Configuration() interface{} {
 	return hfs.Args
 }
 
+// DependOn is used for other resources to depend on [HealthcareFhirStore].
+func (hfs *HealthcareFhirStore) DependOn() terra.Reference {
+	return terra.ReferenceResource(hfs)
+}
+
+// Dependencies returns the list of resources [HealthcareFhirStore] depends_on.
+func (hfs *HealthcareFhirStore) Dependencies() terra.Dependencies {
+	return hfs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [HealthcareFhirStore].
+func (hfs *HealthcareFhirStore) LifecycleManagement() *terra.Lifecycle {
+	return hfs.Lifecycle
+}
+
+// Attributes returns the attributes for [HealthcareFhirStore].
 func (hfs *HealthcareFhirStore) Attributes() healthcareFhirStoreAttributes {
 	return healthcareFhirStoreAttributes{ref: terra.ReferenceResource(hfs)}
 }
 
+// ImportState imports the given attribute values into [HealthcareFhirStore]'s state.
 func (hfs *HealthcareFhirStore) ImportState(av io.Reader) error {
 	hfs.state = &healthcareFhirStoreState{}
 	if err := json.NewDecoder(av).Decode(hfs.state); err != nil {
@@ -49,10 +73,12 @@ func (hfs *HealthcareFhirStore) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [HealthcareFhirStore] has state.
 func (hfs *HealthcareFhirStore) State() (*healthcareFhirStoreState, bool) {
 	return hfs.state, hfs.state != nil
 }
 
+// StateMust returns the state for [HealthcareFhirStore]. Panics if the state is nil.
 func (hfs *HealthcareFhirStore) StateMust() *healthcareFhirStoreState {
 	if hfs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", hfs.Type(), hfs.LocalName()))
@@ -60,10 +86,7 @@ func (hfs *HealthcareFhirStore) StateMust() *healthcareFhirStoreState {
 	return hfs.state
 }
 
-func (hfs *HealthcareFhirStore) DependOn() terra.Reference {
-	return terra.ReferenceResource(hfs)
-}
-
+// HealthcareFhirStoreArgs contains the configurations for google_healthcare_fhir_store.
 type HealthcareFhirStoreArgs struct {
 	// Dataset: string, required
 	Dataset terra.StringValue `hcl:"dataset,attr" validate:"required"`
@@ -89,63 +112,71 @@ type HealthcareFhirStoreArgs struct {
 	StreamConfigs []healthcarefhirstore.StreamConfigs `hcl:"stream_configs,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *healthcarefhirstore.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that HealthcareFhirStore depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type healthcareFhirStoreAttributes struct {
 	ref terra.Reference
 }
 
+// Dataset returns a reference to field dataset of google_healthcare_fhir_store.
 func (hfs healthcareFhirStoreAttributes) Dataset() terra.StringValue {
-	return terra.ReferenceString(hfs.ref.Append("dataset"))
+	return terra.ReferenceAsString(hfs.ref.Append("dataset"))
 }
 
+// DisableReferentialIntegrity returns a reference to field disable_referential_integrity of google_healthcare_fhir_store.
 func (hfs healthcareFhirStoreAttributes) DisableReferentialIntegrity() terra.BoolValue {
-	return terra.ReferenceBool(hfs.ref.Append("disable_referential_integrity"))
+	return terra.ReferenceAsBool(hfs.ref.Append("disable_referential_integrity"))
 }
 
+// DisableResourceVersioning returns a reference to field disable_resource_versioning of google_healthcare_fhir_store.
 func (hfs healthcareFhirStoreAttributes) DisableResourceVersioning() terra.BoolValue {
-	return terra.ReferenceBool(hfs.ref.Append("disable_resource_versioning"))
+	return terra.ReferenceAsBool(hfs.ref.Append("disable_resource_versioning"))
 }
 
+// EnableHistoryImport returns a reference to field enable_history_import of google_healthcare_fhir_store.
 func (hfs healthcareFhirStoreAttributes) EnableHistoryImport() terra.BoolValue {
-	return terra.ReferenceBool(hfs.ref.Append("enable_history_import"))
+	return terra.ReferenceAsBool(hfs.ref.Append("enable_history_import"))
 }
 
+// EnableUpdateCreate returns a reference to field enable_update_create of google_healthcare_fhir_store.
 func (hfs healthcareFhirStoreAttributes) EnableUpdateCreate() terra.BoolValue {
-	return terra.ReferenceBool(hfs.ref.Append("enable_update_create"))
+	return terra.ReferenceAsBool(hfs.ref.Append("enable_update_create"))
 }
 
+// Id returns a reference to field id of google_healthcare_fhir_store.
 func (hfs healthcareFhirStoreAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(hfs.ref.Append("id"))
+	return terra.ReferenceAsString(hfs.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_healthcare_fhir_store.
 func (hfs healthcareFhirStoreAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](hfs.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](hfs.ref.Append("labels"))
 }
 
+// Name returns a reference to field name of google_healthcare_fhir_store.
 func (hfs healthcareFhirStoreAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(hfs.ref.Append("name"))
+	return terra.ReferenceAsString(hfs.ref.Append("name"))
 }
 
+// SelfLink returns a reference to field self_link of google_healthcare_fhir_store.
 func (hfs healthcareFhirStoreAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(hfs.ref.Append("self_link"))
+	return terra.ReferenceAsString(hfs.ref.Append("self_link"))
 }
 
+// Version returns a reference to field version of google_healthcare_fhir_store.
 func (hfs healthcareFhirStoreAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(hfs.ref.Append("version"))
+	return terra.ReferenceAsString(hfs.ref.Append("version"))
 }
 
 func (hfs healthcareFhirStoreAttributes) NotificationConfig() terra.ListValue[healthcarefhirstore.NotificationConfigAttributes] {
-	return terra.ReferenceList[healthcarefhirstore.NotificationConfigAttributes](hfs.ref.Append("notification_config"))
+	return terra.ReferenceAsList[healthcarefhirstore.NotificationConfigAttributes](hfs.ref.Append("notification_config"))
 }
 
 func (hfs healthcareFhirStoreAttributes) StreamConfigs() terra.ListValue[healthcarefhirstore.StreamConfigsAttributes] {
-	return terra.ReferenceList[healthcarefhirstore.StreamConfigsAttributes](hfs.ref.Append("stream_configs"))
+	return terra.ReferenceAsList[healthcarefhirstore.StreamConfigsAttributes](hfs.ref.Append("stream_configs"))
 }
 
 func (hfs healthcareFhirStoreAttributes) Timeouts() healthcarefhirstore.TimeoutsAttributes {
-	return terra.ReferenceSingle[healthcarefhirstore.TimeoutsAttributes](hfs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[healthcarefhirstore.TimeoutsAttributes](hfs.ref.Append("timeouts"))
 }
 
 type healthcareFhirStoreState struct {

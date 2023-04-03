@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNotebooksInstanceIamBinding creates a new instance of [NotebooksInstanceIamBinding].
 func NewNotebooksInstanceIamBinding(name string, args NotebooksInstanceIamBindingArgs) *NotebooksInstanceIamBinding {
 	return &NotebooksInstanceIamBinding{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNotebooksInstanceIamBinding(name string, args NotebooksInstanceIamBindin
 
 var _ terra.Resource = (*NotebooksInstanceIamBinding)(nil)
 
+// NotebooksInstanceIamBinding represents the Terraform resource google_notebooks_instance_iam_binding.
 type NotebooksInstanceIamBinding struct {
-	Name  string
-	Args  NotebooksInstanceIamBindingArgs
-	state *notebooksInstanceIamBindingState
+	Name      string
+	Args      NotebooksInstanceIamBindingArgs
+	state     *notebooksInstanceIamBindingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NotebooksInstanceIamBinding].
 func (niib *NotebooksInstanceIamBinding) Type() string {
 	return "google_notebooks_instance_iam_binding"
 }
 
+// LocalName returns the local name for [NotebooksInstanceIamBinding].
 func (niib *NotebooksInstanceIamBinding) LocalName() string {
 	return niib.Name
 }
 
+// Configuration returns the configuration (args) for [NotebooksInstanceIamBinding].
 func (niib *NotebooksInstanceIamBinding) Configuration() interface{} {
 	return niib.Args
 }
 
+// DependOn is used for other resources to depend on [NotebooksInstanceIamBinding].
+func (niib *NotebooksInstanceIamBinding) DependOn() terra.Reference {
+	return terra.ReferenceResource(niib)
+}
+
+// Dependencies returns the list of resources [NotebooksInstanceIamBinding] depends_on.
+func (niib *NotebooksInstanceIamBinding) Dependencies() terra.Dependencies {
+	return niib.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NotebooksInstanceIamBinding].
+func (niib *NotebooksInstanceIamBinding) LifecycleManagement() *terra.Lifecycle {
+	return niib.Lifecycle
+}
+
+// Attributes returns the attributes for [NotebooksInstanceIamBinding].
 func (niib *NotebooksInstanceIamBinding) Attributes() notebooksInstanceIamBindingAttributes {
 	return notebooksInstanceIamBindingAttributes{ref: terra.ReferenceResource(niib)}
 }
 
+// ImportState imports the given attribute values into [NotebooksInstanceIamBinding]'s state.
 func (niib *NotebooksInstanceIamBinding) ImportState(av io.Reader) error {
 	niib.state = &notebooksInstanceIamBindingState{}
 	if err := json.NewDecoder(av).Decode(niib.state); err != nil {
@@ -49,10 +73,12 @@ func (niib *NotebooksInstanceIamBinding) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NotebooksInstanceIamBinding] has state.
 func (niib *NotebooksInstanceIamBinding) State() (*notebooksInstanceIamBindingState, bool) {
 	return niib.state, niib.state != nil
 }
 
+// StateMust returns the state for [NotebooksInstanceIamBinding]. Panics if the state is nil.
 func (niib *NotebooksInstanceIamBinding) StateMust() *notebooksInstanceIamBindingState {
 	if niib.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", niib.Type(), niib.LocalName()))
@@ -60,10 +86,7 @@ func (niib *NotebooksInstanceIamBinding) StateMust() *notebooksInstanceIamBindin
 	return niib.state
 }
 
-func (niib *NotebooksInstanceIamBinding) DependOn() terra.Reference {
-	return terra.ReferenceResource(niib)
-}
-
+// NotebooksInstanceIamBindingArgs contains the configurations for google_notebooks_instance_iam_binding.
 type NotebooksInstanceIamBindingArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,43 +102,48 @@ type NotebooksInstanceIamBindingArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *notebooksinstanceiambinding.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that NotebooksInstanceIamBinding depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type notebooksInstanceIamBindingAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_notebooks_instance_iam_binding.
 func (niib notebooksInstanceIamBindingAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(niib.ref.Append("etag"))
+	return terra.ReferenceAsString(niib.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_notebooks_instance_iam_binding.
 func (niib notebooksInstanceIamBindingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(niib.ref.Append("id"))
+	return terra.ReferenceAsString(niib.ref.Append("id"))
 }
 
+// InstanceName returns a reference to field instance_name of google_notebooks_instance_iam_binding.
 func (niib notebooksInstanceIamBindingAttributes) InstanceName() terra.StringValue {
-	return terra.ReferenceString(niib.ref.Append("instance_name"))
+	return terra.ReferenceAsString(niib.ref.Append("instance_name"))
 }
 
+// Location returns a reference to field location of google_notebooks_instance_iam_binding.
 func (niib notebooksInstanceIamBindingAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(niib.ref.Append("location"))
+	return terra.ReferenceAsString(niib.ref.Append("location"))
 }
 
+// Members returns a reference to field members of google_notebooks_instance_iam_binding.
 func (niib notebooksInstanceIamBindingAttributes) Members() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](niib.ref.Append("members"))
+	return terra.ReferenceAsSet[terra.StringValue](niib.ref.Append("members"))
 }
 
+// Project returns a reference to field project of google_notebooks_instance_iam_binding.
 func (niib notebooksInstanceIamBindingAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(niib.ref.Append("project"))
+	return terra.ReferenceAsString(niib.ref.Append("project"))
 }
 
+// Role returns a reference to field role of google_notebooks_instance_iam_binding.
 func (niib notebooksInstanceIamBindingAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(niib.ref.Append("role"))
+	return terra.ReferenceAsString(niib.ref.Append("role"))
 }
 
 func (niib notebooksInstanceIamBindingAttributes) Condition() terra.ListValue[notebooksinstanceiambinding.ConditionAttributes] {
-	return terra.ReferenceList[notebooksinstanceiambinding.ConditionAttributes](niib.ref.Append("condition"))
+	return terra.ReferenceAsList[notebooksinstanceiambinding.ConditionAttributes](niib.ref.Append("condition"))
 }
 
 type notebooksInstanceIamBindingState struct {

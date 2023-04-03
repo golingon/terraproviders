@@ -23,7 +23,7 @@ func (mc MediaConcurrenciesAttributes) InternalWithRef(ref terra.Reference) Medi
 	return MediaConcurrenciesAttributes{ref: ref}
 }
 
-func (mc MediaConcurrenciesAttributes) InternalTokens() hclwrite.Tokens {
+func (mc MediaConcurrenciesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mc.ref.InternalTokens()
 }
 
@@ -47,7 +47,7 @@ func (qc QueueConfigsAttributes) InternalWithRef(ref terra.Reference) QueueConfi
 	return QueueConfigsAttributes{ref: ref}
 }
 
-func (qc QueueConfigsAttributes) InternalTokens() hclwrite.Tokens {
+func (qc QueueConfigsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return qc.ref.InternalTokens()
 }
 

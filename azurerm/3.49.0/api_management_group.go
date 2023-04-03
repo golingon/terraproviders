@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApiManagementGroup creates a new instance of [ApiManagementGroup].
 func NewApiManagementGroup(name string, args ApiManagementGroupArgs) *ApiManagementGroup {
 	return &ApiManagementGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApiManagementGroup(name string, args ApiManagementGroupArgs) *ApiManagem
 
 var _ terra.Resource = (*ApiManagementGroup)(nil)
 
+// ApiManagementGroup represents the Terraform resource azurerm_api_management_group.
 type ApiManagementGroup struct {
-	Name  string
-	Args  ApiManagementGroupArgs
-	state *apiManagementGroupState
+	Name      string
+	Args      ApiManagementGroupArgs
+	state     *apiManagementGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiManagementGroup].
 func (amg *ApiManagementGroup) Type() string {
 	return "azurerm_api_management_group"
 }
 
+// LocalName returns the local name for [ApiManagementGroup].
 func (amg *ApiManagementGroup) LocalName() string {
 	return amg.Name
 }
 
+// Configuration returns the configuration (args) for [ApiManagementGroup].
 func (amg *ApiManagementGroup) Configuration() interface{} {
 	return amg.Args
 }
 
+// DependOn is used for other resources to depend on [ApiManagementGroup].
+func (amg *ApiManagementGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(amg)
+}
+
+// Dependencies returns the list of resources [ApiManagementGroup] depends_on.
+func (amg *ApiManagementGroup) Dependencies() terra.Dependencies {
+	return amg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiManagementGroup].
+func (amg *ApiManagementGroup) LifecycleManagement() *terra.Lifecycle {
+	return amg.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiManagementGroup].
 func (amg *ApiManagementGroup) Attributes() apiManagementGroupAttributes {
 	return apiManagementGroupAttributes{ref: terra.ReferenceResource(amg)}
 }
 
+// ImportState imports the given attribute values into [ApiManagementGroup]'s state.
 func (amg *ApiManagementGroup) ImportState(av io.Reader) error {
 	amg.state = &apiManagementGroupState{}
 	if err := json.NewDecoder(av).Decode(amg.state); err != nil {
@@ -49,10 +73,12 @@ func (amg *ApiManagementGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiManagementGroup] has state.
 func (amg *ApiManagementGroup) State() (*apiManagementGroupState, bool) {
 	return amg.state, amg.state != nil
 }
 
+// StateMust returns the state for [ApiManagementGroup]. Panics if the state is nil.
 func (amg *ApiManagementGroup) StateMust() *apiManagementGroupState {
 	if amg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", amg.Type(), amg.LocalName()))
@@ -60,10 +86,7 @@ func (amg *ApiManagementGroup) StateMust() *apiManagementGroupState {
 	return amg.state
 }
 
-func (amg *ApiManagementGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(amg)
-}
-
+// ApiManagementGroupArgs contains the configurations for azurerm_api_management_group.
 type ApiManagementGroupArgs struct {
 	// ApiManagementName: string, required
 	ApiManagementName terra.StringValue `hcl:"api_management_name,attr" validate:"required"`
@@ -83,47 +106,53 @@ type ApiManagementGroupArgs struct {
 	Type terra.StringValue `hcl:"type,attr"`
 	// Timeouts: optional
 	Timeouts *apimanagementgroup.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ApiManagementGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiManagementGroupAttributes struct {
 	ref terra.Reference
 }
 
+// ApiManagementName returns a reference to field api_management_name of azurerm_api_management_group.
 func (amg apiManagementGroupAttributes) ApiManagementName() terra.StringValue {
-	return terra.ReferenceString(amg.ref.Append("api_management_name"))
+	return terra.ReferenceAsString(amg.ref.Append("api_management_name"))
 }
 
+// Description returns a reference to field description of azurerm_api_management_group.
 func (amg apiManagementGroupAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(amg.ref.Append("description"))
+	return terra.ReferenceAsString(amg.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_api_management_group.
 func (amg apiManagementGroupAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(amg.ref.Append("display_name"))
+	return terra.ReferenceAsString(amg.ref.Append("display_name"))
 }
 
+// ExternalId returns a reference to field external_id of azurerm_api_management_group.
 func (amg apiManagementGroupAttributes) ExternalId() terra.StringValue {
-	return terra.ReferenceString(amg.ref.Append("external_id"))
+	return terra.ReferenceAsString(amg.ref.Append("external_id"))
 }
 
+// Id returns a reference to field id of azurerm_api_management_group.
 func (amg apiManagementGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(amg.ref.Append("id"))
+	return terra.ReferenceAsString(amg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_api_management_group.
 func (amg apiManagementGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(amg.ref.Append("name"))
+	return terra.ReferenceAsString(amg.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_api_management_group.
 func (amg apiManagementGroupAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(amg.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(amg.ref.Append("resource_group_name"))
 }
 
+// Type returns a reference to field type of azurerm_api_management_group.
 func (amg apiManagementGroupAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(amg.ref.Append("type"))
+	return terra.ReferenceAsString(amg.ref.Append("type"))
 }
 
 func (amg apiManagementGroupAttributes) Timeouts() apimanagementgroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[apimanagementgroup.TimeoutsAttributes](amg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[apimanagementgroup.TimeoutsAttributes](amg.ref.Append("timeouts"))
 }
 
 type apiManagementGroupState struct {

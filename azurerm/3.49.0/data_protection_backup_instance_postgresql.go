@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataProtectionBackupInstancePostgresql creates a new instance of [DataProtectionBackupInstancePostgresql].
 func NewDataProtectionBackupInstancePostgresql(name string, args DataProtectionBackupInstancePostgresqlArgs) *DataProtectionBackupInstancePostgresql {
 	return &DataProtectionBackupInstancePostgresql{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataProtectionBackupInstancePostgresql(name string, args DataProtectionB
 
 var _ terra.Resource = (*DataProtectionBackupInstancePostgresql)(nil)
 
+// DataProtectionBackupInstancePostgresql represents the Terraform resource azurerm_data_protection_backup_instance_postgresql.
 type DataProtectionBackupInstancePostgresql struct {
-	Name  string
-	Args  DataProtectionBackupInstancePostgresqlArgs
-	state *dataProtectionBackupInstancePostgresqlState
+	Name      string
+	Args      DataProtectionBackupInstancePostgresqlArgs
+	state     *dataProtectionBackupInstancePostgresqlState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataProtectionBackupInstancePostgresql].
 func (dpbip *DataProtectionBackupInstancePostgresql) Type() string {
 	return "azurerm_data_protection_backup_instance_postgresql"
 }
 
+// LocalName returns the local name for [DataProtectionBackupInstancePostgresql].
 func (dpbip *DataProtectionBackupInstancePostgresql) LocalName() string {
 	return dpbip.Name
 }
 
+// Configuration returns the configuration (args) for [DataProtectionBackupInstancePostgresql].
 func (dpbip *DataProtectionBackupInstancePostgresql) Configuration() interface{} {
 	return dpbip.Args
 }
 
+// DependOn is used for other resources to depend on [DataProtectionBackupInstancePostgresql].
+func (dpbip *DataProtectionBackupInstancePostgresql) DependOn() terra.Reference {
+	return terra.ReferenceResource(dpbip)
+}
+
+// Dependencies returns the list of resources [DataProtectionBackupInstancePostgresql] depends_on.
+func (dpbip *DataProtectionBackupInstancePostgresql) Dependencies() terra.Dependencies {
+	return dpbip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataProtectionBackupInstancePostgresql].
+func (dpbip *DataProtectionBackupInstancePostgresql) LifecycleManagement() *terra.Lifecycle {
+	return dpbip.Lifecycle
+}
+
+// Attributes returns the attributes for [DataProtectionBackupInstancePostgresql].
 func (dpbip *DataProtectionBackupInstancePostgresql) Attributes() dataProtectionBackupInstancePostgresqlAttributes {
 	return dataProtectionBackupInstancePostgresqlAttributes{ref: terra.ReferenceResource(dpbip)}
 }
 
+// ImportState imports the given attribute values into [DataProtectionBackupInstancePostgresql]'s state.
 func (dpbip *DataProtectionBackupInstancePostgresql) ImportState(av io.Reader) error {
 	dpbip.state = &dataProtectionBackupInstancePostgresqlState{}
 	if err := json.NewDecoder(av).Decode(dpbip.state); err != nil {
@@ -49,10 +73,12 @@ func (dpbip *DataProtectionBackupInstancePostgresql) ImportState(av io.Reader) e
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataProtectionBackupInstancePostgresql] has state.
 func (dpbip *DataProtectionBackupInstancePostgresql) State() (*dataProtectionBackupInstancePostgresqlState, bool) {
 	return dpbip.state, dpbip.state != nil
 }
 
+// StateMust returns the state for [DataProtectionBackupInstancePostgresql]. Panics if the state is nil.
 func (dpbip *DataProtectionBackupInstancePostgresql) StateMust() *dataProtectionBackupInstancePostgresqlState {
 	if dpbip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dpbip.Type(), dpbip.LocalName()))
@@ -60,10 +86,7 @@ func (dpbip *DataProtectionBackupInstancePostgresql) StateMust() *dataProtection
 	return dpbip.state
 }
 
-func (dpbip *DataProtectionBackupInstancePostgresql) DependOn() terra.Reference {
-	return terra.ReferenceResource(dpbip)
-}
-
+// DataProtectionBackupInstancePostgresqlArgs contains the configurations for azurerm_data_protection_backup_instance_postgresql.
 type DataProtectionBackupInstancePostgresqlArgs struct {
 	// BackupPolicyId: string, required
 	BackupPolicyId terra.StringValue `hcl:"backup_policy_id,attr" validate:"required"`
@@ -81,43 +104,48 @@ type DataProtectionBackupInstancePostgresqlArgs struct {
 	VaultId terra.StringValue `hcl:"vault_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *dataprotectionbackupinstancepostgresql.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataProtectionBackupInstancePostgresql depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataProtectionBackupInstancePostgresqlAttributes struct {
 	ref terra.Reference
 }
 
+// BackupPolicyId returns a reference to field backup_policy_id of azurerm_data_protection_backup_instance_postgresql.
 func (dpbip dataProtectionBackupInstancePostgresqlAttributes) BackupPolicyId() terra.StringValue {
-	return terra.ReferenceString(dpbip.ref.Append("backup_policy_id"))
+	return terra.ReferenceAsString(dpbip.ref.Append("backup_policy_id"))
 }
 
+// DatabaseCredentialKeyVaultSecretId returns a reference to field database_credential_key_vault_secret_id of azurerm_data_protection_backup_instance_postgresql.
 func (dpbip dataProtectionBackupInstancePostgresqlAttributes) DatabaseCredentialKeyVaultSecretId() terra.StringValue {
-	return terra.ReferenceString(dpbip.ref.Append("database_credential_key_vault_secret_id"))
+	return terra.ReferenceAsString(dpbip.ref.Append("database_credential_key_vault_secret_id"))
 }
 
+// DatabaseId returns a reference to field database_id of azurerm_data_protection_backup_instance_postgresql.
 func (dpbip dataProtectionBackupInstancePostgresqlAttributes) DatabaseId() terra.StringValue {
-	return terra.ReferenceString(dpbip.ref.Append("database_id"))
+	return terra.ReferenceAsString(dpbip.ref.Append("database_id"))
 }
 
+// Id returns a reference to field id of azurerm_data_protection_backup_instance_postgresql.
 func (dpbip dataProtectionBackupInstancePostgresqlAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dpbip.ref.Append("id"))
+	return terra.ReferenceAsString(dpbip.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_data_protection_backup_instance_postgresql.
 func (dpbip dataProtectionBackupInstancePostgresqlAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(dpbip.ref.Append("location"))
+	return terra.ReferenceAsString(dpbip.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_data_protection_backup_instance_postgresql.
 func (dpbip dataProtectionBackupInstancePostgresqlAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dpbip.ref.Append("name"))
+	return terra.ReferenceAsString(dpbip.ref.Append("name"))
 }
 
+// VaultId returns a reference to field vault_id of azurerm_data_protection_backup_instance_postgresql.
 func (dpbip dataProtectionBackupInstancePostgresqlAttributes) VaultId() terra.StringValue {
-	return terra.ReferenceString(dpbip.ref.Append("vault_id"))
+	return terra.ReferenceAsString(dpbip.ref.Append("vault_id"))
 }
 
 func (dpbip dataProtectionBackupInstancePostgresqlAttributes) Timeouts() dataprotectionbackupinstancepostgresql.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataprotectionbackupinstancepostgresql.TimeoutsAttributes](dpbip.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataprotectionbackupinstancepostgresql.TimeoutsAttributes](dpbip.ref.Append("timeouts"))
 }
 
 type dataProtectionBackupInstancePostgresqlState struct {

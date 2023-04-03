@@ -28,7 +28,7 @@ func (pu PosixUserAttributes) InternalWithRef(ref terra.Reference) PosixUserAttr
 	return PosixUserAttributes{ref: ref}
 }
 
-func (pu PosixUserAttributes) InternalTokens() hclwrite.Tokens {
+func (pu PosixUserAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pu.ref.InternalTokens()
 }
 
@@ -56,7 +56,7 @@ func (rd RootDirectoryAttributes) InternalWithRef(ref terra.Reference) RootDirec
 	return RootDirectoryAttributes{ref: ref}
 }
 
-func (rd RootDirectoryAttributes) InternalTokens() hclwrite.Tokens {
+func (rd RootDirectoryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rd.ref.InternalTokens()
 }
 
@@ -80,7 +80,7 @@ func (ci CreationInfoAttributes) InternalWithRef(ref terra.Reference) CreationIn
 	return CreationInfoAttributes{ref: ref}
 }
 
-func (ci CreationInfoAttributes) InternalTokens() hclwrite.Tokens {
+func (ci CreationInfoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ci.ref.InternalTokens()
 }
 

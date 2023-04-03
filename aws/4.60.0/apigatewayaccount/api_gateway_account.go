@@ -21,7 +21,7 @@ func (ts ThrottleSettingsAttributes) InternalWithRef(ref terra.Reference) Thrott
 	return ThrottleSettingsAttributes{ref: ref}
 }
 
-func (ts ThrottleSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ts ThrottleSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ts.ref.InternalTokens()
 }
 

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMonitorSmartDetectorAlertRule creates a new instance of [MonitorSmartDetectorAlertRule].
 func NewMonitorSmartDetectorAlertRule(name string, args MonitorSmartDetectorAlertRuleArgs) *MonitorSmartDetectorAlertRule {
 	return &MonitorSmartDetectorAlertRule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMonitorSmartDetectorAlertRule(name string, args MonitorSmartDetectorAler
 
 var _ terra.Resource = (*MonitorSmartDetectorAlertRule)(nil)
 
+// MonitorSmartDetectorAlertRule represents the Terraform resource azurerm_monitor_smart_detector_alert_rule.
 type MonitorSmartDetectorAlertRule struct {
-	Name  string
-	Args  MonitorSmartDetectorAlertRuleArgs
-	state *monitorSmartDetectorAlertRuleState
+	Name      string
+	Args      MonitorSmartDetectorAlertRuleArgs
+	state     *monitorSmartDetectorAlertRuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MonitorSmartDetectorAlertRule].
 func (msdar *MonitorSmartDetectorAlertRule) Type() string {
 	return "azurerm_monitor_smart_detector_alert_rule"
 }
 
+// LocalName returns the local name for [MonitorSmartDetectorAlertRule].
 func (msdar *MonitorSmartDetectorAlertRule) LocalName() string {
 	return msdar.Name
 }
 
+// Configuration returns the configuration (args) for [MonitorSmartDetectorAlertRule].
 func (msdar *MonitorSmartDetectorAlertRule) Configuration() interface{} {
 	return msdar.Args
 }
 
+// DependOn is used for other resources to depend on [MonitorSmartDetectorAlertRule].
+func (msdar *MonitorSmartDetectorAlertRule) DependOn() terra.Reference {
+	return terra.ReferenceResource(msdar)
+}
+
+// Dependencies returns the list of resources [MonitorSmartDetectorAlertRule] depends_on.
+func (msdar *MonitorSmartDetectorAlertRule) Dependencies() terra.Dependencies {
+	return msdar.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MonitorSmartDetectorAlertRule].
+func (msdar *MonitorSmartDetectorAlertRule) LifecycleManagement() *terra.Lifecycle {
+	return msdar.Lifecycle
+}
+
+// Attributes returns the attributes for [MonitorSmartDetectorAlertRule].
 func (msdar *MonitorSmartDetectorAlertRule) Attributes() monitorSmartDetectorAlertRuleAttributes {
 	return monitorSmartDetectorAlertRuleAttributes{ref: terra.ReferenceResource(msdar)}
 }
 
+// ImportState imports the given attribute values into [MonitorSmartDetectorAlertRule]'s state.
 func (msdar *MonitorSmartDetectorAlertRule) ImportState(av io.Reader) error {
 	msdar.state = &monitorSmartDetectorAlertRuleState{}
 	if err := json.NewDecoder(av).Decode(msdar.state); err != nil {
@@ -49,10 +73,12 @@ func (msdar *MonitorSmartDetectorAlertRule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MonitorSmartDetectorAlertRule] has state.
 func (msdar *MonitorSmartDetectorAlertRule) State() (*monitorSmartDetectorAlertRuleState, bool) {
 	return msdar.state, msdar.state != nil
 }
 
+// StateMust returns the state for [MonitorSmartDetectorAlertRule]. Panics if the state is nil.
 func (msdar *MonitorSmartDetectorAlertRule) StateMust() *monitorSmartDetectorAlertRuleState {
 	if msdar.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", msdar.Type(), msdar.LocalName()))
@@ -60,10 +86,7 @@ func (msdar *MonitorSmartDetectorAlertRule) StateMust() *monitorSmartDetectorAle
 	return msdar.state
 }
 
-func (msdar *MonitorSmartDetectorAlertRule) DependOn() terra.Reference {
-	return terra.ReferenceResource(msdar)
-}
-
+// MonitorSmartDetectorAlertRuleArgs contains the configurations for azurerm_monitor_smart_detector_alert_rule.
 type MonitorSmartDetectorAlertRuleArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -91,63 +114,72 @@ type MonitorSmartDetectorAlertRuleArgs struct {
 	ActionGroup *monitorsmartdetectoralertrule.ActionGroup `hcl:"action_group,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *monitorsmartdetectoralertrule.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MonitorSmartDetectorAlertRule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type monitorSmartDetectorAlertRuleAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of azurerm_monitor_smart_detector_alert_rule.
 func (msdar monitorSmartDetectorAlertRuleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(msdar.ref.Append("description"))
+	return terra.ReferenceAsString(msdar.ref.Append("description"))
 }
 
+// DetectorType returns a reference to field detector_type of azurerm_monitor_smart_detector_alert_rule.
 func (msdar monitorSmartDetectorAlertRuleAttributes) DetectorType() terra.StringValue {
-	return terra.ReferenceString(msdar.ref.Append("detector_type"))
+	return terra.ReferenceAsString(msdar.ref.Append("detector_type"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_monitor_smart_detector_alert_rule.
 func (msdar monitorSmartDetectorAlertRuleAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(msdar.ref.Append("enabled"))
+	return terra.ReferenceAsBool(msdar.ref.Append("enabled"))
 }
 
+// Frequency returns a reference to field frequency of azurerm_monitor_smart_detector_alert_rule.
 func (msdar monitorSmartDetectorAlertRuleAttributes) Frequency() terra.StringValue {
-	return terra.ReferenceString(msdar.ref.Append("frequency"))
+	return terra.ReferenceAsString(msdar.ref.Append("frequency"))
 }
 
+// Id returns a reference to field id of azurerm_monitor_smart_detector_alert_rule.
 func (msdar monitorSmartDetectorAlertRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(msdar.ref.Append("id"))
+	return terra.ReferenceAsString(msdar.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_monitor_smart_detector_alert_rule.
 func (msdar monitorSmartDetectorAlertRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(msdar.ref.Append("name"))
+	return terra.ReferenceAsString(msdar.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_monitor_smart_detector_alert_rule.
 func (msdar monitorSmartDetectorAlertRuleAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(msdar.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(msdar.ref.Append("resource_group_name"))
 }
 
+// ScopeResourceIds returns a reference to field scope_resource_ids of azurerm_monitor_smart_detector_alert_rule.
 func (msdar monitorSmartDetectorAlertRuleAttributes) ScopeResourceIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](msdar.ref.Append("scope_resource_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](msdar.ref.Append("scope_resource_ids"))
 }
 
+// Severity returns a reference to field severity of azurerm_monitor_smart_detector_alert_rule.
 func (msdar monitorSmartDetectorAlertRuleAttributes) Severity() terra.StringValue {
-	return terra.ReferenceString(msdar.ref.Append("severity"))
+	return terra.ReferenceAsString(msdar.ref.Append("severity"))
 }
 
+// Tags returns a reference to field tags of azurerm_monitor_smart_detector_alert_rule.
 func (msdar monitorSmartDetectorAlertRuleAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](msdar.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](msdar.ref.Append("tags"))
 }
 
+// ThrottlingDuration returns a reference to field throttling_duration of azurerm_monitor_smart_detector_alert_rule.
 func (msdar monitorSmartDetectorAlertRuleAttributes) ThrottlingDuration() terra.StringValue {
-	return terra.ReferenceString(msdar.ref.Append("throttling_duration"))
+	return terra.ReferenceAsString(msdar.ref.Append("throttling_duration"))
 }
 
 func (msdar monitorSmartDetectorAlertRuleAttributes) ActionGroup() terra.ListValue[monitorsmartdetectoralertrule.ActionGroupAttributes] {
-	return terra.ReferenceList[monitorsmartdetectoralertrule.ActionGroupAttributes](msdar.ref.Append("action_group"))
+	return terra.ReferenceAsList[monitorsmartdetectoralertrule.ActionGroupAttributes](msdar.ref.Append("action_group"))
 }
 
 func (msdar monitorSmartDetectorAlertRuleAttributes) Timeouts() monitorsmartdetectoralertrule.TimeoutsAttributes {
-	return terra.ReferenceSingle[monitorsmartdetectoralertrule.TimeoutsAttributes](msdar.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[monitorsmartdetectoralertrule.TimeoutsAttributes](msdar.ref.Append("timeouts"))
 }
 
 type monitorSmartDetectorAlertRuleState struct {

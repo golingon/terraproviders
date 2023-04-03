@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSynapseWorkspace creates a new instance of [SynapseWorkspace].
 func NewSynapseWorkspace(name string, args SynapseWorkspaceArgs) *SynapseWorkspace {
 	return &SynapseWorkspace{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSynapseWorkspace(name string, args SynapseWorkspaceArgs) *SynapseWorkspa
 
 var _ terra.Resource = (*SynapseWorkspace)(nil)
 
+// SynapseWorkspace represents the Terraform resource azurerm_synapse_workspace.
 type SynapseWorkspace struct {
-	Name  string
-	Args  SynapseWorkspaceArgs
-	state *synapseWorkspaceState
+	Name      string
+	Args      SynapseWorkspaceArgs
+	state     *synapseWorkspaceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SynapseWorkspace].
 func (sw *SynapseWorkspace) Type() string {
 	return "azurerm_synapse_workspace"
 }
 
+// LocalName returns the local name for [SynapseWorkspace].
 func (sw *SynapseWorkspace) LocalName() string {
 	return sw.Name
 }
 
+// Configuration returns the configuration (args) for [SynapseWorkspace].
 func (sw *SynapseWorkspace) Configuration() interface{} {
 	return sw.Args
 }
 
+// DependOn is used for other resources to depend on [SynapseWorkspace].
+func (sw *SynapseWorkspace) DependOn() terra.Reference {
+	return terra.ReferenceResource(sw)
+}
+
+// Dependencies returns the list of resources [SynapseWorkspace] depends_on.
+func (sw *SynapseWorkspace) Dependencies() terra.Dependencies {
+	return sw.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SynapseWorkspace].
+func (sw *SynapseWorkspace) LifecycleManagement() *terra.Lifecycle {
+	return sw.Lifecycle
+}
+
+// Attributes returns the attributes for [SynapseWorkspace].
 func (sw *SynapseWorkspace) Attributes() synapseWorkspaceAttributes {
 	return synapseWorkspaceAttributes{ref: terra.ReferenceResource(sw)}
 }
 
+// ImportState imports the given attribute values into [SynapseWorkspace]'s state.
 func (sw *SynapseWorkspace) ImportState(av io.Reader) error {
 	sw.state = &synapseWorkspaceState{}
 	if err := json.NewDecoder(av).Decode(sw.state); err != nil {
@@ -49,10 +73,12 @@ func (sw *SynapseWorkspace) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SynapseWorkspace] has state.
 func (sw *SynapseWorkspace) State() (*synapseWorkspaceState, bool) {
 	return sw.state, sw.state != nil
 }
 
+// StateMust returns the state for [SynapseWorkspace]. Panics if the state is nil.
 func (sw *SynapseWorkspace) StateMust() *synapseWorkspaceState {
 	if sw.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sw.Type(), sw.LocalName()))
@@ -60,10 +86,7 @@ func (sw *SynapseWorkspace) StateMust() *synapseWorkspaceState {
 	return sw.state
 }
 
-func (sw *SynapseWorkspace) DependOn() terra.Reference {
-	return terra.ReferenceResource(sw)
-}
-
+// SynapseWorkspaceArgs contains the configurations for azurerm_synapse_workspace.
 type SynapseWorkspaceArgs struct {
 	// ComputeSubnetId: string, optional
 	ComputeSubnetId terra.StringValue `hcl:"compute_subnet_id,attr"`
@@ -111,107 +134,122 @@ type SynapseWorkspaceArgs struct {
 	Identity *synapseworkspace.Identity `hcl:"identity,block"`
 	// Timeouts: optional
 	Timeouts *synapseworkspace.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SynapseWorkspace depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type synapseWorkspaceAttributes struct {
 	ref terra.Reference
 }
 
+// ComputeSubnetId returns a reference to field compute_subnet_id of azurerm_synapse_workspace.
 func (sw synapseWorkspaceAttributes) ComputeSubnetId() terra.StringValue {
-	return terra.ReferenceString(sw.ref.Append("compute_subnet_id"))
+	return terra.ReferenceAsString(sw.ref.Append("compute_subnet_id"))
 }
 
+// ConnectivityEndpoints returns a reference to field connectivity_endpoints of azurerm_synapse_workspace.
 func (sw synapseWorkspaceAttributes) ConnectivityEndpoints() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sw.ref.Append("connectivity_endpoints"))
+	return terra.ReferenceAsMap[terra.StringValue](sw.ref.Append("connectivity_endpoints"))
 }
 
+// DataExfiltrationProtectionEnabled returns a reference to field data_exfiltration_protection_enabled of azurerm_synapse_workspace.
 func (sw synapseWorkspaceAttributes) DataExfiltrationProtectionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(sw.ref.Append("data_exfiltration_protection_enabled"))
+	return terra.ReferenceAsBool(sw.ref.Append("data_exfiltration_protection_enabled"))
 }
 
+// Id returns a reference to field id of azurerm_synapse_workspace.
 func (sw synapseWorkspaceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sw.ref.Append("id"))
+	return terra.ReferenceAsString(sw.ref.Append("id"))
 }
 
+// LinkingAllowedForAadTenantIds returns a reference to field linking_allowed_for_aad_tenant_ids of azurerm_synapse_workspace.
 func (sw synapseWorkspaceAttributes) LinkingAllowedForAadTenantIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sw.ref.Append("linking_allowed_for_aad_tenant_ids"))
+	return terra.ReferenceAsList[terra.StringValue](sw.ref.Append("linking_allowed_for_aad_tenant_ids"))
 }
 
+// Location returns a reference to field location of azurerm_synapse_workspace.
 func (sw synapseWorkspaceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(sw.ref.Append("location"))
+	return terra.ReferenceAsString(sw.ref.Append("location"))
 }
 
+// ManagedResourceGroupName returns a reference to field managed_resource_group_name of azurerm_synapse_workspace.
 func (sw synapseWorkspaceAttributes) ManagedResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(sw.ref.Append("managed_resource_group_name"))
+	return terra.ReferenceAsString(sw.ref.Append("managed_resource_group_name"))
 }
 
+// ManagedVirtualNetworkEnabled returns a reference to field managed_virtual_network_enabled of azurerm_synapse_workspace.
 func (sw synapseWorkspaceAttributes) ManagedVirtualNetworkEnabled() terra.BoolValue {
-	return terra.ReferenceBool(sw.ref.Append("managed_virtual_network_enabled"))
+	return terra.ReferenceAsBool(sw.ref.Append("managed_virtual_network_enabled"))
 }
 
+// Name returns a reference to field name of azurerm_synapse_workspace.
 func (sw synapseWorkspaceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sw.ref.Append("name"))
+	return terra.ReferenceAsString(sw.ref.Append("name"))
 }
 
+// PublicNetworkAccessEnabled returns a reference to field public_network_access_enabled of azurerm_synapse_workspace.
 func (sw synapseWorkspaceAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(sw.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(sw.ref.Append("public_network_access_enabled"))
 }
 
+// PurviewId returns a reference to field purview_id of azurerm_synapse_workspace.
 func (sw synapseWorkspaceAttributes) PurviewId() terra.StringValue {
-	return terra.ReferenceString(sw.ref.Append("purview_id"))
+	return terra.ReferenceAsString(sw.ref.Append("purview_id"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_synapse_workspace.
 func (sw synapseWorkspaceAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(sw.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(sw.ref.Append("resource_group_name"))
 }
 
+// SqlAdministratorLogin returns a reference to field sql_administrator_login of azurerm_synapse_workspace.
 func (sw synapseWorkspaceAttributes) SqlAdministratorLogin() terra.StringValue {
-	return terra.ReferenceString(sw.ref.Append("sql_administrator_login"))
+	return terra.ReferenceAsString(sw.ref.Append("sql_administrator_login"))
 }
 
+// SqlAdministratorLoginPassword returns a reference to field sql_administrator_login_password of azurerm_synapse_workspace.
 func (sw synapseWorkspaceAttributes) SqlAdministratorLoginPassword() terra.StringValue {
-	return terra.ReferenceString(sw.ref.Append("sql_administrator_login_password"))
+	return terra.ReferenceAsString(sw.ref.Append("sql_administrator_login_password"))
 }
 
+// SqlIdentityControlEnabled returns a reference to field sql_identity_control_enabled of azurerm_synapse_workspace.
 func (sw synapseWorkspaceAttributes) SqlIdentityControlEnabled() terra.BoolValue {
-	return terra.ReferenceBool(sw.ref.Append("sql_identity_control_enabled"))
+	return terra.ReferenceAsBool(sw.ref.Append("sql_identity_control_enabled"))
 }
 
+// StorageDataLakeGen2FilesystemId returns a reference to field storage_data_lake_gen2_filesystem_id of azurerm_synapse_workspace.
 func (sw synapseWorkspaceAttributes) StorageDataLakeGen2FilesystemId() terra.StringValue {
-	return terra.ReferenceString(sw.ref.Append("storage_data_lake_gen2_filesystem_id"))
+	return terra.ReferenceAsString(sw.ref.Append("storage_data_lake_gen2_filesystem_id"))
 }
 
+// Tags returns a reference to field tags of azurerm_synapse_workspace.
 func (sw synapseWorkspaceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sw.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sw.ref.Append("tags"))
 }
 
 func (sw synapseWorkspaceAttributes) AadAdmin() terra.ListValue[synapseworkspace.AadAdminAttributes] {
-	return terra.ReferenceList[synapseworkspace.AadAdminAttributes](sw.ref.Append("aad_admin"))
+	return terra.ReferenceAsList[synapseworkspace.AadAdminAttributes](sw.ref.Append("aad_admin"))
 }
 
 func (sw synapseWorkspaceAttributes) SqlAadAdmin() terra.ListValue[synapseworkspace.SqlAadAdminAttributes] {
-	return terra.ReferenceList[synapseworkspace.SqlAadAdminAttributes](sw.ref.Append("sql_aad_admin"))
+	return terra.ReferenceAsList[synapseworkspace.SqlAadAdminAttributes](sw.ref.Append("sql_aad_admin"))
 }
 
 func (sw synapseWorkspaceAttributes) AzureDevopsRepo() terra.ListValue[synapseworkspace.AzureDevopsRepoAttributes] {
-	return terra.ReferenceList[synapseworkspace.AzureDevopsRepoAttributes](sw.ref.Append("azure_devops_repo"))
+	return terra.ReferenceAsList[synapseworkspace.AzureDevopsRepoAttributes](sw.ref.Append("azure_devops_repo"))
 }
 
 func (sw synapseWorkspaceAttributes) CustomerManagedKey() terra.ListValue[synapseworkspace.CustomerManagedKeyAttributes] {
-	return terra.ReferenceList[synapseworkspace.CustomerManagedKeyAttributes](sw.ref.Append("customer_managed_key"))
+	return terra.ReferenceAsList[synapseworkspace.CustomerManagedKeyAttributes](sw.ref.Append("customer_managed_key"))
 }
 
 func (sw synapseWorkspaceAttributes) GithubRepo() terra.ListValue[synapseworkspace.GithubRepoAttributes] {
-	return terra.ReferenceList[synapseworkspace.GithubRepoAttributes](sw.ref.Append("github_repo"))
+	return terra.ReferenceAsList[synapseworkspace.GithubRepoAttributes](sw.ref.Append("github_repo"))
 }
 
 func (sw synapseWorkspaceAttributes) Identity() terra.ListValue[synapseworkspace.IdentityAttributes] {
-	return terra.ReferenceList[synapseworkspace.IdentityAttributes](sw.ref.Append("identity"))
+	return terra.ReferenceAsList[synapseworkspace.IdentityAttributes](sw.ref.Append("identity"))
 }
 
 func (sw synapseWorkspaceAttributes) Timeouts() synapseworkspace.TimeoutsAttributes {
-	return terra.ReferenceSingle[synapseworkspace.TimeoutsAttributes](sw.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[synapseworkspace.TimeoutsAttributes](sw.ref.Append("timeouts"))
 }
 
 type synapseWorkspaceState struct {

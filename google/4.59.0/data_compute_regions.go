@@ -4,6 +4,7 @@ package google
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataComputeRegions creates a new instance of [DataComputeRegions].
 func NewDataComputeRegions(name string, args DataComputeRegionsArgs) *DataComputeRegions {
 	return &DataComputeRegions{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataComputeRegions(name string, args DataComputeRegionsArgs) *DataComput
 
 var _ terra.DataResource = (*DataComputeRegions)(nil)
 
+// DataComputeRegions represents the Terraform data resource google_compute_regions.
 type DataComputeRegions struct {
 	Name string
 	Args DataComputeRegionsArgs
 }
 
+// DataSource returns the Terraform object type for [DataComputeRegions].
 func (cr *DataComputeRegions) DataSource() string {
 	return "google_compute_regions"
 }
 
+// LocalName returns the local name for [DataComputeRegions].
 func (cr *DataComputeRegions) LocalName() string {
 	return cr.Name
 }
 
+// Configuration returns the configuration (args) for [DataComputeRegions].
 func (cr *DataComputeRegions) Configuration() interface{} {
 	return cr.Args
 }
 
+// Attributes returns the attributes for [DataComputeRegions].
 func (cr *DataComputeRegions) Attributes() dataComputeRegionsAttributes {
 	return dataComputeRegionsAttributes{ref: terra.ReferenceDataResource(cr)}
 }
 
+// DataComputeRegionsArgs contains the configurations for google_compute_regions.
 type DataComputeRegionsArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -46,18 +53,22 @@ type dataComputeRegionsAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of google_compute_regions.
 func (cr dataComputeRegionsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("id"))
+	return terra.ReferenceAsString(cr.ref.Append("id"))
 }
 
+// Names returns a reference to field names of google_compute_regions.
 func (cr dataComputeRegionsAttributes) Names() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cr.ref.Append("names"))
+	return terra.ReferenceAsList[terra.StringValue](cr.ref.Append("names"))
 }
 
+// Project returns a reference to field project of google_compute_regions.
 func (cr dataComputeRegionsAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("project"))
+	return terra.ReferenceAsString(cr.ref.Append("project"))
 }
 
+// Status returns a reference to field status of google_compute_regions.
 func (cr dataComputeRegionsAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("status"))
+	return terra.ReferenceAsString(cr.ref.Append("status"))
 }

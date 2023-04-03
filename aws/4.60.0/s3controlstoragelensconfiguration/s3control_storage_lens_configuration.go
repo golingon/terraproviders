@@ -181,7 +181,7 @@ func (slc StorageLensConfigurationAttributes) InternalWithRef(ref terra.Referenc
 	return StorageLensConfigurationAttributes{ref: ref}
 }
 
-func (slc StorageLensConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (slc StorageLensConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return slc.ref.InternalTokens()
 }
 
@@ -221,7 +221,7 @@ func (al AccountLevelAttributes) InternalWithRef(ref terra.Reference) AccountLev
 	return AccountLevelAttributes{ref: ref}
 }
 
-func (al AccountLevelAttributes) InternalTokens() hclwrite.Tokens {
+func (al AccountLevelAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return al.ref.InternalTokens()
 }
 
@@ -257,7 +257,7 @@ func (am AccountLevelActivityMetricsAttributes) InternalWithRef(ref terra.Refere
 	return AccountLevelActivityMetricsAttributes{ref: ref}
 }
 
-func (am AccountLevelActivityMetricsAttributes) InternalTokens() hclwrite.Tokens {
+func (am AccountLevelActivityMetricsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return am.ref.InternalTokens()
 }
 
@@ -277,7 +277,7 @@ func (acom AccountLevelAdvancedCostOptimizationMetricsAttributes) InternalWithRe
 	return AccountLevelAdvancedCostOptimizationMetricsAttributes{ref: ref}
 }
 
-func (acom AccountLevelAdvancedCostOptimizationMetricsAttributes) InternalTokens() hclwrite.Tokens {
+func (acom AccountLevelAdvancedCostOptimizationMetricsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return acom.ref.InternalTokens()
 }
 
@@ -297,7 +297,7 @@ func (adpm AccountLevelAdvancedDataProtectionMetricsAttributes) InternalWithRef(
 	return AccountLevelAdvancedDataProtectionMetricsAttributes{ref: ref}
 }
 
-func (adpm AccountLevelAdvancedDataProtectionMetricsAttributes) InternalTokens() hclwrite.Tokens {
+func (adpm AccountLevelAdvancedDataProtectionMetricsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return adpm.ref.InternalTokens()
 }
 
@@ -317,7 +317,7 @@ func (bl BucketLevelAttributes) InternalWithRef(ref terra.Reference) BucketLevel
 	return BucketLevelAttributes{ref: ref}
 }
 
-func (bl BucketLevelAttributes) InternalTokens() hclwrite.Tokens {
+func (bl BucketLevelAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bl.ref.InternalTokens()
 }
 
@@ -353,7 +353,7 @@ func (am BucketLevelActivityMetricsAttributes) InternalWithRef(ref terra.Referen
 	return BucketLevelActivityMetricsAttributes{ref: ref}
 }
 
-func (am BucketLevelActivityMetricsAttributes) InternalTokens() hclwrite.Tokens {
+func (am BucketLevelActivityMetricsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return am.ref.InternalTokens()
 }
 
@@ -373,7 +373,7 @@ func (acom BucketLevelAdvancedCostOptimizationMetricsAttributes) InternalWithRef
 	return BucketLevelAdvancedCostOptimizationMetricsAttributes{ref: ref}
 }
 
-func (acom BucketLevelAdvancedCostOptimizationMetricsAttributes) InternalTokens() hclwrite.Tokens {
+func (acom BucketLevelAdvancedCostOptimizationMetricsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return acom.ref.InternalTokens()
 }
 
@@ -393,7 +393,7 @@ func (adpm BucketLevelAdvancedDataProtectionMetricsAttributes) InternalWithRef(r
 	return BucketLevelAdvancedDataProtectionMetricsAttributes{ref: ref}
 }
 
-func (adpm BucketLevelAdvancedDataProtectionMetricsAttributes) InternalTokens() hclwrite.Tokens {
+func (adpm BucketLevelAdvancedDataProtectionMetricsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return adpm.ref.InternalTokens()
 }
 
@@ -413,7 +413,7 @@ func (dscm BucketLevelDetailedStatusCodeMetricsAttributes) InternalWithRef(ref t
 	return BucketLevelDetailedStatusCodeMetricsAttributes{ref: ref}
 }
 
-func (dscm BucketLevelDetailedStatusCodeMetricsAttributes) InternalTokens() hclwrite.Tokens {
+func (dscm BucketLevelDetailedStatusCodeMetricsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dscm.ref.InternalTokens()
 }
 
@@ -433,7 +433,7 @@ func (pl PrefixLevelAttributes) InternalWithRef(ref terra.Reference) PrefixLevel
 	return PrefixLevelAttributes{ref: ref}
 }
 
-func (pl PrefixLevelAttributes) InternalTokens() hclwrite.Tokens {
+func (pl PrefixLevelAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pl.ref.InternalTokens()
 }
 
@@ -453,7 +453,7 @@ func (sm StorageMetricsAttributes) InternalWithRef(ref terra.Reference) StorageM
 	return StorageMetricsAttributes{ref: ref}
 }
 
-func (sm StorageMetricsAttributes) InternalTokens() hclwrite.Tokens {
+func (sm StorageMetricsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sm.ref.InternalTokens()
 }
 
@@ -477,7 +477,7 @@ func (sc SelectionCriteriaAttributes) InternalWithRef(ref terra.Reference) Selec
 	return SelectionCriteriaAttributes{ref: ref}
 }
 
-func (sc SelectionCriteriaAttributes) InternalTokens() hclwrite.Tokens {
+func (sc SelectionCriteriaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -505,7 +505,7 @@ func (dscm AccountLevelDetailedStatusCodeMetricsAttributes) InternalWithRef(ref 
 	return AccountLevelDetailedStatusCodeMetricsAttributes{ref: ref}
 }
 
-func (dscm AccountLevelDetailedStatusCodeMetricsAttributes) InternalTokens() hclwrite.Tokens {
+func (dscm AccountLevelDetailedStatusCodeMetricsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dscm.ref.InternalTokens()
 }
 
@@ -525,7 +525,7 @@ func (ao AwsOrgAttributes) InternalWithRef(ref terra.Reference) AwsOrgAttributes
 	return AwsOrgAttributes{ref: ref}
 }
 
-func (ao AwsOrgAttributes) InternalTokens() hclwrite.Tokens {
+func (ao AwsOrgAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ao.ref.InternalTokens()
 }
 
@@ -545,7 +545,7 @@ func (de DataExportAttributes) InternalWithRef(ref terra.Reference) DataExportAt
 	return DataExportAttributes{ref: ref}
 }
 
-func (de DataExportAttributes) InternalTokens() hclwrite.Tokens {
+func (de DataExportAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return de.ref.InternalTokens()
 }
 
@@ -569,7 +569,7 @@ func (cwm CloudWatchMetricsAttributes) InternalWithRef(ref terra.Reference) Clou
 	return CloudWatchMetricsAttributes{ref: ref}
 }
 
-func (cwm CloudWatchMetricsAttributes) InternalTokens() hclwrite.Tokens {
+func (cwm CloudWatchMetricsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cwm.ref.InternalTokens()
 }
 
@@ -589,7 +589,7 @@ func (sbd S3BucketDestinationAttributes) InternalWithRef(ref terra.Reference) S3
 	return S3BucketDestinationAttributes{ref: ref}
 }
 
-func (sbd S3BucketDestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (sbd S3BucketDestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sbd.ref.InternalTokens()
 }
 
@@ -629,7 +629,7 @@ func (e EncryptionAttributes) InternalWithRef(ref terra.Reference) EncryptionAtt
 	return EncryptionAttributes{ref: ref}
 }
 
-func (e EncryptionAttributes) InternalTokens() hclwrite.Tokens {
+func (e EncryptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -653,7 +653,7 @@ func (sk SseKmsAttributes) InternalWithRef(ref terra.Reference) SseKmsAttributes
 	return SseKmsAttributes{ref: ref}
 }
 
-func (sk SseKmsAttributes) InternalTokens() hclwrite.Tokens {
+func (sk SseKmsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sk.ref.InternalTokens()
 }
 
@@ -673,7 +673,7 @@ func (ss SseS3Attributes) InternalWithRef(ref terra.Reference) SseS3Attributes {
 	return SseS3Attributes{ref: ref}
 }
 
-func (ss SseS3Attributes) InternalTokens() hclwrite.Tokens {
+func (ss SseS3Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ss.ref.InternalTokens()
 }
 
@@ -689,7 +689,7 @@ func (e ExcludeAttributes) InternalWithRef(ref terra.Reference) ExcludeAttribute
 	return ExcludeAttributes{ref: ref}
 }
 
-func (e ExcludeAttributes) InternalTokens() hclwrite.Tokens {
+func (e ExcludeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -713,7 +713,7 @@ func (i IncludeAttributes) InternalWithRef(ref terra.Reference) IncludeAttribute
 	return IncludeAttributes{ref: ref}
 }
 
-func (i IncludeAttributes) InternalTokens() hclwrite.Tokens {
+func (i IncludeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 

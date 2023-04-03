@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataDataShareDatasetKustoDatabase creates a new instance of [DataDataShareDatasetKustoDatabase].
 func NewDataDataShareDatasetKustoDatabase(name string, args DataDataShareDatasetKustoDatabaseArgs) *DataDataShareDatasetKustoDatabase {
 	return &DataDataShareDatasetKustoDatabase{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataDataShareDatasetKustoDatabase(name string, args DataDataShareDataset
 
 var _ terra.DataResource = (*DataDataShareDatasetKustoDatabase)(nil)
 
+// DataDataShareDatasetKustoDatabase represents the Terraform data resource azurerm_data_share_dataset_kusto_database.
 type DataDataShareDatasetKustoDatabase struct {
 	Name string
 	Args DataDataShareDatasetKustoDatabaseArgs
 }
 
+// DataSource returns the Terraform object type for [DataDataShareDatasetKustoDatabase].
 func (dsdkd *DataDataShareDatasetKustoDatabase) DataSource() string {
 	return "azurerm_data_share_dataset_kusto_database"
 }
 
+// LocalName returns the local name for [DataDataShareDatasetKustoDatabase].
 func (dsdkd *DataDataShareDatasetKustoDatabase) LocalName() string {
 	return dsdkd.Name
 }
 
+// Configuration returns the configuration (args) for [DataDataShareDatasetKustoDatabase].
 func (dsdkd *DataDataShareDatasetKustoDatabase) Configuration() interface{} {
 	return dsdkd.Args
 }
 
+// Attributes returns the attributes for [DataDataShareDatasetKustoDatabase].
 func (dsdkd *DataDataShareDatasetKustoDatabase) Attributes() dataDataShareDatasetKustoDatabaseAttributes {
 	return dataDataShareDatasetKustoDatabaseAttributes{ref: terra.ReferenceDataResource(dsdkd)}
 }
 
+// DataDataShareDatasetKustoDatabaseArgs contains the configurations for azurerm_data_share_dataset_kusto_database.
 type DataDataShareDatasetKustoDatabaseArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,30 +58,36 @@ type dataDataShareDatasetKustoDatabaseAttributes struct {
 	ref terra.Reference
 }
 
+// DisplayName returns a reference to field display_name of azurerm_data_share_dataset_kusto_database.
 func (dsdkd dataDataShareDatasetKustoDatabaseAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(dsdkd.ref.Append("display_name"))
+	return terra.ReferenceAsString(dsdkd.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of azurerm_data_share_dataset_kusto_database.
 func (dsdkd dataDataShareDatasetKustoDatabaseAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dsdkd.ref.Append("id"))
+	return terra.ReferenceAsString(dsdkd.ref.Append("id"))
 }
 
+// KustoClusterLocation returns a reference to field kusto_cluster_location of azurerm_data_share_dataset_kusto_database.
 func (dsdkd dataDataShareDatasetKustoDatabaseAttributes) KustoClusterLocation() terra.StringValue {
-	return terra.ReferenceString(dsdkd.ref.Append("kusto_cluster_location"))
+	return terra.ReferenceAsString(dsdkd.ref.Append("kusto_cluster_location"))
 }
 
+// KustoDatabaseId returns a reference to field kusto_database_id of azurerm_data_share_dataset_kusto_database.
 func (dsdkd dataDataShareDatasetKustoDatabaseAttributes) KustoDatabaseId() terra.StringValue {
-	return terra.ReferenceString(dsdkd.ref.Append("kusto_database_id"))
+	return terra.ReferenceAsString(dsdkd.ref.Append("kusto_database_id"))
 }
 
+// Name returns a reference to field name of azurerm_data_share_dataset_kusto_database.
 func (dsdkd dataDataShareDatasetKustoDatabaseAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dsdkd.ref.Append("name"))
+	return terra.ReferenceAsString(dsdkd.ref.Append("name"))
 }
 
+// ShareId returns a reference to field share_id of azurerm_data_share_dataset_kusto_database.
 func (dsdkd dataDataShareDatasetKustoDatabaseAttributes) ShareId() terra.StringValue {
-	return terra.ReferenceString(dsdkd.ref.Append("share_id"))
+	return terra.ReferenceAsString(dsdkd.ref.Append("share_id"))
 }
 
 func (dsdkd dataDataShareDatasetKustoDatabaseAttributes) Timeouts() datadatasharedatasetkustodatabase.TimeoutsAttributes {
-	return terra.ReferenceSingle[datadatasharedatasetkustodatabase.TimeoutsAttributes](dsdkd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datadatasharedatasetkustodatabase.TimeoutsAttributes](dsdkd.ref.Append("timeouts"))
 }

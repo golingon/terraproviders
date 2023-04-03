@@ -29,56 +29,56 @@ type PageAttributes struct {
 	ref terra.Reference
 }
 
-func (p PageAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p PageAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p PageAttributes) InternalWithRef(ref terra.Reference) PageAttributes {
 	return PageAttributes{ref: ref}
 }
 
-func (p PageAttributes) InternalTokens() hclwrite.Tokens {
+func (p PageAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
 func (p PageAttributes) AccessToken() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("access_token"))
+	return terra.ReferenceAsString(p.ref.Append("access_token"))
 }
 
 func (p PageAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("id"))
+	return terra.ReferenceAsString(p.ref.Append("id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type PageState struct {

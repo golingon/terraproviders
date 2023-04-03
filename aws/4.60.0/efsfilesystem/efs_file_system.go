@@ -28,7 +28,7 @@ func (sib SizeInBytesAttributes) InternalWithRef(ref terra.Reference) SizeInByte
 	return SizeInBytesAttributes{ref: ref}
 }
 
-func (sib SizeInBytesAttributes) InternalTokens() hclwrite.Tokens {
+func (sib SizeInBytesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sib.ref.InternalTokens()
 }
 
@@ -56,7 +56,7 @@ func (lp LifecyclePolicyAttributes) InternalWithRef(ref terra.Reference) Lifecyc
 	return LifecyclePolicyAttributes{ref: ref}
 }
 
-func (lp LifecyclePolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (lp LifecyclePolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lp.ref.InternalTokens()
 }
 

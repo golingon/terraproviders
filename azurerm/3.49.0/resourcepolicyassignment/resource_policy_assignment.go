@@ -66,192 +66,192 @@ type IdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (i IdentityAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IdentityAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IdentityAttributes) InternalWithRef(ref terra.Reference) IdentityAttributes {
 	return IdentityAttributes{ref: ref}
 }
 
-func (i IdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (i IdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IdentityAttributes) IdentityIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i.ref.Append("identity_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](i.ref.Append("identity_ids"))
 }
 
 func (i IdentityAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("principal_id"))
+	return terra.ReferenceAsString(i.ref.Append("principal_id"))
 }
 
 func (i IdentityAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(i.ref.Append("tenant_id"))
 }
 
 func (i IdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("type"))
+	return terra.ReferenceAsString(i.ref.Append("type"))
 }
 
 type NonComplianceMessageAttributes struct {
 	ref terra.Reference
 }
 
-func (ncm NonComplianceMessageAttributes) InternalRef() terra.Reference {
-	return ncm.ref
+func (ncm NonComplianceMessageAttributes) InternalRef() (terra.Reference, error) {
+	return ncm.ref, nil
 }
 
 func (ncm NonComplianceMessageAttributes) InternalWithRef(ref terra.Reference) NonComplianceMessageAttributes {
 	return NonComplianceMessageAttributes{ref: ref}
 }
 
-func (ncm NonComplianceMessageAttributes) InternalTokens() hclwrite.Tokens {
+func (ncm NonComplianceMessageAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ncm.ref.InternalTokens()
 }
 
 func (ncm NonComplianceMessageAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(ncm.ref.Append("content"))
+	return terra.ReferenceAsString(ncm.ref.Append("content"))
 }
 
 func (ncm NonComplianceMessageAttributes) PolicyDefinitionReferenceId() terra.StringValue {
-	return terra.ReferenceString(ncm.ref.Append("policy_definition_reference_id"))
+	return terra.ReferenceAsString(ncm.ref.Append("policy_definition_reference_id"))
 }
 
 type OverridesAttributes struct {
 	ref terra.Reference
 }
 
-func (o OverridesAttributes) InternalRef() terra.Reference {
-	return o.ref
+func (o OverridesAttributes) InternalRef() (terra.Reference, error) {
+	return o.ref, nil
 }
 
 func (o OverridesAttributes) InternalWithRef(ref terra.Reference) OverridesAttributes {
 	return OverridesAttributes{ref: ref}
 }
 
-func (o OverridesAttributes) InternalTokens() hclwrite.Tokens {
+func (o OverridesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return o.ref.InternalTokens()
 }
 
 func (o OverridesAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("value"))
+	return terra.ReferenceAsString(o.ref.Append("value"))
 }
 
 func (o OverridesAttributes) Selectors() terra.ListValue[OverridesSelectorsAttributes] {
-	return terra.ReferenceList[OverridesSelectorsAttributes](o.ref.Append("selectors"))
+	return terra.ReferenceAsList[OverridesSelectorsAttributes](o.ref.Append("selectors"))
 }
 
 type OverridesSelectorsAttributes struct {
 	ref terra.Reference
 }
 
-func (s OverridesSelectorsAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s OverridesSelectorsAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s OverridesSelectorsAttributes) InternalWithRef(ref terra.Reference) OverridesSelectorsAttributes {
 	return OverridesSelectorsAttributes{ref: ref}
 }
 
-func (s OverridesSelectorsAttributes) InternalTokens() hclwrite.Tokens {
+func (s OverridesSelectorsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s OverridesSelectorsAttributes) In() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](s.ref.Append("in"))
+	return terra.ReferenceAsList[terra.StringValue](s.ref.Append("in"))
 }
 
 func (s OverridesSelectorsAttributes) Kind() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("kind"))
+	return terra.ReferenceAsString(s.ref.Append("kind"))
 }
 
 func (s OverridesSelectorsAttributes) NotIn() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](s.ref.Append("not_in"))
+	return terra.ReferenceAsList[terra.StringValue](s.ref.Append("not_in"))
 }
 
 type ResourceSelectorsAttributes struct {
 	ref terra.Reference
 }
 
-func (rs ResourceSelectorsAttributes) InternalRef() terra.Reference {
-	return rs.ref
+func (rs ResourceSelectorsAttributes) InternalRef() (terra.Reference, error) {
+	return rs.ref, nil
 }
 
 func (rs ResourceSelectorsAttributes) InternalWithRef(ref terra.Reference) ResourceSelectorsAttributes {
 	return ResourceSelectorsAttributes{ref: ref}
 }
 
-func (rs ResourceSelectorsAttributes) InternalTokens() hclwrite.Tokens {
+func (rs ResourceSelectorsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rs.ref.InternalTokens()
 }
 
 func (rs ResourceSelectorsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("name"))
+	return terra.ReferenceAsString(rs.ref.Append("name"))
 }
 
 func (rs ResourceSelectorsAttributes) Selectors() terra.ListValue[ResourceSelectorsSelectorsAttributes] {
-	return terra.ReferenceList[ResourceSelectorsSelectorsAttributes](rs.ref.Append("selectors"))
+	return terra.ReferenceAsList[ResourceSelectorsSelectorsAttributes](rs.ref.Append("selectors"))
 }
 
 type ResourceSelectorsSelectorsAttributes struct {
 	ref terra.Reference
 }
 
-func (s ResourceSelectorsSelectorsAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ResourceSelectorsSelectorsAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ResourceSelectorsSelectorsAttributes) InternalWithRef(ref terra.Reference) ResourceSelectorsSelectorsAttributes {
 	return ResourceSelectorsSelectorsAttributes{ref: ref}
 }
 
-func (s ResourceSelectorsSelectorsAttributes) InternalTokens() hclwrite.Tokens {
+func (s ResourceSelectorsSelectorsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s ResourceSelectorsSelectorsAttributes) In() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](s.ref.Append("in"))
+	return terra.ReferenceAsList[terra.StringValue](s.ref.Append("in"))
 }
 
 func (s ResourceSelectorsSelectorsAttributes) Kind() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("kind"))
+	return terra.ReferenceAsString(s.ref.Append("kind"))
 }
 
 func (s ResourceSelectorsSelectorsAttributes) NotIn() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](s.ref.Append("not_in"))
+	return terra.ReferenceAsList[terra.StringValue](s.ref.Append("not_in"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type IdentityState struct {

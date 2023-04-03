@@ -13,24 +13,24 @@ type AllocatedConnectionsAttributes struct {
 	ref terra.Reference
 }
 
-func (ac AllocatedConnectionsAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac AllocatedConnectionsAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac AllocatedConnectionsAttributes) InternalWithRef(ref terra.Reference) AllocatedConnectionsAttributes {
 	return AllocatedConnectionsAttributes{ref: ref}
 }
 
-func (ac AllocatedConnectionsAttributes) InternalTokens() hclwrite.Tokens {
+func (ac AllocatedConnectionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
 func (ac AllocatedConnectionsAttributes) IngressPort() terra.NumberValue {
-	return terra.ReferenceNumber(ac.ref.Append("ingress_port"))
+	return terra.ReferenceAsNumber(ac.ref.Append("ingress_port"))
 }
 
 func (ac AllocatedConnectionsAttributes) PscUri() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("psc_uri"))
+	return terra.ReferenceAsString(ac.ref.Append("psc_uri"))
 }
 
 type AllocatedConnectionsState struct {

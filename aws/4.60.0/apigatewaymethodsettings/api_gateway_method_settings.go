@@ -42,7 +42,7 @@ func (s SettingsAttributes) InternalWithRef(ref terra.Reference) SettingsAttribu
 	return SettingsAttributes{ref: ref}
 }
 
-func (s SettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (s SettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 

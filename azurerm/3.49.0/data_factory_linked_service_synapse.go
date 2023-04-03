@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFactoryLinkedServiceSynapse creates a new instance of [DataFactoryLinkedServiceSynapse].
 func NewDataFactoryLinkedServiceSynapse(name string, args DataFactoryLinkedServiceSynapseArgs) *DataFactoryLinkedServiceSynapse {
 	return &DataFactoryLinkedServiceSynapse{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFactoryLinkedServiceSynapse(name string, args DataFactoryLinkedServi
 
 var _ terra.Resource = (*DataFactoryLinkedServiceSynapse)(nil)
 
+// DataFactoryLinkedServiceSynapse represents the Terraform resource azurerm_data_factory_linked_service_synapse.
 type DataFactoryLinkedServiceSynapse struct {
-	Name  string
-	Args  DataFactoryLinkedServiceSynapseArgs
-	state *dataFactoryLinkedServiceSynapseState
+	Name      string
+	Args      DataFactoryLinkedServiceSynapseArgs
+	state     *dataFactoryLinkedServiceSynapseState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFactoryLinkedServiceSynapse].
 func (dflss *DataFactoryLinkedServiceSynapse) Type() string {
 	return "azurerm_data_factory_linked_service_synapse"
 }
 
+// LocalName returns the local name for [DataFactoryLinkedServiceSynapse].
 func (dflss *DataFactoryLinkedServiceSynapse) LocalName() string {
 	return dflss.Name
 }
 
+// Configuration returns the configuration (args) for [DataFactoryLinkedServiceSynapse].
 func (dflss *DataFactoryLinkedServiceSynapse) Configuration() interface{} {
 	return dflss.Args
 }
 
+// DependOn is used for other resources to depend on [DataFactoryLinkedServiceSynapse].
+func (dflss *DataFactoryLinkedServiceSynapse) DependOn() terra.Reference {
+	return terra.ReferenceResource(dflss)
+}
+
+// Dependencies returns the list of resources [DataFactoryLinkedServiceSynapse] depends_on.
+func (dflss *DataFactoryLinkedServiceSynapse) Dependencies() terra.Dependencies {
+	return dflss.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFactoryLinkedServiceSynapse].
+func (dflss *DataFactoryLinkedServiceSynapse) LifecycleManagement() *terra.Lifecycle {
+	return dflss.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFactoryLinkedServiceSynapse].
 func (dflss *DataFactoryLinkedServiceSynapse) Attributes() dataFactoryLinkedServiceSynapseAttributes {
 	return dataFactoryLinkedServiceSynapseAttributes{ref: terra.ReferenceResource(dflss)}
 }
 
+// ImportState imports the given attribute values into [DataFactoryLinkedServiceSynapse]'s state.
 func (dflss *DataFactoryLinkedServiceSynapse) ImportState(av io.Reader) error {
 	dflss.state = &dataFactoryLinkedServiceSynapseState{}
 	if err := json.NewDecoder(av).Decode(dflss.state); err != nil {
@@ -49,10 +73,12 @@ func (dflss *DataFactoryLinkedServiceSynapse) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFactoryLinkedServiceSynapse] has state.
 func (dflss *DataFactoryLinkedServiceSynapse) State() (*dataFactoryLinkedServiceSynapseState, bool) {
 	return dflss.state, dflss.state != nil
 }
 
+// StateMust returns the state for [DataFactoryLinkedServiceSynapse]. Panics if the state is nil.
 func (dflss *DataFactoryLinkedServiceSynapse) StateMust() *dataFactoryLinkedServiceSynapseState {
 	if dflss.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dflss.Type(), dflss.LocalName()))
@@ -60,10 +86,7 @@ func (dflss *DataFactoryLinkedServiceSynapse) StateMust() *dataFactoryLinkedServ
 	return dflss.state
 }
 
-func (dflss *DataFactoryLinkedServiceSynapse) DependOn() terra.Reference {
-	return terra.ReferenceResource(dflss)
-}
-
+// DataFactoryLinkedServiceSynapseArgs contains the configurations for azurerm_data_factory_linked_service_synapse.
 type DataFactoryLinkedServiceSynapseArgs struct {
 	// AdditionalProperties: map of string, optional
 	AdditionalProperties terra.MapValue[terra.StringValue] `hcl:"additional_properties,attr"`
@@ -87,55 +110,62 @@ type DataFactoryLinkedServiceSynapseArgs struct {
 	KeyVaultPassword *datafactorylinkedservicesynapse.KeyVaultPassword `hcl:"key_vault_password,block"`
 	// Timeouts: optional
 	Timeouts *datafactorylinkedservicesynapse.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataFactoryLinkedServiceSynapse depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFactoryLinkedServiceSynapseAttributes struct {
 	ref terra.Reference
 }
 
+// AdditionalProperties returns a reference to field additional_properties of azurerm_data_factory_linked_service_synapse.
 func (dflss dataFactoryLinkedServiceSynapseAttributes) AdditionalProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dflss.ref.Append("additional_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](dflss.ref.Append("additional_properties"))
 }
 
+// Annotations returns a reference to field annotations of azurerm_data_factory_linked_service_synapse.
 func (dflss dataFactoryLinkedServiceSynapseAttributes) Annotations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dflss.ref.Append("annotations"))
+	return terra.ReferenceAsList[terra.StringValue](dflss.ref.Append("annotations"))
 }
 
+// ConnectionString returns a reference to field connection_string of azurerm_data_factory_linked_service_synapse.
 func (dflss dataFactoryLinkedServiceSynapseAttributes) ConnectionString() terra.StringValue {
-	return terra.ReferenceString(dflss.ref.Append("connection_string"))
+	return terra.ReferenceAsString(dflss.ref.Append("connection_string"))
 }
 
+// DataFactoryId returns a reference to field data_factory_id of azurerm_data_factory_linked_service_synapse.
 func (dflss dataFactoryLinkedServiceSynapseAttributes) DataFactoryId() terra.StringValue {
-	return terra.ReferenceString(dflss.ref.Append("data_factory_id"))
+	return terra.ReferenceAsString(dflss.ref.Append("data_factory_id"))
 }
 
+// Description returns a reference to field description of azurerm_data_factory_linked_service_synapse.
 func (dflss dataFactoryLinkedServiceSynapseAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dflss.ref.Append("description"))
+	return terra.ReferenceAsString(dflss.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_data_factory_linked_service_synapse.
 func (dflss dataFactoryLinkedServiceSynapseAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dflss.ref.Append("id"))
+	return terra.ReferenceAsString(dflss.ref.Append("id"))
 }
 
+// IntegrationRuntimeName returns a reference to field integration_runtime_name of azurerm_data_factory_linked_service_synapse.
 func (dflss dataFactoryLinkedServiceSynapseAttributes) IntegrationRuntimeName() terra.StringValue {
-	return terra.ReferenceString(dflss.ref.Append("integration_runtime_name"))
+	return terra.ReferenceAsString(dflss.ref.Append("integration_runtime_name"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory_linked_service_synapse.
 func (dflss dataFactoryLinkedServiceSynapseAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dflss.ref.Append("name"))
+	return terra.ReferenceAsString(dflss.ref.Append("name"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_data_factory_linked_service_synapse.
 func (dflss dataFactoryLinkedServiceSynapseAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dflss.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](dflss.ref.Append("parameters"))
 }
 
 func (dflss dataFactoryLinkedServiceSynapseAttributes) KeyVaultPassword() terra.ListValue[datafactorylinkedservicesynapse.KeyVaultPasswordAttributes] {
-	return terra.ReferenceList[datafactorylinkedservicesynapse.KeyVaultPasswordAttributes](dflss.ref.Append("key_vault_password"))
+	return terra.ReferenceAsList[datafactorylinkedservicesynapse.KeyVaultPasswordAttributes](dflss.ref.Append("key_vault_password"))
 }
 
 func (dflss dataFactoryLinkedServiceSynapseAttributes) Timeouts() datafactorylinkedservicesynapse.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafactorylinkedservicesynapse.TimeoutsAttributes](dflss.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafactorylinkedservicesynapse.TimeoutsAttributes](dflss.ref.Append("timeouts"))
 }
 
 type dataFactoryLinkedServiceSynapseState struct {

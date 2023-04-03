@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAccessContextManagerGcpUserAccessBinding creates a new instance of [AccessContextManagerGcpUserAccessBinding].
 func NewAccessContextManagerGcpUserAccessBinding(name string, args AccessContextManagerGcpUserAccessBindingArgs) *AccessContextManagerGcpUserAccessBinding {
 	return &AccessContextManagerGcpUserAccessBinding{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAccessContextManagerGcpUserAccessBinding(name string, args AccessContext
 
 var _ terra.Resource = (*AccessContextManagerGcpUserAccessBinding)(nil)
 
+// AccessContextManagerGcpUserAccessBinding represents the Terraform resource google_access_context_manager_gcp_user_access_binding.
 type AccessContextManagerGcpUserAccessBinding struct {
-	Name  string
-	Args  AccessContextManagerGcpUserAccessBindingArgs
-	state *accessContextManagerGcpUserAccessBindingState
+	Name      string
+	Args      AccessContextManagerGcpUserAccessBindingArgs
+	state     *accessContextManagerGcpUserAccessBindingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AccessContextManagerGcpUserAccessBinding].
 func (acmguab *AccessContextManagerGcpUserAccessBinding) Type() string {
 	return "google_access_context_manager_gcp_user_access_binding"
 }
 
+// LocalName returns the local name for [AccessContextManagerGcpUserAccessBinding].
 func (acmguab *AccessContextManagerGcpUserAccessBinding) LocalName() string {
 	return acmguab.Name
 }
 
+// Configuration returns the configuration (args) for [AccessContextManagerGcpUserAccessBinding].
 func (acmguab *AccessContextManagerGcpUserAccessBinding) Configuration() interface{} {
 	return acmguab.Args
 }
 
+// DependOn is used for other resources to depend on [AccessContextManagerGcpUserAccessBinding].
+func (acmguab *AccessContextManagerGcpUserAccessBinding) DependOn() terra.Reference {
+	return terra.ReferenceResource(acmguab)
+}
+
+// Dependencies returns the list of resources [AccessContextManagerGcpUserAccessBinding] depends_on.
+func (acmguab *AccessContextManagerGcpUserAccessBinding) Dependencies() terra.Dependencies {
+	return acmguab.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AccessContextManagerGcpUserAccessBinding].
+func (acmguab *AccessContextManagerGcpUserAccessBinding) LifecycleManagement() *terra.Lifecycle {
+	return acmguab.Lifecycle
+}
+
+// Attributes returns the attributes for [AccessContextManagerGcpUserAccessBinding].
 func (acmguab *AccessContextManagerGcpUserAccessBinding) Attributes() accessContextManagerGcpUserAccessBindingAttributes {
 	return accessContextManagerGcpUserAccessBindingAttributes{ref: terra.ReferenceResource(acmguab)}
 }
 
+// ImportState imports the given attribute values into [AccessContextManagerGcpUserAccessBinding]'s state.
 func (acmguab *AccessContextManagerGcpUserAccessBinding) ImportState(av io.Reader) error {
 	acmguab.state = &accessContextManagerGcpUserAccessBindingState{}
 	if err := json.NewDecoder(av).Decode(acmguab.state); err != nil {
@@ -49,10 +73,12 @@ func (acmguab *AccessContextManagerGcpUserAccessBinding) ImportState(av io.Reade
 	return nil
 }
 
+// State returns the state and a bool indicating if [AccessContextManagerGcpUserAccessBinding] has state.
 func (acmguab *AccessContextManagerGcpUserAccessBinding) State() (*accessContextManagerGcpUserAccessBindingState, bool) {
 	return acmguab.state, acmguab.state != nil
 }
 
+// StateMust returns the state for [AccessContextManagerGcpUserAccessBinding]. Panics if the state is nil.
 func (acmguab *AccessContextManagerGcpUserAccessBinding) StateMust() *accessContextManagerGcpUserAccessBindingState {
 	if acmguab.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", acmguab.Type(), acmguab.LocalName()))
@@ -60,10 +86,7 @@ func (acmguab *AccessContextManagerGcpUserAccessBinding) StateMust() *accessCont
 	return acmguab.state
 }
 
-func (acmguab *AccessContextManagerGcpUserAccessBinding) DependOn() terra.Reference {
-	return terra.ReferenceResource(acmguab)
-}
-
+// AccessContextManagerGcpUserAccessBindingArgs contains the configurations for google_access_context_manager_gcp_user_access_binding.
 type AccessContextManagerGcpUserAccessBindingArgs struct {
 	// AccessLevels: list of string, required
 	AccessLevels terra.ListValue[terra.StringValue] `hcl:"access_levels,attr" validate:"required"`
@@ -75,35 +98,38 @@ type AccessContextManagerGcpUserAccessBindingArgs struct {
 	OrganizationId terra.StringValue `hcl:"organization_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *accesscontextmanagergcpuseraccessbinding.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that AccessContextManagerGcpUserAccessBinding depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type accessContextManagerGcpUserAccessBindingAttributes struct {
 	ref terra.Reference
 }
 
+// AccessLevels returns a reference to field access_levels of google_access_context_manager_gcp_user_access_binding.
 func (acmguab accessContextManagerGcpUserAccessBindingAttributes) AccessLevels() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](acmguab.ref.Append("access_levels"))
+	return terra.ReferenceAsList[terra.StringValue](acmguab.ref.Append("access_levels"))
 }
 
+// GroupKey returns a reference to field group_key of google_access_context_manager_gcp_user_access_binding.
 func (acmguab accessContextManagerGcpUserAccessBindingAttributes) GroupKey() terra.StringValue {
-	return terra.ReferenceString(acmguab.ref.Append("group_key"))
+	return terra.ReferenceAsString(acmguab.ref.Append("group_key"))
 }
 
+// Id returns a reference to field id of google_access_context_manager_gcp_user_access_binding.
 func (acmguab accessContextManagerGcpUserAccessBindingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(acmguab.ref.Append("id"))
+	return terra.ReferenceAsString(acmguab.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_access_context_manager_gcp_user_access_binding.
 func (acmguab accessContextManagerGcpUserAccessBindingAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(acmguab.ref.Append("name"))
+	return terra.ReferenceAsString(acmguab.ref.Append("name"))
 }
 
+// OrganizationId returns a reference to field organization_id of google_access_context_manager_gcp_user_access_binding.
 func (acmguab accessContextManagerGcpUserAccessBindingAttributes) OrganizationId() terra.StringValue {
-	return terra.ReferenceString(acmguab.ref.Append("organization_id"))
+	return terra.ReferenceAsString(acmguab.ref.Append("organization_id"))
 }
 
 func (acmguab accessContextManagerGcpUserAccessBindingAttributes) Timeouts() accesscontextmanagergcpuseraccessbinding.TimeoutsAttributes {
-	return terra.ReferenceSingle[accesscontextmanagergcpuseraccessbinding.TimeoutsAttributes](acmguab.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[accesscontextmanagergcpuseraccessbinding.TimeoutsAttributes](acmguab.ref.Append("timeouts"))
 }
 
 type accessContextManagerGcpUserAccessBindingState struct {

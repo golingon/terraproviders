@@ -96,240 +96,240 @@ type ActionAttributes struct {
 	ref terra.Reference
 }
 
-func (a ActionAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a ActionAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a ActionAttributes) InternalWithRef(ref terra.Reference) ActionAttributes {
 	return ActionAttributes{ref: ref}
 }
 
-func (a ActionAttributes) InternalTokens() hclwrite.Tokens {
+func (a ActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a ActionAttributes) ActionGroupId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("action_group_id"))
+	return terra.ReferenceAsString(a.ref.Append("action_group_id"))
 }
 
 func (a ActionAttributes) WebhookProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](a.ref.Append("webhook_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](a.ref.Append("webhook_properties"))
 }
 
 type ApplicationInsightsWebTestLocationAvailabilityCriteriaAttributes struct {
 	ref terra.Reference
 }
 
-func (aiwtlac ApplicationInsightsWebTestLocationAvailabilityCriteriaAttributes) InternalRef() terra.Reference {
-	return aiwtlac.ref
+func (aiwtlac ApplicationInsightsWebTestLocationAvailabilityCriteriaAttributes) InternalRef() (terra.Reference, error) {
+	return aiwtlac.ref, nil
 }
 
 func (aiwtlac ApplicationInsightsWebTestLocationAvailabilityCriteriaAttributes) InternalWithRef(ref terra.Reference) ApplicationInsightsWebTestLocationAvailabilityCriteriaAttributes {
 	return ApplicationInsightsWebTestLocationAvailabilityCriteriaAttributes{ref: ref}
 }
 
-func (aiwtlac ApplicationInsightsWebTestLocationAvailabilityCriteriaAttributes) InternalTokens() hclwrite.Tokens {
+func (aiwtlac ApplicationInsightsWebTestLocationAvailabilityCriteriaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aiwtlac.ref.InternalTokens()
 }
 
 func (aiwtlac ApplicationInsightsWebTestLocationAvailabilityCriteriaAttributes) ComponentId() terra.StringValue {
-	return terra.ReferenceString(aiwtlac.ref.Append("component_id"))
+	return terra.ReferenceAsString(aiwtlac.ref.Append("component_id"))
 }
 
 func (aiwtlac ApplicationInsightsWebTestLocationAvailabilityCriteriaAttributes) FailedLocationCount() terra.NumberValue {
-	return terra.ReferenceNumber(aiwtlac.ref.Append("failed_location_count"))
+	return terra.ReferenceAsNumber(aiwtlac.ref.Append("failed_location_count"))
 }
 
 func (aiwtlac ApplicationInsightsWebTestLocationAvailabilityCriteriaAttributes) WebTestId() terra.StringValue {
-	return terra.ReferenceString(aiwtlac.ref.Append("web_test_id"))
+	return terra.ReferenceAsString(aiwtlac.ref.Append("web_test_id"))
 }
 
 type CriteriaAttributes struct {
 	ref terra.Reference
 }
 
-func (c CriteriaAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CriteriaAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CriteriaAttributes) InternalWithRef(ref terra.Reference) CriteriaAttributes {
 	return CriteriaAttributes{ref: ref}
 }
 
-func (c CriteriaAttributes) InternalTokens() hclwrite.Tokens {
+func (c CriteriaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c CriteriaAttributes) Aggregation() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("aggregation"))
+	return terra.ReferenceAsString(c.ref.Append("aggregation"))
 }
 
 func (c CriteriaAttributes) MetricName() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("metric_name"))
+	return terra.ReferenceAsString(c.ref.Append("metric_name"))
 }
 
 func (c CriteriaAttributes) MetricNamespace() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("metric_namespace"))
+	return terra.ReferenceAsString(c.ref.Append("metric_namespace"))
 }
 
 func (c CriteriaAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("operator"))
+	return terra.ReferenceAsString(c.ref.Append("operator"))
 }
 
 func (c CriteriaAttributes) SkipMetricValidation() terra.BoolValue {
-	return terra.ReferenceBool(c.ref.Append("skip_metric_validation"))
+	return terra.ReferenceAsBool(c.ref.Append("skip_metric_validation"))
 }
 
 func (c CriteriaAttributes) Threshold() terra.NumberValue {
-	return terra.ReferenceNumber(c.ref.Append("threshold"))
+	return terra.ReferenceAsNumber(c.ref.Append("threshold"))
 }
 
 func (c CriteriaAttributes) Dimension() terra.ListValue[CriteriaDimensionAttributes] {
-	return terra.ReferenceList[CriteriaDimensionAttributes](c.ref.Append("dimension"))
+	return terra.ReferenceAsList[CriteriaDimensionAttributes](c.ref.Append("dimension"))
 }
 
 type CriteriaDimensionAttributes struct {
 	ref terra.Reference
 }
 
-func (d CriteriaDimensionAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d CriteriaDimensionAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d CriteriaDimensionAttributes) InternalWithRef(ref terra.Reference) CriteriaDimensionAttributes {
 	return CriteriaDimensionAttributes{ref: ref}
 }
 
-func (d CriteriaDimensionAttributes) InternalTokens() hclwrite.Tokens {
+func (d CriteriaDimensionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d CriteriaDimensionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("name"))
+	return terra.ReferenceAsString(d.ref.Append("name"))
 }
 
 func (d CriteriaDimensionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("operator"))
+	return terra.ReferenceAsString(d.ref.Append("operator"))
 }
 
 func (d CriteriaDimensionAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](d.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](d.ref.Append("values"))
 }
 
 type DynamicCriteriaAttributes struct {
 	ref terra.Reference
 }
 
-func (dc DynamicCriteriaAttributes) InternalRef() terra.Reference {
-	return dc.ref
+func (dc DynamicCriteriaAttributes) InternalRef() (terra.Reference, error) {
+	return dc.ref, nil
 }
 
 func (dc DynamicCriteriaAttributes) InternalWithRef(ref terra.Reference) DynamicCriteriaAttributes {
 	return DynamicCriteriaAttributes{ref: ref}
 }
 
-func (dc DynamicCriteriaAttributes) InternalTokens() hclwrite.Tokens {
+func (dc DynamicCriteriaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dc.ref.InternalTokens()
 }
 
 func (dc DynamicCriteriaAttributes) Aggregation() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("aggregation"))
+	return terra.ReferenceAsString(dc.ref.Append("aggregation"))
 }
 
 func (dc DynamicCriteriaAttributes) AlertSensitivity() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("alert_sensitivity"))
+	return terra.ReferenceAsString(dc.ref.Append("alert_sensitivity"))
 }
 
 func (dc DynamicCriteriaAttributes) EvaluationFailureCount() terra.NumberValue {
-	return terra.ReferenceNumber(dc.ref.Append("evaluation_failure_count"))
+	return terra.ReferenceAsNumber(dc.ref.Append("evaluation_failure_count"))
 }
 
 func (dc DynamicCriteriaAttributes) EvaluationTotalCount() terra.NumberValue {
-	return terra.ReferenceNumber(dc.ref.Append("evaluation_total_count"))
+	return terra.ReferenceAsNumber(dc.ref.Append("evaluation_total_count"))
 }
 
 func (dc DynamicCriteriaAttributes) IgnoreDataBefore() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("ignore_data_before"))
+	return terra.ReferenceAsString(dc.ref.Append("ignore_data_before"))
 }
 
 func (dc DynamicCriteriaAttributes) MetricName() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("metric_name"))
+	return terra.ReferenceAsString(dc.ref.Append("metric_name"))
 }
 
 func (dc DynamicCriteriaAttributes) MetricNamespace() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("metric_namespace"))
+	return terra.ReferenceAsString(dc.ref.Append("metric_namespace"))
 }
 
 func (dc DynamicCriteriaAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("operator"))
+	return terra.ReferenceAsString(dc.ref.Append("operator"))
 }
 
 func (dc DynamicCriteriaAttributes) SkipMetricValidation() terra.BoolValue {
-	return terra.ReferenceBool(dc.ref.Append("skip_metric_validation"))
+	return terra.ReferenceAsBool(dc.ref.Append("skip_metric_validation"))
 }
 
 func (dc DynamicCriteriaAttributes) Dimension() terra.ListValue[DynamicCriteriaDimensionAttributes] {
-	return terra.ReferenceList[DynamicCriteriaDimensionAttributes](dc.ref.Append("dimension"))
+	return terra.ReferenceAsList[DynamicCriteriaDimensionAttributes](dc.ref.Append("dimension"))
 }
 
 type DynamicCriteriaDimensionAttributes struct {
 	ref terra.Reference
 }
 
-func (d DynamicCriteriaDimensionAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DynamicCriteriaDimensionAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DynamicCriteriaDimensionAttributes) InternalWithRef(ref terra.Reference) DynamicCriteriaDimensionAttributes {
 	return DynamicCriteriaDimensionAttributes{ref: ref}
 }
 
-func (d DynamicCriteriaDimensionAttributes) InternalTokens() hclwrite.Tokens {
+func (d DynamicCriteriaDimensionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d DynamicCriteriaDimensionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("name"))
+	return terra.ReferenceAsString(d.ref.Append("name"))
 }
 
 func (d DynamicCriteriaDimensionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("operator"))
+	return terra.ReferenceAsString(d.ref.Append("operator"))
 }
 
 func (d DynamicCriteriaDimensionAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](d.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](d.ref.Append("values"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ActionState struct {

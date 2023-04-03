@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMysqlFlexibleServer creates a new instance of [MysqlFlexibleServer].
 func NewMysqlFlexibleServer(name string, args MysqlFlexibleServerArgs) *MysqlFlexibleServer {
 	return &MysqlFlexibleServer{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMysqlFlexibleServer(name string, args MysqlFlexibleServerArgs) *MysqlFle
 
 var _ terra.Resource = (*MysqlFlexibleServer)(nil)
 
+// MysqlFlexibleServer represents the Terraform resource azurerm_mysql_flexible_server.
 type MysqlFlexibleServer struct {
-	Name  string
-	Args  MysqlFlexibleServerArgs
-	state *mysqlFlexibleServerState
+	Name      string
+	Args      MysqlFlexibleServerArgs
+	state     *mysqlFlexibleServerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MysqlFlexibleServer].
 func (mfs *MysqlFlexibleServer) Type() string {
 	return "azurerm_mysql_flexible_server"
 }
 
+// LocalName returns the local name for [MysqlFlexibleServer].
 func (mfs *MysqlFlexibleServer) LocalName() string {
 	return mfs.Name
 }
 
+// Configuration returns the configuration (args) for [MysqlFlexibleServer].
 func (mfs *MysqlFlexibleServer) Configuration() interface{} {
 	return mfs.Args
 }
 
+// DependOn is used for other resources to depend on [MysqlFlexibleServer].
+func (mfs *MysqlFlexibleServer) DependOn() terra.Reference {
+	return terra.ReferenceResource(mfs)
+}
+
+// Dependencies returns the list of resources [MysqlFlexibleServer] depends_on.
+func (mfs *MysqlFlexibleServer) Dependencies() terra.Dependencies {
+	return mfs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MysqlFlexibleServer].
+func (mfs *MysqlFlexibleServer) LifecycleManagement() *terra.Lifecycle {
+	return mfs.Lifecycle
+}
+
+// Attributes returns the attributes for [MysqlFlexibleServer].
 func (mfs *MysqlFlexibleServer) Attributes() mysqlFlexibleServerAttributes {
 	return mysqlFlexibleServerAttributes{ref: terra.ReferenceResource(mfs)}
 }
 
+// ImportState imports the given attribute values into [MysqlFlexibleServer]'s state.
 func (mfs *MysqlFlexibleServer) ImportState(av io.Reader) error {
 	mfs.state = &mysqlFlexibleServerState{}
 	if err := json.NewDecoder(av).Decode(mfs.state); err != nil {
@@ -49,10 +73,12 @@ func (mfs *MysqlFlexibleServer) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MysqlFlexibleServer] has state.
 func (mfs *MysqlFlexibleServer) State() (*mysqlFlexibleServerState, bool) {
 	return mfs.state, mfs.state != nil
 }
 
+// StateMust returns the state for [MysqlFlexibleServer]. Panics if the state is nil.
 func (mfs *MysqlFlexibleServer) StateMust() *mysqlFlexibleServerState {
 	if mfs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mfs.Type(), mfs.LocalName()))
@@ -60,10 +86,7 @@ func (mfs *MysqlFlexibleServer) StateMust() *mysqlFlexibleServerState {
 	return mfs.state
 }
 
-func (mfs *MysqlFlexibleServer) DependOn() terra.Reference {
-	return terra.ReferenceResource(mfs)
-}
-
+// MysqlFlexibleServerArgs contains the configurations for azurerm_mysql_flexible_server.
 type MysqlFlexibleServerArgs struct {
 	// AdministratorLogin: string, optional
 	AdministratorLogin terra.StringValue `hcl:"administrator_login,attr"`
@@ -113,119 +136,138 @@ type MysqlFlexibleServerArgs struct {
 	Storage *mysqlflexibleserver.Storage `hcl:"storage,block"`
 	// Timeouts: optional
 	Timeouts *mysqlflexibleserver.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MysqlFlexibleServer depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mysqlFlexibleServerAttributes struct {
 	ref terra.Reference
 }
 
+// AdministratorLogin returns a reference to field administrator_login of azurerm_mysql_flexible_server.
 func (mfs mysqlFlexibleServerAttributes) AdministratorLogin() terra.StringValue {
-	return terra.ReferenceString(mfs.ref.Append("administrator_login"))
+	return terra.ReferenceAsString(mfs.ref.Append("administrator_login"))
 }
 
+// AdministratorPassword returns a reference to field administrator_password of azurerm_mysql_flexible_server.
 func (mfs mysqlFlexibleServerAttributes) AdministratorPassword() terra.StringValue {
-	return terra.ReferenceString(mfs.ref.Append("administrator_password"))
+	return terra.ReferenceAsString(mfs.ref.Append("administrator_password"))
 }
 
+// BackupRetentionDays returns a reference to field backup_retention_days of azurerm_mysql_flexible_server.
 func (mfs mysqlFlexibleServerAttributes) BackupRetentionDays() terra.NumberValue {
-	return terra.ReferenceNumber(mfs.ref.Append("backup_retention_days"))
+	return terra.ReferenceAsNumber(mfs.ref.Append("backup_retention_days"))
 }
 
+// CreateMode returns a reference to field create_mode of azurerm_mysql_flexible_server.
 func (mfs mysqlFlexibleServerAttributes) CreateMode() terra.StringValue {
-	return terra.ReferenceString(mfs.ref.Append("create_mode"))
+	return terra.ReferenceAsString(mfs.ref.Append("create_mode"))
 }
 
+// DelegatedSubnetId returns a reference to field delegated_subnet_id of azurerm_mysql_flexible_server.
 func (mfs mysqlFlexibleServerAttributes) DelegatedSubnetId() terra.StringValue {
-	return terra.ReferenceString(mfs.ref.Append("delegated_subnet_id"))
+	return terra.ReferenceAsString(mfs.ref.Append("delegated_subnet_id"))
 }
 
+// Fqdn returns a reference to field fqdn of azurerm_mysql_flexible_server.
 func (mfs mysqlFlexibleServerAttributes) Fqdn() terra.StringValue {
-	return terra.ReferenceString(mfs.ref.Append("fqdn"))
+	return terra.ReferenceAsString(mfs.ref.Append("fqdn"))
 }
 
+// GeoRedundantBackupEnabled returns a reference to field geo_redundant_backup_enabled of azurerm_mysql_flexible_server.
 func (mfs mysqlFlexibleServerAttributes) GeoRedundantBackupEnabled() terra.BoolValue {
-	return terra.ReferenceBool(mfs.ref.Append("geo_redundant_backup_enabled"))
+	return terra.ReferenceAsBool(mfs.ref.Append("geo_redundant_backup_enabled"))
 }
 
+// Id returns a reference to field id of azurerm_mysql_flexible_server.
 func (mfs mysqlFlexibleServerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mfs.ref.Append("id"))
+	return terra.ReferenceAsString(mfs.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_mysql_flexible_server.
 func (mfs mysqlFlexibleServerAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(mfs.ref.Append("location"))
+	return terra.ReferenceAsString(mfs.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_mysql_flexible_server.
 func (mfs mysqlFlexibleServerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mfs.ref.Append("name"))
+	return terra.ReferenceAsString(mfs.ref.Append("name"))
 }
 
+// PointInTimeRestoreTimeInUtc returns a reference to field point_in_time_restore_time_in_utc of azurerm_mysql_flexible_server.
 func (mfs mysqlFlexibleServerAttributes) PointInTimeRestoreTimeInUtc() terra.StringValue {
-	return terra.ReferenceString(mfs.ref.Append("point_in_time_restore_time_in_utc"))
+	return terra.ReferenceAsString(mfs.ref.Append("point_in_time_restore_time_in_utc"))
 }
 
+// PrivateDnsZoneId returns a reference to field private_dns_zone_id of azurerm_mysql_flexible_server.
 func (mfs mysqlFlexibleServerAttributes) PrivateDnsZoneId() terra.StringValue {
-	return terra.ReferenceString(mfs.ref.Append("private_dns_zone_id"))
+	return terra.ReferenceAsString(mfs.ref.Append("private_dns_zone_id"))
 }
 
+// PublicNetworkAccessEnabled returns a reference to field public_network_access_enabled of azurerm_mysql_flexible_server.
 func (mfs mysqlFlexibleServerAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(mfs.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(mfs.ref.Append("public_network_access_enabled"))
 }
 
+// ReplicaCapacity returns a reference to field replica_capacity of azurerm_mysql_flexible_server.
 func (mfs mysqlFlexibleServerAttributes) ReplicaCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(mfs.ref.Append("replica_capacity"))
+	return terra.ReferenceAsNumber(mfs.ref.Append("replica_capacity"))
 }
 
+// ReplicationRole returns a reference to field replication_role of azurerm_mysql_flexible_server.
 func (mfs mysqlFlexibleServerAttributes) ReplicationRole() terra.StringValue {
-	return terra.ReferenceString(mfs.ref.Append("replication_role"))
+	return terra.ReferenceAsString(mfs.ref.Append("replication_role"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_mysql_flexible_server.
 func (mfs mysqlFlexibleServerAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(mfs.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(mfs.ref.Append("resource_group_name"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_mysql_flexible_server.
 func (mfs mysqlFlexibleServerAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(mfs.ref.Append("sku_name"))
+	return terra.ReferenceAsString(mfs.ref.Append("sku_name"))
 }
 
+// SourceServerId returns a reference to field source_server_id of azurerm_mysql_flexible_server.
 func (mfs mysqlFlexibleServerAttributes) SourceServerId() terra.StringValue {
-	return terra.ReferenceString(mfs.ref.Append("source_server_id"))
+	return terra.ReferenceAsString(mfs.ref.Append("source_server_id"))
 }
 
+// Tags returns a reference to field tags of azurerm_mysql_flexible_server.
 func (mfs mysqlFlexibleServerAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mfs.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mfs.ref.Append("tags"))
 }
 
+// Version returns a reference to field version of azurerm_mysql_flexible_server.
 func (mfs mysqlFlexibleServerAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(mfs.ref.Append("version"))
+	return terra.ReferenceAsString(mfs.ref.Append("version"))
 }
 
+// Zone returns a reference to field zone of azurerm_mysql_flexible_server.
 func (mfs mysqlFlexibleServerAttributes) Zone() terra.StringValue {
-	return terra.ReferenceString(mfs.ref.Append("zone"))
+	return terra.ReferenceAsString(mfs.ref.Append("zone"))
 }
 
 func (mfs mysqlFlexibleServerAttributes) CustomerManagedKey() terra.ListValue[mysqlflexibleserver.CustomerManagedKeyAttributes] {
-	return terra.ReferenceList[mysqlflexibleserver.CustomerManagedKeyAttributes](mfs.ref.Append("customer_managed_key"))
+	return terra.ReferenceAsList[mysqlflexibleserver.CustomerManagedKeyAttributes](mfs.ref.Append("customer_managed_key"))
 }
 
 func (mfs mysqlFlexibleServerAttributes) HighAvailability() terra.ListValue[mysqlflexibleserver.HighAvailabilityAttributes] {
-	return terra.ReferenceList[mysqlflexibleserver.HighAvailabilityAttributes](mfs.ref.Append("high_availability"))
+	return terra.ReferenceAsList[mysqlflexibleserver.HighAvailabilityAttributes](mfs.ref.Append("high_availability"))
 }
 
 func (mfs mysqlFlexibleServerAttributes) Identity() terra.ListValue[mysqlflexibleserver.IdentityAttributes] {
-	return terra.ReferenceList[mysqlflexibleserver.IdentityAttributes](mfs.ref.Append("identity"))
+	return terra.ReferenceAsList[mysqlflexibleserver.IdentityAttributes](mfs.ref.Append("identity"))
 }
 
 func (mfs mysqlFlexibleServerAttributes) MaintenanceWindow() terra.ListValue[mysqlflexibleserver.MaintenanceWindowAttributes] {
-	return terra.ReferenceList[mysqlflexibleserver.MaintenanceWindowAttributes](mfs.ref.Append("maintenance_window"))
+	return terra.ReferenceAsList[mysqlflexibleserver.MaintenanceWindowAttributes](mfs.ref.Append("maintenance_window"))
 }
 
 func (mfs mysqlFlexibleServerAttributes) Storage() terra.ListValue[mysqlflexibleserver.StorageAttributes] {
-	return terra.ReferenceList[mysqlflexibleserver.StorageAttributes](mfs.ref.Append("storage"))
+	return terra.ReferenceAsList[mysqlflexibleserver.StorageAttributes](mfs.ref.Append("storage"))
 }
 
 func (mfs mysqlFlexibleServerAttributes) Timeouts() mysqlflexibleserver.TimeoutsAttributes {
-	return terra.ReferenceSingle[mysqlflexibleserver.TimeoutsAttributes](mfs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[mysqlflexibleserver.TimeoutsAttributes](mfs.ref.Append("timeouts"))
 }
 
 type mysqlFlexibleServerState struct {

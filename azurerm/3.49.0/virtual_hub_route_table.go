@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewVirtualHubRouteTable creates a new instance of [VirtualHubRouteTable].
 func NewVirtualHubRouteTable(name string, args VirtualHubRouteTableArgs) *VirtualHubRouteTable {
 	return &VirtualHubRouteTable{
 		Args: args,
@@ -19,28 +20,51 @@ func NewVirtualHubRouteTable(name string, args VirtualHubRouteTableArgs) *Virtua
 
 var _ terra.Resource = (*VirtualHubRouteTable)(nil)
 
+// VirtualHubRouteTable represents the Terraform resource azurerm_virtual_hub_route_table.
 type VirtualHubRouteTable struct {
-	Name  string
-	Args  VirtualHubRouteTableArgs
-	state *virtualHubRouteTableState
+	Name      string
+	Args      VirtualHubRouteTableArgs
+	state     *virtualHubRouteTableState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VirtualHubRouteTable].
 func (vhrt *VirtualHubRouteTable) Type() string {
 	return "azurerm_virtual_hub_route_table"
 }
 
+// LocalName returns the local name for [VirtualHubRouteTable].
 func (vhrt *VirtualHubRouteTable) LocalName() string {
 	return vhrt.Name
 }
 
+// Configuration returns the configuration (args) for [VirtualHubRouteTable].
 func (vhrt *VirtualHubRouteTable) Configuration() interface{} {
 	return vhrt.Args
 }
 
+// DependOn is used for other resources to depend on [VirtualHubRouteTable].
+func (vhrt *VirtualHubRouteTable) DependOn() terra.Reference {
+	return terra.ReferenceResource(vhrt)
+}
+
+// Dependencies returns the list of resources [VirtualHubRouteTable] depends_on.
+func (vhrt *VirtualHubRouteTable) Dependencies() terra.Dependencies {
+	return vhrt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VirtualHubRouteTable].
+func (vhrt *VirtualHubRouteTable) LifecycleManagement() *terra.Lifecycle {
+	return vhrt.Lifecycle
+}
+
+// Attributes returns the attributes for [VirtualHubRouteTable].
 func (vhrt *VirtualHubRouteTable) Attributes() virtualHubRouteTableAttributes {
 	return virtualHubRouteTableAttributes{ref: terra.ReferenceResource(vhrt)}
 }
 
+// ImportState imports the given attribute values into [VirtualHubRouteTable]'s state.
 func (vhrt *VirtualHubRouteTable) ImportState(av io.Reader) error {
 	vhrt.state = &virtualHubRouteTableState{}
 	if err := json.NewDecoder(av).Decode(vhrt.state); err != nil {
@@ -49,10 +73,12 @@ func (vhrt *VirtualHubRouteTable) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [VirtualHubRouteTable] has state.
 func (vhrt *VirtualHubRouteTable) State() (*virtualHubRouteTableState, bool) {
 	return vhrt.state, vhrt.state != nil
 }
 
+// StateMust returns the state for [VirtualHubRouteTable]. Panics if the state is nil.
 func (vhrt *VirtualHubRouteTable) StateMust() *virtualHubRouteTableState {
 	if vhrt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", vhrt.Type(), vhrt.LocalName()))
@@ -60,10 +86,7 @@ func (vhrt *VirtualHubRouteTable) StateMust() *virtualHubRouteTableState {
 	return vhrt.state
 }
 
-func (vhrt *VirtualHubRouteTable) DependOn() terra.Reference {
-	return terra.ReferenceResource(vhrt)
-}
-
+// VirtualHubRouteTableArgs contains the configurations for azurerm_virtual_hub_route_table.
 type VirtualHubRouteTableArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,35 +100,37 @@ type VirtualHubRouteTableArgs struct {
 	Route []virtualhubroutetable.Route `hcl:"route,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *virtualhubroutetable.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that VirtualHubRouteTable depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type virtualHubRouteTableAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_virtual_hub_route_table.
 func (vhrt virtualHubRouteTableAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vhrt.ref.Append("id"))
+	return terra.ReferenceAsString(vhrt.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of azurerm_virtual_hub_route_table.
 func (vhrt virtualHubRouteTableAttributes) Labels() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vhrt.ref.Append("labels"))
+	return terra.ReferenceAsSet[terra.StringValue](vhrt.ref.Append("labels"))
 }
 
+// Name returns a reference to field name of azurerm_virtual_hub_route_table.
 func (vhrt virtualHubRouteTableAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(vhrt.ref.Append("name"))
+	return terra.ReferenceAsString(vhrt.ref.Append("name"))
 }
 
+// VirtualHubId returns a reference to field virtual_hub_id of azurerm_virtual_hub_route_table.
 func (vhrt virtualHubRouteTableAttributes) VirtualHubId() terra.StringValue {
-	return terra.ReferenceString(vhrt.ref.Append("virtual_hub_id"))
+	return terra.ReferenceAsString(vhrt.ref.Append("virtual_hub_id"))
 }
 
 func (vhrt virtualHubRouteTableAttributes) Route() terra.SetValue[virtualhubroutetable.RouteAttributes] {
-	return terra.ReferenceSet[virtualhubroutetable.RouteAttributes](vhrt.ref.Append("route"))
+	return terra.ReferenceAsSet[virtualhubroutetable.RouteAttributes](vhrt.ref.Append("route"))
 }
 
 func (vhrt virtualHubRouteTableAttributes) Timeouts() virtualhubroutetable.TimeoutsAttributes {
-	return terra.ReferenceSingle[virtualhubroutetable.TimeoutsAttributes](vhrt.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[virtualhubroutetable.TimeoutsAttributes](vhrt.ref.Append("timeouts"))
 }
 
 type virtualHubRouteTableState struct {

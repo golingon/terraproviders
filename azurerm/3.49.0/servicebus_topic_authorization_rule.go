@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewServicebusTopicAuthorizationRule creates a new instance of [ServicebusTopicAuthorizationRule].
 func NewServicebusTopicAuthorizationRule(name string, args ServicebusTopicAuthorizationRuleArgs) *ServicebusTopicAuthorizationRule {
 	return &ServicebusTopicAuthorizationRule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewServicebusTopicAuthorizationRule(name string, args ServicebusTopicAuthor
 
 var _ terra.Resource = (*ServicebusTopicAuthorizationRule)(nil)
 
+// ServicebusTopicAuthorizationRule represents the Terraform resource azurerm_servicebus_topic_authorization_rule.
 type ServicebusTopicAuthorizationRule struct {
-	Name  string
-	Args  ServicebusTopicAuthorizationRuleArgs
-	state *servicebusTopicAuthorizationRuleState
+	Name      string
+	Args      ServicebusTopicAuthorizationRuleArgs
+	state     *servicebusTopicAuthorizationRuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ServicebusTopicAuthorizationRule].
 func (star *ServicebusTopicAuthorizationRule) Type() string {
 	return "azurerm_servicebus_topic_authorization_rule"
 }
 
+// LocalName returns the local name for [ServicebusTopicAuthorizationRule].
 func (star *ServicebusTopicAuthorizationRule) LocalName() string {
 	return star.Name
 }
 
+// Configuration returns the configuration (args) for [ServicebusTopicAuthorizationRule].
 func (star *ServicebusTopicAuthorizationRule) Configuration() interface{} {
 	return star.Args
 }
 
+// DependOn is used for other resources to depend on [ServicebusTopicAuthorizationRule].
+func (star *ServicebusTopicAuthorizationRule) DependOn() terra.Reference {
+	return terra.ReferenceResource(star)
+}
+
+// Dependencies returns the list of resources [ServicebusTopicAuthorizationRule] depends_on.
+func (star *ServicebusTopicAuthorizationRule) Dependencies() terra.Dependencies {
+	return star.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ServicebusTopicAuthorizationRule].
+func (star *ServicebusTopicAuthorizationRule) LifecycleManagement() *terra.Lifecycle {
+	return star.Lifecycle
+}
+
+// Attributes returns the attributes for [ServicebusTopicAuthorizationRule].
 func (star *ServicebusTopicAuthorizationRule) Attributes() servicebusTopicAuthorizationRuleAttributes {
 	return servicebusTopicAuthorizationRuleAttributes{ref: terra.ReferenceResource(star)}
 }
 
+// ImportState imports the given attribute values into [ServicebusTopicAuthorizationRule]'s state.
 func (star *ServicebusTopicAuthorizationRule) ImportState(av io.Reader) error {
 	star.state = &servicebusTopicAuthorizationRuleState{}
 	if err := json.NewDecoder(av).Decode(star.state); err != nil {
@@ -49,10 +73,12 @@ func (star *ServicebusTopicAuthorizationRule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ServicebusTopicAuthorizationRule] has state.
 func (star *ServicebusTopicAuthorizationRule) State() (*servicebusTopicAuthorizationRuleState, bool) {
 	return star.state, star.state != nil
 }
 
+// StateMust returns the state for [ServicebusTopicAuthorizationRule]. Panics if the state is nil.
 func (star *ServicebusTopicAuthorizationRule) StateMust() *servicebusTopicAuthorizationRuleState {
 	if star.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", star.Type(), star.LocalName()))
@@ -60,10 +86,7 @@ func (star *ServicebusTopicAuthorizationRule) StateMust() *servicebusTopicAuthor
 	return star.state
 }
 
-func (star *ServicebusTopicAuthorizationRule) DependOn() terra.Reference {
-	return terra.ReferenceResource(star)
-}
-
+// ServicebusTopicAuthorizationRuleArgs contains the configurations for azurerm_servicebus_topic_authorization_rule.
 type ServicebusTopicAuthorizationRuleArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,63 +102,73 @@ type ServicebusTopicAuthorizationRuleArgs struct {
 	TopicId terra.StringValue `hcl:"topic_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *servicebustopicauthorizationrule.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ServicebusTopicAuthorizationRule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type servicebusTopicAuthorizationRuleAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_servicebus_topic_authorization_rule.
 func (star servicebusTopicAuthorizationRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(star.ref.Append("id"))
+	return terra.ReferenceAsString(star.ref.Append("id"))
 }
 
+// Listen returns a reference to field listen of azurerm_servicebus_topic_authorization_rule.
 func (star servicebusTopicAuthorizationRuleAttributes) Listen() terra.BoolValue {
-	return terra.ReferenceBool(star.ref.Append("listen"))
+	return terra.ReferenceAsBool(star.ref.Append("listen"))
 }
 
+// Manage returns a reference to field manage of azurerm_servicebus_topic_authorization_rule.
 func (star servicebusTopicAuthorizationRuleAttributes) Manage() terra.BoolValue {
-	return terra.ReferenceBool(star.ref.Append("manage"))
+	return terra.ReferenceAsBool(star.ref.Append("manage"))
 }
 
+// Name returns a reference to field name of azurerm_servicebus_topic_authorization_rule.
 func (star servicebusTopicAuthorizationRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(star.ref.Append("name"))
+	return terra.ReferenceAsString(star.ref.Append("name"))
 }
 
+// PrimaryConnectionString returns a reference to field primary_connection_string of azurerm_servicebus_topic_authorization_rule.
 func (star servicebusTopicAuthorizationRuleAttributes) PrimaryConnectionString() terra.StringValue {
-	return terra.ReferenceString(star.ref.Append("primary_connection_string"))
+	return terra.ReferenceAsString(star.ref.Append("primary_connection_string"))
 }
 
+// PrimaryConnectionStringAlias returns a reference to field primary_connection_string_alias of azurerm_servicebus_topic_authorization_rule.
 func (star servicebusTopicAuthorizationRuleAttributes) PrimaryConnectionStringAlias() terra.StringValue {
-	return terra.ReferenceString(star.ref.Append("primary_connection_string_alias"))
+	return terra.ReferenceAsString(star.ref.Append("primary_connection_string_alias"))
 }
 
+// PrimaryKey returns a reference to field primary_key of azurerm_servicebus_topic_authorization_rule.
 func (star servicebusTopicAuthorizationRuleAttributes) PrimaryKey() terra.StringValue {
-	return terra.ReferenceString(star.ref.Append("primary_key"))
+	return terra.ReferenceAsString(star.ref.Append("primary_key"))
 }
 
+// SecondaryConnectionString returns a reference to field secondary_connection_string of azurerm_servicebus_topic_authorization_rule.
 func (star servicebusTopicAuthorizationRuleAttributes) SecondaryConnectionString() terra.StringValue {
-	return terra.ReferenceString(star.ref.Append("secondary_connection_string"))
+	return terra.ReferenceAsString(star.ref.Append("secondary_connection_string"))
 }
 
+// SecondaryConnectionStringAlias returns a reference to field secondary_connection_string_alias of azurerm_servicebus_topic_authorization_rule.
 func (star servicebusTopicAuthorizationRuleAttributes) SecondaryConnectionStringAlias() terra.StringValue {
-	return terra.ReferenceString(star.ref.Append("secondary_connection_string_alias"))
+	return terra.ReferenceAsString(star.ref.Append("secondary_connection_string_alias"))
 }
 
+// SecondaryKey returns a reference to field secondary_key of azurerm_servicebus_topic_authorization_rule.
 func (star servicebusTopicAuthorizationRuleAttributes) SecondaryKey() terra.StringValue {
-	return terra.ReferenceString(star.ref.Append("secondary_key"))
+	return terra.ReferenceAsString(star.ref.Append("secondary_key"))
 }
 
+// Send returns a reference to field send of azurerm_servicebus_topic_authorization_rule.
 func (star servicebusTopicAuthorizationRuleAttributes) Send() terra.BoolValue {
-	return terra.ReferenceBool(star.ref.Append("send"))
+	return terra.ReferenceAsBool(star.ref.Append("send"))
 }
 
+// TopicId returns a reference to field topic_id of azurerm_servicebus_topic_authorization_rule.
 func (star servicebusTopicAuthorizationRuleAttributes) TopicId() terra.StringValue {
-	return terra.ReferenceString(star.ref.Append("topic_id"))
+	return terra.ReferenceAsString(star.ref.Append("topic_id"))
 }
 
 func (star servicebusTopicAuthorizationRuleAttributes) Timeouts() servicebustopicauthorizationrule.TimeoutsAttributes {
-	return terra.ReferenceSingle[servicebustopicauthorizationrule.TimeoutsAttributes](star.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[servicebustopicauthorizationrule.TimeoutsAttributes](star.ref.Append("timeouts"))
 }
 
 type servicebusTopicAuthorizationRuleState struct {

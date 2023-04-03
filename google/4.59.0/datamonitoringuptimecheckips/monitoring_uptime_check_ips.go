@@ -13,28 +13,28 @@ type UptimeCheckIpsAttributes struct {
 	ref terra.Reference
 }
 
-func (uci UptimeCheckIpsAttributes) InternalRef() terra.Reference {
-	return uci.ref
+func (uci UptimeCheckIpsAttributes) InternalRef() (terra.Reference, error) {
+	return uci.ref, nil
 }
 
 func (uci UptimeCheckIpsAttributes) InternalWithRef(ref terra.Reference) UptimeCheckIpsAttributes {
 	return UptimeCheckIpsAttributes{ref: ref}
 }
 
-func (uci UptimeCheckIpsAttributes) InternalTokens() hclwrite.Tokens {
+func (uci UptimeCheckIpsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return uci.ref.InternalTokens()
 }
 
 func (uci UptimeCheckIpsAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(uci.ref.Append("ip_address"))
+	return terra.ReferenceAsString(uci.ref.Append("ip_address"))
 }
 
 func (uci UptimeCheckIpsAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(uci.ref.Append("location"))
+	return terra.ReferenceAsString(uci.ref.Append("location"))
 }
 
 func (uci UptimeCheckIpsAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(uci.ref.Append("region"))
+	return terra.ReferenceAsString(uci.ref.Append("region"))
 }
 
 type UptimeCheckIpsState struct {

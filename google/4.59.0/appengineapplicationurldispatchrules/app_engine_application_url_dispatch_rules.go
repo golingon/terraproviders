@@ -29,56 +29,56 @@ type DispatchRulesAttributes struct {
 	ref terra.Reference
 }
 
-func (dr DispatchRulesAttributes) InternalRef() terra.Reference {
-	return dr.ref
+func (dr DispatchRulesAttributes) InternalRef() (terra.Reference, error) {
+	return dr.ref, nil
 }
 
 func (dr DispatchRulesAttributes) InternalWithRef(ref terra.Reference) DispatchRulesAttributes {
 	return DispatchRulesAttributes{ref: ref}
 }
 
-func (dr DispatchRulesAttributes) InternalTokens() hclwrite.Tokens {
+func (dr DispatchRulesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dr.ref.InternalTokens()
 }
 
 func (dr DispatchRulesAttributes) Domain() terra.StringValue {
-	return terra.ReferenceString(dr.ref.Append("domain"))
+	return terra.ReferenceAsString(dr.ref.Append("domain"))
 }
 
 func (dr DispatchRulesAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(dr.ref.Append("path"))
+	return terra.ReferenceAsString(dr.ref.Append("path"))
 }
 
 func (dr DispatchRulesAttributes) Service() terra.StringValue {
-	return terra.ReferenceString(dr.ref.Append("service"))
+	return terra.ReferenceAsString(dr.ref.Append("service"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type DispatchRulesState struct {

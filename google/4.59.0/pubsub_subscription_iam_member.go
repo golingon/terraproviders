@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewPubsubSubscriptionIamMember creates a new instance of [PubsubSubscriptionIamMember].
 func NewPubsubSubscriptionIamMember(name string, args PubsubSubscriptionIamMemberArgs) *PubsubSubscriptionIamMember {
 	return &PubsubSubscriptionIamMember{
 		Args: args,
@@ -19,28 +20,51 @@ func NewPubsubSubscriptionIamMember(name string, args PubsubSubscriptionIamMembe
 
 var _ terra.Resource = (*PubsubSubscriptionIamMember)(nil)
 
+// PubsubSubscriptionIamMember represents the Terraform resource google_pubsub_subscription_iam_member.
 type PubsubSubscriptionIamMember struct {
-	Name  string
-	Args  PubsubSubscriptionIamMemberArgs
-	state *pubsubSubscriptionIamMemberState
+	Name      string
+	Args      PubsubSubscriptionIamMemberArgs
+	state     *pubsubSubscriptionIamMemberState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PubsubSubscriptionIamMember].
 func (psim *PubsubSubscriptionIamMember) Type() string {
 	return "google_pubsub_subscription_iam_member"
 }
 
+// LocalName returns the local name for [PubsubSubscriptionIamMember].
 func (psim *PubsubSubscriptionIamMember) LocalName() string {
 	return psim.Name
 }
 
+// Configuration returns the configuration (args) for [PubsubSubscriptionIamMember].
 func (psim *PubsubSubscriptionIamMember) Configuration() interface{} {
 	return psim.Args
 }
 
+// DependOn is used for other resources to depend on [PubsubSubscriptionIamMember].
+func (psim *PubsubSubscriptionIamMember) DependOn() terra.Reference {
+	return terra.ReferenceResource(psim)
+}
+
+// Dependencies returns the list of resources [PubsubSubscriptionIamMember] depends_on.
+func (psim *PubsubSubscriptionIamMember) Dependencies() terra.Dependencies {
+	return psim.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PubsubSubscriptionIamMember].
+func (psim *PubsubSubscriptionIamMember) LifecycleManagement() *terra.Lifecycle {
+	return psim.Lifecycle
+}
+
+// Attributes returns the attributes for [PubsubSubscriptionIamMember].
 func (psim *PubsubSubscriptionIamMember) Attributes() pubsubSubscriptionIamMemberAttributes {
 	return pubsubSubscriptionIamMemberAttributes{ref: terra.ReferenceResource(psim)}
 }
 
+// ImportState imports the given attribute values into [PubsubSubscriptionIamMember]'s state.
 func (psim *PubsubSubscriptionIamMember) ImportState(av io.Reader) error {
 	psim.state = &pubsubSubscriptionIamMemberState{}
 	if err := json.NewDecoder(av).Decode(psim.state); err != nil {
@@ -49,10 +73,12 @@ func (psim *PubsubSubscriptionIamMember) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PubsubSubscriptionIamMember] has state.
 func (psim *PubsubSubscriptionIamMember) State() (*pubsubSubscriptionIamMemberState, bool) {
 	return psim.state, psim.state != nil
 }
 
+// StateMust returns the state for [PubsubSubscriptionIamMember]. Panics if the state is nil.
 func (psim *PubsubSubscriptionIamMember) StateMust() *pubsubSubscriptionIamMemberState {
 	if psim.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", psim.Type(), psim.LocalName()))
@@ -60,10 +86,7 @@ func (psim *PubsubSubscriptionIamMember) StateMust() *pubsubSubscriptionIamMembe
 	return psim.state
 }
 
-func (psim *PubsubSubscriptionIamMember) DependOn() terra.Reference {
-	return terra.ReferenceResource(psim)
-}
-
+// PubsubSubscriptionIamMemberArgs contains the configurations for google_pubsub_subscription_iam_member.
 type PubsubSubscriptionIamMemberArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,39 +100,43 @@ type PubsubSubscriptionIamMemberArgs struct {
 	Subscription terra.StringValue `hcl:"subscription,attr" validate:"required"`
 	// Condition: optional
 	Condition *pubsubsubscriptioniammember.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that PubsubSubscriptionIamMember depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type pubsubSubscriptionIamMemberAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_pubsub_subscription_iam_member.
 func (psim pubsubSubscriptionIamMemberAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(psim.ref.Append("etag"))
+	return terra.ReferenceAsString(psim.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_pubsub_subscription_iam_member.
 func (psim pubsubSubscriptionIamMemberAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(psim.ref.Append("id"))
+	return terra.ReferenceAsString(psim.ref.Append("id"))
 }
 
+// Member returns a reference to field member of google_pubsub_subscription_iam_member.
 func (psim pubsubSubscriptionIamMemberAttributes) Member() terra.StringValue {
-	return terra.ReferenceString(psim.ref.Append("member"))
+	return terra.ReferenceAsString(psim.ref.Append("member"))
 }
 
+// Project returns a reference to field project of google_pubsub_subscription_iam_member.
 func (psim pubsubSubscriptionIamMemberAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(psim.ref.Append("project"))
+	return terra.ReferenceAsString(psim.ref.Append("project"))
 }
 
+// Role returns a reference to field role of google_pubsub_subscription_iam_member.
 func (psim pubsubSubscriptionIamMemberAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(psim.ref.Append("role"))
+	return terra.ReferenceAsString(psim.ref.Append("role"))
 }
 
+// Subscription returns a reference to field subscription of google_pubsub_subscription_iam_member.
 func (psim pubsubSubscriptionIamMemberAttributes) Subscription() terra.StringValue {
-	return terra.ReferenceString(psim.ref.Append("subscription"))
+	return terra.ReferenceAsString(psim.ref.Append("subscription"))
 }
 
 func (psim pubsubSubscriptionIamMemberAttributes) Condition() terra.ListValue[pubsubsubscriptioniammember.ConditionAttributes] {
-	return terra.ReferenceList[pubsubsubscriptioniammember.ConditionAttributes](psim.ref.Append("condition"))
+	return terra.ReferenceAsList[pubsubsubscriptioniammember.ConditionAttributes](psim.ref.Append("condition"))
 }
 
 type pubsubSubscriptionIamMemberState struct {

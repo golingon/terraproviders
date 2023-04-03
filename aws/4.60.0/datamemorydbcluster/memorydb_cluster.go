@@ -33,7 +33,7 @@ func (ce ClusterEndpointAttributes) InternalWithRef(ref terra.Reference) Cluster
 	return ClusterEndpointAttributes{ref: ref}
 }
 
-func (ce ClusterEndpointAttributes) InternalTokens() hclwrite.Tokens {
+func (ce ClusterEndpointAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ce.ref.InternalTokens()
 }
 
@@ -57,7 +57,7 @@ func (s ShardsAttributes) InternalWithRef(ref terra.Reference) ShardsAttributes 
 	return ShardsAttributes{ref: ref}
 }
 
-func (s ShardsAttributes) InternalTokens() hclwrite.Tokens {
+func (s ShardsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -89,7 +89,7 @@ func (n NodesAttributes) InternalWithRef(ref terra.Reference) NodesAttributes {
 	return NodesAttributes{ref: ref}
 }
 
-func (n NodesAttributes) InternalTokens() hclwrite.Tokens {
+func (n NodesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return n.ref.InternalTokens()
 }
 
@@ -121,7 +121,7 @@ func (e EndpointAttributes) InternalWithRef(ref terra.Reference) EndpointAttribu
 	return EndpointAttributes{ref: ref}
 }
 
-func (e EndpointAttributes) InternalTokens() hclwrite.Tokens {
+func (e EndpointAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 

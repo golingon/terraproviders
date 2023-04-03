@@ -506,7 +506,7 @@ func (ca CloudwatchAlarmAttributes) InternalWithRef(ref terra.Reference) Cloudwa
 	return CloudwatchAlarmAttributes{ref: ref}
 }
 
-func (ca CloudwatchAlarmAttributes) InternalTokens() hclwrite.Tokens {
+func (ca CloudwatchAlarmAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ca.ref.InternalTokens()
 }
 
@@ -538,7 +538,7 @@ func (cl CloudwatchLogsAttributes) InternalWithRef(ref terra.Reference) Cloudwat
 	return CloudwatchLogsAttributes{ref: ref}
 }
 
-func (cl CloudwatchLogsAttributes) InternalTokens() hclwrite.Tokens {
+func (cl CloudwatchLogsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cl.ref.InternalTokens()
 }
 
@@ -562,7 +562,7 @@ func (cm CloudwatchMetricAttributes) InternalWithRef(ref terra.Reference) Cloudw
 	return CloudwatchMetricAttributes{ref: ref}
 }
 
-func (cm CloudwatchMetricAttributes) InternalTokens() hclwrite.Tokens {
+func (cm CloudwatchMetricAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cm.ref.InternalTokens()
 }
 
@@ -602,7 +602,7 @@ func (d DynamodbAttributes) InternalWithRef(ref terra.Reference) DynamodbAttribu
 	return DynamodbAttributes{ref: ref}
 }
 
-func (d DynamodbAttributes) InternalTokens() hclwrite.Tokens {
+func (d DynamodbAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -658,7 +658,7 @@ func (d Dynamodbv2Attributes) InternalWithRef(ref terra.Reference) Dynamodbv2Att
 	return Dynamodbv2Attributes{ref: ref}
 }
 
-func (d Dynamodbv2Attributes) InternalTokens() hclwrite.Tokens {
+func (d Dynamodbv2Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -682,7 +682,7 @@ func (pi Dynamodbv2PutItemAttributes) InternalWithRef(ref terra.Reference) Dynam
 	return Dynamodbv2PutItemAttributes{ref: ref}
 }
 
-func (pi Dynamodbv2PutItemAttributes) InternalTokens() hclwrite.Tokens {
+func (pi Dynamodbv2PutItemAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pi.ref.InternalTokens()
 }
 
@@ -702,7 +702,7 @@ func (e ElasticsearchAttributes) InternalWithRef(ref terra.Reference) Elasticsea
 	return ElasticsearchAttributes{ref: ref}
 }
 
-func (e ElasticsearchAttributes) InternalTokens() hclwrite.Tokens {
+func (e ElasticsearchAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -738,7 +738,7 @@ func (ea ErrorActionAttributes) InternalWithRef(ref terra.Reference) ErrorAction
 	return ErrorActionAttributes{ref: ref}
 }
 
-func (ea ErrorActionAttributes) InternalTokens() hclwrite.Tokens {
+func (ea ErrorActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ea.ref.InternalTokens()
 }
 
@@ -830,7 +830,7 @@ func (ca ErrorActionCloudwatchAlarmAttributes) InternalWithRef(ref terra.Referen
 	return ErrorActionCloudwatchAlarmAttributes{ref: ref}
 }
 
-func (ca ErrorActionCloudwatchAlarmAttributes) InternalTokens() hclwrite.Tokens {
+func (ca ErrorActionCloudwatchAlarmAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ca.ref.InternalTokens()
 }
 
@@ -862,7 +862,7 @@ func (cl ErrorActionCloudwatchLogsAttributes) InternalWithRef(ref terra.Referenc
 	return ErrorActionCloudwatchLogsAttributes{ref: ref}
 }
 
-func (cl ErrorActionCloudwatchLogsAttributes) InternalTokens() hclwrite.Tokens {
+func (cl ErrorActionCloudwatchLogsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cl.ref.InternalTokens()
 }
 
@@ -886,7 +886,7 @@ func (cm ErrorActionCloudwatchMetricAttributes) InternalWithRef(ref terra.Refere
 	return ErrorActionCloudwatchMetricAttributes{ref: ref}
 }
 
-func (cm ErrorActionCloudwatchMetricAttributes) InternalTokens() hclwrite.Tokens {
+func (cm ErrorActionCloudwatchMetricAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cm.ref.InternalTokens()
 }
 
@@ -926,7 +926,7 @@ func (d ErrorActionDynamodbAttributes) InternalWithRef(ref terra.Reference) Erro
 	return ErrorActionDynamodbAttributes{ref: ref}
 }
 
-func (d ErrorActionDynamodbAttributes) InternalTokens() hclwrite.Tokens {
+func (d ErrorActionDynamodbAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -982,7 +982,7 @@ func (d ErrorActionDynamodbv2Attributes) InternalWithRef(ref terra.Reference) Er
 	return ErrorActionDynamodbv2Attributes{ref: ref}
 }
 
-func (d ErrorActionDynamodbv2Attributes) InternalTokens() hclwrite.Tokens {
+func (d ErrorActionDynamodbv2Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -1006,7 +1006,7 @@ func (pi ErrorActionDynamodbv2PutItemAttributes) InternalWithRef(ref terra.Refer
 	return ErrorActionDynamodbv2PutItemAttributes{ref: ref}
 }
 
-func (pi ErrorActionDynamodbv2PutItemAttributes) InternalTokens() hclwrite.Tokens {
+func (pi ErrorActionDynamodbv2PutItemAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pi.ref.InternalTokens()
 }
 
@@ -1026,7 +1026,7 @@ func (e ErrorActionElasticsearchAttributes) InternalWithRef(ref terra.Reference)
 	return ErrorActionElasticsearchAttributes{ref: ref}
 }
 
-func (e ErrorActionElasticsearchAttributes) InternalTokens() hclwrite.Tokens {
+func (e ErrorActionElasticsearchAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -1062,7 +1062,7 @@ func (f ErrorActionFirehoseAttributes) InternalWithRef(ref terra.Reference) Erro
 	return ErrorActionFirehoseAttributes{ref: ref}
 }
 
-func (f ErrorActionFirehoseAttributes) InternalTokens() hclwrite.Tokens {
+func (f ErrorActionFirehoseAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -1090,7 +1090,7 @@ func (h ErrorActionHttpAttributes) InternalWithRef(ref terra.Reference) ErrorAct
 	return ErrorActionHttpAttributes{ref: ref}
 }
 
-func (h ErrorActionHttpAttributes) InternalTokens() hclwrite.Tokens {
+func (h ErrorActionHttpAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 
@@ -1118,7 +1118,7 @@ func (hh ErrorActionHttpHttpHeaderAttributes) InternalWithRef(ref terra.Referenc
 	return ErrorActionHttpHttpHeaderAttributes{ref: ref}
 }
 
-func (hh ErrorActionHttpHttpHeaderAttributes) InternalTokens() hclwrite.Tokens {
+func (hh ErrorActionHttpHttpHeaderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hh.ref.InternalTokens()
 }
 
@@ -1142,7 +1142,7 @@ func (ia ErrorActionIotAnalyticsAttributes) InternalWithRef(ref terra.Reference)
 	return ErrorActionIotAnalyticsAttributes{ref: ref}
 }
 
-func (ia ErrorActionIotAnalyticsAttributes) InternalTokens() hclwrite.Tokens {
+func (ia ErrorActionIotAnalyticsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ia.ref.InternalTokens()
 }
 
@@ -1166,7 +1166,7 @@ func (ie ErrorActionIotEventsAttributes) InternalWithRef(ref terra.Reference) Er
 	return ErrorActionIotEventsAttributes{ref: ref}
 }
 
-func (ie ErrorActionIotEventsAttributes) InternalTokens() hclwrite.Tokens {
+func (ie ErrorActionIotEventsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ie.ref.InternalTokens()
 }
 
@@ -1194,7 +1194,7 @@ func (k ErrorActionKafkaAttributes) InternalWithRef(ref terra.Reference) ErrorAc
 	return ErrorActionKafkaAttributes{ref: ref}
 }
 
-func (k ErrorActionKafkaAttributes) InternalTokens() hclwrite.Tokens {
+func (k ErrorActionKafkaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return k.ref.InternalTokens()
 }
 
@@ -1230,7 +1230,7 @@ func (k ErrorActionKinesisAttributes) InternalWithRef(ref terra.Reference) Error
 	return ErrorActionKinesisAttributes{ref: ref}
 }
 
-func (k ErrorActionKinesisAttributes) InternalTokens() hclwrite.Tokens {
+func (k ErrorActionKinesisAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return k.ref.InternalTokens()
 }
 
@@ -1258,7 +1258,7 @@ func (l ErrorActionLambdaAttributes) InternalWithRef(ref terra.Reference) ErrorA
 	return ErrorActionLambdaAttributes{ref: ref}
 }
 
-func (l ErrorActionLambdaAttributes) InternalTokens() hclwrite.Tokens {
+func (l ErrorActionLambdaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 
@@ -1278,7 +1278,7 @@ func (r ErrorActionRepublishAttributes) InternalWithRef(ref terra.Reference) Err
 	return ErrorActionRepublishAttributes{ref: ref}
 }
 
-func (r ErrorActionRepublishAttributes) InternalTokens() hclwrite.Tokens {
+func (r ErrorActionRepublishAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -1306,7 +1306,7 @@ func (s ErrorActionS3Attributes) InternalWithRef(ref terra.Reference) ErrorActio
 	return ErrorActionS3Attributes{ref: ref}
 }
 
-func (s ErrorActionS3Attributes) InternalTokens() hclwrite.Tokens {
+func (s ErrorActionS3Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -1338,7 +1338,7 @@ func (s ErrorActionSnsAttributes) InternalWithRef(ref terra.Reference) ErrorActi
 	return ErrorActionSnsAttributes{ref: ref}
 }
 
-func (s ErrorActionSnsAttributes) InternalTokens() hclwrite.Tokens {
+func (s ErrorActionSnsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -1366,7 +1366,7 @@ func (s ErrorActionSqsAttributes) InternalWithRef(ref terra.Reference) ErrorActi
 	return ErrorActionSqsAttributes{ref: ref}
 }
 
-func (s ErrorActionSqsAttributes) InternalTokens() hclwrite.Tokens {
+func (s ErrorActionSqsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -1394,7 +1394,7 @@ func (sf ErrorActionStepFunctionsAttributes) InternalWithRef(ref terra.Reference
 	return ErrorActionStepFunctionsAttributes{ref: ref}
 }
 
-func (sf ErrorActionStepFunctionsAttributes) InternalTokens() hclwrite.Tokens {
+func (sf ErrorActionStepFunctionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sf.ref.InternalTokens()
 }
 
@@ -1422,7 +1422,7 @@ func (t ErrorActionTimestreamAttributes) InternalWithRef(ref terra.Reference) Er
 	return ErrorActionTimestreamAttributes{ref: ref}
 }
 
-func (t ErrorActionTimestreamAttributes) InternalTokens() hclwrite.Tokens {
+func (t ErrorActionTimestreamAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -1458,7 +1458,7 @@ func (d ErrorActionTimestreamDimensionAttributes) InternalWithRef(ref terra.Refe
 	return ErrorActionTimestreamDimensionAttributes{ref: ref}
 }
 
-func (d ErrorActionTimestreamDimensionAttributes) InternalTokens() hclwrite.Tokens {
+func (d ErrorActionTimestreamDimensionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -1482,7 +1482,7 @@ func (t ErrorActionTimestreamTimestampAttributes) InternalWithRef(ref terra.Refe
 	return ErrorActionTimestreamTimestampAttributes{ref: ref}
 }
 
-func (t ErrorActionTimestreamTimestampAttributes) InternalTokens() hclwrite.Tokens {
+func (t ErrorActionTimestreamTimestampAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -1506,7 +1506,7 @@ func (f FirehoseAttributes) InternalWithRef(ref terra.Reference) FirehoseAttribu
 	return FirehoseAttributes{ref: ref}
 }
 
-func (f FirehoseAttributes) InternalTokens() hclwrite.Tokens {
+func (f FirehoseAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -1534,7 +1534,7 @@ func (h HttpAttributes) InternalWithRef(ref terra.Reference) HttpAttributes {
 	return HttpAttributes{ref: ref}
 }
 
-func (h HttpAttributes) InternalTokens() hclwrite.Tokens {
+func (h HttpAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 
@@ -1562,7 +1562,7 @@ func (hh HttpHttpHeaderAttributes) InternalWithRef(ref terra.Reference) HttpHttp
 	return HttpHttpHeaderAttributes{ref: ref}
 }
 
-func (hh HttpHttpHeaderAttributes) InternalTokens() hclwrite.Tokens {
+func (hh HttpHttpHeaderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hh.ref.InternalTokens()
 }
 
@@ -1586,7 +1586,7 @@ func (ia IotAnalyticsAttributes) InternalWithRef(ref terra.Reference) IotAnalyti
 	return IotAnalyticsAttributes{ref: ref}
 }
 
-func (ia IotAnalyticsAttributes) InternalTokens() hclwrite.Tokens {
+func (ia IotAnalyticsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ia.ref.InternalTokens()
 }
 
@@ -1610,7 +1610,7 @@ func (ie IotEventsAttributes) InternalWithRef(ref terra.Reference) IotEventsAttr
 	return IotEventsAttributes{ref: ref}
 }
 
-func (ie IotEventsAttributes) InternalTokens() hclwrite.Tokens {
+func (ie IotEventsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ie.ref.InternalTokens()
 }
 
@@ -1638,7 +1638,7 @@ func (k KafkaAttributes) InternalWithRef(ref terra.Reference) KafkaAttributes {
 	return KafkaAttributes{ref: ref}
 }
 
-func (k KafkaAttributes) InternalTokens() hclwrite.Tokens {
+func (k KafkaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return k.ref.InternalTokens()
 }
 
@@ -1674,7 +1674,7 @@ func (k KinesisAttributes) InternalWithRef(ref terra.Reference) KinesisAttribute
 	return KinesisAttributes{ref: ref}
 }
 
-func (k KinesisAttributes) InternalTokens() hclwrite.Tokens {
+func (k KinesisAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return k.ref.InternalTokens()
 }
 
@@ -1702,7 +1702,7 @@ func (l LambdaAttributes) InternalWithRef(ref terra.Reference) LambdaAttributes 
 	return LambdaAttributes{ref: ref}
 }
 
-func (l LambdaAttributes) InternalTokens() hclwrite.Tokens {
+func (l LambdaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 
@@ -1722,7 +1722,7 @@ func (r RepublishAttributes) InternalWithRef(ref terra.Reference) RepublishAttri
 	return RepublishAttributes{ref: ref}
 }
 
-func (r RepublishAttributes) InternalTokens() hclwrite.Tokens {
+func (r RepublishAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -1750,7 +1750,7 @@ func (s S3Attributes) InternalWithRef(ref terra.Reference) S3Attributes {
 	return S3Attributes{ref: ref}
 }
 
-func (s S3Attributes) InternalTokens() hclwrite.Tokens {
+func (s S3Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -1782,7 +1782,7 @@ func (s SnsAttributes) InternalWithRef(ref terra.Reference) SnsAttributes {
 	return SnsAttributes{ref: ref}
 }
 
-func (s SnsAttributes) InternalTokens() hclwrite.Tokens {
+func (s SnsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -1810,7 +1810,7 @@ func (s SqsAttributes) InternalWithRef(ref terra.Reference) SqsAttributes {
 	return SqsAttributes{ref: ref}
 }
 
-func (s SqsAttributes) InternalTokens() hclwrite.Tokens {
+func (s SqsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -1838,7 +1838,7 @@ func (sf StepFunctionsAttributes) InternalWithRef(ref terra.Reference) StepFunct
 	return StepFunctionsAttributes{ref: ref}
 }
 
-func (sf StepFunctionsAttributes) InternalTokens() hclwrite.Tokens {
+func (sf StepFunctionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sf.ref.InternalTokens()
 }
 
@@ -1866,7 +1866,7 @@ func (t TimestreamAttributes) InternalWithRef(ref terra.Reference) TimestreamAtt
 	return TimestreamAttributes{ref: ref}
 }
 
-func (t TimestreamAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimestreamAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -1902,7 +1902,7 @@ func (d TimestreamDimensionAttributes) InternalWithRef(ref terra.Reference) Time
 	return TimestreamDimensionAttributes{ref: ref}
 }
 
-func (d TimestreamDimensionAttributes) InternalTokens() hclwrite.Tokens {
+func (d TimestreamDimensionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -1926,7 +1926,7 @@ func (t TimestreamTimestampAttributes) InternalWithRef(ref terra.Reference) Time
 	return TimestreamTimestampAttributes{ref: ref}
 }
 
-func (t TimestreamTimestampAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimestreamTimestampAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

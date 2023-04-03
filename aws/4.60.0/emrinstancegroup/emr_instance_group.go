@@ -30,7 +30,7 @@ func (ec EbsConfigAttributes) InternalWithRef(ref terra.Reference) EbsConfigAttr
 	return EbsConfigAttributes{ref: ref}
 }
 
-func (ec EbsConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ec EbsConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 

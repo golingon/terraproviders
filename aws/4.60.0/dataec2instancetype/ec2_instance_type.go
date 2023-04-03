@@ -32,7 +32,7 @@ func (f FpgasAttributes) InternalWithRef(ref terra.Reference) FpgasAttributes {
 	return FpgasAttributes{ref: ref}
 }
 
-func (f FpgasAttributes) InternalTokens() hclwrite.Tokens {
+func (f FpgasAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -64,7 +64,7 @@ func (g GpusAttributes) InternalWithRef(ref terra.Reference) GpusAttributes {
 	return GpusAttributes{ref: ref}
 }
 
-func (g GpusAttributes) InternalTokens() hclwrite.Tokens {
+func (g GpusAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return g.ref.InternalTokens()
 }
 
@@ -96,7 +96,7 @@ func (ia InferenceAcceleratorsAttributes) InternalWithRef(ref terra.Reference) I
 	return InferenceAcceleratorsAttributes{ref: ref}
 }
 
-func (ia InferenceAcceleratorsAttributes) InternalTokens() hclwrite.Tokens {
+func (ia InferenceAcceleratorsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ia.ref.InternalTokens()
 }
 
@@ -124,7 +124,7 @@ func (id InstanceDisksAttributes) InternalWithRef(ref terra.Reference) InstanceD
 	return InstanceDisksAttributes{ref: ref}
 }
 
-func (id InstanceDisksAttributes) InternalTokens() hclwrite.Tokens {
+func (id InstanceDisksAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return id.ref.InternalTokens()
 }
 
@@ -152,7 +152,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

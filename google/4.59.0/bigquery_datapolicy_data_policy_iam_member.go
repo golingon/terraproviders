@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBigqueryDatapolicyDataPolicyIamMember creates a new instance of [BigqueryDatapolicyDataPolicyIamMember].
 func NewBigqueryDatapolicyDataPolicyIamMember(name string, args BigqueryDatapolicyDataPolicyIamMemberArgs) *BigqueryDatapolicyDataPolicyIamMember {
 	return &BigqueryDatapolicyDataPolicyIamMember{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBigqueryDatapolicyDataPolicyIamMember(name string, args BigqueryDatapoli
 
 var _ terra.Resource = (*BigqueryDatapolicyDataPolicyIamMember)(nil)
 
+// BigqueryDatapolicyDataPolicyIamMember represents the Terraform resource google_bigquery_datapolicy_data_policy_iam_member.
 type BigqueryDatapolicyDataPolicyIamMember struct {
-	Name  string
-	Args  BigqueryDatapolicyDataPolicyIamMemberArgs
-	state *bigqueryDatapolicyDataPolicyIamMemberState
+	Name      string
+	Args      BigqueryDatapolicyDataPolicyIamMemberArgs
+	state     *bigqueryDatapolicyDataPolicyIamMemberState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BigqueryDatapolicyDataPolicyIamMember].
 func (bddpim *BigqueryDatapolicyDataPolicyIamMember) Type() string {
 	return "google_bigquery_datapolicy_data_policy_iam_member"
 }
 
+// LocalName returns the local name for [BigqueryDatapolicyDataPolicyIamMember].
 func (bddpim *BigqueryDatapolicyDataPolicyIamMember) LocalName() string {
 	return bddpim.Name
 }
 
+// Configuration returns the configuration (args) for [BigqueryDatapolicyDataPolicyIamMember].
 func (bddpim *BigqueryDatapolicyDataPolicyIamMember) Configuration() interface{} {
 	return bddpim.Args
 }
 
+// DependOn is used for other resources to depend on [BigqueryDatapolicyDataPolicyIamMember].
+func (bddpim *BigqueryDatapolicyDataPolicyIamMember) DependOn() terra.Reference {
+	return terra.ReferenceResource(bddpim)
+}
+
+// Dependencies returns the list of resources [BigqueryDatapolicyDataPolicyIamMember] depends_on.
+func (bddpim *BigqueryDatapolicyDataPolicyIamMember) Dependencies() terra.Dependencies {
+	return bddpim.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BigqueryDatapolicyDataPolicyIamMember].
+func (bddpim *BigqueryDatapolicyDataPolicyIamMember) LifecycleManagement() *terra.Lifecycle {
+	return bddpim.Lifecycle
+}
+
+// Attributes returns the attributes for [BigqueryDatapolicyDataPolicyIamMember].
 func (bddpim *BigqueryDatapolicyDataPolicyIamMember) Attributes() bigqueryDatapolicyDataPolicyIamMemberAttributes {
 	return bigqueryDatapolicyDataPolicyIamMemberAttributes{ref: terra.ReferenceResource(bddpim)}
 }
 
+// ImportState imports the given attribute values into [BigqueryDatapolicyDataPolicyIamMember]'s state.
 func (bddpim *BigqueryDatapolicyDataPolicyIamMember) ImportState(av io.Reader) error {
 	bddpim.state = &bigqueryDatapolicyDataPolicyIamMemberState{}
 	if err := json.NewDecoder(av).Decode(bddpim.state); err != nil {
@@ -49,10 +73,12 @@ func (bddpim *BigqueryDatapolicyDataPolicyIamMember) ImportState(av io.Reader) e
 	return nil
 }
 
+// State returns the state and a bool indicating if [BigqueryDatapolicyDataPolicyIamMember] has state.
 func (bddpim *BigqueryDatapolicyDataPolicyIamMember) State() (*bigqueryDatapolicyDataPolicyIamMemberState, bool) {
 	return bddpim.state, bddpim.state != nil
 }
 
+// StateMust returns the state for [BigqueryDatapolicyDataPolicyIamMember]. Panics if the state is nil.
 func (bddpim *BigqueryDatapolicyDataPolicyIamMember) StateMust() *bigqueryDatapolicyDataPolicyIamMemberState {
 	if bddpim.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bddpim.Type(), bddpim.LocalName()))
@@ -60,10 +86,7 @@ func (bddpim *BigqueryDatapolicyDataPolicyIamMember) StateMust() *bigqueryDatapo
 	return bddpim.state
 }
 
-func (bddpim *BigqueryDatapolicyDataPolicyIamMember) DependOn() terra.Reference {
-	return terra.ReferenceResource(bddpim)
-}
-
+// BigqueryDatapolicyDataPolicyIamMemberArgs contains the configurations for google_bigquery_datapolicy_data_policy_iam_member.
 type BigqueryDatapolicyDataPolicyIamMemberArgs struct {
 	// DataPolicyId: string, required
 	DataPolicyId terra.StringValue `hcl:"data_policy_id,attr" validate:"required"`
@@ -79,43 +102,48 @@ type BigqueryDatapolicyDataPolicyIamMemberArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *bigquerydatapolicydatapolicyiammember.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that BigqueryDatapolicyDataPolicyIamMember depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type bigqueryDatapolicyDataPolicyIamMemberAttributes struct {
 	ref terra.Reference
 }
 
+// DataPolicyId returns a reference to field data_policy_id of google_bigquery_datapolicy_data_policy_iam_member.
 func (bddpim bigqueryDatapolicyDataPolicyIamMemberAttributes) DataPolicyId() terra.StringValue {
-	return terra.ReferenceString(bddpim.ref.Append("data_policy_id"))
+	return terra.ReferenceAsString(bddpim.ref.Append("data_policy_id"))
 }
 
+// Etag returns a reference to field etag of google_bigquery_datapolicy_data_policy_iam_member.
 func (bddpim bigqueryDatapolicyDataPolicyIamMemberAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(bddpim.ref.Append("etag"))
+	return terra.ReferenceAsString(bddpim.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_bigquery_datapolicy_data_policy_iam_member.
 func (bddpim bigqueryDatapolicyDataPolicyIamMemberAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bddpim.ref.Append("id"))
+	return terra.ReferenceAsString(bddpim.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_bigquery_datapolicy_data_policy_iam_member.
 func (bddpim bigqueryDatapolicyDataPolicyIamMemberAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(bddpim.ref.Append("location"))
+	return terra.ReferenceAsString(bddpim.ref.Append("location"))
 }
 
+// Member returns a reference to field member of google_bigquery_datapolicy_data_policy_iam_member.
 func (bddpim bigqueryDatapolicyDataPolicyIamMemberAttributes) Member() terra.StringValue {
-	return terra.ReferenceString(bddpim.ref.Append("member"))
+	return terra.ReferenceAsString(bddpim.ref.Append("member"))
 }
 
+// Project returns a reference to field project of google_bigquery_datapolicy_data_policy_iam_member.
 func (bddpim bigqueryDatapolicyDataPolicyIamMemberAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(bddpim.ref.Append("project"))
+	return terra.ReferenceAsString(bddpim.ref.Append("project"))
 }
 
+// Role returns a reference to field role of google_bigquery_datapolicy_data_policy_iam_member.
 func (bddpim bigqueryDatapolicyDataPolicyIamMemberAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(bddpim.ref.Append("role"))
+	return terra.ReferenceAsString(bddpim.ref.Append("role"))
 }
 
 func (bddpim bigqueryDatapolicyDataPolicyIamMemberAttributes) Condition() terra.ListValue[bigquerydatapolicydatapolicyiammember.ConditionAttributes] {
-	return terra.ReferenceList[bigquerydatapolicydatapolicyiammember.ConditionAttributes](bddpim.ref.Append("condition"))
+	return terra.ReferenceAsList[bigquerydatapolicydatapolicyiammember.ConditionAttributes](bddpim.ref.Append("condition"))
 }
 
 type bigqueryDatapolicyDataPolicyIamMemberState struct {

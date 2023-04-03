@@ -249,7 +249,7 @@ func (oes OnExceptionStepsAttributes) InternalWithRef(ref terra.Reference) OnExc
 	return OnExceptionStepsAttributes{ref: ref}
 }
 
-func (oes OnExceptionStepsAttributes) InternalTokens() hclwrite.Tokens {
+func (oes OnExceptionStepsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oes.ref.InternalTokens()
 }
 
@@ -289,7 +289,7 @@ func (csd OnExceptionStepsCopyStepDetailsAttributes) InternalWithRef(ref terra.R
 	return OnExceptionStepsCopyStepDetailsAttributes{ref: ref}
 }
 
-func (csd OnExceptionStepsCopyStepDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (csd OnExceptionStepsCopyStepDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return csd.ref.InternalTokens()
 }
 
@@ -321,7 +321,7 @@ func (dfl OnExceptionStepsCopyStepDetailsDestinationFileLocationAttributes) Inte
 	return OnExceptionStepsCopyStepDetailsDestinationFileLocationAttributes{ref: ref}
 }
 
-func (dfl OnExceptionStepsCopyStepDetailsDestinationFileLocationAttributes) InternalTokens() hclwrite.Tokens {
+func (dfl OnExceptionStepsCopyStepDetailsDestinationFileLocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dfl.ref.InternalTokens()
 }
 
@@ -345,7 +345,7 @@ func (efl OnExceptionStepsCopyStepDetailsDestinationFileLocationEfsFileLocationA
 	return OnExceptionStepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes{ref: ref}
 }
 
-func (efl OnExceptionStepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes) InternalTokens() hclwrite.Tokens {
+func (efl OnExceptionStepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return efl.ref.InternalTokens()
 }
 
@@ -369,7 +369,7 @@ func (sfl OnExceptionStepsCopyStepDetailsDestinationFileLocationS3FileLocationAt
 	return OnExceptionStepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes{ref: ref}
 }
 
-func (sfl OnExceptionStepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes) InternalTokens() hclwrite.Tokens {
+func (sfl OnExceptionStepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sfl.ref.InternalTokens()
 }
 
@@ -393,7 +393,7 @@ func (csd OnExceptionStepsCustomStepDetailsAttributes) InternalWithRef(ref terra
 	return OnExceptionStepsCustomStepDetailsAttributes{ref: ref}
 }
 
-func (csd OnExceptionStepsCustomStepDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (csd OnExceptionStepsCustomStepDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return csd.ref.InternalTokens()
 }
 
@@ -425,7 +425,7 @@ func (dsd OnExceptionStepsDecryptStepDetailsAttributes) InternalWithRef(ref terr
 	return OnExceptionStepsDecryptStepDetailsAttributes{ref: ref}
 }
 
-func (dsd OnExceptionStepsDecryptStepDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (dsd OnExceptionStepsDecryptStepDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dsd.ref.InternalTokens()
 }
 
@@ -461,7 +461,7 @@ func (dfl OnExceptionStepsDecryptStepDetailsDestinationFileLocationAttributes) I
 	return OnExceptionStepsDecryptStepDetailsDestinationFileLocationAttributes{ref: ref}
 }
 
-func (dfl OnExceptionStepsDecryptStepDetailsDestinationFileLocationAttributes) InternalTokens() hclwrite.Tokens {
+func (dfl OnExceptionStepsDecryptStepDetailsDestinationFileLocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dfl.ref.InternalTokens()
 }
 
@@ -485,7 +485,7 @@ func (efl OnExceptionStepsDecryptStepDetailsDestinationFileLocationEfsFileLocati
 	return OnExceptionStepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttributes{ref: ref}
 }
 
-func (efl OnExceptionStepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttributes) InternalTokens() hclwrite.Tokens {
+func (efl OnExceptionStepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return efl.ref.InternalTokens()
 }
 
@@ -509,7 +509,7 @@ func (sfl OnExceptionStepsDecryptStepDetailsDestinationFileLocationS3FileLocatio
 	return OnExceptionStepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes{ref: ref}
 }
 
-func (sfl OnExceptionStepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes) InternalTokens() hclwrite.Tokens {
+func (sfl OnExceptionStepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sfl.ref.InternalTokens()
 }
 
@@ -533,7 +533,7 @@ func (dsd OnExceptionStepsDeleteStepDetailsAttributes) InternalWithRef(ref terra
 	return OnExceptionStepsDeleteStepDetailsAttributes{ref: ref}
 }
 
-func (dsd OnExceptionStepsDeleteStepDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (dsd OnExceptionStepsDeleteStepDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dsd.ref.InternalTokens()
 }
 
@@ -557,7 +557,7 @@ func (tsd OnExceptionStepsTagStepDetailsAttributes) InternalWithRef(ref terra.Re
 	return OnExceptionStepsTagStepDetailsAttributes{ref: ref}
 }
 
-func (tsd OnExceptionStepsTagStepDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (tsd OnExceptionStepsTagStepDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tsd.ref.InternalTokens()
 }
 
@@ -585,7 +585,7 @@ func (t OnExceptionStepsTagStepDetailsTagsAttributes) InternalWithRef(ref terra.
 	return OnExceptionStepsTagStepDetailsTagsAttributes{ref: ref}
 }
 
-func (t OnExceptionStepsTagStepDetailsTagsAttributes) InternalTokens() hclwrite.Tokens {
+func (t OnExceptionStepsTagStepDetailsTagsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -609,7 +609,7 @@ func (s StepsAttributes) InternalWithRef(ref terra.Reference) StepsAttributes {
 	return StepsAttributes{ref: ref}
 }
 
-func (s StepsAttributes) InternalTokens() hclwrite.Tokens {
+func (s StepsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -649,7 +649,7 @@ func (csd StepsCopyStepDetailsAttributes) InternalWithRef(ref terra.Reference) S
 	return StepsCopyStepDetailsAttributes{ref: ref}
 }
 
-func (csd StepsCopyStepDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (csd StepsCopyStepDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return csd.ref.InternalTokens()
 }
 
@@ -681,7 +681,7 @@ func (dfl StepsCopyStepDetailsDestinationFileLocationAttributes) InternalWithRef
 	return StepsCopyStepDetailsDestinationFileLocationAttributes{ref: ref}
 }
 
-func (dfl StepsCopyStepDetailsDestinationFileLocationAttributes) InternalTokens() hclwrite.Tokens {
+func (dfl StepsCopyStepDetailsDestinationFileLocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dfl.ref.InternalTokens()
 }
 
@@ -705,7 +705,7 @@ func (efl StepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes) 
 	return StepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes{ref: ref}
 }
 
-func (efl StepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes) InternalTokens() hclwrite.Tokens {
+func (efl StepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return efl.ref.InternalTokens()
 }
 
@@ -729,7 +729,7 @@ func (sfl StepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes) I
 	return StepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes{ref: ref}
 }
 
-func (sfl StepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes) InternalTokens() hclwrite.Tokens {
+func (sfl StepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sfl.ref.InternalTokens()
 }
 
@@ -753,7 +753,7 @@ func (csd StepsCustomStepDetailsAttributes) InternalWithRef(ref terra.Reference)
 	return StepsCustomStepDetailsAttributes{ref: ref}
 }
 
-func (csd StepsCustomStepDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (csd StepsCustomStepDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return csd.ref.InternalTokens()
 }
 
@@ -785,7 +785,7 @@ func (dsd StepsDecryptStepDetailsAttributes) InternalWithRef(ref terra.Reference
 	return StepsDecryptStepDetailsAttributes{ref: ref}
 }
 
-func (dsd StepsDecryptStepDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (dsd StepsDecryptStepDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dsd.ref.InternalTokens()
 }
 
@@ -821,7 +821,7 @@ func (dfl StepsDecryptStepDetailsDestinationFileLocationAttributes) InternalWith
 	return StepsDecryptStepDetailsDestinationFileLocationAttributes{ref: ref}
 }
 
-func (dfl StepsDecryptStepDetailsDestinationFileLocationAttributes) InternalTokens() hclwrite.Tokens {
+func (dfl StepsDecryptStepDetailsDestinationFileLocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dfl.ref.InternalTokens()
 }
 
@@ -845,7 +845,7 @@ func (efl StepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttribute
 	return StepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttributes{ref: ref}
 }
 
-func (efl StepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttributes) InternalTokens() hclwrite.Tokens {
+func (efl StepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return efl.ref.InternalTokens()
 }
 
@@ -869,7 +869,7 @@ func (sfl StepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes
 	return StepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes{ref: ref}
 }
 
-func (sfl StepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes) InternalTokens() hclwrite.Tokens {
+func (sfl StepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sfl.ref.InternalTokens()
 }
 
@@ -893,7 +893,7 @@ func (dsd StepsDeleteStepDetailsAttributes) InternalWithRef(ref terra.Reference)
 	return StepsDeleteStepDetailsAttributes{ref: ref}
 }
 
-func (dsd StepsDeleteStepDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (dsd StepsDeleteStepDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dsd.ref.InternalTokens()
 }
 
@@ -917,7 +917,7 @@ func (tsd StepsTagStepDetailsAttributes) InternalWithRef(ref terra.Reference) St
 	return StepsTagStepDetailsAttributes{ref: ref}
 }
 
-func (tsd StepsTagStepDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (tsd StepsTagStepDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tsd.ref.InternalTokens()
 }
 
@@ -945,7 +945,7 @@ func (t StepsTagStepDetailsTagsAttributes) InternalWithRef(ref terra.Reference) 
 	return StepsTagStepDetailsTagsAttributes{ref: ref}
 }
 
-func (t StepsTagStepDetailsTagsAttributes) InternalTokens() hclwrite.Tokens {
+func (t StepsTagStepDetailsTagsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

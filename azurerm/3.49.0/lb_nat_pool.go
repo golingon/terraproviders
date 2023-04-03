@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLbNatPool creates a new instance of [LbNatPool].
 func NewLbNatPool(name string, args LbNatPoolArgs) *LbNatPool {
 	return &LbNatPool{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLbNatPool(name string, args LbNatPoolArgs) *LbNatPool {
 
 var _ terra.Resource = (*LbNatPool)(nil)
 
+// LbNatPool represents the Terraform resource azurerm_lb_nat_pool.
 type LbNatPool struct {
-	Name  string
-	Args  LbNatPoolArgs
-	state *lbNatPoolState
+	Name      string
+	Args      LbNatPoolArgs
+	state     *lbNatPoolState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LbNatPool].
 func (lnp *LbNatPool) Type() string {
 	return "azurerm_lb_nat_pool"
 }
 
+// LocalName returns the local name for [LbNatPool].
 func (lnp *LbNatPool) LocalName() string {
 	return lnp.Name
 }
 
+// Configuration returns the configuration (args) for [LbNatPool].
 func (lnp *LbNatPool) Configuration() interface{} {
 	return lnp.Args
 }
 
+// DependOn is used for other resources to depend on [LbNatPool].
+func (lnp *LbNatPool) DependOn() terra.Reference {
+	return terra.ReferenceResource(lnp)
+}
+
+// Dependencies returns the list of resources [LbNatPool] depends_on.
+func (lnp *LbNatPool) Dependencies() terra.Dependencies {
+	return lnp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LbNatPool].
+func (lnp *LbNatPool) LifecycleManagement() *terra.Lifecycle {
+	return lnp.Lifecycle
+}
+
+// Attributes returns the attributes for [LbNatPool].
 func (lnp *LbNatPool) Attributes() lbNatPoolAttributes {
 	return lbNatPoolAttributes{ref: terra.ReferenceResource(lnp)}
 }
 
+// ImportState imports the given attribute values into [LbNatPool]'s state.
 func (lnp *LbNatPool) ImportState(av io.Reader) error {
 	lnp.state = &lbNatPoolState{}
 	if err := json.NewDecoder(av).Decode(lnp.state); err != nil {
@@ -49,10 +73,12 @@ func (lnp *LbNatPool) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LbNatPool] has state.
 func (lnp *LbNatPool) State() (*lbNatPoolState, bool) {
 	return lnp.state, lnp.state != nil
 }
 
+// StateMust returns the state for [LbNatPool]. Panics if the state is nil.
 func (lnp *LbNatPool) StateMust() *lbNatPoolState {
 	if lnp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lnp.Type(), lnp.LocalName()))
@@ -60,10 +86,7 @@ func (lnp *LbNatPool) StateMust() *lbNatPoolState {
 	return lnp.state
 }
 
-func (lnp *LbNatPool) DependOn() terra.Reference {
-	return terra.ReferenceResource(lnp)
-}
-
+// LbNatPoolArgs contains the configurations for azurerm_lb_nat_pool.
 type LbNatPoolArgs struct {
 	// BackendPort: number, required
 	BackendPort terra.NumberValue `hcl:"backend_port,attr" validate:"required"`
@@ -91,67 +114,78 @@ type LbNatPoolArgs struct {
 	TcpResetEnabled terra.BoolValue `hcl:"tcp_reset_enabled,attr"`
 	// Timeouts: optional
 	Timeouts *lbnatpool.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LbNatPool depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lbNatPoolAttributes struct {
 	ref terra.Reference
 }
 
+// BackendPort returns a reference to field backend_port of azurerm_lb_nat_pool.
 func (lnp lbNatPoolAttributes) BackendPort() terra.NumberValue {
-	return terra.ReferenceNumber(lnp.ref.Append("backend_port"))
+	return terra.ReferenceAsNumber(lnp.ref.Append("backend_port"))
 }
 
+// FloatingIpEnabled returns a reference to field floating_ip_enabled of azurerm_lb_nat_pool.
 func (lnp lbNatPoolAttributes) FloatingIpEnabled() terra.BoolValue {
-	return terra.ReferenceBool(lnp.ref.Append("floating_ip_enabled"))
+	return terra.ReferenceAsBool(lnp.ref.Append("floating_ip_enabled"))
 }
 
+// FrontendIpConfigurationId returns a reference to field frontend_ip_configuration_id of azurerm_lb_nat_pool.
 func (lnp lbNatPoolAttributes) FrontendIpConfigurationId() terra.StringValue {
-	return terra.ReferenceString(lnp.ref.Append("frontend_ip_configuration_id"))
+	return terra.ReferenceAsString(lnp.ref.Append("frontend_ip_configuration_id"))
 }
 
+// FrontendIpConfigurationName returns a reference to field frontend_ip_configuration_name of azurerm_lb_nat_pool.
 func (lnp lbNatPoolAttributes) FrontendIpConfigurationName() terra.StringValue {
-	return terra.ReferenceString(lnp.ref.Append("frontend_ip_configuration_name"))
+	return terra.ReferenceAsString(lnp.ref.Append("frontend_ip_configuration_name"))
 }
 
+// FrontendPortEnd returns a reference to field frontend_port_end of azurerm_lb_nat_pool.
 func (lnp lbNatPoolAttributes) FrontendPortEnd() terra.NumberValue {
-	return terra.ReferenceNumber(lnp.ref.Append("frontend_port_end"))
+	return terra.ReferenceAsNumber(lnp.ref.Append("frontend_port_end"))
 }
 
+// FrontendPortStart returns a reference to field frontend_port_start of azurerm_lb_nat_pool.
 func (lnp lbNatPoolAttributes) FrontendPortStart() terra.NumberValue {
-	return terra.ReferenceNumber(lnp.ref.Append("frontend_port_start"))
+	return terra.ReferenceAsNumber(lnp.ref.Append("frontend_port_start"))
 }
 
+// Id returns a reference to field id of azurerm_lb_nat_pool.
 func (lnp lbNatPoolAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lnp.ref.Append("id"))
+	return terra.ReferenceAsString(lnp.ref.Append("id"))
 }
 
+// IdleTimeoutInMinutes returns a reference to field idle_timeout_in_minutes of azurerm_lb_nat_pool.
 func (lnp lbNatPoolAttributes) IdleTimeoutInMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(lnp.ref.Append("idle_timeout_in_minutes"))
+	return terra.ReferenceAsNumber(lnp.ref.Append("idle_timeout_in_minutes"))
 }
 
+// LoadbalancerId returns a reference to field loadbalancer_id of azurerm_lb_nat_pool.
 func (lnp lbNatPoolAttributes) LoadbalancerId() terra.StringValue {
-	return terra.ReferenceString(lnp.ref.Append("loadbalancer_id"))
+	return terra.ReferenceAsString(lnp.ref.Append("loadbalancer_id"))
 }
 
+// Name returns a reference to field name of azurerm_lb_nat_pool.
 func (lnp lbNatPoolAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lnp.ref.Append("name"))
+	return terra.ReferenceAsString(lnp.ref.Append("name"))
 }
 
+// Protocol returns a reference to field protocol of azurerm_lb_nat_pool.
 func (lnp lbNatPoolAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(lnp.ref.Append("protocol"))
+	return terra.ReferenceAsString(lnp.ref.Append("protocol"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_lb_nat_pool.
 func (lnp lbNatPoolAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(lnp.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(lnp.ref.Append("resource_group_name"))
 }
 
+// TcpResetEnabled returns a reference to field tcp_reset_enabled of azurerm_lb_nat_pool.
 func (lnp lbNatPoolAttributes) TcpResetEnabled() terra.BoolValue {
-	return terra.ReferenceBool(lnp.ref.Append("tcp_reset_enabled"))
+	return terra.ReferenceAsBool(lnp.ref.Append("tcp_reset_enabled"))
 }
 
 func (lnp lbNatPoolAttributes) Timeouts() lbnatpool.TimeoutsAttributes {
-	return terra.ReferenceSingle[lbnatpool.TimeoutsAttributes](lnp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[lbnatpool.TimeoutsAttributes](lnp.ref.Append("timeouts"))
 }
 
 type lbNatPoolState struct {

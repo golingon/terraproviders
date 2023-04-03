@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewFolder creates a new instance of [Folder].
 func NewFolder(name string, args FolderArgs) *Folder {
 	return &Folder{
 		Args: args,
@@ -19,28 +20,51 @@ func NewFolder(name string, args FolderArgs) *Folder {
 
 var _ terra.Resource = (*Folder)(nil)
 
+// Folder represents the Terraform resource google_folder.
 type Folder struct {
-	Name  string
-	Args  FolderArgs
-	state *folderState
+	Name      string
+	Args      FolderArgs
+	state     *folderState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Folder].
 func (f *Folder) Type() string {
 	return "google_folder"
 }
 
+// LocalName returns the local name for [Folder].
 func (f *Folder) LocalName() string {
 	return f.Name
 }
 
+// Configuration returns the configuration (args) for [Folder].
 func (f *Folder) Configuration() interface{} {
 	return f.Args
 }
 
+// DependOn is used for other resources to depend on [Folder].
+func (f *Folder) DependOn() terra.Reference {
+	return terra.ReferenceResource(f)
+}
+
+// Dependencies returns the list of resources [Folder] depends_on.
+func (f *Folder) Dependencies() terra.Dependencies {
+	return f.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Folder].
+func (f *Folder) LifecycleManagement() *terra.Lifecycle {
+	return f.Lifecycle
+}
+
+// Attributes returns the attributes for [Folder].
 func (f *Folder) Attributes() folderAttributes {
 	return folderAttributes{ref: terra.ReferenceResource(f)}
 }
 
+// ImportState imports the given attribute values into [Folder]'s state.
 func (f *Folder) ImportState(av io.Reader) error {
 	f.state = &folderState{}
 	if err := json.NewDecoder(av).Decode(f.state); err != nil {
@@ -49,10 +73,12 @@ func (f *Folder) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Folder] has state.
 func (f *Folder) State() (*folderState, bool) {
 	return f.state, f.state != nil
 }
 
+// StateMust returns the state for [Folder]. Panics if the state is nil.
 func (f *Folder) StateMust() *folderState {
 	if f.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", f.Type(), f.LocalName()))
@@ -60,10 +86,7 @@ func (f *Folder) StateMust() *folderState {
 	return f.state
 }
 
-func (f *Folder) DependOn() terra.Reference {
-	return terra.ReferenceResource(f)
-}
-
+// FolderArgs contains the configurations for google_folder.
 type FolderArgs struct {
 	// DisplayName: string, required
 	DisplayName terra.StringValue `hcl:"display_name,attr" validate:"required"`
@@ -73,43 +96,48 @@ type FolderArgs struct {
 	Parent terra.StringValue `hcl:"parent,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *folder.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that Folder depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type folderAttributes struct {
 	ref terra.Reference
 }
 
+// CreateTime returns a reference to field create_time of google_folder.
 func (f folderAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("create_time"))
+	return terra.ReferenceAsString(f.ref.Append("create_time"))
 }
 
+// DisplayName returns a reference to field display_name of google_folder.
 func (f folderAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("display_name"))
+	return terra.ReferenceAsString(f.ref.Append("display_name"))
 }
 
+// FolderId returns a reference to field folder_id of google_folder.
 func (f folderAttributes) FolderId() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("folder_id"))
+	return terra.ReferenceAsString(f.ref.Append("folder_id"))
 }
 
+// Id returns a reference to field id of google_folder.
 func (f folderAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("id"))
+	return terra.ReferenceAsString(f.ref.Append("id"))
 }
 
+// LifecycleState returns a reference to field lifecycle_state of google_folder.
 func (f folderAttributes) LifecycleState() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("lifecycle_state"))
+	return terra.ReferenceAsString(f.ref.Append("lifecycle_state"))
 }
 
+// Name returns a reference to field name of google_folder.
 func (f folderAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("name"))
+	return terra.ReferenceAsString(f.ref.Append("name"))
 }
 
+// Parent returns a reference to field parent of google_folder.
 func (f folderAttributes) Parent() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("parent"))
+	return terra.ReferenceAsString(f.ref.Append("parent"))
 }
 
 func (f folderAttributes) Timeouts() folder.TimeoutsAttributes {
-	return terra.ReferenceSingle[folder.TimeoutsAttributes](f.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[folder.TimeoutsAttributes](f.ref.Append("timeouts"))
 }
 
 type folderState struct {

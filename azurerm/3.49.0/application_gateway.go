@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApplicationGateway creates a new instance of [ApplicationGateway].
 func NewApplicationGateway(name string, args ApplicationGatewayArgs) *ApplicationGateway {
 	return &ApplicationGateway{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApplicationGateway(name string, args ApplicationGatewayArgs) *Applicatio
 
 var _ terra.Resource = (*ApplicationGateway)(nil)
 
+// ApplicationGateway represents the Terraform resource azurerm_application_gateway.
 type ApplicationGateway struct {
-	Name  string
-	Args  ApplicationGatewayArgs
-	state *applicationGatewayState
+	Name      string
+	Args      ApplicationGatewayArgs
+	state     *applicationGatewayState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApplicationGateway].
 func (ag *ApplicationGateway) Type() string {
 	return "azurerm_application_gateway"
 }
 
+// LocalName returns the local name for [ApplicationGateway].
 func (ag *ApplicationGateway) LocalName() string {
 	return ag.Name
 }
 
+// Configuration returns the configuration (args) for [ApplicationGateway].
 func (ag *ApplicationGateway) Configuration() interface{} {
 	return ag.Args
 }
 
+// DependOn is used for other resources to depend on [ApplicationGateway].
+func (ag *ApplicationGateway) DependOn() terra.Reference {
+	return terra.ReferenceResource(ag)
+}
+
+// Dependencies returns the list of resources [ApplicationGateway] depends_on.
+func (ag *ApplicationGateway) Dependencies() terra.Dependencies {
+	return ag.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApplicationGateway].
+func (ag *ApplicationGateway) LifecycleManagement() *terra.Lifecycle {
+	return ag.Lifecycle
+}
+
+// Attributes returns the attributes for [ApplicationGateway].
 func (ag *ApplicationGateway) Attributes() applicationGatewayAttributes {
 	return applicationGatewayAttributes{ref: terra.ReferenceResource(ag)}
 }
 
+// ImportState imports the given attribute values into [ApplicationGateway]'s state.
 func (ag *ApplicationGateway) ImportState(av io.Reader) error {
 	ag.state = &applicationGatewayState{}
 	if err := json.NewDecoder(av).Decode(ag.state); err != nil {
@@ -49,10 +73,12 @@ func (ag *ApplicationGateway) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApplicationGateway] has state.
 func (ag *ApplicationGateway) State() (*applicationGatewayState, bool) {
 	return ag.state, ag.state != nil
 }
 
+// StateMust returns the state for [ApplicationGateway]. Panics if the state is nil.
 func (ag *ApplicationGateway) StateMust() *applicationGatewayState {
 	if ag.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ag.Type(), ag.LocalName()))
@@ -60,10 +86,7 @@ func (ag *ApplicationGateway) StateMust() *applicationGatewayState {
 	return ag.state
 }
 
-func (ag *ApplicationGateway) DependOn() terra.Reference {
-	return terra.ReferenceResource(ag)
-}
-
+// ApplicationGatewayArgs contains the configurations for azurerm_application_gateway.
 type ApplicationGatewayArgs struct {
 	// EnableHttp2: bool, optional
 	EnableHttp2 terra.BoolValue `hcl:"enable_http2,attr"`
@@ -137,155 +160,163 @@ type ApplicationGatewayArgs struct {
 	UrlPathMap []applicationgateway.UrlPathMap `hcl:"url_path_map,block" validate:"min=0"`
 	// WafConfiguration: optional
 	WafConfiguration *applicationgateway.WafConfiguration `hcl:"waf_configuration,block"`
-	// DependsOn contains resources that ApplicationGateway depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type applicationGatewayAttributes struct {
 	ref terra.Reference
 }
 
+// EnableHttp2 returns a reference to field enable_http2 of azurerm_application_gateway.
 func (ag applicationGatewayAttributes) EnableHttp2() terra.BoolValue {
-	return terra.ReferenceBool(ag.ref.Append("enable_http2"))
+	return terra.ReferenceAsBool(ag.ref.Append("enable_http2"))
 }
 
+// FipsEnabled returns a reference to field fips_enabled of azurerm_application_gateway.
 func (ag applicationGatewayAttributes) FipsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ag.ref.Append("fips_enabled"))
+	return terra.ReferenceAsBool(ag.ref.Append("fips_enabled"))
 }
 
+// FirewallPolicyId returns a reference to field firewall_policy_id of azurerm_application_gateway.
 func (ag applicationGatewayAttributes) FirewallPolicyId() terra.StringValue {
-	return terra.ReferenceString(ag.ref.Append("firewall_policy_id"))
+	return terra.ReferenceAsString(ag.ref.Append("firewall_policy_id"))
 }
 
+// ForceFirewallPolicyAssociation returns a reference to field force_firewall_policy_association of azurerm_application_gateway.
 func (ag applicationGatewayAttributes) ForceFirewallPolicyAssociation() terra.BoolValue {
-	return terra.ReferenceBool(ag.ref.Append("force_firewall_policy_association"))
+	return terra.ReferenceAsBool(ag.ref.Append("force_firewall_policy_association"))
 }
 
+// Id returns a reference to field id of azurerm_application_gateway.
 func (ag applicationGatewayAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ag.ref.Append("id"))
+	return terra.ReferenceAsString(ag.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_application_gateway.
 func (ag applicationGatewayAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ag.ref.Append("location"))
+	return terra.ReferenceAsString(ag.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_application_gateway.
 func (ag applicationGatewayAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ag.ref.Append("name"))
+	return terra.ReferenceAsString(ag.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_application_gateway.
 func (ag applicationGatewayAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ag.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ag.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_application_gateway.
 func (ag applicationGatewayAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ag.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ag.ref.Append("tags"))
 }
 
+// Zones returns a reference to field zones of azurerm_application_gateway.
 func (ag applicationGatewayAttributes) Zones() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ag.ref.Append("zones"))
+	return terra.ReferenceAsSet[terra.StringValue](ag.ref.Append("zones"))
 }
 
 func (ag applicationGatewayAttributes) PrivateEndpointConnection() terra.SetValue[applicationgateway.PrivateEndpointConnectionAttributes] {
-	return terra.ReferenceSet[applicationgateway.PrivateEndpointConnectionAttributes](ag.ref.Append("private_endpoint_connection"))
+	return terra.ReferenceAsSet[applicationgateway.PrivateEndpointConnectionAttributes](ag.ref.Append("private_endpoint_connection"))
 }
 
 func (ag applicationGatewayAttributes) AuthenticationCertificate() terra.ListValue[applicationgateway.AuthenticationCertificateAttributes] {
-	return terra.ReferenceList[applicationgateway.AuthenticationCertificateAttributes](ag.ref.Append("authentication_certificate"))
+	return terra.ReferenceAsList[applicationgateway.AuthenticationCertificateAttributes](ag.ref.Append("authentication_certificate"))
 }
 
 func (ag applicationGatewayAttributes) AutoscaleConfiguration() terra.ListValue[applicationgateway.AutoscaleConfigurationAttributes] {
-	return terra.ReferenceList[applicationgateway.AutoscaleConfigurationAttributes](ag.ref.Append("autoscale_configuration"))
+	return terra.ReferenceAsList[applicationgateway.AutoscaleConfigurationAttributes](ag.ref.Append("autoscale_configuration"))
 }
 
 func (ag applicationGatewayAttributes) BackendAddressPool() terra.SetValue[applicationgateway.BackendAddressPoolAttributes] {
-	return terra.ReferenceSet[applicationgateway.BackendAddressPoolAttributes](ag.ref.Append("backend_address_pool"))
+	return terra.ReferenceAsSet[applicationgateway.BackendAddressPoolAttributes](ag.ref.Append("backend_address_pool"))
 }
 
 func (ag applicationGatewayAttributes) BackendHttpSettings() terra.SetValue[applicationgateway.BackendHttpSettingsAttributes] {
-	return terra.ReferenceSet[applicationgateway.BackendHttpSettingsAttributes](ag.ref.Append("backend_http_settings"))
+	return terra.ReferenceAsSet[applicationgateway.BackendHttpSettingsAttributes](ag.ref.Append("backend_http_settings"))
 }
 
 func (ag applicationGatewayAttributes) CustomErrorConfiguration() terra.ListValue[applicationgateway.CustomErrorConfigurationAttributes] {
-	return terra.ReferenceList[applicationgateway.CustomErrorConfigurationAttributes](ag.ref.Append("custom_error_configuration"))
+	return terra.ReferenceAsList[applicationgateway.CustomErrorConfigurationAttributes](ag.ref.Append("custom_error_configuration"))
 }
 
 func (ag applicationGatewayAttributes) FrontendIpConfiguration() terra.ListValue[applicationgateway.FrontendIpConfigurationAttributes] {
-	return terra.ReferenceList[applicationgateway.FrontendIpConfigurationAttributes](ag.ref.Append("frontend_ip_configuration"))
+	return terra.ReferenceAsList[applicationgateway.FrontendIpConfigurationAttributes](ag.ref.Append("frontend_ip_configuration"))
 }
 
 func (ag applicationGatewayAttributes) FrontendPort() terra.SetValue[applicationgateway.FrontendPortAttributes] {
-	return terra.ReferenceSet[applicationgateway.FrontendPortAttributes](ag.ref.Append("frontend_port"))
+	return terra.ReferenceAsSet[applicationgateway.FrontendPortAttributes](ag.ref.Append("frontend_port"))
 }
 
 func (ag applicationGatewayAttributes) GatewayIpConfiguration() terra.ListValue[applicationgateway.GatewayIpConfigurationAttributes] {
-	return terra.ReferenceList[applicationgateway.GatewayIpConfigurationAttributes](ag.ref.Append("gateway_ip_configuration"))
+	return terra.ReferenceAsList[applicationgateway.GatewayIpConfigurationAttributes](ag.ref.Append("gateway_ip_configuration"))
 }
 
 func (ag applicationGatewayAttributes) Global() terra.ListValue[applicationgateway.GlobalAttributes] {
-	return terra.ReferenceList[applicationgateway.GlobalAttributes](ag.ref.Append("global"))
+	return terra.ReferenceAsList[applicationgateway.GlobalAttributes](ag.ref.Append("global"))
 }
 
 func (ag applicationGatewayAttributes) HttpListener() terra.SetValue[applicationgateway.HttpListenerAttributes] {
-	return terra.ReferenceSet[applicationgateway.HttpListenerAttributes](ag.ref.Append("http_listener"))
+	return terra.ReferenceAsSet[applicationgateway.HttpListenerAttributes](ag.ref.Append("http_listener"))
 }
 
 func (ag applicationGatewayAttributes) Identity() terra.ListValue[applicationgateway.IdentityAttributes] {
-	return terra.ReferenceList[applicationgateway.IdentityAttributes](ag.ref.Append("identity"))
+	return terra.ReferenceAsList[applicationgateway.IdentityAttributes](ag.ref.Append("identity"))
 }
 
 func (ag applicationGatewayAttributes) PrivateLinkConfiguration() terra.SetValue[applicationgateway.PrivateLinkConfigurationAttributes] {
-	return terra.ReferenceSet[applicationgateway.PrivateLinkConfigurationAttributes](ag.ref.Append("private_link_configuration"))
+	return terra.ReferenceAsSet[applicationgateway.PrivateLinkConfigurationAttributes](ag.ref.Append("private_link_configuration"))
 }
 
 func (ag applicationGatewayAttributes) Probe() terra.SetValue[applicationgateway.ProbeAttributes] {
-	return terra.ReferenceSet[applicationgateway.ProbeAttributes](ag.ref.Append("probe"))
+	return terra.ReferenceAsSet[applicationgateway.ProbeAttributes](ag.ref.Append("probe"))
 }
 
 func (ag applicationGatewayAttributes) RedirectConfiguration() terra.SetValue[applicationgateway.RedirectConfigurationAttributes] {
-	return terra.ReferenceSet[applicationgateway.RedirectConfigurationAttributes](ag.ref.Append("redirect_configuration"))
+	return terra.ReferenceAsSet[applicationgateway.RedirectConfigurationAttributes](ag.ref.Append("redirect_configuration"))
 }
 
 func (ag applicationGatewayAttributes) RequestRoutingRule() terra.SetValue[applicationgateway.RequestRoutingRuleAttributes] {
-	return terra.ReferenceSet[applicationgateway.RequestRoutingRuleAttributes](ag.ref.Append("request_routing_rule"))
+	return terra.ReferenceAsSet[applicationgateway.RequestRoutingRuleAttributes](ag.ref.Append("request_routing_rule"))
 }
 
 func (ag applicationGatewayAttributes) RewriteRuleSet() terra.ListValue[applicationgateway.RewriteRuleSetAttributes] {
-	return terra.ReferenceList[applicationgateway.RewriteRuleSetAttributes](ag.ref.Append("rewrite_rule_set"))
+	return terra.ReferenceAsList[applicationgateway.RewriteRuleSetAttributes](ag.ref.Append("rewrite_rule_set"))
 }
 
 func (ag applicationGatewayAttributes) Sku() terra.ListValue[applicationgateway.SkuAttributes] {
-	return terra.ReferenceList[applicationgateway.SkuAttributes](ag.ref.Append("sku"))
+	return terra.ReferenceAsList[applicationgateway.SkuAttributes](ag.ref.Append("sku"))
 }
 
 func (ag applicationGatewayAttributes) SslCertificate() terra.SetValue[applicationgateway.SslCertificateAttributes] {
-	return terra.ReferenceSet[applicationgateway.SslCertificateAttributes](ag.ref.Append("ssl_certificate"))
+	return terra.ReferenceAsSet[applicationgateway.SslCertificateAttributes](ag.ref.Append("ssl_certificate"))
 }
 
 func (ag applicationGatewayAttributes) SslPolicy() terra.ListValue[applicationgateway.SslPolicyAttributes] {
-	return terra.ReferenceList[applicationgateway.SslPolicyAttributes](ag.ref.Append("ssl_policy"))
+	return terra.ReferenceAsList[applicationgateway.SslPolicyAttributes](ag.ref.Append("ssl_policy"))
 }
 
 func (ag applicationGatewayAttributes) SslProfile() terra.ListValue[applicationgateway.SslProfileAttributes] {
-	return terra.ReferenceList[applicationgateway.SslProfileAttributes](ag.ref.Append("ssl_profile"))
+	return terra.ReferenceAsList[applicationgateway.SslProfileAttributes](ag.ref.Append("ssl_profile"))
 }
 
 func (ag applicationGatewayAttributes) Timeouts() applicationgateway.TimeoutsAttributes {
-	return terra.ReferenceSingle[applicationgateway.TimeoutsAttributes](ag.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[applicationgateway.TimeoutsAttributes](ag.ref.Append("timeouts"))
 }
 
 func (ag applicationGatewayAttributes) TrustedClientCertificate() terra.ListValue[applicationgateway.TrustedClientCertificateAttributes] {
-	return terra.ReferenceList[applicationgateway.TrustedClientCertificateAttributes](ag.ref.Append("trusted_client_certificate"))
+	return terra.ReferenceAsList[applicationgateway.TrustedClientCertificateAttributes](ag.ref.Append("trusted_client_certificate"))
 }
 
 func (ag applicationGatewayAttributes) TrustedRootCertificate() terra.ListValue[applicationgateway.TrustedRootCertificateAttributes] {
-	return terra.ReferenceList[applicationgateway.TrustedRootCertificateAttributes](ag.ref.Append("trusted_root_certificate"))
+	return terra.ReferenceAsList[applicationgateway.TrustedRootCertificateAttributes](ag.ref.Append("trusted_root_certificate"))
 }
 
 func (ag applicationGatewayAttributes) UrlPathMap() terra.ListValue[applicationgateway.UrlPathMapAttributes] {
-	return terra.ReferenceList[applicationgateway.UrlPathMapAttributes](ag.ref.Append("url_path_map"))
+	return terra.ReferenceAsList[applicationgateway.UrlPathMapAttributes](ag.ref.Append("url_path_map"))
 }
 
 func (ag applicationGatewayAttributes) WafConfiguration() terra.ListValue[applicationgateway.WafConfigurationAttributes] {
-	return terra.ReferenceList[applicationgateway.WafConfigurationAttributes](ag.ref.Append("waf_configuration"))
+	return terra.ReferenceAsList[applicationgateway.WafConfigurationAttributes](ag.ref.Append("waf_configuration"))
 }
 
 type applicationGatewayState struct {

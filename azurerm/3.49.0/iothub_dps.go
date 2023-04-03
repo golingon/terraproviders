@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewIothubDps creates a new instance of [IothubDps].
 func NewIothubDps(name string, args IothubDpsArgs) *IothubDps {
 	return &IothubDps{
 		Args: args,
@@ -19,28 +20,51 @@ func NewIothubDps(name string, args IothubDpsArgs) *IothubDps {
 
 var _ terra.Resource = (*IothubDps)(nil)
 
+// IothubDps represents the Terraform resource azurerm_iothub_dps.
 type IothubDps struct {
-	Name  string
-	Args  IothubDpsArgs
-	state *iothubDpsState
+	Name      string
+	Args      IothubDpsArgs
+	state     *iothubDpsState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IothubDps].
 func (id *IothubDps) Type() string {
 	return "azurerm_iothub_dps"
 }
 
+// LocalName returns the local name for [IothubDps].
 func (id *IothubDps) LocalName() string {
 	return id.Name
 }
 
+// Configuration returns the configuration (args) for [IothubDps].
 func (id *IothubDps) Configuration() interface{} {
 	return id.Args
 }
 
+// DependOn is used for other resources to depend on [IothubDps].
+func (id *IothubDps) DependOn() terra.Reference {
+	return terra.ReferenceResource(id)
+}
+
+// Dependencies returns the list of resources [IothubDps] depends_on.
+func (id *IothubDps) Dependencies() terra.Dependencies {
+	return id.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IothubDps].
+func (id *IothubDps) LifecycleManagement() *terra.Lifecycle {
+	return id.Lifecycle
+}
+
+// Attributes returns the attributes for [IothubDps].
 func (id *IothubDps) Attributes() iothubDpsAttributes {
 	return iothubDpsAttributes{ref: terra.ReferenceResource(id)}
 }
 
+// ImportState imports the given attribute values into [IothubDps]'s state.
 func (id *IothubDps) ImportState(av io.Reader) error {
 	id.state = &iothubDpsState{}
 	if err := json.NewDecoder(av).Decode(id.state); err != nil {
@@ -49,10 +73,12 @@ func (id *IothubDps) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IothubDps] has state.
 func (id *IothubDps) State() (*iothubDpsState, bool) {
 	return id.state, id.state != nil
 }
 
+// StateMust returns the state for [IothubDps]. Panics if the state is nil.
 func (id *IothubDps) StateMust() *iothubDpsState {
 	if id.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", id.Type(), id.LocalName()))
@@ -60,10 +86,7 @@ func (id *IothubDps) StateMust() *iothubDpsState {
 	return id.state
 }
 
-func (id *IothubDps) DependOn() terra.Reference {
-	return terra.ReferenceResource(id)
-}
-
+// IothubDpsArgs contains the configurations for azurerm_iothub_dps.
 type IothubDpsArgs struct {
 	// AllocationPolicy: string, optional
 	AllocationPolicy terra.StringValue `hcl:"allocation_policy,attr"`
@@ -89,71 +112,80 @@ type IothubDpsArgs struct {
 	Sku *iothubdps.Sku `hcl:"sku,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *iothubdps.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that IothubDps depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iothubDpsAttributes struct {
 	ref terra.Reference
 }
 
+// AllocationPolicy returns a reference to field allocation_policy of azurerm_iothub_dps.
 func (id iothubDpsAttributes) AllocationPolicy() terra.StringValue {
-	return terra.ReferenceString(id.ref.Append("allocation_policy"))
+	return terra.ReferenceAsString(id.ref.Append("allocation_policy"))
 }
 
+// DataResidencyEnabled returns a reference to field data_residency_enabled of azurerm_iothub_dps.
 func (id iothubDpsAttributes) DataResidencyEnabled() terra.BoolValue {
-	return terra.ReferenceBool(id.ref.Append("data_residency_enabled"))
+	return terra.ReferenceAsBool(id.ref.Append("data_residency_enabled"))
 }
 
+// DeviceProvisioningHostName returns a reference to field device_provisioning_host_name of azurerm_iothub_dps.
 func (id iothubDpsAttributes) DeviceProvisioningHostName() terra.StringValue {
-	return terra.ReferenceString(id.ref.Append("device_provisioning_host_name"))
+	return terra.ReferenceAsString(id.ref.Append("device_provisioning_host_name"))
 }
 
+// Id returns a reference to field id of azurerm_iothub_dps.
 func (id iothubDpsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(id.ref.Append("id"))
+	return terra.ReferenceAsString(id.ref.Append("id"))
 }
 
+// IdScope returns a reference to field id_scope of azurerm_iothub_dps.
 func (id iothubDpsAttributes) IdScope() terra.StringValue {
-	return terra.ReferenceString(id.ref.Append("id_scope"))
+	return terra.ReferenceAsString(id.ref.Append("id_scope"))
 }
 
+// Location returns a reference to field location of azurerm_iothub_dps.
 func (id iothubDpsAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(id.ref.Append("location"))
+	return terra.ReferenceAsString(id.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_iothub_dps.
 func (id iothubDpsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(id.ref.Append("name"))
+	return terra.ReferenceAsString(id.ref.Append("name"))
 }
 
+// PublicNetworkAccessEnabled returns a reference to field public_network_access_enabled of azurerm_iothub_dps.
 func (id iothubDpsAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(id.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(id.ref.Append("public_network_access_enabled"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_iothub_dps.
 func (id iothubDpsAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(id.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(id.ref.Append("resource_group_name"))
 }
 
+// ServiceOperationsHostName returns a reference to field service_operations_host_name of azurerm_iothub_dps.
 func (id iothubDpsAttributes) ServiceOperationsHostName() terra.StringValue {
-	return terra.ReferenceString(id.ref.Append("service_operations_host_name"))
+	return terra.ReferenceAsString(id.ref.Append("service_operations_host_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_iothub_dps.
 func (id iothubDpsAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](id.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](id.ref.Append("tags"))
 }
 
 func (id iothubDpsAttributes) IpFilterRule() terra.ListValue[iothubdps.IpFilterRuleAttributes] {
-	return terra.ReferenceList[iothubdps.IpFilterRuleAttributes](id.ref.Append("ip_filter_rule"))
+	return terra.ReferenceAsList[iothubdps.IpFilterRuleAttributes](id.ref.Append("ip_filter_rule"))
 }
 
 func (id iothubDpsAttributes) LinkedHub() terra.ListValue[iothubdps.LinkedHubAttributes] {
-	return terra.ReferenceList[iothubdps.LinkedHubAttributes](id.ref.Append("linked_hub"))
+	return terra.ReferenceAsList[iothubdps.LinkedHubAttributes](id.ref.Append("linked_hub"))
 }
 
 func (id iothubDpsAttributes) Sku() terra.ListValue[iothubdps.SkuAttributes] {
-	return terra.ReferenceList[iothubdps.SkuAttributes](id.ref.Append("sku"))
+	return terra.ReferenceAsList[iothubdps.SkuAttributes](id.ref.Append("sku"))
 }
 
 func (id iothubDpsAttributes) Timeouts() iothubdps.TimeoutsAttributes {
-	return terra.ReferenceSingle[iothubdps.TimeoutsAttributes](id.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[iothubdps.TimeoutsAttributes](id.ref.Append("timeouts"))
 }
 
 type iothubDpsState struct {

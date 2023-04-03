@@ -4,6 +4,7 @@ package google
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataComputeNodeTypes creates a new instance of [DataComputeNodeTypes].
 func NewDataComputeNodeTypes(name string, args DataComputeNodeTypesArgs) *DataComputeNodeTypes {
 	return &DataComputeNodeTypes{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataComputeNodeTypes(name string, args DataComputeNodeTypesArgs) *DataCo
 
 var _ terra.DataResource = (*DataComputeNodeTypes)(nil)
 
+// DataComputeNodeTypes represents the Terraform data resource google_compute_node_types.
 type DataComputeNodeTypes struct {
 	Name string
 	Args DataComputeNodeTypesArgs
 }
 
+// DataSource returns the Terraform object type for [DataComputeNodeTypes].
 func (cnt *DataComputeNodeTypes) DataSource() string {
 	return "google_compute_node_types"
 }
 
+// LocalName returns the local name for [DataComputeNodeTypes].
 func (cnt *DataComputeNodeTypes) LocalName() string {
 	return cnt.Name
 }
 
+// Configuration returns the configuration (args) for [DataComputeNodeTypes].
 func (cnt *DataComputeNodeTypes) Configuration() interface{} {
 	return cnt.Args
 }
 
+// Attributes returns the attributes for [DataComputeNodeTypes].
 func (cnt *DataComputeNodeTypes) Attributes() dataComputeNodeTypesAttributes {
 	return dataComputeNodeTypesAttributes{ref: terra.ReferenceDataResource(cnt)}
 }
 
+// DataComputeNodeTypesArgs contains the configurations for google_compute_node_types.
 type DataComputeNodeTypesArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -46,18 +53,22 @@ type dataComputeNodeTypesAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of google_compute_node_types.
 func (cnt dataComputeNodeTypesAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cnt.ref.Append("id"))
+	return terra.ReferenceAsString(cnt.ref.Append("id"))
 }
 
+// Names returns a reference to field names of google_compute_node_types.
 func (cnt dataComputeNodeTypesAttributes) Names() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cnt.ref.Append("names"))
+	return terra.ReferenceAsList[terra.StringValue](cnt.ref.Append("names"))
 }
 
+// Project returns a reference to field project of google_compute_node_types.
 func (cnt dataComputeNodeTypesAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cnt.ref.Append("project"))
+	return terra.ReferenceAsString(cnt.ref.Append("project"))
 }
 
+// Zone returns a reference to field zone of google_compute_node_types.
 func (cnt dataComputeNodeTypesAttributes) Zone() terra.StringValue {
-	return terra.ReferenceString(cnt.ref.Append("zone"))
+	return terra.ReferenceAsString(cnt.ref.Append("zone"))
 }

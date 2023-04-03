@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewHpcCacheAccessPolicy creates a new instance of [HpcCacheAccessPolicy].
 func NewHpcCacheAccessPolicy(name string, args HpcCacheAccessPolicyArgs) *HpcCacheAccessPolicy {
 	return &HpcCacheAccessPolicy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewHpcCacheAccessPolicy(name string, args HpcCacheAccessPolicyArgs) *HpcCac
 
 var _ terra.Resource = (*HpcCacheAccessPolicy)(nil)
 
+// HpcCacheAccessPolicy represents the Terraform resource azurerm_hpc_cache_access_policy.
 type HpcCacheAccessPolicy struct {
-	Name  string
-	Args  HpcCacheAccessPolicyArgs
-	state *hpcCacheAccessPolicyState
+	Name      string
+	Args      HpcCacheAccessPolicyArgs
+	state     *hpcCacheAccessPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [HpcCacheAccessPolicy].
 func (hcap *HpcCacheAccessPolicy) Type() string {
 	return "azurerm_hpc_cache_access_policy"
 }
 
+// LocalName returns the local name for [HpcCacheAccessPolicy].
 func (hcap *HpcCacheAccessPolicy) LocalName() string {
 	return hcap.Name
 }
 
+// Configuration returns the configuration (args) for [HpcCacheAccessPolicy].
 func (hcap *HpcCacheAccessPolicy) Configuration() interface{} {
 	return hcap.Args
 }
 
+// DependOn is used for other resources to depend on [HpcCacheAccessPolicy].
+func (hcap *HpcCacheAccessPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(hcap)
+}
+
+// Dependencies returns the list of resources [HpcCacheAccessPolicy] depends_on.
+func (hcap *HpcCacheAccessPolicy) Dependencies() terra.Dependencies {
+	return hcap.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [HpcCacheAccessPolicy].
+func (hcap *HpcCacheAccessPolicy) LifecycleManagement() *terra.Lifecycle {
+	return hcap.Lifecycle
+}
+
+// Attributes returns the attributes for [HpcCacheAccessPolicy].
 func (hcap *HpcCacheAccessPolicy) Attributes() hpcCacheAccessPolicyAttributes {
 	return hpcCacheAccessPolicyAttributes{ref: terra.ReferenceResource(hcap)}
 }
 
+// ImportState imports the given attribute values into [HpcCacheAccessPolicy]'s state.
 func (hcap *HpcCacheAccessPolicy) ImportState(av io.Reader) error {
 	hcap.state = &hpcCacheAccessPolicyState{}
 	if err := json.NewDecoder(av).Decode(hcap.state); err != nil {
@@ -49,10 +73,12 @@ func (hcap *HpcCacheAccessPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [HpcCacheAccessPolicy] has state.
 func (hcap *HpcCacheAccessPolicy) State() (*hpcCacheAccessPolicyState, bool) {
 	return hcap.state, hcap.state != nil
 }
 
+// StateMust returns the state for [HpcCacheAccessPolicy]. Panics if the state is nil.
 func (hcap *HpcCacheAccessPolicy) StateMust() *hpcCacheAccessPolicyState {
 	if hcap.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", hcap.Type(), hcap.LocalName()))
@@ -60,10 +86,7 @@ func (hcap *HpcCacheAccessPolicy) StateMust() *hpcCacheAccessPolicyState {
 	return hcap.state
 }
 
-func (hcap *HpcCacheAccessPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(hcap)
-}
-
+// HpcCacheAccessPolicyArgs contains the configurations for azurerm_hpc_cache_access_policy.
 type HpcCacheAccessPolicyArgs struct {
 	// HpcCacheId: string, required
 	HpcCacheId terra.StringValue `hcl:"hpc_cache_id,attr" validate:"required"`
@@ -75,31 +98,32 @@ type HpcCacheAccessPolicyArgs struct {
 	AccessRule []hpccacheaccesspolicy.AccessRule `hcl:"access_rule,block" validate:"min=1,max=3"`
 	// Timeouts: optional
 	Timeouts *hpccacheaccesspolicy.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that HpcCacheAccessPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type hpcCacheAccessPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// HpcCacheId returns a reference to field hpc_cache_id of azurerm_hpc_cache_access_policy.
 func (hcap hpcCacheAccessPolicyAttributes) HpcCacheId() terra.StringValue {
-	return terra.ReferenceString(hcap.ref.Append("hpc_cache_id"))
+	return terra.ReferenceAsString(hcap.ref.Append("hpc_cache_id"))
 }
 
+// Id returns a reference to field id of azurerm_hpc_cache_access_policy.
 func (hcap hpcCacheAccessPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(hcap.ref.Append("id"))
+	return terra.ReferenceAsString(hcap.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_hpc_cache_access_policy.
 func (hcap hpcCacheAccessPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(hcap.ref.Append("name"))
+	return terra.ReferenceAsString(hcap.ref.Append("name"))
 }
 
 func (hcap hpcCacheAccessPolicyAttributes) AccessRule() terra.SetValue[hpccacheaccesspolicy.AccessRuleAttributes] {
-	return terra.ReferenceSet[hpccacheaccesspolicy.AccessRuleAttributes](hcap.ref.Append("access_rule"))
+	return terra.ReferenceAsSet[hpccacheaccesspolicy.AccessRuleAttributes](hcap.ref.Append("access_rule"))
 }
 
 func (hcap hpcCacheAccessPolicyAttributes) Timeouts() hpccacheaccesspolicy.TimeoutsAttributes {
-	return terra.ReferenceSingle[hpccacheaccesspolicy.TimeoutsAttributes](hcap.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[hpccacheaccesspolicy.TimeoutsAttributes](hcap.ref.Append("timeouts"))
 }
 
 type hpcCacheAccessPolicyState struct {

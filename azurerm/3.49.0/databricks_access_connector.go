@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDatabricksAccessConnector creates a new instance of [DatabricksAccessConnector].
 func NewDatabricksAccessConnector(name string, args DatabricksAccessConnectorArgs) *DatabricksAccessConnector {
 	return &DatabricksAccessConnector{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDatabricksAccessConnector(name string, args DatabricksAccessConnectorArg
 
 var _ terra.Resource = (*DatabricksAccessConnector)(nil)
 
+// DatabricksAccessConnector represents the Terraform resource azurerm_databricks_access_connector.
 type DatabricksAccessConnector struct {
-	Name  string
-	Args  DatabricksAccessConnectorArgs
-	state *databricksAccessConnectorState
+	Name      string
+	Args      DatabricksAccessConnectorArgs
+	state     *databricksAccessConnectorState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DatabricksAccessConnector].
 func (dac *DatabricksAccessConnector) Type() string {
 	return "azurerm_databricks_access_connector"
 }
 
+// LocalName returns the local name for [DatabricksAccessConnector].
 func (dac *DatabricksAccessConnector) LocalName() string {
 	return dac.Name
 }
 
+// Configuration returns the configuration (args) for [DatabricksAccessConnector].
 func (dac *DatabricksAccessConnector) Configuration() interface{} {
 	return dac.Args
 }
 
+// DependOn is used for other resources to depend on [DatabricksAccessConnector].
+func (dac *DatabricksAccessConnector) DependOn() terra.Reference {
+	return terra.ReferenceResource(dac)
+}
+
+// Dependencies returns the list of resources [DatabricksAccessConnector] depends_on.
+func (dac *DatabricksAccessConnector) Dependencies() terra.Dependencies {
+	return dac.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DatabricksAccessConnector].
+func (dac *DatabricksAccessConnector) LifecycleManagement() *terra.Lifecycle {
+	return dac.Lifecycle
+}
+
+// Attributes returns the attributes for [DatabricksAccessConnector].
 func (dac *DatabricksAccessConnector) Attributes() databricksAccessConnectorAttributes {
 	return databricksAccessConnectorAttributes{ref: terra.ReferenceResource(dac)}
 }
 
+// ImportState imports the given attribute values into [DatabricksAccessConnector]'s state.
 func (dac *DatabricksAccessConnector) ImportState(av io.Reader) error {
 	dac.state = &databricksAccessConnectorState{}
 	if err := json.NewDecoder(av).Decode(dac.state); err != nil {
@@ -49,10 +73,12 @@ func (dac *DatabricksAccessConnector) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DatabricksAccessConnector] has state.
 func (dac *DatabricksAccessConnector) State() (*databricksAccessConnectorState, bool) {
 	return dac.state, dac.state != nil
 }
 
+// StateMust returns the state for [DatabricksAccessConnector]. Panics if the state is nil.
 func (dac *DatabricksAccessConnector) StateMust() *databricksAccessConnectorState {
 	if dac.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dac.Type(), dac.LocalName()))
@@ -60,10 +86,7 @@ func (dac *DatabricksAccessConnector) StateMust() *databricksAccessConnectorStat
 	return dac.state
 }
 
-func (dac *DatabricksAccessConnector) DependOn() terra.Reference {
-	return terra.ReferenceResource(dac)
-}
-
+// DatabricksAccessConnectorArgs contains the configurations for azurerm_databricks_access_connector.
 type DatabricksAccessConnectorArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,39 +102,42 @@ type DatabricksAccessConnectorArgs struct {
 	Identity *databricksaccessconnector.Identity `hcl:"identity,block"`
 	// Timeouts: optional
 	Timeouts *databricksaccessconnector.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DatabricksAccessConnector depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type databricksAccessConnectorAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_databricks_access_connector.
 func (dac databricksAccessConnectorAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dac.ref.Append("id"))
+	return terra.ReferenceAsString(dac.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_databricks_access_connector.
 func (dac databricksAccessConnectorAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(dac.ref.Append("location"))
+	return terra.ReferenceAsString(dac.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_databricks_access_connector.
 func (dac databricksAccessConnectorAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dac.ref.Append("name"))
+	return terra.ReferenceAsString(dac.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_databricks_access_connector.
 func (dac databricksAccessConnectorAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(dac.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(dac.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_databricks_access_connector.
 func (dac databricksAccessConnectorAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dac.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dac.ref.Append("tags"))
 }
 
 func (dac databricksAccessConnectorAttributes) Identity() terra.ListValue[databricksaccessconnector.IdentityAttributes] {
-	return terra.ReferenceList[databricksaccessconnector.IdentityAttributes](dac.ref.Append("identity"))
+	return terra.ReferenceAsList[databricksaccessconnector.IdentityAttributes](dac.ref.Append("identity"))
 }
 
 func (dac databricksAccessConnectorAttributes) Timeouts() databricksaccessconnector.TimeoutsAttributes {
-	return terra.ReferenceSingle[databricksaccessconnector.TimeoutsAttributes](dac.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[databricksaccessconnector.TimeoutsAttributes](dac.ref.Append("timeouts"))
 }
 
 type databricksAccessConnectorState struct {

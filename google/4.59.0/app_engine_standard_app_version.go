@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAppEngineStandardAppVersion creates a new instance of [AppEngineStandardAppVersion].
 func NewAppEngineStandardAppVersion(name string, args AppEngineStandardAppVersionArgs) *AppEngineStandardAppVersion {
 	return &AppEngineStandardAppVersion{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAppEngineStandardAppVersion(name string, args AppEngineStandardAppVersio
 
 var _ terra.Resource = (*AppEngineStandardAppVersion)(nil)
 
+// AppEngineStandardAppVersion represents the Terraform resource google_app_engine_standard_app_version.
 type AppEngineStandardAppVersion struct {
-	Name  string
-	Args  AppEngineStandardAppVersionArgs
-	state *appEngineStandardAppVersionState
+	Name      string
+	Args      AppEngineStandardAppVersionArgs
+	state     *appEngineStandardAppVersionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AppEngineStandardAppVersion].
 func (aesav *AppEngineStandardAppVersion) Type() string {
 	return "google_app_engine_standard_app_version"
 }
 
+// LocalName returns the local name for [AppEngineStandardAppVersion].
 func (aesav *AppEngineStandardAppVersion) LocalName() string {
 	return aesav.Name
 }
 
+// Configuration returns the configuration (args) for [AppEngineStandardAppVersion].
 func (aesav *AppEngineStandardAppVersion) Configuration() interface{} {
 	return aesav.Args
 }
 
+// DependOn is used for other resources to depend on [AppEngineStandardAppVersion].
+func (aesav *AppEngineStandardAppVersion) DependOn() terra.Reference {
+	return terra.ReferenceResource(aesav)
+}
+
+// Dependencies returns the list of resources [AppEngineStandardAppVersion] depends_on.
+func (aesav *AppEngineStandardAppVersion) Dependencies() terra.Dependencies {
+	return aesav.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AppEngineStandardAppVersion].
+func (aesav *AppEngineStandardAppVersion) LifecycleManagement() *terra.Lifecycle {
+	return aesav.Lifecycle
+}
+
+// Attributes returns the attributes for [AppEngineStandardAppVersion].
 func (aesav *AppEngineStandardAppVersion) Attributes() appEngineStandardAppVersionAttributes {
 	return appEngineStandardAppVersionAttributes{ref: terra.ReferenceResource(aesav)}
 }
 
+// ImportState imports the given attribute values into [AppEngineStandardAppVersion]'s state.
 func (aesav *AppEngineStandardAppVersion) ImportState(av io.Reader) error {
 	aesav.state = &appEngineStandardAppVersionState{}
 	if err := json.NewDecoder(av).Decode(aesav.state); err != nil {
@@ -49,10 +73,12 @@ func (aesav *AppEngineStandardAppVersion) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AppEngineStandardAppVersion] has state.
 func (aesav *AppEngineStandardAppVersion) State() (*appEngineStandardAppVersionState, bool) {
 	return aesav.state, aesav.state != nil
 }
 
+// StateMust returns the state for [AppEngineStandardAppVersion]. Panics if the state is nil.
 func (aesav *AppEngineStandardAppVersion) StateMust() *appEngineStandardAppVersionState {
 	if aesav.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", aesav.Type(), aesav.LocalName()))
@@ -60,10 +86,7 @@ func (aesav *AppEngineStandardAppVersion) StateMust() *appEngineStandardAppVersi
 	return aesav.state
 }
 
-func (aesav *AppEngineStandardAppVersion) DependOn() terra.Reference {
-	return terra.ReferenceResource(aesav)
-}
-
+// AppEngineStandardAppVersionArgs contains the configurations for google_app_engine_standard_app_version.
 type AppEngineStandardAppVersionArgs struct {
 	// AppEngineApis: bool, optional
 	AppEngineApis terra.BoolValue `hcl:"app_engine_apis,attr"`
@@ -111,107 +134,120 @@ type AppEngineStandardAppVersionArgs struct {
 	Timeouts *appenginestandardappversion.Timeouts `hcl:"timeouts,block"`
 	// VpcAccessConnector: optional
 	VpcAccessConnector *appenginestandardappversion.VpcAccessConnector `hcl:"vpc_access_connector,block"`
-	// DependsOn contains resources that AppEngineStandardAppVersion depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type appEngineStandardAppVersionAttributes struct {
 	ref terra.Reference
 }
 
+// AppEngineApis returns a reference to field app_engine_apis of google_app_engine_standard_app_version.
 func (aesav appEngineStandardAppVersionAttributes) AppEngineApis() terra.BoolValue {
-	return terra.ReferenceBool(aesav.ref.Append("app_engine_apis"))
+	return terra.ReferenceAsBool(aesav.ref.Append("app_engine_apis"))
 }
 
+// DeleteServiceOnDestroy returns a reference to field delete_service_on_destroy of google_app_engine_standard_app_version.
 func (aesav appEngineStandardAppVersionAttributes) DeleteServiceOnDestroy() terra.BoolValue {
-	return terra.ReferenceBool(aesav.ref.Append("delete_service_on_destroy"))
+	return terra.ReferenceAsBool(aesav.ref.Append("delete_service_on_destroy"))
 }
 
+// EnvVariables returns a reference to field env_variables of google_app_engine_standard_app_version.
 func (aesav appEngineStandardAppVersionAttributes) EnvVariables() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](aesav.ref.Append("env_variables"))
+	return terra.ReferenceAsMap[terra.StringValue](aesav.ref.Append("env_variables"))
 }
 
+// Id returns a reference to field id of google_app_engine_standard_app_version.
 func (aesav appEngineStandardAppVersionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(aesav.ref.Append("id"))
+	return terra.ReferenceAsString(aesav.ref.Append("id"))
 }
 
+// InboundServices returns a reference to field inbound_services of google_app_engine_standard_app_version.
 func (aesav appEngineStandardAppVersionAttributes) InboundServices() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](aesav.ref.Append("inbound_services"))
+	return terra.ReferenceAsSet[terra.StringValue](aesav.ref.Append("inbound_services"))
 }
 
+// InstanceClass returns a reference to field instance_class of google_app_engine_standard_app_version.
 func (aesav appEngineStandardAppVersionAttributes) InstanceClass() terra.StringValue {
-	return terra.ReferenceString(aesav.ref.Append("instance_class"))
+	return terra.ReferenceAsString(aesav.ref.Append("instance_class"))
 }
 
+// Name returns a reference to field name of google_app_engine_standard_app_version.
 func (aesav appEngineStandardAppVersionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(aesav.ref.Append("name"))
+	return terra.ReferenceAsString(aesav.ref.Append("name"))
 }
 
+// NoopOnDestroy returns a reference to field noop_on_destroy of google_app_engine_standard_app_version.
 func (aesav appEngineStandardAppVersionAttributes) NoopOnDestroy() terra.BoolValue {
-	return terra.ReferenceBool(aesav.ref.Append("noop_on_destroy"))
+	return terra.ReferenceAsBool(aesav.ref.Append("noop_on_destroy"))
 }
 
+// Project returns a reference to field project of google_app_engine_standard_app_version.
 func (aesav appEngineStandardAppVersionAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(aesav.ref.Append("project"))
+	return terra.ReferenceAsString(aesav.ref.Append("project"))
 }
 
+// Runtime returns a reference to field runtime of google_app_engine_standard_app_version.
 func (aesav appEngineStandardAppVersionAttributes) Runtime() terra.StringValue {
-	return terra.ReferenceString(aesav.ref.Append("runtime"))
+	return terra.ReferenceAsString(aesav.ref.Append("runtime"))
 }
 
+// RuntimeApiVersion returns a reference to field runtime_api_version of google_app_engine_standard_app_version.
 func (aesav appEngineStandardAppVersionAttributes) RuntimeApiVersion() terra.StringValue {
-	return terra.ReferenceString(aesav.ref.Append("runtime_api_version"))
+	return terra.ReferenceAsString(aesav.ref.Append("runtime_api_version"))
 }
 
+// Service returns a reference to field service of google_app_engine_standard_app_version.
 func (aesav appEngineStandardAppVersionAttributes) Service() terra.StringValue {
-	return terra.ReferenceString(aesav.ref.Append("service"))
+	return terra.ReferenceAsString(aesav.ref.Append("service"))
 }
 
+// ServiceAccount returns a reference to field service_account of google_app_engine_standard_app_version.
 func (aesav appEngineStandardAppVersionAttributes) ServiceAccount() terra.StringValue {
-	return terra.ReferenceString(aesav.ref.Append("service_account"))
+	return terra.ReferenceAsString(aesav.ref.Append("service_account"))
 }
 
+// Threadsafe returns a reference to field threadsafe of google_app_engine_standard_app_version.
 func (aesav appEngineStandardAppVersionAttributes) Threadsafe() terra.BoolValue {
-	return terra.ReferenceBool(aesav.ref.Append("threadsafe"))
+	return terra.ReferenceAsBool(aesav.ref.Append("threadsafe"))
 }
 
+// VersionId returns a reference to field version_id of google_app_engine_standard_app_version.
 func (aesav appEngineStandardAppVersionAttributes) VersionId() terra.StringValue {
-	return terra.ReferenceString(aesav.ref.Append("version_id"))
+	return terra.ReferenceAsString(aesav.ref.Append("version_id"))
 }
 
 func (aesav appEngineStandardAppVersionAttributes) AutomaticScaling() terra.ListValue[appenginestandardappversion.AutomaticScalingAttributes] {
-	return terra.ReferenceList[appenginestandardappversion.AutomaticScalingAttributes](aesav.ref.Append("automatic_scaling"))
+	return terra.ReferenceAsList[appenginestandardappversion.AutomaticScalingAttributes](aesav.ref.Append("automatic_scaling"))
 }
 
 func (aesav appEngineStandardAppVersionAttributes) BasicScaling() terra.ListValue[appenginestandardappversion.BasicScalingAttributes] {
-	return terra.ReferenceList[appenginestandardappversion.BasicScalingAttributes](aesav.ref.Append("basic_scaling"))
+	return terra.ReferenceAsList[appenginestandardappversion.BasicScalingAttributes](aesav.ref.Append("basic_scaling"))
 }
 
 func (aesav appEngineStandardAppVersionAttributes) Deployment() terra.ListValue[appenginestandardappversion.DeploymentAttributes] {
-	return terra.ReferenceList[appenginestandardappversion.DeploymentAttributes](aesav.ref.Append("deployment"))
+	return terra.ReferenceAsList[appenginestandardappversion.DeploymentAttributes](aesav.ref.Append("deployment"))
 }
 
 func (aesav appEngineStandardAppVersionAttributes) Entrypoint() terra.ListValue[appenginestandardappversion.EntrypointAttributes] {
-	return terra.ReferenceList[appenginestandardappversion.EntrypointAttributes](aesav.ref.Append("entrypoint"))
+	return terra.ReferenceAsList[appenginestandardappversion.EntrypointAttributes](aesav.ref.Append("entrypoint"))
 }
 
 func (aesav appEngineStandardAppVersionAttributes) Handlers() terra.ListValue[appenginestandardappversion.HandlersAttributes] {
-	return terra.ReferenceList[appenginestandardappversion.HandlersAttributes](aesav.ref.Append("handlers"))
+	return terra.ReferenceAsList[appenginestandardappversion.HandlersAttributes](aesav.ref.Append("handlers"))
 }
 
 func (aesav appEngineStandardAppVersionAttributes) Libraries() terra.ListValue[appenginestandardappversion.LibrariesAttributes] {
-	return terra.ReferenceList[appenginestandardappversion.LibrariesAttributes](aesav.ref.Append("libraries"))
+	return terra.ReferenceAsList[appenginestandardappversion.LibrariesAttributes](aesav.ref.Append("libraries"))
 }
 
 func (aesav appEngineStandardAppVersionAttributes) ManualScaling() terra.ListValue[appenginestandardappversion.ManualScalingAttributes] {
-	return terra.ReferenceList[appenginestandardappversion.ManualScalingAttributes](aesav.ref.Append("manual_scaling"))
+	return terra.ReferenceAsList[appenginestandardappversion.ManualScalingAttributes](aesav.ref.Append("manual_scaling"))
 }
 
 func (aesav appEngineStandardAppVersionAttributes) Timeouts() appenginestandardappversion.TimeoutsAttributes {
-	return terra.ReferenceSingle[appenginestandardappversion.TimeoutsAttributes](aesav.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[appenginestandardappversion.TimeoutsAttributes](aesav.ref.Append("timeouts"))
 }
 
 func (aesav appEngineStandardAppVersionAttributes) VpcAccessConnector() terra.ListValue[appenginestandardappversion.VpcAccessConnectorAttributes] {
-	return terra.ReferenceList[appenginestandardappversion.VpcAccessConnectorAttributes](aesav.ref.Append("vpc_access_connector"))
+	return terra.ReferenceAsList[appenginestandardappversion.VpcAccessConnectorAttributes](aesav.ref.Append("vpc_access_connector"))
 }
 
 type appEngineStandardAppVersionState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewComputeRegionDiskIamPolicy creates a new instance of [ComputeRegionDiskIamPolicy].
 func NewComputeRegionDiskIamPolicy(name string, args ComputeRegionDiskIamPolicyArgs) *ComputeRegionDiskIamPolicy {
 	return &ComputeRegionDiskIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewComputeRegionDiskIamPolicy(name string, args ComputeRegionDiskIamPolicyA
 
 var _ terra.Resource = (*ComputeRegionDiskIamPolicy)(nil)
 
+// ComputeRegionDiskIamPolicy represents the Terraform resource google_compute_region_disk_iam_policy.
 type ComputeRegionDiskIamPolicy struct {
-	Name  string
-	Args  ComputeRegionDiskIamPolicyArgs
-	state *computeRegionDiskIamPolicyState
+	Name      string
+	Args      ComputeRegionDiskIamPolicyArgs
+	state     *computeRegionDiskIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeRegionDiskIamPolicy].
 func (crdip *ComputeRegionDiskIamPolicy) Type() string {
 	return "google_compute_region_disk_iam_policy"
 }
 
+// LocalName returns the local name for [ComputeRegionDiskIamPolicy].
 func (crdip *ComputeRegionDiskIamPolicy) LocalName() string {
 	return crdip.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeRegionDiskIamPolicy].
 func (crdip *ComputeRegionDiskIamPolicy) Configuration() interface{} {
 	return crdip.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeRegionDiskIamPolicy].
+func (crdip *ComputeRegionDiskIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(crdip)
+}
+
+// Dependencies returns the list of resources [ComputeRegionDiskIamPolicy] depends_on.
+func (crdip *ComputeRegionDiskIamPolicy) Dependencies() terra.Dependencies {
+	return crdip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeRegionDiskIamPolicy].
+func (crdip *ComputeRegionDiskIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return crdip.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeRegionDiskIamPolicy].
 func (crdip *ComputeRegionDiskIamPolicy) Attributes() computeRegionDiskIamPolicyAttributes {
 	return computeRegionDiskIamPolicyAttributes{ref: terra.ReferenceResource(crdip)}
 }
 
+// ImportState imports the given attribute values into [ComputeRegionDiskIamPolicy]'s state.
 func (crdip *ComputeRegionDiskIamPolicy) ImportState(av io.Reader) error {
 	crdip.state = &computeRegionDiskIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(crdip.state); err != nil {
@@ -48,10 +72,12 @@ func (crdip *ComputeRegionDiskIamPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeRegionDiskIamPolicy] has state.
 func (crdip *ComputeRegionDiskIamPolicy) State() (*computeRegionDiskIamPolicyState, bool) {
 	return crdip.state, crdip.state != nil
 }
 
+// StateMust returns the state for [ComputeRegionDiskIamPolicy]. Panics if the state is nil.
 func (crdip *ComputeRegionDiskIamPolicy) StateMust() *computeRegionDiskIamPolicyState {
 	if crdip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", crdip.Type(), crdip.LocalName()))
@@ -59,10 +85,7 @@ func (crdip *ComputeRegionDiskIamPolicy) StateMust() *computeRegionDiskIamPolicy
 	return crdip.state
 }
 
-func (crdip *ComputeRegionDiskIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(crdip)
-}
-
+// ComputeRegionDiskIamPolicyArgs contains the configurations for google_compute_region_disk_iam_policy.
 type ComputeRegionDiskIamPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -74,35 +97,39 @@ type ComputeRegionDiskIamPolicyArgs struct {
 	Project terra.StringValue `hcl:"project,attr"`
 	// Region: string, optional
 	Region terra.StringValue `hcl:"region,attr"`
-	// DependsOn contains resources that ComputeRegionDiskIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeRegionDiskIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_compute_region_disk_iam_policy.
 func (crdip computeRegionDiskIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(crdip.ref.Append("etag"))
+	return terra.ReferenceAsString(crdip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_compute_region_disk_iam_policy.
 func (crdip computeRegionDiskIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(crdip.ref.Append("id"))
+	return terra.ReferenceAsString(crdip.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_compute_region_disk_iam_policy.
 func (crdip computeRegionDiskIamPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(crdip.ref.Append("name"))
+	return terra.ReferenceAsString(crdip.ref.Append("name"))
 }
 
+// PolicyData returns a reference to field policy_data of google_compute_region_disk_iam_policy.
 func (crdip computeRegionDiskIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(crdip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(crdip.ref.Append("policy_data"))
 }
 
+// Project returns a reference to field project of google_compute_region_disk_iam_policy.
 func (crdip computeRegionDiskIamPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(crdip.ref.Append("project"))
+	return terra.ReferenceAsString(crdip.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_compute_region_disk_iam_policy.
 func (crdip computeRegionDiskIamPolicyAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(crdip.ref.Append("region"))
+	return terra.ReferenceAsString(crdip.ref.Append("region"))
 }
 
 type computeRegionDiskIamPolicyState struct {

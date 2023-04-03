@@ -114,7 +114,7 @@ func (a AudioAttributes) InternalWithRef(ref terra.Reference) AudioAttributes {
 	return AudioAttributes{ref: ref}
 }
 
-func (a AudioAttributes) InternalTokens() hclwrite.Tokens {
+func (a AudioAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -150,7 +150,7 @@ func (aco AudioCodecOptionsAttributes) InternalWithRef(ref terra.Reference) Audi
 	return AudioCodecOptionsAttributes{ref: ref}
 }
 
-func (aco AudioCodecOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (aco AudioCodecOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aco.ref.InternalTokens()
 }
 
@@ -182,7 +182,7 @@ func (t ThumbnailsAttributes) InternalWithRef(ref terra.Reference) ThumbnailsAtt
 	return ThumbnailsAttributes{ref: ref}
 }
 
-func (t ThumbnailsAttributes) InternalTokens() hclwrite.Tokens {
+func (t ThumbnailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -230,7 +230,7 @@ func (v VideoAttributes) InternalWithRef(ref terra.Reference) VideoAttributes {
 	return VideoAttributes{ref: ref}
 }
 
-func (v VideoAttributes) InternalTokens() hclwrite.Tokens {
+func (v VideoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 
@@ -298,7 +298,7 @@ func (vw VideoWatermarksAttributes) InternalWithRef(ref terra.Reference) VideoWa
 	return VideoWatermarksAttributes{ref: ref}
 }
 
-func (vw VideoWatermarksAttributes) InternalTokens() hclwrite.Tokens {
+func (vw VideoWatermarksAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vw.ref.InternalTokens()
 }
 

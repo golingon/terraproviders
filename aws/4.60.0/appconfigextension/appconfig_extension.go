@@ -46,7 +46,7 @@ func (ap ActionPointAttributes) InternalWithRef(ref terra.Reference) ActionPoint
 	return ActionPointAttributes{ref: ref}
 }
 
-func (ap ActionPointAttributes) InternalTokens() hclwrite.Tokens {
+func (ap ActionPointAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ap.ref.InternalTokens()
 }
 
@@ -70,7 +70,7 @@ func (a ActionAttributes) InternalWithRef(ref terra.Reference) ActionAttributes 
 	return ActionAttributes{ref: ref}
 }
 
-func (a ActionAttributes) InternalTokens() hclwrite.Tokens {
+func (a ActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -102,7 +102,7 @@ func (p ParameterAttributes) InternalWithRef(ref terra.Reference) ParameterAttri
 	return ParameterAttributes{ref: ref}
 }
 
-func (p ParameterAttributes) InternalTokens() hclwrite.Tokens {
+func (p ParameterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 

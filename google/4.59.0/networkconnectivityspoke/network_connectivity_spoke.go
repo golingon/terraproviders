@@ -48,124 +48,124 @@ type LinkedInterconnectAttachmentsAttributes struct {
 	ref terra.Reference
 }
 
-func (lia LinkedInterconnectAttachmentsAttributes) InternalRef() terra.Reference {
-	return lia.ref
+func (lia LinkedInterconnectAttachmentsAttributes) InternalRef() (terra.Reference, error) {
+	return lia.ref, nil
 }
 
 func (lia LinkedInterconnectAttachmentsAttributes) InternalWithRef(ref terra.Reference) LinkedInterconnectAttachmentsAttributes {
 	return LinkedInterconnectAttachmentsAttributes{ref: ref}
 }
 
-func (lia LinkedInterconnectAttachmentsAttributes) InternalTokens() hclwrite.Tokens {
+func (lia LinkedInterconnectAttachmentsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lia.ref.InternalTokens()
 }
 
 func (lia LinkedInterconnectAttachmentsAttributes) SiteToSiteDataTransfer() terra.BoolValue {
-	return terra.ReferenceBool(lia.ref.Append("site_to_site_data_transfer"))
+	return terra.ReferenceAsBool(lia.ref.Append("site_to_site_data_transfer"))
 }
 
 func (lia LinkedInterconnectAttachmentsAttributes) Uris() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lia.ref.Append("uris"))
+	return terra.ReferenceAsList[terra.StringValue](lia.ref.Append("uris"))
 }
 
 type LinkedRouterApplianceInstancesAttributes struct {
 	ref terra.Reference
 }
 
-func (lrai LinkedRouterApplianceInstancesAttributes) InternalRef() terra.Reference {
-	return lrai.ref
+func (lrai LinkedRouterApplianceInstancesAttributes) InternalRef() (terra.Reference, error) {
+	return lrai.ref, nil
 }
 
 func (lrai LinkedRouterApplianceInstancesAttributes) InternalWithRef(ref terra.Reference) LinkedRouterApplianceInstancesAttributes {
 	return LinkedRouterApplianceInstancesAttributes{ref: ref}
 }
 
-func (lrai LinkedRouterApplianceInstancesAttributes) InternalTokens() hclwrite.Tokens {
+func (lrai LinkedRouterApplianceInstancesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lrai.ref.InternalTokens()
 }
 
 func (lrai LinkedRouterApplianceInstancesAttributes) SiteToSiteDataTransfer() terra.BoolValue {
-	return terra.ReferenceBool(lrai.ref.Append("site_to_site_data_transfer"))
+	return terra.ReferenceAsBool(lrai.ref.Append("site_to_site_data_transfer"))
 }
 
 func (lrai LinkedRouterApplianceInstancesAttributes) Instances() terra.ListValue[InstancesAttributes] {
-	return terra.ReferenceList[InstancesAttributes](lrai.ref.Append("instances"))
+	return terra.ReferenceAsList[InstancesAttributes](lrai.ref.Append("instances"))
 }
 
 type InstancesAttributes struct {
 	ref terra.Reference
 }
 
-func (i InstancesAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i InstancesAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i InstancesAttributes) InternalWithRef(ref terra.Reference) InstancesAttributes {
 	return InstancesAttributes{ref: ref}
 }
 
-func (i InstancesAttributes) InternalTokens() hclwrite.Tokens {
+func (i InstancesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i InstancesAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("ip_address"))
+	return terra.ReferenceAsString(i.ref.Append("ip_address"))
 }
 
 func (i InstancesAttributes) VirtualMachine() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("virtual_machine"))
+	return terra.ReferenceAsString(i.ref.Append("virtual_machine"))
 }
 
 type LinkedVpnTunnelsAttributes struct {
 	ref terra.Reference
 }
 
-func (lvt LinkedVpnTunnelsAttributes) InternalRef() terra.Reference {
-	return lvt.ref
+func (lvt LinkedVpnTunnelsAttributes) InternalRef() (terra.Reference, error) {
+	return lvt.ref, nil
 }
 
 func (lvt LinkedVpnTunnelsAttributes) InternalWithRef(ref terra.Reference) LinkedVpnTunnelsAttributes {
 	return LinkedVpnTunnelsAttributes{ref: ref}
 }
 
-func (lvt LinkedVpnTunnelsAttributes) InternalTokens() hclwrite.Tokens {
+func (lvt LinkedVpnTunnelsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lvt.ref.InternalTokens()
 }
 
 func (lvt LinkedVpnTunnelsAttributes) SiteToSiteDataTransfer() terra.BoolValue {
-	return terra.ReferenceBool(lvt.ref.Append("site_to_site_data_transfer"))
+	return terra.ReferenceAsBool(lvt.ref.Append("site_to_site_data_transfer"))
 }
 
 func (lvt LinkedVpnTunnelsAttributes) Uris() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lvt.ref.Append("uris"))
+	return terra.ReferenceAsList[terra.StringValue](lvt.ref.Append("uris"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type LinkedInterconnectAttachmentsState struct {

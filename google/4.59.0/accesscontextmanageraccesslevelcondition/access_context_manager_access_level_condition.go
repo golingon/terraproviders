@@ -40,88 +40,88 @@ type DevicePolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (dp DevicePolicyAttributes) InternalRef() terra.Reference {
-	return dp.ref
+func (dp DevicePolicyAttributes) InternalRef() (terra.Reference, error) {
+	return dp.ref, nil
 }
 
 func (dp DevicePolicyAttributes) InternalWithRef(ref terra.Reference) DevicePolicyAttributes {
 	return DevicePolicyAttributes{ref: ref}
 }
 
-func (dp DevicePolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (dp DevicePolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dp.ref.InternalTokens()
 }
 
 func (dp DevicePolicyAttributes) AllowedDeviceManagementLevels() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dp.ref.Append("allowed_device_management_levels"))
+	return terra.ReferenceAsList[terra.StringValue](dp.ref.Append("allowed_device_management_levels"))
 }
 
 func (dp DevicePolicyAttributes) AllowedEncryptionStatuses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dp.ref.Append("allowed_encryption_statuses"))
+	return terra.ReferenceAsList[terra.StringValue](dp.ref.Append("allowed_encryption_statuses"))
 }
 
 func (dp DevicePolicyAttributes) RequireAdminApproval() terra.BoolValue {
-	return terra.ReferenceBool(dp.ref.Append("require_admin_approval"))
+	return terra.ReferenceAsBool(dp.ref.Append("require_admin_approval"))
 }
 
 func (dp DevicePolicyAttributes) RequireCorpOwned() terra.BoolValue {
-	return terra.ReferenceBool(dp.ref.Append("require_corp_owned"))
+	return terra.ReferenceAsBool(dp.ref.Append("require_corp_owned"))
 }
 
 func (dp DevicePolicyAttributes) RequireScreenLock() terra.BoolValue {
-	return terra.ReferenceBool(dp.ref.Append("require_screen_lock"))
+	return terra.ReferenceAsBool(dp.ref.Append("require_screen_lock"))
 }
 
 func (dp DevicePolicyAttributes) OsConstraints() terra.ListValue[OsConstraintsAttributes] {
-	return terra.ReferenceList[OsConstraintsAttributes](dp.ref.Append("os_constraints"))
+	return terra.ReferenceAsList[OsConstraintsAttributes](dp.ref.Append("os_constraints"))
 }
 
 type OsConstraintsAttributes struct {
 	ref terra.Reference
 }
 
-func (oc OsConstraintsAttributes) InternalRef() terra.Reference {
-	return oc.ref
+func (oc OsConstraintsAttributes) InternalRef() (terra.Reference, error) {
+	return oc.ref, nil
 }
 
 func (oc OsConstraintsAttributes) InternalWithRef(ref terra.Reference) OsConstraintsAttributes {
 	return OsConstraintsAttributes{ref: ref}
 }
 
-func (oc OsConstraintsAttributes) InternalTokens() hclwrite.Tokens {
+func (oc OsConstraintsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oc.ref.InternalTokens()
 }
 
 func (oc OsConstraintsAttributes) MinimumVersion() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("minimum_version"))
+	return terra.ReferenceAsString(oc.ref.Append("minimum_version"))
 }
 
 func (oc OsConstraintsAttributes) OsType() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("os_type"))
+	return terra.ReferenceAsString(oc.ref.Append("os_type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type DevicePolicyState struct {

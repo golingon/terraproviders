@@ -64,7 +64,7 @@ func (ed EndpointDetailsAttributes) InternalWithRef(ref terra.Reference) Endpoin
 	return EndpointDetailsAttributes{ref: ref}
 }
 
-func (ed EndpointDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (ed EndpointDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ed.ref.InternalTokens()
 }
 
@@ -100,7 +100,7 @@ func (pd ProtocolDetailsAttributes) InternalWithRef(ref terra.Reference) Protoco
 	return ProtocolDetailsAttributes{ref: ref}
 }
 
-func (pd ProtocolDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (pd ProtocolDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pd.ref.InternalTokens()
 }
 
@@ -132,7 +132,7 @@ func (wd WorkflowDetailsAttributes) InternalWithRef(ref terra.Reference) Workflo
 	return WorkflowDetailsAttributes{ref: ref}
 }
 
-func (wd WorkflowDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (wd WorkflowDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wd.ref.InternalTokens()
 }
 
@@ -156,7 +156,7 @@ func (opu OnPartialUploadAttributes) InternalWithRef(ref terra.Reference) OnPart
 	return OnPartialUploadAttributes{ref: ref}
 }
 
-func (opu OnPartialUploadAttributes) InternalTokens() hclwrite.Tokens {
+func (opu OnPartialUploadAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return opu.ref.InternalTokens()
 }
 
@@ -180,7 +180,7 @@ func (ou OnUploadAttributes) InternalWithRef(ref terra.Reference) OnUploadAttrib
 	return OnUploadAttributes{ref: ref}
 }
 
-func (ou OnUploadAttributes) InternalTokens() hclwrite.Tokens {
+func (ou OnUploadAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ou.ref.InternalTokens()
 }
 

@@ -29,76 +29,76 @@ type ConnectedEndpointsAttributes struct {
 	ref terra.Reference
 }
 
-func (ce ConnectedEndpointsAttributes) InternalRef() terra.Reference {
-	return ce.ref
+func (ce ConnectedEndpointsAttributes) InternalRef() (terra.Reference, error) {
+	return ce.ref, nil
 }
 
 func (ce ConnectedEndpointsAttributes) InternalWithRef(ref terra.Reference) ConnectedEndpointsAttributes {
 	return ConnectedEndpointsAttributes{ref: ref}
 }
 
-func (ce ConnectedEndpointsAttributes) InternalTokens() hclwrite.Tokens {
+func (ce ConnectedEndpointsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ce.ref.InternalTokens()
 }
 
 func (ce ConnectedEndpointsAttributes) Endpoint() terra.StringValue {
-	return terra.ReferenceString(ce.ref.Append("endpoint"))
+	return terra.ReferenceAsString(ce.ref.Append("endpoint"))
 }
 
 func (ce ConnectedEndpointsAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(ce.ref.Append("status"))
+	return terra.ReferenceAsString(ce.ref.Append("status"))
 }
 
 type ConsumerAcceptListsAttributes struct {
 	ref terra.Reference
 }
 
-func (cal ConsumerAcceptListsAttributes) InternalRef() terra.Reference {
-	return cal.ref
+func (cal ConsumerAcceptListsAttributes) InternalRef() (terra.Reference, error) {
+	return cal.ref, nil
 }
 
 func (cal ConsumerAcceptListsAttributes) InternalWithRef(ref terra.Reference) ConsumerAcceptListsAttributes {
 	return ConsumerAcceptListsAttributes{ref: ref}
 }
 
-func (cal ConsumerAcceptListsAttributes) InternalTokens() hclwrite.Tokens {
+func (cal ConsumerAcceptListsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cal.ref.InternalTokens()
 }
 
 func (cal ConsumerAcceptListsAttributes) ConnectionLimit() terra.NumberValue {
-	return terra.ReferenceNumber(cal.ref.Append("connection_limit"))
+	return terra.ReferenceAsNumber(cal.ref.Append("connection_limit"))
 }
 
 func (cal ConsumerAcceptListsAttributes) ProjectIdOrNum() terra.StringValue {
-	return terra.ReferenceString(cal.ref.Append("project_id_or_num"))
+	return terra.ReferenceAsString(cal.ref.Append("project_id_or_num"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ConnectedEndpointsState struct {

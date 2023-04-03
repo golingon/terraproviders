@@ -22,48 +22,48 @@ type PrivateInterconnectInfoAttributes struct {
 	ref terra.Reference
 }
 
-func (pii PrivateInterconnectInfoAttributes) InternalRef() terra.Reference {
-	return pii.ref
+func (pii PrivateInterconnectInfoAttributes) InternalRef() (terra.Reference, error) {
+	return pii.ref, nil
 }
 
 func (pii PrivateInterconnectInfoAttributes) InternalWithRef(ref terra.Reference) PrivateInterconnectInfoAttributes {
 	return PrivateInterconnectInfoAttributes{ref: ref}
 }
 
-func (pii PrivateInterconnectInfoAttributes) InternalTokens() hclwrite.Tokens {
+func (pii PrivateInterconnectInfoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pii.ref.InternalTokens()
 }
 
 func (pii PrivateInterconnectInfoAttributes) Tag8021Q() terra.NumberValue {
-	return terra.ReferenceNumber(pii.ref.Append("tag8021q"))
+	return terra.ReferenceAsNumber(pii.ref.Append("tag8021q"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type PrivateInterconnectInfoState struct {

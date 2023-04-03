@@ -25,48 +25,48 @@ type DeliveryConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (dc DeliveryConfigAttributes) InternalRef() terra.Reference {
-	return dc.ref
+func (dc DeliveryConfigAttributes) InternalRef() (terra.Reference, error) {
+	return dc.ref, nil
 }
 
 func (dc DeliveryConfigAttributes) InternalWithRef(ref terra.Reference) DeliveryConfigAttributes {
 	return DeliveryConfigAttributes{ref: ref}
 }
 
-func (dc DeliveryConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (dc DeliveryConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dc.ref.InternalTokens()
 }
 
 func (dc DeliveryConfigAttributes) DeliveryRequirement() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("delivery_requirement"))
+	return terra.ReferenceAsString(dc.ref.Append("delivery_requirement"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type DeliveryConfigState struct {

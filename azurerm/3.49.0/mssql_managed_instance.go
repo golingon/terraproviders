@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMssqlManagedInstance creates a new instance of [MssqlManagedInstance].
 func NewMssqlManagedInstance(name string, args MssqlManagedInstanceArgs) *MssqlManagedInstance {
 	return &MssqlManagedInstance{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMssqlManagedInstance(name string, args MssqlManagedInstanceArgs) *MssqlM
 
 var _ terra.Resource = (*MssqlManagedInstance)(nil)
 
+// MssqlManagedInstance represents the Terraform resource azurerm_mssql_managed_instance.
 type MssqlManagedInstance struct {
-	Name  string
-	Args  MssqlManagedInstanceArgs
-	state *mssqlManagedInstanceState
+	Name      string
+	Args      MssqlManagedInstanceArgs
+	state     *mssqlManagedInstanceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MssqlManagedInstance].
 func (mmi *MssqlManagedInstance) Type() string {
 	return "azurerm_mssql_managed_instance"
 }
 
+// LocalName returns the local name for [MssqlManagedInstance].
 func (mmi *MssqlManagedInstance) LocalName() string {
 	return mmi.Name
 }
 
+// Configuration returns the configuration (args) for [MssqlManagedInstance].
 func (mmi *MssqlManagedInstance) Configuration() interface{} {
 	return mmi.Args
 }
 
+// DependOn is used for other resources to depend on [MssqlManagedInstance].
+func (mmi *MssqlManagedInstance) DependOn() terra.Reference {
+	return terra.ReferenceResource(mmi)
+}
+
+// Dependencies returns the list of resources [MssqlManagedInstance] depends_on.
+func (mmi *MssqlManagedInstance) Dependencies() terra.Dependencies {
+	return mmi.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MssqlManagedInstance].
+func (mmi *MssqlManagedInstance) LifecycleManagement() *terra.Lifecycle {
+	return mmi.Lifecycle
+}
+
+// Attributes returns the attributes for [MssqlManagedInstance].
 func (mmi *MssqlManagedInstance) Attributes() mssqlManagedInstanceAttributes {
 	return mssqlManagedInstanceAttributes{ref: terra.ReferenceResource(mmi)}
 }
 
+// ImportState imports the given attribute values into [MssqlManagedInstance]'s state.
 func (mmi *MssqlManagedInstance) ImportState(av io.Reader) error {
 	mmi.state = &mssqlManagedInstanceState{}
 	if err := json.NewDecoder(av).Decode(mmi.state); err != nil {
@@ -49,10 +73,12 @@ func (mmi *MssqlManagedInstance) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MssqlManagedInstance] has state.
 func (mmi *MssqlManagedInstance) State() (*mssqlManagedInstanceState, bool) {
 	return mmi.state, mmi.state != nil
 }
 
+// StateMust returns the state for [MssqlManagedInstance]. Panics if the state is nil.
 func (mmi *MssqlManagedInstance) StateMust() *mssqlManagedInstanceState {
 	if mmi.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mmi.Type(), mmi.LocalName()))
@@ -60,10 +86,7 @@ func (mmi *MssqlManagedInstance) StateMust() *mssqlManagedInstanceState {
 	return mmi.state
 }
 
-func (mmi *MssqlManagedInstance) DependOn() terra.Reference {
-	return terra.ReferenceResource(mmi)
-}
-
+// MssqlManagedInstanceArgs contains the configurations for azurerm_mssql_managed_instance.
 type MssqlManagedInstanceArgs struct {
 	// AdministratorLogin: string, required
 	AdministratorLogin terra.StringValue `hcl:"administrator_login,attr" validate:"required"`
@@ -109,103 +132,122 @@ type MssqlManagedInstanceArgs struct {
 	Identity *mssqlmanagedinstance.Identity `hcl:"identity,block"`
 	// Timeouts: optional
 	Timeouts *mssqlmanagedinstance.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MssqlManagedInstance depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mssqlManagedInstanceAttributes struct {
 	ref terra.Reference
 }
 
+// AdministratorLogin returns a reference to field administrator_login of azurerm_mssql_managed_instance.
 func (mmi mssqlManagedInstanceAttributes) AdministratorLogin() terra.StringValue {
-	return terra.ReferenceString(mmi.ref.Append("administrator_login"))
+	return terra.ReferenceAsString(mmi.ref.Append("administrator_login"))
 }
 
+// AdministratorLoginPassword returns a reference to field administrator_login_password of azurerm_mssql_managed_instance.
 func (mmi mssqlManagedInstanceAttributes) AdministratorLoginPassword() terra.StringValue {
-	return terra.ReferenceString(mmi.ref.Append("administrator_login_password"))
+	return terra.ReferenceAsString(mmi.ref.Append("administrator_login_password"))
 }
 
+// Collation returns a reference to field collation of azurerm_mssql_managed_instance.
 func (mmi mssqlManagedInstanceAttributes) Collation() terra.StringValue {
-	return terra.ReferenceString(mmi.ref.Append("collation"))
+	return terra.ReferenceAsString(mmi.ref.Append("collation"))
 }
 
+// DnsZonePartnerId returns a reference to field dns_zone_partner_id of azurerm_mssql_managed_instance.
 func (mmi mssqlManagedInstanceAttributes) DnsZonePartnerId() terra.StringValue {
-	return terra.ReferenceString(mmi.ref.Append("dns_zone_partner_id"))
+	return terra.ReferenceAsString(mmi.ref.Append("dns_zone_partner_id"))
 }
 
+// Fqdn returns a reference to field fqdn of azurerm_mssql_managed_instance.
 func (mmi mssqlManagedInstanceAttributes) Fqdn() terra.StringValue {
-	return terra.ReferenceString(mmi.ref.Append("fqdn"))
+	return terra.ReferenceAsString(mmi.ref.Append("fqdn"))
 }
 
+// Id returns a reference to field id of azurerm_mssql_managed_instance.
 func (mmi mssqlManagedInstanceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mmi.ref.Append("id"))
+	return terra.ReferenceAsString(mmi.ref.Append("id"))
 }
 
+// LicenseType returns a reference to field license_type of azurerm_mssql_managed_instance.
 func (mmi mssqlManagedInstanceAttributes) LicenseType() terra.StringValue {
-	return terra.ReferenceString(mmi.ref.Append("license_type"))
+	return terra.ReferenceAsString(mmi.ref.Append("license_type"))
 }
 
+// Location returns a reference to field location of azurerm_mssql_managed_instance.
 func (mmi mssqlManagedInstanceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(mmi.ref.Append("location"))
+	return terra.ReferenceAsString(mmi.ref.Append("location"))
 }
 
+// MaintenanceConfigurationName returns a reference to field maintenance_configuration_name of azurerm_mssql_managed_instance.
 func (mmi mssqlManagedInstanceAttributes) MaintenanceConfigurationName() terra.StringValue {
-	return terra.ReferenceString(mmi.ref.Append("maintenance_configuration_name"))
+	return terra.ReferenceAsString(mmi.ref.Append("maintenance_configuration_name"))
 }
 
+// MinimumTlsVersion returns a reference to field minimum_tls_version of azurerm_mssql_managed_instance.
 func (mmi mssqlManagedInstanceAttributes) MinimumTlsVersion() terra.StringValue {
-	return terra.ReferenceString(mmi.ref.Append("minimum_tls_version"))
+	return terra.ReferenceAsString(mmi.ref.Append("minimum_tls_version"))
 }
 
+// Name returns a reference to field name of azurerm_mssql_managed_instance.
 func (mmi mssqlManagedInstanceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mmi.ref.Append("name"))
+	return terra.ReferenceAsString(mmi.ref.Append("name"))
 }
 
+// ProxyOverride returns a reference to field proxy_override of azurerm_mssql_managed_instance.
 func (mmi mssqlManagedInstanceAttributes) ProxyOverride() terra.StringValue {
-	return terra.ReferenceString(mmi.ref.Append("proxy_override"))
+	return terra.ReferenceAsString(mmi.ref.Append("proxy_override"))
 }
 
+// PublicDataEndpointEnabled returns a reference to field public_data_endpoint_enabled of azurerm_mssql_managed_instance.
 func (mmi mssqlManagedInstanceAttributes) PublicDataEndpointEnabled() terra.BoolValue {
-	return terra.ReferenceBool(mmi.ref.Append("public_data_endpoint_enabled"))
+	return terra.ReferenceAsBool(mmi.ref.Append("public_data_endpoint_enabled"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_mssql_managed_instance.
 func (mmi mssqlManagedInstanceAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(mmi.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(mmi.ref.Append("resource_group_name"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_mssql_managed_instance.
 func (mmi mssqlManagedInstanceAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(mmi.ref.Append("sku_name"))
+	return terra.ReferenceAsString(mmi.ref.Append("sku_name"))
 }
 
+// StorageAccountType returns a reference to field storage_account_type of azurerm_mssql_managed_instance.
 func (mmi mssqlManagedInstanceAttributes) StorageAccountType() terra.StringValue {
-	return terra.ReferenceString(mmi.ref.Append("storage_account_type"))
+	return terra.ReferenceAsString(mmi.ref.Append("storage_account_type"))
 }
 
+// StorageSizeInGb returns a reference to field storage_size_in_gb of azurerm_mssql_managed_instance.
 func (mmi mssqlManagedInstanceAttributes) StorageSizeInGb() terra.NumberValue {
-	return terra.ReferenceNumber(mmi.ref.Append("storage_size_in_gb"))
+	return terra.ReferenceAsNumber(mmi.ref.Append("storage_size_in_gb"))
 }
 
+// SubnetId returns a reference to field subnet_id of azurerm_mssql_managed_instance.
 func (mmi mssqlManagedInstanceAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(mmi.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(mmi.ref.Append("subnet_id"))
 }
 
+// Tags returns a reference to field tags of azurerm_mssql_managed_instance.
 func (mmi mssqlManagedInstanceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mmi.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mmi.ref.Append("tags"))
 }
 
+// TimezoneId returns a reference to field timezone_id of azurerm_mssql_managed_instance.
 func (mmi mssqlManagedInstanceAttributes) TimezoneId() terra.StringValue {
-	return terra.ReferenceString(mmi.ref.Append("timezone_id"))
+	return terra.ReferenceAsString(mmi.ref.Append("timezone_id"))
 }
 
+// Vcores returns a reference to field vcores of azurerm_mssql_managed_instance.
 func (mmi mssqlManagedInstanceAttributes) Vcores() terra.NumberValue {
-	return terra.ReferenceNumber(mmi.ref.Append("vcores"))
+	return terra.ReferenceAsNumber(mmi.ref.Append("vcores"))
 }
 
 func (mmi mssqlManagedInstanceAttributes) Identity() terra.ListValue[mssqlmanagedinstance.IdentityAttributes] {
-	return terra.ReferenceList[mssqlmanagedinstance.IdentityAttributes](mmi.ref.Append("identity"))
+	return terra.ReferenceAsList[mssqlmanagedinstance.IdentityAttributes](mmi.ref.Append("identity"))
 }
 
 func (mmi mssqlManagedInstanceAttributes) Timeouts() mssqlmanagedinstance.TimeoutsAttributes {
-	return terra.ReferenceSingle[mssqlmanagedinstance.TimeoutsAttributes](mmi.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[mssqlmanagedinstance.TimeoutsAttributes](mmi.ref.Append("timeouts"))
 }
 
 type mssqlManagedInstanceState struct {

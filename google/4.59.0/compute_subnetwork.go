@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeSubnetwork creates a new instance of [ComputeSubnetwork].
 func NewComputeSubnetwork(name string, args ComputeSubnetworkArgs) *ComputeSubnetwork {
 	return &ComputeSubnetwork{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeSubnetwork(name string, args ComputeSubnetworkArgs) *ComputeSubne
 
 var _ terra.Resource = (*ComputeSubnetwork)(nil)
 
+// ComputeSubnetwork represents the Terraform resource google_compute_subnetwork.
 type ComputeSubnetwork struct {
-	Name  string
-	Args  ComputeSubnetworkArgs
-	state *computeSubnetworkState
+	Name      string
+	Args      ComputeSubnetworkArgs
+	state     *computeSubnetworkState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeSubnetwork].
 func (cs *ComputeSubnetwork) Type() string {
 	return "google_compute_subnetwork"
 }
 
+// LocalName returns the local name for [ComputeSubnetwork].
 func (cs *ComputeSubnetwork) LocalName() string {
 	return cs.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeSubnetwork].
 func (cs *ComputeSubnetwork) Configuration() interface{} {
 	return cs.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeSubnetwork].
+func (cs *ComputeSubnetwork) DependOn() terra.Reference {
+	return terra.ReferenceResource(cs)
+}
+
+// Dependencies returns the list of resources [ComputeSubnetwork] depends_on.
+func (cs *ComputeSubnetwork) Dependencies() terra.Dependencies {
+	return cs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeSubnetwork].
+func (cs *ComputeSubnetwork) LifecycleManagement() *terra.Lifecycle {
+	return cs.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeSubnetwork].
 func (cs *ComputeSubnetwork) Attributes() computeSubnetworkAttributes {
 	return computeSubnetworkAttributes{ref: terra.ReferenceResource(cs)}
 }
 
+// ImportState imports the given attribute values into [ComputeSubnetwork]'s state.
 func (cs *ComputeSubnetwork) ImportState(av io.Reader) error {
 	cs.state = &computeSubnetworkState{}
 	if err := json.NewDecoder(av).Decode(cs.state); err != nil {
@@ -49,10 +73,12 @@ func (cs *ComputeSubnetwork) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeSubnetwork] has state.
 func (cs *ComputeSubnetwork) State() (*computeSubnetworkState, bool) {
 	return cs.state, cs.state != nil
 }
 
+// StateMust returns the state for [ComputeSubnetwork]. Panics if the state is nil.
 func (cs *ComputeSubnetwork) StateMust() *computeSubnetworkState {
 	if cs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cs.Type(), cs.LocalName()))
@@ -60,10 +86,7 @@ func (cs *ComputeSubnetwork) StateMust() *computeSubnetworkState {
 	return cs.state
 }
 
-func (cs *ComputeSubnetwork) DependOn() terra.Reference {
-	return terra.ReferenceResource(cs)
-}
-
+// ComputeSubnetworkArgs contains the configurations for google_compute_subnetwork.
 type ComputeSubnetworkArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -97,99 +120,116 @@ type ComputeSubnetworkArgs struct {
 	LogConfig *computesubnetwork.LogConfig `hcl:"log_config,block"`
 	// Timeouts: optional
 	Timeouts *computesubnetwork.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeSubnetwork depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeSubnetworkAttributes struct {
 	ref terra.Reference
 }
 
+// CreationTimestamp returns a reference to field creation_timestamp of google_compute_subnetwork.
 func (cs computeSubnetworkAttributes) CreationTimestamp() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("creation_timestamp"))
+	return terra.ReferenceAsString(cs.ref.Append("creation_timestamp"))
 }
 
+// Description returns a reference to field description of google_compute_subnetwork.
 func (cs computeSubnetworkAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("description"))
+	return terra.ReferenceAsString(cs.ref.Append("description"))
 }
 
+// ExternalIpv6Prefix returns a reference to field external_ipv6_prefix of google_compute_subnetwork.
 func (cs computeSubnetworkAttributes) ExternalIpv6Prefix() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("external_ipv6_prefix"))
+	return terra.ReferenceAsString(cs.ref.Append("external_ipv6_prefix"))
 }
 
+// Fingerprint returns a reference to field fingerprint of google_compute_subnetwork.
 func (cs computeSubnetworkAttributes) Fingerprint() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("fingerprint"))
+	return terra.ReferenceAsString(cs.ref.Append("fingerprint"))
 }
 
+// GatewayAddress returns a reference to field gateway_address of google_compute_subnetwork.
 func (cs computeSubnetworkAttributes) GatewayAddress() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("gateway_address"))
+	return terra.ReferenceAsString(cs.ref.Append("gateway_address"))
 }
 
+// Id returns a reference to field id of google_compute_subnetwork.
 func (cs computeSubnetworkAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("id"))
+	return terra.ReferenceAsString(cs.ref.Append("id"))
 }
 
+// IpCidrRange returns a reference to field ip_cidr_range of google_compute_subnetwork.
 func (cs computeSubnetworkAttributes) IpCidrRange() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("ip_cidr_range"))
+	return terra.ReferenceAsString(cs.ref.Append("ip_cidr_range"))
 }
 
+// Ipv6AccessType returns a reference to field ipv6_access_type of google_compute_subnetwork.
 func (cs computeSubnetworkAttributes) Ipv6AccessType() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("ipv6_access_type"))
+	return terra.ReferenceAsString(cs.ref.Append("ipv6_access_type"))
 }
 
+// Ipv6CidrRange returns a reference to field ipv6_cidr_range of google_compute_subnetwork.
 func (cs computeSubnetworkAttributes) Ipv6CidrRange() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("ipv6_cidr_range"))
+	return terra.ReferenceAsString(cs.ref.Append("ipv6_cidr_range"))
 }
 
+// Name returns a reference to field name of google_compute_subnetwork.
 func (cs computeSubnetworkAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("name"))
+	return terra.ReferenceAsString(cs.ref.Append("name"))
 }
 
+// Network returns a reference to field network of google_compute_subnetwork.
 func (cs computeSubnetworkAttributes) Network() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("network"))
+	return terra.ReferenceAsString(cs.ref.Append("network"))
 }
 
+// PrivateIpGoogleAccess returns a reference to field private_ip_google_access of google_compute_subnetwork.
 func (cs computeSubnetworkAttributes) PrivateIpGoogleAccess() terra.BoolValue {
-	return terra.ReferenceBool(cs.ref.Append("private_ip_google_access"))
+	return terra.ReferenceAsBool(cs.ref.Append("private_ip_google_access"))
 }
 
+// PrivateIpv6GoogleAccess returns a reference to field private_ipv6_google_access of google_compute_subnetwork.
 func (cs computeSubnetworkAttributes) PrivateIpv6GoogleAccess() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("private_ipv6_google_access"))
+	return terra.ReferenceAsString(cs.ref.Append("private_ipv6_google_access"))
 }
 
+// Project returns a reference to field project of google_compute_subnetwork.
 func (cs computeSubnetworkAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("project"))
+	return terra.ReferenceAsString(cs.ref.Append("project"))
 }
 
+// Purpose returns a reference to field purpose of google_compute_subnetwork.
 func (cs computeSubnetworkAttributes) Purpose() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("purpose"))
+	return terra.ReferenceAsString(cs.ref.Append("purpose"))
 }
 
+// Region returns a reference to field region of google_compute_subnetwork.
 func (cs computeSubnetworkAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("region"))
+	return terra.ReferenceAsString(cs.ref.Append("region"))
 }
 
+// Role returns a reference to field role of google_compute_subnetwork.
 func (cs computeSubnetworkAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("role"))
+	return terra.ReferenceAsString(cs.ref.Append("role"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_subnetwork.
 func (cs computeSubnetworkAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("self_link"))
+	return terra.ReferenceAsString(cs.ref.Append("self_link"))
 }
 
+// StackType returns a reference to field stack_type of google_compute_subnetwork.
 func (cs computeSubnetworkAttributes) StackType() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("stack_type"))
+	return terra.ReferenceAsString(cs.ref.Append("stack_type"))
 }
 
 func (cs computeSubnetworkAttributes) SecondaryIpRange() terra.ListValue[computesubnetwork.SecondaryIpRangeAttributes] {
-	return terra.ReferenceList[computesubnetwork.SecondaryIpRangeAttributes](cs.ref.Append("secondary_ip_range"))
+	return terra.ReferenceAsList[computesubnetwork.SecondaryIpRangeAttributes](cs.ref.Append("secondary_ip_range"))
 }
 
 func (cs computeSubnetworkAttributes) LogConfig() terra.ListValue[computesubnetwork.LogConfigAttributes] {
-	return terra.ReferenceList[computesubnetwork.LogConfigAttributes](cs.ref.Append("log_config"))
+	return terra.ReferenceAsList[computesubnetwork.LogConfigAttributes](cs.ref.Append("log_config"))
 }
 
 func (cs computeSubnetworkAttributes) Timeouts() computesubnetwork.TimeoutsAttributes {
-	return terra.ReferenceSingle[computesubnetwork.TimeoutsAttributes](cs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computesubnetwork.TimeoutsAttributes](cs.ref.Append("timeouts"))
 }
 
 type computeSubnetworkState struct {

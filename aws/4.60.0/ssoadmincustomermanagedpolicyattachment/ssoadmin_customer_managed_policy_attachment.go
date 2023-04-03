@@ -26,7 +26,7 @@ func (cmpr CustomerManagedPolicyReferenceAttributes) InternalWithRef(ref terra.R
 	return CustomerManagedPolicyReferenceAttributes{ref: ref}
 }
 
-func (cmpr CustomerManagedPolicyReferenceAttributes) InternalTokens() hclwrite.Tokens {
+func (cmpr CustomerManagedPolicyReferenceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cmpr.ref.InternalTokens()
 }
 

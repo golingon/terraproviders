@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFactoryDatasetSnowflake creates a new instance of [DataFactoryDatasetSnowflake].
 func NewDataFactoryDatasetSnowflake(name string, args DataFactoryDatasetSnowflakeArgs) *DataFactoryDatasetSnowflake {
 	return &DataFactoryDatasetSnowflake{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFactoryDatasetSnowflake(name string, args DataFactoryDatasetSnowflak
 
 var _ terra.Resource = (*DataFactoryDatasetSnowflake)(nil)
 
+// DataFactoryDatasetSnowflake represents the Terraform resource azurerm_data_factory_dataset_snowflake.
 type DataFactoryDatasetSnowflake struct {
-	Name  string
-	Args  DataFactoryDatasetSnowflakeArgs
-	state *dataFactoryDatasetSnowflakeState
+	Name      string
+	Args      DataFactoryDatasetSnowflakeArgs
+	state     *dataFactoryDatasetSnowflakeState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFactoryDatasetSnowflake].
 func (dfds *DataFactoryDatasetSnowflake) Type() string {
 	return "azurerm_data_factory_dataset_snowflake"
 }
 
+// LocalName returns the local name for [DataFactoryDatasetSnowflake].
 func (dfds *DataFactoryDatasetSnowflake) LocalName() string {
 	return dfds.Name
 }
 
+// Configuration returns the configuration (args) for [DataFactoryDatasetSnowflake].
 func (dfds *DataFactoryDatasetSnowflake) Configuration() interface{} {
 	return dfds.Args
 }
 
+// DependOn is used for other resources to depend on [DataFactoryDatasetSnowflake].
+func (dfds *DataFactoryDatasetSnowflake) DependOn() terra.Reference {
+	return terra.ReferenceResource(dfds)
+}
+
+// Dependencies returns the list of resources [DataFactoryDatasetSnowflake] depends_on.
+func (dfds *DataFactoryDatasetSnowflake) Dependencies() terra.Dependencies {
+	return dfds.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFactoryDatasetSnowflake].
+func (dfds *DataFactoryDatasetSnowflake) LifecycleManagement() *terra.Lifecycle {
+	return dfds.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFactoryDatasetSnowflake].
 func (dfds *DataFactoryDatasetSnowflake) Attributes() dataFactoryDatasetSnowflakeAttributes {
 	return dataFactoryDatasetSnowflakeAttributes{ref: terra.ReferenceResource(dfds)}
 }
 
+// ImportState imports the given attribute values into [DataFactoryDatasetSnowflake]'s state.
 func (dfds *DataFactoryDatasetSnowflake) ImportState(av io.Reader) error {
 	dfds.state = &dataFactoryDatasetSnowflakeState{}
 	if err := json.NewDecoder(av).Decode(dfds.state); err != nil {
@@ -49,10 +73,12 @@ func (dfds *DataFactoryDatasetSnowflake) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFactoryDatasetSnowflake] has state.
 func (dfds *DataFactoryDatasetSnowflake) State() (*dataFactoryDatasetSnowflakeState, bool) {
 	return dfds.state, dfds.state != nil
 }
 
+// StateMust returns the state for [DataFactoryDatasetSnowflake]. Panics if the state is nil.
 func (dfds *DataFactoryDatasetSnowflake) StateMust() *dataFactoryDatasetSnowflakeState {
 	if dfds.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dfds.Type(), dfds.LocalName()))
@@ -60,10 +86,7 @@ func (dfds *DataFactoryDatasetSnowflake) StateMust() *dataFactoryDatasetSnowflak
 	return dfds.state
 }
 
-func (dfds *DataFactoryDatasetSnowflake) DependOn() terra.Reference {
-	return terra.ReferenceResource(dfds)
-}
-
+// DataFactoryDatasetSnowflakeArgs contains the configurations for azurerm_data_factory_dataset_snowflake.
 type DataFactoryDatasetSnowflakeArgs struct {
 	// AdditionalProperties: map of string, optional
 	AdditionalProperties terra.MapValue[terra.StringValue] `hcl:"additional_properties,attr"`
@@ -91,63 +114,72 @@ type DataFactoryDatasetSnowflakeArgs struct {
 	SchemaColumn []datafactorydatasetsnowflake.SchemaColumn `hcl:"schema_column,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *datafactorydatasetsnowflake.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataFactoryDatasetSnowflake depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFactoryDatasetSnowflakeAttributes struct {
 	ref terra.Reference
 }
 
+// AdditionalProperties returns a reference to field additional_properties of azurerm_data_factory_dataset_snowflake.
 func (dfds dataFactoryDatasetSnowflakeAttributes) AdditionalProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dfds.ref.Append("additional_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](dfds.ref.Append("additional_properties"))
 }
 
+// Annotations returns a reference to field annotations of azurerm_data_factory_dataset_snowflake.
 func (dfds dataFactoryDatasetSnowflakeAttributes) Annotations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dfds.ref.Append("annotations"))
+	return terra.ReferenceAsList[terra.StringValue](dfds.ref.Append("annotations"))
 }
 
+// DataFactoryId returns a reference to field data_factory_id of azurerm_data_factory_dataset_snowflake.
 func (dfds dataFactoryDatasetSnowflakeAttributes) DataFactoryId() terra.StringValue {
-	return terra.ReferenceString(dfds.ref.Append("data_factory_id"))
+	return terra.ReferenceAsString(dfds.ref.Append("data_factory_id"))
 }
 
+// Description returns a reference to field description of azurerm_data_factory_dataset_snowflake.
 func (dfds dataFactoryDatasetSnowflakeAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dfds.ref.Append("description"))
+	return terra.ReferenceAsString(dfds.ref.Append("description"))
 }
 
+// Folder returns a reference to field folder of azurerm_data_factory_dataset_snowflake.
 func (dfds dataFactoryDatasetSnowflakeAttributes) Folder() terra.StringValue {
-	return terra.ReferenceString(dfds.ref.Append("folder"))
+	return terra.ReferenceAsString(dfds.ref.Append("folder"))
 }
 
+// Id returns a reference to field id of azurerm_data_factory_dataset_snowflake.
 func (dfds dataFactoryDatasetSnowflakeAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dfds.ref.Append("id"))
+	return terra.ReferenceAsString(dfds.ref.Append("id"))
 }
 
+// LinkedServiceName returns a reference to field linked_service_name of azurerm_data_factory_dataset_snowflake.
 func (dfds dataFactoryDatasetSnowflakeAttributes) LinkedServiceName() terra.StringValue {
-	return terra.ReferenceString(dfds.ref.Append("linked_service_name"))
+	return terra.ReferenceAsString(dfds.ref.Append("linked_service_name"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory_dataset_snowflake.
 func (dfds dataFactoryDatasetSnowflakeAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dfds.ref.Append("name"))
+	return terra.ReferenceAsString(dfds.ref.Append("name"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_data_factory_dataset_snowflake.
 func (dfds dataFactoryDatasetSnowflakeAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dfds.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](dfds.ref.Append("parameters"))
 }
 
+// SchemaName returns a reference to field schema_name of azurerm_data_factory_dataset_snowflake.
 func (dfds dataFactoryDatasetSnowflakeAttributes) SchemaName() terra.StringValue {
-	return terra.ReferenceString(dfds.ref.Append("schema_name"))
+	return terra.ReferenceAsString(dfds.ref.Append("schema_name"))
 }
 
+// TableName returns a reference to field table_name of azurerm_data_factory_dataset_snowflake.
 func (dfds dataFactoryDatasetSnowflakeAttributes) TableName() terra.StringValue {
-	return terra.ReferenceString(dfds.ref.Append("table_name"))
+	return terra.ReferenceAsString(dfds.ref.Append("table_name"))
 }
 
 func (dfds dataFactoryDatasetSnowflakeAttributes) SchemaColumn() terra.ListValue[datafactorydatasetsnowflake.SchemaColumnAttributes] {
-	return terra.ReferenceList[datafactorydatasetsnowflake.SchemaColumnAttributes](dfds.ref.Append("schema_column"))
+	return terra.ReferenceAsList[datafactorydatasetsnowflake.SchemaColumnAttributes](dfds.ref.Append("schema_column"))
 }
 
 func (dfds dataFactoryDatasetSnowflakeAttributes) Timeouts() datafactorydatasetsnowflake.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafactorydatasetsnowflake.TimeoutsAttributes](dfds.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafactorydatasetsnowflake.TimeoutsAttributes](dfds.ref.Append("timeouts"))
 }
 
 type dataFactoryDatasetSnowflakeState struct {

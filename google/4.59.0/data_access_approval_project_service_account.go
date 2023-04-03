@@ -4,6 +4,7 @@ package google
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataAccessApprovalProjectServiceAccount creates a new instance of [DataAccessApprovalProjectServiceAccount].
 func NewDataAccessApprovalProjectServiceAccount(name string, args DataAccessApprovalProjectServiceAccountArgs) *DataAccessApprovalProjectServiceAccount {
 	return &DataAccessApprovalProjectServiceAccount{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataAccessApprovalProjectServiceAccount(name string, args DataAccessAppr
 
 var _ terra.DataResource = (*DataAccessApprovalProjectServiceAccount)(nil)
 
+// DataAccessApprovalProjectServiceAccount represents the Terraform data resource google_access_approval_project_service_account.
 type DataAccessApprovalProjectServiceAccount struct {
 	Name string
 	Args DataAccessApprovalProjectServiceAccountArgs
 }
 
+// DataSource returns the Terraform object type for [DataAccessApprovalProjectServiceAccount].
 func (aapsa *DataAccessApprovalProjectServiceAccount) DataSource() string {
 	return "google_access_approval_project_service_account"
 }
 
+// LocalName returns the local name for [DataAccessApprovalProjectServiceAccount].
 func (aapsa *DataAccessApprovalProjectServiceAccount) LocalName() string {
 	return aapsa.Name
 }
 
+// Configuration returns the configuration (args) for [DataAccessApprovalProjectServiceAccount].
 func (aapsa *DataAccessApprovalProjectServiceAccount) Configuration() interface{} {
 	return aapsa.Args
 }
 
+// Attributes returns the attributes for [DataAccessApprovalProjectServiceAccount].
 func (aapsa *DataAccessApprovalProjectServiceAccount) Attributes() dataAccessApprovalProjectServiceAccountAttributes {
 	return dataAccessApprovalProjectServiceAccountAttributes{ref: terra.ReferenceDataResource(aapsa)}
 }
 
+// DataAccessApprovalProjectServiceAccountArgs contains the configurations for google_access_approval_project_service_account.
 type DataAccessApprovalProjectServiceAccountArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,18 +51,22 @@ type dataAccessApprovalProjectServiceAccountAttributes struct {
 	ref terra.Reference
 }
 
+// AccountEmail returns a reference to field account_email of google_access_approval_project_service_account.
 func (aapsa dataAccessApprovalProjectServiceAccountAttributes) AccountEmail() terra.StringValue {
-	return terra.ReferenceString(aapsa.ref.Append("account_email"))
+	return terra.ReferenceAsString(aapsa.ref.Append("account_email"))
 }
 
+// Id returns a reference to field id of google_access_approval_project_service_account.
 func (aapsa dataAccessApprovalProjectServiceAccountAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(aapsa.ref.Append("id"))
+	return terra.ReferenceAsString(aapsa.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_access_approval_project_service_account.
 func (aapsa dataAccessApprovalProjectServiceAccountAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(aapsa.ref.Append("name"))
+	return terra.ReferenceAsString(aapsa.ref.Append("name"))
 }
 
+// ProjectId returns a reference to field project_id of google_access_approval_project_service_account.
 func (aapsa dataAccessApprovalProjectServiceAccountAttributes) ProjectId() terra.StringValue {
-	return terra.ReferenceString(aapsa.ref.Append("project_id"))
+	return terra.ReferenceAsString(aapsa.ref.Append("project_id"))
 }

@@ -38,84 +38,84 @@ type CriteriaAttributes struct {
 	ref terra.Reference
 }
 
-func (c CriteriaAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CriteriaAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CriteriaAttributes) InternalWithRef(ref terra.Reference) CriteriaAttributes {
 	return CriteriaAttributes{ref: ref}
 }
 
-func (c CriteriaAttributes) InternalTokens() hclwrite.Tokens {
+func (c CriteriaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c CriteriaAttributes) MetricName() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("metric_name"))
+	return terra.ReferenceAsString(c.ref.Append("metric_name"))
 }
 
 func (c CriteriaAttributes) Dimension() terra.SetValue[DimensionAttributes] {
-	return terra.ReferenceSet[DimensionAttributes](c.ref.Append("dimension"))
+	return terra.ReferenceAsSet[DimensionAttributes](c.ref.Append("dimension"))
 }
 
 type DimensionAttributes struct {
 	ref terra.Reference
 }
 
-func (d DimensionAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DimensionAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DimensionAttributes) InternalWithRef(ref terra.Reference) DimensionAttributes {
 	return DimensionAttributes{ref: ref}
 }
 
-func (d DimensionAttributes) InternalTokens() hclwrite.Tokens {
+func (d DimensionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d DimensionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("name"))
+	return terra.ReferenceAsString(d.ref.Append("name"))
 }
 
 func (d DimensionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("operator"))
+	return terra.ReferenceAsString(d.ref.Append("operator"))
 }
 
 func (d DimensionAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](d.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](d.ref.Append("values"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type CriteriaState struct {

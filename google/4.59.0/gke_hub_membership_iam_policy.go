@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewGkeHubMembershipIamPolicy creates a new instance of [GkeHubMembershipIamPolicy].
 func NewGkeHubMembershipIamPolicy(name string, args GkeHubMembershipIamPolicyArgs) *GkeHubMembershipIamPolicy {
 	return &GkeHubMembershipIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewGkeHubMembershipIamPolicy(name string, args GkeHubMembershipIamPolicyArg
 
 var _ terra.Resource = (*GkeHubMembershipIamPolicy)(nil)
 
+// GkeHubMembershipIamPolicy represents the Terraform resource google_gke_hub_membership_iam_policy.
 type GkeHubMembershipIamPolicy struct {
-	Name  string
-	Args  GkeHubMembershipIamPolicyArgs
-	state *gkeHubMembershipIamPolicyState
+	Name      string
+	Args      GkeHubMembershipIamPolicyArgs
+	state     *gkeHubMembershipIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GkeHubMembershipIamPolicy].
 func (ghmip *GkeHubMembershipIamPolicy) Type() string {
 	return "google_gke_hub_membership_iam_policy"
 }
 
+// LocalName returns the local name for [GkeHubMembershipIamPolicy].
 func (ghmip *GkeHubMembershipIamPolicy) LocalName() string {
 	return ghmip.Name
 }
 
+// Configuration returns the configuration (args) for [GkeHubMembershipIamPolicy].
 func (ghmip *GkeHubMembershipIamPolicy) Configuration() interface{} {
 	return ghmip.Args
 }
 
+// DependOn is used for other resources to depend on [GkeHubMembershipIamPolicy].
+func (ghmip *GkeHubMembershipIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(ghmip)
+}
+
+// Dependencies returns the list of resources [GkeHubMembershipIamPolicy] depends_on.
+func (ghmip *GkeHubMembershipIamPolicy) Dependencies() terra.Dependencies {
+	return ghmip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GkeHubMembershipIamPolicy].
+func (ghmip *GkeHubMembershipIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return ghmip.Lifecycle
+}
+
+// Attributes returns the attributes for [GkeHubMembershipIamPolicy].
 func (ghmip *GkeHubMembershipIamPolicy) Attributes() gkeHubMembershipIamPolicyAttributes {
 	return gkeHubMembershipIamPolicyAttributes{ref: terra.ReferenceResource(ghmip)}
 }
 
+// ImportState imports the given attribute values into [GkeHubMembershipIamPolicy]'s state.
 func (ghmip *GkeHubMembershipIamPolicy) ImportState(av io.Reader) error {
 	ghmip.state = &gkeHubMembershipIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(ghmip.state); err != nil {
@@ -48,10 +72,12 @@ func (ghmip *GkeHubMembershipIamPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GkeHubMembershipIamPolicy] has state.
 func (ghmip *GkeHubMembershipIamPolicy) State() (*gkeHubMembershipIamPolicyState, bool) {
 	return ghmip.state, ghmip.state != nil
 }
 
+// StateMust returns the state for [GkeHubMembershipIamPolicy]. Panics if the state is nil.
 func (ghmip *GkeHubMembershipIamPolicy) StateMust() *gkeHubMembershipIamPolicyState {
 	if ghmip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ghmip.Type(), ghmip.LocalName()))
@@ -59,10 +85,7 @@ func (ghmip *GkeHubMembershipIamPolicy) StateMust() *gkeHubMembershipIamPolicySt
 	return ghmip.state
 }
 
-func (ghmip *GkeHubMembershipIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(ghmip)
-}
-
+// GkeHubMembershipIamPolicyArgs contains the configurations for google_gke_hub_membership_iam_policy.
 type GkeHubMembershipIamPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -72,31 +95,34 @@ type GkeHubMembershipIamPolicyArgs struct {
 	PolicyData terra.StringValue `hcl:"policy_data,attr" validate:"required"`
 	// Project: string, optional
 	Project terra.StringValue `hcl:"project,attr"`
-	// DependsOn contains resources that GkeHubMembershipIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type gkeHubMembershipIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_gke_hub_membership_iam_policy.
 func (ghmip gkeHubMembershipIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(ghmip.ref.Append("etag"))
+	return terra.ReferenceAsString(ghmip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_gke_hub_membership_iam_policy.
 func (ghmip gkeHubMembershipIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ghmip.ref.Append("id"))
+	return terra.ReferenceAsString(ghmip.ref.Append("id"))
 }
 
+// MembershipId returns a reference to field membership_id of google_gke_hub_membership_iam_policy.
 func (ghmip gkeHubMembershipIamPolicyAttributes) MembershipId() terra.StringValue {
-	return terra.ReferenceString(ghmip.ref.Append("membership_id"))
+	return terra.ReferenceAsString(ghmip.ref.Append("membership_id"))
 }
 
+// PolicyData returns a reference to field policy_data of google_gke_hub_membership_iam_policy.
 func (ghmip gkeHubMembershipIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(ghmip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(ghmip.ref.Append("policy_data"))
 }
 
+// Project returns a reference to field project of google_gke_hub_membership_iam_policy.
 func (ghmip gkeHubMembershipIamPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ghmip.ref.Append("project"))
+	return terra.ReferenceAsString(ghmip.ref.Append("project"))
 }
 
 type gkeHubMembershipIamPolicyState struct {

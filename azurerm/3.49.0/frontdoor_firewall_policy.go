@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewFrontdoorFirewallPolicy creates a new instance of [FrontdoorFirewallPolicy].
 func NewFrontdoorFirewallPolicy(name string, args FrontdoorFirewallPolicyArgs) *FrontdoorFirewallPolicy {
 	return &FrontdoorFirewallPolicy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewFrontdoorFirewallPolicy(name string, args FrontdoorFirewallPolicyArgs) *
 
 var _ terra.Resource = (*FrontdoorFirewallPolicy)(nil)
 
+// FrontdoorFirewallPolicy represents the Terraform resource azurerm_frontdoor_firewall_policy.
 type FrontdoorFirewallPolicy struct {
-	Name  string
-	Args  FrontdoorFirewallPolicyArgs
-	state *frontdoorFirewallPolicyState
+	Name      string
+	Args      FrontdoorFirewallPolicyArgs
+	state     *frontdoorFirewallPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [FrontdoorFirewallPolicy].
 func (ffp *FrontdoorFirewallPolicy) Type() string {
 	return "azurerm_frontdoor_firewall_policy"
 }
 
+// LocalName returns the local name for [FrontdoorFirewallPolicy].
 func (ffp *FrontdoorFirewallPolicy) LocalName() string {
 	return ffp.Name
 }
 
+// Configuration returns the configuration (args) for [FrontdoorFirewallPolicy].
 func (ffp *FrontdoorFirewallPolicy) Configuration() interface{} {
 	return ffp.Args
 }
 
+// DependOn is used for other resources to depend on [FrontdoorFirewallPolicy].
+func (ffp *FrontdoorFirewallPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(ffp)
+}
+
+// Dependencies returns the list of resources [FrontdoorFirewallPolicy] depends_on.
+func (ffp *FrontdoorFirewallPolicy) Dependencies() terra.Dependencies {
+	return ffp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [FrontdoorFirewallPolicy].
+func (ffp *FrontdoorFirewallPolicy) LifecycleManagement() *terra.Lifecycle {
+	return ffp.Lifecycle
+}
+
+// Attributes returns the attributes for [FrontdoorFirewallPolicy].
 func (ffp *FrontdoorFirewallPolicy) Attributes() frontdoorFirewallPolicyAttributes {
 	return frontdoorFirewallPolicyAttributes{ref: terra.ReferenceResource(ffp)}
 }
 
+// ImportState imports the given attribute values into [FrontdoorFirewallPolicy]'s state.
 func (ffp *FrontdoorFirewallPolicy) ImportState(av io.Reader) error {
 	ffp.state = &frontdoorFirewallPolicyState{}
 	if err := json.NewDecoder(av).Decode(ffp.state); err != nil {
@@ -49,10 +73,12 @@ func (ffp *FrontdoorFirewallPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [FrontdoorFirewallPolicy] has state.
 func (ffp *FrontdoorFirewallPolicy) State() (*frontdoorFirewallPolicyState, bool) {
 	return ffp.state, ffp.state != nil
 }
 
+// StateMust returns the state for [FrontdoorFirewallPolicy]. Panics if the state is nil.
 func (ffp *FrontdoorFirewallPolicy) StateMust() *frontdoorFirewallPolicyState {
 	if ffp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ffp.Type(), ffp.LocalName()))
@@ -60,10 +86,7 @@ func (ffp *FrontdoorFirewallPolicy) StateMust() *frontdoorFirewallPolicyState {
 	return ffp.state
 }
 
-func (ffp *FrontdoorFirewallPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(ffp)
-}
-
+// FrontdoorFirewallPolicyArgs contains the configurations for azurerm_frontdoor_firewall_policy.
 type FrontdoorFirewallPolicyArgs struct {
 	// CustomBlockResponseBody: string, optional
 	CustomBlockResponseBody terra.StringValue `hcl:"custom_block_response_body,attr"`
@@ -89,67 +112,76 @@ type FrontdoorFirewallPolicyArgs struct {
 	ManagedRule []frontdoorfirewallpolicy.ManagedRule `hcl:"managed_rule,block" validate:"min=0,max=100"`
 	// Timeouts: optional
 	Timeouts *frontdoorfirewallpolicy.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that FrontdoorFirewallPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type frontdoorFirewallPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// CustomBlockResponseBody returns a reference to field custom_block_response_body of azurerm_frontdoor_firewall_policy.
 func (ffp frontdoorFirewallPolicyAttributes) CustomBlockResponseBody() terra.StringValue {
-	return terra.ReferenceString(ffp.ref.Append("custom_block_response_body"))
+	return terra.ReferenceAsString(ffp.ref.Append("custom_block_response_body"))
 }
 
+// CustomBlockResponseStatusCode returns a reference to field custom_block_response_status_code of azurerm_frontdoor_firewall_policy.
 func (ffp frontdoorFirewallPolicyAttributes) CustomBlockResponseStatusCode() terra.NumberValue {
-	return terra.ReferenceNumber(ffp.ref.Append("custom_block_response_status_code"))
+	return terra.ReferenceAsNumber(ffp.ref.Append("custom_block_response_status_code"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_frontdoor_firewall_policy.
 func (ffp frontdoorFirewallPolicyAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(ffp.ref.Append("enabled"))
+	return terra.ReferenceAsBool(ffp.ref.Append("enabled"))
 }
 
+// FrontendEndpointIds returns a reference to field frontend_endpoint_ids of azurerm_frontdoor_firewall_policy.
 func (ffp frontdoorFirewallPolicyAttributes) FrontendEndpointIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ffp.ref.Append("frontend_endpoint_ids"))
+	return terra.ReferenceAsList[terra.StringValue](ffp.ref.Append("frontend_endpoint_ids"))
 }
 
+// Id returns a reference to field id of azurerm_frontdoor_firewall_policy.
 func (ffp frontdoorFirewallPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ffp.ref.Append("id"))
+	return terra.ReferenceAsString(ffp.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_frontdoor_firewall_policy.
 func (ffp frontdoorFirewallPolicyAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ffp.ref.Append("location"))
+	return terra.ReferenceAsString(ffp.ref.Append("location"))
 }
 
+// Mode returns a reference to field mode of azurerm_frontdoor_firewall_policy.
 func (ffp frontdoorFirewallPolicyAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(ffp.ref.Append("mode"))
+	return terra.ReferenceAsString(ffp.ref.Append("mode"))
 }
 
+// Name returns a reference to field name of azurerm_frontdoor_firewall_policy.
 func (ffp frontdoorFirewallPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ffp.ref.Append("name"))
+	return terra.ReferenceAsString(ffp.ref.Append("name"))
 }
 
+// RedirectUrl returns a reference to field redirect_url of azurerm_frontdoor_firewall_policy.
 func (ffp frontdoorFirewallPolicyAttributes) RedirectUrl() terra.StringValue {
-	return terra.ReferenceString(ffp.ref.Append("redirect_url"))
+	return terra.ReferenceAsString(ffp.ref.Append("redirect_url"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_frontdoor_firewall_policy.
 func (ffp frontdoorFirewallPolicyAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ffp.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ffp.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_frontdoor_firewall_policy.
 func (ffp frontdoorFirewallPolicyAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ffp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ffp.ref.Append("tags"))
 }
 
 func (ffp frontdoorFirewallPolicyAttributes) CustomRule() terra.ListValue[frontdoorfirewallpolicy.CustomRuleAttributes] {
-	return terra.ReferenceList[frontdoorfirewallpolicy.CustomRuleAttributes](ffp.ref.Append("custom_rule"))
+	return terra.ReferenceAsList[frontdoorfirewallpolicy.CustomRuleAttributes](ffp.ref.Append("custom_rule"))
 }
 
 func (ffp frontdoorFirewallPolicyAttributes) ManagedRule() terra.ListValue[frontdoorfirewallpolicy.ManagedRuleAttributes] {
-	return terra.ReferenceList[frontdoorfirewallpolicy.ManagedRuleAttributes](ffp.ref.Append("managed_rule"))
+	return terra.ReferenceAsList[frontdoorfirewallpolicy.ManagedRuleAttributes](ffp.ref.Append("managed_rule"))
 }
 
 func (ffp frontdoorFirewallPolicyAttributes) Timeouts() frontdoorfirewallpolicy.TimeoutsAttributes {
-	return terra.ReferenceSingle[frontdoorfirewallpolicy.TimeoutsAttributes](ffp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[frontdoorfirewallpolicy.TimeoutsAttributes](ffp.ref.Append("timeouts"))
 }
 
 type frontdoorFirewallPolicyState struct {

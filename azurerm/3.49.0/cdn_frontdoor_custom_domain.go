@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCdnFrontdoorCustomDomain creates a new instance of [CdnFrontdoorCustomDomain].
 func NewCdnFrontdoorCustomDomain(name string, args CdnFrontdoorCustomDomainArgs) *CdnFrontdoorCustomDomain {
 	return &CdnFrontdoorCustomDomain{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCdnFrontdoorCustomDomain(name string, args CdnFrontdoorCustomDomainArgs)
 
 var _ terra.Resource = (*CdnFrontdoorCustomDomain)(nil)
 
+// CdnFrontdoorCustomDomain represents the Terraform resource azurerm_cdn_frontdoor_custom_domain.
 type CdnFrontdoorCustomDomain struct {
-	Name  string
-	Args  CdnFrontdoorCustomDomainArgs
-	state *cdnFrontdoorCustomDomainState
+	Name      string
+	Args      CdnFrontdoorCustomDomainArgs
+	state     *cdnFrontdoorCustomDomainState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CdnFrontdoorCustomDomain].
 func (cfcd *CdnFrontdoorCustomDomain) Type() string {
 	return "azurerm_cdn_frontdoor_custom_domain"
 }
 
+// LocalName returns the local name for [CdnFrontdoorCustomDomain].
 func (cfcd *CdnFrontdoorCustomDomain) LocalName() string {
 	return cfcd.Name
 }
 
+// Configuration returns the configuration (args) for [CdnFrontdoorCustomDomain].
 func (cfcd *CdnFrontdoorCustomDomain) Configuration() interface{} {
 	return cfcd.Args
 }
 
+// DependOn is used for other resources to depend on [CdnFrontdoorCustomDomain].
+func (cfcd *CdnFrontdoorCustomDomain) DependOn() terra.Reference {
+	return terra.ReferenceResource(cfcd)
+}
+
+// Dependencies returns the list of resources [CdnFrontdoorCustomDomain] depends_on.
+func (cfcd *CdnFrontdoorCustomDomain) Dependencies() terra.Dependencies {
+	return cfcd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CdnFrontdoorCustomDomain].
+func (cfcd *CdnFrontdoorCustomDomain) LifecycleManagement() *terra.Lifecycle {
+	return cfcd.Lifecycle
+}
+
+// Attributes returns the attributes for [CdnFrontdoorCustomDomain].
 func (cfcd *CdnFrontdoorCustomDomain) Attributes() cdnFrontdoorCustomDomainAttributes {
 	return cdnFrontdoorCustomDomainAttributes{ref: terra.ReferenceResource(cfcd)}
 }
 
+// ImportState imports the given attribute values into [CdnFrontdoorCustomDomain]'s state.
 func (cfcd *CdnFrontdoorCustomDomain) ImportState(av io.Reader) error {
 	cfcd.state = &cdnFrontdoorCustomDomainState{}
 	if err := json.NewDecoder(av).Decode(cfcd.state); err != nil {
@@ -49,10 +73,12 @@ func (cfcd *CdnFrontdoorCustomDomain) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CdnFrontdoorCustomDomain] has state.
 func (cfcd *CdnFrontdoorCustomDomain) State() (*cdnFrontdoorCustomDomainState, bool) {
 	return cfcd.state, cfcd.state != nil
 }
 
+// StateMust returns the state for [CdnFrontdoorCustomDomain]. Panics if the state is nil.
 func (cfcd *CdnFrontdoorCustomDomain) StateMust() *cdnFrontdoorCustomDomainState {
 	if cfcd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cfcd.Type(), cfcd.LocalName()))
@@ -60,10 +86,7 @@ func (cfcd *CdnFrontdoorCustomDomain) StateMust() *cdnFrontdoorCustomDomainState
 	return cfcd.state
 }
 
-func (cfcd *CdnFrontdoorCustomDomain) DependOn() terra.Reference {
-	return terra.ReferenceResource(cfcd)
-}
-
+// CdnFrontdoorCustomDomainArgs contains the configurations for azurerm_cdn_frontdoor_custom_domain.
 type CdnFrontdoorCustomDomainArgs struct {
 	// CdnFrontdoorProfileId: string, required
 	CdnFrontdoorProfileId terra.StringValue `hcl:"cdn_frontdoor_profile_id,attr" validate:"required"`
@@ -79,47 +102,52 @@ type CdnFrontdoorCustomDomainArgs struct {
 	Timeouts *cdnfrontdoorcustomdomain.Timeouts `hcl:"timeouts,block"`
 	// Tls: required
 	Tls *cdnfrontdoorcustomdomain.Tls `hcl:"tls,block" validate:"required"`
-	// DependsOn contains resources that CdnFrontdoorCustomDomain depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cdnFrontdoorCustomDomainAttributes struct {
 	ref terra.Reference
 }
 
+// CdnFrontdoorProfileId returns a reference to field cdn_frontdoor_profile_id of azurerm_cdn_frontdoor_custom_domain.
 func (cfcd cdnFrontdoorCustomDomainAttributes) CdnFrontdoorProfileId() terra.StringValue {
-	return terra.ReferenceString(cfcd.ref.Append("cdn_frontdoor_profile_id"))
+	return terra.ReferenceAsString(cfcd.ref.Append("cdn_frontdoor_profile_id"))
 }
 
+// DnsZoneId returns a reference to field dns_zone_id of azurerm_cdn_frontdoor_custom_domain.
 func (cfcd cdnFrontdoorCustomDomainAttributes) DnsZoneId() terra.StringValue {
-	return terra.ReferenceString(cfcd.ref.Append("dns_zone_id"))
+	return terra.ReferenceAsString(cfcd.ref.Append("dns_zone_id"))
 }
 
+// ExpirationDate returns a reference to field expiration_date of azurerm_cdn_frontdoor_custom_domain.
 func (cfcd cdnFrontdoorCustomDomainAttributes) ExpirationDate() terra.StringValue {
-	return terra.ReferenceString(cfcd.ref.Append("expiration_date"))
+	return terra.ReferenceAsString(cfcd.ref.Append("expiration_date"))
 }
 
+// HostName returns a reference to field host_name of azurerm_cdn_frontdoor_custom_domain.
 func (cfcd cdnFrontdoorCustomDomainAttributes) HostName() terra.StringValue {
-	return terra.ReferenceString(cfcd.ref.Append("host_name"))
+	return terra.ReferenceAsString(cfcd.ref.Append("host_name"))
 }
 
+// Id returns a reference to field id of azurerm_cdn_frontdoor_custom_domain.
 func (cfcd cdnFrontdoorCustomDomainAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cfcd.ref.Append("id"))
+	return terra.ReferenceAsString(cfcd.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_cdn_frontdoor_custom_domain.
 func (cfcd cdnFrontdoorCustomDomainAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cfcd.ref.Append("name"))
+	return terra.ReferenceAsString(cfcd.ref.Append("name"))
 }
 
+// ValidationToken returns a reference to field validation_token of azurerm_cdn_frontdoor_custom_domain.
 func (cfcd cdnFrontdoorCustomDomainAttributes) ValidationToken() terra.StringValue {
-	return terra.ReferenceString(cfcd.ref.Append("validation_token"))
+	return terra.ReferenceAsString(cfcd.ref.Append("validation_token"))
 }
 
 func (cfcd cdnFrontdoorCustomDomainAttributes) Timeouts() cdnfrontdoorcustomdomain.TimeoutsAttributes {
-	return terra.ReferenceSingle[cdnfrontdoorcustomdomain.TimeoutsAttributes](cfcd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cdnfrontdoorcustomdomain.TimeoutsAttributes](cfcd.ref.Append("timeouts"))
 }
 
 func (cfcd cdnFrontdoorCustomDomainAttributes) Tls() terra.ListValue[cdnfrontdoorcustomdomain.TlsAttributes] {
-	return terra.ReferenceList[cdnfrontdoorcustomdomain.TlsAttributes](cfcd.ref.Append("tls"))
+	return terra.ReferenceAsList[cdnfrontdoorcustomdomain.TlsAttributes](cfcd.ref.Append("tls"))
 }
 
 type cdnFrontdoorCustomDomainState struct {

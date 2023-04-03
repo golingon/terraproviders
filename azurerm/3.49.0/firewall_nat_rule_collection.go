@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewFirewallNatRuleCollection creates a new instance of [FirewallNatRuleCollection].
 func NewFirewallNatRuleCollection(name string, args FirewallNatRuleCollectionArgs) *FirewallNatRuleCollection {
 	return &FirewallNatRuleCollection{
 		Args: args,
@@ -19,28 +20,51 @@ func NewFirewallNatRuleCollection(name string, args FirewallNatRuleCollectionArg
 
 var _ terra.Resource = (*FirewallNatRuleCollection)(nil)
 
+// FirewallNatRuleCollection represents the Terraform resource azurerm_firewall_nat_rule_collection.
 type FirewallNatRuleCollection struct {
-	Name  string
-	Args  FirewallNatRuleCollectionArgs
-	state *firewallNatRuleCollectionState
+	Name      string
+	Args      FirewallNatRuleCollectionArgs
+	state     *firewallNatRuleCollectionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [FirewallNatRuleCollection].
 func (fnrc *FirewallNatRuleCollection) Type() string {
 	return "azurerm_firewall_nat_rule_collection"
 }
 
+// LocalName returns the local name for [FirewallNatRuleCollection].
 func (fnrc *FirewallNatRuleCollection) LocalName() string {
 	return fnrc.Name
 }
 
+// Configuration returns the configuration (args) for [FirewallNatRuleCollection].
 func (fnrc *FirewallNatRuleCollection) Configuration() interface{} {
 	return fnrc.Args
 }
 
+// DependOn is used for other resources to depend on [FirewallNatRuleCollection].
+func (fnrc *FirewallNatRuleCollection) DependOn() terra.Reference {
+	return terra.ReferenceResource(fnrc)
+}
+
+// Dependencies returns the list of resources [FirewallNatRuleCollection] depends_on.
+func (fnrc *FirewallNatRuleCollection) Dependencies() terra.Dependencies {
+	return fnrc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [FirewallNatRuleCollection].
+func (fnrc *FirewallNatRuleCollection) LifecycleManagement() *terra.Lifecycle {
+	return fnrc.Lifecycle
+}
+
+// Attributes returns the attributes for [FirewallNatRuleCollection].
 func (fnrc *FirewallNatRuleCollection) Attributes() firewallNatRuleCollectionAttributes {
 	return firewallNatRuleCollectionAttributes{ref: terra.ReferenceResource(fnrc)}
 }
 
+// ImportState imports the given attribute values into [FirewallNatRuleCollection]'s state.
 func (fnrc *FirewallNatRuleCollection) ImportState(av io.Reader) error {
 	fnrc.state = &firewallNatRuleCollectionState{}
 	if err := json.NewDecoder(av).Decode(fnrc.state); err != nil {
@@ -49,10 +73,12 @@ func (fnrc *FirewallNatRuleCollection) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [FirewallNatRuleCollection] has state.
 func (fnrc *FirewallNatRuleCollection) State() (*firewallNatRuleCollectionState, bool) {
 	return fnrc.state, fnrc.state != nil
 }
 
+// StateMust returns the state for [FirewallNatRuleCollection]. Panics if the state is nil.
 func (fnrc *FirewallNatRuleCollection) StateMust() *firewallNatRuleCollectionState {
 	if fnrc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", fnrc.Type(), fnrc.LocalName()))
@@ -60,10 +86,7 @@ func (fnrc *FirewallNatRuleCollection) StateMust() *firewallNatRuleCollectionSta
 	return fnrc.state
 }
 
-func (fnrc *FirewallNatRuleCollection) DependOn() terra.Reference {
-	return terra.ReferenceResource(fnrc)
-}
-
+// FirewallNatRuleCollectionArgs contains the configurations for azurerm_firewall_nat_rule_collection.
 type FirewallNatRuleCollectionArgs struct {
 	// Action: string, required
 	Action terra.StringValue `hcl:"action,attr" validate:"required"`
@@ -81,43 +104,47 @@ type FirewallNatRuleCollectionArgs struct {
 	Rule []firewallnatrulecollection.Rule `hcl:"rule,block" validate:"min=1"`
 	// Timeouts: optional
 	Timeouts *firewallnatrulecollection.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that FirewallNatRuleCollection depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type firewallNatRuleCollectionAttributes struct {
 	ref terra.Reference
 }
 
+// Action returns a reference to field action of azurerm_firewall_nat_rule_collection.
 func (fnrc firewallNatRuleCollectionAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(fnrc.ref.Append("action"))
+	return terra.ReferenceAsString(fnrc.ref.Append("action"))
 }
 
+// AzureFirewallName returns a reference to field azure_firewall_name of azurerm_firewall_nat_rule_collection.
 func (fnrc firewallNatRuleCollectionAttributes) AzureFirewallName() terra.StringValue {
-	return terra.ReferenceString(fnrc.ref.Append("azure_firewall_name"))
+	return terra.ReferenceAsString(fnrc.ref.Append("azure_firewall_name"))
 }
 
+// Id returns a reference to field id of azurerm_firewall_nat_rule_collection.
 func (fnrc firewallNatRuleCollectionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(fnrc.ref.Append("id"))
+	return terra.ReferenceAsString(fnrc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_firewall_nat_rule_collection.
 func (fnrc firewallNatRuleCollectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(fnrc.ref.Append("name"))
+	return terra.ReferenceAsString(fnrc.ref.Append("name"))
 }
 
+// Priority returns a reference to field priority of azurerm_firewall_nat_rule_collection.
 func (fnrc firewallNatRuleCollectionAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(fnrc.ref.Append("priority"))
+	return terra.ReferenceAsNumber(fnrc.ref.Append("priority"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_firewall_nat_rule_collection.
 func (fnrc firewallNatRuleCollectionAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(fnrc.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(fnrc.ref.Append("resource_group_name"))
 }
 
 func (fnrc firewallNatRuleCollectionAttributes) Rule() terra.ListValue[firewallnatrulecollection.RuleAttributes] {
-	return terra.ReferenceList[firewallnatrulecollection.RuleAttributes](fnrc.ref.Append("rule"))
+	return terra.ReferenceAsList[firewallnatrulecollection.RuleAttributes](fnrc.ref.Append("rule"))
 }
 
 func (fnrc firewallNatRuleCollectionAttributes) Timeouts() firewallnatrulecollection.TimeoutsAttributes {
-	return terra.ReferenceSingle[firewallnatrulecollection.TimeoutsAttributes](fnrc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[firewallnatrulecollection.TimeoutsAttributes](fnrc.ref.Append("timeouts"))
 }
 
 type firewallNatRuleCollectionState struct {

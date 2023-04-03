@@ -129,7 +129,7 @@ func (e EndpointAttributes) InternalWithRef(ref terra.Reference) EndpointAttribu
 	return EndpointAttributes{ref: ref}
 }
 
-func (e EndpointAttributes) InternalTokens() hclwrite.Tokens {
+func (e EndpointAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -161,7 +161,7 @@ func (r RuleAttributes) InternalWithRef(ref terra.Reference) RuleAttributes {
 	return RuleAttributes{ref: ref}
 }
 
-func (r RuleAttributes) InternalTokens() hclwrite.Tokens {
+func (r RuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -209,7 +209,7 @@ func (gpl GeoProximityLocationAttributes) InternalWithRef(ref terra.Reference) G
 	return GeoProximityLocationAttributes{ref: ref}
 }
 
-func (gpl GeoProximityLocationAttributes) InternalTokens() hclwrite.Tokens {
+func (gpl GeoProximityLocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gpl.ref.InternalTokens()
 }
 
@@ -257,7 +257,7 @@ func (i ItemsAttributes) InternalWithRef(ref terra.Reference) ItemsAttributes {
 	return ItemsAttributes{ref: ref}
 }
 
-func (i ItemsAttributes) InternalTokens() hclwrite.Tokens {
+func (i ItemsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -281,7 +281,7 @@ func (l LocationAttributes) InternalWithRef(ref terra.Reference) LocationAttribu
 	return LocationAttributes{ref: ref}
 }
 
-func (l LocationAttributes) InternalTokens() hclwrite.Tokens {
+func (l LocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 
@@ -329,7 +329,7 @@ func (p PrimaryAttributes) InternalWithRef(ref terra.Reference) PrimaryAttribute
 	return PrimaryAttributes{ref: ref}
 }
 
-func (p PrimaryAttributes) InternalTokens() hclwrite.Tokens {
+func (p PrimaryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -361,7 +361,7 @@ func (r RegionAttributes) InternalWithRef(ref terra.Reference) RegionAttributes 
 	return RegionAttributes{ref: ref}
 }
 
-func (r RegionAttributes) InternalTokens() hclwrite.Tokens {
+func (r RegionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -397,7 +397,7 @@ func (s SecondaryAttributes) InternalWithRef(ref terra.Reference) SecondaryAttri
 	return SecondaryAttributes{ref: ref}
 }
 
-func (s SecondaryAttributes) InternalTokens() hclwrite.Tokens {
+func (s SecondaryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 

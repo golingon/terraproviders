@@ -27,96 +27,96 @@ type EncryptionSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (es EncryptionSettingsAttributes) InternalRef() terra.Reference {
-	return es.ref
+func (es EncryptionSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return es.ref, nil
 }
 
 func (es EncryptionSettingsAttributes) InternalWithRef(ref terra.Reference) EncryptionSettingsAttributes {
 	return EncryptionSettingsAttributes{ref: ref}
 }
 
-func (es EncryptionSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (es EncryptionSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return es.ref.InternalTokens()
 }
 
 func (es EncryptionSettingsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(es.ref.Append("enabled"))
+	return terra.ReferenceAsBool(es.ref.Append("enabled"))
 }
 
 func (es EncryptionSettingsAttributes) DiskEncryptionKey() terra.ListValue[DiskEncryptionKeyAttributes] {
-	return terra.ReferenceList[DiskEncryptionKeyAttributes](es.ref.Append("disk_encryption_key"))
+	return terra.ReferenceAsList[DiskEncryptionKeyAttributes](es.ref.Append("disk_encryption_key"))
 }
 
 func (es EncryptionSettingsAttributes) KeyEncryptionKey() terra.ListValue[KeyEncryptionKeyAttributes] {
-	return terra.ReferenceList[KeyEncryptionKeyAttributes](es.ref.Append("key_encryption_key"))
+	return terra.ReferenceAsList[KeyEncryptionKeyAttributes](es.ref.Append("key_encryption_key"))
 }
 
 type DiskEncryptionKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (dek DiskEncryptionKeyAttributes) InternalRef() terra.Reference {
-	return dek.ref
+func (dek DiskEncryptionKeyAttributes) InternalRef() (terra.Reference, error) {
+	return dek.ref, nil
 }
 
 func (dek DiskEncryptionKeyAttributes) InternalWithRef(ref terra.Reference) DiskEncryptionKeyAttributes {
 	return DiskEncryptionKeyAttributes{ref: ref}
 }
 
-func (dek DiskEncryptionKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (dek DiskEncryptionKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dek.ref.InternalTokens()
 }
 
 func (dek DiskEncryptionKeyAttributes) SecretUrl() terra.StringValue {
-	return terra.ReferenceString(dek.ref.Append("secret_url"))
+	return terra.ReferenceAsString(dek.ref.Append("secret_url"))
 }
 
 func (dek DiskEncryptionKeyAttributes) SourceVaultId() terra.StringValue {
-	return terra.ReferenceString(dek.ref.Append("source_vault_id"))
+	return terra.ReferenceAsString(dek.ref.Append("source_vault_id"))
 }
 
 type KeyEncryptionKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (kek KeyEncryptionKeyAttributes) InternalRef() terra.Reference {
-	return kek.ref
+func (kek KeyEncryptionKeyAttributes) InternalRef() (terra.Reference, error) {
+	return kek.ref, nil
 }
 
 func (kek KeyEncryptionKeyAttributes) InternalWithRef(ref terra.Reference) KeyEncryptionKeyAttributes {
 	return KeyEncryptionKeyAttributes{ref: ref}
 }
 
-func (kek KeyEncryptionKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (kek KeyEncryptionKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kek.ref.InternalTokens()
 }
 
 func (kek KeyEncryptionKeyAttributes) KeyUrl() terra.StringValue {
-	return terra.ReferenceString(kek.ref.Append("key_url"))
+	return terra.ReferenceAsString(kek.ref.Append("key_url"))
 }
 
 func (kek KeyEncryptionKeyAttributes) SourceVaultId() terra.StringValue {
-	return terra.ReferenceString(kek.ref.Append("source_vault_id"))
+	return terra.ReferenceAsString(kek.ref.Append("source_vault_id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type EncryptionSettingsState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewHpcCache creates a new instance of [HpcCache].
 func NewHpcCache(name string, args HpcCacheArgs) *HpcCache {
 	return &HpcCache{
 		Args: args,
@@ -19,28 +20,51 @@ func NewHpcCache(name string, args HpcCacheArgs) *HpcCache {
 
 var _ terra.Resource = (*HpcCache)(nil)
 
+// HpcCache represents the Terraform resource azurerm_hpc_cache.
 type HpcCache struct {
-	Name  string
-	Args  HpcCacheArgs
-	state *hpcCacheState
+	Name      string
+	Args      HpcCacheArgs
+	state     *hpcCacheState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [HpcCache].
 func (hc *HpcCache) Type() string {
 	return "azurerm_hpc_cache"
 }
 
+// LocalName returns the local name for [HpcCache].
 func (hc *HpcCache) LocalName() string {
 	return hc.Name
 }
 
+// Configuration returns the configuration (args) for [HpcCache].
 func (hc *HpcCache) Configuration() interface{} {
 	return hc.Args
 }
 
+// DependOn is used for other resources to depend on [HpcCache].
+func (hc *HpcCache) DependOn() terra.Reference {
+	return terra.ReferenceResource(hc)
+}
+
+// Dependencies returns the list of resources [HpcCache] depends_on.
+func (hc *HpcCache) Dependencies() terra.Dependencies {
+	return hc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [HpcCache].
+func (hc *HpcCache) LifecycleManagement() *terra.Lifecycle {
+	return hc.Lifecycle
+}
+
+// Attributes returns the attributes for [HpcCache].
 func (hc *HpcCache) Attributes() hpcCacheAttributes {
 	return hpcCacheAttributes{ref: terra.ReferenceResource(hc)}
 }
 
+// ImportState imports the given attribute values into [HpcCache]'s state.
 func (hc *HpcCache) ImportState(av io.Reader) error {
 	hc.state = &hpcCacheState{}
 	if err := json.NewDecoder(av).Decode(hc.state); err != nil {
@@ -49,10 +73,12 @@ func (hc *HpcCache) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [HpcCache] has state.
 func (hc *HpcCache) State() (*hpcCacheState, bool) {
 	return hc.state, hc.state != nil
 }
 
+// StateMust returns the state for [HpcCache]. Panics if the state is nil.
 func (hc *HpcCache) StateMust() *hpcCacheState {
 	if hc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", hc.Type(), hc.LocalName()))
@@ -60,10 +86,7 @@ func (hc *HpcCache) StateMust() *hpcCacheState {
 	return hc.state
 }
 
-func (hc *HpcCache) DependOn() terra.Reference {
-	return terra.ReferenceResource(hc)
-}
-
+// HpcCacheArgs contains the configurations for azurerm_hpc_cache.
 type HpcCacheArgs struct {
 	// AutomaticallyRotateKeyToLatestEnabled: bool, optional
 	AutomaticallyRotateKeyToLatestEnabled terra.BoolValue `hcl:"automatically_rotate_key_to_latest_enabled,attr"`
@@ -103,91 +126,102 @@ type HpcCacheArgs struct {
 	Identity *hpccache.Identity `hcl:"identity,block"`
 	// Timeouts: optional
 	Timeouts *hpccache.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that HpcCache depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type hpcCacheAttributes struct {
 	ref terra.Reference
 }
 
+// AutomaticallyRotateKeyToLatestEnabled returns a reference to field automatically_rotate_key_to_latest_enabled of azurerm_hpc_cache.
 func (hc hpcCacheAttributes) AutomaticallyRotateKeyToLatestEnabled() terra.BoolValue {
-	return terra.ReferenceBool(hc.ref.Append("automatically_rotate_key_to_latest_enabled"))
+	return terra.ReferenceAsBool(hc.ref.Append("automatically_rotate_key_to_latest_enabled"))
 }
 
+// CacheSizeInGb returns a reference to field cache_size_in_gb of azurerm_hpc_cache.
 func (hc hpcCacheAttributes) CacheSizeInGb() terra.NumberValue {
-	return terra.ReferenceNumber(hc.ref.Append("cache_size_in_gb"))
+	return terra.ReferenceAsNumber(hc.ref.Append("cache_size_in_gb"))
 }
 
+// Id returns a reference to field id of azurerm_hpc_cache.
 func (hc hpcCacheAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("id"))
+	return terra.ReferenceAsString(hc.ref.Append("id"))
 }
 
+// KeyVaultKeyId returns a reference to field key_vault_key_id of azurerm_hpc_cache.
 func (hc hpcCacheAttributes) KeyVaultKeyId() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("key_vault_key_id"))
+	return terra.ReferenceAsString(hc.ref.Append("key_vault_key_id"))
 }
 
+// Location returns a reference to field location of azurerm_hpc_cache.
 func (hc hpcCacheAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("location"))
+	return terra.ReferenceAsString(hc.ref.Append("location"))
 }
 
+// MountAddresses returns a reference to field mount_addresses of azurerm_hpc_cache.
 func (hc hpcCacheAttributes) MountAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](hc.ref.Append("mount_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](hc.ref.Append("mount_addresses"))
 }
 
+// Mtu returns a reference to field mtu of azurerm_hpc_cache.
 func (hc hpcCacheAttributes) Mtu() terra.NumberValue {
-	return terra.ReferenceNumber(hc.ref.Append("mtu"))
+	return terra.ReferenceAsNumber(hc.ref.Append("mtu"))
 }
 
+// Name returns a reference to field name of azurerm_hpc_cache.
 func (hc hpcCacheAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("name"))
+	return terra.ReferenceAsString(hc.ref.Append("name"))
 }
 
+// NtpServer returns a reference to field ntp_server of azurerm_hpc_cache.
 func (hc hpcCacheAttributes) NtpServer() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("ntp_server"))
+	return terra.ReferenceAsString(hc.ref.Append("ntp_server"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_hpc_cache.
 func (hc hpcCacheAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(hc.ref.Append("resource_group_name"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_hpc_cache.
 func (hc hpcCacheAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("sku_name"))
+	return terra.ReferenceAsString(hc.ref.Append("sku_name"))
 }
 
+// SubnetId returns a reference to field subnet_id of azurerm_hpc_cache.
 func (hc hpcCacheAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(hc.ref.Append("subnet_id"))
 }
 
+// Tags returns a reference to field tags of azurerm_hpc_cache.
 func (hc hpcCacheAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](hc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](hc.ref.Append("tags"))
 }
 
 func (hc hpcCacheAttributes) DefaultAccessPolicy() terra.ListValue[hpccache.DefaultAccessPolicyAttributes] {
-	return terra.ReferenceList[hpccache.DefaultAccessPolicyAttributes](hc.ref.Append("default_access_policy"))
+	return terra.ReferenceAsList[hpccache.DefaultAccessPolicyAttributes](hc.ref.Append("default_access_policy"))
 }
 
 func (hc hpcCacheAttributes) DirectoryActiveDirectory() terra.ListValue[hpccache.DirectoryActiveDirectoryAttributes] {
-	return terra.ReferenceList[hpccache.DirectoryActiveDirectoryAttributes](hc.ref.Append("directory_active_directory"))
+	return terra.ReferenceAsList[hpccache.DirectoryActiveDirectoryAttributes](hc.ref.Append("directory_active_directory"))
 }
 
 func (hc hpcCacheAttributes) DirectoryFlatFile() terra.ListValue[hpccache.DirectoryFlatFileAttributes] {
-	return terra.ReferenceList[hpccache.DirectoryFlatFileAttributes](hc.ref.Append("directory_flat_file"))
+	return terra.ReferenceAsList[hpccache.DirectoryFlatFileAttributes](hc.ref.Append("directory_flat_file"))
 }
 
 func (hc hpcCacheAttributes) DirectoryLdap() terra.ListValue[hpccache.DirectoryLdapAttributes] {
-	return terra.ReferenceList[hpccache.DirectoryLdapAttributes](hc.ref.Append("directory_ldap"))
+	return terra.ReferenceAsList[hpccache.DirectoryLdapAttributes](hc.ref.Append("directory_ldap"))
 }
 
 func (hc hpcCacheAttributes) Dns() terra.ListValue[hpccache.DnsAttributes] {
-	return terra.ReferenceList[hpccache.DnsAttributes](hc.ref.Append("dns"))
+	return terra.ReferenceAsList[hpccache.DnsAttributes](hc.ref.Append("dns"))
 }
 
 func (hc hpcCacheAttributes) Identity() terra.ListValue[hpccache.IdentityAttributes] {
-	return terra.ReferenceList[hpccache.IdentityAttributes](hc.ref.Append("identity"))
+	return terra.ReferenceAsList[hpccache.IdentityAttributes](hc.ref.Append("identity"))
 }
 
 func (hc hpcCacheAttributes) Timeouts() hpccache.TimeoutsAttributes {
-	return terra.ReferenceSingle[hpccache.TimeoutsAttributes](hc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[hpccache.TimeoutsAttributes](hc.ref.Append("timeouts"))
 }
 
 type hpcCacheState struct {

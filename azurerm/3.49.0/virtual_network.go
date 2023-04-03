@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewVirtualNetwork creates a new instance of [VirtualNetwork].
 func NewVirtualNetwork(name string, args VirtualNetworkArgs) *VirtualNetwork {
 	return &VirtualNetwork{
 		Args: args,
@@ -19,28 +20,51 @@ func NewVirtualNetwork(name string, args VirtualNetworkArgs) *VirtualNetwork {
 
 var _ terra.Resource = (*VirtualNetwork)(nil)
 
+// VirtualNetwork represents the Terraform resource azurerm_virtual_network.
 type VirtualNetwork struct {
-	Name  string
-	Args  VirtualNetworkArgs
-	state *virtualNetworkState
+	Name      string
+	Args      VirtualNetworkArgs
+	state     *virtualNetworkState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VirtualNetwork].
 func (vn *VirtualNetwork) Type() string {
 	return "azurerm_virtual_network"
 }
 
+// LocalName returns the local name for [VirtualNetwork].
 func (vn *VirtualNetwork) LocalName() string {
 	return vn.Name
 }
 
+// Configuration returns the configuration (args) for [VirtualNetwork].
 func (vn *VirtualNetwork) Configuration() interface{} {
 	return vn.Args
 }
 
+// DependOn is used for other resources to depend on [VirtualNetwork].
+func (vn *VirtualNetwork) DependOn() terra.Reference {
+	return terra.ReferenceResource(vn)
+}
+
+// Dependencies returns the list of resources [VirtualNetwork] depends_on.
+func (vn *VirtualNetwork) Dependencies() terra.Dependencies {
+	return vn.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VirtualNetwork].
+func (vn *VirtualNetwork) LifecycleManagement() *terra.Lifecycle {
+	return vn.Lifecycle
+}
+
+// Attributes returns the attributes for [VirtualNetwork].
 func (vn *VirtualNetwork) Attributes() virtualNetworkAttributes {
 	return virtualNetworkAttributes{ref: terra.ReferenceResource(vn)}
 }
 
+// ImportState imports the given attribute values into [VirtualNetwork]'s state.
 func (vn *VirtualNetwork) ImportState(av io.Reader) error {
 	vn.state = &virtualNetworkState{}
 	if err := json.NewDecoder(av).Decode(vn.state); err != nil {
@@ -49,10 +73,12 @@ func (vn *VirtualNetwork) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [VirtualNetwork] has state.
 func (vn *VirtualNetwork) State() (*virtualNetworkState, bool) {
 	return vn.state, vn.state != nil
 }
 
+// StateMust returns the state for [VirtualNetwork]. Panics if the state is nil.
 func (vn *VirtualNetwork) StateMust() *virtualNetworkState {
 	if vn.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", vn.Type(), vn.LocalName()))
@@ -60,10 +86,7 @@ func (vn *VirtualNetwork) StateMust() *virtualNetworkState {
 	return vn.state
 }
 
-func (vn *VirtualNetwork) DependOn() terra.Reference {
-	return terra.ReferenceResource(vn)
-}
-
+// VirtualNetworkArgs contains the configurations for azurerm_virtual_network.
 type VirtualNetworkArgs struct {
 	// AddressSpace: list of string, required
 	AddressSpace terra.ListValue[terra.StringValue] `hcl:"address_space,attr" validate:"required"`
@@ -91,67 +114,76 @@ type VirtualNetworkArgs struct {
 	DdosProtectionPlan *virtualnetwork.DdosProtectionPlan `hcl:"ddos_protection_plan,block"`
 	// Timeouts: optional
 	Timeouts *virtualnetwork.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that VirtualNetwork depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type virtualNetworkAttributes struct {
 	ref terra.Reference
 }
 
+// AddressSpace returns a reference to field address_space of azurerm_virtual_network.
 func (vn virtualNetworkAttributes) AddressSpace() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](vn.ref.Append("address_space"))
+	return terra.ReferenceAsList[terra.StringValue](vn.ref.Append("address_space"))
 }
 
+// BgpCommunity returns a reference to field bgp_community of azurerm_virtual_network.
 func (vn virtualNetworkAttributes) BgpCommunity() terra.StringValue {
-	return terra.ReferenceString(vn.ref.Append("bgp_community"))
+	return terra.ReferenceAsString(vn.ref.Append("bgp_community"))
 }
 
+// DnsServers returns a reference to field dns_servers of azurerm_virtual_network.
 func (vn virtualNetworkAttributes) DnsServers() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](vn.ref.Append("dns_servers"))
+	return terra.ReferenceAsList[terra.StringValue](vn.ref.Append("dns_servers"))
 }
 
+// EdgeZone returns a reference to field edge_zone of azurerm_virtual_network.
 func (vn virtualNetworkAttributes) EdgeZone() terra.StringValue {
-	return terra.ReferenceString(vn.ref.Append("edge_zone"))
+	return terra.ReferenceAsString(vn.ref.Append("edge_zone"))
 }
 
+// FlowTimeoutInMinutes returns a reference to field flow_timeout_in_minutes of azurerm_virtual_network.
 func (vn virtualNetworkAttributes) FlowTimeoutInMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(vn.ref.Append("flow_timeout_in_minutes"))
+	return terra.ReferenceAsNumber(vn.ref.Append("flow_timeout_in_minutes"))
 }
 
+// Guid returns a reference to field guid of azurerm_virtual_network.
 func (vn virtualNetworkAttributes) Guid() terra.StringValue {
-	return terra.ReferenceString(vn.ref.Append("guid"))
+	return terra.ReferenceAsString(vn.ref.Append("guid"))
 }
 
+// Id returns a reference to field id of azurerm_virtual_network.
 func (vn virtualNetworkAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vn.ref.Append("id"))
+	return terra.ReferenceAsString(vn.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_virtual_network.
 func (vn virtualNetworkAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(vn.ref.Append("location"))
+	return terra.ReferenceAsString(vn.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_virtual_network.
 func (vn virtualNetworkAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(vn.ref.Append("name"))
+	return terra.ReferenceAsString(vn.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_virtual_network.
 func (vn virtualNetworkAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(vn.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(vn.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_virtual_network.
 func (vn virtualNetworkAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](vn.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](vn.ref.Append("tags"))
 }
 
 func (vn virtualNetworkAttributes) Subnet() terra.SetValue[virtualnetwork.SubnetAttributes] {
-	return terra.ReferenceSet[virtualnetwork.SubnetAttributes](vn.ref.Append("subnet"))
+	return terra.ReferenceAsSet[virtualnetwork.SubnetAttributes](vn.ref.Append("subnet"))
 }
 
 func (vn virtualNetworkAttributes) DdosProtectionPlan() terra.ListValue[virtualnetwork.DdosProtectionPlanAttributes] {
-	return terra.ReferenceList[virtualnetwork.DdosProtectionPlanAttributes](vn.ref.Append("ddos_protection_plan"))
+	return terra.ReferenceAsList[virtualnetwork.DdosProtectionPlanAttributes](vn.ref.Append("ddos_protection_plan"))
 }
 
 func (vn virtualNetworkAttributes) Timeouts() virtualnetwork.TimeoutsAttributes {
-	return terra.ReferenceSingle[virtualnetwork.TimeoutsAttributes](vn.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[virtualnetwork.TimeoutsAttributes](vn.ref.Append("timeouts"))
 }
 
 type virtualNetworkState struct {

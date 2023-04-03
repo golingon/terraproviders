@@ -72,192 +72,192 @@ type EnabledLogAttributes struct {
 	ref terra.Reference
 }
 
-func (el EnabledLogAttributes) InternalRef() terra.Reference {
-	return el.ref
+func (el EnabledLogAttributes) InternalRef() (terra.Reference, error) {
+	return el.ref, nil
 }
 
 func (el EnabledLogAttributes) InternalWithRef(ref terra.Reference) EnabledLogAttributes {
 	return EnabledLogAttributes{ref: ref}
 }
 
-func (el EnabledLogAttributes) InternalTokens() hclwrite.Tokens {
+func (el EnabledLogAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return el.ref.InternalTokens()
 }
 
 func (el EnabledLogAttributes) Category() terra.StringValue {
-	return terra.ReferenceString(el.ref.Append("category"))
+	return terra.ReferenceAsString(el.ref.Append("category"))
 }
 
 func (el EnabledLogAttributes) CategoryGroup() terra.StringValue {
-	return terra.ReferenceString(el.ref.Append("category_group"))
+	return terra.ReferenceAsString(el.ref.Append("category_group"))
 }
 
 func (el EnabledLogAttributes) RetentionPolicy() terra.ListValue[EnabledLogRetentionPolicyAttributes] {
-	return terra.ReferenceList[EnabledLogRetentionPolicyAttributes](el.ref.Append("retention_policy"))
+	return terra.ReferenceAsList[EnabledLogRetentionPolicyAttributes](el.ref.Append("retention_policy"))
 }
 
 type EnabledLogRetentionPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (rp EnabledLogRetentionPolicyAttributes) InternalRef() terra.Reference {
-	return rp.ref
+func (rp EnabledLogRetentionPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return rp.ref, nil
 }
 
 func (rp EnabledLogRetentionPolicyAttributes) InternalWithRef(ref terra.Reference) EnabledLogRetentionPolicyAttributes {
 	return EnabledLogRetentionPolicyAttributes{ref: ref}
 }
 
-func (rp EnabledLogRetentionPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (rp EnabledLogRetentionPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rp.ref.InternalTokens()
 }
 
 func (rp EnabledLogRetentionPolicyAttributes) Days() terra.NumberValue {
-	return terra.ReferenceNumber(rp.ref.Append("days"))
+	return terra.ReferenceAsNumber(rp.ref.Append("days"))
 }
 
 func (rp EnabledLogRetentionPolicyAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(rp.ref.Append("enabled"))
+	return terra.ReferenceAsBool(rp.ref.Append("enabled"))
 }
 
 type LogAttributes struct {
 	ref terra.Reference
 }
 
-func (l LogAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l LogAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l LogAttributes) InternalWithRef(ref terra.Reference) LogAttributes {
 	return LogAttributes{ref: ref}
 }
 
-func (l LogAttributes) InternalTokens() hclwrite.Tokens {
+func (l LogAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 
 func (l LogAttributes) Category() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("category"))
+	return terra.ReferenceAsString(l.ref.Append("category"))
 }
 
 func (l LogAttributes) CategoryGroup() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("category_group"))
+	return terra.ReferenceAsString(l.ref.Append("category_group"))
 }
 
 func (l LogAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(l.ref.Append("enabled"))
+	return terra.ReferenceAsBool(l.ref.Append("enabled"))
 }
 
 func (l LogAttributes) RetentionPolicy() terra.ListValue[LogRetentionPolicyAttributes] {
-	return terra.ReferenceList[LogRetentionPolicyAttributes](l.ref.Append("retention_policy"))
+	return terra.ReferenceAsList[LogRetentionPolicyAttributes](l.ref.Append("retention_policy"))
 }
 
 type LogRetentionPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (rp LogRetentionPolicyAttributes) InternalRef() terra.Reference {
-	return rp.ref
+func (rp LogRetentionPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return rp.ref, nil
 }
 
 func (rp LogRetentionPolicyAttributes) InternalWithRef(ref terra.Reference) LogRetentionPolicyAttributes {
 	return LogRetentionPolicyAttributes{ref: ref}
 }
 
-func (rp LogRetentionPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (rp LogRetentionPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rp.ref.InternalTokens()
 }
 
 func (rp LogRetentionPolicyAttributes) Days() terra.NumberValue {
-	return terra.ReferenceNumber(rp.ref.Append("days"))
+	return terra.ReferenceAsNumber(rp.ref.Append("days"))
 }
 
 func (rp LogRetentionPolicyAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(rp.ref.Append("enabled"))
+	return terra.ReferenceAsBool(rp.ref.Append("enabled"))
 }
 
 type MetricAttributes struct {
 	ref terra.Reference
 }
 
-func (m MetricAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MetricAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MetricAttributes) InternalWithRef(ref terra.Reference) MetricAttributes {
 	return MetricAttributes{ref: ref}
 }
 
-func (m MetricAttributes) InternalTokens() hclwrite.Tokens {
+func (m MetricAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
 func (m MetricAttributes) Category() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("category"))
+	return terra.ReferenceAsString(m.ref.Append("category"))
 }
 
 func (m MetricAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(m.ref.Append("enabled"))
+	return terra.ReferenceAsBool(m.ref.Append("enabled"))
 }
 
 func (m MetricAttributes) RetentionPolicy() terra.ListValue[MetricRetentionPolicyAttributes] {
-	return terra.ReferenceList[MetricRetentionPolicyAttributes](m.ref.Append("retention_policy"))
+	return terra.ReferenceAsList[MetricRetentionPolicyAttributes](m.ref.Append("retention_policy"))
 }
 
 type MetricRetentionPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (rp MetricRetentionPolicyAttributes) InternalRef() terra.Reference {
-	return rp.ref
+func (rp MetricRetentionPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return rp.ref, nil
 }
 
 func (rp MetricRetentionPolicyAttributes) InternalWithRef(ref terra.Reference) MetricRetentionPolicyAttributes {
 	return MetricRetentionPolicyAttributes{ref: ref}
 }
 
-func (rp MetricRetentionPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (rp MetricRetentionPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rp.ref.InternalTokens()
 }
 
 func (rp MetricRetentionPolicyAttributes) Days() terra.NumberValue {
-	return terra.ReferenceNumber(rp.ref.Append("days"))
+	return terra.ReferenceAsNumber(rp.ref.Append("days"))
 }
 
 func (rp MetricRetentionPolicyAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(rp.ref.Append("enabled"))
+	return terra.ReferenceAsBool(rp.ref.Append("enabled"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type EnabledLogState struct {

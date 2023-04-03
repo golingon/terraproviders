@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLoggingFolderSink creates a new instance of [LoggingFolderSink].
 func NewLoggingFolderSink(name string, args LoggingFolderSinkArgs) *LoggingFolderSink {
 	return &LoggingFolderSink{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLoggingFolderSink(name string, args LoggingFolderSinkArgs) *LoggingFolde
 
 var _ terra.Resource = (*LoggingFolderSink)(nil)
 
+// LoggingFolderSink represents the Terraform resource google_logging_folder_sink.
 type LoggingFolderSink struct {
-	Name  string
-	Args  LoggingFolderSinkArgs
-	state *loggingFolderSinkState
+	Name      string
+	Args      LoggingFolderSinkArgs
+	state     *loggingFolderSinkState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LoggingFolderSink].
 func (lfs *LoggingFolderSink) Type() string {
 	return "google_logging_folder_sink"
 }
 
+// LocalName returns the local name for [LoggingFolderSink].
 func (lfs *LoggingFolderSink) LocalName() string {
 	return lfs.Name
 }
 
+// Configuration returns the configuration (args) for [LoggingFolderSink].
 func (lfs *LoggingFolderSink) Configuration() interface{} {
 	return lfs.Args
 }
 
+// DependOn is used for other resources to depend on [LoggingFolderSink].
+func (lfs *LoggingFolderSink) DependOn() terra.Reference {
+	return terra.ReferenceResource(lfs)
+}
+
+// Dependencies returns the list of resources [LoggingFolderSink] depends_on.
+func (lfs *LoggingFolderSink) Dependencies() terra.Dependencies {
+	return lfs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LoggingFolderSink].
+func (lfs *LoggingFolderSink) LifecycleManagement() *terra.Lifecycle {
+	return lfs.Lifecycle
+}
+
+// Attributes returns the attributes for [LoggingFolderSink].
 func (lfs *LoggingFolderSink) Attributes() loggingFolderSinkAttributes {
 	return loggingFolderSinkAttributes{ref: terra.ReferenceResource(lfs)}
 }
 
+// ImportState imports the given attribute values into [LoggingFolderSink]'s state.
 func (lfs *LoggingFolderSink) ImportState(av io.Reader) error {
 	lfs.state = &loggingFolderSinkState{}
 	if err := json.NewDecoder(av).Decode(lfs.state); err != nil {
@@ -49,10 +73,12 @@ func (lfs *LoggingFolderSink) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LoggingFolderSink] has state.
 func (lfs *LoggingFolderSink) State() (*loggingFolderSinkState, bool) {
 	return lfs.state, lfs.state != nil
 }
 
+// StateMust returns the state for [LoggingFolderSink]. Panics if the state is nil.
 func (lfs *LoggingFolderSink) StateMust() *loggingFolderSinkState {
 	if lfs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lfs.Type(), lfs.LocalName()))
@@ -60,10 +86,7 @@ func (lfs *LoggingFolderSink) StateMust() *loggingFolderSinkState {
 	return lfs.state
 }
 
-func (lfs *LoggingFolderSink) DependOn() terra.Reference {
-	return terra.ReferenceResource(lfs)
-}
-
+// LoggingFolderSinkArgs contains the configurations for google_logging_folder_sink.
 type LoggingFolderSinkArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -85,55 +108,62 @@ type LoggingFolderSinkArgs struct {
 	BigqueryOptions *loggingfoldersink.BigqueryOptions `hcl:"bigquery_options,block"`
 	// Exclusions: min=0
 	Exclusions []loggingfoldersink.Exclusions `hcl:"exclusions,block" validate:"min=0"`
-	// DependsOn contains resources that LoggingFolderSink depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type loggingFolderSinkAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of google_logging_folder_sink.
 func (lfs loggingFolderSinkAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(lfs.ref.Append("description"))
+	return terra.ReferenceAsString(lfs.ref.Append("description"))
 }
 
+// Destination returns a reference to field destination of google_logging_folder_sink.
 func (lfs loggingFolderSinkAttributes) Destination() terra.StringValue {
-	return terra.ReferenceString(lfs.ref.Append("destination"))
+	return terra.ReferenceAsString(lfs.ref.Append("destination"))
 }
 
+// Disabled returns a reference to field disabled of google_logging_folder_sink.
 func (lfs loggingFolderSinkAttributes) Disabled() terra.BoolValue {
-	return terra.ReferenceBool(lfs.ref.Append("disabled"))
+	return terra.ReferenceAsBool(lfs.ref.Append("disabled"))
 }
 
+// Filter returns a reference to field filter of google_logging_folder_sink.
 func (lfs loggingFolderSinkAttributes) Filter() terra.StringValue {
-	return terra.ReferenceString(lfs.ref.Append("filter"))
+	return terra.ReferenceAsString(lfs.ref.Append("filter"))
 }
 
+// Folder returns a reference to field folder of google_logging_folder_sink.
 func (lfs loggingFolderSinkAttributes) Folder() terra.StringValue {
-	return terra.ReferenceString(lfs.ref.Append("folder"))
+	return terra.ReferenceAsString(lfs.ref.Append("folder"))
 }
 
+// Id returns a reference to field id of google_logging_folder_sink.
 func (lfs loggingFolderSinkAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lfs.ref.Append("id"))
+	return terra.ReferenceAsString(lfs.ref.Append("id"))
 }
 
+// IncludeChildren returns a reference to field include_children of google_logging_folder_sink.
 func (lfs loggingFolderSinkAttributes) IncludeChildren() terra.BoolValue {
-	return terra.ReferenceBool(lfs.ref.Append("include_children"))
+	return terra.ReferenceAsBool(lfs.ref.Append("include_children"))
 }
 
+// Name returns a reference to field name of google_logging_folder_sink.
 func (lfs loggingFolderSinkAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lfs.ref.Append("name"))
+	return terra.ReferenceAsString(lfs.ref.Append("name"))
 }
 
+// WriterIdentity returns a reference to field writer_identity of google_logging_folder_sink.
 func (lfs loggingFolderSinkAttributes) WriterIdentity() terra.StringValue {
-	return terra.ReferenceString(lfs.ref.Append("writer_identity"))
+	return terra.ReferenceAsString(lfs.ref.Append("writer_identity"))
 }
 
 func (lfs loggingFolderSinkAttributes) BigqueryOptions() terra.ListValue[loggingfoldersink.BigqueryOptionsAttributes] {
-	return terra.ReferenceList[loggingfoldersink.BigqueryOptionsAttributes](lfs.ref.Append("bigquery_options"))
+	return terra.ReferenceAsList[loggingfoldersink.BigqueryOptionsAttributes](lfs.ref.Append("bigquery_options"))
 }
 
 func (lfs loggingFolderSinkAttributes) Exclusions() terra.ListValue[loggingfoldersink.ExclusionsAttributes] {
-	return terra.ReferenceList[loggingfoldersink.ExclusionsAttributes](lfs.ref.Append("exclusions"))
+	return terra.ReferenceAsList[loggingfoldersink.ExclusionsAttributes](lfs.ref.Append("exclusions"))
 }
 
 type loggingFolderSinkState struct {

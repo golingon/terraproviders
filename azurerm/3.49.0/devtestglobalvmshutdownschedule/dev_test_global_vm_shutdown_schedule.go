@@ -33,64 +33,64 @@ type NotificationSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ns NotificationSettingsAttributes) InternalRef() terra.Reference {
-	return ns.ref
+func (ns NotificationSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ns.ref, nil
 }
 
 func (ns NotificationSettingsAttributes) InternalWithRef(ref terra.Reference) NotificationSettingsAttributes {
 	return NotificationSettingsAttributes{ref: ref}
 }
 
-func (ns NotificationSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ns NotificationSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ns.ref.InternalTokens()
 }
 
 func (ns NotificationSettingsAttributes) Email() terra.StringValue {
-	return terra.ReferenceString(ns.ref.Append("email"))
+	return terra.ReferenceAsString(ns.ref.Append("email"))
 }
 
 func (ns NotificationSettingsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(ns.ref.Append("enabled"))
+	return terra.ReferenceAsBool(ns.ref.Append("enabled"))
 }
 
 func (ns NotificationSettingsAttributes) TimeInMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(ns.ref.Append("time_in_minutes"))
+	return terra.ReferenceAsNumber(ns.ref.Append("time_in_minutes"))
 }
 
 func (ns NotificationSettingsAttributes) WebhookUrl() terra.StringValue {
-	return terra.ReferenceString(ns.ref.Append("webhook_url"))
+	return terra.ReferenceAsString(ns.ref.Append("webhook_url"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type NotificationSettingsState struct {

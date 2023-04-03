@@ -51,124 +51,124 @@ type IpFilterRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (ifr IpFilterRuleAttributes) InternalRef() terra.Reference {
-	return ifr.ref
+func (ifr IpFilterRuleAttributes) InternalRef() (terra.Reference, error) {
+	return ifr.ref, nil
 }
 
 func (ifr IpFilterRuleAttributes) InternalWithRef(ref terra.Reference) IpFilterRuleAttributes {
 	return IpFilterRuleAttributes{ref: ref}
 }
 
-func (ifr IpFilterRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (ifr IpFilterRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ifr.ref.InternalTokens()
 }
 
 func (ifr IpFilterRuleAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(ifr.ref.Append("action"))
+	return terra.ReferenceAsString(ifr.ref.Append("action"))
 }
 
 func (ifr IpFilterRuleAttributes) IpMask() terra.StringValue {
-	return terra.ReferenceString(ifr.ref.Append("ip_mask"))
+	return terra.ReferenceAsString(ifr.ref.Append("ip_mask"))
 }
 
 func (ifr IpFilterRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ifr.ref.Append("name"))
+	return terra.ReferenceAsString(ifr.ref.Append("name"))
 }
 
 func (ifr IpFilterRuleAttributes) Target() terra.StringValue {
-	return terra.ReferenceString(ifr.ref.Append("target"))
+	return terra.ReferenceAsString(ifr.ref.Append("target"))
 }
 
 type LinkedHubAttributes struct {
 	ref terra.Reference
 }
 
-func (lh LinkedHubAttributes) InternalRef() terra.Reference {
-	return lh.ref
+func (lh LinkedHubAttributes) InternalRef() (terra.Reference, error) {
+	return lh.ref, nil
 }
 
 func (lh LinkedHubAttributes) InternalWithRef(ref terra.Reference) LinkedHubAttributes {
 	return LinkedHubAttributes{ref: ref}
 }
 
-func (lh LinkedHubAttributes) InternalTokens() hclwrite.Tokens {
+func (lh LinkedHubAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lh.ref.InternalTokens()
 }
 
 func (lh LinkedHubAttributes) AllocationWeight() terra.NumberValue {
-	return terra.ReferenceNumber(lh.ref.Append("allocation_weight"))
+	return terra.ReferenceAsNumber(lh.ref.Append("allocation_weight"))
 }
 
 func (lh LinkedHubAttributes) ApplyAllocationPolicy() terra.BoolValue {
-	return terra.ReferenceBool(lh.ref.Append("apply_allocation_policy"))
+	return terra.ReferenceAsBool(lh.ref.Append("apply_allocation_policy"))
 }
 
 func (lh LinkedHubAttributes) ConnectionString() terra.StringValue {
-	return terra.ReferenceString(lh.ref.Append("connection_string"))
+	return terra.ReferenceAsString(lh.ref.Append("connection_string"))
 }
 
 func (lh LinkedHubAttributes) Hostname() terra.StringValue {
-	return terra.ReferenceString(lh.ref.Append("hostname"))
+	return terra.ReferenceAsString(lh.ref.Append("hostname"))
 }
 
 func (lh LinkedHubAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(lh.ref.Append("location"))
+	return terra.ReferenceAsString(lh.ref.Append("location"))
 }
 
 type SkuAttributes struct {
 	ref terra.Reference
 }
 
-func (s SkuAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SkuAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SkuAttributes) InternalWithRef(ref terra.Reference) SkuAttributes {
 	return SkuAttributes{ref: ref}
 }
 
-func (s SkuAttributes) InternalTokens() hclwrite.Tokens {
+func (s SkuAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SkuAttributes) Capacity() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("capacity"))
+	return terra.ReferenceAsNumber(s.ref.Append("capacity"))
 }
 
 func (s SkuAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type IpFilterRuleState struct {

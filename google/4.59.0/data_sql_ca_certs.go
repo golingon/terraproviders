@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataSqlCaCerts creates a new instance of [DataSqlCaCerts].
 func NewDataSqlCaCerts(name string, args DataSqlCaCertsArgs) *DataSqlCaCerts {
 	return &DataSqlCaCerts{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataSqlCaCerts(name string, args DataSqlCaCertsArgs) *DataSqlCaCerts {
 
 var _ terra.DataResource = (*DataSqlCaCerts)(nil)
 
+// DataSqlCaCerts represents the Terraform data resource google_sql_ca_certs.
 type DataSqlCaCerts struct {
 	Name string
 	Args DataSqlCaCertsArgs
 }
 
+// DataSource returns the Terraform object type for [DataSqlCaCerts].
 func (scc *DataSqlCaCerts) DataSource() string {
 	return "google_sql_ca_certs"
 }
 
+// LocalName returns the local name for [DataSqlCaCerts].
 func (scc *DataSqlCaCerts) LocalName() string {
 	return scc.Name
 }
 
+// Configuration returns the configuration (args) for [DataSqlCaCerts].
 func (scc *DataSqlCaCerts) Configuration() interface{} {
 	return scc.Args
 }
 
+// Attributes returns the attributes for [DataSqlCaCerts].
 func (scc *DataSqlCaCerts) Attributes() dataSqlCaCertsAttributes {
 	return dataSqlCaCertsAttributes{ref: terra.ReferenceDataResource(scc)}
 }
 
+// DataSqlCaCertsArgs contains the configurations for google_sql_ca_certs.
 type DataSqlCaCertsArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,22 +58,26 @@ type dataSqlCaCertsAttributes struct {
 	ref terra.Reference
 }
 
+// ActiveVersion returns a reference to field active_version of google_sql_ca_certs.
 func (scc dataSqlCaCertsAttributes) ActiveVersion() terra.StringValue {
-	return terra.ReferenceString(scc.ref.Append("active_version"))
+	return terra.ReferenceAsString(scc.ref.Append("active_version"))
 }
 
+// Id returns a reference to field id of google_sql_ca_certs.
 func (scc dataSqlCaCertsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(scc.ref.Append("id"))
+	return terra.ReferenceAsString(scc.ref.Append("id"))
 }
 
+// Instance returns a reference to field instance of google_sql_ca_certs.
 func (scc dataSqlCaCertsAttributes) Instance() terra.StringValue {
-	return terra.ReferenceString(scc.ref.Append("instance"))
+	return terra.ReferenceAsString(scc.ref.Append("instance"))
 }
 
+// Project returns a reference to field project of google_sql_ca_certs.
 func (scc dataSqlCaCertsAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(scc.ref.Append("project"))
+	return terra.ReferenceAsString(scc.ref.Append("project"))
 }
 
 func (scc dataSqlCaCertsAttributes) Certs() terra.ListValue[datasqlcacerts.CertsAttributes] {
-	return terra.ReferenceList[datasqlcacerts.CertsAttributes](scc.ref.Append("certs"))
+	return terra.ReferenceAsList[datasqlcacerts.CertsAttributes](scc.ref.Append("certs"))
 }

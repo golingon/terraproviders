@@ -26,7 +26,7 @@ func (s ScopeAttributes) InternalWithRef(ref terra.Reference) ScopeAttributes {
 	return ScopeAttributes{ref: ref}
 }
 
-func (s ScopeAttributes) InternalTokens() hclwrite.Tokens {
+func (s ScopeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewHpcCacheBlobTarget creates a new instance of [HpcCacheBlobTarget].
 func NewHpcCacheBlobTarget(name string, args HpcCacheBlobTargetArgs) *HpcCacheBlobTarget {
 	return &HpcCacheBlobTarget{
 		Args: args,
@@ -19,28 +20,51 @@ func NewHpcCacheBlobTarget(name string, args HpcCacheBlobTargetArgs) *HpcCacheBl
 
 var _ terra.Resource = (*HpcCacheBlobTarget)(nil)
 
+// HpcCacheBlobTarget represents the Terraform resource azurerm_hpc_cache_blob_target.
 type HpcCacheBlobTarget struct {
-	Name  string
-	Args  HpcCacheBlobTargetArgs
-	state *hpcCacheBlobTargetState
+	Name      string
+	Args      HpcCacheBlobTargetArgs
+	state     *hpcCacheBlobTargetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [HpcCacheBlobTarget].
 func (hcbt *HpcCacheBlobTarget) Type() string {
 	return "azurerm_hpc_cache_blob_target"
 }
 
+// LocalName returns the local name for [HpcCacheBlobTarget].
 func (hcbt *HpcCacheBlobTarget) LocalName() string {
 	return hcbt.Name
 }
 
+// Configuration returns the configuration (args) for [HpcCacheBlobTarget].
 func (hcbt *HpcCacheBlobTarget) Configuration() interface{} {
 	return hcbt.Args
 }
 
+// DependOn is used for other resources to depend on [HpcCacheBlobTarget].
+func (hcbt *HpcCacheBlobTarget) DependOn() terra.Reference {
+	return terra.ReferenceResource(hcbt)
+}
+
+// Dependencies returns the list of resources [HpcCacheBlobTarget] depends_on.
+func (hcbt *HpcCacheBlobTarget) Dependencies() terra.Dependencies {
+	return hcbt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [HpcCacheBlobTarget].
+func (hcbt *HpcCacheBlobTarget) LifecycleManagement() *terra.Lifecycle {
+	return hcbt.Lifecycle
+}
+
+// Attributes returns the attributes for [HpcCacheBlobTarget].
 func (hcbt *HpcCacheBlobTarget) Attributes() hpcCacheBlobTargetAttributes {
 	return hpcCacheBlobTargetAttributes{ref: terra.ReferenceResource(hcbt)}
 }
 
+// ImportState imports the given attribute values into [HpcCacheBlobTarget]'s state.
 func (hcbt *HpcCacheBlobTarget) ImportState(av io.Reader) error {
 	hcbt.state = &hpcCacheBlobTargetState{}
 	if err := json.NewDecoder(av).Decode(hcbt.state); err != nil {
@@ -49,10 +73,12 @@ func (hcbt *HpcCacheBlobTarget) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [HpcCacheBlobTarget] has state.
 func (hcbt *HpcCacheBlobTarget) State() (*hpcCacheBlobTargetState, bool) {
 	return hcbt.state, hcbt.state != nil
 }
 
+// StateMust returns the state for [HpcCacheBlobTarget]. Panics if the state is nil.
 func (hcbt *HpcCacheBlobTarget) StateMust() *hpcCacheBlobTargetState {
 	if hcbt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", hcbt.Type(), hcbt.LocalName()))
@@ -60,10 +86,7 @@ func (hcbt *HpcCacheBlobTarget) StateMust() *hpcCacheBlobTargetState {
 	return hcbt.state
 }
 
-func (hcbt *HpcCacheBlobTarget) DependOn() terra.Reference {
-	return terra.ReferenceResource(hcbt)
-}
-
+// HpcCacheBlobTargetArgs contains the configurations for azurerm_hpc_cache_blob_target.
 type HpcCacheBlobTargetArgs struct {
 	// AccessPolicyName: string, optional
 	AccessPolicyName terra.StringValue `hcl:"access_policy_name,attr"`
@@ -81,43 +104,48 @@ type HpcCacheBlobTargetArgs struct {
 	StorageContainerId terra.StringValue `hcl:"storage_container_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *hpccacheblobtarget.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that HpcCacheBlobTarget depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type hpcCacheBlobTargetAttributes struct {
 	ref terra.Reference
 }
 
+// AccessPolicyName returns a reference to field access_policy_name of azurerm_hpc_cache_blob_target.
 func (hcbt hpcCacheBlobTargetAttributes) AccessPolicyName() terra.StringValue {
-	return terra.ReferenceString(hcbt.ref.Append("access_policy_name"))
+	return terra.ReferenceAsString(hcbt.ref.Append("access_policy_name"))
 }
 
+// CacheName returns a reference to field cache_name of azurerm_hpc_cache_blob_target.
 func (hcbt hpcCacheBlobTargetAttributes) CacheName() terra.StringValue {
-	return terra.ReferenceString(hcbt.ref.Append("cache_name"))
+	return terra.ReferenceAsString(hcbt.ref.Append("cache_name"))
 }
 
+// Id returns a reference to field id of azurerm_hpc_cache_blob_target.
 func (hcbt hpcCacheBlobTargetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(hcbt.ref.Append("id"))
+	return terra.ReferenceAsString(hcbt.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_hpc_cache_blob_target.
 func (hcbt hpcCacheBlobTargetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(hcbt.ref.Append("name"))
+	return terra.ReferenceAsString(hcbt.ref.Append("name"))
 }
 
+// NamespacePath returns a reference to field namespace_path of azurerm_hpc_cache_blob_target.
 func (hcbt hpcCacheBlobTargetAttributes) NamespacePath() terra.StringValue {
-	return terra.ReferenceString(hcbt.ref.Append("namespace_path"))
+	return terra.ReferenceAsString(hcbt.ref.Append("namespace_path"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_hpc_cache_blob_target.
 func (hcbt hpcCacheBlobTargetAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(hcbt.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(hcbt.ref.Append("resource_group_name"))
 }
 
+// StorageContainerId returns a reference to field storage_container_id of azurerm_hpc_cache_blob_target.
 func (hcbt hpcCacheBlobTargetAttributes) StorageContainerId() terra.StringValue {
-	return terra.ReferenceString(hcbt.ref.Append("storage_container_id"))
+	return terra.ReferenceAsString(hcbt.ref.Append("storage_container_id"))
 }
 
 func (hcbt hpcCacheBlobTargetAttributes) Timeouts() hpccacheblobtarget.TimeoutsAttributes {
-	return terra.ReferenceSingle[hpccacheblobtarget.TimeoutsAttributes](hcbt.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[hpccacheblobtarget.TimeoutsAttributes](hcbt.ref.Append("timeouts"))
 }
 
 type hpcCacheBlobTargetState struct {

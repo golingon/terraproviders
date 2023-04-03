@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFactoryIntegrationRuntimeSelfHosted creates a new instance of [DataFactoryIntegrationRuntimeSelfHosted].
 func NewDataFactoryIntegrationRuntimeSelfHosted(name string, args DataFactoryIntegrationRuntimeSelfHostedArgs) *DataFactoryIntegrationRuntimeSelfHosted {
 	return &DataFactoryIntegrationRuntimeSelfHosted{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFactoryIntegrationRuntimeSelfHosted(name string, args DataFactoryInt
 
 var _ terra.Resource = (*DataFactoryIntegrationRuntimeSelfHosted)(nil)
 
+// DataFactoryIntegrationRuntimeSelfHosted represents the Terraform resource azurerm_data_factory_integration_runtime_self_hosted.
 type DataFactoryIntegrationRuntimeSelfHosted struct {
-	Name  string
-	Args  DataFactoryIntegrationRuntimeSelfHostedArgs
-	state *dataFactoryIntegrationRuntimeSelfHostedState
+	Name      string
+	Args      DataFactoryIntegrationRuntimeSelfHostedArgs
+	state     *dataFactoryIntegrationRuntimeSelfHostedState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFactoryIntegrationRuntimeSelfHosted].
 func (dfirsh *DataFactoryIntegrationRuntimeSelfHosted) Type() string {
 	return "azurerm_data_factory_integration_runtime_self_hosted"
 }
 
+// LocalName returns the local name for [DataFactoryIntegrationRuntimeSelfHosted].
 func (dfirsh *DataFactoryIntegrationRuntimeSelfHosted) LocalName() string {
 	return dfirsh.Name
 }
 
+// Configuration returns the configuration (args) for [DataFactoryIntegrationRuntimeSelfHosted].
 func (dfirsh *DataFactoryIntegrationRuntimeSelfHosted) Configuration() interface{} {
 	return dfirsh.Args
 }
 
+// DependOn is used for other resources to depend on [DataFactoryIntegrationRuntimeSelfHosted].
+func (dfirsh *DataFactoryIntegrationRuntimeSelfHosted) DependOn() terra.Reference {
+	return terra.ReferenceResource(dfirsh)
+}
+
+// Dependencies returns the list of resources [DataFactoryIntegrationRuntimeSelfHosted] depends_on.
+func (dfirsh *DataFactoryIntegrationRuntimeSelfHosted) Dependencies() terra.Dependencies {
+	return dfirsh.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFactoryIntegrationRuntimeSelfHosted].
+func (dfirsh *DataFactoryIntegrationRuntimeSelfHosted) LifecycleManagement() *terra.Lifecycle {
+	return dfirsh.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFactoryIntegrationRuntimeSelfHosted].
 func (dfirsh *DataFactoryIntegrationRuntimeSelfHosted) Attributes() dataFactoryIntegrationRuntimeSelfHostedAttributes {
 	return dataFactoryIntegrationRuntimeSelfHostedAttributes{ref: terra.ReferenceResource(dfirsh)}
 }
 
+// ImportState imports the given attribute values into [DataFactoryIntegrationRuntimeSelfHosted]'s state.
 func (dfirsh *DataFactoryIntegrationRuntimeSelfHosted) ImportState(av io.Reader) error {
 	dfirsh.state = &dataFactoryIntegrationRuntimeSelfHostedState{}
 	if err := json.NewDecoder(av).Decode(dfirsh.state); err != nil {
@@ -49,10 +73,12 @@ func (dfirsh *DataFactoryIntegrationRuntimeSelfHosted) ImportState(av io.Reader)
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFactoryIntegrationRuntimeSelfHosted] has state.
 func (dfirsh *DataFactoryIntegrationRuntimeSelfHosted) State() (*dataFactoryIntegrationRuntimeSelfHostedState, bool) {
 	return dfirsh.state, dfirsh.state != nil
 }
 
+// StateMust returns the state for [DataFactoryIntegrationRuntimeSelfHosted]. Panics if the state is nil.
 func (dfirsh *DataFactoryIntegrationRuntimeSelfHosted) StateMust() *dataFactoryIntegrationRuntimeSelfHostedState {
 	if dfirsh.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dfirsh.Type(), dfirsh.LocalName()))
@@ -60,10 +86,7 @@ func (dfirsh *DataFactoryIntegrationRuntimeSelfHosted) StateMust() *dataFactoryI
 	return dfirsh.state
 }
 
-func (dfirsh *DataFactoryIntegrationRuntimeSelfHosted) DependOn() terra.Reference {
-	return terra.ReferenceResource(dfirsh)
-}
-
+// DataFactoryIntegrationRuntimeSelfHostedArgs contains the configurations for azurerm_data_factory_integration_runtime_self_hosted.
 type DataFactoryIntegrationRuntimeSelfHostedArgs struct {
 	// DataFactoryId: string, required
 	DataFactoryId terra.StringValue `hcl:"data_factory_id,attr" validate:"required"`
@@ -77,43 +100,47 @@ type DataFactoryIntegrationRuntimeSelfHostedArgs struct {
 	RbacAuthorization []datafactoryintegrationruntimeselfhosted.RbacAuthorization `hcl:"rbac_authorization,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *datafactoryintegrationruntimeselfhosted.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataFactoryIntegrationRuntimeSelfHosted depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFactoryIntegrationRuntimeSelfHostedAttributes struct {
 	ref terra.Reference
 }
 
+// DataFactoryId returns a reference to field data_factory_id of azurerm_data_factory_integration_runtime_self_hosted.
 func (dfirsh dataFactoryIntegrationRuntimeSelfHostedAttributes) DataFactoryId() terra.StringValue {
-	return terra.ReferenceString(dfirsh.ref.Append("data_factory_id"))
+	return terra.ReferenceAsString(dfirsh.ref.Append("data_factory_id"))
 }
 
+// Description returns a reference to field description of azurerm_data_factory_integration_runtime_self_hosted.
 func (dfirsh dataFactoryIntegrationRuntimeSelfHostedAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dfirsh.ref.Append("description"))
+	return terra.ReferenceAsString(dfirsh.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_data_factory_integration_runtime_self_hosted.
 func (dfirsh dataFactoryIntegrationRuntimeSelfHostedAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dfirsh.ref.Append("id"))
+	return terra.ReferenceAsString(dfirsh.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory_integration_runtime_self_hosted.
 func (dfirsh dataFactoryIntegrationRuntimeSelfHostedAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dfirsh.ref.Append("name"))
+	return terra.ReferenceAsString(dfirsh.ref.Append("name"))
 }
 
+// PrimaryAuthorizationKey returns a reference to field primary_authorization_key of azurerm_data_factory_integration_runtime_self_hosted.
 func (dfirsh dataFactoryIntegrationRuntimeSelfHostedAttributes) PrimaryAuthorizationKey() terra.StringValue {
-	return terra.ReferenceString(dfirsh.ref.Append("primary_authorization_key"))
+	return terra.ReferenceAsString(dfirsh.ref.Append("primary_authorization_key"))
 }
 
+// SecondaryAuthorizationKey returns a reference to field secondary_authorization_key of azurerm_data_factory_integration_runtime_self_hosted.
 func (dfirsh dataFactoryIntegrationRuntimeSelfHostedAttributes) SecondaryAuthorizationKey() terra.StringValue {
-	return terra.ReferenceString(dfirsh.ref.Append("secondary_authorization_key"))
+	return terra.ReferenceAsString(dfirsh.ref.Append("secondary_authorization_key"))
 }
 
 func (dfirsh dataFactoryIntegrationRuntimeSelfHostedAttributes) RbacAuthorization() terra.SetValue[datafactoryintegrationruntimeselfhosted.RbacAuthorizationAttributes] {
-	return terra.ReferenceSet[datafactoryintegrationruntimeselfhosted.RbacAuthorizationAttributes](dfirsh.ref.Append("rbac_authorization"))
+	return terra.ReferenceAsSet[datafactoryintegrationruntimeselfhosted.RbacAuthorizationAttributes](dfirsh.ref.Append("rbac_authorization"))
 }
 
 func (dfirsh dataFactoryIntegrationRuntimeSelfHostedAttributes) Timeouts() datafactoryintegrationruntimeselfhosted.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafactoryintegrationruntimeselfhosted.TimeoutsAttributes](dfirsh.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafactoryintegrationruntimeselfhosted.TimeoutsAttributes](dfirsh.ref.Append("timeouts"))
 }
 
 type dataFactoryIntegrationRuntimeSelfHostedState struct {

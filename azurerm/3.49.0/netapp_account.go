@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNetappAccount creates a new instance of [NetappAccount].
 func NewNetappAccount(name string, args NetappAccountArgs) *NetappAccount {
 	return &NetappAccount{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNetappAccount(name string, args NetappAccountArgs) *NetappAccount {
 
 var _ terra.Resource = (*NetappAccount)(nil)
 
+// NetappAccount represents the Terraform resource azurerm_netapp_account.
 type NetappAccount struct {
-	Name  string
-	Args  NetappAccountArgs
-	state *netappAccountState
+	Name      string
+	Args      NetappAccountArgs
+	state     *netappAccountState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NetappAccount].
 func (na *NetappAccount) Type() string {
 	return "azurerm_netapp_account"
 }
 
+// LocalName returns the local name for [NetappAccount].
 func (na *NetappAccount) LocalName() string {
 	return na.Name
 }
 
+// Configuration returns the configuration (args) for [NetappAccount].
 func (na *NetappAccount) Configuration() interface{} {
 	return na.Args
 }
 
+// DependOn is used for other resources to depend on [NetappAccount].
+func (na *NetappAccount) DependOn() terra.Reference {
+	return terra.ReferenceResource(na)
+}
+
+// Dependencies returns the list of resources [NetappAccount] depends_on.
+func (na *NetappAccount) Dependencies() terra.Dependencies {
+	return na.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NetappAccount].
+func (na *NetappAccount) LifecycleManagement() *terra.Lifecycle {
+	return na.Lifecycle
+}
+
+// Attributes returns the attributes for [NetappAccount].
 func (na *NetappAccount) Attributes() netappAccountAttributes {
 	return netappAccountAttributes{ref: terra.ReferenceResource(na)}
 }
 
+// ImportState imports the given attribute values into [NetappAccount]'s state.
 func (na *NetappAccount) ImportState(av io.Reader) error {
 	na.state = &netappAccountState{}
 	if err := json.NewDecoder(av).Decode(na.state); err != nil {
@@ -49,10 +73,12 @@ func (na *NetappAccount) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NetappAccount] has state.
 func (na *NetappAccount) State() (*netappAccountState, bool) {
 	return na.state, na.state != nil
 }
 
+// StateMust returns the state for [NetappAccount]. Panics if the state is nil.
 func (na *NetappAccount) StateMust() *netappAccountState {
 	if na.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", na.Type(), na.LocalName()))
@@ -60,10 +86,7 @@ func (na *NetappAccount) StateMust() *netappAccountState {
 	return na.state
 }
 
-func (na *NetappAccount) DependOn() terra.Reference {
-	return terra.ReferenceResource(na)
-}
-
+// NetappAccountArgs contains the configurations for azurerm_netapp_account.
 type NetappAccountArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,39 +102,42 @@ type NetappAccountArgs struct {
 	ActiveDirectory *netappaccount.ActiveDirectory `hcl:"active_directory,block"`
 	// Timeouts: optional
 	Timeouts *netappaccount.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that NetappAccount depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type netappAccountAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_netapp_account.
 func (na netappAccountAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(na.ref.Append("id"))
+	return terra.ReferenceAsString(na.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_netapp_account.
 func (na netappAccountAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(na.ref.Append("location"))
+	return terra.ReferenceAsString(na.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_netapp_account.
 func (na netappAccountAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(na.ref.Append("name"))
+	return terra.ReferenceAsString(na.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_netapp_account.
 func (na netappAccountAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(na.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(na.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_netapp_account.
 func (na netappAccountAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](na.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](na.ref.Append("tags"))
 }
 
 func (na netappAccountAttributes) ActiveDirectory() terra.ListValue[netappaccount.ActiveDirectoryAttributes] {
-	return terra.ReferenceList[netappaccount.ActiveDirectoryAttributes](na.ref.Append("active_directory"))
+	return terra.ReferenceAsList[netappaccount.ActiveDirectoryAttributes](na.ref.Append("active_directory"))
 }
 
 func (na netappAccountAttributes) Timeouts() netappaccount.TimeoutsAttributes {
-	return terra.ReferenceSingle[netappaccount.TimeoutsAttributes](na.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[netappaccount.TimeoutsAttributes](na.ref.Append("timeouts"))
 }
 
 type netappAccountState struct {

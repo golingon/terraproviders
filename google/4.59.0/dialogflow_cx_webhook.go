@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDialogflowCxWebhook creates a new instance of [DialogflowCxWebhook].
 func NewDialogflowCxWebhook(name string, args DialogflowCxWebhookArgs) *DialogflowCxWebhook {
 	return &DialogflowCxWebhook{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDialogflowCxWebhook(name string, args DialogflowCxWebhookArgs) *Dialogfl
 
 var _ terra.Resource = (*DialogflowCxWebhook)(nil)
 
+// DialogflowCxWebhook represents the Terraform resource google_dialogflow_cx_webhook.
 type DialogflowCxWebhook struct {
-	Name  string
-	Args  DialogflowCxWebhookArgs
-	state *dialogflowCxWebhookState
+	Name      string
+	Args      DialogflowCxWebhookArgs
+	state     *dialogflowCxWebhookState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DialogflowCxWebhook].
 func (dcw *DialogflowCxWebhook) Type() string {
 	return "google_dialogflow_cx_webhook"
 }
 
+// LocalName returns the local name for [DialogflowCxWebhook].
 func (dcw *DialogflowCxWebhook) LocalName() string {
 	return dcw.Name
 }
 
+// Configuration returns the configuration (args) for [DialogflowCxWebhook].
 func (dcw *DialogflowCxWebhook) Configuration() interface{} {
 	return dcw.Args
 }
 
+// DependOn is used for other resources to depend on [DialogflowCxWebhook].
+func (dcw *DialogflowCxWebhook) DependOn() terra.Reference {
+	return terra.ReferenceResource(dcw)
+}
+
+// Dependencies returns the list of resources [DialogflowCxWebhook] depends_on.
+func (dcw *DialogflowCxWebhook) Dependencies() terra.Dependencies {
+	return dcw.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DialogflowCxWebhook].
+func (dcw *DialogflowCxWebhook) LifecycleManagement() *terra.Lifecycle {
+	return dcw.Lifecycle
+}
+
+// Attributes returns the attributes for [DialogflowCxWebhook].
 func (dcw *DialogflowCxWebhook) Attributes() dialogflowCxWebhookAttributes {
 	return dialogflowCxWebhookAttributes{ref: terra.ReferenceResource(dcw)}
 }
 
+// ImportState imports the given attribute values into [DialogflowCxWebhook]'s state.
 func (dcw *DialogflowCxWebhook) ImportState(av io.Reader) error {
 	dcw.state = &dialogflowCxWebhookState{}
 	if err := json.NewDecoder(av).Decode(dcw.state); err != nil {
@@ -49,10 +73,12 @@ func (dcw *DialogflowCxWebhook) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DialogflowCxWebhook] has state.
 func (dcw *DialogflowCxWebhook) State() (*dialogflowCxWebhookState, bool) {
 	return dcw.state, dcw.state != nil
 }
 
+// StateMust returns the state for [DialogflowCxWebhook]. Panics if the state is nil.
 func (dcw *DialogflowCxWebhook) StateMust() *dialogflowCxWebhookState {
 	if dcw.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dcw.Type(), dcw.LocalName()))
@@ -60,10 +86,7 @@ func (dcw *DialogflowCxWebhook) StateMust() *dialogflowCxWebhookState {
 	return dcw.state
 }
 
-func (dcw *DialogflowCxWebhook) DependOn() terra.Reference {
-	return terra.ReferenceResource(dcw)
-}
-
+// DialogflowCxWebhookArgs contains the configurations for google_dialogflow_cx_webhook.
 type DialogflowCxWebhookArgs struct {
 	// Disabled: bool, optional
 	Disabled terra.BoolValue `hcl:"disabled,attr"`
@@ -87,63 +110,71 @@ type DialogflowCxWebhookArgs struct {
 	ServiceDirectory *dialogflowcxwebhook.ServiceDirectory `hcl:"service_directory,block"`
 	// Timeouts: optional
 	Timeouts *dialogflowcxwebhook.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DialogflowCxWebhook depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dialogflowCxWebhookAttributes struct {
 	ref terra.Reference
 }
 
+// Disabled returns a reference to field disabled of google_dialogflow_cx_webhook.
 func (dcw dialogflowCxWebhookAttributes) Disabled() terra.BoolValue {
-	return terra.ReferenceBool(dcw.ref.Append("disabled"))
+	return terra.ReferenceAsBool(dcw.ref.Append("disabled"))
 }
 
+// DisplayName returns a reference to field display_name of google_dialogflow_cx_webhook.
 func (dcw dialogflowCxWebhookAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(dcw.ref.Append("display_name"))
+	return terra.ReferenceAsString(dcw.ref.Append("display_name"))
 }
 
+// EnableSpellCorrection returns a reference to field enable_spell_correction of google_dialogflow_cx_webhook.
 func (dcw dialogflowCxWebhookAttributes) EnableSpellCorrection() terra.BoolValue {
-	return terra.ReferenceBool(dcw.ref.Append("enable_spell_correction"))
+	return terra.ReferenceAsBool(dcw.ref.Append("enable_spell_correction"))
 }
 
+// EnableStackdriverLogging returns a reference to field enable_stackdriver_logging of google_dialogflow_cx_webhook.
 func (dcw dialogflowCxWebhookAttributes) EnableStackdriverLogging() terra.BoolValue {
-	return terra.ReferenceBool(dcw.ref.Append("enable_stackdriver_logging"))
+	return terra.ReferenceAsBool(dcw.ref.Append("enable_stackdriver_logging"))
 }
 
+// Id returns a reference to field id of google_dialogflow_cx_webhook.
 func (dcw dialogflowCxWebhookAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dcw.ref.Append("id"))
+	return terra.ReferenceAsString(dcw.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_dialogflow_cx_webhook.
 func (dcw dialogflowCxWebhookAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dcw.ref.Append("name"))
+	return terra.ReferenceAsString(dcw.ref.Append("name"))
 }
 
+// Parent returns a reference to field parent of google_dialogflow_cx_webhook.
 func (dcw dialogflowCxWebhookAttributes) Parent() terra.StringValue {
-	return terra.ReferenceString(dcw.ref.Append("parent"))
+	return terra.ReferenceAsString(dcw.ref.Append("parent"))
 }
 
+// SecuritySettings returns a reference to field security_settings of google_dialogflow_cx_webhook.
 func (dcw dialogflowCxWebhookAttributes) SecuritySettings() terra.StringValue {
-	return terra.ReferenceString(dcw.ref.Append("security_settings"))
+	return terra.ReferenceAsString(dcw.ref.Append("security_settings"))
 }
 
+// StartFlow returns a reference to field start_flow of google_dialogflow_cx_webhook.
 func (dcw dialogflowCxWebhookAttributes) StartFlow() terra.StringValue {
-	return terra.ReferenceString(dcw.ref.Append("start_flow"))
+	return terra.ReferenceAsString(dcw.ref.Append("start_flow"))
 }
 
+// Timeout returns a reference to field timeout of google_dialogflow_cx_webhook.
 func (dcw dialogflowCxWebhookAttributes) Timeout() terra.StringValue {
-	return terra.ReferenceString(dcw.ref.Append("timeout"))
+	return terra.ReferenceAsString(dcw.ref.Append("timeout"))
 }
 
 func (dcw dialogflowCxWebhookAttributes) GenericWebService() terra.ListValue[dialogflowcxwebhook.GenericWebServiceAttributes] {
-	return terra.ReferenceList[dialogflowcxwebhook.GenericWebServiceAttributes](dcw.ref.Append("generic_web_service"))
+	return terra.ReferenceAsList[dialogflowcxwebhook.GenericWebServiceAttributes](dcw.ref.Append("generic_web_service"))
 }
 
 func (dcw dialogflowCxWebhookAttributes) ServiceDirectory() terra.ListValue[dialogflowcxwebhook.ServiceDirectoryAttributes] {
-	return terra.ReferenceList[dialogflowcxwebhook.ServiceDirectoryAttributes](dcw.ref.Append("service_directory"))
+	return terra.ReferenceAsList[dialogflowcxwebhook.ServiceDirectoryAttributes](dcw.ref.Append("service_directory"))
 }
 
 func (dcw dialogflowCxWebhookAttributes) Timeouts() dialogflowcxwebhook.TimeoutsAttributes {
-	return terra.ReferenceSingle[dialogflowcxwebhook.TimeoutsAttributes](dcw.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dialogflowcxwebhook.TimeoutsAttributes](dcw.ref.Append("timeouts"))
 }
 
 type dialogflowCxWebhookState struct {

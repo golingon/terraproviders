@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMssqlVirtualNetworkRule creates a new instance of [MssqlVirtualNetworkRule].
 func NewMssqlVirtualNetworkRule(name string, args MssqlVirtualNetworkRuleArgs) *MssqlVirtualNetworkRule {
 	return &MssqlVirtualNetworkRule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMssqlVirtualNetworkRule(name string, args MssqlVirtualNetworkRuleArgs) *
 
 var _ terra.Resource = (*MssqlVirtualNetworkRule)(nil)
 
+// MssqlVirtualNetworkRule represents the Terraform resource azurerm_mssql_virtual_network_rule.
 type MssqlVirtualNetworkRule struct {
-	Name  string
-	Args  MssqlVirtualNetworkRuleArgs
-	state *mssqlVirtualNetworkRuleState
+	Name      string
+	Args      MssqlVirtualNetworkRuleArgs
+	state     *mssqlVirtualNetworkRuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MssqlVirtualNetworkRule].
 func (mvnr *MssqlVirtualNetworkRule) Type() string {
 	return "azurerm_mssql_virtual_network_rule"
 }
 
+// LocalName returns the local name for [MssqlVirtualNetworkRule].
 func (mvnr *MssqlVirtualNetworkRule) LocalName() string {
 	return mvnr.Name
 }
 
+// Configuration returns the configuration (args) for [MssqlVirtualNetworkRule].
 func (mvnr *MssqlVirtualNetworkRule) Configuration() interface{} {
 	return mvnr.Args
 }
 
+// DependOn is used for other resources to depend on [MssqlVirtualNetworkRule].
+func (mvnr *MssqlVirtualNetworkRule) DependOn() terra.Reference {
+	return terra.ReferenceResource(mvnr)
+}
+
+// Dependencies returns the list of resources [MssqlVirtualNetworkRule] depends_on.
+func (mvnr *MssqlVirtualNetworkRule) Dependencies() terra.Dependencies {
+	return mvnr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MssqlVirtualNetworkRule].
+func (mvnr *MssqlVirtualNetworkRule) LifecycleManagement() *terra.Lifecycle {
+	return mvnr.Lifecycle
+}
+
+// Attributes returns the attributes for [MssqlVirtualNetworkRule].
 func (mvnr *MssqlVirtualNetworkRule) Attributes() mssqlVirtualNetworkRuleAttributes {
 	return mssqlVirtualNetworkRuleAttributes{ref: terra.ReferenceResource(mvnr)}
 }
 
+// ImportState imports the given attribute values into [MssqlVirtualNetworkRule]'s state.
 func (mvnr *MssqlVirtualNetworkRule) ImportState(av io.Reader) error {
 	mvnr.state = &mssqlVirtualNetworkRuleState{}
 	if err := json.NewDecoder(av).Decode(mvnr.state); err != nil {
@@ -49,10 +73,12 @@ func (mvnr *MssqlVirtualNetworkRule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MssqlVirtualNetworkRule] has state.
 func (mvnr *MssqlVirtualNetworkRule) State() (*mssqlVirtualNetworkRuleState, bool) {
 	return mvnr.state, mvnr.state != nil
 }
 
+// StateMust returns the state for [MssqlVirtualNetworkRule]. Panics if the state is nil.
 func (mvnr *MssqlVirtualNetworkRule) StateMust() *mssqlVirtualNetworkRuleState {
 	if mvnr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mvnr.Type(), mvnr.LocalName()))
@@ -60,10 +86,7 @@ func (mvnr *MssqlVirtualNetworkRule) StateMust() *mssqlVirtualNetworkRuleState {
 	return mvnr.state
 }
 
-func (mvnr *MssqlVirtualNetworkRule) DependOn() terra.Reference {
-	return terra.ReferenceResource(mvnr)
-}
-
+// MssqlVirtualNetworkRuleArgs contains the configurations for azurerm_mssql_virtual_network_rule.
 type MssqlVirtualNetworkRuleArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,35 +100,38 @@ type MssqlVirtualNetworkRuleArgs struct {
 	SubnetId terra.StringValue `hcl:"subnet_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *mssqlvirtualnetworkrule.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MssqlVirtualNetworkRule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mssqlVirtualNetworkRuleAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_mssql_virtual_network_rule.
 func (mvnr mssqlVirtualNetworkRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mvnr.ref.Append("id"))
+	return terra.ReferenceAsString(mvnr.ref.Append("id"))
 }
 
+// IgnoreMissingVnetServiceEndpoint returns a reference to field ignore_missing_vnet_service_endpoint of azurerm_mssql_virtual_network_rule.
 func (mvnr mssqlVirtualNetworkRuleAttributes) IgnoreMissingVnetServiceEndpoint() terra.BoolValue {
-	return terra.ReferenceBool(mvnr.ref.Append("ignore_missing_vnet_service_endpoint"))
+	return terra.ReferenceAsBool(mvnr.ref.Append("ignore_missing_vnet_service_endpoint"))
 }
 
+// Name returns a reference to field name of azurerm_mssql_virtual_network_rule.
 func (mvnr mssqlVirtualNetworkRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mvnr.ref.Append("name"))
+	return terra.ReferenceAsString(mvnr.ref.Append("name"))
 }
 
+// ServerId returns a reference to field server_id of azurerm_mssql_virtual_network_rule.
 func (mvnr mssqlVirtualNetworkRuleAttributes) ServerId() terra.StringValue {
-	return terra.ReferenceString(mvnr.ref.Append("server_id"))
+	return terra.ReferenceAsString(mvnr.ref.Append("server_id"))
 }
 
+// SubnetId returns a reference to field subnet_id of azurerm_mssql_virtual_network_rule.
 func (mvnr mssqlVirtualNetworkRuleAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(mvnr.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(mvnr.ref.Append("subnet_id"))
 }
 
 func (mvnr mssqlVirtualNetworkRuleAttributes) Timeouts() mssqlvirtualnetworkrule.TimeoutsAttributes {
-	return terra.ReferenceSingle[mssqlvirtualnetworkrule.TimeoutsAttributes](mvnr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[mssqlvirtualnetworkrule.TimeoutsAttributes](mvnr.ref.Append("timeouts"))
 }
 
 type mssqlVirtualNetworkRuleState struct {

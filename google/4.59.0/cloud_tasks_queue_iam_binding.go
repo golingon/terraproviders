@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCloudTasksQueueIamBinding creates a new instance of [CloudTasksQueueIamBinding].
 func NewCloudTasksQueueIamBinding(name string, args CloudTasksQueueIamBindingArgs) *CloudTasksQueueIamBinding {
 	return &CloudTasksQueueIamBinding{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCloudTasksQueueIamBinding(name string, args CloudTasksQueueIamBindingArg
 
 var _ terra.Resource = (*CloudTasksQueueIamBinding)(nil)
 
+// CloudTasksQueueIamBinding represents the Terraform resource google_cloud_tasks_queue_iam_binding.
 type CloudTasksQueueIamBinding struct {
-	Name  string
-	Args  CloudTasksQueueIamBindingArgs
-	state *cloudTasksQueueIamBindingState
+	Name      string
+	Args      CloudTasksQueueIamBindingArgs
+	state     *cloudTasksQueueIamBindingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudTasksQueueIamBinding].
 func (ctqib *CloudTasksQueueIamBinding) Type() string {
 	return "google_cloud_tasks_queue_iam_binding"
 }
 
+// LocalName returns the local name for [CloudTasksQueueIamBinding].
 func (ctqib *CloudTasksQueueIamBinding) LocalName() string {
 	return ctqib.Name
 }
 
+// Configuration returns the configuration (args) for [CloudTasksQueueIamBinding].
 func (ctqib *CloudTasksQueueIamBinding) Configuration() interface{} {
 	return ctqib.Args
 }
 
+// DependOn is used for other resources to depend on [CloudTasksQueueIamBinding].
+func (ctqib *CloudTasksQueueIamBinding) DependOn() terra.Reference {
+	return terra.ReferenceResource(ctqib)
+}
+
+// Dependencies returns the list of resources [CloudTasksQueueIamBinding] depends_on.
+func (ctqib *CloudTasksQueueIamBinding) Dependencies() terra.Dependencies {
+	return ctqib.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudTasksQueueIamBinding].
+func (ctqib *CloudTasksQueueIamBinding) LifecycleManagement() *terra.Lifecycle {
+	return ctqib.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudTasksQueueIamBinding].
 func (ctqib *CloudTasksQueueIamBinding) Attributes() cloudTasksQueueIamBindingAttributes {
 	return cloudTasksQueueIamBindingAttributes{ref: terra.ReferenceResource(ctqib)}
 }
 
+// ImportState imports the given attribute values into [CloudTasksQueueIamBinding]'s state.
 func (ctqib *CloudTasksQueueIamBinding) ImportState(av io.Reader) error {
 	ctqib.state = &cloudTasksQueueIamBindingState{}
 	if err := json.NewDecoder(av).Decode(ctqib.state); err != nil {
@@ -49,10 +73,12 @@ func (ctqib *CloudTasksQueueIamBinding) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudTasksQueueIamBinding] has state.
 func (ctqib *CloudTasksQueueIamBinding) State() (*cloudTasksQueueIamBindingState, bool) {
 	return ctqib.state, ctqib.state != nil
 }
 
+// StateMust returns the state for [CloudTasksQueueIamBinding]. Panics if the state is nil.
 func (ctqib *CloudTasksQueueIamBinding) StateMust() *cloudTasksQueueIamBindingState {
 	if ctqib.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ctqib.Type(), ctqib.LocalName()))
@@ -60,10 +86,7 @@ func (ctqib *CloudTasksQueueIamBinding) StateMust() *cloudTasksQueueIamBindingSt
 	return ctqib.state
 }
 
-func (ctqib *CloudTasksQueueIamBinding) DependOn() terra.Reference {
-	return terra.ReferenceResource(ctqib)
-}
-
+// CloudTasksQueueIamBindingArgs contains the configurations for google_cloud_tasks_queue_iam_binding.
 type CloudTasksQueueIamBindingArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,43 +102,48 @@ type CloudTasksQueueIamBindingArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *cloudtasksqueueiambinding.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that CloudTasksQueueIamBinding depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudTasksQueueIamBindingAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_cloud_tasks_queue_iam_binding.
 func (ctqib cloudTasksQueueIamBindingAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(ctqib.ref.Append("etag"))
+	return terra.ReferenceAsString(ctqib.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_cloud_tasks_queue_iam_binding.
 func (ctqib cloudTasksQueueIamBindingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ctqib.ref.Append("id"))
+	return terra.ReferenceAsString(ctqib.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_cloud_tasks_queue_iam_binding.
 func (ctqib cloudTasksQueueIamBindingAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ctqib.ref.Append("location"))
+	return terra.ReferenceAsString(ctqib.ref.Append("location"))
 }
 
+// Members returns a reference to field members of google_cloud_tasks_queue_iam_binding.
 func (ctqib cloudTasksQueueIamBindingAttributes) Members() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ctqib.ref.Append("members"))
+	return terra.ReferenceAsSet[terra.StringValue](ctqib.ref.Append("members"))
 }
 
+// Name returns a reference to field name of google_cloud_tasks_queue_iam_binding.
 func (ctqib cloudTasksQueueIamBindingAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ctqib.ref.Append("name"))
+	return terra.ReferenceAsString(ctqib.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_cloud_tasks_queue_iam_binding.
 func (ctqib cloudTasksQueueIamBindingAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ctqib.ref.Append("project"))
+	return terra.ReferenceAsString(ctqib.ref.Append("project"))
 }
 
+// Role returns a reference to field role of google_cloud_tasks_queue_iam_binding.
 func (ctqib cloudTasksQueueIamBindingAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(ctqib.ref.Append("role"))
+	return terra.ReferenceAsString(ctqib.ref.Append("role"))
 }
 
 func (ctqib cloudTasksQueueIamBindingAttributes) Condition() terra.ListValue[cloudtasksqueueiambinding.ConditionAttributes] {
-	return terra.ReferenceList[cloudtasksqueueiambinding.ConditionAttributes](ctqib.ref.Append("condition"))
+	return terra.ReferenceAsList[cloudtasksqueueiambinding.ConditionAttributes](ctqib.ref.Append("condition"))
 }
 
 type cloudTasksQueueIamBindingState struct {

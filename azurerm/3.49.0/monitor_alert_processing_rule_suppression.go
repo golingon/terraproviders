@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMonitorAlertProcessingRuleSuppression creates a new instance of [MonitorAlertProcessingRuleSuppression].
 func NewMonitorAlertProcessingRuleSuppression(name string, args MonitorAlertProcessingRuleSuppressionArgs) *MonitorAlertProcessingRuleSuppression {
 	return &MonitorAlertProcessingRuleSuppression{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMonitorAlertProcessingRuleSuppression(name string, args MonitorAlertProc
 
 var _ terra.Resource = (*MonitorAlertProcessingRuleSuppression)(nil)
 
+// MonitorAlertProcessingRuleSuppression represents the Terraform resource azurerm_monitor_alert_processing_rule_suppression.
 type MonitorAlertProcessingRuleSuppression struct {
-	Name  string
-	Args  MonitorAlertProcessingRuleSuppressionArgs
-	state *monitorAlertProcessingRuleSuppressionState
+	Name      string
+	Args      MonitorAlertProcessingRuleSuppressionArgs
+	state     *monitorAlertProcessingRuleSuppressionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MonitorAlertProcessingRuleSuppression].
 func (maprs *MonitorAlertProcessingRuleSuppression) Type() string {
 	return "azurerm_monitor_alert_processing_rule_suppression"
 }
 
+// LocalName returns the local name for [MonitorAlertProcessingRuleSuppression].
 func (maprs *MonitorAlertProcessingRuleSuppression) LocalName() string {
 	return maprs.Name
 }
 
+// Configuration returns the configuration (args) for [MonitorAlertProcessingRuleSuppression].
 func (maprs *MonitorAlertProcessingRuleSuppression) Configuration() interface{} {
 	return maprs.Args
 }
 
+// DependOn is used for other resources to depend on [MonitorAlertProcessingRuleSuppression].
+func (maprs *MonitorAlertProcessingRuleSuppression) DependOn() terra.Reference {
+	return terra.ReferenceResource(maprs)
+}
+
+// Dependencies returns the list of resources [MonitorAlertProcessingRuleSuppression] depends_on.
+func (maprs *MonitorAlertProcessingRuleSuppression) Dependencies() terra.Dependencies {
+	return maprs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MonitorAlertProcessingRuleSuppression].
+func (maprs *MonitorAlertProcessingRuleSuppression) LifecycleManagement() *terra.Lifecycle {
+	return maprs.Lifecycle
+}
+
+// Attributes returns the attributes for [MonitorAlertProcessingRuleSuppression].
 func (maprs *MonitorAlertProcessingRuleSuppression) Attributes() monitorAlertProcessingRuleSuppressionAttributes {
 	return monitorAlertProcessingRuleSuppressionAttributes{ref: terra.ReferenceResource(maprs)}
 }
 
+// ImportState imports the given attribute values into [MonitorAlertProcessingRuleSuppression]'s state.
 func (maprs *MonitorAlertProcessingRuleSuppression) ImportState(av io.Reader) error {
 	maprs.state = &monitorAlertProcessingRuleSuppressionState{}
 	if err := json.NewDecoder(av).Decode(maprs.state); err != nil {
@@ -49,10 +73,12 @@ func (maprs *MonitorAlertProcessingRuleSuppression) ImportState(av io.Reader) er
 	return nil
 }
 
+// State returns the state and a bool indicating if [MonitorAlertProcessingRuleSuppression] has state.
 func (maprs *MonitorAlertProcessingRuleSuppression) State() (*monitorAlertProcessingRuleSuppressionState, bool) {
 	return maprs.state, maprs.state != nil
 }
 
+// StateMust returns the state for [MonitorAlertProcessingRuleSuppression]. Panics if the state is nil.
 func (maprs *MonitorAlertProcessingRuleSuppression) StateMust() *monitorAlertProcessingRuleSuppressionState {
 	if maprs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", maprs.Type(), maprs.LocalName()))
@@ -60,10 +86,7 @@ func (maprs *MonitorAlertProcessingRuleSuppression) StateMust() *monitorAlertPro
 	return maprs.state
 }
 
-func (maprs *MonitorAlertProcessingRuleSuppression) DependOn() terra.Reference {
-	return terra.ReferenceResource(maprs)
-}
-
+// MonitorAlertProcessingRuleSuppressionArgs contains the configurations for azurerm_monitor_alert_processing_rule_suppression.
 type MonitorAlertProcessingRuleSuppressionArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -85,51 +108,56 @@ type MonitorAlertProcessingRuleSuppressionArgs struct {
 	Schedule *monitoralertprocessingrulesuppression.Schedule `hcl:"schedule,block"`
 	// Timeouts: optional
 	Timeouts *monitoralertprocessingrulesuppression.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MonitorAlertProcessingRuleSuppression depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type monitorAlertProcessingRuleSuppressionAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of azurerm_monitor_alert_processing_rule_suppression.
 func (maprs monitorAlertProcessingRuleSuppressionAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(maprs.ref.Append("description"))
+	return terra.ReferenceAsString(maprs.ref.Append("description"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_monitor_alert_processing_rule_suppression.
 func (maprs monitorAlertProcessingRuleSuppressionAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(maprs.ref.Append("enabled"))
+	return terra.ReferenceAsBool(maprs.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of azurerm_monitor_alert_processing_rule_suppression.
 func (maprs monitorAlertProcessingRuleSuppressionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(maprs.ref.Append("id"))
+	return terra.ReferenceAsString(maprs.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_monitor_alert_processing_rule_suppression.
 func (maprs monitorAlertProcessingRuleSuppressionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(maprs.ref.Append("name"))
+	return terra.ReferenceAsString(maprs.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_monitor_alert_processing_rule_suppression.
 func (maprs monitorAlertProcessingRuleSuppressionAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(maprs.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(maprs.ref.Append("resource_group_name"))
 }
 
+// Scopes returns a reference to field scopes of azurerm_monitor_alert_processing_rule_suppression.
 func (maprs monitorAlertProcessingRuleSuppressionAttributes) Scopes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](maprs.ref.Append("scopes"))
+	return terra.ReferenceAsList[terra.StringValue](maprs.ref.Append("scopes"))
 }
 
+// Tags returns a reference to field tags of azurerm_monitor_alert_processing_rule_suppression.
 func (maprs monitorAlertProcessingRuleSuppressionAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](maprs.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](maprs.ref.Append("tags"))
 }
 
 func (maprs monitorAlertProcessingRuleSuppressionAttributes) Condition() terra.ListValue[monitoralertprocessingrulesuppression.ConditionAttributes] {
-	return terra.ReferenceList[monitoralertprocessingrulesuppression.ConditionAttributes](maprs.ref.Append("condition"))
+	return terra.ReferenceAsList[monitoralertprocessingrulesuppression.ConditionAttributes](maprs.ref.Append("condition"))
 }
 
 func (maprs monitorAlertProcessingRuleSuppressionAttributes) Schedule() terra.ListValue[monitoralertprocessingrulesuppression.ScheduleAttributes] {
-	return terra.ReferenceList[monitoralertprocessingrulesuppression.ScheduleAttributes](maprs.ref.Append("schedule"))
+	return terra.ReferenceAsList[monitoralertprocessingrulesuppression.ScheduleAttributes](maprs.ref.Append("schedule"))
 }
 
 func (maprs monitorAlertProcessingRuleSuppressionAttributes) Timeouts() monitoralertprocessingrulesuppression.TimeoutsAttributes {
-	return terra.ReferenceSingle[monitoralertprocessingrulesuppression.TimeoutsAttributes](maprs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[monitoralertprocessingrulesuppression.TimeoutsAttributes](maprs.ref.Append("timeouts"))
 }
 
 type monitorAlertProcessingRuleSuppressionState struct {

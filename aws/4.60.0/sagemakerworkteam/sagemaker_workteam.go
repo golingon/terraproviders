@@ -45,7 +45,7 @@ func (md MemberDefinitionAttributes) InternalWithRef(ref terra.Reference) Member
 	return MemberDefinitionAttributes{ref: ref}
 }
 
-func (md MemberDefinitionAttributes) InternalTokens() hclwrite.Tokens {
+func (md MemberDefinitionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return md.ref.InternalTokens()
 }
 
@@ -69,7 +69,7 @@ func (cmd CognitoMemberDefinitionAttributes) InternalWithRef(ref terra.Reference
 	return CognitoMemberDefinitionAttributes{ref: ref}
 }
 
-func (cmd CognitoMemberDefinitionAttributes) InternalTokens() hclwrite.Tokens {
+func (cmd CognitoMemberDefinitionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cmd.ref.InternalTokens()
 }
 
@@ -97,7 +97,7 @@ func (omd OidcMemberDefinitionAttributes) InternalWithRef(ref terra.Reference) O
 	return OidcMemberDefinitionAttributes{ref: ref}
 }
 
-func (omd OidcMemberDefinitionAttributes) InternalTokens() hclwrite.Tokens {
+func (omd OidcMemberDefinitionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return omd.ref.InternalTokens()
 }
 
@@ -117,7 +117,7 @@ func (nc NotificationConfigurationAttributes) InternalWithRef(ref terra.Referenc
 	return NotificationConfigurationAttributes{ref: ref}
 }
 
-func (nc NotificationConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (nc NotificationConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nc.ref.InternalTokens()
 }
 

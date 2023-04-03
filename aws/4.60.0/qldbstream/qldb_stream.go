@@ -26,7 +26,7 @@ func (kc KinesisConfigurationAttributes) InternalWithRef(ref terra.Reference) Ki
 	return KinesisConfigurationAttributes{ref: ref}
 }
 
-func (kc KinesisConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (kc KinesisConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kc.ref.InternalTokens()
 }
 

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLbRule creates a new instance of [LbRule].
 func NewLbRule(name string, args LbRuleArgs) *LbRule {
 	return &LbRule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLbRule(name string, args LbRuleArgs) *LbRule {
 
 var _ terra.Resource = (*LbRule)(nil)
 
+// LbRule represents the Terraform resource azurerm_lb_rule.
 type LbRule struct {
-	Name  string
-	Args  LbRuleArgs
-	state *lbRuleState
+	Name      string
+	Args      LbRuleArgs
+	state     *lbRuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LbRule].
 func (lr *LbRule) Type() string {
 	return "azurerm_lb_rule"
 }
 
+// LocalName returns the local name for [LbRule].
 func (lr *LbRule) LocalName() string {
 	return lr.Name
 }
 
+// Configuration returns the configuration (args) for [LbRule].
 func (lr *LbRule) Configuration() interface{} {
 	return lr.Args
 }
 
+// DependOn is used for other resources to depend on [LbRule].
+func (lr *LbRule) DependOn() terra.Reference {
+	return terra.ReferenceResource(lr)
+}
+
+// Dependencies returns the list of resources [LbRule] depends_on.
+func (lr *LbRule) Dependencies() terra.Dependencies {
+	return lr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LbRule].
+func (lr *LbRule) LifecycleManagement() *terra.Lifecycle {
+	return lr.Lifecycle
+}
+
+// Attributes returns the attributes for [LbRule].
 func (lr *LbRule) Attributes() lbRuleAttributes {
 	return lbRuleAttributes{ref: terra.ReferenceResource(lr)}
 }
 
+// ImportState imports the given attribute values into [LbRule]'s state.
 func (lr *LbRule) ImportState(av io.Reader) error {
 	lr.state = &lbRuleState{}
 	if err := json.NewDecoder(av).Decode(lr.state); err != nil {
@@ -49,10 +73,12 @@ func (lr *LbRule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LbRule] has state.
 func (lr *LbRule) State() (*lbRuleState, bool) {
 	return lr.state, lr.state != nil
 }
 
+// StateMust returns the state for [LbRule]. Panics if the state is nil.
 func (lr *LbRule) StateMust() *lbRuleState {
 	if lr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lr.Type(), lr.LocalName()))
@@ -60,10 +86,7 @@ func (lr *LbRule) StateMust() *lbRuleState {
 	return lr.state
 }
 
-func (lr *LbRule) DependOn() terra.Reference {
-	return terra.ReferenceResource(lr)
-}
-
+// LbRuleArgs contains the configurations for azurerm_lb_rule.
 type LbRuleArgs struct {
 	// BackendAddressPoolIds: list of string, optional
 	BackendAddressPoolIds terra.ListValue[terra.StringValue] `hcl:"backend_address_pool_ids,attr"`
@@ -95,75 +118,88 @@ type LbRuleArgs struct {
 	Protocol terra.StringValue `hcl:"protocol,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *lbrule.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LbRule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lbRuleAttributes struct {
 	ref terra.Reference
 }
 
+// BackendAddressPoolIds returns a reference to field backend_address_pool_ids of azurerm_lb_rule.
 func (lr lbRuleAttributes) BackendAddressPoolIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lr.ref.Append("backend_address_pool_ids"))
+	return terra.ReferenceAsList[terra.StringValue](lr.ref.Append("backend_address_pool_ids"))
 }
 
+// BackendPort returns a reference to field backend_port of azurerm_lb_rule.
 func (lr lbRuleAttributes) BackendPort() terra.NumberValue {
-	return terra.ReferenceNumber(lr.ref.Append("backend_port"))
+	return terra.ReferenceAsNumber(lr.ref.Append("backend_port"))
 }
 
+// DisableOutboundSnat returns a reference to field disable_outbound_snat of azurerm_lb_rule.
 func (lr lbRuleAttributes) DisableOutboundSnat() terra.BoolValue {
-	return terra.ReferenceBool(lr.ref.Append("disable_outbound_snat"))
+	return terra.ReferenceAsBool(lr.ref.Append("disable_outbound_snat"))
 }
 
+// EnableFloatingIp returns a reference to field enable_floating_ip of azurerm_lb_rule.
 func (lr lbRuleAttributes) EnableFloatingIp() terra.BoolValue {
-	return terra.ReferenceBool(lr.ref.Append("enable_floating_ip"))
+	return terra.ReferenceAsBool(lr.ref.Append("enable_floating_ip"))
 }
 
+// EnableTcpReset returns a reference to field enable_tcp_reset of azurerm_lb_rule.
 func (lr lbRuleAttributes) EnableTcpReset() terra.BoolValue {
-	return terra.ReferenceBool(lr.ref.Append("enable_tcp_reset"))
+	return terra.ReferenceAsBool(lr.ref.Append("enable_tcp_reset"))
 }
 
+// FrontendIpConfigurationId returns a reference to field frontend_ip_configuration_id of azurerm_lb_rule.
 func (lr lbRuleAttributes) FrontendIpConfigurationId() terra.StringValue {
-	return terra.ReferenceString(lr.ref.Append("frontend_ip_configuration_id"))
+	return terra.ReferenceAsString(lr.ref.Append("frontend_ip_configuration_id"))
 }
 
+// FrontendIpConfigurationName returns a reference to field frontend_ip_configuration_name of azurerm_lb_rule.
 func (lr lbRuleAttributes) FrontendIpConfigurationName() terra.StringValue {
-	return terra.ReferenceString(lr.ref.Append("frontend_ip_configuration_name"))
+	return terra.ReferenceAsString(lr.ref.Append("frontend_ip_configuration_name"))
 }
 
+// FrontendPort returns a reference to field frontend_port of azurerm_lb_rule.
 func (lr lbRuleAttributes) FrontendPort() terra.NumberValue {
-	return terra.ReferenceNumber(lr.ref.Append("frontend_port"))
+	return terra.ReferenceAsNumber(lr.ref.Append("frontend_port"))
 }
 
+// Id returns a reference to field id of azurerm_lb_rule.
 func (lr lbRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lr.ref.Append("id"))
+	return terra.ReferenceAsString(lr.ref.Append("id"))
 }
 
+// IdleTimeoutInMinutes returns a reference to field idle_timeout_in_minutes of azurerm_lb_rule.
 func (lr lbRuleAttributes) IdleTimeoutInMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(lr.ref.Append("idle_timeout_in_minutes"))
+	return terra.ReferenceAsNumber(lr.ref.Append("idle_timeout_in_minutes"))
 }
 
+// LoadDistribution returns a reference to field load_distribution of azurerm_lb_rule.
 func (lr lbRuleAttributes) LoadDistribution() terra.StringValue {
-	return terra.ReferenceString(lr.ref.Append("load_distribution"))
+	return terra.ReferenceAsString(lr.ref.Append("load_distribution"))
 }
 
+// LoadbalancerId returns a reference to field loadbalancer_id of azurerm_lb_rule.
 func (lr lbRuleAttributes) LoadbalancerId() terra.StringValue {
-	return terra.ReferenceString(lr.ref.Append("loadbalancer_id"))
+	return terra.ReferenceAsString(lr.ref.Append("loadbalancer_id"))
 }
 
+// Name returns a reference to field name of azurerm_lb_rule.
 func (lr lbRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lr.ref.Append("name"))
+	return terra.ReferenceAsString(lr.ref.Append("name"))
 }
 
+// ProbeId returns a reference to field probe_id of azurerm_lb_rule.
 func (lr lbRuleAttributes) ProbeId() terra.StringValue {
-	return terra.ReferenceString(lr.ref.Append("probe_id"))
+	return terra.ReferenceAsString(lr.ref.Append("probe_id"))
 }
 
+// Protocol returns a reference to field protocol of azurerm_lb_rule.
 func (lr lbRuleAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(lr.ref.Append("protocol"))
+	return terra.ReferenceAsString(lr.ref.Append("protocol"))
 }
 
 func (lr lbRuleAttributes) Timeouts() lbrule.TimeoutsAttributes {
-	return terra.ReferenceSingle[lbrule.TimeoutsAttributes](lr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[lbrule.TimeoutsAttributes](lr.ref.Append("timeouts"))
 }
 
 type lbRuleState struct {

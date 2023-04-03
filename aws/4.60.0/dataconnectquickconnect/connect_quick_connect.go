@@ -34,7 +34,7 @@ func (qcc QuickConnectConfigAttributes) InternalWithRef(ref terra.Reference) Qui
 	return QuickConnectConfigAttributes{ref: ref}
 }
 
-func (qcc QuickConnectConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (qcc QuickConnectConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return qcc.ref.InternalTokens()
 }
 
@@ -66,7 +66,7 @@ func (pc PhoneConfigAttributes) InternalWithRef(ref terra.Reference) PhoneConfig
 	return PhoneConfigAttributes{ref: ref}
 }
 
-func (pc PhoneConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (pc PhoneConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
@@ -86,7 +86,7 @@ func (qc QueueConfigAttributes) InternalWithRef(ref terra.Reference) QueueConfig
 	return QueueConfigAttributes{ref: ref}
 }
 
-func (qc QueueConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (qc QueueConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return qc.ref.InternalTokens()
 }
 
@@ -110,7 +110,7 @@ func (uc UserConfigAttributes) InternalWithRef(ref terra.Reference) UserConfigAt
 	return UserConfigAttributes{ref: ref}
 }
 
-func (uc UserConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (uc UserConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return uc.ref.InternalTokens()
 }
 

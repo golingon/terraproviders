@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataCosmosdbRestorableDatabaseAccounts creates a new instance of [DataCosmosdbRestorableDatabaseAccounts].
 func NewDataCosmosdbRestorableDatabaseAccounts(name string, args DataCosmosdbRestorableDatabaseAccountsArgs) *DataCosmosdbRestorableDatabaseAccounts {
 	return &DataCosmosdbRestorableDatabaseAccounts{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataCosmosdbRestorableDatabaseAccounts(name string, args DataCosmosdbRes
 
 var _ terra.DataResource = (*DataCosmosdbRestorableDatabaseAccounts)(nil)
 
+// DataCosmosdbRestorableDatabaseAccounts represents the Terraform data resource azurerm_cosmosdb_restorable_database_accounts.
 type DataCosmosdbRestorableDatabaseAccounts struct {
 	Name string
 	Args DataCosmosdbRestorableDatabaseAccountsArgs
 }
 
+// DataSource returns the Terraform object type for [DataCosmosdbRestorableDatabaseAccounts].
 func (crda *DataCosmosdbRestorableDatabaseAccounts) DataSource() string {
 	return "azurerm_cosmosdb_restorable_database_accounts"
 }
 
+// LocalName returns the local name for [DataCosmosdbRestorableDatabaseAccounts].
 func (crda *DataCosmosdbRestorableDatabaseAccounts) LocalName() string {
 	return crda.Name
 }
 
+// Configuration returns the configuration (args) for [DataCosmosdbRestorableDatabaseAccounts].
 func (crda *DataCosmosdbRestorableDatabaseAccounts) Configuration() interface{} {
 	return crda.Args
 }
 
+// Attributes returns the attributes for [DataCosmosdbRestorableDatabaseAccounts].
 func (crda *DataCosmosdbRestorableDatabaseAccounts) Attributes() dataCosmosdbRestorableDatabaseAccountsAttributes {
 	return dataCosmosdbRestorableDatabaseAccountsAttributes{ref: terra.ReferenceDataResource(crda)}
 }
 
+// DataCosmosdbRestorableDatabaseAccountsArgs contains the configurations for azurerm_cosmosdb_restorable_database_accounts.
 type DataCosmosdbRestorableDatabaseAccountsArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,22 +60,25 @@ type dataCosmosdbRestorableDatabaseAccountsAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_cosmosdb_restorable_database_accounts.
 func (crda dataCosmosdbRestorableDatabaseAccountsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(crda.ref.Append("id"))
+	return terra.ReferenceAsString(crda.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_cosmosdb_restorable_database_accounts.
 func (crda dataCosmosdbRestorableDatabaseAccountsAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(crda.ref.Append("location"))
+	return terra.ReferenceAsString(crda.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_cosmosdb_restorable_database_accounts.
 func (crda dataCosmosdbRestorableDatabaseAccountsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(crda.ref.Append("name"))
+	return terra.ReferenceAsString(crda.ref.Append("name"))
 }
 
 func (crda dataCosmosdbRestorableDatabaseAccountsAttributes) Accounts() terra.ListValue[datacosmosdbrestorabledatabaseaccounts.AccountsAttributes] {
-	return terra.ReferenceList[datacosmosdbrestorabledatabaseaccounts.AccountsAttributes](crda.ref.Append("accounts"))
+	return terra.ReferenceAsList[datacosmosdbrestorabledatabaseaccounts.AccountsAttributes](crda.ref.Append("accounts"))
 }
 
 func (crda dataCosmosdbRestorableDatabaseAccountsAttributes) Timeouts() datacosmosdbrestorabledatabaseaccounts.TimeoutsAttributes {
-	return terra.ReferenceSingle[datacosmosdbrestorabledatabaseaccounts.TimeoutsAttributes](crda.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datacosmosdbrestorabledatabaseaccounts.TimeoutsAttributes](crda.ref.Append("timeouts"))
 }

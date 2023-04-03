@@ -101,280 +101,280 @@ type AutoscalingAttributes struct {
 	ref terra.Reference
 }
 
-func (a AutoscalingAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AutoscalingAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AutoscalingAttributes) InternalWithRef(ref terra.Reference) AutoscalingAttributes {
 	return AutoscalingAttributes{ref: ref}
 }
 
-func (a AutoscalingAttributes) InternalTokens() hclwrite.Tokens {
+func (a AutoscalingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a AutoscalingAttributes) MaxNodeCount() terra.NumberValue {
-	return terra.ReferenceNumber(a.ref.Append("max_node_count"))
+	return terra.ReferenceAsNumber(a.ref.Append("max_node_count"))
 }
 
 func (a AutoscalingAttributes) MinNodeCount() terra.NumberValue {
-	return terra.ReferenceNumber(a.ref.Append("min_node_count"))
+	return terra.ReferenceAsNumber(a.ref.Append("min_node_count"))
 }
 
 type ConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConfigAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConfigAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConfigAttributes) InternalWithRef(ref terra.Reference) ConfigAttributes {
 	return ConfigAttributes{ref: ref}
 }
 
-func (c ConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ConfigAttributes) IamInstanceProfile() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("iam_instance_profile"))
+	return terra.ReferenceAsString(c.ref.Append("iam_instance_profile"))
 }
 
 func (c ConfigAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("instance_type"))
+	return terra.ReferenceAsString(c.ref.Append("instance_type"))
 }
 
 func (c ConfigAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](c.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](c.ref.Append("labels"))
 }
 
 func (c ConfigAttributes) SecurityGroupIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](c.ref.Append("security_group_ids"))
+	return terra.ReferenceAsList[terra.StringValue](c.ref.Append("security_group_ids"))
 }
 
 func (c ConfigAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](c.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](c.ref.Append("tags"))
 }
 
 func (c ConfigAttributes) AutoscalingMetricsCollection() terra.ListValue[AutoscalingMetricsCollectionAttributes] {
-	return terra.ReferenceList[AutoscalingMetricsCollectionAttributes](c.ref.Append("autoscaling_metrics_collection"))
+	return terra.ReferenceAsList[AutoscalingMetricsCollectionAttributes](c.ref.Append("autoscaling_metrics_collection"))
 }
 
 func (c ConfigAttributes) ConfigEncryption() terra.ListValue[ConfigEncryptionAttributes] {
-	return terra.ReferenceList[ConfigEncryptionAttributes](c.ref.Append("config_encryption"))
+	return terra.ReferenceAsList[ConfigEncryptionAttributes](c.ref.Append("config_encryption"))
 }
 
 func (c ConfigAttributes) ProxyConfig() terra.ListValue[ProxyConfigAttributes] {
-	return terra.ReferenceList[ProxyConfigAttributes](c.ref.Append("proxy_config"))
+	return terra.ReferenceAsList[ProxyConfigAttributes](c.ref.Append("proxy_config"))
 }
 
 func (c ConfigAttributes) RootVolume() terra.ListValue[RootVolumeAttributes] {
-	return terra.ReferenceList[RootVolumeAttributes](c.ref.Append("root_volume"))
+	return terra.ReferenceAsList[RootVolumeAttributes](c.ref.Append("root_volume"))
 }
 
 func (c ConfigAttributes) SshConfig() terra.ListValue[SshConfigAttributes] {
-	return terra.ReferenceList[SshConfigAttributes](c.ref.Append("ssh_config"))
+	return terra.ReferenceAsList[SshConfigAttributes](c.ref.Append("ssh_config"))
 }
 
 func (c ConfigAttributes) Taints() terra.ListValue[TaintsAttributes] {
-	return terra.ReferenceList[TaintsAttributes](c.ref.Append("taints"))
+	return terra.ReferenceAsList[TaintsAttributes](c.ref.Append("taints"))
 }
 
 type AutoscalingMetricsCollectionAttributes struct {
 	ref terra.Reference
 }
 
-func (amc AutoscalingMetricsCollectionAttributes) InternalRef() terra.Reference {
-	return amc.ref
+func (amc AutoscalingMetricsCollectionAttributes) InternalRef() (terra.Reference, error) {
+	return amc.ref, nil
 }
 
 func (amc AutoscalingMetricsCollectionAttributes) InternalWithRef(ref terra.Reference) AutoscalingMetricsCollectionAttributes {
 	return AutoscalingMetricsCollectionAttributes{ref: ref}
 }
 
-func (amc AutoscalingMetricsCollectionAttributes) InternalTokens() hclwrite.Tokens {
+func (amc AutoscalingMetricsCollectionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return amc.ref.InternalTokens()
 }
 
 func (amc AutoscalingMetricsCollectionAttributes) Granularity() terra.StringValue {
-	return terra.ReferenceString(amc.ref.Append("granularity"))
+	return terra.ReferenceAsString(amc.ref.Append("granularity"))
 }
 
 func (amc AutoscalingMetricsCollectionAttributes) Metrics() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](amc.ref.Append("metrics"))
+	return terra.ReferenceAsList[terra.StringValue](amc.ref.Append("metrics"))
 }
 
 type ConfigEncryptionAttributes struct {
 	ref terra.Reference
 }
 
-func (ce ConfigEncryptionAttributes) InternalRef() terra.Reference {
-	return ce.ref
+func (ce ConfigEncryptionAttributes) InternalRef() (terra.Reference, error) {
+	return ce.ref, nil
 }
 
 func (ce ConfigEncryptionAttributes) InternalWithRef(ref terra.Reference) ConfigEncryptionAttributes {
 	return ConfigEncryptionAttributes{ref: ref}
 }
 
-func (ce ConfigEncryptionAttributes) InternalTokens() hclwrite.Tokens {
+func (ce ConfigEncryptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ce.ref.InternalTokens()
 }
 
 func (ce ConfigEncryptionAttributes) KmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(ce.ref.Append("kms_key_arn"))
+	return terra.ReferenceAsString(ce.ref.Append("kms_key_arn"))
 }
 
 type ProxyConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (pc ProxyConfigAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc ProxyConfigAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc ProxyConfigAttributes) InternalWithRef(ref terra.Reference) ProxyConfigAttributes {
 	return ProxyConfigAttributes{ref: ref}
 }
 
-func (pc ProxyConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (pc ProxyConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
 func (pc ProxyConfigAttributes) SecretArn() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("secret_arn"))
+	return terra.ReferenceAsString(pc.ref.Append("secret_arn"))
 }
 
 func (pc ProxyConfigAttributes) SecretVersion() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("secret_version"))
+	return terra.ReferenceAsString(pc.ref.Append("secret_version"))
 }
 
 type RootVolumeAttributes struct {
 	ref terra.Reference
 }
 
-func (rv RootVolumeAttributes) InternalRef() terra.Reference {
-	return rv.ref
+func (rv RootVolumeAttributes) InternalRef() (terra.Reference, error) {
+	return rv.ref, nil
 }
 
 func (rv RootVolumeAttributes) InternalWithRef(ref terra.Reference) RootVolumeAttributes {
 	return RootVolumeAttributes{ref: ref}
 }
 
-func (rv RootVolumeAttributes) InternalTokens() hclwrite.Tokens {
+func (rv RootVolumeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rv.ref.InternalTokens()
 }
 
 func (rv RootVolumeAttributes) Iops() terra.NumberValue {
-	return terra.ReferenceNumber(rv.ref.Append("iops"))
+	return terra.ReferenceAsNumber(rv.ref.Append("iops"))
 }
 
 func (rv RootVolumeAttributes) KmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(rv.ref.Append("kms_key_arn"))
+	return terra.ReferenceAsString(rv.ref.Append("kms_key_arn"))
 }
 
 func (rv RootVolumeAttributes) SizeGib() terra.NumberValue {
-	return terra.ReferenceNumber(rv.ref.Append("size_gib"))
+	return terra.ReferenceAsNumber(rv.ref.Append("size_gib"))
 }
 
 func (rv RootVolumeAttributes) VolumeType() terra.StringValue {
-	return terra.ReferenceString(rv.ref.Append("volume_type"))
+	return terra.ReferenceAsString(rv.ref.Append("volume_type"))
 }
 
 type SshConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (sc SshConfigAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc SshConfigAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc SshConfigAttributes) InternalWithRef(ref terra.Reference) SshConfigAttributes {
 	return SshConfigAttributes{ref: ref}
 }
 
-func (sc SshConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sc SshConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
 func (sc SshConfigAttributes) Ec2KeyPair() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("ec2_key_pair"))
+	return terra.ReferenceAsString(sc.ref.Append("ec2_key_pair"))
 }
 
 type TaintsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TaintsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TaintsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TaintsAttributes) InternalWithRef(ref terra.Reference) TaintsAttributes {
 	return TaintsAttributes{ref: ref}
 }
 
-func (t TaintsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TaintsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TaintsAttributes) Effect() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("effect"))
+	return terra.ReferenceAsString(t.ref.Append("effect"))
 }
 
 func (t TaintsAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("key"))
+	return terra.ReferenceAsString(t.ref.Append("key"))
 }
 
 func (t TaintsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("value"))
+	return terra.ReferenceAsString(t.ref.Append("value"))
 }
 
 type MaxPodsConstraintAttributes struct {
 	ref terra.Reference
 }
 
-func (mpc MaxPodsConstraintAttributes) InternalRef() terra.Reference {
-	return mpc.ref
+func (mpc MaxPodsConstraintAttributes) InternalRef() (terra.Reference, error) {
+	return mpc.ref, nil
 }
 
 func (mpc MaxPodsConstraintAttributes) InternalWithRef(ref terra.Reference) MaxPodsConstraintAttributes {
 	return MaxPodsConstraintAttributes{ref: ref}
 }
 
-func (mpc MaxPodsConstraintAttributes) InternalTokens() hclwrite.Tokens {
+func (mpc MaxPodsConstraintAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mpc.ref.InternalTokens()
 }
 
 func (mpc MaxPodsConstraintAttributes) MaxPodsPerNode() terra.NumberValue {
-	return terra.ReferenceNumber(mpc.ref.Append("max_pods_per_node"))
+	return terra.ReferenceAsNumber(mpc.ref.Append("max_pods_per_node"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AutoscalingState struct {

@@ -142,7 +142,7 @@ func (bt BatchTargetAttributes) InternalWithRef(ref terra.Reference) BatchTarget
 	return BatchTargetAttributes{ref: ref}
 }
 
-func (bt BatchTargetAttributes) InternalTokens() hclwrite.Tokens {
+func (bt BatchTargetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bt.ref.InternalTokens()
 }
 
@@ -174,7 +174,7 @@ func (dlc DeadLetterConfigAttributes) InternalWithRef(ref terra.Reference) DeadL
 	return DeadLetterConfigAttributes{ref: ref}
 }
 
-func (dlc DeadLetterConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (dlc DeadLetterConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dlc.ref.InternalTokens()
 }
 
@@ -194,7 +194,7 @@ func (et EcsTargetAttributes) InternalWithRef(ref terra.Reference) EcsTargetAttr
 	return EcsTargetAttributes{ref: ref}
 }
 
-func (et EcsTargetAttributes) InternalTokens() hclwrite.Tokens {
+func (et EcsTargetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return et.ref.InternalTokens()
 }
 
@@ -258,7 +258,7 @@ func (cps CapacityProviderStrategyAttributes) InternalWithRef(ref terra.Referenc
 	return CapacityProviderStrategyAttributes{ref: ref}
 }
 
-func (cps CapacityProviderStrategyAttributes) InternalTokens() hclwrite.Tokens {
+func (cps CapacityProviderStrategyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cps.ref.InternalTokens()
 }
 
@@ -286,7 +286,7 @@ func (nc NetworkConfigurationAttributes) InternalWithRef(ref terra.Reference) Ne
 	return NetworkConfigurationAttributes{ref: ref}
 }
 
-func (nc NetworkConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (nc NetworkConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nc.ref.InternalTokens()
 }
 
@@ -314,7 +314,7 @@ func (pc PlacementConstraintAttributes) InternalWithRef(ref terra.Reference) Pla
 	return PlacementConstraintAttributes{ref: ref}
 }
 
-func (pc PlacementConstraintAttributes) InternalTokens() hclwrite.Tokens {
+func (pc PlacementConstraintAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
@@ -338,7 +338,7 @@ func (ht HttpTargetAttributes) InternalWithRef(ref terra.Reference) HttpTargetAt
 	return HttpTargetAttributes{ref: ref}
 }
 
-func (ht HttpTargetAttributes) InternalTokens() hclwrite.Tokens {
+func (ht HttpTargetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ht.ref.InternalTokens()
 }
 
@@ -366,7 +366,7 @@ func (it InputTransformerAttributes) InternalWithRef(ref terra.Reference) InputT
 	return InputTransformerAttributes{ref: ref}
 }
 
-func (it InputTransformerAttributes) InternalTokens() hclwrite.Tokens {
+func (it InputTransformerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return it.ref.InternalTokens()
 }
 
@@ -390,7 +390,7 @@ func (kt KinesisTargetAttributes) InternalWithRef(ref terra.Reference) KinesisTa
 	return KinesisTargetAttributes{ref: ref}
 }
 
-func (kt KinesisTargetAttributes) InternalTokens() hclwrite.Tokens {
+func (kt KinesisTargetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kt.ref.InternalTokens()
 }
 
@@ -410,7 +410,7 @@ func (rt RedshiftTargetAttributes) InternalWithRef(ref terra.Reference) Redshift
 	return RedshiftTargetAttributes{ref: ref}
 }
 
-func (rt RedshiftTargetAttributes) InternalTokens() hclwrite.Tokens {
+func (rt RedshiftTargetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rt.ref.InternalTokens()
 }
 
@@ -450,7 +450,7 @@ func (rp RetryPolicyAttributes) InternalWithRef(ref terra.Reference) RetryPolicy
 	return RetryPolicyAttributes{ref: ref}
 }
 
-func (rp RetryPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (rp RetryPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rp.ref.InternalTokens()
 }
 
@@ -474,7 +474,7 @@ func (rct RunCommandTargetsAttributes) InternalWithRef(ref terra.Reference) RunC
 	return RunCommandTargetsAttributes{ref: ref}
 }
 
-func (rct RunCommandTargetsAttributes) InternalTokens() hclwrite.Tokens {
+func (rct RunCommandTargetsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rct.ref.InternalTokens()
 }
 
@@ -498,7 +498,7 @@ func (st SqsTargetAttributes) InternalWithRef(ref terra.Reference) SqsTargetAttr
 	return SqsTargetAttributes{ref: ref}
 }
 
-func (st SqsTargetAttributes) InternalTokens() hclwrite.Tokens {
+func (st SqsTargetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return st.ref.InternalTokens()
 }
 

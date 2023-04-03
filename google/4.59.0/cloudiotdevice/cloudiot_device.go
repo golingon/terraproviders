@@ -47,192 +47,192 @@ type ConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConfigAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConfigAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConfigAttributes) InternalWithRef(ref terra.Reference) ConfigAttributes {
 	return ConfigAttributes{ref: ref}
 }
 
-func (c ConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ConfigAttributes) BinaryData() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("binary_data"))
+	return terra.ReferenceAsString(c.ref.Append("binary_data"))
 }
 
 func (c ConfigAttributes) CloudUpdateTime() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("cloud_update_time"))
+	return terra.ReferenceAsString(c.ref.Append("cloud_update_time"))
 }
 
 func (c ConfigAttributes) DeviceAckTime() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("device_ack_time"))
+	return terra.ReferenceAsString(c.ref.Append("device_ack_time"))
 }
 
 func (c ConfigAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("version"))
+	return terra.ReferenceAsString(c.ref.Append("version"))
 }
 
 type LastErrorStatusAttributes struct {
 	ref terra.Reference
 }
 
-func (les LastErrorStatusAttributes) InternalRef() terra.Reference {
-	return les.ref
+func (les LastErrorStatusAttributes) InternalRef() (terra.Reference, error) {
+	return les.ref, nil
 }
 
 func (les LastErrorStatusAttributes) InternalWithRef(ref terra.Reference) LastErrorStatusAttributes {
 	return LastErrorStatusAttributes{ref: ref}
 }
 
-func (les LastErrorStatusAttributes) InternalTokens() hclwrite.Tokens {
+func (les LastErrorStatusAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return les.ref.InternalTokens()
 }
 
 func (les LastErrorStatusAttributes) Details() terra.ListValue[terra.MapValue[terra.StringValue]] {
-	return terra.ReferenceList[terra.MapValue[terra.StringValue]](les.ref.Append("details"))
+	return terra.ReferenceAsList[terra.MapValue[terra.StringValue]](les.ref.Append("details"))
 }
 
 func (les LastErrorStatusAttributes) Message() terra.StringValue {
-	return terra.ReferenceString(les.ref.Append("message"))
+	return terra.ReferenceAsString(les.ref.Append("message"))
 }
 
 func (les LastErrorStatusAttributes) Number() terra.NumberValue {
-	return terra.ReferenceNumber(les.ref.Append("number"))
+	return terra.ReferenceAsNumber(les.ref.Append("number"))
 }
 
 type StateAttributes struct {
 	ref terra.Reference
 }
 
-func (s StateAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s StateAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s StateAttributes) InternalWithRef(ref terra.Reference) StateAttributes {
 	return StateAttributes{ref: ref}
 }
 
-func (s StateAttributes) InternalTokens() hclwrite.Tokens {
+func (s StateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s StateAttributes) BinaryData() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("binary_data"))
+	return terra.ReferenceAsString(s.ref.Append("binary_data"))
 }
 
 func (s StateAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("update_time"))
+	return terra.ReferenceAsString(s.ref.Append("update_time"))
 }
 
 type CredentialsAttributes struct {
 	ref terra.Reference
 }
 
-func (c CredentialsAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CredentialsAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CredentialsAttributes) InternalWithRef(ref terra.Reference) CredentialsAttributes {
 	return CredentialsAttributes{ref: ref}
 }
 
-func (c CredentialsAttributes) InternalTokens() hclwrite.Tokens {
+func (c CredentialsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c CredentialsAttributes) ExpirationTime() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("expiration_time"))
+	return terra.ReferenceAsString(c.ref.Append("expiration_time"))
 }
 
 func (c CredentialsAttributes) PublicKey() terra.ListValue[PublicKeyAttributes] {
-	return terra.ReferenceList[PublicKeyAttributes](c.ref.Append("public_key"))
+	return terra.ReferenceAsList[PublicKeyAttributes](c.ref.Append("public_key"))
 }
 
 type PublicKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (pk PublicKeyAttributes) InternalRef() terra.Reference {
-	return pk.ref
+func (pk PublicKeyAttributes) InternalRef() (terra.Reference, error) {
+	return pk.ref, nil
 }
 
 func (pk PublicKeyAttributes) InternalWithRef(ref terra.Reference) PublicKeyAttributes {
 	return PublicKeyAttributes{ref: ref}
 }
 
-func (pk PublicKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (pk PublicKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pk.ref.InternalTokens()
 }
 
 func (pk PublicKeyAttributes) Format() terra.StringValue {
-	return terra.ReferenceString(pk.ref.Append("format"))
+	return terra.ReferenceAsString(pk.ref.Append("format"))
 }
 
 func (pk PublicKeyAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(pk.ref.Append("key"))
+	return terra.ReferenceAsString(pk.ref.Append("key"))
 }
 
 type GatewayConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (gc GatewayConfigAttributes) InternalRef() terra.Reference {
-	return gc.ref
+func (gc GatewayConfigAttributes) InternalRef() (terra.Reference, error) {
+	return gc.ref, nil
 }
 
 func (gc GatewayConfigAttributes) InternalWithRef(ref terra.Reference) GatewayConfigAttributes {
 	return GatewayConfigAttributes{ref: ref}
 }
 
-func (gc GatewayConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (gc GatewayConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gc.ref.InternalTokens()
 }
 
 func (gc GatewayConfigAttributes) GatewayAuthMethod() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("gateway_auth_method"))
+	return terra.ReferenceAsString(gc.ref.Append("gateway_auth_method"))
 }
 
 func (gc GatewayConfigAttributes) GatewayType() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("gateway_type"))
+	return terra.ReferenceAsString(gc.ref.Append("gateway_type"))
 }
 
 func (gc GatewayConfigAttributes) LastAccessedGatewayId() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("last_accessed_gateway_id"))
+	return terra.ReferenceAsString(gc.ref.Append("last_accessed_gateway_id"))
 }
 
 func (gc GatewayConfigAttributes) LastAccessedGatewayTime() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("last_accessed_gateway_time"))
+	return terra.ReferenceAsString(gc.ref.Append("last_accessed_gateway_time"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ConfigState struct {

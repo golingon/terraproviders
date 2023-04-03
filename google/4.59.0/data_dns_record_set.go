@@ -4,6 +4,7 @@ package google
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataDnsRecordSet creates a new instance of [DataDnsRecordSet].
 func NewDataDnsRecordSet(name string, args DataDnsRecordSetArgs) *DataDnsRecordSet {
 	return &DataDnsRecordSet{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataDnsRecordSet(name string, args DataDnsRecordSetArgs) *DataDnsRecordS
 
 var _ terra.DataResource = (*DataDnsRecordSet)(nil)
 
+// DataDnsRecordSet represents the Terraform data resource google_dns_record_set.
 type DataDnsRecordSet struct {
 	Name string
 	Args DataDnsRecordSetArgs
 }
 
+// DataSource returns the Terraform object type for [DataDnsRecordSet].
 func (drs *DataDnsRecordSet) DataSource() string {
 	return "google_dns_record_set"
 }
 
+// LocalName returns the local name for [DataDnsRecordSet].
 func (drs *DataDnsRecordSet) LocalName() string {
 	return drs.Name
 }
 
+// Configuration returns the configuration (args) for [DataDnsRecordSet].
 func (drs *DataDnsRecordSet) Configuration() interface{} {
 	return drs.Args
 }
 
+// Attributes returns the attributes for [DataDnsRecordSet].
 func (drs *DataDnsRecordSet) Attributes() dataDnsRecordSetAttributes {
 	return dataDnsRecordSetAttributes{ref: terra.ReferenceDataResource(drs)}
 }
 
+// DataDnsRecordSetArgs contains the configurations for google_dns_record_set.
 type DataDnsRecordSetArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -50,30 +57,37 @@ type dataDnsRecordSetAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of google_dns_record_set.
 func (drs dataDnsRecordSetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("id"))
+	return terra.ReferenceAsString(drs.ref.Append("id"))
 }
 
+// ManagedZone returns a reference to field managed_zone of google_dns_record_set.
 func (drs dataDnsRecordSetAttributes) ManagedZone() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("managed_zone"))
+	return terra.ReferenceAsString(drs.ref.Append("managed_zone"))
 }
 
+// Name returns a reference to field name of google_dns_record_set.
 func (drs dataDnsRecordSetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("name"))
+	return terra.ReferenceAsString(drs.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_dns_record_set.
 func (drs dataDnsRecordSetAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("project"))
+	return terra.ReferenceAsString(drs.ref.Append("project"))
 }
 
+// Rrdatas returns a reference to field rrdatas of google_dns_record_set.
 func (drs dataDnsRecordSetAttributes) Rrdatas() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](drs.ref.Append("rrdatas"))
+	return terra.ReferenceAsList[terra.StringValue](drs.ref.Append("rrdatas"))
 }
 
+// Ttl returns a reference to field ttl of google_dns_record_set.
 func (drs dataDnsRecordSetAttributes) Ttl() terra.NumberValue {
-	return terra.ReferenceNumber(drs.ref.Append("ttl"))
+	return terra.ReferenceAsNumber(drs.ref.Append("ttl"))
 }
 
+// Type returns a reference to field type of google_dns_record_set.
 func (drs dataDnsRecordSetAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("type"))
+	return terra.ReferenceAsString(drs.ref.Append("type"))
 }

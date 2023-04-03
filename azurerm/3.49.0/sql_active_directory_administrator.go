@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSqlActiveDirectoryAdministrator creates a new instance of [SqlActiveDirectoryAdministrator].
 func NewSqlActiveDirectoryAdministrator(name string, args SqlActiveDirectoryAdministratorArgs) *SqlActiveDirectoryAdministrator {
 	return &SqlActiveDirectoryAdministrator{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSqlActiveDirectoryAdministrator(name string, args SqlActiveDirectoryAdmi
 
 var _ terra.Resource = (*SqlActiveDirectoryAdministrator)(nil)
 
+// SqlActiveDirectoryAdministrator represents the Terraform resource azurerm_sql_active_directory_administrator.
 type SqlActiveDirectoryAdministrator struct {
-	Name  string
-	Args  SqlActiveDirectoryAdministratorArgs
-	state *sqlActiveDirectoryAdministratorState
+	Name      string
+	Args      SqlActiveDirectoryAdministratorArgs
+	state     *sqlActiveDirectoryAdministratorState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SqlActiveDirectoryAdministrator].
 func (sada *SqlActiveDirectoryAdministrator) Type() string {
 	return "azurerm_sql_active_directory_administrator"
 }
 
+// LocalName returns the local name for [SqlActiveDirectoryAdministrator].
 func (sada *SqlActiveDirectoryAdministrator) LocalName() string {
 	return sada.Name
 }
 
+// Configuration returns the configuration (args) for [SqlActiveDirectoryAdministrator].
 func (sada *SqlActiveDirectoryAdministrator) Configuration() interface{} {
 	return sada.Args
 }
 
+// DependOn is used for other resources to depend on [SqlActiveDirectoryAdministrator].
+func (sada *SqlActiveDirectoryAdministrator) DependOn() terra.Reference {
+	return terra.ReferenceResource(sada)
+}
+
+// Dependencies returns the list of resources [SqlActiveDirectoryAdministrator] depends_on.
+func (sada *SqlActiveDirectoryAdministrator) Dependencies() terra.Dependencies {
+	return sada.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SqlActiveDirectoryAdministrator].
+func (sada *SqlActiveDirectoryAdministrator) LifecycleManagement() *terra.Lifecycle {
+	return sada.Lifecycle
+}
+
+// Attributes returns the attributes for [SqlActiveDirectoryAdministrator].
 func (sada *SqlActiveDirectoryAdministrator) Attributes() sqlActiveDirectoryAdministratorAttributes {
 	return sqlActiveDirectoryAdministratorAttributes{ref: terra.ReferenceResource(sada)}
 }
 
+// ImportState imports the given attribute values into [SqlActiveDirectoryAdministrator]'s state.
 func (sada *SqlActiveDirectoryAdministrator) ImportState(av io.Reader) error {
 	sada.state = &sqlActiveDirectoryAdministratorState{}
 	if err := json.NewDecoder(av).Decode(sada.state); err != nil {
@@ -49,10 +73,12 @@ func (sada *SqlActiveDirectoryAdministrator) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SqlActiveDirectoryAdministrator] has state.
 func (sada *SqlActiveDirectoryAdministrator) State() (*sqlActiveDirectoryAdministratorState, bool) {
 	return sada.state, sada.state != nil
 }
 
+// StateMust returns the state for [SqlActiveDirectoryAdministrator]. Panics if the state is nil.
 func (sada *SqlActiveDirectoryAdministrator) StateMust() *sqlActiveDirectoryAdministratorState {
 	if sada.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sada.Type(), sada.LocalName()))
@@ -60,10 +86,7 @@ func (sada *SqlActiveDirectoryAdministrator) StateMust() *sqlActiveDirectoryAdmi
 	return sada.state
 }
 
-func (sada *SqlActiveDirectoryAdministrator) DependOn() terra.Reference {
-	return terra.ReferenceResource(sada)
-}
-
+// SqlActiveDirectoryAdministratorArgs contains the configurations for azurerm_sql_active_directory_administrator.
 type SqlActiveDirectoryAdministratorArgs struct {
 	// AzureadAuthenticationOnly: bool, optional
 	AzureadAuthenticationOnly terra.BoolValue `hcl:"azuread_authentication_only,attr"`
@@ -81,43 +104,48 @@ type SqlActiveDirectoryAdministratorArgs struct {
 	TenantId terra.StringValue `hcl:"tenant_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *sqlactivedirectoryadministrator.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SqlActiveDirectoryAdministrator depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sqlActiveDirectoryAdministratorAttributes struct {
 	ref terra.Reference
 }
 
+// AzureadAuthenticationOnly returns a reference to field azuread_authentication_only of azurerm_sql_active_directory_administrator.
 func (sada sqlActiveDirectoryAdministratorAttributes) AzureadAuthenticationOnly() terra.BoolValue {
-	return terra.ReferenceBool(sada.ref.Append("azuread_authentication_only"))
+	return terra.ReferenceAsBool(sada.ref.Append("azuread_authentication_only"))
 }
 
+// Id returns a reference to field id of azurerm_sql_active_directory_administrator.
 func (sada sqlActiveDirectoryAdministratorAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sada.ref.Append("id"))
+	return terra.ReferenceAsString(sada.ref.Append("id"))
 }
 
+// Login returns a reference to field login of azurerm_sql_active_directory_administrator.
 func (sada sqlActiveDirectoryAdministratorAttributes) Login() terra.StringValue {
-	return terra.ReferenceString(sada.ref.Append("login"))
+	return terra.ReferenceAsString(sada.ref.Append("login"))
 }
 
+// ObjectId returns a reference to field object_id of azurerm_sql_active_directory_administrator.
 func (sada sqlActiveDirectoryAdministratorAttributes) ObjectId() terra.StringValue {
-	return terra.ReferenceString(sada.ref.Append("object_id"))
+	return terra.ReferenceAsString(sada.ref.Append("object_id"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_sql_active_directory_administrator.
 func (sada sqlActiveDirectoryAdministratorAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(sada.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(sada.ref.Append("resource_group_name"))
 }
 
+// ServerName returns a reference to field server_name of azurerm_sql_active_directory_administrator.
 func (sada sqlActiveDirectoryAdministratorAttributes) ServerName() terra.StringValue {
-	return terra.ReferenceString(sada.ref.Append("server_name"))
+	return terra.ReferenceAsString(sada.ref.Append("server_name"))
 }
 
+// TenantId returns a reference to field tenant_id of azurerm_sql_active_directory_administrator.
 func (sada sqlActiveDirectoryAdministratorAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(sada.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(sada.ref.Append("tenant_id"))
 }
 
 func (sada sqlActiveDirectoryAdministratorAttributes) Timeouts() sqlactivedirectoryadministrator.TimeoutsAttributes {
-	return terra.ReferenceSingle[sqlactivedirectoryadministrator.TimeoutsAttributes](sada.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[sqlactivedirectoryadministrator.TimeoutsAttributes](sada.ref.Append("timeouts"))
 }
 
 type sqlActiveDirectoryAdministratorState struct {

@@ -24,7 +24,7 @@ func (sdp SnapshotDeliveryPropertiesAttributes) InternalWithRef(ref terra.Refere
 	return SnapshotDeliveryPropertiesAttributes{ref: ref}
 }
 
-func (sdp SnapshotDeliveryPropertiesAttributes) InternalTokens() hclwrite.Tokens {
+func (sdp SnapshotDeliveryPropertiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sdp.ref.InternalTokens()
 }
 

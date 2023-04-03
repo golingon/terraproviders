@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMonitorDiagnosticSetting creates a new instance of [MonitorDiagnosticSetting].
 func NewMonitorDiagnosticSetting(name string, args MonitorDiagnosticSettingArgs) *MonitorDiagnosticSetting {
 	return &MonitorDiagnosticSetting{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMonitorDiagnosticSetting(name string, args MonitorDiagnosticSettingArgs)
 
 var _ terra.Resource = (*MonitorDiagnosticSetting)(nil)
 
+// MonitorDiagnosticSetting represents the Terraform resource azurerm_monitor_diagnostic_setting.
 type MonitorDiagnosticSetting struct {
-	Name  string
-	Args  MonitorDiagnosticSettingArgs
-	state *monitorDiagnosticSettingState
+	Name      string
+	Args      MonitorDiagnosticSettingArgs
+	state     *monitorDiagnosticSettingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MonitorDiagnosticSetting].
 func (mds *MonitorDiagnosticSetting) Type() string {
 	return "azurerm_monitor_diagnostic_setting"
 }
 
+// LocalName returns the local name for [MonitorDiagnosticSetting].
 func (mds *MonitorDiagnosticSetting) LocalName() string {
 	return mds.Name
 }
 
+// Configuration returns the configuration (args) for [MonitorDiagnosticSetting].
 func (mds *MonitorDiagnosticSetting) Configuration() interface{} {
 	return mds.Args
 }
 
+// DependOn is used for other resources to depend on [MonitorDiagnosticSetting].
+func (mds *MonitorDiagnosticSetting) DependOn() terra.Reference {
+	return terra.ReferenceResource(mds)
+}
+
+// Dependencies returns the list of resources [MonitorDiagnosticSetting] depends_on.
+func (mds *MonitorDiagnosticSetting) Dependencies() terra.Dependencies {
+	return mds.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MonitorDiagnosticSetting].
+func (mds *MonitorDiagnosticSetting) LifecycleManagement() *terra.Lifecycle {
+	return mds.Lifecycle
+}
+
+// Attributes returns the attributes for [MonitorDiagnosticSetting].
 func (mds *MonitorDiagnosticSetting) Attributes() monitorDiagnosticSettingAttributes {
 	return monitorDiagnosticSettingAttributes{ref: terra.ReferenceResource(mds)}
 }
 
+// ImportState imports the given attribute values into [MonitorDiagnosticSetting]'s state.
 func (mds *MonitorDiagnosticSetting) ImportState(av io.Reader) error {
 	mds.state = &monitorDiagnosticSettingState{}
 	if err := json.NewDecoder(av).Decode(mds.state); err != nil {
@@ -49,10 +73,12 @@ func (mds *MonitorDiagnosticSetting) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MonitorDiagnosticSetting] has state.
 func (mds *MonitorDiagnosticSetting) State() (*monitorDiagnosticSettingState, bool) {
 	return mds.state, mds.state != nil
 }
 
+// StateMust returns the state for [MonitorDiagnosticSetting]. Panics if the state is nil.
 func (mds *MonitorDiagnosticSetting) StateMust() *monitorDiagnosticSettingState {
 	if mds.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mds.Type(), mds.LocalName()))
@@ -60,10 +86,7 @@ func (mds *MonitorDiagnosticSetting) StateMust() *monitorDiagnosticSettingState 
 	return mds.state
 }
 
-func (mds *MonitorDiagnosticSetting) DependOn() terra.Reference {
-	return terra.ReferenceResource(mds)
-}
-
+// MonitorDiagnosticSettingArgs contains the configurations for azurerm_monitor_diagnostic_setting.
 type MonitorDiagnosticSettingArgs struct {
 	// EventhubAuthorizationRuleId: string, optional
 	EventhubAuthorizationRuleId terra.StringValue `hcl:"eventhub_authorization_rule_id,attr"`
@@ -91,63 +114,70 @@ type MonitorDiagnosticSettingArgs struct {
 	Metric []monitordiagnosticsetting.Metric `hcl:"metric,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *monitordiagnosticsetting.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MonitorDiagnosticSetting depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type monitorDiagnosticSettingAttributes struct {
 	ref terra.Reference
 }
 
+// EventhubAuthorizationRuleId returns a reference to field eventhub_authorization_rule_id of azurerm_monitor_diagnostic_setting.
 func (mds monitorDiagnosticSettingAttributes) EventhubAuthorizationRuleId() terra.StringValue {
-	return terra.ReferenceString(mds.ref.Append("eventhub_authorization_rule_id"))
+	return terra.ReferenceAsString(mds.ref.Append("eventhub_authorization_rule_id"))
 }
 
+// EventhubName returns a reference to field eventhub_name of azurerm_monitor_diagnostic_setting.
 func (mds monitorDiagnosticSettingAttributes) EventhubName() terra.StringValue {
-	return terra.ReferenceString(mds.ref.Append("eventhub_name"))
+	return terra.ReferenceAsString(mds.ref.Append("eventhub_name"))
 }
 
+// Id returns a reference to field id of azurerm_monitor_diagnostic_setting.
 func (mds monitorDiagnosticSettingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mds.ref.Append("id"))
+	return terra.ReferenceAsString(mds.ref.Append("id"))
 }
 
+// LogAnalyticsDestinationType returns a reference to field log_analytics_destination_type of azurerm_monitor_diagnostic_setting.
 func (mds monitorDiagnosticSettingAttributes) LogAnalyticsDestinationType() terra.StringValue {
-	return terra.ReferenceString(mds.ref.Append("log_analytics_destination_type"))
+	return terra.ReferenceAsString(mds.ref.Append("log_analytics_destination_type"))
 }
 
+// LogAnalyticsWorkspaceId returns a reference to field log_analytics_workspace_id of azurerm_monitor_diagnostic_setting.
 func (mds monitorDiagnosticSettingAttributes) LogAnalyticsWorkspaceId() terra.StringValue {
-	return terra.ReferenceString(mds.ref.Append("log_analytics_workspace_id"))
+	return terra.ReferenceAsString(mds.ref.Append("log_analytics_workspace_id"))
 }
 
+// Name returns a reference to field name of azurerm_monitor_diagnostic_setting.
 func (mds monitorDiagnosticSettingAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mds.ref.Append("name"))
+	return terra.ReferenceAsString(mds.ref.Append("name"))
 }
 
+// PartnerSolutionId returns a reference to field partner_solution_id of azurerm_monitor_diagnostic_setting.
 func (mds monitorDiagnosticSettingAttributes) PartnerSolutionId() terra.StringValue {
-	return terra.ReferenceString(mds.ref.Append("partner_solution_id"))
+	return terra.ReferenceAsString(mds.ref.Append("partner_solution_id"))
 }
 
+// StorageAccountId returns a reference to field storage_account_id of azurerm_monitor_diagnostic_setting.
 func (mds monitorDiagnosticSettingAttributes) StorageAccountId() terra.StringValue {
-	return terra.ReferenceString(mds.ref.Append("storage_account_id"))
+	return terra.ReferenceAsString(mds.ref.Append("storage_account_id"))
 }
 
+// TargetResourceId returns a reference to field target_resource_id of azurerm_monitor_diagnostic_setting.
 func (mds monitorDiagnosticSettingAttributes) TargetResourceId() terra.StringValue {
-	return terra.ReferenceString(mds.ref.Append("target_resource_id"))
+	return terra.ReferenceAsString(mds.ref.Append("target_resource_id"))
 }
 
 func (mds monitorDiagnosticSettingAttributes) EnabledLog() terra.SetValue[monitordiagnosticsetting.EnabledLogAttributes] {
-	return terra.ReferenceSet[monitordiagnosticsetting.EnabledLogAttributes](mds.ref.Append("enabled_log"))
+	return terra.ReferenceAsSet[monitordiagnosticsetting.EnabledLogAttributes](mds.ref.Append("enabled_log"))
 }
 
 func (mds monitorDiagnosticSettingAttributes) Log() terra.SetValue[monitordiagnosticsetting.LogAttributes] {
-	return terra.ReferenceSet[monitordiagnosticsetting.LogAttributes](mds.ref.Append("log"))
+	return terra.ReferenceAsSet[monitordiagnosticsetting.LogAttributes](mds.ref.Append("log"))
 }
 
 func (mds monitorDiagnosticSettingAttributes) Metric() terra.SetValue[monitordiagnosticsetting.MetricAttributes] {
-	return terra.ReferenceSet[monitordiagnosticsetting.MetricAttributes](mds.ref.Append("metric"))
+	return terra.ReferenceAsSet[monitordiagnosticsetting.MetricAttributes](mds.ref.Append("metric"))
 }
 
 func (mds monitorDiagnosticSettingAttributes) Timeouts() monitordiagnosticsetting.TimeoutsAttributes {
-	return terra.ReferenceSingle[monitordiagnosticsetting.TimeoutsAttributes](mds.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[monitordiagnosticsetting.TimeoutsAttributes](mds.ref.Append("timeouts"))
 }
 
 type monitorDiagnosticSettingState struct {

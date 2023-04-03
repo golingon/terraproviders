@@ -36,7 +36,7 @@ func (s SpecAttributes) InternalWithRef(ref terra.Reference) SpecAttributes {
 	return SpecAttributes{ref: ref}
 }
 
-func (s SpecAttributes) InternalTokens() hclwrite.Tokens {
+func (s SpecAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -56,7 +56,7 @@ func (l ListenerAttributes) InternalWithRef(ref terra.Reference) ListenerAttribu
 	return ListenerAttributes{ref: ref}
 }
 
-func (l ListenerAttributes) InternalTokens() hclwrite.Tokens {
+func (l ListenerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 
@@ -76,7 +76,7 @@ func (pm PortMappingAttributes) InternalWithRef(ref terra.Reference) PortMapping
 	return PortMappingAttributes{ref: ref}
 }
 
-func (pm PortMappingAttributes) InternalTokens() hclwrite.Tokens {
+func (pm PortMappingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pm.ref.InternalTokens()
 }
 

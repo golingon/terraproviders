@@ -26,7 +26,7 @@ func (c ConstraintsAttributes) InternalWithRef(ref terra.Reference) ConstraintsA
 	return ConstraintsAttributes{ref: ref}
 }
 
-func (c ConstraintsAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConstraintsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 

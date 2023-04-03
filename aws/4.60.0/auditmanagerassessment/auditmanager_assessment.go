@@ -52,7 +52,7 @@ func (r RolesAttributes) InternalWithRef(ref terra.Reference) RolesAttributes {
 	return RolesAttributes{ref: ref}
 }
 
-func (r RolesAttributes) InternalTokens() hclwrite.Tokens {
+func (r RolesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -76,7 +76,7 @@ func (ra RolesAllAttributes) InternalWithRef(ref terra.Reference) RolesAllAttrib
 	return RolesAllAttributes{ref: ref}
 }
 
-func (ra RolesAllAttributes) InternalTokens() hclwrite.Tokens {
+func (ra RolesAllAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ra.ref.InternalTokens()
 }
 
@@ -100,7 +100,7 @@ func (ard AssessmentReportsDestinationAttributes) InternalWithRef(ref terra.Refe
 	return AssessmentReportsDestinationAttributes{ref: ref}
 }
 
-func (ard AssessmentReportsDestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (ard AssessmentReportsDestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ard.ref.InternalTokens()
 }
 
@@ -124,7 +124,7 @@ func (s ScopeAttributes) InternalWithRef(ref terra.Reference) ScopeAttributes {
 	return ScopeAttributes{ref: ref}
 }
 
-func (s ScopeAttributes) InternalTokens() hclwrite.Tokens {
+func (s ScopeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -148,7 +148,7 @@ func (aa AwsAccountsAttributes) InternalWithRef(ref terra.Reference) AwsAccounts
 	return AwsAccountsAttributes{ref: ref}
 }
 
-func (aa AwsAccountsAttributes) InternalTokens() hclwrite.Tokens {
+func (aa AwsAccountsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aa.ref.InternalTokens()
 }
 
@@ -168,7 +168,7 @@ func (as AwsServicesAttributes) InternalWithRef(ref terra.Reference) AwsServices
 	return AwsServicesAttributes{ref: ref}
 }
 
-func (as AwsServicesAttributes) InternalTokens() hclwrite.Tokens {
+func (as AwsServicesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return as.ref.InternalTokens()
 }
 

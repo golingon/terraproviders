@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSqlSourceRepresentationInstance creates a new instance of [SqlSourceRepresentationInstance].
 func NewSqlSourceRepresentationInstance(name string, args SqlSourceRepresentationInstanceArgs) *SqlSourceRepresentationInstance {
 	return &SqlSourceRepresentationInstance{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSqlSourceRepresentationInstance(name string, args SqlSourceRepresentatio
 
 var _ terra.Resource = (*SqlSourceRepresentationInstance)(nil)
 
+// SqlSourceRepresentationInstance represents the Terraform resource google_sql_source_representation_instance.
 type SqlSourceRepresentationInstance struct {
-	Name  string
-	Args  SqlSourceRepresentationInstanceArgs
-	state *sqlSourceRepresentationInstanceState
+	Name      string
+	Args      SqlSourceRepresentationInstanceArgs
+	state     *sqlSourceRepresentationInstanceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SqlSourceRepresentationInstance].
 func (ssri *SqlSourceRepresentationInstance) Type() string {
 	return "google_sql_source_representation_instance"
 }
 
+// LocalName returns the local name for [SqlSourceRepresentationInstance].
 func (ssri *SqlSourceRepresentationInstance) LocalName() string {
 	return ssri.Name
 }
 
+// Configuration returns the configuration (args) for [SqlSourceRepresentationInstance].
 func (ssri *SqlSourceRepresentationInstance) Configuration() interface{} {
 	return ssri.Args
 }
 
+// DependOn is used for other resources to depend on [SqlSourceRepresentationInstance].
+func (ssri *SqlSourceRepresentationInstance) DependOn() terra.Reference {
+	return terra.ReferenceResource(ssri)
+}
+
+// Dependencies returns the list of resources [SqlSourceRepresentationInstance] depends_on.
+func (ssri *SqlSourceRepresentationInstance) Dependencies() terra.Dependencies {
+	return ssri.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SqlSourceRepresentationInstance].
+func (ssri *SqlSourceRepresentationInstance) LifecycleManagement() *terra.Lifecycle {
+	return ssri.Lifecycle
+}
+
+// Attributes returns the attributes for [SqlSourceRepresentationInstance].
 func (ssri *SqlSourceRepresentationInstance) Attributes() sqlSourceRepresentationInstanceAttributes {
 	return sqlSourceRepresentationInstanceAttributes{ref: terra.ReferenceResource(ssri)}
 }
 
+// ImportState imports the given attribute values into [SqlSourceRepresentationInstance]'s state.
 func (ssri *SqlSourceRepresentationInstance) ImportState(av io.Reader) error {
 	ssri.state = &sqlSourceRepresentationInstanceState{}
 	if err := json.NewDecoder(av).Decode(ssri.state); err != nil {
@@ -49,10 +73,12 @@ func (ssri *SqlSourceRepresentationInstance) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SqlSourceRepresentationInstance] has state.
 func (ssri *SqlSourceRepresentationInstance) State() (*sqlSourceRepresentationInstanceState, bool) {
 	return ssri.state, ssri.state != nil
 }
 
+// StateMust returns the state for [SqlSourceRepresentationInstance]. Panics if the state is nil.
 func (ssri *SqlSourceRepresentationInstance) StateMust() *sqlSourceRepresentationInstanceState {
 	if ssri.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ssri.Type(), ssri.LocalName()))
@@ -60,10 +86,7 @@ func (ssri *SqlSourceRepresentationInstance) StateMust() *sqlSourceRepresentatio
 	return ssri.state
 }
 
-func (ssri *SqlSourceRepresentationInstance) DependOn() terra.Reference {
-	return terra.ReferenceResource(ssri)
-}
-
+// SqlSourceRepresentationInstanceArgs contains the configurations for google_sql_source_representation_instance.
 type SqlSourceRepresentationInstanceArgs struct {
 	// CaCertificate: string, optional
 	CaCertificate terra.StringValue `hcl:"ca_certificate,attr"`
@@ -93,67 +116,78 @@ type SqlSourceRepresentationInstanceArgs struct {
 	Username terra.StringValue `hcl:"username,attr"`
 	// Timeouts: optional
 	Timeouts *sqlsourcerepresentationinstance.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SqlSourceRepresentationInstance depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sqlSourceRepresentationInstanceAttributes struct {
 	ref terra.Reference
 }
 
+// CaCertificate returns a reference to field ca_certificate of google_sql_source_representation_instance.
 func (ssri sqlSourceRepresentationInstanceAttributes) CaCertificate() terra.StringValue {
-	return terra.ReferenceString(ssri.ref.Append("ca_certificate"))
+	return terra.ReferenceAsString(ssri.ref.Append("ca_certificate"))
 }
 
+// ClientCertificate returns a reference to field client_certificate of google_sql_source_representation_instance.
 func (ssri sqlSourceRepresentationInstanceAttributes) ClientCertificate() terra.StringValue {
-	return terra.ReferenceString(ssri.ref.Append("client_certificate"))
+	return terra.ReferenceAsString(ssri.ref.Append("client_certificate"))
 }
 
+// ClientKey returns a reference to field client_key of google_sql_source_representation_instance.
 func (ssri sqlSourceRepresentationInstanceAttributes) ClientKey() terra.StringValue {
-	return terra.ReferenceString(ssri.ref.Append("client_key"))
+	return terra.ReferenceAsString(ssri.ref.Append("client_key"))
 }
 
+// DatabaseVersion returns a reference to field database_version of google_sql_source_representation_instance.
 func (ssri sqlSourceRepresentationInstanceAttributes) DatabaseVersion() terra.StringValue {
-	return terra.ReferenceString(ssri.ref.Append("database_version"))
+	return terra.ReferenceAsString(ssri.ref.Append("database_version"))
 }
 
+// DumpFilePath returns a reference to field dump_file_path of google_sql_source_representation_instance.
 func (ssri sqlSourceRepresentationInstanceAttributes) DumpFilePath() terra.StringValue {
-	return terra.ReferenceString(ssri.ref.Append("dump_file_path"))
+	return terra.ReferenceAsString(ssri.ref.Append("dump_file_path"))
 }
 
+// Host returns a reference to field host of google_sql_source_representation_instance.
 func (ssri sqlSourceRepresentationInstanceAttributes) Host() terra.StringValue {
-	return terra.ReferenceString(ssri.ref.Append("host"))
+	return terra.ReferenceAsString(ssri.ref.Append("host"))
 }
 
+// Id returns a reference to field id of google_sql_source_representation_instance.
 func (ssri sqlSourceRepresentationInstanceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ssri.ref.Append("id"))
+	return terra.ReferenceAsString(ssri.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_sql_source_representation_instance.
 func (ssri sqlSourceRepresentationInstanceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ssri.ref.Append("name"))
+	return terra.ReferenceAsString(ssri.ref.Append("name"))
 }
 
+// Password returns a reference to field password of google_sql_source_representation_instance.
 func (ssri sqlSourceRepresentationInstanceAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(ssri.ref.Append("password"))
+	return terra.ReferenceAsString(ssri.ref.Append("password"))
 }
 
+// Port returns a reference to field port of google_sql_source_representation_instance.
 func (ssri sqlSourceRepresentationInstanceAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(ssri.ref.Append("port"))
+	return terra.ReferenceAsNumber(ssri.ref.Append("port"))
 }
 
+// Project returns a reference to field project of google_sql_source_representation_instance.
 func (ssri sqlSourceRepresentationInstanceAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ssri.ref.Append("project"))
+	return terra.ReferenceAsString(ssri.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_sql_source_representation_instance.
 func (ssri sqlSourceRepresentationInstanceAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(ssri.ref.Append("region"))
+	return terra.ReferenceAsString(ssri.ref.Append("region"))
 }
 
+// Username returns a reference to field username of google_sql_source_representation_instance.
 func (ssri sqlSourceRepresentationInstanceAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(ssri.ref.Append("username"))
+	return terra.ReferenceAsString(ssri.ref.Append("username"))
 }
 
 func (ssri sqlSourceRepresentationInstanceAttributes) Timeouts() sqlsourcerepresentationinstance.TimeoutsAttributes {
-	return terra.ReferenceSingle[sqlsourcerepresentationinstance.TimeoutsAttributes](ssri.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[sqlsourcerepresentationinstance.TimeoutsAttributes](ssri.ref.Append("timeouts"))
 }
 
 type sqlSourceRepresentationInstanceState struct {

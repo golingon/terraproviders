@@ -93,244 +93,244 @@ type AutoscalingPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (ap AutoscalingPolicyAttributes) InternalRef() terra.Reference {
-	return ap.ref
+func (ap AutoscalingPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return ap.ref, nil
 }
 
 func (ap AutoscalingPolicyAttributes) InternalWithRef(ref terra.Reference) AutoscalingPolicyAttributes {
 	return AutoscalingPolicyAttributes{ref: ref}
 }
 
-func (ap AutoscalingPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (ap AutoscalingPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ap.ref.InternalTokens()
 }
 
 func (ap AutoscalingPolicyAttributes) CooldownPeriod() terra.NumberValue {
-	return terra.ReferenceNumber(ap.ref.Append("cooldown_period"))
+	return terra.ReferenceAsNumber(ap.ref.Append("cooldown_period"))
 }
 
 func (ap AutoscalingPolicyAttributes) MaxReplicas() terra.NumberValue {
-	return terra.ReferenceNumber(ap.ref.Append("max_replicas"))
+	return terra.ReferenceAsNumber(ap.ref.Append("max_replicas"))
 }
 
 func (ap AutoscalingPolicyAttributes) MinReplicas() terra.NumberValue {
-	return terra.ReferenceNumber(ap.ref.Append("min_replicas"))
+	return terra.ReferenceAsNumber(ap.ref.Append("min_replicas"))
 }
 
 func (ap AutoscalingPolicyAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("mode"))
+	return terra.ReferenceAsString(ap.ref.Append("mode"))
 }
 
 func (ap AutoscalingPolicyAttributes) CpuUtilization() terra.ListValue[CpuUtilizationAttributes] {
-	return terra.ReferenceList[CpuUtilizationAttributes](ap.ref.Append("cpu_utilization"))
+	return terra.ReferenceAsList[CpuUtilizationAttributes](ap.ref.Append("cpu_utilization"))
 }
 
 func (ap AutoscalingPolicyAttributes) LoadBalancingUtilization() terra.ListValue[LoadBalancingUtilizationAttributes] {
-	return terra.ReferenceList[LoadBalancingUtilizationAttributes](ap.ref.Append("load_balancing_utilization"))
+	return terra.ReferenceAsList[LoadBalancingUtilizationAttributes](ap.ref.Append("load_balancing_utilization"))
 }
 
 func (ap AutoscalingPolicyAttributes) Metric() terra.ListValue[MetricAttributes] {
-	return terra.ReferenceList[MetricAttributes](ap.ref.Append("metric"))
+	return terra.ReferenceAsList[MetricAttributes](ap.ref.Append("metric"))
 }
 
 func (ap AutoscalingPolicyAttributes) ScaleInControl() terra.ListValue[ScaleInControlAttributes] {
-	return terra.ReferenceList[ScaleInControlAttributes](ap.ref.Append("scale_in_control"))
+	return terra.ReferenceAsList[ScaleInControlAttributes](ap.ref.Append("scale_in_control"))
 }
 
 func (ap AutoscalingPolicyAttributes) ScalingSchedules() terra.SetValue[ScalingSchedulesAttributes] {
-	return terra.ReferenceSet[ScalingSchedulesAttributes](ap.ref.Append("scaling_schedules"))
+	return terra.ReferenceAsSet[ScalingSchedulesAttributes](ap.ref.Append("scaling_schedules"))
 }
 
 type CpuUtilizationAttributes struct {
 	ref terra.Reference
 }
 
-func (cu CpuUtilizationAttributes) InternalRef() terra.Reference {
-	return cu.ref
+func (cu CpuUtilizationAttributes) InternalRef() (terra.Reference, error) {
+	return cu.ref, nil
 }
 
 func (cu CpuUtilizationAttributes) InternalWithRef(ref terra.Reference) CpuUtilizationAttributes {
 	return CpuUtilizationAttributes{ref: ref}
 }
 
-func (cu CpuUtilizationAttributes) InternalTokens() hclwrite.Tokens {
+func (cu CpuUtilizationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cu.ref.InternalTokens()
 }
 
 func (cu CpuUtilizationAttributes) PredictiveMethod() terra.StringValue {
-	return terra.ReferenceString(cu.ref.Append("predictive_method"))
+	return terra.ReferenceAsString(cu.ref.Append("predictive_method"))
 }
 
 func (cu CpuUtilizationAttributes) Target() terra.NumberValue {
-	return terra.ReferenceNumber(cu.ref.Append("target"))
+	return terra.ReferenceAsNumber(cu.ref.Append("target"))
 }
 
 type LoadBalancingUtilizationAttributes struct {
 	ref terra.Reference
 }
 
-func (lbu LoadBalancingUtilizationAttributes) InternalRef() terra.Reference {
-	return lbu.ref
+func (lbu LoadBalancingUtilizationAttributes) InternalRef() (terra.Reference, error) {
+	return lbu.ref, nil
 }
 
 func (lbu LoadBalancingUtilizationAttributes) InternalWithRef(ref terra.Reference) LoadBalancingUtilizationAttributes {
 	return LoadBalancingUtilizationAttributes{ref: ref}
 }
 
-func (lbu LoadBalancingUtilizationAttributes) InternalTokens() hclwrite.Tokens {
+func (lbu LoadBalancingUtilizationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lbu.ref.InternalTokens()
 }
 
 func (lbu LoadBalancingUtilizationAttributes) Target() terra.NumberValue {
-	return terra.ReferenceNumber(lbu.ref.Append("target"))
+	return terra.ReferenceAsNumber(lbu.ref.Append("target"))
 }
 
 type MetricAttributes struct {
 	ref terra.Reference
 }
 
-func (m MetricAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MetricAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MetricAttributes) InternalWithRef(ref terra.Reference) MetricAttributes {
 	return MetricAttributes{ref: ref}
 }
 
-func (m MetricAttributes) InternalTokens() hclwrite.Tokens {
+func (m MetricAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
 func (m MetricAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("name"))
+	return terra.ReferenceAsString(m.ref.Append("name"))
 }
 
 func (m MetricAttributes) Target() terra.NumberValue {
-	return terra.ReferenceNumber(m.ref.Append("target"))
+	return terra.ReferenceAsNumber(m.ref.Append("target"))
 }
 
 func (m MetricAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("type"))
+	return terra.ReferenceAsString(m.ref.Append("type"))
 }
 
 type ScaleInControlAttributes struct {
 	ref terra.Reference
 }
 
-func (sic ScaleInControlAttributes) InternalRef() terra.Reference {
-	return sic.ref
+func (sic ScaleInControlAttributes) InternalRef() (terra.Reference, error) {
+	return sic.ref, nil
 }
 
 func (sic ScaleInControlAttributes) InternalWithRef(ref terra.Reference) ScaleInControlAttributes {
 	return ScaleInControlAttributes{ref: ref}
 }
 
-func (sic ScaleInControlAttributes) InternalTokens() hclwrite.Tokens {
+func (sic ScaleInControlAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sic.ref.InternalTokens()
 }
 
 func (sic ScaleInControlAttributes) TimeWindowSec() terra.NumberValue {
-	return terra.ReferenceNumber(sic.ref.Append("time_window_sec"))
+	return terra.ReferenceAsNumber(sic.ref.Append("time_window_sec"))
 }
 
 func (sic ScaleInControlAttributes) MaxScaledInReplicas() terra.ListValue[MaxScaledInReplicasAttributes] {
-	return terra.ReferenceList[MaxScaledInReplicasAttributes](sic.ref.Append("max_scaled_in_replicas"))
+	return terra.ReferenceAsList[MaxScaledInReplicasAttributes](sic.ref.Append("max_scaled_in_replicas"))
 }
 
 type MaxScaledInReplicasAttributes struct {
 	ref terra.Reference
 }
 
-func (msir MaxScaledInReplicasAttributes) InternalRef() terra.Reference {
-	return msir.ref
+func (msir MaxScaledInReplicasAttributes) InternalRef() (terra.Reference, error) {
+	return msir.ref, nil
 }
 
 func (msir MaxScaledInReplicasAttributes) InternalWithRef(ref terra.Reference) MaxScaledInReplicasAttributes {
 	return MaxScaledInReplicasAttributes{ref: ref}
 }
 
-func (msir MaxScaledInReplicasAttributes) InternalTokens() hclwrite.Tokens {
+func (msir MaxScaledInReplicasAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return msir.ref.InternalTokens()
 }
 
 func (msir MaxScaledInReplicasAttributes) Fixed() terra.NumberValue {
-	return terra.ReferenceNumber(msir.ref.Append("fixed"))
+	return terra.ReferenceAsNumber(msir.ref.Append("fixed"))
 }
 
 func (msir MaxScaledInReplicasAttributes) Percent() terra.NumberValue {
-	return terra.ReferenceNumber(msir.ref.Append("percent"))
+	return terra.ReferenceAsNumber(msir.ref.Append("percent"))
 }
 
 type ScalingSchedulesAttributes struct {
 	ref terra.Reference
 }
 
-func (ss ScalingSchedulesAttributes) InternalRef() terra.Reference {
-	return ss.ref
+func (ss ScalingSchedulesAttributes) InternalRef() (terra.Reference, error) {
+	return ss.ref, nil
 }
 
 func (ss ScalingSchedulesAttributes) InternalWithRef(ref terra.Reference) ScalingSchedulesAttributes {
 	return ScalingSchedulesAttributes{ref: ref}
 }
 
-func (ss ScalingSchedulesAttributes) InternalTokens() hclwrite.Tokens {
+func (ss ScalingSchedulesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ss.ref.InternalTokens()
 }
 
 func (ss ScalingSchedulesAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("description"))
+	return terra.ReferenceAsString(ss.ref.Append("description"))
 }
 
 func (ss ScalingSchedulesAttributes) Disabled() terra.BoolValue {
-	return terra.ReferenceBool(ss.ref.Append("disabled"))
+	return terra.ReferenceAsBool(ss.ref.Append("disabled"))
 }
 
 func (ss ScalingSchedulesAttributes) DurationSec() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("duration_sec"))
+	return terra.ReferenceAsNumber(ss.ref.Append("duration_sec"))
 }
 
 func (ss ScalingSchedulesAttributes) MinRequiredReplicas() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("min_required_replicas"))
+	return terra.ReferenceAsNumber(ss.ref.Append("min_required_replicas"))
 }
 
 func (ss ScalingSchedulesAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("name"))
+	return terra.ReferenceAsString(ss.ref.Append("name"))
 }
 
 func (ss ScalingSchedulesAttributes) Schedule() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("schedule"))
+	return terra.ReferenceAsString(ss.ref.Append("schedule"))
 }
 
 func (ss ScalingSchedulesAttributes) TimeZone() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("time_zone"))
+	return terra.ReferenceAsString(ss.ref.Append("time_zone"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AutoscalingPolicyState struct {

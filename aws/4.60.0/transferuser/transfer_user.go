@@ -40,7 +40,7 @@ func (hdm HomeDirectoryMappingsAttributes) InternalWithRef(ref terra.Reference) 
 	return HomeDirectoryMappingsAttributes{ref: ref}
 }
 
-func (hdm HomeDirectoryMappingsAttributes) InternalTokens() hclwrite.Tokens {
+func (hdm HomeDirectoryMappingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hdm.ref.InternalTokens()
 }
 
@@ -64,7 +64,7 @@ func (pp PosixProfileAttributes) InternalWithRef(ref terra.Reference) PosixProfi
 	return PosixProfileAttributes{ref: ref}
 }
 
-func (pp PosixProfileAttributes) InternalTokens() hclwrite.Tokens {
+func (pp PosixProfileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pp.ref.InternalTokens()
 }
 
@@ -92,7 +92,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

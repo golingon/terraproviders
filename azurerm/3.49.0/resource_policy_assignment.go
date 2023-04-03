@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewResourcePolicyAssignment creates a new instance of [ResourcePolicyAssignment].
 func NewResourcePolicyAssignment(name string, args ResourcePolicyAssignmentArgs) *ResourcePolicyAssignment {
 	return &ResourcePolicyAssignment{
 		Args: args,
@@ -19,28 +20,51 @@ func NewResourcePolicyAssignment(name string, args ResourcePolicyAssignmentArgs)
 
 var _ terra.Resource = (*ResourcePolicyAssignment)(nil)
 
+// ResourcePolicyAssignment represents the Terraform resource azurerm_resource_policy_assignment.
 type ResourcePolicyAssignment struct {
-	Name  string
-	Args  ResourcePolicyAssignmentArgs
-	state *resourcePolicyAssignmentState
+	Name      string
+	Args      ResourcePolicyAssignmentArgs
+	state     *resourcePolicyAssignmentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ResourcePolicyAssignment].
 func (rpa *ResourcePolicyAssignment) Type() string {
 	return "azurerm_resource_policy_assignment"
 }
 
+// LocalName returns the local name for [ResourcePolicyAssignment].
 func (rpa *ResourcePolicyAssignment) LocalName() string {
 	return rpa.Name
 }
 
+// Configuration returns the configuration (args) for [ResourcePolicyAssignment].
 func (rpa *ResourcePolicyAssignment) Configuration() interface{} {
 	return rpa.Args
 }
 
+// DependOn is used for other resources to depend on [ResourcePolicyAssignment].
+func (rpa *ResourcePolicyAssignment) DependOn() terra.Reference {
+	return terra.ReferenceResource(rpa)
+}
+
+// Dependencies returns the list of resources [ResourcePolicyAssignment] depends_on.
+func (rpa *ResourcePolicyAssignment) Dependencies() terra.Dependencies {
+	return rpa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ResourcePolicyAssignment].
+func (rpa *ResourcePolicyAssignment) LifecycleManagement() *terra.Lifecycle {
+	return rpa.Lifecycle
+}
+
+// Attributes returns the attributes for [ResourcePolicyAssignment].
 func (rpa *ResourcePolicyAssignment) Attributes() resourcePolicyAssignmentAttributes {
 	return resourcePolicyAssignmentAttributes{ref: terra.ReferenceResource(rpa)}
 }
 
+// ImportState imports the given attribute values into [ResourcePolicyAssignment]'s state.
 func (rpa *ResourcePolicyAssignment) ImportState(av io.Reader) error {
 	rpa.state = &resourcePolicyAssignmentState{}
 	if err := json.NewDecoder(av).Decode(rpa.state); err != nil {
@@ -49,10 +73,12 @@ func (rpa *ResourcePolicyAssignment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ResourcePolicyAssignment] has state.
 func (rpa *ResourcePolicyAssignment) State() (*resourcePolicyAssignmentState, bool) {
 	return rpa.state, rpa.state != nil
 }
 
+// StateMust returns the state for [ResourcePolicyAssignment]. Panics if the state is nil.
 func (rpa *ResourcePolicyAssignment) StateMust() *resourcePolicyAssignmentState {
 	if rpa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rpa.Type(), rpa.LocalName()))
@@ -60,10 +86,7 @@ func (rpa *ResourcePolicyAssignment) StateMust() *resourcePolicyAssignmentState 
 	return rpa.state
 }
 
-func (rpa *ResourcePolicyAssignment) DependOn() terra.Reference {
-	return terra.ReferenceResource(rpa)
-}
-
+// ResourcePolicyAssignmentArgs contains the configurations for azurerm_resource_policy_assignment.
 type ResourcePolicyAssignmentArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -97,75 +120,84 @@ type ResourcePolicyAssignmentArgs struct {
 	ResourceSelectors []resourcepolicyassignment.ResourceSelectors `hcl:"resource_selectors,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *resourcepolicyassignment.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ResourcePolicyAssignment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type resourcePolicyAssignmentAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of azurerm_resource_policy_assignment.
 func (rpa resourcePolicyAssignmentAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(rpa.ref.Append("description"))
+	return terra.ReferenceAsString(rpa.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_resource_policy_assignment.
 func (rpa resourcePolicyAssignmentAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(rpa.ref.Append("display_name"))
+	return terra.ReferenceAsString(rpa.ref.Append("display_name"))
 }
 
+// Enforce returns a reference to field enforce of azurerm_resource_policy_assignment.
 func (rpa resourcePolicyAssignmentAttributes) Enforce() terra.BoolValue {
-	return terra.ReferenceBool(rpa.ref.Append("enforce"))
+	return terra.ReferenceAsBool(rpa.ref.Append("enforce"))
 }
 
+// Id returns a reference to field id of azurerm_resource_policy_assignment.
 func (rpa resourcePolicyAssignmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rpa.ref.Append("id"))
+	return terra.ReferenceAsString(rpa.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_resource_policy_assignment.
 func (rpa resourcePolicyAssignmentAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(rpa.ref.Append("location"))
+	return terra.ReferenceAsString(rpa.ref.Append("location"))
 }
 
+// Metadata returns a reference to field metadata of azurerm_resource_policy_assignment.
 func (rpa resourcePolicyAssignmentAttributes) Metadata() terra.StringValue {
-	return terra.ReferenceString(rpa.ref.Append("metadata"))
+	return terra.ReferenceAsString(rpa.ref.Append("metadata"))
 }
 
+// Name returns a reference to field name of azurerm_resource_policy_assignment.
 func (rpa resourcePolicyAssignmentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rpa.ref.Append("name"))
+	return terra.ReferenceAsString(rpa.ref.Append("name"))
 }
 
+// NotScopes returns a reference to field not_scopes of azurerm_resource_policy_assignment.
 func (rpa resourcePolicyAssignmentAttributes) NotScopes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rpa.ref.Append("not_scopes"))
+	return terra.ReferenceAsList[terra.StringValue](rpa.ref.Append("not_scopes"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_resource_policy_assignment.
 func (rpa resourcePolicyAssignmentAttributes) Parameters() terra.StringValue {
-	return terra.ReferenceString(rpa.ref.Append("parameters"))
+	return terra.ReferenceAsString(rpa.ref.Append("parameters"))
 }
 
+// PolicyDefinitionId returns a reference to field policy_definition_id of azurerm_resource_policy_assignment.
 func (rpa resourcePolicyAssignmentAttributes) PolicyDefinitionId() terra.StringValue {
-	return terra.ReferenceString(rpa.ref.Append("policy_definition_id"))
+	return terra.ReferenceAsString(rpa.ref.Append("policy_definition_id"))
 }
 
+// ResourceId returns a reference to field resource_id of azurerm_resource_policy_assignment.
 func (rpa resourcePolicyAssignmentAttributes) ResourceId() terra.StringValue {
-	return terra.ReferenceString(rpa.ref.Append("resource_id"))
+	return terra.ReferenceAsString(rpa.ref.Append("resource_id"))
 }
 
 func (rpa resourcePolicyAssignmentAttributes) Identity() terra.ListValue[resourcepolicyassignment.IdentityAttributes] {
-	return terra.ReferenceList[resourcepolicyassignment.IdentityAttributes](rpa.ref.Append("identity"))
+	return terra.ReferenceAsList[resourcepolicyassignment.IdentityAttributes](rpa.ref.Append("identity"))
 }
 
 func (rpa resourcePolicyAssignmentAttributes) NonComplianceMessage() terra.ListValue[resourcepolicyassignment.NonComplianceMessageAttributes] {
-	return terra.ReferenceList[resourcepolicyassignment.NonComplianceMessageAttributes](rpa.ref.Append("non_compliance_message"))
+	return terra.ReferenceAsList[resourcepolicyassignment.NonComplianceMessageAttributes](rpa.ref.Append("non_compliance_message"))
 }
 
 func (rpa resourcePolicyAssignmentAttributes) Overrides() terra.ListValue[resourcepolicyassignment.OverridesAttributes] {
-	return terra.ReferenceList[resourcepolicyassignment.OverridesAttributes](rpa.ref.Append("overrides"))
+	return terra.ReferenceAsList[resourcepolicyassignment.OverridesAttributes](rpa.ref.Append("overrides"))
 }
 
 func (rpa resourcePolicyAssignmentAttributes) ResourceSelectors() terra.ListValue[resourcepolicyassignment.ResourceSelectorsAttributes] {
-	return terra.ReferenceList[resourcepolicyassignment.ResourceSelectorsAttributes](rpa.ref.Append("resource_selectors"))
+	return terra.ReferenceAsList[resourcepolicyassignment.ResourceSelectorsAttributes](rpa.ref.Append("resource_selectors"))
 }
 
 func (rpa resourcePolicyAssignmentAttributes) Timeouts() resourcepolicyassignment.TimeoutsAttributes {
-	return terra.ReferenceSingle[resourcepolicyassignment.TimeoutsAttributes](rpa.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[resourcepolicyassignment.TimeoutsAttributes](rpa.ref.Append("timeouts"))
 }
 
 type resourcePolicyAssignmentState struct {

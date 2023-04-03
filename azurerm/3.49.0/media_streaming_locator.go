@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMediaStreamingLocator creates a new instance of [MediaStreamingLocator].
 func NewMediaStreamingLocator(name string, args MediaStreamingLocatorArgs) *MediaStreamingLocator {
 	return &MediaStreamingLocator{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMediaStreamingLocator(name string, args MediaStreamingLocatorArgs) *Medi
 
 var _ terra.Resource = (*MediaStreamingLocator)(nil)
 
+// MediaStreamingLocator represents the Terraform resource azurerm_media_streaming_locator.
 type MediaStreamingLocator struct {
-	Name  string
-	Args  MediaStreamingLocatorArgs
-	state *mediaStreamingLocatorState
+	Name      string
+	Args      MediaStreamingLocatorArgs
+	state     *mediaStreamingLocatorState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MediaStreamingLocator].
 func (msl *MediaStreamingLocator) Type() string {
 	return "azurerm_media_streaming_locator"
 }
 
+// LocalName returns the local name for [MediaStreamingLocator].
 func (msl *MediaStreamingLocator) LocalName() string {
 	return msl.Name
 }
 
+// Configuration returns the configuration (args) for [MediaStreamingLocator].
 func (msl *MediaStreamingLocator) Configuration() interface{} {
 	return msl.Args
 }
 
+// DependOn is used for other resources to depend on [MediaStreamingLocator].
+func (msl *MediaStreamingLocator) DependOn() terra.Reference {
+	return terra.ReferenceResource(msl)
+}
+
+// Dependencies returns the list of resources [MediaStreamingLocator] depends_on.
+func (msl *MediaStreamingLocator) Dependencies() terra.Dependencies {
+	return msl.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MediaStreamingLocator].
+func (msl *MediaStreamingLocator) LifecycleManagement() *terra.Lifecycle {
+	return msl.Lifecycle
+}
+
+// Attributes returns the attributes for [MediaStreamingLocator].
 func (msl *MediaStreamingLocator) Attributes() mediaStreamingLocatorAttributes {
 	return mediaStreamingLocatorAttributes{ref: terra.ReferenceResource(msl)}
 }
 
+// ImportState imports the given attribute values into [MediaStreamingLocator]'s state.
 func (msl *MediaStreamingLocator) ImportState(av io.Reader) error {
 	msl.state = &mediaStreamingLocatorState{}
 	if err := json.NewDecoder(av).Decode(msl.state); err != nil {
@@ -49,10 +73,12 @@ func (msl *MediaStreamingLocator) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MediaStreamingLocator] has state.
 func (msl *MediaStreamingLocator) State() (*mediaStreamingLocatorState, bool) {
 	return msl.state, msl.state != nil
 }
 
+// StateMust returns the state for [MediaStreamingLocator]. Panics if the state is nil.
 func (msl *MediaStreamingLocator) StateMust() *mediaStreamingLocatorState {
 	if msl.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", msl.Type(), msl.LocalName()))
@@ -60,10 +86,7 @@ func (msl *MediaStreamingLocator) StateMust() *mediaStreamingLocatorState {
 	return msl.state
 }
 
-func (msl *MediaStreamingLocator) DependOn() terra.Reference {
-	return terra.ReferenceResource(msl)
-}
-
+// MediaStreamingLocatorArgs contains the configurations for azurerm_media_streaming_locator.
 type MediaStreamingLocatorArgs struct {
 	// AlternativeMediaId: string, optional
 	AlternativeMediaId terra.StringValue `hcl:"alternative_media_id,attr"`
@@ -93,67 +116,77 @@ type MediaStreamingLocatorArgs struct {
 	ContentKey []mediastreaminglocator.ContentKey `hcl:"content_key,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *mediastreaminglocator.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MediaStreamingLocator depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mediaStreamingLocatorAttributes struct {
 	ref terra.Reference
 }
 
+// AlternativeMediaId returns a reference to field alternative_media_id of azurerm_media_streaming_locator.
 func (msl mediaStreamingLocatorAttributes) AlternativeMediaId() terra.StringValue {
-	return terra.ReferenceString(msl.ref.Append("alternative_media_id"))
+	return terra.ReferenceAsString(msl.ref.Append("alternative_media_id"))
 }
 
+// AssetName returns a reference to field asset_name of azurerm_media_streaming_locator.
 func (msl mediaStreamingLocatorAttributes) AssetName() terra.StringValue {
-	return terra.ReferenceString(msl.ref.Append("asset_name"))
+	return terra.ReferenceAsString(msl.ref.Append("asset_name"))
 }
 
+// DefaultContentKeyPolicyName returns a reference to field default_content_key_policy_name of azurerm_media_streaming_locator.
 func (msl mediaStreamingLocatorAttributes) DefaultContentKeyPolicyName() terra.StringValue {
-	return terra.ReferenceString(msl.ref.Append("default_content_key_policy_name"))
+	return terra.ReferenceAsString(msl.ref.Append("default_content_key_policy_name"))
 }
 
+// EndTime returns a reference to field end_time of azurerm_media_streaming_locator.
 func (msl mediaStreamingLocatorAttributes) EndTime() terra.StringValue {
-	return terra.ReferenceString(msl.ref.Append("end_time"))
+	return terra.ReferenceAsString(msl.ref.Append("end_time"))
 }
 
+// FilterNames returns a reference to field filter_names of azurerm_media_streaming_locator.
 func (msl mediaStreamingLocatorAttributes) FilterNames() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](msl.ref.Append("filter_names"))
+	return terra.ReferenceAsList[terra.StringValue](msl.ref.Append("filter_names"))
 }
 
+// Id returns a reference to field id of azurerm_media_streaming_locator.
 func (msl mediaStreamingLocatorAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(msl.ref.Append("id"))
+	return terra.ReferenceAsString(msl.ref.Append("id"))
 }
 
+// MediaServicesAccountName returns a reference to field media_services_account_name of azurerm_media_streaming_locator.
 func (msl mediaStreamingLocatorAttributes) MediaServicesAccountName() terra.StringValue {
-	return terra.ReferenceString(msl.ref.Append("media_services_account_name"))
+	return terra.ReferenceAsString(msl.ref.Append("media_services_account_name"))
 }
 
+// Name returns a reference to field name of azurerm_media_streaming_locator.
 func (msl mediaStreamingLocatorAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(msl.ref.Append("name"))
+	return terra.ReferenceAsString(msl.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_media_streaming_locator.
 func (msl mediaStreamingLocatorAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(msl.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(msl.ref.Append("resource_group_name"))
 }
 
+// StartTime returns a reference to field start_time of azurerm_media_streaming_locator.
 func (msl mediaStreamingLocatorAttributes) StartTime() terra.StringValue {
-	return terra.ReferenceString(msl.ref.Append("start_time"))
+	return terra.ReferenceAsString(msl.ref.Append("start_time"))
 }
 
+// StreamingLocatorId returns a reference to field streaming_locator_id of azurerm_media_streaming_locator.
 func (msl mediaStreamingLocatorAttributes) StreamingLocatorId() terra.StringValue {
-	return terra.ReferenceString(msl.ref.Append("streaming_locator_id"))
+	return terra.ReferenceAsString(msl.ref.Append("streaming_locator_id"))
 }
 
+// StreamingPolicyName returns a reference to field streaming_policy_name of azurerm_media_streaming_locator.
 func (msl mediaStreamingLocatorAttributes) StreamingPolicyName() terra.StringValue {
-	return terra.ReferenceString(msl.ref.Append("streaming_policy_name"))
+	return terra.ReferenceAsString(msl.ref.Append("streaming_policy_name"))
 }
 
 func (msl mediaStreamingLocatorAttributes) ContentKey() terra.ListValue[mediastreaminglocator.ContentKeyAttributes] {
-	return terra.ReferenceList[mediastreaminglocator.ContentKeyAttributes](msl.ref.Append("content_key"))
+	return terra.ReferenceAsList[mediastreaminglocator.ContentKeyAttributes](msl.ref.Append("content_key"))
 }
 
 func (msl mediaStreamingLocatorAttributes) Timeouts() mediastreaminglocator.TimeoutsAttributes {
-	return terra.ReferenceSingle[mediastreaminglocator.TimeoutsAttributes](msl.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[mediastreaminglocator.TimeoutsAttributes](msl.ref.Append("timeouts"))
 }
 
 type mediaStreamingLocatorState struct {

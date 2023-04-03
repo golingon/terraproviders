@@ -271,808 +271,808 @@ type InstanceFilterAttributes struct {
 	ref terra.Reference
 }
 
-func (_if InstanceFilterAttributes) InternalRef() terra.Reference {
-	return _if.ref
+func (_if InstanceFilterAttributes) InternalRef() (terra.Reference, error) {
+	return _if.ref, nil
 }
 
 func (_if InstanceFilterAttributes) InternalWithRef(ref terra.Reference) InstanceFilterAttributes {
 	return InstanceFilterAttributes{ref: ref}
 }
 
-func (_if InstanceFilterAttributes) InternalTokens() hclwrite.Tokens {
+func (_if InstanceFilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return _if.ref.InternalTokens()
 }
 
 func (_if InstanceFilterAttributes) All() terra.BoolValue {
-	return terra.ReferenceBool(_if.ref.Append("all"))
+	return terra.ReferenceAsBool(_if.ref.Append("all"))
 }
 
 func (_if InstanceFilterAttributes) InstanceNamePrefixes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](_if.ref.Append("instance_name_prefixes"))
+	return terra.ReferenceAsList[terra.StringValue](_if.ref.Append("instance_name_prefixes"))
 }
 
 func (_if InstanceFilterAttributes) Instances() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](_if.ref.Append("instances"))
+	return terra.ReferenceAsList[terra.StringValue](_if.ref.Append("instances"))
 }
 
 func (_if InstanceFilterAttributes) Zones() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](_if.ref.Append("zones"))
+	return terra.ReferenceAsList[terra.StringValue](_if.ref.Append("zones"))
 }
 
 func (_if InstanceFilterAttributes) GroupLabels() terra.ListValue[GroupLabelsAttributes] {
-	return terra.ReferenceList[GroupLabelsAttributes](_if.ref.Append("group_labels"))
+	return terra.ReferenceAsList[GroupLabelsAttributes](_if.ref.Append("group_labels"))
 }
 
 type GroupLabelsAttributes struct {
 	ref terra.Reference
 }
 
-func (gl GroupLabelsAttributes) InternalRef() terra.Reference {
-	return gl.ref
+func (gl GroupLabelsAttributes) InternalRef() (terra.Reference, error) {
+	return gl.ref, nil
 }
 
 func (gl GroupLabelsAttributes) InternalWithRef(ref terra.Reference) GroupLabelsAttributes {
 	return GroupLabelsAttributes{ref: ref}
 }
 
-func (gl GroupLabelsAttributes) InternalTokens() hclwrite.Tokens {
+func (gl GroupLabelsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gl.ref.InternalTokens()
 }
 
 func (gl GroupLabelsAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gl.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](gl.ref.Append("labels"))
 }
 
 type OneTimeScheduleAttributes struct {
 	ref terra.Reference
 }
 
-func (ots OneTimeScheduleAttributes) InternalRef() terra.Reference {
-	return ots.ref
+func (ots OneTimeScheduleAttributes) InternalRef() (terra.Reference, error) {
+	return ots.ref, nil
 }
 
 func (ots OneTimeScheduleAttributes) InternalWithRef(ref terra.Reference) OneTimeScheduleAttributes {
 	return OneTimeScheduleAttributes{ref: ref}
 }
 
-func (ots OneTimeScheduleAttributes) InternalTokens() hclwrite.Tokens {
+func (ots OneTimeScheduleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ots.ref.InternalTokens()
 }
 
 func (ots OneTimeScheduleAttributes) ExecuteTime() terra.StringValue {
-	return terra.ReferenceString(ots.ref.Append("execute_time"))
+	return terra.ReferenceAsString(ots.ref.Append("execute_time"))
 }
 
 type PatchConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (pc PatchConfigAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc PatchConfigAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc PatchConfigAttributes) InternalWithRef(ref terra.Reference) PatchConfigAttributes {
 	return PatchConfigAttributes{ref: ref}
 }
 
-func (pc PatchConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (pc PatchConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
 func (pc PatchConfigAttributes) MigInstancesAllowed() terra.BoolValue {
-	return terra.ReferenceBool(pc.ref.Append("mig_instances_allowed"))
+	return terra.ReferenceAsBool(pc.ref.Append("mig_instances_allowed"))
 }
 
 func (pc PatchConfigAttributes) RebootConfig() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("reboot_config"))
+	return terra.ReferenceAsString(pc.ref.Append("reboot_config"))
 }
 
 func (pc PatchConfigAttributes) Apt() terra.ListValue[AptAttributes] {
-	return terra.ReferenceList[AptAttributes](pc.ref.Append("apt"))
+	return terra.ReferenceAsList[AptAttributes](pc.ref.Append("apt"))
 }
 
 func (pc PatchConfigAttributes) Goo() terra.ListValue[GooAttributes] {
-	return terra.ReferenceList[GooAttributes](pc.ref.Append("goo"))
+	return terra.ReferenceAsList[GooAttributes](pc.ref.Append("goo"))
 }
 
 func (pc PatchConfigAttributes) PostStep() terra.ListValue[PostStepAttributes] {
-	return terra.ReferenceList[PostStepAttributes](pc.ref.Append("post_step"))
+	return terra.ReferenceAsList[PostStepAttributes](pc.ref.Append("post_step"))
 }
 
 func (pc PatchConfigAttributes) PreStep() terra.ListValue[PreStepAttributes] {
-	return terra.ReferenceList[PreStepAttributes](pc.ref.Append("pre_step"))
+	return terra.ReferenceAsList[PreStepAttributes](pc.ref.Append("pre_step"))
 }
 
 func (pc PatchConfigAttributes) WindowsUpdate() terra.ListValue[WindowsUpdateAttributes] {
-	return terra.ReferenceList[WindowsUpdateAttributes](pc.ref.Append("windows_update"))
+	return terra.ReferenceAsList[WindowsUpdateAttributes](pc.ref.Append("windows_update"))
 }
 
 func (pc PatchConfigAttributes) Yum() terra.ListValue[YumAttributes] {
-	return terra.ReferenceList[YumAttributes](pc.ref.Append("yum"))
+	return terra.ReferenceAsList[YumAttributes](pc.ref.Append("yum"))
 }
 
 func (pc PatchConfigAttributes) Zypper() terra.ListValue[ZypperAttributes] {
-	return terra.ReferenceList[ZypperAttributes](pc.ref.Append("zypper"))
+	return terra.ReferenceAsList[ZypperAttributes](pc.ref.Append("zypper"))
 }
 
 type AptAttributes struct {
 	ref terra.Reference
 }
 
-func (a AptAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AptAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AptAttributes) InternalWithRef(ref terra.Reference) AptAttributes {
 	return AptAttributes{ref: ref}
 }
 
-func (a AptAttributes) InternalTokens() hclwrite.Tokens {
+func (a AptAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a AptAttributes) Excludes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](a.ref.Append("excludes"))
+	return terra.ReferenceAsList[terra.StringValue](a.ref.Append("excludes"))
 }
 
 func (a AptAttributes) ExclusivePackages() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](a.ref.Append("exclusive_packages"))
+	return terra.ReferenceAsList[terra.StringValue](a.ref.Append("exclusive_packages"))
 }
 
 func (a AptAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("type"))
+	return terra.ReferenceAsString(a.ref.Append("type"))
 }
 
 type GooAttributes struct {
 	ref terra.Reference
 }
 
-func (g GooAttributes) InternalRef() terra.Reference {
-	return g.ref
+func (g GooAttributes) InternalRef() (terra.Reference, error) {
+	return g.ref, nil
 }
 
 func (g GooAttributes) InternalWithRef(ref terra.Reference) GooAttributes {
 	return GooAttributes{ref: ref}
 }
 
-func (g GooAttributes) InternalTokens() hclwrite.Tokens {
+func (g GooAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return g.ref.InternalTokens()
 }
 
 func (g GooAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(g.ref.Append("enabled"))
+	return terra.ReferenceAsBool(g.ref.Append("enabled"))
 }
 
 type PostStepAttributes struct {
 	ref terra.Reference
 }
 
-func (ps PostStepAttributes) InternalRef() terra.Reference {
-	return ps.ref
+func (ps PostStepAttributes) InternalRef() (terra.Reference, error) {
+	return ps.ref, nil
 }
 
 func (ps PostStepAttributes) InternalWithRef(ref terra.Reference) PostStepAttributes {
 	return PostStepAttributes{ref: ref}
 }
 
-func (ps PostStepAttributes) InternalTokens() hclwrite.Tokens {
+func (ps PostStepAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ps.ref.InternalTokens()
 }
 
 func (ps PostStepAttributes) LinuxExecStepConfig() terra.ListValue[PostStepLinuxExecStepConfigAttributes] {
-	return terra.ReferenceList[PostStepLinuxExecStepConfigAttributes](ps.ref.Append("linux_exec_step_config"))
+	return terra.ReferenceAsList[PostStepLinuxExecStepConfigAttributes](ps.ref.Append("linux_exec_step_config"))
 }
 
 func (ps PostStepAttributes) WindowsExecStepConfig() terra.ListValue[PostStepWindowsExecStepConfigAttributes] {
-	return terra.ReferenceList[PostStepWindowsExecStepConfigAttributes](ps.ref.Append("windows_exec_step_config"))
+	return terra.ReferenceAsList[PostStepWindowsExecStepConfigAttributes](ps.ref.Append("windows_exec_step_config"))
 }
 
 type PostStepLinuxExecStepConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (lesc PostStepLinuxExecStepConfigAttributes) InternalRef() terra.Reference {
-	return lesc.ref
+func (lesc PostStepLinuxExecStepConfigAttributes) InternalRef() (terra.Reference, error) {
+	return lesc.ref, nil
 }
 
 func (lesc PostStepLinuxExecStepConfigAttributes) InternalWithRef(ref terra.Reference) PostStepLinuxExecStepConfigAttributes {
 	return PostStepLinuxExecStepConfigAttributes{ref: ref}
 }
 
-func (lesc PostStepLinuxExecStepConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (lesc PostStepLinuxExecStepConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lesc.ref.InternalTokens()
 }
 
 func (lesc PostStepLinuxExecStepConfigAttributes) AllowedSuccessCodes() terra.ListValue[terra.NumberValue] {
-	return terra.ReferenceList[terra.NumberValue](lesc.ref.Append("allowed_success_codes"))
+	return terra.ReferenceAsList[terra.NumberValue](lesc.ref.Append("allowed_success_codes"))
 }
 
 func (lesc PostStepLinuxExecStepConfigAttributes) Interpreter() terra.StringValue {
-	return terra.ReferenceString(lesc.ref.Append("interpreter"))
+	return terra.ReferenceAsString(lesc.ref.Append("interpreter"))
 }
 
 func (lesc PostStepLinuxExecStepConfigAttributes) LocalPath() terra.StringValue {
-	return terra.ReferenceString(lesc.ref.Append("local_path"))
+	return terra.ReferenceAsString(lesc.ref.Append("local_path"))
 }
 
 func (lesc PostStepLinuxExecStepConfigAttributes) GcsObject() terra.ListValue[PostStepLinuxExecStepConfigGcsObjectAttributes] {
-	return terra.ReferenceList[PostStepLinuxExecStepConfigGcsObjectAttributes](lesc.ref.Append("gcs_object"))
+	return terra.ReferenceAsList[PostStepLinuxExecStepConfigGcsObjectAttributes](lesc.ref.Append("gcs_object"))
 }
 
 type PostStepLinuxExecStepConfigGcsObjectAttributes struct {
 	ref terra.Reference
 }
 
-func (_go PostStepLinuxExecStepConfigGcsObjectAttributes) InternalRef() terra.Reference {
-	return _go.ref
+func (_go PostStepLinuxExecStepConfigGcsObjectAttributes) InternalRef() (terra.Reference, error) {
+	return _go.ref, nil
 }
 
 func (_go PostStepLinuxExecStepConfigGcsObjectAttributes) InternalWithRef(ref terra.Reference) PostStepLinuxExecStepConfigGcsObjectAttributes {
 	return PostStepLinuxExecStepConfigGcsObjectAttributes{ref: ref}
 }
 
-func (_go PostStepLinuxExecStepConfigGcsObjectAttributes) InternalTokens() hclwrite.Tokens {
+func (_go PostStepLinuxExecStepConfigGcsObjectAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return _go.ref.InternalTokens()
 }
 
 func (_go PostStepLinuxExecStepConfigGcsObjectAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(_go.ref.Append("bucket"))
+	return terra.ReferenceAsString(_go.ref.Append("bucket"))
 }
 
 func (_go PostStepLinuxExecStepConfigGcsObjectAttributes) GenerationNumber() terra.StringValue {
-	return terra.ReferenceString(_go.ref.Append("generation_number"))
+	return terra.ReferenceAsString(_go.ref.Append("generation_number"))
 }
 
 func (_go PostStepLinuxExecStepConfigGcsObjectAttributes) Object() terra.StringValue {
-	return terra.ReferenceString(_go.ref.Append("object"))
+	return terra.ReferenceAsString(_go.ref.Append("object"))
 }
 
 type PostStepWindowsExecStepConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (wesc PostStepWindowsExecStepConfigAttributes) InternalRef() terra.Reference {
-	return wesc.ref
+func (wesc PostStepWindowsExecStepConfigAttributes) InternalRef() (terra.Reference, error) {
+	return wesc.ref, nil
 }
 
 func (wesc PostStepWindowsExecStepConfigAttributes) InternalWithRef(ref terra.Reference) PostStepWindowsExecStepConfigAttributes {
 	return PostStepWindowsExecStepConfigAttributes{ref: ref}
 }
 
-func (wesc PostStepWindowsExecStepConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (wesc PostStepWindowsExecStepConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wesc.ref.InternalTokens()
 }
 
 func (wesc PostStepWindowsExecStepConfigAttributes) AllowedSuccessCodes() terra.ListValue[terra.NumberValue] {
-	return terra.ReferenceList[terra.NumberValue](wesc.ref.Append("allowed_success_codes"))
+	return terra.ReferenceAsList[terra.NumberValue](wesc.ref.Append("allowed_success_codes"))
 }
 
 func (wesc PostStepWindowsExecStepConfigAttributes) Interpreter() terra.StringValue {
-	return terra.ReferenceString(wesc.ref.Append("interpreter"))
+	return terra.ReferenceAsString(wesc.ref.Append("interpreter"))
 }
 
 func (wesc PostStepWindowsExecStepConfigAttributes) LocalPath() terra.StringValue {
-	return terra.ReferenceString(wesc.ref.Append("local_path"))
+	return terra.ReferenceAsString(wesc.ref.Append("local_path"))
 }
 
 func (wesc PostStepWindowsExecStepConfigAttributes) GcsObject() terra.ListValue[PostStepWindowsExecStepConfigGcsObjectAttributes] {
-	return terra.ReferenceList[PostStepWindowsExecStepConfigGcsObjectAttributes](wesc.ref.Append("gcs_object"))
+	return terra.ReferenceAsList[PostStepWindowsExecStepConfigGcsObjectAttributes](wesc.ref.Append("gcs_object"))
 }
 
 type PostStepWindowsExecStepConfigGcsObjectAttributes struct {
 	ref terra.Reference
 }
 
-func (_go PostStepWindowsExecStepConfigGcsObjectAttributes) InternalRef() terra.Reference {
-	return _go.ref
+func (_go PostStepWindowsExecStepConfigGcsObjectAttributes) InternalRef() (terra.Reference, error) {
+	return _go.ref, nil
 }
 
 func (_go PostStepWindowsExecStepConfigGcsObjectAttributes) InternalWithRef(ref terra.Reference) PostStepWindowsExecStepConfigGcsObjectAttributes {
 	return PostStepWindowsExecStepConfigGcsObjectAttributes{ref: ref}
 }
 
-func (_go PostStepWindowsExecStepConfigGcsObjectAttributes) InternalTokens() hclwrite.Tokens {
+func (_go PostStepWindowsExecStepConfigGcsObjectAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return _go.ref.InternalTokens()
 }
 
 func (_go PostStepWindowsExecStepConfigGcsObjectAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(_go.ref.Append("bucket"))
+	return terra.ReferenceAsString(_go.ref.Append("bucket"))
 }
 
 func (_go PostStepWindowsExecStepConfigGcsObjectAttributes) GenerationNumber() terra.StringValue {
-	return terra.ReferenceString(_go.ref.Append("generation_number"))
+	return terra.ReferenceAsString(_go.ref.Append("generation_number"))
 }
 
 func (_go PostStepWindowsExecStepConfigGcsObjectAttributes) Object() terra.StringValue {
-	return terra.ReferenceString(_go.ref.Append("object"))
+	return terra.ReferenceAsString(_go.ref.Append("object"))
 }
 
 type PreStepAttributes struct {
 	ref terra.Reference
 }
 
-func (ps PreStepAttributes) InternalRef() terra.Reference {
-	return ps.ref
+func (ps PreStepAttributes) InternalRef() (terra.Reference, error) {
+	return ps.ref, nil
 }
 
 func (ps PreStepAttributes) InternalWithRef(ref terra.Reference) PreStepAttributes {
 	return PreStepAttributes{ref: ref}
 }
 
-func (ps PreStepAttributes) InternalTokens() hclwrite.Tokens {
+func (ps PreStepAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ps.ref.InternalTokens()
 }
 
 func (ps PreStepAttributes) LinuxExecStepConfig() terra.ListValue[PreStepLinuxExecStepConfigAttributes] {
-	return terra.ReferenceList[PreStepLinuxExecStepConfigAttributes](ps.ref.Append("linux_exec_step_config"))
+	return terra.ReferenceAsList[PreStepLinuxExecStepConfigAttributes](ps.ref.Append("linux_exec_step_config"))
 }
 
 func (ps PreStepAttributes) WindowsExecStepConfig() terra.ListValue[PreStepWindowsExecStepConfigAttributes] {
-	return terra.ReferenceList[PreStepWindowsExecStepConfigAttributes](ps.ref.Append("windows_exec_step_config"))
+	return terra.ReferenceAsList[PreStepWindowsExecStepConfigAttributes](ps.ref.Append("windows_exec_step_config"))
 }
 
 type PreStepLinuxExecStepConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (lesc PreStepLinuxExecStepConfigAttributes) InternalRef() terra.Reference {
-	return lesc.ref
+func (lesc PreStepLinuxExecStepConfigAttributes) InternalRef() (terra.Reference, error) {
+	return lesc.ref, nil
 }
 
 func (lesc PreStepLinuxExecStepConfigAttributes) InternalWithRef(ref terra.Reference) PreStepLinuxExecStepConfigAttributes {
 	return PreStepLinuxExecStepConfigAttributes{ref: ref}
 }
 
-func (lesc PreStepLinuxExecStepConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (lesc PreStepLinuxExecStepConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lesc.ref.InternalTokens()
 }
 
 func (lesc PreStepLinuxExecStepConfigAttributes) AllowedSuccessCodes() terra.ListValue[terra.NumberValue] {
-	return terra.ReferenceList[terra.NumberValue](lesc.ref.Append("allowed_success_codes"))
+	return terra.ReferenceAsList[terra.NumberValue](lesc.ref.Append("allowed_success_codes"))
 }
 
 func (lesc PreStepLinuxExecStepConfigAttributes) Interpreter() terra.StringValue {
-	return terra.ReferenceString(lesc.ref.Append("interpreter"))
+	return terra.ReferenceAsString(lesc.ref.Append("interpreter"))
 }
 
 func (lesc PreStepLinuxExecStepConfigAttributes) LocalPath() terra.StringValue {
-	return terra.ReferenceString(lesc.ref.Append("local_path"))
+	return terra.ReferenceAsString(lesc.ref.Append("local_path"))
 }
 
 func (lesc PreStepLinuxExecStepConfigAttributes) GcsObject() terra.ListValue[PreStepLinuxExecStepConfigGcsObjectAttributes] {
-	return terra.ReferenceList[PreStepLinuxExecStepConfigGcsObjectAttributes](lesc.ref.Append("gcs_object"))
+	return terra.ReferenceAsList[PreStepLinuxExecStepConfigGcsObjectAttributes](lesc.ref.Append("gcs_object"))
 }
 
 type PreStepLinuxExecStepConfigGcsObjectAttributes struct {
 	ref terra.Reference
 }
 
-func (_go PreStepLinuxExecStepConfigGcsObjectAttributes) InternalRef() terra.Reference {
-	return _go.ref
+func (_go PreStepLinuxExecStepConfigGcsObjectAttributes) InternalRef() (terra.Reference, error) {
+	return _go.ref, nil
 }
 
 func (_go PreStepLinuxExecStepConfigGcsObjectAttributes) InternalWithRef(ref terra.Reference) PreStepLinuxExecStepConfigGcsObjectAttributes {
 	return PreStepLinuxExecStepConfigGcsObjectAttributes{ref: ref}
 }
 
-func (_go PreStepLinuxExecStepConfigGcsObjectAttributes) InternalTokens() hclwrite.Tokens {
+func (_go PreStepLinuxExecStepConfigGcsObjectAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return _go.ref.InternalTokens()
 }
 
 func (_go PreStepLinuxExecStepConfigGcsObjectAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(_go.ref.Append("bucket"))
+	return terra.ReferenceAsString(_go.ref.Append("bucket"))
 }
 
 func (_go PreStepLinuxExecStepConfigGcsObjectAttributes) GenerationNumber() terra.StringValue {
-	return terra.ReferenceString(_go.ref.Append("generation_number"))
+	return terra.ReferenceAsString(_go.ref.Append("generation_number"))
 }
 
 func (_go PreStepLinuxExecStepConfigGcsObjectAttributes) Object() terra.StringValue {
-	return terra.ReferenceString(_go.ref.Append("object"))
+	return terra.ReferenceAsString(_go.ref.Append("object"))
 }
 
 type PreStepWindowsExecStepConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (wesc PreStepWindowsExecStepConfigAttributes) InternalRef() terra.Reference {
-	return wesc.ref
+func (wesc PreStepWindowsExecStepConfigAttributes) InternalRef() (terra.Reference, error) {
+	return wesc.ref, nil
 }
 
 func (wesc PreStepWindowsExecStepConfigAttributes) InternalWithRef(ref terra.Reference) PreStepWindowsExecStepConfigAttributes {
 	return PreStepWindowsExecStepConfigAttributes{ref: ref}
 }
 
-func (wesc PreStepWindowsExecStepConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (wesc PreStepWindowsExecStepConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wesc.ref.InternalTokens()
 }
 
 func (wesc PreStepWindowsExecStepConfigAttributes) AllowedSuccessCodes() terra.ListValue[terra.NumberValue] {
-	return terra.ReferenceList[terra.NumberValue](wesc.ref.Append("allowed_success_codes"))
+	return terra.ReferenceAsList[terra.NumberValue](wesc.ref.Append("allowed_success_codes"))
 }
 
 func (wesc PreStepWindowsExecStepConfigAttributes) Interpreter() terra.StringValue {
-	return terra.ReferenceString(wesc.ref.Append("interpreter"))
+	return terra.ReferenceAsString(wesc.ref.Append("interpreter"))
 }
 
 func (wesc PreStepWindowsExecStepConfigAttributes) LocalPath() terra.StringValue {
-	return terra.ReferenceString(wesc.ref.Append("local_path"))
+	return terra.ReferenceAsString(wesc.ref.Append("local_path"))
 }
 
 func (wesc PreStepWindowsExecStepConfigAttributes) GcsObject() terra.ListValue[PreStepWindowsExecStepConfigGcsObjectAttributes] {
-	return terra.ReferenceList[PreStepWindowsExecStepConfigGcsObjectAttributes](wesc.ref.Append("gcs_object"))
+	return terra.ReferenceAsList[PreStepWindowsExecStepConfigGcsObjectAttributes](wesc.ref.Append("gcs_object"))
 }
 
 type PreStepWindowsExecStepConfigGcsObjectAttributes struct {
 	ref terra.Reference
 }
 
-func (_go PreStepWindowsExecStepConfigGcsObjectAttributes) InternalRef() terra.Reference {
-	return _go.ref
+func (_go PreStepWindowsExecStepConfigGcsObjectAttributes) InternalRef() (terra.Reference, error) {
+	return _go.ref, nil
 }
 
 func (_go PreStepWindowsExecStepConfigGcsObjectAttributes) InternalWithRef(ref terra.Reference) PreStepWindowsExecStepConfigGcsObjectAttributes {
 	return PreStepWindowsExecStepConfigGcsObjectAttributes{ref: ref}
 }
 
-func (_go PreStepWindowsExecStepConfigGcsObjectAttributes) InternalTokens() hclwrite.Tokens {
+func (_go PreStepWindowsExecStepConfigGcsObjectAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return _go.ref.InternalTokens()
 }
 
 func (_go PreStepWindowsExecStepConfigGcsObjectAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(_go.ref.Append("bucket"))
+	return terra.ReferenceAsString(_go.ref.Append("bucket"))
 }
 
 func (_go PreStepWindowsExecStepConfigGcsObjectAttributes) GenerationNumber() terra.StringValue {
-	return terra.ReferenceString(_go.ref.Append("generation_number"))
+	return terra.ReferenceAsString(_go.ref.Append("generation_number"))
 }
 
 func (_go PreStepWindowsExecStepConfigGcsObjectAttributes) Object() terra.StringValue {
-	return terra.ReferenceString(_go.ref.Append("object"))
+	return terra.ReferenceAsString(_go.ref.Append("object"))
 }
 
 type WindowsUpdateAttributes struct {
 	ref terra.Reference
 }
 
-func (wu WindowsUpdateAttributes) InternalRef() terra.Reference {
-	return wu.ref
+func (wu WindowsUpdateAttributes) InternalRef() (terra.Reference, error) {
+	return wu.ref, nil
 }
 
 func (wu WindowsUpdateAttributes) InternalWithRef(ref terra.Reference) WindowsUpdateAttributes {
 	return WindowsUpdateAttributes{ref: ref}
 }
 
-func (wu WindowsUpdateAttributes) InternalTokens() hclwrite.Tokens {
+func (wu WindowsUpdateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wu.ref.InternalTokens()
 }
 
 func (wu WindowsUpdateAttributes) Classifications() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](wu.ref.Append("classifications"))
+	return terra.ReferenceAsList[terra.StringValue](wu.ref.Append("classifications"))
 }
 
 func (wu WindowsUpdateAttributes) Excludes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](wu.ref.Append("excludes"))
+	return terra.ReferenceAsList[terra.StringValue](wu.ref.Append("excludes"))
 }
 
 func (wu WindowsUpdateAttributes) ExclusivePatches() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](wu.ref.Append("exclusive_patches"))
+	return terra.ReferenceAsList[terra.StringValue](wu.ref.Append("exclusive_patches"))
 }
 
 type YumAttributes struct {
 	ref terra.Reference
 }
 
-func (y YumAttributes) InternalRef() terra.Reference {
-	return y.ref
+func (y YumAttributes) InternalRef() (terra.Reference, error) {
+	return y.ref, nil
 }
 
 func (y YumAttributes) InternalWithRef(ref terra.Reference) YumAttributes {
 	return YumAttributes{ref: ref}
 }
 
-func (y YumAttributes) InternalTokens() hclwrite.Tokens {
+func (y YumAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return y.ref.InternalTokens()
 }
 
 func (y YumAttributes) Excludes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](y.ref.Append("excludes"))
+	return terra.ReferenceAsList[terra.StringValue](y.ref.Append("excludes"))
 }
 
 func (y YumAttributes) ExclusivePackages() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](y.ref.Append("exclusive_packages"))
+	return terra.ReferenceAsList[terra.StringValue](y.ref.Append("exclusive_packages"))
 }
 
 func (y YumAttributes) Minimal() terra.BoolValue {
-	return terra.ReferenceBool(y.ref.Append("minimal"))
+	return terra.ReferenceAsBool(y.ref.Append("minimal"))
 }
 
 func (y YumAttributes) Security() terra.BoolValue {
-	return terra.ReferenceBool(y.ref.Append("security"))
+	return terra.ReferenceAsBool(y.ref.Append("security"))
 }
 
 type ZypperAttributes struct {
 	ref terra.Reference
 }
 
-func (z ZypperAttributes) InternalRef() terra.Reference {
-	return z.ref
+func (z ZypperAttributes) InternalRef() (terra.Reference, error) {
+	return z.ref, nil
 }
 
 func (z ZypperAttributes) InternalWithRef(ref terra.Reference) ZypperAttributes {
 	return ZypperAttributes{ref: ref}
 }
 
-func (z ZypperAttributes) InternalTokens() hclwrite.Tokens {
+func (z ZypperAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return z.ref.InternalTokens()
 }
 
 func (z ZypperAttributes) Categories() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](z.ref.Append("categories"))
+	return terra.ReferenceAsList[terra.StringValue](z.ref.Append("categories"))
 }
 
 func (z ZypperAttributes) Excludes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](z.ref.Append("excludes"))
+	return terra.ReferenceAsList[terra.StringValue](z.ref.Append("excludes"))
 }
 
 func (z ZypperAttributes) ExclusivePatches() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](z.ref.Append("exclusive_patches"))
+	return terra.ReferenceAsList[terra.StringValue](z.ref.Append("exclusive_patches"))
 }
 
 func (z ZypperAttributes) Severities() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](z.ref.Append("severities"))
+	return terra.ReferenceAsList[terra.StringValue](z.ref.Append("severities"))
 }
 
 func (z ZypperAttributes) WithOptional() terra.BoolValue {
-	return terra.ReferenceBool(z.ref.Append("with_optional"))
+	return terra.ReferenceAsBool(z.ref.Append("with_optional"))
 }
 
 func (z ZypperAttributes) WithUpdate() terra.BoolValue {
-	return terra.ReferenceBool(z.ref.Append("with_update"))
+	return terra.ReferenceAsBool(z.ref.Append("with_update"))
 }
 
 type RecurringScheduleAttributes struct {
 	ref terra.Reference
 }
 
-func (rs RecurringScheduleAttributes) InternalRef() terra.Reference {
-	return rs.ref
+func (rs RecurringScheduleAttributes) InternalRef() (terra.Reference, error) {
+	return rs.ref, nil
 }
 
 func (rs RecurringScheduleAttributes) InternalWithRef(ref terra.Reference) RecurringScheduleAttributes {
 	return RecurringScheduleAttributes{ref: ref}
 }
 
-func (rs RecurringScheduleAttributes) InternalTokens() hclwrite.Tokens {
+func (rs RecurringScheduleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rs.ref.InternalTokens()
 }
 
 func (rs RecurringScheduleAttributes) EndTime() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("end_time"))
+	return terra.ReferenceAsString(rs.ref.Append("end_time"))
 }
 
 func (rs RecurringScheduleAttributes) LastExecuteTime() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("last_execute_time"))
+	return terra.ReferenceAsString(rs.ref.Append("last_execute_time"))
 }
 
 func (rs RecurringScheduleAttributes) NextExecuteTime() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("next_execute_time"))
+	return terra.ReferenceAsString(rs.ref.Append("next_execute_time"))
 }
 
 func (rs RecurringScheduleAttributes) StartTime() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("start_time"))
+	return terra.ReferenceAsString(rs.ref.Append("start_time"))
 }
 
 func (rs RecurringScheduleAttributes) Monthly() terra.ListValue[MonthlyAttributes] {
-	return terra.ReferenceList[MonthlyAttributes](rs.ref.Append("monthly"))
+	return terra.ReferenceAsList[MonthlyAttributes](rs.ref.Append("monthly"))
 }
 
 func (rs RecurringScheduleAttributes) TimeOfDay() terra.ListValue[TimeOfDayAttributes] {
-	return terra.ReferenceList[TimeOfDayAttributes](rs.ref.Append("time_of_day"))
+	return terra.ReferenceAsList[TimeOfDayAttributes](rs.ref.Append("time_of_day"))
 }
 
 func (rs RecurringScheduleAttributes) TimeZone() terra.ListValue[TimeZoneAttributes] {
-	return terra.ReferenceList[TimeZoneAttributes](rs.ref.Append("time_zone"))
+	return terra.ReferenceAsList[TimeZoneAttributes](rs.ref.Append("time_zone"))
 }
 
 func (rs RecurringScheduleAttributes) Weekly() terra.ListValue[WeeklyAttributes] {
-	return terra.ReferenceList[WeeklyAttributes](rs.ref.Append("weekly"))
+	return terra.ReferenceAsList[WeeklyAttributes](rs.ref.Append("weekly"))
 }
 
 type MonthlyAttributes struct {
 	ref terra.Reference
 }
 
-func (m MonthlyAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MonthlyAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MonthlyAttributes) InternalWithRef(ref terra.Reference) MonthlyAttributes {
 	return MonthlyAttributes{ref: ref}
 }
 
-func (m MonthlyAttributes) InternalTokens() hclwrite.Tokens {
+func (m MonthlyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
 func (m MonthlyAttributes) MonthDay() terra.NumberValue {
-	return terra.ReferenceNumber(m.ref.Append("month_day"))
+	return terra.ReferenceAsNumber(m.ref.Append("month_day"))
 }
 
 func (m MonthlyAttributes) WeekDayOfMonth() terra.ListValue[WeekDayOfMonthAttributes] {
-	return terra.ReferenceList[WeekDayOfMonthAttributes](m.ref.Append("week_day_of_month"))
+	return terra.ReferenceAsList[WeekDayOfMonthAttributes](m.ref.Append("week_day_of_month"))
 }
 
 type WeekDayOfMonthAttributes struct {
 	ref terra.Reference
 }
 
-func (wdom WeekDayOfMonthAttributes) InternalRef() terra.Reference {
-	return wdom.ref
+func (wdom WeekDayOfMonthAttributes) InternalRef() (terra.Reference, error) {
+	return wdom.ref, nil
 }
 
 func (wdom WeekDayOfMonthAttributes) InternalWithRef(ref terra.Reference) WeekDayOfMonthAttributes {
 	return WeekDayOfMonthAttributes{ref: ref}
 }
 
-func (wdom WeekDayOfMonthAttributes) InternalTokens() hclwrite.Tokens {
+func (wdom WeekDayOfMonthAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wdom.ref.InternalTokens()
 }
 
 func (wdom WeekDayOfMonthAttributes) DayOfWeek() terra.StringValue {
-	return terra.ReferenceString(wdom.ref.Append("day_of_week"))
+	return terra.ReferenceAsString(wdom.ref.Append("day_of_week"))
 }
 
 func (wdom WeekDayOfMonthAttributes) WeekOrdinal() terra.NumberValue {
-	return terra.ReferenceNumber(wdom.ref.Append("week_ordinal"))
+	return terra.ReferenceAsNumber(wdom.ref.Append("week_ordinal"))
 }
 
 type TimeOfDayAttributes struct {
 	ref terra.Reference
 }
 
-func (tod TimeOfDayAttributes) InternalRef() terra.Reference {
-	return tod.ref
+func (tod TimeOfDayAttributes) InternalRef() (terra.Reference, error) {
+	return tod.ref, nil
 }
 
 func (tod TimeOfDayAttributes) InternalWithRef(ref terra.Reference) TimeOfDayAttributes {
 	return TimeOfDayAttributes{ref: ref}
 }
 
-func (tod TimeOfDayAttributes) InternalTokens() hclwrite.Tokens {
+func (tod TimeOfDayAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tod.ref.InternalTokens()
 }
 
 func (tod TimeOfDayAttributes) Hours() terra.NumberValue {
-	return terra.ReferenceNumber(tod.ref.Append("hours"))
+	return terra.ReferenceAsNumber(tod.ref.Append("hours"))
 }
 
 func (tod TimeOfDayAttributes) Minutes() terra.NumberValue {
-	return terra.ReferenceNumber(tod.ref.Append("minutes"))
+	return terra.ReferenceAsNumber(tod.ref.Append("minutes"))
 }
 
 func (tod TimeOfDayAttributes) Nanos() terra.NumberValue {
-	return terra.ReferenceNumber(tod.ref.Append("nanos"))
+	return terra.ReferenceAsNumber(tod.ref.Append("nanos"))
 }
 
 func (tod TimeOfDayAttributes) Seconds() terra.NumberValue {
-	return terra.ReferenceNumber(tod.ref.Append("seconds"))
+	return terra.ReferenceAsNumber(tod.ref.Append("seconds"))
 }
 
 type TimeZoneAttributes struct {
 	ref terra.Reference
 }
 
-func (tz TimeZoneAttributes) InternalRef() terra.Reference {
-	return tz.ref
+func (tz TimeZoneAttributes) InternalRef() (terra.Reference, error) {
+	return tz.ref, nil
 }
 
 func (tz TimeZoneAttributes) InternalWithRef(ref terra.Reference) TimeZoneAttributes {
 	return TimeZoneAttributes{ref: ref}
 }
 
-func (tz TimeZoneAttributes) InternalTokens() hclwrite.Tokens {
+func (tz TimeZoneAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tz.ref.InternalTokens()
 }
 
 func (tz TimeZoneAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(tz.ref.Append("id"))
+	return terra.ReferenceAsString(tz.ref.Append("id"))
 }
 
 func (tz TimeZoneAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(tz.ref.Append("version"))
+	return terra.ReferenceAsString(tz.ref.Append("version"))
 }
 
 type WeeklyAttributes struct {
 	ref terra.Reference
 }
 
-func (w WeeklyAttributes) InternalRef() terra.Reference {
-	return w.ref
+func (w WeeklyAttributes) InternalRef() (terra.Reference, error) {
+	return w.ref, nil
 }
 
 func (w WeeklyAttributes) InternalWithRef(ref terra.Reference) WeeklyAttributes {
 	return WeeklyAttributes{ref: ref}
 }
 
-func (w WeeklyAttributes) InternalTokens() hclwrite.Tokens {
+func (w WeeklyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return w.ref.InternalTokens()
 }
 
 func (w WeeklyAttributes) DayOfWeek() terra.StringValue {
-	return terra.ReferenceString(w.ref.Append("day_of_week"))
+	return terra.ReferenceAsString(w.ref.Append("day_of_week"))
 }
 
 type RolloutAttributes struct {
 	ref terra.Reference
 }
 
-func (r RolloutAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RolloutAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RolloutAttributes) InternalWithRef(ref terra.Reference) RolloutAttributes {
 	return RolloutAttributes{ref: ref}
 }
 
-func (r RolloutAttributes) InternalTokens() hclwrite.Tokens {
+func (r RolloutAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RolloutAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("mode"))
+	return terra.ReferenceAsString(r.ref.Append("mode"))
 }
 
 func (r RolloutAttributes) DisruptionBudget() terra.ListValue[DisruptionBudgetAttributes] {
-	return terra.ReferenceList[DisruptionBudgetAttributes](r.ref.Append("disruption_budget"))
+	return terra.ReferenceAsList[DisruptionBudgetAttributes](r.ref.Append("disruption_budget"))
 }
 
 type DisruptionBudgetAttributes struct {
 	ref terra.Reference
 }
 
-func (db DisruptionBudgetAttributes) InternalRef() terra.Reference {
-	return db.ref
+func (db DisruptionBudgetAttributes) InternalRef() (terra.Reference, error) {
+	return db.ref, nil
 }
 
 func (db DisruptionBudgetAttributes) InternalWithRef(ref terra.Reference) DisruptionBudgetAttributes {
 	return DisruptionBudgetAttributes{ref: ref}
 }
 
-func (db DisruptionBudgetAttributes) InternalTokens() hclwrite.Tokens {
+func (db DisruptionBudgetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return db.ref.InternalTokens()
 }
 
 func (db DisruptionBudgetAttributes) Fixed() terra.NumberValue {
-	return terra.ReferenceNumber(db.ref.Append("fixed"))
+	return terra.ReferenceAsNumber(db.ref.Append("fixed"))
 }
 
 func (db DisruptionBudgetAttributes) Percentage() terra.NumberValue {
-	return terra.ReferenceNumber(db.ref.Append("percentage"))
+	return terra.ReferenceAsNumber(db.ref.Append("percentage"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type InstanceFilterState struct {

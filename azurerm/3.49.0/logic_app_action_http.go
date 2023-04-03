@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLogicAppActionHttp creates a new instance of [LogicAppActionHttp].
 func NewLogicAppActionHttp(name string, args LogicAppActionHttpArgs) *LogicAppActionHttp {
 	return &LogicAppActionHttp{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLogicAppActionHttp(name string, args LogicAppActionHttpArgs) *LogicAppAc
 
 var _ terra.Resource = (*LogicAppActionHttp)(nil)
 
+// LogicAppActionHttp represents the Terraform resource azurerm_logic_app_action_http.
 type LogicAppActionHttp struct {
-	Name  string
-	Args  LogicAppActionHttpArgs
-	state *logicAppActionHttpState
+	Name      string
+	Args      LogicAppActionHttpArgs
+	state     *logicAppActionHttpState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LogicAppActionHttp].
 func (laah *LogicAppActionHttp) Type() string {
 	return "azurerm_logic_app_action_http"
 }
 
+// LocalName returns the local name for [LogicAppActionHttp].
 func (laah *LogicAppActionHttp) LocalName() string {
 	return laah.Name
 }
 
+// Configuration returns the configuration (args) for [LogicAppActionHttp].
 func (laah *LogicAppActionHttp) Configuration() interface{} {
 	return laah.Args
 }
 
+// DependOn is used for other resources to depend on [LogicAppActionHttp].
+func (laah *LogicAppActionHttp) DependOn() terra.Reference {
+	return terra.ReferenceResource(laah)
+}
+
+// Dependencies returns the list of resources [LogicAppActionHttp] depends_on.
+func (laah *LogicAppActionHttp) Dependencies() terra.Dependencies {
+	return laah.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LogicAppActionHttp].
+func (laah *LogicAppActionHttp) LifecycleManagement() *terra.Lifecycle {
+	return laah.Lifecycle
+}
+
+// Attributes returns the attributes for [LogicAppActionHttp].
 func (laah *LogicAppActionHttp) Attributes() logicAppActionHttpAttributes {
 	return logicAppActionHttpAttributes{ref: terra.ReferenceResource(laah)}
 }
 
+// ImportState imports the given attribute values into [LogicAppActionHttp]'s state.
 func (laah *LogicAppActionHttp) ImportState(av io.Reader) error {
 	laah.state = &logicAppActionHttpState{}
 	if err := json.NewDecoder(av).Decode(laah.state); err != nil {
@@ -49,10 +73,12 @@ func (laah *LogicAppActionHttp) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LogicAppActionHttp] has state.
 func (laah *LogicAppActionHttp) State() (*logicAppActionHttpState, bool) {
 	return laah.state, laah.state != nil
 }
 
+// StateMust returns the state for [LogicAppActionHttp]. Panics if the state is nil.
 func (laah *LogicAppActionHttp) StateMust() *logicAppActionHttpState {
 	if laah.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", laah.Type(), laah.LocalName()))
@@ -60,10 +86,7 @@ func (laah *LogicAppActionHttp) StateMust() *logicAppActionHttpState {
 	return laah.state
 }
 
-func (laah *LogicAppActionHttp) DependOn() terra.Reference {
-	return terra.ReferenceResource(laah)
-}
-
+// LogicAppActionHttpArgs contains the configurations for azurerm_logic_app_action_http.
 type LogicAppActionHttpArgs struct {
 	// Body: string, optional
 	Body terra.StringValue `hcl:"body,attr"`
@@ -85,51 +108,57 @@ type LogicAppActionHttpArgs struct {
 	RunAfter []logicappactionhttp.RunAfter `hcl:"run_after,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *logicappactionhttp.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LogicAppActionHttp depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type logicAppActionHttpAttributes struct {
 	ref terra.Reference
 }
 
+// Body returns a reference to field body of azurerm_logic_app_action_http.
 func (laah logicAppActionHttpAttributes) Body() terra.StringValue {
-	return terra.ReferenceString(laah.ref.Append("body"))
+	return terra.ReferenceAsString(laah.ref.Append("body"))
 }
 
+// Headers returns a reference to field headers of azurerm_logic_app_action_http.
 func (laah logicAppActionHttpAttributes) Headers() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](laah.ref.Append("headers"))
+	return terra.ReferenceAsMap[terra.StringValue](laah.ref.Append("headers"))
 }
 
+// Id returns a reference to field id of azurerm_logic_app_action_http.
 func (laah logicAppActionHttpAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(laah.ref.Append("id"))
+	return terra.ReferenceAsString(laah.ref.Append("id"))
 }
 
+// LogicAppId returns a reference to field logic_app_id of azurerm_logic_app_action_http.
 func (laah logicAppActionHttpAttributes) LogicAppId() terra.StringValue {
-	return terra.ReferenceString(laah.ref.Append("logic_app_id"))
+	return terra.ReferenceAsString(laah.ref.Append("logic_app_id"))
 }
 
+// Method returns a reference to field method of azurerm_logic_app_action_http.
 func (laah logicAppActionHttpAttributes) Method() terra.StringValue {
-	return terra.ReferenceString(laah.ref.Append("method"))
+	return terra.ReferenceAsString(laah.ref.Append("method"))
 }
 
+// Name returns a reference to field name of azurerm_logic_app_action_http.
 func (laah logicAppActionHttpAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(laah.ref.Append("name"))
+	return terra.ReferenceAsString(laah.ref.Append("name"))
 }
 
+// Queries returns a reference to field queries of azurerm_logic_app_action_http.
 func (laah logicAppActionHttpAttributes) Queries() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](laah.ref.Append("queries"))
+	return terra.ReferenceAsMap[terra.StringValue](laah.ref.Append("queries"))
 }
 
+// Uri returns a reference to field uri of azurerm_logic_app_action_http.
 func (laah logicAppActionHttpAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(laah.ref.Append("uri"))
+	return terra.ReferenceAsString(laah.ref.Append("uri"))
 }
 
 func (laah logicAppActionHttpAttributes) RunAfter() terra.SetValue[logicappactionhttp.RunAfterAttributes] {
-	return terra.ReferenceSet[logicappactionhttp.RunAfterAttributes](laah.ref.Append("run_after"))
+	return terra.ReferenceAsSet[logicappactionhttp.RunAfterAttributes](laah.ref.Append("run_after"))
 }
 
 func (laah logicAppActionHttpAttributes) Timeouts() logicappactionhttp.TimeoutsAttributes {
-	return terra.ReferenceSingle[logicappactionhttp.TimeoutsAttributes](laah.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[logicappactionhttp.TimeoutsAttributes](laah.ref.Append("timeouts"))
 }
 
 type logicAppActionHttpState struct {

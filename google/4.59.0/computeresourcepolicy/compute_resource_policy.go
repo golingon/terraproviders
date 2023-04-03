@@ -112,332 +112,332 @@ type GroupPlacementPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (gpp GroupPlacementPolicyAttributes) InternalRef() terra.Reference {
-	return gpp.ref
+func (gpp GroupPlacementPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return gpp.ref, nil
 }
 
 func (gpp GroupPlacementPolicyAttributes) InternalWithRef(ref terra.Reference) GroupPlacementPolicyAttributes {
 	return GroupPlacementPolicyAttributes{ref: ref}
 }
 
-func (gpp GroupPlacementPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (gpp GroupPlacementPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gpp.ref.InternalTokens()
 }
 
 func (gpp GroupPlacementPolicyAttributes) AvailabilityDomainCount() terra.NumberValue {
-	return terra.ReferenceNumber(gpp.ref.Append("availability_domain_count"))
+	return terra.ReferenceAsNumber(gpp.ref.Append("availability_domain_count"))
 }
 
 func (gpp GroupPlacementPolicyAttributes) Collocation() terra.StringValue {
-	return terra.ReferenceString(gpp.ref.Append("collocation"))
+	return terra.ReferenceAsString(gpp.ref.Append("collocation"))
 }
 
 func (gpp GroupPlacementPolicyAttributes) VmCount() terra.NumberValue {
-	return terra.ReferenceNumber(gpp.ref.Append("vm_count"))
+	return terra.ReferenceAsNumber(gpp.ref.Append("vm_count"))
 }
 
 type InstanceSchedulePolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (isp InstanceSchedulePolicyAttributes) InternalRef() terra.Reference {
-	return isp.ref
+func (isp InstanceSchedulePolicyAttributes) InternalRef() (terra.Reference, error) {
+	return isp.ref, nil
 }
 
 func (isp InstanceSchedulePolicyAttributes) InternalWithRef(ref terra.Reference) InstanceSchedulePolicyAttributes {
 	return InstanceSchedulePolicyAttributes{ref: ref}
 }
 
-func (isp InstanceSchedulePolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (isp InstanceSchedulePolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return isp.ref.InternalTokens()
 }
 
 func (isp InstanceSchedulePolicyAttributes) ExpirationTime() terra.StringValue {
-	return terra.ReferenceString(isp.ref.Append("expiration_time"))
+	return terra.ReferenceAsString(isp.ref.Append("expiration_time"))
 }
 
 func (isp InstanceSchedulePolicyAttributes) StartTime() terra.StringValue {
-	return terra.ReferenceString(isp.ref.Append("start_time"))
+	return terra.ReferenceAsString(isp.ref.Append("start_time"))
 }
 
 func (isp InstanceSchedulePolicyAttributes) TimeZone() terra.StringValue {
-	return terra.ReferenceString(isp.ref.Append("time_zone"))
+	return terra.ReferenceAsString(isp.ref.Append("time_zone"))
 }
 
 func (isp InstanceSchedulePolicyAttributes) VmStartSchedule() terra.ListValue[VmStartScheduleAttributes] {
-	return terra.ReferenceList[VmStartScheduleAttributes](isp.ref.Append("vm_start_schedule"))
+	return terra.ReferenceAsList[VmStartScheduleAttributes](isp.ref.Append("vm_start_schedule"))
 }
 
 func (isp InstanceSchedulePolicyAttributes) VmStopSchedule() terra.ListValue[VmStopScheduleAttributes] {
-	return terra.ReferenceList[VmStopScheduleAttributes](isp.ref.Append("vm_stop_schedule"))
+	return terra.ReferenceAsList[VmStopScheduleAttributes](isp.ref.Append("vm_stop_schedule"))
 }
 
 type VmStartScheduleAttributes struct {
 	ref terra.Reference
 }
 
-func (vss VmStartScheduleAttributes) InternalRef() terra.Reference {
-	return vss.ref
+func (vss VmStartScheduleAttributes) InternalRef() (terra.Reference, error) {
+	return vss.ref, nil
 }
 
 func (vss VmStartScheduleAttributes) InternalWithRef(ref terra.Reference) VmStartScheduleAttributes {
 	return VmStartScheduleAttributes{ref: ref}
 }
 
-func (vss VmStartScheduleAttributes) InternalTokens() hclwrite.Tokens {
+func (vss VmStartScheduleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vss.ref.InternalTokens()
 }
 
 func (vss VmStartScheduleAttributes) Schedule() terra.StringValue {
-	return terra.ReferenceString(vss.ref.Append("schedule"))
+	return terra.ReferenceAsString(vss.ref.Append("schedule"))
 }
 
 type VmStopScheduleAttributes struct {
 	ref terra.Reference
 }
 
-func (vss VmStopScheduleAttributes) InternalRef() terra.Reference {
-	return vss.ref
+func (vss VmStopScheduleAttributes) InternalRef() (terra.Reference, error) {
+	return vss.ref, nil
 }
 
 func (vss VmStopScheduleAttributes) InternalWithRef(ref terra.Reference) VmStopScheduleAttributes {
 	return VmStopScheduleAttributes{ref: ref}
 }
 
-func (vss VmStopScheduleAttributes) InternalTokens() hclwrite.Tokens {
+func (vss VmStopScheduleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vss.ref.InternalTokens()
 }
 
 func (vss VmStopScheduleAttributes) Schedule() terra.StringValue {
-	return terra.ReferenceString(vss.ref.Append("schedule"))
+	return terra.ReferenceAsString(vss.ref.Append("schedule"))
 }
 
 type SnapshotSchedulePolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (ssp SnapshotSchedulePolicyAttributes) InternalRef() terra.Reference {
-	return ssp.ref
+func (ssp SnapshotSchedulePolicyAttributes) InternalRef() (terra.Reference, error) {
+	return ssp.ref, nil
 }
 
 func (ssp SnapshotSchedulePolicyAttributes) InternalWithRef(ref terra.Reference) SnapshotSchedulePolicyAttributes {
 	return SnapshotSchedulePolicyAttributes{ref: ref}
 }
 
-func (ssp SnapshotSchedulePolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (ssp SnapshotSchedulePolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ssp.ref.InternalTokens()
 }
 
 func (ssp SnapshotSchedulePolicyAttributes) RetentionPolicy() terra.ListValue[RetentionPolicyAttributes] {
-	return terra.ReferenceList[RetentionPolicyAttributes](ssp.ref.Append("retention_policy"))
+	return terra.ReferenceAsList[RetentionPolicyAttributes](ssp.ref.Append("retention_policy"))
 }
 
 func (ssp SnapshotSchedulePolicyAttributes) Schedule() terra.ListValue[ScheduleAttributes] {
-	return terra.ReferenceList[ScheduleAttributes](ssp.ref.Append("schedule"))
+	return terra.ReferenceAsList[ScheduleAttributes](ssp.ref.Append("schedule"))
 }
 
 func (ssp SnapshotSchedulePolicyAttributes) SnapshotProperties() terra.ListValue[SnapshotPropertiesAttributes] {
-	return terra.ReferenceList[SnapshotPropertiesAttributes](ssp.ref.Append("snapshot_properties"))
+	return terra.ReferenceAsList[SnapshotPropertiesAttributes](ssp.ref.Append("snapshot_properties"))
 }
 
 type RetentionPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (rp RetentionPolicyAttributes) InternalRef() terra.Reference {
-	return rp.ref
+func (rp RetentionPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return rp.ref, nil
 }
 
 func (rp RetentionPolicyAttributes) InternalWithRef(ref terra.Reference) RetentionPolicyAttributes {
 	return RetentionPolicyAttributes{ref: ref}
 }
 
-func (rp RetentionPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (rp RetentionPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rp.ref.InternalTokens()
 }
 
 func (rp RetentionPolicyAttributes) MaxRetentionDays() terra.NumberValue {
-	return terra.ReferenceNumber(rp.ref.Append("max_retention_days"))
+	return terra.ReferenceAsNumber(rp.ref.Append("max_retention_days"))
 }
 
 func (rp RetentionPolicyAttributes) OnSourceDiskDelete() terra.StringValue {
-	return terra.ReferenceString(rp.ref.Append("on_source_disk_delete"))
+	return terra.ReferenceAsString(rp.ref.Append("on_source_disk_delete"))
 }
 
 type ScheduleAttributes struct {
 	ref terra.Reference
 }
 
-func (s ScheduleAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ScheduleAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ScheduleAttributes) InternalWithRef(ref terra.Reference) ScheduleAttributes {
 	return ScheduleAttributes{ref: ref}
 }
 
-func (s ScheduleAttributes) InternalTokens() hclwrite.Tokens {
+func (s ScheduleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s ScheduleAttributes) DailySchedule() terra.ListValue[DailyScheduleAttributes] {
-	return terra.ReferenceList[DailyScheduleAttributes](s.ref.Append("daily_schedule"))
+	return terra.ReferenceAsList[DailyScheduleAttributes](s.ref.Append("daily_schedule"))
 }
 
 func (s ScheduleAttributes) HourlySchedule() terra.ListValue[HourlyScheduleAttributes] {
-	return terra.ReferenceList[HourlyScheduleAttributes](s.ref.Append("hourly_schedule"))
+	return terra.ReferenceAsList[HourlyScheduleAttributes](s.ref.Append("hourly_schedule"))
 }
 
 func (s ScheduleAttributes) WeeklySchedule() terra.ListValue[WeeklyScheduleAttributes] {
-	return terra.ReferenceList[WeeklyScheduleAttributes](s.ref.Append("weekly_schedule"))
+	return terra.ReferenceAsList[WeeklyScheduleAttributes](s.ref.Append("weekly_schedule"))
 }
 
 type DailyScheduleAttributes struct {
 	ref terra.Reference
 }
 
-func (ds DailyScheduleAttributes) InternalRef() terra.Reference {
-	return ds.ref
+func (ds DailyScheduleAttributes) InternalRef() (terra.Reference, error) {
+	return ds.ref, nil
 }
 
 func (ds DailyScheduleAttributes) InternalWithRef(ref terra.Reference) DailyScheduleAttributes {
 	return DailyScheduleAttributes{ref: ref}
 }
 
-func (ds DailyScheduleAttributes) InternalTokens() hclwrite.Tokens {
+func (ds DailyScheduleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ds.ref.InternalTokens()
 }
 
 func (ds DailyScheduleAttributes) DaysInCycle() terra.NumberValue {
-	return terra.ReferenceNumber(ds.ref.Append("days_in_cycle"))
+	return terra.ReferenceAsNumber(ds.ref.Append("days_in_cycle"))
 }
 
 func (ds DailyScheduleAttributes) StartTime() terra.StringValue {
-	return terra.ReferenceString(ds.ref.Append("start_time"))
+	return terra.ReferenceAsString(ds.ref.Append("start_time"))
 }
 
 type HourlyScheduleAttributes struct {
 	ref terra.Reference
 }
 
-func (hs HourlyScheduleAttributes) InternalRef() terra.Reference {
-	return hs.ref
+func (hs HourlyScheduleAttributes) InternalRef() (terra.Reference, error) {
+	return hs.ref, nil
 }
 
 func (hs HourlyScheduleAttributes) InternalWithRef(ref terra.Reference) HourlyScheduleAttributes {
 	return HourlyScheduleAttributes{ref: ref}
 }
 
-func (hs HourlyScheduleAttributes) InternalTokens() hclwrite.Tokens {
+func (hs HourlyScheduleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hs.ref.InternalTokens()
 }
 
 func (hs HourlyScheduleAttributes) HoursInCycle() terra.NumberValue {
-	return terra.ReferenceNumber(hs.ref.Append("hours_in_cycle"))
+	return terra.ReferenceAsNumber(hs.ref.Append("hours_in_cycle"))
 }
 
 func (hs HourlyScheduleAttributes) StartTime() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("start_time"))
+	return terra.ReferenceAsString(hs.ref.Append("start_time"))
 }
 
 type WeeklyScheduleAttributes struct {
 	ref terra.Reference
 }
 
-func (ws WeeklyScheduleAttributes) InternalRef() terra.Reference {
-	return ws.ref
+func (ws WeeklyScheduleAttributes) InternalRef() (terra.Reference, error) {
+	return ws.ref, nil
 }
 
 func (ws WeeklyScheduleAttributes) InternalWithRef(ref terra.Reference) WeeklyScheduleAttributes {
 	return WeeklyScheduleAttributes{ref: ref}
 }
 
-func (ws WeeklyScheduleAttributes) InternalTokens() hclwrite.Tokens {
+func (ws WeeklyScheduleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ws.ref.InternalTokens()
 }
 
 func (ws WeeklyScheduleAttributes) DayOfWeeks() terra.SetValue[DayOfWeeksAttributes] {
-	return terra.ReferenceSet[DayOfWeeksAttributes](ws.ref.Append("day_of_weeks"))
+	return terra.ReferenceAsSet[DayOfWeeksAttributes](ws.ref.Append("day_of_weeks"))
 }
 
 type DayOfWeeksAttributes struct {
 	ref terra.Reference
 }
 
-func (dow DayOfWeeksAttributes) InternalRef() terra.Reference {
-	return dow.ref
+func (dow DayOfWeeksAttributes) InternalRef() (terra.Reference, error) {
+	return dow.ref, nil
 }
 
 func (dow DayOfWeeksAttributes) InternalWithRef(ref terra.Reference) DayOfWeeksAttributes {
 	return DayOfWeeksAttributes{ref: ref}
 }
 
-func (dow DayOfWeeksAttributes) InternalTokens() hclwrite.Tokens {
+func (dow DayOfWeeksAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dow.ref.InternalTokens()
 }
 
 func (dow DayOfWeeksAttributes) Day() terra.StringValue {
-	return terra.ReferenceString(dow.ref.Append("day"))
+	return terra.ReferenceAsString(dow.ref.Append("day"))
 }
 
 func (dow DayOfWeeksAttributes) StartTime() terra.StringValue {
-	return terra.ReferenceString(dow.ref.Append("start_time"))
+	return terra.ReferenceAsString(dow.ref.Append("start_time"))
 }
 
 type SnapshotPropertiesAttributes struct {
 	ref terra.Reference
 }
 
-func (sp SnapshotPropertiesAttributes) InternalRef() terra.Reference {
-	return sp.ref
+func (sp SnapshotPropertiesAttributes) InternalRef() (terra.Reference, error) {
+	return sp.ref, nil
 }
 
 func (sp SnapshotPropertiesAttributes) InternalWithRef(ref terra.Reference) SnapshotPropertiesAttributes {
 	return SnapshotPropertiesAttributes{ref: ref}
 }
 
-func (sp SnapshotPropertiesAttributes) InternalTokens() hclwrite.Tokens {
+func (sp SnapshotPropertiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sp.ref.InternalTokens()
 }
 
 func (sp SnapshotPropertiesAttributes) ChainName() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("chain_name"))
+	return terra.ReferenceAsString(sp.ref.Append("chain_name"))
 }
 
 func (sp SnapshotPropertiesAttributes) GuestFlush() terra.BoolValue {
-	return terra.ReferenceBool(sp.ref.Append("guest_flush"))
+	return terra.ReferenceAsBool(sp.ref.Append("guest_flush"))
 }
 
 func (sp SnapshotPropertiesAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sp.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](sp.ref.Append("labels"))
 }
 
 func (sp SnapshotPropertiesAttributes) StorageLocations() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sp.ref.Append("storage_locations"))
+	return terra.ReferenceAsSet[terra.StringValue](sp.ref.Append("storage_locations"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type GroupPlacementPolicyState struct {

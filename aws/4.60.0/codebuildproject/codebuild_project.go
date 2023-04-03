@@ -265,7 +265,7 @@ func (a ArtifactsAttributes) InternalWithRef(ref terra.Reference) ArtifactsAttri
 	return ArtifactsAttributes{ref: ref}
 }
 
-func (a ArtifactsAttributes) InternalTokens() hclwrite.Tokens {
+func (a ArtifactsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -321,7 +321,7 @@ func (bbc BuildBatchConfigAttributes) InternalWithRef(ref terra.Reference) Build
 	return BuildBatchConfigAttributes{ref: ref}
 }
 
-func (bbc BuildBatchConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (bbc BuildBatchConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bbc.ref.InternalTokens()
 }
 
@@ -353,7 +353,7 @@ func (r RestrictionsAttributes) InternalWithRef(ref terra.Reference) Restriction
 	return RestrictionsAttributes{ref: ref}
 }
 
-func (r RestrictionsAttributes) InternalTokens() hclwrite.Tokens {
+func (r RestrictionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -377,7 +377,7 @@ func (c CacheAttributes) InternalWithRef(ref terra.Reference) CacheAttributes {
 	return CacheAttributes{ref: ref}
 }
 
-func (c CacheAttributes) InternalTokens() hclwrite.Tokens {
+func (c CacheAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -405,7 +405,7 @@ func (e EnvironmentAttributes) InternalWithRef(ref terra.Reference) EnvironmentA
 	return EnvironmentAttributes{ref: ref}
 }
 
-func (e EnvironmentAttributes) InternalTokens() hclwrite.Tokens {
+func (e EnvironmentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -453,7 +453,7 @@ func (ev EnvironmentVariableAttributes) InternalWithRef(ref terra.Reference) Env
 	return EnvironmentVariableAttributes{ref: ref}
 }
 
-func (ev EnvironmentVariableAttributes) InternalTokens() hclwrite.Tokens {
+func (ev EnvironmentVariableAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ev.ref.InternalTokens()
 }
 
@@ -481,7 +481,7 @@ func (rc RegistryCredentialAttributes) InternalWithRef(ref terra.Reference) Regi
 	return RegistryCredentialAttributes{ref: ref}
 }
 
-func (rc RegistryCredentialAttributes) InternalTokens() hclwrite.Tokens {
+func (rc RegistryCredentialAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rc.ref.InternalTokens()
 }
 
@@ -505,7 +505,7 @@ func (fsl FileSystemLocationsAttributes) InternalWithRef(ref terra.Reference) Fi
 	return FileSystemLocationsAttributes{ref: ref}
 }
 
-func (fsl FileSystemLocationsAttributes) InternalTokens() hclwrite.Tokens {
+func (fsl FileSystemLocationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fsl.ref.InternalTokens()
 }
 
@@ -541,7 +541,7 @@ func (lc LogsConfigAttributes) InternalWithRef(ref terra.Reference) LogsConfigAt
 	return LogsConfigAttributes{ref: ref}
 }
 
-func (lc LogsConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (lc LogsConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lc.ref.InternalTokens()
 }
 
@@ -565,7 +565,7 @@ func (cl CloudwatchLogsAttributes) InternalWithRef(ref terra.Reference) Cloudwat
 	return CloudwatchLogsAttributes{ref: ref}
 }
 
-func (cl CloudwatchLogsAttributes) InternalTokens() hclwrite.Tokens {
+func (cl CloudwatchLogsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cl.ref.InternalTokens()
 }
 
@@ -593,7 +593,7 @@ func (sl S3LogsAttributes) InternalWithRef(ref terra.Reference) S3LogsAttributes
 	return S3LogsAttributes{ref: ref}
 }
 
-func (sl S3LogsAttributes) InternalTokens() hclwrite.Tokens {
+func (sl S3LogsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sl.ref.InternalTokens()
 }
 
@@ -625,7 +625,7 @@ func (sa SecondaryArtifactsAttributes) InternalWithRef(ref terra.Reference) Seco
 	return SecondaryArtifactsAttributes{ref: ref}
 }
 
-func (sa SecondaryArtifactsAttributes) InternalTokens() hclwrite.Tokens {
+func (sa SecondaryArtifactsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sa.ref.InternalTokens()
 }
 
@@ -681,7 +681,7 @@ func (ssv SecondarySourceVersionAttributes) InternalWithRef(ref terra.Reference)
 	return SecondarySourceVersionAttributes{ref: ref}
 }
 
-func (ssv SecondarySourceVersionAttributes) InternalTokens() hclwrite.Tokens {
+func (ssv SecondarySourceVersionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ssv.ref.InternalTokens()
 }
 
@@ -705,7 +705,7 @@ func (ss SecondarySourcesAttributes) InternalWithRef(ref terra.Reference) Second
 	return SecondarySourcesAttributes{ref: ref}
 }
 
-func (ss SecondarySourcesAttributes) InternalTokens() hclwrite.Tokens {
+func (ss SecondarySourcesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ss.ref.InternalTokens()
 }
 
@@ -761,7 +761,7 @@ func (a SecondarySourcesAuthAttributes) InternalWithRef(ref terra.Reference) Sec
 	return SecondarySourcesAuthAttributes{ref: ref}
 }
 
-func (a SecondarySourcesAuthAttributes) InternalTokens() hclwrite.Tokens {
+func (a SecondarySourcesAuthAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -785,7 +785,7 @@ func (bsc SecondarySourcesBuildStatusConfigAttributes) InternalWithRef(ref terra
 	return SecondarySourcesBuildStatusConfigAttributes{ref: ref}
 }
 
-func (bsc SecondarySourcesBuildStatusConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (bsc SecondarySourcesBuildStatusConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bsc.ref.InternalTokens()
 }
 
@@ -809,7 +809,7 @@ func (gsc SecondarySourcesGitSubmodulesConfigAttributes) InternalWithRef(ref ter
 	return SecondarySourcesGitSubmodulesConfigAttributes{ref: ref}
 }
 
-func (gsc SecondarySourcesGitSubmodulesConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (gsc SecondarySourcesGitSubmodulesConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gsc.ref.InternalTokens()
 }
 
@@ -829,7 +829,7 @@ func (s SourceAttributes) InternalWithRef(ref terra.Reference) SourceAttributes 
 	return SourceAttributes{ref: ref}
 }
 
-func (s SourceAttributes) InternalTokens() hclwrite.Tokens {
+func (s SourceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -881,7 +881,7 @@ func (a SourceAuthAttributes) InternalWithRef(ref terra.Reference) SourceAuthAtt
 	return SourceAuthAttributes{ref: ref}
 }
 
-func (a SourceAuthAttributes) InternalTokens() hclwrite.Tokens {
+func (a SourceAuthAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -905,7 +905,7 @@ func (bsc SourceBuildStatusConfigAttributes) InternalWithRef(ref terra.Reference
 	return SourceBuildStatusConfigAttributes{ref: ref}
 }
 
-func (bsc SourceBuildStatusConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (bsc SourceBuildStatusConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bsc.ref.InternalTokens()
 }
 
@@ -929,7 +929,7 @@ func (gsc SourceGitSubmodulesConfigAttributes) InternalWithRef(ref terra.Referen
 	return SourceGitSubmodulesConfigAttributes{ref: ref}
 }
 
-func (gsc SourceGitSubmodulesConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (gsc SourceGitSubmodulesConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gsc.ref.InternalTokens()
 }
 
@@ -949,7 +949,7 @@ func (vc VpcConfigAttributes) InternalWithRef(ref terra.Reference) VpcConfigAttr
 	return VpcConfigAttributes{ref: ref}
 }
 
-func (vc VpcConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (vc VpcConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vc.ref.InternalTokens()
 }
 

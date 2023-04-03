@@ -4,6 +4,7 @@ package google
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataComputeNetworkEndpointGroup creates a new instance of [DataComputeNetworkEndpointGroup].
 func NewDataComputeNetworkEndpointGroup(name string, args DataComputeNetworkEndpointGroupArgs) *DataComputeNetworkEndpointGroup {
 	return &DataComputeNetworkEndpointGroup{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataComputeNetworkEndpointGroup(name string, args DataComputeNetworkEndp
 
 var _ terra.DataResource = (*DataComputeNetworkEndpointGroup)(nil)
 
+// DataComputeNetworkEndpointGroup represents the Terraform data resource google_compute_network_endpoint_group.
 type DataComputeNetworkEndpointGroup struct {
 	Name string
 	Args DataComputeNetworkEndpointGroupArgs
 }
 
+// DataSource returns the Terraform object type for [DataComputeNetworkEndpointGroup].
 func (cneg *DataComputeNetworkEndpointGroup) DataSource() string {
 	return "google_compute_network_endpoint_group"
 }
 
+// LocalName returns the local name for [DataComputeNetworkEndpointGroup].
 func (cneg *DataComputeNetworkEndpointGroup) LocalName() string {
 	return cneg.Name
 }
 
+// Configuration returns the configuration (args) for [DataComputeNetworkEndpointGroup].
 func (cneg *DataComputeNetworkEndpointGroup) Configuration() interface{} {
 	return cneg.Args
 }
 
+// Attributes returns the attributes for [DataComputeNetworkEndpointGroup].
 func (cneg *DataComputeNetworkEndpointGroup) Attributes() dataComputeNetworkEndpointGroupAttributes {
 	return dataComputeNetworkEndpointGroupAttributes{ref: terra.ReferenceDataResource(cneg)}
 }
 
+// DataComputeNetworkEndpointGroupArgs contains the configurations for google_compute_network_endpoint_group.
 type DataComputeNetworkEndpointGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -50,46 +57,57 @@ type dataComputeNetworkEndpointGroupAttributes struct {
 	ref terra.Reference
 }
 
+// DefaultPort returns a reference to field default_port of google_compute_network_endpoint_group.
 func (cneg dataComputeNetworkEndpointGroupAttributes) DefaultPort() terra.NumberValue {
-	return terra.ReferenceNumber(cneg.ref.Append("default_port"))
+	return terra.ReferenceAsNumber(cneg.ref.Append("default_port"))
 }
 
+// Description returns a reference to field description of google_compute_network_endpoint_group.
 func (cneg dataComputeNetworkEndpointGroupAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cneg.ref.Append("description"))
+	return terra.ReferenceAsString(cneg.ref.Append("description"))
 }
 
+// Id returns a reference to field id of google_compute_network_endpoint_group.
 func (cneg dataComputeNetworkEndpointGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cneg.ref.Append("id"))
+	return terra.ReferenceAsString(cneg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_compute_network_endpoint_group.
 func (cneg dataComputeNetworkEndpointGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cneg.ref.Append("name"))
+	return terra.ReferenceAsString(cneg.ref.Append("name"))
 }
 
+// Network returns a reference to field network of google_compute_network_endpoint_group.
 func (cneg dataComputeNetworkEndpointGroupAttributes) Network() terra.StringValue {
-	return terra.ReferenceString(cneg.ref.Append("network"))
+	return terra.ReferenceAsString(cneg.ref.Append("network"))
 }
 
+// NetworkEndpointType returns a reference to field network_endpoint_type of google_compute_network_endpoint_group.
 func (cneg dataComputeNetworkEndpointGroupAttributes) NetworkEndpointType() terra.StringValue {
-	return terra.ReferenceString(cneg.ref.Append("network_endpoint_type"))
+	return terra.ReferenceAsString(cneg.ref.Append("network_endpoint_type"))
 }
 
+// Project returns a reference to field project of google_compute_network_endpoint_group.
 func (cneg dataComputeNetworkEndpointGroupAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cneg.ref.Append("project"))
+	return terra.ReferenceAsString(cneg.ref.Append("project"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_network_endpoint_group.
 func (cneg dataComputeNetworkEndpointGroupAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(cneg.ref.Append("self_link"))
+	return terra.ReferenceAsString(cneg.ref.Append("self_link"))
 }
 
+// Size returns a reference to field size of google_compute_network_endpoint_group.
 func (cneg dataComputeNetworkEndpointGroupAttributes) Size() terra.NumberValue {
-	return terra.ReferenceNumber(cneg.ref.Append("size"))
+	return terra.ReferenceAsNumber(cneg.ref.Append("size"))
 }
 
+// Subnetwork returns a reference to field subnetwork of google_compute_network_endpoint_group.
 func (cneg dataComputeNetworkEndpointGroupAttributes) Subnetwork() terra.StringValue {
-	return terra.ReferenceString(cneg.ref.Append("subnetwork"))
+	return terra.ReferenceAsString(cneg.ref.Append("subnetwork"))
 }
 
+// Zone returns a reference to field zone of google_compute_network_endpoint_group.
 func (cneg dataComputeNetworkEndpointGroupAttributes) Zone() terra.StringValue {
-	return terra.ReferenceString(cneg.ref.Append("zone"))
+	return terra.ReferenceAsString(cneg.ref.Append("zone"))
 }

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewFirewallApplicationRuleCollection creates a new instance of [FirewallApplicationRuleCollection].
 func NewFirewallApplicationRuleCollection(name string, args FirewallApplicationRuleCollectionArgs) *FirewallApplicationRuleCollection {
 	return &FirewallApplicationRuleCollection{
 		Args: args,
@@ -19,28 +20,51 @@ func NewFirewallApplicationRuleCollection(name string, args FirewallApplicationR
 
 var _ terra.Resource = (*FirewallApplicationRuleCollection)(nil)
 
+// FirewallApplicationRuleCollection represents the Terraform resource azurerm_firewall_application_rule_collection.
 type FirewallApplicationRuleCollection struct {
-	Name  string
-	Args  FirewallApplicationRuleCollectionArgs
-	state *firewallApplicationRuleCollectionState
+	Name      string
+	Args      FirewallApplicationRuleCollectionArgs
+	state     *firewallApplicationRuleCollectionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [FirewallApplicationRuleCollection].
 func (farc *FirewallApplicationRuleCollection) Type() string {
 	return "azurerm_firewall_application_rule_collection"
 }
 
+// LocalName returns the local name for [FirewallApplicationRuleCollection].
 func (farc *FirewallApplicationRuleCollection) LocalName() string {
 	return farc.Name
 }
 
+// Configuration returns the configuration (args) for [FirewallApplicationRuleCollection].
 func (farc *FirewallApplicationRuleCollection) Configuration() interface{} {
 	return farc.Args
 }
 
+// DependOn is used for other resources to depend on [FirewallApplicationRuleCollection].
+func (farc *FirewallApplicationRuleCollection) DependOn() terra.Reference {
+	return terra.ReferenceResource(farc)
+}
+
+// Dependencies returns the list of resources [FirewallApplicationRuleCollection] depends_on.
+func (farc *FirewallApplicationRuleCollection) Dependencies() terra.Dependencies {
+	return farc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [FirewallApplicationRuleCollection].
+func (farc *FirewallApplicationRuleCollection) LifecycleManagement() *terra.Lifecycle {
+	return farc.Lifecycle
+}
+
+// Attributes returns the attributes for [FirewallApplicationRuleCollection].
 func (farc *FirewallApplicationRuleCollection) Attributes() firewallApplicationRuleCollectionAttributes {
 	return firewallApplicationRuleCollectionAttributes{ref: terra.ReferenceResource(farc)}
 }
 
+// ImportState imports the given attribute values into [FirewallApplicationRuleCollection]'s state.
 func (farc *FirewallApplicationRuleCollection) ImportState(av io.Reader) error {
 	farc.state = &firewallApplicationRuleCollectionState{}
 	if err := json.NewDecoder(av).Decode(farc.state); err != nil {
@@ -49,10 +73,12 @@ func (farc *FirewallApplicationRuleCollection) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [FirewallApplicationRuleCollection] has state.
 func (farc *FirewallApplicationRuleCollection) State() (*firewallApplicationRuleCollectionState, bool) {
 	return farc.state, farc.state != nil
 }
 
+// StateMust returns the state for [FirewallApplicationRuleCollection]. Panics if the state is nil.
 func (farc *FirewallApplicationRuleCollection) StateMust() *firewallApplicationRuleCollectionState {
 	if farc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", farc.Type(), farc.LocalName()))
@@ -60,10 +86,7 @@ func (farc *FirewallApplicationRuleCollection) StateMust() *firewallApplicationR
 	return farc.state
 }
 
-func (farc *FirewallApplicationRuleCollection) DependOn() terra.Reference {
-	return terra.ReferenceResource(farc)
-}
-
+// FirewallApplicationRuleCollectionArgs contains the configurations for azurerm_firewall_application_rule_collection.
 type FirewallApplicationRuleCollectionArgs struct {
 	// Action: string, required
 	Action terra.StringValue `hcl:"action,attr" validate:"required"`
@@ -81,43 +104,47 @@ type FirewallApplicationRuleCollectionArgs struct {
 	Rule []firewallapplicationrulecollection.Rule `hcl:"rule,block" validate:"min=1"`
 	// Timeouts: optional
 	Timeouts *firewallapplicationrulecollection.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that FirewallApplicationRuleCollection depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type firewallApplicationRuleCollectionAttributes struct {
 	ref terra.Reference
 }
 
+// Action returns a reference to field action of azurerm_firewall_application_rule_collection.
 func (farc firewallApplicationRuleCollectionAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(farc.ref.Append("action"))
+	return terra.ReferenceAsString(farc.ref.Append("action"))
 }
 
+// AzureFirewallName returns a reference to field azure_firewall_name of azurerm_firewall_application_rule_collection.
 func (farc firewallApplicationRuleCollectionAttributes) AzureFirewallName() terra.StringValue {
-	return terra.ReferenceString(farc.ref.Append("azure_firewall_name"))
+	return terra.ReferenceAsString(farc.ref.Append("azure_firewall_name"))
 }
 
+// Id returns a reference to field id of azurerm_firewall_application_rule_collection.
 func (farc firewallApplicationRuleCollectionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(farc.ref.Append("id"))
+	return terra.ReferenceAsString(farc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_firewall_application_rule_collection.
 func (farc firewallApplicationRuleCollectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(farc.ref.Append("name"))
+	return terra.ReferenceAsString(farc.ref.Append("name"))
 }
 
+// Priority returns a reference to field priority of azurerm_firewall_application_rule_collection.
 func (farc firewallApplicationRuleCollectionAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(farc.ref.Append("priority"))
+	return terra.ReferenceAsNumber(farc.ref.Append("priority"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_firewall_application_rule_collection.
 func (farc firewallApplicationRuleCollectionAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(farc.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(farc.ref.Append("resource_group_name"))
 }
 
 func (farc firewallApplicationRuleCollectionAttributes) Rule() terra.ListValue[firewallapplicationrulecollection.RuleAttributes] {
-	return terra.ReferenceList[firewallapplicationrulecollection.RuleAttributes](farc.ref.Append("rule"))
+	return terra.ReferenceAsList[firewallapplicationrulecollection.RuleAttributes](farc.ref.Append("rule"))
 }
 
 func (farc firewallApplicationRuleCollectionAttributes) Timeouts() firewallapplicationrulecollection.TimeoutsAttributes {
-	return terra.ReferenceSingle[firewallapplicationrulecollection.TimeoutsAttributes](farc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[firewallapplicationrulecollection.TimeoutsAttributes](farc.ref.Append("timeouts"))
 }
 
 type firewallApplicationRuleCollectionState struct {

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataComposerImageVersions creates a new instance of [DataComposerImageVersions].
 func NewDataComposerImageVersions(name string, args DataComposerImageVersionsArgs) *DataComposerImageVersions {
 	return &DataComposerImageVersions{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataComposerImageVersions(name string, args DataComposerImageVersionsArg
 
 var _ terra.DataResource = (*DataComposerImageVersions)(nil)
 
+// DataComposerImageVersions represents the Terraform data resource google_composer_image_versions.
 type DataComposerImageVersions struct {
 	Name string
 	Args DataComposerImageVersionsArgs
 }
 
+// DataSource returns the Terraform object type for [DataComposerImageVersions].
 func (civ *DataComposerImageVersions) DataSource() string {
 	return "google_composer_image_versions"
 }
 
+// LocalName returns the local name for [DataComposerImageVersions].
 func (civ *DataComposerImageVersions) LocalName() string {
 	return civ.Name
 }
 
+// Configuration returns the configuration (args) for [DataComposerImageVersions].
 func (civ *DataComposerImageVersions) Configuration() interface{} {
 	return civ.Args
 }
 
+// Attributes returns the attributes for [DataComposerImageVersions].
 func (civ *DataComposerImageVersions) Attributes() dataComposerImageVersionsAttributes {
 	return dataComposerImageVersionsAttributes{ref: terra.ReferenceDataResource(civ)}
 }
 
+// DataComposerImageVersionsArgs contains the configurations for google_composer_image_versions.
 type DataComposerImageVersionsArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,18 +58,21 @@ type dataComposerImageVersionsAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of google_composer_image_versions.
 func (civ dataComposerImageVersionsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(civ.ref.Append("id"))
+	return terra.ReferenceAsString(civ.ref.Append("id"))
 }
 
+// Project returns a reference to field project of google_composer_image_versions.
 func (civ dataComposerImageVersionsAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(civ.ref.Append("project"))
+	return terra.ReferenceAsString(civ.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_composer_image_versions.
 func (civ dataComposerImageVersionsAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(civ.ref.Append("region"))
+	return terra.ReferenceAsString(civ.ref.Append("region"))
 }
 
 func (civ dataComposerImageVersionsAttributes) ImageVersions() terra.ListValue[datacomposerimageversions.ImageVersionsAttributes] {
-	return terra.ReferenceList[datacomposerimageversions.ImageVersionsAttributes](civ.ref.Append("image_versions"))
+	return terra.ReferenceAsList[datacomposerimageversions.ImageVersionsAttributes](civ.ref.Append("image_versions"))
 }

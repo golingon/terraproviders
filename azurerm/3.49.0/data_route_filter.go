@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataRouteFilter creates a new instance of [DataRouteFilter].
 func NewDataRouteFilter(name string, args DataRouteFilterArgs) *DataRouteFilter {
 	return &DataRouteFilter{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataRouteFilter(name string, args DataRouteFilterArgs) *DataRouteFilter 
 
 var _ terra.DataResource = (*DataRouteFilter)(nil)
 
+// DataRouteFilter represents the Terraform data resource azurerm_route_filter.
 type DataRouteFilter struct {
 	Name string
 	Args DataRouteFilterArgs
 }
 
+// DataSource returns the Terraform object type for [DataRouteFilter].
 func (rf *DataRouteFilter) DataSource() string {
 	return "azurerm_route_filter"
 }
 
+// LocalName returns the local name for [DataRouteFilter].
 func (rf *DataRouteFilter) LocalName() string {
 	return rf.Name
 }
 
+// Configuration returns the configuration (args) for [DataRouteFilter].
 func (rf *DataRouteFilter) Configuration() interface{} {
 	return rf.Args
 }
 
+// Attributes returns the attributes for [DataRouteFilter].
 func (rf *DataRouteFilter) Attributes() dataRouteFilterAttributes {
 	return dataRouteFilterAttributes{ref: terra.ReferenceDataResource(rf)}
 }
 
+// DataRouteFilterArgs contains the configurations for azurerm_route_filter.
 type DataRouteFilterArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,30 +60,35 @@ type dataRouteFilterAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_route_filter.
 func (rf dataRouteFilterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rf.ref.Append("id"))
+	return terra.ReferenceAsString(rf.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_route_filter.
 func (rf dataRouteFilterAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(rf.ref.Append("location"))
+	return terra.ReferenceAsString(rf.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_route_filter.
 func (rf dataRouteFilterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rf.ref.Append("name"))
+	return terra.ReferenceAsString(rf.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_route_filter.
 func (rf dataRouteFilterAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(rf.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(rf.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_route_filter.
 func (rf dataRouteFilterAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rf.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](rf.ref.Append("tags"))
 }
 
 func (rf dataRouteFilterAttributes) Rule() terra.ListValue[dataroutefilter.RuleAttributes] {
-	return terra.ReferenceList[dataroutefilter.RuleAttributes](rf.ref.Append("rule"))
+	return terra.ReferenceAsList[dataroutefilter.RuleAttributes](rf.ref.Append("rule"))
 }
 
 func (rf dataRouteFilterAttributes) Timeouts() dataroutefilter.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataroutefilter.TimeoutsAttributes](rf.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataroutefilter.TimeoutsAttributes](rf.ref.Append("timeouts"))
 }

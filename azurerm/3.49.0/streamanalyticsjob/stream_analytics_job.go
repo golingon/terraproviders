@@ -36,88 +36,88 @@ type IdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (i IdentityAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IdentityAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IdentityAttributes) InternalWithRef(ref terra.Reference) IdentityAttributes {
 	return IdentityAttributes{ref: ref}
 }
 
-func (i IdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (i IdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IdentityAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("principal_id"))
+	return terra.ReferenceAsString(i.ref.Append("principal_id"))
 }
 
 func (i IdentityAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(i.ref.Append("tenant_id"))
 }
 
 func (i IdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("type"))
+	return terra.ReferenceAsString(i.ref.Append("type"))
 }
 
 type JobStorageAccountAttributes struct {
 	ref terra.Reference
 }
 
-func (jsa JobStorageAccountAttributes) InternalRef() terra.Reference {
-	return jsa.ref
+func (jsa JobStorageAccountAttributes) InternalRef() (terra.Reference, error) {
+	return jsa.ref, nil
 }
 
 func (jsa JobStorageAccountAttributes) InternalWithRef(ref terra.Reference) JobStorageAccountAttributes {
 	return JobStorageAccountAttributes{ref: ref}
 }
 
-func (jsa JobStorageAccountAttributes) InternalTokens() hclwrite.Tokens {
+func (jsa JobStorageAccountAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return jsa.ref.InternalTokens()
 }
 
 func (jsa JobStorageAccountAttributes) AccountKey() terra.StringValue {
-	return terra.ReferenceString(jsa.ref.Append("account_key"))
+	return terra.ReferenceAsString(jsa.ref.Append("account_key"))
 }
 
 func (jsa JobStorageAccountAttributes) AccountName() terra.StringValue {
-	return terra.ReferenceString(jsa.ref.Append("account_name"))
+	return terra.ReferenceAsString(jsa.ref.Append("account_name"))
 }
 
 func (jsa JobStorageAccountAttributes) AuthenticationMode() terra.StringValue {
-	return terra.ReferenceString(jsa.ref.Append("authentication_mode"))
+	return terra.ReferenceAsString(jsa.ref.Append("authentication_mode"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type IdentityState struct {

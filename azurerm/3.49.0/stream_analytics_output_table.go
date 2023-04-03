@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewStreamAnalyticsOutputTable creates a new instance of [StreamAnalyticsOutputTable].
 func NewStreamAnalyticsOutputTable(name string, args StreamAnalyticsOutputTableArgs) *StreamAnalyticsOutputTable {
 	return &StreamAnalyticsOutputTable{
 		Args: args,
@@ -19,28 +20,51 @@ func NewStreamAnalyticsOutputTable(name string, args StreamAnalyticsOutputTableA
 
 var _ terra.Resource = (*StreamAnalyticsOutputTable)(nil)
 
+// StreamAnalyticsOutputTable represents the Terraform resource azurerm_stream_analytics_output_table.
 type StreamAnalyticsOutputTable struct {
-	Name  string
-	Args  StreamAnalyticsOutputTableArgs
-	state *streamAnalyticsOutputTableState
+	Name      string
+	Args      StreamAnalyticsOutputTableArgs
+	state     *streamAnalyticsOutputTableState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [StreamAnalyticsOutputTable].
 func (saot *StreamAnalyticsOutputTable) Type() string {
 	return "azurerm_stream_analytics_output_table"
 }
 
+// LocalName returns the local name for [StreamAnalyticsOutputTable].
 func (saot *StreamAnalyticsOutputTable) LocalName() string {
 	return saot.Name
 }
 
+// Configuration returns the configuration (args) for [StreamAnalyticsOutputTable].
 func (saot *StreamAnalyticsOutputTable) Configuration() interface{} {
 	return saot.Args
 }
 
+// DependOn is used for other resources to depend on [StreamAnalyticsOutputTable].
+func (saot *StreamAnalyticsOutputTable) DependOn() terra.Reference {
+	return terra.ReferenceResource(saot)
+}
+
+// Dependencies returns the list of resources [StreamAnalyticsOutputTable] depends_on.
+func (saot *StreamAnalyticsOutputTable) Dependencies() terra.Dependencies {
+	return saot.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [StreamAnalyticsOutputTable].
+func (saot *StreamAnalyticsOutputTable) LifecycleManagement() *terra.Lifecycle {
+	return saot.Lifecycle
+}
+
+// Attributes returns the attributes for [StreamAnalyticsOutputTable].
 func (saot *StreamAnalyticsOutputTable) Attributes() streamAnalyticsOutputTableAttributes {
 	return streamAnalyticsOutputTableAttributes{ref: terra.ReferenceResource(saot)}
 }
 
+// ImportState imports the given attribute values into [StreamAnalyticsOutputTable]'s state.
 func (saot *StreamAnalyticsOutputTable) ImportState(av io.Reader) error {
 	saot.state = &streamAnalyticsOutputTableState{}
 	if err := json.NewDecoder(av).Decode(saot.state); err != nil {
@@ -49,10 +73,12 @@ func (saot *StreamAnalyticsOutputTable) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [StreamAnalyticsOutputTable] has state.
 func (saot *StreamAnalyticsOutputTable) State() (*streamAnalyticsOutputTableState, bool) {
 	return saot.state, saot.state != nil
 }
 
+// StateMust returns the state for [StreamAnalyticsOutputTable]. Panics if the state is nil.
 func (saot *StreamAnalyticsOutputTable) StateMust() *streamAnalyticsOutputTableState {
 	if saot.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", saot.Type(), saot.LocalName()))
@@ -60,10 +86,7 @@ func (saot *StreamAnalyticsOutputTable) StateMust() *streamAnalyticsOutputTableS
 	return saot.state
 }
 
-func (saot *StreamAnalyticsOutputTable) DependOn() terra.Reference {
-	return terra.ReferenceResource(saot)
-}
-
+// StreamAnalyticsOutputTableArgs contains the configurations for azurerm_stream_analytics_output_table.
 type StreamAnalyticsOutputTableArgs struct {
 	// BatchSize: number, required
 	BatchSize terra.NumberValue `hcl:"batch_size,attr" validate:"required"`
@@ -89,59 +112,68 @@ type StreamAnalyticsOutputTableArgs struct {
 	Table terra.StringValue `hcl:"table,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *streamanalyticsoutputtable.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that StreamAnalyticsOutputTable depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type streamAnalyticsOutputTableAttributes struct {
 	ref terra.Reference
 }
 
+// BatchSize returns a reference to field batch_size of azurerm_stream_analytics_output_table.
 func (saot streamAnalyticsOutputTableAttributes) BatchSize() terra.NumberValue {
-	return terra.ReferenceNumber(saot.ref.Append("batch_size"))
+	return terra.ReferenceAsNumber(saot.ref.Append("batch_size"))
 }
 
+// ColumnsToRemove returns a reference to field columns_to_remove of azurerm_stream_analytics_output_table.
 func (saot streamAnalyticsOutputTableAttributes) ColumnsToRemove() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](saot.ref.Append("columns_to_remove"))
+	return terra.ReferenceAsList[terra.StringValue](saot.ref.Append("columns_to_remove"))
 }
 
+// Id returns a reference to field id of azurerm_stream_analytics_output_table.
 func (saot streamAnalyticsOutputTableAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(saot.ref.Append("id"))
+	return terra.ReferenceAsString(saot.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_stream_analytics_output_table.
 func (saot streamAnalyticsOutputTableAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(saot.ref.Append("name"))
+	return terra.ReferenceAsString(saot.ref.Append("name"))
 }
 
+// PartitionKey returns a reference to field partition_key of azurerm_stream_analytics_output_table.
 func (saot streamAnalyticsOutputTableAttributes) PartitionKey() terra.StringValue {
-	return terra.ReferenceString(saot.ref.Append("partition_key"))
+	return terra.ReferenceAsString(saot.ref.Append("partition_key"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_stream_analytics_output_table.
 func (saot streamAnalyticsOutputTableAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(saot.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(saot.ref.Append("resource_group_name"))
 }
 
+// RowKey returns a reference to field row_key of azurerm_stream_analytics_output_table.
 func (saot streamAnalyticsOutputTableAttributes) RowKey() terra.StringValue {
-	return terra.ReferenceString(saot.ref.Append("row_key"))
+	return terra.ReferenceAsString(saot.ref.Append("row_key"))
 }
 
+// StorageAccountKey returns a reference to field storage_account_key of azurerm_stream_analytics_output_table.
 func (saot streamAnalyticsOutputTableAttributes) StorageAccountKey() terra.StringValue {
-	return terra.ReferenceString(saot.ref.Append("storage_account_key"))
+	return terra.ReferenceAsString(saot.ref.Append("storage_account_key"))
 }
 
+// StorageAccountName returns a reference to field storage_account_name of azurerm_stream_analytics_output_table.
 func (saot streamAnalyticsOutputTableAttributes) StorageAccountName() terra.StringValue {
-	return terra.ReferenceString(saot.ref.Append("storage_account_name"))
+	return terra.ReferenceAsString(saot.ref.Append("storage_account_name"))
 }
 
+// StreamAnalyticsJobName returns a reference to field stream_analytics_job_name of azurerm_stream_analytics_output_table.
 func (saot streamAnalyticsOutputTableAttributes) StreamAnalyticsJobName() terra.StringValue {
-	return terra.ReferenceString(saot.ref.Append("stream_analytics_job_name"))
+	return terra.ReferenceAsString(saot.ref.Append("stream_analytics_job_name"))
 }
 
+// Table returns a reference to field table of azurerm_stream_analytics_output_table.
 func (saot streamAnalyticsOutputTableAttributes) Table() terra.StringValue {
-	return terra.ReferenceString(saot.ref.Append("table"))
+	return terra.ReferenceAsString(saot.ref.Append("table"))
 }
 
 func (saot streamAnalyticsOutputTableAttributes) Timeouts() streamanalyticsoutputtable.TimeoutsAttributes {
-	return terra.ReferenceSingle[streamanalyticsoutputtable.TimeoutsAttributes](saot.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[streamanalyticsoutputtable.TimeoutsAttributes](saot.ref.Append("timeouts"))
 }
 
 type streamAnalyticsOutputTableState struct {

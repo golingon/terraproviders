@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSpringCloudGatewayRouteConfig creates a new instance of [SpringCloudGatewayRouteConfig].
 func NewSpringCloudGatewayRouteConfig(name string, args SpringCloudGatewayRouteConfigArgs) *SpringCloudGatewayRouteConfig {
 	return &SpringCloudGatewayRouteConfig{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSpringCloudGatewayRouteConfig(name string, args SpringCloudGatewayRouteC
 
 var _ terra.Resource = (*SpringCloudGatewayRouteConfig)(nil)
 
+// SpringCloudGatewayRouteConfig represents the Terraform resource azurerm_spring_cloud_gateway_route_config.
 type SpringCloudGatewayRouteConfig struct {
-	Name  string
-	Args  SpringCloudGatewayRouteConfigArgs
-	state *springCloudGatewayRouteConfigState
+	Name      string
+	Args      SpringCloudGatewayRouteConfigArgs
+	state     *springCloudGatewayRouteConfigState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SpringCloudGatewayRouteConfig].
 func (scgrc *SpringCloudGatewayRouteConfig) Type() string {
 	return "azurerm_spring_cloud_gateway_route_config"
 }
 
+// LocalName returns the local name for [SpringCloudGatewayRouteConfig].
 func (scgrc *SpringCloudGatewayRouteConfig) LocalName() string {
 	return scgrc.Name
 }
 
+// Configuration returns the configuration (args) for [SpringCloudGatewayRouteConfig].
 func (scgrc *SpringCloudGatewayRouteConfig) Configuration() interface{} {
 	return scgrc.Args
 }
 
+// DependOn is used for other resources to depend on [SpringCloudGatewayRouteConfig].
+func (scgrc *SpringCloudGatewayRouteConfig) DependOn() terra.Reference {
+	return terra.ReferenceResource(scgrc)
+}
+
+// Dependencies returns the list of resources [SpringCloudGatewayRouteConfig] depends_on.
+func (scgrc *SpringCloudGatewayRouteConfig) Dependencies() terra.Dependencies {
+	return scgrc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SpringCloudGatewayRouteConfig].
+func (scgrc *SpringCloudGatewayRouteConfig) LifecycleManagement() *terra.Lifecycle {
+	return scgrc.Lifecycle
+}
+
+// Attributes returns the attributes for [SpringCloudGatewayRouteConfig].
 func (scgrc *SpringCloudGatewayRouteConfig) Attributes() springCloudGatewayRouteConfigAttributes {
 	return springCloudGatewayRouteConfigAttributes{ref: terra.ReferenceResource(scgrc)}
 }
 
+// ImportState imports the given attribute values into [SpringCloudGatewayRouteConfig]'s state.
 func (scgrc *SpringCloudGatewayRouteConfig) ImportState(av io.Reader) error {
 	scgrc.state = &springCloudGatewayRouteConfigState{}
 	if err := json.NewDecoder(av).Decode(scgrc.state); err != nil {
@@ -49,10 +73,12 @@ func (scgrc *SpringCloudGatewayRouteConfig) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SpringCloudGatewayRouteConfig] has state.
 func (scgrc *SpringCloudGatewayRouteConfig) State() (*springCloudGatewayRouteConfigState, bool) {
 	return scgrc.state, scgrc.state != nil
 }
 
+// StateMust returns the state for [SpringCloudGatewayRouteConfig]. Panics if the state is nil.
 func (scgrc *SpringCloudGatewayRouteConfig) StateMust() *springCloudGatewayRouteConfigState {
 	if scgrc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", scgrc.Type(), scgrc.LocalName()))
@@ -60,10 +86,7 @@ func (scgrc *SpringCloudGatewayRouteConfig) StateMust() *springCloudGatewayRoute
 	return scgrc.state
 }
 
-func (scgrc *SpringCloudGatewayRouteConfig) DependOn() terra.Reference {
-	return terra.ReferenceResource(scgrc)
-}
-
+// SpringCloudGatewayRouteConfigArgs contains the configurations for azurerm_spring_cloud_gateway_route_config.
 type SpringCloudGatewayRouteConfigArgs struct {
 	// Filters: set of string, optional
 	Filters terra.SetValue[terra.StringValue] `hcl:"filters,attr"`
@@ -87,55 +110,61 @@ type SpringCloudGatewayRouteConfigArgs struct {
 	Route []springcloudgatewayrouteconfig.Route `hcl:"route,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *springcloudgatewayrouteconfig.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SpringCloudGatewayRouteConfig depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type springCloudGatewayRouteConfigAttributes struct {
 	ref terra.Reference
 }
 
+// Filters returns a reference to field filters of azurerm_spring_cloud_gateway_route_config.
 func (scgrc springCloudGatewayRouteConfigAttributes) Filters() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](scgrc.ref.Append("filters"))
+	return terra.ReferenceAsSet[terra.StringValue](scgrc.ref.Append("filters"))
 }
 
+// Id returns a reference to field id of azurerm_spring_cloud_gateway_route_config.
 func (scgrc springCloudGatewayRouteConfigAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(scgrc.ref.Append("id"))
+	return terra.ReferenceAsString(scgrc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_spring_cloud_gateway_route_config.
 func (scgrc springCloudGatewayRouteConfigAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(scgrc.ref.Append("name"))
+	return terra.ReferenceAsString(scgrc.ref.Append("name"))
 }
 
+// Predicates returns a reference to field predicates of azurerm_spring_cloud_gateway_route_config.
 func (scgrc springCloudGatewayRouteConfigAttributes) Predicates() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](scgrc.ref.Append("predicates"))
+	return terra.ReferenceAsSet[terra.StringValue](scgrc.ref.Append("predicates"))
 }
 
+// Protocol returns a reference to field protocol of azurerm_spring_cloud_gateway_route_config.
 func (scgrc springCloudGatewayRouteConfigAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(scgrc.ref.Append("protocol"))
+	return terra.ReferenceAsString(scgrc.ref.Append("protocol"))
 }
 
+// SpringCloudAppId returns a reference to field spring_cloud_app_id of azurerm_spring_cloud_gateway_route_config.
 func (scgrc springCloudGatewayRouteConfigAttributes) SpringCloudAppId() terra.StringValue {
-	return terra.ReferenceString(scgrc.ref.Append("spring_cloud_app_id"))
+	return terra.ReferenceAsString(scgrc.ref.Append("spring_cloud_app_id"))
 }
 
+// SpringCloudGatewayId returns a reference to field spring_cloud_gateway_id of azurerm_spring_cloud_gateway_route_config.
 func (scgrc springCloudGatewayRouteConfigAttributes) SpringCloudGatewayId() terra.StringValue {
-	return terra.ReferenceString(scgrc.ref.Append("spring_cloud_gateway_id"))
+	return terra.ReferenceAsString(scgrc.ref.Append("spring_cloud_gateway_id"))
 }
 
+// SsoValidationEnabled returns a reference to field sso_validation_enabled of azurerm_spring_cloud_gateway_route_config.
 func (scgrc springCloudGatewayRouteConfigAttributes) SsoValidationEnabled() terra.BoolValue {
-	return terra.ReferenceBool(scgrc.ref.Append("sso_validation_enabled"))
+	return terra.ReferenceAsBool(scgrc.ref.Append("sso_validation_enabled"))
 }
 
 func (scgrc springCloudGatewayRouteConfigAttributes) OpenApi() terra.ListValue[springcloudgatewayrouteconfig.OpenApiAttributes] {
-	return terra.ReferenceList[springcloudgatewayrouteconfig.OpenApiAttributes](scgrc.ref.Append("open_api"))
+	return terra.ReferenceAsList[springcloudgatewayrouteconfig.OpenApiAttributes](scgrc.ref.Append("open_api"))
 }
 
 func (scgrc springCloudGatewayRouteConfigAttributes) Route() terra.SetValue[springcloudgatewayrouteconfig.RouteAttributes] {
-	return terra.ReferenceSet[springcloudgatewayrouteconfig.RouteAttributes](scgrc.ref.Append("route"))
+	return terra.ReferenceAsSet[springcloudgatewayrouteconfig.RouteAttributes](scgrc.ref.Append("route"))
 }
 
 func (scgrc springCloudGatewayRouteConfigAttributes) Timeouts() springcloudgatewayrouteconfig.TimeoutsAttributes {
-	return terra.ReferenceSingle[springcloudgatewayrouteconfig.TimeoutsAttributes](scgrc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[springcloudgatewayrouteconfig.TimeoutsAttributes](scgrc.ref.Append("timeouts"))
 }
 
 type springCloudGatewayRouteConfigState struct {

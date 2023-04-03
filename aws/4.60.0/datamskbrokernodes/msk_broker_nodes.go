@@ -21,7 +21,7 @@ func (nil NodeInfoListAttributes) InternalWithRef(ref terra.Reference) NodeInfoL
 	return NodeInfoListAttributes{ref: ref}
 }
 
-func (nil NodeInfoListAttributes) InternalTokens() hclwrite.Tokens {
+func (nil NodeInfoListAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nil.ref.InternalTokens()
 }
 

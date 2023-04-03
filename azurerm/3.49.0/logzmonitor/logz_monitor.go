@@ -44,96 +44,96 @@ type PlanAttributes struct {
 	ref terra.Reference
 }
 
-func (p PlanAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p PlanAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p PlanAttributes) InternalWithRef(ref terra.Reference) PlanAttributes {
 	return PlanAttributes{ref: ref}
 }
 
-func (p PlanAttributes) InternalTokens() hclwrite.Tokens {
+func (p PlanAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
 func (p PlanAttributes) BillingCycle() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("billing_cycle"))
+	return terra.ReferenceAsString(p.ref.Append("billing_cycle"))
 }
 
 func (p PlanAttributes) EffectiveDate() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("effective_date"))
+	return terra.ReferenceAsString(p.ref.Append("effective_date"))
 }
 
 func (p PlanAttributes) PlanId() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("plan_id"))
+	return terra.ReferenceAsString(p.ref.Append("plan_id"))
 }
 
 func (p PlanAttributes) UsageType() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("usage_type"))
+	return terra.ReferenceAsString(p.ref.Append("usage_type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type UserAttributes struct {
 	ref terra.Reference
 }
 
-func (u UserAttributes) InternalRef() terra.Reference {
-	return u.ref
+func (u UserAttributes) InternalRef() (terra.Reference, error) {
+	return u.ref, nil
 }
 
 func (u UserAttributes) InternalWithRef(ref terra.Reference) UserAttributes {
 	return UserAttributes{ref: ref}
 }
 
-func (u UserAttributes) InternalTokens() hclwrite.Tokens {
+func (u UserAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return u.ref.InternalTokens()
 }
 
 func (u UserAttributes) Email() terra.StringValue {
-	return terra.ReferenceString(u.ref.Append("email"))
+	return terra.ReferenceAsString(u.ref.Append("email"))
 }
 
 func (u UserAttributes) FirstName() terra.StringValue {
-	return terra.ReferenceString(u.ref.Append("first_name"))
+	return terra.ReferenceAsString(u.ref.Append("first_name"))
 }
 
 func (u UserAttributes) LastName() terra.StringValue {
-	return terra.ReferenceString(u.ref.Append("last_name"))
+	return terra.ReferenceAsString(u.ref.Append("last_name"))
 }
 
 func (u UserAttributes) PhoneNumber() terra.StringValue {
-	return terra.ReferenceString(u.ref.Append("phone_number"))
+	return terra.ReferenceAsString(u.ref.Append("phone_number"))
 }
 
 type PlanState struct {

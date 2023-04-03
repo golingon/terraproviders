@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDnsManagedZoneIamMember creates a new instance of [DnsManagedZoneIamMember].
 func NewDnsManagedZoneIamMember(name string, args DnsManagedZoneIamMemberArgs) *DnsManagedZoneIamMember {
 	return &DnsManagedZoneIamMember{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDnsManagedZoneIamMember(name string, args DnsManagedZoneIamMemberArgs) *
 
 var _ terra.Resource = (*DnsManagedZoneIamMember)(nil)
 
+// DnsManagedZoneIamMember represents the Terraform resource google_dns_managed_zone_iam_member.
 type DnsManagedZoneIamMember struct {
-	Name  string
-	Args  DnsManagedZoneIamMemberArgs
-	state *dnsManagedZoneIamMemberState
+	Name      string
+	Args      DnsManagedZoneIamMemberArgs
+	state     *dnsManagedZoneIamMemberState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DnsManagedZoneIamMember].
 func (dmzim *DnsManagedZoneIamMember) Type() string {
 	return "google_dns_managed_zone_iam_member"
 }
 
+// LocalName returns the local name for [DnsManagedZoneIamMember].
 func (dmzim *DnsManagedZoneIamMember) LocalName() string {
 	return dmzim.Name
 }
 
+// Configuration returns the configuration (args) for [DnsManagedZoneIamMember].
 func (dmzim *DnsManagedZoneIamMember) Configuration() interface{} {
 	return dmzim.Args
 }
 
+// DependOn is used for other resources to depend on [DnsManagedZoneIamMember].
+func (dmzim *DnsManagedZoneIamMember) DependOn() terra.Reference {
+	return terra.ReferenceResource(dmzim)
+}
+
+// Dependencies returns the list of resources [DnsManagedZoneIamMember] depends_on.
+func (dmzim *DnsManagedZoneIamMember) Dependencies() terra.Dependencies {
+	return dmzim.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DnsManagedZoneIamMember].
+func (dmzim *DnsManagedZoneIamMember) LifecycleManagement() *terra.Lifecycle {
+	return dmzim.Lifecycle
+}
+
+// Attributes returns the attributes for [DnsManagedZoneIamMember].
 func (dmzim *DnsManagedZoneIamMember) Attributes() dnsManagedZoneIamMemberAttributes {
 	return dnsManagedZoneIamMemberAttributes{ref: terra.ReferenceResource(dmzim)}
 }
 
+// ImportState imports the given attribute values into [DnsManagedZoneIamMember]'s state.
 func (dmzim *DnsManagedZoneIamMember) ImportState(av io.Reader) error {
 	dmzim.state = &dnsManagedZoneIamMemberState{}
 	if err := json.NewDecoder(av).Decode(dmzim.state); err != nil {
@@ -49,10 +73,12 @@ func (dmzim *DnsManagedZoneIamMember) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DnsManagedZoneIamMember] has state.
 func (dmzim *DnsManagedZoneIamMember) State() (*dnsManagedZoneIamMemberState, bool) {
 	return dmzim.state, dmzim.state != nil
 }
 
+// StateMust returns the state for [DnsManagedZoneIamMember]. Panics if the state is nil.
 func (dmzim *DnsManagedZoneIamMember) StateMust() *dnsManagedZoneIamMemberState {
 	if dmzim.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dmzim.Type(), dmzim.LocalName()))
@@ -60,10 +86,7 @@ func (dmzim *DnsManagedZoneIamMember) StateMust() *dnsManagedZoneIamMemberState 
 	return dmzim.state
 }
 
-func (dmzim *DnsManagedZoneIamMember) DependOn() terra.Reference {
-	return terra.ReferenceResource(dmzim)
-}
-
+// DnsManagedZoneIamMemberArgs contains the configurations for google_dns_managed_zone_iam_member.
 type DnsManagedZoneIamMemberArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,39 +100,43 @@ type DnsManagedZoneIamMemberArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *dnsmanagedzoneiammember.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that DnsManagedZoneIamMember depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dnsManagedZoneIamMemberAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_dns_managed_zone_iam_member.
 func (dmzim dnsManagedZoneIamMemberAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(dmzim.ref.Append("etag"))
+	return terra.ReferenceAsString(dmzim.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_dns_managed_zone_iam_member.
 func (dmzim dnsManagedZoneIamMemberAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dmzim.ref.Append("id"))
+	return terra.ReferenceAsString(dmzim.ref.Append("id"))
 }
 
+// ManagedZone returns a reference to field managed_zone of google_dns_managed_zone_iam_member.
 func (dmzim dnsManagedZoneIamMemberAttributes) ManagedZone() terra.StringValue {
-	return terra.ReferenceString(dmzim.ref.Append("managed_zone"))
+	return terra.ReferenceAsString(dmzim.ref.Append("managed_zone"))
 }
 
+// Member returns a reference to field member of google_dns_managed_zone_iam_member.
 func (dmzim dnsManagedZoneIamMemberAttributes) Member() terra.StringValue {
-	return terra.ReferenceString(dmzim.ref.Append("member"))
+	return terra.ReferenceAsString(dmzim.ref.Append("member"))
 }
 
+// Project returns a reference to field project of google_dns_managed_zone_iam_member.
 func (dmzim dnsManagedZoneIamMemberAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(dmzim.ref.Append("project"))
+	return terra.ReferenceAsString(dmzim.ref.Append("project"))
 }
 
+// Role returns a reference to field role of google_dns_managed_zone_iam_member.
 func (dmzim dnsManagedZoneIamMemberAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(dmzim.ref.Append("role"))
+	return terra.ReferenceAsString(dmzim.ref.Append("role"))
 }
 
 func (dmzim dnsManagedZoneIamMemberAttributes) Condition() terra.ListValue[dnsmanagedzoneiammember.ConditionAttributes] {
-	return terra.ReferenceList[dnsmanagedzoneiammember.ConditionAttributes](dmzim.ref.Append("condition"))
+	return terra.ReferenceAsList[dnsmanagedzoneiammember.ConditionAttributes](dmzim.ref.Append("condition"))
 }
 
 type dnsManagedZoneIamMemberState struct {

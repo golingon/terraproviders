@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSentinelDataConnectorThreatIntelligenceTaxii creates a new instance of [SentinelDataConnectorThreatIntelligenceTaxii].
 func NewSentinelDataConnectorThreatIntelligenceTaxii(name string, args SentinelDataConnectorThreatIntelligenceTaxiiArgs) *SentinelDataConnectorThreatIntelligenceTaxii {
 	return &SentinelDataConnectorThreatIntelligenceTaxii{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSentinelDataConnectorThreatIntelligenceTaxii(name string, args SentinelD
 
 var _ terra.Resource = (*SentinelDataConnectorThreatIntelligenceTaxii)(nil)
 
+// SentinelDataConnectorThreatIntelligenceTaxii represents the Terraform resource azurerm_sentinel_data_connector_threat_intelligence_taxii.
 type SentinelDataConnectorThreatIntelligenceTaxii struct {
-	Name  string
-	Args  SentinelDataConnectorThreatIntelligenceTaxiiArgs
-	state *sentinelDataConnectorThreatIntelligenceTaxiiState
+	Name      string
+	Args      SentinelDataConnectorThreatIntelligenceTaxiiArgs
+	state     *sentinelDataConnectorThreatIntelligenceTaxiiState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SentinelDataConnectorThreatIntelligenceTaxii].
 func (sdctit *SentinelDataConnectorThreatIntelligenceTaxii) Type() string {
 	return "azurerm_sentinel_data_connector_threat_intelligence_taxii"
 }
 
+// LocalName returns the local name for [SentinelDataConnectorThreatIntelligenceTaxii].
 func (sdctit *SentinelDataConnectorThreatIntelligenceTaxii) LocalName() string {
 	return sdctit.Name
 }
 
+// Configuration returns the configuration (args) for [SentinelDataConnectorThreatIntelligenceTaxii].
 func (sdctit *SentinelDataConnectorThreatIntelligenceTaxii) Configuration() interface{} {
 	return sdctit.Args
 }
 
+// DependOn is used for other resources to depend on [SentinelDataConnectorThreatIntelligenceTaxii].
+func (sdctit *SentinelDataConnectorThreatIntelligenceTaxii) DependOn() terra.Reference {
+	return terra.ReferenceResource(sdctit)
+}
+
+// Dependencies returns the list of resources [SentinelDataConnectorThreatIntelligenceTaxii] depends_on.
+func (sdctit *SentinelDataConnectorThreatIntelligenceTaxii) Dependencies() terra.Dependencies {
+	return sdctit.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SentinelDataConnectorThreatIntelligenceTaxii].
+func (sdctit *SentinelDataConnectorThreatIntelligenceTaxii) LifecycleManagement() *terra.Lifecycle {
+	return sdctit.Lifecycle
+}
+
+// Attributes returns the attributes for [SentinelDataConnectorThreatIntelligenceTaxii].
 func (sdctit *SentinelDataConnectorThreatIntelligenceTaxii) Attributes() sentinelDataConnectorThreatIntelligenceTaxiiAttributes {
 	return sentinelDataConnectorThreatIntelligenceTaxiiAttributes{ref: terra.ReferenceResource(sdctit)}
 }
 
+// ImportState imports the given attribute values into [SentinelDataConnectorThreatIntelligenceTaxii]'s state.
 func (sdctit *SentinelDataConnectorThreatIntelligenceTaxii) ImportState(av io.Reader) error {
 	sdctit.state = &sentinelDataConnectorThreatIntelligenceTaxiiState{}
 	if err := json.NewDecoder(av).Decode(sdctit.state); err != nil {
@@ -49,10 +73,12 @@ func (sdctit *SentinelDataConnectorThreatIntelligenceTaxii) ImportState(av io.Re
 	return nil
 }
 
+// State returns the state and a bool indicating if [SentinelDataConnectorThreatIntelligenceTaxii] has state.
 func (sdctit *SentinelDataConnectorThreatIntelligenceTaxii) State() (*sentinelDataConnectorThreatIntelligenceTaxiiState, bool) {
 	return sdctit.state, sdctit.state != nil
 }
 
+// StateMust returns the state for [SentinelDataConnectorThreatIntelligenceTaxii]. Panics if the state is nil.
 func (sdctit *SentinelDataConnectorThreatIntelligenceTaxii) StateMust() *sentinelDataConnectorThreatIntelligenceTaxiiState {
 	if sdctit.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sdctit.Type(), sdctit.LocalName()))
@@ -60,10 +86,7 @@ func (sdctit *SentinelDataConnectorThreatIntelligenceTaxii) StateMust() *sentine
 	return sdctit.state
 }
 
-func (sdctit *SentinelDataConnectorThreatIntelligenceTaxii) DependOn() terra.Reference {
-	return terra.ReferenceResource(sdctit)
-}
-
+// SentinelDataConnectorThreatIntelligenceTaxiiArgs contains the configurations for azurerm_sentinel_data_connector_threat_intelligence_taxii.
 type SentinelDataConnectorThreatIntelligenceTaxiiArgs struct {
 	// ApiRootUrl: string, required
 	ApiRootUrl terra.StringValue `hcl:"api_root_url,attr" validate:"required"`
@@ -89,59 +112,68 @@ type SentinelDataConnectorThreatIntelligenceTaxiiArgs struct {
 	UserName terra.StringValue `hcl:"user_name,attr"`
 	// Timeouts: optional
 	Timeouts *sentineldataconnectorthreatintelligencetaxii.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SentinelDataConnectorThreatIntelligenceTaxii depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sentinelDataConnectorThreatIntelligenceTaxiiAttributes struct {
 	ref terra.Reference
 }
 
+// ApiRootUrl returns a reference to field api_root_url of azurerm_sentinel_data_connector_threat_intelligence_taxii.
 func (sdctit sentinelDataConnectorThreatIntelligenceTaxiiAttributes) ApiRootUrl() terra.StringValue {
-	return terra.ReferenceString(sdctit.ref.Append("api_root_url"))
+	return terra.ReferenceAsString(sdctit.ref.Append("api_root_url"))
 }
 
+// CollectionId returns a reference to field collection_id of azurerm_sentinel_data_connector_threat_intelligence_taxii.
 func (sdctit sentinelDataConnectorThreatIntelligenceTaxiiAttributes) CollectionId() terra.StringValue {
-	return terra.ReferenceString(sdctit.ref.Append("collection_id"))
+	return terra.ReferenceAsString(sdctit.ref.Append("collection_id"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_sentinel_data_connector_threat_intelligence_taxii.
 func (sdctit sentinelDataConnectorThreatIntelligenceTaxiiAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(sdctit.ref.Append("display_name"))
+	return terra.ReferenceAsString(sdctit.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of azurerm_sentinel_data_connector_threat_intelligence_taxii.
 func (sdctit sentinelDataConnectorThreatIntelligenceTaxiiAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sdctit.ref.Append("id"))
+	return terra.ReferenceAsString(sdctit.ref.Append("id"))
 }
 
+// LogAnalyticsWorkspaceId returns a reference to field log_analytics_workspace_id of azurerm_sentinel_data_connector_threat_intelligence_taxii.
 func (sdctit sentinelDataConnectorThreatIntelligenceTaxiiAttributes) LogAnalyticsWorkspaceId() terra.StringValue {
-	return terra.ReferenceString(sdctit.ref.Append("log_analytics_workspace_id"))
+	return terra.ReferenceAsString(sdctit.ref.Append("log_analytics_workspace_id"))
 }
 
+// LookbackDate returns a reference to field lookback_date of azurerm_sentinel_data_connector_threat_intelligence_taxii.
 func (sdctit sentinelDataConnectorThreatIntelligenceTaxiiAttributes) LookbackDate() terra.StringValue {
-	return terra.ReferenceString(sdctit.ref.Append("lookback_date"))
+	return terra.ReferenceAsString(sdctit.ref.Append("lookback_date"))
 }
 
+// Name returns a reference to field name of azurerm_sentinel_data_connector_threat_intelligence_taxii.
 func (sdctit sentinelDataConnectorThreatIntelligenceTaxiiAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sdctit.ref.Append("name"))
+	return terra.ReferenceAsString(sdctit.ref.Append("name"))
 }
 
+// Password returns a reference to field password of azurerm_sentinel_data_connector_threat_intelligence_taxii.
 func (sdctit sentinelDataConnectorThreatIntelligenceTaxiiAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(sdctit.ref.Append("password"))
+	return terra.ReferenceAsString(sdctit.ref.Append("password"))
 }
 
+// PollingFrequency returns a reference to field polling_frequency of azurerm_sentinel_data_connector_threat_intelligence_taxii.
 func (sdctit sentinelDataConnectorThreatIntelligenceTaxiiAttributes) PollingFrequency() terra.StringValue {
-	return terra.ReferenceString(sdctit.ref.Append("polling_frequency"))
+	return terra.ReferenceAsString(sdctit.ref.Append("polling_frequency"))
 }
 
+// TenantId returns a reference to field tenant_id of azurerm_sentinel_data_connector_threat_intelligence_taxii.
 func (sdctit sentinelDataConnectorThreatIntelligenceTaxiiAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(sdctit.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(sdctit.ref.Append("tenant_id"))
 }
 
+// UserName returns a reference to field user_name of azurerm_sentinel_data_connector_threat_intelligence_taxii.
 func (sdctit sentinelDataConnectorThreatIntelligenceTaxiiAttributes) UserName() terra.StringValue {
-	return terra.ReferenceString(sdctit.ref.Append("user_name"))
+	return terra.ReferenceAsString(sdctit.ref.Append("user_name"))
 }
 
 func (sdctit sentinelDataConnectorThreatIntelligenceTaxiiAttributes) Timeouts() sentineldataconnectorthreatintelligencetaxii.TimeoutsAttributes {
-	return terra.ReferenceSingle[sentineldataconnectorthreatintelligencetaxii.TimeoutsAttributes](sdctit.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[sentineldataconnectorthreatintelligencetaxii.TimeoutsAttributes](sdctit.ref.Append("timeouts"))
 }
 
 type sentinelDataConnectorThreatIntelligenceTaxiiState struct {

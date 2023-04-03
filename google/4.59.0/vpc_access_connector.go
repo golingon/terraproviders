@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewVpcAccessConnector creates a new instance of [VpcAccessConnector].
 func NewVpcAccessConnector(name string, args VpcAccessConnectorArgs) *VpcAccessConnector {
 	return &VpcAccessConnector{
 		Args: args,
@@ -19,28 +20,51 @@ func NewVpcAccessConnector(name string, args VpcAccessConnectorArgs) *VpcAccessC
 
 var _ terra.Resource = (*VpcAccessConnector)(nil)
 
+// VpcAccessConnector represents the Terraform resource google_vpc_access_connector.
 type VpcAccessConnector struct {
-	Name  string
-	Args  VpcAccessConnectorArgs
-	state *vpcAccessConnectorState
+	Name      string
+	Args      VpcAccessConnectorArgs
+	state     *vpcAccessConnectorState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VpcAccessConnector].
 func (vac *VpcAccessConnector) Type() string {
 	return "google_vpc_access_connector"
 }
 
+// LocalName returns the local name for [VpcAccessConnector].
 func (vac *VpcAccessConnector) LocalName() string {
 	return vac.Name
 }
 
+// Configuration returns the configuration (args) for [VpcAccessConnector].
 func (vac *VpcAccessConnector) Configuration() interface{} {
 	return vac.Args
 }
 
+// DependOn is used for other resources to depend on [VpcAccessConnector].
+func (vac *VpcAccessConnector) DependOn() terra.Reference {
+	return terra.ReferenceResource(vac)
+}
+
+// Dependencies returns the list of resources [VpcAccessConnector] depends_on.
+func (vac *VpcAccessConnector) Dependencies() terra.Dependencies {
+	return vac.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VpcAccessConnector].
+func (vac *VpcAccessConnector) LifecycleManagement() *terra.Lifecycle {
+	return vac.Lifecycle
+}
+
+// Attributes returns the attributes for [VpcAccessConnector].
 func (vac *VpcAccessConnector) Attributes() vpcAccessConnectorAttributes {
 	return vpcAccessConnectorAttributes{ref: terra.ReferenceResource(vac)}
 }
 
+// ImportState imports the given attribute values into [VpcAccessConnector]'s state.
 func (vac *VpcAccessConnector) ImportState(av io.Reader) error {
 	vac.state = &vpcAccessConnectorState{}
 	if err := json.NewDecoder(av).Decode(vac.state); err != nil {
@@ -49,10 +73,12 @@ func (vac *VpcAccessConnector) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [VpcAccessConnector] has state.
 func (vac *VpcAccessConnector) State() (*vpcAccessConnectorState, bool) {
 	return vac.state, vac.state != nil
 }
 
+// StateMust returns the state for [VpcAccessConnector]. Panics if the state is nil.
 func (vac *VpcAccessConnector) StateMust() *vpcAccessConnectorState {
 	if vac.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", vac.Type(), vac.LocalName()))
@@ -60,10 +86,7 @@ func (vac *VpcAccessConnector) StateMust() *vpcAccessConnectorState {
 	return vac.state
 }
 
-func (vac *VpcAccessConnector) DependOn() terra.Reference {
-	return terra.ReferenceResource(vac)
-}
-
+// VpcAccessConnectorArgs contains the configurations for google_vpc_access_connector.
 type VpcAccessConnectorArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -91,71 +114,82 @@ type VpcAccessConnectorArgs struct {
 	Subnet *vpcaccessconnector.Subnet `hcl:"subnet,block"`
 	// Timeouts: optional
 	Timeouts *vpcaccessconnector.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that VpcAccessConnector depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type vpcAccessConnectorAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of google_vpc_access_connector.
 func (vac vpcAccessConnectorAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vac.ref.Append("id"))
+	return terra.ReferenceAsString(vac.ref.Append("id"))
 }
 
+// IpCidrRange returns a reference to field ip_cidr_range of google_vpc_access_connector.
 func (vac vpcAccessConnectorAttributes) IpCidrRange() terra.StringValue {
-	return terra.ReferenceString(vac.ref.Append("ip_cidr_range"))
+	return terra.ReferenceAsString(vac.ref.Append("ip_cidr_range"))
 }
 
+// MachineType returns a reference to field machine_type of google_vpc_access_connector.
 func (vac vpcAccessConnectorAttributes) MachineType() terra.StringValue {
-	return terra.ReferenceString(vac.ref.Append("machine_type"))
+	return terra.ReferenceAsString(vac.ref.Append("machine_type"))
 }
 
+// MaxInstances returns a reference to field max_instances of google_vpc_access_connector.
 func (vac vpcAccessConnectorAttributes) MaxInstances() terra.NumberValue {
-	return terra.ReferenceNumber(vac.ref.Append("max_instances"))
+	return terra.ReferenceAsNumber(vac.ref.Append("max_instances"))
 }
 
+// MaxThroughput returns a reference to field max_throughput of google_vpc_access_connector.
 func (vac vpcAccessConnectorAttributes) MaxThroughput() terra.NumberValue {
-	return terra.ReferenceNumber(vac.ref.Append("max_throughput"))
+	return terra.ReferenceAsNumber(vac.ref.Append("max_throughput"))
 }
 
+// MinInstances returns a reference to field min_instances of google_vpc_access_connector.
 func (vac vpcAccessConnectorAttributes) MinInstances() terra.NumberValue {
-	return terra.ReferenceNumber(vac.ref.Append("min_instances"))
+	return terra.ReferenceAsNumber(vac.ref.Append("min_instances"))
 }
 
+// MinThroughput returns a reference to field min_throughput of google_vpc_access_connector.
 func (vac vpcAccessConnectorAttributes) MinThroughput() terra.NumberValue {
-	return terra.ReferenceNumber(vac.ref.Append("min_throughput"))
+	return terra.ReferenceAsNumber(vac.ref.Append("min_throughput"))
 }
 
+// Name returns a reference to field name of google_vpc_access_connector.
 func (vac vpcAccessConnectorAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(vac.ref.Append("name"))
+	return terra.ReferenceAsString(vac.ref.Append("name"))
 }
 
+// Network returns a reference to field network of google_vpc_access_connector.
 func (vac vpcAccessConnectorAttributes) Network() terra.StringValue {
-	return terra.ReferenceString(vac.ref.Append("network"))
+	return terra.ReferenceAsString(vac.ref.Append("network"))
 }
 
+// Project returns a reference to field project of google_vpc_access_connector.
 func (vac vpcAccessConnectorAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(vac.ref.Append("project"))
+	return terra.ReferenceAsString(vac.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_vpc_access_connector.
 func (vac vpcAccessConnectorAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(vac.ref.Append("region"))
+	return terra.ReferenceAsString(vac.ref.Append("region"))
 }
 
+// SelfLink returns a reference to field self_link of google_vpc_access_connector.
 func (vac vpcAccessConnectorAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(vac.ref.Append("self_link"))
+	return terra.ReferenceAsString(vac.ref.Append("self_link"))
 }
 
+// State returns a reference to field state of google_vpc_access_connector.
 func (vac vpcAccessConnectorAttributes) State() terra.StringValue {
-	return terra.ReferenceString(vac.ref.Append("state"))
+	return terra.ReferenceAsString(vac.ref.Append("state"))
 }
 
 func (vac vpcAccessConnectorAttributes) Subnet() terra.ListValue[vpcaccessconnector.SubnetAttributes] {
-	return terra.ReferenceList[vpcaccessconnector.SubnetAttributes](vac.ref.Append("subnet"))
+	return terra.ReferenceAsList[vpcaccessconnector.SubnetAttributes](vac.ref.Append("subnet"))
 }
 
 func (vac vpcAccessConnectorAttributes) Timeouts() vpcaccessconnector.TimeoutsAttributes {
-	return terra.ReferenceSingle[vpcaccessconnector.TimeoutsAttributes](vac.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[vpcaccessconnector.TimeoutsAttributes](vac.ref.Append("timeouts"))
 }
 
 type vpcAccessConnectorState struct {

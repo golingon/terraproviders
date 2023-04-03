@@ -35,7 +35,7 @@ func (fsp FairSharePolicyAttributes) InternalWithRef(ref terra.Reference) FairSh
 	return FairSharePolicyAttributes{ref: ref}
 }
 
-func (fsp FairSharePolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (fsp FairSharePolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fsp.ref.InternalTokens()
 }
 
@@ -63,7 +63,7 @@ func (sd ShareDistributionAttributes) InternalWithRef(ref terra.Reference) Share
 	return ShareDistributionAttributes{ref: ref}
 }
 
-func (sd ShareDistributionAttributes) InternalTokens() hclwrite.Tokens {
+func (sd ShareDistributionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sd.ref.InternalTokens()
 }
 

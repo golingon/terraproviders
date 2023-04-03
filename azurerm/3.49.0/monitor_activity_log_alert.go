@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMonitorActivityLogAlert creates a new instance of [MonitorActivityLogAlert].
 func NewMonitorActivityLogAlert(name string, args MonitorActivityLogAlertArgs) *MonitorActivityLogAlert {
 	return &MonitorActivityLogAlert{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMonitorActivityLogAlert(name string, args MonitorActivityLogAlertArgs) *
 
 var _ terra.Resource = (*MonitorActivityLogAlert)(nil)
 
+// MonitorActivityLogAlert represents the Terraform resource azurerm_monitor_activity_log_alert.
 type MonitorActivityLogAlert struct {
-	Name  string
-	Args  MonitorActivityLogAlertArgs
-	state *monitorActivityLogAlertState
+	Name      string
+	Args      MonitorActivityLogAlertArgs
+	state     *monitorActivityLogAlertState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MonitorActivityLogAlert].
 func (mala *MonitorActivityLogAlert) Type() string {
 	return "azurerm_monitor_activity_log_alert"
 }
 
+// LocalName returns the local name for [MonitorActivityLogAlert].
 func (mala *MonitorActivityLogAlert) LocalName() string {
 	return mala.Name
 }
 
+// Configuration returns the configuration (args) for [MonitorActivityLogAlert].
 func (mala *MonitorActivityLogAlert) Configuration() interface{} {
 	return mala.Args
 }
 
+// DependOn is used for other resources to depend on [MonitorActivityLogAlert].
+func (mala *MonitorActivityLogAlert) DependOn() terra.Reference {
+	return terra.ReferenceResource(mala)
+}
+
+// Dependencies returns the list of resources [MonitorActivityLogAlert] depends_on.
+func (mala *MonitorActivityLogAlert) Dependencies() terra.Dependencies {
+	return mala.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MonitorActivityLogAlert].
+func (mala *MonitorActivityLogAlert) LifecycleManagement() *terra.Lifecycle {
+	return mala.Lifecycle
+}
+
+// Attributes returns the attributes for [MonitorActivityLogAlert].
 func (mala *MonitorActivityLogAlert) Attributes() monitorActivityLogAlertAttributes {
 	return monitorActivityLogAlertAttributes{ref: terra.ReferenceResource(mala)}
 }
 
+// ImportState imports the given attribute values into [MonitorActivityLogAlert]'s state.
 func (mala *MonitorActivityLogAlert) ImportState(av io.Reader) error {
 	mala.state = &monitorActivityLogAlertState{}
 	if err := json.NewDecoder(av).Decode(mala.state); err != nil {
@@ -49,10 +73,12 @@ func (mala *MonitorActivityLogAlert) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MonitorActivityLogAlert] has state.
 func (mala *MonitorActivityLogAlert) State() (*monitorActivityLogAlertState, bool) {
 	return mala.state, mala.state != nil
 }
 
+// StateMust returns the state for [MonitorActivityLogAlert]. Panics if the state is nil.
 func (mala *MonitorActivityLogAlert) StateMust() *monitorActivityLogAlertState {
 	if mala.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mala.Type(), mala.LocalName()))
@@ -60,10 +86,7 @@ func (mala *MonitorActivityLogAlert) StateMust() *monitorActivityLogAlertState {
 	return mala.state
 }
 
-func (mala *MonitorActivityLogAlert) DependOn() terra.Reference {
-	return terra.ReferenceResource(mala)
-}
-
+// MonitorActivityLogAlertArgs contains the configurations for azurerm_monitor_activity_log_alert.
 type MonitorActivityLogAlertArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -85,51 +108,56 @@ type MonitorActivityLogAlertArgs struct {
 	Criteria *monitoractivitylogalert.Criteria `hcl:"criteria,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *monitoractivitylogalert.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MonitorActivityLogAlert depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type monitorActivityLogAlertAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of azurerm_monitor_activity_log_alert.
 func (mala monitorActivityLogAlertAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(mala.ref.Append("description"))
+	return terra.ReferenceAsString(mala.ref.Append("description"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_monitor_activity_log_alert.
 func (mala monitorActivityLogAlertAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(mala.ref.Append("enabled"))
+	return terra.ReferenceAsBool(mala.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of azurerm_monitor_activity_log_alert.
 func (mala monitorActivityLogAlertAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mala.ref.Append("id"))
+	return terra.ReferenceAsString(mala.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_monitor_activity_log_alert.
 func (mala monitorActivityLogAlertAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mala.ref.Append("name"))
+	return terra.ReferenceAsString(mala.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_monitor_activity_log_alert.
 func (mala monitorActivityLogAlertAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(mala.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(mala.ref.Append("resource_group_name"))
 }
 
+// Scopes returns a reference to field scopes of azurerm_monitor_activity_log_alert.
 func (mala monitorActivityLogAlertAttributes) Scopes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](mala.ref.Append("scopes"))
+	return terra.ReferenceAsSet[terra.StringValue](mala.ref.Append("scopes"))
 }
 
+// Tags returns a reference to field tags of azurerm_monitor_activity_log_alert.
 func (mala monitorActivityLogAlertAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mala.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mala.ref.Append("tags"))
 }
 
 func (mala monitorActivityLogAlertAttributes) Action() terra.ListValue[monitoractivitylogalert.ActionAttributes] {
-	return terra.ReferenceList[monitoractivitylogalert.ActionAttributes](mala.ref.Append("action"))
+	return terra.ReferenceAsList[monitoractivitylogalert.ActionAttributes](mala.ref.Append("action"))
 }
 
 func (mala monitorActivityLogAlertAttributes) Criteria() terra.ListValue[monitoractivitylogalert.CriteriaAttributes] {
-	return terra.ReferenceList[monitoractivitylogalert.CriteriaAttributes](mala.ref.Append("criteria"))
+	return terra.ReferenceAsList[monitoractivitylogalert.CriteriaAttributes](mala.ref.Append("criteria"))
 }
 
 func (mala monitorActivityLogAlertAttributes) Timeouts() monitoractivitylogalert.TimeoutsAttributes {
-	return terra.ReferenceSingle[monitoractivitylogalert.TimeoutsAttributes](mala.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[monitoractivitylogalert.TimeoutsAttributes](mala.ref.Append("timeouts"))
 }
 
 type monitorActivityLogAlertState struct {

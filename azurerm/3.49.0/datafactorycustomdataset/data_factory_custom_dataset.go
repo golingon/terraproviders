@@ -29,56 +29,56 @@ type LinkedServiceAttributes struct {
 	ref terra.Reference
 }
 
-func (ls LinkedServiceAttributes) InternalRef() terra.Reference {
-	return ls.ref
+func (ls LinkedServiceAttributes) InternalRef() (terra.Reference, error) {
+	return ls.ref, nil
 }
 
 func (ls LinkedServiceAttributes) InternalWithRef(ref terra.Reference) LinkedServiceAttributes {
 	return LinkedServiceAttributes{ref: ref}
 }
 
-func (ls LinkedServiceAttributes) InternalTokens() hclwrite.Tokens {
+func (ls LinkedServiceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ls.ref.InternalTokens()
 }
 
 func (ls LinkedServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ls.ref.Append("name"))
+	return terra.ReferenceAsString(ls.ref.Append("name"))
 }
 
 func (ls LinkedServiceAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ls.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](ls.ref.Append("parameters"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type LinkedServiceState struct {

@@ -110,7 +110,7 @@ func (ap AttachmentPoliciesAttributes) InternalWithRef(ref terra.Reference) Atta
 	return AttachmentPoliciesAttributes{ref: ref}
 }
 
-func (ap AttachmentPoliciesAttributes) InternalTokens() hclwrite.Tokens {
+func (ap AttachmentPoliciesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ap.ref.InternalTokens()
 }
 
@@ -146,7 +146,7 @@ func (a ActionAttributes) InternalWithRef(ref terra.Reference) ActionAttributes 
 	return ActionAttributes{ref: ref}
 }
 
-func (a ActionAttributes) InternalTokens() hclwrite.Tokens {
+func (a ActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -178,7 +178,7 @@ func (c ConditionsAttributes) InternalWithRef(ref terra.Reference) ConditionsAtt
 	return ConditionsAttributes{ref: ref}
 }
 
-func (c ConditionsAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConditionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -210,7 +210,7 @@ func (cnc CoreNetworkConfigurationAttributes) InternalWithRef(ref terra.Referenc
 	return CoreNetworkConfigurationAttributes{ref: ref}
 }
 
-func (cnc CoreNetworkConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (cnc CoreNetworkConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cnc.ref.InternalTokens()
 }
 
@@ -242,7 +242,7 @@ func (el EdgeLocationsAttributes) InternalWithRef(ref terra.Reference) EdgeLocat
 	return EdgeLocationsAttributes{ref: ref}
 }
 
-func (el EdgeLocationsAttributes) InternalTokens() hclwrite.Tokens {
+func (el EdgeLocationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return el.ref.InternalTokens()
 }
 
@@ -270,7 +270,7 @@ func (sa SegmentActionsAttributes) InternalWithRef(ref terra.Reference) SegmentA
 	return SegmentActionsAttributes{ref: ref}
 }
 
-func (sa SegmentActionsAttributes) InternalTokens() hclwrite.Tokens {
+func (sa SegmentActionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sa.ref.InternalTokens()
 }
 
@@ -318,7 +318,7 @@ func (s SegmentsAttributes) InternalWithRef(ref terra.Reference) SegmentsAttribu
 	return SegmentsAttributes{ref: ref}
 }
 
-func (s SegmentsAttributes) InternalTokens() hclwrite.Tokens {
+func (s SegmentsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 

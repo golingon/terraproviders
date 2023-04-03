@@ -31,7 +31,7 @@ func (p ParametersAttributes) InternalWithRef(ref terra.Reference) ParametersAtt
 	return ParametersAttributes{ref: ref}
 }
 
-func (p ParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (p ParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -55,7 +55,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

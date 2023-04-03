@@ -30,7 +30,7 @@ func (rc RecurringChargesAttributes) InternalWithRef(ref terra.Reference) Recurr
 	return RecurringChargesAttributes{ref: ref}
 }
 
-func (rc RecurringChargesAttributes) InternalTokens() hclwrite.Tokens {
+func (rc RecurringChargesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rc.ref.InternalTokens()
 }
 
@@ -54,7 +54,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

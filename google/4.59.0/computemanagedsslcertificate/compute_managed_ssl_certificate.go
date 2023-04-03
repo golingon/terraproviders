@@ -23,44 +23,44 @@ type ManagedAttributes struct {
 	ref terra.Reference
 }
 
-func (m ManagedAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m ManagedAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m ManagedAttributes) InternalWithRef(ref terra.Reference) ManagedAttributes {
 	return ManagedAttributes{ref: ref}
 }
 
-func (m ManagedAttributes) InternalTokens() hclwrite.Tokens {
+func (m ManagedAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
 func (m ManagedAttributes) Domains() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](m.ref.Append("domains"))
+	return terra.ReferenceAsList[terra.StringValue](m.ref.Append("domains"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type ManagedState struct {

@@ -73,7 +73,7 @@ func (ei ExternalIdsAttributes) InternalWithRef(ref terra.Reference) ExternalIds
 	return ExternalIdsAttributes{ref: ref}
 }
 
-func (ei ExternalIdsAttributes) InternalTokens() hclwrite.Tokens {
+func (ei ExternalIdsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ei.ref.InternalTokens()
 }
 
@@ -97,7 +97,7 @@ func (a AddressesAttributes) InternalWithRef(ref terra.Reference) AddressesAttri
 	return AddressesAttributes{ref: ref}
 }
 
-func (a AddressesAttributes) InternalTokens() hclwrite.Tokens {
+func (a AddressesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -145,7 +145,7 @@ func (e EmailsAttributes) InternalWithRef(ref terra.Reference) EmailsAttributes 
 	return EmailsAttributes{ref: ref}
 }
 
-func (e EmailsAttributes) InternalTokens() hclwrite.Tokens {
+func (e EmailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -173,7 +173,7 @@ func (n NameAttributes) InternalWithRef(ref terra.Reference) NameAttributes {
 	return NameAttributes{ref: ref}
 }
 
-func (n NameAttributes) InternalTokens() hclwrite.Tokens {
+func (n NameAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return n.ref.InternalTokens()
 }
 
@@ -213,7 +213,7 @@ func (pn PhoneNumbersAttributes) InternalWithRef(ref terra.Reference) PhoneNumbe
 	return PhoneNumbersAttributes{ref: ref}
 }
 
-func (pn PhoneNumbersAttributes) InternalTokens() hclwrite.Tokens {
+func (pn PhoneNumbersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pn.ref.InternalTokens()
 }
 

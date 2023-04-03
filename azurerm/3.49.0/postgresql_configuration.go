@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewPostgresqlConfiguration creates a new instance of [PostgresqlConfiguration].
 func NewPostgresqlConfiguration(name string, args PostgresqlConfigurationArgs) *PostgresqlConfiguration {
 	return &PostgresqlConfiguration{
 		Args: args,
@@ -19,28 +20,51 @@ func NewPostgresqlConfiguration(name string, args PostgresqlConfigurationArgs) *
 
 var _ terra.Resource = (*PostgresqlConfiguration)(nil)
 
+// PostgresqlConfiguration represents the Terraform resource azurerm_postgresql_configuration.
 type PostgresqlConfiguration struct {
-	Name  string
-	Args  PostgresqlConfigurationArgs
-	state *postgresqlConfigurationState
+	Name      string
+	Args      PostgresqlConfigurationArgs
+	state     *postgresqlConfigurationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PostgresqlConfiguration].
 func (pc *PostgresqlConfiguration) Type() string {
 	return "azurerm_postgresql_configuration"
 }
 
+// LocalName returns the local name for [PostgresqlConfiguration].
 func (pc *PostgresqlConfiguration) LocalName() string {
 	return pc.Name
 }
 
+// Configuration returns the configuration (args) for [PostgresqlConfiguration].
 func (pc *PostgresqlConfiguration) Configuration() interface{} {
 	return pc.Args
 }
 
+// DependOn is used for other resources to depend on [PostgresqlConfiguration].
+func (pc *PostgresqlConfiguration) DependOn() terra.Reference {
+	return terra.ReferenceResource(pc)
+}
+
+// Dependencies returns the list of resources [PostgresqlConfiguration] depends_on.
+func (pc *PostgresqlConfiguration) Dependencies() terra.Dependencies {
+	return pc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PostgresqlConfiguration].
+func (pc *PostgresqlConfiguration) LifecycleManagement() *terra.Lifecycle {
+	return pc.Lifecycle
+}
+
+// Attributes returns the attributes for [PostgresqlConfiguration].
 func (pc *PostgresqlConfiguration) Attributes() postgresqlConfigurationAttributes {
 	return postgresqlConfigurationAttributes{ref: terra.ReferenceResource(pc)}
 }
 
+// ImportState imports the given attribute values into [PostgresqlConfiguration]'s state.
 func (pc *PostgresqlConfiguration) ImportState(av io.Reader) error {
 	pc.state = &postgresqlConfigurationState{}
 	if err := json.NewDecoder(av).Decode(pc.state); err != nil {
@@ -49,10 +73,12 @@ func (pc *PostgresqlConfiguration) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PostgresqlConfiguration] has state.
 func (pc *PostgresqlConfiguration) State() (*postgresqlConfigurationState, bool) {
 	return pc.state, pc.state != nil
 }
 
+// StateMust returns the state for [PostgresqlConfiguration]. Panics if the state is nil.
 func (pc *PostgresqlConfiguration) StateMust() *postgresqlConfigurationState {
 	if pc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pc.Type(), pc.LocalName()))
@@ -60,10 +86,7 @@ func (pc *PostgresqlConfiguration) StateMust() *postgresqlConfigurationState {
 	return pc.state
 }
 
-func (pc *PostgresqlConfiguration) DependOn() terra.Reference {
-	return terra.ReferenceResource(pc)
-}
-
+// PostgresqlConfigurationArgs contains the configurations for azurerm_postgresql_configuration.
 type PostgresqlConfigurationArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,35 +100,38 @@ type PostgresqlConfigurationArgs struct {
 	Value terra.StringValue `hcl:"value,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *postgresqlconfiguration.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that PostgresqlConfiguration depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type postgresqlConfigurationAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_postgresql_configuration.
 func (pc postgresqlConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("id"))
+	return terra.ReferenceAsString(pc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_postgresql_configuration.
 func (pc postgresqlConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("name"))
+	return terra.ReferenceAsString(pc.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_postgresql_configuration.
 func (pc postgresqlConfigurationAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(pc.ref.Append("resource_group_name"))
 }
 
+// ServerName returns a reference to field server_name of azurerm_postgresql_configuration.
 func (pc postgresqlConfigurationAttributes) ServerName() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("server_name"))
+	return terra.ReferenceAsString(pc.ref.Append("server_name"))
 }
 
+// Value returns a reference to field value of azurerm_postgresql_configuration.
 func (pc postgresqlConfigurationAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("value"))
+	return terra.ReferenceAsString(pc.ref.Append("value"))
 }
 
 func (pc postgresqlConfigurationAttributes) Timeouts() postgresqlconfiguration.TimeoutsAttributes {
-	return terra.ReferenceSingle[postgresqlconfiguration.TimeoutsAttributes](pc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[postgresqlconfiguration.TimeoutsAttributes](pc.ref.Append("timeouts"))
 }
 
 type postgresqlConfigurationState struct {

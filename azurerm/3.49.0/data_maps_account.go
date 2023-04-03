@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataMapsAccount creates a new instance of [DataMapsAccount].
 func NewDataMapsAccount(name string, args DataMapsAccountArgs) *DataMapsAccount {
 	return &DataMapsAccount{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataMapsAccount(name string, args DataMapsAccountArgs) *DataMapsAccount 
 
 var _ terra.DataResource = (*DataMapsAccount)(nil)
 
+// DataMapsAccount represents the Terraform data resource azurerm_maps_account.
 type DataMapsAccount struct {
 	Name string
 	Args DataMapsAccountArgs
 }
 
+// DataSource returns the Terraform object type for [DataMapsAccount].
 func (ma *DataMapsAccount) DataSource() string {
 	return "azurerm_maps_account"
 }
 
+// LocalName returns the local name for [DataMapsAccount].
 func (ma *DataMapsAccount) LocalName() string {
 	return ma.Name
 }
 
+// Configuration returns the configuration (args) for [DataMapsAccount].
 func (ma *DataMapsAccount) Configuration() interface{} {
 	return ma.Args
 }
 
+// Attributes returns the attributes for [DataMapsAccount].
 func (ma *DataMapsAccount) Attributes() dataMapsAccountAttributes {
 	return dataMapsAccountAttributes{ref: terra.ReferenceDataResource(ma)}
 }
 
+// DataMapsAccountArgs contains the configurations for azurerm_maps_account.
 type DataMapsAccountArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,38 +60,46 @@ type dataMapsAccountAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_maps_account.
 func (ma dataMapsAccountAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("id"))
+	return terra.ReferenceAsString(ma.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_maps_account.
 func (ma dataMapsAccountAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("name"))
+	return terra.ReferenceAsString(ma.ref.Append("name"))
 }
 
+// PrimaryAccessKey returns a reference to field primary_access_key of azurerm_maps_account.
 func (ma dataMapsAccountAttributes) PrimaryAccessKey() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("primary_access_key"))
+	return terra.ReferenceAsString(ma.ref.Append("primary_access_key"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_maps_account.
 func (ma dataMapsAccountAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ma.ref.Append("resource_group_name"))
 }
 
+// SecondaryAccessKey returns a reference to field secondary_access_key of azurerm_maps_account.
 func (ma dataMapsAccountAttributes) SecondaryAccessKey() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("secondary_access_key"))
+	return terra.ReferenceAsString(ma.ref.Append("secondary_access_key"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_maps_account.
 func (ma dataMapsAccountAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("sku_name"))
+	return terra.ReferenceAsString(ma.ref.Append("sku_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_maps_account.
 func (ma dataMapsAccountAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ma.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ma.ref.Append("tags"))
 }
 
+// XMsClientId returns a reference to field x_ms_client_id of azurerm_maps_account.
 func (ma dataMapsAccountAttributes) XMsClientId() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("x_ms_client_id"))
+	return terra.ReferenceAsString(ma.ref.Append("x_ms_client_id"))
 }
 
 func (ma dataMapsAccountAttributes) Timeouts() datamapsaccount.TimeoutsAttributes {
-	return terra.ReferenceSingle[datamapsaccount.TimeoutsAttributes](ma.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datamapsaccount.TimeoutsAttributes](ma.ref.Append("timeouts"))
 }

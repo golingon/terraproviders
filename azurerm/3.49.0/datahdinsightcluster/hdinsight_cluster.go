@@ -18,48 +18,48 @@ type GatewayAttributes struct {
 	ref terra.Reference
 }
 
-func (g GatewayAttributes) InternalRef() terra.Reference {
-	return g.ref
+func (g GatewayAttributes) InternalRef() (terra.Reference, error) {
+	return g.ref, nil
 }
 
 func (g GatewayAttributes) InternalWithRef(ref terra.Reference) GatewayAttributes {
 	return GatewayAttributes{ref: ref}
 }
 
-func (g GatewayAttributes) InternalTokens() hclwrite.Tokens {
+func (g GatewayAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return g.ref.InternalTokens()
 }
 
 func (g GatewayAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(g.ref.Append("enabled"))
+	return terra.ReferenceAsBool(g.ref.Append("enabled"))
 }
 
 func (g GatewayAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("password"))
+	return terra.ReferenceAsString(g.ref.Append("password"))
 }
 
 func (g GatewayAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("username"))
+	return terra.ReferenceAsString(g.ref.Append("username"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type GatewayState struct {

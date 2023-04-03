@@ -59,7 +59,7 @@ func (cc CognitoConfigAttributes) InternalWithRef(ref terra.Reference) CognitoCo
 	return CognitoConfigAttributes{ref: ref}
 }
 
-func (cc CognitoConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (cc CognitoConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -83,7 +83,7 @@ func (oc OidcConfigAttributes) InternalWithRef(ref terra.Reference) OidcConfigAt
 	return OidcConfigAttributes{ref: ref}
 }
 
-func (oc OidcConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (oc OidcConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oc.ref.InternalTokens()
 }
 
@@ -131,7 +131,7 @@ func (sic SourceIpConfigAttributes) InternalWithRef(ref terra.Reference) SourceI
 	return SourceIpConfigAttributes{ref: ref}
 }
 
-func (sic SourceIpConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sic SourceIpConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sic.ref.InternalTokens()
 }
 
@@ -151,7 +151,7 @@ func (wvc WorkforceVpcConfigAttributes) InternalWithRef(ref terra.Reference) Wor
 	return WorkforceVpcConfigAttributes{ref: ref}
 }
 
-func (wvc WorkforceVpcConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (wvc WorkforceVpcConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wvc.ref.InternalTokens()
 }
 

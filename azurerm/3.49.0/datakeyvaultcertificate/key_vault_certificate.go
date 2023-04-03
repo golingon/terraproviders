@@ -53,264 +53,264 @@ type CertificatePolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (cp CertificatePolicyAttributes) InternalRef() terra.Reference {
-	return cp.ref
+func (cp CertificatePolicyAttributes) InternalRef() (terra.Reference, error) {
+	return cp.ref, nil
 }
 
 func (cp CertificatePolicyAttributes) InternalWithRef(ref terra.Reference) CertificatePolicyAttributes {
 	return CertificatePolicyAttributes{ref: ref}
 }
 
-func (cp CertificatePolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (cp CertificatePolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cp.ref.InternalTokens()
 }
 
 func (cp CertificatePolicyAttributes) IssuerParameters() terra.ListValue[IssuerParametersAttributes] {
-	return terra.ReferenceList[IssuerParametersAttributes](cp.ref.Append("issuer_parameters"))
+	return terra.ReferenceAsList[IssuerParametersAttributes](cp.ref.Append("issuer_parameters"))
 }
 
 func (cp CertificatePolicyAttributes) KeyProperties() terra.ListValue[KeyPropertiesAttributes] {
-	return terra.ReferenceList[KeyPropertiesAttributes](cp.ref.Append("key_properties"))
+	return terra.ReferenceAsList[KeyPropertiesAttributes](cp.ref.Append("key_properties"))
 }
 
 func (cp CertificatePolicyAttributes) LifetimeAction() terra.ListValue[LifetimeActionAttributes] {
-	return terra.ReferenceList[LifetimeActionAttributes](cp.ref.Append("lifetime_action"))
+	return terra.ReferenceAsList[LifetimeActionAttributes](cp.ref.Append("lifetime_action"))
 }
 
 func (cp CertificatePolicyAttributes) SecretProperties() terra.ListValue[SecretPropertiesAttributes] {
-	return terra.ReferenceList[SecretPropertiesAttributes](cp.ref.Append("secret_properties"))
+	return terra.ReferenceAsList[SecretPropertiesAttributes](cp.ref.Append("secret_properties"))
 }
 
 func (cp CertificatePolicyAttributes) X509CertificateProperties() terra.ListValue[X509CertificatePropertiesAttributes] {
-	return terra.ReferenceList[X509CertificatePropertiesAttributes](cp.ref.Append("x509_certificate_properties"))
+	return terra.ReferenceAsList[X509CertificatePropertiesAttributes](cp.ref.Append("x509_certificate_properties"))
 }
 
 type IssuerParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (ip IssuerParametersAttributes) InternalRef() terra.Reference {
-	return ip.ref
+func (ip IssuerParametersAttributes) InternalRef() (terra.Reference, error) {
+	return ip.ref, nil
 }
 
 func (ip IssuerParametersAttributes) InternalWithRef(ref terra.Reference) IssuerParametersAttributes {
 	return IssuerParametersAttributes{ref: ref}
 }
 
-func (ip IssuerParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (ip IssuerParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ip.ref.InternalTokens()
 }
 
 func (ip IssuerParametersAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("name"))
+	return terra.ReferenceAsString(ip.ref.Append("name"))
 }
 
 type KeyPropertiesAttributes struct {
 	ref terra.Reference
 }
 
-func (kp KeyPropertiesAttributes) InternalRef() terra.Reference {
-	return kp.ref
+func (kp KeyPropertiesAttributes) InternalRef() (terra.Reference, error) {
+	return kp.ref, nil
 }
 
 func (kp KeyPropertiesAttributes) InternalWithRef(ref terra.Reference) KeyPropertiesAttributes {
 	return KeyPropertiesAttributes{ref: ref}
 }
 
-func (kp KeyPropertiesAttributes) InternalTokens() hclwrite.Tokens {
+func (kp KeyPropertiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kp.ref.InternalTokens()
 }
 
 func (kp KeyPropertiesAttributes) Curve() terra.StringValue {
-	return terra.ReferenceString(kp.ref.Append("curve"))
+	return terra.ReferenceAsString(kp.ref.Append("curve"))
 }
 
 func (kp KeyPropertiesAttributes) Exportable() terra.BoolValue {
-	return terra.ReferenceBool(kp.ref.Append("exportable"))
+	return terra.ReferenceAsBool(kp.ref.Append("exportable"))
 }
 
 func (kp KeyPropertiesAttributes) KeySize() terra.NumberValue {
-	return terra.ReferenceNumber(kp.ref.Append("key_size"))
+	return terra.ReferenceAsNumber(kp.ref.Append("key_size"))
 }
 
 func (kp KeyPropertiesAttributes) KeyType() terra.StringValue {
-	return terra.ReferenceString(kp.ref.Append("key_type"))
+	return terra.ReferenceAsString(kp.ref.Append("key_type"))
 }
 
 func (kp KeyPropertiesAttributes) ReuseKey() terra.BoolValue {
-	return terra.ReferenceBool(kp.ref.Append("reuse_key"))
+	return terra.ReferenceAsBool(kp.ref.Append("reuse_key"))
 }
 
 type LifetimeActionAttributes struct {
 	ref terra.Reference
 }
 
-func (la LifetimeActionAttributes) InternalRef() terra.Reference {
-	return la.ref
+func (la LifetimeActionAttributes) InternalRef() (terra.Reference, error) {
+	return la.ref, nil
 }
 
 func (la LifetimeActionAttributes) InternalWithRef(ref terra.Reference) LifetimeActionAttributes {
 	return LifetimeActionAttributes{ref: ref}
 }
 
-func (la LifetimeActionAttributes) InternalTokens() hclwrite.Tokens {
+func (la LifetimeActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return la.ref.InternalTokens()
 }
 
 func (la LifetimeActionAttributes) Action() terra.ListValue[ActionAttributes] {
-	return terra.ReferenceList[ActionAttributes](la.ref.Append("action"))
+	return terra.ReferenceAsList[ActionAttributes](la.ref.Append("action"))
 }
 
 func (la LifetimeActionAttributes) Trigger() terra.ListValue[TriggerAttributes] {
-	return terra.ReferenceList[TriggerAttributes](la.ref.Append("trigger"))
+	return terra.ReferenceAsList[TriggerAttributes](la.ref.Append("trigger"))
 }
 
 type ActionAttributes struct {
 	ref terra.Reference
 }
 
-func (a ActionAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a ActionAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a ActionAttributes) InternalWithRef(ref terra.Reference) ActionAttributes {
 	return ActionAttributes{ref: ref}
 }
 
-func (a ActionAttributes) InternalTokens() hclwrite.Tokens {
+func (a ActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a ActionAttributes) ActionType() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("action_type"))
+	return terra.ReferenceAsString(a.ref.Append("action_type"))
 }
 
 type TriggerAttributes struct {
 	ref terra.Reference
 }
 
-func (t TriggerAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TriggerAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TriggerAttributes) InternalWithRef(ref terra.Reference) TriggerAttributes {
 	return TriggerAttributes{ref: ref}
 }
 
-func (t TriggerAttributes) InternalTokens() hclwrite.Tokens {
+func (t TriggerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TriggerAttributes) DaysBeforeExpiry() terra.NumberValue {
-	return terra.ReferenceNumber(t.ref.Append("days_before_expiry"))
+	return terra.ReferenceAsNumber(t.ref.Append("days_before_expiry"))
 }
 
 func (t TriggerAttributes) LifetimePercentage() terra.NumberValue {
-	return terra.ReferenceNumber(t.ref.Append("lifetime_percentage"))
+	return terra.ReferenceAsNumber(t.ref.Append("lifetime_percentage"))
 }
 
 type SecretPropertiesAttributes struct {
 	ref terra.Reference
 }
 
-func (sp SecretPropertiesAttributes) InternalRef() terra.Reference {
-	return sp.ref
+func (sp SecretPropertiesAttributes) InternalRef() (terra.Reference, error) {
+	return sp.ref, nil
 }
 
 func (sp SecretPropertiesAttributes) InternalWithRef(ref terra.Reference) SecretPropertiesAttributes {
 	return SecretPropertiesAttributes{ref: ref}
 }
 
-func (sp SecretPropertiesAttributes) InternalTokens() hclwrite.Tokens {
+func (sp SecretPropertiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sp.ref.InternalTokens()
 }
 
 func (sp SecretPropertiesAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("content_type"))
+	return terra.ReferenceAsString(sp.ref.Append("content_type"))
 }
 
 type X509CertificatePropertiesAttributes struct {
 	ref terra.Reference
 }
 
-func (xcp X509CertificatePropertiesAttributes) InternalRef() terra.Reference {
-	return xcp.ref
+func (xcp X509CertificatePropertiesAttributes) InternalRef() (terra.Reference, error) {
+	return xcp.ref, nil
 }
 
 func (xcp X509CertificatePropertiesAttributes) InternalWithRef(ref terra.Reference) X509CertificatePropertiesAttributes {
 	return X509CertificatePropertiesAttributes{ref: ref}
 }
 
-func (xcp X509CertificatePropertiesAttributes) InternalTokens() hclwrite.Tokens {
+func (xcp X509CertificatePropertiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return xcp.ref.InternalTokens()
 }
 
 func (xcp X509CertificatePropertiesAttributes) ExtendedKeyUsage() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](xcp.ref.Append("extended_key_usage"))
+	return terra.ReferenceAsList[terra.StringValue](xcp.ref.Append("extended_key_usage"))
 }
 
 func (xcp X509CertificatePropertiesAttributes) KeyUsage() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](xcp.ref.Append("key_usage"))
+	return terra.ReferenceAsList[terra.StringValue](xcp.ref.Append("key_usage"))
 }
 
 func (xcp X509CertificatePropertiesAttributes) Subject() terra.StringValue {
-	return terra.ReferenceString(xcp.ref.Append("subject"))
+	return terra.ReferenceAsString(xcp.ref.Append("subject"))
 }
 
 func (xcp X509CertificatePropertiesAttributes) ValidityInMonths() terra.NumberValue {
-	return terra.ReferenceNumber(xcp.ref.Append("validity_in_months"))
+	return terra.ReferenceAsNumber(xcp.ref.Append("validity_in_months"))
 }
 
 func (xcp X509CertificatePropertiesAttributes) SubjectAlternativeNames() terra.ListValue[SubjectAlternativeNamesAttributes] {
-	return terra.ReferenceList[SubjectAlternativeNamesAttributes](xcp.ref.Append("subject_alternative_names"))
+	return terra.ReferenceAsList[SubjectAlternativeNamesAttributes](xcp.ref.Append("subject_alternative_names"))
 }
 
 type SubjectAlternativeNamesAttributes struct {
 	ref terra.Reference
 }
 
-func (san SubjectAlternativeNamesAttributes) InternalRef() terra.Reference {
-	return san.ref
+func (san SubjectAlternativeNamesAttributes) InternalRef() (terra.Reference, error) {
+	return san.ref, nil
 }
 
 func (san SubjectAlternativeNamesAttributes) InternalWithRef(ref terra.Reference) SubjectAlternativeNamesAttributes {
 	return SubjectAlternativeNamesAttributes{ref: ref}
 }
 
-func (san SubjectAlternativeNamesAttributes) InternalTokens() hclwrite.Tokens {
+func (san SubjectAlternativeNamesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return san.ref.InternalTokens()
 }
 
 func (san SubjectAlternativeNamesAttributes) DnsNames() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](san.ref.Append("dns_names"))
+	return terra.ReferenceAsList[terra.StringValue](san.ref.Append("dns_names"))
 }
 
 func (san SubjectAlternativeNamesAttributes) Emails() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](san.ref.Append("emails"))
+	return terra.ReferenceAsList[terra.StringValue](san.ref.Append("emails"))
 }
 
 func (san SubjectAlternativeNamesAttributes) Upns() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](san.ref.Append("upns"))
+	return terra.ReferenceAsList[terra.StringValue](san.ref.Append("upns"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type CertificatePolicyState struct {

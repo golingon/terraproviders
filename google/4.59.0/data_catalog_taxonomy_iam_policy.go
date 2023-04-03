@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewDataCatalogTaxonomyIamPolicy creates a new instance of [DataCatalogTaxonomyIamPolicy].
 func NewDataCatalogTaxonomyIamPolicy(name string, args DataCatalogTaxonomyIamPolicyArgs) *DataCatalogTaxonomyIamPolicy {
 	return &DataCatalogTaxonomyIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewDataCatalogTaxonomyIamPolicy(name string, args DataCatalogTaxonomyIamPol
 
 var _ terra.Resource = (*DataCatalogTaxonomyIamPolicy)(nil)
 
+// DataCatalogTaxonomyIamPolicy represents the Terraform resource google_data_catalog_taxonomy_iam_policy.
 type DataCatalogTaxonomyIamPolicy struct {
-	Name  string
-	Args  DataCatalogTaxonomyIamPolicyArgs
-	state *dataCatalogTaxonomyIamPolicyState
+	Name      string
+	Args      DataCatalogTaxonomyIamPolicyArgs
+	state     *dataCatalogTaxonomyIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataCatalogTaxonomyIamPolicy].
 func (dctip *DataCatalogTaxonomyIamPolicy) Type() string {
 	return "google_data_catalog_taxonomy_iam_policy"
 }
 
+// LocalName returns the local name for [DataCatalogTaxonomyIamPolicy].
 func (dctip *DataCatalogTaxonomyIamPolicy) LocalName() string {
 	return dctip.Name
 }
 
+// Configuration returns the configuration (args) for [DataCatalogTaxonomyIamPolicy].
 func (dctip *DataCatalogTaxonomyIamPolicy) Configuration() interface{} {
 	return dctip.Args
 }
 
+// DependOn is used for other resources to depend on [DataCatalogTaxonomyIamPolicy].
+func (dctip *DataCatalogTaxonomyIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(dctip)
+}
+
+// Dependencies returns the list of resources [DataCatalogTaxonomyIamPolicy] depends_on.
+func (dctip *DataCatalogTaxonomyIamPolicy) Dependencies() terra.Dependencies {
+	return dctip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataCatalogTaxonomyIamPolicy].
+func (dctip *DataCatalogTaxonomyIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return dctip.Lifecycle
+}
+
+// Attributes returns the attributes for [DataCatalogTaxonomyIamPolicy].
 func (dctip *DataCatalogTaxonomyIamPolicy) Attributes() dataCatalogTaxonomyIamPolicyAttributes {
 	return dataCatalogTaxonomyIamPolicyAttributes{ref: terra.ReferenceResource(dctip)}
 }
 
+// ImportState imports the given attribute values into [DataCatalogTaxonomyIamPolicy]'s state.
 func (dctip *DataCatalogTaxonomyIamPolicy) ImportState(av io.Reader) error {
 	dctip.state = &dataCatalogTaxonomyIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(dctip.state); err != nil {
@@ -48,10 +72,12 @@ func (dctip *DataCatalogTaxonomyIamPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataCatalogTaxonomyIamPolicy] has state.
 func (dctip *DataCatalogTaxonomyIamPolicy) State() (*dataCatalogTaxonomyIamPolicyState, bool) {
 	return dctip.state, dctip.state != nil
 }
 
+// StateMust returns the state for [DataCatalogTaxonomyIamPolicy]. Panics if the state is nil.
 func (dctip *DataCatalogTaxonomyIamPolicy) StateMust() *dataCatalogTaxonomyIamPolicyState {
 	if dctip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dctip.Type(), dctip.LocalName()))
@@ -59,10 +85,7 @@ func (dctip *DataCatalogTaxonomyIamPolicy) StateMust() *dataCatalogTaxonomyIamPo
 	return dctip.state
 }
 
-func (dctip *DataCatalogTaxonomyIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(dctip)
-}
-
+// DataCatalogTaxonomyIamPolicyArgs contains the configurations for google_data_catalog_taxonomy_iam_policy.
 type DataCatalogTaxonomyIamPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -74,35 +97,39 @@ type DataCatalogTaxonomyIamPolicyArgs struct {
 	Region terra.StringValue `hcl:"region,attr"`
 	// Taxonomy: string, required
 	Taxonomy terra.StringValue `hcl:"taxonomy,attr" validate:"required"`
-	// DependsOn contains resources that DataCatalogTaxonomyIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataCatalogTaxonomyIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_data_catalog_taxonomy_iam_policy.
 func (dctip dataCatalogTaxonomyIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(dctip.ref.Append("etag"))
+	return terra.ReferenceAsString(dctip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_data_catalog_taxonomy_iam_policy.
 func (dctip dataCatalogTaxonomyIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dctip.ref.Append("id"))
+	return terra.ReferenceAsString(dctip.ref.Append("id"))
 }
 
+// PolicyData returns a reference to field policy_data of google_data_catalog_taxonomy_iam_policy.
 func (dctip dataCatalogTaxonomyIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(dctip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(dctip.ref.Append("policy_data"))
 }
 
+// Project returns a reference to field project of google_data_catalog_taxonomy_iam_policy.
 func (dctip dataCatalogTaxonomyIamPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(dctip.ref.Append("project"))
+	return terra.ReferenceAsString(dctip.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_data_catalog_taxonomy_iam_policy.
 func (dctip dataCatalogTaxonomyIamPolicyAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(dctip.ref.Append("region"))
+	return terra.ReferenceAsString(dctip.ref.Append("region"))
 }
 
+// Taxonomy returns a reference to field taxonomy of google_data_catalog_taxonomy_iam_policy.
 func (dctip dataCatalogTaxonomyIamPolicyAttributes) Taxonomy() terra.StringValue {
-	return terra.ReferenceString(dctip.ref.Append("taxonomy"))
+	return terra.ReferenceAsString(dctip.ref.Append("taxonomy"))
 }
 
 type dataCatalogTaxonomyIamPolicyState struct {

@@ -134,7 +134,7 @@ func (ap AuthParametersAttributes) InternalWithRef(ref terra.Reference) AuthPara
 	return AuthParametersAttributes{ref: ref}
 }
 
-func (ap AuthParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (ap AuthParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ap.ref.InternalTokens()
 }
 
@@ -166,7 +166,7 @@ func (ak ApiKeyAttributes) InternalWithRef(ref terra.Reference) ApiKeyAttributes
 	return ApiKeyAttributes{ref: ref}
 }
 
-func (ak ApiKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (ak ApiKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ak.ref.InternalTokens()
 }
 
@@ -190,7 +190,7 @@ func (b BasicAttributes) InternalWithRef(ref terra.Reference) BasicAttributes {
 	return BasicAttributes{ref: ref}
 }
 
-func (b BasicAttributes) InternalTokens() hclwrite.Tokens {
+func (b BasicAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return b.ref.InternalTokens()
 }
 
@@ -214,7 +214,7 @@ func (ihp InvocationHttpParametersAttributes) InternalWithRef(ref terra.Referenc
 	return InvocationHttpParametersAttributes{ref: ref}
 }
 
-func (ihp InvocationHttpParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (ihp InvocationHttpParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ihp.ref.InternalTokens()
 }
 
@@ -242,7 +242,7 @@ func (b InvocationHttpParametersBodyAttributes) InternalWithRef(ref terra.Refere
 	return InvocationHttpParametersBodyAttributes{ref: ref}
 }
 
-func (b InvocationHttpParametersBodyAttributes) InternalTokens() hclwrite.Tokens {
+func (b InvocationHttpParametersBodyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return b.ref.InternalTokens()
 }
 
@@ -270,7 +270,7 @@ func (h InvocationHttpParametersHeaderAttributes) InternalWithRef(ref terra.Refe
 	return InvocationHttpParametersHeaderAttributes{ref: ref}
 }
 
-func (h InvocationHttpParametersHeaderAttributes) InternalTokens() hclwrite.Tokens {
+func (h InvocationHttpParametersHeaderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 
@@ -298,7 +298,7 @@ func (qs InvocationHttpParametersQueryStringAttributes) InternalWithRef(ref terr
 	return InvocationHttpParametersQueryStringAttributes{ref: ref}
 }
 
-func (qs InvocationHttpParametersQueryStringAttributes) InternalTokens() hclwrite.Tokens {
+func (qs InvocationHttpParametersQueryStringAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return qs.ref.InternalTokens()
 }
 
@@ -326,7 +326,7 @@ func (o OauthAttributes) InternalWithRef(ref terra.Reference) OauthAttributes {
 	return OauthAttributes{ref: ref}
 }
 
-func (o OauthAttributes) InternalTokens() hclwrite.Tokens {
+func (o OauthAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return o.ref.InternalTokens()
 }
 
@@ -358,7 +358,7 @@ func (cp ClientParametersAttributes) InternalWithRef(ref terra.Reference) Client
 	return ClientParametersAttributes{ref: ref}
 }
 
-func (cp ClientParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (cp ClientParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cp.ref.InternalTokens()
 }
 
@@ -382,7 +382,7 @@ func (ohp OauthHttpParametersAttributes) InternalWithRef(ref terra.Reference) Oa
 	return OauthHttpParametersAttributes{ref: ref}
 }
 
-func (ohp OauthHttpParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (ohp OauthHttpParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ohp.ref.InternalTokens()
 }
 
@@ -410,7 +410,7 @@ func (b OauthHttpParametersBodyAttributes) InternalWithRef(ref terra.Reference) 
 	return OauthHttpParametersBodyAttributes{ref: ref}
 }
 
-func (b OauthHttpParametersBodyAttributes) InternalTokens() hclwrite.Tokens {
+func (b OauthHttpParametersBodyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return b.ref.InternalTokens()
 }
 
@@ -438,7 +438,7 @@ func (h OauthHttpParametersHeaderAttributes) InternalWithRef(ref terra.Reference
 	return OauthHttpParametersHeaderAttributes{ref: ref}
 }
 
-func (h OauthHttpParametersHeaderAttributes) InternalTokens() hclwrite.Tokens {
+func (h OauthHttpParametersHeaderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 
@@ -466,7 +466,7 @@ func (qs OauthHttpParametersQueryStringAttributes) InternalWithRef(ref terra.Ref
 	return OauthHttpParametersQueryStringAttributes{ref: ref}
 }
 
-func (qs OauthHttpParametersQueryStringAttributes) InternalTokens() hclwrite.Tokens {
+func (qs OauthHttpParametersQueryStringAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return qs.ref.InternalTokens()
 }
 

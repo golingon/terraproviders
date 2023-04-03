@@ -29,7 +29,7 @@ func (s SpecAttributes) InternalWithRef(ref terra.Reference) SpecAttributes {
 	return SpecAttributes{ref: ref}
 }
 
-func (s SpecAttributes) InternalTokens() hclwrite.Tokens {
+func (s SpecAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -49,7 +49,7 @@ func (ef EgressFilterAttributes) InternalWithRef(ref terra.Reference) EgressFilt
 	return EgressFilterAttributes{ref: ref}
 }
 
-func (ef EgressFilterAttributes) InternalTokens() hclwrite.Tokens {
+func (ef EgressFilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ef.ref.InternalTokens()
 }
 

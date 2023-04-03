@@ -25,48 +25,48 @@ type EncryptionConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ec EncryptionConfigAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec EncryptionConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec EncryptionConfigAttributes) InternalWithRef(ref terra.Reference) EncryptionConfigAttributes {
 	return EncryptionConfigAttributes{ref: ref}
 }
 
-func (ec EncryptionConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ec EncryptionConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 
 func (ec EncryptionConfigAttributes) KmsKeyName() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("kms_key_name"))
+	return terra.ReferenceAsString(ec.ref.Append("kms_key_name"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type EncryptionConfigState struct {

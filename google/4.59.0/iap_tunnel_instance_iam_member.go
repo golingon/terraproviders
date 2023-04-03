@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewIapTunnelInstanceIamMember creates a new instance of [IapTunnelInstanceIamMember].
 func NewIapTunnelInstanceIamMember(name string, args IapTunnelInstanceIamMemberArgs) *IapTunnelInstanceIamMember {
 	return &IapTunnelInstanceIamMember{
 		Args: args,
@@ -19,28 +20,51 @@ func NewIapTunnelInstanceIamMember(name string, args IapTunnelInstanceIamMemberA
 
 var _ terra.Resource = (*IapTunnelInstanceIamMember)(nil)
 
+// IapTunnelInstanceIamMember represents the Terraform resource google_iap_tunnel_instance_iam_member.
 type IapTunnelInstanceIamMember struct {
-	Name  string
-	Args  IapTunnelInstanceIamMemberArgs
-	state *iapTunnelInstanceIamMemberState
+	Name      string
+	Args      IapTunnelInstanceIamMemberArgs
+	state     *iapTunnelInstanceIamMemberState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IapTunnelInstanceIamMember].
 func (itiim *IapTunnelInstanceIamMember) Type() string {
 	return "google_iap_tunnel_instance_iam_member"
 }
 
+// LocalName returns the local name for [IapTunnelInstanceIamMember].
 func (itiim *IapTunnelInstanceIamMember) LocalName() string {
 	return itiim.Name
 }
 
+// Configuration returns the configuration (args) for [IapTunnelInstanceIamMember].
 func (itiim *IapTunnelInstanceIamMember) Configuration() interface{} {
 	return itiim.Args
 }
 
+// DependOn is used for other resources to depend on [IapTunnelInstanceIamMember].
+func (itiim *IapTunnelInstanceIamMember) DependOn() terra.Reference {
+	return terra.ReferenceResource(itiim)
+}
+
+// Dependencies returns the list of resources [IapTunnelInstanceIamMember] depends_on.
+func (itiim *IapTunnelInstanceIamMember) Dependencies() terra.Dependencies {
+	return itiim.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IapTunnelInstanceIamMember].
+func (itiim *IapTunnelInstanceIamMember) LifecycleManagement() *terra.Lifecycle {
+	return itiim.Lifecycle
+}
+
+// Attributes returns the attributes for [IapTunnelInstanceIamMember].
 func (itiim *IapTunnelInstanceIamMember) Attributes() iapTunnelInstanceIamMemberAttributes {
 	return iapTunnelInstanceIamMemberAttributes{ref: terra.ReferenceResource(itiim)}
 }
 
+// ImportState imports the given attribute values into [IapTunnelInstanceIamMember]'s state.
 func (itiim *IapTunnelInstanceIamMember) ImportState(av io.Reader) error {
 	itiim.state = &iapTunnelInstanceIamMemberState{}
 	if err := json.NewDecoder(av).Decode(itiim.state); err != nil {
@@ -49,10 +73,12 @@ func (itiim *IapTunnelInstanceIamMember) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IapTunnelInstanceIamMember] has state.
 func (itiim *IapTunnelInstanceIamMember) State() (*iapTunnelInstanceIamMemberState, bool) {
 	return itiim.state, itiim.state != nil
 }
 
+// StateMust returns the state for [IapTunnelInstanceIamMember]. Panics if the state is nil.
 func (itiim *IapTunnelInstanceIamMember) StateMust() *iapTunnelInstanceIamMemberState {
 	if itiim.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", itiim.Type(), itiim.LocalName()))
@@ -60,10 +86,7 @@ func (itiim *IapTunnelInstanceIamMember) StateMust() *iapTunnelInstanceIamMember
 	return itiim.state
 }
 
-func (itiim *IapTunnelInstanceIamMember) DependOn() terra.Reference {
-	return terra.ReferenceResource(itiim)
-}
-
+// IapTunnelInstanceIamMemberArgs contains the configurations for google_iap_tunnel_instance_iam_member.
 type IapTunnelInstanceIamMemberArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,43 +102,48 @@ type IapTunnelInstanceIamMemberArgs struct {
 	Zone terra.StringValue `hcl:"zone,attr"`
 	// Condition: optional
 	Condition *iaptunnelinstanceiammember.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that IapTunnelInstanceIamMember depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iapTunnelInstanceIamMemberAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_iap_tunnel_instance_iam_member.
 func (itiim iapTunnelInstanceIamMemberAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(itiim.ref.Append("etag"))
+	return terra.ReferenceAsString(itiim.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_iap_tunnel_instance_iam_member.
 func (itiim iapTunnelInstanceIamMemberAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(itiim.ref.Append("id"))
+	return terra.ReferenceAsString(itiim.ref.Append("id"))
 }
 
+// Instance returns a reference to field instance of google_iap_tunnel_instance_iam_member.
 func (itiim iapTunnelInstanceIamMemberAttributes) Instance() terra.StringValue {
-	return terra.ReferenceString(itiim.ref.Append("instance"))
+	return terra.ReferenceAsString(itiim.ref.Append("instance"))
 }
 
+// Member returns a reference to field member of google_iap_tunnel_instance_iam_member.
 func (itiim iapTunnelInstanceIamMemberAttributes) Member() terra.StringValue {
-	return terra.ReferenceString(itiim.ref.Append("member"))
+	return terra.ReferenceAsString(itiim.ref.Append("member"))
 }
 
+// Project returns a reference to field project of google_iap_tunnel_instance_iam_member.
 func (itiim iapTunnelInstanceIamMemberAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(itiim.ref.Append("project"))
+	return terra.ReferenceAsString(itiim.ref.Append("project"))
 }
 
+// Role returns a reference to field role of google_iap_tunnel_instance_iam_member.
 func (itiim iapTunnelInstanceIamMemberAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(itiim.ref.Append("role"))
+	return terra.ReferenceAsString(itiim.ref.Append("role"))
 }
 
+// Zone returns a reference to field zone of google_iap_tunnel_instance_iam_member.
 func (itiim iapTunnelInstanceIamMemberAttributes) Zone() terra.StringValue {
-	return terra.ReferenceString(itiim.ref.Append("zone"))
+	return terra.ReferenceAsString(itiim.ref.Append("zone"))
 }
 
 func (itiim iapTunnelInstanceIamMemberAttributes) Condition() terra.ListValue[iaptunnelinstanceiammember.ConditionAttributes] {
-	return terra.ReferenceList[iaptunnelinstanceiammember.ConditionAttributes](itiim.ref.Append("condition"))
+	return terra.ReferenceAsList[iaptunnelinstanceiammember.ConditionAttributes](itiim.ref.Append("condition"))
 }
 
 type iapTunnelInstanceIamMemberState struct {

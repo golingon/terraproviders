@@ -279,7 +279,7 @@ func (s StepAttributes) InternalWithRef(ref terra.Reference) StepAttributes {
 	return StepAttributes{ref: ref}
 }
 
-func (s StepAttributes) InternalTokens() hclwrite.Tokens {
+func (s StepAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -307,7 +307,7 @@ func (hjs HadoopJarStepAttributes) InternalWithRef(ref terra.Reference) HadoopJa
 	return HadoopJarStepAttributes{ref: ref}
 }
 
-func (hjs HadoopJarStepAttributes) InternalTokens() hclwrite.Tokens {
+func (hjs HadoopJarStepAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hjs.ref.InternalTokens()
 }
 
@@ -339,7 +339,7 @@ func (atp AutoTerminationPolicyAttributes) InternalWithRef(ref terra.Reference) 
 	return AutoTerminationPolicyAttributes{ref: ref}
 }
 
-func (atp AutoTerminationPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (atp AutoTerminationPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return atp.ref.InternalTokens()
 }
 
@@ -359,7 +359,7 @@ func (ba BootstrapActionAttributes) InternalWithRef(ref terra.Reference) Bootstr
 	return BootstrapActionAttributes{ref: ref}
 }
 
-func (ba BootstrapActionAttributes) InternalTokens() hclwrite.Tokens {
+func (ba BootstrapActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ba.ref.InternalTokens()
 }
 
@@ -387,7 +387,7 @@ func (cif CoreInstanceFleetAttributes) InternalWithRef(ref terra.Reference) Core
 	return CoreInstanceFleetAttributes{ref: ref}
 }
 
-func (cif CoreInstanceFleetAttributes) InternalTokens() hclwrite.Tokens {
+func (cif CoreInstanceFleetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cif.ref.InternalTokens()
 }
 
@@ -435,7 +435,7 @@ func (itc CoreInstanceFleetInstanceTypeConfigsAttributes) InternalWithRef(ref te
 	return CoreInstanceFleetInstanceTypeConfigsAttributes{ref: ref}
 }
 
-func (itc CoreInstanceFleetInstanceTypeConfigsAttributes) InternalTokens() hclwrite.Tokens {
+func (itc CoreInstanceFleetInstanceTypeConfigsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return itc.ref.InternalTokens()
 }
 
@@ -475,7 +475,7 @@ func (c CoreInstanceFleetInstanceTypeConfigsConfigurationsAttributes) InternalWi
 	return CoreInstanceFleetInstanceTypeConfigsConfigurationsAttributes{ref: ref}
 }
 
-func (c CoreInstanceFleetInstanceTypeConfigsConfigurationsAttributes) InternalTokens() hclwrite.Tokens {
+func (c CoreInstanceFleetInstanceTypeConfigsConfigurationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -499,7 +499,7 @@ func (ec CoreInstanceFleetInstanceTypeConfigsEbsConfigAttributes) InternalWithRe
 	return CoreInstanceFleetInstanceTypeConfigsEbsConfigAttributes{ref: ref}
 }
 
-func (ec CoreInstanceFleetInstanceTypeConfigsEbsConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ec CoreInstanceFleetInstanceTypeConfigsEbsConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 
@@ -531,7 +531,7 @@ func (ls CoreInstanceFleetLaunchSpecificationsAttributes) InternalWithRef(ref te
 	return CoreInstanceFleetLaunchSpecificationsAttributes{ref: ref}
 }
 
-func (ls CoreInstanceFleetLaunchSpecificationsAttributes) InternalTokens() hclwrite.Tokens {
+func (ls CoreInstanceFleetLaunchSpecificationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ls.ref.InternalTokens()
 }
 
@@ -555,7 +555,7 @@ func (ods CoreInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes) 
 	return CoreInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes{ref: ref}
 }
 
-func (ods CoreInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (ods CoreInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ods.ref.InternalTokens()
 }
 
@@ -575,7 +575,7 @@ func (ss CoreInstanceFleetLaunchSpecificationsSpotSpecificationAttributes) Inter
 	return CoreInstanceFleetLaunchSpecificationsSpotSpecificationAttributes{ref: ref}
 }
 
-func (ss CoreInstanceFleetLaunchSpecificationsSpotSpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (ss CoreInstanceFleetLaunchSpecificationsSpotSpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ss.ref.InternalTokens()
 }
 
@@ -607,7 +607,7 @@ func (cig CoreInstanceGroupAttributes) InternalWithRef(ref terra.Reference) Core
 	return CoreInstanceGroupAttributes{ref: ref}
 }
 
-func (cig CoreInstanceGroupAttributes) InternalTokens() hclwrite.Tokens {
+func (cig CoreInstanceGroupAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cig.ref.InternalTokens()
 }
 
@@ -651,7 +651,7 @@ func (ec CoreInstanceGroupEbsConfigAttributes) InternalWithRef(ref terra.Referen
 	return CoreInstanceGroupEbsConfigAttributes{ref: ref}
 }
 
-func (ec CoreInstanceGroupEbsConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ec CoreInstanceGroupEbsConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 
@@ -687,7 +687,7 @@ func (ea Ec2AttributesAttributes) InternalWithRef(ref terra.Reference) Ec2Attrib
 	return Ec2AttributesAttributes{ref: ref}
 }
 
-func (ea Ec2AttributesAttributes) InternalTokens() hclwrite.Tokens {
+func (ea Ec2AttributesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ea.ref.InternalTokens()
 }
 
@@ -739,7 +739,7 @@ func (ka KerberosAttributesAttributes) InternalWithRef(ref terra.Reference) Kerb
 	return KerberosAttributesAttributes{ref: ref}
 }
 
-func (ka KerberosAttributesAttributes) InternalTokens() hclwrite.Tokens {
+func (ka KerberosAttributesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ka.ref.InternalTokens()
 }
 
@@ -775,7 +775,7 @@ func (mif MasterInstanceFleetAttributes) InternalWithRef(ref terra.Reference) Ma
 	return MasterInstanceFleetAttributes{ref: ref}
 }
 
-func (mif MasterInstanceFleetAttributes) InternalTokens() hclwrite.Tokens {
+func (mif MasterInstanceFleetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mif.ref.InternalTokens()
 }
 
@@ -823,7 +823,7 @@ func (itc MasterInstanceFleetInstanceTypeConfigsAttributes) InternalWithRef(ref 
 	return MasterInstanceFleetInstanceTypeConfigsAttributes{ref: ref}
 }
 
-func (itc MasterInstanceFleetInstanceTypeConfigsAttributes) InternalTokens() hclwrite.Tokens {
+func (itc MasterInstanceFleetInstanceTypeConfigsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return itc.ref.InternalTokens()
 }
 
@@ -863,7 +863,7 @@ func (c MasterInstanceFleetInstanceTypeConfigsConfigurationsAttributes) Internal
 	return MasterInstanceFleetInstanceTypeConfigsConfigurationsAttributes{ref: ref}
 }
 
-func (c MasterInstanceFleetInstanceTypeConfigsConfigurationsAttributes) InternalTokens() hclwrite.Tokens {
+func (c MasterInstanceFleetInstanceTypeConfigsConfigurationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -887,7 +887,7 @@ func (ec MasterInstanceFleetInstanceTypeConfigsEbsConfigAttributes) InternalWith
 	return MasterInstanceFleetInstanceTypeConfigsEbsConfigAttributes{ref: ref}
 }
 
-func (ec MasterInstanceFleetInstanceTypeConfigsEbsConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ec MasterInstanceFleetInstanceTypeConfigsEbsConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 
@@ -919,7 +919,7 @@ func (ls MasterInstanceFleetLaunchSpecificationsAttributes) InternalWithRef(ref 
 	return MasterInstanceFleetLaunchSpecificationsAttributes{ref: ref}
 }
 
-func (ls MasterInstanceFleetLaunchSpecificationsAttributes) InternalTokens() hclwrite.Tokens {
+func (ls MasterInstanceFleetLaunchSpecificationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ls.ref.InternalTokens()
 }
 
@@ -943,7 +943,7 @@ func (ods MasterInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes
 	return MasterInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes{ref: ref}
 }
 
-func (ods MasterInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (ods MasterInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ods.ref.InternalTokens()
 }
 
@@ -963,7 +963,7 @@ func (ss MasterInstanceFleetLaunchSpecificationsSpotSpecificationAttributes) Int
 	return MasterInstanceFleetLaunchSpecificationsSpotSpecificationAttributes{ref: ref}
 }
 
-func (ss MasterInstanceFleetLaunchSpecificationsSpotSpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (ss MasterInstanceFleetLaunchSpecificationsSpotSpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ss.ref.InternalTokens()
 }
 
@@ -995,7 +995,7 @@ func (mig MasterInstanceGroupAttributes) InternalWithRef(ref terra.Reference) Ma
 	return MasterInstanceGroupAttributes{ref: ref}
 }
 
-func (mig MasterInstanceGroupAttributes) InternalTokens() hclwrite.Tokens {
+func (mig MasterInstanceGroupAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mig.ref.InternalTokens()
 }
 
@@ -1035,7 +1035,7 @@ func (ec MasterInstanceGroupEbsConfigAttributes) InternalWithRef(ref terra.Refer
 	return MasterInstanceGroupEbsConfigAttributes{ref: ref}
 }
 
-func (ec MasterInstanceGroupEbsConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ec MasterInstanceGroupEbsConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 

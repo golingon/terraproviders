@@ -40,88 +40,88 @@ type BgpAttributes struct {
 	ref terra.Reference
 }
 
-func (b BgpAttributes) InternalRef() terra.Reference {
-	return b.ref
+func (b BgpAttributes) InternalRef() (terra.Reference, error) {
+	return b.ref, nil
 }
 
 func (b BgpAttributes) InternalWithRef(ref terra.Reference) BgpAttributes {
 	return BgpAttributes{ref: ref}
 }
 
-func (b BgpAttributes) InternalTokens() hclwrite.Tokens {
+func (b BgpAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return b.ref.InternalTokens()
 }
 
 func (b BgpAttributes) AdvertiseMode() terra.StringValue {
-	return terra.ReferenceString(b.ref.Append("advertise_mode"))
+	return terra.ReferenceAsString(b.ref.Append("advertise_mode"))
 }
 
 func (b BgpAttributes) AdvertisedGroups() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](b.ref.Append("advertised_groups"))
+	return terra.ReferenceAsList[terra.StringValue](b.ref.Append("advertised_groups"))
 }
 
 func (b BgpAttributes) Asn() terra.NumberValue {
-	return terra.ReferenceNumber(b.ref.Append("asn"))
+	return terra.ReferenceAsNumber(b.ref.Append("asn"))
 }
 
 func (b BgpAttributes) KeepaliveInterval() terra.NumberValue {
-	return terra.ReferenceNumber(b.ref.Append("keepalive_interval"))
+	return terra.ReferenceAsNumber(b.ref.Append("keepalive_interval"))
 }
 
 func (b BgpAttributes) AdvertisedIpRanges() terra.ListValue[AdvertisedIpRangesAttributes] {
-	return terra.ReferenceList[AdvertisedIpRangesAttributes](b.ref.Append("advertised_ip_ranges"))
+	return terra.ReferenceAsList[AdvertisedIpRangesAttributes](b.ref.Append("advertised_ip_ranges"))
 }
 
 type AdvertisedIpRangesAttributes struct {
 	ref terra.Reference
 }
 
-func (air AdvertisedIpRangesAttributes) InternalRef() terra.Reference {
-	return air.ref
+func (air AdvertisedIpRangesAttributes) InternalRef() (terra.Reference, error) {
+	return air.ref, nil
 }
 
 func (air AdvertisedIpRangesAttributes) InternalWithRef(ref terra.Reference) AdvertisedIpRangesAttributes {
 	return AdvertisedIpRangesAttributes{ref: ref}
 }
 
-func (air AdvertisedIpRangesAttributes) InternalTokens() hclwrite.Tokens {
+func (air AdvertisedIpRangesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return air.ref.InternalTokens()
 }
 
 func (air AdvertisedIpRangesAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(air.ref.Append("description"))
+	return terra.ReferenceAsString(air.ref.Append("description"))
 }
 
 func (air AdvertisedIpRangesAttributes) Range() terra.StringValue {
-	return terra.ReferenceString(air.ref.Append("range"))
+	return terra.ReferenceAsString(air.ref.Append("range"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type BgpState struct {

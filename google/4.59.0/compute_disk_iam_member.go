@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeDiskIamMember creates a new instance of [ComputeDiskIamMember].
 func NewComputeDiskIamMember(name string, args ComputeDiskIamMemberArgs) *ComputeDiskIamMember {
 	return &ComputeDiskIamMember{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeDiskIamMember(name string, args ComputeDiskIamMemberArgs) *Comput
 
 var _ terra.Resource = (*ComputeDiskIamMember)(nil)
 
+// ComputeDiskIamMember represents the Terraform resource google_compute_disk_iam_member.
 type ComputeDiskIamMember struct {
-	Name  string
-	Args  ComputeDiskIamMemberArgs
-	state *computeDiskIamMemberState
+	Name      string
+	Args      ComputeDiskIamMemberArgs
+	state     *computeDiskIamMemberState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeDiskIamMember].
 func (cdim *ComputeDiskIamMember) Type() string {
 	return "google_compute_disk_iam_member"
 }
 
+// LocalName returns the local name for [ComputeDiskIamMember].
 func (cdim *ComputeDiskIamMember) LocalName() string {
 	return cdim.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeDiskIamMember].
 func (cdim *ComputeDiskIamMember) Configuration() interface{} {
 	return cdim.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeDiskIamMember].
+func (cdim *ComputeDiskIamMember) DependOn() terra.Reference {
+	return terra.ReferenceResource(cdim)
+}
+
+// Dependencies returns the list of resources [ComputeDiskIamMember] depends_on.
+func (cdim *ComputeDiskIamMember) Dependencies() terra.Dependencies {
+	return cdim.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeDiskIamMember].
+func (cdim *ComputeDiskIamMember) LifecycleManagement() *terra.Lifecycle {
+	return cdim.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeDiskIamMember].
 func (cdim *ComputeDiskIamMember) Attributes() computeDiskIamMemberAttributes {
 	return computeDiskIamMemberAttributes{ref: terra.ReferenceResource(cdim)}
 }
 
+// ImportState imports the given attribute values into [ComputeDiskIamMember]'s state.
 func (cdim *ComputeDiskIamMember) ImportState(av io.Reader) error {
 	cdim.state = &computeDiskIamMemberState{}
 	if err := json.NewDecoder(av).Decode(cdim.state); err != nil {
@@ -49,10 +73,12 @@ func (cdim *ComputeDiskIamMember) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeDiskIamMember] has state.
 func (cdim *ComputeDiskIamMember) State() (*computeDiskIamMemberState, bool) {
 	return cdim.state, cdim.state != nil
 }
 
+// StateMust returns the state for [ComputeDiskIamMember]. Panics if the state is nil.
 func (cdim *ComputeDiskIamMember) StateMust() *computeDiskIamMemberState {
 	if cdim.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cdim.Type(), cdim.LocalName()))
@@ -60,10 +86,7 @@ func (cdim *ComputeDiskIamMember) StateMust() *computeDiskIamMemberState {
 	return cdim.state
 }
 
-func (cdim *ComputeDiskIamMember) DependOn() terra.Reference {
-	return terra.ReferenceResource(cdim)
-}
-
+// ComputeDiskIamMemberArgs contains the configurations for google_compute_disk_iam_member.
 type ComputeDiskIamMemberArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,43 +102,48 @@ type ComputeDiskIamMemberArgs struct {
 	Zone terra.StringValue `hcl:"zone,attr"`
 	// Condition: optional
 	Condition *computediskiammember.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that ComputeDiskIamMember depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeDiskIamMemberAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_compute_disk_iam_member.
 func (cdim computeDiskIamMemberAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(cdim.ref.Append("etag"))
+	return terra.ReferenceAsString(cdim.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_compute_disk_iam_member.
 func (cdim computeDiskIamMemberAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cdim.ref.Append("id"))
+	return terra.ReferenceAsString(cdim.ref.Append("id"))
 }
 
+// Member returns a reference to field member of google_compute_disk_iam_member.
 func (cdim computeDiskIamMemberAttributes) Member() terra.StringValue {
-	return terra.ReferenceString(cdim.ref.Append("member"))
+	return terra.ReferenceAsString(cdim.ref.Append("member"))
 }
 
+// Name returns a reference to field name of google_compute_disk_iam_member.
 func (cdim computeDiskIamMemberAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cdim.ref.Append("name"))
+	return terra.ReferenceAsString(cdim.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_compute_disk_iam_member.
 func (cdim computeDiskIamMemberAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cdim.ref.Append("project"))
+	return terra.ReferenceAsString(cdim.ref.Append("project"))
 }
 
+// Role returns a reference to field role of google_compute_disk_iam_member.
 func (cdim computeDiskIamMemberAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(cdim.ref.Append("role"))
+	return terra.ReferenceAsString(cdim.ref.Append("role"))
 }
 
+// Zone returns a reference to field zone of google_compute_disk_iam_member.
 func (cdim computeDiskIamMemberAttributes) Zone() terra.StringValue {
-	return terra.ReferenceString(cdim.ref.Append("zone"))
+	return terra.ReferenceAsString(cdim.ref.Append("zone"))
 }
 
 func (cdim computeDiskIamMemberAttributes) Condition() terra.ListValue[computediskiammember.ConditionAttributes] {
-	return terra.ReferenceList[computediskiammember.ConditionAttributes](cdim.ref.Append("condition"))
+	return terra.ReferenceAsList[computediskiammember.ConditionAttributes](cdim.ref.Append("condition"))
 }
 
 type computeDiskIamMemberState struct {

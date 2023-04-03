@@ -35,68 +35,68 @@ type LinksAttributes struct {
 	ref terra.Reference
 }
 
-func (l LinksAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l LinksAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l LinksAttributes) InternalWithRef(ref terra.Reference) LinksAttributes {
 	return LinksAttributes{ref: ref}
 }
 
-func (l LinksAttributes) InternalTokens() hclwrite.Tokens {
+func (l LinksAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 
 func (l LinksAttributes) BandwidthMhz() terra.NumberValue {
-	return terra.ReferenceNumber(l.ref.Append("bandwidth_mhz"))
+	return terra.ReferenceAsNumber(l.ref.Append("bandwidth_mhz"))
 }
 
 func (l LinksAttributes) CenterFrequencyMhz() terra.NumberValue {
-	return terra.ReferenceNumber(l.ref.Append("center_frequency_mhz"))
+	return terra.ReferenceAsNumber(l.ref.Append("center_frequency_mhz"))
 }
 
 func (l LinksAttributes) Direction() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("direction"))
+	return terra.ReferenceAsString(l.ref.Append("direction"))
 }
 
 func (l LinksAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("name"))
+	return terra.ReferenceAsString(l.ref.Append("name"))
 }
 
 func (l LinksAttributes) Polarization() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("polarization"))
+	return terra.ReferenceAsString(l.ref.Append("polarization"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type LinksState struct {

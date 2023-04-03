@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSqlDatabaseInstance creates a new instance of [SqlDatabaseInstance].
 func NewSqlDatabaseInstance(name string, args SqlDatabaseInstanceArgs) *SqlDatabaseInstance {
 	return &SqlDatabaseInstance{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSqlDatabaseInstance(name string, args SqlDatabaseInstanceArgs) *SqlDatab
 
 var _ terra.Resource = (*SqlDatabaseInstance)(nil)
 
+// SqlDatabaseInstance represents the Terraform resource google_sql_database_instance.
 type SqlDatabaseInstance struct {
-	Name  string
-	Args  SqlDatabaseInstanceArgs
-	state *sqlDatabaseInstanceState
+	Name      string
+	Args      SqlDatabaseInstanceArgs
+	state     *sqlDatabaseInstanceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SqlDatabaseInstance].
 func (sdi *SqlDatabaseInstance) Type() string {
 	return "google_sql_database_instance"
 }
 
+// LocalName returns the local name for [SqlDatabaseInstance].
 func (sdi *SqlDatabaseInstance) LocalName() string {
 	return sdi.Name
 }
 
+// Configuration returns the configuration (args) for [SqlDatabaseInstance].
 func (sdi *SqlDatabaseInstance) Configuration() interface{} {
 	return sdi.Args
 }
 
+// DependOn is used for other resources to depend on [SqlDatabaseInstance].
+func (sdi *SqlDatabaseInstance) DependOn() terra.Reference {
+	return terra.ReferenceResource(sdi)
+}
+
+// Dependencies returns the list of resources [SqlDatabaseInstance] depends_on.
+func (sdi *SqlDatabaseInstance) Dependencies() terra.Dependencies {
+	return sdi.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SqlDatabaseInstance].
+func (sdi *SqlDatabaseInstance) LifecycleManagement() *terra.Lifecycle {
+	return sdi.Lifecycle
+}
+
+// Attributes returns the attributes for [SqlDatabaseInstance].
 func (sdi *SqlDatabaseInstance) Attributes() sqlDatabaseInstanceAttributes {
 	return sqlDatabaseInstanceAttributes{ref: terra.ReferenceResource(sdi)}
 }
 
+// ImportState imports the given attribute values into [SqlDatabaseInstance]'s state.
 func (sdi *SqlDatabaseInstance) ImportState(av io.Reader) error {
 	sdi.state = &sqlDatabaseInstanceState{}
 	if err := json.NewDecoder(av).Decode(sdi.state); err != nil {
@@ -49,10 +73,12 @@ func (sdi *SqlDatabaseInstance) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SqlDatabaseInstance] has state.
 func (sdi *SqlDatabaseInstance) State() (*sqlDatabaseInstanceState, bool) {
 	return sdi.state, sdi.state != nil
 }
 
+// StateMust returns the state for [SqlDatabaseInstance]. Panics if the state is nil.
 func (sdi *SqlDatabaseInstance) StateMust() *sqlDatabaseInstanceState {
 	if sdi.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sdi.Type(), sdi.LocalName()))
@@ -60,10 +86,7 @@ func (sdi *SqlDatabaseInstance) StateMust() *sqlDatabaseInstanceState {
 	return sdi.state
 }
 
-func (sdi *SqlDatabaseInstance) DependOn() terra.Reference {
-	return terra.ReferenceResource(sdi)
-}
-
+// SqlDatabaseInstanceArgs contains the configurations for google_sql_database_instance.
 type SqlDatabaseInstanceArgs struct {
 	// DatabaseVersion: string, required
 	DatabaseVersion terra.StringValue `hcl:"database_version,attr" validate:"required"`
@@ -101,111 +124,127 @@ type SqlDatabaseInstanceArgs struct {
 	Settings *sqldatabaseinstance.Settings `hcl:"settings,block"`
 	// Timeouts: optional
 	Timeouts *sqldatabaseinstance.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SqlDatabaseInstance depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sqlDatabaseInstanceAttributes struct {
 	ref terra.Reference
 }
 
+// AvailableMaintenanceVersions returns a reference to field available_maintenance_versions of google_sql_database_instance.
 func (sdi sqlDatabaseInstanceAttributes) AvailableMaintenanceVersions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sdi.ref.Append("available_maintenance_versions"))
+	return terra.ReferenceAsList[terra.StringValue](sdi.ref.Append("available_maintenance_versions"))
 }
 
+// ConnectionName returns a reference to field connection_name of google_sql_database_instance.
 func (sdi sqlDatabaseInstanceAttributes) ConnectionName() terra.StringValue {
-	return terra.ReferenceString(sdi.ref.Append("connection_name"))
+	return terra.ReferenceAsString(sdi.ref.Append("connection_name"))
 }
 
+// DatabaseVersion returns a reference to field database_version of google_sql_database_instance.
 func (sdi sqlDatabaseInstanceAttributes) DatabaseVersion() terra.StringValue {
-	return terra.ReferenceString(sdi.ref.Append("database_version"))
+	return terra.ReferenceAsString(sdi.ref.Append("database_version"))
 }
 
+// DeletionProtection returns a reference to field deletion_protection of google_sql_database_instance.
 func (sdi sqlDatabaseInstanceAttributes) DeletionProtection() terra.BoolValue {
-	return terra.ReferenceBool(sdi.ref.Append("deletion_protection"))
+	return terra.ReferenceAsBool(sdi.ref.Append("deletion_protection"))
 }
 
+// EncryptionKeyName returns a reference to field encryption_key_name of google_sql_database_instance.
 func (sdi sqlDatabaseInstanceAttributes) EncryptionKeyName() terra.StringValue {
-	return terra.ReferenceString(sdi.ref.Append("encryption_key_name"))
+	return terra.ReferenceAsString(sdi.ref.Append("encryption_key_name"))
 }
 
+// FirstIpAddress returns a reference to field first_ip_address of google_sql_database_instance.
 func (sdi sqlDatabaseInstanceAttributes) FirstIpAddress() terra.StringValue {
-	return terra.ReferenceString(sdi.ref.Append("first_ip_address"))
+	return terra.ReferenceAsString(sdi.ref.Append("first_ip_address"))
 }
 
+// Id returns a reference to field id of google_sql_database_instance.
 func (sdi sqlDatabaseInstanceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sdi.ref.Append("id"))
+	return terra.ReferenceAsString(sdi.ref.Append("id"))
 }
 
+// InstanceType returns a reference to field instance_type of google_sql_database_instance.
 func (sdi sqlDatabaseInstanceAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(sdi.ref.Append("instance_type"))
+	return terra.ReferenceAsString(sdi.ref.Append("instance_type"))
 }
 
+// MaintenanceVersion returns a reference to field maintenance_version of google_sql_database_instance.
 func (sdi sqlDatabaseInstanceAttributes) MaintenanceVersion() terra.StringValue {
-	return terra.ReferenceString(sdi.ref.Append("maintenance_version"))
+	return terra.ReferenceAsString(sdi.ref.Append("maintenance_version"))
 }
 
+// MasterInstanceName returns a reference to field master_instance_name of google_sql_database_instance.
 func (sdi sqlDatabaseInstanceAttributes) MasterInstanceName() terra.StringValue {
-	return terra.ReferenceString(sdi.ref.Append("master_instance_name"))
+	return terra.ReferenceAsString(sdi.ref.Append("master_instance_name"))
 }
 
+// Name returns a reference to field name of google_sql_database_instance.
 func (sdi sqlDatabaseInstanceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sdi.ref.Append("name"))
+	return terra.ReferenceAsString(sdi.ref.Append("name"))
 }
 
+// PrivateIpAddress returns a reference to field private_ip_address of google_sql_database_instance.
 func (sdi sqlDatabaseInstanceAttributes) PrivateIpAddress() terra.StringValue {
-	return terra.ReferenceString(sdi.ref.Append("private_ip_address"))
+	return terra.ReferenceAsString(sdi.ref.Append("private_ip_address"))
 }
 
+// Project returns a reference to field project of google_sql_database_instance.
 func (sdi sqlDatabaseInstanceAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(sdi.ref.Append("project"))
+	return terra.ReferenceAsString(sdi.ref.Append("project"))
 }
 
+// PublicIpAddress returns a reference to field public_ip_address of google_sql_database_instance.
 func (sdi sqlDatabaseInstanceAttributes) PublicIpAddress() terra.StringValue {
-	return terra.ReferenceString(sdi.ref.Append("public_ip_address"))
+	return terra.ReferenceAsString(sdi.ref.Append("public_ip_address"))
 }
 
+// Region returns a reference to field region of google_sql_database_instance.
 func (sdi sqlDatabaseInstanceAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(sdi.ref.Append("region"))
+	return terra.ReferenceAsString(sdi.ref.Append("region"))
 }
 
+// RootPassword returns a reference to field root_password of google_sql_database_instance.
 func (sdi sqlDatabaseInstanceAttributes) RootPassword() terra.StringValue {
-	return terra.ReferenceString(sdi.ref.Append("root_password"))
+	return terra.ReferenceAsString(sdi.ref.Append("root_password"))
 }
 
+// SelfLink returns a reference to field self_link of google_sql_database_instance.
 func (sdi sqlDatabaseInstanceAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(sdi.ref.Append("self_link"))
+	return terra.ReferenceAsString(sdi.ref.Append("self_link"))
 }
 
+// ServiceAccountEmailAddress returns a reference to field service_account_email_address of google_sql_database_instance.
 func (sdi sqlDatabaseInstanceAttributes) ServiceAccountEmailAddress() terra.StringValue {
-	return terra.ReferenceString(sdi.ref.Append("service_account_email_address"))
+	return terra.ReferenceAsString(sdi.ref.Append("service_account_email_address"))
 }
 
 func (sdi sqlDatabaseInstanceAttributes) IpAddress() terra.ListValue[sqldatabaseinstance.IpAddressAttributes] {
-	return terra.ReferenceList[sqldatabaseinstance.IpAddressAttributes](sdi.ref.Append("ip_address"))
+	return terra.ReferenceAsList[sqldatabaseinstance.IpAddressAttributes](sdi.ref.Append("ip_address"))
 }
 
 func (sdi sqlDatabaseInstanceAttributes) ServerCaCert() terra.ListValue[sqldatabaseinstance.ServerCaCertAttributes] {
-	return terra.ReferenceList[sqldatabaseinstance.ServerCaCertAttributes](sdi.ref.Append("server_ca_cert"))
+	return terra.ReferenceAsList[sqldatabaseinstance.ServerCaCertAttributes](sdi.ref.Append("server_ca_cert"))
 }
 
 func (sdi sqlDatabaseInstanceAttributes) Clone() terra.ListValue[sqldatabaseinstance.CloneAttributes] {
-	return terra.ReferenceList[sqldatabaseinstance.CloneAttributes](sdi.ref.Append("clone"))
+	return terra.ReferenceAsList[sqldatabaseinstance.CloneAttributes](sdi.ref.Append("clone"))
 }
 
 func (sdi sqlDatabaseInstanceAttributes) ReplicaConfiguration() terra.ListValue[sqldatabaseinstance.ReplicaConfigurationAttributes] {
-	return terra.ReferenceList[sqldatabaseinstance.ReplicaConfigurationAttributes](sdi.ref.Append("replica_configuration"))
+	return terra.ReferenceAsList[sqldatabaseinstance.ReplicaConfigurationAttributes](sdi.ref.Append("replica_configuration"))
 }
 
 func (sdi sqlDatabaseInstanceAttributes) RestoreBackupContext() terra.ListValue[sqldatabaseinstance.RestoreBackupContextAttributes] {
-	return terra.ReferenceList[sqldatabaseinstance.RestoreBackupContextAttributes](sdi.ref.Append("restore_backup_context"))
+	return terra.ReferenceAsList[sqldatabaseinstance.RestoreBackupContextAttributes](sdi.ref.Append("restore_backup_context"))
 }
 
 func (sdi sqlDatabaseInstanceAttributes) Settings() terra.ListValue[sqldatabaseinstance.SettingsAttributes] {
-	return terra.ReferenceList[sqldatabaseinstance.SettingsAttributes](sdi.ref.Append("settings"))
+	return terra.ReferenceAsList[sqldatabaseinstance.SettingsAttributes](sdi.ref.Append("settings"))
 }
 
 func (sdi sqlDatabaseInstanceAttributes) Timeouts() sqldatabaseinstance.TimeoutsAttributes {
-	return terra.ReferenceSingle[sqldatabaseinstance.TimeoutsAttributes](sdi.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[sqldatabaseinstance.TimeoutsAttributes](sdi.ref.Append("timeouts"))
 }
 
 type sqlDatabaseInstanceState struct {

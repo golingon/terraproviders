@@ -41,80 +41,80 @@ type AccessRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (ar AccessRuleAttributes) InternalRef() terra.Reference {
-	return ar.ref
+func (ar AccessRuleAttributes) InternalRef() (terra.Reference, error) {
+	return ar.ref, nil
 }
 
 func (ar AccessRuleAttributes) InternalWithRef(ref terra.Reference) AccessRuleAttributes {
 	return AccessRuleAttributes{ref: ref}
 }
 
-func (ar AccessRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (ar AccessRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ar.ref.InternalTokens()
 }
 
 func (ar AccessRuleAttributes) Access() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("access"))
+	return terra.ReferenceAsString(ar.ref.Append("access"))
 }
 
 func (ar AccessRuleAttributes) AnonymousGid() terra.NumberValue {
-	return terra.ReferenceNumber(ar.ref.Append("anonymous_gid"))
+	return terra.ReferenceAsNumber(ar.ref.Append("anonymous_gid"))
 }
 
 func (ar AccessRuleAttributes) AnonymousUid() terra.NumberValue {
-	return terra.ReferenceNumber(ar.ref.Append("anonymous_uid"))
+	return terra.ReferenceAsNumber(ar.ref.Append("anonymous_uid"))
 }
 
 func (ar AccessRuleAttributes) Filter() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("filter"))
+	return terra.ReferenceAsString(ar.ref.Append("filter"))
 }
 
 func (ar AccessRuleAttributes) RootSquashEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ar.ref.Append("root_squash_enabled"))
+	return terra.ReferenceAsBool(ar.ref.Append("root_squash_enabled"))
 }
 
 func (ar AccessRuleAttributes) Scope() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("scope"))
+	return terra.ReferenceAsString(ar.ref.Append("scope"))
 }
 
 func (ar AccessRuleAttributes) SubmountAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ar.ref.Append("submount_access_enabled"))
+	return terra.ReferenceAsBool(ar.ref.Append("submount_access_enabled"))
 }
 
 func (ar AccessRuleAttributes) SuidEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ar.ref.Append("suid_enabled"))
+	return terra.ReferenceAsBool(ar.ref.Append("suid_enabled"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AccessRuleState struct {

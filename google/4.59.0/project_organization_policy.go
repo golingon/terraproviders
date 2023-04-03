@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewProjectOrganizationPolicy creates a new instance of [ProjectOrganizationPolicy].
 func NewProjectOrganizationPolicy(name string, args ProjectOrganizationPolicyArgs) *ProjectOrganizationPolicy {
 	return &ProjectOrganizationPolicy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewProjectOrganizationPolicy(name string, args ProjectOrganizationPolicyArg
 
 var _ terra.Resource = (*ProjectOrganizationPolicy)(nil)
 
+// ProjectOrganizationPolicy represents the Terraform resource google_project_organization_policy.
 type ProjectOrganizationPolicy struct {
-	Name  string
-	Args  ProjectOrganizationPolicyArgs
-	state *projectOrganizationPolicyState
+	Name      string
+	Args      ProjectOrganizationPolicyArgs
+	state     *projectOrganizationPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ProjectOrganizationPolicy].
 func (pop *ProjectOrganizationPolicy) Type() string {
 	return "google_project_organization_policy"
 }
 
+// LocalName returns the local name for [ProjectOrganizationPolicy].
 func (pop *ProjectOrganizationPolicy) LocalName() string {
 	return pop.Name
 }
 
+// Configuration returns the configuration (args) for [ProjectOrganizationPolicy].
 func (pop *ProjectOrganizationPolicy) Configuration() interface{} {
 	return pop.Args
 }
 
+// DependOn is used for other resources to depend on [ProjectOrganizationPolicy].
+func (pop *ProjectOrganizationPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(pop)
+}
+
+// Dependencies returns the list of resources [ProjectOrganizationPolicy] depends_on.
+func (pop *ProjectOrganizationPolicy) Dependencies() terra.Dependencies {
+	return pop.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ProjectOrganizationPolicy].
+func (pop *ProjectOrganizationPolicy) LifecycleManagement() *terra.Lifecycle {
+	return pop.Lifecycle
+}
+
+// Attributes returns the attributes for [ProjectOrganizationPolicy].
 func (pop *ProjectOrganizationPolicy) Attributes() projectOrganizationPolicyAttributes {
 	return projectOrganizationPolicyAttributes{ref: terra.ReferenceResource(pop)}
 }
 
+// ImportState imports the given attribute values into [ProjectOrganizationPolicy]'s state.
 func (pop *ProjectOrganizationPolicy) ImportState(av io.Reader) error {
 	pop.state = &projectOrganizationPolicyState{}
 	if err := json.NewDecoder(av).Decode(pop.state); err != nil {
@@ -49,10 +73,12 @@ func (pop *ProjectOrganizationPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ProjectOrganizationPolicy] has state.
 func (pop *ProjectOrganizationPolicy) State() (*projectOrganizationPolicyState, bool) {
 	return pop.state, pop.state != nil
 }
 
+// StateMust returns the state for [ProjectOrganizationPolicy]. Panics if the state is nil.
 func (pop *ProjectOrganizationPolicy) StateMust() *projectOrganizationPolicyState {
 	if pop.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pop.Type(), pop.LocalName()))
@@ -60,10 +86,7 @@ func (pop *ProjectOrganizationPolicy) StateMust() *projectOrganizationPolicyStat
 	return pop.state
 }
 
-func (pop *ProjectOrganizationPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(pop)
-}
-
+// ProjectOrganizationPolicyArgs contains the configurations for google_project_organization_policy.
 type ProjectOrganizationPolicyArgs struct {
 	// Constraint: string, required
 	Constraint terra.StringValue `hcl:"constraint,attr" validate:"required"`
@@ -81,51 +104,55 @@ type ProjectOrganizationPolicyArgs struct {
 	RestorePolicy *projectorganizationpolicy.RestorePolicy `hcl:"restore_policy,block"`
 	// Timeouts: optional
 	Timeouts *projectorganizationpolicy.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ProjectOrganizationPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type projectOrganizationPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Constraint returns a reference to field constraint of google_project_organization_policy.
 func (pop projectOrganizationPolicyAttributes) Constraint() terra.StringValue {
-	return terra.ReferenceString(pop.ref.Append("constraint"))
+	return terra.ReferenceAsString(pop.ref.Append("constraint"))
 }
 
+// Etag returns a reference to field etag of google_project_organization_policy.
 func (pop projectOrganizationPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(pop.ref.Append("etag"))
+	return terra.ReferenceAsString(pop.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_project_organization_policy.
 func (pop projectOrganizationPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pop.ref.Append("id"))
+	return terra.ReferenceAsString(pop.ref.Append("id"))
 }
 
+// Project returns a reference to field project of google_project_organization_policy.
 func (pop projectOrganizationPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(pop.ref.Append("project"))
+	return terra.ReferenceAsString(pop.ref.Append("project"))
 }
 
+// UpdateTime returns a reference to field update_time of google_project_organization_policy.
 func (pop projectOrganizationPolicyAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(pop.ref.Append("update_time"))
+	return terra.ReferenceAsString(pop.ref.Append("update_time"))
 }
 
+// Version returns a reference to field version of google_project_organization_policy.
 func (pop projectOrganizationPolicyAttributes) Version() terra.NumberValue {
-	return terra.ReferenceNumber(pop.ref.Append("version"))
+	return terra.ReferenceAsNumber(pop.ref.Append("version"))
 }
 
 func (pop projectOrganizationPolicyAttributes) BooleanPolicy() terra.ListValue[projectorganizationpolicy.BooleanPolicyAttributes] {
-	return terra.ReferenceList[projectorganizationpolicy.BooleanPolicyAttributes](pop.ref.Append("boolean_policy"))
+	return terra.ReferenceAsList[projectorganizationpolicy.BooleanPolicyAttributes](pop.ref.Append("boolean_policy"))
 }
 
 func (pop projectOrganizationPolicyAttributes) ListPolicy() terra.ListValue[projectorganizationpolicy.ListPolicyAttributes] {
-	return terra.ReferenceList[projectorganizationpolicy.ListPolicyAttributes](pop.ref.Append("list_policy"))
+	return terra.ReferenceAsList[projectorganizationpolicy.ListPolicyAttributes](pop.ref.Append("list_policy"))
 }
 
 func (pop projectOrganizationPolicyAttributes) RestorePolicy() terra.ListValue[projectorganizationpolicy.RestorePolicyAttributes] {
-	return terra.ReferenceList[projectorganizationpolicy.RestorePolicyAttributes](pop.ref.Append("restore_policy"))
+	return terra.ReferenceAsList[projectorganizationpolicy.RestorePolicyAttributes](pop.ref.Append("restore_policy"))
 }
 
 func (pop projectOrganizationPolicyAttributes) Timeouts() projectorganizationpolicy.TimeoutsAttributes {
-	return terra.ReferenceSingle[projectorganizationpolicy.TimeoutsAttributes](pop.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[projectorganizationpolicy.TimeoutsAttributes](pop.ref.Append("timeouts"))
 }
 
 type projectOrganizationPolicyState struct {

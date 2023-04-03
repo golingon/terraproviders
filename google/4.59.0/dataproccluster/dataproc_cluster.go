@@ -361,1088 +361,1088 @@ type ClusterConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (cc ClusterConfigAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc ClusterConfigAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc ClusterConfigAttributes) InternalWithRef(ref terra.Reference) ClusterConfigAttributes {
 	return ClusterConfigAttributes{ref: ref}
 }
 
-func (cc ClusterConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (cc ClusterConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
 func (cc ClusterConfigAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("bucket"))
+	return terra.ReferenceAsString(cc.ref.Append("bucket"))
 }
 
 func (cc ClusterConfigAttributes) StagingBucket() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("staging_bucket"))
+	return terra.ReferenceAsString(cc.ref.Append("staging_bucket"))
 }
 
 func (cc ClusterConfigAttributes) TempBucket() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("temp_bucket"))
+	return terra.ReferenceAsString(cc.ref.Append("temp_bucket"))
 }
 
 func (cc ClusterConfigAttributes) AutoscalingConfig() terra.ListValue[AutoscalingConfigAttributes] {
-	return terra.ReferenceList[AutoscalingConfigAttributes](cc.ref.Append("autoscaling_config"))
+	return terra.ReferenceAsList[AutoscalingConfigAttributes](cc.ref.Append("autoscaling_config"))
 }
 
 func (cc ClusterConfigAttributes) DataprocMetricConfig() terra.ListValue[DataprocMetricConfigAttributes] {
-	return terra.ReferenceList[DataprocMetricConfigAttributes](cc.ref.Append("dataproc_metric_config"))
+	return terra.ReferenceAsList[DataprocMetricConfigAttributes](cc.ref.Append("dataproc_metric_config"))
 }
 
 func (cc ClusterConfigAttributes) EncryptionConfig() terra.ListValue[EncryptionConfigAttributes] {
-	return terra.ReferenceList[EncryptionConfigAttributes](cc.ref.Append("encryption_config"))
+	return terra.ReferenceAsList[EncryptionConfigAttributes](cc.ref.Append("encryption_config"))
 }
 
 func (cc ClusterConfigAttributes) EndpointConfig() terra.ListValue[EndpointConfigAttributes] {
-	return terra.ReferenceList[EndpointConfigAttributes](cc.ref.Append("endpoint_config"))
+	return terra.ReferenceAsList[EndpointConfigAttributes](cc.ref.Append("endpoint_config"))
 }
 
 func (cc ClusterConfigAttributes) GceClusterConfig() terra.ListValue[GceClusterConfigAttributes] {
-	return terra.ReferenceList[GceClusterConfigAttributes](cc.ref.Append("gce_cluster_config"))
+	return terra.ReferenceAsList[GceClusterConfigAttributes](cc.ref.Append("gce_cluster_config"))
 }
 
 func (cc ClusterConfigAttributes) InitializationAction() terra.ListValue[InitializationActionAttributes] {
-	return terra.ReferenceList[InitializationActionAttributes](cc.ref.Append("initialization_action"))
+	return terra.ReferenceAsList[InitializationActionAttributes](cc.ref.Append("initialization_action"))
 }
 
 func (cc ClusterConfigAttributes) LifecycleConfig() terra.ListValue[LifecycleConfigAttributes] {
-	return terra.ReferenceList[LifecycleConfigAttributes](cc.ref.Append("lifecycle_config"))
+	return terra.ReferenceAsList[LifecycleConfigAttributes](cc.ref.Append("lifecycle_config"))
 }
 
 func (cc ClusterConfigAttributes) MasterConfig() terra.ListValue[MasterConfigAttributes] {
-	return terra.ReferenceList[MasterConfigAttributes](cc.ref.Append("master_config"))
+	return terra.ReferenceAsList[MasterConfigAttributes](cc.ref.Append("master_config"))
 }
 
 func (cc ClusterConfigAttributes) MetastoreConfig() terra.ListValue[ClusterConfigMetastoreConfigAttributes] {
-	return terra.ReferenceList[ClusterConfigMetastoreConfigAttributes](cc.ref.Append("metastore_config"))
+	return terra.ReferenceAsList[ClusterConfigMetastoreConfigAttributes](cc.ref.Append("metastore_config"))
 }
 
 func (cc ClusterConfigAttributes) PreemptibleWorkerConfig() terra.ListValue[PreemptibleWorkerConfigAttributes] {
-	return terra.ReferenceList[PreemptibleWorkerConfigAttributes](cc.ref.Append("preemptible_worker_config"))
+	return terra.ReferenceAsList[PreemptibleWorkerConfigAttributes](cc.ref.Append("preemptible_worker_config"))
 }
 
 func (cc ClusterConfigAttributes) SecurityConfig() terra.ListValue[SecurityConfigAttributes] {
-	return terra.ReferenceList[SecurityConfigAttributes](cc.ref.Append("security_config"))
+	return terra.ReferenceAsList[SecurityConfigAttributes](cc.ref.Append("security_config"))
 }
 
 func (cc ClusterConfigAttributes) SoftwareConfig() terra.ListValue[SoftwareConfigAttributes] {
-	return terra.ReferenceList[SoftwareConfigAttributes](cc.ref.Append("software_config"))
+	return terra.ReferenceAsList[SoftwareConfigAttributes](cc.ref.Append("software_config"))
 }
 
 func (cc ClusterConfigAttributes) WorkerConfig() terra.ListValue[WorkerConfigAttributes] {
-	return terra.ReferenceList[WorkerConfigAttributes](cc.ref.Append("worker_config"))
+	return terra.ReferenceAsList[WorkerConfigAttributes](cc.ref.Append("worker_config"))
 }
 
 type AutoscalingConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ac AutoscalingConfigAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac AutoscalingConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac AutoscalingConfigAttributes) InternalWithRef(ref terra.Reference) AutoscalingConfigAttributes {
 	return AutoscalingConfigAttributes{ref: ref}
 }
 
-func (ac AutoscalingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ac AutoscalingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
 func (ac AutoscalingConfigAttributes) PolicyUri() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("policy_uri"))
+	return terra.ReferenceAsString(ac.ref.Append("policy_uri"))
 }
 
 type DataprocMetricConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (dmc DataprocMetricConfigAttributes) InternalRef() terra.Reference {
-	return dmc.ref
+func (dmc DataprocMetricConfigAttributes) InternalRef() (terra.Reference, error) {
+	return dmc.ref, nil
 }
 
 func (dmc DataprocMetricConfigAttributes) InternalWithRef(ref terra.Reference) DataprocMetricConfigAttributes {
 	return DataprocMetricConfigAttributes{ref: ref}
 }
 
-func (dmc DataprocMetricConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (dmc DataprocMetricConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dmc.ref.InternalTokens()
 }
 
 func (dmc DataprocMetricConfigAttributes) Metrics() terra.ListValue[MetricsAttributes] {
-	return terra.ReferenceList[MetricsAttributes](dmc.ref.Append("metrics"))
+	return terra.ReferenceAsList[MetricsAttributes](dmc.ref.Append("metrics"))
 }
 
 type MetricsAttributes struct {
 	ref terra.Reference
 }
 
-func (m MetricsAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MetricsAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MetricsAttributes) InternalWithRef(ref terra.Reference) MetricsAttributes {
 	return MetricsAttributes{ref: ref}
 }
 
-func (m MetricsAttributes) InternalTokens() hclwrite.Tokens {
+func (m MetricsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
 func (m MetricsAttributes) MetricOverrides() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](m.ref.Append("metric_overrides"))
+	return terra.ReferenceAsSet[terra.StringValue](m.ref.Append("metric_overrides"))
 }
 
 func (m MetricsAttributes) MetricSource() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("metric_source"))
+	return terra.ReferenceAsString(m.ref.Append("metric_source"))
 }
 
 type EncryptionConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ec EncryptionConfigAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec EncryptionConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec EncryptionConfigAttributes) InternalWithRef(ref terra.Reference) EncryptionConfigAttributes {
 	return EncryptionConfigAttributes{ref: ref}
 }
 
-func (ec EncryptionConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ec EncryptionConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 
 func (ec EncryptionConfigAttributes) KmsKeyName() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("kms_key_name"))
+	return terra.ReferenceAsString(ec.ref.Append("kms_key_name"))
 }
 
 type EndpointConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ec EndpointConfigAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec EndpointConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec EndpointConfigAttributes) InternalWithRef(ref terra.Reference) EndpointConfigAttributes {
 	return EndpointConfigAttributes{ref: ref}
 }
 
-func (ec EndpointConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ec EndpointConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 
 func (ec EndpointConfigAttributes) EnableHttpPortAccess() terra.BoolValue {
-	return terra.ReferenceBool(ec.ref.Append("enable_http_port_access"))
+	return terra.ReferenceAsBool(ec.ref.Append("enable_http_port_access"))
 }
 
 func (ec EndpointConfigAttributes) HttpPorts() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ec.ref.Append("http_ports"))
+	return terra.ReferenceAsMap[terra.StringValue](ec.ref.Append("http_ports"))
 }
 
 type GceClusterConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (gcc GceClusterConfigAttributes) InternalRef() terra.Reference {
-	return gcc.ref
+func (gcc GceClusterConfigAttributes) InternalRef() (terra.Reference, error) {
+	return gcc.ref, nil
 }
 
 func (gcc GceClusterConfigAttributes) InternalWithRef(ref terra.Reference) GceClusterConfigAttributes {
 	return GceClusterConfigAttributes{ref: ref}
 }
 
-func (gcc GceClusterConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (gcc GceClusterConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gcc.ref.InternalTokens()
 }
 
 func (gcc GceClusterConfigAttributes) InternalIpOnly() terra.BoolValue {
-	return terra.ReferenceBool(gcc.ref.Append("internal_ip_only"))
+	return terra.ReferenceAsBool(gcc.ref.Append("internal_ip_only"))
 }
 
 func (gcc GceClusterConfigAttributes) Metadata() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gcc.ref.Append("metadata"))
+	return terra.ReferenceAsMap[terra.StringValue](gcc.ref.Append("metadata"))
 }
 
 func (gcc GceClusterConfigAttributes) Network() terra.StringValue {
-	return terra.ReferenceString(gcc.ref.Append("network"))
+	return terra.ReferenceAsString(gcc.ref.Append("network"))
 }
 
 func (gcc GceClusterConfigAttributes) ServiceAccount() terra.StringValue {
-	return terra.ReferenceString(gcc.ref.Append("service_account"))
+	return terra.ReferenceAsString(gcc.ref.Append("service_account"))
 }
 
 func (gcc GceClusterConfigAttributes) ServiceAccountScopes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](gcc.ref.Append("service_account_scopes"))
+	return terra.ReferenceAsSet[terra.StringValue](gcc.ref.Append("service_account_scopes"))
 }
 
 func (gcc GceClusterConfigAttributes) Subnetwork() terra.StringValue {
-	return terra.ReferenceString(gcc.ref.Append("subnetwork"))
+	return terra.ReferenceAsString(gcc.ref.Append("subnetwork"))
 }
 
 func (gcc GceClusterConfigAttributes) Tags() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](gcc.ref.Append("tags"))
+	return terra.ReferenceAsSet[terra.StringValue](gcc.ref.Append("tags"))
 }
 
 func (gcc GceClusterConfigAttributes) Zone() terra.StringValue {
-	return terra.ReferenceString(gcc.ref.Append("zone"))
+	return terra.ReferenceAsString(gcc.ref.Append("zone"))
 }
 
 func (gcc GceClusterConfigAttributes) NodeGroupAffinity() terra.ListValue[NodeGroupAffinityAttributes] {
-	return terra.ReferenceList[NodeGroupAffinityAttributes](gcc.ref.Append("node_group_affinity"))
+	return terra.ReferenceAsList[NodeGroupAffinityAttributes](gcc.ref.Append("node_group_affinity"))
 }
 
 func (gcc GceClusterConfigAttributes) ReservationAffinity() terra.ListValue[ReservationAffinityAttributes] {
-	return terra.ReferenceList[ReservationAffinityAttributes](gcc.ref.Append("reservation_affinity"))
+	return terra.ReferenceAsList[ReservationAffinityAttributes](gcc.ref.Append("reservation_affinity"))
 }
 
 func (gcc GceClusterConfigAttributes) ShieldedInstanceConfig() terra.ListValue[ShieldedInstanceConfigAttributes] {
-	return terra.ReferenceList[ShieldedInstanceConfigAttributes](gcc.ref.Append("shielded_instance_config"))
+	return terra.ReferenceAsList[ShieldedInstanceConfigAttributes](gcc.ref.Append("shielded_instance_config"))
 }
 
 type NodeGroupAffinityAttributes struct {
 	ref terra.Reference
 }
 
-func (nga NodeGroupAffinityAttributes) InternalRef() terra.Reference {
-	return nga.ref
+func (nga NodeGroupAffinityAttributes) InternalRef() (terra.Reference, error) {
+	return nga.ref, nil
 }
 
 func (nga NodeGroupAffinityAttributes) InternalWithRef(ref terra.Reference) NodeGroupAffinityAttributes {
 	return NodeGroupAffinityAttributes{ref: ref}
 }
 
-func (nga NodeGroupAffinityAttributes) InternalTokens() hclwrite.Tokens {
+func (nga NodeGroupAffinityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nga.ref.InternalTokens()
 }
 
 func (nga NodeGroupAffinityAttributes) NodeGroupUri() terra.StringValue {
-	return terra.ReferenceString(nga.ref.Append("node_group_uri"))
+	return terra.ReferenceAsString(nga.ref.Append("node_group_uri"))
 }
 
 type ReservationAffinityAttributes struct {
 	ref terra.Reference
 }
 
-func (ra ReservationAffinityAttributes) InternalRef() terra.Reference {
-	return ra.ref
+func (ra ReservationAffinityAttributes) InternalRef() (terra.Reference, error) {
+	return ra.ref, nil
 }
 
 func (ra ReservationAffinityAttributes) InternalWithRef(ref terra.Reference) ReservationAffinityAttributes {
 	return ReservationAffinityAttributes{ref: ref}
 }
 
-func (ra ReservationAffinityAttributes) InternalTokens() hclwrite.Tokens {
+func (ra ReservationAffinityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ra.ref.InternalTokens()
 }
 
 func (ra ReservationAffinityAttributes) ConsumeReservationType() terra.StringValue {
-	return terra.ReferenceString(ra.ref.Append("consume_reservation_type"))
+	return terra.ReferenceAsString(ra.ref.Append("consume_reservation_type"))
 }
 
 func (ra ReservationAffinityAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(ra.ref.Append("key"))
+	return terra.ReferenceAsString(ra.ref.Append("key"))
 }
 
 func (ra ReservationAffinityAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ra.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](ra.ref.Append("values"))
 }
 
 type ShieldedInstanceConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (sic ShieldedInstanceConfigAttributes) InternalRef() terra.Reference {
-	return sic.ref
+func (sic ShieldedInstanceConfigAttributes) InternalRef() (terra.Reference, error) {
+	return sic.ref, nil
 }
 
 func (sic ShieldedInstanceConfigAttributes) InternalWithRef(ref terra.Reference) ShieldedInstanceConfigAttributes {
 	return ShieldedInstanceConfigAttributes{ref: ref}
 }
 
-func (sic ShieldedInstanceConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sic ShieldedInstanceConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sic.ref.InternalTokens()
 }
 
 func (sic ShieldedInstanceConfigAttributes) EnableIntegrityMonitoring() terra.BoolValue {
-	return terra.ReferenceBool(sic.ref.Append("enable_integrity_monitoring"))
+	return terra.ReferenceAsBool(sic.ref.Append("enable_integrity_monitoring"))
 }
 
 func (sic ShieldedInstanceConfigAttributes) EnableSecureBoot() terra.BoolValue {
-	return terra.ReferenceBool(sic.ref.Append("enable_secure_boot"))
+	return terra.ReferenceAsBool(sic.ref.Append("enable_secure_boot"))
 }
 
 func (sic ShieldedInstanceConfigAttributes) EnableVtpm() terra.BoolValue {
-	return terra.ReferenceBool(sic.ref.Append("enable_vtpm"))
+	return terra.ReferenceAsBool(sic.ref.Append("enable_vtpm"))
 }
 
 type InitializationActionAttributes struct {
 	ref terra.Reference
 }
 
-func (ia InitializationActionAttributes) InternalRef() terra.Reference {
-	return ia.ref
+func (ia InitializationActionAttributes) InternalRef() (terra.Reference, error) {
+	return ia.ref, nil
 }
 
 func (ia InitializationActionAttributes) InternalWithRef(ref terra.Reference) InitializationActionAttributes {
 	return InitializationActionAttributes{ref: ref}
 }
 
-func (ia InitializationActionAttributes) InternalTokens() hclwrite.Tokens {
+func (ia InitializationActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ia.ref.InternalTokens()
 }
 
 func (ia InitializationActionAttributes) Script() terra.StringValue {
-	return terra.ReferenceString(ia.ref.Append("script"))
+	return terra.ReferenceAsString(ia.ref.Append("script"))
 }
 
 func (ia InitializationActionAttributes) TimeoutSec() terra.NumberValue {
-	return terra.ReferenceNumber(ia.ref.Append("timeout_sec"))
+	return terra.ReferenceAsNumber(ia.ref.Append("timeout_sec"))
 }
 
 type LifecycleConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (lc LifecycleConfigAttributes) InternalRef() terra.Reference {
-	return lc.ref
+func (lc LifecycleConfigAttributes) InternalRef() (terra.Reference, error) {
+	return lc.ref, nil
 }
 
 func (lc LifecycleConfigAttributes) InternalWithRef(ref terra.Reference) LifecycleConfigAttributes {
 	return LifecycleConfigAttributes{ref: ref}
 }
 
-func (lc LifecycleConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (lc LifecycleConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lc.ref.InternalTokens()
 }
 
 func (lc LifecycleConfigAttributes) AutoDeleteTime() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("auto_delete_time"))
+	return terra.ReferenceAsString(lc.ref.Append("auto_delete_time"))
 }
 
 func (lc LifecycleConfigAttributes) IdleDeleteTtl() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("idle_delete_ttl"))
+	return terra.ReferenceAsString(lc.ref.Append("idle_delete_ttl"))
 }
 
 func (lc LifecycleConfigAttributes) IdleStartTime() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("idle_start_time"))
+	return terra.ReferenceAsString(lc.ref.Append("idle_start_time"))
 }
 
 type MasterConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (mc MasterConfigAttributes) InternalRef() terra.Reference {
-	return mc.ref
+func (mc MasterConfigAttributes) InternalRef() (terra.Reference, error) {
+	return mc.ref, nil
 }
 
 func (mc MasterConfigAttributes) InternalWithRef(ref terra.Reference) MasterConfigAttributes {
 	return MasterConfigAttributes{ref: ref}
 }
 
-func (mc MasterConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (mc MasterConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mc.ref.InternalTokens()
 }
 
 func (mc MasterConfigAttributes) ImageUri() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("image_uri"))
+	return terra.ReferenceAsString(mc.ref.Append("image_uri"))
 }
 
 func (mc MasterConfigAttributes) InstanceNames() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](mc.ref.Append("instance_names"))
+	return terra.ReferenceAsList[terra.StringValue](mc.ref.Append("instance_names"))
 }
 
 func (mc MasterConfigAttributes) MachineType() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("machine_type"))
+	return terra.ReferenceAsString(mc.ref.Append("machine_type"))
 }
 
 func (mc MasterConfigAttributes) MinCpuPlatform() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("min_cpu_platform"))
+	return terra.ReferenceAsString(mc.ref.Append("min_cpu_platform"))
 }
 
 func (mc MasterConfigAttributes) NumInstances() terra.NumberValue {
-	return terra.ReferenceNumber(mc.ref.Append("num_instances"))
+	return terra.ReferenceAsNumber(mc.ref.Append("num_instances"))
 }
 
 func (mc MasterConfigAttributes) Accelerators() terra.SetValue[MasterConfigAcceleratorsAttributes] {
-	return terra.ReferenceSet[MasterConfigAcceleratorsAttributes](mc.ref.Append("accelerators"))
+	return terra.ReferenceAsSet[MasterConfigAcceleratorsAttributes](mc.ref.Append("accelerators"))
 }
 
 func (mc MasterConfigAttributes) DiskConfig() terra.ListValue[MasterConfigDiskConfigAttributes] {
-	return terra.ReferenceList[MasterConfigDiskConfigAttributes](mc.ref.Append("disk_config"))
+	return terra.ReferenceAsList[MasterConfigDiskConfigAttributes](mc.ref.Append("disk_config"))
 }
 
 type MasterConfigAcceleratorsAttributes struct {
 	ref terra.Reference
 }
 
-func (a MasterConfigAcceleratorsAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a MasterConfigAcceleratorsAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a MasterConfigAcceleratorsAttributes) InternalWithRef(ref terra.Reference) MasterConfigAcceleratorsAttributes {
 	return MasterConfigAcceleratorsAttributes{ref: ref}
 }
 
-func (a MasterConfigAcceleratorsAttributes) InternalTokens() hclwrite.Tokens {
+func (a MasterConfigAcceleratorsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a MasterConfigAcceleratorsAttributes) AcceleratorCount() terra.NumberValue {
-	return terra.ReferenceNumber(a.ref.Append("accelerator_count"))
+	return terra.ReferenceAsNumber(a.ref.Append("accelerator_count"))
 }
 
 func (a MasterConfigAcceleratorsAttributes) AcceleratorType() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("accelerator_type"))
+	return terra.ReferenceAsString(a.ref.Append("accelerator_type"))
 }
 
 type MasterConfigDiskConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (dc MasterConfigDiskConfigAttributes) InternalRef() terra.Reference {
-	return dc.ref
+func (dc MasterConfigDiskConfigAttributes) InternalRef() (terra.Reference, error) {
+	return dc.ref, nil
 }
 
 func (dc MasterConfigDiskConfigAttributes) InternalWithRef(ref terra.Reference) MasterConfigDiskConfigAttributes {
 	return MasterConfigDiskConfigAttributes{ref: ref}
 }
 
-func (dc MasterConfigDiskConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (dc MasterConfigDiskConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dc.ref.InternalTokens()
 }
 
 func (dc MasterConfigDiskConfigAttributes) BootDiskSizeGb() terra.NumberValue {
-	return terra.ReferenceNumber(dc.ref.Append("boot_disk_size_gb"))
+	return terra.ReferenceAsNumber(dc.ref.Append("boot_disk_size_gb"))
 }
 
 func (dc MasterConfigDiskConfigAttributes) BootDiskType() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("boot_disk_type"))
+	return terra.ReferenceAsString(dc.ref.Append("boot_disk_type"))
 }
 
 func (dc MasterConfigDiskConfigAttributes) NumLocalSsds() terra.NumberValue {
-	return terra.ReferenceNumber(dc.ref.Append("num_local_ssds"))
+	return terra.ReferenceAsNumber(dc.ref.Append("num_local_ssds"))
 }
 
 type ClusterConfigMetastoreConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (mc ClusterConfigMetastoreConfigAttributes) InternalRef() terra.Reference {
-	return mc.ref
+func (mc ClusterConfigMetastoreConfigAttributes) InternalRef() (terra.Reference, error) {
+	return mc.ref, nil
 }
 
 func (mc ClusterConfigMetastoreConfigAttributes) InternalWithRef(ref terra.Reference) ClusterConfigMetastoreConfigAttributes {
 	return ClusterConfigMetastoreConfigAttributes{ref: ref}
 }
 
-func (mc ClusterConfigMetastoreConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (mc ClusterConfigMetastoreConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mc.ref.InternalTokens()
 }
 
 func (mc ClusterConfigMetastoreConfigAttributes) DataprocMetastoreService() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("dataproc_metastore_service"))
+	return terra.ReferenceAsString(mc.ref.Append("dataproc_metastore_service"))
 }
 
 type PreemptibleWorkerConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (pwc PreemptibleWorkerConfigAttributes) InternalRef() terra.Reference {
-	return pwc.ref
+func (pwc PreemptibleWorkerConfigAttributes) InternalRef() (terra.Reference, error) {
+	return pwc.ref, nil
 }
 
 func (pwc PreemptibleWorkerConfigAttributes) InternalWithRef(ref terra.Reference) PreemptibleWorkerConfigAttributes {
 	return PreemptibleWorkerConfigAttributes{ref: ref}
 }
 
-func (pwc PreemptibleWorkerConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (pwc PreemptibleWorkerConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pwc.ref.InternalTokens()
 }
 
 func (pwc PreemptibleWorkerConfigAttributes) InstanceNames() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](pwc.ref.Append("instance_names"))
+	return terra.ReferenceAsList[terra.StringValue](pwc.ref.Append("instance_names"))
 }
 
 func (pwc PreemptibleWorkerConfigAttributes) NumInstances() terra.NumberValue {
-	return terra.ReferenceNumber(pwc.ref.Append("num_instances"))
+	return terra.ReferenceAsNumber(pwc.ref.Append("num_instances"))
 }
 
 func (pwc PreemptibleWorkerConfigAttributes) Preemptibility() terra.StringValue {
-	return terra.ReferenceString(pwc.ref.Append("preemptibility"))
+	return terra.ReferenceAsString(pwc.ref.Append("preemptibility"))
 }
 
 func (pwc PreemptibleWorkerConfigAttributes) DiskConfig() terra.ListValue[PreemptibleWorkerConfigDiskConfigAttributes] {
-	return terra.ReferenceList[PreemptibleWorkerConfigDiskConfigAttributes](pwc.ref.Append("disk_config"))
+	return terra.ReferenceAsList[PreemptibleWorkerConfigDiskConfigAttributes](pwc.ref.Append("disk_config"))
 }
 
 type PreemptibleWorkerConfigDiskConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (dc PreemptibleWorkerConfigDiskConfigAttributes) InternalRef() terra.Reference {
-	return dc.ref
+func (dc PreemptibleWorkerConfigDiskConfigAttributes) InternalRef() (terra.Reference, error) {
+	return dc.ref, nil
 }
 
 func (dc PreemptibleWorkerConfigDiskConfigAttributes) InternalWithRef(ref terra.Reference) PreemptibleWorkerConfigDiskConfigAttributes {
 	return PreemptibleWorkerConfigDiskConfigAttributes{ref: ref}
 }
 
-func (dc PreemptibleWorkerConfigDiskConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (dc PreemptibleWorkerConfigDiskConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dc.ref.InternalTokens()
 }
 
 func (dc PreemptibleWorkerConfigDiskConfigAttributes) BootDiskSizeGb() terra.NumberValue {
-	return terra.ReferenceNumber(dc.ref.Append("boot_disk_size_gb"))
+	return terra.ReferenceAsNumber(dc.ref.Append("boot_disk_size_gb"))
 }
 
 func (dc PreemptibleWorkerConfigDiskConfigAttributes) BootDiskType() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("boot_disk_type"))
+	return terra.ReferenceAsString(dc.ref.Append("boot_disk_type"))
 }
 
 func (dc PreemptibleWorkerConfigDiskConfigAttributes) NumLocalSsds() terra.NumberValue {
-	return terra.ReferenceNumber(dc.ref.Append("num_local_ssds"))
+	return terra.ReferenceAsNumber(dc.ref.Append("num_local_ssds"))
 }
 
 type SecurityConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (sc SecurityConfigAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc SecurityConfigAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc SecurityConfigAttributes) InternalWithRef(ref terra.Reference) SecurityConfigAttributes {
 	return SecurityConfigAttributes{ref: ref}
 }
 
-func (sc SecurityConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sc SecurityConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
 func (sc SecurityConfigAttributes) KerberosConfig() terra.ListValue[KerberosConfigAttributes] {
-	return terra.ReferenceList[KerberosConfigAttributes](sc.ref.Append("kerberos_config"))
+	return terra.ReferenceAsList[KerberosConfigAttributes](sc.ref.Append("kerberos_config"))
 }
 
 type KerberosConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (kc KerberosConfigAttributes) InternalRef() terra.Reference {
-	return kc.ref
+func (kc KerberosConfigAttributes) InternalRef() (terra.Reference, error) {
+	return kc.ref, nil
 }
 
 func (kc KerberosConfigAttributes) InternalWithRef(ref terra.Reference) KerberosConfigAttributes {
 	return KerberosConfigAttributes{ref: ref}
 }
 
-func (kc KerberosConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (kc KerberosConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kc.ref.InternalTokens()
 }
 
 func (kc KerberosConfigAttributes) CrossRealmTrustAdminServer() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("cross_realm_trust_admin_server"))
+	return terra.ReferenceAsString(kc.ref.Append("cross_realm_trust_admin_server"))
 }
 
 func (kc KerberosConfigAttributes) CrossRealmTrustKdc() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("cross_realm_trust_kdc"))
+	return terra.ReferenceAsString(kc.ref.Append("cross_realm_trust_kdc"))
 }
 
 func (kc KerberosConfigAttributes) CrossRealmTrustRealm() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("cross_realm_trust_realm"))
+	return terra.ReferenceAsString(kc.ref.Append("cross_realm_trust_realm"))
 }
 
 func (kc KerberosConfigAttributes) CrossRealmTrustSharedPasswordUri() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("cross_realm_trust_shared_password_uri"))
+	return terra.ReferenceAsString(kc.ref.Append("cross_realm_trust_shared_password_uri"))
 }
 
 func (kc KerberosConfigAttributes) EnableKerberos() terra.BoolValue {
-	return terra.ReferenceBool(kc.ref.Append("enable_kerberos"))
+	return terra.ReferenceAsBool(kc.ref.Append("enable_kerberos"))
 }
 
 func (kc KerberosConfigAttributes) KdcDbKeyUri() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("kdc_db_key_uri"))
+	return terra.ReferenceAsString(kc.ref.Append("kdc_db_key_uri"))
 }
 
 func (kc KerberosConfigAttributes) KeyPasswordUri() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("key_password_uri"))
+	return terra.ReferenceAsString(kc.ref.Append("key_password_uri"))
 }
 
 func (kc KerberosConfigAttributes) KeystorePasswordUri() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("keystore_password_uri"))
+	return terra.ReferenceAsString(kc.ref.Append("keystore_password_uri"))
 }
 
 func (kc KerberosConfigAttributes) KeystoreUri() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("keystore_uri"))
+	return terra.ReferenceAsString(kc.ref.Append("keystore_uri"))
 }
 
 func (kc KerberosConfigAttributes) KmsKeyUri() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("kms_key_uri"))
+	return terra.ReferenceAsString(kc.ref.Append("kms_key_uri"))
 }
 
 func (kc KerberosConfigAttributes) Realm() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("realm"))
+	return terra.ReferenceAsString(kc.ref.Append("realm"))
 }
 
 func (kc KerberosConfigAttributes) RootPrincipalPasswordUri() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("root_principal_password_uri"))
+	return terra.ReferenceAsString(kc.ref.Append("root_principal_password_uri"))
 }
 
 func (kc KerberosConfigAttributes) TgtLifetimeHours() terra.NumberValue {
-	return terra.ReferenceNumber(kc.ref.Append("tgt_lifetime_hours"))
+	return terra.ReferenceAsNumber(kc.ref.Append("tgt_lifetime_hours"))
 }
 
 func (kc KerberosConfigAttributes) TruststorePasswordUri() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("truststore_password_uri"))
+	return terra.ReferenceAsString(kc.ref.Append("truststore_password_uri"))
 }
 
 func (kc KerberosConfigAttributes) TruststoreUri() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("truststore_uri"))
+	return terra.ReferenceAsString(kc.ref.Append("truststore_uri"))
 }
 
 type SoftwareConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (sc SoftwareConfigAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc SoftwareConfigAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc SoftwareConfigAttributes) InternalWithRef(ref terra.Reference) SoftwareConfigAttributes {
 	return SoftwareConfigAttributes{ref: ref}
 }
 
-func (sc SoftwareConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sc SoftwareConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
 func (sc SoftwareConfigAttributes) ImageVersion() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("image_version"))
+	return terra.ReferenceAsString(sc.ref.Append("image_version"))
 }
 
 func (sc SoftwareConfigAttributes) OptionalComponents() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sc.ref.Append("optional_components"))
+	return terra.ReferenceAsSet[terra.StringValue](sc.ref.Append("optional_components"))
 }
 
 func (sc SoftwareConfigAttributes) OverrideProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sc.ref.Append("override_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](sc.ref.Append("override_properties"))
 }
 
 func (sc SoftwareConfigAttributes) Properties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sc.ref.Append("properties"))
+	return terra.ReferenceAsMap[terra.StringValue](sc.ref.Append("properties"))
 }
 
 type WorkerConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (wc WorkerConfigAttributes) InternalRef() terra.Reference {
-	return wc.ref
+func (wc WorkerConfigAttributes) InternalRef() (terra.Reference, error) {
+	return wc.ref, nil
 }
 
 func (wc WorkerConfigAttributes) InternalWithRef(ref terra.Reference) WorkerConfigAttributes {
 	return WorkerConfigAttributes{ref: ref}
 }
 
-func (wc WorkerConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (wc WorkerConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wc.ref.InternalTokens()
 }
 
 func (wc WorkerConfigAttributes) ImageUri() terra.StringValue {
-	return terra.ReferenceString(wc.ref.Append("image_uri"))
+	return terra.ReferenceAsString(wc.ref.Append("image_uri"))
 }
 
 func (wc WorkerConfigAttributes) InstanceNames() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](wc.ref.Append("instance_names"))
+	return terra.ReferenceAsList[terra.StringValue](wc.ref.Append("instance_names"))
 }
 
 func (wc WorkerConfigAttributes) MachineType() terra.StringValue {
-	return terra.ReferenceString(wc.ref.Append("machine_type"))
+	return terra.ReferenceAsString(wc.ref.Append("machine_type"))
 }
 
 func (wc WorkerConfigAttributes) MinCpuPlatform() terra.StringValue {
-	return terra.ReferenceString(wc.ref.Append("min_cpu_platform"))
+	return terra.ReferenceAsString(wc.ref.Append("min_cpu_platform"))
 }
 
 func (wc WorkerConfigAttributes) NumInstances() terra.NumberValue {
-	return terra.ReferenceNumber(wc.ref.Append("num_instances"))
+	return terra.ReferenceAsNumber(wc.ref.Append("num_instances"))
 }
 
 func (wc WorkerConfigAttributes) Accelerators() terra.SetValue[WorkerConfigAcceleratorsAttributes] {
-	return terra.ReferenceSet[WorkerConfigAcceleratorsAttributes](wc.ref.Append("accelerators"))
+	return terra.ReferenceAsSet[WorkerConfigAcceleratorsAttributes](wc.ref.Append("accelerators"))
 }
 
 func (wc WorkerConfigAttributes) DiskConfig() terra.ListValue[WorkerConfigDiskConfigAttributes] {
-	return terra.ReferenceList[WorkerConfigDiskConfigAttributes](wc.ref.Append("disk_config"))
+	return terra.ReferenceAsList[WorkerConfigDiskConfigAttributes](wc.ref.Append("disk_config"))
 }
 
 type WorkerConfigAcceleratorsAttributes struct {
 	ref terra.Reference
 }
 
-func (a WorkerConfigAcceleratorsAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a WorkerConfigAcceleratorsAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a WorkerConfigAcceleratorsAttributes) InternalWithRef(ref terra.Reference) WorkerConfigAcceleratorsAttributes {
 	return WorkerConfigAcceleratorsAttributes{ref: ref}
 }
 
-func (a WorkerConfigAcceleratorsAttributes) InternalTokens() hclwrite.Tokens {
+func (a WorkerConfigAcceleratorsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a WorkerConfigAcceleratorsAttributes) AcceleratorCount() terra.NumberValue {
-	return terra.ReferenceNumber(a.ref.Append("accelerator_count"))
+	return terra.ReferenceAsNumber(a.ref.Append("accelerator_count"))
 }
 
 func (a WorkerConfigAcceleratorsAttributes) AcceleratorType() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("accelerator_type"))
+	return terra.ReferenceAsString(a.ref.Append("accelerator_type"))
 }
 
 type WorkerConfigDiskConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (dc WorkerConfigDiskConfigAttributes) InternalRef() terra.Reference {
-	return dc.ref
+func (dc WorkerConfigDiskConfigAttributes) InternalRef() (terra.Reference, error) {
+	return dc.ref, nil
 }
 
 func (dc WorkerConfigDiskConfigAttributes) InternalWithRef(ref terra.Reference) WorkerConfigDiskConfigAttributes {
 	return WorkerConfigDiskConfigAttributes{ref: ref}
 }
 
-func (dc WorkerConfigDiskConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (dc WorkerConfigDiskConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dc.ref.InternalTokens()
 }
 
 func (dc WorkerConfigDiskConfigAttributes) BootDiskSizeGb() terra.NumberValue {
-	return terra.ReferenceNumber(dc.ref.Append("boot_disk_size_gb"))
+	return terra.ReferenceAsNumber(dc.ref.Append("boot_disk_size_gb"))
 }
 
 func (dc WorkerConfigDiskConfigAttributes) BootDiskType() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("boot_disk_type"))
+	return terra.ReferenceAsString(dc.ref.Append("boot_disk_type"))
 }
 
 func (dc WorkerConfigDiskConfigAttributes) NumLocalSsds() terra.NumberValue {
-	return terra.ReferenceNumber(dc.ref.Append("num_local_ssds"))
+	return terra.ReferenceAsNumber(dc.ref.Append("num_local_ssds"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type VirtualClusterConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (vcc VirtualClusterConfigAttributes) InternalRef() terra.Reference {
-	return vcc.ref
+func (vcc VirtualClusterConfigAttributes) InternalRef() (terra.Reference, error) {
+	return vcc.ref, nil
 }
 
 func (vcc VirtualClusterConfigAttributes) InternalWithRef(ref terra.Reference) VirtualClusterConfigAttributes {
 	return VirtualClusterConfigAttributes{ref: ref}
 }
 
-func (vcc VirtualClusterConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (vcc VirtualClusterConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vcc.ref.InternalTokens()
 }
 
 func (vcc VirtualClusterConfigAttributes) StagingBucket() terra.StringValue {
-	return terra.ReferenceString(vcc.ref.Append("staging_bucket"))
+	return terra.ReferenceAsString(vcc.ref.Append("staging_bucket"))
 }
 
 func (vcc VirtualClusterConfigAttributes) AuxiliaryServicesConfig() terra.ListValue[AuxiliaryServicesConfigAttributes] {
-	return terra.ReferenceList[AuxiliaryServicesConfigAttributes](vcc.ref.Append("auxiliary_services_config"))
+	return terra.ReferenceAsList[AuxiliaryServicesConfigAttributes](vcc.ref.Append("auxiliary_services_config"))
 }
 
 func (vcc VirtualClusterConfigAttributes) KubernetesClusterConfig() terra.ListValue[KubernetesClusterConfigAttributes] {
-	return terra.ReferenceList[KubernetesClusterConfigAttributes](vcc.ref.Append("kubernetes_cluster_config"))
+	return terra.ReferenceAsList[KubernetesClusterConfigAttributes](vcc.ref.Append("kubernetes_cluster_config"))
 }
 
 type AuxiliaryServicesConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (asc AuxiliaryServicesConfigAttributes) InternalRef() terra.Reference {
-	return asc.ref
+func (asc AuxiliaryServicesConfigAttributes) InternalRef() (terra.Reference, error) {
+	return asc.ref, nil
 }
 
 func (asc AuxiliaryServicesConfigAttributes) InternalWithRef(ref terra.Reference) AuxiliaryServicesConfigAttributes {
 	return AuxiliaryServicesConfigAttributes{ref: ref}
 }
 
-func (asc AuxiliaryServicesConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (asc AuxiliaryServicesConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return asc.ref.InternalTokens()
 }
 
 func (asc AuxiliaryServicesConfigAttributes) MetastoreConfig() terra.ListValue[AuxiliaryServicesConfigMetastoreConfigAttributes] {
-	return terra.ReferenceList[AuxiliaryServicesConfigMetastoreConfigAttributes](asc.ref.Append("metastore_config"))
+	return terra.ReferenceAsList[AuxiliaryServicesConfigMetastoreConfigAttributes](asc.ref.Append("metastore_config"))
 }
 
 func (asc AuxiliaryServicesConfigAttributes) SparkHistoryServerConfig() terra.ListValue[SparkHistoryServerConfigAttributes] {
-	return terra.ReferenceList[SparkHistoryServerConfigAttributes](asc.ref.Append("spark_history_server_config"))
+	return terra.ReferenceAsList[SparkHistoryServerConfigAttributes](asc.ref.Append("spark_history_server_config"))
 }
 
 type AuxiliaryServicesConfigMetastoreConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (mc AuxiliaryServicesConfigMetastoreConfigAttributes) InternalRef() terra.Reference {
-	return mc.ref
+func (mc AuxiliaryServicesConfigMetastoreConfigAttributes) InternalRef() (terra.Reference, error) {
+	return mc.ref, nil
 }
 
 func (mc AuxiliaryServicesConfigMetastoreConfigAttributes) InternalWithRef(ref terra.Reference) AuxiliaryServicesConfigMetastoreConfigAttributes {
 	return AuxiliaryServicesConfigMetastoreConfigAttributes{ref: ref}
 }
 
-func (mc AuxiliaryServicesConfigMetastoreConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (mc AuxiliaryServicesConfigMetastoreConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mc.ref.InternalTokens()
 }
 
 func (mc AuxiliaryServicesConfigMetastoreConfigAttributes) DataprocMetastoreService() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("dataproc_metastore_service"))
+	return terra.ReferenceAsString(mc.ref.Append("dataproc_metastore_service"))
 }
 
 type SparkHistoryServerConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (shsc SparkHistoryServerConfigAttributes) InternalRef() terra.Reference {
-	return shsc.ref
+func (shsc SparkHistoryServerConfigAttributes) InternalRef() (terra.Reference, error) {
+	return shsc.ref, nil
 }
 
 func (shsc SparkHistoryServerConfigAttributes) InternalWithRef(ref terra.Reference) SparkHistoryServerConfigAttributes {
 	return SparkHistoryServerConfigAttributes{ref: ref}
 }
 
-func (shsc SparkHistoryServerConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (shsc SparkHistoryServerConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return shsc.ref.InternalTokens()
 }
 
 func (shsc SparkHistoryServerConfigAttributes) DataprocCluster() terra.StringValue {
-	return terra.ReferenceString(shsc.ref.Append("dataproc_cluster"))
+	return terra.ReferenceAsString(shsc.ref.Append("dataproc_cluster"))
 }
 
 type KubernetesClusterConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (kcc KubernetesClusterConfigAttributes) InternalRef() terra.Reference {
-	return kcc.ref
+func (kcc KubernetesClusterConfigAttributes) InternalRef() (terra.Reference, error) {
+	return kcc.ref, nil
 }
 
 func (kcc KubernetesClusterConfigAttributes) InternalWithRef(ref terra.Reference) KubernetesClusterConfigAttributes {
 	return KubernetesClusterConfigAttributes{ref: ref}
 }
 
-func (kcc KubernetesClusterConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (kcc KubernetesClusterConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kcc.ref.InternalTokens()
 }
 
 func (kcc KubernetesClusterConfigAttributes) KubernetesNamespace() terra.StringValue {
-	return terra.ReferenceString(kcc.ref.Append("kubernetes_namespace"))
+	return terra.ReferenceAsString(kcc.ref.Append("kubernetes_namespace"))
 }
 
 func (kcc KubernetesClusterConfigAttributes) GkeClusterConfig() terra.ListValue[GkeClusterConfigAttributes] {
-	return terra.ReferenceList[GkeClusterConfigAttributes](kcc.ref.Append("gke_cluster_config"))
+	return terra.ReferenceAsList[GkeClusterConfigAttributes](kcc.ref.Append("gke_cluster_config"))
 }
 
 func (kcc KubernetesClusterConfigAttributes) KubernetesSoftwareConfig() terra.ListValue[KubernetesSoftwareConfigAttributes] {
-	return terra.ReferenceList[KubernetesSoftwareConfigAttributes](kcc.ref.Append("kubernetes_software_config"))
+	return terra.ReferenceAsList[KubernetesSoftwareConfigAttributes](kcc.ref.Append("kubernetes_software_config"))
 }
 
 type GkeClusterConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (gcc GkeClusterConfigAttributes) InternalRef() terra.Reference {
-	return gcc.ref
+func (gcc GkeClusterConfigAttributes) InternalRef() (terra.Reference, error) {
+	return gcc.ref, nil
 }
 
 func (gcc GkeClusterConfigAttributes) InternalWithRef(ref terra.Reference) GkeClusterConfigAttributes {
 	return GkeClusterConfigAttributes{ref: ref}
 }
 
-func (gcc GkeClusterConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (gcc GkeClusterConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gcc.ref.InternalTokens()
 }
 
 func (gcc GkeClusterConfigAttributes) GkeClusterTarget() terra.StringValue {
-	return terra.ReferenceString(gcc.ref.Append("gke_cluster_target"))
+	return terra.ReferenceAsString(gcc.ref.Append("gke_cluster_target"))
 }
 
 func (gcc GkeClusterConfigAttributes) NodePoolTarget() terra.ListValue[NodePoolTargetAttributes] {
-	return terra.ReferenceList[NodePoolTargetAttributes](gcc.ref.Append("node_pool_target"))
+	return terra.ReferenceAsList[NodePoolTargetAttributes](gcc.ref.Append("node_pool_target"))
 }
 
 type NodePoolTargetAttributes struct {
 	ref terra.Reference
 }
 
-func (npt NodePoolTargetAttributes) InternalRef() terra.Reference {
-	return npt.ref
+func (npt NodePoolTargetAttributes) InternalRef() (terra.Reference, error) {
+	return npt.ref, nil
 }
 
 func (npt NodePoolTargetAttributes) InternalWithRef(ref terra.Reference) NodePoolTargetAttributes {
 	return NodePoolTargetAttributes{ref: ref}
 }
 
-func (npt NodePoolTargetAttributes) InternalTokens() hclwrite.Tokens {
+func (npt NodePoolTargetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return npt.ref.InternalTokens()
 }
 
 func (npt NodePoolTargetAttributes) NodePool() terra.StringValue {
-	return terra.ReferenceString(npt.ref.Append("node_pool"))
+	return terra.ReferenceAsString(npt.ref.Append("node_pool"))
 }
 
 func (npt NodePoolTargetAttributes) Roles() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](npt.ref.Append("roles"))
+	return terra.ReferenceAsSet[terra.StringValue](npt.ref.Append("roles"))
 }
 
 func (npt NodePoolTargetAttributes) NodePoolConfig() terra.ListValue[NodePoolConfigAttributes] {
-	return terra.ReferenceList[NodePoolConfigAttributes](npt.ref.Append("node_pool_config"))
+	return terra.ReferenceAsList[NodePoolConfigAttributes](npt.ref.Append("node_pool_config"))
 }
 
 type NodePoolConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (npc NodePoolConfigAttributes) InternalRef() terra.Reference {
-	return npc.ref
+func (npc NodePoolConfigAttributes) InternalRef() (terra.Reference, error) {
+	return npc.ref, nil
 }
 
 func (npc NodePoolConfigAttributes) InternalWithRef(ref terra.Reference) NodePoolConfigAttributes {
 	return NodePoolConfigAttributes{ref: ref}
 }
 
-func (npc NodePoolConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (npc NodePoolConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return npc.ref.InternalTokens()
 }
 
 func (npc NodePoolConfigAttributes) Locations() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](npc.ref.Append("locations"))
+	return terra.ReferenceAsSet[terra.StringValue](npc.ref.Append("locations"))
 }
 
 func (npc NodePoolConfigAttributes) Autoscaling() terra.ListValue[AutoscalingAttributes] {
-	return terra.ReferenceList[AutoscalingAttributes](npc.ref.Append("autoscaling"))
+	return terra.ReferenceAsList[AutoscalingAttributes](npc.ref.Append("autoscaling"))
 }
 
 func (npc NodePoolConfigAttributes) Config() terra.ListValue[ConfigAttributes] {
-	return terra.ReferenceList[ConfigAttributes](npc.ref.Append("config"))
+	return terra.ReferenceAsList[ConfigAttributes](npc.ref.Append("config"))
 }
 
 type AutoscalingAttributes struct {
 	ref terra.Reference
 }
 
-func (a AutoscalingAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AutoscalingAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AutoscalingAttributes) InternalWithRef(ref terra.Reference) AutoscalingAttributes {
 	return AutoscalingAttributes{ref: ref}
 }
 
-func (a AutoscalingAttributes) InternalTokens() hclwrite.Tokens {
+func (a AutoscalingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a AutoscalingAttributes) MaxNodeCount() terra.NumberValue {
-	return terra.ReferenceNumber(a.ref.Append("max_node_count"))
+	return terra.ReferenceAsNumber(a.ref.Append("max_node_count"))
 }
 
 func (a AutoscalingAttributes) MinNodeCount() terra.NumberValue {
-	return terra.ReferenceNumber(a.ref.Append("min_node_count"))
+	return terra.ReferenceAsNumber(a.ref.Append("min_node_count"))
 }
 
 type ConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConfigAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConfigAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConfigAttributes) InternalWithRef(ref terra.Reference) ConfigAttributes {
 	return ConfigAttributes{ref: ref}
 }
 
-func (c ConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ConfigAttributes) LocalSsdCount() terra.NumberValue {
-	return terra.ReferenceNumber(c.ref.Append("local_ssd_count"))
+	return terra.ReferenceAsNumber(c.ref.Append("local_ssd_count"))
 }
 
 func (c ConfigAttributes) MachineType() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("machine_type"))
+	return terra.ReferenceAsString(c.ref.Append("machine_type"))
 }
 
 func (c ConfigAttributes) MinCpuPlatform() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("min_cpu_platform"))
+	return terra.ReferenceAsString(c.ref.Append("min_cpu_platform"))
 }
 
 func (c ConfigAttributes) Preemptible() terra.BoolValue {
-	return terra.ReferenceBool(c.ref.Append("preemptible"))
+	return terra.ReferenceAsBool(c.ref.Append("preemptible"))
 }
 
 func (c ConfigAttributes) Spot() terra.BoolValue {
-	return terra.ReferenceBool(c.ref.Append("spot"))
+	return terra.ReferenceAsBool(c.ref.Append("spot"))
 }
 
 type KubernetesSoftwareConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ksc KubernetesSoftwareConfigAttributes) InternalRef() terra.Reference {
-	return ksc.ref
+func (ksc KubernetesSoftwareConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ksc.ref, nil
 }
 
 func (ksc KubernetesSoftwareConfigAttributes) InternalWithRef(ref terra.Reference) KubernetesSoftwareConfigAttributes {
 	return KubernetesSoftwareConfigAttributes{ref: ref}
 }
 
-func (ksc KubernetesSoftwareConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ksc KubernetesSoftwareConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ksc.ref.InternalTokens()
 }
 
 func (ksc KubernetesSoftwareConfigAttributes) ComponentVersion() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ksc.ref.Append("component_version"))
+	return terra.ReferenceAsMap[terra.StringValue](ksc.ref.Append("component_version"))
 }
 
 func (ksc KubernetesSoftwareConfigAttributes) Properties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ksc.ref.Append("properties"))
+	return terra.ReferenceAsMap[terra.StringValue](ksc.ref.Append("properties"))
 }
 
 type ClusterConfigState struct {

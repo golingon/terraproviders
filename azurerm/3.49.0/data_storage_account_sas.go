@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataStorageAccountSas creates a new instance of [DataStorageAccountSas].
 func NewDataStorageAccountSas(name string, args DataStorageAccountSasArgs) *DataStorageAccountSas {
 	return &DataStorageAccountSas{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataStorageAccountSas(name string, args DataStorageAccountSasArgs) *Data
 
 var _ terra.DataResource = (*DataStorageAccountSas)(nil)
 
+// DataStorageAccountSas represents the Terraform data resource azurerm_storage_account_sas.
 type DataStorageAccountSas struct {
 	Name string
 	Args DataStorageAccountSasArgs
 }
 
+// DataSource returns the Terraform object type for [DataStorageAccountSas].
 func (sas *DataStorageAccountSas) DataSource() string {
 	return "azurerm_storage_account_sas"
 }
 
+// LocalName returns the local name for [DataStorageAccountSas].
 func (sas *DataStorageAccountSas) LocalName() string {
 	return sas.Name
 }
 
+// Configuration returns the configuration (args) for [DataStorageAccountSas].
 func (sas *DataStorageAccountSas) Configuration() interface{} {
 	return sas.Args
 }
 
+// Attributes returns the attributes for [DataStorageAccountSas].
 func (sas *DataStorageAccountSas) Attributes() dataStorageAccountSasAttributes {
 	return dataStorageAccountSasAttributes{ref: terra.ReferenceDataResource(sas)}
 }
 
+// DataStorageAccountSasArgs contains the configurations for azurerm_storage_account_sas.
 type DataStorageAccountSasArgs struct {
 	// ConnectionString: string, required
 	ConnectionString terra.StringValue `hcl:"connection_string,attr" validate:"required"`
@@ -65,50 +72,58 @@ type dataStorageAccountSasAttributes struct {
 	ref terra.Reference
 }
 
+// ConnectionString returns a reference to field connection_string of azurerm_storage_account_sas.
 func (sas dataStorageAccountSasAttributes) ConnectionString() terra.StringValue {
-	return terra.ReferenceString(sas.ref.Append("connection_string"))
+	return terra.ReferenceAsString(sas.ref.Append("connection_string"))
 }
 
+// Expiry returns a reference to field expiry of azurerm_storage_account_sas.
 func (sas dataStorageAccountSasAttributes) Expiry() terra.StringValue {
-	return terra.ReferenceString(sas.ref.Append("expiry"))
+	return terra.ReferenceAsString(sas.ref.Append("expiry"))
 }
 
+// HttpsOnly returns a reference to field https_only of azurerm_storage_account_sas.
 func (sas dataStorageAccountSasAttributes) HttpsOnly() terra.BoolValue {
-	return terra.ReferenceBool(sas.ref.Append("https_only"))
+	return terra.ReferenceAsBool(sas.ref.Append("https_only"))
 }
 
+// Id returns a reference to field id of azurerm_storage_account_sas.
 func (sas dataStorageAccountSasAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sas.ref.Append("id"))
+	return terra.ReferenceAsString(sas.ref.Append("id"))
 }
 
+// IpAddresses returns a reference to field ip_addresses of azurerm_storage_account_sas.
 func (sas dataStorageAccountSasAttributes) IpAddresses() terra.StringValue {
-	return terra.ReferenceString(sas.ref.Append("ip_addresses"))
+	return terra.ReferenceAsString(sas.ref.Append("ip_addresses"))
 }
 
+// Sas returns a reference to field sas of azurerm_storage_account_sas.
 func (sas dataStorageAccountSasAttributes) Sas() terra.StringValue {
-	return terra.ReferenceString(sas.ref.Append("sas"))
+	return terra.ReferenceAsString(sas.ref.Append("sas"))
 }
 
+// SignedVersion returns a reference to field signed_version of azurerm_storage_account_sas.
 func (sas dataStorageAccountSasAttributes) SignedVersion() terra.StringValue {
-	return terra.ReferenceString(sas.ref.Append("signed_version"))
+	return terra.ReferenceAsString(sas.ref.Append("signed_version"))
 }
 
+// Start returns a reference to field start of azurerm_storage_account_sas.
 func (sas dataStorageAccountSasAttributes) Start() terra.StringValue {
-	return terra.ReferenceString(sas.ref.Append("start"))
+	return terra.ReferenceAsString(sas.ref.Append("start"))
 }
 
 func (sas dataStorageAccountSasAttributes) Permissions() terra.ListValue[datastorageaccountsas.PermissionsAttributes] {
-	return terra.ReferenceList[datastorageaccountsas.PermissionsAttributes](sas.ref.Append("permissions"))
+	return terra.ReferenceAsList[datastorageaccountsas.PermissionsAttributes](sas.ref.Append("permissions"))
 }
 
 func (sas dataStorageAccountSasAttributes) ResourceTypes() terra.ListValue[datastorageaccountsas.ResourceTypesAttributes] {
-	return terra.ReferenceList[datastorageaccountsas.ResourceTypesAttributes](sas.ref.Append("resource_types"))
+	return terra.ReferenceAsList[datastorageaccountsas.ResourceTypesAttributes](sas.ref.Append("resource_types"))
 }
 
 func (sas dataStorageAccountSasAttributes) Services() terra.ListValue[datastorageaccountsas.ServicesAttributes] {
-	return terra.ReferenceList[datastorageaccountsas.ServicesAttributes](sas.ref.Append("services"))
+	return terra.ReferenceAsList[datastorageaccountsas.ServicesAttributes](sas.ref.Append("services"))
 }
 
 func (sas dataStorageAccountSasAttributes) Timeouts() datastorageaccountsas.TimeoutsAttributes {
-	return terra.ReferenceSingle[datastorageaccountsas.TimeoutsAttributes](sas.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datastorageaccountsas.TimeoutsAttributes](sas.ref.Append("timeouts"))
 }

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSubscriptionCostManagementExport creates a new instance of [SubscriptionCostManagementExport].
 func NewSubscriptionCostManagementExport(name string, args SubscriptionCostManagementExportArgs) *SubscriptionCostManagementExport {
 	return &SubscriptionCostManagementExport{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSubscriptionCostManagementExport(name string, args SubscriptionCostManag
 
 var _ terra.Resource = (*SubscriptionCostManagementExport)(nil)
 
+// SubscriptionCostManagementExport represents the Terraform resource azurerm_subscription_cost_management_export.
 type SubscriptionCostManagementExport struct {
-	Name  string
-	Args  SubscriptionCostManagementExportArgs
-	state *subscriptionCostManagementExportState
+	Name      string
+	Args      SubscriptionCostManagementExportArgs
+	state     *subscriptionCostManagementExportState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SubscriptionCostManagementExport].
 func (scme *SubscriptionCostManagementExport) Type() string {
 	return "azurerm_subscription_cost_management_export"
 }
 
+// LocalName returns the local name for [SubscriptionCostManagementExport].
 func (scme *SubscriptionCostManagementExport) LocalName() string {
 	return scme.Name
 }
 
+// Configuration returns the configuration (args) for [SubscriptionCostManagementExport].
 func (scme *SubscriptionCostManagementExport) Configuration() interface{} {
 	return scme.Args
 }
 
+// DependOn is used for other resources to depend on [SubscriptionCostManagementExport].
+func (scme *SubscriptionCostManagementExport) DependOn() terra.Reference {
+	return terra.ReferenceResource(scme)
+}
+
+// Dependencies returns the list of resources [SubscriptionCostManagementExport] depends_on.
+func (scme *SubscriptionCostManagementExport) Dependencies() terra.Dependencies {
+	return scme.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SubscriptionCostManagementExport].
+func (scme *SubscriptionCostManagementExport) LifecycleManagement() *terra.Lifecycle {
+	return scme.Lifecycle
+}
+
+// Attributes returns the attributes for [SubscriptionCostManagementExport].
 func (scme *SubscriptionCostManagementExport) Attributes() subscriptionCostManagementExportAttributes {
 	return subscriptionCostManagementExportAttributes{ref: terra.ReferenceResource(scme)}
 }
 
+// ImportState imports the given attribute values into [SubscriptionCostManagementExport]'s state.
 func (scme *SubscriptionCostManagementExport) ImportState(av io.Reader) error {
 	scme.state = &subscriptionCostManagementExportState{}
 	if err := json.NewDecoder(av).Decode(scme.state); err != nil {
@@ -49,10 +73,12 @@ func (scme *SubscriptionCostManagementExport) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SubscriptionCostManagementExport] has state.
 func (scme *SubscriptionCostManagementExport) State() (*subscriptionCostManagementExportState, bool) {
 	return scme.state, scme.state != nil
 }
 
+// StateMust returns the state for [SubscriptionCostManagementExport]. Panics if the state is nil.
 func (scme *SubscriptionCostManagementExport) StateMust() *subscriptionCostManagementExportState {
 	if scme.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", scme.Type(), scme.LocalName()))
@@ -60,10 +86,7 @@ func (scme *SubscriptionCostManagementExport) StateMust() *subscriptionCostManag
 	return scme.state
 }
 
-func (scme *SubscriptionCostManagementExport) DependOn() terra.Reference {
-	return terra.ReferenceResource(scme)
-}
-
+// SubscriptionCostManagementExportArgs contains the configurations for azurerm_subscription_cost_management_export.
 type SubscriptionCostManagementExportArgs struct {
 	// Active: bool, optional
 	Active terra.BoolValue `hcl:"active,attr"`
@@ -85,51 +108,56 @@ type SubscriptionCostManagementExportArgs struct {
 	ExportDataStorageLocation *subscriptioncostmanagementexport.ExportDataStorageLocation `hcl:"export_data_storage_location,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *subscriptioncostmanagementexport.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SubscriptionCostManagementExport depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type subscriptionCostManagementExportAttributes struct {
 	ref terra.Reference
 }
 
+// Active returns a reference to field active of azurerm_subscription_cost_management_export.
 func (scme subscriptionCostManagementExportAttributes) Active() terra.BoolValue {
-	return terra.ReferenceBool(scme.ref.Append("active"))
+	return terra.ReferenceAsBool(scme.ref.Append("active"))
 }
 
+// Id returns a reference to field id of azurerm_subscription_cost_management_export.
 func (scme subscriptionCostManagementExportAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(scme.ref.Append("id"))
+	return terra.ReferenceAsString(scme.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_subscription_cost_management_export.
 func (scme subscriptionCostManagementExportAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(scme.ref.Append("name"))
+	return terra.ReferenceAsString(scme.ref.Append("name"))
 }
 
+// RecurrencePeriodEndDate returns a reference to field recurrence_period_end_date of azurerm_subscription_cost_management_export.
 func (scme subscriptionCostManagementExportAttributes) RecurrencePeriodEndDate() terra.StringValue {
-	return terra.ReferenceString(scme.ref.Append("recurrence_period_end_date"))
+	return terra.ReferenceAsString(scme.ref.Append("recurrence_period_end_date"))
 }
 
+// RecurrencePeriodStartDate returns a reference to field recurrence_period_start_date of azurerm_subscription_cost_management_export.
 func (scme subscriptionCostManagementExportAttributes) RecurrencePeriodStartDate() terra.StringValue {
-	return terra.ReferenceString(scme.ref.Append("recurrence_period_start_date"))
+	return terra.ReferenceAsString(scme.ref.Append("recurrence_period_start_date"))
 }
 
+// RecurrenceType returns a reference to field recurrence_type of azurerm_subscription_cost_management_export.
 func (scme subscriptionCostManagementExportAttributes) RecurrenceType() terra.StringValue {
-	return terra.ReferenceString(scme.ref.Append("recurrence_type"))
+	return terra.ReferenceAsString(scme.ref.Append("recurrence_type"))
 }
 
+// SubscriptionId returns a reference to field subscription_id of azurerm_subscription_cost_management_export.
 func (scme subscriptionCostManagementExportAttributes) SubscriptionId() terra.StringValue {
-	return terra.ReferenceString(scme.ref.Append("subscription_id"))
+	return terra.ReferenceAsString(scme.ref.Append("subscription_id"))
 }
 
 func (scme subscriptionCostManagementExportAttributes) ExportDataOptions() terra.ListValue[subscriptioncostmanagementexport.ExportDataOptionsAttributes] {
-	return terra.ReferenceList[subscriptioncostmanagementexport.ExportDataOptionsAttributes](scme.ref.Append("export_data_options"))
+	return terra.ReferenceAsList[subscriptioncostmanagementexport.ExportDataOptionsAttributes](scme.ref.Append("export_data_options"))
 }
 
 func (scme subscriptionCostManagementExportAttributes) ExportDataStorageLocation() terra.ListValue[subscriptioncostmanagementexport.ExportDataStorageLocationAttributes] {
-	return terra.ReferenceList[subscriptioncostmanagementexport.ExportDataStorageLocationAttributes](scme.ref.Append("export_data_storage_location"))
+	return terra.ReferenceAsList[subscriptioncostmanagementexport.ExportDataStorageLocationAttributes](scme.ref.Append("export_data_storage_location"))
 }
 
 func (scme subscriptionCostManagementExportAttributes) Timeouts() subscriptioncostmanagementexport.TimeoutsAttributes {
-	return terra.ReferenceSingle[subscriptioncostmanagementexport.TimeoutsAttributes](scme.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[subscriptioncostmanagementexport.TimeoutsAttributes](scme.ref.Append("timeouts"))
 }
 
 type subscriptionCostManagementExportState struct {

@@ -68,164 +68,164 @@ type SliceAttributes struct {
 	ref terra.Reference
 }
 
-func (s SliceAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SliceAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SliceAttributes) InternalWithRef(ref terra.Reference) SliceAttributes {
 	return SliceAttributes{ref: ref}
 }
 
-func (s SliceAttributes) InternalTokens() hclwrite.Tokens {
+func (s SliceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SliceAttributes) DefaultDataNetworkId() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("default_data_network_id"))
+	return terra.ReferenceAsString(s.ref.Append("default_data_network_id"))
 }
 
 func (s SliceAttributes) SliceId() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("slice_id"))
+	return terra.ReferenceAsString(s.ref.Append("slice_id"))
 }
 
 func (s SliceAttributes) DataNetwork() terra.ListValue[DataNetworkAttributes] {
-	return terra.ReferenceList[DataNetworkAttributes](s.ref.Append("data_network"))
+	return terra.ReferenceAsList[DataNetworkAttributes](s.ref.Append("data_network"))
 }
 
 type DataNetworkAttributes struct {
 	ref terra.Reference
 }
 
-func (dn DataNetworkAttributes) InternalRef() terra.Reference {
-	return dn.ref
+func (dn DataNetworkAttributes) InternalRef() (terra.Reference, error) {
+	return dn.ref, nil
 }
 
 func (dn DataNetworkAttributes) InternalWithRef(ref terra.Reference) DataNetworkAttributes {
 	return DataNetworkAttributes{ref: ref}
 }
 
-func (dn DataNetworkAttributes) InternalTokens() hclwrite.Tokens {
+func (dn DataNetworkAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dn.ref.InternalTokens()
 }
 
 func (dn DataNetworkAttributes) AdditionalAllowedSessionTypes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dn.ref.Append("additional_allowed_session_types"))
+	return terra.ReferenceAsList[terra.StringValue](dn.ref.Append("additional_allowed_session_types"))
 }
 
 func (dn DataNetworkAttributes) AllocationAndRetentionPriorityLevel() terra.NumberValue {
-	return terra.ReferenceNumber(dn.ref.Append("allocation_and_retention_priority_level"))
+	return terra.ReferenceAsNumber(dn.ref.Append("allocation_and_retention_priority_level"))
 }
 
 func (dn DataNetworkAttributes) AllowedServicesIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dn.ref.Append("allowed_services_ids"))
+	return terra.ReferenceAsList[terra.StringValue](dn.ref.Append("allowed_services_ids"))
 }
 
 func (dn DataNetworkAttributes) DataNetworkId() terra.StringValue {
-	return terra.ReferenceString(dn.ref.Append("data_network_id"))
+	return terra.ReferenceAsString(dn.ref.Append("data_network_id"))
 }
 
 func (dn DataNetworkAttributes) DefaultSessionType() terra.StringValue {
-	return terra.ReferenceString(dn.ref.Append("default_session_type"))
+	return terra.ReferenceAsString(dn.ref.Append("default_session_type"))
 }
 
 func (dn DataNetworkAttributes) MaxBufferedPackets() terra.NumberValue {
-	return terra.ReferenceNumber(dn.ref.Append("max_buffered_packets"))
+	return terra.ReferenceAsNumber(dn.ref.Append("max_buffered_packets"))
 }
 
 func (dn DataNetworkAttributes) PreemptionCapability() terra.StringValue {
-	return terra.ReferenceString(dn.ref.Append("preemption_capability"))
+	return terra.ReferenceAsString(dn.ref.Append("preemption_capability"))
 }
 
 func (dn DataNetworkAttributes) PreemptionVulnerability() terra.StringValue {
-	return terra.ReferenceString(dn.ref.Append("preemption_vulnerability"))
+	return terra.ReferenceAsString(dn.ref.Append("preemption_vulnerability"))
 }
 
 func (dn DataNetworkAttributes) QosIndicator() terra.NumberValue {
-	return terra.ReferenceNumber(dn.ref.Append("qos_indicator"))
+	return terra.ReferenceAsNumber(dn.ref.Append("qos_indicator"))
 }
 
 func (dn DataNetworkAttributes) SessionAggregateMaximumBitRate() terra.ListValue[SessionAggregateMaximumBitRateAttributes] {
-	return terra.ReferenceList[SessionAggregateMaximumBitRateAttributes](dn.ref.Append("session_aggregate_maximum_bit_rate"))
+	return terra.ReferenceAsList[SessionAggregateMaximumBitRateAttributes](dn.ref.Append("session_aggregate_maximum_bit_rate"))
 }
 
 type SessionAggregateMaximumBitRateAttributes struct {
 	ref terra.Reference
 }
 
-func (sambr SessionAggregateMaximumBitRateAttributes) InternalRef() terra.Reference {
-	return sambr.ref
+func (sambr SessionAggregateMaximumBitRateAttributes) InternalRef() (terra.Reference, error) {
+	return sambr.ref, nil
 }
 
 func (sambr SessionAggregateMaximumBitRateAttributes) InternalWithRef(ref terra.Reference) SessionAggregateMaximumBitRateAttributes {
 	return SessionAggregateMaximumBitRateAttributes{ref: ref}
 }
 
-func (sambr SessionAggregateMaximumBitRateAttributes) InternalTokens() hclwrite.Tokens {
+func (sambr SessionAggregateMaximumBitRateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sambr.ref.InternalTokens()
 }
 
 func (sambr SessionAggregateMaximumBitRateAttributes) Downlink() terra.StringValue {
-	return terra.ReferenceString(sambr.ref.Append("downlink"))
+	return terra.ReferenceAsString(sambr.ref.Append("downlink"))
 }
 
 func (sambr SessionAggregateMaximumBitRateAttributes) Uplink() terra.StringValue {
-	return terra.ReferenceString(sambr.ref.Append("uplink"))
+	return terra.ReferenceAsString(sambr.ref.Append("uplink"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type UserEquipmentAggregateMaximumBitRateAttributes struct {
 	ref terra.Reference
 }
 
-func (ueambr UserEquipmentAggregateMaximumBitRateAttributes) InternalRef() terra.Reference {
-	return ueambr.ref
+func (ueambr UserEquipmentAggregateMaximumBitRateAttributes) InternalRef() (terra.Reference, error) {
+	return ueambr.ref, nil
 }
 
 func (ueambr UserEquipmentAggregateMaximumBitRateAttributes) InternalWithRef(ref terra.Reference) UserEquipmentAggregateMaximumBitRateAttributes {
 	return UserEquipmentAggregateMaximumBitRateAttributes{ref: ref}
 }
 
-func (ueambr UserEquipmentAggregateMaximumBitRateAttributes) InternalTokens() hclwrite.Tokens {
+func (ueambr UserEquipmentAggregateMaximumBitRateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ueambr.ref.InternalTokens()
 }
 
 func (ueambr UserEquipmentAggregateMaximumBitRateAttributes) Downlink() terra.StringValue {
-	return terra.ReferenceString(ueambr.ref.Append("downlink"))
+	return terra.ReferenceAsString(ueambr.ref.Append("downlink"))
 }
 
 func (ueambr UserEquipmentAggregateMaximumBitRateAttributes) Uplink() terra.StringValue {
-	return terra.ReferenceString(ueambr.ref.Append("uplink"))
+	return terra.ReferenceAsString(ueambr.ref.Append("uplink"))
 }
 
 type SliceState struct {

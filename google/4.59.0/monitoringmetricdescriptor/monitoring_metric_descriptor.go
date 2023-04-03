@@ -36,80 +36,80 @@ type LabelsAttributes struct {
 	ref terra.Reference
 }
 
-func (l LabelsAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l LabelsAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l LabelsAttributes) InternalWithRef(ref terra.Reference) LabelsAttributes {
 	return LabelsAttributes{ref: ref}
 }
 
-func (l LabelsAttributes) InternalTokens() hclwrite.Tokens {
+func (l LabelsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 
 func (l LabelsAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("description"))
+	return terra.ReferenceAsString(l.ref.Append("description"))
 }
 
 func (l LabelsAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("key"))
+	return terra.ReferenceAsString(l.ref.Append("key"))
 }
 
 func (l LabelsAttributes) ValueType() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("value_type"))
+	return terra.ReferenceAsString(l.ref.Append("value_type"))
 }
 
 type MetadataAttributes struct {
 	ref terra.Reference
 }
 
-func (m MetadataAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MetadataAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MetadataAttributes) InternalWithRef(ref terra.Reference) MetadataAttributes {
 	return MetadataAttributes{ref: ref}
 }
 
-func (m MetadataAttributes) InternalTokens() hclwrite.Tokens {
+func (m MetadataAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
 func (m MetadataAttributes) IngestDelay() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("ingest_delay"))
+	return terra.ReferenceAsString(m.ref.Append("ingest_delay"))
 }
 
 func (m MetadataAttributes) SamplePeriod() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("sample_period"))
+	return terra.ReferenceAsString(m.ref.Append("sample_period"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type LabelsState struct {

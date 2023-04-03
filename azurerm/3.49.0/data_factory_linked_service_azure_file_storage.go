@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFactoryLinkedServiceAzureFileStorage creates a new instance of [DataFactoryLinkedServiceAzureFileStorage].
 func NewDataFactoryLinkedServiceAzureFileStorage(name string, args DataFactoryLinkedServiceAzureFileStorageArgs) *DataFactoryLinkedServiceAzureFileStorage {
 	return &DataFactoryLinkedServiceAzureFileStorage{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFactoryLinkedServiceAzureFileStorage(name string, args DataFactoryLi
 
 var _ terra.Resource = (*DataFactoryLinkedServiceAzureFileStorage)(nil)
 
+// DataFactoryLinkedServiceAzureFileStorage represents the Terraform resource azurerm_data_factory_linked_service_azure_file_storage.
 type DataFactoryLinkedServiceAzureFileStorage struct {
-	Name  string
-	Args  DataFactoryLinkedServiceAzureFileStorageArgs
-	state *dataFactoryLinkedServiceAzureFileStorageState
+	Name      string
+	Args      DataFactoryLinkedServiceAzureFileStorageArgs
+	state     *dataFactoryLinkedServiceAzureFileStorageState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFactoryLinkedServiceAzureFileStorage].
 func (dflsafs *DataFactoryLinkedServiceAzureFileStorage) Type() string {
 	return "azurerm_data_factory_linked_service_azure_file_storage"
 }
 
+// LocalName returns the local name for [DataFactoryLinkedServiceAzureFileStorage].
 func (dflsafs *DataFactoryLinkedServiceAzureFileStorage) LocalName() string {
 	return dflsafs.Name
 }
 
+// Configuration returns the configuration (args) for [DataFactoryLinkedServiceAzureFileStorage].
 func (dflsafs *DataFactoryLinkedServiceAzureFileStorage) Configuration() interface{} {
 	return dflsafs.Args
 }
 
+// DependOn is used for other resources to depend on [DataFactoryLinkedServiceAzureFileStorage].
+func (dflsafs *DataFactoryLinkedServiceAzureFileStorage) DependOn() terra.Reference {
+	return terra.ReferenceResource(dflsafs)
+}
+
+// Dependencies returns the list of resources [DataFactoryLinkedServiceAzureFileStorage] depends_on.
+func (dflsafs *DataFactoryLinkedServiceAzureFileStorage) Dependencies() terra.Dependencies {
+	return dflsafs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFactoryLinkedServiceAzureFileStorage].
+func (dflsafs *DataFactoryLinkedServiceAzureFileStorage) LifecycleManagement() *terra.Lifecycle {
+	return dflsafs.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFactoryLinkedServiceAzureFileStorage].
 func (dflsafs *DataFactoryLinkedServiceAzureFileStorage) Attributes() dataFactoryLinkedServiceAzureFileStorageAttributes {
 	return dataFactoryLinkedServiceAzureFileStorageAttributes{ref: terra.ReferenceResource(dflsafs)}
 }
 
+// ImportState imports the given attribute values into [DataFactoryLinkedServiceAzureFileStorage]'s state.
 func (dflsafs *DataFactoryLinkedServiceAzureFileStorage) ImportState(av io.Reader) error {
 	dflsafs.state = &dataFactoryLinkedServiceAzureFileStorageState{}
 	if err := json.NewDecoder(av).Decode(dflsafs.state); err != nil {
@@ -49,10 +73,12 @@ func (dflsafs *DataFactoryLinkedServiceAzureFileStorage) ImportState(av io.Reade
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFactoryLinkedServiceAzureFileStorage] has state.
 func (dflsafs *DataFactoryLinkedServiceAzureFileStorage) State() (*dataFactoryLinkedServiceAzureFileStorageState, bool) {
 	return dflsafs.state, dflsafs.state != nil
 }
 
+// StateMust returns the state for [DataFactoryLinkedServiceAzureFileStorage]. Panics if the state is nil.
 func (dflsafs *DataFactoryLinkedServiceAzureFileStorage) StateMust() *dataFactoryLinkedServiceAzureFileStorageState {
 	if dflsafs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dflsafs.Type(), dflsafs.LocalName()))
@@ -60,10 +86,7 @@ func (dflsafs *DataFactoryLinkedServiceAzureFileStorage) StateMust() *dataFactor
 	return dflsafs.state
 }
 
-func (dflsafs *DataFactoryLinkedServiceAzureFileStorage) DependOn() terra.Reference {
-	return terra.ReferenceResource(dflsafs)
-}
-
+// DataFactoryLinkedServiceAzureFileStorageArgs contains the configurations for azurerm_data_factory_linked_service_azure_file_storage.
 type DataFactoryLinkedServiceAzureFileStorageArgs struct {
 	// AdditionalProperties: map of string, optional
 	AdditionalProperties terra.MapValue[terra.StringValue] `hcl:"additional_properties,attr"`
@@ -95,71 +118,82 @@ type DataFactoryLinkedServiceAzureFileStorageArgs struct {
 	KeyVaultPassword *datafactorylinkedserviceazurefilestorage.KeyVaultPassword `hcl:"key_vault_password,block"`
 	// Timeouts: optional
 	Timeouts *datafactorylinkedserviceazurefilestorage.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataFactoryLinkedServiceAzureFileStorage depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFactoryLinkedServiceAzureFileStorageAttributes struct {
 	ref terra.Reference
 }
 
+// AdditionalProperties returns a reference to field additional_properties of azurerm_data_factory_linked_service_azure_file_storage.
 func (dflsafs dataFactoryLinkedServiceAzureFileStorageAttributes) AdditionalProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dflsafs.ref.Append("additional_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](dflsafs.ref.Append("additional_properties"))
 }
 
+// Annotations returns a reference to field annotations of azurerm_data_factory_linked_service_azure_file_storage.
 func (dflsafs dataFactoryLinkedServiceAzureFileStorageAttributes) Annotations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dflsafs.ref.Append("annotations"))
+	return terra.ReferenceAsList[terra.StringValue](dflsafs.ref.Append("annotations"))
 }
 
+// ConnectionString returns a reference to field connection_string of azurerm_data_factory_linked_service_azure_file_storage.
 func (dflsafs dataFactoryLinkedServiceAzureFileStorageAttributes) ConnectionString() terra.StringValue {
-	return terra.ReferenceString(dflsafs.ref.Append("connection_string"))
+	return terra.ReferenceAsString(dflsafs.ref.Append("connection_string"))
 }
 
+// DataFactoryId returns a reference to field data_factory_id of azurerm_data_factory_linked_service_azure_file_storage.
 func (dflsafs dataFactoryLinkedServiceAzureFileStorageAttributes) DataFactoryId() terra.StringValue {
-	return terra.ReferenceString(dflsafs.ref.Append("data_factory_id"))
+	return terra.ReferenceAsString(dflsafs.ref.Append("data_factory_id"))
 }
 
+// Description returns a reference to field description of azurerm_data_factory_linked_service_azure_file_storage.
 func (dflsafs dataFactoryLinkedServiceAzureFileStorageAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dflsafs.ref.Append("description"))
+	return terra.ReferenceAsString(dflsafs.ref.Append("description"))
 }
 
+// FileShare returns a reference to field file_share of azurerm_data_factory_linked_service_azure_file_storage.
 func (dflsafs dataFactoryLinkedServiceAzureFileStorageAttributes) FileShare() terra.StringValue {
-	return terra.ReferenceString(dflsafs.ref.Append("file_share"))
+	return terra.ReferenceAsString(dflsafs.ref.Append("file_share"))
 }
 
+// Host returns a reference to field host of azurerm_data_factory_linked_service_azure_file_storage.
 func (dflsafs dataFactoryLinkedServiceAzureFileStorageAttributes) Host() terra.StringValue {
-	return terra.ReferenceString(dflsafs.ref.Append("host"))
+	return terra.ReferenceAsString(dflsafs.ref.Append("host"))
 }
 
+// Id returns a reference to field id of azurerm_data_factory_linked_service_azure_file_storage.
 func (dflsafs dataFactoryLinkedServiceAzureFileStorageAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dflsafs.ref.Append("id"))
+	return terra.ReferenceAsString(dflsafs.ref.Append("id"))
 }
 
+// IntegrationRuntimeName returns a reference to field integration_runtime_name of azurerm_data_factory_linked_service_azure_file_storage.
 func (dflsafs dataFactoryLinkedServiceAzureFileStorageAttributes) IntegrationRuntimeName() terra.StringValue {
-	return terra.ReferenceString(dflsafs.ref.Append("integration_runtime_name"))
+	return terra.ReferenceAsString(dflsafs.ref.Append("integration_runtime_name"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory_linked_service_azure_file_storage.
 func (dflsafs dataFactoryLinkedServiceAzureFileStorageAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dflsafs.ref.Append("name"))
+	return terra.ReferenceAsString(dflsafs.ref.Append("name"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_data_factory_linked_service_azure_file_storage.
 func (dflsafs dataFactoryLinkedServiceAzureFileStorageAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dflsafs.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](dflsafs.ref.Append("parameters"))
 }
 
+// Password returns a reference to field password of azurerm_data_factory_linked_service_azure_file_storage.
 func (dflsafs dataFactoryLinkedServiceAzureFileStorageAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(dflsafs.ref.Append("password"))
+	return terra.ReferenceAsString(dflsafs.ref.Append("password"))
 }
 
+// UserId returns a reference to field user_id of azurerm_data_factory_linked_service_azure_file_storage.
 func (dflsafs dataFactoryLinkedServiceAzureFileStorageAttributes) UserId() terra.StringValue {
-	return terra.ReferenceString(dflsafs.ref.Append("user_id"))
+	return terra.ReferenceAsString(dflsafs.ref.Append("user_id"))
 }
 
 func (dflsafs dataFactoryLinkedServiceAzureFileStorageAttributes) KeyVaultPassword() terra.ListValue[datafactorylinkedserviceazurefilestorage.KeyVaultPasswordAttributes] {
-	return terra.ReferenceList[datafactorylinkedserviceazurefilestorage.KeyVaultPasswordAttributes](dflsafs.ref.Append("key_vault_password"))
+	return terra.ReferenceAsList[datafactorylinkedserviceazurefilestorage.KeyVaultPasswordAttributes](dflsafs.ref.Append("key_vault_password"))
 }
 
 func (dflsafs dataFactoryLinkedServiceAzureFileStorageAttributes) Timeouts() datafactorylinkedserviceazurefilestorage.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafactorylinkedserviceazurefilestorage.TimeoutsAttributes](dflsafs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafactorylinkedserviceazurefilestorage.TimeoutsAttributes](dflsafs.ref.Append("timeouts"))
 }
 
 type dataFactoryLinkedServiceAzureFileStorageState struct {

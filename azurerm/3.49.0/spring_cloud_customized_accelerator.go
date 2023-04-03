@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSpringCloudCustomizedAccelerator creates a new instance of [SpringCloudCustomizedAccelerator].
 func NewSpringCloudCustomizedAccelerator(name string, args SpringCloudCustomizedAcceleratorArgs) *SpringCloudCustomizedAccelerator {
 	return &SpringCloudCustomizedAccelerator{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSpringCloudCustomizedAccelerator(name string, args SpringCloudCustomized
 
 var _ terra.Resource = (*SpringCloudCustomizedAccelerator)(nil)
 
+// SpringCloudCustomizedAccelerator represents the Terraform resource azurerm_spring_cloud_customized_accelerator.
 type SpringCloudCustomizedAccelerator struct {
-	Name  string
-	Args  SpringCloudCustomizedAcceleratorArgs
-	state *springCloudCustomizedAcceleratorState
+	Name      string
+	Args      SpringCloudCustomizedAcceleratorArgs
+	state     *springCloudCustomizedAcceleratorState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SpringCloudCustomizedAccelerator].
 func (scca *SpringCloudCustomizedAccelerator) Type() string {
 	return "azurerm_spring_cloud_customized_accelerator"
 }
 
+// LocalName returns the local name for [SpringCloudCustomizedAccelerator].
 func (scca *SpringCloudCustomizedAccelerator) LocalName() string {
 	return scca.Name
 }
 
+// Configuration returns the configuration (args) for [SpringCloudCustomizedAccelerator].
 func (scca *SpringCloudCustomizedAccelerator) Configuration() interface{} {
 	return scca.Args
 }
 
+// DependOn is used for other resources to depend on [SpringCloudCustomizedAccelerator].
+func (scca *SpringCloudCustomizedAccelerator) DependOn() terra.Reference {
+	return terra.ReferenceResource(scca)
+}
+
+// Dependencies returns the list of resources [SpringCloudCustomizedAccelerator] depends_on.
+func (scca *SpringCloudCustomizedAccelerator) Dependencies() terra.Dependencies {
+	return scca.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SpringCloudCustomizedAccelerator].
+func (scca *SpringCloudCustomizedAccelerator) LifecycleManagement() *terra.Lifecycle {
+	return scca.Lifecycle
+}
+
+// Attributes returns the attributes for [SpringCloudCustomizedAccelerator].
 func (scca *SpringCloudCustomizedAccelerator) Attributes() springCloudCustomizedAcceleratorAttributes {
 	return springCloudCustomizedAcceleratorAttributes{ref: terra.ReferenceResource(scca)}
 }
 
+// ImportState imports the given attribute values into [SpringCloudCustomizedAccelerator]'s state.
 func (scca *SpringCloudCustomizedAccelerator) ImportState(av io.Reader) error {
 	scca.state = &springCloudCustomizedAcceleratorState{}
 	if err := json.NewDecoder(av).Decode(scca.state); err != nil {
@@ -49,10 +73,12 @@ func (scca *SpringCloudCustomizedAccelerator) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SpringCloudCustomizedAccelerator] has state.
 func (scca *SpringCloudCustomizedAccelerator) State() (*springCloudCustomizedAcceleratorState, bool) {
 	return scca.state, scca.state != nil
 }
 
+// StateMust returns the state for [SpringCloudCustomizedAccelerator]. Panics if the state is nil.
 func (scca *SpringCloudCustomizedAccelerator) StateMust() *springCloudCustomizedAcceleratorState {
 	if scca.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", scca.Type(), scca.LocalName()))
@@ -60,10 +86,7 @@ func (scca *SpringCloudCustomizedAccelerator) StateMust() *springCloudCustomized
 	return scca.state
 }
 
-func (scca *SpringCloudCustomizedAccelerator) DependOn() terra.Reference {
-	return terra.ReferenceResource(scca)
-}
-
+// SpringCloudCustomizedAcceleratorArgs contains the configurations for azurerm_spring_cloud_customized_accelerator.
 type SpringCloudCustomizedAcceleratorArgs struct {
 	// AcceleratorTags: list of string, optional
 	AcceleratorTags terra.ListValue[terra.StringValue] `hcl:"accelerator_tags,attr"`
@@ -83,47 +106,52 @@ type SpringCloudCustomizedAcceleratorArgs struct {
 	GitRepository *springcloudcustomizedaccelerator.GitRepository `hcl:"git_repository,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *springcloudcustomizedaccelerator.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SpringCloudCustomizedAccelerator depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type springCloudCustomizedAcceleratorAttributes struct {
 	ref terra.Reference
 }
 
+// AcceleratorTags returns a reference to field accelerator_tags of azurerm_spring_cloud_customized_accelerator.
 func (scca springCloudCustomizedAcceleratorAttributes) AcceleratorTags() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](scca.ref.Append("accelerator_tags"))
+	return terra.ReferenceAsList[terra.StringValue](scca.ref.Append("accelerator_tags"))
 }
 
+// Description returns a reference to field description of azurerm_spring_cloud_customized_accelerator.
 func (scca springCloudCustomizedAcceleratorAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(scca.ref.Append("description"))
+	return terra.ReferenceAsString(scca.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_spring_cloud_customized_accelerator.
 func (scca springCloudCustomizedAcceleratorAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(scca.ref.Append("display_name"))
+	return terra.ReferenceAsString(scca.ref.Append("display_name"))
 }
 
+// IconUrl returns a reference to field icon_url of azurerm_spring_cloud_customized_accelerator.
 func (scca springCloudCustomizedAcceleratorAttributes) IconUrl() terra.StringValue {
-	return terra.ReferenceString(scca.ref.Append("icon_url"))
+	return terra.ReferenceAsString(scca.ref.Append("icon_url"))
 }
 
+// Id returns a reference to field id of azurerm_spring_cloud_customized_accelerator.
 func (scca springCloudCustomizedAcceleratorAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(scca.ref.Append("id"))
+	return terra.ReferenceAsString(scca.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_spring_cloud_customized_accelerator.
 func (scca springCloudCustomizedAcceleratorAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(scca.ref.Append("name"))
+	return terra.ReferenceAsString(scca.ref.Append("name"))
 }
 
+// SpringCloudAcceleratorId returns a reference to field spring_cloud_accelerator_id of azurerm_spring_cloud_customized_accelerator.
 func (scca springCloudCustomizedAcceleratorAttributes) SpringCloudAcceleratorId() terra.StringValue {
-	return terra.ReferenceString(scca.ref.Append("spring_cloud_accelerator_id"))
+	return terra.ReferenceAsString(scca.ref.Append("spring_cloud_accelerator_id"))
 }
 
 func (scca springCloudCustomizedAcceleratorAttributes) GitRepository() terra.ListValue[springcloudcustomizedaccelerator.GitRepositoryAttributes] {
-	return terra.ReferenceList[springcloudcustomizedaccelerator.GitRepositoryAttributes](scca.ref.Append("git_repository"))
+	return terra.ReferenceAsList[springcloudcustomizedaccelerator.GitRepositoryAttributes](scca.ref.Append("git_repository"))
 }
 
 func (scca springCloudCustomizedAcceleratorAttributes) Timeouts() springcloudcustomizedaccelerator.TimeoutsAttributes {
-	return terra.ReferenceSingle[springcloudcustomizedaccelerator.TimeoutsAttributes](scca.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[springcloudcustomizedaccelerator.TimeoutsAttributes](scca.ref.Append("timeouts"))
 }
 
 type springCloudCustomizedAcceleratorState struct {

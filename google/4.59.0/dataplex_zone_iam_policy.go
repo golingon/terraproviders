@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewDataplexZoneIamPolicy creates a new instance of [DataplexZoneIamPolicy].
 func NewDataplexZoneIamPolicy(name string, args DataplexZoneIamPolicyArgs) *DataplexZoneIamPolicy {
 	return &DataplexZoneIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewDataplexZoneIamPolicy(name string, args DataplexZoneIamPolicyArgs) *Data
 
 var _ terra.Resource = (*DataplexZoneIamPolicy)(nil)
 
+// DataplexZoneIamPolicy represents the Terraform resource google_dataplex_zone_iam_policy.
 type DataplexZoneIamPolicy struct {
-	Name  string
-	Args  DataplexZoneIamPolicyArgs
-	state *dataplexZoneIamPolicyState
+	Name      string
+	Args      DataplexZoneIamPolicyArgs
+	state     *dataplexZoneIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataplexZoneIamPolicy].
 func (dzip *DataplexZoneIamPolicy) Type() string {
 	return "google_dataplex_zone_iam_policy"
 }
 
+// LocalName returns the local name for [DataplexZoneIamPolicy].
 func (dzip *DataplexZoneIamPolicy) LocalName() string {
 	return dzip.Name
 }
 
+// Configuration returns the configuration (args) for [DataplexZoneIamPolicy].
 func (dzip *DataplexZoneIamPolicy) Configuration() interface{} {
 	return dzip.Args
 }
 
+// DependOn is used for other resources to depend on [DataplexZoneIamPolicy].
+func (dzip *DataplexZoneIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(dzip)
+}
+
+// Dependencies returns the list of resources [DataplexZoneIamPolicy] depends_on.
+func (dzip *DataplexZoneIamPolicy) Dependencies() terra.Dependencies {
+	return dzip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataplexZoneIamPolicy].
+func (dzip *DataplexZoneIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return dzip.Lifecycle
+}
+
+// Attributes returns the attributes for [DataplexZoneIamPolicy].
 func (dzip *DataplexZoneIamPolicy) Attributes() dataplexZoneIamPolicyAttributes {
 	return dataplexZoneIamPolicyAttributes{ref: terra.ReferenceResource(dzip)}
 }
 
+// ImportState imports the given attribute values into [DataplexZoneIamPolicy]'s state.
 func (dzip *DataplexZoneIamPolicy) ImportState(av io.Reader) error {
 	dzip.state = &dataplexZoneIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(dzip.state); err != nil {
@@ -48,10 +72,12 @@ func (dzip *DataplexZoneIamPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataplexZoneIamPolicy] has state.
 func (dzip *DataplexZoneIamPolicy) State() (*dataplexZoneIamPolicyState, bool) {
 	return dzip.state, dzip.state != nil
 }
 
+// StateMust returns the state for [DataplexZoneIamPolicy]. Panics if the state is nil.
 func (dzip *DataplexZoneIamPolicy) StateMust() *dataplexZoneIamPolicyState {
 	if dzip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dzip.Type(), dzip.LocalName()))
@@ -59,10 +85,7 @@ func (dzip *DataplexZoneIamPolicy) StateMust() *dataplexZoneIamPolicyState {
 	return dzip.state
 }
 
-func (dzip *DataplexZoneIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(dzip)
-}
-
+// DataplexZoneIamPolicyArgs contains the configurations for google_dataplex_zone_iam_policy.
 type DataplexZoneIamPolicyArgs struct {
 	// DataplexZone: string, required
 	DataplexZone terra.StringValue `hcl:"dataplex_zone,attr" validate:"required"`
@@ -76,39 +99,44 @@ type DataplexZoneIamPolicyArgs struct {
 	PolicyData terra.StringValue `hcl:"policy_data,attr" validate:"required"`
 	// Project: string, optional
 	Project terra.StringValue `hcl:"project,attr"`
-	// DependsOn contains resources that DataplexZoneIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataplexZoneIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// DataplexZone returns a reference to field dataplex_zone of google_dataplex_zone_iam_policy.
 func (dzip dataplexZoneIamPolicyAttributes) DataplexZone() terra.StringValue {
-	return terra.ReferenceString(dzip.ref.Append("dataplex_zone"))
+	return terra.ReferenceAsString(dzip.ref.Append("dataplex_zone"))
 }
 
+// Etag returns a reference to field etag of google_dataplex_zone_iam_policy.
 func (dzip dataplexZoneIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(dzip.ref.Append("etag"))
+	return terra.ReferenceAsString(dzip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_dataplex_zone_iam_policy.
 func (dzip dataplexZoneIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dzip.ref.Append("id"))
+	return terra.ReferenceAsString(dzip.ref.Append("id"))
 }
 
+// Lake returns a reference to field lake of google_dataplex_zone_iam_policy.
 func (dzip dataplexZoneIamPolicyAttributes) Lake() terra.StringValue {
-	return terra.ReferenceString(dzip.ref.Append("lake"))
+	return terra.ReferenceAsString(dzip.ref.Append("lake"))
 }
 
+// Location returns a reference to field location of google_dataplex_zone_iam_policy.
 func (dzip dataplexZoneIamPolicyAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(dzip.ref.Append("location"))
+	return terra.ReferenceAsString(dzip.ref.Append("location"))
 }
 
+// PolicyData returns a reference to field policy_data of google_dataplex_zone_iam_policy.
 func (dzip dataplexZoneIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(dzip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(dzip.ref.Append("policy_data"))
 }
 
+// Project returns a reference to field project of google_dataplex_zone_iam_policy.
 func (dzip dataplexZoneIamPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(dzip.ref.Append("project"))
+	return terra.ReferenceAsString(dzip.ref.Append("project"))
 }
 
 type dataplexZoneIamPolicyState struct {

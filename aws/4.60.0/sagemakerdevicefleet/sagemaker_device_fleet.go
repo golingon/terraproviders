@@ -26,7 +26,7 @@ func (oc OutputConfigAttributes) InternalWithRef(ref terra.Reference) OutputConf
 	return OutputConfigAttributes{ref: ref}
 }
 
-func (oc OutputConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (oc OutputConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oc.ref.InternalTokens()
 }
 

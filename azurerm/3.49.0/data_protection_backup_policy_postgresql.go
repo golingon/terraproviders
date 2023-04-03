@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataProtectionBackupPolicyPostgresql creates a new instance of [DataProtectionBackupPolicyPostgresql].
 func NewDataProtectionBackupPolicyPostgresql(name string, args DataProtectionBackupPolicyPostgresqlArgs) *DataProtectionBackupPolicyPostgresql {
 	return &DataProtectionBackupPolicyPostgresql{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataProtectionBackupPolicyPostgresql(name string, args DataProtectionBac
 
 var _ terra.Resource = (*DataProtectionBackupPolicyPostgresql)(nil)
 
+// DataProtectionBackupPolicyPostgresql represents the Terraform resource azurerm_data_protection_backup_policy_postgresql.
 type DataProtectionBackupPolicyPostgresql struct {
-	Name  string
-	Args  DataProtectionBackupPolicyPostgresqlArgs
-	state *dataProtectionBackupPolicyPostgresqlState
+	Name      string
+	Args      DataProtectionBackupPolicyPostgresqlArgs
+	state     *dataProtectionBackupPolicyPostgresqlState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataProtectionBackupPolicyPostgresql].
 func (dpbpp *DataProtectionBackupPolicyPostgresql) Type() string {
 	return "azurerm_data_protection_backup_policy_postgresql"
 }
 
+// LocalName returns the local name for [DataProtectionBackupPolicyPostgresql].
 func (dpbpp *DataProtectionBackupPolicyPostgresql) LocalName() string {
 	return dpbpp.Name
 }
 
+// Configuration returns the configuration (args) for [DataProtectionBackupPolicyPostgresql].
 func (dpbpp *DataProtectionBackupPolicyPostgresql) Configuration() interface{} {
 	return dpbpp.Args
 }
 
+// DependOn is used for other resources to depend on [DataProtectionBackupPolicyPostgresql].
+func (dpbpp *DataProtectionBackupPolicyPostgresql) DependOn() terra.Reference {
+	return terra.ReferenceResource(dpbpp)
+}
+
+// Dependencies returns the list of resources [DataProtectionBackupPolicyPostgresql] depends_on.
+func (dpbpp *DataProtectionBackupPolicyPostgresql) Dependencies() terra.Dependencies {
+	return dpbpp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataProtectionBackupPolicyPostgresql].
+func (dpbpp *DataProtectionBackupPolicyPostgresql) LifecycleManagement() *terra.Lifecycle {
+	return dpbpp.Lifecycle
+}
+
+// Attributes returns the attributes for [DataProtectionBackupPolicyPostgresql].
 func (dpbpp *DataProtectionBackupPolicyPostgresql) Attributes() dataProtectionBackupPolicyPostgresqlAttributes {
 	return dataProtectionBackupPolicyPostgresqlAttributes{ref: terra.ReferenceResource(dpbpp)}
 }
 
+// ImportState imports the given attribute values into [DataProtectionBackupPolicyPostgresql]'s state.
 func (dpbpp *DataProtectionBackupPolicyPostgresql) ImportState(av io.Reader) error {
 	dpbpp.state = &dataProtectionBackupPolicyPostgresqlState{}
 	if err := json.NewDecoder(av).Decode(dpbpp.state); err != nil {
@@ -49,10 +73,12 @@ func (dpbpp *DataProtectionBackupPolicyPostgresql) ImportState(av io.Reader) err
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataProtectionBackupPolicyPostgresql] has state.
 func (dpbpp *DataProtectionBackupPolicyPostgresql) State() (*dataProtectionBackupPolicyPostgresqlState, bool) {
 	return dpbpp.state, dpbpp.state != nil
 }
 
+// StateMust returns the state for [DataProtectionBackupPolicyPostgresql]. Panics if the state is nil.
 func (dpbpp *DataProtectionBackupPolicyPostgresql) StateMust() *dataProtectionBackupPolicyPostgresqlState {
 	if dpbpp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dpbpp.Type(), dpbpp.LocalName()))
@@ -60,10 +86,7 @@ func (dpbpp *DataProtectionBackupPolicyPostgresql) StateMust() *dataProtectionBa
 	return dpbpp.state
 }
 
-func (dpbpp *DataProtectionBackupPolicyPostgresql) DependOn() terra.Reference {
-	return terra.ReferenceResource(dpbpp)
-}
-
+// DataProtectionBackupPolicyPostgresqlArgs contains the configurations for azurerm_data_protection_backup_policy_postgresql.
 type DataProtectionBackupPolicyPostgresqlArgs struct {
 	// BackupRepeatingTimeIntervals: list of string, required
 	BackupRepeatingTimeIntervals terra.ListValue[terra.StringValue] `hcl:"backup_repeating_time_intervals,attr" validate:"required"`
@@ -81,43 +104,47 @@ type DataProtectionBackupPolicyPostgresqlArgs struct {
 	RetentionRule []dataprotectionbackuppolicypostgresql.RetentionRule `hcl:"retention_rule,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *dataprotectionbackuppolicypostgresql.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataProtectionBackupPolicyPostgresql depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataProtectionBackupPolicyPostgresqlAttributes struct {
 	ref terra.Reference
 }
 
+// BackupRepeatingTimeIntervals returns a reference to field backup_repeating_time_intervals of azurerm_data_protection_backup_policy_postgresql.
 func (dpbpp dataProtectionBackupPolicyPostgresqlAttributes) BackupRepeatingTimeIntervals() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dpbpp.ref.Append("backup_repeating_time_intervals"))
+	return terra.ReferenceAsList[terra.StringValue](dpbpp.ref.Append("backup_repeating_time_intervals"))
 }
 
+// DefaultRetentionDuration returns a reference to field default_retention_duration of azurerm_data_protection_backup_policy_postgresql.
 func (dpbpp dataProtectionBackupPolicyPostgresqlAttributes) DefaultRetentionDuration() terra.StringValue {
-	return terra.ReferenceString(dpbpp.ref.Append("default_retention_duration"))
+	return terra.ReferenceAsString(dpbpp.ref.Append("default_retention_duration"))
 }
 
+// Id returns a reference to field id of azurerm_data_protection_backup_policy_postgresql.
 func (dpbpp dataProtectionBackupPolicyPostgresqlAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dpbpp.ref.Append("id"))
+	return terra.ReferenceAsString(dpbpp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_data_protection_backup_policy_postgresql.
 func (dpbpp dataProtectionBackupPolicyPostgresqlAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dpbpp.ref.Append("name"))
+	return terra.ReferenceAsString(dpbpp.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_data_protection_backup_policy_postgresql.
 func (dpbpp dataProtectionBackupPolicyPostgresqlAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(dpbpp.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(dpbpp.ref.Append("resource_group_name"))
 }
 
+// VaultName returns a reference to field vault_name of azurerm_data_protection_backup_policy_postgresql.
 func (dpbpp dataProtectionBackupPolicyPostgresqlAttributes) VaultName() terra.StringValue {
-	return terra.ReferenceString(dpbpp.ref.Append("vault_name"))
+	return terra.ReferenceAsString(dpbpp.ref.Append("vault_name"))
 }
 
 func (dpbpp dataProtectionBackupPolicyPostgresqlAttributes) RetentionRule() terra.ListValue[dataprotectionbackuppolicypostgresql.RetentionRuleAttributes] {
-	return terra.ReferenceList[dataprotectionbackuppolicypostgresql.RetentionRuleAttributes](dpbpp.ref.Append("retention_rule"))
+	return terra.ReferenceAsList[dataprotectionbackuppolicypostgresql.RetentionRuleAttributes](dpbpp.ref.Append("retention_rule"))
 }
 
 func (dpbpp dataProtectionBackupPolicyPostgresqlAttributes) Timeouts() dataprotectionbackuppolicypostgresql.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataprotectionbackuppolicypostgresql.TimeoutsAttributes](dpbpp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataprotectionbackuppolicypostgresql.TimeoutsAttributes](dpbpp.ref.Append("timeouts"))
 }
 
 type dataProtectionBackupPolicyPostgresqlState struct {

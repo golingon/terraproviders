@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewComputeSubnetworkIamPolicy creates a new instance of [ComputeSubnetworkIamPolicy].
 func NewComputeSubnetworkIamPolicy(name string, args ComputeSubnetworkIamPolicyArgs) *ComputeSubnetworkIamPolicy {
 	return &ComputeSubnetworkIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewComputeSubnetworkIamPolicy(name string, args ComputeSubnetworkIamPolicyA
 
 var _ terra.Resource = (*ComputeSubnetworkIamPolicy)(nil)
 
+// ComputeSubnetworkIamPolicy represents the Terraform resource google_compute_subnetwork_iam_policy.
 type ComputeSubnetworkIamPolicy struct {
-	Name  string
-	Args  ComputeSubnetworkIamPolicyArgs
-	state *computeSubnetworkIamPolicyState
+	Name      string
+	Args      ComputeSubnetworkIamPolicyArgs
+	state     *computeSubnetworkIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeSubnetworkIamPolicy].
 func (csip *ComputeSubnetworkIamPolicy) Type() string {
 	return "google_compute_subnetwork_iam_policy"
 }
 
+// LocalName returns the local name for [ComputeSubnetworkIamPolicy].
 func (csip *ComputeSubnetworkIamPolicy) LocalName() string {
 	return csip.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeSubnetworkIamPolicy].
 func (csip *ComputeSubnetworkIamPolicy) Configuration() interface{} {
 	return csip.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeSubnetworkIamPolicy].
+func (csip *ComputeSubnetworkIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(csip)
+}
+
+// Dependencies returns the list of resources [ComputeSubnetworkIamPolicy] depends_on.
+func (csip *ComputeSubnetworkIamPolicy) Dependencies() terra.Dependencies {
+	return csip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeSubnetworkIamPolicy].
+func (csip *ComputeSubnetworkIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return csip.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeSubnetworkIamPolicy].
 func (csip *ComputeSubnetworkIamPolicy) Attributes() computeSubnetworkIamPolicyAttributes {
 	return computeSubnetworkIamPolicyAttributes{ref: terra.ReferenceResource(csip)}
 }
 
+// ImportState imports the given attribute values into [ComputeSubnetworkIamPolicy]'s state.
 func (csip *ComputeSubnetworkIamPolicy) ImportState(av io.Reader) error {
 	csip.state = &computeSubnetworkIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(csip.state); err != nil {
@@ -48,10 +72,12 @@ func (csip *ComputeSubnetworkIamPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeSubnetworkIamPolicy] has state.
 func (csip *ComputeSubnetworkIamPolicy) State() (*computeSubnetworkIamPolicyState, bool) {
 	return csip.state, csip.state != nil
 }
 
+// StateMust returns the state for [ComputeSubnetworkIamPolicy]. Panics if the state is nil.
 func (csip *ComputeSubnetworkIamPolicy) StateMust() *computeSubnetworkIamPolicyState {
 	if csip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", csip.Type(), csip.LocalName()))
@@ -59,10 +85,7 @@ func (csip *ComputeSubnetworkIamPolicy) StateMust() *computeSubnetworkIamPolicyS
 	return csip.state
 }
 
-func (csip *ComputeSubnetworkIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(csip)
-}
-
+// ComputeSubnetworkIamPolicyArgs contains the configurations for google_compute_subnetwork_iam_policy.
 type ComputeSubnetworkIamPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -74,35 +97,39 @@ type ComputeSubnetworkIamPolicyArgs struct {
 	Region terra.StringValue `hcl:"region,attr"`
 	// Subnetwork: string, required
 	Subnetwork terra.StringValue `hcl:"subnetwork,attr" validate:"required"`
-	// DependsOn contains resources that ComputeSubnetworkIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeSubnetworkIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_compute_subnetwork_iam_policy.
 func (csip computeSubnetworkIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(csip.ref.Append("etag"))
+	return terra.ReferenceAsString(csip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_compute_subnetwork_iam_policy.
 func (csip computeSubnetworkIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(csip.ref.Append("id"))
+	return terra.ReferenceAsString(csip.ref.Append("id"))
 }
 
+// PolicyData returns a reference to field policy_data of google_compute_subnetwork_iam_policy.
 func (csip computeSubnetworkIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(csip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(csip.ref.Append("policy_data"))
 }
 
+// Project returns a reference to field project of google_compute_subnetwork_iam_policy.
 func (csip computeSubnetworkIamPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(csip.ref.Append("project"))
+	return terra.ReferenceAsString(csip.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_compute_subnetwork_iam_policy.
 func (csip computeSubnetworkIamPolicyAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(csip.ref.Append("region"))
+	return terra.ReferenceAsString(csip.ref.Append("region"))
 }
 
+// Subnetwork returns a reference to field subnetwork of google_compute_subnetwork_iam_policy.
 func (csip computeSubnetworkIamPolicyAttributes) Subnetwork() terra.StringValue {
-	return terra.ReferenceString(csip.ref.Append("subnetwork"))
+	return terra.ReferenceAsString(csip.ref.Append("subnetwork"))
 }
 
 type computeSubnetworkIamPolicyState struct {

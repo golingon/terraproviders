@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSubscription creates a new instance of [Subscription].
 func NewSubscription(name string, args SubscriptionArgs) *Subscription {
 	return &Subscription{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSubscription(name string, args SubscriptionArgs) *Subscription {
 
 var _ terra.Resource = (*Subscription)(nil)
 
+// Subscription represents the Terraform resource azurerm_subscription.
 type Subscription struct {
-	Name  string
-	Args  SubscriptionArgs
-	state *subscriptionState
+	Name      string
+	Args      SubscriptionArgs
+	state     *subscriptionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Subscription].
 func (s *Subscription) Type() string {
 	return "azurerm_subscription"
 }
 
+// LocalName returns the local name for [Subscription].
 func (s *Subscription) LocalName() string {
 	return s.Name
 }
 
+// Configuration returns the configuration (args) for [Subscription].
 func (s *Subscription) Configuration() interface{} {
 	return s.Args
 }
 
+// DependOn is used for other resources to depend on [Subscription].
+func (s *Subscription) DependOn() terra.Reference {
+	return terra.ReferenceResource(s)
+}
+
+// Dependencies returns the list of resources [Subscription] depends_on.
+func (s *Subscription) Dependencies() terra.Dependencies {
+	return s.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Subscription].
+func (s *Subscription) LifecycleManagement() *terra.Lifecycle {
+	return s.Lifecycle
+}
+
+// Attributes returns the attributes for [Subscription].
 func (s *Subscription) Attributes() subscriptionAttributes {
 	return subscriptionAttributes{ref: terra.ReferenceResource(s)}
 }
 
+// ImportState imports the given attribute values into [Subscription]'s state.
 func (s *Subscription) ImportState(av io.Reader) error {
 	s.state = &subscriptionState{}
 	if err := json.NewDecoder(av).Decode(s.state); err != nil {
@@ -49,10 +73,12 @@ func (s *Subscription) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Subscription] has state.
 func (s *Subscription) State() (*subscriptionState, bool) {
 	return s.state, s.state != nil
 }
 
+// StateMust returns the state for [Subscription]. Panics if the state is nil.
 func (s *Subscription) StateMust() *subscriptionState {
 	if s.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", s.Type(), s.LocalName()))
@@ -60,10 +86,7 @@ func (s *Subscription) StateMust() *subscriptionState {
 	return s.state
 }
 
-func (s *Subscription) DependOn() terra.Reference {
-	return terra.ReferenceResource(s)
-}
-
+// SubscriptionArgs contains the configurations for azurerm_subscription.
 type SubscriptionArgs struct {
 	// Alias: string, optional
 	Alias terra.StringValue `hcl:"alias,attr"`
@@ -81,47 +104,53 @@ type SubscriptionArgs struct {
 	Workload terra.StringValue `hcl:"workload,attr"`
 	// Timeouts: optional
 	Timeouts *subscription.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that Subscription depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type subscriptionAttributes struct {
 	ref terra.Reference
 }
 
+// Alias returns a reference to field alias of azurerm_subscription.
 func (s subscriptionAttributes) Alias() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("alias"))
+	return terra.ReferenceAsString(s.ref.Append("alias"))
 }
 
+// BillingScopeId returns a reference to field billing_scope_id of azurerm_subscription.
 func (s subscriptionAttributes) BillingScopeId() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("billing_scope_id"))
+	return terra.ReferenceAsString(s.ref.Append("billing_scope_id"))
 }
 
+// Id returns a reference to field id of azurerm_subscription.
 func (s subscriptionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("id"))
+	return terra.ReferenceAsString(s.ref.Append("id"))
 }
 
+// SubscriptionId returns a reference to field subscription_id of azurerm_subscription.
 func (s subscriptionAttributes) SubscriptionId() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("subscription_id"))
+	return terra.ReferenceAsString(s.ref.Append("subscription_id"))
 }
 
+// SubscriptionName returns a reference to field subscription_name of azurerm_subscription.
 func (s subscriptionAttributes) SubscriptionName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("subscription_name"))
+	return terra.ReferenceAsString(s.ref.Append("subscription_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_subscription.
 func (s subscriptionAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](s.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](s.ref.Append("tags"))
 }
 
+// TenantId returns a reference to field tenant_id of azurerm_subscription.
 func (s subscriptionAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(s.ref.Append("tenant_id"))
 }
 
+// Workload returns a reference to field workload of azurerm_subscription.
 func (s subscriptionAttributes) Workload() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("workload"))
+	return terra.ReferenceAsString(s.ref.Append("workload"))
 }
 
 func (s subscriptionAttributes) Timeouts() subscription.TimeoutsAttributes {
-	return terra.ReferenceSingle[subscription.TimeoutsAttributes](s.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[subscription.TimeoutsAttributes](s.ref.Append("timeouts"))
 }
 
 type subscriptionState struct {

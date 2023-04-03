@@ -28,7 +28,7 @@ func (t TagAttributes) InternalWithRef(ref terra.Reference) TagAttributes {
 	return TagAttributes{ref: ref}
 }
 
-func (t TagAttributes) InternalTokens() hclwrite.Tokens {
+func (t TagAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

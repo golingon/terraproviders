@@ -87,7 +87,7 @@ func (aad AutoAdjustDataAttributes) InternalWithRef(ref terra.Reference) AutoAdj
 	return AutoAdjustDataAttributes{ref: ref}
 }
 
-func (aad AutoAdjustDataAttributes) InternalTokens() hclwrite.Tokens {
+func (aad AutoAdjustDataAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aad.ref.InternalTokens()
 }
 
@@ -115,7 +115,7 @@ func (ho HistoricalOptionsAttributes) InternalWithRef(ref terra.Reference) Histo
 	return HistoricalOptionsAttributes{ref: ref}
 }
 
-func (ho HistoricalOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (ho HistoricalOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ho.ref.InternalTokens()
 }
 
@@ -139,7 +139,7 @@ func (cf CostFilterAttributes) InternalWithRef(ref terra.Reference) CostFilterAt
 	return CostFilterAttributes{ref: ref}
 }
 
-func (cf CostFilterAttributes) InternalTokens() hclwrite.Tokens {
+func (cf CostFilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cf.ref.InternalTokens()
 }
 
@@ -163,7 +163,7 @@ func (ct CostTypesAttributes) InternalWithRef(ref terra.Reference) CostTypesAttr
 	return CostTypesAttributes{ref: ref}
 }
 
-func (ct CostTypesAttributes) InternalTokens() hclwrite.Tokens {
+func (ct CostTypesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ct.ref.InternalTokens()
 }
 
@@ -223,7 +223,7 @@ func (n NotificationAttributes) InternalWithRef(ref terra.Reference) Notificatio
 	return NotificationAttributes{ref: ref}
 }
 
-func (n NotificationAttributes) InternalTokens() hclwrite.Tokens {
+func (n NotificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return n.ref.InternalTokens()
 }
 
@@ -263,7 +263,7 @@ func (pl PlannedLimitAttributes) InternalWithRef(ref terra.Reference) PlannedLim
 	return PlannedLimitAttributes{ref: ref}
 }
 
-func (pl PlannedLimitAttributes) InternalTokens() hclwrite.Tokens {
+func (pl PlannedLimitAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pl.ref.InternalTokens()
 }
 

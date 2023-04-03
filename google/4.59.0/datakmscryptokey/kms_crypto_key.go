@@ -13,24 +13,24 @@ type VersionTemplateAttributes struct {
 	ref terra.Reference
 }
 
-func (vt VersionTemplateAttributes) InternalRef() terra.Reference {
-	return vt.ref
+func (vt VersionTemplateAttributes) InternalRef() (terra.Reference, error) {
+	return vt.ref, nil
 }
 
 func (vt VersionTemplateAttributes) InternalWithRef(ref terra.Reference) VersionTemplateAttributes {
 	return VersionTemplateAttributes{ref: ref}
 }
 
-func (vt VersionTemplateAttributes) InternalTokens() hclwrite.Tokens {
+func (vt VersionTemplateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vt.ref.InternalTokens()
 }
 
 func (vt VersionTemplateAttributes) Algorithm() terra.StringValue {
-	return terra.ReferenceString(vt.ref.Append("algorithm"))
+	return terra.ReferenceAsString(vt.ref.Append("algorithm"))
 }
 
 func (vt VersionTemplateAttributes) ProtectionLevel() terra.StringValue {
-	return terra.ReferenceString(vt.ref.Append("protection_level"))
+	return terra.ReferenceAsString(vt.ref.Append("protection_level"))
 }
 
 type VersionTemplateState struct {

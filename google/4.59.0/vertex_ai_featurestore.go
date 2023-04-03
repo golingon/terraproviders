@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewVertexAiFeaturestore creates a new instance of [VertexAiFeaturestore].
 func NewVertexAiFeaturestore(name string, args VertexAiFeaturestoreArgs) *VertexAiFeaturestore {
 	return &VertexAiFeaturestore{
 		Args: args,
@@ -19,28 +20,51 @@ func NewVertexAiFeaturestore(name string, args VertexAiFeaturestoreArgs) *Vertex
 
 var _ terra.Resource = (*VertexAiFeaturestore)(nil)
 
+// VertexAiFeaturestore represents the Terraform resource google_vertex_ai_featurestore.
 type VertexAiFeaturestore struct {
-	Name  string
-	Args  VertexAiFeaturestoreArgs
-	state *vertexAiFeaturestoreState
+	Name      string
+	Args      VertexAiFeaturestoreArgs
+	state     *vertexAiFeaturestoreState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VertexAiFeaturestore].
 func (vaf *VertexAiFeaturestore) Type() string {
 	return "google_vertex_ai_featurestore"
 }
 
+// LocalName returns the local name for [VertexAiFeaturestore].
 func (vaf *VertexAiFeaturestore) LocalName() string {
 	return vaf.Name
 }
 
+// Configuration returns the configuration (args) for [VertexAiFeaturestore].
 func (vaf *VertexAiFeaturestore) Configuration() interface{} {
 	return vaf.Args
 }
 
+// DependOn is used for other resources to depend on [VertexAiFeaturestore].
+func (vaf *VertexAiFeaturestore) DependOn() terra.Reference {
+	return terra.ReferenceResource(vaf)
+}
+
+// Dependencies returns the list of resources [VertexAiFeaturestore] depends_on.
+func (vaf *VertexAiFeaturestore) Dependencies() terra.Dependencies {
+	return vaf.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VertexAiFeaturestore].
+func (vaf *VertexAiFeaturestore) LifecycleManagement() *terra.Lifecycle {
+	return vaf.Lifecycle
+}
+
+// Attributes returns the attributes for [VertexAiFeaturestore].
 func (vaf *VertexAiFeaturestore) Attributes() vertexAiFeaturestoreAttributes {
 	return vertexAiFeaturestoreAttributes{ref: terra.ReferenceResource(vaf)}
 }
 
+// ImportState imports the given attribute values into [VertexAiFeaturestore]'s state.
 func (vaf *VertexAiFeaturestore) ImportState(av io.Reader) error {
 	vaf.state = &vertexAiFeaturestoreState{}
 	if err := json.NewDecoder(av).Decode(vaf.state); err != nil {
@@ -49,10 +73,12 @@ func (vaf *VertexAiFeaturestore) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [VertexAiFeaturestore] has state.
 func (vaf *VertexAiFeaturestore) State() (*vertexAiFeaturestoreState, bool) {
 	return vaf.state, vaf.state != nil
 }
 
+// StateMust returns the state for [VertexAiFeaturestore]. Panics if the state is nil.
 func (vaf *VertexAiFeaturestore) StateMust() *vertexAiFeaturestoreState {
 	if vaf.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", vaf.Type(), vaf.LocalName()))
@@ -60,10 +86,7 @@ func (vaf *VertexAiFeaturestore) StateMust() *vertexAiFeaturestoreState {
 	return vaf.state
 }
 
-func (vaf *VertexAiFeaturestore) DependOn() terra.Reference {
-	return terra.ReferenceResource(vaf)
-}
-
+// VertexAiFeaturestoreArgs contains the configurations for google_vertex_ai_featurestore.
 type VertexAiFeaturestoreArgs struct {
 	// ForceDestroy: bool, optional
 	ForceDestroy terra.BoolValue `hcl:"force_destroy,attr"`
@@ -83,59 +106,66 @@ type VertexAiFeaturestoreArgs struct {
 	OnlineServingConfig *vertexaifeaturestore.OnlineServingConfig `hcl:"online_serving_config,block"`
 	// Timeouts: optional
 	Timeouts *vertexaifeaturestore.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that VertexAiFeaturestore depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type vertexAiFeaturestoreAttributes struct {
 	ref terra.Reference
 }
 
+// CreateTime returns a reference to field create_time of google_vertex_ai_featurestore.
 func (vaf vertexAiFeaturestoreAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(vaf.ref.Append("create_time"))
+	return terra.ReferenceAsString(vaf.ref.Append("create_time"))
 }
 
+// Etag returns a reference to field etag of google_vertex_ai_featurestore.
 func (vaf vertexAiFeaturestoreAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(vaf.ref.Append("etag"))
+	return terra.ReferenceAsString(vaf.ref.Append("etag"))
 }
 
+// ForceDestroy returns a reference to field force_destroy of google_vertex_ai_featurestore.
 func (vaf vertexAiFeaturestoreAttributes) ForceDestroy() terra.BoolValue {
-	return terra.ReferenceBool(vaf.ref.Append("force_destroy"))
+	return terra.ReferenceAsBool(vaf.ref.Append("force_destroy"))
 }
 
+// Id returns a reference to field id of google_vertex_ai_featurestore.
 func (vaf vertexAiFeaturestoreAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vaf.ref.Append("id"))
+	return terra.ReferenceAsString(vaf.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_vertex_ai_featurestore.
 func (vaf vertexAiFeaturestoreAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](vaf.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](vaf.ref.Append("labels"))
 }
 
+// Name returns a reference to field name of google_vertex_ai_featurestore.
 func (vaf vertexAiFeaturestoreAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(vaf.ref.Append("name"))
+	return terra.ReferenceAsString(vaf.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_vertex_ai_featurestore.
 func (vaf vertexAiFeaturestoreAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(vaf.ref.Append("project"))
+	return terra.ReferenceAsString(vaf.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_vertex_ai_featurestore.
 func (vaf vertexAiFeaturestoreAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(vaf.ref.Append("region"))
+	return terra.ReferenceAsString(vaf.ref.Append("region"))
 }
 
+// UpdateTime returns a reference to field update_time of google_vertex_ai_featurestore.
 func (vaf vertexAiFeaturestoreAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(vaf.ref.Append("update_time"))
+	return terra.ReferenceAsString(vaf.ref.Append("update_time"))
 }
 
 func (vaf vertexAiFeaturestoreAttributes) EncryptionSpec() terra.ListValue[vertexaifeaturestore.EncryptionSpecAttributes] {
-	return terra.ReferenceList[vertexaifeaturestore.EncryptionSpecAttributes](vaf.ref.Append("encryption_spec"))
+	return terra.ReferenceAsList[vertexaifeaturestore.EncryptionSpecAttributes](vaf.ref.Append("encryption_spec"))
 }
 
 func (vaf vertexAiFeaturestoreAttributes) OnlineServingConfig() terra.ListValue[vertexaifeaturestore.OnlineServingConfigAttributes] {
-	return terra.ReferenceList[vertexaifeaturestore.OnlineServingConfigAttributes](vaf.ref.Append("online_serving_config"))
+	return terra.ReferenceAsList[vertexaifeaturestore.OnlineServingConfigAttributes](vaf.ref.Append("online_serving_config"))
 }
 
 func (vaf vertexAiFeaturestoreAttributes) Timeouts() vertexaifeaturestore.TimeoutsAttributes {
-	return terra.ReferenceSingle[vertexaifeaturestore.TimeoutsAttributes](vaf.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[vertexaifeaturestore.TimeoutsAttributes](vaf.ref.Append("timeouts"))
 }
 
 type vertexAiFeaturestoreState struct {

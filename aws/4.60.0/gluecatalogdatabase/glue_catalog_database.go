@@ -38,7 +38,7 @@ func (ctdp CreateTableDefaultPermissionAttributes) InternalWithRef(ref terra.Ref
 	return CreateTableDefaultPermissionAttributes{ref: ref}
 }
 
-func (ctdp CreateTableDefaultPermissionAttributes) InternalTokens() hclwrite.Tokens {
+func (ctdp CreateTableDefaultPermissionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ctdp.ref.InternalTokens()
 }
 
@@ -62,7 +62,7 @@ func (p PrincipalAttributes) InternalWithRef(ref terra.Reference) PrincipalAttri
 	return PrincipalAttributes{ref: ref}
 }
 
-func (p PrincipalAttributes) InternalTokens() hclwrite.Tokens {
+func (p PrincipalAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -82,7 +82,7 @@ func (td TargetDatabaseAttributes) InternalWithRef(ref terra.Reference) TargetDa
 	return TargetDatabaseAttributes{ref: ref}
 }
 
-func (td TargetDatabaseAttributes) InternalTokens() hclwrite.Tokens {
+func (td TargetDatabaseAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return td.ref.InternalTokens()
 }
 

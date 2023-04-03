@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBillingAccountIamBinding creates a new instance of [BillingAccountIamBinding].
 func NewBillingAccountIamBinding(name string, args BillingAccountIamBindingArgs) *BillingAccountIamBinding {
 	return &BillingAccountIamBinding{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBillingAccountIamBinding(name string, args BillingAccountIamBindingArgs)
 
 var _ terra.Resource = (*BillingAccountIamBinding)(nil)
 
+// BillingAccountIamBinding represents the Terraform resource google_billing_account_iam_binding.
 type BillingAccountIamBinding struct {
-	Name  string
-	Args  BillingAccountIamBindingArgs
-	state *billingAccountIamBindingState
+	Name      string
+	Args      BillingAccountIamBindingArgs
+	state     *billingAccountIamBindingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BillingAccountIamBinding].
 func (baib *BillingAccountIamBinding) Type() string {
 	return "google_billing_account_iam_binding"
 }
 
+// LocalName returns the local name for [BillingAccountIamBinding].
 func (baib *BillingAccountIamBinding) LocalName() string {
 	return baib.Name
 }
 
+// Configuration returns the configuration (args) for [BillingAccountIamBinding].
 func (baib *BillingAccountIamBinding) Configuration() interface{} {
 	return baib.Args
 }
 
+// DependOn is used for other resources to depend on [BillingAccountIamBinding].
+func (baib *BillingAccountIamBinding) DependOn() terra.Reference {
+	return terra.ReferenceResource(baib)
+}
+
+// Dependencies returns the list of resources [BillingAccountIamBinding] depends_on.
+func (baib *BillingAccountIamBinding) Dependencies() terra.Dependencies {
+	return baib.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BillingAccountIamBinding].
+func (baib *BillingAccountIamBinding) LifecycleManagement() *terra.Lifecycle {
+	return baib.Lifecycle
+}
+
+// Attributes returns the attributes for [BillingAccountIamBinding].
 func (baib *BillingAccountIamBinding) Attributes() billingAccountIamBindingAttributes {
 	return billingAccountIamBindingAttributes{ref: terra.ReferenceResource(baib)}
 }
 
+// ImportState imports the given attribute values into [BillingAccountIamBinding]'s state.
 func (baib *BillingAccountIamBinding) ImportState(av io.Reader) error {
 	baib.state = &billingAccountIamBindingState{}
 	if err := json.NewDecoder(av).Decode(baib.state); err != nil {
@@ -49,10 +73,12 @@ func (baib *BillingAccountIamBinding) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BillingAccountIamBinding] has state.
 func (baib *BillingAccountIamBinding) State() (*billingAccountIamBindingState, bool) {
 	return baib.state, baib.state != nil
 }
 
+// StateMust returns the state for [BillingAccountIamBinding]. Panics if the state is nil.
 func (baib *BillingAccountIamBinding) StateMust() *billingAccountIamBindingState {
 	if baib.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", baib.Type(), baib.LocalName()))
@@ -60,10 +86,7 @@ func (baib *BillingAccountIamBinding) StateMust() *billingAccountIamBindingState
 	return baib.state
 }
 
-func (baib *BillingAccountIamBinding) DependOn() terra.Reference {
-	return terra.ReferenceResource(baib)
-}
-
+// BillingAccountIamBindingArgs contains the configurations for google_billing_account_iam_binding.
 type BillingAccountIamBindingArgs struct {
 	// BillingAccountId: string, required
 	BillingAccountId terra.StringValue `hcl:"billing_account_id,attr" validate:"required"`
@@ -75,35 +98,38 @@ type BillingAccountIamBindingArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *billingaccountiambinding.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that BillingAccountIamBinding depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type billingAccountIamBindingAttributes struct {
 	ref terra.Reference
 }
 
+// BillingAccountId returns a reference to field billing_account_id of google_billing_account_iam_binding.
 func (baib billingAccountIamBindingAttributes) BillingAccountId() terra.StringValue {
-	return terra.ReferenceString(baib.ref.Append("billing_account_id"))
+	return terra.ReferenceAsString(baib.ref.Append("billing_account_id"))
 }
 
+// Etag returns a reference to field etag of google_billing_account_iam_binding.
 func (baib billingAccountIamBindingAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(baib.ref.Append("etag"))
+	return terra.ReferenceAsString(baib.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_billing_account_iam_binding.
 func (baib billingAccountIamBindingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(baib.ref.Append("id"))
+	return terra.ReferenceAsString(baib.ref.Append("id"))
 }
 
+// Members returns a reference to field members of google_billing_account_iam_binding.
 func (baib billingAccountIamBindingAttributes) Members() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](baib.ref.Append("members"))
+	return terra.ReferenceAsSet[terra.StringValue](baib.ref.Append("members"))
 }
 
+// Role returns a reference to field role of google_billing_account_iam_binding.
 func (baib billingAccountIamBindingAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(baib.ref.Append("role"))
+	return terra.ReferenceAsString(baib.ref.Append("role"))
 }
 
 func (baib billingAccountIamBindingAttributes) Condition() terra.ListValue[billingaccountiambinding.ConditionAttributes] {
-	return terra.ReferenceList[billingaccountiambinding.ConditionAttributes](baib.ref.Append("condition"))
+	return terra.ReferenceAsList[billingaccountiambinding.ConditionAttributes](baib.ref.Append("condition"))
 }
 
 type billingAccountIamBindingState struct {

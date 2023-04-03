@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeSecurityPolicy creates a new instance of [ComputeSecurityPolicy].
 func NewComputeSecurityPolicy(name string, args ComputeSecurityPolicyArgs) *ComputeSecurityPolicy {
 	return &ComputeSecurityPolicy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeSecurityPolicy(name string, args ComputeSecurityPolicyArgs) *Comp
 
 var _ terra.Resource = (*ComputeSecurityPolicy)(nil)
 
+// ComputeSecurityPolicy represents the Terraform resource google_compute_security_policy.
 type ComputeSecurityPolicy struct {
-	Name  string
-	Args  ComputeSecurityPolicyArgs
-	state *computeSecurityPolicyState
+	Name      string
+	Args      ComputeSecurityPolicyArgs
+	state     *computeSecurityPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeSecurityPolicy].
 func (csp *ComputeSecurityPolicy) Type() string {
 	return "google_compute_security_policy"
 }
 
+// LocalName returns the local name for [ComputeSecurityPolicy].
 func (csp *ComputeSecurityPolicy) LocalName() string {
 	return csp.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeSecurityPolicy].
 func (csp *ComputeSecurityPolicy) Configuration() interface{} {
 	return csp.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeSecurityPolicy].
+func (csp *ComputeSecurityPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(csp)
+}
+
+// Dependencies returns the list of resources [ComputeSecurityPolicy] depends_on.
+func (csp *ComputeSecurityPolicy) Dependencies() terra.Dependencies {
+	return csp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeSecurityPolicy].
+func (csp *ComputeSecurityPolicy) LifecycleManagement() *terra.Lifecycle {
+	return csp.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeSecurityPolicy].
 func (csp *ComputeSecurityPolicy) Attributes() computeSecurityPolicyAttributes {
 	return computeSecurityPolicyAttributes{ref: terra.ReferenceResource(csp)}
 }
 
+// ImportState imports the given attribute values into [ComputeSecurityPolicy]'s state.
 func (csp *ComputeSecurityPolicy) ImportState(av io.Reader) error {
 	csp.state = &computeSecurityPolicyState{}
 	if err := json.NewDecoder(av).Decode(csp.state); err != nil {
@@ -49,10 +73,12 @@ func (csp *ComputeSecurityPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeSecurityPolicy] has state.
 func (csp *ComputeSecurityPolicy) State() (*computeSecurityPolicyState, bool) {
 	return csp.state, csp.state != nil
 }
 
+// StateMust returns the state for [ComputeSecurityPolicy]. Panics if the state is nil.
 func (csp *ComputeSecurityPolicy) StateMust() *computeSecurityPolicyState {
 	if csp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", csp.Type(), csp.LocalName()))
@@ -60,10 +86,7 @@ func (csp *ComputeSecurityPolicy) StateMust() *computeSecurityPolicyState {
 	return csp.state
 }
 
-func (csp *ComputeSecurityPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(csp)
-}
-
+// ComputeSecurityPolicyArgs contains the configurations for google_compute_security_policy.
 type ComputeSecurityPolicyArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -85,59 +108,64 @@ type ComputeSecurityPolicyArgs struct {
 	Rule []computesecuritypolicy.Rule `hcl:"rule,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *computesecuritypolicy.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeSecurityPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeSecurityPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of google_compute_security_policy.
 func (csp computeSecurityPolicyAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("description"))
+	return terra.ReferenceAsString(csp.ref.Append("description"))
 }
 
+// Fingerprint returns a reference to field fingerprint of google_compute_security_policy.
 func (csp computeSecurityPolicyAttributes) Fingerprint() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("fingerprint"))
+	return terra.ReferenceAsString(csp.ref.Append("fingerprint"))
 }
 
+// Id returns a reference to field id of google_compute_security_policy.
 func (csp computeSecurityPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("id"))
+	return terra.ReferenceAsString(csp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_compute_security_policy.
 func (csp computeSecurityPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("name"))
+	return terra.ReferenceAsString(csp.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_compute_security_policy.
 func (csp computeSecurityPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("project"))
+	return terra.ReferenceAsString(csp.ref.Append("project"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_security_policy.
 func (csp computeSecurityPolicyAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("self_link"))
+	return terra.ReferenceAsString(csp.ref.Append("self_link"))
 }
 
+// Type returns a reference to field type of google_compute_security_policy.
 func (csp computeSecurityPolicyAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("type"))
+	return terra.ReferenceAsString(csp.ref.Append("type"))
 }
 
 func (csp computeSecurityPolicyAttributes) AdaptiveProtectionConfig() terra.ListValue[computesecuritypolicy.AdaptiveProtectionConfigAttributes] {
-	return terra.ReferenceList[computesecuritypolicy.AdaptiveProtectionConfigAttributes](csp.ref.Append("adaptive_protection_config"))
+	return terra.ReferenceAsList[computesecuritypolicy.AdaptiveProtectionConfigAttributes](csp.ref.Append("adaptive_protection_config"))
 }
 
 func (csp computeSecurityPolicyAttributes) AdvancedOptionsConfig() terra.ListValue[computesecuritypolicy.AdvancedOptionsConfigAttributes] {
-	return terra.ReferenceList[computesecuritypolicy.AdvancedOptionsConfigAttributes](csp.ref.Append("advanced_options_config"))
+	return terra.ReferenceAsList[computesecuritypolicy.AdvancedOptionsConfigAttributes](csp.ref.Append("advanced_options_config"))
 }
 
 func (csp computeSecurityPolicyAttributes) RecaptchaOptionsConfig() terra.ListValue[computesecuritypolicy.RecaptchaOptionsConfigAttributes] {
-	return terra.ReferenceList[computesecuritypolicy.RecaptchaOptionsConfigAttributes](csp.ref.Append("recaptcha_options_config"))
+	return terra.ReferenceAsList[computesecuritypolicy.RecaptchaOptionsConfigAttributes](csp.ref.Append("recaptcha_options_config"))
 }
 
 func (csp computeSecurityPolicyAttributes) Rule() terra.SetValue[computesecuritypolicy.RuleAttributes] {
-	return terra.ReferenceSet[computesecuritypolicy.RuleAttributes](csp.ref.Append("rule"))
+	return terra.ReferenceAsSet[computesecuritypolicy.RuleAttributes](csp.ref.Append("rule"))
 }
 
 func (csp computeSecurityPolicyAttributes) Timeouts() computesecuritypolicy.TimeoutsAttributes {
-	return terra.ReferenceSingle[computesecuritypolicy.TimeoutsAttributes](csp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computesecuritypolicy.TimeoutsAttributes](csp.ref.Append("timeouts"))
 }
 
 type computeSecurityPolicyState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewIotSecuritySolution creates a new instance of [IotSecuritySolution].
 func NewIotSecuritySolution(name string, args IotSecuritySolutionArgs) *IotSecuritySolution {
 	return &IotSecuritySolution{
 		Args: args,
@@ -19,28 +20,51 @@ func NewIotSecuritySolution(name string, args IotSecuritySolutionArgs) *IotSecur
 
 var _ terra.Resource = (*IotSecuritySolution)(nil)
 
+// IotSecuritySolution represents the Terraform resource azurerm_iot_security_solution.
 type IotSecuritySolution struct {
-	Name  string
-	Args  IotSecuritySolutionArgs
-	state *iotSecuritySolutionState
+	Name      string
+	Args      IotSecuritySolutionArgs
+	state     *iotSecuritySolutionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IotSecuritySolution].
 func (iss *IotSecuritySolution) Type() string {
 	return "azurerm_iot_security_solution"
 }
 
+// LocalName returns the local name for [IotSecuritySolution].
 func (iss *IotSecuritySolution) LocalName() string {
 	return iss.Name
 }
 
+// Configuration returns the configuration (args) for [IotSecuritySolution].
 func (iss *IotSecuritySolution) Configuration() interface{} {
 	return iss.Args
 }
 
+// DependOn is used for other resources to depend on [IotSecuritySolution].
+func (iss *IotSecuritySolution) DependOn() terra.Reference {
+	return terra.ReferenceResource(iss)
+}
+
+// Dependencies returns the list of resources [IotSecuritySolution] depends_on.
+func (iss *IotSecuritySolution) Dependencies() terra.Dependencies {
+	return iss.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IotSecuritySolution].
+func (iss *IotSecuritySolution) LifecycleManagement() *terra.Lifecycle {
+	return iss.Lifecycle
+}
+
+// Attributes returns the attributes for [IotSecuritySolution].
 func (iss *IotSecuritySolution) Attributes() iotSecuritySolutionAttributes {
 	return iotSecuritySolutionAttributes{ref: terra.ReferenceResource(iss)}
 }
 
+// ImportState imports the given attribute values into [IotSecuritySolution]'s state.
 func (iss *IotSecuritySolution) ImportState(av io.Reader) error {
 	iss.state = &iotSecuritySolutionState{}
 	if err := json.NewDecoder(av).Decode(iss.state); err != nil {
@@ -49,10 +73,12 @@ func (iss *IotSecuritySolution) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IotSecuritySolution] has state.
 func (iss *IotSecuritySolution) State() (*iotSecuritySolutionState, bool) {
 	return iss.state, iss.state != nil
 }
 
+// StateMust returns the state for [IotSecuritySolution]. Panics if the state is nil.
 func (iss *IotSecuritySolution) StateMust() *iotSecuritySolutionState {
 	if iss.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", iss.Type(), iss.LocalName()))
@@ -60,10 +86,7 @@ func (iss *IotSecuritySolution) StateMust() *iotSecuritySolutionState {
 	return iss.state
 }
 
-func (iss *IotSecuritySolution) DependOn() terra.Reference {
-	return terra.ReferenceResource(iss)
-}
-
+// IotSecuritySolutionArgs contains the configurations for azurerm_iot_security_solution.
 type IotSecuritySolutionArgs struct {
 	// DisabledDataSources: set of string, optional
 	DisabledDataSources terra.SetValue[terra.StringValue] `hcl:"disabled_data_sources,attr"`
@@ -99,79 +122,91 @@ type IotSecuritySolutionArgs struct {
 	RecommendationsEnabled *iotsecuritysolution.RecommendationsEnabled `hcl:"recommendations_enabled,block"`
 	// Timeouts: optional
 	Timeouts *iotsecuritysolution.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that IotSecuritySolution depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iotSecuritySolutionAttributes struct {
 	ref terra.Reference
 }
 
+// DisabledDataSources returns a reference to field disabled_data_sources of azurerm_iot_security_solution.
 func (iss iotSecuritySolutionAttributes) DisabledDataSources() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](iss.ref.Append("disabled_data_sources"))
+	return terra.ReferenceAsSet[terra.StringValue](iss.ref.Append("disabled_data_sources"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_iot_security_solution.
 func (iss iotSecuritySolutionAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(iss.ref.Append("display_name"))
+	return terra.ReferenceAsString(iss.ref.Append("display_name"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_iot_security_solution.
 func (iss iotSecuritySolutionAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(iss.ref.Append("enabled"))
+	return terra.ReferenceAsBool(iss.ref.Append("enabled"))
 }
 
+// EventsToExport returns a reference to field events_to_export of azurerm_iot_security_solution.
 func (iss iotSecuritySolutionAttributes) EventsToExport() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](iss.ref.Append("events_to_export"))
+	return terra.ReferenceAsSet[terra.StringValue](iss.ref.Append("events_to_export"))
 }
 
+// Id returns a reference to field id of azurerm_iot_security_solution.
 func (iss iotSecuritySolutionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(iss.ref.Append("id"))
+	return terra.ReferenceAsString(iss.ref.Append("id"))
 }
 
+// IothubIds returns a reference to field iothub_ids of azurerm_iot_security_solution.
 func (iss iotSecuritySolutionAttributes) IothubIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](iss.ref.Append("iothub_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](iss.ref.Append("iothub_ids"))
 }
 
+// Location returns a reference to field location of azurerm_iot_security_solution.
 func (iss iotSecuritySolutionAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(iss.ref.Append("location"))
+	return terra.ReferenceAsString(iss.ref.Append("location"))
 }
 
+// LogAnalyticsWorkspaceId returns a reference to field log_analytics_workspace_id of azurerm_iot_security_solution.
 func (iss iotSecuritySolutionAttributes) LogAnalyticsWorkspaceId() terra.StringValue {
-	return terra.ReferenceString(iss.ref.Append("log_analytics_workspace_id"))
+	return terra.ReferenceAsString(iss.ref.Append("log_analytics_workspace_id"))
 }
 
+// LogUnmaskedIpsEnabled returns a reference to field log_unmasked_ips_enabled of azurerm_iot_security_solution.
 func (iss iotSecuritySolutionAttributes) LogUnmaskedIpsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(iss.ref.Append("log_unmasked_ips_enabled"))
+	return terra.ReferenceAsBool(iss.ref.Append("log_unmasked_ips_enabled"))
 }
 
+// Name returns a reference to field name of azurerm_iot_security_solution.
 func (iss iotSecuritySolutionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(iss.ref.Append("name"))
+	return terra.ReferenceAsString(iss.ref.Append("name"))
 }
 
+// QueryForResources returns a reference to field query_for_resources of azurerm_iot_security_solution.
 func (iss iotSecuritySolutionAttributes) QueryForResources() terra.StringValue {
-	return terra.ReferenceString(iss.ref.Append("query_for_resources"))
+	return terra.ReferenceAsString(iss.ref.Append("query_for_resources"))
 }
 
+// QuerySubscriptionIds returns a reference to field query_subscription_ids of azurerm_iot_security_solution.
 func (iss iotSecuritySolutionAttributes) QuerySubscriptionIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](iss.ref.Append("query_subscription_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](iss.ref.Append("query_subscription_ids"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_iot_security_solution.
 func (iss iotSecuritySolutionAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(iss.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(iss.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_iot_security_solution.
 func (iss iotSecuritySolutionAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](iss.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](iss.ref.Append("tags"))
 }
 
 func (iss iotSecuritySolutionAttributes) AdditionalWorkspace() terra.SetValue[iotsecuritysolution.AdditionalWorkspaceAttributes] {
-	return terra.ReferenceSet[iotsecuritysolution.AdditionalWorkspaceAttributes](iss.ref.Append("additional_workspace"))
+	return terra.ReferenceAsSet[iotsecuritysolution.AdditionalWorkspaceAttributes](iss.ref.Append("additional_workspace"))
 }
 
 func (iss iotSecuritySolutionAttributes) RecommendationsEnabled() terra.ListValue[iotsecuritysolution.RecommendationsEnabledAttributes] {
-	return terra.ReferenceList[iotsecuritysolution.RecommendationsEnabledAttributes](iss.ref.Append("recommendations_enabled"))
+	return terra.ReferenceAsList[iotsecuritysolution.RecommendationsEnabledAttributes](iss.ref.Append("recommendations_enabled"))
 }
 
 func (iss iotSecuritySolutionAttributes) Timeouts() iotsecuritysolution.TimeoutsAttributes {
-	return terra.ReferenceSingle[iotsecuritysolution.TimeoutsAttributes](iss.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[iotsecuritysolution.TimeoutsAttributes](iss.ref.Append("timeouts"))
 }
 
 type iotSecuritySolutionState struct {

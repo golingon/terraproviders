@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewStorageAccount creates a new instance of [StorageAccount].
 func NewStorageAccount(name string, args StorageAccountArgs) *StorageAccount {
 	return &StorageAccount{
 		Args: args,
@@ -19,28 +20,51 @@ func NewStorageAccount(name string, args StorageAccountArgs) *StorageAccount {
 
 var _ terra.Resource = (*StorageAccount)(nil)
 
+// StorageAccount represents the Terraform resource azurerm_storage_account.
 type StorageAccount struct {
-	Name  string
-	Args  StorageAccountArgs
-	state *storageAccountState
+	Name      string
+	Args      StorageAccountArgs
+	state     *storageAccountState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [StorageAccount].
 func (sa *StorageAccount) Type() string {
 	return "azurerm_storage_account"
 }
 
+// LocalName returns the local name for [StorageAccount].
 func (sa *StorageAccount) LocalName() string {
 	return sa.Name
 }
 
+// Configuration returns the configuration (args) for [StorageAccount].
 func (sa *StorageAccount) Configuration() interface{} {
 	return sa.Args
 }
 
+// DependOn is used for other resources to depend on [StorageAccount].
+func (sa *StorageAccount) DependOn() terra.Reference {
+	return terra.ReferenceResource(sa)
+}
+
+// Dependencies returns the list of resources [StorageAccount] depends_on.
+func (sa *StorageAccount) Dependencies() terra.Dependencies {
+	return sa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [StorageAccount].
+func (sa *StorageAccount) LifecycleManagement() *terra.Lifecycle {
+	return sa.Lifecycle
+}
+
+// Attributes returns the attributes for [StorageAccount].
 func (sa *StorageAccount) Attributes() storageAccountAttributes {
 	return storageAccountAttributes{ref: terra.ReferenceResource(sa)}
 }
 
+// ImportState imports the given attribute values into [StorageAccount]'s state.
 func (sa *StorageAccount) ImportState(av io.Reader) error {
 	sa.state = &storageAccountState{}
 	if err := json.NewDecoder(av).Decode(sa.state); err != nil {
@@ -49,10 +73,12 @@ func (sa *StorageAccount) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [StorageAccount] has state.
 func (sa *StorageAccount) State() (*storageAccountState, bool) {
 	return sa.state, sa.state != nil
 }
 
+// StateMust returns the state for [StorageAccount]. Panics if the state is nil.
 func (sa *StorageAccount) StateMust() *storageAccountState {
 	if sa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sa.Type(), sa.LocalName()))
@@ -60,10 +86,7 @@ func (sa *StorageAccount) StateMust() *storageAccountState {
 	return sa.state
 }
 
-func (sa *StorageAccount) DependOn() terra.Reference {
-	return terra.ReferenceResource(sa)
-}
-
+// StorageAccountArgs contains the configurations for azurerm_storage_account.
 type StorageAccountArgs struct {
 	// AccessTier: string, optional
 	AccessTier terra.StringValue `hcl:"access_tier,attr"`
@@ -141,291 +164,346 @@ type StorageAccountArgs struct {
 	StaticWebsite *storageaccount.StaticWebsite `hcl:"static_website,block"`
 	// Timeouts: optional
 	Timeouts *storageaccount.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that StorageAccount depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type storageAccountAttributes struct {
 	ref terra.Reference
 }
 
+// AccessTier returns a reference to field access_tier of azurerm_storage_account.
 func (sa storageAccountAttributes) AccessTier() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("access_tier"))
+	return terra.ReferenceAsString(sa.ref.Append("access_tier"))
 }
 
+// AccountKind returns a reference to field account_kind of azurerm_storage_account.
 func (sa storageAccountAttributes) AccountKind() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("account_kind"))
+	return terra.ReferenceAsString(sa.ref.Append("account_kind"))
 }
 
+// AccountReplicationType returns a reference to field account_replication_type of azurerm_storage_account.
 func (sa storageAccountAttributes) AccountReplicationType() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("account_replication_type"))
+	return terra.ReferenceAsString(sa.ref.Append("account_replication_type"))
 }
 
+// AccountTier returns a reference to field account_tier of azurerm_storage_account.
 func (sa storageAccountAttributes) AccountTier() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("account_tier"))
+	return terra.ReferenceAsString(sa.ref.Append("account_tier"))
 }
 
+// AllowNestedItemsToBePublic returns a reference to field allow_nested_items_to_be_public of azurerm_storage_account.
 func (sa storageAccountAttributes) AllowNestedItemsToBePublic() terra.BoolValue {
-	return terra.ReferenceBool(sa.ref.Append("allow_nested_items_to_be_public"))
+	return terra.ReferenceAsBool(sa.ref.Append("allow_nested_items_to_be_public"))
 }
 
+// AllowedCopyScope returns a reference to field allowed_copy_scope of azurerm_storage_account.
 func (sa storageAccountAttributes) AllowedCopyScope() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("allowed_copy_scope"))
+	return terra.ReferenceAsString(sa.ref.Append("allowed_copy_scope"))
 }
 
+// CrossTenantReplicationEnabled returns a reference to field cross_tenant_replication_enabled of azurerm_storage_account.
 func (sa storageAccountAttributes) CrossTenantReplicationEnabled() terra.BoolValue {
-	return terra.ReferenceBool(sa.ref.Append("cross_tenant_replication_enabled"))
+	return terra.ReferenceAsBool(sa.ref.Append("cross_tenant_replication_enabled"))
 }
 
+// DefaultToOauthAuthentication returns a reference to field default_to_oauth_authentication of azurerm_storage_account.
 func (sa storageAccountAttributes) DefaultToOauthAuthentication() terra.BoolValue {
-	return terra.ReferenceBool(sa.ref.Append("default_to_oauth_authentication"))
+	return terra.ReferenceAsBool(sa.ref.Append("default_to_oauth_authentication"))
 }
 
+// EdgeZone returns a reference to field edge_zone of azurerm_storage_account.
 func (sa storageAccountAttributes) EdgeZone() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("edge_zone"))
+	return terra.ReferenceAsString(sa.ref.Append("edge_zone"))
 }
 
+// EnableHttpsTrafficOnly returns a reference to field enable_https_traffic_only of azurerm_storage_account.
 func (sa storageAccountAttributes) EnableHttpsTrafficOnly() terra.BoolValue {
-	return terra.ReferenceBool(sa.ref.Append("enable_https_traffic_only"))
+	return terra.ReferenceAsBool(sa.ref.Append("enable_https_traffic_only"))
 }
 
+// Id returns a reference to field id of azurerm_storage_account.
 func (sa storageAccountAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("id"))
+	return terra.ReferenceAsString(sa.ref.Append("id"))
 }
 
+// InfrastructureEncryptionEnabled returns a reference to field infrastructure_encryption_enabled of azurerm_storage_account.
 func (sa storageAccountAttributes) InfrastructureEncryptionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(sa.ref.Append("infrastructure_encryption_enabled"))
+	return terra.ReferenceAsBool(sa.ref.Append("infrastructure_encryption_enabled"))
 }
 
+// IsHnsEnabled returns a reference to field is_hns_enabled of azurerm_storage_account.
 func (sa storageAccountAttributes) IsHnsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(sa.ref.Append("is_hns_enabled"))
+	return terra.ReferenceAsBool(sa.ref.Append("is_hns_enabled"))
 }
 
+// LargeFileShareEnabled returns a reference to field large_file_share_enabled of azurerm_storage_account.
 func (sa storageAccountAttributes) LargeFileShareEnabled() terra.BoolValue {
-	return terra.ReferenceBool(sa.ref.Append("large_file_share_enabled"))
+	return terra.ReferenceAsBool(sa.ref.Append("large_file_share_enabled"))
 }
 
+// Location returns a reference to field location of azurerm_storage_account.
 func (sa storageAccountAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("location"))
+	return terra.ReferenceAsString(sa.ref.Append("location"))
 }
 
+// MinTlsVersion returns a reference to field min_tls_version of azurerm_storage_account.
 func (sa storageAccountAttributes) MinTlsVersion() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("min_tls_version"))
+	return terra.ReferenceAsString(sa.ref.Append("min_tls_version"))
 }
 
+// Name returns a reference to field name of azurerm_storage_account.
 func (sa storageAccountAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("name"))
+	return terra.ReferenceAsString(sa.ref.Append("name"))
 }
 
+// Nfsv3Enabled returns a reference to field nfsv3_enabled of azurerm_storage_account.
 func (sa storageAccountAttributes) Nfsv3Enabled() terra.BoolValue {
-	return terra.ReferenceBool(sa.ref.Append("nfsv3_enabled"))
+	return terra.ReferenceAsBool(sa.ref.Append("nfsv3_enabled"))
 }
 
+// PrimaryAccessKey returns a reference to field primary_access_key of azurerm_storage_account.
 func (sa storageAccountAttributes) PrimaryAccessKey() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("primary_access_key"))
+	return terra.ReferenceAsString(sa.ref.Append("primary_access_key"))
 }
 
+// PrimaryBlobConnectionString returns a reference to field primary_blob_connection_string of azurerm_storage_account.
 func (sa storageAccountAttributes) PrimaryBlobConnectionString() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("primary_blob_connection_string"))
+	return terra.ReferenceAsString(sa.ref.Append("primary_blob_connection_string"))
 }
 
+// PrimaryBlobEndpoint returns a reference to field primary_blob_endpoint of azurerm_storage_account.
 func (sa storageAccountAttributes) PrimaryBlobEndpoint() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("primary_blob_endpoint"))
+	return terra.ReferenceAsString(sa.ref.Append("primary_blob_endpoint"))
 }
 
+// PrimaryBlobHost returns a reference to field primary_blob_host of azurerm_storage_account.
 func (sa storageAccountAttributes) PrimaryBlobHost() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("primary_blob_host"))
+	return terra.ReferenceAsString(sa.ref.Append("primary_blob_host"))
 }
 
+// PrimaryConnectionString returns a reference to field primary_connection_string of azurerm_storage_account.
 func (sa storageAccountAttributes) PrimaryConnectionString() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("primary_connection_string"))
+	return terra.ReferenceAsString(sa.ref.Append("primary_connection_string"))
 }
 
+// PrimaryDfsEndpoint returns a reference to field primary_dfs_endpoint of azurerm_storage_account.
 func (sa storageAccountAttributes) PrimaryDfsEndpoint() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("primary_dfs_endpoint"))
+	return terra.ReferenceAsString(sa.ref.Append("primary_dfs_endpoint"))
 }
 
+// PrimaryDfsHost returns a reference to field primary_dfs_host of azurerm_storage_account.
 func (sa storageAccountAttributes) PrimaryDfsHost() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("primary_dfs_host"))
+	return terra.ReferenceAsString(sa.ref.Append("primary_dfs_host"))
 }
 
+// PrimaryFileEndpoint returns a reference to field primary_file_endpoint of azurerm_storage_account.
 func (sa storageAccountAttributes) PrimaryFileEndpoint() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("primary_file_endpoint"))
+	return terra.ReferenceAsString(sa.ref.Append("primary_file_endpoint"))
 }
 
+// PrimaryFileHost returns a reference to field primary_file_host of azurerm_storage_account.
 func (sa storageAccountAttributes) PrimaryFileHost() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("primary_file_host"))
+	return terra.ReferenceAsString(sa.ref.Append("primary_file_host"))
 }
 
+// PrimaryLocation returns a reference to field primary_location of azurerm_storage_account.
 func (sa storageAccountAttributes) PrimaryLocation() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("primary_location"))
+	return terra.ReferenceAsString(sa.ref.Append("primary_location"))
 }
 
+// PrimaryQueueEndpoint returns a reference to field primary_queue_endpoint of azurerm_storage_account.
 func (sa storageAccountAttributes) PrimaryQueueEndpoint() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("primary_queue_endpoint"))
+	return terra.ReferenceAsString(sa.ref.Append("primary_queue_endpoint"))
 }
 
+// PrimaryQueueHost returns a reference to field primary_queue_host of azurerm_storage_account.
 func (sa storageAccountAttributes) PrimaryQueueHost() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("primary_queue_host"))
+	return terra.ReferenceAsString(sa.ref.Append("primary_queue_host"))
 }
 
+// PrimaryTableEndpoint returns a reference to field primary_table_endpoint of azurerm_storage_account.
 func (sa storageAccountAttributes) PrimaryTableEndpoint() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("primary_table_endpoint"))
+	return terra.ReferenceAsString(sa.ref.Append("primary_table_endpoint"))
 }
 
+// PrimaryTableHost returns a reference to field primary_table_host of azurerm_storage_account.
 func (sa storageAccountAttributes) PrimaryTableHost() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("primary_table_host"))
+	return terra.ReferenceAsString(sa.ref.Append("primary_table_host"))
 }
 
+// PrimaryWebEndpoint returns a reference to field primary_web_endpoint of azurerm_storage_account.
 func (sa storageAccountAttributes) PrimaryWebEndpoint() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("primary_web_endpoint"))
+	return terra.ReferenceAsString(sa.ref.Append("primary_web_endpoint"))
 }
 
+// PrimaryWebHost returns a reference to field primary_web_host of azurerm_storage_account.
 func (sa storageAccountAttributes) PrimaryWebHost() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("primary_web_host"))
+	return terra.ReferenceAsString(sa.ref.Append("primary_web_host"))
 }
 
+// PublicNetworkAccessEnabled returns a reference to field public_network_access_enabled of azurerm_storage_account.
 func (sa storageAccountAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(sa.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(sa.ref.Append("public_network_access_enabled"))
 }
 
+// QueueEncryptionKeyType returns a reference to field queue_encryption_key_type of azurerm_storage_account.
 func (sa storageAccountAttributes) QueueEncryptionKeyType() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("queue_encryption_key_type"))
+	return terra.ReferenceAsString(sa.ref.Append("queue_encryption_key_type"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_storage_account.
 func (sa storageAccountAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(sa.ref.Append("resource_group_name"))
 }
 
+// SecondaryAccessKey returns a reference to field secondary_access_key of azurerm_storage_account.
 func (sa storageAccountAttributes) SecondaryAccessKey() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("secondary_access_key"))
+	return terra.ReferenceAsString(sa.ref.Append("secondary_access_key"))
 }
 
+// SecondaryBlobConnectionString returns a reference to field secondary_blob_connection_string of azurerm_storage_account.
 func (sa storageAccountAttributes) SecondaryBlobConnectionString() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("secondary_blob_connection_string"))
+	return terra.ReferenceAsString(sa.ref.Append("secondary_blob_connection_string"))
 }
 
+// SecondaryBlobEndpoint returns a reference to field secondary_blob_endpoint of azurerm_storage_account.
 func (sa storageAccountAttributes) SecondaryBlobEndpoint() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("secondary_blob_endpoint"))
+	return terra.ReferenceAsString(sa.ref.Append("secondary_blob_endpoint"))
 }
 
+// SecondaryBlobHost returns a reference to field secondary_blob_host of azurerm_storage_account.
 func (sa storageAccountAttributes) SecondaryBlobHost() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("secondary_blob_host"))
+	return terra.ReferenceAsString(sa.ref.Append("secondary_blob_host"))
 }
 
+// SecondaryConnectionString returns a reference to field secondary_connection_string of azurerm_storage_account.
 func (sa storageAccountAttributes) SecondaryConnectionString() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("secondary_connection_string"))
+	return terra.ReferenceAsString(sa.ref.Append("secondary_connection_string"))
 }
 
+// SecondaryDfsEndpoint returns a reference to field secondary_dfs_endpoint of azurerm_storage_account.
 func (sa storageAccountAttributes) SecondaryDfsEndpoint() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("secondary_dfs_endpoint"))
+	return terra.ReferenceAsString(sa.ref.Append("secondary_dfs_endpoint"))
 }
 
+// SecondaryDfsHost returns a reference to field secondary_dfs_host of azurerm_storage_account.
 func (sa storageAccountAttributes) SecondaryDfsHost() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("secondary_dfs_host"))
+	return terra.ReferenceAsString(sa.ref.Append("secondary_dfs_host"))
 }
 
+// SecondaryFileEndpoint returns a reference to field secondary_file_endpoint of azurerm_storage_account.
 func (sa storageAccountAttributes) SecondaryFileEndpoint() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("secondary_file_endpoint"))
+	return terra.ReferenceAsString(sa.ref.Append("secondary_file_endpoint"))
 }
 
+// SecondaryFileHost returns a reference to field secondary_file_host of azurerm_storage_account.
 func (sa storageAccountAttributes) SecondaryFileHost() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("secondary_file_host"))
+	return terra.ReferenceAsString(sa.ref.Append("secondary_file_host"))
 }
 
+// SecondaryLocation returns a reference to field secondary_location of azurerm_storage_account.
 func (sa storageAccountAttributes) SecondaryLocation() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("secondary_location"))
+	return terra.ReferenceAsString(sa.ref.Append("secondary_location"))
 }
 
+// SecondaryQueueEndpoint returns a reference to field secondary_queue_endpoint of azurerm_storage_account.
 func (sa storageAccountAttributes) SecondaryQueueEndpoint() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("secondary_queue_endpoint"))
+	return terra.ReferenceAsString(sa.ref.Append("secondary_queue_endpoint"))
 }
 
+// SecondaryQueueHost returns a reference to field secondary_queue_host of azurerm_storage_account.
 func (sa storageAccountAttributes) SecondaryQueueHost() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("secondary_queue_host"))
+	return terra.ReferenceAsString(sa.ref.Append("secondary_queue_host"))
 }
 
+// SecondaryTableEndpoint returns a reference to field secondary_table_endpoint of azurerm_storage_account.
 func (sa storageAccountAttributes) SecondaryTableEndpoint() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("secondary_table_endpoint"))
+	return terra.ReferenceAsString(sa.ref.Append("secondary_table_endpoint"))
 }
 
+// SecondaryTableHost returns a reference to field secondary_table_host of azurerm_storage_account.
 func (sa storageAccountAttributes) SecondaryTableHost() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("secondary_table_host"))
+	return terra.ReferenceAsString(sa.ref.Append("secondary_table_host"))
 }
 
+// SecondaryWebEndpoint returns a reference to field secondary_web_endpoint of azurerm_storage_account.
 func (sa storageAccountAttributes) SecondaryWebEndpoint() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("secondary_web_endpoint"))
+	return terra.ReferenceAsString(sa.ref.Append("secondary_web_endpoint"))
 }
 
+// SecondaryWebHost returns a reference to field secondary_web_host of azurerm_storage_account.
 func (sa storageAccountAttributes) SecondaryWebHost() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("secondary_web_host"))
+	return terra.ReferenceAsString(sa.ref.Append("secondary_web_host"))
 }
 
+// SftpEnabled returns a reference to field sftp_enabled of azurerm_storage_account.
 func (sa storageAccountAttributes) SftpEnabled() terra.BoolValue {
-	return terra.ReferenceBool(sa.ref.Append("sftp_enabled"))
+	return terra.ReferenceAsBool(sa.ref.Append("sftp_enabled"))
 }
 
+// SharedAccessKeyEnabled returns a reference to field shared_access_key_enabled of azurerm_storage_account.
 func (sa storageAccountAttributes) SharedAccessKeyEnabled() terra.BoolValue {
-	return terra.ReferenceBool(sa.ref.Append("shared_access_key_enabled"))
+	return terra.ReferenceAsBool(sa.ref.Append("shared_access_key_enabled"))
 }
 
+// TableEncryptionKeyType returns a reference to field table_encryption_key_type of azurerm_storage_account.
 func (sa storageAccountAttributes) TableEncryptionKeyType() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("table_encryption_key_type"))
+	return terra.ReferenceAsString(sa.ref.Append("table_encryption_key_type"))
 }
 
+// Tags returns a reference to field tags of azurerm_storage_account.
 func (sa storageAccountAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sa.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sa.ref.Append("tags"))
 }
 
 func (sa storageAccountAttributes) AzureFilesAuthentication() terra.ListValue[storageaccount.AzureFilesAuthenticationAttributes] {
-	return terra.ReferenceList[storageaccount.AzureFilesAuthenticationAttributes](sa.ref.Append("azure_files_authentication"))
+	return terra.ReferenceAsList[storageaccount.AzureFilesAuthenticationAttributes](sa.ref.Append("azure_files_authentication"))
 }
 
 func (sa storageAccountAttributes) BlobProperties() terra.ListValue[storageaccount.BlobPropertiesAttributes] {
-	return terra.ReferenceList[storageaccount.BlobPropertiesAttributes](sa.ref.Append("blob_properties"))
+	return terra.ReferenceAsList[storageaccount.BlobPropertiesAttributes](sa.ref.Append("blob_properties"))
 }
 
 func (sa storageAccountAttributes) CustomDomain() terra.ListValue[storageaccount.CustomDomainAttributes] {
-	return terra.ReferenceList[storageaccount.CustomDomainAttributes](sa.ref.Append("custom_domain"))
+	return terra.ReferenceAsList[storageaccount.CustomDomainAttributes](sa.ref.Append("custom_domain"))
 }
 
 func (sa storageAccountAttributes) CustomerManagedKey() terra.ListValue[storageaccount.CustomerManagedKeyAttributes] {
-	return terra.ReferenceList[storageaccount.CustomerManagedKeyAttributes](sa.ref.Append("customer_managed_key"))
+	return terra.ReferenceAsList[storageaccount.CustomerManagedKeyAttributes](sa.ref.Append("customer_managed_key"))
 }
 
 func (sa storageAccountAttributes) Identity() terra.ListValue[storageaccount.IdentityAttributes] {
-	return terra.ReferenceList[storageaccount.IdentityAttributes](sa.ref.Append("identity"))
+	return terra.ReferenceAsList[storageaccount.IdentityAttributes](sa.ref.Append("identity"))
 }
 
 func (sa storageAccountAttributes) ImmutabilityPolicy() terra.ListValue[storageaccount.ImmutabilityPolicyAttributes] {
-	return terra.ReferenceList[storageaccount.ImmutabilityPolicyAttributes](sa.ref.Append("immutability_policy"))
+	return terra.ReferenceAsList[storageaccount.ImmutabilityPolicyAttributes](sa.ref.Append("immutability_policy"))
 }
 
 func (sa storageAccountAttributes) NetworkRules() terra.ListValue[storageaccount.NetworkRulesAttributes] {
-	return terra.ReferenceList[storageaccount.NetworkRulesAttributes](sa.ref.Append("network_rules"))
+	return terra.ReferenceAsList[storageaccount.NetworkRulesAttributes](sa.ref.Append("network_rules"))
 }
 
 func (sa storageAccountAttributes) QueueProperties() terra.ListValue[storageaccount.QueuePropertiesAttributes] {
-	return terra.ReferenceList[storageaccount.QueuePropertiesAttributes](sa.ref.Append("queue_properties"))
+	return terra.ReferenceAsList[storageaccount.QueuePropertiesAttributes](sa.ref.Append("queue_properties"))
 }
 
 func (sa storageAccountAttributes) Routing() terra.ListValue[storageaccount.RoutingAttributes] {
-	return terra.ReferenceList[storageaccount.RoutingAttributes](sa.ref.Append("routing"))
+	return terra.ReferenceAsList[storageaccount.RoutingAttributes](sa.ref.Append("routing"))
 }
 
 func (sa storageAccountAttributes) SasPolicy() terra.ListValue[storageaccount.SasPolicyAttributes] {
-	return terra.ReferenceList[storageaccount.SasPolicyAttributes](sa.ref.Append("sas_policy"))
+	return terra.ReferenceAsList[storageaccount.SasPolicyAttributes](sa.ref.Append("sas_policy"))
 }
 
 func (sa storageAccountAttributes) ShareProperties() terra.ListValue[storageaccount.SharePropertiesAttributes] {
-	return terra.ReferenceList[storageaccount.SharePropertiesAttributes](sa.ref.Append("share_properties"))
+	return terra.ReferenceAsList[storageaccount.SharePropertiesAttributes](sa.ref.Append("share_properties"))
 }
 
 func (sa storageAccountAttributes) StaticWebsite() terra.ListValue[storageaccount.StaticWebsiteAttributes] {
-	return terra.ReferenceList[storageaccount.StaticWebsiteAttributes](sa.ref.Append("static_website"))
+	return terra.ReferenceAsList[storageaccount.StaticWebsiteAttributes](sa.ref.Append("static_website"))
 }
 
 func (sa storageAccountAttributes) Timeouts() storageaccount.TimeoutsAttributes {
-	return terra.ReferenceSingle[storageaccount.TimeoutsAttributes](sa.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[storageaccount.TimeoutsAttributes](sa.ref.Append("timeouts"))
 }
 
 type storageAccountState struct {

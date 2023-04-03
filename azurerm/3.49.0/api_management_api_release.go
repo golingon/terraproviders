@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApiManagementApiRelease creates a new instance of [ApiManagementApiRelease].
 func NewApiManagementApiRelease(name string, args ApiManagementApiReleaseArgs) *ApiManagementApiRelease {
 	return &ApiManagementApiRelease{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApiManagementApiRelease(name string, args ApiManagementApiReleaseArgs) *
 
 var _ terra.Resource = (*ApiManagementApiRelease)(nil)
 
+// ApiManagementApiRelease represents the Terraform resource azurerm_api_management_api_release.
 type ApiManagementApiRelease struct {
-	Name  string
-	Args  ApiManagementApiReleaseArgs
-	state *apiManagementApiReleaseState
+	Name      string
+	Args      ApiManagementApiReleaseArgs
+	state     *apiManagementApiReleaseState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiManagementApiRelease].
 func (amar *ApiManagementApiRelease) Type() string {
 	return "azurerm_api_management_api_release"
 }
 
+// LocalName returns the local name for [ApiManagementApiRelease].
 func (amar *ApiManagementApiRelease) LocalName() string {
 	return amar.Name
 }
 
+// Configuration returns the configuration (args) for [ApiManagementApiRelease].
 func (amar *ApiManagementApiRelease) Configuration() interface{} {
 	return amar.Args
 }
 
+// DependOn is used for other resources to depend on [ApiManagementApiRelease].
+func (amar *ApiManagementApiRelease) DependOn() terra.Reference {
+	return terra.ReferenceResource(amar)
+}
+
+// Dependencies returns the list of resources [ApiManagementApiRelease] depends_on.
+func (amar *ApiManagementApiRelease) Dependencies() terra.Dependencies {
+	return amar.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiManagementApiRelease].
+func (amar *ApiManagementApiRelease) LifecycleManagement() *terra.Lifecycle {
+	return amar.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiManagementApiRelease].
 func (amar *ApiManagementApiRelease) Attributes() apiManagementApiReleaseAttributes {
 	return apiManagementApiReleaseAttributes{ref: terra.ReferenceResource(amar)}
 }
 
+// ImportState imports the given attribute values into [ApiManagementApiRelease]'s state.
 func (amar *ApiManagementApiRelease) ImportState(av io.Reader) error {
 	amar.state = &apiManagementApiReleaseState{}
 	if err := json.NewDecoder(av).Decode(amar.state); err != nil {
@@ -49,10 +73,12 @@ func (amar *ApiManagementApiRelease) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiManagementApiRelease] has state.
 func (amar *ApiManagementApiRelease) State() (*apiManagementApiReleaseState, bool) {
 	return amar.state, amar.state != nil
 }
 
+// StateMust returns the state for [ApiManagementApiRelease]. Panics if the state is nil.
 func (amar *ApiManagementApiRelease) StateMust() *apiManagementApiReleaseState {
 	if amar.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", amar.Type(), amar.LocalName()))
@@ -60,10 +86,7 @@ func (amar *ApiManagementApiRelease) StateMust() *apiManagementApiReleaseState {
 	return amar.state
 }
 
-func (amar *ApiManagementApiRelease) DependOn() terra.Reference {
-	return terra.ReferenceResource(amar)
-}
-
+// ApiManagementApiReleaseArgs contains the configurations for azurerm_api_management_api_release.
 type ApiManagementApiReleaseArgs struct {
 	// ApiId: string, required
 	ApiId terra.StringValue `hcl:"api_id,attr" validate:"required"`
@@ -75,31 +98,33 @@ type ApiManagementApiReleaseArgs struct {
 	Notes terra.StringValue `hcl:"notes,attr"`
 	// Timeouts: optional
 	Timeouts *apimanagementapirelease.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ApiManagementApiRelease depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiManagementApiReleaseAttributes struct {
 	ref terra.Reference
 }
 
+// ApiId returns a reference to field api_id of azurerm_api_management_api_release.
 func (amar apiManagementApiReleaseAttributes) ApiId() terra.StringValue {
-	return terra.ReferenceString(amar.ref.Append("api_id"))
+	return terra.ReferenceAsString(amar.ref.Append("api_id"))
 }
 
+// Id returns a reference to field id of azurerm_api_management_api_release.
 func (amar apiManagementApiReleaseAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(amar.ref.Append("id"))
+	return terra.ReferenceAsString(amar.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_api_management_api_release.
 func (amar apiManagementApiReleaseAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(amar.ref.Append("name"))
+	return terra.ReferenceAsString(amar.ref.Append("name"))
 }
 
+// Notes returns a reference to field notes of azurerm_api_management_api_release.
 func (amar apiManagementApiReleaseAttributes) Notes() terra.StringValue {
-	return terra.ReferenceString(amar.ref.Append("notes"))
+	return terra.ReferenceAsString(amar.ref.Append("notes"))
 }
 
 func (amar apiManagementApiReleaseAttributes) Timeouts() apimanagementapirelease.TimeoutsAttributes {
-	return terra.ReferenceSingle[apimanagementapirelease.TimeoutsAttributes](amar.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[apimanagementapirelease.TimeoutsAttributes](amar.ref.Append("timeouts"))
 }
 
 type apiManagementApiReleaseState struct {

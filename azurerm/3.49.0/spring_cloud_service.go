@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSpringCloudService creates a new instance of [SpringCloudService].
 func NewSpringCloudService(name string, args SpringCloudServiceArgs) *SpringCloudService {
 	return &SpringCloudService{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSpringCloudService(name string, args SpringCloudServiceArgs) *SpringClou
 
 var _ terra.Resource = (*SpringCloudService)(nil)
 
+// SpringCloudService represents the Terraform resource azurerm_spring_cloud_service.
 type SpringCloudService struct {
-	Name  string
-	Args  SpringCloudServiceArgs
-	state *springCloudServiceState
+	Name      string
+	Args      SpringCloudServiceArgs
+	state     *springCloudServiceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SpringCloudService].
 func (scs *SpringCloudService) Type() string {
 	return "azurerm_spring_cloud_service"
 }
 
+// LocalName returns the local name for [SpringCloudService].
 func (scs *SpringCloudService) LocalName() string {
 	return scs.Name
 }
 
+// Configuration returns the configuration (args) for [SpringCloudService].
 func (scs *SpringCloudService) Configuration() interface{} {
 	return scs.Args
 }
 
+// DependOn is used for other resources to depend on [SpringCloudService].
+func (scs *SpringCloudService) DependOn() terra.Reference {
+	return terra.ReferenceResource(scs)
+}
+
+// Dependencies returns the list of resources [SpringCloudService] depends_on.
+func (scs *SpringCloudService) Dependencies() terra.Dependencies {
+	return scs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SpringCloudService].
+func (scs *SpringCloudService) LifecycleManagement() *terra.Lifecycle {
+	return scs.Lifecycle
+}
+
+// Attributes returns the attributes for [SpringCloudService].
 func (scs *SpringCloudService) Attributes() springCloudServiceAttributes {
 	return springCloudServiceAttributes{ref: terra.ReferenceResource(scs)}
 }
 
+// ImportState imports the given attribute values into [SpringCloudService]'s state.
 func (scs *SpringCloudService) ImportState(av io.Reader) error {
 	scs.state = &springCloudServiceState{}
 	if err := json.NewDecoder(av).Decode(scs.state); err != nil {
@@ -49,10 +73,12 @@ func (scs *SpringCloudService) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SpringCloudService] has state.
 func (scs *SpringCloudService) State() (*springCloudServiceState, bool) {
 	return scs.state, scs.state != nil
 }
 
+// StateMust returns the state for [SpringCloudService]. Panics if the state is nil.
 func (scs *SpringCloudService) StateMust() *springCloudServiceState {
 	if scs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", scs.Type(), scs.LocalName()))
@@ -60,10 +86,7 @@ func (scs *SpringCloudService) StateMust() *springCloudServiceState {
 	return scs.state
 }
 
-func (scs *SpringCloudService) DependOn() terra.Reference {
-	return terra.ReferenceResource(scs)
-}
-
+// SpringCloudServiceArgs contains the configurations for azurerm_spring_cloud_service.
 type SpringCloudServiceArgs struct {
 	// BuildAgentPoolSize: string, optional
 	BuildAgentPoolSize terra.StringValue `hcl:"build_agent_pool_size,attr"`
@@ -95,79 +118,89 @@ type SpringCloudServiceArgs struct {
 	Timeouts *springcloudservice.Timeouts `hcl:"timeouts,block"`
 	// Trace: optional
 	Trace *springcloudservice.Trace `hcl:"trace,block"`
-	// DependsOn contains resources that SpringCloudService depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type springCloudServiceAttributes struct {
 	ref terra.Reference
 }
 
+// BuildAgentPoolSize returns a reference to field build_agent_pool_size of azurerm_spring_cloud_service.
 func (scs springCloudServiceAttributes) BuildAgentPoolSize() terra.StringValue {
-	return terra.ReferenceString(scs.ref.Append("build_agent_pool_size"))
+	return terra.ReferenceAsString(scs.ref.Append("build_agent_pool_size"))
 }
 
+// Id returns a reference to field id of azurerm_spring_cloud_service.
 func (scs springCloudServiceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(scs.ref.Append("id"))
+	return terra.ReferenceAsString(scs.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_spring_cloud_service.
 func (scs springCloudServiceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(scs.ref.Append("location"))
+	return terra.ReferenceAsString(scs.ref.Append("location"))
 }
 
+// LogStreamPublicEndpointEnabled returns a reference to field log_stream_public_endpoint_enabled of azurerm_spring_cloud_service.
 func (scs springCloudServiceAttributes) LogStreamPublicEndpointEnabled() terra.BoolValue {
-	return terra.ReferenceBool(scs.ref.Append("log_stream_public_endpoint_enabled"))
+	return terra.ReferenceAsBool(scs.ref.Append("log_stream_public_endpoint_enabled"))
 }
 
+// Name returns a reference to field name of azurerm_spring_cloud_service.
 func (scs springCloudServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(scs.ref.Append("name"))
+	return terra.ReferenceAsString(scs.ref.Append("name"))
 }
 
+// OutboundPublicIpAddresses returns a reference to field outbound_public_ip_addresses of azurerm_spring_cloud_service.
 func (scs springCloudServiceAttributes) OutboundPublicIpAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](scs.ref.Append("outbound_public_ip_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](scs.ref.Append("outbound_public_ip_addresses"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_spring_cloud_service.
 func (scs springCloudServiceAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(scs.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(scs.ref.Append("resource_group_name"))
 }
 
+// ServiceRegistryEnabled returns a reference to field service_registry_enabled of azurerm_spring_cloud_service.
 func (scs springCloudServiceAttributes) ServiceRegistryEnabled() terra.BoolValue {
-	return terra.ReferenceBool(scs.ref.Append("service_registry_enabled"))
+	return terra.ReferenceAsBool(scs.ref.Append("service_registry_enabled"))
 }
 
+// ServiceRegistryId returns a reference to field service_registry_id of azurerm_spring_cloud_service.
 func (scs springCloudServiceAttributes) ServiceRegistryId() terra.StringValue {
-	return terra.ReferenceString(scs.ref.Append("service_registry_id"))
+	return terra.ReferenceAsString(scs.ref.Append("service_registry_id"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_spring_cloud_service.
 func (scs springCloudServiceAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(scs.ref.Append("sku_name"))
+	return terra.ReferenceAsString(scs.ref.Append("sku_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_spring_cloud_service.
 func (scs springCloudServiceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](scs.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](scs.ref.Append("tags"))
 }
 
+// ZoneRedundant returns a reference to field zone_redundant of azurerm_spring_cloud_service.
 func (scs springCloudServiceAttributes) ZoneRedundant() terra.BoolValue {
-	return terra.ReferenceBool(scs.ref.Append("zone_redundant"))
+	return terra.ReferenceAsBool(scs.ref.Append("zone_redundant"))
 }
 
 func (scs springCloudServiceAttributes) RequiredNetworkTrafficRules() terra.ListValue[springcloudservice.RequiredNetworkTrafficRulesAttributes] {
-	return terra.ReferenceList[springcloudservice.RequiredNetworkTrafficRulesAttributes](scs.ref.Append("required_network_traffic_rules"))
+	return terra.ReferenceAsList[springcloudservice.RequiredNetworkTrafficRulesAttributes](scs.ref.Append("required_network_traffic_rules"))
 }
 
 func (scs springCloudServiceAttributes) ConfigServerGitSetting() terra.ListValue[springcloudservice.ConfigServerGitSettingAttributes] {
-	return terra.ReferenceList[springcloudservice.ConfigServerGitSettingAttributes](scs.ref.Append("config_server_git_setting"))
+	return terra.ReferenceAsList[springcloudservice.ConfigServerGitSettingAttributes](scs.ref.Append("config_server_git_setting"))
 }
 
 func (scs springCloudServiceAttributes) Network() terra.ListValue[springcloudservice.NetworkAttributes] {
-	return terra.ReferenceList[springcloudservice.NetworkAttributes](scs.ref.Append("network"))
+	return terra.ReferenceAsList[springcloudservice.NetworkAttributes](scs.ref.Append("network"))
 }
 
 func (scs springCloudServiceAttributes) Timeouts() springcloudservice.TimeoutsAttributes {
-	return terra.ReferenceSingle[springcloudservice.TimeoutsAttributes](scs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[springcloudservice.TimeoutsAttributes](scs.ref.Append("timeouts"))
 }
 
 func (scs springCloudServiceAttributes) Trace() terra.ListValue[springcloudservice.TraceAttributes] {
-	return terra.ReferenceList[springcloudservice.TraceAttributes](scs.ref.Append("trace"))
+	return terra.ReferenceAsList[springcloudservice.TraceAttributes](scs.ref.Append("trace"))
 }
 
 type springCloudServiceState struct {

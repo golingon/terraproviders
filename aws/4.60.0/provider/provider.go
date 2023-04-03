@@ -828,7 +828,7 @@ func (ar AssumeRoleAttributes) InternalWithRef(ref terra.Reference) AssumeRoleAt
 	return AssumeRoleAttributes{ref: ref}
 }
 
-func (ar AssumeRoleAttributes) InternalTokens() hclwrite.Tokens {
+func (ar AssumeRoleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ar.ref.InternalTokens()
 }
 
@@ -884,7 +884,7 @@ func (arwwi AssumeRoleWithWebIdentityAttributes) InternalWithRef(ref terra.Refer
 	return AssumeRoleWithWebIdentityAttributes{ref: ref}
 }
 
-func (arwwi AssumeRoleWithWebIdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (arwwi AssumeRoleWithWebIdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return arwwi.ref.InternalTokens()
 }
 
@@ -928,7 +928,7 @@ func (dt DefaultTagsAttributes) InternalWithRef(ref terra.Reference) DefaultTags
 	return DefaultTagsAttributes{ref: ref}
 }
 
-func (dt DefaultTagsAttributes) InternalTokens() hclwrite.Tokens {
+func (dt DefaultTagsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dt.ref.InternalTokens()
 }
 
@@ -948,7 +948,7 @@ func (e EndpointsAttributes) InternalWithRef(ref terra.Reference) EndpointsAttri
 	return EndpointsAttributes{ref: ref}
 }
 
-func (e EndpointsAttributes) InternalTokens() hclwrite.Tokens {
+func (e EndpointsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -2472,7 +2472,7 @@ func (it IgnoreTagsAttributes) InternalWithRef(ref terra.Reference) IgnoreTagsAt
 	return IgnoreTagsAttributes{ref: ref}
 }
 
-func (it IgnoreTagsAttributes) InternalTokens() hclwrite.Tokens {
+func (it IgnoreTagsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return it.ref.InternalTokens()
 }
 

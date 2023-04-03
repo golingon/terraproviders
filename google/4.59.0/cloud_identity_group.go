@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCloudIdentityGroup creates a new instance of [CloudIdentityGroup].
 func NewCloudIdentityGroup(name string, args CloudIdentityGroupArgs) *CloudIdentityGroup {
 	return &CloudIdentityGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCloudIdentityGroup(name string, args CloudIdentityGroupArgs) *CloudIdent
 
 var _ terra.Resource = (*CloudIdentityGroup)(nil)
 
+// CloudIdentityGroup represents the Terraform resource google_cloud_identity_group.
 type CloudIdentityGroup struct {
-	Name  string
-	Args  CloudIdentityGroupArgs
-	state *cloudIdentityGroupState
+	Name      string
+	Args      CloudIdentityGroupArgs
+	state     *cloudIdentityGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudIdentityGroup].
 func (cig *CloudIdentityGroup) Type() string {
 	return "google_cloud_identity_group"
 }
 
+// LocalName returns the local name for [CloudIdentityGroup].
 func (cig *CloudIdentityGroup) LocalName() string {
 	return cig.Name
 }
 
+// Configuration returns the configuration (args) for [CloudIdentityGroup].
 func (cig *CloudIdentityGroup) Configuration() interface{} {
 	return cig.Args
 }
 
+// DependOn is used for other resources to depend on [CloudIdentityGroup].
+func (cig *CloudIdentityGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(cig)
+}
+
+// Dependencies returns the list of resources [CloudIdentityGroup] depends_on.
+func (cig *CloudIdentityGroup) Dependencies() terra.Dependencies {
+	return cig.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudIdentityGroup].
+func (cig *CloudIdentityGroup) LifecycleManagement() *terra.Lifecycle {
+	return cig.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudIdentityGroup].
 func (cig *CloudIdentityGroup) Attributes() cloudIdentityGroupAttributes {
 	return cloudIdentityGroupAttributes{ref: terra.ReferenceResource(cig)}
 }
 
+// ImportState imports the given attribute values into [CloudIdentityGroup]'s state.
 func (cig *CloudIdentityGroup) ImportState(av io.Reader) error {
 	cig.state = &cloudIdentityGroupState{}
 	if err := json.NewDecoder(av).Decode(cig.state); err != nil {
@@ -49,10 +73,12 @@ func (cig *CloudIdentityGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudIdentityGroup] has state.
 func (cig *CloudIdentityGroup) State() (*cloudIdentityGroupState, bool) {
 	return cig.state, cig.state != nil
 }
 
+// StateMust returns the state for [CloudIdentityGroup]. Panics if the state is nil.
 func (cig *CloudIdentityGroup) StateMust() *cloudIdentityGroupState {
 	if cig.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cig.Type(), cig.LocalName()))
@@ -60,10 +86,7 @@ func (cig *CloudIdentityGroup) StateMust() *cloudIdentityGroupState {
 	return cig.state
 }
 
-func (cig *CloudIdentityGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(cig)
-}
-
+// CloudIdentityGroupArgs contains the configurations for google_cloud_identity_group.
 type CloudIdentityGroupArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -81,55 +104,62 @@ type CloudIdentityGroupArgs struct {
 	GroupKey *cloudidentitygroup.GroupKey `hcl:"group_key,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *cloudidentitygroup.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that CloudIdentityGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudIdentityGroupAttributes struct {
 	ref terra.Reference
 }
 
+// CreateTime returns a reference to field create_time of google_cloud_identity_group.
 func (cig cloudIdentityGroupAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(cig.ref.Append("create_time"))
+	return terra.ReferenceAsString(cig.ref.Append("create_time"))
 }
 
+// Description returns a reference to field description of google_cloud_identity_group.
 func (cig cloudIdentityGroupAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cig.ref.Append("description"))
+	return terra.ReferenceAsString(cig.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of google_cloud_identity_group.
 func (cig cloudIdentityGroupAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(cig.ref.Append("display_name"))
+	return terra.ReferenceAsString(cig.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of google_cloud_identity_group.
 func (cig cloudIdentityGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cig.ref.Append("id"))
+	return terra.ReferenceAsString(cig.ref.Append("id"))
 }
 
+// InitialGroupConfig returns a reference to field initial_group_config of google_cloud_identity_group.
 func (cig cloudIdentityGroupAttributes) InitialGroupConfig() terra.StringValue {
-	return terra.ReferenceString(cig.ref.Append("initial_group_config"))
+	return terra.ReferenceAsString(cig.ref.Append("initial_group_config"))
 }
 
+// Labels returns a reference to field labels of google_cloud_identity_group.
 func (cig cloudIdentityGroupAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cig.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](cig.ref.Append("labels"))
 }
 
+// Name returns a reference to field name of google_cloud_identity_group.
 func (cig cloudIdentityGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cig.ref.Append("name"))
+	return terra.ReferenceAsString(cig.ref.Append("name"))
 }
 
+// Parent returns a reference to field parent of google_cloud_identity_group.
 func (cig cloudIdentityGroupAttributes) Parent() terra.StringValue {
-	return terra.ReferenceString(cig.ref.Append("parent"))
+	return terra.ReferenceAsString(cig.ref.Append("parent"))
 }
 
+// UpdateTime returns a reference to field update_time of google_cloud_identity_group.
 func (cig cloudIdentityGroupAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(cig.ref.Append("update_time"))
+	return terra.ReferenceAsString(cig.ref.Append("update_time"))
 }
 
 func (cig cloudIdentityGroupAttributes) GroupKey() terra.ListValue[cloudidentitygroup.GroupKeyAttributes] {
-	return terra.ReferenceList[cloudidentitygroup.GroupKeyAttributes](cig.ref.Append("group_key"))
+	return terra.ReferenceAsList[cloudidentitygroup.GroupKeyAttributes](cig.ref.Append("group_key"))
 }
 
 func (cig cloudIdentityGroupAttributes) Timeouts() cloudidentitygroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[cloudidentitygroup.TimeoutsAttributes](cig.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cloudidentitygroup.TimeoutsAttributes](cig.ref.Append("timeouts"))
 }
 
 type cloudIdentityGroupState struct {

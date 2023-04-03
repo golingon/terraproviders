@@ -25,48 +25,48 @@ type InterfaceAttributes struct {
 	ref terra.Reference
 }
 
-func (i InterfaceAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i InterfaceAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i InterfaceAttributes) InternalWithRef(ref terra.Reference) InterfaceAttributes {
 	return InterfaceAttributes{ref: ref}
 }
 
-func (i InterfaceAttributes) InternalTokens() hclwrite.Tokens {
+func (i InterfaceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i InterfaceAttributes) Id() terra.NumberValue {
-	return terra.ReferenceNumber(i.ref.Append("id"))
+	return terra.ReferenceAsNumber(i.ref.Append("id"))
 }
 
 func (i InterfaceAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("ip_address"))
+	return terra.ReferenceAsString(i.ref.Append("ip_address"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type InterfaceState struct {

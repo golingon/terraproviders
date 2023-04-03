@@ -49,116 +49,116 @@ type PipelineAttributes struct {
 	ref terra.Reference
 }
 
-func (p PipelineAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p PipelineAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p PipelineAttributes) InternalWithRef(ref terra.Reference) PipelineAttributes {
 	return PipelineAttributes{ref: ref}
 }
 
-func (p PipelineAttributes) InternalTokens() hclwrite.Tokens {
+func (p PipelineAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
 func (p PipelineAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("name"))
+	return terra.ReferenceAsString(p.ref.Append("name"))
 }
 
 func (p PipelineAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](p.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](p.ref.Append("parameters"))
 }
 
 type ScheduleAttributes struct {
 	ref terra.Reference
 }
 
-func (s ScheduleAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ScheduleAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ScheduleAttributes) InternalWithRef(ref terra.Reference) ScheduleAttributes {
 	return ScheduleAttributes{ref: ref}
 }
 
-func (s ScheduleAttributes) InternalTokens() hclwrite.Tokens {
+func (s ScheduleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s ScheduleAttributes) DaysOfMonth() terra.ListValue[terra.NumberValue] {
-	return terra.ReferenceList[terra.NumberValue](s.ref.Append("days_of_month"))
+	return terra.ReferenceAsList[terra.NumberValue](s.ref.Append("days_of_month"))
 }
 
 func (s ScheduleAttributes) DaysOfWeek() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](s.ref.Append("days_of_week"))
+	return terra.ReferenceAsList[terra.StringValue](s.ref.Append("days_of_week"))
 }
 
 func (s ScheduleAttributes) Hours() terra.ListValue[terra.NumberValue] {
-	return terra.ReferenceList[terra.NumberValue](s.ref.Append("hours"))
+	return terra.ReferenceAsList[terra.NumberValue](s.ref.Append("hours"))
 }
 
 func (s ScheduleAttributes) Minutes() terra.ListValue[terra.NumberValue] {
-	return terra.ReferenceList[terra.NumberValue](s.ref.Append("minutes"))
+	return terra.ReferenceAsList[terra.NumberValue](s.ref.Append("minutes"))
 }
 
 func (s ScheduleAttributes) Monthly() terra.ListValue[MonthlyAttributes] {
-	return terra.ReferenceList[MonthlyAttributes](s.ref.Append("monthly"))
+	return terra.ReferenceAsList[MonthlyAttributes](s.ref.Append("monthly"))
 }
 
 type MonthlyAttributes struct {
 	ref terra.Reference
 }
 
-func (m MonthlyAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MonthlyAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MonthlyAttributes) InternalWithRef(ref terra.Reference) MonthlyAttributes {
 	return MonthlyAttributes{ref: ref}
 }
 
-func (m MonthlyAttributes) InternalTokens() hclwrite.Tokens {
+func (m MonthlyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
 func (m MonthlyAttributes) Week() terra.NumberValue {
-	return terra.ReferenceNumber(m.ref.Append("week"))
+	return terra.ReferenceAsNumber(m.ref.Append("week"))
 }
 
 func (m MonthlyAttributes) Weekday() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("weekday"))
+	return terra.ReferenceAsString(m.ref.Append("weekday"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type PipelineState struct {

@@ -58,7 +58,7 @@ func (d DatasourcesAttributes) InternalWithRef(ref terra.Reference) DatasourcesA
 	return DatasourcesAttributes{ref: ref}
 }
 
-func (d DatasourcesAttributes) InternalTokens() hclwrite.Tokens {
+func (d DatasourcesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -86,7 +86,7 @@ func (k KubernetesAttributes) InternalWithRef(ref terra.Reference) KubernetesAtt
 	return KubernetesAttributes{ref: ref}
 }
 
-func (k KubernetesAttributes) InternalTokens() hclwrite.Tokens {
+func (k KubernetesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return k.ref.InternalTokens()
 }
 
@@ -106,7 +106,7 @@ func (al AuditLogsAttributes) InternalWithRef(ref terra.Reference) AuditLogsAttr
 	return AuditLogsAttributes{ref: ref}
 }
 
-func (al AuditLogsAttributes) InternalTokens() hclwrite.Tokens {
+func (al AuditLogsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return al.ref.InternalTokens()
 }
 
@@ -126,7 +126,7 @@ func (mp MalwareProtectionAttributes) InternalWithRef(ref terra.Reference) Malwa
 	return MalwareProtectionAttributes{ref: ref}
 }
 
-func (mp MalwareProtectionAttributes) InternalTokens() hclwrite.Tokens {
+func (mp MalwareProtectionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mp.ref.InternalTokens()
 }
 
@@ -146,7 +146,7 @@ func (seiwf ScanEc2InstanceWithFindingsAttributes) InternalWithRef(ref terra.Ref
 	return ScanEc2InstanceWithFindingsAttributes{ref: ref}
 }
 
-func (seiwf ScanEc2InstanceWithFindingsAttributes) InternalTokens() hclwrite.Tokens {
+func (seiwf ScanEc2InstanceWithFindingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return seiwf.ref.InternalTokens()
 }
 
@@ -166,7 +166,7 @@ func (ev EbsVolumesAttributes) InternalWithRef(ref terra.Reference) EbsVolumesAt
 	return EbsVolumesAttributes{ref: ref}
 }
 
-func (ev EbsVolumesAttributes) InternalTokens() hclwrite.Tokens {
+func (ev EbsVolumesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ev.ref.InternalTokens()
 }
 
@@ -186,7 +186,7 @@ func (sl S3LogsAttributes) InternalWithRef(ref terra.Reference) S3LogsAttributes
 	return S3LogsAttributes{ref: ref}
 }
 
-func (sl S3LogsAttributes) InternalTokens() hclwrite.Tokens {
+func (sl S3LogsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sl.ref.InternalTokens()
 }
 

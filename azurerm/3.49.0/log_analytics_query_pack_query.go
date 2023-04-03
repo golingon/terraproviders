@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLogAnalyticsQueryPackQuery creates a new instance of [LogAnalyticsQueryPackQuery].
 func NewLogAnalyticsQueryPackQuery(name string, args LogAnalyticsQueryPackQueryArgs) *LogAnalyticsQueryPackQuery {
 	return &LogAnalyticsQueryPackQuery{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLogAnalyticsQueryPackQuery(name string, args LogAnalyticsQueryPackQueryA
 
 var _ terra.Resource = (*LogAnalyticsQueryPackQuery)(nil)
 
+// LogAnalyticsQueryPackQuery represents the Terraform resource azurerm_log_analytics_query_pack_query.
 type LogAnalyticsQueryPackQuery struct {
-	Name  string
-	Args  LogAnalyticsQueryPackQueryArgs
-	state *logAnalyticsQueryPackQueryState
+	Name      string
+	Args      LogAnalyticsQueryPackQueryArgs
+	state     *logAnalyticsQueryPackQueryState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LogAnalyticsQueryPackQuery].
 func (laqpq *LogAnalyticsQueryPackQuery) Type() string {
 	return "azurerm_log_analytics_query_pack_query"
 }
 
+// LocalName returns the local name for [LogAnalyticsQueryPackQuery].
 func (laqpq *LogAnalyticsQueryPackQuery) LocalName() string {
 	return laqpq.Name
 }
 
+// Configuration returns the configuration (args) for [LogAnalyticsQueryPackQuery].
 func (laqpq *LogAnalyticsQueryPackQuery) Configuration() interface{} {
 	return laqpq.Args
 }
 
+// DependOn is used for other resources to depend on [LogAnalyticsQueryPackQuery].
+func (laqpq *LogAnalyticsQueryPackQuery) DependOn() terra.Reference {
+	return terra.ReferenceResource(laqpq)
+}
+
+// Dependencies returns the list of resources [LogAnalyticsQueryPackQuery] depends_on.
+func (laqpq *LogAnalyticsQueryPackQuery) Dependencies() terra.Dependencies {
+	return laqpq.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LogAnalyticsQueryPackQuery].
+func (laqpq *LogAnalyticsQueryPackQuery) LifecycleManagement() *terra.Lifecycle {
+	return laqpq.Lifecycle
+}
+
+// Attributes returns the attributes for [LogAnalyticsQueryPackQuery].
 func (laqpq *LogAnalyticsQueryPackQuery) Attributes() logAnalyticsQueryPackQueryAttributes {
 	return logAnalyticsQueryPackQueryAttributes{ref: terra.ReferenceResource(laqpq)}
 }
 
+// ImportState imports the given attribute values into [LogAnalyticsQueryPackQuery]'s state.
 func (laqpq *LogAnalyticsQueryPackQuery) ImportState(av io.Reader) error {
 	laqpq.state = &logAnalyticsQueryPackQueryState{}
 	if err := json.NewDecoder(av).Decode(laqpq.state); err != nil {
@@ -49,10 +73,12 @@ func (laqpq *LogAnalyticsQueryPackQuery) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LogAnalyticsQueryPackQuery] has state.
 func (laqpq *LogAnalyticsQueryPackQuery) State() (*logAnalyticsQueryPackQueryState, bool) {
 	return laqpq.state, laqpq.state != nil
 }
 
+// StateMust returns the state for [LogAnalyticsQueryPackQuery]. Panics if the state is nil.
 func (laqpq *LogAnalyticsQueryPackQuery) StateMust() *logAnalyticsQueryPackQueryState {
 	if laqpq.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", laqpq.Type(), laqpq.LocalName()))
@@ -60,10 +86,7 @@ func (laqpq *LogAnalyticsQueryPackQuery) StateMust() *logAnalyticsQueryPackQuery
 	return laqpq.state
 }
 
-func (laqpq *LogAnalyticsQueryPackQuery) DependOn() terra.Reference {
-	return terra.ReferenceResource(laqpq)
-}
-
+// LogAnalyticsQueryPackQueryArgs contains the configurations for azurerm_log_analytics_query_pack_query.
 type LogAnalyticsQueryPackQueryArgs struct {
 	// AdditionalSettingsJson: string, optional
 	AdditionalSettingsJson terra.StringValue `hcl:"additional_settings_json,attr"`
@@ -89,59 +112,68 @@ type LogAnalyticsQueryPackQueryArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// Timeouts: optional
 	Timeouts *loganalyticsquerypackquery.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LogAnalyticsQueryPackQuery depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type logAnalyticsQueryPackQueryAttributes struct {
 	ref terra.Reference
 }
 
+// AdditionalSettingsJson returns a reference to field additional_settings_json of azurerm_log_analytics_query_pack_query.
 func (laqpq logAnalyticsQueryPackQueryAttributes) AdditionalSettingsJson() terra.StringValue {
-	return terra.ReferenceString(laqpq.ref.Append("additional_settings_json"))
+	return terra.ReferenceAsString(laqpq.ref.Append("additional_settings_json"))
 }
 
+// Body returns a reference to field body of azurerm_log_analytics_query_pack_query.
 func (laqpq logAnalyticsQueryPackQueryAttributes) Body() terra.StringValue {
-	return terra.ReferenceString(laqpq.ref.Append("body"))
+	return terra.ReferenceAsString(laqpq.ref.Append("body"))
 }
 
+// Categories returns a reference to field categories of azurerm_log_analytics_query_pack_query.
 func (laqpq logAnalyticsQueryPackQueryAttributes) Categories() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](laqpq.ref.Append("categories"))
+	return terra.ReferenceAsList[terra.StringValue](laqpq.ref.Append("categories"))
 }
 
+// Description returns a reference to field description of azurerm_log_analytics_query_pack_query.
 func (laqpq logAnalyticsQueryPackQueryAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(laqpq.ref.Append("description"))
+	return terra.ReferenceAsString(laqpq.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_log_analytics_query_pack_query.
 func (laqpq logAnalyticsQueryPackQueryAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(laqpq.ref.Append("display_name"))
+	return terra.ReferenceAsString(laqpq.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of azurerm_log_analytics_query_pack_query.
 func (laqpq logAnalyticsQueryPackQueryAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(laqpq.ref.Append("id"))
+	return terra.ReferenceAsString(laqpq.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_log_analytics_query_pack_query.
 func (laqpq logAnalyticsQueryPackQueryAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(laqpq.ref.Append("name"))
+	return terra.ReferenceAsString(laqpq.ref.Append("name"))
 }
 
+// QueryPackId returns a reference to field query_pack_id of azurerm_log_analytics_query_pack_query.
 func (laqpq logAnalyticsQueryPackQueryAttributes) QueryPackId() terra.StringValue {
-	return terra.ReferenceString(laqpq.ref.Append("query_pack_id"))
+	return terra.ReferenceAsString(laqpq.ref.Append("query_pack_id"))
 }
 
+// ResourceTypes returns a reference to field resource_types of azurerm_log_analytics_query_pack_query.
 func (laqpq logAnalyticsQueryPackQueryAttributes) ResourceTypes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](laqpq.ref.Append("resource_types"))
+	return terra.ReferenceAsList[terra.StringValue](laqpq.ref.Append("resource_types"))
 }
 
+// Solutions returns a reference to field solutions of azurerm_log_analytics_query_pack_query.
 func (laqpq logAnalyticsQueryPackQueryAttributes) Solutions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](laqpq.ref.Append("solutions"))
+	return terra.ReferenceAsList[terra.StringValue](laqpq.ref.Append("solutions"))
 }
 
+// Tags returns a reference to field tags of azurerm_log_analytics_query_pack_query.
 func (laqpq logAnalyticsQueryPackQueryAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](laqpq.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](laqpq.ref.Append("tags"))
 }
 
 func (laqpq logAnalyticsQueryPackQueryAttributes) Timeouts() loganalyticsquerypackquery.TimeoutsAttributes {
-	return terra.ReferenceSingle[loganalyticsquerypackquery.TimeoutsAttributes](laqpq.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[loganalyticsquerypackquery.TimeoutsAttributes](laqpq.ref.Append("timeouts"))
 }
 
 type logAnalyticsQueryPackQueryState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewVirtualDesktopScalingPlan creates a new instance of [VirtualDesktopScalingPlan].
 func NewVirtualDesktopScalingPlan(name string, args VirtualDesktopScalingPlanArgs) *VirtualDesktopScalingPlan {
 	return &VirtualDesktopScalingPlan{
 		Args: args,
@@ -19,28 +20,51 @@ func NewVirtualDesktopScalingPlan(name string, args VirtualDesktopScalingPlanArg
 
 var _ terra.Resource = (*VirtualDesktopScalingPlan)(nil)
 
+// VirtualDesktopScalingPlan represents the Terraform resource azurerm_virtual_desktop_scaling_plan.
 type VirtualDesktopScalingPlan struct {
-	Name  string
-	Args  VirtualDesktopScalingPlanArgs
-	state *virtualDesktopScalingPlanState
+	Name      string
+	Args      VirtualDesktopScalingPlanArgs
+	state     *virtualDesktopScalingPlanState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VirtualDesktopScalingPlan].
 func (vdsp *VirtualDesktopScalingPlan) Type() string {
 	return "azurerm_virtual_desktop_scaling_plan"
 }
 
+// LocalName returns the local name for [VirtualDesktopScalingPlan].
 func (vdsp *VirtualDesktopScalingPlan) LocalName() string {
 	return vdsp.Name
 }
 
+// Configuration returns the configuration (args) for [VirtualDesktopScalingPlan].
 func (vdsp *VirtualDesktopScalingPlan) Configuration() interface{} {
 	return vdsp.Args
 }
 
+// DependOn is used for other resources to depend on [VirtualDesktopScalingPlan].
+func (vdsp *VirtualDesktopScalingPlan) DependOn() terra.Reference {
+	return terra.ReferenceResource(vdsp)
+}
+
+// Dependencies returns the list of resources [VirtualDesktopScalingPlan] depends_on.
+func (vdsp *VirtualDesktopScalingPlan) Dependencies() terra.Dependencies {
+	return vdsp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VirtualDesktopScalingPlan].
+func (vdsp *VirtualDesktopScalingPlan) LifecycleManagement() *terra.Lifecycle {
+	return vdsp.Lifecycle
+}
+
+// Attributes returns the attributes for [VirtualDesktopScalingPlan].
 func (vdsp *VirtualDesktopScalingPlan) Attributes() virtualDesktopScalingPlanAttributes {
 	return virtualDesktopScalingPlanAttributes{ref: terra.ReferenceResource(vdsp)}
 }
 
+// ImportState imports the given attribute values into [VirtualDesktopScalingPlan]'s state.
 func (vdsp *VirtualDesktopScalingPlan) ImportState(av io.Reader) error {
 	vdsp.state = &virtualDesktopScalingPlanState{}
 	if err := json.NewDecoder(av).Decode(vdsp.state); err != nil {
@@ -49,10 +73,12 @@ func (vdsp *VirtualDesktopScalingPlan) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [VirtualDesktopScalingPlan] has state.
 func (vdsp *VirtualDesktopScalingPlan) State() (*virtualDesktopScalingPlanState, bool) {
 	return vdsp.state, vdsp.state != nil
 }
 
+// StateMust returns the state for [VirtualDesktopScalingPlan]. Panics if the state is nil.
 func (vdsp *VirtualDesktopScalingPlan) StateMust() *virtualDesktopScalingPlanState {
 	if vdsp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", vdsp.Type(), vdsp.LocalName()))
@@ -60,10 +86,7 @@ func (vdsp *VirtualDesktopScalingPlan) StateMust() *virtualDesktopScalingPlanSta
 	return vdsp.state
 }
 
-func (vdsp *VirtualDesktopScalingPlan) DependOn() terra.Reference {
-	return terra.ReferenceResource(vdsp)
-}
-
+// VirtualDesktopScalingPlanArgs contains the configurations for azurerm_virtual_desktop_scaling_plan.
 type VirtualDesktopScalingPlanArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -89,59 +112,66 @@ type VirtualDesktopScalingPlanArgs struct {
 	Schedule []virtualdesktopscalingplan.Schedule `hcl:"schedule,block" validate:"min=1"`
 	// Timeouts: optional
 	Timeouts *virtualdesktopscalingplan.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that VirtualDesktopScalingPlan depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type virtualDesktopScalingPlanAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of azurerm_virtual_desktop_scaling_plan.
 func (vdsp virtualDesktopScalingPlanAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(vdsp.ref.Append("description"))
+	return terra.ReferenceAsString(vdsp.ref.Append("description"))
 }
 
+// ExclusionTag returns a reference to field exclusion_tag of azurerm_virtual_desktop_scaling_plan.
 func (vdsp virtualDesktopScalingPlanAttributes) ExclusionTag() terra.StringValue {
-	return terra.ReferenceString(vdsp.ref.Append("exclusion_tag"))
+	return terra.ReferenceAsString(vdsp.ref.Append("exclusion_tag"))
 }
 
+// FriendlyName returns a reference to field friendly_name of azurerm_virtual_desktop_scaling_plan.
 func (vdsp virtualDesktopScalingPlanAttributes) FriendlyName() terra.StringValue {
-	return terra.ReferenceString(vdsp.ref.Append("friendly_name"))
+	return terra.ReferenceAsString(vdsp.ref.Append("friendly_name"))
 }
 
+// Id returns a reference to field id of azurerm_virtual_desktop_scaling_plan.
 func (vdsp virtualDesktopScalingPlanAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vdsp.ref.Append("id"))
+	return terra.ReferenceAsString(vdsp.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_virtual_desktop_scaling_plan.
 func (vdsp virtualDesktopScalingPlanAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(vdsp.ref.Append("location"))
+	return terra.ReferenceAsString(vdsp.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_virtual_desktop_scaling_plan.
 func (vdsp virtualDesktopScalingPlanAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(vdsp.ref.Append("name"))
+	return terra.ReferenceAsString(vdsp.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_virtual_desktop_scaling_plan.
 func (vdsp virtualDesktopScalingPlanAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(vdsp.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(vdsp.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_virtual_desktop_scaling_plan.
 func (vdsp virtualDesktopScalingPlanAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](vdsp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](vdsp.ref.Append("tags"))
 }
 
+// TimeZone returns a reference to field time_zone of azurerm_virtual_desktop_scaling_plan.
 func (vdsp virtualDesktopScalingPlanAttributes) TimeZone() terra.StringValue {
-	return terra.ReferenceString(vdsp.ref.Append("time_zone"))
+	return terra.ReferenceAsString(vdsp.ref.Append("time_zone"))
 }
 
 func (vdsp virtualDesktopScalingPlanAttributes) HostPool() terra.ListValue[virtualdesktopscalingplan.HostPoolAttributes] {
-	return terra.ReferenceList[virtualdesktopscalingplan.HostPoolAttributes](vdsp.ref.Append("host_pool"))
+	return terra.ReferenceAsList[virtualdesktopscalingplan.HostPoolAttributes](vdsp.ref.Append("host_pool"))
 }
 
 func (vdsp virtualDesktopScalingPlanAttributes) Schedule() terra.ListValue[virtualdesktopscalingplan.ScheduleAttributes] {
-	return terra.ReferenceList[virtualdesktopscalingplan.ScheduleAttributes](vdsp.ref.Append("schedule"))
+	return terra.ReferenceAsList[virtualdesktopscalingplan.ScheduleAttributes](vdsp.ref.Append("schedule"))
 }
 
 func (vdsp virtualDesktopScalingPlanAttributes) Timeouts() virtualdesktopscalingplan.TimeoutsAttributes {
-	return terra.ReferenceSingle[virtualdesktopscalingplan.TimeoutsAttributes](vdsp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[virtualdesktopscalingplan.TimeoutsAttributes](vdsp.ref.Append("timeouts"))
 }
 
 type virtualDesktopScalingPlanState struct {

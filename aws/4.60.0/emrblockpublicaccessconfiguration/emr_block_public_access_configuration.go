@@ -26,7 +26,7 @@ func (ppsgrr PermittedPublicSecurityGroupRuleRangeAttributes) InternalWithRef(re
 	return PermittedPublicSecurityGroupRuleRangeAttributes{ref: ref}
 }
 
-func (ppsgrr PermittedPublicSecurityGroupRuleRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (ppsgrr PermittedPublicSecurityGroupRuleRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ppsgrr.ref.InternalTokens()
 }
 

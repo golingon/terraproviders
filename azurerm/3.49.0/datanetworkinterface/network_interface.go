@@ -18,84 +18,84 @@ type IpConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ic IpConfigurationAttributes) InternalRef() terra.Reference {
-	return ic.ref
+func (ic IpConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ic.ref, nil
 }
 
 func (ic IpConfigurationAttributes) InternalWithRef(ref terra.Reference) IpConfigurationAttributes {
 	return IpConfigurationAttributes{ref: ref}
 }
 
-func (ic IpConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ic IpConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ic.ref.InternalTokens()
 }
 
 func (ic IpConfigurationAttributes) ApplicationGatewayBackendAddressPoolsIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ic.ref.Append("application_gateway_backend_address_pools_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](ic.ref.Append("application_gateway_backend_address_pools_ids"))
 }
 
 func (ic IpConfigurationAttributes) ApplicationSecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ic.ref.Append("application_security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](ic.ref.Append("application_security_group_ids"))
 }
 
 func (ic IpConfigurationAttributes) GatewayLoadBalancerFrontendIpConfigurationId() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("gateway_load_balancer_frontend_ip_configuration_id"))
+	return terra.ReferenceAsString(ic.ref.Append("gateway_load_balancer_frontend_ip_configuration_id"))
 }
 
 func (ic IpConfigurationAttributes) LoadBalancerBackendAddressPoolsIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ic.ref.Append("load_balancer_backend_address_pools_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](ic.ref.Append("load_balancer_backend_address_pools_ids"))
 }
 
 func (ic IpConfigurationAttributes) LoadBalancerInboundNatRulesIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ic.ref.Append("load_balancer_inbound_nat_rules_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](ic.ref.Append("load_balancer_inbound_nat_rules_ids"))
 }
 
 func (ic IpConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("name"))
+	return terra.ReferenceAsString(ic.ref.Append("name"))
 }
 
 func (ic IpConfigurationAttributes) Primary() terra.BoolValue {
-	return terra.ReferenceBool(ic.ref.Append("primary"))
+	return terra.ReferenceAsBool(ic.ref.Append("primary"))
 }
 
 func (ic IpConfigurationAttributes) PrivateIpAddress() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("private_ip_address"))
+	return terra.ReferenceAsString(ic.ref.Append("private_ip_address"))
 }
 
 func (ic IpConfigurationAttributes) PrivateIpAddressAllocation() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("private_ip_address_allocation"))
+	return terra.ReferenceAsString(ic.ref.Append("private_ip_address_allocation"))
 }
 
 func (ic IpConfigurationAttributes) PrivateIpAddressVersion() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("private_ip_address_version"))
+	return terra.ReferenceAsString(ic.ref.Append("private_ip_address_version"))
 }
 
 func (ic IpConfigurationAttributes) PublicIpAddressId() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("public_ip_address_id"))
+	return terra.ReferenceAsString(ic.ref.Append("public_ip_address_id"))
 }
 
 func (ic IpConfigurationAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(ic.ref.Append("subnet_id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type IpConfigurationState struct {

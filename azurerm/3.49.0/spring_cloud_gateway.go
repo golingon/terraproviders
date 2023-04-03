@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSpringCloudGateway creates a new instance of [SpringCloudGateway].
 func NewSpringCloudGateway(name string, args SpringCloudGatewayArgs) *SpringCloudGateway {
 	return &SpringCloudGateway{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSpringCloudGateway(name string, args SpringCloudGatewayArgs) *SpringClou
 
 var _ terra.Resource = (*SpringCloudGateway)(nil)
 
+// SpringCloudGateway represents the Terraform resource azurerm_spring_cloud_gateway.
 type SpringCloudGateway struct {
-	Name  string
-	Args  SpringCloudGatewayArgs
-	state *springCloudGatewayState
+	Name      string
+	Args      SpringCloudGatewayArgs
+	state     *springCloudGatewayState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SpringCloudGateway].
 func (scg *SpringCloudGateway) Type() string {
 	return "azurerm_spring_cloud_gateway"
 }
 
+// LocalName returns the local name for [SpringCloudGateway].
 func (scg *SpringCloudGateway) LocalName() string {
 	return scg.Name
 }
 
+// Configuration returns the configuration (args) for [SpringCloudGateway].
 func (scg *SpringCloudGateway) Configuration() interface{} {
 	return scg.Args
 }
 
+// DependOn is used for other resources to depend on [SpringCloudGateway].
+func (scg *SpringCloudGateway) DependOn() terra.Reference {
+	return terra.ReferenceResource(scg)
+}
+
+// Dependencies returns the list of resources [SpringCloudGateway] depends_on.
+func (scg *SpringCloudGateway) Dependencies() terra.Dependencies {
+	return scg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SpringCloudGateway].
+func (scg *SpringCloudGateway) LifecycleManagement() *terra.Lifecycle {
+	return scg.Lifecycle
+}
+
+// Attributes returns the attributes for [SpringCloudGateway].
 func (scg *SpringCloudGateway) Attributes() springCloudGatewayAttributes {
 	return springCloudGatewayAttributes{ref: terra.ReferenceResource(scg)}
 }
 
+// ImportState imports the given attribute values into [SpringCloudGateway]'s state.
 func (scg *SpringCloudGateway) ImportState(av io.Reader) error {
 	scg.state = &springCloudGatewayState{}
 	if err := json.NewDecoder(av).Decode(scg.state); err != nil {
@@ -49,10 +73,12 @@ func (scg *SpringCloudGateway) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SpringCloudGateway] has state.
 func (scg *SpringCloudGateway) State() (*springCloudGatewayState, bool) {
 	return scg.state, scg.state != nil
 }
 
+// StateMust returns the state for [SpringCloudGateway]. Panics if the state is nil.
 func (scg *SpringCloudGateway) StateMust() *springCloudGatewayState {
 	if scg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", scg.Type(), scg.LocalName()))
@@ -60,10 +86,7 @@ func (scg *SpringCloudGateway) StateMust() *springCloudGatewayState {
 	return scg.state
 }
 
-func (scg *SpringCloudGateway) DependOn() terra.Reference {
-	return terra.ReferenceResource(scg)
-}
-
+// SpringCloudGatewayArgs contains the configurations for azurerm_spring_cloud_gateway.
 type SpringCloudGatewayArgs struct {
 	// ApplicationPerformanceMonitoringTypes: list of string, optional
 	ApplicationPerformanceMonitoringTypes terra.ListValue[terra.StringValue] `hcl:"application_performance_monitoring_types,attr"`
@@ -93,71 +116,79 @@ type SpringCloudGatewayArgs struct {
 	Sso *springcloudgateway.Sso `hcl:"sso,block"`
 	// Timeouts: optional
 	Timeouts *springcloudgateway.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SpringCloudGateway depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type springCloudGatewayAttributes struct {
 	ref terra.Reference
 }
 
+// ApplicationPerformanceMonitoringTypes returns a reference to field application_performance_monitoring_types of azurerm_spring_cloud_gateway.
 func (scg springCloudGatewayAttributes) ApplicationPerformanceMonitoringTypes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](scg.ref.Append("application_performance_monitoring_types"))
+	return terra.ReferenceAsList[terra.StringValue](scg.ref.Append("application_performance_monitoring_types"))
 }
 
+// EnvironmentVariables returns a reference to field environment_variables of azurerm_spring_cloud_gateway.
 func (scg springCloudGatewayAttributes) EnvironmentVariables() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](scg.ref.Append("environment_variables"))
+	return terra.ReferenceAsMap[terra.StringValue](scg.ref.Append("environment_variables"))
 }
 
+// HttpsOnly returns a reference to field https_only of azurerm_spring_cloud_gateway.
 func (scg springCloudGatewayAttributes) HttpsOnly() terra.BoolValue {
-	return terra.ReferenceBool(scg.ref.Append("https_only"))
+	return terra.ReferenceAsBool(scg.ref.Append("https_only"))
 }
 
+// Id returns a reference to field id of azurerm_spring_cloud_gateway.
 func (scg springCloudGatewayAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(scg.ref.Append("id"))
+	return terra.ReferenceAsString(scg.ref.Append("id"))
 }
 
+// InstanceCount returns a reference to field instance_count of azurerm_spring_cloud_gateway.
 func (scg springCloudGatewayAttributes) InstanceCount() terra.NumberValue {
-	return terra.ReferenceNumber(scg.ref.Append("instance_count"))
+	return terra.ReferenceAsNumber(scg.ref.Append("instance_count"))
 }
 
+// Name returns a reference to field name of azurerm_spring_cloud_gateway.
 func (scg springCloudGatewayAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(scg.ref.Append("name"))
+	return terra.ReferenceAsString(scg.ref.Append("name"))
 }
 
+// PublicNetworkAccessEnabled returns a reference to field public_network_access_enabled of azurerm_spring_cloud_gateway.
 func (scg springCloudGatewayAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(scg.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(scg.ref.Append("public_network_access_enabled"))
 }
 
+// SensitiveEnvironmentVariables returns a reference to field sensitive_environment_variables of azurerm_spring_cloud_gateway.
 func (scg springCloudGatewayAttributes) SensitiveEnvironmentVariables() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](scg.ref.Append("sensitive_environment_variables"))
+	return terra.ReferenceAsMap[terra.StringValue](scg.ref.Append("sensitive_environment_variables"))
 }
 
+// SpringCloudServiceId returns a reference to field spring_cloud_service_id of azurerm_spring_cloud_gateway.
 func (scg springCloudGatewayAttributes) SpringCloudServiceId() terra.StringValue {
-	return terra.ReferenceString(scg.ref.Append("spring_cloud_service_id"))
+	return terra.ReferenceAsString(scg.ref.Append("spring_cloud_service_id"))
 }
 
+// Url returns a reference to field url of azurerm_spring_cloud_gateway.
 func (scg springCloudGatewayAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(scg.ref.Append("url"))
+	return terra.ReferenceAsString(scg.ref.Append("url"))
 }
 
 func (scg springCloudGatewayAttributes) ApiMetadata() terra.ListValue[springcloudgateway.ApiMetadataAttributes] {
-	return terra.ReferenceList[springcloudgateway.ApiMetadataAttributes](scg.ref.Append("api_metadata"))
+	return terra.ReferenceAsList[springcloudgateway.ApiMetadataAttributes](scg.ref.Append("api_metadata"))
 }
 
 func (scg springCloudGatewayAttributes) Cors() terra.ListValue[springcloudgateway.CorsAttributes] {
-	return terra.ReferenceList[springcloudgateway.CorsAttributes](scg.ref.Append("cors"))
+	return terra.ReferenceAsList[springcloudgateway.CorsAttributes](scg.ref.Append("cors"))
 }
 
 func (scg springCloudGatewayAttributes) Quota() terra.ListValue[springcloudgateway.QuotaAttributes] {
-	return terra.ReferenceList[springcloudgateway.QuotaAttributes](scg.ref.Append("quota"))
+	return terra.ReferenceAsList[springcloudgateway.QuotaAttributes](scg.ref.Append("quota"))
 }
 
 func (scg springCloudGatewayAttributes) Sso() terra.ListValue[springcloudgateway.SsoAttributes] {
-	return terra.ReferenceList[springcloudgateway.SsoAttributes](scg.ref.Append("sso"))
+	return terra.ReferenceAsList[springcloudgateway.SsoAttributes](scg.ref.Append("sso"))
 }
 
 func (scg springCloudGatewayAttributes) Timeouts() springcloudgateway.TimeoutsAttributes {
-	return terra.ReferenceSingle[springcloudgateway.TimeoutsAttributes](scg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[springcloudgateway.TimeoutsAttributes](scg.ref.Append("timeouts"))
 }
 
 type springCloudGatewayState struct {

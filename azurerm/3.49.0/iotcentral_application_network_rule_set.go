@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewIotcentralApplicationNetworkRuleSet creates a new instance of [IotcentralApplicationNetworkRuleSet].
 func NewIotcentralApplicationNetworkRuleSet(name string, args IotcentralApplicationNetworkRuleSetArgs) *IotcentralApplicationNetworkRuleSet {
 	return &IotcentralApplicationNetworkRuleSet{
 		Args: args,
@@ -19,28 +20,51 @@ func NewIotcentralApplicationNetworkRuleSet(name string, args IotcentralApplicat
 
 var _ terra.Resource = (*IotcentralApplicationNetworkRuleSet)(nil)
 
+// IotcentralApplicationNetworkRuleSet represents the Terraform resource azurerm_iotcentral_application_network_rule_set.
 type IotcentralApplicationNetworkRuleSet struct {
-	Name  string
-	Args  IotcentralApplicationNetworkRuleSetArgs
-	state *iotcentralApplicationNetworkRuleSetState
+	Name      string
+	Args      IotcentralApplicationNetworkRuleSetArgs
+	state     *iotcentralApplicationNetworkRuleSetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IotcentralApplicationNetworkRuleSet].
 func (ianrs *IotcentralApplicationNetworkRuleSet) Type() string {
 	return "azurerm_iotcentral_application_network_rule_set"
 }
 
+// LocalName returns the local name for [IotcentralApplicationNetworkRuleSet].
 func (ianrs *IotcentralApplicationNetworkRuleSet) LocalName() string {
 	return ianrs.Name
 }
 
+// Configuration returns the configuration (args) for [IotcentralApplicationNetworkRuleSet].
 func (ianrs *IotcentralApplicationNetworkRuleSet) Configuration() interface{} {
 	return ianrs.Args
 }
 
+// DependOn is used for other resources to depend on [IotcentralApplicationNetworkRuleSet].
+func (ianrs *IotcentralApplicationNetworkRuleSet) DependOn() terra.Reference {
+	return terra.ReferenceResource(ianrs)
+}
+
+// Dependencies returns the list of resources [IotcentralApplicationNetworkRuleSet] depends_on.
+func (ianrs *IotcentralApplicationNetworkRuleSet) Dependencies() terra.Dependencies {
+	return ianrs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IotcentralApplicationNetworkRuleSet].
+func (ianrs *IotcentralApplicationNetworkRuleSet) LifecycleManagement() *terra.Lifecycle {
+	return ianrs.Lifecycle
+}
+
+// Attributes returns the attributes for [IotcentralApplicationNetworkRuleSet].
 func (ianrs *IotcentralApplicationNetworkRuleSet) Attributes() iotcentralApplicationNetworkRuleSetAttributes {
 	return iotcentralApplicationNetworkRuleSetAttributes{ref: terra.ReferenceResource(ianrs)}
 }
 
+// ImportState imports the given attribute values into [IotcentralApplicationNetworkRuleSet]'s state.
 func (ianrs *IotcentralApplicationNetworkRuleSet) ImportState(av io.Reader) error {
 	ianrs.state = &iotcentralApplicationNetworkRuleSetState{}
 	if err := json.NewDecoder(av).Decode(ianrs.state); err != nil {
@@ -49,10 +73,12 @@ func (ianrs *IotcentralApplicationNetworkRuleSet) ImportState(av io.Reader) erro
 	return nil
 }
 
+// State returns the state and a bool indicating if [IotcentralApplicationNetworkRuleSet] has state.
 func (ianrs *IotcentralApplicationNetworkRuleSet) State() (*iotcentralApplicationNetworkRuleSetState, bool) {
 	return ianrs.state, ianrs.state != nil
 }
 
+// StateMust returns the state for [IotcentralApplicationNetworkRuleSet]. Panics if the state is nil.
 func (ianrs *IotcentralApplicationNetworkRuleSet) StateMust() *iotcentralApplicationNetworkRuleSetState {
 	if ianrs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ianrs.Type(), ianrs.LocalName()))
@@ -60,10 +86,7 @@ func (ianrs *IotcentralApplicationNetworkRuleSet) StateMust() *iotcentralApplica
 	return ianrs.state
 }
 
-func (ianrs *IotcentralApplicationNetworkRuleSet) DependOn() terra.Reference {
-	return terra.ReferenceResource(ianrs)
-}
-
+// IotcentralApplicationNetworkRuleSetArgs contains the configurations for azurerm_iotcentral_application_network_rule_set.
 type IotcentralApplicationNetworkRuleSetArgs struct {
 	// ApplyToDevice: bool, optional
 	ApplyToDevice terra.BoolValue `hcl:"apply_to_device,attr"`
@@ -77,35 +100,37 @@ type IotcentralApplicationNetworkRuleSetArgs struct {
 	IpRule []iotcentralapplicationnetworkruleset.IpRule `hcl:"ip_rule,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *iotcentralapplicationnetworkruleset.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that IotcentralApplicationNetworkRuleSet depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iotcentralApplicationNetworkRuleSetAttributes struct {
 	ref terra.Reference
 }
 
+// ApplyToDevice returns a reference to field apply_to_device of azurerm_iotcentral_application_network_rule_set.
 func (ianrs iotcentralApplicationNetworkRuleSetAttributes) ApplyToDevice() terra.BoolValue {
-	return terra.ReferenceBool(ianrs.ref.Append("apply_to_device"))
+	return terra.ReferenceAsBool(ianrs.ref.Append("apply_to_device"))
 }
 
+// DefaultAction returns a reference to field default_action of azurerm_iotcentral_application_network_rule_set.
 func (ianrs iotcentralApplicationNetworkRuleSetAttributes) DefaultAction() terra.StringValue {
-	return terra.ReferenceString(ianrs.ref.Append("default_action"))
+	return terra.ReferenceAsString(ianrs.ref.Append("default_action"))
 }
 
+// Id returns a reference to field id of azurerm_iotcentral_application_network_rule_set.
 func (ianrs iotcentralApplicationNetworkRuleSetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ianrs.ref.Append("id"))
+	return terra.ReferenceAsString(ianrs.ref.Append("id"))
 }
 
+// IotcentralApplicationId returns a reference to field iotcentral_application_id of azurerm_iotcentral_application_network_rule_set.
 func (ianrs iotcentralApplicationNetworkRuleSetAttributes) IotcentralApplicationId() terra.StringValue {
-	return terra.ReferenceString(ianrs.ref.Append("iotcentral_application_id"))
+	return terra.ReferenceAsString(ianrs.ref.Append("iotcentral_application_id"))
 }
 
 func (ianrs iotcentralApplicationNetworkRuleSetAttributes) IpRule() terra.ListValue[iotcentralapplicationnetworkruleset.IpRuleAttributes] {
-	return terra.ReferenceList[iotcentralapplicationnetworkruleset.IpRuleAttributes](ianrs.ref.Append("ip_rule"))
+	return terra.ReferenceAsList[iotcentralapplicationnetworkruleset.IpRuleAttributes](ianrs.ref.Append("ip_rule"))
 }
 
 func (ianrs iotcentralApplicationNetworkRuleSetAttributes) Timeouts() iotcentralapplicationnetworkruleset.TimeoutsAttributes {
-	return terra.ReferenceSingle[iotcentralapplicationnetworkruleset.TimeoutsAttributes](ianrs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[iotcentralapplicationnetworkruleset.TimeoutsAttributes](ianrs.ref.Append("timeouts"))
 }
 
 type iotcentralApplicationNetworkRuleSetState struct {

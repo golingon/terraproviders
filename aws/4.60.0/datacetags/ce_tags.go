@@ -183,7 +183,7 @@ func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes 
 	return FilterAttributes{ref: ref}
 }
 
-func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
+func (f FilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -223,7 +223,7 @@ func (a AndAttributes) InternalWithRef(ref terra.Reference) AndAttributes {
 	return AndAttributes{ref: ref}
 }
 
-func (a AndAttributes) InternalTokens() hclwrite.Tokens {
+func (a AndAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -251,7 +251,7 @@ func (cc AndCostCategoryAttributes) InternalWithRef(ref terra.Reference) AndCost
 	return AndCostCategoryAttributes{ref: ref}
 }
 
-func (cc AndCostCategoryAttributes) InternalTokens() hclwrite.Tokens {
+func (cc AndCostCategoryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -279,7 +279,7 @@ func (d AndDimensionAttributes) InternalWithRef(ref terra.Reference) AndDimensio
 	return AndDimensionAttributes{ref: ref}
 }
 
-func (d AndDimensionAttributes) InternalTokens() hclwrite.Tokens {
+func (d AndDimensionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -307,7 +307,7 @@ func (t AndTagsAttributes) InternalWithRef(ref terra.Reference) AndTagsAttribute
 	return AndTagsAttributes{ref: ref}
 }
 
-func (t AndTagsAttributes) InternalTokens() hclwrite.Tokens {
+func (t AndTagsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -335,7 +335,7 @@ func (cc FilterCostCategoryAttributes) InternalWithRef(ref terra.Reference) Filt
 	return FilterCostCategoryAttributes{ref: ref}
 }
 
-func (cc FilterCostCategoryAttributes) InternalTokens() hclwrite.Tokens {
+func (cc FilterCostCategoryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -363,7 +363,7 @@ func (d FilterDimensionAttributes) InternalWithRef(ref terra.Reference) FilterDi
 	return FilterDimensionAttributes{ref: ref}
 }
 
-func (d FilterDimensionAttributes) InternalTokens() hclwrite.Tokens {
+func (d FilterDimensionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -391,7 +391,7 @@ func (n NotAttributes) InternalWithRef(ref terra.Reference) NotAttributes {
 	return NotAttributes{ref: ref}
 }
 
-func (n NotAttributes) InternalTokens() hclwrite.Tokens {
+func (n NotAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return n.ref.InternalTokens()
 }
 
@@ -419,7 +419,7 @@ func (cc NotCostCategoryAttributes) InternalWithRef(ref terra.Reference) NotCost
 	return NotCostCategoryAttributes{ref: ref}
 }
 
-func (cc NotCostCategoryAttributes) InternalTokens() hclwrite.Tokens {
+func (cc NotCostCategoryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -447,7 +447,7 @@ func (d NotDimensionAttributes) InternalWithRef(ref terra.Reference) NotDimensio
 	return NotDimensionAttributes{ref: ref}
 }
 
-func (d NotDimensionAttributes) InternalTokens() hclwrite.Tokens {
+func (d NotDimensionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -475,7 +475,7 @@ func (t NotTagsAttributes) InternalWithRef(ref terra.Reference) NotTagsAttribute
 	return NotTagsAttributes{ref: ref}
 }
 
-func (t NotTagsAttributes) InternalTokens() hclwrite.Tokens {
+func (t NotTagsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -503,7 +503,7 @@ func (o OrAttributes) InternalWithRef(ref terra.Reference) OrAttributes {
 	return OrAttributes{ref: ref}
 }
 
-func (o OrAttributes) InternalTokens() hclwrite.Tokens {
+func (o OrAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return o.ref.InternalTokens()
 }
 
@@ -531,7 +531,7 @@ func (cc OrCostCategoryAttributes) InternalWithRef(ref terra.Reference) OrCostCa
 	return OrCostCategoryAttributes{ref: ref}
 }
 
-func (cc OrCostCategoryAttributes) InternalTokens() hclwrite.Tokens {
+func (cc OrCostCategoryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -559,7 +559,7 @@ func (d OrDimensionAttributes) InternalWithRef(ref terra.Reference) OrDimensionA
 	return OrDimensionAttributes{ref: ref}
 }
 
-func (d OrDimensionAttributes) InternalTokens() hclwrite.Tokens {
+func (d OrDimensionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -587,7 +587,7 @@ func (t OrTagsAttributes) InternalWithRef(ref terra.Reference) OrTagsAttributes 
 	return OrTagsAttributes{ref: ref}
 }
 
-func (t OrTagsAttributes) InternalTokens() hclwrite.Tokens {
+func (t OrTagsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -615,7 +615,7 @@ func (t FilterTagsAttributes) InternalWithRef(ref terra.Reference) FilterTagsAtt
 	return FilterTagsAttributes{ref: ref}
 }
 
-func (t FilterTagsAttributes) InternalTokens() hclwrite.Tokens {
+func (t FilterTagsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -643,7 +643,7 @@ func (sb SortByAttributes) InternalWithRef(ref terra.Reference) SortByAttributes
 	return SortByAttributes{ref: ref}
 }
 
-func (sb SortByAttributes) InternalTokens() hclwrite.Tokens {
+func (sb SortByAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sb.ref.InternalTokens()
 }
 
@@ -667,7 +667,7 @@ func (tp TimePeriodAttributes) InternalWithRef(ref terra.Reference) TimePeriodAt
 	return TimePeriodAttributes{ref: ref}
 }
 
-func (tp TimePeriodAttributes) InternalTokens() hclwrite.Tokens {
+func (tp TimePeriodAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tp.ref.InternalTokens()
 }
 

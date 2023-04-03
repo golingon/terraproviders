@@ -21,7 +21,7 @@ func (ei ExternalIdsAttributes) InternalWithRef(ref terra.Reference) ExternalIds
 	return ExternalIdsAttributes{ref: ref}
 }
 
-func (ei ExternalIdsAttributes) InternalTokens() hclwrite.Tokens {
+func (ei ExternalIdsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ei.ref.InternalTokens()
 }
 

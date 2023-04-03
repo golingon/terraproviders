@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLogAnalyticsStorageInsights creates a new instance of [LogAnalyticsStorageInsights].
 func NewLogAnalyticsStorageInsights(name string, args LogAnalyticsStorageInsightsArgs) *LogAnalyticsStorageInsights {
 	return &LogAnalyticsStorageInsights{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLogAnalyticsStorageInsights(name string, args LogAnalyticsStorageInsight
 
 var _ terra.Resource = (*LogAnalyticsStorageInsights)(nil)
 
+// LogAnalyticsStorageInsights represents the Terraform resource azurerm_log_analytics_storage_insights.
 type LogAnalyticsStorageInsights struct {
-	Name  string
-	Args  LogAnalyticsStorageInsightsArgs
-	state *logAnalyticsStorageInsightsState
+	Name      string
+	Args      LogAnalyticsStorageInsightsArgs
+	state     *logAnalyticsStorageInsightsState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LogAnalyticsStorageInsights].
 func (lasi *LogAnalyticsStorageInsights) Type() string {
 	return "azurerm_log_analytics_storage_insights"
 }
 
+// LocalName returns the local name for [LogAnalyticsStorageInsights].
 func (lasi *LogAnalyticsStorageInsights) LocalName() string {
 	return lasi.Name
 }
 
+// Configuration returns the configuration (args) for [LogAnalyticsStorageInsights].
 func (lasi *LogAnalyticsStorageInsights) Configuration() interface{} {
 	return lasi.Args
 }
 
+// DependOn is used for other resources to depend on [LogAnalyticsStorageInsights].
+func (lasi *LogAnalyticsStorageInsights) DependOn() terra.Reference {
+	return terra.ReferenceResource(lasi)
+}
+
+// Dependencies returns the list of resources [LogAnalyticsStorageInsights] depends_on.
+func (lasi *LogAnalyticsStorageInsights) Dependencies() terra.Dependencies {
+	return lasi.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LogAnalyticsStorageInsights].
+func (lasi *LogAnalyticsStorageInsights) LifecycleManagement() *terra.Lifecycle {
+	return lasi.Lifecycle
+}
+
+// Attributes returns the attributes for [LogAnalyticsStorageInsights].
 func (lasi *LogAnalyticsStorageInsights) Attributes() logAnalyticsStorageInsightsAttributes {
 	return logAnalyticsStorageInsightsAttributes{ref: terra.ReferenceResource(lasi)}
 }
 
+// ImportState imports the given attribute values into [LogAnalyticsStorageInsights]'s state.
 func (lasi *LogAnalyticsStorageInsights) ImportState(av io.Reader) error {
 	lasi.state = &logAnalyticsStorageInsightsState{}
 	if err := json.NewDecoder(av).Decode(lasi.state); err != nil {
@@ -49,10 +73,12 @@ func (lasi *LogAnalyticsStorageInsights) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LogAnalyticsStorageInsights] has state.
 func (lasi *LogAnalyticsStorageInsights) State() (*logAnalyticsStorageInsightsState, bool) {
 	return lasi.state, lasi.state != nil
 }
 
+// StateMust returns the state for [LogAnalyticsStorageInsights]. Panics if the state is nil.
 func (lasi *LogAnalyticsStorageInsights) StateMust() *logAnalyticsStorageInsightsState {
 	if lasi.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lasi.Type(), lasi.LocalName()))
@@ -60,10 +86,7 @@ func (lasi *LogAnalyticsStorageInsights) StateMust() *logAnalyticsStorageInsight
 	return lasi.state
 }
 
-func (lasi *LogAnalyticsStorageInsights) DependOn() terra.Reference {
-	return terra.ReferenceResource(lasi)
-}
-
+// LogAnalyticsStorageInsightsArgs contains the configurations for azurerm_log_analytics_storage_insights.
 type LogAnalyticsStorageInsightsArgs struct {
 	// BlobContainerNames: set of string, optional
 	BlobContainerNames terra.SetValue[terra.StringValue] `hcl:"blob_container_names,attr"`
@@ -83,47 +106,53 @@ type LogAnalyticsStorageInsightsArgs struct {
 	WorkspaceId terra.StringValue `hcl:"workspace_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *loganalyticsstorageinsights.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LogAnalyticsStorageInsights depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type logAnalyticsStorageInsightsAttributes struct {
 	ref terra.Reference
 }
 
+// BlobContainerNames returns a reference to field blob_container_names of azurerm_log_analytics_storage_insights.
 func (lasi logAnalyticsStorageInsightsAttributes) BlobContainerNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](lasi.ref.Append("blob_container_names"))
+	return terra.ReferenceAsSet[terra.StringValue](lasi.ref.Append("blob_container_names"))
 }
 
+// Id returns a reference to field id of azurerm_log_analytics_storage_insights.
 func (lasi logAnalyticsStorageInsightsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lasi.ref.Append("id"))
+	return terra.ReferenceAsString(lasi.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_log_analytics_storage_insights.
 func (lasi logAnalyticsStorageInsightsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lasi.ref.Append("name"))
+	return terra.ReferenceAsString(lasi.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_log_analytics_storage_insights.
 func (lasi logAnalyticsStorageInsightsAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(lasi.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(lasi.ref.Append("resource_group_name"))
 }
 
+// StorageAccountId returns a reference to field storage_account_id of azurerm_log_analytics_storage_insights.
 func (lasi logAnalyticsStorageInsightsAttributes) StorageAccountId() terra.StringValue {
-	return terra.ReferenceString(lasi.ref.Append("storage_account_id"))
+	return terra.ReferenceAsString(lasi.ref.Append("storage_account_id"))
 }
 
+// StorageAccountKey returns a reference to field storage_account_key of azurerm_log_analytics_storage_insights.
 func (lasi logAnalyticsStorageInsightsAttributes) StorageAccountKey() terra.StringValue {
-	return terra.ReferenceString(lasi.ref.Append("storage_account_key"))
+	return terra.ReferenceAsString(lasi.ref.Append("storage_account_key"))
 }
 
+// TableNames returns a reference to field table_names of azurerm_log_analytics_storage_insights.
 func (lasi logAnalyticsStorageInsightsAttributes) TableNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](lasi.ref.Append("table_names"))
+	return terra.ReferenceAsSet[terra.StringValue](lasi.ref.Append("table_names"))
 }
 
+// WorkspaceId returns a reference to field workspace_id of azurerm_log_analytics_storage_insights.
 func (lasi logAnalyticsStorageInsightsAttributes) WorkspaceId() terra.StringValue {
-	return terra.ReferenceString(lasi.ref.Append("workspace_id"))
+	return terra.ReferenceAsString(lasi.ref.Append("workspace_id"))
 }
 
 func (lasi logAnalyticsStorageInsightsAttributes) Timeouts() loganalyticsstorageinsights.TimeoutsAttributes {
-	return terra.ReferenceSingle[loganalyticsstorageinsights.TimeoutsAttributes](lasi.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[loganalyticsstorageinsights.TimeoutsAttributes](lasi.ref.Append("timeouts"))
 }
 
 type logAnalyticsStorageInsightsState struct {

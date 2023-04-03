@@ -26,7 +26,7 @@ func (lb LexBotAttributes) InternalWithRef(ref terra.Reference) LexBotAttributes
 	return LexBotAttributes{ref: ref}
 }
 
-func (lb LexBotAttributes) InternalTokens() hclwrite.Tokens {
+func (lb LexBotAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lb.ref.InternalTokens()
 }
 

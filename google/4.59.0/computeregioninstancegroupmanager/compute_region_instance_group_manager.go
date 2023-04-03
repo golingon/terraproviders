@@ -94,296 +94,296 @@ type StatusAttributes struct {
 	ref terra.Reference
 }
 
-func (s StatusAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s StatusAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s StatusAttributes) InternalWithRef(ref terra.Reference) StatusAttributes {
 	return StatusAttributes{ref: ref}
 }
 
-func (s StatusAttributes) InternalTokens() hclwrite.Tokens {
+func (s StatusAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s StatusAttributes) IsStable() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("is_stable"))
+	return terra.ReferenceAsBool(s.ref.Append("is_stable"))
 }
 
 func (s StatusAttributes) Stateful() terra.ListValue[StatefulAttributes] {
-	return terra.ReferenceList[StatefulAttributes](s.ref.Append("stateful"))
+	return terra.ReferenceAsList[StatefulAttributes](s.ref.Append("stateful"))
 }
 
 func (s StatusAttributes) VersionTarget() terra.ListValue[VersionTargetAttributes] {
-	return terra.ReferenceList[VersionTargetAttributes](s.ref.Append("version_target"))
+	return terra.ReferenceAsList[VersionTargetAttributes](s.ref.Append("version_target"))
 }
 
 type StatefulAttributes struct {
 	ref terra.Reference
 }
 
-func (s StatefulAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s StatefulAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s StatefulAttributes) InternalWithRef(ref terra.Reference) StatefulAttributes {
 	return StatefulAttributes{ref: ref}
 }
 
-func (s StatefulAttributes) InternalTokens() hclwrite.Tokens {
+func (s StatefulAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s StatefulAttributes) HasStatefulConfig() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("has_stateful_config"))
+	return terra.ReferenceAsBool(s.ref.Append("has_stateful_config"))
 }
 
 func (s StatefulAttributes) PerInstanceConfigs() terra.ListValue[PerInstanceConfigsAttributes] {
-	return terra.ReferenceList[PerInstanceConfigsAttributes](s.ref.Append("per_instance_configs"))
+	return terra.ReferenceAsList[PerInstanceConfigsAttributes](s.ref.Append("per_instance_configs"))
 }
 
 type PerInstanceConfigsAttributes struct {
 	ref terra.Reference
 }
 
-func (pic PerInstanceConfigsAttributes) InternalRef() terra.Reference {
-	return pic.ref
+func (pic PerInstanceConfigsAttributes) InternalRef() (terra.Reference, error) {
+	return pic.ref, nil
 }
 
 func (pic PerInstanceConfigsAttributes) InternalWithRef(ref terra.Reference) PerInstanceConfigsAttributes {
 	return PerInstanceConfigsAttributes{ref: ref}
 }
 
-func (pic PerInstanceConfigsAttributes) InternalTokens() hclwrite.Tokens {
+func (pic PerInstanceConfigsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pic.ref.InternalTokens()
 }
 
 func (pic PerInstanceConfigsAttributes) AllEffective() terra.BoolValue {
-	return terra.ReferenceBool(pic.ref.Append("all_effective"))
+	return terra.ReferenceAsBool(pic.ref.Append("all_effective"))
 }
 
 type VersionTargetAttributes struct {
 	ref terra.Reference
 }
 
-func (vt VersionTargetAttributes) InternalRef() terra.Reference {
-	return vt.ref
+func (vt VersionTargetAttributes) InternalRef() (terra.Reference, error) {
+	return vt.ref, nil
 }
 
 func (vt VersionTargetAttributes) InternalWithRef(ref terra.Reference) VersionTargetAttributes {
 	return VersionTargetAttributes{ref: ref}
 }
 
-func (vt VersionTargetAttributes) InternalTokens() hclwrite.Tokens {
+func (vt VersionTargetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vt.ref.InternalTokens()
 }
 
 func (vt VersionTargetAttributes) IsReached() terra.BoolValue {
-	return terra.ReferenceBool(vt.ref.Append("is_reached"))
+	return terra.ReferenceAsBool(vt.ref.Append("is_reached"))
 }
 
 type AutoHealingPoliciesAttributes struct {
 	ref terra.Reference
 }
 
-func (ahp AutoHealingPoliciesAttributes) InternalRef() terra.Reference {
-	return ahp.ref
+func (ahp AutoHealingPoliciesAttributes) InternalRef() (terra.Reference, error) {
+	return ahp.ref, nil
 }
 
 func (ahp AutoHealingPoliciesAttributes) InternalWithRef(ref terra.Reference) AutoHealingPoliciesAttributes {
 	return AutoHealingPoliciesAttributes{ref: ref}
 }
 
-func (ahp AutoHealingPoliciesAttributes) InternalTokens() hclwrite.Tokens {
+func (ahp AutoHealingPoliciesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ahp.ref.InternalTokens()
 }
 
 func (ahp AutoHealingPoliciesAttributes) HealthCheck() terra.StringValue {
-	return terra.ReferenceString(ahp.ref.Append("health_check"))
+	return terra.ReferenceAsString(ahp.ref.Append("health_check"))
 }
 
 func (ahp AutoHealingPoliciesAttributes) InitialDelaySec() terra.NumberValue {
-	return terra.ReferenceNumber(ahp.ref.Append("initial_delay_sec"))
+	return terra.ReferenceAsNumber(ahp.ref.Append("initial_delay_sec"))
 }
 
 type NamedPortAttributes struct {
 	ref terra.Reference
 }
 
-func (np NamedPortAttributes) InternalRef() terra.Reference {
-	return np.ref
+func (np NamedPortAttributes) InternalRef() (terra.Reference, error) {
+	return np.ref, nil
 }
 
 func (np NamedPortAttributes) InternalWithRef(ref terra.Reference) NamedPortAttributes {
 	return NamedPortAttributes{ref: ref}
 }
 
-func (np NamedPortAttributes) InternalTokens() hclwrite.Tokens {
+func (np NamedPortAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return np.ref.InternalTokens()
 }
 
 func (np NamedPortAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("name"))
+	return terra.ReferenceAsString(np.ref.Append("name"))
 }
 
 func (np NamedPortAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(np.ref.Append("port"))
+	return terra.ReferenceAsNumber(np.ref.Append("port"))
 }
 
 type StatefulDiskAttributes struct {
 	ref terra.Reference
 }
 
-func (sd StatefulDiskAttributes) InternalRef() terra.Reference {
-	return sd.ref
+func (sd StatefulDiskAttributes) InternalRef() (terra.Reference, error) {
+	return sd.ref, nil
 }
 
 func (sd StatefulDiskAttributes) InternalWithRef(ref terra.Reference) StatefulDiskAttributes {
 	return StatefulDiskAttributes{ref: ref}
 }
 
-func (sd StatefulDiskAttributes) InternalTokens() hclwrite.Tokens {
+func (sd StatefulDiskAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sd.ref.InternalTokens()
 }
 
 func (sd StatefulDiskAttributes) DeleteRule() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("delete_rule"))
+	return terra.ReferenceAsString(sd.ref.Append("delete_rule"))
 }
 
 func (sd StatefulDiskAttributes) DeviceName() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("device_name"))
+	return terra.ReferenceAsString(sd.ref.Append("device_name"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type UpdatePolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (up UpdatePolicyAttributes) InternalRef() terra.Reference {
-	return up.ref
+func (up UpdatePolicyAttributes) InternalRef() (terra.Reference, error) {
+	return up.ref, nil
 }
 
 func (up UpdatePolicyAttributes) InternalWithRef(ref terra.Reference) UpdatePolicyAttributes {
 	return UpdatePolicyAttributes{ref: ref}
 }
 
-func (up UpdatePolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (up UpdatePolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return up.ref.InternalTokens()
 }
 
 func (up UpdatePolicyAttributes) InstanceRedistributionType() terra.StringValue {
-	return terra.ReferenceString(up.ref.Append("instance_redistribution_type"))
+	return terra.ReferenceAsString(up.ref.Append("instance_redistribution_type"))
 }
 
 func (up UpdatePolicyAttributes) MaxSurgeFixed() terra.NumberValue {
-	return terra.ReferenceNumber(up.ref.Append("max_surge_fixed"))
+	return terra.ReferenceAsNumber(up.ref.Append("max_surge_fixed"))
 }
 
 func (up UpdatePolicyAttributes) MaxSurgePercent() terra.NumberValue {
-	return terra.ReferenceNumber(up.ref.Append("max_surge_percent"))
+	return terra.ReferenceAsNumber(up.ref.Append("max_surge_percent"))
 }
 
 func (up UpdatePolicyAttributes) MaxUnavailableFixed() terra.NumberValue {
-	return terra.ReferenceNumber(up.ref.Append("max_unavailable_fixed"))
+	return terra.ReferenceAsNumber(up.ref.Append("max_unavailable_fixed"))
 }
 
 func (up UpdatePolicyAttributes) MaxUnavailablePercent() terra.NumberValue {
-	return terra.ReferenceNumber(up.ref.Append("max_unavailable_percent"))
+	return terra.ReferenceAsNumber(up.ref.Append("max_unavailable_percent"))
 }
 
 func (up UpdatePolicyAttributes) MinimalAction() terra.StringValue {
-	return terra.ReferenceString(up.ref.Append("minimal_action"))
+	return terra.ReferenceAsString(up.ref.Append("minimal_action"))
 }
 
 func (up UpdatePolicyAttributes) MostDisruptiveAllowedAction() terra.StringValue {
-	return terra.ReferenceString(up.ref.Append("most_disruptive_allowed_action"))
+	return terra.ReferenceAsString(up.ref.Append("most_disruptive_allowed_action"))
 }
 
 func (up UpdatePolicyAttributes) ReplacementMethod() terra.StringValue {
-	return terra.ReferenceString(up.ref.Append("replacement_method"))
+	return terra.ReferenceAsString(up.ref.Append("replacement_method"))
 }
 
 func (up UpdatePolicyAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(up.ref.Append("type"))
+	return terra.ReferenceAsString(up.ref.Append("type"))
 }
 
 type VersionAttributes struct {
 	ref terra.Reference
 }
 
-func (v VersionAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v VersionAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v VersionAttributes) InternalWithRef(ref terra.Reference) VersionAttributes {
 	return VersionAttributes{ref: ref}
 }
 
-func (v VersionAttributes) InternalTokens() hclwrite.Tokens {
+func (v VersionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 
 func (v VersionAttributes) InstanceTemplate() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("instance_template"))
+	return terra.ReferenceAsString(v.ref.Append("instance_template"))
 }
 
 func (v VersionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("name"))
+	return terra.ReferenceAsString(v.ref.Append("name"))
 }
 
 func (v VersionAttributes) TargetSize() terra.ListValue[TargetSizeAttributes] {
-	return terra.ReferenceList[TargetSizeAttributes](v.ref.Append("target_size"))
+	return terra.ReferenceAsList[TargetSizeAttributes](v.ref.Append("target_size"))
 }
 
 type TargetSizeAttributes struct {
 	ref terra.Reference
 }
 
-func (ts TargetSizeAttributes) InternalRef() terra.Reference {
-	return ts.ref
+func (ts TargetSizeAttributes) InternalRef() (terra.Reference, error) {
+	return ts.ref, nil
 }
 
 func (ts TargetSizeAttributes) InternalWithRef(ref terra.Reference) TargetSizeAttributes {
 	return TargetSizeAttributes{ref: ref}
 }
 
-func (ts TargetSizeAttributes) InternalTokens() hclwrite.Tokens {
+func (ts TargetSizeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ts.ref.InternalTokens()
 }
 
 func (ts TargetSizeAttributes) Fixed() terra.NumberValue {
-	return terra.ReferenceNumber(ts.ref.Append("fixed"))
+	return terra.ReferenceAsNumber(ts.ref.Append("fixed"))
 }
 
 func (ts TargetSizeAttributes) Percent() terra.NumberValue {
-	return terra.ReferenceNumber(ts.ref.Append("percent"))
+	return terra.ReferenceAsNumber(ts.ref.Append("percent"))
 }
 
 type StatusState struct {

@@ -31,7 +31,7 @@ func (ac AclConfigurationAttributes) InternalWithRef(ref terra.Reference) AclCon
 	return AclConfigurationAttributes{ref: ref}
 }
 
-func (ac AclConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ac AclConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
@@ -51,7 +51,7 @@ func (ec EncryptionConfigurationAttributes) InternalWithRef(ref terra.Reference)
 	return EncryptionConfigurationAttributes{ref: ref}
 }
 
-func (ec EncryptionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ec EncryptionConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 

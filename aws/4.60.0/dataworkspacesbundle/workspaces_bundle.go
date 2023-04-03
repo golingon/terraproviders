@@ -25,7 +25,7 @@ func (ct ComputeTypeAttributes) InternalWithRef(ref terra.Reference) ComputeType
 	return ComputeTypeAttributes{ref: ref}
 }
 
-func (ct ComputeTypeAttributes) InternalTokens() hclwrite.Tokens {
+func (ct ComputeTypeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ct.ref.InternalTokens()
 }
 
@@ -45,7 +45,7 @@ func (rs RootStorageAttributes) InternalWithRef(ref terra.Reference) RootStorage
 	return RootStorageAttributes{ref: ref}
 }
 
-func (rs RootStorageAttributes) InternalTokens() hclwrite.Tokens {
+func (rs RootStorageAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rs.ref.InternalTokens()
 }
 
@@ -65,7 +65,7 @@ func (us UserStorageAttributes) InternalWithRef(ref terra.Reference) UserStorage
 	return UserStorageAttributes{ref: ref}
 }
 
-func (us UserStorageAttributes) InternalTokens() hclwrite.Tokens {
+func (us UserStorageAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return us.ref.InternalTokens()
 }
 

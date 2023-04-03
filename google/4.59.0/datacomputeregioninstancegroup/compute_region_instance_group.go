@@ -18,52 +18,52 @@ type InstancesAttributes struct {
 	ref terra.Reference
 }
 
-func (i InstancesAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i InstancesAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i InstancesAttributes) InternalWithRef(ref terra.Reference) InstancesAttributes {
 	return InstancesAttributes{ref: ref}
 }
 
-func (i InstancesAttributes) InternalTokens() hclwrite.Tokens {
+func (i InstancesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i InstancesAttributes) Instance() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("instance"))
+	return terra.ReferenceAsString(i.ref.Append("instance"))
 }
 
 func (i InstancesAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("status"))
+	return terra.ReferenceAsString(i.ref.Append("status"))
 }
 
 func (i InstancesAttributes) NamedPorts() terra.ListValue[NamedPortsAttributes] {
-	return terra.ReferenceList[NamedPortsAttributes](i.ref.Append("named_ports"))
+	return terra.ReferenceAsList[NamedPortsAttributes](i.ref.Append("named_ports"))
 }
 
 type NamedPortsAttributes struct {
 	ref terra.Reference
 }
 
-func (np NamedPortsAttributes) InternalRef() terra.Reference {
-	return np.ref
+func (np NamedPortsAttributes) InternalRef() (terra.Reference, error) {
+	return np.ref, nil
 }
 
 func (np NamedPortsAttributes) InternalWithRef(ref terra.Reference) NamedPortsAttributes {
 	return NamedPortsAttributes{ref: ref}
 }
 
-func (np NamedPortsAttributes) InternalTokens() hclwrite.Tokens {
+func (np NamedPortsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return np.ref.InternalTokens()
 }
 
 func (np NamedPortsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("name"))
+	return terra.ReferenceAsString(np.ref.Append("name"))
 }
 
 func (np NamedPortsAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(np.ref.Append("port"))
+	return terra.ReferenceAsNumber(np.ref.Append("port"))
 }
 
 type InstancesState struct {

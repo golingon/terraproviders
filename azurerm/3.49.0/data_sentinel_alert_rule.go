@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataSentinelAlertRule creates a new instance of [DataSentinelAlertRule].
 func NewDataSentinelAlertRule(name string, args DataSentinelAlertRuleArgs) *DataSentinelAlertRule {
 	return &DataSentinelAlertRule{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataSentinelAlertRule(name string, args DataSentinelAlertRuleArgs) *Data
 
 var _ terra.DataResource = (*DataSentinelAlertRule)(nil)
 
+// DataSentinelAlertRule represents the Terraform data resource azurerm_sentinel_alert_rule.
 type DataSentinelAlertRule struct {
 	Name string
 	Args DataSentinelAlertRuleArgs
 }
 
+// DataSource returns the Terraform object type for [DataSentinelAlertRule].
 func (sar *DataSentinelAlertRule) DataSource() string {
 	return "azurerm_sentinel_alert_rule"
 }
 
+// LocalName returns the local name for [DataSentinelAlertRule].
 func (sar *DataSentinelAlertRule) LocalName() string {
 	return sar.Name
 }
 
+// Configuration returns the configuration (args) for [DataSentinelAlertRule].
 func (sar *DataSentinelAlertRule) Configuration() interface{} {
 	return sar.Args
 }
 
+// Attributes returns the attributes for [DataSentinelAlertRule].
 func (sar *DataSentinelAlertRule) Attributes() dataSentinelAlertRuleAttributes {
 	return dataSentinelAlertRuleAttributes{ref: terra.ReferenceDataResource(sar)}
 }
 
+// DataSentinelAlertRuleArgs contains the configurations for azurerm_sentinel_alert_rule.
 type DataSentinelAlertRuleArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,18 +58,21 @@ type dataSentinelAlertRuleAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_sentinel_alert_rule.
 func (sar dataSentinelAlertRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sar.ref.Append("id"))
+	return terra.ReferenceAsString(sar.ref.Append("id"))
 }
 
+// LogAnalyticsWorkspaceId returns a reference to field log_analytics_workspace_id of azurerm_sentinel_alert_rule.
 func (sar dataSentinelAlertRuleAttributes) LogAnalyticsWorkspaceId() terra.StringValue {
-	return terra.ReferenceString(sar.ref.Append("log_analytics_workspace_id"))
+	return terra.ReferenceAsString(sar.ref.Append("log_analytics_workspace_id"))
 }
 
+// Name returns a reference to field name of azurerm_sentinel_alert_rule.
 func (sar dataSentinelAlertRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sar.ref.Append("name"))
+	return terra.ReferenceAsString(sar.ref.Append("name"))
 }
 
 func (sar dataSentinelAlertRuleAttributes) Timeouts() datasentinelalertrule.TimeoutsAttributes {
-	return terra.ReferenceSingle[datasentinelalertrule.TimeoutsAttributes](sar.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datasentinelalertrule.TimeoutsAttributes](sar.ref.Append("timeouts"))
 }

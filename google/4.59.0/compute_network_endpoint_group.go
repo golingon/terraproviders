@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeNetworkEndpointGroup creates a new instance of [ComputeNetworkEndpointGroup].
 func NewComputeNetworkEndpointGroup(name string, args ComputeNetworkEndpointGroupArgs) *ComputeNetworkEndpointGroup {
 	return &ComputeNetworkEndpointGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeNetworkEndpointGroup(name string, args ComputeNetworkEndpointGrou
 
 var _ terra.Resource = (*ComputeNetworkEndpointGroup)(nil)
 
+// ComputeNetworkEndpointGroup represents the Terraform resource google_compute_network_endpoint_group.
 type ComputeNetworkEndpointGroup struct {
-	Name  string
-	Args  ComputeNetworkEndpointGroupArgs
-	state *computeNetworkEndpointGroupState
+	Name      string
+	Args      ComputeNetworkEndpointGroupArgs
+	state     *computeNetworkEndpointGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeNetworkEndpointGroup].
 func (cneg *ComputeNetworkEndpointGroup) Type() string {
 	return "google_compute_network_endpoint_group"
 }
 
+// LocalName returns the local name for [ComputeNetworkEndpointGroup].
 func (cneg *ComputeNetworkEndpointGroup) LocalName() string {
 	return cneg.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeNetworkEndpointGroup].
 func (cneg *ComputeNetworkEndpointGroup) Configuration() interface{} {
 	return cneg.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeNetworkEndpointGroup].
+func (cneg *ComputeNetworkEndpointGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(cneg)
+}
+
+// Dependencies returns the list of resources [ComputeNetworkEndpointGroup] depends_on.
+func (cneg *ComputeNetworkEndpointGroup) Dependencies() terra.Dependencies {
+	return cneg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeNetworkEndpointGroup].
+func (cneg *ComputeNetworkEndpointGroup) LifecycleManagement() *terra.Lifecycle {
+	return cneg.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeNetworkEndpointGroup].
 func (cneg *ComputeNetworkEndpointGroup) Attributes() computeNetworkEndpointGroupAttributes {
 	return computeNetworkEndpointGroupAttributes{ref: terra.ReferenceResource(cneg)}
 }
 
+// ImportState imports the given attribute values into [ComputeNetworkEndpointGroup]'s state.
 func (cneg *ComputeNetworkEndpointGroup) ImportState(av io.Reader) error {
 	cneg.state = &computeNetworkEndpointGroupState{}
 	if err := json.NewDecoder(av).Decode(cneg.state); err != nil {
@@ -49,10 +73,12 @@ func (cneg *ComputeNetworkEndpointGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeNetworkEndpointGroup] has state.
 func (cneg *ComputeNetworkEndpointGroup) State() (*computeNetworkEndpointGroupState, bool) {
 	return cneg.state, cneg.state != nil
 }
 
+// StateMust returns the state for [ComputeNetworkEndpointGroup]. Panics if the state is nil.
 func (cneg *ComputeNetworkEndpointGroup) StateMust() *computeNetworkEndpointGroupState {
 	if cneg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cneg.Type(), cneg.LocalName()))
@@ -60,10 +86,7 @@ func (cneg *ComputeNetworkEndpointGroup) StateMust() *computeNetworkEndpointGrou
 	return cneg.state
 }
 
-func (cneg *ComputeNetworkEndpointGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(cneg)
-}
-
+// ComputeNetworkEndpointGroupArgs contains the configurations for google_compute_network_endpoint_group.
 type ComputeNetworkEndpointGroupArgs struct {
 	// DefaultPort: number, optional
 	DefaultPort terra.NumberValue `hcl:"default_port,attr"`
@@ -85,59 +108,68 @@ type ComputeNetworkEndpointGroupArgs struct {
 	Zone terra.StringValue `hcl:"zone,attr"`
 	// Timeouts: optional
 	Timeouts *computenetworkendpointgroup.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeNetworkEndpointGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeNetworkEndpointGroupAttributes struct {
 	ref terra.Reference
 }
 
+// DefaultPort returns a reference to field default_port of google_compute_network_endpoint_group.
 func (cneg computeNetworkEndpointGroupAttributes) DefaultPort() terra.NumberValue {
-	return terra.ReferenceNumber(cneg.ref.Append("default_port"))
+	return terra.ReferenceAsNumber(cneg.ref.Append("default_port"))
 }
 
+// Description returns a reference to field description of google_compute_network_endpoint_group.
 func (cneg computeNetworkEndpointGroupAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cneg.ref.Append("description"))
+	return terra.ReferenceAsString(cneg.ref.Append("description"))
 }
 
+// Id returns a reference to field id of google_compute_network_endpoint_group.
 func (cneg computeNetworkEndpointGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cneg.ref.Append("id"))
+	return terra.ReferenceAsString(cneg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_compute_network_endpoint_group.
 func (cneg computeNetworkEndpointGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cneg.ref.Append("name"))
+	return terra.ReferenceAsString(cneg.ref.Append("name"))
 }
 
+// Network returns a reference to field network of google_compute_network_endpoint_group.
 func (cneg computeNetworkEndpointGroupAttributes) Network() terra.StringValue {
-	return terra.ReferenceString(cneg.ref.Append("network"))
+	return terra.ReferenceAsString(cneg.ref.Append("network"))
 }
 
+// NetworkEndpointType returns a reference to field network_endpoint_type of google_compute_network_endpoint_group.
 func (cneg computeNetworkEndpointGroupAttributes) NetworkEndpointType() terra.StringValue {
-	return terra.ReferenceString(cneg.ref.Append("network_endpoint_type"))
+	return terra.ReferenceAsString(cneg.ref.Append("network_endpoint_type"))
 }
 
+// Project returns a reference to field project of google_compute_network_endpoint_group.
 func (cneg computeNetworkEndpointGroupAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cneg.ref.Append("project"))
+	return terra.ReferenceAsString(cneg.ref.Append("project"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_network_endpoint_group.
 func (cneg computeNetworkEndpointGroupAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(cneg.ref.Append("self_link"))
+	return terra.ReferenceAsString(cneg.ref.Append("self_link"))
 }
 
+// Size returns a reference to field size of google_compute_network_endpoint_group.
 func (cneg computeNetworkEndpointGroupAttributes) Size() terra.NumberValue {
-	return terra.ReferenceNumber(cneg.ref.Append("size"))
+	return terra.ReferenceAsNumber(cneg.ref.Append("size"))
 }
 
+// Subnetwork returns a reference to field subnetwork of google_compute_network_endpoint_group.
 func (cneg computeNetworkEndpointGroupAttributes) Subnetwork() terra.StringValue {
-	return terra.ReferenceString(cneg.ref.Append("subnetwork"))
+	return terra.ReferenceAsString(cneg.ref.Append("subnetwork"))
 }
 
+// Zone returns a reference to field zone of google_compute_network_endpoint_group.
 func (cneg computeNetworkEndpointGroupAttributes) Zone() terra.StringValue {
-	return terra.ReferenceString(cneg.ref.Append("zone"))
+	return terra.ReferenceAsString(cneg.ref.Append("zone"))
 }
 
 func (cneg computeNetworkEndpointGroupAttributes) Timeouts() computenetworkendpointgroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[computenetworkendpointgroup.TimeoutsAttributes](cneg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computenetworkendpointgroup.TimeoutsAttributes](cneg.ref.Append("timeouts"))
 }
 
 type computeNetworkEndpointGroupState struct {

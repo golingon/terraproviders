@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNetworkSecurityGroup creates a new instance of [NetworkSecurityGroup].
 func NewNetworkSecurityGroup(name string, args NetworkSecurityGroupArgs) *NetworkSecurityGroup {
 	return &NetworkSecurityGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNetworkSecurityGroup(name string, args NetworkSecurityGroupArgs) *Networ
 
 var _ terra.Resource = (*NetworkSecurityGroup)(nil)
 
+// NetworkSecurityGroup represents the Terraform resource azurerm_network_security_group.
 type NetworkSecurityGroup struct {
-	Name  string
-	Args  NetworkSecurityGroupArgs
-	state *networkSecurityGroupState
+	Name      string
+	Args      NetworkSecurityGroupArgs
+	state     *networkSecurityGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NetworkSecurityGroup].
 func (nsg *NetworkSecurityGroup) Type() string {
 	return "azurerm_network_security_group"
 }
 
+// LocalName returns the local name for [NetworkSecurityGroup].
 func (nsg *NetworkSecurityGroup) LocalName() string {
 	return nsg.Name
 }
 
+// Configuration returns the configuration (args) for [NetworkSecurityGroup].
 func (nsg *NetworkSecurityGroup) Configuration() interface{} {
 	return nsg.Args
 }
 
+// DependOn is used for other resources to depend on [NetworkSecurityGroup].
+func (nsg *NetworkSecurityGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(nsg)
+}
+
+// Dependencies returns the list of resources [NetworkSecurityGroup] depends_on.
+func (nsg *NetworkSecurityGroup) Dependencies() terra.Dependencies {
+	return nsg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NetworkSecurityGroup].
+func (nsg *NetworkSecurityGroup) LifecycleManagement() *terra.Lifecycle {
+	return nsg.Lifecycle
+}
+
+// Attributes returns the attributes for [NetworkSecurityGroup].
 func (nsg *NetworkSecurityGroup) Attributes() networkSecurityGroupAttributes {
 	return networkSecurityGroupAttributes{ref: terra.ReferenceResource(nsg)}
 }
 
+// ImportState imports the given attribute values into [NetworkSecurityGroup]'s state.
 func (nsg *NetworkSecurityGroup) ImportState(av io.Reader) error {
 	nsg.state = &networkSecurityGroupState{}
 	if err := json.NewDecoder(av).Decode(nsg.state); err != nil {
@@ -49,10 +73,12 @@ func (nsg *NetworkSecurityGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NetworkSecurityGroup] has state.
 func (nsg *NetworkSecurityGroup) State() (*networkSecurityGroupState, bool) {
 	return nsg.state, nsg.state != nil
 }
 
+// StateMust returns the state for [NetworkSecurityGroup]. Panics if the state is nil.
 func (nsg *NetworkSecurityGroup) StateMust() *networkSecurityGroupState {
 	if nsg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", nsg.Type(), nsg.LocalName()))
@@ -60,10 +86,7 @@ func (nsg *NetworkSecurityGroup) StateMust() *networkSecurityGroupState {
 	return nsg.state
 }
 
-func (nsg *NetworkSecurityGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(nsg)
-}
-
+// NetworkSecurityGroupArgs contains the configurations for azurerm_network_security_group.
 type NetworkSecurityGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,39 +102,42 @@ type NetworkSecurityGroupArgs struct {
 	SecurityRule []networksecuritygroup.SecurityRule `hcl:"security_rule,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *networksecuritygroup.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that NetworkSecurityGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type networkSecurityGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_network_security_group.
 func (nsg networkSecurityGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(nsg.ref.Append("id"))
+	return terra.ReferenceAsString(nsg.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_network_security_group.
 func (nsg networkSecurityGroupAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(nsg.ref.Append("location"))
+	return terra.ReferenceAsString(nsg.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_network_security_group.
 func (nsg networkSecurityGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(nsg.ref.Append("name"))
+	return terra.ReferenceAsString(nsg.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_network_security_group.
 func (nsg networkSecurityGroupAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(nsg.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(nsg.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_network_security_group.
 func (nsg networkSecurityGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](nsg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](nsg.ref.Append("tags"))
 }
 
 func (nsg networkSecurityGroupAttributes) SecurityRule() terra.SetValue[networksecuritygroup.SecurityRuleAttributes] {
-	return terra.ReferenceSet[networksecuritygroup.SecurityRuleAttributes](nsg.ref.Append("security_rule"))
+	return terra.ReferenceAsSet[networksecuritygroup.SecurityRuleAttributes](nsg.ref.Append("security_rule"))
 }
 
 func (nsg networkSecurityGroupAttributes) Timeouts() networksecuritygroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[networksecuritygroup.TimeoutsAttributes](nsg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[networksecuritygroup.TimeoutsAttributes](nsg.ref.Append("timeouts"))
 }
 
 type networkSecurityGroupState struct {

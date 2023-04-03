@@ -286,7 +286,7 @@ func (psc PredictiveScalingConfigurationAttributes) InternalWithRef(ref terra.Re
 	return PredictiveScalingConfigurationAttributes{ref: ref}
 }
 
-func (psc PredictiveScalingConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (psc PredictiveScalingConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return psc.ref.InternalTokens()
 }
 
@@ -322,7 +322,7 @@ func (ms MetricSpecificationAttributes) InternalWithRef(ref terra.Reference) Met
 	return MetricSpecificationAttributes{ref: ref}
 }
 
-func (ms MetricSpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (ms MetricSpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ms.ref.InternalTokens()
 }
 
@@ -366,7 +366,7 @@ func (ccms CustomizedCapacityMetricSpecificationAttributes) InternalWithRef(ref 
 	return CustomizedCapacityMetricSpecificationAttributes{ref: ref}
 }
 
-func (ccms CustomizedCapacityMetricSpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (ccms CustomizedCapacityMetricSpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ccms.ref.InternalTokens()
 }
 
@@ -386,7 +386,7 @@ func (mdq CustomizedCapacityMetricSpecificationMetricDataQueriesAttributes) Inte
 	return CustomizedCapacityMetricSpecificationMetricDataQueriesAttributes{ref: ref}
 }
 
-func (mdq CustomizedCapacityMetricSpecificationMetricDataQueriesAttributes) InternalTokens() hclwrite.Tokens {
+func (mdq CustomizedCapacityMetricSpecificationMetricDataQueriesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mdq.ref.InternalTokens()
 }
 
@@ -422,7 +422,7 @@ func (ms CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatAttribu
 	return CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatAttributes{ref: ref}
 }
 
-func (ms CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatAttributes) InternalTokens() hclwrite.Tokens {
+func (ms CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ms.ref.InternalTokens()
 }
 
@@ -450,7 +450,7 @@ func (m CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatMetricAt
 	return CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatMetricAttributes{ref: ref}
 }
 
-func (m CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatMetricAttributes) InternalTokens() hclwrite.Tokens {
+func (m CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatMetricAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -478,7 +478,7 @@ func (d CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatMetricDi
 	return CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatMetricDimensionsAttributes{ref: ref}
 }
 
-func (d CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatMetricDimensionsAttributes) InternalTokens() hclwrite.Tokens {
+func (d CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatMetricDimensionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -502,7 +502,7 @@ func (clms CustomizedLoadMetricSpecificationAttributes) InternalWithRef(ref terr
 	return CustomizedLoadMetricSpecificationAttributes{ref: ref}
 }
 
-func (clms CustomizedLoadMetricSpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (clms CustomizedLoadMetricSpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return clms.ref.InternalTokens()
 }
 
@@ -522,7 +522,7 @@ func (mdq CustomizedLoadMetricSpecificationMetricDataQueriesAttributes) Internal
 	return CustomizedLoadMetricSpecificationMetricDataQueriesAttributes{ref: ref}
 }
 
-func (mdq CustomizedLoadMetricSpecificationMetricDataQueriesAttributes) InternalTokens() hclwrite.Tokens {
+func (mdq CustomizedLoadMetricSpecificationMetricDataQueriesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mdq.ref.InternalTokens()
 }
 
@@ -558,7 +558,7 @@ func (ms CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatAttributes)
 	return CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatAttributes{ref: ref}
 }
 
-func (ms CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatAttributes) InternalTokens() hclwrite.Tokens {
+func (ms CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ms.ref.InternalTokens()
 }
 
@@ -586,7 +586,7 @@ func (m CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatMetricAttrib
 	return CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatMetricAttributes{ref: ref}
 }
 
-func (m CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatMetricAttributes) InternalTokens() hclwrite.Tokens {
+func (m CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatMetricAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -614,7 +614,7 @@ func (d CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatMetricDimens
 	return CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatMetricDimensionsAttributes{ref: ref}
 }
 
-func (d CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatMetricDimensionsAttributes) InternalTokens() hclwrite.Tokens {
+func (d CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatMetricDimensionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -638,7 +638,7 @@ func (csms CustomizedScalingMetricSpecificationAttributes) InternalWithRef(ref t
 	return CustomizedScalingMetricSpecificationAttributes{ref: ref}
 }
 
-func (csms CustomizedScalingMetricSpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (csms CustomizedScalingMetricSpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return csms.ref.InternalTokens()
 }
 
@@ -658,7 +658,7 @@ func (mdq CustomizedScalingMetricSpecificationMetricDataQueriesAttributes) Inter
 	return CustomizedScalingMetricSpecificationMetricDataQueriesAttributes{ref: ref}
 }
 
-func (mdq CustomizedScalingMetricSpecificationMetricDataQueriesAttributes) InternalTokens() hclwrite.Tokens {
+func (mdq CustomizedScalingMetricSpecificationMetricDataQueriesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mdq.ref.InternalTokens()
 }
 
@@ -694,7 +694,7 @@ func (ms CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatAttribut
 	return CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatAttributes{ref: ref}
 }
 
-func (ms CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatAttributes) InternalTokens() hclwrite.Tokens {
+func (ms CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ms.ref.InternalTokens()
 }
 
@@ -722,7 +722,7 @@ func (m CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatMetricAtt
 	return CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatMetricAttributes{ref: ref}
 }
 
-func (m CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatMetricAttributes) InternalTokens() hclwrite.Tokens {
+func (m CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatMetricAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -750,7 +750,7 @@ func (d CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatMetricDim
 	return CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatMetricDimensionsAttributes{ref: ref}
 }
 
-func (d CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatMetricDimensionsAttributes) InternalTokens() hclwrite.Tokens {
+func (d CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatMetricDimensionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -774,7 +774,7 @@ func (plms PredefinedLoadMetricSpecificationAttributes) InternalWithRef(ref terr
 	return PredefinedLoadMetricSpecificationAttributes{ref: ref}
 }
 
-func (plms PredefinedLoadMetricSpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (plms PredefinedLoadMetricSpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return plms.ref.InternalTokens()
 }
 
@@ -798,7 +798,7 @@ func (pmps PredefinedMetricPairSpecificationAttributes) InternalWithRef(ref terr
 	return PredefinedMetricPairSpecificationAttributes{ref: ref}
 }
 
-func (pmps PredefinedMetricPairSpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (pmps PredefinedMetricPairSpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pmps.ref.InternalTokens()
 }
 
@@ -822,7 +822,7 @@ func (psms PredefinedScalingMetricSpecificationAttributes) InternalWithRef(ref t
 	return PredefinedScalingMetricSpecificationAttributes{ref: ref}
 }
 
-func (psms PredefinedScalingMetricSpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (psms PredefinedScalingMetricSpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return psms.ref.InternalTokens()
 }
 
@@ -846,7 +846,7 @@ func (sa StepAdjustmentAttributes) InternalWithRef(ref terra.Reference) StepAdju
 	return StepAdjustmentAttributes{ref: ref}
 }
 
-func (sa StepAdjustmentAttributes) InternalTokens() hclwrite.Tokens {
+func (sa StepAdjustmentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sa.ref.InternalTokens()
 }
 
@@ -874,7 +874,7 @@ func (ttc TargetTrackingConfigurationAttributes) InternalWithRef(ref terra.Refer
 	return TargetTrackingConfigurationAttributes{ref: ref}
 }
 
-func (ttc TargetTrackingConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ttc TargetTrackingConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ttc.ref.InternalTokens()
 }
 
@@ -906,7 +906,7 @@ func (cms CustomizedMetricSpecificationAttributes) InternalWithRef(ref terra.Ref
 	return CustomizedMetricSpecificationAttributes{ref: ref}
 }
 
-func (cms CustomizedMetricSpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (cms CustomizedMetricSpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cms.ref.InternalTokens()
 }
 
@@ -946,7 +946,7 @@ func (md MetricDimensionAttributes) InternalWithRef(ref terra.Reference) MetricD
 	return MetricDimensionAttributes{ref: ref}
 }
 
-func (md MetricDimensionAttributes) InternalTokens() hclwrite.Tokens {
+func (md MetricDimensionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return md.ref.InternalTokens()
 }
 
@@ -970,7 +970,7 @@ func (m MetricsAttributes) InternalWithRef(ref terra.Reference) MetricsAttribute
 	return MetricsAttributes{ref: ref}
 }
 
-func (m MetricsAttributes) InternalTokens() hclwrite.Tokens {
+func (m MetricsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -1006,7 +1006,7 @@ func (ms MetricsMetricStatAttributes) InternalWithRef(ref terra.Reference) Metri
 	return MetricsMetricStatAttributes{ref: ref}
 }
 
-func (ms MetricsMetricStatAttributes) InternalTokens() hclwrite.Tokens {
+func (ms MetricsMetricStatAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ms.ref.InternalTokens()
 }
 
@@ -1034,7 +1034,7 @@ func (m MetricsMetricStatMetricAttributes) InternalWithRef(ref terra.Reference) 
 	return MetricsMetricStatMetricAttributes{ref: ref}
 }
 
-func (m MetricsMetricStatMetricAttributes) InternalTokens() hclwrite.Tokens {
+func (m MetricsMetricStatMetricAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -1062,7 +1062,7 @@ func (d MetricsMetricStatMetricDimensionsAttributes) InternalWithRef(ref terra.R
 	return MetricsMetricStatMetricDimensionsAttributes{ref: ref}
 }
 
-func (d MetricsMetricStatMetricDimensionsAttributes) InternalTokens() hclwrite.Tokens {
+func (d MetricsMetricStatMetricDimensionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -1086,7 +1086,7 @@ func (pms PredefinedMetricSpecificationAttributes) InternalWithRef(ref terra.Ref
 	return PredefinedMetricSpecificationAttributes{ref: ref}
 }
 
-func (pms PredefinedMetricSpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (pms PredefinedMetricSpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pms.ref.InternalTokens()
 }
 

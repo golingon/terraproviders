@@ -18,72 +18,72 @@ type SubscriptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (s SubscriptionsAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SubscriptionsAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SubscriptionsAttributes) InternalWithRef(ref terra.Reference) SubscriptionsAttributes {
 	return SubscriptionsAttributes{ref: ref}
 }
 
-func (s SubscriptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (s SubscriptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SubscriptionsAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("display_name"))
+	return terra.ReferenceAsString(s.ref.Append("display_name"))
 }
 
 func (s SubscriptionsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("id"))
+	return terra.ReferenceAsString(s.ref.Append("id"))
 }
 
 func (s SubscriptionsAttributes) LocationPlacementId() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("location_placement_id"))
+	return terra.ReferenceAsString(s.ref.Append("location_placement_id"))
 }
 
 func (s SubscriptionsAttributes) QuotaId() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("quota_id"))
+	return terra.ReferenceAsString(s.ref.Append("quota_id"))
 }
 
 func (s SubscriptionsAttributes) SpendingLimit() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("spending_limit"))
+	return terra.ReferenceAsString(s.ref.Append("spending_limit"))
 }
 
 func (s SubscriptionsAttributes) State() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("state"))
+	return terra.ReferenceAsString(s.ref.Append("state"))
 }
 
 func (s SubscriptionsAttributes) SubscriptionId() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("subscription_id"))
+	return terra.ReferenceAsString(s.ref.Append("subscription_id"))
 }
 
 func (s SubscriptionsAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](s.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](s.ref.Append("tags"))
 }
 
 func (s SubscriptionsAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(s.ref.Append("tenant_id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type SubscriptionsState struct {

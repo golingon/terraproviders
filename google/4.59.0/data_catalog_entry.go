@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataCatalogEntry creates a new instance of [DataCatalogEntry].
 func NewDataCatalogEntry(name string, args DataCatalogEntryArgs) *DataCatalogEntry {
 	return &DataCatalogEntry{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataCatalogEntry(name string, args DataCatalogEntryArgs) *DataCatalogEnt
 
 var _ terra.Resource = (*DataCatalogEntry)(nil)
 
+// DataCatalogEntry represents the Terraform resource google_data_catalog_entry.
 type DataCatalogEntry struct {
-	Name  string
-	Args  DataCatalogEntryArgs
-	state *dataCatalogEntryState
+	Name      string
+	Args      DataCatalogEntryArgs
+	state     *dataCatalogEntryState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataCatalogEntry].
 func (dce *DataCatalogEntry) Type() string {
 	return "google_data_catalog_entry"
 }
 
+// LocalName returns the local name for [DataCatalogEntry].
 func (dce *DataCatalogEntry) LocalName() string {
 	return dce.Name
 }
 
+// Configuration returns the configuration (args) for [DataCatalogEntry].
 func (dce *DataCatalogEntry) Configuration() interface{} {
 	return dce.Args
 }
 
+// DependOn is used for other resources to depend on [DataCatalogEntry].
+func (dce *DataCatalogEntry) DependOn() terra.Reference {
+	return terra.ReferenceResource(dce)
+}
+
+// Dependencies returns the list of resources [DataCatalogEntry] depends_on.
+func (dce *DataCatalogEntry) Dependencies() terra.Dependencies {
+	return dce.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataCatalogEntry].
+func (dce *DataCatalogEntry) LifecycleManagement() *terra.Lifecycle {
+	return dce.Lifecycle
+}
+
+// Attributes returns the attributes for [DataCatalogEntry].
 func (dce *DataCatalogEntry) Attributes() dataCatalogEntryAttributes {
 	return dataCatalogEntryAttributes{ref: terra.ReferenceResource(dce)}
 }
 
+// ImportState imports the given attribute values into [DataCatalogEntry]'s state.
 func (dce *DataCatalogEntry) ImportState(av io.Reader) error {
 	dce.state = &dataCatalogEntryState{}
 	if err := json.NewDecoder(av).Decode(dce.state); err != nil {
@@ -49,10 +73,12 @@ func (dce *DataCatalogEntry) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataCatalogEntry] has state.
 func (dce *DataCatalogEntry) State() (*dataCatalogEntryState, bool) {
 	return dce.state, dce.state != nil
 }
 
+// StateMust returns the state for [DataCatalogEntry]. Panics if the state is nil.
 func (dce *DataCatalogEntry) StateMust() *dataCatalogEntryState {
 	if dce.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dce.Type(), dce.LocalName()))
@@ -60,10 +86,7 @@ func (dce *DataCatalogEntry) StateMust() *dataCatalogEntryState {
 	return dce.state
 }
 
-func (dce *DataCatalogEntry) DependOn() terra.Reference {
-	return terra.ReferenceResource(dce)
-}
-
+// DataCatalogEntryArgs contains the configurations for google_data_catalog_entry.
 type DataCatalogEntryArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -93,75 +116,85 @@ type DataCatalogEntryArgs struct {
 	GcsFilesetSpec *datacatalogentry.GcsFilesetSpec `hcl:"gcs_fileset_spec,block"`
 	// Timeouts: optional
 	Timeouts *datacatalogentry.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataCatalogEntry depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataCatalogEntryAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of google_data_catalog_entry.
 func (dce dataCatalogEntryAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dce.ref.Append("description"))
+	return terra.ReferenceAsString(dce.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of google_data_catalog_entry.
 func (dce dataCatalogEntryAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(dce.ref.Append("display_name"))
+	return terra.ReferenceAsString(dce.ref.Append("display_name"))
 }
 
+// EntryGroup returns a reference to field entry_group of google_data_catalog_entry.
 func (dce dataCatalogEntryAttributes) EntryGroup() terra.StringValue {
-	return terra.ReferenceString(dce.ref.Append("entry_group"))
+	return terra.ReferenceAsString(dce.ref.Append("entry_group"))
 }
 
+// EntryId returns a reference to field entry_id of google_data_catalog_entry.
 func (dce dataCatalogEntryAttributes) EntryId() terra.StringValue {
-	return terra.ReferenceString(dce.ref.Append("entry_id"))
+	return terra.ReferenceAsString(dce.ref.Append("entry_id"))
 }
 
+// Id returns a reference to field id of google_data_catalog_entry.
 func (dce dataCatalogEntryAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dce.ref.Append("id"))
+	return terra.ReferenceAsString(dce.ref.Append("id"))
 }
 
+// IntegratedSystem returns a reference to field integrated_system of google_data_catalog_entry.
 func (dce dataCatalogEntryAttributes) IntegratedSystem() terra.StringValue {
-	return terra.ReferenceString(dce.ref.Append("integrated_system"))
+	return terra.ReferenceAsString(dce.ref.Append("integrated_system"))
 }
 
+// LinkedResource returns a reference to field linked_resource of google_data_catalog_entry.
 func (dce dataCatalogEntryAttributes) LinkedResource() terra.StringValue {
-	return terra.ReferenceString(dce.ref.Append("linked_resource"))
+	return terra.ReferenceAsString(dce.ref.Append("linked_resource"))
 }
 
+// Name returns a reference to field name of google_data_catalog_entry.
 func (dce dataCatalogEntryAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dce.ref.Append("name"))
+	return terra.ReferenceAsString(dce.ref.Append("name"))
 }
 
+// Schema returns a reference to field schema of google_data_catalog_entry.
 func (dce dataCatalogEntryAttributes) Schema() terra.StringValue {
-	return terra.ReferenceString(dce.ref.Append("schema"))
+	return terra.ReferenceAsString(dce.ref.Append("schema"))
 }
 
+// Type returns a reference to field type of google_data_catalog_entry.
 func (dce dataCatalogEntryAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(dce.ref.Append("type"))
+	return terra.ReferenceAsString(dce.ref.Append("type"))
 }
 
+// UserSpecifiedSystem returns a reference to field user_specified_system of google_data_catalog_entry.
 func (dce dataCatalogEntryAttributes) UserSpecifiedSystem() terra.StringValue {
-	return terra.ReferenceString(dce.ref.Append("user_specified_system"))
+	return terra.ReferenceAsString(dce.ref.Append("user_specified_system"))
 }
 
+// UserSpecifiedType returns a reference to field user_specified_type of google_data_catalog_entry.
 func (dce dataCatalogEntryAttributes) UserSpecifiedType() terra.StringValue {
-	return terra.ReferenceString(dce.ref.Append("user_specified_type"))
+	return terra.ReferenceAsString(dce.ref.Append("user_specified_type"))
 }
 
 func (dce dataCatalogEntryAttributes) BigqueryDateShardedSpec() terra.ListValue[datacatalogentry.BigqueryDateShardedSpecAttributes] {
-	return terra.ReferenceList[datacatalogentry.BigqueryDateShardedSpecAttributes](dce.ref.Append("bigquery_date_sharded_spec"))
+	return terra.ReferenceAsList[datacatalogentry.BigqueryDateShardedSpecAttributes](dce.ref.Append("bigquery_date_sharded_spec"))
 }
 
 func (dce dataCatalogEntryAttributes) BigqueryTableSpec() terra.ListValue[datacatalogentry.BigqueryTableSpecAttributes] {
-	return terra.ReferenceList[datacatalogentry.BigqueryTableSpecAttributes](dce.ref.Append("bigquery_table_spec"))
+	return terra.ReferenceAsList[datacatalogentry.BigqueryTableSpecAttributes](dce.ref.Append("bigquery_table_spec"))
 }
 
 func (dce dataCatalogEntryAttributes) GcsFilesetSpec() terra.ListValue[datacatalogentry.GcsFilesetSpecAttributes] {
-	return terra.ReferenceList[datacatalogentry.GcsFilesetSpecAttributes](dce.ref.Append("gcs_fileset_spec"))
+	return terra.ReferenceAsList[datacatalogentry.GcsFilesetSpecAttributes](dce.ref.Append("gcs_fileset_spec"))
 }
 
 func (dce dataCatalogEntryAttributes) Timeouts() datacatalogentry.TimeoutsAttributes {
-	return terra.ReferenceSingle[datacatalogentry.TimeoutsAttributes](dce.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datacatalogentry.TimeoutsAttributes](dce.ref.Append("timeouts"))
 }
 
 type dataCatalogEntryState struct {

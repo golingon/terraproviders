@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewKubernetesClusterNodePool creates a new instance of [KubernetesClusterNodePool].
 func NewKubernetesClusterNodePool(name string, args KubernetesClusterNodePoolArgs) *KubernetesClusterNodePool {
 	return &KubernetesClusterNodePool{
 		Args: args,
@@ -19,28 +20,51 @@ func NewKubernetesClusterNodePool(name string, args KubernetesClusterNodePoolArg
 
 var _ terra.Resource = (*KubernetesClusterNodePool)(nil)
 
+// KubernetesClusterNodePool represents the Terraform resource azurerm_kubernetes_cluster_node_pool.
 type KubernetesClusterNodePool struct {
-	Name  string
-	Args  KubernetesClusterNodePoolArgs
-	state *kubernetesClusterNodePoolState
+	Name      string
+	Args      KubernetesClusterNodePoolArgs
+	state     *kubernetesClusterNodePoolState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [KubernetesClusterNodePool].
 func (kcnp *KubernetesClusterNodePool) Type() string {
 	return "azurerm_kubernetes_cluster_node_pool"
 }
 
+// LocalName returns the local name for [KubernetesClusterNodePool].
 func (kcnp *KubernetesClusterNodePool) LocalName() string {
 	return kcnp.Name
 }
 
+// Configuration returns the configuration (args) for [KubernetesClusterNodePool].
 func (kcnp *KubernetesClusterNodePool) Configuration() interface{} {
 	return kcnp.Args
 }
 
+// DependOn is used for other resources to depend on [KubernetesClusterNodePool].
+func (kcnp *KubernetesClusterNodePool) DependOn() terra.Reference {
+	return terra.ReferenceResource(kcnp)
+}
+
+// Dependencies returns the list of resources [KubernetesClusterNodePool] depends_on.
+func (kcnp *KubernetesClusterNodePool) Dependencies() terra.Dependencies {
+	return kcnp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [KubernetesClusterNodePool].
+func (kcnp *KubernetesClusterNodePool) LifecycleManagement() *terra.Lifecycle {
+	return kcnp.Lifecycle
+}
+
+// Attributes returns the attributes for [KubernetesClusterNodePool].
 func (kcnp *KubernetesClusterNodePool) Attributes() kubernetesClusterNodePoolAttributes {
 	return kubernetesClusterNodePoolAttributes{ref: terra.ReferenceResource(kcnp)}
 }
 
+// ImportState imports the given attribute values into [KubernetesClusterNodePool]'s state.
 func (kcnp *KubernetesClusterNodePool) ImportState(av io.Reader) error {
 	kcnp.state = &kubernetesClusterNodePoolState{}
 	if err := json.NewDecoder(av).Decode(kcnp.state); err != nil {
@@ -49,10 +73,12 @@ func (kcnp *KubernetesClusterNodePool) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [KubernetesClusterNodePool] has state.
 func (kcnp *KubernetesClusterNodePool) State() (*kubernetesClusterNodePoolState, bool) {
 	return kcnp.state, kcnp.state != nil
 }
 
+// StateMust returns the state for [KubernetesClusterNodePool]. Panics if the state is nil.
 func (kcnp *KubernetesClusterNodePool) StateMust() *kubernetesClusterNodePoolState {
 	if kcnp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", kcnp.Type(), kcnp.LocalName()))
@@ -60,10 +86,7 @@ func (kcnp *KubernetesClusterNodePool) StateMust() *kubernetesClusterNodePoolSta
 	return kcnp.state
 }
 
-func (kcnp *KubernetesClusterNodePool) DependOn() terra.Reference {
-	return terra.ReferenceResource(kcnp)
-}
-
+// KubernetesClusterNodePoolArgs contains the configurations for azurerm_kubernetes_cluster_node_pool.
 type KubernetesClusterNodePoolArgs struct {
 	// CapacityReservationGroupId: string, optional
 	CapacityReservationGroupId terra.StringValue `hcl:"capacity_reservation_group_id,attr"`
@@ -151,183 +174,218 @@ type KubernetesClusterNodePoolArgs struct {
 	UpgradeSettings *kubernetesclusternodepool.UpgradeSettings `hcl:"upgrade_settings,block"`
 	// WindowsProfile: optional
 	WindowsProfile *kubernetesclusternodepool.WindowsProfile `hcl:"windows_profile,block"`
-	// DependsOn contains resources that KubernetesClusterNodePool depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type kubernetesClusterNodePoolAttributes struct {
 	ref terra.Reference
 }
 
+// CapacityReservationGroupId returns a reference to field capacity_reservation_group_id of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) CapacityReservationGroupId() terra.StringValue {
-	return terra.ReferenceString(kcnp.ref.Append("capacity_reservation_group_id"))
+	return terra.ReferenceAsString(kcnp.ref.Append("capacity_reservation_group_id"))
 }
 
+// CustomCaTrustEnabled returns a reference to field custom_ca_trust_enabled of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) CustomCaTrustEnabled() terra.BoolValue {
-	return terra.ReferenceBool(kcnp.ref.Append("custom_ca_trust_enabled"))
+	return terra.ReferenceAsBool(kcnp.ref.Append("custom_ca_trust_enabled"))
 }
 
+// EnableAutoScaling returns a reference to field enable_auto_scaling of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) EnableAutoScaling() terra.BoolValue {
-	return terra.ReferenceBool(kcnp.ref.Append("enable_auto_scaling"))
+	return terra.ReferenceAsBool(kcnp.ref.Append("enable_auto_scaling"))
 }
 
+// EnableHostEncryption returns a reference to field enable_host_encryption of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) EnableHostEncryption() terra.BoolValue {
-	return terra.ReferenceBool(kcnp.ref.Append("enable_host_encryption"))
+	return terra.ReferenceAsBool(kcnp.ref.Append("enable_host_encryption"))
 }
 
+// EnableNodePublicIp returns a reference to field enable_node_public_ip of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) EnableNodePublicIp() terra.BoolValue {
-	return terra.ReferenceBool(kcnp.ref.Append("enable_node_public_ip"))
+	return terra.ReferenceAsBool(kcnp.ref.Append("enable_node_public_ip"))
 }
 
+// EvictionPolicy returns a reference to field eviction_policy of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) EvictionPolicy() terra.StringValue {
-	return terra.ReferenceString(kcnp.ref.Append("eviction_policy"))
+	return terra.ReferenceAsString(kcnp.ref.Append("eviction_policy"))
 }
 
+// FipsEnabled returns a reference to field fips_enabled of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) FipsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(kcnp.ref.Append("fips_enabled"))
+	return terra.ReferenceAsBool(kcnp.ref.Append("fips_enabled"))
 }
 
+// HostGroupId returns a reference to field host_group_id of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) HostGroupId() terra.StringValue {
-	return terra.ReferenceString(kcnp.ref.Append("host_group_id"))
+	return terra.ReferenceAsString(kcnp.ref.Append("host_group_id"))
 }
 
+// Id returns a reference to field id of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kcnp.ref.Append("id"))
+	return terra.ReferenceAsString(kcnp.ref.Append("id"))
 }
 
+// KubeletDiskType returns a reference to field kubelet_disk_type of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) KubeletDiskType() terra.StringValue {
-	return terra.ReferenceString(kcnp.ref.Append("kubelet_disk_type"))
+	return terra.ReferenceAsString(kcnp.ref.Append("kubelet_disk_type"))
 }
 
+// KubernetesClusterId returns a reference to field kubernetes_cluster_id of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) KubernetesClusterId() terra.StringValue {
-	return terra.ReferenceString(kcnp.ref.Append("kubernetes_cluster_id"))
+	return terra.ReferenceAsString(kcnp.ref.Append("kubernetes_cluster_id"))
 }
 
+// MaxCount returns a reference to field max_count of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) MaxCount() terra.NumberValue {
-	return terra.ReferenceNumber(kcnp.ref.Append("max_count"))
+	return terra.ReferenceAsNumber(kcnp.ref.Append("max_count"))
 }
 
+// MaxPods returns a reference to field max_pods of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) MaxPods() terra.NumberValue {
-	return terra.ReferenceNumber(kcnp.ref.Append("max_pods"))
+	return terra.ReferenceAsNumber(kcnp.ref.Append("max_pods"))
 }
 
+// MessageOfTheDay returns a reference to field message_of_the_day of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) MessageOfTheDay() terra.StringValue {
-	return terra.ReferenceString(kcnp.ref.Append("message_of_the_day"))
+	return terra.ReferenceAsString(kcnp.ref.Append("message_of_the_day"))
 }
 
+// MinCount returns a reference to field min_count of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) MinCount() terra.NumberValue {
-	return terra.ReferenceNumber(kcnp.ref.Append("min_count"))
+	return terra.ReferenceAsNumber(kcnp.ref.Append("min_count"))
 }
 
+// Mode returns a reference to field mode of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(kcnp.ref.Append("mode"))
+	return terra.ReferenceAsString(kcnp.ref.Append("mode"))
 }
 
+// Name returns a reference to field name of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(kcnp.ref.Append("name"))
+	return terra.ReferenceAsString(kcnp.ref.Append("name"))
 }
 
+// NodeCount returns a reference to field node_count of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) NodeCount() terra.NumberValue {
-	return terra.ReferenceNumber(kcnp.ref.Append("node_count"))
+	return terra.ReferenceAsNumber(kcnp.ref.Append("node_count"))
 }
 
+// NodeLabels returns a reference to field node_labels of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) NodeLabels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](kcnp.ref.Append("node_labels"))
+	return terra.ReferenceAsMap[terra.StringValue](kcnp.ref.Append("node_labels"))
 }
 
+// NodePublicIpPrefixId returns a reference to field node_public_ip_prefix_id of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) NodePublicIpPrefixId() terra.StringValue {
-	return terra.ReferenceString(kcnp.ref.Append("node_public_ip_prefix_id"))
+	return terra.ReferenceAsString(kcnp.ref.Append("node_public_ip_prefix_id"))
 }
 
+// NodeTaints returns a reference to field node_taints of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) NodeTaints() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](kcnp.ref.Append("node_taints"))
+	return terra.ReferenceAsList[terra.StringValue](kcnp.ref.Append("node_taints"))
 }
 
+// OrchestratorVersion returns a reference to field orchestrator_version of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) OrchestratorVersion() terra.StringValue {
-	return terra.ReferenceString(kcnp.ref.Append("orchestrator_version"))
+	return terra.ReferenceAsString(kcnp.ref.Append("orchestrator_version"))
 }
 
+// OsDiskSizeGb returns a reference to field os_disk_size_gb of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) OsDiskSizeGb() terra.NumberValue {
-	return terra.ReferenceNumber(kcnp.ref.Append("os_disk_size_gb"))
+	return terra.ReferenceAsNumber(kcnp.ref.Append("os_disk_size_gb"))
 }
 
+// OsDiskType returns a reference to field os_disk_type of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) OsDiskType() terra.StringValue {
-	return terra.ReferenceString(kcnp.ref.Append("os_disk_type"))
+	return terra.ReferenceAsString(kcnp.ref.Append("os_disk_type"))
 }
 
+// OsSku returns a reference to field os_sku of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) OsSku() terra.StringValue {
-	return terra.ReferenceString(kcnp.ref.Append("os_sku"))
+	return terra.ReferenceAsString(kcnp.ref.Append("os_sku"))
 }
 
+// OsType returns a reference to field os_type of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) OsType() terra.StringValue {
-	return terra.ReferenceString(kcnp.ref.Append("os_type"))
+	return terra.ReferenceAsString(kcnp.ref.Append("os_type"))
 }
 
+// PodSubnetId returns a reference to field pod_subnet_id of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) PodSubnetId() terra.StringValue {
-	return terra.ReferenceString(kcnp.ref.Append("pod_subnet_id"))
+	return terra.ReferenceAsString(kcnp.ref.Append("pod_subnet_id"))
 }
 
+// Priority returns a reference to field priority of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) Priority() terra.StringValue {
-	return terra.ReferenceString(kcnp.ref.Append("priority"))
+	return terra.ReferenceAsString(kcnp.ref.Append("priority"))
 }
 
+// ProximityPlacementGroupId returns a reference to field proximity_placement_group_id of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) ProximityPlacementGroupId() terra.StringValue {
-	return terra.ReferenceString(kcnp.ref.Append("proximity_placement_group_id"))
+	return terra.ReferenceAsString(kcnp.ref.Append("proximity_placement_group_id"))
 }
 
+// ScaleDownMode returns a reference to field scale_down_mode of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) ScaleDownMode() terra.StringValue {
-	return terra.ReferenceString(kcnp.ref.Append("scale_down_mode"))
+	return terra.ReferenceAsString(kcnp.ref.Append("scale_down_mode"))
 }
 
+// SpotMaxPrice returns a reference to field spot_max_price of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) SpotMaxPrice() terra.NumberValue {
-	return terra.ReferenceNumber(kcnp.ref.Append("spot_max_price"))
+	return terra.ReferenceAsNumber(kcnp.ref.Append("spot_max_price"))
 }
 
+// Tags returns a reference to field tags of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](kcnp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](kcnp.ref.Append("tags"))
 }
 
+// UltraSsdEnabled returns a reference to field ultra_ssd_enabled of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) UltraSsdEnabled() terra.BoolValue {
-	return terra.ReferenceBool(kcnp.ref.Append("ultra_ssd_enabled"))
+	return terra.ReferenceAsBool(kcnp.ref.Append("ultra_ssd_enabled"))
 }
 
+// VmSize returns a reference to field vm_size of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) VmSize() terra.StringValue {
-	return terra.ReferenceString(kcnp.ref.Append("vm_size"))
+	return terra.ReferenceAsString(kcnp.ref.Append("vm_size"))
 }
 
+// VnetSubnetId returns a reference to field vnet_subnet_id of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) VnetSubnetId() terra.StringValue {
-	return terra.ReferenceString(kcnp.ref.Append("vnet_subnet_id"))
+	return terra.ReferenceAsString(kcnp.ref.Append("vnet_subnet_id"))
 }
 
+// WorkloadRuntime returns a reference to field workload_runtime of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) WorkloadRuntime() terra.StringValue {
-	return terra.ReferenceString(kcnp.ref.Append("workload_runtime"))
+	return terra.ReferenceAsString(kcnp.ref.Append("workload_runtime"))
 }
 
+// Zones returns a reference to field zones of azurerm_kubernetes_cluster_node_pool.
 func (kcnp kubernetesClusterNodePoolAttributes) Zones() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](kcnp.ref.Append("zones"))
+	return terra.ReferenceAsSet[terra.StringValue](kcnp.ref.Append("zones"))
 }
 
 func (kcnp kubernetesClusterNodePoolAttributes) KubeletConfig() terra.ListValue[kubernetesclusternodepool.KubeletConfigAttributes] {
-	return terra.ReferenceList[kubernetesclusternodepool.KubeletConfigAttributes](kcnp.ref.Append("kubelet_config"))
+	return terra.ReferenceAsList[kubernetesclusternodepool.KubeletConfigAttributes](kcnp.ref.Append("kubelet_config"))
 }
 
 func (kcnp kubernetesClusterNodePoolAttributes) LinuxOsConfig() terra.ListValue[kubernetesclusternodepool.LinuxOsConfigAttributes] {
-	return terra.ReferenceList[kubernetesclusternodepool.LinuxOsConfigAttributes](kcnp.ref.Append("linux_os_config"))
+	return terra.ReferenceAsList[kubernetesclusternodepool.LinuxOsConfigAttributes](kcnp.ref.Append("linux_os_config"))
 }
 
 func (kcnp kubernetesClusterNodePoolAttributes) NodeNetworkProfile() terra.ListValue[kubernetesclusternodepool.NodeNetworkProfileAttributes] {
-	return terra.ReferenceList[kubernetesclusternodepool.NodeNetworkProfileAttributes](kcnp.ref.Append("node_network_profile"))
+	return terra.ReferenceAsList[kubernetesclusternodepool.NodeNetworkProfileAttributes](kcnp.ref.Append("node_network_profile"))
 }
 
 func (kcnp kubernetesClusterNodePoolAttributes) Timeouts() kubernetesclusternodepool.TimeoutsAttributes {
-	return terra.ReferenceSingle[kubernetesclusternodepool.TimeoutsAttributes](kcnp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[kubernetesclusternodepool.TimeoutsAttributes](kcnp.ref.Append("timeouts"))
 }
 
 func (kcnp kubernetesClusterNodePoolAttributes) UpgradeSettings() terra.ListValue[kubernetesclusternodepool.UpgradeSettingsAttributes] {
-	return terra.ReferenceList[kubernetesclusternodepool.UpgradeSettingsAttributes](kcnp.ref.Append("upgrade_settings"))
+	return terra.ReferenceAsList[kubernetesclusternodepool.UpgradeSettingsAttributes](kcnp.ref.Append("upgrade_settings"))
 }
 
 func (kcnp kubernetesClusterNodePoolAttributes) WindowsProfile() terra.ListValue[kubernetesclusternodepool.WindowsProfileAttributes] {
-	return terra.ReferenceList[kubernetesclusternodepool.WindowsProfileAttributes](kcnp.ref.Append("windows_profile"))
+	return terra.ReferenceAsList[kubernetesclusternodepool.WindowsProfileAttributes](kcnp.ref.Append("windows_profile"))
 }
 
 type kubernetesClusterNodePoolState struct {

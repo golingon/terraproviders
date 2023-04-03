@@ -23,88 +23,88 @@ type ImagesAttributes struct {
 	ref terra.Reference
 }
 
-func (i ImagesAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i ImagesAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i ImagesAttributes) InternalWithRef(ref terra.Reference) ImagesAttributes {
 	return ImagesAttributes{ref: ref}
 }
 
-func (i ImagesAttributes) InternalTokens() hclwrite.Tokens {
+func (i ImagesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i ImagesAttributes) ExcludeFromLatest() terra.BoolValue {
-	return terra.ReferenceBool(i.ref.Append("exclude_from_latest"))
+	return terra.ReferenceAsBool(i.ref.Append("exclude_from_latest"))
 }
 
 func (i ImagesAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("location"))
+	return terra.ReferenceAsString(i.ref.Append("location"))
 }
 
 func (i ImagesAttributes) ManagedImageId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("managed_image_id"))
+	return terra.ReferenceAsString(i.ref.Append("managed_image_id"))
 }
 
 func (i ImagesAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("name"))
+	return terra.ReferenceAsString(i.ref.Append("name"))
 }
 
 func (i ImagesAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](i.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](i.ref.Append("tags"))
 }
 
 func (i ImagesAttributes) TargetRegion() terra.ListValue[TargetRegionAttributes] {
-	return terra.ReferenceList[TargetRegionAttributes](i.ref.Append("target_region"))
+	return terra.ReferenceAsList[TargetRegionAttributes](i.ref.Append("target_region"))
 }
 
 type TargetRegionAttributes struct {
 	ref terra.Reference
 }
 
-func (tr TargetRegionAttributes) InternalRef() terra.Reference {
-	return tr.ref
+func (tr TargetRegionAttributes) InternalRef() (terra.Reference, error) {
+	return tr.ref, nil
 }
 
 func (tr TargetRegionAttributes) InternalWithRef(ref terra.Reference) TargetRegionAttributes {
 	return TargetRegionAttributes{ref: ref}
 }
 
-func (tr TargetRegionAttributes) InternalTokens() hclwrite.Tokens {
+func (tr TargetRegionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tr.ref.InternalTokens()
 }
 
 func (tr TargetRegionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(tr.ref.Append("name"))
+	return terra.ReferenceAsString(tr.ref.Append("name"))
 }
 
 func (tr TargetRegionAttributes) RegionalReplicaCount() terra.NumberValue {
-	return terra.ReferenceNumber(tr.ref.Append("regional_replica_count"))
+	return terra.ReferenceAsNumber(tr.ref.Append("regional_replica_count"))
 }
 
 func (tr TargetRegionAttributes) StorageAccountType() terra.StringValue {
-	return terra.ReferenceString(tr.ref.Append("storage_account_type"))
+	return terra.ReferenceAsString(tr.ref.Append("storage_account_type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type ImagesState struct {

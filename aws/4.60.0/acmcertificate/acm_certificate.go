@@ -35,7 +35,7 @@ func (dvo DomainValidationOptionsAttributes) InternalWithRef(ref terra.Reference
 	return DomainValidationOptionsAttributes{ref: ref}
 }
 
-func (dvo DomainValidationOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (dvo DomainValidationOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dvo.ref.InternalTokens()
 }
 
@@ -67,7 +67,7 @@ func (rs RenewalSummaryAttributes) InternalWithRef(ref terra.Reference) RenewalS
 	return RenewalSummaryAttributes{ref: ref}
 }
 
-func (rs RenewalSummaryAttributes) InternalTokens() hclwrite.Tokens {
+func (rs RenewalSummaryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rs.ref.InternalTokens()
 }
 
@@ -95,7 +95,7 @@ func (o OptionsAttributes) InternalWithRef(ref terra.Reference) OptionsAttribute
 	return OptionsAttributes{ref: ref}
 }
 
-func (o OptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (o OptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return o.ref.InternalTokens()
 }
 
@@ -115,7 +115,7 @@ func (vo ValidationOptionAttributes) InternalWithRef(ref terra.Reference) Valida
 	return ValidationOptionAttributes{ref: ref}
 }
 
-func (vo ValidationOptionAttributes) InternalTokens() hclwrite.Tokens {
+func (vo ValidationOptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vo.ref.InternalTokens()
 }
 

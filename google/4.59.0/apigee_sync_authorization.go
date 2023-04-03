@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApigeeSyncAuthorization creates a new instance of [ApigeeSyncAuthorization].
 func NewApigeeSyncAuthorization(name string, args ApigeeSyncAuthorizationArgs) *ApigeeSyncAuthorization {
 	return &ApigeeSyncAuthorization{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApigeeSyncAuthorization(name string, args ApigeeSyncAuthorizationArgs) *
 
 var _ terra.Resource = (*ApigeeSyncAuthorization)(nil)
 
+// ApigeeSyncAuthorization represents the Terraform resource google_apigee_sync_authorization.
 type ApigeeSyncAuthorization struct {
-	Name  string
-	Args  ApigeeSyncAuthorizationArgs
-	state *apigeeSyncAuthorizationState
+	Name      string
+	Args      ApigeeSyncAuthorizationArgs
+	state     *apigeeSyncAuthorizationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApigeeSyncAuthorization].
 func (asa *ApigeeSyncAuthorization) Type() string {
 	return "google_apigee_sync_authorization"
 }
 
+// LocalName returns the local name for [ApigeeSyncAuthorization].
 func (asa *ApigeeSyncAuthorization) LocalName() string {
 	return asa.Name
 }
 
+// Configuration returns the configuration (args) for [ApigeeSyncAuthorization].
 func (asa *ApigeeSyncAuthorization) Configuration() interface{} {
 	return asa.Args
 }
 
+// DependOn is used for other resources to depend on [ApigeeSyncAuthorization].
+func (asa *ApigeeSyncAuthorization) DependOn() terra.Reference {
+	return terra.ReferenceResource(asa)
+}
+
+// Dependencies returns the list of resources [ApigeeSyncAuthorization] depends_on.
+func (asa *ApigeeSyncAuthorization) Dependencies() terra.Dependencies {
+	return asa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApigeeSyncAuthorization].
+func (asa *ApigeeSyncAuthorization) LifecycleManagement() *terra.Lifecycle {
+	return asa.Lifecycle
+}
+
+// Attributes returns the attributes for [ApigeeSyncAuthorization].
 func (asa *ApigeeSyncAuthorization) Attributes() apigeeSyncAuthorizationAttributes {
 	return apigeeSyncAuthorizationAttributes{ref: terra.ReferenceResource(asa)}
 }
 
+// ImportState imports the given attribute values into [ApigeeSyncAuthorization]'s state.
 func (asa *ApigeeSyncAuthorization) ImportState(av io.Reader) error {
 	asa.state = &apigeeSyncAuthorizationState{}
 	if err := json.NewDecoder(av).Decode(asa.state); err != nil {
@@ -49,10 +73,12 @@ func (asa *ApigeeSyncAuthorization) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApigeeSyncAuthorization] has state.
 func (asa *ApigeeSyncAuthorization) State() (*apigeeSyncAuthorizationState, bool) {
 	return asa.state, asa.state != nil
 }
 
+// StateMust returns the state for [ApigeeSyncAuthorization]. Panics if the state is nil.
 func (asa *ApigeeSyncAuthorization) StateMust() *apigeeSyncAuthorizationState {
 	if asa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", asa.Type(), asa.LocalName()))
@@ -60,10 +86,7 @@ func (asa *ApigeeSyncAuthorization) StateMust() *apigeeSyncAuthorizationState {
 	return asa.state
 }
 
-func (asa *ApigeeSyncAuthorization) DependOn() terra.Reference {
-	return terra.ReferenceResource(asa)
-}
-
+// ApigeeSyncAuthorizationArgs contains the configurations for google_apigee_sync_authorization.
 type ApigeeSyncAuthorizationArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -73,31 +96,33 @@ type ApigeeSyncAuthorizationArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *apigeesyncauthorization.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ApigeeSyncAuthorization depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apigeeSyncAuthorizationAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_apigee_sync_authorization.
 func (asa apigeeSyncAuthorizationAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(asa.ref.Append("etag"))
+	return terra.ReferenceAsString(asa.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_apigee_sync_authorization.
 func (asa apigeeSyncAuthorizationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(asa.ref.Append("id"))
+	return terra.ReferenceAsString(asa.ref.Append("id"))
 }
 
+// Identities returns a reference to field identities of google_apigee_sync_authorization.
 func (asa apigeeSyncAuthorizationAttributes) Identities() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](asa.ref.Append("identities"))
+	return terra.ReferenceAsList[terra.StringValue](asa.ref.Append("identities"))
 }
 
+// Name returns a reference to field name of google_apigee_sync_authorization.
 func (asa apigeeSyncAuthorizationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(asa.ref.Append("name"))
+	return terra.ReferenceAsString(asa.ref.Append("name"))
 }
 
 func (asa apigeeSyncAuthorizationAttributes) Timeouts() apigeesyncauthorization.TimeoutsAttributes {
-	return terra.ReferenceSingle[apigeesyncauthorization.TimeoutsAttributes](asa.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[apigeesyncauthorization.TimeoutsAttributes](asa.ref.Append("timeouts"))
 }
 
 type apigeeSyncAuthorizationState struct {

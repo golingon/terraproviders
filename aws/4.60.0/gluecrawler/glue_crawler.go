@@ -111,7 +111,7 @@ func (ct CatalogTargetAttributes) InternalWithRef(ref terra.Reference) CatalogTa
 	return CatalogTargetAttributes{ref: ref}
 }
 
-func (ct CatalogTargetAttributes) InternalTokens() hclwrite.Tokens {
+func (ct CatalogTargetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ct.ref.InternalTokens()
 }
 
@@ -147,7 +147,7 @@ func (dt DeltaTargetAttributes) InternalWithRef(ref terra.Reference) DeltaTarget
 	return DeltaTargetAttributes{ref: ref}
 }
 
-func (dt DeltaTargetAttributes) InternalTokens() hclwrite.Tokens {
+func (dt DeltaTargetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dt.ref.InternalTokens()
 }
 
@@ -179,7 +179,7 @@ func (dt DynamodbTargetAttributes) InternalWithRef(ref terra.Reference) Dynamodb
 	return DynamodbTargetAttributes{ref: ref}
 }
 
-func (dt DynamodbTargetAttributes) InternalTokens() hclwrite.Tokens {
+func (dt DynamodbTargetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dt.ref.InternalTokens()
 }
 
@@ -207,7 +207,7 @@ func (jt JdbcTargetAttributes) InternalWithRef(ref terra.Reference) JdbcTargetAt
 	return JdbcTargetAttributes{ref: ref}
 }
 
-func (jt JdbcTargetAttributes) InternalTokens() hclwrite.Tokens {
+func (jt JdbcTargetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return jt.ref.InternalTokens()
 }
 
@@ -239,7 +239,7 @@ func (lfc LakeFormationConfigurationAttributes) InternalWithRef(ref terra.Refere
 	return LakeFormationConfigurationAttributes{ref: ref}
 }
 
-func (lfc LakeFormationConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (lfc LakeFormationConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lfc.ref.InternalTokens()
 }
 
@@ -263,7 +263,7 @@ func (lc LineageConfigurationAttributes) InternalWithRef(ref terra.Reference) Li
 	return LineageConfigurationAttributes{ref: ref}
 }
 
-func (lc LineageConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (lc LineageConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lc.ref.InternalTokens()
 }
 
@@ -283,7 +283,7 @@ func (mt MongodbTargetAttributes) InternalWithRef(ref terra.Reference) MongodbTa
 	return MongodbTargetAttributes{ref: ref}
 }
 
-func (mt MongodbTargetAttributes) InternalTokens() hclwrite.Tokens {
+func (mt MongodbTargetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mt.ref.InternalTokens()
 }
 
@@ -311,7 +311,7 @@ func (rp RecrawlPolicyAttributes) InternalWithRef(ref terra.Reference) RecrawlPo
 	return RecrawlPolicyAttributes{ref: ref}
 }
 
-func (rp RecrawlPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (rp RecrawlPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rp.ref.InternalTokens()
 }
 
@@ -331,7 +331,7 @@ func (st S3TargetAttributes) InternalWithRef(ref terra.Reference) S3TargetAttrib
 	return S3TargetAttributes{ref: ref}
 }
 
-func (st S3TargetAttributes) InternalTokens() hclwrite.Tokens {
+func (st S3TargetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return st.ref.InternalTokens()
 }
 
@@ -371,7 +371,7 @@ func (scp SchemaChangePolicyAttributes) InternalWithRef(ref terra.Reference) Sch
 	return SchemaChangePolicyAttributes{ref: ref}
 }
 
-func (scp SchemaChangePolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (scp SchemaChangePolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return scp.ref.InternalTokens()
 }
 

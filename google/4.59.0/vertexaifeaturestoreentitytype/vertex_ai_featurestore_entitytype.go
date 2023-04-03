@@ -57,152 +57,152 @@ type MonitoringConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (mc MonitoringConfigAttributes) InternalRef() terra.Reference {
-	return mc.ref
+func (mc MonitoringConfigAttributes) InternalRef() (terra.Reference, error) {
+	return mc.ref, nil
 }
 
 func (mc MonitoringConfigAttributes) InternalWithRef(ref terra.Reference) MonitoringConfigAttributes {
 	return MonitoringConfigAttributes{ref: ref}
 }
 
-func (mc MonitoringConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (mc MonitoringConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mc.ref.InternalTokens()
 }
 
 func (mc MonitoringConfigAttributes) CategoricalThresholdConfig() terra.ListValue[CategoricalThresholdConfigAttributes] {
-	return terra.ReferenceList[CategoricalThresholdConfigAttributes](mc.ref.Append("categorical_threshold_config"))
+	return terra.ReferenceAsList[CategoricalThresholdConfigAttributes](mc.ref.Append("categorical_threshold_config"))
 }
 
 func (mc MonitoringConfigAttributes) ImportFeaturesAnalysis() terra.ListValue[ImportFeaturesAnalysisAttributes] {
-	return terra.ReferenceList[ImportFeaturesAnalysisAttributes](mc.ref.Append("import_features_analysis"))
+	return terra.ReferenceAsList[ImportFeaturesAnalysisAttributes](mc.ref.Append("import_features_analysis"))
 }
 
 func (mc MonitoringConfigAttributes) NumericalThresholdConfig() terra.ListValue[NumericalThresholdConfigAttributes] {
-	return terra.ReferenceList[NumericalThresholdConfigAttributes](mc.ref.Append("numerical_threshold_config"))
+	return terra.ReferenceAsList[NumericalThresholdConfigAttributes](mc.ref.Append("numerical_threshold_config"))
 }
 
 func (mc MonitoringConfigAttributes) SnapshotAnalysis() terra.ListValue[SnapshotAnalysisAttributes] {
-	return terra.ReferenceList[SnapshotAnalysisAttributes](mc.ref.Append("snapshot_analysis"))
+	return terra.ReferenceAsList[SnapshotAnalysisAttributes](mc.ref.Append("snapshot_analysis"))
 }
 
 type CategoricalThresholdConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ctc CategoricalThresholdConfigAttributes) InternalRef() terra.Reference {
-	return ctc.ref
+func (ctc CategoricalThresholdConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ctc.ref, nil
 }
 
 func (ctc CategoricalThresholdConfigAttributes) InternalWithRef(ref terra.Reference) CategoricalThresholdConfigAttributes {
 	return CategoricalThresholdConfigAttributes{ref: ref}
 }
 
-func (ctc CategoricalThresholdConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ctc CategoricalThresholdConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ctc.ref.InternalTokens()
 }
 
 func (ctc CategoricalThresholdConfigAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(ctc.ref.Append("value"))
+	return terra.ReferenceAsNumber(ctc.ref.Append("value"))
 }
 
 type ImportFeaturesAnalysisAttributes struct {
 	ref terra.Reference
 }
 
-func (ifa ImportFeaturesAnalysisAttributes) InternalRef() terra.Reference {
-	return ifa.ref
+func (ifa ImportFeaturesAnalysisAttributes) InternalRef() (terra.Reference, error) {
+	return ifa.ref, nil
 }
 
 func (ifa ImportFeaturesAnalysisAttributes) InternalWithRef(ref terra.Reference) ImportFeaturesAnalysisAttributes {
 	return ImportFeaturesAnalysisAttributes{ref: ref}
 }
 
-func (ifa ImportFeaturesAnalysisAttributes) InternalTokens() hclwrite.Tokens {
+func (ifa ImportFeaturesAnalysisAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ifa.ref.InternalTokens()
 }
 
 func (ifa ImportFeaturesAnalysisAttributes) AnomalyDetectionBaseline() terra.StringValue {
-	return terra.ReferenceString(ifa.ref.Append("anomaly_detection_baseline"))
+	return terra.ReferenceAsString(ifa.ref.Append("anomaly_detection_baseline"))
 }
 
 func (ifa ImportFeaturesAnalysisAttributes) State() terra.StringValue {
-	return terra.ReferenceString(ifa.ref.Append("state"))
+	return terra.ReferenceAsString(ifa.ref.Append("state"))
 }
 
 type NumericalThresholdConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ntc NumericalThresholdConfigAttributes) InternalRef() terra.Reference {
-	return ntc.ref
+func (ntc NumericalThresholdConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ntc.ref, nil
 }
 
 func (ntc NumericalThresholdConfigAttributes) InternalWithRef(ref terra.Reference) NumericalThresholdConfigAttributes {
 	return NumericalThresholdConfigAttributes{ref: ref}
 }
 
-func (ntc NumericalThresholdConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ntc NumericalThresholdConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ntc.ref.InternalTokens()
 }
 
 func (ntc NumericalThresholdConfigAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(ntc.ref.Append("value"))
+	return terra.ReferenceAsNumber(ntc.ref.Append("value"))
 }
 
 type SnapshotAnalysisAttributes struct {
 	ref terra.Reference
 }
 
-func (sa SnapshotAnalysisAttributes) InternalRef() terra.Reference {
-	return sa.ref
+func (sa SnapshotAnalysisAttributes) InternalRef() (terra.Reference, error) {
+	return sa.ref, nil
 }
 
 func (sa SnapshotAnalysisAttributes) InternalWithRef(ref terra.Reference) SnapshotAnalysisAttributes {
 	return SnapshotAnalysisAttributes{ref: ref}
 }
 
-func (sa SnapshotAnalysisAttributes) InternalTokens() hclwrite.Tokens {
+func (sa SnapshotAnalysisAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sa.ref.InternalTokens()
 }
 
 func (sa SnapshotAnalysisAttributes) Disabled() terra.BoolValue {
-	return terra.ReferenceBool(sa.ref.Append("disabled"))
+	return terra.ReferenceAsBool(sa.ref.Append("disabled"))
 }
 
 func (sa SnapshotAnalysisAttributes) MonitoringIntervalDays() terra.NumberValue {
-	return terra.ReferenceNumber(sa.ref.Append("monitoring_interval_days"))
+	return terra.ReferenceAsNumber(sa.ref.Append("monitoring_interval_days"))
 }
 
 func (sa SnapshotAnalysisAttributes) StalenessDays() terra.NumberValue {
-	return terra.ReferenceNumber(sa.ref.Append("staleness_days"))
+	return terra.ReferenceAsNumber(sa.ref.Append("staleness_days"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type MonitoringConfigState struct {

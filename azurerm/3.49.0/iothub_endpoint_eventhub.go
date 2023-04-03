@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewIothubEndpointEventhub creates a new instance of [IothubEndpointEventhub].
 func NewIothubEndpointEventhub(name string, args IothubEndpointEventhubArgs) *IothubEndpointEventhub {
 	return &IothubEndpointEventhub{
 		Args: args,
@@ -19,28 +20,51 @@ func NewIothubEndpointEventhub(name string, args IothubEndpointEventhubArgs) *Io
 
 var _ terra.Resource = (*IothubEndpointEventhub)(nil)
 
+// IothubEndpointEventhub represents the Terraform resource azurerm_iothub_endpoint_eventhub.
 type IothubEndpointEventhub struct {
-	Name  string
-	Args  IothubEndpointEventhubArgs
-	state *iothubEndpointEventhubState
+	Name      string
+	Args      IothubEndpointEventhubArgs
+	state     *iothubEndpointEventhubState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IothubEndpointEventhub].
 func (iee *IothubEndpointEventhub) Type() string {
 	return "azurerm_iothub_endpoint_eventhub"
 }
 
+// LocalName returns the local name for [IothubEndpointEventhub].
 func (iee *IothubEndpointEventhub) LocalName() string {
 	return iee.Name
 }
 
+// Configuration returns the configuration (args) for [IothubEndpointEventhub].
 func (iee *IothubEndpointEventhub) Configuration() interface{} {
 	return iee.Args
 }
 
+// DependOn is used for other resources to depend on [IothubEndpointEventhub].
+func (iee *IothubEndpointEventhub) DependOn() terra.Reference {
+	return terra.ReferenceResource(iee)
+}
+
+// Dependencies returns the list of resources [IothubEndpointEventhub] depends_on.
+func (iee *IothubEndpointEventhub) Dependencies() terra.Dependencies {
+	return iee.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IothubEndpointEventhub].
+func (iee *IothubEndpointEventhub) LifecycleManagement() *terra.Lifecycle {
+	return iee.Lifecycle
+}
+
+// Attributes returns the attributes for [IothubEndpointEventhub].
 func (iee *IothubEndpointEventhub) Attributes() iothubEndpointEventhubAttributes {
 	return iothubEndpointEventhubAttributes{ref: terra.ReferenceResource(iee)}
 }
 
+// ImportState imports the given attribute values into [IothubEndpointEventhub]'s state.
 func (iee *IothubEndpointEventhub) ImportState(av io.Reader) error {
 	iee.state = &iothubEndpointEventhubState{}
 	if err := json.NewDecoder(av).Decode(iee.state); err != nil {
@@ -49,10 +73,12 @@ func (iee *IothubEndpointEventhub) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IothubEndpointEventhub] has state.
 func (iee *IothubEndpointEventhub) State() (*iothubEndpointEventhubState, bool) {
 	return iee.state, iee.state != nil
 }
 
+// StateMust returns the state for [IothubEndpointEventhub]. Panics if the state is nil.
 func (iee *IothubEndpointEventhub) StateMust() *iothubEndpointEventhubState {
 	if iee.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", iee.Type(), iee.LocalName()))
@@ -60,10 +86,7 @@ func (iee *IothubEndpointEventhub) StateMust() *iothubEndpointEventhubState {
 	return iee.state
 }
 
-func (iee *IothubEndpointEventhub) DependOn() terra.Reference {
-	return terra.ReferenceResource(iee)
-}
-
+// IothubEndpointEventhubArgs contains the configurations for azurerm_iothub_endpoint_eventhub.
 type IothubEndpointEventhubArgs struct {
 	// AuthenticationType: string, optional
 	AuthenticationType terra.StringValue `hcl:"authentication_type,attr"`
@@ -85,51 +108,58 @@ type IothubEndpointEventhubArgs struct {
 	ResourceGroupName terra.StringValue `hcl:"resource_group_name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *iothubendpointeventhub.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that IothubEndpointEventhub depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iothubEndpointEventhubAttributes struct {
 	ref terra.Reference
 }
 
+// AuthenticationType returns a reference to field authentication_type of azurerm_iothub_endpoint_eventhub.
 func (iee iothubEndpointEventhubAttributes) AuthenticationType() terra.StringValue {
-	return terra.ReferenceString(iee.ref.Append("authentication_type"))
+	return terra.ReferenceAsString(iee.ref.Append("authentication_type"))
 }
 
+// ConnectionString returns a reference to field connection_string of azurerm_iothub_endpoint_eventhub.
 func (iee iothubEndpointEventhubAttributes) ConnectionString() terra.StringValue {
-	return terra.ReferenceString(iee.ref.Append("connection_string"))
+	return terra.ReferenceAsString(iee.ref.Append("connection_string"))
 }
 
+// EndpointUri returns a reference to field endpoint_uri of azurerm_iothub_endpoint_eventhub.
 func (iee iothubEndpointEventhubAttributes) EndpointUri() terra.StringValue {
-	return terra.ReferenceString(iee.ref.Append("endpoint_uri"))
+	return terra.ReferenceAsString(iee.ref.Append("endpoint_uri"))
 }
 
+// EntityPath returns a reference to field entity_path of azurerm_iothub_endpoint_eventhub.
 func (iee iothubEndpointEventhubAttributes) EntityPath() terra.StringValue {
-	return terra.ReferenceString(iee.ref.Append("entity_path"))
+	return terra.ReferenceAsString(iee.ref.Append("entity_path"))
 }
 
+// Id returns a reference to field id of azurerm_iothub_endpoint_eventhub.
 func (iee iothubEndpointEventhubAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(iee.ref.Append("id"))
+	return terra.ReferenceAsString(iee.ref.Append("id"))
 }
 
+// IdentityId returns a reference to field identity_id of azurerm_iothub_endpoint_eventhub.
 func (iee iothubEndpointEventhubAttributes) IdentityId() terra.StringValue {
-	return terra.ReferenceString(iee.ref.Append("identity_id"))
+	return terra.ReferenceAsString(iee.ref.Append("identity_id"))
 }
 
+// IothubId returns a reference to field iothub_id of azurerm_iothub_endpoint_eventhub.
 func (iee iothubEndpointEventhubAttributes) IothubId() terra.StringValue {
-	return terra.ReferenceString(iee.ref.Append("iothub_id"))
+	return terra.ReferenceAsString(iee.ref.Append("iothub_id"))
 }
 
+// Name returns a reference to field name of azurerm_iothub_endpoint_eventhub.
 func (iee iothubEndpointEventhubAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(iee.ref.Append("name"))
+	return terra.ReferenceAsString(iee.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_iothub_endpoint_eventhub.
 func (iee iothubEndpointEventhubAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(iee.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(iee.ref.Append("resource_group_name"))
 }
 
 func (iee iothubEndpointEventhubAttributes) Timeouts() iothubendpointeventhub.TimeoutsAttributes {
-	return terra.ReferenceSingle[iothubendpointeventhub.TimeoutsAttributes](iee.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[iothubendpointeventhub.TimeoutsAttributes](iee.ref.Append("timeouts"))
 }
 
 type iothubEndpointEventhubState struct {

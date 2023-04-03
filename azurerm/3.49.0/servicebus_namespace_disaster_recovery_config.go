@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewServicebusNamespaceDisasterRecoveryConfig creates a new instance of [ServicebusNamespaceDisasterRecoveryConfig].
 func NewServicebusNamespaceDisasterRecoveryConfig(name string, args ServicebusNamespaceDisasterRecoveryConfigArgs) *ServicebusNamespaceDisasterRecoveryConfig {
 	return &ServicebusNamespaceDisasterRecoveryConfig{
 		Args: args,
@@ -19,28 +20,51 @@ func NewServicebusNamespaceDisasterRecoveryConfig(name string, args ServicebusNa
 
 var _ terra.Resource = (*ServicebusNamespaceDisasterRecoveryConfig)(nil)
 
+// ServicebusNamespaceDisasterRecoveryConfig represents the Terraform resource azurerm_servicebus_namespace_disaster_recovery_config.
 type ServicebusNamespaceDisasterRecoveryConfig struct {
-	Name  string
-	Args  ServicebusNamespaceDisasterRecoveryConfigArgs
-	state *servicebusNamespaceDisasterRecoveryConfigState
+	Name      string
+	Args      ServicebusNamespaceDisasterRecoveryConfigArgs
+	state     *servicebusNamespaceDisasterRecoveryConfigState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ServicebusNamespaceDisasterRecoveryConfig].
 func (sndrc *ServicebusNamespaceDisasterRecoveryConfig) Type() string {
 	return "azurerm_servicebus_namespace_disaster_recovery_config"
 }
 
+// LocalName returns the local name for [ServicebusNamespaceDisasterRecoveryConfig].
 func (sndrc *ServicebusNamespaceDisasterRecoveryConfig) LocalName() string {
 	return sndrc.Name
 }
 
+// Configuration returns the configuration (args) for [ServicebusNamespaceDisasterRecoveryConfig].
 func (sndrc *ServicebusNamespaceDisasterRecoveryConfig) Configuration() interface{} {
 	return sndrc.Args
 }
 
+// DependOn is used for other resources to depend on [ServicebusNamespaceDisasterRecoveryConfig].
+func (sndrc *ServicebusNamespaceDisasterRecoveryConfig) DependOn() terra.Reference {
+	return terra.ReferenceResource(sndrc)
+}
+
+// Dependencies returns the list of resources [ServicebusNamespaceDisasterRecoveryConfig] depends_on.
+func (sndrc *ServicebusNamespaceDisasterRecoveryConfig) Dependencies() terra.Dependencies {
+	return sndrc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ServicebusNamespaceDisasterRecoveryConfig].
+func (sndrc *ServicebusNamespaceDisasterRecoveryConfig) LifecycleManagement() *terra.Lifecycle {
+	return sndrc.Lifecycle
+}
+
+// Attributes returns the attributes for [ServicebusNamespaceDisasterRecoveryConfig].
 func (sndrc *ServicebusNamespaceDisasterRecoveryConfig) Attributes() servicebusNamespaceDisasterRecoveryConfigAttributes {
 	return servicebusNamespaceDisasterRecoveryConfigAttributes{ref: terra.ReferenceResource(sndrc)}
 }
 
+// ImportState imports the given attribute values into [ServicebusNamespaceDisasterRecoveryConfig]'s state.
 func (sndrc *ServicebusNamespaceDisasterRecoveryConfig) ImportState(av io.Reader) error {
 	sndrc.state = &servicebusNamespaceDisasterRecoveryConfigState{}
 	if err := json.NewDecoder(av).Decode(sndrc.state); err != nil {
@@ -49,10 +73,12 @@ func (sndrc *ServicebusNamespaceDisasterRecoveryConfig) ImportState(av io.Reader
 	return nil
 }
 
+// State returns the state and a bool indicating if [ServicebusNamespaceDisasterRecoveryConfig] has state.
 func (sndrc *ServicebusNamespaceDisasterRecoveryConfig) State() (*servicebusNamespaceDisasterRecoveryConfigState, bool) {
 	return sndrc.state, sndrc.state != nil
 }
 
+// StateMust returns the state for [ServicebusNamespaceDisasterRecoveryConfig]. Panics if the state is nil.
 func (sndrc *ServicebusNamespaceDisasterRecoveryConfig) StateMust() *servicebusNamespaceDisasterRecoveryConfigState {
 	if sndrc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sndrc.Type(), sndrc.LocalName()))
@@ -60,10 +86,7 @@ func (sndrc *ServicebusNamespaceDisasterRecoveryConfig) StateMust() *servicebusN
 	return sndrc.state
 }
 
-func (sndrc *ServicebusNamespaceDisasterRecoveryConfig) DependOn() terra.Reference {
-	return terra.ReferenceResource(sndrc)
-}
-
+// ServicebusNamespaceDisasterRecoveryConfigArgs contains the configurations for azurerm_servicebus_namespace_disaster_recovery_config.
 type ServicebusNamespaceDisasterRecoveryConfigArgs struct {
 	// AliasAuthorizationRuleId: string, optional
 	AliasAuthorizationRuleId terra.StringValue `hcl:"alias_authorization_rule_id,attr"`
@@ -77,51 +100,58 @@ type ServicebusNamespaceDisasterRecoveryConfigArgs struct {
 	PrimaryNamespaceId terra.StringValue `hcl:"primary_namespace_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *servicebusnamespacedisasterrecoveryconfig.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ServicebusNamespaceDisasterRecoveryConfig depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type servicebusNamespaceDisasterRecoveryConfigAttributes struct {
 	ref terra.Reference
 }
 
+// AliasAuthorizationRuleId returns a reference to field alias_authorization_rule_id of azurerm_servicebus_namespace_disaster_recovery_config.
 func (sndrc servicebusNamespaceDisasterRecoveryConfigAttributes) AliasAuthorizationRuleId() terra.StringValue {
-	return terra.ReferenceString(sndrc.ref.Append("alias_authorization_rule_id"))
+	return terra.ReferenceAsString(sndrc.ref.Append("alias_authorization_rule_id"))
 }
 
+// DefaultPrimaryKey returns a reference to field default_primary_key of azurerm_servicebus_namespace_disaster_recovery_config.
 func (sndrc servicebusNamespaceDisasterRecoveryConfigAttributes) DefaultPrimaryKey() terra.StringValue {
-	return terra.ReferenceString(sndrc.ref.Append("default_primary_key"))
+	return terra.ReferenceAsString(sndrc.ref.Append("default_primary_key"))
 }
 
+// DefaultSecondaryKey returns a reference to field default_secondary_key of azurerm_servicebus_namespace_disaster_recovery_config.
 func (sndrc servicebusNamespaceDisasterRecoveryConfigAttributes) DefaultSecondaryKey() terra.StringValue {
-	return terra.ReferenceString(sndrc.ref.Append("default_secondary_key"))
+	return terra.ReferenceAsString(sndrc.ref.Append("default_secondary_key"))
 }
 
+// Id returns a reference to field id of azurerm_servicebus_namespace_disaster_recovery_config.
 func (sndrc servicebusNamespaceDisasterRecoveryConfigAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sndrc.ref.Append("id"))
+	return terra.ReferenceAsString(sndrc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_servicebus_namespace_disaster_recovery_config.
 func (sndrc servicebusNamespaceDisasterRecoveryConfigAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sndrc.ref.Append("name"))
+	return terra.ReferenceAsString(sndrc.ref.Append("name"))
 }
 
+// PartnerNamespaceId returns a reference to field partner_namespace_id of azurerm_servicebus_namespace_disaster_recovery_config.
 func (sndrc servicebusNamespaceDisasterRecoveryConfigAttributes) PartnerNamespaceId() terra.StringValue {
-	return terra.ReferenceString(sndrc.ref.Append("partner_namespace_id"))
+	return terra.ReferenceAsString(sndrc.ref.Append("partner_namespace_id"))
 }
 
+// PrimaryConnectionStringAlias returns a reference to field primary_connection_string_alias of azurerm_servicebus_namespace_disaster_recovery_config.
 func (sndrc servicebusNamespaceDisasterRecoveryConfigAttributes) PrimaryConnectionStringAlias() terra.StringValue {
-	return terra.ReferenceString(sndrc.ref.Append("primary_connection_string_alias"))
+	return terra.ReferenceAsString(sndrc.ref.Append("primary_connection_string_alias"))
 }
 
+// PrimaryNamespaceId returns a reference to field primary_namespace_id of azurerm_servicebus_namespace_disaster_recovery_config.
 func (sndrc servicebusNamespaceDisasterRecoveryConfigAttributes) PrimaryNamespaceId() terra.StringValue {
-	return terra.ReferenceString(sndrc.ref.Append("primary_namespace_id"))
+	return terra.ReferenceAsString(sndrc.ref.Append("primary_namespace_id"))
 }
 
+// SecondaryConnectionStringAlias returns a reference to field secondary_connection_string_alias of azurerm_servicebus_namespace_disaster_recovery_config.
 func (sndrc servicebusNamespaceDisasterRecoveryConfigAttributes) SecondaryConnectionStringAlias() terra.StringValue {
-	return terra.ReferenceString(sndrc.ref.Append("secondary_connection_string_alias"))
+	return terra.ReferenceAsString(sndrc.ref.Append("secondary_connection_string_alias"))
 }
 
 func (sndrc servicebusNamespaceDisasterRecoveryConfigAttributes) Timeouts() servicebusnamespacedisasterrecoveryconfig.TimeoutsAttributes {
-	return terra.ReferenceSingle[servicebusnamespacedisasterrecoveryconfig.TimeoutsAttributes](sndrc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[servicebusnamespacedisasterrecoveryconfig.TimeoutsAttributes](sndrc.ref.Append("timeouts"))
 }
 
 type servicebusNamespaceDisasterRecoveryConfigState struct {

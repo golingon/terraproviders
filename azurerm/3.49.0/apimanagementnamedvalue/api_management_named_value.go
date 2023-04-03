@@ -29,56 +29,56 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ValueFromKeyVaultAttributes struct {
 	ref terra.Reference
 }
 
-func (vfkv ValueFromKeyVaultAttributes) InternalRef() terra.Reference {
-	return vfkv.ref
+func (vfkv ValueFromKeyVaultAttributes) InternalRef() (terra.Reference, error) {
+	return vfkv.ref, nil
 }
 
 func (vfkv ValueFromKeyVaultAttributes) InternalWithRef(ref terra.Reference) ValueFromKeyVaultAttributes {
 	return ValueFromKeyVaultAttributes{ref: ref}
 }
 
-func (vfkv ValueFromKeyVaultAttributes) InternalTokens() hclwrite.Tokens {
+func (vfkv ValueFromKeyVaultAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vfkv.ref.InternalTokens()
 }
 
 func (vfkv ValueFromKeyVaultAttributes) IdentityClientId() terra.StringValue {
-	return terra.ReferenceString(vfkv.ref.Append("identity_client_id"))
+	return terra.ReferenceAsString(vfkv.ref.Append("identity_client_id"))
 }
 
 func (vfkv ValueFromKeyVaultAttributes) SecretId() terra.StringValue {
-	return terra.ReferenceString(vfkv.ref.Append("secret_id"))
+	return terra.ReferenceAsString(vfkv.ref.Append("secret_id"))
 }
 
 type TimeoutsState struct {

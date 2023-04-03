@@ -35,7 +35,7 @@ func (ol OutputLocationAttributes) InternalWithRef(ref terra.Reference) OutputLo
 	return OutputLocationAttributes{ref: ref}
 }
 
-func (ol OutputLocationAttributes) InternalTokens() hclwrite.Tokens {
+func (ol OutputLocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ol.ref.InternalTokens()
 }
 
@@ -63,7 +63,7 @@ func (t TargetsAttributes) InternalWithRef(ref terra.Reference) TargetsAttribute
 	return TargetsAttributes{ref: ref}
 }
 
-func (t TargetsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TargetsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

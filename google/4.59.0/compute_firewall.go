@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeFirewall creates a new instance of [ComputeFirewall].
 func NewComputeFirewall(name string, args ComputeFirewallArgs) *ComputeFirewall {
 	return &ComputeFirewall{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeFirewall(name string, args ComputeFirewallArgs) *ComputeFirewall 
 
 var _ terra.Resource = (*ComputeFirewall)(nil)
 
+// ComputeFirewall represents the Terraform resource google_compute_firewall.
 type ComputeFirewall struct {
-	Name  string
-	Args  ComputeFirewallArgs
-	state *computeFirewallState
+	Name      string
+	Args      ComputeFirewallArgs
+	state     *computeFirewallState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeFirewall].
 func (cf *ComputeFirewall) Type() string {
 	return "google_compute_firewall"
 }
 
+// LocalName returns the local name for [ComputeFirewall].
 func (cf *ComputeFirewall) LocalName() string {
 	return cf.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeFirewall].
 func (cf *ComputeFirewall) Configuration() interface{} {
 	return cf.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeFirewall].
+func (cf *ComputeFirewall) DependOn() terra.Reference {
+	return terra.ReferenceResource(cf)
+}
+
+// Dependencies returns the list of resources [ComputeFirewall] depends_on.
+func (cf *ComputeFirewall) Dependencies() terra.Dependencies {
+	return cf.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeFirewall].
+func (cf *ComputeFirewall) LifecycleManagement() *terra.Lifecycle {
+	return cf.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeFirewall].
 func (cf *ComputeFirewall) Attributes() computeFirewallAttributes {
 	return computeFirewallAttributes{ref: terra.ReferenceResource(cf)}
 }
 
+// ImportState imports the given attribute values into [ComputeFirewall]'s state.
 func (cf *ComputeFirewall) ImportState(av io.Reader) error {
 	cf.state = &computeFirewallState{}
 	if err := json.NewDecoder(av).Decode(cf.state); err != nil {
@@ -49,10 +73,12 @@ func (cf *ComputeFirewall) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeFirewall] has state.
 func (cf *ComputeFirewall) State() (*computeFirewallState, bool) {
 	return cf.state, cf.state != nil
 }
 
+// StateMust returns the state for [ComputeFirewall]. Panics if the state is nil.
 func (cf *ComputeFirewall) StateMust() *computeFirewallState {
 	if cf.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cf.Type(), cf.LocalName()))
@@ -60,10 +86,7 @@ func (cf *ComputeFirewall) StateMust() *computeFirewallState {
 	return cf.state
 }
 
-func (cf *ComputeFirewall) DependOn() terra.Reference {
-	return terra.ReferenceResource(cf)
-}
-
+// ComputeFirewallArgs contains the configurations for google_compute_firewall.
 type ComputeFirewallArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -103,95 +126,110 @@ type ComputeFirewallArgs struct {
 	LogConfig *computefirewall.LogConfig `hcl:"log_config,block"`
 	// Timeouts: optional
 	Timeouts *computefirewall.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeFirewall depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeFirewallAttributes struct {
 	ref terra.Reference
 }
 
+// CreationTimestamp returns a reference to field creation_timestamp of google_compute_firewall.
 func (cf computeFirewallAttributes) CreationTimestamp() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("creation_timestamp"))
+	return terra.ReferenceAsString(cf.ref.Append("creation_timestamp"))
 }
 
+// Description returns a reference to field description of google_compute_firewall.
 func (cf computeFirewallAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("description"))
+	return terra.ReferenceAsString(cf.ref.Append("description"))
 }
 
+// DestinationRanges returns a reference to field destination_ranges of google_compute_firewall.
 func (cf computeFirewallAttributes) DestinationRanges() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cf.ref.Append("destination_ranges"))
+	return terra.ReferenceAsSet[terra.StringValue](cf.ref.Append("destination_ranges"))
 }
 
+// Direction returns a reference to field direction of google_compute_firewall.
 func (cf computeFirewallAttributes) Direction() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("direction"))
+	return terra.ReferenceAsString(cf.ref.Append("direction"))
 }
 
+// Disabled returns a reference to field disabled of google_compute_firewall.
 func (cf computeFirewallAttributes) Disabled() terra.BoolValue {
-	return terra.ReferenceBool(cf.ref.Append("disabled"))
+	return terra.ReferenceAsBool(cf.ref.Append("disabled"))
 }
 
+// EnableLogging returns a reference to field enable_logging of google_compute_firewall.
 func (cf computeFirewallAttributes) EnableLogging() terra.BoolValue {
-	return terra.ReferenceBool(cf.ref.Append("enable_logging"))
+	return terra.ReferenceAsBool(cf.ref.Append("enable_logging"))
 }
 
+// Id returns a reference to field id of google_compute_firewall.
 func (cf computeFirewallAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("id"))
+	return terra.ReferenceAsString(cf.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_compute_firewall.
 func (cf computeFirewallAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("name"))
+	return terra.ReferenceAsString(cf.ref.Append("name"))
 }
 
+// Network returns a reference to field network of google_compute_firewall.
 func (cf computeFirewallAttributes) Network() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("network"))
+	return terra.ReferenceAsString(cf.ref.Append("network"))
 }
 
+// Priority returns a reference to field priority of google_compute_firewall.
 func (cf computeFirewallAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(cf.ref.Append("priority"))
+	return terra.ReferenceAsNumber(cf.ref.Append("priority"))
 }
 
+// Project returns a reference to field project of google_compute_firewall.
 func (cf computeFirewallAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("project"))
+	return terra.ReferenceAsString(cf.ref.Append("project"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_firewall.
 func (cf computeFirewallAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("self_link"))
+	return terra.ReferenceAsString(cf.ref.Append("self_link"))
 }
 
+// SourceRanges returns a reference to field source_ranges of google_compute_firewall.
 func (cf computeFirewallAttributes) SourceRanges() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cf.ref.Append("source_ranges"))
+	return terra.ReferenceAsSet[terra.StringValue](cf.ref.Append("source_ranges"))
 }
 
+// SourceServiceAccounts returns a reference to field source_service_accounts of google_compute_firewall.
 func (cf computeFirewallAttributes) SourceServiceAccounts() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cf.ref.Append("source_service_accounts"))
+	return terra.ReferenceAsSet[terra.StringValue](cf.ref.Append("source_service_accounts"))
 }
 
+// SourceTags returns a reference to field source_tags of google_compute_firewall.
 func (cf computeFirewallAttributes) SourceTags() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cf.ref.Append("source_tags"))
+	return terra.ReferenceAsSet[terra.StringValue](cf.ref.Append("source_tags"))
 }
 
+// TargetServiceAccounts returns a reference to field target_service_accounts of google_compute_firewall.
 func (cf computeFirewallAttributes) TargetServiceAccounts() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cf.ref.Append("target_service_accounts"))
+	return terra.ReferenceAsSet[terra.StringValue](cf.ref.Append("target_service_accounts"))
 }
 
+// TargetTags returns a reference to field target_tags of google_compute_firewall.
 func (cf computeFirewallAttributes) TargetTags() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cf.ref.Append("target_tags"))
+	return terra.ReferenceAsSet[terra.StringValue](cf.ref.Append("target_tags"))
 }
 
 func (cf computeFirewallAttributes) Allow() terra.SetValue[computefirewall.AllowAttributes] {
-	return terra.ReferenceSet[computefirewall.AllowAttributes](cf.ref.Append("allow"))
+	return terra.ReferenceAsSet[computefirewall.AllowAttributes](cf.ref.Append("allow"))
 }
 
 func (cf computeFirewallAttributes) Deny() terra.SetValue[computefirewall.DenyAttributes] {
-	return terra.ReferenceSet[computefirewall.DenyAttributes](cf.ref.Append("deny"))
+	return terra.ReferenceAsSet[computefirewall.DenyAttributes](cf.ref.Append("deny"))
 }
 
 func (cf computeFirewallAttributes) LogConfig() terra.ListValue[computefirewall.LogConfigAttributes] {
-	return terra.ReferenceList[computefirewall.LogConfigAttributes](cf.ref.Append("log_config"))
+	return terra.ReferenceAsList[computefirewall.LogConfigAttributes](cf.ref.Append("log_config"))
 }
 
 func (cf computeFirewallAttributes) Timeouts() computefirewall.TimeoutsAttributes {
-	return terra.ReferenceSingle[computefirewall.TimeoutsAttributes](cf.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computefirewall.TimeoutsAttributes](cf.ref.Append("timeouts"))
 }
 
 type computeFirewallState struct {

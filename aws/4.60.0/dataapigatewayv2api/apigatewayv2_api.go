@@ -21,7 +21,7 @@ func (cc CorsConfigurationAttributes) InternalWithRef(ref terra.Reference) CorsC
 	return CorsConfigurationAttributes{ref: ref}
 }
 
-func (cc CorsConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (cc CorsConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSpringCloudActiveDeployment creates a new instance of [SpringCloudActiveDeployment].
 func NewSpringCloudActiveDeployment(name string, args SpringCloudActiveDeploymentArgs) *SpringCloudActiveDeployment {
 	return &SpringCloudActiveDeployment{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSpringCloudActiveDeployment(name string, args SpringCloudActiveDeploymen
 
 var _ terra.Resource = (*SpringCloudActiveDeployment)(nil)
 
+// SpringCloudActiveDeployment represents the Terraform resource azurerm_spring_cloud_active_deployment.
 type SpringCloudActiveDeployment struct {
-	Name  string
-	Args  SpringCloudActiveDeploymentArgs
-	state *springCloudActiveDeploymentState
+	Name      string
+	Args      SpringCloudActiveDeploymentArgs
+	state     *springCloudActiveDeploymentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SpringCloudActiveDeployment].
 func (scad *SpringCloudActiveDeployment) Type() string {
 	return "azurerm_spring_cloud_active_deployment"
 }
 
+// LocalName returns the local name for [SpringCloudActiveDeployment].
 func (scad *SpringCloudActiveDeployment) LocalName() string {
 	return scad.Name
 }
 
+// Configuration returns the configuration (args) for [SpringCloudActiveDeployment].
 func (scad *SpringCloudActiveDeployment) Configuration() interface{} {
 	return scad.Args
 }
 
+// DependOn is used for other resources to depend on [SpringCloudActiveDeployment].
+func (scad *SpringCloudActiveDeployment) DependOn() terra.Reference {
+	return terra.ReferenceResource(scad)
+}
+
+// Dependencies returns the list of resources [SpringCloudActiveDeployment] depends_on.
+func (scad *SpringCloudActiveDeployment) Dependencies() terra.Dependencies {
+	return scad.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SpringCloudActiveDeployment].
+func (scad *SpringCloudActiveDeployment) LifecycleManagement() *terra.Lifecycle {
+	return scad.Lifecycle
+}
+
+// Attributes returns the attributes for [SpringCloudActiveDeployment].
 func (scad *SpringCloudActiveDeployment) Attributes() springCloudActiveDeploymentAttributes {
 	return springCloudActiveDeploymentAttributes{ref: terra.ReferenceResource(scad)}
 }
 
+// ImportState imports the given attribute values into [SpringCloudActiveDeployment]'s state.
 func (scad *SpringCloudActiveDeployment) ImportState(av io.Reader) error {
 	scad.state = &springCloudActiveDeploymentState{}
 	if err := json.NewDecoder(av).Decode(scad.state); err != nil {
@@ -49,10 +73,12 @@ func (scad *SpringCloudActiveDeployment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SpringCloudActiveDeployment] has state.
 func (scad *SpringCloudActiveDeployment) State() (*springCloudActiveDeploymentState, bool) {
 	return scad.state, scad.state != nil
 }
 
+// StateMust returns the state for [SpringCloudActiveDeployment]. Panics if the state is nil.
 func (scad *SpringCloudActiveDeployment) StateMust() *springCloudActiveDeploymentState {
 	if scad.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", scad.Type(), scad.LocalName()))
@@ -60,10 +86,7 @@ func (scad *SpringCloudActiveDeployment) StateMust() *springCloudActiveDeploymen
 	return scad.state
 }
 
-func (scad *SpringCloudActiveDeployment) DependOn() terra.Reference {
-	return terra.ReferenceResource(scad)
-}
-
+// SpringCloudActiveDeploymentArgs contains the configurations for azurerm_spring_cloud_active_deployment.
 type SpringCloudActiveDeploymentArgs struct {
 	// DeploymentName: string, required
 	DeploymentName terra.StringValue `hcl:"deployment_name,attr" validate:"required"`
@@ -73,27 +96,28 @@ type SpringCloudActiveDeploymentArgs struct {
 	SpringCloudAppId terra.StringValue `hcl:"spring_cloud_app_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *springcloudactivedeployment.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SpringCloudActiveDeployment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type springCloudActiveDeploymentAttributes struct {
 	ref terra.Reference
 }
 
+// DeploymentName returns a reference to field deployment_name of azurerm_spring_cloud_active_deployment.
 func (scad springCloudActiveDeploymentAttributes) DeploymentName() terra.StringValue {
-	return terra.ReferenceString(scad.ref.Append("deployment_name"))
+	return terra.ReferenceAsString(scad.ref.Append("deployment_name"))
 }
 
+// Id returns a reference to field id of azurerm_spring_cloud_active_deployment.
 func (scad springCloudActiveDeploymentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(scad.ref.Append("id"))
+	return terra.ReferenceAsString(scad.ref.Append("id"))
 }
 
+// SpringCloudAppId returns a reference to field spring_cloud_app_id of azurerm_spring_cloud_active_deployment.
 func (scad springCloudActiveDeploymentAttributes) SpringCloudAppId() terra.StringValue {
-	return terra.ReferenceString(scad.ref.Append("spring_cloud_app_id"))
+	return terra.ReferenceAsString(scad.ref.Append("spring_cloud_app_id"))
 }
 
 func (scad springCloudActiveDeploymentAttributes) Timeouts() springcloudactivedeployment.TimeoutsAttributes {
-	return terra.ReferenceSingle[springcloudactivedeployment.TimeoutsAttributes](scad.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[springcloudactivedeployment.TimeoutsAttributes](scad.ref.Append("timeouts"))
 }
 
 type springCloudActiveDeploymentState struct {

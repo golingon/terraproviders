@@ -32,7 +32,7 @@ func (ra RemoteAccessAttributes) InternalWithRef(ref terra.Reference) RemoteAcce
 	return RemoteAccessAttributes{ref: ref}
 }
 
-func (ra RemoteAccessAttributes) InternalTokens() hclwrite.Tokens {
+func (ra RemoteAccessAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ra.ref.InternalTokens()
 }
 
@@ -56,7 +56,7 @@ func (r ResourcesAttributes) InternalWithRef(ref terra.Reference) ResourcesAttri
 	return ResourcesAttributes{ref: ref}
 }
 
-func (r ResourcesAttributes) InternalTokens() hclwrite.Tokens {
+func (r ResourcesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -80,7 +80,7 @@ func (ag AutoscalingGroupsAttributes) InternalWithRef(ref terra.Reference) Autos
 	return AutoscalingGroupsAttributes{ref: ref}
 }
 
-func (ag AutoscalingGroupsAttributes) InternalTokens() hclwrite.Tokens {
+func (ag AutoscalingGroupsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ag.ref.InternalTokens()
 }
 
@@ -100,7 +100,7 @@ func (sc ScalingConfigAttributes) InternalWithRef(ref terra.Reference) ScalingCo
 	return ScalingConfigAttributes{ref: ref}
 }
 
-func (sc ScalingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sc ScalingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -128,7 +128,7 @@ func (t TaintsAttributes) InternalWithRef(ref terra.Reference) TaintsAttributes 
 	return TaintsAttributes{ref: ref}
 }
 
-func (t TaintsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TaintsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

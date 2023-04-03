@@ -33,64 +33,64 @@ type TargetRegionAttributes struct {
 	ref terra.Reference
 }
 
-func (tr TargetRegionAttributes) InternalRef() terra.Reference {
-	return tr.ref
+func (tr TargetRegionAttributes) InternalRef() (terra.Reference, error) {
+	return tr.ref, nil
 }
 
 func (tr TargetRegionAttributes) InternalWithRef(ref terra.Reference) TargetRegionAttributes {
 	return TargetRegionAttributes{ref: ref}
 }
 
-func (tr TargetRegionAttributes) InternalTokens() hclwrite.Tokens {
+func (tr TargetRegionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tr.ref.InternalTokens()
 }
 
 func (tr TargetRegionAttributes) DiskEncryptionSetId() terra.StringValue {
-	return terra.ReferenceString(tr.ref.Append("disk_encryption_set_id"))
+	return terra.ReferenceAsString(tr.ref.Append("disk_encryption_set_id"))
 }
 
 func (tr TargetRegionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(tr.ref.Append("name"))
+	return terra.ReferenceAsString(tr.ref.Append("name"))
 }
 
 func (tr TargetRegionAttributes) RegionalReplicaCount() terra.NumberValue {
-	return terra.ReferenceNumber(tr.ref.Append("regional_replica_count"))
+	return terra.ReferenceAsNumber(tr.ref.Append("regional_replica_count"))
 }
 
 func (tr TargetRegionAttributes) StorageAccountType() terra.StringValue {
-	return terra.ReferenceString(tr.ref.Append("storage_account_type"))
+	return terra.ReferenceAsString(tr.ref.Append("storage_account_type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type TargetRegionState struct {

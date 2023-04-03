@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMonitorActionGroup creates a new instance of [MonitorActionGroup].
 func NewMonitorActionGroup(name string, args MonitorActionGroupArgs) *MonitorActionGroup {
 	return &MonitorActionGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMonitorActionGroup(name string, args MonitorActionGroupArgs) *MonitorAct
 
 var _ terra.Resource = (*MonitorActionGroup)(nil)
 
+// MonitorActionGroup represents the Terraform resource azurerm_monitor_action_group.
 type MonitorActionGroup struct {
-	Name  string
-	Args  MonitorActionGroupArgs
-	state *monitorActionGroupState
+	Name      string
+	Args      MonitorActionGroupArgs
+	state     *monitorActionGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MonitorActionGroup].
 func (mag *MonitorActionGroup) Type() string {
 	return "azurerm_monitor_action_group"
 }
 
+// LocalName returns the local name for [MonitorActionGroup].
 func (mag *MonitorActionGroup) LocalName() string {
 	return mag.Name
 }
 
+// Configuration returns the configuration (args) for [MonitorActionGroup].
 func (mag *MonitorActionGroup) Configuration() interface{} {
 	return mag.Args
 }
 
+// DependOn is used for other resources to depend on [MonitorActionGroup].
+func (mag *MonitorActionGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(mag)
+}
+
+// Dependencies returns the list of resources [MonitorActionGroup] depends_on.
+func (mag *MonitorActionGroup) Dependencies() terra.Dependencies {
+	return mag.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MonitorActionGroup].
+func (mag *MonitorActionGroup) LifecycleManagement() *terra.Lifecycle {
+	return mag.Lifecycle
+}
+
+// Attributes returns the attributes for [MonitorActionGroup].
 func (mag *MonitorActionGroup) Attributes() monitorActionGroupAttributes {
 	return monitorActionGroupAttributes{ref: terra.ReferenceResource(mag)}
 }
 
+// ImportState imports the given attribute values into [MonitorActionGroup]'s state.
 func (mag *MonitorActionGroup) ImportState(av io.Reader) error {
 	mag.state = &monitorActionGroupState{}
 	if err := json.NewDecoder(av).Decode(mag.state); err != nil {
@@ -49,10 +73,12 @@ func (mag *MonitorActionGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MonitorActionGroup] has state.
 func (mag *MonitorActionGroup) State() (*monitorActionGroupState, bool) {
 	return mag.state, mag.state != nil
 }
 
+// StateMust returns the state for [MonitorActionGroup]. Panics if the state is nil.
 func (mag *MonitorActionGroup) StateMust() *monitorActionGroupState {
 	if mag.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mag.Type(), mag.LocalName()))
@@ -60,10 +86,7 @@ func (mag *MonitorActionGroup) StateMust() *monitorActionGroupState {
 	return mag.state
 }
 
-func (mag *MonitorActionGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(mag)
-}
-
+// MonitorActionGroupArgs contains the configurations for azurerm_monitor_action_group.
 type MonitorActionGroupArgs struct {
 	// Enabled: bool, optional
 	Enabled terra.BoolValue `hcl:"enabled,attr"`
@@ -103,87 +126,92 @@ type MonitorActionGroupArgs struct {
 	VoiceReceiver []monitoractiongroup.VoiceReceiver `hcl:"voice_receiver,block" validate:"min=0"`
 	// WebhookReceiver: min=0
 	WebhookReceiver []monitoractiongroup.WebhookReceiver `hcl:"webhook_receiver,block" validate:"min=0"`
-	// DependsOn contains resources that MonitorActionGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type monitorActionGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Enabled returns a reference to field enabled of azurerm_monitor_action_group.
 func (mag monitorActionGroupAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(mag.ref.Append("enabled"))
+	return terra.ReferenceAsBool(mag.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of azurerm_monitor_action_group.
 func (mag monitorActionGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mag.ref.Append("id"))
+	return terra.ReferenceAsString(mag.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_monitor_action_group.
 func (mag monitorActionGroupAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(mag.ref.Append("location"))
+	return terra.ReferenceAsString(mag.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_monitor_action_group.
 func (mag monitorActionGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mag.ref.Append("name"))
+	return terra.ReferenceAsString(mag.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_monitor_action_group.
 func (mag monitorActionGroupAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(mag.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(mag.ref.Append("resource_group_name"))
 }
 
+// ShortName returns a reference to field short_name of azurerm_monitor_action_group.
 func (mag monitorActionGroupAttributes) ShortName() terra.StringValue {
-	return terra.ReferenceString(mag.ref.Append("short_name"))
+	return terra.ReferenceAsString(mag.ref.Append("short_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_monitor_action_group.
 func (mag monitorActionGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mag.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mag.ref.Append("tags"))
 }
 
 func (mag monitorActionGroupAttributes) ArmRoleReceiver() terra.ListValue[monitoractiongroup.ArmRoleReceiverAttributes] {
-	return terra.ReferenceList[monitoractiongroup.ArmRoleReceiverAttributes](mag.ref.Append("arm_role_receiver"))
+	return terra.ReferenceAsList[monitoractiongroup.ArmRoleReceiverAttributes](mag.ref.Append("arm_role_receiver"))
 }
 
 func (mag monitorActionGroupAttributes) AutomationRunbookReceiver() terra.ListValue[monitoractiongroup.AutomationRunbookReceiverAttributes] {
-	return terra.ReferenceList[monitoractiongroup.AutomationRunbookReceiverAttributes](mag.ref.Append("automation_runbook_receiver"))
+	return terra.ReferenceAsList[monitoractiongroup.AutomationRunbookReceiverAttributes](mag.ref.Append("automation_runbook_receiver"))
 }
 
 func (mag monitorActionGroupAttributes) AzureAppPushReceiver() terra.ListValue[monitoractiongroup.AzureAppPushReceiverAttributes] {
-	return terra.ReferenceList[monitoractiongroup.AzureAppPushReceiverAttributes](mag.ref.Append("azure_app_push_receiver"))
+	return terra.ReferenceAsList[monitoractiongroup.AzureAppPushReceiverAttributes](mag.ref.Append("azure_app_push_receiver"))
 }
 
 func (mag monitorActionGroupAttributes) AzureFunctionReceiver() terra.ListValue[monitoractiongroup.AzureFunctionReceiverAttributes] {
-	return terra.ReferenceList[monitoractiongroup.AzureFunctionReceiverAttributes](mag.ref.Append("azure_function_receiver"))
+	return terra.ReferenceAsList[monitoractiongroup.AzureFunctionReceiverAttributes](mag.ref.Append("azure_function_receiver"))
 }
 
 func (mag monitorActionGroupAttributes) EmailReceiver() terra.ListValue[monitoractiongroup.EmailReceiverAttributes] {
-	return terra.ReferenceList[monitoractiongroup.EmailReceiverAttributes](mag.ref.Append("email_receiver"))
+	return terra.ReferenceAsList[monitoractiongroup.EmailReceiverAttributes](mag.ref.Append("email_receiver"))
 }
 
 func (mag monitorActionGroupAttributes) EventHubReceiver() terra.ListValue[monitoractiongroup.EventHubReceiverAttributes] {
-	return terra.ReferenceList[monitoractiongroup.EventHubReceiverAttributes](mag.ref.Append("event_hub_receiver"))
+	return terra.ReferenceAsList[monitoractiongroup.EventHubReceiverAttributes](mag.ref.Append("event_hub_receiver"))
 }
 
 func (mag monitorActionGroupAttributes) ItsmReceiver() terra.ListValue[monitoractiongroup.ItsmReceiverAttributes] {
-	return terra.ReferenceList[monitoractiongroup.ItsmReceiverAttributes](mag.ref.Append("itsm_receiver"))
+	return terra.ReferenceAsList[monitoractiongroup.ItsmReceiverAttributes](mag.ref.Append("itsm_receiver"))
 }
 
 func (mag monitorActionGroupAttributes) LogicAppReceiver() terra.ListValue[monitoractiongroup.LogicAppReceiverAttributes] {
-	return terra.ReferenceList[monitoractiongroup.LogicAppReceiverAttributes](mag.ref.Append("logic_app_receiver"))
+	return terra.ReferenceAsList[monitoractiongroup.LogicAppReceiverAttributes](mag.ref.Append("logic_app_receiver"))
 }
 
 func (mag monitorActionGroupAttributes) SmsReceiver() terra.ListValue[monitoractiongroup.SmsReceiverAttributes] {
-	return terra.ReferenceList[monitoractiongroup.SmsReceiverAttributes](mag.ref.Append("sms_receiver"))
+	return terra.ReferenceAsList[monitoractiongroup.SmsReceiverAttributes](mag.ref.Append("sms_receiver"))
 }
 
 func (mag monitorActionGroupAttributes) Timeouts() monitoractiongroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[monitoractiongroup.TimeoutsAttributes](mag.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[monitoractiongroup.TimeoutsAttributes](mag.ref.Append("timeouts"))
 }
 
 func (mag monitorActionGroupAttributes) VoiceReceiver() terra.ListValue[monitoractiongroup.VoiceReceiverAttributes] {
-	return terra.ReferenceList[monitoractiongroup.VoiceReceiverAttributes](mag.ref.Append("voice_receiver"))
+	return terra.ReferenceAsList[monitoractiongroup.VoiceReceiverAttributes](mag.ref.Append("voice_receiver"))
 }
 
 func (mag monitorActionGroupAttributes) WebhookReceiver() terra.ListValue[monitoractiongroup.WebhookReceiverAttributes] {
-	return terra.ReferenceList[monitoractiongroup.WebhookReceiverAttributes](mag.ref.Append("webhook_receiver"))
+	return terra.ReferenceAsList[monitoractiongroup.WebhookReceiverAttributes](mag.ref.Append("webhook_receiver"))
 }
 
 type monitorActionGroupState struct {

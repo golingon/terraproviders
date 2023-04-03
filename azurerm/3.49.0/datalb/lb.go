@@ -18,68 +18,68 @@ type FrontendIpConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (fic FrontendIpConfigurationAttributes) InternalRef() terra.Reference {
-	return fic.ref
+func (fic FrontendIpConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return fic.ref, nil
 }
 
 func (fic FrontendIpConfigurationAttributes) InternalWithRef(ref terra.Reference) FrontendIpConfigurationAttributes {
 	return FrontendIpConfigurationAttributes{ref: ref}
 }
 
-func (fic FrontendIpConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (fic FrontendIpConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fic.ref.InternalTokens()
 }
 
 func (fic FrontendIpConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(fic.ref.Append("id"))
+	return terra.ReferenceAsString(fic.ref.Append("id"))
 }
 
 func (fic FrontendIpConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(fic.ref.Append("name"))
+	return terra.ReferenceAsString(fic.ref.Append("name"))
 }
 
 func (fic FrontendIpConfigurationAttributes) PrivateIpAddress() terra.StringValue {
-	return terra.ReferenceString(fic.ref.Append("private_ip_address"))
+	return terra.ReferenceAsString(fic.ref.Append("private_ip_address"))
 }
 
 func (fic FrontendIpConfigurationAttributes) PrivateIpAddressAllocation() terra.StringValue {
-	return terra.ReferenceString(fic.ref.Append("private_ip_address_allocation"))
+	return terra.ReferenceAsString(fic.ref.Append("private_ip_address_allocation"))
 }
 
 func (fic FrontendIpConfigurationAttributes) PrivateIpAddressVersion() terra.StringValue {
-	return terra.ReferenceString(fic.ref.Append("private_ip_address_version"))
+	return terra.ReferenceAsString(fic.ref.Append("private_ip_address_version"))
 }
 
 func (fic FrontendIpConfigurationAttributes) PublicIpAddressId() terra.StringValue {
-	return terra.ReferenceString(fic.ref.Append("public_ip_address_id"))
+	return terra.ReferenceAsString(fic.ref.Append("public_ip_address_id"))
 }
 
 func (fic FrontendIpConfigurationAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(fic.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(fic.ref.Append("subnet_id"))
 }
 
 func (fic FrontendIpConfigurationAttributes) Zones() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](fic.ref.Append("zones"))
+	return terra.ReferenceAsList[terra.StringValue](fic.ref.Append("zones"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type FrontendIpConfigurationState struct {

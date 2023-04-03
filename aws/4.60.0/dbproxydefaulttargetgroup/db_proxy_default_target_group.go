@@ -39,7 +39,7 @@ func (cpc ConnectionPoolConfigAttributes) InternalWithRef(ref terra.Reference) C
 	return ConnectionPoolConfigAttributes{ref: ref}
 }
 
-func (cpc ConnectionPoolConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (cpc ConnectionPoolConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cpc.ref.InternalTokens()
 }
 
@@ -75,7 +75,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

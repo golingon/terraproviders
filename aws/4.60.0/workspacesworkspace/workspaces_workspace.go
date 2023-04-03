@@ -41,7 +41,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -69,7 +69,7 @@ func (wp WorkspacePropertiesAttributes) InternalWithRef(ref terra.Reference) Wor
 	return WorkspacePropertiesAttributes{ref: ref}
 }
 
-func (wp WorkspacePropertiesAttributes) InternalTokens() hclwrite.Tokens {
+func (wp WorkspacePropertiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wp.ref.InternalTokens()
 }
 

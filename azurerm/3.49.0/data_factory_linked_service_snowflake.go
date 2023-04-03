@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFactoryLinkedServiceSnowflake creates a new instance of [DataFactoryLinkedServiceSnowflake].
 func NewDataFactoryLinkedServiceSnowflake(name string, args DataFactoryLinkedServiceSnowflakeArgs) *DataFactoryLinkedServiceSnowflake {
 	return &DataFactoryLinkedServiceSnowflake{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFactoryLinkedServiceSnowflake(name string, args DataFactoryLinkedSer
 
 var _ terra.Resource = (*DataFactoryLinkedServiceSnowflake)(nil)
 
+// DataFactoryLinkedServiceSnowflake represents the Terraform resource azurerm_data_factory_linked_service_snowflake.
 type DataFactoryLinkedServiceSnowflake struct {
-	Name  string
-	Args  DataFactoryLinkedServiceSnowflakeArgs
-	state *dataFactoryLinkedServiceSnowflakeState
+	Name      string
+	Args      DataFactoryLinkedServiceSnowflakeArgs
+	state     *dataFactoryLinkedServiceSnowflakeState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFactoryLinkedServiceSnowflake].
 func (dflss *DataFactoryLinkedServiceSnowflake) Type() string {
 	return "azurerm_data_factory_linked_service_snowflake"
 }
 
+// LocalName returns the local name for [DataFactoryLinkedServiceSnowflake].
 func (dflss *DataFactoryLinkedServiceSnowflake) LocalName() string {
 	return dflss.Name
 }
 
+// Configuration returns the configuration (args) for [DataFactoryLinkedServiceSnowflake].
 func (dflss *DataFactoryLinkedServiceSnowflake) Configuration() interface{} {
 	return dflss.Args
 }
 
+// DependOn is used for other resources to depend on [DataFactoryLinkedServiceSnowflake].
+func (dflss *DataFactoryLinkedServiceSnowflake) DependOn() terra.Reference {
+	return terra.ReferenceResource(dflss)
+}
+
+// Dependencies returns the list of resources [DataFactoryLinkedServiceSnowflake] depends_on.
+func (dflss *DataFactoryLinkedServiceSnowflake) Dependencies() terra.Dependencies {
+	return dflss.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFactoryLinkedServiceSnowflake].
+func (dflss *DataFactoryLinkedServiceSnowflake) LifecycleManagement() *terra.Lifecycle {
+	return dflss.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFactoryLinkedServiceSnowflake].
 func (dflss *DataFactoryLinkedServiceSnowflake) Attributes() dataFactoryLinkedServiceSnowflakeAttributes {
 	return dataFactoryLinkedServiceSnowflakeAttributes{ref: terra.ReferenceResource(dflss)}
 }
 
+// ImportState imports the given attribute values into [DataFactoryLinkedServiceSnowflake]'s state.
 func (dflss *DataFactoryLinkedServiceSnowflake) ImportState(av io.Reader) error {
 	dflss.state = &dataFactoryLinkedServiceSnowflakeState{}
 	if err := json.NewDecoder(av).Decode(dflss.state); err != nil {
@@ -49,10 +73,12 @@ func (dflss *DataFactoryLinkedServiceSnowflake) ImportState(av io.Reader) error 
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFactoryLinkedServiceSnowflake] has state.
 func (dflss *DataFactoryLinkedServiceSnowflake) State() (*dataFactoryLinkedServiceSnowflakeState, bool) {
 	return dflss.state, dflss.state != nil
 }
 
+// StateMust returns the state for [DataFactoryLinkedServiceSnowflake]. Panics if the state is nil.
 func (dflss *DataFactoryLinkedServiceSnowflake) StateMust() *dataFactoryLinkedServiceSnowflakeState {
 	if dflss.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dflss.Type(), dflss.LocalName()))
@@ -60,10 +86,7 @@ func (dflss *DataFactoryLinkedServiceSnowflake) StateMust() *dataFactoryLinkedSe
 	return dflss.state
 }
 
-func (dflss *DataFactoryLinkedServiceSnowflake) DependOn() terra.Reference {
-	return terra.ReferenceResource(dflss)
-}
-
+// DataFactoryLinkedServiceSnowflakeArgs contains the configurations for azurerm_data_factory_linked_service_snowflake.
 type DataFactoryLinkedServiceSnowflakeArgs struct {
 	// AdditionalProperties: map of string, optional
 	AdditionalProperties terra.MapValue[terra.StringValue] `hcl:"additional_properties,attr"`
@@ -87,55 +110,62 @@ type DataFactoryLinkedServiceSnowflakeArgs struct {
 	KeyVaultPassword *datafactorylinkedservicesnowflake.KeyVaultPassword `hcl:"key_vault_password,block"`
 	// Timeouts: optional
 	Timeouts *datafactorylinkedservicesnowflake.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataFactoryLinkedServiceSnowflake depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFactoryLinkedServiceSnowflakeAttributes struct {
 	ref terra.Reference
 }
 
+// AdditionalProperties returns a reference to field additional_properties of azurerm_data_factory_linked_service_snowflake.
 func (dflss dataFactoryLinkedServiceSnowflakeAttributes) AdditionalProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dflss.ref.Append("additional_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](dflss.ref.Append("additional_properties"))
 }
 
+// Annotations returns a reference to field annotations of azurerm_data_factory_linked_service_snowflake.
 func (dflss dataFactoryLinkedServiceSnowflakeAttributes) Annotations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dflss.ref.Append("annotations"))
+	return terra.ReferenceAsList[terra.StringValue](dflss.ref.Append("annotations"))
 }
 
+// ConnectionString returns a reference to field connection_string of azurerm_data_factory_linked_service_snowflake.
 func (dflss dataFactoryLinkedServiceSnowflakeAttributes) ConnectionString() terra.StringValue {
-	return terra.ReferenceString(dflss.ref.Append("connection_string"))
+	return terra.ReferenceAsString(dflss.ref.Append("connection_string"))
 }
 
+// DataFactoryId returns a reference to field data_factory_id of azurerm_data_factory_linked_service_snowflake.
 func (dflss dataFactoryLinkedServiceSnowflakeAttributes) DataFactoryId() terra.StringValue {
-	return terra.ReferenceString(dflss.ref.Append("data_factory_id"))
+	return terra.ReferenceAsString(dflss.ref.Append("data_factory_id"))
 }
 
+// Description returns a reference to field description of azurerm_data_factory_linked_service_snowflake.
 func (dflss dataFactoryLinkedServiceSnowflakeAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dflss.ref.Append("description"))
+	return terra.ReferenceAsString(dflss.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_data_factory_linked_service_snowflake.
 func (dflss dataFactoryLinkedServiceSnowflakeAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dflss.ref.Append("id"))
+	return terra.ReferenceAsString(dflss.ref.Append("id"))
 }
 
+// IntegrationRuntimeName returns a reference to field integration_runtime_name of azurerm_data_factory_linked_service_snowflake.
 func (dflss dataFactoryLinkedServiceSnowflakeAttributes) IntegrationRuntimeName() terra.StringValue {
-	return terra.ReferenceString(dflss.ref.Append("integration_runtime_name"))
+	return terra.ReferenceAsString(dflss.ref.Append("integration_runtime_name"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory_linked_service_snowflake.
 func (dflss dataFactoryLinkedServiceSnowflakeAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dflss.ref.Append("name"))
+	return terra.ReferenceAsString(dflss.ref.Append("name"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_data_factory_linked_service_snowflake.
 func (dflss dataFactoryLinkedServiceSnowflakeAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dflss.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](dflss.ref.Append("parameters"))
 }
 
 func (dflss dataFactoryLinkedServiceSnowflakeAttributes) KeyVaultPassword() terra.ListValue[datafactorylinkedservicesnowflake.KeyVaultPasswordAttributes] {
-	return terra.ReferenceList[datafactorylinkedservicesnowflake.KeyVaultPasswordAttributes](dflss.ref.Append("key_vault_password"))
+	return terra.ReferenceAsList[datafactorylinkedservicesnowflake.KeyVaultPasswordAttributes](dflss.ref.Append("key_vault_password"))
 }
 
 func (dflss dataFactoryLinkedServiceSnowflakeAttributes) Timeouts() datafactorylinkedservicesnowflake.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafactorylinkedservicesnowflake.TimeoutsAttributes](dflss.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafactorylinkedservicesnowflake.TimeoutsAttributes](dflss.ref.Append("timeouts"))
 }
 
 type dataFactoryLinkedServiceSnowflakeState struct {

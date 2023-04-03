@@ -45,7 +45,7 @@ func (fs FirewallStatusAttributes) InternalWithRef(ref terra.Reference) Firewall
 	return FirewallStatusAttributes{ref: ref}
 }
 
-func (fs FirewallStatusAttributes) InternalTokens() hclwrite.Tokens {
+func (fs FirewallStatusAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fs.ref.InternalTokens()
 }
 
@@ -65,7 +65,7 @@ func (ss SyncStatesAttributes) InternalWithRef(ref terra.Reference) SyncStatesAt
 	return SyncStatesAttributes{ref: ref}
 }
 
-func (ss SyncStatesAttributes) InternalTokens() hclwrite.Tokens {
+func (ss SyncStatesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ss.ref.InternalTokens()
 }
 
@@ -89,7 +89,7 @@ func (a AttachmentAttributes) InternalWithRef(ref terra.Reference) AttachmentAtt
 	return AttachmentAttributes{ref: ref}
 }
 
-func (a AttachmentAttributes) InternalTokens() hclwrite.Tokens {
+func (a AttachmentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -113,7 +113,7 @@ func (ec EncryptionConfigurationAttributes) InternalWithRef(ref terra.Reference)
 	return EncryptionConfigurationAttributes{ref: ref}
 }
 
-func (ec EncryptionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ec EncryptionConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 
@@ -137,7 +137,7 @@ func (sm SubnetMappingAttributes) InternalWithRef(ref terra.Reference) SubnetMap
 	return SubnetMappingAttributes{ref: ref}
 }
 
-func (sm SubnetMappingAttributes) InternalTokens() hclwrite.Tokens {
+func (sm SubnetMappingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sm.ref.InternalTokens()
 }
 

@@ -37,7 +37,7 @@ func (rdc ReportDeliveryChannelAttributes) InternalWithRef(ref terra.Reference) 
 	return ReportDeliveryChannelAttributes{ref: ref}
 }
 
-func (rdc ReportDeliveryChannelAttributes) InternalTokens() hclwrite.Tokens {
+func (rdc ReportDeliveryChannelAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rdc.ref.InternalTokens()
 }
 
@@ -65,7 +65,7 @@ func (rs ReportSettingAttributes) InternalWithRef(ref terra.Reference) ReportSet
 	return ReportSettingAttributes{ref: ref}
 }
 
-func (rs ReportSettingAttributes) InternalTokens() hclwrite.Tokens {
+func (rs ReportSettingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rs.ref.InternalTokens()
 }
 

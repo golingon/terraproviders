@@ -26,7 +26,7 @@ func (pa PolicyAttributeAttributes) InternalWithRef(ref terra.Reference) PolicyA
 	return PolicyAttributeAttributes{ref: ref}
 }
 
-func (pa PolicyAttributeAttributes) InternalTokens() hclwrite.Tokens {
+func (pa PolicyAttributeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pa.ref.InternalTokens()
 }
 

@@ -104,7 +104,7 @@ func (cps CapacityProviderStrategyAttributes) InternalWithRef(ref terra.Referenc
 	return CapacityProviderStrategyAttributes{ref: ref}
 }
 
-func (cps CapacityProviderStrategyAttributes) InternalTokens() hclwrite.Tokens {
+func (cps CapacityProviderStrategyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cps.ref.InternalTokens()
 }
 
@@ -132,7 +132,7 @@ func (nc NetworkConfigurationAttributes) InternalWithRef(ref terra.Reference) Ne
 	return NetworkConfigurationAttributes{ref: ref}
 }
 
-func (nc NetworkConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (nc NetworkConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nc.ref.InternalTokens()
 }
 
@@ -160,7 +160,7 @@ func (o OverridesAttributes) InternalWithRef(ref terra.Reference) OverridesAttri
 	return OverridesAttributes{ref: ref}
 }
 
-func (o OverridesAttributes) InternalTokens() hclwrite.Tokens {
+func (o OverridesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return o.ref.InternalTokens()
 }
 
@@ -200,7 +200,7 @@ func (co ContainerOverridesAttributes) InternalWithRef(ref terra.Reference) Cont
 	return ContainerOverridesAttributes{ref: ref}
 }
 
-func (co ContainerOverridesAttributes) InternalTokens() hclwrite.Tokens {
+func (co ContainerOverridesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return co.ref.InternalTokens()
 }
 
@@ -244,7 +244,7 @@ func (e EnvironmentAttributes) InternalWithRef(ref terra.Reference) EnvironmentA
 	return EnvironmentAttributes{ref: ref}
 }
 
-func (e EnvironmentAttributes) InternalTokens() hclwrite.Tokens {
+func (e EnvironmentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -268,7 +268,7 @@ func (rr ResourceRequirementsAttributes) InternalWithRef(ref terra.Reference) Re
 	return ResourceRequirementsAttributes{ref: ref}
 }
 
-func (rr ResourceRequirementsAttributes) InternalTokens() hclwrite.Tokens {
+func (rr ResourceRequirementsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rr.ref.InternalTokens()
 }
 
@@ -292,7 +292,7 @@ func (iao InferenceAcceleratorOverridesAttributes) InternalWithRef(ref terra.Ref
 	return InferenceAcceleratorOverridesAttributes{ref: ref}
 }
 
-func (iao InferenceAcceleratorOverridesAttributes) InternalTokens() hclwrite.Tokens {
+func (iao InferenceAcceleratorOverridesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return iao.ref.InternalTokens()
 }
 
@@ -316,7 +316,7 @@ func (pc PlacementConstraintsAttributes) InternalWithRef(ref terra.Reference) Pl
 	return PlacementConstraintsAttributes{ref: ref}
 }
 
-func (pc PlacementConstraintsAttributes) InternalTokens() hclwrite.Tokens {
+func (pc PlacementConstraintsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
@@ -340,7 +340,7 @@ func (ps PlacementStrategyAttributes) InternalWithRef(ref terra.Reference) Place
 	return PlacementStrategyAttributes{ref: ref}
 }
 
-func (ps PlacementStrategyAttributes) InternalTokens() hclwrite.Tokens {
+func (ps PlacementStrategyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ps.ref.InternalTokens()
 }
 

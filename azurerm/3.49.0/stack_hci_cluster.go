@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewStackHciCluster creates a new instance of [StackHciCluster].
 func NewStackHciCluster(name string, args StackHciClusterArgs) *StackHciCluster {
 	return &StackHciCluster{
 		Args: args,
@@ -19,28 +20,51 @@ func NewStackHciCluster(name string, args StackHciClusterArgs) *StackHciCluster 
 
 var _ terra.Resource = (*StackHciCluster)(nil)
 
+// StackHciCluster represents the Terraform resource azurerm_stack_hci_cluster.
 type StackHciCluster struct {
-	Name  string
-	Args  StackHciClusterArgs
-	state *stackHciClusterState
+	Name      string
+	Args      StackHciClusterArgs
+	state     *stackHciClusterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [StackHciCluster].
 func (shc *StackHciCluster) Type() string {
 	return "azurerm_stack_hci_cluster"
 }
 
+// LocalName returns the local name for [StackHciCluster].
 func (shc *StackHciCluster) LocalName() string {
 	return shc.Name
 }
 
+// Configuration returns the configuration (args) for [StackHciCluster].
 func (shc *StackHciCluster) Configuration() interface{} {
 	return shc.Args
 }
 
+// DependOn is used for other resources to depend on [StackHciCluster].
+func (shc *StackHciCluster) DependOn() terra.Reference {
+	return terra.ReferenceResource(shc)
+}
+
+// Dependencies returns the list of resources [StackHciCluster] depends_on.
+func (shc *StackHciCluster) Dependencies() terra.Dependencies {
+	return shc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [StackHciCluster].
+func (shc *StackHciCluster) LifecycleManagement() *terra.Lifecycle {
+	return shc.Lifecycle
+}
+
+// Attributes returns the attributes for [StackHciCluster].
 func (shc *StackHciCluster) Attributes() stackHciClusterAttributes {
 	return stackHciClusterAttributes{ref: terra.ReferenceResource(shc)}
 }
 
+// ImportState imports the given attribute values into [StackHciCluster]'s state.
 func (shc *StackHciCluster) ImportState(av io.Reader) error {
 	shc.state = &stackHciClusterState{}
 	if err := json.NewDecoder(av).Decode(shc.state); err != nil {
@@ -49,10 +73,12 @@ func (shc *StackHciCluster) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [StackHciCluster] has state.
 func (shc *StackHciCluster) State() (*stackHciClusterState, bool) {
 	return shc.state, shc.state != nil
 }
 
+// StateMust returns the state for [StackHciCluster]. Panics if the state is nil.
 func (shc *StackHciCluster) StateMust() *stackHciClusterState {
 	if shc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", shc.Type(), shc.LocalName()))
@@ -60,10 +86,7 @@ func (shc *StackHciCluster) StateMust() *stackHciClusterState {
 	return shc.state
 }
 
-func (shc *StackHciCluster) DependOn() terra.Reference {
-	return terra.ReferenceResource(shc)
-}
-
+// StackHciClusterArgs contains the configurations for azurerm_stack_hci_cluster.
 type StackHciClusterArgs struct {
 	// ClientId: string, required
 	ClientId terra.StringValue `hcl:"client_id,attr" validate:"required"`
@@ -81,43 +104,48 @@ type StackHciClusterArgs struct {
 	TenantId terra.StringValue `hcl:"tenant_id,attr"`
 	// Timeouts: optional
 	Timeouts *stackhcicluster.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that StackHciCluster depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type stackHciClusterAttributes struct {
 	ref terra.Reference
 }
 
+// ClientId returns a reference to field client_id of azurerm_stack_hci_cluster.
 func (shc stackHciClusterAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(shc.ref.Append("client_id"))
+	return terra.ReferenceAsString(shc.ref.Append("client_id"))
 }
 
+// Id returns a reference to field id of azurerm_stack_hci_cluster.
 func (shc stackHciClusterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(shc.ref.Append("id"))
+	return terra.ReferenceAsString(shc.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_stack_hci_cluster.
 func (shc stackHciClusterAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(shc.ref.Append("location"))
+	return terra.ReferenceAsString(shc.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_stack_hci_cluster.
 func (shc stackHciClusterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(shc.ref.Append("name"))
+	return terra.ReferenceAsString(shc.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_stack_hci_cluster.
 func (shc stackHciClusterAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(shc.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(shc.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_stack_hci_cluster.
 func (shc stackHciClusterAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](shc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](shc.ref.Append("tags"))
 }
 
+// TenantId returns a reference to field tenant_id of azurerm_stack_hci_cluster.
 func (shc stackHciClusterAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(shc.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(shc.ref.Append("tenant_id"))
 }
 
 func (shc stackHciClusterAttributes) Timeouts() stackhcicluster.TimeoutsAttributes {
-	return terra.ReferenceSingle[stackhcicluster.TimeoutsAttributes](shc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[stackhcicluster.TimeoutsAttributes](shc.ref.Append("timeouts"))
 }
 
 type stackHciClusterState struct {

@@ -40,7 +40,7 @@ func (dces DataCatalogEncryptionSettingsAttributes) InternalWithRef(ref terra.Re
 	return DataCatalogEncryptionSettingsAttributes{ref: ref}
 }
 
-func (dces DataCatalogEncryptionSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (dces DataCatalogEncryptionSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dces.ref.InternalTokens()
 }
 
@@ -64,7 +64,7 @@ func (cpe ConnectionPasswordEncryptionAttributes) InternalWithRef(ref terra.Refe
 	return ConnectionPasswordEncryptionAttributes{ref: ref}
 }
 
-func (cpe ConnectionPasswordEncryptionAttributes) InternalTokens() hclwrite.Tokens {
+func (cpe ConnectionPasswordEncryptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cpe.ref.InternalTokens()
 }
 
@@ -88,7 +88,7 @@ func (ear EncryptionAtRestAttributes) InternalWithRef(ref terra.Reference) Encry
 	return EncryptionAtRestAttributes{ref: ref}
 }
 
-func (ear EncryptionAtRestAttributes) InternalTokens() hclwrite.Tokens {
+func (ear EncryptionAtRestAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ear.ref.InternalTokens()
 }
 

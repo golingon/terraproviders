@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataMssqlDatabase creates a new instance of [DataMssqlDatabase].
 func NewDataMssqlDatabase(name string, args DataMssqlDatabaseArgs) *DataMssqlDatabase {
 	return &DataMssqlDatabase{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataMssqlDatabase(name string, args DataMssqlDatabaseArgs) *DataMssqlDat
 
 var _ terra.DataResource = (*DataMssqlDatabase)(nil)
 
+// DataMssqlDatabase represents the Terraform data resource azurerm_mssql_database.
 type DataMssqlDatabase struct {
 	Name string
 	Args DataMssqlDatabaseArgs
 }
 
+// DataSource returns the Terraform object type for [DataMssqlDatabase].
 func (md *DataMssqlDatabase) DataSource() string {
 	return "azurerm_mssql_database"
 }
 
+// LocalName returns the local name for [DataMssqlDatabase].
 func (md *DataMssqlDatabase) LocalName() string {
 	return md.Name
 }
 
+// Configuration returns the configuration (args) for [DataMssqlDatabase].
 func (md *DataMssqlDatabase) Configuration() interface{} {
 	return md.Args
 }
 
+// Attributes returns the attributes for [DataMssqlDatabase].
 func (md *DataMssqlDatabase) Attributes() dataMssqlDatabaseAttributes {
 	return dataMssqlDatabaseAttributes{ref: terra.ReferenceDataResource(md)}
 }
 
+// DataMssqlDatabaseArgs contains the configurations for azurerm_mssql_database.
 type DataMssqlDatabaseArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,58 +58,71 @@ type dataMssqlDatabaseAttributes struct {
 	ref terra.Reference
 }
 
+// Collation returns a reference to field collation of azurerm_mssql_database.
 func (md dataMssqlDatabaseAttributes) Collation() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("collation"))
+	return terra.ReferenceAsString(md.ref.Append("collation"))
 }
 
+// ElasticPoolId returns a reference to field elastic_pool_id of azurerm_mssql_database.
 func (md dataMssqlDatabaseAttributes) ElasticPoolId() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("elastic_pool_id"))
+	return terra.ReferenceAsString(md.ref.Append("elastic_pool_id"))
 }
 
+// Id returns a reference to field id of azurerm_mssql_database.
 func (md dataMssqlDatabaseAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("id"))
+	return terra.ReferenceAsString(md.ref.Append("id"))
 }
 
+// LicenseType returns a reference to field license_type of azurerm_mssql_database.
 func (md dataMssqlDatabaseAttributes) LicenseType() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("license_type"))
+	return terra.ReferenceAsString(md.ref.Append("license_type"))
 }
 
+// MaxSizeGb returns a reference to field max_size_gb of azurerm_mssql_database.
 func (md dataMssqlDatabaseAttributes) MaxSizeGb() terra.NumberValue {
-	return terra.ReferenceNumber(md.ref.Append("max_size_gb"))
+	return terra.ReferenceAsNumber(md.ref.Append("max_size_gb"))
 }
 
+// Name returns a reference to field name of azurerm_mssql_database.
 func (md dataMssqlDatabaseAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("name"))
+	return terra.ReferenceAsString(md.ref.Append("name"))
 }
 
+// ReadReplicaCount returns a reference to field read_replica_count of azurerm_mssql_database.
 func (md dataMssqlDatabaseAttributes) ReadReplicaCount() terra.NumberValue {
-	return terra.ReferenceNumber(md.ref.Append("read_replica_count"))
+	return terra.ReferenceAsNumber(md.ref.Append("read_replica_count"))
 }
 
+// ReadScale returns a reference to field read_scale of azurerm_mssql_database.
 func (md dataMssqlDatabaseAttributes) ReadScale() terra.BoolValue {
-	return terra.ReferenceBool(md.ref.Append("read_scale"))
+	return terra.ReferenceAsBool(md.ref.Append("read_scale"))
 }
 
+// ServerId returns a reference to field server_id of azurerm_mssql_database.
 func (md dataMssqlDatabaseAttributes) ServerId() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("server_id"))
+	return terra.ReferenceAsString(md.ref.Append("server_id"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_mssql_database.
 func (md dataMssqlDatabaseAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("sku_name"))
+	return terra.ReferenceAsString(md.ref.Append("sku_name"))
 }
 
+// StorageAccountType returns a reference to field storage_account_type of azurerm_mssql_database.
 func (md dataMssqlDatabaseAttributes) StorageAccountType() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("storage_account_type"))
+	return terra.ReferenceAsString(md.ref.Append("storage_account_type"))
 }
 
+// Tags returns a reference to field tags of azurerm_mssql_database.
 func (md dataMssqlDatabaseAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](md.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](md.ref.Append("tags"))
 }
 
+// ZoneRedundant returns a reference to field zone_redundant of azurerm_mssql_database.
 func (md dataMssqlDatabaseAttributes) ZoneRedundant() terra.BoolValue {
-	return terra.ReferenceBool(md.ref.Append("zone_redundant"))
+	return terra.ReferenceAsBool(md.ref.Append("zone_redundant"))
 }
 
 func (md dataMssqlDatabaseAttributes) Timeouts() datamssqldatabase.TimeoutsAttributes {
-	return terra.ReferenceSingle[datamssqldatabase.TimeoutsAttributes](md.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datamssqldatabase.TimeoutsAttributes](md.ref.Append("timeouts"))
 }

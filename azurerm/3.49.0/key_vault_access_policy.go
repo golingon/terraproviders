@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewKeyVaultAccessPolicy creates a new instance of [KeyVaultAccessPolicy].
 func NewKeyVaultAccessPolicy(name string, args KeyVaultAccessPolicyArgs) *KeyVaultAccessPolicy {
 	return &KeyVaultAccessPolicy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewKeyVaultAccessPolicy(name string, args KeyVaultAccessPolicyArgs) *KeyVau
 
 var _ terra.Resource = (*KeyVaultAccessPolicy)(nil)
 
+// KeyVaultAccessPolicy represents the Terraform resource azurerm_key_vault_access_policy.
 type KeyVaultAccessPolicy struct {
-	Name  string
-	Args  KeyVaultAccessPolicyArgs
-	state *keyVaultAccessPolicyState
+	Name      string
+	Args      KeyVaultAccessPolicyArgs
+	state     *keyVaultAccessPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [KeyVaultAccessPolicy].
 func (kvap *KeyVaultAccessPolicy) Type() string {
 	return "azurerm_key_vault_access_policy"
 }
 
+// LocalName returns the local name for [KeyVaultAccessPolicy].
 func (kvap *KeyVaultAccessPolicy) LocalName() string {
 	return kvap.Name
 }
 
+// Configuration returns the configuration (args) for [KeyVaultAccessPolicy].
 func (kvap *KeyVaultAccessPolicy) Configuration() interface{} {
 	return kvap.Args
 }
 
+// DependOn is used for other resources to depend on [KeyVaultAccessPolicy].
+func (kvap *KeyVaultAccessPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(kvap)
+}
+
+// Dependencies returns the list of resources [KeyVaultAccessPolicy] depends_on.
+func (kvap *KeyVaultAccessPolicy) Dependencies() terra.Dependencies {
+	return kvap.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [KeyVaultAccessPolicy].
+func (kvap *KeyVaultAccessPolicy) LifecycleManagement() *terra.Lifecycle {
+	return kvap.Lifecycle
+}
+
+// Attributes returns the attributes for [KeyVaultAccessPolicy].
 func (kvap *KeyVaultAccessPolicy) Attributes() keyVaultAccessPolicyAttributes {
 	return keyVaultAccessPolicyAttributes{ref: terra.ReferenceResource(kvap)}
 }
 
+// ImportState imports the given attribute values into [KeyVaultAccessPolicy]'s state.
 func (kvap *KeyVaultAccessPolicy) ImportState(av io.Reader) error {
 	kvap.state = &keyVaultAccessPolicyState{}
 	if err := json.NewDecoder(av).Decode(kvap.state); err != nil {
@@ -49,10 +73,12 @@ func (kvap *KeyVaultAccessPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [KeyVaultAccessPolicy] has state.
 func (kvap *KeyVaultAccessPolicy) State() (*keyVaultAccessPolicyState, bool) {
 	return kvap.state, kvap.state != nil
 }
 
+// StateMust returns the state for [KeyVaultAccessPolicy]. Panics if the state is nil.
 func (kvap *KeyVaultAccessPolicy) StateMust() *keyVaultAccessPolicyState {
 	if kvap.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", kvap.Type(), kvap.LocalName()))
@@ -60,10 +86,7 @@ func (kvap *KeyVaultAccessPolicy) StateMust() *keyVaultAccessPolicyState {
 	return kvap.state
 }
 
-func (kvap *KeyVaultAccessPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(kvap)
-}
-
+// KeyVaultAccessPolicyArgs contains the configurations for azurerm_key_vault_access_policy.
 type KeyVaultAccessPolicyArgs struct {
 	// ApplicationId: string, optional
 	ApplicationId terra.StringValue `hcl:"application_id,attr"`
@@ -85,51 +108,58 @@ type KeyVaultAccessPolicyArgs struct {
 	TenantId terra.StringValue `hcl:"tenant_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *keyvaultaccesspolicy.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that KeyVaultAccessPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type keyVaultAccessPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// ApplicationId returns a reference to field application_id of azurerm_key_vault_access_policy.
 func (kvap keyVaultAccessPolicyAttributes) ApplicationId() terra.StringValue {
-	return terra.ReferenceString(kvap.ref.Append("application_id"))
+	return terra.ReferenceAsString(kvap.ref.Append("application_id"))
 }
 
+// CertificatePermissions returns a reference to field certificate_permissions of azurerm_key_vault_access_policy.
 func (kvap keyVaultAccessPolicyAttributes) CertificatePermissions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](kvap.ref.Append("certificate_permissions"))
+	return terra.ReferenceAsList[terra.StringValue](kvap.ref.Append("certificate_permissions"))
 }
 
+// Id returns a reference to field id of azurerm_key_vault_access_policy.
 func (kvap keyVaultAccessPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kvap.ref.Append("id"))
+	return terra.ReferenceAsString(kvap.ref.Append("id"))
 }
 
+// KeyPermissions returns a reference to field key_permissions of azurerm_key_vault_access_policy.
 func (kvap keyVaultAccessPolicyAttributes) KeyPermissions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](kvap.ref.Append("key_permissions"))
+	return terra.ReferenceAsList[terra.StringValue](kvap.ref.Append("key_permissions"))
 }
 
+// KeyVaultId returns a reference to field key_vault_id of azurerm_key_vault_access_policy.
 func (kvap keyVaultAccessPolicyAttributes) KeyVaultId() terra.StringValue {
-	return terra.ReferenceString(kvap.ref.Append("key_vault_id"))
+	return terra.ReferenceAsString(kvap.ref.Append("key_vault_id"))
 }
 
+// ObjectId returns a reference to field object_id of azurerm_key_vault_access_policy.
 func (kvap keyVaultAccessPolicyAttributes) ObjectId() terra.StringValue {
-	return terra.ReferenceString(kvap.ref.Append("object_id"))
+	return terra.ReferenceAsString(kvap.ref.Append("object_id"))
 }
 
+// SecretPermissions returns a reference to field secret_permissions of azurerm_key_vault_access_policy.
 func (kvap keyVaultAccessPolicyAttributes) SecretPermissions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](kvap.ref.Append("secret_permissions"))
+	return terra.ReferenceAsList[terra.StringValue](kvap.ref.Append("secret_permissions"))
 }
 
+// StoragePermissions returns a reference to field storage_permissions of azurerm_key_vault_access_policy.
 func (kvap keyVaultAccessPolicyAttributes) StoragePermissions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](kvap.ref.Append("storage_permissions"))
+	return terra.ReferenceAsList[terra.StringValue](kvap.ref.Append("storage_permissions"))
 }
 
+// TenantId returns a reference to field tenant_id of azurerm_key_vault_access_policy.
 func (kvap keyVaultAccessPolicyAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(kvap.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(kvap.ref.Append("tenant_id"))
 }
 
 func (kvap keyVaultAccessPolicyAttributes) Timeouts() keyvaultaccesspolicy.TimeoutsAttributes {
-	return terra.ReferenceSingle[keyvaultaccesspolicy.TimeoutsAttributes](kvap.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[keyvaultaccesspolicy.TimeoutsAttributes](kvap.ref.Append("timeouts"))
 }
 
 type keyVaultAccessPolicyState struct {

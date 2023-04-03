@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNetworkConnectivitySpoke creates a new instance of [NetworkConnectivitySpoke].
 func NewNetworkConnectivitySpoke(name string, args NetworkConnectivitySpokeArgs) *NetworkConnectivitySpoke {
 	return &NetworkConnectivitySpoke{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNetworkConnectivitySpoke(name string, args NetworkConnectivitySpokeArgs)
 
 var _ terra.Resource = (*NetworkConnectivitySpoke)(nil)
 
+// NetworkConnectivitySpoke represents the Terraform resource google_network_connectivity_spoke.
 type NetworkConnectivitySpoke struct {
-	Name  string
-	Args  NetworkConnectivitySpokeArgs
-	state *networkConnectivitySpokeState
+	Name      string
+	Args      NetworkConnectivitySpokeArgs
+	state     *networkConnectivitySpokeState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NetworkConnectivitySpoke].
 func (ncs *NetworkConnectivitySpoke) Type() string {
 	return "google_network_connectivity_spoke"
 }
 
+// LocalName returns the local name for [NetworkConnectivitySpoke].
 func (ncs *NetworkConnectivitySpoke) LocalName() string {
 	return ncs.Name
 }
 
+// Configuration returns the configuration (args) for [NetworkConnectivitySpoke].
 func (ncs *NetworkConnectivitySpoke) Configuration() interface{} {
 	return ncs.Args
 }
 
+// DependOn is used for other resources to depend on [NetworkConnectivitySpoke].
+func (ncs *NetworkConnectivitySpoke) DependOn() terra.Reference {
+	return terra.ReferenceResource(ncs)
+}
+
+// Dependencies returns the list of resources [NetworkConnectivitySpoke] depends_on.
+func (ncs *NetworkConnectivitySpoke) Dependencies() terra.Dependencies {
+	return ncs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NetworkConnectivitySpoke].
+func (ncs *NetworkConnectivitySpoke) LifecycleManagement() *terra.Lifecycle {
+	return ncs.Lifecycle
+}
+
+// Attributes returns the attributes for [NetworkConnectivitySpoke].
 func (ncs *NetworkConnectivitySpoke) Attributes() networkConnectivitySpokeAttributes {
 	return networkConnectivitySpokeAttributes{ref: terra.ReferenceResource(ncs)}
 }
 
+// ImportState imports the given attribute values into [NetworkConnectivitySpoke]'s state.
 func (ncs *NetworkConnectivitySpoke) ImportState(av io.Reader) error {
 	ncs.state = &networkConnectivitySpokeState{}
 	if err := json.NewDecoder(av).Decode(ncs.state); err != nil {
@@ -49,10 +73,12 @@ func (ncs *NetworkConnectivitySpoke) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NetworkConnectivitySpoke] has state.
 func (ncs *NetworkConnectivitySpoke) State() (*networkConnectivitySpokeState, bool) {
 	return ncs.state, ncs.state != nil
 }
 
+// StateMust returns the state for [NetworkConnectivitySpoke]. Panics if the state is nil.
 func (ncs *NetworkConnectivitySpoke) StateMust() *networkConnectivitySpokeState {
 	if ncs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ncs.Type(), ncs.LocalName()))
@@ -60,10 +86,7 @@ func (ncs *NetworkConnectivitySpoke) StateMust() *networkConnectivitySpokeState 
 	return ncs.state
 }
 
-func (ncs *NetworkConnectivitySpoke) DependOn() terra.Reference {
-	return terra.ReferenceResource(ncs)
-}
-
+// NetworkConnectivitySpokeArgs contains the configurations for google_network_connectivity_spoke.
 type NetworkConnectivitySpokeArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -87,71 +110,80 @@ type NetworkConnectivitySpokeArgs struct {
 	LinkedVpnTunnels *networkconnectivityspoke.LinkedVpnTunnels `hcl:"linked_vpn_tunnels,block"`
 	// Timeouts: optional
 	Timeouts *networkconnectivityspoke.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that NetworkConnectivitySpoke depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type networkConnectivitySpokeAttributes struct {
 	ref terra.Reference
 }
 
+// CreateTime returns a reference to field create_time of google_network_connectivity_spoke.
 func (ncs networkConnectivitySpokeAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(ncs.ref.Append("create_time"))
+	return terra.ReferenceAsString(ncs.ref.Append("create_time"))
 }
 
+// Description returns a reference to field description of google_network_connectivity_spoke.
 func (ncs networkConnectivitySpokeAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ncs.ref.Append("description"))
+	return terra.ReferenceAsString(ncs.ref.Append("description"))
 }
 
+// Hub returns a reference to field hub of google_network_connectivity_spoke.
 func (ncs networkConnectivitySpokeAttributes) Hub() terra.StringValue {
-	return terra.ReferenceString(ncs.ref.Append("hub"))
+	return terra.ReferenceAsString(ncs.ref.Append("hub"))
 }
 
+// Id returns a reference to field id of google_network_connectivity_spoke.
 func (ncs networkConnectivitySpokeAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ncs.ref.Append("id"))
+	return terra.ReferenceAsString(ncs.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_network_connectivity_spoke.
 func (ncs networkConnectivitySpokeAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ncs.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](ncs.ref.Append("labels"))
 }
 
+// Location returns a reference to field location of google_network_connectivity_spoke.
 func (ncs networkConnectivitySpokeAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ncs.ref.Append("location"))
+	return terra.ReferenceAsString(ncs.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_network_connectivity_spoke.
 func (ncs networkConnectivitySpokeAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ncs.ref.Append("name"))
+	return terra.ReferenceAsString(ncs.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_network_connectivity_spoke.
 func (ncs networkConnectivitySpokeAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ncs.ref.Append("project"))
+	return terra.ReferenceAsString(ncs.ref.Append("project"))
 }
 
+// State returns a reference to field state of google_network_connectivity_spoke.
 func (ncs networkConnectivitySpokeAttributes) State() terra.StringValue {
-	return terra.ReferenceString(ncs.ref.Append("state"))
+	return terra.ReferenceAsString(ncs.ref.Append("state"))
 }
 
+// UniqueId returns a reference to field unique_id of google_network_connectivity_spoke.
 func (ncs networkConnectivitySpokeAttributes) UniqueId() terra.StringValue {
-	return terra.ReferenceString(ncs.ref.Append("unique_id"))
+	return terra.ReferenceAsString(ncs.ref.Append("unique_id"))
 }
 
+// UpdateTime returns a reference to field update_time of google_network_connectivity_spoke.
 func (ncs networkConnectivitySpokeAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(ncs.ref.Append("update_time"))
+	return terra.ReferenceAsString(ncs.ref.Append("update_time"))
 }
 
 func (ncs networkConnectivitySpokeAttributes) LinkedInterconnectAttachments() terra.ListValue[networkconnectivityspoke.LinkedInterconnectAttachmentsAttributes] {
-	return terra.ReferenceList[networkconnectivityspoke.LinkedInterconnectAttachmentsAttributes](ncs.ref.Append("linked_interconnect_attachments"))
+	return terra.ReferenceAsList[networkconnectivityspoke.LinkedInterconnectAttachmentsAttributes](ncs.ref.Append("linked_interconnect_attachments"))
 }
 
 func (ncs networkConnectivitySpokeAttributes) LinkedRouterApplianceInstances() terra.ListValue[networkconnectivityspoke.LinkedRouterApplianceInstancesAttributes] {
-	return terra.ReferenceList[networkconnectivityspoke.LinkedRouterApplianceInstancesAttributes](ncs.ref.Append("linked_router_appliance_instances"))
+	return terra.ReferenceAsList[networkconnectivityspoke.LinkedRouterApplianceInstancesAttributes](ncs.ref.Append("linked_router_appliance_instances"))
 }
 
 func (ncs networkConnectivitySpokeAttributes) LinkedVpnTunnels() terra.ListValue[networkconnectivityspoke.LinkedVpnTunnelsAttributes] {
-	return terra.ReferenceList[networkconnectivityspoke.LinkedVpnTunnelsAttributes](ncs.ref.Append("linked_vpn_tunnels"))
+	return terra.ReferenceAsList[networkconnectivityspoke.LinkedVpnTunnelsAttributes](ncs.ref.Append("linked_vpn_tunnels"))
 }
 
 func (ncs networkConnectivitySpokeAttributes) Timeouts() networkconnectivityspoke.TimeoutsAttributes {
-	return terra.ReferenceSingle[networkconnectivityspoke.TimeoutsAttributes](ncs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[networkconnectivityspoke.TimeoutsAttributes](ncs.ref.Append("timeouts"))
 }
 
 type networkConnectivitySpokeState struct {

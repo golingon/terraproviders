@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewRelayHybridConnection creates a new instance of [RelayHybridConnection].
 func NewRelayHybridConnection(name string, args RelayHybridConnectionArgs) *RelayHybridConnection {
 	return &RelayHybridConnection{
 		Args: args,
@@ -19,28 +20,51 @@ func NewRelayHybridConnection(name string, args RelayHybridConnectionArgs) *Rela
 
 var _ terra.Resource = (*RelayHybridConnection)(nil)
 
+// RelayHybridConnection represents the Terraform resource azurerm_relay_hybrid_connection.
 type RelayHybridConnection struct {
-	Name  string
-	Args  RelayHybridConnectionArgs
-	state *relayHybridConnectionState
+	Name      string
+	Args      RelayHybridConnectionArgs
+	state     *relayHybridConnectionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RelayHybridConnection].
 func (rhc *RelayHybridConnection) Type() string {
 	return "azurerm_relay_hybrid_connection"
 }
 
+// LocalName returns the local name for [RelayHybridConnection].
 func (rhc *RelayHybridConnection) LocalName() string {
 	return rhc.Name
 }
 
+// Configuration returns the configuration (args) for [RelayHybridConnection].
 func (rhc *RelayHybridConnection) Configuration() interface{} {
 	return rhc.Args
 }
 
+// DependOn is used for other resources to depend on [RelayHybridConnection].
+func (rhc *RelayHybridConnection) DependOn() terra.Reference {
+	return terra.ReferenceResource(rhc)
+}
+
+// Dependencies returns the list of resources [RelayHybridConnection] depends_on.
+func (rhc *RelayHybridConnection) Dependencies() terra.Dependencies {
+	return rhc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RelayHybridConnection].
+func (rhc *RelayHybridConnection) LifecycleManagement() *terra.Lifecycle {
+	return rhc.Lifecycle
+}
+
+// Attributes returns the attributes for [RelayHybridConnection].
 func (rhc *RelayHybridConnection) Attributes() relayHybridConnectionAttributes {
 	return relayHybridConnectionAttributes{ref: terra.ReferenceResource(rhc)}
 }
 
+// ImportState imports the given attribute values into [RelayHybridConnection]'s state.
 func (rhc *RelayHybridConnection) ImportState(av io.Reader) error {
 	rhc.state = &relayHybridConnectionState{}
 	if err := json.NewDecoder(av).Decode(rhc.state); err != nil {
@@ -49,10 +73,12 @@ func (rhc *RelayHybridConnection) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RelayHybridConnection] has state.
 func (rhc *RelayHybridConnection) State() (*relayHybridConnectionState, bool) {
 	return rhc.state, rhc.state != nil
 }
 
+// StateMust returns the state for [RelayHybridConnection]. Panics if the state is nil.
 func (rhc *RelayHybridConnection) StateMust() *relayHybridConnectionState {
 	if rhc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rhc.Type(), rhc.LocalName()))
@@ -60,10 +86,7 @@ func (rhc *RelayHybridConnection) StateMust() *relayHybridConnectionState {
 	return rhc.state
 }
 
-func (rhc *RelayHybridConnection) DependOn() terra.Reference {
-	return terra.ReferenceResource(rhc)
-}
-
+// RelayHybridConnectionArgs contains the configurations for azurerm_relay_hybrid_connection.
 type RelayHybridConnectionArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,39 +102,43 @@ type RelayHybridConnectionArgs struct {
 	UserMetadata terra.StringValue `hcl:"user_metadata,attr"`
 	// Timeouts: optional
 	Timeouts *relayhybridconnection.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that RelayHybridConnection depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type relayHybridConnectionAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_relay_hybrid_connection.
 func (rhc relayHybridConnectionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rhc.ref.Append("id"))
+	return terra.ReferenceAsString(rhc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_relay_hybrid_connection.
 func (rhc relayHybridConnectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rhc.ref.Append("name"))
+	return terra.ReferenceAsString(rhc.ref.Append("name"))
 }
 
+// RelayNamespaceName returns a reference to field relay_namespace_name of azurerm_relay_hybrid_connection.
 func (rhc relayHybridConnectionAttributes) RelayNamespaceName() terra.StringValue {
-	return terra.ReferenceString(rhc.ref.Append("relay_namespace_name"))
+	return terra.ReferenceAsString(rhc.ref.Append("relay_namespace_name"))
 }
 
+// RequiresClientAuthorization returns a reference to field requires_client_authorization of azurerm_relay_hybrid_connection.
 func (rhc relayHybridConnectionAttributes) RequiresClientAuthorization() terra.BoolValue {
-	return terra.ReferenceBool(rhc.ref.Append("requires_client_authorization"))
+	return terra.ReferenceAsBool(rhc.ref.Append("requires_client_authorization"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_relay_hybrid_connection.
 func (rhc relayHybridConnectionAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(rhc.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(rhc.ref.Append("resource_group_name"))
 }
 
+// UserMetadata returns a reference to field user_metadata of azurerm_relay_hybrid_connection.
 func (rhc relayHybridConnectionAttributes) UserMetadata() terra.StringValue {
-	return terra.ReferenceString(rhc.ref.Append("user_metadata"))
+	return terra.ReferenceAsString(rhc.ref.Append("user_metadata"))
 }
 
 func (rhc relayHybridConnectionAttributes) Timeouts() relayhybridconnection.TimeoutsAttributes {
-	return terra.ReferenceSingle[relayhybridconnection.TimeoutsAttributes](rhc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[relayhybridconnection.TimeoutsAttributes](rhc.ref.Append("timeouts"))
 }
 
 type relayHybridConnectionState struct {

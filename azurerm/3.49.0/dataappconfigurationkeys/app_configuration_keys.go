@@ -18,72 +18,72 @@ type ItemsAttributes struct {
 	ref terra.Reference
 }
 
-func (i ItemsAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i ItemsAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i ItemsAttributes) InternalWithRef(ref terra.Reference) ItemsAttributes {
 	return ItemsAttributes{ref: ref}
 }
 
-func (i ItemsAttributes) InternalTokens() hclwrite.Tokens {
+func (i ItemsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i ItemsAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("content_type"))
+	return terra.ReferenceAsString(i.ref.Append("content_type"))
 }
 
 func (i ItemsAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("etag"))
+	return terra.ReferenceAsString(i.ref.Append("etag"))
 }
 
 func (i ItemsAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("key"))
+	return terra.ReferenceAsString(i.ref.Append("key"))
 }
 
 func (i ItemsAttributes) Label() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("label"))
+	return terra.ReferenceAsString(i.ref.Append("label"))
 }
 
 func (i ItemsAttributes) Locked() terra.BoolValue {
-	return terra.ReferenceBool(i.ref.Append("locked"))
+	return terra.ReferenceAsBool(i.ref.Append("locked"))
 }
 
 func (i ItemsAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](i.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](i.ref.Append("tags"))
 }
 
 func (i ItemsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("type"))
+	return terra.ReferenceAsString(i.ref.Append("type"))
 }
 
 func (i ItemsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("value"))
+	return terra.ReferenceAsString(i.ref.Append("value"))
 }
 
 func (i ItemsAttributes) VaultKeyReference() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("vault_key_reference"))
+	return terra.ReferenceAsString(i.ref.Append("vault_key_reference"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type ItemsState struct {

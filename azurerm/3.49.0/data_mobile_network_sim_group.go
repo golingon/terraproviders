@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataMobileNetworkSimGroup creates a new instance of [DataMobileNetworkSimGroup].
 func NewDataMobileNetworkSimGroup(name string, args DataMobileNetworkSimGroupArgs) *DataMobileNetworkSimGroup {
 	return &DataMobileNetworkSimGroup{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataMobileNetworkSimGroup(name string, args DataMobileNetworkSimGroupArg
 
 var _ terra.DataResource = (*DataMobileNetworkSimGroup)(nil)
 
+// DataMobileNetworkSimGroup represents the Terraform data resource azurerm_mobile_network_sim_group.
 type DataMobileNetworkSimGroup struct {
 	Name string
 	Args DataMobileNetworkSimGroupArgs
 }
 
+// DataSource returns the Terraform object type for [DataMobileNetworkSimGroup].
 func (mnsg *DataMobileNetworkSimGroup) DataSource() string {
 	return "azurerm_mobile_network_sim_group"
 }
 
+// LocalName returns the local name for [DataMobileNetworkSimGroup].
 func (mnsg *DataMobileNetworkSimGroup) LocalName() string {
 	return mnsg.Name
 }
 
+// Configuration returns the configuration (args) for [DataMobileNetworkSimGroup].
 func (mnsg *DataMobileNetworkSimGroup) Configuration() interface{} {
 	return mnsg.Args
 }
 
+// Attributes returns the attributes for [DataMobileNetworkSimGroup].
 func (mnsg *DataMobileNetworkSimGroup) Attributes() dataMobileNetworkSimGroupAttributes {
 	return dataMobileNetworkSimGroupAttributes{ref: terra.ReferenceDataResource(mnsg)}
 }
 
+// DataMobileNetworkSimGroupArgs contains the configurations for azurerm_mobile_network_sim_group.
 type DataMobileNetworkSimGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,34 +60,40 @@ type dataMobileNetworkSimGroupAttributes struct {
 	ref terra.Reference
 }
 
+// EncryptionKeyUrl returns a reference to field encryption_key_url of azurerm_mobile_network_sim_group.
 func (mnsg dataMobileNetworkSimGroupAttributes) EncryptionKeyUrl() terra.StringValue {
-	return terra.ReferenceString(mnsg.ref.Append("encryption_key_url"))
+	return terra.ReferenceAsString(mnsg.ref.Append("encryption_key_url"))
 }
 
+// Id returns a reference to field id of azurerm_mobile_network_sim_group.
 func (mnsg dataMobileNetworkSimGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mnsg.ref.Append("id"))
+	return terra.ReferenceAsString(mnsg.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_mobile_network_sim_group.
 func (mnsg dataMobileNetworkSimGroupAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(mnsg.ref.Append("location"))
+	return terra.ReferenceAsString(mnsg.ref.Append("location"))
 }
 
+// MobileNetworkId returns a reference to field mobile_network_id of azurerm_mobile_network_sim_group.
 func (mnsg dataMobileNetworkSimGroupAttributes) MobileNetworkId() terra.StringValue {
-	return terra.ReferenceString(mnsg.ref.Append("mobile_network_id"))
+	return terra.ReferenceAsString(mnsg.ref.Append("mobile_network_id"))
 }
 
+// Name returns a reference to field name of azurerm_mobile_network_sim_group.
 func (mnsg dataMobileNetworkSimGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mnsg.ref.Append("name"))
+	return terra.ReferenceAsString(mnsg.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of azurerm_mobile_network_sim_group.
 func (mnsg dataMobileNetworkSimGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mnsg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mnsg.ref.Append("tags"))
 }
 
 func (mnsg dataMobileNetworkSimGroupAttributes) Identity() terra.ListValue[datamobilenetworksimgroup.IdentityAttributes] {
-	return terra.ReferenceList[datamobilenetworksimgroup.IdentityAttributes](mnsg.ref.Append("identity"))
+	return terra.ReferenceAsList[datamobilenetworksimgroup.IdentityAttributes](mnsg.ref.Append("identity"))
 }
 
 func (mnsg dataMobileNetworkSimGroupAttributes) Timeouts() datamobilenetworksimgroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[datamobilenetworksimgroup.TimeoutsAttributes](mnsg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datamobilenetworksimgroup.TimeoutsAttributes](mnsg.ref.Append("timeouts"))
 }

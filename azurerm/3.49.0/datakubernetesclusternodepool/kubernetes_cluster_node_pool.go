@@ -18,40 +18,40 @@ type UpgradeSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (us UpgradeSettingsAttributes) InternalRef() terra.Reference {
-	return us.ref
+func (us UpgradeSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return us.ref, nil
 }
 
 func (us UpgradeSettingsAttributes) InternalWithRef(ref terra.Reference) UpgradeSettingsAttributes {
 	return UpgradeSettingsAttributes{ref: ref}
 }
 
-func (us UpgradeSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (us UpgradeSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return us.ref.InternalTokens()
 }
 
 func (us UpgradeSettingsAttributes) MaxSurge() terra.StringValue {
-	return terra.ReferenceString(us.ref.Append("max_surge"))
+	return terra.ReferenceAsString(us.ref.Append("max_surge"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type UpgradeSettingsState struct {

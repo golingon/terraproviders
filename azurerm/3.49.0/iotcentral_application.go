@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewIotcentralApplication creates a new instance of [IotcentralApplication].
 func NewIotcentralApplication(name string, args IotcentralApplicationArgs) *IotcentralApplication {
 	return &IotcentralApplication{
 		Args: args,
@@ -19,28 +20,51 @@ func NewIotcentralApplication(name string, args IotcentralApplicationArgs) *Iotc
 
 var _ terra.Resource = (*IotcentralApplication)(nil)
 
+// IotcentralApplication represents the Terraform resource azurerm_iotcentral_application.
 type IotcentralApplication struct {
-	Name  string
-	Args  IotcentralApplicationArgs
-	state *iotcentralApplicationState
+	Name      string
+	Args      IotcentralApplicationArgs
+	state     *iotcentralApplicationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IotcentralApplication].
 func (ia *IotcentralApplication) Type() string {
 	return "azurerm_iotcentral_application"
 }
 
+// LocalName returns the local name for [IotcentralApplication].
 func (ia *IotcentralApplication) LocalName() string {
 	return ia.Name
 }
 
+// Configuration returns the configuration (args) for [IotcentralApplication].
 func (ia *IotcentralApplication) Configuration() interface{} {
 	return ia.Args
 }
 
+// DependOn is used for other resources to depend on [IotcentralApplication].
+func (ia *IotcentralApplication) DependOn() terra.Reference {
+	return terra.ReferenceResource(ia)
+}
+
+// Dependencies returns the list of resources [IotcentralApplication] depends_on.
+func (ia *IotcentralApplication) Dependencies() terra.Dependencies {
+	return ia.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IotcentralApplication].
+func (ia *IotcentralApplication) LifecycleManagement() *terra.Lifecycle {
+	return ia.Lifecycle
+}
+
+// Attributes returns the attributes for [IotcentralApplication].
 func (ia *IotcentralApplication) Attributes() iotcentralApplicationAttributes {
 	return iotcentralApplicationAttributes{ref: terra.ReferenceResource(ia)}
 }
 
+// ImportState imports the given attribute values into [IotcentralApplication]'s state.
 func (ia *IotcentralApplication) ImportState(av io.Reader) error {
 	ia.state = &iotcentralApplicationState{}
 	if err := json.NewDecoder(av).Decode(ia.state); err != nil {
@@ -49,10 +73,12 @@ func (ia *IotcentralApplication) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IotcentralApplication] has state.
 func (ia *IotcentralApplication) State() (*iotcentralApplicationState, bool) {
 	return ia.state, ia.state != nil
 }
 
+// StateMust returns the state for [IotcentralApplication]. Panics if the state is nil.
 func (ia *IotcentralApplication) StateMust() *iotcentralApplicationState {
 	if ia.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ia.Type(), ia.LocalName()))
@@ -60,10 +86,7 @@ func (ia *IotcentralApplication) StateMust() *iotcentralApplicationState {
 	return ia.state
 }
 
-func (ia *IotcentralApplication) DependOn() terra.Reference {
-	return terra.ReferenceResource(ia)
-}
-
+// IotcentralApplicationArgs contains the configurations for azurerm_iotcentral_application.
 type IotcentralApplicationArgs struct {
 	// DisplayName: string, optional
 	DisplayName terra.StringValue `hcl:"display_name,attr"`
@@ -89,59 +112,67 @@ type IotcentralApplicationArgs struct {
 	Identity *iotcentralapplication.Identity `hcl:"identity,block"`
 	// Timeouts: optional
 	Timeouts *iotcentralapplication.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that IotcentralApplication depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iotcentralApplicationAttributes struct {
 	ref terra.Reference
 }
 
+// DisplayName returns a reference to field display_name of azurerm_iotcentral_application.
 func (ia iotcentralApplicationAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(ia.ref.Append("display_name"))
+	return terra.ReferenceAsString(ia.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of azurerm_iotcentral_application.
 func (ia iotcentralApplicationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ia.ref.Append("id"))
+	return terra.ReferenceAsString(ia.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_iotcentral_application.
 func (ia iotcentralApplicationAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ia.ref.Append("location"))
+	return terra.ReferenceAsString(ia.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_iotcentral_application.
 func (ia iotcentralApplicationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ia.ref.Append("name"))
+	return terra.ReferenceAsString(ia.ref.Append("name"))
 }
 
+// PublicNetworkAccessEnabled returns a reference to field public_network_access_enabled of azurerm_iotcentral_application.
 func (ia iotcentralApplicationAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ia.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(ia.ref.Append("public_network_access_enabled"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_iotcentral_application.
 func (ia iotcentralApplicationAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ia.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ia.ref.Append("resource_group_name"))
 }
 
+// Sku returns a reference to field sku of azurerm_iotcentral_application.
 func (ia iotcentralApplicationAttributes) Sku() terra.StringValue {
-	return terra.ReferenceString(ia.ref.Append("sku"))
+	return terra.ReferenceAsString(ia.ref.Append("sku"))
 }
 
+// SubDomain returns a reference to field sub_domain of azurerm_iotcentral_application.
 func (ia iotcentralApplicationAttributes) SubDomain() terra.StringValue {
-	return terra.ReferenceString(ia.ref.Append("sub_domain"))
+	return terra.ReferenceAsString(ia.ref.Append("sub_domain"))
 }
 
+// Tags returns a reference to field tags of azurerm_iotcentral_application.
 func (ia iotcentralApplicationAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ia.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ia.ref.Append("tags"))
 }
 
+// Template returns a reference to field template of azurerm_iotcentral_application.
 func (ia iotcentralApplicationAttributes) Template() terra.StringValue {
-	return terra.ReferenceString(ia.ref.Append("template"))
+	return terra.ReferenceAsString(ia.ref.Append("template"))
 }
 
 func (ia iotcentralApplicationAttributes) Identity() terra.ListValue[iotcentralapplication.IdentityAttributes] {
-	return terra.ReferenceList[iotcentralapplication.IdentityAttributes](ia.ref.Append("identity"))
+	return terra.ReferenceAsList[iotcentralapplication.IdentityAttributes](ia.ref.Append("identity"))
 }
 
 func (ia iotcentralApplicationAttributes) Timeouts() iotcentralapplication.TimeoutsAttributes {
-	return terra.ReferenceSingle[iotcentralapplication.TimeoutsAttributes](ia.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[iotcentralapplication.TimeoutsAttributes](ia.ref.Append("timeouts"))
 }
 
 type iotcentralApplicationState struct {

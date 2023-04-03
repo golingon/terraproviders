@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAlloydbBackup creates a new instance of [AlloydbBackup].
 func NewAlloydbBackup(name string, args AlloydbBackupArgs) *AlloydbBackup {
 	return &AlloydbBackup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAlloydbBackup(name string, args AlloydbBackupArgs) *AlloydbBackup {
 
 var _ terra.Resource = (*AlloydbBackup)(nil)
 
+// AlloydbBackup represents the Terraform resource google_alloydb_backup.
 type AlloydbBackup struct {
-	Name  string
-	Args  AlloydbBackupArgs
-	state *alloydbBackupState
+	Name      string
+	Args      AlloydbBackupArgs
+	state     *alloydbBackupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AlloydbBackup].
 func (ab *AlloydbBackup) Type() string {
 	return "google_alloydb_backup"
 }
 
+// LocalName returns the local name for [AlloydbBackup].
 func (ab *AlloydbBackup) LocalName() string {
 	return ab.Name
 }
 
+// Configuration returns the configuration (args) for [AlloydbBackup].
 func (ab *AlloydbBackup) Configuration() interface{} {
 	return ab.Args
 }
 
+// DependOn is used for other resources to depend on [AlloydbBackup].
+func (ab *AlloydbBackup) DependOn() terra.Reference {
+	return terra.ReferenceResource(ab)
+}
+
+// Dependencies returns the list of resources [AlloydbBackup] depends_on.
+func (ab *AlloydbBackup) Dependencies() terra.Dependencies {
+	return ab.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AlloydbBackup].
+func (ab *AlloydbBackup) LifecycleManagement() *terra.Lifecycle {
+	return ab.Lifecycle
+}
+
+// Attributes returns the attributes for [AlloydbBackup].
 func (ab *AlloydbBackup) Attributes() alloydbBackupAttributes {
 	return alloydbBackupAttributes{ref: terra.ReferenceResource(ab)}
 }
 
+// ImportState imports the given attribute values into [AlloydbBackup]'s state.
 func (ab *AlloydbBackup) ImportState(av io.Reader) error {
 	ab.state = &alloydbBackupState{}
 	if err := json.NewDecoder(av).Decode(ab.state); err != nil {
@@ -49,10 +73,12 @@ func (ab *AlloydbBackup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AlloydbBackup] has state.
 func (ab *AlloydbBackup) State() (*alloydbBackupState, bool) {
 	return ab.state, ab.state != nil
 }
 
+// StateMust returns the state for [AlloydbBackup]. Panics if the state is nil.
 func (ab *AlloydbBackup) StateMust() *alloydbBackupState {
 	if ab.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ab.Type(), ab.LocalName()))
@@ -60,10 +86,7 @@ func (ab *AlloydbBackup) StateMust() *alloydbBackupState {
 	return ab.state
 }
 
-func (ab *AlloydbBackup) DependOn() terra.Reference {
-	return terra.ReferenceResource(ab)
-}
-
+// AlloydbBackupArgs contains the configurations for google_alloydb_backup.
 type AlloydbBackupArgs struct {
 	// BackupId: string, required
 	BackupId terra.StringValue `hcl:"backup_id,attr" validate:"required"`
@@ -81,71 +104,83 @@ type AlloydbBackupArgs struct {
 	Project terra.StringValue `hcl:"project,attr"`
 	// Timeouts: optional
 	Timeouts *alloydbbackup.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that AlloydbBackup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type alloydbBackupAttributes struct {
 	ref terra.Reference
 }
 
+// BackupId returns a reference to field backup_id of google_alloydb_backup.
 func (ab alloydbBackupAttributes) BackupId() terra.StringValue {
-	return terra.ReferenceString(ab.ref.Append("backup_id"))
+	return terra.ReferenceAsString(ab.ref.Append("backup_id"))
 }
 
+// ClusterName returns a reference to field cluster_name of google_alloydb_backup.
 func (ab alloydbBackupAttributes) ClusterName() terra.StringValue {
-	return terra.ReferenceString(ab.ref.Append("cluster_name"))
+	return terra.ReferenceAsString(ab.ref.Append("cluster_name"))
 }
 
+// CreateTime returns a reference to field create_time of google_alloydb_backup.
 func (ab alloydbBackupAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(ab.ref.Append("create_time"))
+	return terra.ReferenceAsString(ab.ref.Append("create_time"))
 }
 
+// Description returns a reference to field description of google_alloydb_backup.
 func (ab alloydbBackupAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ab.ref.Append("description"))
+	return terra.ReferenceAsString(ab.ref.Append("description"))
 }
 
+// Etag returns a reference to field etag of google_alloydb_backup.
 func (ab alloydbBackupAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(ab.ref.Append("etag"))
+	return terra.ReferenceAsString(ab.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_alloydb_backup.
 func (ab alloydbBackupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ab.ref.Append("id"))
+	return terra.ReferenceAsString(ab.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_alloydb_backup.
 func (ab alloydbBackupAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ab.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](ab.ref.Append("labels"))
 }
 
+// Location returns a reference to field location of google_alloydb_backup.
 func (ab alloydbBackupAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ab.ref.Append("location"))
+	return terra.ReferenceAsString(ab.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_alloydb_backup.
 func (ab alloydbBackupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ab.ref.Append("name"))
+	return terra.ReferenceAsString(ab.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_alloydb_backup.
 func (ab alloydbBackupAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ab.ref.Append("project"))
+	return terra.ReferenceAsString(ab.ref.Append("project"))
 }
 
+// Reconciling returns a reference to field reconciling of google_alloydb_backup.
 func (ab alloydbBackupAttributes) Reconciling() terra.BoolValue {
-	return terra.ReferenceBool(ab.ref.Append("reconciling"))
+	return terra.ReferenceAsBool(ab.ref.Append("reconciling"))
 }
 
+// State returns a reference to field state of google_alloydb_backup.
 func (ab alloydbBackupAttributes) State() terra.StringValue {
-	return terra.ReferenceString(ab.ref.Append("state"))
+	return terra.ReferenceAsString(ab.ref.Append("state"))
 }
 
+// Uid returns a reference to field uid of google_alloydb_backup.
 func (ab alloydbBackupAttributes) Uid() terra.StringValue {
-	return terra.ReferenceString(ab.ref.Append("uid"))
+	return terra.ReferenceAsString(ab.ref.Append("uid"))
 }
 
+// UpdateTime returns a reference to field update_time of google_alloydb_backup.
 func (ab alloydbBackupAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(ab.ref.Append("update_time"))
+	return terra.ReferenceAsString(ab.ref.Append("update_time"))
 }
 
 func (ab alloydbBackupAttributes) Timeouts() alloydbbackup.TimeoutsAttributes {
-	return terra.ReferenceSingle[alloydbbackup.TimeoutsAttributes](ab.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[alloydbbackup.TimeoutsAttributes](ab.ref.Append("timeouts"))
 }
 
 type alloydbBackupState struct {

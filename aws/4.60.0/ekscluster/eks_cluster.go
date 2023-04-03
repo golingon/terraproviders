@@ -83,7 +83,7 @@ func (ca CertificateAuthorityAttributes) InternalWithRef(ref terra.Reference) Ce
 	return CertificateAuthorityAttributes{ref: ref}
 }
 
-func (ca CertificateAuthorityAttributes) InternalTokens() hclwrite.Tokens {
+func (ca CertificateAuthorityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ca.ref.InternalTokens()
 }
 
@@ -103,7 +103,7 @@ func (i IdentityAttributes) InternalWithRef(ref terra.Reference) IdentityAttribu
 	return IdentityAttributes{ref: ref}
 }
 
-func (i IdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (i IdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -123,7 +123,7 @@ func (o OidcAttributes) InternalWithRef(ref terra.Reference) OidcAttributes {
 	return OidcAttributes{ref: ref}
 }
 
-func (o OidcAttributes) InternalTokens() hclwrite.Tokens {
+func (o OidcAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return o.ref.InternalTokens()
 }
 
@@ -143,7 +143,7 @@ func (ec EncryptionConfigAttributes) InternalWithRef(ref terra.Reference) Encryp
 	return EncryptionConfigAttributes{ref: ref}
 }
 
-func (ec EncryptionConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ec EncryptionConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 
@@ -167,7 +167,7 @@ func (p ProviderAttributes) InternalWithRef(ref terra.Reference) ProviderAttribu
 	return ProviderAttributes{ref: ref}
 }
 
-func (p ProviderAttributes) InternalTokens() hclwrite.Tokens {
+func (p ProviderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -187,7 +187,7 @@ func (knc KubernetesNetworkConfigAttributes) InternalWithRef(ref terra.Reference
 	return KubernetesNetworkConfigAttributes{ref: ref}
 }
 
-func (knc KubernetesNetworkConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (knc KubernetesNetworkConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return knc.ref.InternalTokens()
 }
 
@@ -215,7 +215,7 @@ func (oc OutpostConfigAttributes) InternalWithRef(ref terra.Reference) OutpostCo
 	return OutpostConfigAttributes{ref: ref}
 }
 
-func (oc OutpostConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (oc OutpostConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oc.ref.InternalTokens()
 }
 
@@ -243,7 +243,7 @@ func (cpp ControlPlanePlacementAttributes) InternalWithRef(ref terra.Reference) 
 	return ControlPlanePlacementAttributes{ref: ref}
 }
 
-func (cpp ControlPlanePlacementAttributes) InternalTokens() hclwrite.Tokens {
+func (cpp ControlPlanePlacementAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cpp.ref.InternalTokens()
 }
 
@@ -263,7 +263,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -291,7 +291,7 @@ func (vc VpcConfigAttributes) InternalWithRef(ref terra.Reference) VpcConfigAttr
 	return VpcConfigAttributes{ref: ref}
 }
 
-func (vc VpcConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (vc VpcConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vc.ref.InternalTokens()
 }
 

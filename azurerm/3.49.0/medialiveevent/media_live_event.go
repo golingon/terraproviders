@@ -88,264 +88,264 @@ type CrossSiteAccessPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (csap CrossSiteAccessPolicyAttributes) InternalRef() terra.Reference {
-	return csap.ref
+func (csap CrossSiteAccessPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return csap.ref, nil
 }
 
 func (csap CrossSiteAccessPolicyAttributes) InternalWithRef(ref terra.Reference) CrossSiteAccessPolicyAttributes {
 	return CrossSiteAccessPolicyAttributes{ref: ref}
 }
 
-func (csap CrossSiteAccessPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (csap CrossSiteAccessPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return csap.ref.InternalTokens()
 }
 
 func (csap CrossSiteAccessPolicyAttributes) ClientAccessPolicy() terra.StringValue {
-	return terra.ReferenceString(csap.ref.Append("client_access_policy"))
+	return terra.ReferenceAsString(csap.ref.Append("client_access_policy"))
 }
 
 func (csap CrossSiteAccessPolicyAttributes) CrossDomainPolicy() terra.StringValue {
-	return terra.ReferenceString(csap.ref.Append("cross_domain_policy"))
+	return terra.ReferenceAsString(csap.ref.Append("cross_domain_policy"))
 }
 
 type EncodingAttributes struct {
 	ref terra.Reference
 }
 
-func (e EncodingAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EncodingAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EncodingAttributes) InternalWithRef(ref terra.Reference) EncodingAttributes {
 	return EncodingAttributes{ref: ref}
 }
 
-func (e EncodingAttributes) InternalTokens() hclwrite.Tokens {
+func (e EncodingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
 func (e EncodingAttributes) KeyFrameInterval() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("key_frame_interval"))
+	return terra.ReferenceAsString(e.ref.Append("key_frame_interval"))
 }
 
 func (e EncodingAttributes) PresetName() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("preset_name"))
+	return terra.ReferenceAsString(e.ref.Append("preset_name"))
 }
 
 func (e EncodingAttributes) StretchMode() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("stretch_mode"))
+	return terra.ReferenceAsString(e.ref.Append("stretch_mode"))
 }
 
 func (e EncodingAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("type"))
+	return terra.ReferenceAsString(e.ref.Append("type"))
 }
 
 type InputAttributes struct {
 	ref terra.Reference
 }
 
-func (i InputAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i InputAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i InputAttributes) InternalWithRef(ref terra.Reference) InputAttributes {
 	return InputAttributes{ref: ref}
 }
 
-func (i InputAttributes) InternalTokens() hclwrite.Tokens {
+func (i InputAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i InputAttributes) AccessToken() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("access_token"))
+	return terra.ReferenceAsString(i.ref.Append("access_token"))
 }
 
 func (i InputAttributes) KeyFrameIntervalDuration() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("key_frame_interval_duration"))
+	return terra.ReferenceAsString(i.ref.Append("key_frame_interval_duration"))
 }
 
 func (i InputAttributes) StreamingProtocol() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("streaming_protocol"))
+	return terra.ReferenceAsString(i.ref.Append("streaming_protocol"))
 }
 
 func (i InputAttributes) Endpoint() terra.ListValue[InputEndpointAttributes] {
-	return terra.ReferenceList[InputEndpointAttributes](i.ref.Append("endpoint"))
+	return terra.ReferenceAsList[InputEndpointAttributes](i.ref.Append("endpoint"))
 }
 
 func (i InputAttributes) IpAccessControlAllow() terra.ListValue[InputIpAccessControlAllowAttributes] {
-	return terra.ReferenceList[InputIpAccessControlAllowAttributes](i.ref.Append("ip_access_control_allow"))
+	return terra.ReferenceAsList[InputIpAccessControlAllowAttributes](i.ref.Append("ip_access_control_allow"))
 }
 
 type InputEndpointAttributes struct {
 	ref terra.Reference
 }
 
-func (e InputEndpointAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e InputEndpointAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e InputEndpointAttributes) InternalWithRef(ref terra.Reference) InputEndpointAttributes {
 	return InputEndpointAttributes{ref: ref}
 }
 
-func (e InputEndpointAttributes) InternalTokens() hclwrite.Tokens {
+func (e InputEndpointAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
 func (e InputEndpointAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("protocol"))
+	return terra.ReferenceAsString(e.ref.Append("protocol"))
 }
 
 func (e InputEndpointAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("url"))
+	return terra.ReferenceAsString(e.ref.Append("url"))
 }
 
 type InputIpAccessControlAllowAttributes struct {
 	ref terra.Reference
 }
 
-func (iaca InputIpAccessControlAllowAttributes) InternalRef() terra.Reference {
-	return iaca.ref
+func (iaca InputIpAccessControlAllowAttributes) InternalRef() (terra.Reference, error) {
+	return iaca.ref, nil
 }
 
 func (iaca InputIpAccessControlAllowAttributes) InternalWithRef(ref terra.Reference) InputIpAccessControlAllowAttributes {
 	return InputIpAccessControlAllowAttributes{ref: ref}
 }
 
-func (iaca InputIpAccessControlAllowAttributes) InternalTokens() hclwrite.Tokens {
+func (iaca InputIpAccessControlAllowAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return iaca.ref.InternalTokens()
 }
 
 func (iaca InputIpAccessControlAllowAttributes) Address() terra.StringValue {
-	return terra.ReferenceString(iaca.ref.Append("address"))
+	return terra.ReferenceAsString(iaca.ref.Append("address"))
 }
 
 func (iaca InputIpAccessControlAllowAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(iaca.ref.Append("name"))
+	return terra.ReferenceAsString(iaca.ref.Append("name"))
 }
 
 func (iaca InputIpAccessControlAllowAttributes) SubnetPrefixLength() terra.NumberValue {
-	return terra.ReferenceNumber(iaca.ref.Append("subnet_prefix_length"))
+	return terra.ReferenceAsNumber(iaca.ref.Append("subnet_prefix_length"))
 }
 
 type PreviewAttributes struct {
 	ref terra.Reference
 }
 
-func (p PreviewAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p PreviewAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p PreviewAttributes) InternalWithRef(ref terra.Reference) PreviewAttributes {
 	return PreviewAttributes{ref: ref}
 }
 
-func (p PreviewAttributes) InternalTokens() hclwrite.Tokens {
+func (p PreviewAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
 func (p PreviewAttributes) AlternativeMediaId() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("alternative_media_id"))
+	return terra.ReferenceAsString(p.ref.Append("alternative_media_id"))
 }
 
 func (p PreviewAttributes) PreviewLocator() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("preview_locator"))
+	return terra.ReferenceAsString(p.ref.Append("preview_locator"))
 }
 
 func (p PreviewAttributes) StreamingPolicyName() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("streaming_policy_name"))
+	return terra.ReferenceAsString(p.ref.Append("streaming_policy_name"))
 }
 
 func (p PreviewAttributes) Endpoint() terra.ListValue[PreviewEndpointAttributes] {
-	return terra.ReferenceList[PreviewEndpointAttributes](p.ref.Append("endpoint"))
+	return terra.ReferenceAsList[PreviewEndpointAttributes](p.ref.Append("endpoint"))
 }
 
 func (p PreviewAttributes) IpAccessControlAllow() terra.ListValue[PreviewIpAccessControlAllowAttributes] {
-	return terra.ReferenceList[PreviewIpAccessControlAllowAttributes](p.ref.Append("ip_access_control_allow"))
+	return terra.ReferenceAsList[PreviewIpAccessControlAllowAttributes](p.ref.Append("ip_access_control_allow"))
 }
 
 type PreviewEndpointAttributes struct {
 	ref terra.Reference
 }
 
-func (e PreviewEndpointAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e PreviewEndpointAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e PreviewEndpointAttributes) InternalWithRef(ref terra.Reference) PreviewEndpointAttributes {
 	return PreviewEndpointAttributes{ref: ref}
 }
 
-func (e PreviewEndpointAttributes) InternalTokens() hclwrite.Tokens {
+func (e PreviewEndpointAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
 func (e PreviewEndpointAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("protocol"))
+	return terra.ReferenceAsString(e.ref.Append("protocol"))
 }
 
 func (e PreviewEndpointAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("url"))
+	return terra.ReferenceAsString(e.ref.Append("url"))
 }
 
 type PreviewIpAccessControlAllowAttributes struct {
 	ref terra.Reference
 }
 
-func (iaca PreviewIpAccessControlAllowAttributes) InternalRef() terra.Reference {
-	return iaca.ref
+func (iaca PreviewIpAccessControlAllowAttributes) InternalRef() (terra.Reference, error) {
+	return iaca.ref, nil
 }
 
 func (iaca PreviewIpAccessControlAllowAttributes) InternalWithRef(ref terra.Reference) PreviewIpAccessControlAllowAttributes {
 	return PreviewIpAccessControlAllowAttributes{ref: ref}
 }
 
-func (iaca PreviewIpAccessControlAllowAttributes) InternalTokens() hclwrite.Tokens {
+func (iaca PreviewIpAccessControlAllowAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return iaca.ref.InternalTokens()
 }
 
 func (iaca PreviewIpAccessControlAllowAttributes) Address() terra.StringValue {
-	return terra.ReferenceString(iaca.ref.Append("address"))
+	return terra.ReferenceAsString(iaca.ref.Append("address"))
 }
 
 func (iaca PreviewIpAccessControlAllowAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(iaca.ref.Append("name"))
+	return terra.ReferenceAsString(iaca.ref.Append("name"))
 }
 
 func (iaca PreviewIpAccessControlAllowAttributes) SubnetPrefixLength() terra.NumberValue {
-	return terra.ReferenceNumber(iaca.ref.Append("subnet_prefix_length"))
+	return terra.ReferenceAsNumber(iaca.ref.Append("subnet_prefix_length"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type CrossSiteAccessPolicyState struct {

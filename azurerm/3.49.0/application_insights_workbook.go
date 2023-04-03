@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApplicationInsightsWorkbook creates a new instance of [ApplicationInsightsWorkbook].
 func NewApplicationInsightsWorkbook(name string, args ApplicationInsightsWorkbookArgs) *ApplicationInsightsWorkbook {
 	return &ApplicationInsightsWorkbook{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApplicationInsightsWorkbook(name string, args ApplicationInsightsWorkboo
 
 var _ terra.Resource = (*ApplicationInsightsWorkbook)(nil)
 
+// ApplicationInsightsWorkbook represents the Terraform resource azurerm_application_insights_workbook.
 type ApplicationInsightsWorkbook struct {
-	Name  string
-	Args  ApplicationInsightsWorkbookArgs
-	state *applicationInsightsWorkbookState
+	Name      string
+	Args      ApplicationInsightsWorkbookArgs
+	state     *applicationInsightsWorkbookState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApplicationInsightsWorkbook].
 func (aiw *ApplicationInsightsWorkbook) Type() string {
 	return "azurerm_application_insights_workbook"
 }
 
+// LocalName returns the local name for [ApplicationInsightsWorkbook].
 func (aiw *ApplicationInsightsWorkbook) LocalName() string {
 	return aiw.Name
 }
 
+// Configuration returns the configuration (args) for [ApplicationInsightsWorkbook].
 func (aiw *ApplicationInsightsWorkbook) Configuration() interface{} {
 	return aiw.Args
 }
 
+// DependOn is used for other resources to depend on [ApplicationInsightsWorkbook].
+func (aiw *ApplicationInsightsWorkbook) DependOn() terra.Reference {
+	return terra.ReferenceResource(aiw)
+}
+
+// Dependencies returns the list of resources [ApplicationInsightsWorkbook] depends_on.
+func (aiw *ApplicationInsightsWorkbook) Dependencies() terra.Dependencies {
+	return aiw.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApplicationInsightsWorkbook].
+func (aiw *ApplicationInsightsWorkbook) LifecycleManagement() *terra.Lifecycle {
+	return aiw.Lifecycle
+}
+
+// Attributes returns the attributes for [ApplicationInsightsWorkbook].
 func (aiw *ApplicationInsightsWorkbook) Attributes() applicationInsightsWorkbookAttributes {
 	return applicationInsightsWorkbookAttributes{ref: terra.ReferenceResource(aiw)}
 }
 
+// ImportState imports the given attribute values into [ApplicationInsightsWorkbook]'s state.
 func (aiw *ApplicationInsightsWorkbook) ImportState(av io.Reader) error {
 	aiw.state = &applicationInsightsWorkbookState{}
 	if err := json.NewDecoder(av).Decode(aiw.state); err != nil {
@@ -49,10 +73,12 @@ func (aiw *ApplicationInsightsWorkbook) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApplicationInsightsWorkbook] has state.
 func (aiw *ApplicationInsightsWorkbook) State() (*applicationInsightsWorkbookState, bool) {
 	return aiw.state, aiw.state != nil
 }
 
+// StateMust returns the state for [ApplicationInsightsWorkbook]. Panics if the state is nil.
 func (aiw *ApplicationInsightsWorkbook) StateMust() *applicationInsightsWorkbookState {
 	if aiw.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", aiw.Type(), aiw.LocalName()))
@@ -60,10 +86,7 @@ func (aiw *ApplicationInsightsWorkbook) StateMust() *applicationInsightsWorkbook
 	return aiw.state
 }
 
-func (aiw *ApplicationInsightsWorkbook) DependOn() terra.Reference {
-	return terra.ReferenceResource(aiw)
-}
-
+// ApplicationInsightsWorkbookArgs contains the configurations for azurerm_application_insights_workbook.
 type ApplicationInsightsWorkbookArgs struct {
 	// Category: string, optional
 	Category terra.StringValue `hcl:"category,attr"`
@@ -91,63 +114,72 @@ type ApplicationInsightsWorkbookArgs struct {
 	Identity *applicationinsightsworkbook.Identity `hcl:"identity,block"`
 	// Timeouts: optional
 	Timeouts *applicationinsightsworkbook.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ApplicationInsightsWorkbook depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type applicationInsightsWorkbookAttributes struct {
 	ref terra.Reference
 }
 
+// Category returns a reference to field category of azurerm_application_insights_workbook.
 func (aiw applicationInsightsWorkbookAttributes) Category() terra.StringValue {
-	return terra.ReferenceString(aiw.ref.Append("category"))
+	return terra.ReferenceAsString(aiw.ref.Append("category"))
 }
 
+// DataJson returns a reference to field data_json of azurerm_application_insights_workbook.
 func (aiw applicationInsightsWorkbookAttributes) DataJson() terra.StringValue {
-	return terra.ReferenceString(aiw.ref.Append("data_json"))
+	return terra.ReferenceAsString(aiw.ref.Append("data_json"))
 }
 
+// Description returns a reference to field description of azurerm_application_insights_workbook.
 func (aiw applicationInsightsWorkbookAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(aiw.ref.Append("description"))
+	return terra.ReferenceAsString(aiw.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_application_insights_workbook.
 func (aiw applicationInsightsWorkbookAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(aiw.ref.Append("display_name"))
+	return terra.ReferenceAsString(aiw.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of azurerm_application_insights_workbook.
 func (aiw applicationInsightsWorkbookAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(aiw.ref.Append("id"))
+	return terra.ReferenceAsString(aiw.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_application_insights_workbook.
 func (aiw applicationInsightsWorkbookAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(aiw.ref.Append("location"))
+	return terra.ReferenceAsString(aiw.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_application_insights_workbook.
 func (aiw applicationInsightsWorkbookAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(aiw.ref.Append("name"))
+	return terra.ReferenceAsString(aiw.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_application_insights_workbook.
 func (aiw applicationInsightsWorkbookAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(aiw.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(aiw.ref.Append("resource_group_name"))
 }
 
+// SourceId returns a reference to field source_id of azurerm_application_insights_workbook.
 func (aiw applicationInsightsWorkbookAttributes) SourceId() terra.StringValue {
-	return terra.ReferenceString(aiw.ref.Append("source_id"))
+	return terra.ReferenceAsString(aiw.ref.Append("source_id"))
 }
 
+// StorageContainerId returns a reference to field storage_container_id of azurerm_application_insights_workbook.
 func (aiw applicationInsightsWorkbookAttributes) StorageContainerId() terra.StringValue {
-	return terra.ReferenceString(aiw.ref.Append("storage_container_id"))
+	return terra.ReferenceAsString(aiw.ref.Append("storage_container_id"))
 }
 
+// Tags returns a reference to field tags of azurerm_application_insights_workbook.
 func (aiw applicationInsightsWorkbookAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](aiw.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](aiw.ref.Append("tags"))
 }
 
 func (aiw applicationInsightsWorkbookAttributes) Identity() terra.ListValue[applicationinsightsworkbook.IdentityAttributes] {
-	return terra.ReferenceList[applicationinsightsworkbook.IdentityAttributes](aiw.ref.Append("identity"))
+	return terra.ReferenceAsList[applicationinsightsworkbook.IdentityAttributes](aiw.ref.Append("identity"))
 }
 
 func (aiw applicationInsightsWorkbookAttributes) Timeouts() applicationinsightsworkbook.TimeoutsAttributes {
-	return terra.ReferenceSingle[applicationinsightsworkbook.TimeoutsAttributes](aiw.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[applicationinsightsworkbook.TimeoutsAttributes](aiw.ref.Append("timeouts"))
 }
 
 type applicationInsightsWorkbookState struct {

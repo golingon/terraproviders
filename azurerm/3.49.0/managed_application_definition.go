@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewManagedApplicationDefinition creates a new instance of [ManagedApplicationDefinition].
 func NewManagedApplicationDefinition(name string, args ManagedApplicationDefinitionArgs) *ManagedApplicationDefinition {
 	return &ManagedApplicationDefinition{
 		Args: args,
@@ -19,28 +20,51 @@ func NewManagedApplicationDefinition(name string, args ManagedApplicationDefinit
 
 var _ terra.Resource = (*ManagedApplicationDefinition)(nil)
 
+// ManagedApplicationDefinition represents the Terraform resource azurerm_managed_application_definition.
 type ManagedApplicationDefinition struct {
-	Name  string
-	Args  ManagedApplicationDefinitionArgs
-	state *managedApplicationDefinitionState
+	Name      string
+	Args      ManagedApplicationDefinitionArgs
+	state     *managedApplicationDefinitionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ManagedApplicationDefinition].
 func (mad *ManagedApplicationDefinition) Type() string {
 	return "azurerm_managed_application_definition"
 }
 
+// LocalName returns the local name for [ManagedApplicationDefinition].
 func (mad *ManagedApplicationDefinition) LocalName() string {
 	return mad.Name
 }
 
+// Configuration returns the configuration (args) for [ManagedApplicationDefinition].
 func (mad *ManagedApplicationDefinition) Configuration() interface{} {
 	return mad.Args
 }
 
+// DependOn is used for other resources to depend on [ManagedApplicationDefinition].
+func (mad *ManagedApplicationDefinition) DependOn() terra.Reference {
+	return terra.ReferenceResource(mad)
+}
+
+// Dependencies returns the list of resources [ManagedApplicationDefinition] depends_on.
+func (mad *ManagedApplicationDefinition) Dependencies() terra.Dependencies {
+	return mad.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ManagedApplicationDefinition].
+func (mad *ManagedApplicationDefinition) LifecycleManagement() *terra.Lifecycle {
+	return mad.Lifecycle
+}
+
+// Attributes returns the attributes for [ManagedApplicationDefinition].
 func (mad *ManagedApplicationDefinition) Attributes() managedApplicationDefinitionAttributes {
 	return managedApplicationDefinitionAttributes{ref: terra.ReferenceResource(mad)}
 }
 
+// ImportState imports the given attribute values into [ManagedApplicationDefinition]'s state.
 func (mad *ManagedApplicationDefinition) ImportState(av io.Reader) error {
 	mad.state = &managedApplicationDefinitionState{}
 	if err := json.NewDecoder(av).Decode(mad.state); err != nil {
@@ -49,10 +73,12 @@ func (mad *ManagedApplicationDefinition) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ManagedApplicationDefinition] has state.
 func (mad *ManagedApplicationDefinition) State() (*managedApplicationDefinitionState, bool) {
 	return mad.state, mad.state != nil
 }
 
+// StateMust returns the state for [ManagedApplicationDefinition]. Panics if the state is nil.
 func (mad *ManagedApplicationDefinition) StateMust() *managedApplicationDefinitionState {
 	if mad.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mad.Type(), mad.LocalName()))
@@ -60,10 +86,7 @@ func (mad *ManagedApplicationDefinition) StateMust() *managedApplicationDefiniti
 	return mad.state
 }
 
-func (mad *ManagedApplicationDefinition) DependOn() terra.Reference {
-	return terra.ReferenceResource(mad)
-}
-
+// ManagedApplicationDefinitionArgs contains the configurations for azurerm_managed_application_definition.
 type ManagedApplicationDefinitionArgs struct {
 	// CreateUiDefinition: string, optional
 	CreateUiDefinition terra.StringValue `hcl:"create_ui_definition,attr"`
@@ -93,67 +116,77 @@ type ManagedApplicationDefinitionArgs struct {
 	Authorization []managedapplicationdefinition.Authorization `hcl:"authorization,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *managedapplicationdefinition.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ManagedApplicationDefinition depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type managedApplicationDefinitionAttributes struct {
 	ref terra.Reference
 }
 
+// CreateUiDefinition returns a reference to field create_ui_definition of azurerm_managed_application_definition.
 func (mad managedApplicationDefinitionAttributes) CreateUiDefinition() terra.StringValue {
-	return terra.ReferenceString(mad.ref.Append("create_ui_definition"))
+	return terra.ReferenceAsString(mad.ref.Append("create_ui_definition"))
 }
 
+// Description returns a reference to field description of azurerm_managed_application_definition.
 func (mad managedApplicationDefinitionAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(mad.ref.Append("description"))
+	return terra.ReferenceAsString(mad.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_managed_application_definition.
 func (mad managedApplicationDefinitionAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(mad.ref.Append("display_name"))
+	return terra.ReferenceAsString(mad.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of azurerm_managed_application_definition.
 func (mad managedApplicationDefinitionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mad.ref.Append("id"))
+	return terra.ReferenceAsString(mad.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_managed_application_definition.
 func (mad managedApplicationDefinitionAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(mad.ref.Append("location"))
+	return terra.ReferenceAsString(mad.ref.Append("location"))
 }
 
+// LockLevel returns a reference to field lock_level of azurerm_managed_application_definition.
 func (mad managedApplicationDefinitionAttributes) LockLevel() terra.StringValue {
-	return terra.ReferenceString(mad.ref.Append("lock_level"))
+	return terra.ReferenceAsString(mad.ref.Append("lock_level"))
 }
 
+// MainTemplate returns a reference to field main_template of azurerm_managed_application_definition.
 func (mad managedApplicationDefinitionAttributes) MainTemplate() terra.StringValue {
-	return terra.ReferenceString(mad.ref.Append("main_template"))
+	return terra.ReferenceAsString(mad.ref.Append("main_template"))
 }
 
+// Name returns a reference to field name of azurerm_managed_application_definition.
 func (mad managedApplicationDefinitionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mad.ref.Append("name"))
+	return terra.ReferenceAsString(mad.ref.Append("name"))
 }
 
+// PackageEnabled returns a reference to field package_enabled of azurerm_managed_application_definition.
 func (mad managedApplicationDefinitionAttributes) PackageEnabled() terra.BoolValue {
-	return terra.ReferenceBool(mad.ref.Append("package_enabled"))
+	return terra.ReferenceAsBool(mad.ref.Append("package_enabled"))
 }
 
+// PackageFileUri returns a reference to field package_file_uri of azurerm_managed_application_definition.
 func (mad managedApplicationDefinitionAttributes) PackageFileUri() terra.StringValue {
-	return terra.ReferenceString(mad.ref.Append("package_file_uri"))
+	return terra.ReferenceAsString(mad.ref.Append("package_file_uri"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_managed_application_definition.
 func (mad managedApplicationDefinitionAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(mad.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(mad.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_managed_application_definition.
 func (mad managedApplicationDefinitionAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mad.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mad.ref.Append("tags"))
 }
 
 func (mad managedApplicationDefinitionAttributes) Authorization() terra.SetValue[managedapplicationdefinition.AuthorizationAttributes] {
-	return terra.ReferenceSet[managedapplicationdefinition.AuthorizationAttributes](mad.ref.Append("authorization"))
+	return terra.ReferenceAsSet[managedapplicationdefinition.AuthorizationAttributes](mad.ref.Append("authorization"))
 }
 
 func (mad managedApplicationDefinitionAttributes) Timeouts() managedapplicationdefinition.TimeoutsAttributes {
-	return terra.ReferenceSingle[managedapplicationdefinition.TimeoutsAttributes](mad.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[managedapplicationdefinition.TimeoutsAttributes](mad.ref.Append("timeouts"))
 }
 
 type managedApplicationDefinitionState struct {

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataContainerGroup creates a new instance of [DataContainerGroup].
 func NewDataContainerGroup(name string, args DataContainerGroupArgs) *DataContainerGroup {
 	return &DataContainerGroup{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataContainerGroup(name string, args DataContainerGroupArgs) *DataContai
 
 var _ terra.DataResource = (*DataContainerGroup)(nil)
 
+// DataContainerGroup represents the Terraform data resource azurerm_container_group.
 type DataContainerGroup struct {
 	Name string
 	Args DataContainerGroupArgs
 }
 
+// DataSource returns the Terraform object type for [DataContainerGroup].
 func (cg *DataContainerGroup) DataSource() string {
 	return "azurerm_container_group"
 }
 
+// LocalName returns the local name for [DataContainerGroup].
 func (cg *DataContainerGroup) LocalName() string {
 	return cg.Name
 }
 
+// Configuration returns the configuration (args) for [DataContainerGroup].
 func (cg *DataContainerGroup) Configuration() interface{} {
 	return cg.Args
 }
 
+// Attributes returns the attributes for [DataContainerGroup].
 func (cg *DataContainerGroup) Attributes() dataContainerGroupAttributes {
 	return dataContainerGroupAttributes{ref: terra.ReferenceDataResource(cg)}
 }
 
+// DataContainerGroupArgs contains the configurations for azurerm_container_group.
 type DataContainerGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -55,46 +62,55 @@ type dataContainerGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Fqdn returns a reference to field fqdn of azurerm_container_group.
 func (cg dataContainerGroupAttributes) Fqdn() terra.StringValue {
-	return terra.ReferenceString(cg.ref.Append("fqdn"))
+	return terra.ReferenceAsString(cg.ref.Append("fqdn"))
 }
 
+// Id returns a reference to field id of azurerm_container_group.
 func (cg dataContainerGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cg.ref.Append("id"))
+	return terra.ReferenceAsString(cg.ref.Append("id"))
 }
 
+// IpAddress returns a reference to field ip_address of azurerm_container_group.
 func (cg dataContainerGroupAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(cg.ref.Append("ip_address"))
+	return terra.ReferenceAsString(cg.ref.Append("ip_address"))
 }
 
+// Location returns a reference to field location of azurerm_container_group.
 func (cg dataContainerGroupAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(cg.ref.Append("location"))
+	return terra.ReferenceAsString(cg.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_container_group.
 func (cg dataContainerGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cg.ref.Append("name"))
+	return terra.ReferenceAsString(cg.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_container_group.
 func (cg dataContainerGroupAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(cg.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(cg.ref.Append("resource_group_name"))
 }
 
+// SubnetIds returns a reference to field subnet_ids of azurerm_container_group.
 func (cg dataContainerGroupAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cg.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](cg.ref.Append("subnet_ids"))
 }
 
+// Tags returns a reference to field tags of azurerm_container_group.
 func (cg dataContainerGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](cg.ref.Append("tags"))
 }
 
+// Zones returns a reference to field zones of azurerm_container_group.
 func (cg dataContainerGroupAttributes) Zones() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cg.ref.Append("zones"))
+	return terra.ReferenceAsSet[terra.StringValue](cg.ref.Append("zones"))
 }
 
 func (cg dataContainerGroupAttributes) Identity() terra.ListValue[datacontainergroup.IdentityAttributes] {
-	return terra.ReferenceList[datacontainergroup.IdentityAttributes](cg.ref.Append("identity"))
+	return terra.ReferenceAsList[datacontainergroup.IdentityAttributes](cg.ref.Append("identity"))
 }
 
 func (cg dataContainerGroupAttributes) Timeouts() datacontainergroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[datacontainergroup.TimeoutsAttributes](cg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datacontainergroup.TimeoutsAttributes](cg.ref.Append("timeouts"))
 }

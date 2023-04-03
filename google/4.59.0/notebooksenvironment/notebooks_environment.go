@@ -36,80 +36,80 @@ type ContainerImageAttributes struct {
 	ref terra.Reference
 }
 
-func (ci ContainerImageAttributes) InternalRef() terra.Reference {
-	return ci.ref
+func (ci ContainerImageAttributes) InternalRef() (terra.Reference, error) {
+	return ci.ref, nil
 }
 
 func (ci ContainerImageAttributes) InternalWithRef(ref terra.Reference) ContainerImageAttributes {
 	return ContainerImageAttributes{ref: ref}
 }
 
-func (ci ContainerImageAttributes) InternalTokens() hclwrite.Tokens {
+func (ci ContainerImageAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ci.ref.InternalTokens()
 }
 
 func (ci ContainerImageAttributes) Repository() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("repository"))
+	return terra.ReferenceAsString(ci.ref.Append("repository"))
 }
 
 func (ci ContainerImageAttributes) Tag() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("tag"))
+	return terra.ReferenceAsString(ci.ref.Append("tag"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type VmImageAttributes struct {
 	ref terra.Reference
 }
 
-func (vi VmImageAttributes) InternalRef() terra.Reference {
-	return vi.ref
+func (vi VmImageAttributes) InternalRef() (terra.Reference, error) {
+	return vi.ref, nil
 }
 
 func (vi VmImageAttributes) InternalWithRef(ref terra.Reference) VmImageAttributes {
 	return VmImageAttributes{ref: ref}
 }
 
-func (vi VmImageAttributes) InternalTokens() hclwrite.Tokens {
+func (vi VmImageAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vi.ref.InternalTokens()
 }
 
 func (vi VmImageAttributes) ImageFamily() terra.StringValue {
-	return terra.ReferenceString(vi.ref.Append("image_family"))
+	return terra.ReferenceAsString(vi.ref.Append("image_family"))
 }
 
 func (vi VmImageAttributes) ImageName() terra.StringValue {
-	return terra.ReferenceString(vi.ref.Append("image_name"))
+	return terra.ReferenceAsString(vi.ref.Append("image_name"))
 }
 
 func (vi VmImageAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(vi.ref.Append("project"))
+	return terra.ReferenceAsString(vi.ref.Append("project"))
 }
 
 type ContainerImageState struct {

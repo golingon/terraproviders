@@ -30,7 +30,7 @@ func (sl StorageLocationAttributes) InternalWithRef(ref terra.Reference) Storage
 	return StorageLocationAttributes{ref: ref}
 }
 
-func (sl StorageLocationAttributes) InternalTokens() hclwrite.Tokens {
+func (sl StorageLocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sl.ref.InternalTokens()
 }
 

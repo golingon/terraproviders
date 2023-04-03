@@ -57,132 +57,132 @@ type Ipv6Attributes struct {
 	ref terra.Reference
 }
 
-func (i Ipv6Attributes) InternalRef() terra.Reference {
-	return i.ref
+func (i Ipv6Attributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i Ipv6Attributes) InternalWithRef(ref terra.Reference) Ipv6Attributes {
 	return Ipv6Attributes{ref: ref}
 }
 
-func (i Ipv6Attributes) InternalTokens() hclwrite.Tokens {
+func (i Ipv6Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i Ipv6Attributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(i.ref.Append("enabled"))
+	return terra.ReferenceAsBool(i.ref.Append("enabled"))
 }
 
 func (i Ipv6Attributes) PrimaryPeerAddressPrefix() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("primary_peer_address_prefix"))
+	return terra.ReferenceAsString(i.ref.Append("primary_peer_address_prefix"))
 }
 
 func (i Ipv6Attributes) RouteFilterId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("route_filter_id"))
+	return terra.ReferenceAsString(i.ref.Append("route_filter_id"))
 }
 
 func (i Ipv6Attributes) SecondaryPeerAddressPrefix() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("secondary_peer_address_prefix"))
+	return terra.ReferenceAsString(i.ref.Append("secondary_peer_address_prefix"))
 }
 
 func (i Ipv6Attributes) MicrosoftPeering() terra.ListValue[MicrosoftPeeringAttributes] {
-	return terra.ReferenceList[MicrosoftPeeringAttributes](i.ref.Append("microsoft_peering"))
+	return terra.ReferenceAsList[MicrosoftPeeringAttributes](i.ref.Append("microsoft_peering"))
 }
 
 type MicrosoftPeeringAttributes struct {
 	ref terra.Reference
 }
 
-func (mp MicrosoftPeeringAttributes) InternalRef() terra.Reference {
-	return mp.ref
+func (mp MicrosoftPeeringAttributes) InternalRef() (terra.Reference, error) {
+	return mp.ref, nil
 }
 
 func (mp MicrosoftPeeringAttributes) InternalWithRef(ref terra.Reference) MicrosoftPeeringAttributes {
 	return MicrosoftPeeringAttributes{ref: ref}
 }
 
-func (mp MicrosoftPeeringAttributes) InternalTokens() hclwrite.Tokens {
+func (mp MicrosoftPeeringAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mp.ref.InternalTokens()
 }
 
 func (mp MicrosoftPeeringAttributes) AdvertisedCommunities() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](mp.ref.Append("advertised_communities"))
+	return terra.ReferenceAsList[terra.StringValue](mp.ref.Append("advertised_communities"))
 }
 
 func (mp MicrosoftPeeringAttributes) AdvertisedPublicPrefixes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](mp.ref.Append("advertised_public_prefixes"))
+	return terra.ReferenceAsList[terra.StringValue](mp.ref.Append("advertised_public_prefixes"))
 }
 
 func (mp MicrosoftPeeringAttributes) CustomerAsn() terra.NumberValue {
-	return terra.ReferenceNumber(mp.ref.Append("customer_asn"))
+	return terra.ReferenceAsNumber(mp.ref.Append("customer_asn"))
 }
 
 func (mp MicrosoftPeeringAttributes) RoutingRegistryName() terra.StringValue {
-	return terra.ReferenceString(mp.ref.Append("routing_registry_name"))
+	return terra.ReferenceAsString(mp.ref.Append("routing_registry_name"))
 }
 
 type MicrosoftPeeringConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (mpc MicrosoftPeeringConfigAttributes) InternalRef() terra.Reference {
-	return mpc.ref
+func (mpc MicrosoftPeeringConfigAttributes) InternalRef() (terra.Reference, error) {
+	return mpc.ref, nil
 }
 
 func (mpc MicrosoftPeeringConfigAttributes) InternalWithRef(ref terra.Reference) MicrosoftPeeringConfigAttributes {
 	return MicrosoftPeeringConfigAttributes{ref: ref}
 }
 
-func (mpc MicrosoftPeeringConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (mpc MicrosoftPeeringConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mpc.ref.InternalTokens()
 }
 
 func (mpc MicrosoftPeeringConfigAttributes) AdvertisedCommunities() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](mpc.ref.Append("advertised_communities"))
+	return terra.ReferenceAsList[terra.StringValue](mpc.ref.Append("advertised_communities"))
 }
 
 func (mpc MicrosoftPeeringConfigAttributes) AdvertisedPublicPrefixes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](mpc.ref.Append("advertised_public_prefixes"))
+	return terra.ReferenceAsList[terra.StringValue](mpc.ref.Append("advertised_public_prefixes"))
 }
 
 func (mpc MicrosoftPeeringConfigAttributes) CustomerAsn() terra.NumberValue {
-	return terra.ReferenceNumber(mpc.ref.Append("customer_asn"))
+	return terra.ReferenceAsNumber(mpc.ref.Append("customer_asn"))
 }
 
 func (mpc MicrosoftPeeringConfigAttributes) RoutingRegistryName() terra.StringValue {
-	return terra.ReferenceString(mpc.ref.Append("routing_registry_name"))
+	return terra.ReferenceAsString(mpc.ref.Append("routing_registry_name"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type Ipv6State struct {

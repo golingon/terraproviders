@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewContainerAzureCluster creates a new instance of [ContainerAzureCluster].
 func NewContainerAzureCluster(name string, args ContainerAzureClusterArgs) *ContainerAzureCluster {
 	return &ContainerAzureCluster{
 		Args: args,
@@ -19,28 +20,51 @@ func NewContainerAzureCluster(name string, args ContainerAzureClusterArgs) *Cont
 
 var _ terra.Resource = (*ContainerAzureCluster)(nil)
 
+// ContainerAzureCluster represents the Terraform resource google_container_azure_cluster.
 type ContainerAzureCluster struct {
-	Name  string
-	Args  ContainerAzureClusterArgs
-	state *containerAzureClusterState
+	Name      string
+	Args      ContainerAzureClusterArgs
+	state     *containerAzureClusterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ContainerAzureCluster].
 func (cac *ContainerAzureCluster) Type() string {
 	return "google_container_azure_cluster"
 }
 
+// LocalName returns the local name for [ContainerAzureCluster].
 func (cac *ContainerAzureCluster) LocalName() string {
 	return cac.Name
 }
 
+// Configuration returns the configuration (args) for [ContainerAzureCluster].
 func (cac *ContainerAzureCluster) Configuration() interface{} {
 	return cac.Args
 }
 
+// DependOn is used for other resources to depend on [ContainerAzureCluster].
+func (cac *ContainerAzureCluster) DependOn() terra.Reference {
+	return terra.ReferenceResource(cac)
+}
+
+// Dependencies returns the list of resources [ContainerAzureCluster] depends_on.
+func (cac *ContainerAzureCluster) Dependencies() terra.Dependencies {
+	return cac.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ContainerAzureCluster].
+func (cac *ContainerAzureCluster) LifecycleManagement() *terra.Lifecycle {
+	return cac.Lifecycle
+}
+
+// Attributes returns the attributes for [ContainerAzureCluster].
 func (cac *ContainerAzureCluster) Attributes() containerAzureClusterAttributes {
 	return containerAzureClusterAttributes{ref: terra.ReferenceResource(cac)}
 }
 
+// ImportState imports the given attribute values into [ContainerAzureCluster]'s state.
 func (cac *ContainerAzureCluster) ImportState(av io.Reader) error {
 	cac.state = &containerAzureClusterState{}
 	if err := json.NewDecoder(av).Decode(cac.state); err != nil {
@@ -49,10 +73,12 @@ func (cac *ContainerAzureCluster) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ContainerAzureCluster] has state.
 func (cac *ContainerAzureCluster) State() (*containerAzureClusterState, bool) {
 	return cac.state, cac.state != nil
 }
 
+// StateMust returns the state for [ContainerAzureCluster]. Panics if the state is nil.
 func (cac *ContainerAzureCluster) StateMust() *containerAzureClusterState {
 	if cac.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cac.Type(), cac.LocalName()))
@@ -60,10 +86,7 @@ func (cac *ContainerAzureCluster) StateMust() *containerAzureClusterState {
 	return cac.state
 }
 
-func (cac *ContainerAzureCluster) DependOn() terra.Reference {
-	return terra.ReferenceResource(cac)
-}
-
+// ContainerAzureClusterArgs contains the configurations for google_container_azure_cluster.
 type ContainerAzureClusterArgs struct {
 	// Annotations: map of string, optional
 	Annotations terra.MapValue[terra.StringValue] `hcl:"annotations,attr"`
@@ -97,103 +120,117 @@ type ContainerAzureClusterArgs struct {
 	Networking *containerazurecluster.Networking `hcl:"networking,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *containerazurecluster.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ContainerAzureCluster depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type containerAzureClusterAttributes struct {
 	ref terra.Reference
 }
 
+// Annotations returns a reference to field annotations of google_container_azure_cluster.
 func (cac containerAzureClusterAttributes) Annotations() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cac.ref.Append("annotations"))
+	return terra.ReferenceAsMap[terra.StringValue](cac.ref.Append("annotations"))
 }
 
+// AzureRegion returns a reference to field azure_region of google_container_azure_cluster.
 func (cac containerAzureClusterAttributes) AzureRegion() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("azure_region"))
+	return terra.ReferenceAsString(cac.ref.Append("azure_region"))
 }
 
+// Client returns a reference to field client of google_container_azure_cluster.
 func (cac containerAzureClusterAttributes) Client() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("client"))
+	return terra.ReferenceAsString(cac.ref.Append("client"))
 }
 
+// CreateTime returns a reference to field create_time of google_container_azure_cluster.
 func (cac containerAzureClusterAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("create_time"))
+	return terra.ReferenceAsString(cac.ref.Append("create_time"))
 }
 
+// Description returns a reference to field description of google_container_azure_cluster.
 func (cac containerAzureClusterAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("description"))
+	return terra.ReferenceAsString(cac.ref.Append("description"))
 }
 
+// Endpoint returns a reference to field endpoint of google_container_azure_cluster.
 func (cac containerAzureClusterAttributes) Endpoint() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("endpoint"))
+	return terra.ReferenceAsString(cac.ref.Append("endpoint"))
 }
 
+// Etag returns a reference to field etag of google_container_azure_cluster.
 func (cac containerAzureClusterAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("etag"))
+	return terra.ReferenceAsString(cac.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_container_azure_cluster.
 func (cac containerAzureClusterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("id"))
+	return terra.ReferenceAsString(cac.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_container_azure_cluster.
 func (cac containerAzureClusterAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("location"))
+	return terra.ReferenceAsString(cac.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_container_azure_cluster.
 func (cac containerAzureClusterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("name"))
+	return terra.ReferenceAsString(cac.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_container_azure_cluster.
 func (cac containerAzureClusterAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("project"))
+	return terra.ReferenceAsString(cac.ref.Append("project"))
 }
 
+// Reconciling returns a reference to field reconciling of google_container_azure_cluster.
 func (cac containerAzureClusterAttributes) Reconciling() terra.BoolValue {
-	return terra.ReferenceBool(cac.ref.Append("reconciling"))
+	return terra.ReferenceAsBool(cac.ref.Append("reconciling"))
 }
 
+// ResourceGroupId returns a reference to field resource_group_id of google_container_azure_cluster.
 func (cac containerAzureClusterAttributes) ResourceGroupId() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("resource_group_id"))
+	return terra.ReferenceAsString(cac.ref.Append("resource_group_id"))
 }
 
+// State returns a reference to field state of google_container_azure_cluster.
 func (cac containerAzureClusterAttributes) State() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("state"))
+	return terra.ReferenceAsString(cac.ref.Append("state"))
 }
 
+// Uid returns a reference to field uid of google_container_azure_cluster.
 func (cac containerAzureClusterAttributes) Uid() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("uid"))
+	return terra.ReferenceAsString(cac.ref.Append("uid"))
 }
 
+// UpdateTime returns a reference to field update_time of google_container_azure_cluster.
 func (cac containerAzureClusterAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("update_time"))
+	return terra.ReferenceAsString(cac.ref.Append("update_time"))
 }
 
 func (cac containerAzureClusterAttributes) WorkloadIdentityConfig() terra.ListValue[containerazurecluster.WorkloadIdentityConfigAttributes] {
-	return terra.ReferenceList[containerazurecluster.WorkloadIdentityConfigAttributes](cac.ref.Append("workload_identity_config"))
+	return terra.ReferenceAsList[containerazurecluster.WorkloadIdentityConfigAttributes](cac.ref.Append("workload_identity_config"))
 }
 
 func (cac containerAzureClusterAttributes) Authorization() terra.ListValue[containerazurecluster.AuthorizationAttributes] {
-	return terra.ReferenceList[containerazurecluster.AuthorizationAttributes](cac.ref.Append("authorization"))
+	return terra.ReferenceAsList[containerazurecluster.AuthorizationAttributes](cac.ref.Append("authorization"))
 }
 
 func (cac containerAzureClusterAttributes) AzureServicesAuthentication() terra.ListValue[containerazurecluster.AzureServicesAuthenticationAttributes] {
-	return terra.ReferenceList[containerazurecluster.AzureServicesAuthenticationAttributes](cac.ref.Append("azure_services_authentication"))
+	return terra.ReferenceAsList[containerazurecluster.AzureServicesAuthenticationAttributes](cac.ref.Append("azure_services_authentication"))
 }
 
 func (cac containerAzureClusterAttributes) ControlPlane() terra.ListValue[containerazurecluster.ControlPlaneAttributes] {
-	return terra.ReferenceList[containerazurecluster.ControlPlaneAttributes](cac.ref.Append("control_plane"))
+	return terra.ReferenceAsList[containerazurecluster.ControlPlaneAttributes](cac.ref.Append("control_plane"))
 }
 
 func (cac containerAzureClusterAttributes) Fleet() terra.ListValue[containerazurecluster.FleetAttributes] {
-	return terra.ReferenceList[containerazurecluster.FleetAttributes](cac.ref.Append("fleet"))
+	return terra.ReferenceAsList[containerazurecluster.FleetAttributes](cac.ref.Append("fleet"))
 }
 
 func (cac containerAzureClusterAttributes) Networking() terra.ListValue[containerazurecluster.NetworkingAttributes] {
-	return terra.ReferenceList[containerazurecluster.NetworkingAttributes](cac.ref.Append("networking"))
+	return terra.ReferenceAsList[containerazurecluster.NetworkingAttributes](cac.ref.Append("networking"))
 }
 
 func (cac containerAzureClusterAttributes) Timeouts() containerazurecluster.TimeoutsAttributes {
-	return terra.ReferenceSingle[containerazurecluster.TimeoutsAttributes](cac.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[containerazurecluster.TimeoutsAttributes](cac.ref.Append("timeouts"))
 }
 
 type containerAzureClusterState struct {

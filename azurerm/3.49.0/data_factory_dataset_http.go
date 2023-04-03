@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFactoryDatasetHttp creates a new instance of [DataFactoryDatasetHttp].
 func NewDataFactoryDatasetHttp(name string, args DataFactoryDatasetHttpArgs) *DataFactoryDatasetHttp {
 	return &DataFactoryDatasetHttp{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFactoryDatasetHttp(name string, args DataFactoryDatasetHttpArgs) *Da
 
 var _ terra.Resource = (*DataFactoryDatasetHttp)(nil)
 
+// DataFactoryDatasetHttp represents the Terraform resource azurerm_data_factory_dataset_http.
 type DataFactoryDatasetHttp struct {
-	Name  string
-	Args  DataFactoryDatasetHttpArgs
-	state *dataFactoryDatasetHttpState
+	Name      string
+	Args      DataFactoryDatasetHttpArgs
+	state     *dataFactoryDatasetHttpState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFactoryDatasetHttp].
 func (dfdh *DataFactoryDatasetHttp) Type() string {
 	return "azurerm_data_factory_dataset_http"
 }
 
+// LocalName returns the local name for [DataFactoryDatasetHttp].
 func (dfdh *DataFactoryDatasetHttp) LocalName() string {
 	return dfdh.Name
 }
 
+// Configuration returns the configuration (args) for [DataFactoryDatasetHttp].
 func (dfdh *DataFactoryDatasetHttp) Configuration() interface{} {
 	return dfdh.Args
 }
 
+// DependOn is used for other resources to depend on [DataFactoryDatasetHttp].
+func (dfdh *DataFactoryDatasetHttp) DependOn() terra.Reference {
+	return terra.ReferenceResource(dfdh)
+}
+
+// Dependencies returns the list of resources [DataFactoryDatasetHttp] depends_on.
+func (dfdh *DataFactoryDatasetHttp) Dependencies() terra.Dependencies {
+	return dfdh.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFactoryDatasetHttp].
+func (dfdh *DataFactoryDatasetHttp) LifecycleManagement() *terra.Lifecycle {
+	return dfdh.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFactoryDatasetHttp].
 func (dfdh *DataFactoryDatasetHttp) Attributes() dataFactoryDatasetHttpAttributes {
 	return dataFactoryDatasetHttpAttributes{ref: terra.ReferenceResource(dfdh)}
 }
 
+// ImportState imports the given attribute values into [DataFactoryDatasetHttp]'s state.
 func (dfdh *DataFactoryDatasetHttp) ImportState(av io.Reader) error {
 	dfdh.state = &dataFactoryDatasetHttpState{}
 	if err := json.NewDecoder(av).Decode(dfdh.state); err != nil {
@@ -49,10 +73,12 @@ func (dfdh *DataFactoryDatasetHttp) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFactoryDatasetHttp] has state.
 func (dfdh *DataFactoryDatasetHttp) State() (*dataFactoryDatasetHttpState, bool) {
 	return dfdh.state, dfdh.state != nil
 }
 
+// StateMust returns the state for [DataFactoryDatasetHttp]. Panics if the state is nil.
 func (dfdh *DataFactoryDatasetHttp) StateMust() *dataFactoryDatasetHttpState {
 	if dfdh.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dfdh.Type(), dfdh.LocalName()))
@@ -60,10 +86,7 @@ func (dfdh *DataFactoryDatasetHttp) StateMust() *dataFactoryDatasetHttpState {
 	return dfdh.state
 }
 
-func (dfdh *DataFactoryDatasetHttp) DependOn() terra.Reference {
-	return terra.ReferenceResource(dfdh)
-}
-
+// DataFactoryDatasetHttpArgs contains the configurations for azurerm_data_factory_dataset_http.
 type DataFactoryDatasetHttpArgs struct {
 	// AdditionalProperties: map of string, optional
 	AdditionalProperties terra.MapValue[terra.StringValue] `hcl:"additional_properties,attr"`
@@ -93,67 +116,77 @@ type DataFactoryDatasetHttpArgs struct {
 	SchemaColumn []datafactorydatasethttp.SchemaColumn `hcl:"schema_column,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *datafactorydatasethttp.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataFactoryDatasetHttp depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFactoryDatasetHttpAttributes struct {
 	ref terra.Reference
 }
 
+// AdditionalProperties returns a reference to field additional_properties of azurerm_data_factory_dataset_http.
 func (dfdh dataFactoryDatasetHttpAttributes) AdditionalProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dfdh.ref.Append("additional_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](dfdh.ref.Append("additional_properties"))
 }
 
+// Annotations returns a reference to field annotations of azurerm_data_factory_dataset_http.
 func (dfdh dataFactoryDatasetHttpAttributes) Annotations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dfdh.ref.Append("annotations"))
+	return terra.ReferenceAsList[terra.StringValue](dfdh.ref.Append("annotations"))
 }
 
+// DataFactoryId returns a reference to field data_factory_id of azurerm_data_factory_dataset_http.
 func (dfdh dataFactoryDatasetHttpAttributes) DataFactoryId() terra.StringValue {
-	return terra.ReferenceString(dfdh.ref.Append("data_factory_id"))
+	return terra.ReferenceAsString(dfdh.ref.Append("data_factory_id"))
 }
 
+// Description returns a reference to field description of azurerm_data_factory_dataset_http.
 func (dfdh dataFactoryDatasetHttpAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dfdh.ref.Append("description"))
+	return terra.ReferenceAsString(dfdh.ref.Append("description"))
 }
 
+// Folder returns a reference to field folder of azurerm_data_factory_dataset_http.
 func (dfdh dataFactoryDatasetHttpAttributes) Folder() terra.StringValue {
-	return terra.ReferenceString(dfdh.ref.Append("folder"))
+	return terra.ReferenceAsString(dfdh.ref.Append("folder"))
 }
 
+// Id returns a reference to field id of azurerm_data_factory_dataset_http.
 func (dfdh dataFactoryDatasetHttpAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dfdh.ref.Append("id"))
+	return terra.ReferenceAsString(dfdh.ref.Append("id"))
 }
 
+// LinkedServiceName returns a reference to field linked_service_name of azurerm_data_factory_dataset_http.
 func (dfdh dataFactoryDatasetHttpAttributes) LinkedServiceName() terra.StringValue {
-	return terra.ReferenceString(dfdh.ref.Append("linked_service_name"))
+	return terra.ReferenceAsString(dfdh.ref.Append("linked_service_name"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory_dataset_http.
 func (dfdh dataFactoryDatasetHttpAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dfdh.ref.Append("name"))
+	return terra.ReferenceAsString(dfdh.ref.Append("name"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_data_factory_dataset_http.
 func (dfdh dataFactoryDatasetHttpAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dfdh.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](dfdh.ref.Append("parameters"))
 }
 
+// RelativeUrl returns a reference to field relative_url of azurerm_data_factory_dataset_http.
 func (dfdh dataFactoryDatasetHttpAttributes) RelativeUrl() terra.StringValue {
-	return terra.ReferenceString(dfdh.ref.Append("relative_url"))
+	return terra.ReferenceAsString(dfdh.ref.Append("relative_url"))
 }
 
+// RequestBody returns a reference to field request_body of azurerm_data_factory_dataset_http.
 func (dfdh dataFactoryDatasetHttpAttributes) RequestBody() terra.StringValue {
-	return terra.ReferenceString(dfdh.ref.Append("request_body"))
+	return terra.ReferenceAsString(dfdh.ref.Append("request_body"))
 }
 
+// RequestMethod returns a reference to field request_method of azurerm_data_factory_dataset_http.
 func (dfdh dataFactoryDatasetHttpAttributes) RequestMethod() terra.StringValue {
-	return terra.ReferenceString(dfdh.ref.Append("request_method"))
+	return terra.ReferenceAsString(dfdh.ref.Append("request_method"))
 }
 
 func (dfdh dataFactoryDatasetHttpAttributes) SchemaColumn() terra.ListValue[datafactorydatasethttp.SchemaColumnAttributes] {
-	return terra.ReferenceList[datafactorydatasethttp.SchemaColumnAttributes](dfdh.ref.Append("schema_column"))
+	return terra.ReferenceAsList[datafactorydatasethttp.SchemaColumnAttributes](dfdh.ref.Append("schema_column"))
 }
 
 func (dfdh dataFactoryDatasetHttpAttributes) Timeouts() datafactorydatasethttp.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafactorydatasethttp.TimeoutsAttributes](dfdh.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafactorydatasethttp.TimeoutsAttributes](dfdh.ref.Append("timeouts"))
 }
 
 type dataFactoryDatasetHttpState struct {

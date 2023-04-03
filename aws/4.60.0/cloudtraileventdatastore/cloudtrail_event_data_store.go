@@ -52,7 +52,7 @@ func (aes AdvancedEventSelectorAttributes) InternalWithRef(ref terra.Reference) 
 	return AdvancedEventSelectorAttributes{ref: ref}
 }
 
-func (aes AdvancedEventSelectorAttributes) InternalTokens() hclwrite.Tokens {
+func (aes AdvancedEventSelectorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aes.ref.InternalTokens()
 }
 
@@ -76,7 +76,7 @@ func (fs FieldSelectorAttributes) InternalWithRef(ref terra.Reference) FieldSele
 	return FieldSelectorAttributes{ref: ref}
 }
 
-func (fs FieldSelectorAttributes) InternalTokens() hclwrite.Tokens {
+func (fs FieldSelectorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fs.ref.InternalTokens()
 }
 
@@ -120,7 +120,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

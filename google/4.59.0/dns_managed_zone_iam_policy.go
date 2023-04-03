@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewDnsManagedZoneIamPolicy creates a new instance of [DnsManagedZoneIamPolicy].
 func NewDnsManagedZoneIamPolicy(name string, args DnsManagedZoneIamPolicyArgs) *DnsManagedZoneIamPolicy {
 	return &DnsManagedZoneIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewDnsManagedZoneIamPolicy(name string, args DnsManagedZoneIamPolicyArgs) *
 
 var _ terra.Resource = (*DnsManagedZoneIamPolicy)(nil)
 
+// DnsManagedZoneIamPolicy represents the Terraform resource google_dns_managed_zone_iam_policy.
 type DnsManagedZoneIamPolicy struct {
-	Name  string
-	Args  DnsManagedZoneIamPolicyArgs
-	state *dnsManagedZoneIamPolicyState
+	Name      string
+	Args      DnsManagedZoneIamPolicyArgs
+	state     *dnsManagedZoneIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DnsManagedZoneIamPolicy].
 func (dmzip *DnsManagedZoneIamPolicy) Type() string {
 	return "google_dns_managed_zone_iam_policy"
 }
 
+// LocalName returns the local name for [DnsManagedZoneIamPolicy].
 func (dmzip *DnsManagedZoneIamPolicy) LocalName() string {
 	return dmzip.Name
 }
 
+// Configuration returns the configuration (args) for [DnsManagedZoneIamPolicy].
 func (dmzip *DnsManagedZoneIamPolicy) Configuration() interface{} {
 	return dmzip.Args
 }
 
+// DependOn is used for other resources to depend on [DnsManagedZoneIamPolicy].
+func (dmzip *DnsManagedZoneIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(dmzip)
+}
+
+// Dependencies returns the list of resources [DnsManagedZoneIamPolicy] depends_on.
+func (dmzip *DnsManagedZoneIamPolicy) Dependencies() terra.Dependencies {
+	return dmzip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DnsManagedZoneIamPolicy].
+func (dmzip *DnsManagedZoneIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return dmzip.Lifecycle
+}
+
+// Attributes returns the attributes for [DnsManagedZoneIamPolicy].
 func (dmzip *DnsManagedZoneIamPolicy) Attributes() dnsManagedZoneIamPolicyAttributes {
 	return dnsManagedZoneIamPolicyAttributes{ref: terra.ReferenceResource(dmzip)}
 }
 
+// ImportState imports the given attribute values into [DnsManagedZoneIamPolicy]'s state.
 func (dmzip *DnsManagedZoneIamPolicy) ImportState(av io.Reader) error {
 	dmzip.state = &dnsManagedZoneIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(dmzip.state); err != nil {
@@ -48,10 +72,12 @@ func (dmzip *DnsManagedZoneIamPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DnsManagedZoneIamPolicy] has state.
 func (dmzip *DnsManagedZoneIamPolicy) State() (*dnsManagedZoneIamPolicyState, bool) {
 	return dmzip.state, dmzip.state != nil
 }
 
+// StateMust returns the state for [DnsManagedZoneIamPolicy]. Panics if the state is nil.
 func (dmzip *DnsManagedZoneIamPolicy) StateMust() *dnsManagedZoneIamPolicyState {
 	if dmzip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dmzip.Type(), dmzip.LocalName()))
@@ -59,10 +85,7 @@ func (dmzip *DnsManagedZoneIamPolicy) StateMust() *dnsManagedZoneIamPolicyState 
 	return dmzip.state
 }
 
-func (dmzip *DnsManagedZoneIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(dmzip)
-}
-
+// DnsManagedZoneIamPolicyArgs contains the configurations for google_dns_managed_zone_iam_policy.
 type DnsManagedZoneIamPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -72,31 +95,34 @@ type DnsManagedZoneIamPolicyArgs struct {
 	PolicyData terra.StringValue `hcl:"policy_data,attr" validate:"required"`
 	// Project: string, optional
 	Project terra.StringValue `hcl:"project,attr"`
-	// DependsOn contains resources that DnsManagedZoneIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dnsManagedZoneIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_dns_managed_zone_iam_policy.
 func (dmzip dnsManagedZoneIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(dmzip.ref.Append("etag"))
+	return terra.ReferenceAsString(dmzip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_dns_managed_zone_iam_policy.
 func (dmzip dnsManagedZoneIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dmzip.ref.Append("id"))
+	return terra.ReferenceAsString(dmzip.ref.Append("id"))
 }
 
+// ManagedZone returns a reference to field managed_zone of google_dns_managed_zone_iam_policy.
 func (dmzip dnsManagedZoneIamPolicyAttributes) ManagedZone() terra.StringValue {
-	return terra.ReferenceString(dmzip.ref.Append("managed_zone"))
+	return terra.ReferenceAsString(dmzip.ref.Append("managed_zone"))
 }
 
+// PolicyData returns a reference to field policy_data of google_dns_managed_zone_iam_policy.
 func (dmzip dnsManagedZoneIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(dmzip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(dmzip.ref.Append("policy_data"))
 }
 
+// Project returns a reference to field project of google_dns_managed_zone_iam_policy.
 func (dmzip dnsManagedZoneIamPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(dmzip.ref.Append("project"))
+	return terra.ReferenceAsString(dmzip.ref.Append("project"))
 }
 
 type dnsManagedZoneIamPolicyState struct {

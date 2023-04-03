@@ -68,7 +68,7 @@ func (e EgressAttributes) InternalWithRef(ref terra.Reference) EgressAttributes 
 	return EgressAttributes{ref: ref}
 }
 
-func (e EgressAttributes) InternalTokens() hclwrite.Tokens {
+func (e EgressAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -120,7 +120,7 @@ func (i IngressAttributes) InternalWithRef(ref terra.Reference) IngressAttribute
 	return IngressAttributes{ref: ref}
 }
 
-func (i IngressAttributes) InternalTokens() hclwrite.Tokens {
+func (i IngressAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -172,7 +172,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

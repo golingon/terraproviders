@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeSubnetworkIamBinding creates a new instance of [ComputeSubnetworkIamBinding].
 func NewComputeSubnetworkIamBinding(name string, args ComputeSubnetworkIamBindingArgs) *ComputeSubnetworkIamBinding {
 	return &ComputeSubnetworkIamBinding{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeSubnetworkIamBinding(name string, args ComputeSubnetworkIamBindin
 
 var _ terra.Resource = (*ComputeSubnetworkIamBinding)(nil)
 
+// ComputeSubnetworkIamBinding represents the Terraform resource google_compute_subnetwork_iam_binding.
 type ComputeSubnetworkIamBinding struct {
-	Name  string
-	Args  ComputeSubnetworkIamBindingArgs
-	state *computeSubnetworkIamBindingState
+	Name      string
+	Args      ComputeSubnetworkIamBindingArgs
+	state     *computeSubnetworkIamBindingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeSubnetworkIamBinding].
 func (csib *ComputeSubnetworkIamBinding) Type() string {
 	return "google_compute_subnetwork_iam_binding"
 }
 
+// LocalName returns the local name for [ComputeSubnetworkIamBinding].
 func (csib *ComputeSubnetworkIamBinding) LocalName() string {
 	return csib.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeSubnetworkIamBinding].
 func (csib *ComputeSubnetworkIamBinding) Configuration() interface{} {
 	return csib.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeSubnetworkIamBinding].
+func (csib *ComputeSubnetworkIamBinding) DependOn() terra.Reference {
+	return terra.ReferenceResource(csib)
+}
+
+// Dependencies returns the list of resources [ComputeSubnetworkIamBinding] depends_on.
+func (csib *ComputeSubnetworkIamBinding) Dependencies() terra.Dependencies {
+	return csib.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeSubnetworkIamBinding].
+func (csib *ComputeSubnetworkIamBinding) LifecycleManagement() *terra.Lifecycle {
+	return csib.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeSubnetworkIamBinding].
 func (csib *ComputeSubnetworkIamBinding) Attributes() computeSubnetworkIamBindingAttributes {
 	return computeSubnetworkIamBindingAttributes{ref: terra.ReferenceResource(csib)}
 }
 
+// ImportState imports the given attribute values into [ComputeSubnetworkIamBinding]'s state.
 func (csib *ComputeSubnetworkIamBinding) ImportState(av io.Reader) error {
 	csib.state = &computeSubnetworkIamBindingState{}
 	if err := json.NewDecoder(av).Decode(csib.state); err != nil {
@@ -49,10 +73,12 @@ func (csib *ComputeSubnetworkIamBinding) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeSubnetworkIamBinding] has state.
 func (csib *ComputeSubnetworkIamBinding) State() (*computeSubnetworkIamBindingState, bool) {
 	return csib.state, csib.state != nil
 }
 
+// StateMust returns the state for [ComputeSubnetworkIamBinding]. Panics if the state is nil.
 func (csib *ComputeSubnetworkIamBinding) StateMust() *computeSubnetworkIamBindingState {
 	if csib.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", csib.Type(), csib.LocalName()))
@@ -60,10 +86,7 @@ func (csib *ComputeSubnetworkIamBinding) StateMust() *computeSubnetworkIamBindin
 	return csib.state
 }
 
-func (csib *ComputeSubnetworkIamBinding) DependOn() terra.Reference {
-	return terra.ReferenceResource(csib)
-}
-
+// ComputeSubnetworkIamBindingArgs contains the configurations for google_compute_subnetwork_iam_binding.
 type ComputeSubnetworkIamBindingArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,43 +102,48 @@ type ComputeSubnetworkIamBindingArgs struct {
 	Subnetwork terra.StringValue `hcl:"subnetwork,attr" validate:"required"`
 	// Condition: optional
 	Condition *computesubnetworkiambinding.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that ComputeSubnetworkIamBinding depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeSubnetworkIamBindingAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_compute_subnetwork_iam_binding.
 func (csib computeSubnetworkIamBindingAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(csib.ref.Append("etag"))
+	return terra.ReferenceAsString(csib.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_compute_subnetwork_iam_binding.
 func (csib computeSubnetworkIamBindingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(csib.ref.Append("id"))
+	return terra.ReferenceAsString(csib.ref.Append("id"))
 }
 
+// Members returns a reference to field members of google_compute_subnetwork_iam_binding.
 func (csib computeSubnetworkIamBindingAttributes) Members() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](csib.ref.Append("members"))
+	return terra.ReferenceAsSet[terra.StringValue](csib.ref.Append("members"))
 }
 
+// Project returns a reference to field project of google_compute_subnetwork_iam_binding.
 func (csib computeSubnetworkIamBindingAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(csib.ref.Append("project"))
+	return terra.ReferenceAsString(csib.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_compute_subnetwork_iam_binding.
 func (csib computeSubnetworkIamBindingAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(csib.ref.Append("region"))
+	return terra.ReferenceAsString(csib.ref.Append("region"))
 }
 
+// Role returns a reference to field role of google_compute_subnetwork_iam_binding.
 func (csib computeSubnetworkIamBindingAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(csib.ref.Append("role"))
+	return terra.ReferenceAsString(csib.ref.Append("role"))
 }
 
+// Subnetwork returns a reference to field subnetwork of google_compute_subnetwork_iam_binding.
 func (csib computeSubnetworkIamBindingAttributes) Subnetwork() terra.StringValue {
-	return terra.ReferenceString(csib.ref.Append("subnetwork"))
+	return terra.ReferenceAsString(csib.ref.Append("subnetwork"))
 }
 
 func (csib computeSubnetworkIamBindingAttributes) Condition() terra.ListValue[computesubnetworkiambinding.ConditionAttributes] {
-	return terra.ReferenceList[computesubnetworkiambinding.ConditionAttributes](csib.ref.Append("condition"))
+	return terra.ReferenceAsList[computesubnetworkiambinding.ConditionAttributes](csib.ref.Append("condition"))
 }
 
 type computeSubnetworkIamBindingState struct {

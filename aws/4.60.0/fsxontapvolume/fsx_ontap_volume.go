@@ -35,7 +35,7 @@ func (tp TieringPolicyAttributes) InternalWithRef(ref terra.Reference) TieringPo
 	return TieringPolicyAttributes{ref: ref}
 }
 
-func (tp TieringPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (tp TieringPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tp.ref.InternalTokens()
 }
 
@@ -59,7 +59,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

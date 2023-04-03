@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCognitiveDeployment creates a new instance of [CognitiveDeployment].
 func NewCognitiveDeployment(name string, args CognitiveDeploymentArgs) *CognitiveDeployment {
 	return &CognitiveDeployment{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCognitiveDeployment(name string, args CognitiveDeploymentArgs) *Cognitiv
 
 var _ terra.Resource = (*CognitiveDeployment)(nil)
 
+// CognitiveDeployment represents the Terraform resource azurerm_cognitive_deployment.
 type CognitiveDeployment struct {
-	Name  string
-	Args  CognitiveDeploymentArgs
-	state *cognitiveDeploymentState
+	Name      string
+	Args      CognitiveDeploymentArgs
+	state     *cognitiveDeploymentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CognitiveDeployment].
 func (cd *CognitiveDeployment) Type() string {
 	return "azurerm_cognitive_deployment"
 }
 
+// LocalName returns the local name for [CognitiveDeployment].
 func (cd *CognitiveDeployment) LocalName() string {
 	return cd.Name
 }
 
+// Configuration returns the configuration (args) for [CognitiveDeployment].
 func (cd *CognitiveDeployment) Configuration() interface{} {
 	return cd.Args
 }
 
+// DependOn is used for other resources to depend on [CognitiveDeployment].
+func (cd *CognitiveDeployment) DependOn() terra.Reference {
+	return terra.ReferenceResource(cd)
+}
+
+// Dependencies returns the list of resources [CognitiveDeployment] depends_on.
+func (cd *CognitiveDeployment) Dependencies() terra.Dependencies {
+	return cd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CognitiveDeployment].
+func (cd *CognitiveDeployment) LifecycleManagement() *terra.Lifecycle {
+	return cd.Lifecycle
+}
+
+// Attributes returns the attributes for [CognitiveDeployment].
 func (cd *CognitiveDeployment) Attributes() cognitiveDeploymentAttributes {
 	return cognitiveDeploymentAttributes{ref: terra.ReferenceResource(cd)}
 }
 
+// ImportState imports the given attribute values into [CognitiveDeployment]'s state.
 func (cd *CognitiveDeployment) ImportState(av io.Reader) error {
 	cd.state = &cognitiveDeploymentState{}
 	if err := json.NewDecoder(av).Decode(cd.state); err != nil {
@@ -49,10 +73,12 @@ func (cd *CognitiveDeployment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CognitiveDeployment] has state.
 func (cd *CognitiveDeployment) State() (*cognitiveDeploymentState, bool) {
 	return cd.state, cd.state != nil
 }
 
+// StateMust returns the state for [CognitiveDeployment]. Panics if the state is nil.
 func (cd *CognitiveDeployment) StateMust() *cognitiveDeploymentState {
 	if cd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cd.Type(), cd.LocalName()))
@@ -60,10 +86,7 @@ func (cd *CognitiveDeployment) StateMust() *cognitiveDeploymentState {
 	return cd.state
 }
 
-func (cd *CognitiveDeployment) DependOn() terra.Reference {
-	return terra.ReferenceResource(cd)
-}
-
+// CognitiveDeploymentArgs contains the configurations for azurerm_cognitive_deployment.
 type CognitiveDeploymentArgs struct {
 	// CognitiveAccountId: string, required
 	CognitiveAccountId terra.StringValue `hcl:"cognitive_account_id,attr" validate:"required"`
@@ -79,39 +102,41 @@ type CognitiveDeploymentArgs struct {
 	Scale *cognitivedeployment.Scale `hcl:"scale,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *cognitivedeployment.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that CognitiveDeployment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cognitiveDeploymentAttributes struct {
 	ref terra.Reference
 }
 
+// CognitiveAccountId returns a reference to field cognitive_account_id of azurerm_cognitive_deployment.
 func (cd cognitiveDeploymentAttributes) CognitiveAccountId() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("cognitive_account_id"))
+	return terra.ReferenceAsString(cd.ref.Append("cognitive_account_id"))
 }
 
+// Id returns a reference to field id of azurerm_cognitive_deployment.
 func (cd cognitiveDeploymentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("id"))
+	return terra.ReferenceAsString(cd.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_cognitive_deployment.
 func (cd cognitiveDeploymentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("name"))
+	return terra.ReferenceAsString(cd.ref.Append("name"))
 }
 
+// RaiPolicyName returns a reference to field rai_policy_name of azurerm_cognitive_deployment.
 func (cd cognitiveDeploymentAttributes) RaiPolicyName() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("rai_policy_name"))
+	return terra.ReferenceAsString(cd.ref.Append("rai_policy_name"))
 }
 
 func (cd cognitiveDeploymentAttributes) Model() terra.ListValue[cognitivedeployment.ModelAttributes] {
-	return terra.ReferenceList[cognitivedeployment.ModelAttributes](cd.ref.Append("model"))
+	return terra.ReferenceAsList[cognitivedeployment.ModelAttributes](cd.ref.Append("model"))
 }
 
 func (cd cognitiveDeploymentAttributes) Scale() terra.ListValue[cognitivedeployment.ScaleAttributes] {
-	return terra.ReferenceList[cognitivedeployment.ScaleAttributes](cd.ref.Append("scale"))
+	return terra.ReferenceAsList[cognitivedeployment.ScaleAttributes](cd.ref.Append("scale"))
 }
 
 func (cd cognitiveDeploymentAttributes) Timeouts() cognitivedeployment.TimeoutsAttributes {
-	return terra.ReferenceSingle[cognitivedeployment.TimeoutsAttributes](cd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cognitivedeployment.TimeoutsAttributes](cd.ref.Append("timeouts"))
 }
 
 type cognitiveDeploymentState struct {

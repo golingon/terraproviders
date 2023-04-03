@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataKeyVaultSecret creates a new instance of [DataKeyVaultSecret].
 func NewDataKeyVaultSecret(name string, args DataKeyVaultSecretArgs) *DataKeyVaultSecret {
 	return &DataKeyVaultSecret{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataKeyVaultSecret(name string, args DataKeyVaultSecretArgs) *DataKeyVau
 
 var _ terra.DataResource = (*DataKeyVaultSecret)(nil)
 
+// DataKeyVaultSecret represents the Terraform data resource azurerm_key_vault_secret.
 type DataKeyVaultSecret struct {
 	Name string
 	Args DataKeyVaultSecretArgs
 }
 
+// DataSource returns the Terraform object type for [DataKeyVaultSecret].
 func (kvs *DataKeyVaultSecret) DataSource() string {
 	return "azurerm_key_vault_secret"
 }
 
+// LocalName returns the local name for [DataKeyVaultSecret].
 func (kvs *DataKeyVaultSecret) LocalName() string {
 	return kvs.Name
 }
 
+// Configuration returns the configuration (args) for [DataKeyVaultSecret].
 func (kvs *DataKeyVaultSecret) Configuration() interface{} {
 	return kvs.Args
 }
 
+// Attributes returns the attributes for [DataKeyVaultSecret].
 func (kvs *DataKeyVaultSecret) Attributes() dataKeyVaultSecretAttributes {
 	return dataKeyVaultSecretAttributes{ref: terra.ReferenceDataResource(kvs)}
 }
 
+// DataKeyVaultSecretArgs contains the configurations for azurerm_key_vault_secret.
 type DataKeyVaultSecretArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,46 +58,56 @@ type dataKeyVaultSecretAttributes struct {
 	ref terra.Reference
 }
 
+// ContentType returns a reference to field content_type of azurerm_key_vault_secret.
 func (kvs dataKeyVaultSecretAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(kvs.ref.Append("content_type"))
+	return terra.ReferenceAsString(kvs.ref.Append("content_type"))
 }
 
+// Id returns a reference to field id of azurerm_key_vault_secret.
 func (kvs dataKeyVaultSecretAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kvs.ref.Append("id"))
+	return terra.ReferenceAsString(kvs.ref.Append("id"))
 }
 
+// KeyVaultId returns a reference to field key_vault_id of azurerm_key_vault_secret.
 func (kvs dataKeyVaultSecretAttributes) KeyVaultId() terra.StringValue {
-	return terra.ReferenceString(kvs.ref.Append("key_vault_id"))
+	return terra.ReferenceAsString(kvs.ref.Append("key_vault_id"))
 }
 
+// Name returns a reference to field name of azurerm_key_vault_secret.
 func (kvs dataKeyVaultSecretAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(kvs.ref.Append("name"))
+	return terra.ReferenceAsString(kvs.ref.Append("name"))
 }
 
+// ResourceId returns a reference to field resource_id of azurerm_key_vault_secret.
 func (kvs dataKeyVaultSecretAttributes) ResourceId() terra.StringValue {
-	return terra.ReferenceString(kvs.ref.Append("resource_id"))
+	return terra.ReferenceAsString(kvs.ref.Append("resource_id"))
 }
 
+// ResourceVersionlessId returns a reference to field resource_versionless_id of azurerm_key_vault_secret.
 func (kvs dataKeyVaultSecretAttributes) ResourceVersionlessId() terra.StringValue {
-	return terra.ReferenceString(kvs.ref.Append("resource_versionless_id"))
+	return terra.ReferenceAsString(kvs.ref.Append("resource_versionless_id"))
 }
 
+// Tags returns a reference to field tags of azurerm_key_vault_secret.
 func (kvs dataKeyVaultSecretAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](kvs.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](kvs.ref.Append("tags"))
 }
 
+// Value returns a reference to field value of azurerm_key_vault_secret.
 func (kvs dataKeyVaultSecretAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(kvs.ref.Append("value"))
+	return terra.ReferenceAsString(kvs.ref.Append("value"))
 }
 
+// Version returns a reference to field version of azurerm_key_vault_secret.
 func (kvs dataKeyVaultSecretAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(kvs.ref.Append("version"))
+	return terra.ReferenceAsString(kvs.ref.Append("version"))
 }
 
+// VersionlessId returns a reference to field versionless_id of azurerm_key_vault_secret.
 func (kvs dataKeyVaultSecretAttributes) VersionlessId() terra.StringValue {
-	return terra.ReferenceString(kvs.ref.Append("versionless_id"))
+	return terra.ReferenceAsString(kvs.ref.Append("versionless_id"))
 }
 
 func (kvs dataKeyVaultSecretAttributes) Timeouts() datakeyvaultsecret.TimeoutsAttributes {
-	return terra.ReferenceSingle[datakeyvaultsecret.TimeoutsAttributes](kvs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datakeyvaultsecret.TimeoutsAttributes](kvs.ref.Append("timeouts"))
 }

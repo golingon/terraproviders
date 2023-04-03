@@ -36,96 +36,96 @@ type MetadataAttributes struct {
 	ref terra.Reference
 }
 
-func (m MetadataAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MetadataAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MetadataAttributes) InternalWithRef(ref terra.Reference) MetadataAttributes {
 	return MetadataAttributes{ref: ref}
 }
 
-func (m MetadataAttributes) InternalTokens() hclwrite.Tokens {
+func (m MetadataAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
 func (m MetadataAttributes) Services() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](m.ref.Append("services"))
+	return terra.ReferenceAsList[terra.StringValue](m.ref.Append("services"))
 }
 
 type SourceAttributes struct {
 	ref terra.Reference
 }
 
-func (s SourceAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SourceAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SourceAttributes) InternalWithRef(ref terra.Reference) SourceAttributes {
 	return SourceAttributes{ref: ref}
 }
 
-func (s SourceAttributes) InternalTokens() hclwrite.Tokens {
+func (s SourceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SourceAttributes) Language() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("language"))
+	return terra.ReferenceAsString(s.ref.Append("language"))
 }
 
 func (s SourceAttributes) Files() terra.ListValue[FilesAttributes] {
-	return terra.ReferenceList[FilesAttributes](s.ref.Append("files"))
+	return terra.ReferenceAsList[FilesAttributes](s.ref.Append("files"))
 }
 
 type FilesAttributes struct {
 	ref terra.Reference
 }
 
-func (f FilesAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FilesAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FilesAttributes) InternalWithRef(ref terra.Reference) FilesAttributes {
 	return FilesAttributes{ref: ref}
 }
 
-func (f FilesAttributes) InternalTokens() hclwrite.Tokens {
+func (f FilesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
 func (f FilesAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("content"))
+	return terra.ReferenceAsString(f.ref.Append("content"))
 }
 
 func (f FilesAttributes) Fingerprint() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("fingerprint"))
+	return terra.ReferenceAsString(f.ref.Append("fingerprint"))
 }
 
 func (f FilesAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("name"))
+	return terra.ReferenceAsString(f.ref.Append("name"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type MetadataState struct {

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataDataShare creates a new instance of [DataDataShare].
 func NewDataDataShare(name string, args DataDataShareArgs) *DataDataShare {
 	return &DataDataShare{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataDataShare(name string, args DataDataShareArgs) *DataDataShare {
 
 var _ terra.DataResource = (*DataDataShare)(nil)
 
+// DataDataShare represents the Terraform data resource azurerm_data_share.
 type DataDataShare struct {
 	Name string
 	Args DataDataShareArgs
 }
 
+// DataSource returns the Terraform object type for [DataDataShare].
 func (ds *DataDataShare) DataSource() string {
 	return "azurerm_data_share"
 }
 
+// LocalName returns the local name for [DataDataShare].
 func (ds *DataDataShare) LocalName() string {
 	return ds.Name
 }
 
+// Configuration returns the configuration (args) for [DataDataShare].
 func (ds *DataDataShare) Configuration() interface{} {
 	return ds.Args
 }
 
+// Attributes returns the attributes for [DataDataShare].
 func (ds *DataDataShare) Attributes() dataDataShareAttributes {
 	return dataDataShareAttributes{ref: terra.ReferenceDataResource(ds)}
 }
 
+// DataDataShareArgs contains the configurations for azurerm_data_share.
 type DataDataShareArgs struct {
 	// AccountId: string, required
 	AccountId terra.StringValue `hcl:"account_id,attr" validate:"required"`
@@ -53,34 +60,40 @@ type dataDataShareAttributes struct {
 	ref terra.Reference
 }
 
+// AccountId returns a reference to field account_id of azurerm_data_share.
 func (ds dataDataShareAttributes) AccountId() terra.StringValue {
-	return terra.ReferenceString(ds.ref.Append("account_id"))
+	return terra.ReferenceAsString(ds.ref.Append("account_id"))
 }
 
+// Description returns a reference to field description of azurerm_data_share.
 func (ds dataDataShareAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ds.ref.Append("description"))
+	return terra.ReferenceAsString(ds.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_data_share.
 func (ds dataDataShareAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ds.ref.Append("id"))
+	return terra.ReferenceAsString(ds.ref.Append("id"))
 }
 
+// Kind returns a reference to field kind of azurerm_data_share.
 func (ds dataDataShareAttributes) Kind() terra.StringValue {
-	return terra.ReferenceString(ds.ref.Append("kind"))
+	return terra.ReferenceAsString(ds.ref.Append("kind"))
 }
 
+// Name returns a reference to field name of azurerm_data_share.
 func (ds dataDataShareAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ds.ref.Append("name"))
+	return terra.ReferenceAsString(ds.ref.Append("name"))
 }
 
+// Terms returns a reference to field terms of azurerm_data_share.
 func (ds dataDataShareAttributes) Terms() terra.StringValue {
-	return terra.ReferenceString(ds.ref.Append("terms"))
+	return terra.ReferenceAsString(ds.ref.Append("terms"))
 }
 
 func (ds dataDataShareAttributes) SnapshotSchedule() terra.ListValue[datadatashare.SnapshotScheduleAttributes] {
-	return terra.ReferenceList[datadatashare.SnapshotScheduleAttributes](ds.ref.Append("snapshot_schedule"))
+	return terra.ReferenceAsList[datadatashare.SnapshotScheduleAttributes](ds.ref.Append("snapshot_schedule"))
 }
 
 func (ds dataDataShareAttributes) Timeouts() datadatashare.TimeoutsAttributes {
-	return terra.ReferenceSingle[datadatashare.TimeoutsAttributes](ds.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datadatashare.TimeoutsAttributes](ds.ref.Append("timeouts"))
 }

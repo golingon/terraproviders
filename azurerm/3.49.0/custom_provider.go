@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCustomProvider creates a new instance of [CustomProvider].
 func NewCustomProvider(name string, args CustomProviderArgs) *CustomProvider {
 	return &CustomProvider{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCustomProvider(name string, args CustomProviderArgs) *CustomProvider {
 
 var _ terra.Resource = (*CustomProvider)(nil)
 
+// CustomProvider represents the Terraform resource azurerm_custom_provider.
 type CustomProvider struct {
-	Name  string
-	Args  CustomProviderArgs
-	state *customProviderState
+	Name      string
+	Args      CustomProviderArgs
+	state     *customProviderState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CustomProvider].
 func (cp *CustomProvider) Type() string {
 	return "azurerm_custom_provider"
 }
 
+// LocalName returns the local name for [CustomProvider].
 func (cp *CustomProvider) LocalName() string {
 	return cp.Name
 }
 
+// Configuration returns the configuration (args) for [CustomProvider].
 func (cp *CustomProvider) Configuration() interface{} {
 	return cp.Args
 }
 
+// DependOn is used for other resources to depend on [CustomProvider].
+func (cp *CustomProvider) DependOn() terra.Reference {
+	return terra.ReferenceResource(cp)
+}
+
+// Dependencies returns the list of resources [CustomProvider] depends_on.
+func (cp *CustomProvider) Dependencies() terra.Dependencies {
+	return cp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CustomProvider].
+func (cp *CustomProvider) LifecycleManagement() *terra.Lifecycle {
+	return cp.Lifecycle
+}
+
+// Attributes returns the attributes for [CustomProvider].
 func (cp *CustomProvider) Attributes() customProviderAttributes {
 	return customProviderAttributes{ref: terra.ReferenceResource(cp)}
 }
 
+// ImportState imports the given attribute values into [CustomProvider]'s state.
 func (cp *CustomProvider) ImportState(av io.Reader) error {
 	cp.state = &customProviderState{}
 	if err := json.NewDecoder(av).Decode(cp.state); err != nil {
@@ -49,10 +73,12 @@ func (cp *CustomProvider) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CustomProvider] has state.
 func (cp *CustomProvider) State() (*customProviderState, bool) {
 	return cp.state, cp.state != nil
 }
 
+// StateMust returns the state for [CustomProvider]. Panics if the state is nil.
 func (cp *CustomProvider) StateMust() *customProviderState {
 	if cp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cp.Type(), cp.LocalName()))
@@ -60,10 +86,7 @@ func (cp *CustomProvider) StateMust() *customProviderState {
 	return cp.state
 }
 
-func (cp *CustomProvider) DependOn() terra.Reference {
-	return terra.ReferenceResource(cp)
-}
-
+// CustomProviderArgs contains the configurations for azurerm_custom_provider.
 type CustomProviderArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -83,47 +106,50 @@ type CustomProviderArgs struct {
 	Timeouts *customprovider.Timeouts `hcl:"timeouts,block"`
 	// Validation: min=0
 	Validation []customprovider.Validation `hcl:"validation,block" validate:"min=0"`
-	// DependsOn contains resources that CustomProvider depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type customProviderAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_custom_provider.
 func (cp customProviderAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("id"))
+	return terra.ReferenceAsString(cp.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_custom_provider.
 func (cp customProviderAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("location"))
+	return terra.ReferenceAsString(cp.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_custom_provider.
 func (cp customProviderAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("name"))
+	return terra.ReferenceAsString(cp.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_custom_provider.
 func (cp customProviderAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(cp.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_custom_provider.
 func (cp customProviderAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](cp.ref.Append("tags"))
 }
 
 func (cp customProviderAttributes) Action() terra.SetValue[customprovider.ActionAttributes] {
-	return terra.ReferenceSet[customprovider.ActionAttributes](cp.ref.Append("action"))
+	return terra.ReferenceAsSet[customprovider.ActionAttributes](cp.ref.Append("action"))
 }
 
 func (cp customProviderAttributes) ResourceType() terra.SetValue[customprovider.ResourceTypeAttributes] {
-	return terra.ReferenceSet[customprovider.ResourceTypeAttributes](cp.ref.Append("resource_type"))
+	return terra.ReferenceAsSet[customprovider.ResourceTypeAttributes](cp.ref.Append("resource_type"))
 }
 
 func (cp customProviderAttributes) Timeouts() customprovider.TimeoutsAttributes {
-	return terra.ReferenceSingle[customprovider.TimeoutsAttributes](cp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[customprovider.TimeoutsAttributes](cp.ref.Append("timeouts"))
 }
 
 func (cp customProviderAttributes) Validation() terra.SetValue[customprovider.ValidationAttributes] {
-	return terra.ReferenceSet[customprovider.ValidationAttributes](cp.ref.Append("validation"))
+	return terra.ReferenceAsSet[customprovider.ValidationAttributes](cp.ref.Append("validation"))
 }
 
 type customProviderState struct {

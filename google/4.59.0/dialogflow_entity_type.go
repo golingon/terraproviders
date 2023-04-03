@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDialogflowEntityType creates a new instance of [DialogflowEntityType].
 func NewDialogflowEntityType(name string, args DialogflowEntityTypeArgs) *DialogflowEntityType {
 	return &DialogflowEntityType{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDialogflowEntityType(name string, args DialogflowEntityTypeArgs) *Dialog
 
 var _ terra.Resource = (*DialogflowEntityType)(nil)
 
+// DialogflowEntityType represents the Terraform resource google_dialogflow_entity_type.
 type DialogflowEntityType struct {
-	Name  string
-	Args  DialogflowEntityTypeArgs
-	state *dialogflowEntityTypeState
+	Name      string
+	Args      DialogflowEntityTypeArgs
+	state     *dialogflowEntityTypeState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DialogflowEntityType].
 func (det *DialogflowEntityType) Type() string {
 	return "google_dialogflow_entity_type"
 }
 
+// LocalName returns the local name for [DialogflowEntityType].
 func (det *DialogflowEntityType) LocalName() string {
 	return det.Name
 }
 
+// Configuration returns the configuration (args) for [DialogflowEntityType].
 func (det *DialogflowEntityType) Configuration() interface{} {
 	return det.Args
 }
 
+// DependOn is used for other resources to depend on [DialogflowEntityType].
+func (det *DialogflowEntityType) DependOn() terra.Reference {
+	return terra.ReferenceResource(det)
+}
+
+// Dependencies returns the list of resources [DialogflowEntityType] depends_on.
+func (det *DialogflowEntityType) Dependencies() terra.Dependencies {
+	return det.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DialogflowEntityType].
+func (det *DialogflowEntityType) LifecycleManagement() *terra.Lifecycle {
+	return det.Lifecycle
+}
+
+// Attributes returns the attributes for [DialogflowEntityType].
 func (det *DialogflowEntityType) Attributes() dialogflowEntityTypeAttributes {
 	return dialogflowEntityTypeAttributes{ref: terra.ReferenceResource(det)}
 }
 
+// ImportState imports the given attribute values into [DialogflowEntityType]'s state.
 func (det *DialogflowEntityType) ImportState(av io.Reader) error {
 	det.state = &dialogflowEntityTypeState{}
 	if err := json.NewDecoder(av).Decode(det.state); err != nil {
@@ -49,10 +73,12 @@ func (det *DialogflowEntityType) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DialogflowEntityType] has state.
 func (det *DialogflowEntityType) State() (*dialogflowEntityTypeState, bool) {
 	return det.state, det.state != nil
 }
 
+// StateMust returns the state for [DialogflowEntityType]. Panics if the state is nil.
 func (det *DialogflowEntityType) StateMust() *dialogflowEntityTypeState {
 	if det.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", det.Type(), det.LocalName()))
@@ -60,10 +86,7 @@ func (det *DialogflowEntityType) StateMust() *dialogflowEntityTypeState {
 	return det.state
 }
 
-func (det *DialogflowEntityType) DependOn() terra.Reference {
-	return terra.ReferenceResource(det)
-}
-
+// DialogflowEntityTypeArgs contains the configurations for google_dialogflow_entity_type.
 type DialogflowEntityTypeArgs struct {
 	// DisplayName: string, required
 	DisplayName terra.StringValue `hcl:"display_name,attr" validate:"required"`
@@ -79,43 +102,47 @@ type DialogflowEntityTypeArgs struct {
 	Entities []dialogflowentitytype.Entities `hcl:"entities,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *dialogflowentitytype.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DialogflowEntityType depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dialogflowEntityTypeAttributes struct {
 	ref terra.Reference
 }
 
+// DisplayName returns a reference to field display_name of google_dialogflow_entity_type.
 func (det dialogflowEntityTypeAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(det.ref.Append("display_name"))
+	return terra.ReferenceAsString(det.ref.Append("display_name"))
 }
 
+// EnableFuzzyExtraction returns a reference to field enable_fuzzy_extraction of google_dialogflow_entity_type.
 func (det dialogflowEntityTypeAttributes) EnableFuzzyExtraction() terra.BoolValue {
-	return terra.ReferenceBool(det.ref.Append("enable_fuzzy_extraction"))
+	return terra.ReferenceAsBool(det.ref.Append("enable_fuzzy_extraction"))
 }
 
+// Id returns a reference to field id of google_dialogflow_entity_type.
 func (det dialogflowEntityTypeAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(det.ref.Append("id"))
+	return terra.ReferenceAsString(det.ref.Append("id"))
 }
 
+// Kind returns a reference to field kind of google_dialogflow_entity_type.
 func (det dialogflowEntityTypeAttributes) Kind() terra.StringValue {
-	return terra.ReferenceString(det.ref.Append("kind"))
+	return terra.ReferenceAsString(det.ref.Append("kind"))
 }
 
+// Name returns a reference to field name of google_dialogflow_entity_type.
 func (det dialogflowEntityTypeAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(det.ref.Append("name"))
+	return terra.ReferenceAsString(det.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_dialogflow_entity_type.
 func (det dialogflowEntityTypeAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(det.ref.Append("project"))
+	return terra.ReferenceAsString(det.ref.Append("project"))
 }
 
 func (det dialogflowEntityTypeAttributes) Entities() terra.ListValue[dialogflowentitytype.EntitiesAttributes] {
-	return terra.ReferenceList[dialogflowentitytype.EntitiesAttributes](det.ref.Append("entities"))
+	return terra.ReferenceAsList[dialogflowentitytype.EntitiesAttributes](det.ref.Append("entities"))
 }
 
 func (det dialogflowEntityTypeAttributes) Timeouts() dialogflowentitytype.TimeoutsAttributes {
-	return terra.ReferenceSingle[dialogflowentitytype.TimeoutsAttributes](det.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dialogflowentitytype.TimeoutsAttributes](det.ref.Append("timeouts"))
 }
 
 type dialogflowEntityTypeState struct {

@@ -27,56 +27,56 @@ type NodeConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (nc NodeConfigAttributes) InternalRef() terra.Reference {
-	return nc.ref
+func (nc NodeConfigAttributes) InternalRef() (terra.Reference, error) {
+	return nc.ref, nil
 }
 
 func (nc NodeConfigAttributes) InternalWithRef(ref terra.Reference) NodeConfigAttributes {
 	return NodeConfigAttributes{ref: ref}
 }
 
-func (nc NodeConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (nc NodeConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nc.ref.InternalTokens()
 }
 
 func (nc NodeConfigAttributes) CurrentAggregateNodeCount() terra.StringValue {
-	return terra.ReferenceString(nc.ref.Append("current_aggregate_node_count"))
+	return terra.ReferenceAsString(nc.ref.Append("current_aggregate_node_count"))
 }
 
 func (nc NodeConfigAttributes) MaxNodeCount() terra.StringValue {
-	return terra.ReferenceString(nc.ref.Append("max_node_count"))
+	return terra.ReferenceAsString(nc.ref.Append("max_node_count"))
 }
 
 func (nc NodeConfigAttributes) MinNodeCount() terra.StringValue {
-	return terra.ReferenceString(nc.ref.Append("min_node_count"))
+	return terra.ReferenceAsString(nc.ref.Append("min_node_count"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type NodeConfigState struct {

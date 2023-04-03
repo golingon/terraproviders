@@ -32,7 +32,7 @@ func (e EdgesAttributes) InternalWithRef(ref terra.Reference) EdgesAttributes {
 	return EdgesAttributes{ref: ref}
 }
 
-func (e EdgesAttributes) InternalTokens() hclwrite.Tokens {
+func (e EdgesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -60,7 +60,7 @@ func (s SegmentsAttributes) InternalWithRef(ref terra.Reference) SegmentsAttribu
 	return SegmentsAttributes{ref: ref}
 }
 
-func (s SegmentsAttributes) InternalTokens() hclwrite.Tokens {
+func (s SegmentsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -88,7 +88,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

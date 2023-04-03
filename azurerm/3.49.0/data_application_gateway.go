@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataApplicationGateway creates a new instance of [DataApplicationGateway].
 func NewDataApplicationGateway(name string, args DataApplicationGatewayArgs) *DataApplicationGateway {
 	return &DataApplicationGateway{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataApplicationGateway(name string, args DataApplicationGatewayArgs) *Da
 
 var _ terra.DataResource = (*DataApplicationGateway)(nil)
 
+// DataApplicationGateway represents the Terraform data resource azurerm_application_gateway.
 type DataApplicationGateway struct {
 	Name string
 	Args DataApplicationGatewayArgs
 }
 
+// DataSource returns the Terraform object type for [DataApplicationGateway].
 func (ag *DataApplicationGateway) DataSource() string {
 	return "azurerm_application_gateway"
 }
 
+// LocalName returns the local name for [DataApplicationGateway].
 func (ag *DataApplicationGateway) LocalName() string {
 	return ag.Name
 }
 
+// Configuration returns the configuration (args) for [DataApplicationGateway].
 func (ag *DataApplicationGateway) Configuration() interface{} {
 	return ag.Args
 }
 
+// Attributes returns the attributes for [DataApplicationGateway].
 func (ag *DataApplicationGateway) Attributes() dataApplicationGatewayAttributes {
 	return dataApplicationGatewayAttributes{ref: terra.ReferenceDataResource(ag)}
 }
 
+// DataApplicationGatewayArgs contains the configurations for azurerm_application_gateway.
 type DataApplicationGatewayArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -55,34 +62,39 @@ type dataApplicationGatewayAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_application_gateway.
 func (ag dataApplicationGatewayAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ag.ref.Append("id"))
+	return terra.ReferenceAsString(ag.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_application_gateway.
 func (ag dataApplicationGatewayAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ag.ref.Append("location"))
+	return terra.ReferenceAsString(ag.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_application_gateway.
 func (ag dataApplicationGatewayAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ag.ref.Append("name"))
+	return terra.ReferenceAsString(ag.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_application_gateway.
 func (ag dataApplicationGatewayAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ag.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ag.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_application_gateway.
 func (ag dataApplicationGatewayAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ag.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ag.ref.Append("tags"))
 }
 
 func (ag dataApplicationGatewayAttributes) BackendAddressPool() terra.ListValue[dataapplicationgateway.BackendAddressPoolAttributes] {
-	return terra.ReferenceList[dataapplicationgateway.BackendAddressPoolAttributes](ag.ref.Append("backend_address_pool"))
+	return terra.ReferenceAsList[dataapplicationgateway.BackendAddressPoolAttributes](ag.ref.Append("backend_address_pool"))
 }
 
 func (ag dataApplicationGatewayAttributes) Identity() terra.ListValue[dataapplicationgateway.IdentityAttributes] {
-	return terra.ReferenceList[dataapplicationgateway.IdentityAttributes](ag.ref.Append("identity"))
+	return terra.ReferenceAsList[dataapplicationgateway.IdentityAttributes](ag.ref.Append("identity"))
 }
 
 func (ag dataApplicationGatewayAttributes) Timeouts() dataapplicationgateway.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataapplicationgateway.TimeoutsAttributes](ag.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataapplicationgateway.TimeoutsAttributes](ag.ref.Append("timeouts"))
 }

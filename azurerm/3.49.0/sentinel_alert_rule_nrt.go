@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSentinelAlertRuleNrt creates a new instance of [SentinelAlertRuleNrt].
 func NewSentinelAlertRuleNrt(name string, args SentinelAlertRuleNrtArgs) *SentinelAlertRuleNrt {
 	return &SentinelAlertRuleNrt{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSentinelAlertRuleNrt(name string, args SentinelAlertRuleNrtArgs) *Sentin
 
 var _ terra.Resource = (*SentinelAlertRuleNrt)(nil)
 
+// SentinelAlertRuleNrt represents the Terraform resource azurerm_sentinel_alert_rule_nrt.
 type SentinelAlertRuleNrt struct {
-	Name  string
-	Args  SentinelAlertRuleNrtArgs
-	state *sentinelAlertRuleNrtState
+	Name      string
+	Args      SentinelAlertRuleNrtArgs
+	state     *sentinelAlertRuleNrtState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SentinelAlertRuleNrt].
 func (sarn *SentinelAlertRuleNrt) Type() string {
 	return "azurerm_sentinel_alert_rule_nrt"
 }
 
+// LocalName returns the local name for [SentinelAlertRuleNrt].
 func (sarn *SentinelAlertRuleNrt) LocalName() string {
 	return sarn.Name
 }
 
+// Configuration returns the configuration (args) for [SentinelAlertRuleNrt].
 func (sarn *SentinelAlertRuleNrt) Configuration() interface{} {
 	return sarn.Args
 }
 
+// DependOn is used for other resources to depend on [SentinelAlertRuleNrt].
+func (sarn *SentinelAlertRuleNrt) DependOn() terra.Reference {
+	return terra.ReferenceResource(sarn)
+}
+
+// Dependencies returns the list of resources [SentinelAlertRuleNrt] depends_on.
+func (sarn *SentinelAlertRuleNrt) Dependencies() terra.Dependencies {
+	return sarn.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SentinelAlertRuleNrt].
+func (sarn *SentinelAlertRuleNrt) LifecycleManagement() *terra.Lifecycle {
+	return sarn.Lifecycle
+}
+
+// Attributes returns the attributes for [SentinelAlertRuleNrt].
 func (sarn *SentinelAlertRuleNrt) Attributes() sentinelAlertRuleNrtAttributes {
 	return sentinelAlertRuleNrtAttributes{ref: terra.ReferenceResource(sarn)}
 }
 
+// ImportState imports the given attribute values into [SentinelAlertRuleNrt]'s state.
 func (sarn *SentinelAlertRuleNrt) ImportState(av io.Reader) error {
 	sarn.state = &sentinelAlertRuleNrtState{}
 	if err := json.NewDecoder(av).Decode(sarn.state); err != nil {
@@ -49,10 +73,12 @@ func (sarn *SentinelAlertRuleNrt) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SentinelAlertRuleNrt] has state.
 func (sarn *SentinelAlertRuleNrt) State() (*sentinelAlertRuleNrtState, bool) {
 	return sarn.state, sarn.state != nil
 }
 
+// StateMust returns the state for [SentinelAlertRuleNrt]. Panics if the state is nil.
 func (sarn *SentinelAlertRuleNrt) StateMust() *sentinelAlertRuleNrtState {
 	if sarn.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sarn.Type(), sarn.LocalName()))
@@ -60,10 +86,7 @@ func (sarn *SentinelAlertRuleNrt) StateMust() *sentinelAlertRuleNrtState {
 	return sarn.state
 }
 
-func (sarn *SentinelAlertRuleNrt) DependOn() terra.Reference {
-	return terra.ReferenceResource(sarn)
-}
-
+// SentinelAlertRuleNrtArgs contains the configurations for azurerm_sentinel_alert_rule_nrt.
 type SentinelAlertRuleNrtArgs struct {
 	// AlertRuleTemplateGuid: string, optional
 	AlertRuleTemplateGuid terra.StringValue `hcl:"alert_rule_template_guid,attr"`
@@ -107,95 +130,108 @@ type SentinelAlertRuleNrtArgs struct {
 	SentinelEntityMapping []sentinelalertrulenrt.SentinelEntityMapping `hcl:"sentinel_entity_mapping,block" validate:"min=0,max=5"`
 	// Timeouts: optional
 	Timeouts *sentinelalertrulenrt.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SentinelAlertRuleNrt depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sentinelAlertRuleNrtAttributes struct {
 	ref terra.Reference
 }
 
+// AlertRuleTemplateGuid returns a reference to field alert_rule_template_guid of azurerm_sentinel_alert_rule_nrt.
 func (sarn sentinelAlertRuleNrtAttributes) AlertRuleTemplateGuid() terra.StringValue {
-	return terra.ReferenceString(sarn.ref.Append("alert_rule_template_guid"))
+	return terra.ReferenceAsString(sarn.ref.Append("alert_rule_template_guid"))
 }
 
+// AlertRuleTemplateVersion returns a reference to field alert_rule_template_version of azurerm_sentinel_alert_rule_nrt.
 func (sarn sentinelAlertRuleNrtAttributes) AlertRuleTemplateVersion() terra.StringValue {
-	return terra.ReferenceString(sarn.ref.Append("alert_rule_template_version"))
+	return terra.ReferenceAsString(sarn.ref.Append("alert_rule_template_version"))
 }
 
+// CustomDetails returns a reference to field custom_details of azurerm_sentinel_alert_rule_nrt.
 func (sarn sentinelAlertRuleNrtAttributes) CustomDetails() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sarn.ref.Append("custom_details"))
+	return terra.ReferenceAsMap[terra.StringValue](sarn.ref.Append("custom_details"))
 }
 
+// Description returns a reference to field description of azurerm_sentinel_alert_rule_nrt.
 func (sarn sentinelAlertRuleNrtAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(sarn.ref.Append("description"))
+	return terra.ReferenceAsString(sarn.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_sentinel_alert_rule_nrt.
 func (sarn sentinelAlertRuleNrtAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(sarn.ref.Append("display_name"))
+	return terra.ReferenceAsString(sarn.ref.Append("display_name"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_sentinel_alert_rule_nrt.
 func (sarn sentinelAlertRuleNrtAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(sarn.ref.Append("enabled"))
+	return terra.ReferenceAsBool(sarn.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of azurerm_sentinel_alert_rule_nrt.
 func (sarn sentinelAlertRuleNrtAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sarn.ref.Append("id"))
+	return terra.ReferenceAsString(sarn.ref.Append("id"))
 }
 
+// LogAnalyticsWorkspaceId returns a reference to field log_analytics_workspace_id of azurerm_sentinel_alert_rule_nrt.
 func (sarn sentinelAlertRuleNrtAttributes) LogAnalyticsWorkspaceId() terra.StringValue {
-	return terra.ReferenceString(sarn.ref.Append("log_analytics_workspace_id"))
+	return terra.ReferenceAsString(sarn.ref.Append("log_analytics_workspace_id"))
 }
 
+// Name returns a reference to field name of azurerm_sentinel_alert_rule_nrt.
 func (sarn sentinelAlertRuleNrtAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sarn.ref.Append("name"))
+	return terra.ReferenceAsString(sarn.ref.Append("name"))
 }
 
+// Query returns a reference to field query of azurerm_sentinel_alert_rule_nrt.
 func (sarn sentinelAlertRuleNrtAttributes) Query() terra.StringValue {
-	return terra.ReferenceString(sarn.ref.Append("query"))
+	return terra.ReferenceAsString(sarn.ref.Append("query"))
 }
 
+// Severity returns a reference to field severity of azurerm_sentinel_alert_rule_nrt.
 func (sarn sentinelAlertRuleNrtAttributes) Severity() terra.StringValue {
-	return terra.ReferenceString(sarn.ref.Append("severity"))
+	return terra.ReferenceAsString(sarn.ref.Append("severity"))
 }
 
+// SuppressionDuration returns a reference to field suppression_duration of azurerm_sentinel_alert_rule_nrt.
 func (sarn sentinelAlertRuleNrtAttributes) SuppressionDuration() terra.StringValue {
-	return terra.ReferenceString(sarn.ref.Append("suppression_duration"))
+	return terra.ReferenceAsString(sarn.ref.Append("suppression_duration"))
 }
 
+// SuppressionEnabled returns a reference to field suppression_enabled of azurerm_sentinel_alert_rule_nrt.
 func (sarn sentinelAlertRuleNrtAttributes) SuppressionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(sarn.ref.Append("suppression_enabled"))
+	return terra.ReferenceAsBool(sarn.ref.Append("suppression_enabled"))
 }
 
+// Tactics returns a reference to field tactics of azurerm_sentinel_alert_rule_nrt.
 func (sarn sentinelAlertRuleNrtAttributes) Tactics() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sarn.ref.Append("tactics"))
+	return terra.ReferenceAsSet[terra.StringValue](sarn.ref.Append("tactics"))
 }
 
+// Techniques returns a reference to field techniques of azurerm_sentinel_alert_rule_nrt.
 func (sarn sentinelAlertRuleNrtAttributes) Techniques() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sarn.ref.Append("techniques"))
+	return terra.ReferenceAsSet[terra.StringValue](sarn.ref.Append("techniques"))
 }
 
 func (sarn sentinelAlertRuleNrtAttributes) AlertDetailsOverride() terra.ListValue[sentinelalertrulenrt.AlertDetailsOverrideAttributes] {
-	return terra.ReferenceList[sentinelalertrulenrt.AlertDetailsOverrideAttributes](sarn.ref.Append("alert_details_override"))
+	return terra.ReferenceAsList[sentinelalertrulenrt.AlertDetailsOverrideAttributes](sarn.ref.Append("alert_details_override"))
 }
 
 func (sarn sentinelAlertRuleNrtAttributes) EntityMapping() terra.ListValue[sentinelalertrulenrt.EntityMappingAttributes] {
-	return terra.ReferenceList[sentinelalertrulenrt.EntityMappingAttributes](sarn.ref.Append("entity_mapping"))
+	return terra.ReferenceAsList[sentinelalertrulenrt.EntityMappingAttributes](sarn.ref.Append("entity_mapping"))
 }
 
 func (sarn sentinelAlertRuleNrtAttributes) EventGrouping() terra.ListValue[sentinelalertrulenrt.EventGroupingAttributes] {
-	return terra.ReferenceList[sentinelalertrulenrt.EventGroupingAttributes](sarn.ref.Append("event_grouping"))
+	return terra.ReferenceAsList[sentinelalertrulenrt.EventGroupingAttributes](sarn.ref.Append("event_grouping"))
 }
 
 func (sarn sentinelAlertRuleNrtAttributes) Incident() terra.ListValue[sentinelalertrulenrt.IncidentAttributes] {
-	return terra.ReferenceList[sentinelalertrulenrt.IncidentAttributes](sarn.ref.Append("incident"))
+	return terra.ReferenceAsList[sentinelalertrulenrt.IncidentAttributes](sarn.ref.Append("incident"))
 }
 
 func (sarn sentinelAlertRuleNrtAttributes) SentinelEntityMapping() terra.ListValue[sentinelalertrulenrt.SentinelEntityMappingAttributes] {
-	return terra.ReferenceList[sentinelalertrulenrt.SentinelEntityMappingAttributes](sarn.ref.Append("sentinel_entity_mapping"))
+	return terra.ReferenceAsList[sentinelalertrulenrt.SentinelEntityMappingAttributes](sarn.ref.Append("sentinel_entity_mapping"))
 }
 
 func (sarn sentinelAlertRuleNrtAttributes) Timeouts() sentinelalertrulenrt.TimeoutsAttributes {
-	return terra.ReferenceSingle[sentinelalertrulenrt.TimeoutsAttributes](sarn.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[sentinelalertrulenrt.TimeoutsAttributes](sarn.ref.Append("timeouts"))
 }
 
 type sentinelAlertRuleNrtState struct {

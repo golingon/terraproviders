@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAutomationJobSchedule creates a new instance of [AutomationJobSchedule].
 func NewAutomationJobSchedule(name string, args AutomationJobScheduleArgs) *AutomationJobSchedule {
 	return &AutomationJobSchedule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAutomationJobSchedule(name string, args AutomationJobScheduleArgs) *Auto
 
 var _ terra.Resource = (*AutomationJobSchedule)(nil)
 
+// AutomationJobSchedule represents the Terraform resource azurerm_automation_job_schedule.
 type AutomationJobSchedule struct {
-	Name  string
-	Args  AutomationJobScheduleArgs
-	state *automationJobScheduleState
+	Name      string
+	Args      AutomationJobScheduleArgs
+	state     *automationJobScheduleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AutomationJobSchedule].
 func (ajs *AutomationJobSchedule) Type() string {
 	return "azurerm_automation_job_schedule"
 }
 
+// LocalName returns the local name for [AutomationJobSchedule].
 func (ajs *AutomationJobSchedule) LocalName() string {
 	return ajs.Name
 }
 
+// Configuration returns the configuration (args) for [AutomationJobSchedule].
 func (ajs *AutomationJobSchedule) Configuration() interface{} {
 	return ajs.Args
 }
 
+// DependOn is used for other resources to depend on [AutomationJobSchedule].
+func (ajs *AutomationJobSchedule) DependOn() terra.Reference {
+	return terra.ReferenceResource(ajs)
+}
+
+// Dependencies returns the list of resources [AutomationJobSchedule] depends_on.
+func (ajs *AutomationJobSchedule) Dependencies() terra.Dependencies {
+	return ajs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AutomationJobSchedule].
+func (ajs *AutomationJobSchedule) LifecycleManagement() *terra.Lifecycle {
+	return ajs.Lifecycle
+}
+
+// Attributes returns the attributes for [AutomationJobSchedule].
 func (ajs *AutomationJobSchedule) Attributes() automationJobScheduleAttributes {
 	return automationJobScheduleAttributes{ref: terra.ReferenceResource(ajs)}
 }
 
+// ImportState imports the given attribute values into [AutomationJobSchedule]'s state.
 func (ajs *AutomationJobSchedule) ImportState(av io.Reader) error {
 	ajs.state = &automationJobScheduleState{}
 	if err := json.NewDecoder(av).Decode(ajs.state); err != nil {
@@ -49,10 +73,12 @@ func (ajs *AutomationJobSchedule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AutomationJobSchedule] has state.
 func (ajs *AutomationJobSchedule) State() (*automationJobScheduleState, bool) {
 	return ajs.state, ajs.state != nil
 }
 
+// StateMust returns the state for [AutomationJobSchedule]. Panics if the state is nil.
 func (ajs *AutomationJobSchedule) StateMust() *automationJobScheduleState {
 	if ajs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ajs.Type(), ajs.LocalName()))
@@ -60,10 +86,7 @@ func (ajs *AutomationJobSchedule) StateMust() *automationJobScheduleState {
 	return ajs.state
 }
 
-func (ajs *AutomationJobSchedule) DependOn() terra.Reference {
-	return terra.ReferenceResource(ajs)
-}
-
+// AutomationJobScheduleArgs contains the configurations for azurerm_automation_job_schedule.
 type AutomationJobScheduleArgs struct {
 	// AutomationAccountName: string, required
 	AutomationAccountName terra.StringValue `hcl:"automation_account_name,attr" validate:"required"`
@@ -83,47 +106,53 @@ type AutomationJobScheduleArgs struct {
 	ScheduleName terra.StringValue `hcl:"schedule_name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *automationjobschedule.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that AutomationJobSchedule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type automationJobScheduleAttributes struct {
 	ref terra.Reference
 }
 
+// AutomationAccountName returns a reference to field automation_account_name of azurerm_automation_job_schedule.
 func (ajs automationJobScheduleAttributes) AutomationAccountName() terra.StringValue {
-	return terra.ReferenceString(ajs.ref.Append("automation_account_name"))
+	return terra.ReferenceAsString(ajs.ref.Append("automation_account_name"))
 }
 
+// Id returns a reference to field id of azurerm_automation_job_schedule.
 func (ajs automationJobScheduleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ajs.ref.Append("id"))
+	return terra.ReferenceAsString(ajs.ref.Append("id"))
 }
 
+// JobScheduleId returns a reference to field job_schedule_id of azurerm_automation_job_schedule.
 func (ajs automationJobScheduleAttributes) JobScheduleId() terra.StringValue {
-	return terra.ReferenceString(ajs.ref.Append("job_schedule_id"))
+	return terra.ReferenceAsString(ajs.ref.Append("job_schedule_id"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_automation_job_schedule.
 func (ajs automationJobScheduleAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ajs.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](ajs.ref.Append("parameters"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_automation_job_schedule.
 func (ajs automationJobScheduleAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ajs.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ajs.ref.Append("resource_group_name"))
 }
 
+// RunOn returns a reference to field run_on of azurerm_automation_job_schedule.
 func (ajs automationJobScheduleAttributes) RunOn() terra.StringValue {
-	return terra.ReferenceString(ajs.ref.Append("run_on"))
+	return terra.ReferenceAsString(ajs.ref.Append("run_on"))
 }
 
+// RunbookName returns a reference to field runbook_name of azurerm_automation_job_schedule.
 func (ajs automationJobScheduleAttributes) RunbookName() terra.StringValue {
-	return terra.ReferenceString(ajs.ref.Append("runbook_name"))
+	return terra.ReferenceAsString(ajs.ref.Append("runbook_name"))
 }
 
+// ScheduleName returns a reference to field schedule_name of azurerm_automation_job_schedule.
 func (ajs automationJobScheduleAttributes) ScheduleName() terra.StringValue {
-	return terra.ReferenceString(ajs.ref.Append("schedule_name"))
+	return terra.ReferenceAsString(ajs.ref.Append("schedule_name"))
 }
 
 func (ajs automationJobScheduleAttributes) Timeouts() automationjobschedule.TimeoutsAttributes {
-	return terra.ReferenceSingle[automationjobschedule.TimeoutsAttributes](ajs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[automationjobschedule.TimeoutsAttributes](ajs.ref.Append("timeouts"))
 }
 
 type automationJobScheduleState struct {

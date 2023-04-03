@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewPubsubLiteTopic creates a new instance of [PubsubLiteTopic].
 func NewPubsubLiteTopic(name string, args PubsubLiteTopicArgs) *PubsubLiteTopic {
 	return &PubsubLiteTopic{
 		Args: args,
@@ -19,28 +20,51 @@ func NewPubsubLiteTopic(name string, args PubsubLiteTopicArgs) *PubsubLiteTopic 
 
 var _ terra.Resource = (*PubsubLiteTopic)(nil)
 
+// PubsubLiteTopic represents the Terraform resource google_pubsub_lite_topic.
 type PubsubLiteTopic struct {
-	Name  string
-	Args  PubsubLiteTopicArgs
-	state *pubsubLiteTopicState
+	Name      string
+	Args      PubsubLiteTopicArgs
+	state     *pubsubLiteTopicState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PubsubLiteTopic].
 func (plt *PubsubLiteTopic) Type() string {
 	return "google_pubsub_lite_topic"
 }
 
+// LocalName returns the local name for [PubsubLiteTopic].
 func (plt *PubsubLiteTopic) LocalName() string {
 	return plt.Name
 }
 
+// Configuration returns the configuration (args) for [PubsubLiteTopic].
 func (plt *PubsubLiteTopic) Configuration() interface{} {
 	return plt.Args
 }
 
+// DependOn is used for other resources to depend on [PubsubLiteTopic].
+func (plt *PubsubLiteTopic) DependOn() terra.Reference {
+	return terra.ReferenceResource(plt)
+}
+
+// Dependencies returns the list of resources [PubsubLiteTopic] depends_on.
+func (plt *PubsubLiteTopic) Dependencies() terra.Dependencies {
+	return plt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PubsubLiteTopic].
+func (plt *PubsubLiteTopic) LifecycleManagement() *terra.Lifecycle {
+	return plt.Lifecycle
+}
+
+// Attributes returns the attributes for [PubsubLiteTopic].
 func (plt *PubsubLiteTopic) Attributes() pubsubLiteTopicAttributes {
 	return pubsubLiteTopicAttributes{ref: terra.ReferenceResource(plt)}
 }
 
+// ImportState imports the given attribute values into [PubsubLiteTopic]'s state.
 func (plt *PubsubLiteTopic) ImportState(av io.Reader) error {
 	plt.state = &pubsubLiteTopicState{}
 	if err := json.NewDecoder(av).Decode(plt.state); err != nil {
@@ -49,10 +73,12 @@ func (plt *PubsubLiteTopic) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PubsubLiteTopic] has state.
 func (plt *PubsubLiteTopic) State() (*pubsubLiteTopicState, bool) {
 	return plt.state, plt.state != nil
 }
 
+// StateMust returns the state for [PubsubLiteTopic]. Panics if the state is nil.
 func (plt *PubsubLiteTopic) StateMust() *pubsubLiteTopicState {
 	if plt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", plt.Type(), plt.LocalName()))
@@ -60,10 +86,7 @@ func (plt *PubsubLiteTopic) StateMust() *pubsubLiteTopicState {
 	return plt.state
 }
 
-func (plt *PubsubLiteTopic) DependOn() terra.Reference {
-	return terra.ReferenceResource(plt)
-}
-
+// PubsubLiteTopicArgs contains the configurations for google_pubsub_lite_topic.
 type PubsubLiteTopicArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -83,47 +106,50 @@ type PubsubLiteTopicArgs struct {
 	RetentionConfig *pubsublitetopic.RetentionConfig `hcl:"retention_config,block"`
 	// Timeouts: optional
 	Timeouts *pubsublitetopic.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that PubsubLiteTopic depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type pubsubLiteTopicAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of google_pubsub_lite_topic.
 func (plt pubsubLiteTopicAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(plt.ref.Append("id"))
+	return terra.ReferenceAsString(plt.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_pubsub_lite_topic.
 func (plt pubsubLiteTopicAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(plt.ref.Append("name"))
+	return terra.ReferenceAsString(plt.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_pubsub_lite_topic.
 func (plt pubsubLiteTopicAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(plt.ref.Append("project"))
+	return terra.ReferenceAsString(plt.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_pubsub_lite_topic.
 func (plt pubsubLiteTopicAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(plt.ref.Append("region"))
+	return terra.ReferenceAsString(plt.ref.Append("region"))
 }
 
+// Zone returns a reference to field zone of google_pubsub_lite_topic.
 func (plt pubsubLiteTopicAttributes) Zone() terra.StringValue {
-	return terra.ReferenceString(plt.ref.Append("zone"))
+	return terra.ReferenceAsString(plt.ref.Append("zone"))
 }
 
 func (plt pubsubLiteTopicAttributes) PartitionConfig() terra.ListValue[pubsublitetopic.PartitionConfigAttributes] {
-	return terra.ReferenceList[pubsublitetopic.PartitionConfigAttributes](plt.ref.Append("partition_config"))
+	return terra.ReferenceAsList[pubsublitetopic.PartitionConfigAttributes](plt.ref.Append("partition_config"))
 }
 
 func (plt pubsubLiteTopicAttributes) ReservationConfig() terra.ListValue[pubsublitetopic.ReservationConfigAttributes] {
-	return terra.ReferenceList[pubsublitetopic.ReservationConfigAttributes](plt.ref.Append("reservation_config"))
+	return terra.ReferenceAsList[pubsublitetopic.ReservationConfigAttributes](plt.ref.Append("reservation_config"))
 }
 
 func (plt pubsubLiteTopicAttributes) RetentionConfig() terra.ListValue[pubsublitetopic.RetentionConfigAttributes] {
-	return terra.ReferenceList[pubsublitetopic.RetentionConfigAttributes](plt.ref.Append("retention_config"))
+	return terra.ReferenceAsList[pubsublitetopic.RetentionConfigAttributes](plt.ref.Append("retention_config"))
 }
 
 func (plt pubsubLiteTopicAttributes) Timeouts() pubsublitetopic.TimeoutsAttributes {
-	return terra.ReferenceSingle[pubsublitetopic.TimeoutsAttributes](plt.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[pubsublitetopic.TimeoutsAttributes](plt.ref.Append("timeouts"))
 }
 
 type pubsubLiteTopicState struct {

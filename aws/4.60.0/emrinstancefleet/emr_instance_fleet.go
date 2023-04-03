@@ -75,7 +75,7 @@ func (itc InstanceTypeConfigsAttributes) InternalWithRef(ref terra.Reference) In
 	return InstanceTypeConfigsAttributes{ref: ref}
 }
 
-func (itc InstanceTypeConfigsAttributes) InternalTokens() hclwrite.Tokens {
+func (itc InstanceTypeConfigsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return itc.ref.InternalTokens()
 }
 
@@ -115,7 +115,7 @@ func (c ConfigurationsAttributes) InternalWithRef(ref terra.Reference) Configura
 	return ConfigurationsAttributes{ref: ref}
 }
 
-func (c ConfigurationsAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConfigurationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -139,7 +139,7 @@ func (ec EbsConfigAttributes) InternalWithRef(ref terra.Reference) EbsConfigAttr
 	return EbsConfigAttributes{ref: ref}
 }
 
-func (ec EbsConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ec EbsConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 
@@ -171,7 +171,7 @@ func (ls LaunchSpecificationsAttributes) InternalWithRef(ref terra.Reference) La
 	return LaunchSpecificationsAttributes{ref: ref}
 }
 
-func (ls LaunchSpecificationsAttributes) InternalTokens() hclwrite.Tokens {
+func (ls LaunchSpecificationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ls.ref.InternalTokens()
 }
 
@@ -195,7 +195,7 @@ func (ods OnDemandSpecificationAttributes) InternalWithRef(ref terra.Reference) 
 	return OnDemandSpecificationAttributes{ref: ref}
 }
 
-func (ods OnDemandSpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (ods OnDemandSpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ods.ref.InternalTokens()
 }
 
@@ -215,7 +215,7 @@ func (ss SpotSpecificationAttributes) InternalWithRef(ref terra.Reference) SpotS
 	return SpotSpecificationAttributes{ref: ref}
 }
 
-func (ss SpotSpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (ss SpotSpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ss.ref.InternalTokens()
 }
 

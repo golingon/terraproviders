@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLinuxFunctionApp creates a new instance of [LinuxFunctionApp].
 func NewLinuxFunctionApp(name string, args LinuxFunctionAppArgs) *LinuxFunctionApp {
 	return &LinuxFunctionApp{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLinuxFunctionApp(name string, args LinuxFunctionAppArgs) *LinuxFunctionA
 
 var _ terra.Resource = (*LinuxFunctionApp)(nil)
 
+// LinuxFunctionApp represents the Terraform resource azurerm_linux_function_app.
 type LinuxFunctionApp struct {
-	Name  string
-	Args  LinuxFunctionAppArgs
-	state *linuxFunctionAppState
+	Name      string
+	Args      LinuxFunctionAppArgs
+	state     *linuxFunctionAppState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LinuxFunctionApp].
 func (lfa *LinuxFunctionApp) Type() string {
 	return "azurerm_linux_function_app"
 }
 
+// LocalName returns the local name for [LinuxFunctionApp].
 func (lfa *LinuxFunctionApp) LocalName() string {
 	return lfa.Name
 }
 
+// Configuration returns the configuration (args) for [LinuxFunctionApp].
 func (lfa *LinuxFunctionApp) Configuration() interface{} {
 	return lfa.Args
 }
 
+// DependOn is used for other resources to depend on [LinuxFunctionApp].
+func (lfa *LinuxFunctionApp) DependOn() terra.Reference {
+	return terra.ReferenceResource(lfa)
+}
+
+// Dependencies returns the list of resources [LinuxFunctionApp] depends_on.
+func (lfa *LinuxFunctionApp) Dependencies() terra.Dependencies {
+	return lfa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LinuxFunctionApp].
+func (lfa *LinuxFunctionApp) LifecycleManagement() *terra.Lifecycle {
+	return lfa.Lifecycle
+}
+
+// Attributes returns the attributes for [LinuxFunctionApp].
 func (lfa *LinuxFunctionApp) Attributes() linuxFunctionAppAttributes {
 	return linuxFunctionAppAttributes{ref: terra.ReferenceResource(lfa)}
 }
 
+// ImportState imports the given attribute values into [LinuxFunctionApp]'s state.
 func (lfa *LinuxFunctionApp) ImportState(av io.Reader) error {
 	lfa.state = &linuxFunctionAppState{}
 	if err := json.NewDecoder(av).Decode(lfa.state); err != nil {
@@ -49,10 +73,12 @@ func (lfa *LinuxFunctionApp) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LinuxFunctionApp] has state.
 func (lfa *LinuxFunctionApp) State() (*linuxFunctionAppState, bool) {
 	return lfa.state, lfa.state != nil
 }
 
+// StateMust returns the state for [LinuxFunctionApp]. Panics if the state is nil.
 func (lfa *LinuxFunctionApp) StateMust() *linuxFunctionAppState {
 	if lfa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lfa.Type(), lfa.LocalName()))
@@ -60,10 +86,7 @@ func (lfa *LinuxFunctionApp) StateMust() *linuxFunctionAppState {
 	return lfa.state
 }
 
-func (lfa *LinuxFunctionApp) DependOn() terra.Reference {
-	return terra.ReferenceResource(lfa)
-}
-
+// LinuxFunctionAppArgs contains the configurations for azurerm_linux_function_app.
 type LinuxFunctionAppArgs struct {
 	// AppSettings: map of string, optional
 	AppSettings terra.MapValue[terra.StringValue] `hcl:"app_settings,attr"`
@@ -129,167 +152,194 @@ type LinuxFunctionAppArgs struct {
 	StorageAccount []linuxfunctionapp.StorageAccount `hcl:"storage_account,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *linuxfunctionapp.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LinuxFunctionApp depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type linuxFunctionAppAttributes struct {
 	ref terra.Reference
 }
 
+// AppSettings returns a reference to field app_settings of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) AppSettings() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lfa.ref.Append("app_settings"))
+	return terra.ReferenceAsMap[terra.StringValue](lfa.ref.Append("app_settings"))
 }
 
+// BuiltinLoggingEnabled returns a reference to field builtin_logging_enabled of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) BuiltinLoggingEnabled() terra.BoolValue {
-	return terra.ReferenceBool(lfa.ref.Append("builtin_logging_enabled"))
+	return terra.ReferenceAsBool(lfa.ref.Append("builtin_logging_enabled"))
 }
 
+// ClientCertificateEnabled returns a reference to field client_certificate_enabled of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) ClientCertificateEnabled() terra.BoolValue {
-	return terra.ReferenceBool(lfa.ref.Append("client_certificate_enabled"))
+	return terra.ReferenceAsBool(lfa.ref.Append("client_certificate_enabled"))
 }
 
+// ClientCertificateExclusionPaths returns a reference to field client_certificate_exclusion_paths of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) ClientCertificateExclusionPaths() terra.StringValue {
-	return terra.ReferenceString(lfa.ref.Append("client_certificate_exclusion_paths"))
+	return terra.ReferenceAsString(lfa.ref.Append("client_certificate_exclusion_paths"))
 }
 
+// ClientCertificateMode returns a reference to field client_certificate_mode of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) ClientCertificateMode() terra.StringValue {
-	return terra.ReferenceString(lfa.ref.Append("client_certificate_mode"))
+	return terra.ReferenceAsString(lfa.ref.Append("client_certificate_mode"))
 }
 
+// ContentShareForceDisabled returns a reference to field content_share_force_disabled of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) ContentShareForceDisabled() terra.BoolValue {
-	return terra.ReferenceBool(lfa.ref.Append("content_share_force_disabled"))
+	return terra.ReferenceAsBool(lfa.ref.Append("content_share_force_disabled"))
 }
 
+// CustomDomainVerificationId returns a reference to field custom_domain_verification_id of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) CustomDomainVerificationId() terra.StringValue {
-	return terra.ReferenceString(lfa.ref.Append("custom_domain_verification_id"))
+	return terra.ReferenceAsString(lfa.ref.Append("custom_domain_verification_id"))
 }
 
+// DailyMemoryTimeQuota returns a reference to field daily_memory_time_quota of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) DailyMemoryTimeQuota() terra.NumberValue {
-	return terra.ReferenceNumber(lfa.ref.Append("daily_memory_time_quota"))
+	return terra.ReferenceAsNumber(lfa.ref.Append("daily_memory_time_quota"))
 }
 
+// DefaultHostname returns a reference to field default_hostname of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) DefaultHostname() terra.StringValue {
-	return terra.ReferenceString(lfa.ref.Append("default_hostname"))
+	return terra.ReferenceAsString(lfa.ref.Append("default_hostname"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(lfa.ref.Append("enabled"))
+	return terra.ReferenceAsBool(lfa.ref.Append("enabled"))
 }
 
+// FunctionsExtensionVersion returns a reference to field functions_extension_version of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) FunctionsExtensionVersion() terra.StringValue {
-	return terra.ReferenceString(lfa.ref.Append("functions_extension_version"))
+	return terra.ReferenceAsString(lfa.ref.Append("functions_extension_version"))
 }
 
+// HttpsOnly returns a reference to field https_only of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) HttpsOnly() terra.BoolValue {
-	return terra.ReferenceBool(lfa.ref.Append("https_only"))
+	return terra.ReferenceAsBool(lfa.ref.Append("https_only"))
 }
 
+// Id returns a reference to field id of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lfa.ref.Append("id"))
+	return terra.ReferenceAsString(lfa.ref.Append("id"))
 }
 
+// KeyVaultReferenceIdentityId returns a reference to field key_vault_reference_identity_id of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) KeyVaultReferenceIdentityId() terra.StringValue {
-	return terra.ReferenceString(lfa.ref.Append("key_vault_reference_identity_id"))
+	return terra.ReferenceAsString(lfa.ref.Append("key_vault_reference_identity_id"))
 }
 
+// Kind returns a reference to field kind of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) Kind() terra.StringValue {
-	return terra.ReferenceString(lfa.ref.Append("kind"))
+	return terra.ReferenceAsString(lfa.ref.Append("kind"))
 }
 
+// Location returns a reference to field location of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(lfa.ref.Append("location"))
+	return terra.ReferenceAsString(lfa.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lfa.ref.Append("name"))
+	return terra.ReferenceAsString(lfa.ref.Append("name"))
 }
 
+// OutboundIpAddressList returns a reference to field outbound_ip_address_list of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) OutboundIpAddressList() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lfa.ref.Append("outbound_ip_address_list"))
+	return terra.ReferenceAsList[terra.StringValue](lfa.ref.Append("outbound_ip_address_list"))
 }
 
+// OutboundIpAddresses returns a reference to field outbound_ip_addresses of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) OutboundIpAddresses() terra.StringValue {
-	return terra.ReferenceString(lfa.ref.Append("outbound_ip_addresses"))
+	return terra.ReferenceAsString(lfa.ref.Append("outbound_ip_addresses"))
 }
 
+// PossibleOutboundIpAddressList returns a reference to field possible_outbound_ip_address_list of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) PossibleOutboundIpAddressList() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lfa.ref.Append("possible_outbound_ip_address_list"))
+	return terra.ReferenceAsList[terra.StringValue](lfa.ref.Append("possible_outbound_ip_address_list"))
 }
 
+// PossibleOutboundIpAddresses returns a reference to field possible_outbound_ip_addresses of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) PossibleOutboundIpAddresses() terra.StringValue {
-	return terra.ReferenceString(lfa.ref.Append("possible_outbound_ip_addresses"))
+	return terra.ReferenceAsString(lfa.ref.Append("possible_outbound_ip_addresses"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(lfa.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(lfa.ref.Append("resource_group_name"))
 }
 
+// ServicePlanId returns a reference to field service_plan_id of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) ServicePlanId() terra.StringValue {
-	return terra.ReferenceString(lfa.ref.Append("service_plan_id"))
+	return terra.ReferenceAsString(lfa.ref.Append("service_plan_id"))
 }
 
+// StorageAccountAccessKey returns a reference to field storage_account_access_key of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) StorageAccountAccessKey() terra.StringValue {
-	return terra.ReferenceString(lfa.ref.Append("storage_account_access_key"))
+	return terra.ReferenceAsString(lfa.ref.Append("storage_account_access_key"))
 }
 
+// StorageAccountName returns a reference to field storage_account_name of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) StorageAccountName() terra.StringValue {
-	return terra.ReferenceString(lfa.ref.Append("storage_account_name"))
+	return terra.ReferenceAsString(lfa.ref.Append("storage_account_name"))
 }
 
+// StorageKeyVaultSecretId returns a reference to field storage_key_vault_secret_id of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) StorageKeyVaultSecretId() terra.StringValue {
-	return terra.ReferenceString(lfa.ref.Append("storage_key_vault_secret_id"))
+	return terra.ReferenceAsString(lfa.ref.Append("storage_key_vault_secret_id"))
 }
 
+// StorageUsesManagedIdentity returns a reference to field storage_uses_managed_identity of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) StorageUsesManagedIdentity() terra.BoolValue {
-	return terra.ReferenceBool(lfa.ref.Append("storage_uses_managed_identity"))
+	return terra.ReferenceAsBool(lfa.ref.Append("storage_uses_managed_identity"))
 }
 
+// Tags returns a reference to field tags of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lfa.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](lfa.ref.Append("tags"))
 }
 
+// VirtualNetworkSubnetId returns a reference to field virtual_network_subnet_id of azurerm_linux_function_app.
 func (lfa linuxFunctionAppAttributes) VirtualNetworkSubnetId() terra.StringValue {
-	return terra.ReferenceString(lfa.ref.Append("virtual_network_subnet_id"))
+	return terra.ReferenceAsString(lfa.ref.Append("virtual_network_subnet_id"))
 }
 
 func (lfa linuxFunctionAppAttributes) SiteCredential() terra.ListValue[linuxfunctionapp.SiteCredentialAttributes] {
-	return terra.ReferenceList[linuxfunctionapp.SiteCredentialAttributes](lfa.ref.Append("site_credential"))
+	return terra.ReferenceAsList[linuxfunctionapp.SiteCredentialAttributes](lfa.ref.Append("site_credential"))
 }
 
 func (lfa linuxFunctionAppAttributes) AuthSettings() terra.ListValue[linuxfunctionapp.AuthSettingsAttributes] {
-	return terra.ReferenceList[linuxfunctionapp.AuthSettingsAttributes](lfa.ref.Append("auth_settings"))
+	return terra.ReferenceAsList[linuxfunctionapp.AuthSettingsAttributes](lfa.ref.Append("auth_settings"))
 }
 
 func (lfa linuxFunctionAppAttributes) AuthSettingsV2() terra.ListValue[linuxfunctionapp.AuthSettingsV2Attributes] {
-	return terra.ReferenceList[linuxfunctionapp.AuthSettingsV2Attributes](lfa.ref.Append("auth_settings_v2"))
+	return terra.ReferenceAsList[linuxfunctionapp.AuthSettingsV2Attributes](lfa.ref.Append("auth_settings_v2"))
 }
 
 func (lfa linuxFunctionAppAttributes) Backup() terra.ListValue[linuxfunctionapp.BackupAttributes] {
-	return terra.ReferenceList[linuxfunctionapp.BackupAttributes](lfa.ref.Append("backup"))
+	return terra.ReferenceAsList[linuxfunctionapp.BackupAttributes](lfa.ref.Append("backup"))
 }
 
 func (lfa linuxFunctionAppAttributes) ConnectionString() terra.SetValue[linuxfunctionapp.ConnectionStringAttributes] {
-	return terra.ReferenceSet[linuxfunctionapp.ConnectionStringAttributes](lfa.ref.Append("connection_string"))
+	return terra.ReferenceAsSet[linuxfunctionapp.ConnectionStringAttributes](lfa.ref.Append("connection_string"))
 }
 
 func (lfa linuxFunctionAppAttributes) Identity() terra.ListValue[linuxfunctionapp.IdentityAttributes] {
-	return terra.ReferenceList[linuxfunctionapp.IdentityAttributes](lfa.ref.Append("identity"))
+	return terra.ReferenceAsList[linuxfunctionapp.IdentityAttributes](lfa.ref.Append("identity"))
 }
 
 func (lfa linuxFunctionAppAttributes) SiteConfig() terra.ListValue[linuxfunctionapp.SiteConfigAttributes] {
-	return terra.ReferenceList[linuxfunctionapp.SiteConfigAttributes](lfa.ref.Append("site_config"))
+	return terra.ReferenceAsList[linuxfunctionapp.SiteConfigAttributes](lfa.ref.Append("site_config"))
 }
 
 func (lfa linuxFunctionAppAttributes) StickySettings() terra.ListValue[linuxfunctionapp.StickySettingsAttributes] {
-	return terra.ReferenceList[linuxfunctionapp.StickySettingsAttributes](lfa.ref.Append("sticky_settings"))
+	return terra.ReferenceAsList[linuxfunctionapp.StickySettingsAttributes](lfa.ref.Append("sticky_settings"))
 }
 
 func (lfa linuxFunctionAppAttributes) StorageAccount() terra.SetValue[linuxfunctionapp.StorageAccountAttributes] {
-	return terra.ReferenceSet[linuxfunctionapp.StorageAccountAttributes](lfa.ref.Append("storage_account"))
+	return terra.ReferenceAsSet[linuxfunctionapp.StorageAccountAttributes](lfa.ref.Append("storage_account"))
 }
 
 func (lfa linuxFunctionAppAttributes) Timeouts() linuxfunctionapp.TimeoutsAttributes {
-	return terra.ReferenceSingle[linuxfunctionapp.TimeoutsAttributes](lfa.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[linuxfunctionapp.TimeoutsAttributes](lfa.ref.Append("timeouts"))
 }
 
 type linuxFunctionAppState struct {

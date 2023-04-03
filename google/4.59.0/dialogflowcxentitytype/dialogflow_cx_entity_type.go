@@ -32,72 +32,72 @@ type EntitiesAttributes struct {
 	ref terra.Reference
 }
 
-func (e EntitiesAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EntitiesAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EntitiesAttributes) InternalWithRef(ref terra.Reference) EntitiesAttributes {
 	return EntitiesAttributes{ref: ref}
 }
 
-func (e EntitiesAttributes) InternalTokens() hclwrite.Tokens {
+func (e EntitiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
 func (e EntitiesAttributes) Synonyms() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](e.ref.Append("synonyms"))
+	return terra.ReferenceAsList[terra.StringValue](e.ref.Append("synonyms"))
 }
 
 func (e EntitiesAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("value"))
+	return terra.ReferenceAsString(e.ref.Append("value"))
 }
 
 type ExcludedPhrasesAttributes struct {
 	ref terra.Reference
 }
 
-func (ep ExcludedPhrasesAttributes) InternalRef() terra.Reference {
-	return ep.ref
+func (ep ExcludedPhrasesAttributes) InternalRef() (terra.Reference, error) {
+	return ep.ref, nil
 }
 
 func (ep ExcludedPhrasesAttributes) InternalWithRef(ref terra.Reference) ExcludedPhrasesAttributes {
 	return ExcludedPhrasesAttributes{ref: ref}
 }
 
-func (ep ExcludedPhrasesAttributes) InternalTokens() hclwrite.Tokens {
+func (ep ExcludedPhrasesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ep.ref.InternalTokens()
 }
 
 func (ep ExcludedPhrasesAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("value"))
+	return terra.ReferenceAsString(ep.ref.Append("value"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type EntitiesState struct {

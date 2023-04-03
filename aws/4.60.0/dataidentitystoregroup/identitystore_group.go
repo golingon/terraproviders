@@ -49,7 +49,7 @@ func (ei ExternalIdsAttributes) InternalWithRef(ref terra.Reference) ExternalIds
 	return ExternalIdsAttributes{ref: ref}
 }
 
-func (ei ExternalIdsAttributes) InternalTokens() hclwrite.Tokens {
+func (ei ExternalIdsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ei.ref.InternalTokens()
 }
 
@@ -73,7 +73,7 @@ func (ai AlternateIdentifierAttributes) InternalWithRef(ref terra.Reference) Alt
 	return AlternateIdentifierAttributes{ref: ref}
 }
 
-func (ai AlternateIdentifierAttributes) InternalTokens() hclwrite.Tokens {
+func (ai AlternateIdentifierAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ai.ref.InternalTokens()
 }
 
@@ -97,7 +97,7 @@ func (ei ExternalIdAttributes) InternalWithRef(ref terra.Reference) ExternalIdAt
 	return ExternalIdAttributes{ref: ref}
 }
 
-func (ei ExternalIdAttributes) InternalTokens() hclwrite.Tokens {
+func (ei ExternalIdAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ei.ref.InternalTokens()
 }
 
@@ -121,7 +121,7 @@ func (ua UniqueAttributeAttributes) InternalWithRef(ref terra.Reference) UniqueA
 	return UniqueAttributeAttributes{ref: ref}
 }
 
-func (ua UniqueAttributeAttributes) InternalTokens() hclwrite.Tokens {
+func (ua UniqueAttributeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ua.ref.InternalTokens()
 }
 
@@ -145,7 +145,7 @@ func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes 
 	return FilterAttributes{ref: ref}
 }
 
-func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
+func (f FilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 

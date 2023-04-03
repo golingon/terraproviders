@@ -57,7 +57,7 @@ func (d DistributionAttributes) InternalWithRef(ref terra.Reference) Distributio
 	return DistributionAttributes{ref: ref}
 }
 
-func (d DistributionAttributes) InternalTokens() hclwrite.Tokens {
+func (d DistributionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -97,7 +97,7 @@ func (adc AmiDistributionConfigurationAttributes) InternalWithRef(ref terra.Refe
 	return AmiDistributionConfigurationAttributes{ref: ref}
 }
 
-func (adc AmiDistributionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (adc AmiDistributionConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return adc.ref.InternalTokens()
 }
 
@@ -137,7 +137,7 @@ func (lp LaunchPermissionAttributes) InternalWithRef(ref terra.Reference) Launch
 	return LaunchPermissionAttributes{ref: ref}
 }
 
-func (lp LaunchPermissionAttributes) InternalTokens() hclwrite.Tokens {
+func (lp LaunchPermissionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lp.ref.InternalTokens()
 }
 
@@ -169,7 +169,7 @@ func (cdc ContainerDistributionConfigurationAttributes) InternalWithRef(ref terr
 	return ContainerDistributionConfigurationAttributes{ref: ref}
 }
 
-func (cdc ContainerDistributionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (cdc ContainerDistributionConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cdc.ref.InternalTokens()
 }
 
@@ -197,7 +197,7 @@ func (tr TargetRepositoryAttributes) InternalWithRef(ref terra.Reference) Target
 	return TargetRepositoryAttributes{ref: ref}
 }
 
-func (tr TargetRepositoryAttributes) InternalTokens() hclwrite.Tokens {
+func (tr TargetRepositoryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tr.ref.InternalTokens()
 }
 
@@ -221,7 +221,7 @@ func (flc FastLaunchConfigurationAttributes) InternalWithRef(ref terra.Reference
 	return FastLaunchConfigurationAttributes{ref: ref}
 }
 
-func (flc FastLaunchConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (flc FastLaunchConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return flc.ref.InternalTokens()
 }
 
@@ -257,7 +257,7 @@ func (lt LaunchTemplateAttributes) InternalWithRef(ref terra.Reference) LaunchTe
 	return LaunchTemplateAttributes{ref: ref}
 }
 
-func (lt LaunchTemplateAttributes) InternalTokens() hclwrite.Tokens {
+func (lt LaunchTemplateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lt.ref.InternalTokens()
 }
 
@@ -285,7 +285,7 @@ func (sc SnapshotConfigurationAttributes) InternalWithRef(ref terra.Reference) S
 	return SnapshotConfigurationAttributes{ref: ref}
 }
 
-func (sc SnapshotConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (sc SnapshotConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -305,7 +305,7 @@ func (ltc LaunchTemplateConfigurationAttributes) InternalWithRef(ref terra.Refer
 	return LaunchTemplateConfigurationAttributes{ref: ref}
 }
 
-func (ltc LaunchTemplateConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ltc LaunchTemplateConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ltc.ref.InternalTokens()
 }
 

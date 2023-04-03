@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewPostgresqlServer creates a new instance of [PostgresqlServer].
 func NewPostgresqlServer(name string, args PostgresqlServerArgs) *PostgresqlServer {
 	return &PostgresqlServer{
 		Args: args,
@@ -19,28 +20,51 @@ func NewPostgresqlServer(name string, args PostgresqlServerArgs) *PostgresqlServ
 
 var _ terra.Resource = (*PostgresqlServer)(nil)
 
+// PostgresqlServer represents the Terraform resource azurerm_postgresql_server.
 type PostgresqlServer struct {
-	Name  string
-	Args  PostgresqlServerArgs
-	state *postgresqlServerState
+	Name      string
+	Args      PostgresqlServerArgs
+	state     *postgresqlServerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PostgresqlServer].
 func (ps *PostgresqlServer) Type() string {
 	return "azurerm_postgresql_server"
 }
 
+// LocalName returns the local name for [PostgresqlServer].
 func (ps *PostgresqlServer) LocalName() string {
 	return ps.Name
 }
 
+// Configuration returns the configuration (args) for [PostgresqlServer].
 func (ps *PostgresqlServer) Configuration() interface{} {
 	return ps.Args
 }
 
+// DependOn is used for other resources to depend on [PostgresqlServer].
+func (ps *PostgresqlServer) DependOn() terra.Reference {
+	return terra.ReferenceResource(ps)
+}
+
+// Dependencies returns the list of resources [PostgresqlServer] depends_on.
+func (ps *PostgresqlServer) Dependencies() terra.Dependencies {
+	return ps.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PostgresqlServer].
+func (ps *PostgresqlServer) LifecycleManagement() *terra.Lifecycle {
+	return ps.Lifecycle
+}
+
+// Attributes returns the attributes for [PostgresqlServer].
 func (ps *PostgresqlServer) Attributes() postgresqlServerAttributes {
 	return postgresqlServerAttributes{ref: terra.ReferenceResource(ps)}
 }
 
+// ImportState imports the given attribute values into [PostgresqlServer]'s state.
 func (ps *PostgresqlServer) ImportState(av io.Reader) error {
 	ps.state = &postgresqlServerState{}
 	if err := json.NewDecoder(av).Decode(ps.state); err != nil {
@@ -49,10 +73,12 @@ func (ps *PostgresqlServer) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PostgresqlServer] has state.
 func (ps *PostgresqlServer) State() (*postgresqlServerState, bool) {
 	return ps.state, ps.state != nil
 }
 
+// StateMust returns the state for [PostgresqlServer]. Panics if the state is nil.
 func (ps *PostgresqlServer) StateMust() *postgresqlServerState {
 	if ps.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ps.Type(), ps.LocalName()))
@@ -60,10 +86,7 @@ func (ps *PostgresqlServer) StateMust() *postgresqlServerState {
 	return ps.state
 }
 
-func (ps *PostgresqlServer) DependOn() terra.Reference {
-	return terra.ReferenceResource(ps)
-}
-
+// PostgresqlServerArgs contains the configurations for azurerm_postgresql_server.
 type PostgresqlServerArgs struct {
 	// AdministratorLogin: string, optional
 	AdministratorLogin terra.StringValue `hcl:"administrator_login,attr"`
@@ -111,107 +134,126 @@ type PostgresqlServerArgs struct {
 	ThreatDetectionPolicy *postgresqlserver.ThreatDetectionPolicy `hcl:"threat_detection_policy,block"`
 	// Timeouts: optional
 	Timeouts *postgresqlserver.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that PostgresqlServer depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type postgresqlServerAttributes struct {
 	ref terra.Reference
 }
 
+// AdministratorLogin returns a reference to field administrator_login of azurerm_postgresql_server.
 func (ps postgresqlServerAttributes) AdministratorLogin() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("administrator_login"))
+	return terra.ReferenceAsString(ps.ref.Append("administrator_login"))
 }
 
+// AdministratorLoginPassword returns a reference to field administrator_login_password of azurerm_postgresql_server.
 func (ps postgresqlServerAttributes) AdministratorLoginPassword() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("administrator_login_password"))
+	return terra.ReferenceAsString(ps.ref.Append("administrator_login_password"))
 }
 
+// AutoGrowEnabled returns a reference to field auto_grow_enabled of azurerm_postgresql_server.
 func (ps postgresqlServerAttributes) AutoGrowEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ps.ref.Append("auto_grow_enabled"))
+	return terra.ReferenceAsBool(ps.ref.Append("auto_grow_enabled"))
 }
 
+// BackupRetentionDays returns a reference to field backup_retention_days of azurerm_postgresql_server.
 func (ps postgresqlServerAttributes) BackupRetentionDays() terra.NumberValue {
-	return terra.ReferenceNumber(ps.ref.Append("backup_retention_days"))
+	return terra.ReferenceAsNumber(ps.ref.Append("backup_retention_days"))
 }
 
+// CreateMode returns a reference to field create_mode of azurerm_postgresql_server.
 func (ps postgresqlServerAttributes) CreateMode() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("create_mode"))
+	return terra.ReferenceAsString(ps.ref.Append("create_mode"))
 }
 
+// CreationSourceServerId returns a reference to field creation_source_server_id of azurerm_postgresql_server.
 func (ps postgresqlServerAttributes) CreationSourceServerId() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("creation_source_server_id"))
+	return terra.ReferenceAsString(ps.ref.Append("creation_source_server_id"))
 }
 
+// Fqdn returns a reference to field fqdn of azurerm_postgresql_server.
 func (ps postgresqlServerAttributes) Fqdn() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("fqdn"))
+	return terra.ReferenceAsString(ps.ref.Append("fqdn"))
 }
 
+// GeoRedundantBackupEnabled returns a reference to field geo_redundant_backup_enabled of azurerm_postgresql_server.
 func (ps postgresqlServerAttributes) GeoRedundantBackupEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ps.ref.Append("geo_redundant_backup_enabled"))
+	return terra.ReferenceAsBool(ps.ref.Append("geo_redundant_backup_enabled"))
 }
 
+// Id returns a reference to field id of azurerm_postgresql_server.
 func (ps postgresqlServerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("id"))
+	return terra.ReferenceAsString(ps.ref.Append("id"))
 }
 
+// InfrastructureEncryptionEnabled returns a reference to field infrastructure_encryption_enabled of azurerm_postgresql_server.
 func (ps postgresqlServerAttributes) InfrastructureEncryptionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ps.ref.Append("infrastructure_encryption_enabled"))
+	return terra.ReferenceAsBool(ps.ref.Append("infrastructure_encryption_enabled"))
 }
 
+// Location returns a reference to field location of azurerm_postgresql_server.
 func (ps postgresqlServerAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("location"))
+	return terra.ReferenceAsString(ps.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_postgresql_server.
 func (ps postgresqlServerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("name"))
+	return terra.ReferenceAsString(ps.ref.Append("name"))
 }
 
+// PublicNetworkAccessEnabled returns a reference to field public_network_access_enabled of azurerm_postgresql_server.
 func (ps postgresqlServerAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ps.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(ps.ref.Append("public_network_access_enabled"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_postgresql_server.
 func (ps postgresqlServerAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ps.ref.Append("resource_group_name"))
 }
 
+// RestorePointInTime returns a reference to field restore_point_in_time of azurerm_postgresql_server.
 func (ps postgresqlServerAttributes) RestorePointInTime() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("restore_point_in_time"))
+	return terra.ReferenceAsString(ps.ref.Append("restore_point_in_time"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_postgresql_server.
 func (ps postgresqlServerAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("sku_name"))
+	return terra.ReferenceAsString(ps.ref.Append("sku_name"))
 }
 
+// SslEnforcementEnabled returns a reference to field ssl_enforcement_enabled of azurerm_postgresql_server.
 func (ps postgresqlServerAttributes) SslEnforcementEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ps.ref.Append("ssl_enforcement_enabled"))
+	return terra.ReferenceAsBool(ps.ref.Append("ssl_enforcement_enabled"))
 }
 
+// SslMinimalTlsVersionEnforced returns a reference to field ssl_minimal_tls_version_enforced of azurerm_postgresql_server.
 func (ps postgresqlServerAttributes) SslMinimalTlsVersionEnforced() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("ssl_minimal_tls_version_enforced"))
+	return terra.ReferenceAsString(ps.ref.Append("ssl_minimal_tls_version_enforced"))
 }
 
+// StorageMb returns a reference to field storage_mb of azurerm_postgresql_server.
 func (ps postgresqlServerAttributes) StorageMb() terra.NumberValue {
-	return terra.ReferenceNumber(ps.ref.Append("storage_mb"))
+	return terra.ReferenceAsNumber(ps.ref.Append("storage_mb"))
 }
 
+// Tags returns a reference to field tags of azurerm_postgresql_server.
 func (ps postgresqlServerAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ps.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ps.ref.Append("tags"))
 }
 
+// Version returns a reference to field version of azurerm_postgresql_server.
 func (ps postgresqlServerAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("version"))
+	return terra.ReferenceAsString(ps.ref.Append("version"))
 }
 
 func (ps postgresqlServerAttributes) Identity() terra.ListValue[postgresqlserver.IdentityAttributes] {
-	return terra.ReferenceList[postgresqlserver.IdentityAttributes](ps.ref.Append("identity"))
+	return terra.ReferenceAsList[postgresqlserver.IdentityAttributes](ps.ref.Append("identity"))
 }
 
 func (ps postgresqlServerAttributes) ThreatDetectionPolicy() terra.ListValue[postgresqlserver.ThreatDetectionPolicyAttributes] {
-	return terra.ReferenceList[postgresqlserver.ThreatDetectionPolicyAttributes](ps.ref.Append("threat_detection_policy"))
+	return terra.ReferenceAsList[postgresqlserver.ThreatDetectionPolicyAttributes](ps.ref.Append("threat_detection_policy"))
 }
 
 func (ps postgresqlServerAttributes) Timeouts() postgresqlserver.TimeoutsAttributes {
-	return terra.ReferenceSingle[postgresqlserver.TimeoutsAttributes](ps.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[postgresqlserver.TimeoutsAttributes](ps.ref.Append("timeouts"))
 }
 
 type postgresqlServerState struct {

@@ -39,7 +39,7 @@ func (c CorsAttributes) InternalWithRef(ref terra.Reference) CorsAttributes {
 	return CorsAttributes{ref: ref}
 }
 
-func (c CorsAttributes) InternalTokens() hclwrite.Tokens {
+func (c CorsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -79,7 +79,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

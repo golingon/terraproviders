@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataCloudIdentityGroupMemberships creates a new instance of [DataCloudIdentityGroupMemberships].
 func NewDataCloudIdentityGroupMemberships(name string, args DataCloudIdentityGroupMembershipsArgs) *DataCloudIdentityGroupMemberships {
 	return &DataCloudIdentityGroupMemberships{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataCloudIdentityGroupMemberships(name string, args DataCloudIdentityGro
 
 var _ terra.DataResource = (*DataCloudIdentityGroupMemberships)(nil)
 
+// DataCloudIdentityGroupMemberships represents the Terraform data resource google_cloud_identity_group_memberships.
 type DataCloudIdentityGroupMemberships struct {
 	Name string
 	Args DataCloudIdentityGroupMembershipsArgs
 }
 
+// DataSource returns the Terraform object type for [DataCloudIdentityGroupMemberships].
 func (cigm *DataCloudIdentityGroupMemberships) DataSource() string {
 	return "google_cloud_identity_group_memberships"
 }
 
+// LocalName returns the local name for [DataCloudIdentityGroupMemberships].
 func (cigm *DataCloudIdentityGroupMemberships) LocalName() string {
 	return cigm.Name
 }
 
+// Configuration returns the configuration (args) for [DataCloudIdentityGroupMemberships].
 func (cigm *DataCloudIdentityGroupMemberships) Configuration() interface{} {
 	return cigm.Args
 }
 
+// Attributes returns the attributes for [DataCloudIdentityGroupMemberships].
 func (cigm *DataCloudIdentityGroupMemberships) Attributes() dataCloudIdentityGroupMembershipsAttributes {
 	return dataCloudIdentityGroupMembershipsAttributes{ref: terra.ReferenceDataResource(cigm)}
 }
 
+// DataCloudIdentityGroupMembershipsArgs contains the configurations for google_cloud_identity_group_memberships.
 type DataCloudIdentityGroupMembershipsArgs struct {
 	// Group: string, required
 	Group terra.StringValue `hcl:"group,attr" validate:"required"`
@@ -49,14 +56,16 @@ type dataCloudIdentityGroupMembershipsAttributes struct {
 	ref terra.Reference
 }
 
+// Group returns a reference to field group of google_cloud_identity_group_memberships.
 func (cigm dataCloudIdentityGroupMembershipsAttributes) Group() terra.StringValue {
-	return terra.ReferenceString(cigm.ref.Append("group"))
+	return terra.ReferenceAsString(cigm.ref.Append("group"))
 }
 
+// Id returns a reference to field id of google_cloud_identity_group_memberships.
 func (cigm dataCloudIdentityGroupMembershipsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cigm.ref.Append("id"))
+	return terra.ReferenceAsString(cigm.ref.Append("id"))
 }
 
 func (cigm dataCloudIdentityGroupMembershipsAttributes) Memberships() terra.ListValue[datacloudidentitygroupmemberships.MembershipsAttributes] {
-	return terra.ReferenceList[datacloudidentitygroupmemberships.MembershipsAttributes](cigm.ref.Append("memberships"))
+	return terra.ReferenceAsList[datacloudidentitygroupmemberships.MembershipsAttributes](cigm.ref.Append("memberships"))
 }

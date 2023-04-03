@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDnsRecordSet creates a new instance of [DnsRecordSet].
 func NewDnsRecordSet(name string, args DnsRecordSetArgs) *DnsRecordSet {
 	return &DnsRecordSet{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDnsRecordSet(name string, args DnsRecordSetArgs) *DnsRecordSet {
 
 var _ terra.Resource = (*DnsRecordSet)(nil)
 
+// DnsRecordSet represents the Terraform resource google_dns_record_set.
 type DnsRecordSet struct {
-	Name  string
-	Args  DnsRecordSetArgs
-	state *dnsRecordSetState
+	Name      string
+	Args      DnsRecordSetArgs
+	state     *dnsRecordSetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DnsRecordSet].
 func (drs *DnsRecordSet) Type() string {
 	return "google_dns_record_set"
 }
 
+// LocalName returns the local name for [DnsRecordSet].
 func (drs *DnsRecordSet) LocalName() string {
 	return drs.Name
 }
 
+// Configuration returns the configuration (args) for [DnsRecordSet].
 func (drs *DnsRecordSet) Configuration() interface{} {
 	return drs.Args
 }
 
+// DependOn is used for other resources to depend on [DnsRecordSet].
+func (drs *DnsRecordSet) DependOn() terra.Reference {
+	return terra.ReferenceResource(drs)
+}
+
+// Dependencies returns the list of resources [DnsRecordSet] depends_on.
+func (drs *DnsRecordSet) Dependencies() terra.Dependencies {
+	return drs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DnsRecordSet].
+func (drs *DnsRecordSet) LifecycleManagement() *terra.Lifecycle {
+	return drs.Lifecycle
+}
+
+// Attributes returns the attributes for [DnsRecordSet].
 func (drs *DnsRecordSet) Attributes() dnsRecordSetAttributes {
 	return dnsRecordSetAttributes{ref: terra.ReferenceResource(drs)}
 }
 
+// ImportState imports the given attribute values into [DnsRecordSet]'s state.
 func (drs *DnsRecordSet) ImportState(av io.Reader) error {
 	drs.state = &dnsRecordSetState{}
 	if err := json.NewDecoder(av).Decode(drs.state); err != nil {
@@ -49,10 +73,12 @@ func (drs *DnsRecordSet) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DnsRecordSet] has state.
 func (drs *DnsRecordSet) State() (*dnsRecordSetState, bool) {
 	return drs.state, drs.state != nil
 }
 
+// StateMust returns the state for [DnsRecordSet]. Panics if the state is nil.
 func (drs *DnsRecordSet) StateMust() *dnsRecordSetState {
 	if drs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", drs.Type(), drs.LocalName()))
@@ -60,10 +86,7 @@ func (drs *DnsRecordSet) StateMust() *dnsRecordSetState {
 	return drs.state
 }
 
-func (drs *DnsRecordSet) DependOn() terra.Reference {
-	return terra.ReferenceResource(drs)
-}
-
+// DnsRecordSetArgs contains the configurations for google_dns_record_set.
 type DnsRecordSetArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -81,43 +104,48 @@ type DnsRecordSetArgs struct {
 	Type terra.StringValue `hcl:"type,attr" validate:"required"`
 	// RoutingPolicy: optional
 	RoutingPolicy *dnsrecordset.RoutingPolicy `hcl:"routing_policy,block"`
-	// DependsOn contains resources that DnsRecordSet depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dnsRecordSetAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of google_dns_record_set.
 func (drs dnsRecordSetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("id"))
+	return terra.ReferenceAsString(drs.ref.Append("id"))
 }
 
+// ManagedZone returns a reference to field managed_zone of google_dns_record_set.
 func (drs dnsRecordSetAttributes) ManagedZone() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("managed_zone"))
+	return terra.ReferenceAsString(drs.ref.Append("managed_zone"))
 }
 
+// Name returns a reference to field name of google_dns_record_set.
 func (drs dnsRecordSetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("name"))
+	return terra.ReferenceAsString(drs.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_dns_record_set.
 func (drs dnsRecordSetAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("project"))
+	return terra.ReferenceAsString(drs.ref.Append("project"))
 }
 
+// Rrdatas returns a reference to field rrdatas of google_dns_record_set.
 func (drs dnsRecordSetAttributes) Rrdatas() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](drs.ref.Append("rrdatas"))
+	return terra.ReferenceAsList[terra.StringValue](drs.ref.Append("rrdatas"))
 }
 
+// Ttl returns a reference to field ttl of google_dns_record_set.
 func (drs dnsRecordSetAttributes) Ttl() terra.NumberValue {
-	return terra.ReferenceNumber(drs.ref.Append("ttl"))
+	return terra.ReferenceAsNumber(drs.ref.Append("ttl"))
 }
 
+// Type returns a reference to field type of google_dns_record_set.
 func (drs dnsRecordSetAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("type"))
+	return terra.ReferenceAsString(drs.ref.Append("type"))
 }
 
 func (drs dnsRecordSetAttributes) RoutingPolicy() terra.ListValue[dnsrecordset.RoutingPolicyAttributes] {
-	return terra.ReferenceList[dnsrecordset.RoutingPolicyAttributes](drs.ref.Append("routing_policy"))
+	return terra.ReferenceAsList[dnsrecordset.RoutingPolicyAttributes](drs.ref.Append("routing_policy"))
 }
 
 type dnsRecordSetState struct {

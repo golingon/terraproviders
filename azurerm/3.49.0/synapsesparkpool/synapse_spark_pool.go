@@ -48,124 +48,124 @@ type AutoPauseAttributes struct {
 	ref terra.Reference
 }
 
-func (ap AutoPauseAttributes) InternalRef() terra.Reference {
-	return ap.ref
+func (ap AutoPauseAttributes) InternalRef() (terra.Reference, error) {
+	return ap.ref, nil
 }
 
 func (ap AutoPauseAttributes) InternalWithRef(ref terra.Reference) AutoPauseAttributes {
 	return AutoPauseAttributes{ref: ref}
 }
 
-func (ap AutoPauseAttributes) InternalTokens() hclwrite.Tokens {
+func (ap AutoPauseAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ap.ref.InternalTokens()
 }
 
 func (ap AutoPauseAttributes) DelayInMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(ap.ref.Append("delay_in_minutes"))
+	return terra.ReferenceAsNumber(ap.ref.Append("delay_in_minutes"))
 }
 
 type AutoScaleAttributes struct {
 	ref terra.Reference
 }
 
-func (as AutoScaleAttributes) InternalRef() terra.Reference {
-	return as.ref
+func (as AutoScaleAttributes) InternalRef() (terra.Reference, error) {
+	return as.ref, nil
 }
 
 func (as AutoScaleAttributes) InternalWithRef(ref terra.Reference) AutoScaleAttributes {
 	return AutoScaleAttributes{ref: ref}
 }
 
-func (as AutoScaleAttributes) InternalTokens() hclwrite.Tokens {
+func (as AutoScaleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return as.ref.InternalTokens()
 }
 
 func (as AutoScaleAttributes) MaxNodeCount() terra.NumberValue {
-	return terra.ReferenceNumber(as.ref.Append("max_node_count"))
+	return terra.ReferenceAsNumber(as.ref.Append("max_node_count"))
 }
 
 func (as AutoScaleAttributes) MinNodeCount() terra.NumberValue {
-	return terra.ReferenceNumber(as.ref.Append("min_node_count"))
+	return terra.ReferenceAsNumber(as.ref.Append("min_node_count"))
 }
 
 type LibraryRequirementAttributes struct {
 	ref terra.Reference
 }
 
-func (lr LibraryRequirementAttributes) InternalRef() terra.Reference {
-	return lr.ref
+func (lr LibraryRequirementAttributes) InternalRef() (terra.Reference, error) {
+	return lr.ref, nil
 }
 
 func (lr LibraryRequirementAttributes) InternalWithRef(ref terra.Reference) LibraryRequirementAttributes {
 	return LibraryRequirementAttributes{ref: ref}
 }
 
-func (lr LibraryRequirementAttributes) InternalTokens() hclwrite.Tokens {
+func (lr LibraryRequirementAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lr.ref.InternalTokens()
 }
 
 func (lr LibraryRequirementAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(lr.ref.Append("content"))
+	return terra.ReferenceAsString(lr.ref.Append("content"))
 }
 
 func (lr LibraryRequirementAttributes) Filename() terra.StringValue {
-	return terra.ReferenceString(lr.ref.Append("filename"))
+	return terra.ReferenceAsString(lr.ref.Append("filename"))
 }
 
 type SparkConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (sc SparkConfigAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc SparkConfigAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc SparkConfigAttributes) InternalWithRef(ref terra.Reference) SparkConfigAttributes {
 	return SparkConfigAttributes{ref: ref}
 }
 
-func (sc SparkConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sc SparkConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
 func (sc SparkConfigAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("content"))
+	return terra.ReferenceAsString(sc.ref.Append("content"))
 }
 
 func (sc SparkConfigAttributes) Filename() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("filename"))
+	return terra.ReferenceAsString(sc.ref.Append("filename"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AutoPauseState struct {

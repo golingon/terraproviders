@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeNodeTemplate creates a new instance of [ComputeNodeTemplate].
 func NewComputeNodeTemplate(name string, args ComputeNodeTemplateArgs) *ComputeNodeTemplate {
 	return &ComputeNodeTemplate{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeNodeTemplate(name string, args ComputeNodeTemplateArgs) *ComputeN
 
 var _ terra.Resource = (*ComputeNodeTemplate)(nil)
 
+// ComputeNodeTemplate represents the Terraform resource google_compute_node_template.
 type ComputeNodeTemplate struct {
-	Name  string
-	Args  ComputeNodeTemplateArgs
-	state *computeNodeTemplateState
+	Name      string
+	Args      ComputeNodeTemplateArgs
+	state     *computeNodeTemplateState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeNodeTemplate].
 func (cnt *ComputeNodeTemplate) Type() string {
 	return "google_compute_node_template"
 }
 
+// LocalName returns the local name for [ComputeNodeTemplate].
 func (cnt *ComputeNodeTemplate) LocalName() string {
 	return cnt.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeNodeTemplate].
 func (cnt *ComputeNodeTemplate) Configuration() interface{} {
 	return cnt.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeNodeTemplate].
+func (cnt *ComputeNodeTemplate) DependOn() terra.Reference {
+	return terra.ReferenceResource(cnt)
+}
+
+// Dependencies returns the list of resources [ComputeNodeTemplate] depends_on.
+func (cnt *ComputeNodeTemplate) Dependencies() terra.Dependencies {
+	return cnt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeNodeTemplate].
+func (cnt *ComputeNodeTemplate) LifecycleManagement() *terra.Lifecycle {
+	return cnt.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeNodeTemplate].
 func (cnt *ComputeNodeTemplate) Attributes() computeNodeTemplateAttributes {
 	return computeNodeTemplateAttributes{ref: terra.ReferenceResource(cnt)}
 }
 
+// ImportState imports the given attribute values into [ComputeNodeTemplate]'s state.
 func (cnt *ComputeNodeTemplate) ImportState(av io.Reader) error {
 	cnt.state = &computeNodeTemplateState{}
 	if err := json.NewDecoder(av).Decode(cnt.state); err != nil {
@@ -49,10 +73,12 @@ func (cnt *ComputeNodeTemplate) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeNodeTemplate] has state.
 func (cnt *ComputeNodeTemplate) State() (*computeNodeTemplateState, bool) {
 	return cnt.state, cnt.state != nil
 }
 
+// StateMust returns the state for [ComputeNodeTemplate]. Panics if the state is nil.
 func (cnt *ComputeNodeTemplate) StateMust() *computeNodeTemplateState {
 	if cnt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cnt.Type(), cnt.LocalName()))
@@ -60,10 +86,7 @@ func (cnt *ComputeNodeTemplate) StateMust() *computeNodeTemplateState {
 	return cnt.state
 }
 
-func (cnt *ComputeNodeTemplate) DependOn() terra.Reference {
-	return terra.ReferenceResource(cnt)
-}
-
+// ComputeNodeTemplateArgs contains the configurations for google_compute_node_template.
 type ComputeNodeTemplateArgs struct {
 	// CpuOvercommitType: string, optional
 	CpuOvercommitType terra.StringValue `hcl:"cpu_overcommit_type,attr"`
@@ -87,63 +110,71 @@ type ComputeNodeTemplateArgs struct {
 	ServerBinding *computenodetemplate.ServerBinding `hcl:"server_binding,block"`
 	// Timeouts: optional
 	Timeouts *computenodetemplate.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeNodeTemplate depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeNodeTemplateAttributes struct {
 	ref terra.Reference
 }
 
+// CpuOvercommitType returns a reference to field cpu_overcommit_type of google_compute_node_template.
 func (cnt computeNodeTemplateAttributes) CpuOvercommitType() terra.StringValue {
-	return terra.ReferenceString(cnt.ref.Append("cpu_overcommit_type"))
+	return terra.ReferenceAsString(cnt.ref.Append("cpu_overcommit_type"))
 }
 
+// CreationTimestamp returns a reference to field creation_timestamp of google_compute_node_template.
 func (cnt computeNodeTemplateAttributes) CreationTimestamp() terra.StringValue {
-	return terra.ReferenceString(cnt.ref.Append("creation_timestamp"))
+	return terra.ReferenceAsString(cnt.ref.Append("creation_timestamp"))
 }
 
+// Description returns a reference to field description of google_compute_node_template.
 func (cnt computeNodeTemplateAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cnt.ref.Append("description"))
+	return terra.ReferenceAsString(cnt.ref.Append("description"))
 }
 
+// Id returns a reference to field id of google_compute_node_template.
 func (cnt computeNodeTemplateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cnt.ref.Append("id"))
+	return terra.ReferenceAsString(cnt.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_compute_node_template.
 func (cnt computeNodeTemplateAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cnt.ref.Append("name"))
+	return terra.ReferenceAsString(cnt.ref.Append("name"))
 }
 
+// NodeAffinityLabels returns a reference to field node_affinity_labels of google_compute_node_template.
 func (cnt computeNodeTemplateAttributes) NodeAffinityLabels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cnt.ref.Append("node_affinity_labels"))
+	return terra.ReferenceAsMap[terra.StringValue](cnt.ref.Append("node_affinity_labels"))
 }
 
+// NodeType returns a reference to field node_type of google_compute_node_template.
 func (cnt computeNodeTemplateAttributes) NodeType() terra.StringValue {
-	return terra.ReferenceString(cnt.ref.Append("node_type"))
+	return terra.ReferenceAsString(cnt.ref.Append("node_type"))
 }
 
+// Project returns a reference to field project of google_compute_node_template.
 func (cnt computeNodeTemplateAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cnt.ref.Append("project"))
+	return terra.ReferenceAsString(cnt.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_compute_node_template.
 func (cnt computeNodeTemplateAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(cnt.ref.Append("region"))
+	return terra.ReferenceAsString(cnt.ref.Append("region"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_node_template.
 func (cnt computeNodeTemplateAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(cnt.ref.Append("self_link"))
+	return terra.ReferenceAsString(cnt.ref.Append("self_link"))
 }
 
 func (cnt computeNodeTemplateAttributes) NodeTypeFlexibility() terra.ListValue[computenodetemplate.NodeTypeFlexibilityAttributes] {
-	return terra.ReferenceList[computenodetemplate.NodeTypeFlexibilityAttributes](cnt.ref.Append("node_type_flexibility"))
+	return terra.ReferenceAsList[computenodetemplate.NodeTypeFlexibilityAttributes](cnt.ref.Append("node_type_flexibility"))
 }
 
 func (cnt computeNodeTemplateAttributes) ServerBinding() terra.ListValue[computenodetemplate.ServerBindingAttributes] {
-	return terra.ReferenceList[computenodetemplate.ServerBindingAttributes](cnt.ref.Append("server_binding"))
+	return terra.ReferenceAsList[computenodetemplate.ServerBindingAttributes](cnt.ref.Append("server_binding"))
 }
 
 func (cnt computeNodeTemplateAttributes) Timeouts() computenodetemplate.TimeoutsAttributes {
-	return terra.ReferenceSingle[computenodetemplate.TimeoutsAttributes](cnt.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computenodetemplate.TimeoutsAttributes](cnt.ref.Append("timeouts"))
 }
 
 type computeNodeTemplateState struct {

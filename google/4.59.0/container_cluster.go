@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewContainerCluster creates a new instance of [ContainerCluster].
 func NewContainerCluster(name string, args ContainerClusterArgs) *ContainerCluster {
 	return &ContainerCluster{
 		Args: args,
@@ -19,28 +20,51 @@ func NewContainerCluster(name string, args ContainerClusterArgs) *ContainerClust
 
 var _ terra.Resource = (*ContainerCluster)(nil)
 
+// ContainerCluster represents the Terraform resource google_container_cluster.
 type ContainerCluster struct {
-	Name  string
-	Args  ContainerClusterArgs
-	state *containerClusterState
+	Name      string
+	Args      ContainerClusterArgs
+	state     *containerClusterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ContainerCluster].
 func (cc *ContainerCluster) Type() string {
 	return "google_container_cluster"
 }
 
+// LocalName returns the local name for [ContainerCluster].
 func (cc *ContainerCluster) LocalName() string {
 	return cc.Name
 }
 
+// Configuration returns the configuration (args) for [ContainerCluster].
 func (cc *ContainerCluster) Configuration() interface{} {
 	return cc.Args
 }
 
+// DependOn is used for other resources to depend on [ContainerCluster].
+func (cc *ContainerCluster) DependOn() terra.Reference {
+	return terra.ReferenceResource(cc)
+}
+
+// Dependencies returns the list of resources [ContainerCluster] depends_on.
+func (cc *ContainerCluster) Dependencies() terra.Dependencies {
+	return cc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ContainerCluster].
+func (cc *ContainerCluster) LifecycleManagement() *terra.Lifecycle {
+	return cc.Lifecycle
+}
+
+// Attributes returns the attributes for [ContainerCluster].
 func (cc *ContainerCluster) Attributes() containerClusterAttributes {
 	return containerClusterAttributes{ref: terra.ReferenceResource(cc)}
 }
 
+// ImportState imports the given attribute values into [ContainerCluster]'s state.
 func (cc *ContainerCluster) ImportState(av io.Reader) error {
 	cc.state = &containerClusterState{}
 	if err := json.NewDecoder(av).Decode(cc.state); err != nil {
@@ -49,10 +73,12 @@ func (cc *ContainerCluster) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ContainerCluster] has state.
 func (cc *ContainerCluster) State() (*containerClusterState, bool) {
 	return cc.state, cc.state != nil
 }
 
+// StateMust returns the state for [ContainerCluster]. Panics if the state is nil.
 func (cc *ContainerCluster) StateMust() *containerClusterState {
 	if cc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cc.Type(), cc.LocalName()))
@@ -60,10 +86,7 @@ func (cc *ContainerCluster) StateMust() *containerClusterState {
 	return cc.state
 }
 
-func (cc *ContainerCluster) DependOn() terra.Reference {
-	return terra.ReferenceResource(cc)
-}
-
+// ContainerClusterArgs contains the configurations for google_container_cluster.
 type ContainerClusterArgs struct {
 	// ClusterIpv4Cidr: string, optional
 	ClusterIpv4Cidr terra.StringValue `hcl:"cluster_ipv4_cidr,attr"`
@@ -179,267 +202,300 @@ type ContainerClusterArgs struct {
 	VerticalPodAutoscaling *containercluster.VerticalPodAutoscaling `hcl:"vertical_pod_autoscaling,block"`
 	// WorkloadIdentityConfig: optional
 	WorkloadIdentityConfig *containercluster.WorkloadIdentityConfig `hcl:"workload_identity_config,block"`
-	// DependsOn contains resources that ContainerCluster depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type containerClusterAttributes struct {
 	ref terra.Reference
 }
 
+// ClusterIpv4Cidr returns a reference to field cluster_ipv4_cidr of google_container_cluster.
 func (cc containerClusterAttributes) ClusterIpv4Cidr() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("cluster_ipv4_cidr"))
+	return terra.ReferenceAsString(cc.ref.Append("cluster_ipv4_cidr"))
 }
 
+// DatapathProvider returns a reference to field datapath_provider of google_container_cluster.
 func (cc containerClusterAttributes) DatapathProvider() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("datapath_provider"))
+	return terra.ReferenceAsString(cc.ref.Append("datapath_provider"))
 }
 
+// DefaultMaxPodsPerNode returns a reference to field default_max_pods_per_node of google_container_cluster.
 func (cc containerClusterAttributes) DefaultMaxPodsPerNode() terra.NumberValue {
-	return terra.ReferenceNumber(cc.ref.Append("default_max_pods_per_node"))
+	return terra.ReferenceAsNumber(cc.ref.Append("default_max_pods_per_node"))
 }
 
+// Description returns a reference to field description of google_container_cluster.
 func (cc containerClusterAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("description"))
+	return terra.ReferenceAsString(cc.ref.Append("description"))
 }
 
+// EnableAutopilot returns a reference to field enable_autopilot of google_container_cluster.
 func (cc containerClusterAttributes) EnableAutopilot() terra.BoolValue {
-	return terra.ReferenceBool(cc.ref.Append("enable_autopilot"))
+	return terra.ReferenceAsBool(cc.ref.Append("enable_autopilot"))
 }
 
+// EnableBinaryAuthorization returns a reference to field enable_binary_authorization of google_container_cluster.
 func (cc containerClusterAttributes) EnableBinaryAuthorization() terra.BoolValue {
-	return terra.ReferenceBool(cc.ref.Append("enable_binary_authorization"))
+	return terra.ReferenceAsBool(cc.ref.Append("enable_binary_authorization"))
 }
 
+// EnableIntranodeVisibility returns a reference to field enable_intranode_visibility of google_container_cluster.
 func (cc containerClusterAttributes) EnableIntranodeVisibility() terra.BoolValue {
-	return terra.ReferenceBool(cc.ref.Append("enable_intranode_visibility"))
+	return terra.ReferenceAsBool(cc.ref.Append("enable_intranode_visibility"))
 }
 
+// EnableKubernetesAlpha returns a reference to field enable_kubernetes_alpha of google_container_cluster.
 func (cc containerClusterAttributes) EnableKubernetesAlpha() terra.BoolValue {
-	return terra.ReferenceBool(cc.ref.Append("enable_kubernetes_alpha"))
+	return terra.ReferenceAsBool(cc.ref.Append("enable_kubernetes_alpha"))
 }
 
+// EnableL4IlbSubsetting returns a reference to field enable_l4_ilb_subsetting of google_container_cluster.
 func (cc containerClusterAttributes) EnableL4IlbSubsetting() terra.BoolValue {
-	return terra.ReferenceBool(cc.ref.Append("enable_l4_ilb_subsetting"))
+	return terra.ReferenceAsBool(cc.ref.Append("enable_l4_ilb_subsetting"))
 }
 
+// EnableLegacyAbac returns a reference to field enable_legacy_abac of google_container_cluster.
 func (cc containerClusterAttributes) EnableLegacyAbac() terra.BoolValue {
-	return terra.ReferenceBool(cc.ref.Append("enable_legacy_abac"))
+	return terra.ReferenceAsBool(cc.ref.Append("enable_legacy_abac"))
 }
 
+// EnableShieldedNodes returns a reference to field enable_shielded_nodes of google_container_cluster.
 func (cc containerClusterAttributes) EnableShieldedNodes() terra.BoolValue {
-	return terra.ReferenceBool(cc.ref.Append("enable_shielded_nodes"))
+	return terra.ReferenceAsBool(cc.ref.Append("enable_shielded_nodes"))
 }
 
+// EnableTpu returns a reference to field enable_tpu of google_container_cluster.
 func (cc containerClusterAttributes) EnableTpu() terra.BoolValue {
-	return terra.ReferenceBool(cc.ref.Append("enable_tpu"))
+	return terra.ReferenceAsBool(cc.ref.Append("enable_tpu"))
 }
 
+// Endpoint returns a reference to field endpoint of google_container_cluster.
 func (cc containerClusterAttributes) Endpoint() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("endpoint"))
+	return terra.ReferenceAsString(cc.ref.Append("endpoint"))
 }
 
+// Id returns a reference to field id of google_container_cluster.
 func (cc containerClusterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("id"))
+	return terra.ReferenceAsString(cc.ref.Append("id"))
 }
 
+// InitialNodeCount returns a reference to field initial_node_count of google_container_cluster.
 func (cc containerClusterAttributes) InitialNodeCount() terra.NumberValue {
-	return terra.ReferenceNumber(cc.ref.Append("initial_node_count"))
+	return terra.ReferenceAsNumber(cc.ref.Append("initial_node_count"))
 }
 
+// LabelFingerprint returns a reference to field label_fingerprint of google_container_cluster.
 func (cc containerClusterAttributes) LabelFingerprint() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("label_fingerprint"))
+	return terra.ReferenceAsString(cc.ref.Append("label_fingerprint"))
 }
 
+// Location returns a reference to field location of google_container_cluster.
 func (cc containerClusterAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("location"))
+	return terra.ReferenceAsString(cc.ref.Append("location"))
 }
 
+// LoggingService returns a reference to field logging_service of google_container_cluster.
 func (cc containerClusterAttributes) LoggingService() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("logging_service"))
+	return terra.ReferenceAsString(cc.ref.Append("logging_service"))
 }
 
+// MasterVersion returns a reference to field master_version of google_container_cluster.
 func (cc containerClusterAttributes) MasterVersion() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("master_version"))
+	return terra.ReferenceAsString(cc.ref.Append("master_version"))
 }
 
+// MinMasterVersion returns a reference to field min_master_version of google_container_cluster.
 func (cc containerClusterAttributes) MinMasterVersion() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("min_master_version"))
+	return terra.ReferenceAsString(cc.ref.Append("min_master_version"))
 }
 
+// MonitoringService returns a reference to field monitoring_service of google_container_cluster.
 func (cc containerClusterAttributes) MonitoringService() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("monitoring_service"))
+	return terra.ReferenceAsString(cc.ref.Append("monitoring_service"))
 }
 
+// Name returns a reference to field name of google_container_cluster.
 func (cc containerClusterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("name"))
+	return terra.ReferenceAsString(cc.ref.Append("name"))
 }
 
+// Network returns a reference to field network of google_container_cluster.
 func (cc containerClusterAttributes) Network() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("network"))
+	return terra.ReferenceAsString(cc.ref.Append("network"))
 }
 
+// NetworkingMode returns a reference to field networking_mode of google_container_cluster.
 func (cc containerClusterAttributes) NetworkingMode() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("networking_mode"))
+	return terra.ReferenceAsString(cc.ref.Append("networking_mode"))
 }
 
+// NodeLocations returns a reference to field node_locations of google_container_cluster.
 func (cc containerClusterAttributes) NodeLocations() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cc.ref.Append("node_locations"))
+	return terra.ReferenceAsSet[terra.StringValue](cc.ref.Append("node_locations"))
 }
 
+// NodeVersion returns a reference to field node_version of google_container_cluster.
 func (cc containerClusterAttributes) NodeVersion() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("node_version"))
+	return terra.ReferenceAsString(cc.ref.Append("node_version"))
 }
 
+// Operation returns a reference to field operation of google_container_cluster.
 func (cc containerClusterAttributes) Operation() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("operation"))
+	return terra.ReferenceAsString(cc.ref.Append("operation"))
 }
 
+// PrivateIpv6GoogleAccess returns a reference to field private_ipv6_google_access of google_container_cluster.
 func (cc containerClusterAttributes) PrivateIpv6GoogleAccess() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("private_ipv6_google_access"))
+	return terra.ReferenceAsString(cc.ref.Append("private_ipv6_google_access"))
 }
 
+// Project returns a reference to field project of google_container_cluster.
 func (cc containerClusterAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("project"))
+	return terra.ReferenceAsString(cc.ref.Append("project"))
 }
 
+// RemoveDefaultNodePool returns a reference to field remove_default_node_pool of google_container_cluster.
 func (cc containerClusterAttributes) RemoveDefaultNodePool() terra.BoolValue {
-	return terra.ReferenceBool(cc.ref.Append("remove_default_node_pool"))
+	return terra.ReferenceAsBool(cc.ref.Append("remove_default_node_pool"))
 }
 
+// ResourceLabels returns a reference to field resource_labels of google_container_cluster.
 func (cc containerClusterAttributes) ResourceLabels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cc.ref.Append("resource_labels"))
+	return terra.ReferenceAsMap[terra.StringValue](cc.ref.Append("resource_labels"))
 }
 
+// SelfLink returns a reference to field self_link of google_container_cluster.
 func (cc containerClusterAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("self_link"))
+	return terra.ReferenceAsString(cc.ref.Append("self_link"))
 }
 
+// ServicesIpv4Cidr returns a reference to field services_ipv4_cidr of google_container_cluster.
 func (cc containerClusterAttributes) ServicesIpv4Cidr() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("services_ipv4_cidr"))
+	return terra.ReferenceAsString(cc.ref.Append("services_ipv4_cidr"))
 }
 
+// Subnetwork returns a reference to field subnetwork of google_container_cluster.
 func (cc containerClusterAttributes) Subnetwork() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("subnetwork"))
+	return terra.ReferenceAsString(cc.ref.Append("subnetwork"))
 }
 
+// TpuIpv4CidrBlock returns a reference to field tpu_ipv4_cidr_block of google_container_cluster.
 func (cc containerClusterAttributes) TpuIpv4CidrBlock() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("tpu_ipv4_cidr_block"))
+	return terra.ReferenceAsString(cc.ref.Append("tpu_ipv4_cidr_block"))
 }
 
 func (cc containerClusterAttributes) AddonsConfig() terra.ListValue[containercluster.AddonsConfigAttributes] {
-	return terra.ReferenceList[containercluster.AddonsConfigAttributes](cc.ref.Append("addons_config"))
+	return terra.ReferenceAsList[containercluster.AddonsConfigAttributes](cc.ref.Append("addons_config"))
 }
 
 func (cc containerClusterAttributes) AuthenticatorGroupsConfig() terra.ListValue[containercluster.AuthenticatorGroupsConfigAttributes] {
-	return terra.ReferenceList[containercluster.AuthenticatorGroupsConfigAttributes](cc.ref.Append("authenticator_groups_config"))
+	return terra.ReferenceAsList[containercluster.AuthenticatorGroupsConfigAttributes](cc.ref.Append("authenticator_groups_config"))
 }
 
 func (cc containerClusterAttributes) BinaryAuthorization() terra.ListValue[containercluster.BinaryAuthorizationAttributes] {
-	return terra.ReferenceList[containercluster.BinaryAuthorizationAttributes](cc.ref.Append("binary_authorization"))
+	return terra.ReferenceAsList[containercluster.BinaryAuthorizationAttributes](cc.ref.Append("binary_authorization"))
 }
 
 func (cc containerClusterAttributes) ClusterAutoscaling() terra.ListValue[containercluster.ClusterAutoscalingAttributes] {
-	return terra.ReferenceList[containercluster.ClusterAutoscalingAttributes](cc.ref.Append("cluster_autoscaling"))
+	return terra.ReferenceAsList[containercluster.ClusterAutoscalingAttributes](cc.ref.Append("cluster_autoscaling"))
 }
 
 func (cc containerClusterAttributes) ConfidentialNodes() terra.ListValue[containercluster.ConfidentialNodesAttributes] {
-	return terra.ReferenceList[containercluster.ConfidentialNodesAttributes](cc.ref.Append("confidential_nodes"))
+	return terra.ReferenceAsList[containercluster.ConfidentialNodesAttributes](cc.ref.Append("confidential_nodes"))
 }
 
 func (cc containerClusterAttributes) CostManagementConfig() terra.ListValue[containercluster.CostManagementConfigAttributes] {
-	return terra.ReferenceList[containercluster.CostManagementConfigAttributes](cc.ref.Append("cost_management_config"))
+	return terra.ReferenceAsList[containercluster.CostManagementConfigAttributes](cc.ref.Append("cost_management_config"))
 }
 
 func (cc containerClusterAttributes) DatabaseEncryption() terra.ListValue[containercluster.DatabaseEncryptionAttributes] {
-	return terra.ReferenceList[containercluster.DatabaseEncryptionAttributes](cc.ref.Append("database_encryption"))
+	return terra.ReferenceAsList[containercluster.DatabaseEncryptionAttributes](cc.ref.Append("database_encryption"))
 }
 
 func (cc containerClusterAttributes) DefaultSnatStatus() terra.ListValue[containercluster.DefaultSnatStatusAttributes] {
-	return terra.ReferenceList[containercluster.DefaultSnatStatusAttributes](cc.ref.Append("default_snat_status"))
+	return terra.ReferenceAsList[containercluster.DefaultSnatStatusAttributes](cc.ref.Append("default_snat_status"))
 }
 
 func (cc containerClusterAttributes) DnsConfig() terra.ListValue[containercluster.DnsConfigAttributes] {
-	return terra.ReferenceList[containercluster.DnsConfigAttributes](cc.ref.Append("dns_config"))
+	return terra.ReferenceAsList[containercluster.DnsConfigAttributes](cc.ref.Append("dns_config"))
 }
 
 func (cc containerClusterAttributes) GatewayApiConfig() terra.ListValue[containercluster.GatewayApiConfigAttributes] {
-	return terra.ReferenceList[containercluster.GatewayApiConfigAttributes](cc.ref.Append("gateway_api_config"))
+	return terra.ReferenceAsList[containercluster.GatewayApiConfigAttributes](cc.ref.Append("gateway_api_config"))
 }
 
 func (cc containerClusterAttributes) IpAllocationPolicy() terra.ListValue[containercluster.IpAllocationPolicyAttributes] {
-	return terra.ReferenceList[containercluster.IpAllocationPolicyAttributes](cc.ref.Append("ip_allocation_policy"))
+	return terra.ReferenceAsList[containercluster.IpAllocationPolicyAttributes](cc.ref.Append("ip_allocation_policy"))
 }
 
 func (cc containerClusterAttributes) LoggingConfig() terra.ListValue[containercluster.LoggingConfigAttributes] {
-	return terra.ReferenceList[containercluster.LoggingConfigAttributes](cc.ref.Append("logging_config"))
+	return terra.ReferenceAsList[containercluster.LoggingConfigAttributes](cc.ref.Append("logging_config"))
 }
 
 func (cc containerClusterAttributes) MaintenancePolicy() terra.ListValue[containercluster.MaintenancePolicyAttributes] {
-	return terra.ReferenceList[containercluster.MaintenancePolicyAttributes](cc.ref.Append("maintenance_policy"))
+	return terra.ReferenceAsList[containercluster.MaintenancePolicyAttributes](cc.ref.Append("maintenance_policy"))
 }
 
 func (cc containerClusterAttributes) MasterAuth() terra.ListValue[containercluster.MasterAuthAttributes] {
-	return terra.ReferenceList[containercluster.MasterAuthAttributes](cc.ref.Append("master_auth"))
+	return terra.ReferenceAsList[containercluster.MasterAuthAttributes](cc.ref.Append("master_auth"))
 }
 
 func (cc containerClusterAttributes) MasterAuthorizedNetworksConfig() terra.ListValue[containercluster.MasterAuthorizedNetworksConfigAttributes] {
-	return terra.ReferenceList[containercluster.MasterAuthorizedNetworksConfigAttributes](cc.ref.Append("master_authorized_networks_config"))
+	return terra.ReferenceAsList[containercluster.MasterAuthorizedNetworksConfigAttributes](cc.ref.Append("master_authorized_networks_config"))
 }
 
 func (cc containerClusterAttributes) MeshCertificates() terra.ListValue[containercluster.MeshCertificatesAttributes] {
-	return terra.ReferenceList[containercluster.MeshCertificatesAttributes](cc.ref.Append("mesh_certificates"))
+	return terra.ReferenceAsList[containercluster.MeshCertificatesAttributes](cc.ref.Append("mesh_certificates"))
 }
 
 func (cc containerClusterAttributes) MonitoringConfig() terra.ListValue[containercluster.MonitoringConfigAttributes] {
-	return terra.ReferenceList[containercluster.MonitoringConfigAttributes](cc.ref.Append("monitoring_config"))
+	return terra.ReferenceAsList[containercluster.MonitoringConfigAttributes](cc.ref.Append("monitoring_config"))
 }
 
 func (cc containerClusterAttributes) NetworkPolicy() terra.ListValue[containercluster.NetworkPolicyAttributes] {
-	return terra.ReferenceList[containercluster.NetworkPolicyAttributes](cc.ref.Append("network_policy"))
+	return terra.ReferenceAsList[containercluster.NetworkPolicyAttributes](cc.ref.Append("network_policy"))
 }
 
 func (cc containerClusterAttributes) NodeConfig() terra.ListValue[containercluster.NodeConfigAttributes] {
-	return terra.ReferenceList[containercluster.NodeConfigAttributes](cc.ref.Append("node_config"))
+	return terra.ReferenceAsList[containercluster.NodeConfigAttributes](cc.ref.Append("node_config"))
 }
 
 func (cc containerClusterAttributes) NodePool() terra.ListValue[containercluster.NodePoolAttributes] {
-	return terra.ReferenceList[containercluster.NodePoolAttributes](cc.ref.Append("node_pool"))
+	return terra.ReferenceAsList[containercluster.NodePoolAttributes](cc.ref.Append("node_pool"))
 }
 
 func (cc containerClusterAttributes) NodePoolDefaults() terra.ListValue[containercluster.NodePoolDefaultsAttributes] {
-	return terra.ReferenceList[containercluster.NodePoolDefaultsAttributes](cc.ref.Append("node_pool_defaults"))
+	return terra.ReferenceAsList[containercluster.NodePoolDefaultsAttributes](cc.ref.Append("node_pool_defaults"))
 }
 
 func (cc containerClusterAttributes) NotificationConfig() terra.ListValue[containercluster.NotificationConfigAttributes] {
-	return terra.ReferenceList[containercluster.NotificationConfigAttributes](cc.ref.Append("notification_config"))
+	return terra.ReferenceAsList[containercluster.NotificationConfigAttributes](cc.ref.Append("notification_config"))
 }
 
 func (cc containerClusterAttributes) PrivateClusterConfig() terra.ListValue[containercluster.PrivateClusterConfigAttributes] {
-	return terra.ReferenceList[containercluster.PrivateClusterConfigAttributes](cc.ref.Append("private_cluster_config"))
+	return terra.ReferenceAsList[containercluster.PrivateClusterConfigAttributes](cc.ref.Append("private_cluster_config"))
 }
 
 func (cc containerClusterAttributes) ReleaseChannel() terra.ListValue[containercluster.ReleaseChannelAttributes] {
-	return terra.ReferenceList[containercluster.ReleaseChannelAttributes](cc.ref.Append("release_channel"))
+	return terra.ReferenceAsList[containercluster.ReleaseChannelAttributes](cc.ref.Append("release_channel"))
 }
 
 func (cc containerClusterAttributes) ResourceUsageExportConfig() terra.ListValue[containercluster.ResourceUsageExportConfigAttributes] {
-	return terra.ReferenceList[containercluster.ResourceUsageExportConfigAttributes](cc.ref.Append("resource_usage_export_config"))
+	return terra.ReferenceAsList[containercluster.ResourceUsageExportConfigAttributes](cc.ref.Append("resource_usage_export_config"))
 }
 
 func (cc containerClusterAttributes) ServiceExternalIpsConfig() terra.ListValue[containercluster.ServiceExternalIpsConfigAttributes] {
-	return terra.ReferenceList[containercluster.ServiceExternalIpsConfigAttributes](cc.ref.Append("service_external_ips_config"))
+	return terra.ReferenceAsList[containercluster.ServiceExternalIpsConfigAttributes](cc.ref.Append("service_external_ips_config"))
 }
 
 func (cc containerClusterAttributes) Timeouts() containercluster.TimeoutsAttributes {
-	return terra.ReferenceSingle[containercluster.TimeoutsAttributes](cc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[containercluster.TimeoutsAttributes](cc.ref.Append("timeouts"))
 }
 
 func (cc containerClusterAttributes) VerticalPodAutoscaling() terra.ListValue[containercluster.VerticalPodAutoscalingAttributes] {
-	return terra.ReferenceList[containercluster.VerticalPodAutoscalingAttributes](cc.ref.Append("vertical_pod_autoscaling"))
+	return terra.ReferenceAsList[containercluster.VerticalPodAutoscalingAttributes](cc.ref.Append("vertical_pod_autoscaling"))
 }
 
 func (cc containerClusterAttributes) WorkloadIdentityConfig() terra.ListValue[containercluster.WorkloadIdentityConfigAttributes] {
-	return terra.ReferenceList[containercluster.WorkloadIdentityConfigAttributes](cc.ref.Append("workload_identity_config"))
+	return terra.ReferenceAsList[containercluster.WorkloadIdentityConfigAttributes](cc.ref.Append("workload_identity_config"))
 }
 
 type containerClusterState struct {

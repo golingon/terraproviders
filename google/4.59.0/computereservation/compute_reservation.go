@@ -66,184 +66,184 @@ type ShareSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ss ShareSettingsAttributes) InternalRef() terra.Reference {
-	return ss.ref
+func (ss ShareSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ss.ref, nil
 }
 
 func (ss ShareSettingsAttributes) InternalWithRef(ref terra.Reference) ShareSettingsAttributes {
 	return ShareSettingsAttributes{ref: ref}
 }
 
-func (ss ShareSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ss ShareSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ss.ref.InternalTokens()
 }
 
 func (ss ShareSettingsAttributes) ShareType() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("share_type"))
+	return terra.ReferenceAsString(ss.ref.Append("share_type"))
 }
 
 func (ss ShareSettingsAttributes) ProjectMap() terra.SetValue[ProjectMapAttributes] {
-	return terra.ReferenceSet[ProjectMapAttributes](ss.ref.Append("project_map"))
+	return terra.ReferenceAsSet[ProjectMapAttributes](ss.ref.Append("project_map"))
 }
 
 type ProjectMapAttributes struct {
 	ref terra.Reference
 }
 
-func (pm ProjectMapAttributes) InternalRef() terra.Reference {
-	return pm.ref
+func (pm ProjectMapAttributes) InternalRef() (terra.Reference, error) {
+	return pm.ref, nil
 }
 
 func (pm ProjectMapAttributes) InternalWithRef(ref terra.Reference) ProjectMapAttributes {
 	return ProjectMapAttributes{ref: ref}
 }
 
-func (pm ProjectMapAttributes) InternalTokens() hclwrite.Tokens {
+func (pm ProjectMapAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pm.ref.InternalTokens()
 }
 
 func (pm ProjectMapAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pm.ref.Append("id"))
+	return terra.ReferenceAsString(pm.ref.Append("id"))
 }
 
 func (pm ProjectMapAttributes) ProjectId() terra.StringValue {
-	return terra.ReferenceString(pm.ref.Append("project_id"))
+	return terra.ReferenceAsString(pm.ref.Append("project_id"))
 }
 
 type SpecificReservationAttributes struct {
 	ref terra.Reference
 }
 
-func (sr SpecificReservationAttributes) InternalRef() terra.Reference {
-	return sr.ref
+func (sr SpecificReservationAttributes) InternalRef() (terra.Reference, error) {
+	return sr.ref, nil
 }
 
 func (sr SpecificReservationAttributes) InternalWithRef(ref terra.Reference) SpecificReservationAttributes {
 	return SpecificReservationAttributes{ref: ref}
 }
 
-func (sr SpecificReservationAttributes) InternalTokens() hclwrite.Tokens {
+func (sr SpecificReservationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sr.ref.InternalTokens()
 }
 
 func (sr SpecificReservationAttributes) Count() terra.NumberValue {
-	return terra.ReferenceNumber(sr.ref.Append("count"))
+	return terra.ReferenceAsNumber(sr.ref.Append("count"))
 }
 
 func (sr SpecificReservationAttributes) InUseCount() terra.NumberValue {
-	return terra.ReferenceNumber(sr.ref.Append("in_use_count"))
+	return terra.ReferenceAsNumber(sr.ref.Append("in_use_count"))
 }
 
 func (sr SpecificReservationAttributes) InstanceProperties() terra.ListValue[InstancePropertiesAttributes] {
-	return terra.ReferenceList[InstancePropertiesAttributes](sr.ref.Append("instance_properties"))
+	return terra.ReferenceAsList[InstancePropertiesAttributes](sr.ref.Append("instance_properties"))
 }
 
 type InstancePropertiesAttributes struct {
 	ref terra.Reference
 }
 
-func (ip InstancePropertiesAttributes) InternalRef() terra.Reference {
-	return ip.ref
+func (ip InstancePropertiesAttributes) InternalRef() (terra.Reference, error) {
+	return ip.ref, nil
 }
 
 func (ip InstancePropertiesAttributes) InternalWithRef(ref terra.Reference) InstancePropertiesAttributes {
 	return InstancePropertiesAttributes{ref: ref}
 }
 
-func (ip InstancePropertiesAttributes) InternalTokens() hclwrite.Tokens {
+func (ip InstancePropertiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ip.ref.InternalTokens()
 }
 
 func (ip InstancePropertiesAttributes) MachineType() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("machine_type"))
+	return terra.ReferenceAsString(ip.ref.Append("machine_type"))
 }
 
 func (ip InstancePropertiesAttributes) MinCpuPlatform() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("min_cpu_platform"))
+	return terra.ReferenceAsString(ip.ref.Append("min_cpu_platform"))
 }
 
 func (ip InstancePropertiesAttributes) GuestAccelerators() terra.ListValue[GuestAcceleratorsAttributes] {
-	return terra.ReferenceList[GuestAcceleratorsAttributes](ip.ref.Append("guest_accelerators"))
+	return terra.ReferenceAsList[GuestAcceleratorsAttributes](ip.ref.Append("guest_accelerators"))
 }
 
 func (ip InstancePropertiesAttributes) LocalSsds() terra.ListValue[LocalSsdsAttributes] {
-	return terra.ReferenceList[LocalSsdsAttributes](ip.ref.Append("local_ssds"))
+	return terra.ReferenceAsList[LocalSsdsAttributes](ip.ref.Append("local_ssds"))
 }
 
 type GuestAcceleratorsAttributes struct {
 	ref terra.Reference
 }
 
-func (ga GuestAcceleratorsAttributes) InternalRef() terra.Reference {
-	return ga.ref
+func (ga GuestAcceleratorsAttributes) InternalRef() (terra.Reference, error) {
+	return ga.ref, nil
 }
 
 func (ga GuestAcceleratorsAttributes) InternalWithRef(ref terra.Reference) GuestAcceleratorsAttributes {
 	return GuestAcceleratorsAttributes{ref: ref}
 }
 
-func (ga GuestAcceleratorsAttributes) InternalTokens() hclwrite.Tokens {
+func (ga GuestAcceleratorsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ga.ref.InternalTokens()
 }
 
 func (ga GuestAcceleratorsAttributes) AcceleratorCount() terra.NumberValue {
-	return terra.ReferenceNumber(ga.ref.Append("accelerator_count"))
+	return terra.ReferenceAsNumber(ga.ref.Append("accelerator_count"))
 }
 
 func (ga GuestAcceleratorsAttributes) AcceleratorType() terra.StringValue {
-	return terra.ReferenceString(ga.ref.Append("accelerator_type"))
+	return terra.ReferenceAsString(ga.ref.Append("accelerator_type"))
 }
 
 type LocalSsdsAttributes struct {
 	ref terra.Reference
 }
 
-func (ls LocalSsdsAttributes) InternalRef() terra.Reference {
-	return ls.ref
+func (ls LocalSsdsAttributes) InternalRef() (terra.Reference, error) {
+	return ls.ref, nil
 }
 
 func (ls LocalSsdsAttributes) InternalWithRef(ref terra.Reference) LocalSsdsAttributes {
 	return LocalSsdsAttributes{ref: ref}
 }
 
-func (ls LocalSsdsAttributes) InternalTokens() hclwrite.Tokens {
+func (ls LocalSsdsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ls.ref.InternalTokens()
 }
 
 func (ls LocalSsdsAttributes) DiskSizeGb() terra.NumberValue {
-	return terra.ReferenceNumber(ls.ref.Append("disk_size_gb"))
+	return terra.ReferenceAsNumber(ls.ref.Append("disk_size_gb"))
 }
 
 func (ls LocalSsdsAttributes) Interface() terra.StringValue {
-	return terra.ReferenceString(ls.ref.Append("interface"))
+	return terra.ReferenceAsString(ls.ref.Append("interface"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ShareSettingsState struct {

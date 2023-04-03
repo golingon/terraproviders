@@ -4,6 +4,7 @@ package google
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataIapClient creates a new instance of [DataIapClient].
 func NewDataIapClient(name string, args DataIapClientArgs) *DataIapClient {
 	return &DataIapClient{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataIapClient(name string, args DataIapClientArgs) *DataIapClient {
 
 var _ terra.DataResource = (*DataIapClient)(nil)
 
+// DataIapClient represents the Terraform data resource google_iap_client.
 type DataIapClient struct {
 	Name string
 	Args DataIapClientArgs
 }
 
+// DataSource returns the Terraform object type for [DataIapClient].
 func (ic *DataIapClient) DataSource() string {
 	return "google_iap_client"
 }
 
+// LocalName returns the local name for [DataIapClient].
 func (ic *DataIapClient) LocalName() string {
 	return ic.Name
 }
 
+// Configuration returns the configuration (args) for [DataIapClient].
 func (ic *DataIapClient) Configuration() interface{} {
 	return ic.Args
 }
 
+// Attributes returns the attributes for [DataIapClient].
 func (ic *DataIapClient) Attributes() dataIapClientAttributes {
 	return dataIapClientAttributes{ref: terra.ReferenceDataResource(ic)}
 }
 
+// DataIapClientArgs contains the configurations for google_iap_client.
 type DataIapClientArgs struct {
 	// Brand: string, required
 	Brand terra.StringValue `hcl:"brand,attr" validate:"required"`
@@ -46,22 +53,27 @@ type dataIapClientAttributes struct {
 	ref terra.Reference
 }
 
+// Brand returns a reference to field brand of google_iap_client.
 func (ic dataIapClientAttributes) Brand() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("brand"))
+	return terra.ReferenceAsString(ic.ref.Append("brand"))
 }
 
+// ClientId returns a reference to field client_id of google_iap_client.
 func (ic dataIapClientAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("client_id"))
+	return terra.ReferenceAsString(ic.ref.Append("client_id"))
 }
 
+// DisplayName returns a reference to field display_name of google_iap_client.
 func (ic dataIapClientAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("display_name"))
+	return terra.ReferenceAsString(ic.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of google_iap_client.
 func (ic dataIapClientAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("id"))
+	return terra.ReferenceAsString(ic.ref.Append("id"))
 }
 
+// Secret returns a reference to field secret of google_iap_client.
 func (ic dataIapClientAttributes) Secret() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("secret"))
+	return terra.ReferenceAsString(ic.ref.Append("secret"))
 }

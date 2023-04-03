@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataSourceControlToken creates a new instance of [DataSourceControlToken].
 func NewDataSourceControlToken(name string, args DataSourceControlTokenArgs) *DataSourceControlToken {
 	return &DataSourceControlToken{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataSourceControlToken(name string, args DataSourceControlTokenArgs) *Da
 
 var _ terra.DataResource = (*DataSourceControlToken)(nil)
 
+// DataSourceControlToken represents the Terraform data resource azurerm_source_control_token.
 type DataSourceControlToken struct {
 	Name string
 	Args DataSourceControlTokenArgs
 }
 
+// DataSource returns the Terraform object type for [DataSourceControlToken].
 func (sct *DataSourceControlToken) DataSource() string {
 	return "azurerm_source_control_token"
 }
 
+// LocalName returns the local name for [DataSourceControlToken].
 func (sct *DataSourceControlToken) LocalName() string {
 	return sct.Name
 }
 
+// Configuration returns the configuration (args) for [DataSourceControlToken].
 func (sct *DataSourceControlToken) Configuration() interface{} {
 	return sct.Args
 }
 
+// Attributes returns the attributes for [DataSourceControlToken].
 func (sct *DataSourceControlToken) Attributes() dataSourceControlTokenAttributes {
 	return dataSourceControlTokenAttributes{ref: terra.ReferenceDataResource(sct)}
 }
 
+// DataSourceControlTokenArgs contains the configurations for azurerm_source_control_token.
 type DataSourceControlTokenArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -49,22 +56,26 @@ type dataSourceControlTokenAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_source_control_token.
 func (sct dataSourceControlTokenAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sct.ref.Append("id"))
+	return terra.ReferenceAsString(sct.ref.Append("id"))
 }
 
+// Token returns a reference to field token of azurerm_source_control_token.
 func (sct dataSourceControlTokenAttributes) Token() terra.StringValue {
-	return terra.ReferenceString(sct.ref.Append("token"))
+	return terra.ReferenceAsString(sct.ref.Append("token"))
 }
 
+// TokenSecret returns a reference to field token_secret of azurerm_source_control_token.
 func (sct dataSourceControlTokenAttributes) TokenSecret() terra.StringValue {
-	return terra.ReferenceString(sct.ref.Append("token_secret"))
+	return terra.ReferenceAsString(sct.ref.Append("token_secret"))
 }
 
+// Type returns a reference to field type of azurerm_source_control_token.
 func (sct dataSourceControlTokenAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(sct.ref.Append("type"))
+	return terra.ReferenceAsString(sct.ref.Append("type"))
 }
 
 func (sct dataSourceControlTokenAttributes) Timeouts() datasourcecontroltoken.TimeoutsAttributes {
-	return terra.ReferenceSingle[datasourcecontroltoken.TimeoutsAttributes](sct.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datasourcecontroltoken.TimeoutsAttributes](sct.ref.Append("timeouts"))
 }

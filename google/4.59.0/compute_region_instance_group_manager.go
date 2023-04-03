@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeRegionInstanceGroupManager creates a new instance of [ComputeRegionInstanceGroupManager].
 func NewComputeRegionInstanceGroupManager(name string, args ComputeRegionInstanceGroupManagerArgs) *ComputeRegionInstanceGroupManager {
 	return &ComputeRegionInstanceGroupManager{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeRegionInstanceGroupManager(name string, args ComputeRegionInstanc
 
 var _ terra.Resource = (*ComputeRegionInstanceGroupManager)(nil)
 
+// ComputeRegionInstanceGroupManager represents the Terraform resource google_compute_region_instance_group_manager.
 type ComputeRegionInstanceGroupManager struct {
-	Name  string
-	Args  ComputeRegionInstanceGroupManagerArgs
-	state *computeRegionInstanceGroupManagerState
+	Name      string
+	Args      ComputeRegionInstanceGroupManagerArgs
+	state     *computeRegionInstanceGroupManagerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeRegionInstanceGroupManager].
 func (crigm *ComputeRegionInstanceGroupManager) Type() string {
 	return "google_compute_region_instance_group_manager"
 }
 
+// LocalName returns the local name for [ComputeRegionInstanceGroupManager].
 func (crigm *ComputeRegionInstanceGroupManager) LocalName() string {
 	return crigm.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeRegionInstanceGroupManager].
 func (crigm *ComputeRegionInstanceGroupManager) Configuration() interface{} {
 	return crigm.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeRegionInstanceGroupManager].
+func (crigm *ComputeRegionInstanceGroupManager) DependOn() terra.Reference {
+	return terra.ReferenceResource(crigm)
+}
+
+// Dependencies returns the list of resources [ComputeRegionInstanceGroupManager] depends_on.
+func (crigm *ComputeRegionInstanceGroupManager) Dependencies() terra.Dependencies {
+	return crigm.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeRegionInstanceGroupManager].
+func (crigm *ComputeRegionInstanceGroupManager) LifecycleManagement() *terra.Lifecycle {
+	return crigm.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeRegionInstanceGroupManager].
 func (crigm *ComputeRegionInstanceGroupManager) Attributes() computeRegionInstanceGroupManagerAttributes {
 	return computeRegionInstanceGroupManagerAttributes{ref: terra.ReferenceResource(crigm)}
 }
 
+// ImportState imports the given attribute values into [ComputeRegionInstanceGroupManager]'s state.
 func (crigm *ComputeRegionInstanceGroupManager) ImportState(av io.Reader) error {
 	crigm.state = &computeRegionInstanceGroupManagerState{}
 	if err := json.NewDecoder(av).Decode(crigm.state); err != nil {
@@ -49,10 +73,12 @@ func (crigm *ComputeRegionInstanceGroupManager) ImportState(av io.Reader) error 
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeRegionInstanceGroupManager] has state.
 func (crigm *ComputeRegionInstanceGroupManager) State() (*computeRegionInstanceGroupManagerState, bool) {
 	return crigm.state, crigm.state != nil
 }
 
+// StateMust returns the state for [ComputeRegionInstanceGroupManager]. Panics if the state is nil.
 func (crigm *ComputeRegionInstanceGroupManager) StateMust() *computeRegionInstanceGroupManagerState {
 	if crigm.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", crigm.Type(), crigm.LocalName()))
@@ -60,10 +86,7 @@ func (crigm *ComputeRegionInstanceGroupManager) StateMust() *computeRegionInstan
 	return crigm.state
 }
 
-func (crigm *ComputeRegionInstanceGroupManager) DependOn() terra.Reference {
-	return terra.ReferenceResource(crigm)
-}
-
+// ComputeRegionInstanceGroupManagerArgs contains the configurations for google_compute_region_instance_group_manager.
 type ComputeRegionInstanceGroupManagerArgs struct {
 	// BaseInstanceName: string, required
 	BaseInstanceName terra.StringValue `hcl:"base_instance_name,attr" validate:"required"`
@@ -105,103 +128,117 @@ type ComputeRegionInstanceGroupManagerArgs struct {
 	UpdatePolicy *computeregioninstancegroupmanager.UpdatePolicy `hcl:"update_policy,block"`
 	// Version: min=1
 	Version []computeregioninstancegroupmanager.Version `hcl:"version,block" validate:"min=1"`
-	// DependsOn contains resources that ComputeRegionInstanceGroupManager depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeRegionInstanceGroupManagerAttributes struct {
 	ref terra.Reference
 }
 
+// BaseInstanceName returns a reference to field base_instance_name of google_compute_region_instance_group_manager.
 func (crigm computeRegionInstanceGroupManagerAttributes) BaseInstanceName() terra.StringValue {
-	return terra.ReferenceString(crigm.ref.Append("base_instance_name"))
+	return terra.ReferenceAsString(crigm.ref.Append("base_instance_name"))
 }
 
+// Description returns a reference to field description of google_compute_region_instance_group_manager.
 func (crigm computeRegionInstanceGroupManagerAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(crigm.ref.Append("description"))
+	return terra.ReferenceAsString(crigm.ref.Append("description"))
 }
 
+// DistributionPolicyTargetShape returns a reference to field distribution_policy_target_shape of google_compute_region_instance_group_manager.
 func (crigm computeRegionInstanceGroupManagerAttributes) DistributionPolicyTargetShape() terra.StringValue {
-	return terra.ReferenceString(crigm.ref.Append("distribution_policy_target_shape"))
+	return terra.ReferenceAsString(crigm.ref.Append("distribution_policy_target_shape"))
 }
 
+// DistributionPolicyZones returns a reference to field distribution_policy_zones of google_compute_region_instance_group_manager.
 func (crigm computeRegionInstanceGroupManagerAttributes) DistributionPolicyZones() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](crigm.ref.Append("distribution_policy_zones"))
+	return terra.ReferenceAsSet[terra.StringValue](crigm.ref.Append("distribution_policy_zones"))
 }
 
+// Fingerprint returns a reference to field fingerprint of google_compute_region_instance_group_manager.
 func (crigm computeRegionInstanceGroupManagerAttributes) Fingerprint() terra.StringValue {
-	return terra.ReferenceString(crigm.ref.Append("fingerprint"))
+	return terra.ReferenceAsString(crigm.ref.Append("fingerprint"))
 }
 
+// Id returns a reference to field id of google_compute_region_instance_group_manager.
 func (crigm computeRegionInstanceGroupManagerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(crigm.ref.Append("id"))
+	return terra.ReferenceAsString(crigm.ref.Append("id"))
 }
 
+// InstanceGroup returns a reference to field instance_group of google_compute_region_instance_group_manager.
 func (crigm computeRegionInstanceGroupManagerAttributes) InstanceGroup() terra.StringValue {
-	return terra.ReferenceString(crigm.ref.Append("instance_group"))
+	return terra.ReferenceAsString(crigm.ref.Append("instance_group"))
 }
 
+// ListManagedInstancesResults returns a reference to field list_managed_instances_results of google_compute_region_instance_group_manager.
 func (crigm computeRegionInstanceGroupManagerAttributes) ListManagedInstancesResults() terra.StringValue {
-	return terra.ReferenceString(crigm.ref.Append("list_managed_instances_results"))
+	return terra.ReferenceAsString(crigm.ref.Append("list_managed_instances_results"))
 }
 
+// Name returns a reference to field name of google_compute_region_instance_group_manager.
 func (crigm computeRegionInstanceGroupManagerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(crigm.ref.Append("name"))
+	return terra.ReferenceAsString(crigm.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_compute_region_instance_group_manager.
 func (crigm computeRegionInstanceGroupManagerAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(crigm.ref.Append("project"))
+	return terra.ReferenceAsString(crigm.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_compute_region_instance_group_manager.
 func (crigm computeRegionInstanceGroupManagerAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(crigm.ref.Append("region"))
+	return terra.ReferenceAsString(crigm.ref.Append("region"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_region_instance_group_manager.
 func (crigm computeRegionInstanceGroupManagerAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(crigm.ref.Append("self_link"))
+	return terra.ReferenceAsString(crigm.ref.Append("self_link"))
 }
 
+// TargetPools returns a reference to field target_pools of google_compute_region_instance_group_manager.
 func (crigm computeRegionInstanceGroupManagerAttributes) TargetPools() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](crigm.ref.Append("target_pools"))
+	return terra.ReferenceAsSet[terra.StringValue](crigm.ref.Append("target_pools"))
 }
 
+// TargetSize returns a reference to field target_size of google_compute_region_instance_group_manager.
 func (crigm computeRegionInstanceGroupManagerAttributes) TargetSize() terra.NumberValue {
-	return terra.ReferenceNumber(crigm.ref.Append("target_size"))
+	return terra.ReferenceAsNumber(crigm.ref.Append("target_size"))
 }
 
+// WaitForInstances returns a reference to field wait_for_instances of google_compute_region_instance_group_manager.
 func (crigm computeRegionInstanceGroupManagerAttributes) WaitForInstances() terra.BoolValue {
-	return terra.ReferenceBool(crigm.ref.Append("wait_for_instances"))
+	return terra.ReferenceAsBool(crigm.ref.Append("wait_for_instances"))
 }
 
+// WaitForInstancesStatus returns a reference to field wait_for_instances_status of google_compute_region_instance_group_manager.
 func (crigm computeRegionInstanceGroupManagerAttributes) WaitForInstancesStatus() terra.StringValue {
-	return terra.ReferenceString(crigm.ref.Append("wait_for_instances_status"))
+	return terra.ReferenceAsString(crigm.ref.Append("wait_for_instances_status"))
 }
 
 func (crigm computeRegionInstanceGroupManagerAttributes) Status() terra.ListValue[computeregioninstancegroupmanager.StatusAttributes] {
-	return terra.ReferenceList[computeregioninstancegroupmanager.StatusAttributes](crigm.ref.Append("status"))
+	return terra.ReferenceAsList[computeregioninstancegroupmanager.StatusAttributes](crigm.ref.Append("status"))
 }
 
 func (crigm computeRegionInstanceGroupManagerAttributes) AutoHealingPolicies() terra.ListValue[computeregioninstancegroupmanager.AutoHealingPoliciesAttributes] {
-	return terra.ReferenceList[computeregioninstancegroupmanager.AutoHealingPoliciesAttributes](crigm.ref.Append("auto_healing_policies"))
+	return terra.ReferenceAsList[computeregioninstancegroupmanager.AutoHealingPoliciesAttributes](crigm.ref.Append("auto_healing_policies"))
 }
 
 func (crigm computeRegionInstanceGroupManagerAttributes) NamedPort() terra.SetValue[computeregioninstancegroupmanager.NamedPortAttributes] {
-	return terra.ReferenceSet[computeregioninstancegroupmanager.NamedPortAttributes](crigm.ref.Append("named_port"))
+	return terra.ReferenceAsSet[computeregioninstancegroupmanager.NamedPortAttributes](crigm.ref.Append("named_port"))
 }
 
 func (crigm computeRegionInstanceGroupManagerAttributes) StatefulDisk() terra.SetValue[computeregioninstancegroupmanager.StatefulDiskAttributes] {
-	return terra.ReferenceSet[computeregioninstancegroupmanager.StatefulDiskAttributes](crigm.ref.Append("stateful_disk"))
+	return terra.ReferenceAsSet[computeregioninstancegroupmanager.StatefulDiskAttributes](crigm.ref.Append("stateful_disk"))
 }
 
 func (crigm computeRegionInstanceGroupManagerAttributes) Timeouts() computeregioninstancegroupmanager.TimeoutsAttributes {
-	return terra.ReferenceSingle[computeregioninstancegroupmanager.TimeoutsAttributes](crigm.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computeregioninstancegroupmanager.TimeoutsAttributes](crigm.ref.Append("timeouts"))
 }
 
 func (crigm computeRegionInstanceGroupManagerAttributes) UpdatePolicy() terra.ListValue[computeregioninstancegroupmanager.UpdatePolicyAttributes] {
-	return terra.ReferenceList[computeregioninstancegroupmanager.UpdatePolicyAttributes](crigm.ref.Append("update_policy"))
+	return terra.ReferenceAsList[computeregioninstancegroupmanager.UpdatePolicyAttributes](crigm.ref.Append("update_policy"))
 }
 
 func (crigm computeRegionInstanceGroupManagerAttributes) Version() terra.ListValue[computeregioninstancegroupmanager.VersionAttributes] {
-	return terra.ReferenceList[computeregioninstancegroupmanager.VersionAttributes](crigm.ref.Append("version"))
+	return terra.ReferenceAsList[computeregioninstancegroupmanager.VersionAttributes](crigm.ref.Append("version"))
 }
 
 type computeRegionInstanceGroupManagerState struct {

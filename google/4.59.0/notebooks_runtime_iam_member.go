@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNotebooksRuntimeIamMember creates a new instance of [NotebooksRuntimeIamMember].
 func NewNotebooksRuntimeIamMember(name string, args NotebooksRuntimeIamMemberArgs) *NotebooksRuntimeIamMember {
 	return &NotebooksRuntimeIamMember{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNotebooksRuntimeIamMember(name string, args NotebooksRuntimeIamMemberArg
 
 var _ terra.Resource = (*NotebooksRuntimeIamMember)(nil)
 
+// NotebooksRuntimeIamMember represents the Terraform resource google_notebooks_runtime_iam_member.
 type NotebooksRuntimeIamMember struct {
-	Name  string
-	Args  NotebooksRuntimeIamMemberArgs
-	state *notebooksRuntimeIamMemberState
+	Name      string
+	Args      NotebooksRuntimeIamMemberArgs
+	state     *notebooksRuntimeIamMemberState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NotebooksRuntimeIamMember].
 func (nrim *NotebooksRuntimeIamMember) Type() string {
 	return "google_notebooks_runtime_iam_member"
 }
 
+// LocalName returns the local name for [NotebooksRuntimeIamMember].
 func (nrim *NotebooksRuntimeIamMember) LocalName() string {
 	return nrim.Name
 }
 
+// Configuration returns the configuration (args) for [NotebooksRuntimeIamMember].
 func (nrim *NotebooksRuntimeIamMember) Configuration() interface{} {
 	return nrim.Args
 }
 
+// DependOn is used for other resources to depend on [NotebooksRuntimeIamMember].
+func (nrim *NotebooksRuntimeIamMember) DependOn() terra.Reference {
+	return terra.ReferenceResource(nrim)
+}
+
+// Dependencies returns the list of resources [NotebooksRuntimeIamMember] depends_on.
+func (nrim *NotebooksRuntimeIamMember) Dependencies() terra.Dependencies {
+	return nrim.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NotebooksRuntimeIamMember].
+func (nrim *NotebooksRuntimeIamMember) LifecycleManagement() *terra.Lifecycle {
+	return nrim.Lifecycle
+}
+
+// Attributes returns the attributes for [NotebooksRuntimeIamMember].
 func (nrim *NotebooksRuntimeIamMember) Attributes() notebooksRuntimeIamMemberAttributes {
 	return notebooksRuntimeIamMemberAttributes{ref: terra.ReferenceResource(nrim)}
 }
 
+// ImportState imports the given attribute values into [NotebooksRuntimeIamMember]'s state.
 func (nrim *NotebooksRuntimeIamMember) ImportState(av io.Reader) error {
 	nrim.state = &notebooksRuntimeIamMemberState{}
 	if err := json.NewDecoder(av).Decode(nrim.state); err != nil {
@@ -49,10 +73,12 @@ func (nrim *NotebooksRuntimeIamMember) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NotebooksRuntimeIamMember] has state.
 func (nrim *NotebooksRuntimeIamMember) State() (*notebooksRuntimeIamMemberState, bool) {
 	return nrim.state, nrim.state != nil
 }
 
+// StateMust returns the state for [NotebooksRuntimeIamMember]. Panics if the state is nil.
 func (nrim *NotebooksRuntimeIamMember) StateMust() *notebooksRuntimeIamMemberState {
 	if nrim.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", nrim.Type(), nrim.LocalName()))
@@ -60,10 +86,7 @@ func (nrim *NotebooksRuntimeIamMember) StateMust() *notebooksRuntimeIamMemberSta
 	return nrim.state
 }
 
-func (nrim *NotebooksRuntimeIamMember) DependOn() terra.Reference {
-	return terra.ReferenceResource(nrim)
-}
-
+// NotebooksRuntimeIamMemberArgs contains the configurations for google_notebooks_runtime_iam_member.
 type NotebooksRuntimeIamMemberArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,43 +102,48 @@ type NotebooksRuntimeIamMemberArgs struct {
 	RuntimeName terra.StringValue `hcl:"runtime_name,attr" validate:"required"`
 	// Condition: optional
 	Condition *notebooksruntimeiammember.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that NotebooksRuntimeIamMember depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type notebooksRuntimeIamMemberAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_notebooks_runtime_iam_member.
 func (nrim notebooksRuntimeIamMemberAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(nrim.ref.Append("etag"))
+	return terra.ReferenceAsString(nrim.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_notebooks_runtime_iam_member.
 func (nrim notebooksRuntimeIamMemberAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(nrim.ref.Append("id"))
+	return terra.ReferenceAsString(nrim.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_notebooks_runtime_iam_member.
 func (nrim notebooksRuntimeIamMemberAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(nrim.ref.Append("location"))
+	return terra.ReferenceAsString(nrim.ref.Append("location"))
 }
 
+// Member returns a reference to field member of google_notebooks_runtime_iam_member.
 func (nrim notebooksRuntimeIamMemberAttributes) Member() terra.StringValue {
-	return terra.ReferenceString(nrim.ref.Append("member"))
+	return terra.ReferenceAsString(nrim.ref.Append("member"))
 }
 
+// Project returns a reference to field project of google_notebooks_runtime_iam_member.
 func (nrim notebooksRuntimeIamMemberAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(nrim.ref.Append("project"))
+	return terra.ReferenceAsString(nrim.ref.Append("project"))
 }
 
+// Role returns a reference to field role of google_notebooks_runtime_iam_member.
 func (nrim notebooksRuntimeIamMemberAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(nrim.ref.Append("role"))
+	return terra.ReferenceAsString(nrim.ref.Append("role"))
 }
 
+// RuntimeName returns a reference to field runtime_name of google_notebooks_runtime_iam_member.
 func (nrim notebooksRuntimeIamMemberAttributes) RuntimeName() terra.StringValue {
-	return terra.ReferenceString(nrim.ref.Append("runtime_name"))
+	return terra.ReferenceAsString(nrim.ref.Append("runtime_name"))
 }
 
 func (nrim notebooksRuntimeIamMemberAttributes) Condition() terra.ListValue[notebooksruntimeiammember.ConditionAttributes] {
-	return terra.ReferenceList[notebooksruntimeiammember.ConditionAttributes](nrim.ref.Append("condition"))
+	return terra.ReferenceAsList[notebooksruntimeiammember.ConditionAttributes](nrim.ref.Append("condition"))
 }
 
 type notebooksRuntimeIamMemberState struct {

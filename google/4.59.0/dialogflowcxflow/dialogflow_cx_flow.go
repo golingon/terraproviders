@@ -95,284 +95,284 @@ type EventHandlersAttributes struct {
 	ref terra.Reference
 }
 
-func (eh EventHandlersAttributes) InternalRef() terra.Reference {
-	return eh.ref
+func (eh EventHandlersAttributes) InternalRef() (terra.Reference, error) {
+	return eh.ref, nil
 }
 
 func (eh EventHandlersAttributes) InternalWithRef(ref terra.Reference) EventHandlersAttributes {
 	return EventHandlersAttributes{ref: ref}
 }
 
-func (eh EventHandlersAttributes) InternalTokens() hclwrite.Tokens {
+func (eh EventHandlersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return eh.ref.InternalTokens()
 }
 
 func (eh EventHandlersAttributes) Event() terra.StringValue {
-	return terra.ReferenceString(eh.ref.Append("event"))
+	return terra.ReferenceAsString(eh.ref.Append("event"))
 }
 
 func (eh EventHandlersAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(eh.ref.Append("name"))
+	return terra.ReferenceAsString(eh.ref.Append("name"))
 }
 
 func (eh EventHandlersAttributes) TargetFlow() terra.StringValue {
-	return terra.ReferenceString(eh.ref.Append("target_flow"))
+	return terra.ReferenceAsString(eh.ref.Append("target_flow"))
 }
 
 func (eh EventHandlersAttributes) TargetPage() terra.StringValue {
-	return terra.ReferenceString(eh.ref.Append("target_page"))
+	return terra.ReferenceAsString(eh.ref.Append("target_page"))
 }
 
 func (eh EventHandlersAttributes) TriggerFulfillment() terra.ListValue[EventHandlersTriggerFulfillmentAttributes] {
-	return terra.ReferenceList[EventHandlersTriggerFulfillmentAttributes](eh.ref.Append("trigger_fulfillment"))
+	return terra.ReferenceAsList[EventHandlersTriggerFulfillmentAttributes](eh.ref.Append("trigger_fulfillment"))
 }
 
 type EventHandlersTriggerFulfillmentAttributes struct {
 	ref terra.Reference
 }
 
-func (tf EventHandlersTriggerFulfillmentAttributes) InternalRef() terra.Reference {
-	return tf.ref
+func (tf EventHandlersTriggerFulfillmentAttributes) InternalRef() (terra.Reference, error) {
+	return tf.ref, nil
 }
 
 func (tf EventHandlersTriggerFulfillmentAttributes) InternalWithRef(ref terra.Reference) EventHandlersTriggerFulfillmentAttributes {
 	return EventHandlersTriggerFulfillmentAttributes{ref: ref}
 }
 
-func (tf EventHandlersTriggerFulfillmentAttributes) InternalTokens() hclwrite.Tokens {
+func (tf EventHandlersTriggerFulfillmentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tf.ref.InternalTokens()
 }
 
 func (tf EventHandlersTriggerFulfillmentAttributes) ReturnPartialResponses() terra.BoolValue {
-	return terra.ReferenceBool(tf.ref.Append("return_partial_responses"))
+	return terra.ReferenceAsBool(tf.ref.Append("return_partial_responses"))
 }
 
 func (tf EventHandlersTriggerFulfillmentAttributes) Tag() terra.StringValue {
-	return terra.ReferenceString(tf.ref.Append("tag"))
+	return terra.ReferenceAsString(tf.ref.Append("tag"))
 }
 
 func (tf EventHandlersTriggerFulfillmentAttributes) Webhook() terra.StringValue {
-	return terra.ReferenceString(tf.ref.Append("webhook"))
+	return terra.ReferenceAsString(tf.ref.Append("webhook"))
 }
 
 func (tf EventHandlersTriggerFulfillmentAttributes) Messages() terra.ListValue[EventHandlersTriggerFulfillmentMessagesAttributes] {
-	return terra.ReferenceList[EventHandlersTriggerFulfillmentMessagesAttributes](tf.ref.Append("messages"))
+	return terra.ReferenceAsList[EventHandlersTriggerFulfillmentMessagesAttributes](tf.ref.Append("messages"))
 }
 
 type EventHandlersTriggerFulfillmentMessagesAttributes struct {
 	ref terra.Reference
 }
 
-func (m EventHandlersTriggerFulfillmentMessagesAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m EventHandlersTriggerFulfillmentMessagesAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m EventHandlersTriggerFulfillmentMessagesAttributes) InternalWithRef(ref terra.Reference) EventHandlersTriggerFulfillmentMessagesAttributes {
 	return EventHandlersTriggerFulfillmentMessagesAttributes{ref: ref}
 }
 
-func (m EventHandlersTriggerFulfillmentMessagesAttributes) InternalTokens() hclwrite.Tokens {
+func (m EventHandlersTriggerFulfillmentMessagesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
 func (m EventHandlersTriggerFulfillmentMessagesAttributes) Text() terra.ListValue[EventHandlersTriggerFulfillmentMessagesTextAttributes] {
-	return terra.ReferenceList[EventHandlersTriggerFulfillmentMessagesTextAttributes](m.ref.Append("text"))
+	return terra.ReferenceAsList[EventHandlersTriggerFulfillmentMessagesTextAttributes](m.ref.Append("text"))
 }
 
 type EventHandlersTriggerFulfillmentMessagesTextAttributes struct {
 	ref terra.Reference
 }
 
-func (t EventHandlersTriggerFulfillmentMessagesTextAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t EventHandlersTriggerFulfillmentMessagesTextAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t EventHandlersTriggerFulfillmentMessagesTextAttributes) InternalWithRef(ref terra.Reference) EventHandlersTriggerFulfillmentMessagesTextAttributes {
 	return EventHandlersTriggerFulfillmentMessagesTextAttributes{ref: ref}
 }
 
-func (t EventHandlersTriggerFulfillmentMessagesTextAttributes) InternalTokens() hclwrite.Tokens {
+func (t EventHandlersTriggerFulfillmentMessagesTextAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t EventHandlersTriggerFulfillmentMessagesTextAttributes) AllowPlaybackInterruption() terra.BoolValue {
-	return terra.ReferenceBool(t.ref.Append("allow_playback_interruption"))
+	return terra.ReferenceAsBool(t.ref.Append("allow_playback_interruption"))
 }
 
 func (t EventHandlersTriggerFulfillmentMessagesTextAttributes) Text() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](t.ref.Append("text"))
+	return terra.ReferenceAsList[terra.StringValue](t.ref.Append("text"))
 }
 
 type NluSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ns NluSettingsAttributes) InternalRef() terra.Reference {
-	return ns.ref
+func (ns NluSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ns.ref, nil
 }
 
 func (ns NluSettingsAttributes) InternalWithRef(ref terra.Reference) NluSettingsAttributes {
 	return NluSettingsAttributes{ref: ref}
 }
 
-func (ns NluSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ns NluSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ns.ref.InternalTokens()
 }
 
 func (ns NluSettingsAttributes) ClassificationThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(ns.ref.Append("classification_threshold"))
+	return terra.ReferenceAsNumber(ns.ref.Append("classification_threshold"))
 }
 
 func (ns NluSettingsAttributes) ModelTrainingMode() terra.StringValue {
-	return terra.ReferenceString(ns.ref.Append("model_training_mode"))
+	return terra.ReferenceAsString(ns.ref.Append("model_training_mode"))
 }
 
 func (ns NluSettingsAttributes) ModelType() terra.StringValue {
-	return terra.ReferenceString(ns.ref.Append("model_type"))
+	return terra.ReferenceAsString(ns.ref.Append("model_type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type TransitionRoutesAttributes struct {
 	ref terra.Reference
 }
 
-func (tr TransitionRoutesAttributes) InternalRef() terra.Reference {
-	return tr.ref
+func (tr TransitionRoutesAttributes) InternalRef() (terra.Reference, error) {
+	return tr.ref, nil
 }
 
 func (tr TransitionRoutesAttributes) InternalWithRef(ref terra.Reference) TransitionRoutesAttributes {
 	return TransitionRoutesAttributes{ref: ref}
 }
 
-func (tr TransitionRoutesAttributes) InternalTokens() hclwrite.Tokens {
+func (tr TransitionRoutesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tr.ref.InternalTokens()
 }
 
 func (tr TransitionRoutesAttributes) Condition() terra.StringValue {
-	return terra.ReferenceString(tr.ref.Append("condition"))
+	return terra.ReferenceAsString(tr.ref.Append("condition"))
 }
 
 func (tr TransitionRoutesAttributes) Intent() terra.StringValue {
-	return terra.ReferenceString(tr.ref.Append("intent"))
+	return terra.ReferenceAsString(tr.ref.Append("intent"))
 }
 
 func (tr TransitionRoutesAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(tr.ref.Append("name"))
+	return terra.ReferenceAsString(tr.ref.Append("name"))
 }
 
 func (tr TransitionRoutesAttributes) TargetFlow() terra.StringValue {
-	return terra.ReferenceString(tr.ref.Append("target_flow"))
+	return terra.ReferenceAsString(tr.ref.Append("target_flow"))
 }
 
 func (tr TransitionRoutesAttributes) TargetPage() terra.StringValue {
-	return terra.ReferenceString(tr.ref.Append("target_page"))
+	return terra.ReferenceAsString(tr.ref.Append("target_page"))
 }
 
 func (tr TransitionRoutesAttributes) TriggerFulfillment() terra.ListValue[TransitionRoutesTriggerFulfillmentAttributes] {
-	return terra.ReferenceList[TransitionRoutesTriggerFulfillmentAttributes](tr.ref.Append("trigger_fulfillment"))
+	return terra.ReferenceAsList[TransitionRoutesTriggerFulfillmentAttributes](tr.ref.Append("trigger_fulfillment"))
 }
 
 type TransitionRoutesTriggerFulfillmentAttributes struct {
 	ref terra.Reference
 }
 
-func (tf TransitionRoutesTriggerFulfillmentAttributes) InternalRef() terra.Reference {
-	return tf.ref
+func (tf TransitionRoutesTriggerFulfillmentAttributes) InternalRef() (terra.Reference, error) {
+	return tf.ref, nil
 }
 
 func (tf TransitionRoutesTriggerFulfillmentAttributes) InternalWithRef(ref terra.Reference) TransitionRoutesTriggerFulfillmentAttributes {
 	return TransitionRoutesTriggerFulfillmentAttributes{ref: ref}
 }
 
-func (tf TransitionRoutesTriggerFulfillmentAttributes) InternalTokens() hclwrite.Tokens {
+func (tf TransitionRoutesTriggerFulfillmentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tf.ref.InternalTokens()
 }
 
 func (tf TransitionRoutesTriggerFulfillmentAttributes) ReturnPartialResponses() terra.BoolValue {
-	return terra.ReferenceBool(tf.ref.Append("return_partial_responses"))
+	return terra.ReferenceAsBool(tf.ref.Append("return_partial_responses"))
 }
 
 func (tf TransitionRoutesTriggerFulfillmentAttributes) Tag() terra.StringValue {
-	return terra.ReferenceString(tf.ref.Append("tag"))
+	return terra.ReferenceAsString(tf.ref.Append("tag"))
 }
 
 func (tf TransitionRoutesTriggerFulfillmentAttributes) Webhook() terra.StringValue {
-	return terra.ReferenceString(tf.ref.Append("webhook"))
+	return terra.ReferenceAsString(tf.ref.Append("webhook"))
 }
 
 func (tf TransitionRoutesTriggerFulfillmentAttributes) Messages() terra.ListValue[TransitionRoutesTriggerFulfillmentMessagesAttributes] {
-	return terra.ReferenceList[TransitionRoutesTriggerFulfillmentMessagesAttributes](tf.ref.Append("messages"))
+	return terra.ReferenceAsList[TransitionRoutesTriggerFulfillmentMessagesAttributes](tf.ref.Append("messages"))
 }
 
 type TransitionRoutesTriggerFulfillmentMessagesAttributes struct {
 	ref terra.Reference
 }
 
-func (m TransitionRoutesTriggerFulfillmentMessagesAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m TransitionRoutesTriggerFulfillmentMessagesAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m TransitionRoutesTriggerFulfillmentMessagesAttributes) InternalWithRef(ref terra.Reference) TransitionRoutesTriggerFulfillmentMessagesAttributes {
 	return TransitionRoutesTriggerFulfillmentMessagesAttributes{ref: ref}
 }
 
-func (m TransitionRoutesTriggerFulfillmentMessagesAttributes) InternalTokens() hclwrite.Tokens {
+func (m TransitionRoutesTriggerFulfillmentMessagesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
 func (m TransitionRoutesTriggerFulfillmentMessagesAttributes) Text() terra.ListValue[TransitionRoutesTriggerFulfillmentMessagesTextAttributes] {
-	return terra.ReferenceList[TransitionRoutesTriggerFulfillmentMessagesTextAttributes](m.ref.Append("text"))
+	return terra.ReferenceAsList[TransitionRoutesTriggerFulfillmentMessagesTextAttributes](m.ref.Append("text"))
 }
 
 type TransitionRoutesTriggerFulfillmentMessagesTextAttributes struct {
 	ref terra.Reference
 }
 
-func (t TransitionRoutesTriggerFulfillmentMessagesTextAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TransitionRoutesTriggerFulfillmentMessagesTextAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TransitionRoutesTriggerFulfillmentMessagesTextAttributes) InternalWithRef(ref terra.Reference) TransitionRoutesTriggerFulfillmentMessagesTextAttributes {
 	return TransitionRoutesTriggerFulfillmentMessagesTextAttributes{ref: ref}
 }
 
-func (t TransitionRoutesTriggerFulfillmentMessagesTextAttributes) InternalTokens() hclwrite.Tokens {
+func (t TransitionRoutesTriggerFulfillmentMessagesTextAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TransitionRoutesTriggerFulfillmentMessagesTextAttributes) AllowPlaybackInterruption() terra.BoolValue {
-	return terra.ReferenceBool(t.ref.Append("allow_playback_interruption"))
+	return terra.ReferenceAsBool(t.ref.Append("allow_playback_interruption"))
 }
 
 func (t TransitionRoutesTriggerFulfillmentMessagesTextAttributes) Text() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](t.ref.Append("text"))
+	return terra.ReferenceAsList[terra.StringValue](t.ref.Append("text"))
 }
 
 type EventHandlersState struct {

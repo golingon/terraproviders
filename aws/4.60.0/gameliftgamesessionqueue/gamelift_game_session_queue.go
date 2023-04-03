@@ -26,7 +26,7 @@ func (plp PlayerLatencyPolicyAttributes) InternalWithRef(ref terra.Reference) Pl
 	return PlayerLatencyPolicyAttributes{ref: ref}
 }
 
-func (plp PlayerLatencyPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (plp PlayerLatencyPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return plp.ref.InternalTokens()
 }
 

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLogicAppStandard creates a new instance of [LogicAppStandard].
 func NewLogicAppStandard(name string, args LogicAppStandardArgs) *LogicAppStandard {
 	return &LogicAppStandard{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLogicAppStandard(name string, args LogicAppStandardArgs) *LogicAppStanda
 
 var _ terra.Resource = (*LogicAppStandard)(nil)
 
+// LogicAppStandard represents the Terraform resource azurerm_logic_app_standard.
 type LogicAppStandard struct {
-	Name  string
-	Args  LogicAppStandardArgs
-	state *logicAppStandardState
+	Name      string
+	Args      LogicAppStandardArgs
+	state     *logicAppStandardState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LogicAppStandard].
 func (las *LogicAppStandard) Type() string {
 	return "azurerm_logic_app_standard"
 }
 
+// LocalName returns the local name for [LogicAppStandard].
 func (las *LogicAppStandard) LocalName() string {
 	return las.Name
 }
 
+// Configuration returns the configuration (args) for [LogicAppStandard].
 func (las *LogicAppStandard) Configuration() interface{} {
 	return las.Args
 }
 
+// DependOn is used for other resources to depend on [LogicAppStandard].
+func (las *LogicAppStandard) DependOn() terra.Reference {
+	return terra.ReferenceResource(las)
+}
+
+// Dependencies returns the list of resources [LogicAppStandard] depends_on.
+func (las *LogicAppStandard) Dependencies() terra.Dependencies {
+	return las.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LogicAppStandard].
+func (las *LogicAppStandard) LifecycleManagement() *terra.Lifecycle {
+	return las.Lifecycle
+}
+
+// Attributes returns the attributes for [LogicAppStandard].
 func (las *LogicAppStandard) Attributes() logicAppStandardAttributes {
 	return logicAppStandardAttributes{ref: terra.ReferenceResource(las)}
 }
 
+// ImportState imports the given attribute values into [LogicAppStandard]'s state.
 func (las *LogicAppStandard) ImportState(av io.Reader) error {
 	las.state = &logicAppStandardState{}
 	if err := json.NewDecoder(av).Decode(las.state); err != nil {
@@ -49,10 +73,12 @@ func (las *LogicAppStandard) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LogicAppStandard] has state.
 func (las *LogicAppStandard) State() (*logicAppStandardState, bool) {
 	return las.state, las.state != nil
 }
 
+// StateMust returns the state for [LogicAppStandard]. Panics if the state is nil.
 func (las *LogicAppStandard) StateMust() *logicAppStandardState {
 	if las.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", las.Type(), las.LocalName()))
@@ -60,10 +86,7 @@ func (las *LogicAppStandard) StateMust() *logicAppStandardState {
 	return las.state
 }
 
-func (las *LogicAppStandard) DependOn() terra.Reference {
-	return terra.ReferenceResource(las)
-}
-
+// LogicAppStandardArgs contains the configurations for azurerm_logic_app_standard.
 type LogicAppStandardArgs struct {
 	// AppServicePlanId: string, required
 	AppServicePlanId terra.StringValue `hcl:"app_service_plan_id,attr" validate:"required"`
@@ -111,123 +134,144 @@ type LogicAppStandardArgs struct {
 	SiteConfig *logicappstandard.SiteConfig `hcl:"site_config,block"`
 	// Timeouts: optional
 	Timeouts *logicappstandard.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LogicAppStandard depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type logicAppStandardAttributes struct {
 	ref terra.Reference
 }
 
+// AppServicePlanId returns a reference to field app_service_plan_id of azurerm_logic_app_standard.
 func (las logicAppStandardAttributes) AppServicePlanId() terra.StringValue {
-	return terra.ReferenceString(las.ref.Append("app_service_plan_id"))
+	return terra.ReferenceAsString(las.ref.Append("app_service_plan_id"))
 }
 
+// AppSettings returns a reference to field app_settings of azurerm_logic_app_standard.
 func (las logicAppStandardAttributes) AppSettings() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](las.ref.Append("app_settings"))
+	return terra.ReferenceAsMap[terra.StringValue](las.ref.Append("app_settings"))
 }
 
+// BundleVersion returns a reference to field bundle_version of azurerm_logic_app_standard.
 func (las logicAppStandardAttributes) BundleVersion() terra.StringValue {
-	return terra.ReferenceString(las.ref.Append("bundle_version"))
+	return terra.ReferenceAsString(las.ref.Append("bundle_version"))
 }
 
+// ClientAffinityEnabled returns a reference to field client_affinity_enabled of azurerm_logic_app_standard.
 func (las logicAppStandardAttributes) ClientAffinityEnabled() terra.BoolValue {
-	return terra.ReferenceBool(las.ref.Append("client_affinity_enabled"))
+	return terra.ReferenceAsBool(las.ref.Append("client_affinity_enabled"))
 }
 
+// ClientCertificateMode returns a reference to field client_certificate_mode of azurerm_logic_app_standard.
 func (las logicAppStandardAttributes) ClientCertificateMode() terra.StringValue {
-	return terra.ReferenceString(las.ref.Append("client_certificate_mode"))
+	return terra.ReferenceAsString(las.ref.Append("client_certificate_mode"))
 }
 
+// CustomDomainVerificationId returns a reference to field custom_domain_verification_id of azurerm_logic_app_standard.
 func (las logicAppStandardAttributes) CustomDomainVerificationId() terra.StringValue {
-	return terra.ReferenceString(las.ref.Append("custom_domain_verification_id"))
+	return terra.ReferenceAsString(las.ref.Append("custom_domain_verification_id"))
 }
 
+// DefaultHostname returns a reference to field default_hostname of azurerm_logic_app_standard.
 func (las logicAppStandardAttributes) DefaultHostname() terra.StringValue {
-	return terra.ReferenceString(las.ref.Append("default_hostname"))
+	return terra.ReferenceAsString(las.ref.Append("default_hostname"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_logic_app_standard.
 func (las logicAppStandardAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(las.ref.Append("enabled"))
+	return terra.ReferenceAsBool(las.ref.Append("enabled"))
 }
 
+// HttpsOnly returns a reference to field https_only of azurerm_logic_app_standard.
 func (las logicAppStandardAttributes) HttpsOnly() terra.BoolValue {
-	return terra.ReferenceBool(las.ref.Append("https_only"))
+	return terra.ReferenceAsBool(las.ref.Append("https_only"))
 }
 
+// Id returns a reference to field id of azurerm_logic_app_standard.
 func (las logicAppStandardAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(las.ref.Append("id"))
+	return terra.ReferenceAsString(las.ref.Append("id"))
 }
 
+// Kind returns a reference to field kind of azurerm_logic_app_standard.
 func (las logicAppStandardAttributes) Kind() terra.StringValue {
-	return terra.ReferenceString(las.ref.Append("kind"))
+	return terra.ReferenceAsString(las.ref.Append("kind"))
 }
 
+// Location returns a reference to field location of azurerm_logic_app_standard.
 func (las logicAppStandardAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(las.ref.Append("location"))
+	return terra.ReferenceAsString(las.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_logic_app_standard.
 func (las logicAppStandardAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(las.ref.Append("name"))
+	return terra.ReferenceAsString(las.ref.Append("name"))
 }
 
+// OutboundIpAddresses returns a reference to field outbound_ip_addresses of azurerm_logic_app_standard.
 func (las logicAppStandardAttributes) OutboundIpAddresses() terra.StringValue {
-	return terra.ReferenceString(las.ref.Append("outbound_ip_addresses"))
+	return terra.ReferenceAsString(las.ref.Append("outbound_ip_addresses"))
 }
 
+// PossibleOutboundIpAddresses returns a reference to field possible_outbound_ip_addresses of azurerm_logic_app_standard.
 func (las logicAppStandardAttributes) PossibleOutboundIpAddresses() terra.StringValue {
-	return terra.ReferenceString(las.ref.Append("possible_outbound_ip_addresses"))
+	return terra.ReferenceAsString(las.ref.Append("possible_outbound_ip_addresses"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_logic_app_standard.
 func (las logicAppStandardAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(las.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(las.ref.Append("resource_group_name"))
 }
 
+// StorageAccountAccessKey returns a reference to field storage_account_access_key of azurerm_logic_app_standard.
 func (las logicAppStandardAttributes) StorageAccountAccessKey() terra.StringValue {
-	return terra.ReferenceString(las.ref.Append("storage_account_access_key"))
+	return terra.ReferenceAsString(las.ref.Append("storage_account_access_key"))
 }
 
+// StorageAccountName returns a reference to field storage_account_name of azurerm_logic_app_standard.
 func (las logicAppStandardAttributes) StorageAccountName() terra.StringValue {
-	return terra.ReferenceString(las.ref.Append("storage_account_name"))
+	return terra.ReferenceAsString(las.ref.Append("storage_account_name"))
 }
 
+// StorageAccountShareName returns a reference to field storage_account_share_name of azurerm_logic_app_standard.
 func (las logicAppStandardAttributes) StorageAccountShareName() terra.StringValue {
-	return terra.ReferenceString(las.ref.Append("storage_account_share_name"))
+	return terra.ReferenceAsString(las.ref.Append("storage_account_share_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_logic_app_standard.
 func (las logicAppStandardAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](las.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](las.ref.Append("tags"))
 }
 
+// UseExtensionBundle returns a reference to field use_extension_bundle of azurerm_logic_app_standard.
 func (las logicAppStandardAttributes) UseExtensionBundle() terra.BoolValue {
-	return terra.ReferenceBool(las.ref.Append("use_extension_bundle"))
+	return terra.ReferenceAsBool(las.ref.Append("use_extension_bundle"))
 }
 
+// Version returns a reference to field version of azurerm_logic_app_standard.
 func (las logicAppStandardAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(las.ref.Append("version"))
+	return terra.ReferenceAsString(las.ref.Append("version"))
 }
 
+// VirtualNetworkSubnetId returns a reference to field virtual_network_subnet_id of azurerm_logic_app_standard.
 func (las logicAppStandardAttributes) VirtualNetworkSubnetId() terra.StringValue {
-	return terra.ReferenceString(las.ref.Append("virtual_network_subnet_id"))
+	return terra.ReferenceAsString(las.ref.Append("virtual_network_subnet_id"))
 }
 
 func (las logicAppStandardAttributes) SiteCredential() terra.ListValue[logicappstandard.SiteCredentialAttributes] {
-	return terra.ReferenceList[logicappstandard.SiteCredentialAttributes](las.ref.Append("site_credential"))
+	return terra.ReferenceAsList[logicappstandard.SiteCredentialAttributes](las.ref.Append("site_credential"))
 }
 
 func (las logicAppStandardAttributes) ConnectionString() terra.SetValue[logicappstandard.ConnectionStringAttributes] {
-	return terra.ReferenceSet[logicappstandard.ConnectionStringAttributes](las.ref.Append("connection_string"))
+	return terra.ReferenceAsSet[logicappstandard.ConnectionStringAttributes](las.ref.Append("connection_string"))
 }
 
 func (las logicAppStandardAttributes) Identity() terra.ListValue[logicappstandard.IdentityAttributes] {
-	return terra.ReferenceList[logicappstandard.IdentityAttributes](las.ref.Append("identity"))
+	return terra.ReferenceAsList[logicappstandard.IdentityAttributes](las.ref.Append("identity"))
 }
 
 func (las logicAppStandardAttributes) SiteConfig() terra.ListValue[logicappstandard.SiteConfigAttributes] {
-	return terra.ReferenceList[logicappstandard.SiteConfigAttributes](las.ref.Append("site_config"))
+	return terra.ReferenceAsList[logicappstandard.SiteConfigAttributes](las.ref.Append("site_config"))
 }
 
 func (las logicAppStandardAttributes) Timeouts() logicappstandard.TimeoutsAttributes {
-	return terra.ReferenceSingle[logicappstandard.TimeoutsAttributes](las.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[logicappstandard.TimeoutsAttributes](las.ref.Append("timeouts"))
 }
 
 type logicAppStandardState struct {

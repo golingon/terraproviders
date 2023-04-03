@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSentinelAlertRuleAnomalyDuplicate creates a new instance of [SentinelAlertRuleAnomalyDuplicate].
 func NewSentinelAlertRuleAnomalyDuplicate(name string, args SentinelAlertRuleAnomalyDuplicateArgs) *SentinelAlertRuleAnomalyDuplicate {
 	return &SentinelAlertRuleAnomalyDuplicate{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSentinelAlertRuleAnomalyDuplicate(name string, args SentinelAlertRuleAno
 
 var _ terra.Resource = (*SentinelAlertRuleAnomalyDuplicate)(nil)
 
+// SentinelAlertRuleAnomalyDuplicate represents the Terraform resource azurerm_sentinel_alert_rule_anomaly_duplicate.
 type SentinelAlertRuleAnomalyDuplicate struct {
-	Name  string
-	Args  SentinelAlertRuleAnomalyDuplicateArgs
-	state *sentinelAlertRuleAnomalyDuplicateState
+	Name      string
+	Args      SentinelAlertRuleAnomalyDuplicateArgs
+	state     *sentinelAlertRuleAnomalyDuplicateState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SentinelAlertRuleAnomalyDuplicate].
 func (sarad *SentinelAlertRuleAnomalyDuplicate) Type() string {
 	return "azurerm_sentinel_alert_rule_anomaly_duplicate"
 }
 
+// LocalName returns the local name for [SentinelAlertRuleAnomalyDuplicate].
 func (sarad *SentinelAlertRuleAnomalyDuplicate) LocalName() string {
 	return sarad.Name
 }
 
+// Configuration returns the configuration (args) for [SentinelAlertRuleAnomalyDuplicate].
 func (sarad *SentinelAlertRuleAnomalyDuplicate) Configuration() interface{} {
 	return sarad.Args
 }
 
+// DependOn is used for other resources to depend on [SentinelAlertRuleAnomalyDuplicate].
+func (sarad *SentinelAlertRuleAnomalyDuplicate) DependOn() terra.Reference {
+	return terra.ReferenceResource(sarad)
+}
+
+// Dependencies returns the list of resources [SentinelAlertRuleAnomalyDuplicate] depends_on.
+func (sarad *SentinelAlertRuleAnomalyDuplicate) Dependencies() terra.Dependencies {
+	return sarad.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SentinelAlertRuleAnomalyDuplicate].
+func (sarad *SentinelAlertRuleAnomalyDuplicate) LifecycleManagement() *terra.Lifecycle {
+	return sarad.Lifecycle
+}
+
+// Attributes returns the attributes for [SentinelAlertRuleAnomalyDuplicate].
 func (sarad *SentinelAlertRuleAnomalyDuplicate) Attributes() sentinelAlertRuleAnomalyDuplicateAttributes {
 	return sentinelAlertRuleAnomalyDuplicateAttributes{ref: terra.ReferenceResource(sarad)}
 }
 
+// ImportState imports the given attribute values into [SentinelAlertRuleAnomalyDuplicate]'s state.
 func (sarad *SentinelAlertRuleAnomalyDuplicate) ImportState(av io.Reader) error {
 	sarad.state = &sentinelAlertRuleAnomalyDuplicateState{}
 	if err := json.NewDecoder(av).Decode(sarad.state); err != nil {
@@ -49,10 +73,12 @@ func (sarad *SentinelAlertRuleAnomalyDuplicate) ImportState(av io.Reader) error 
 	return nil
 }
 
+// State returns the state and a bool indicating if [SentinelAlertRuleAnomalyDuplicate] has state.
 func (sarad *SentinelAlertRuleAnomalyDuplicate) State() (*sentinelAlertRuleAnomalyDuplicateState, bool) {
 	return sarad.state, sarad.state != nil
 }
 
+// StateMust returns the state for [SentinelAlertRuleAnomalyDuplicate]. Panics if the state is nil.
 func (sarad *SentinelAlertRuleAnomalyDuplicate) StateMust() *sentinelAlertRuleAnomalyDuplicateState {
 	if sarad.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sarad.Type(), sarad.LocalName()))
@@ -60,10 +86,7 @@ func (sarad *SentinelAlertRuleAnomalyDuplicate) StateMust() *sentinelAlertRuleAn
 	return sarad.state
 }
 
-func (sarad *SentinelAlertRuleAnomalyDuplicate) DependOn() terra.Reference {
-	return terra.ReferenceResource(sarad)
-}
-
+// SentinelAlertRuleAnomalyDuplicateArgs contains the configurations for azurerm_sentinel_alert_rule_anomaly_duplicate.
 type SentinelAlertRuleAnomalyDuplicateArgs struct {
 	// BuiltInRuleId: string, required
 	BuiltInRuleId terra.StringValue `hcl:"built_in_rule_id,attr" validate:"required"`
@@ -89,95 +112,108 @@ type SentinelAlertRuleAnomalyDuplicateArgs struct {
 	ThresholdObservation []sentinelalertruleanomalyduplicate.ThresholdObservation `hcl:"threshold_observation,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *sentinelalertruleanomalyduplicate.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SentinelAlertRuleAnomalyDuplicate depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sentinelAlertRuleAnomalyDuplicateAttributes struct {
 	ref terra.Reference
 }
 
+// AnomalySettingsVersion returns a reference to field anomaly_settings_version of azurerm_sentinel_alert_rule_anomaly_duplicate.
 func (sarad sentinelAlertRuleAnomalyDuplicateAttributes) AnomalySettingsVersion() terra.NumberValue {
-	return terra.ReferenceNumber(sarad.ref.Append("anomaly_settings_version"))
+	return terra.ReferenceAsNumber(sarad.ref.Append("anomaly_settings_version"))
 }
 
+// AnomalyVersion returns a reference to field anomaly_version of azurerm_sentinel_alert_rule_anomaly_duplicate.
 func (sarad sentinelAlertRuleAnomalyDuplicateAttributes) AnomalyVersion() terra.StringValue {
-	return terra.ReferenceString(sarad.ref.Append("anomaly_version"))
+	return terra.ReferenceAsString(sarad.ref.Append("anomaly_version"))
 }
 
+// BuiltInRuleId returns a reference to field built_in_rule_id of azurerm_sentinel_alert_rule_anomaly_duplicate.
 func (sarad sentinelAlertRuleAnomalyDuplicateAttributes) BuiltInRuleId() terra.StringValue {
-	return terra.ReferenceString(sarad.ref.Append("built_in_rule_id"))
+	return terra.ReferenceAsString(sarad.ref.Append("built_in_rule_id"))
 }
 
+// Description returns a reference to field description of azurerm_sentinel_alert_rule_anomaly_duplicate.
 func (sarad sentinelAlertRuleAnomalyDuplicateAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(sarad.ref.Append("description"))
+	return terra.ReferenceAsString(sarad.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_sentinel_alert_rule_anomaly_duplicate.
 func (sarad sentinelAlertRuleAnomalyDuplicateAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(sarad.ref.Append("display_name"))
+	return terra.ReferenceAsString(sarad.ref.Append("display_name"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_sentinel_alert_rule_anomaly_duplicate.
 func (sarad sentinelAlertRuleAnomalyDuplicateAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(sarad.ref.Append("enabled"))
+	return terra.ReferenceAsBool(sarad.ref.Append("enabled"))
 }
 
+// Frequency returns a reference to field frequency of azurerm_sentinel_alert_rule_anomaly_duplicate.
 func (sarad sentinelAlertRuleAnomalyDuplicateAttributes) Frequency() terra.StringValue {
-	return terra.ReferenceString(sarad.ref.Append("frequency"))
+	return terra.ReferenceAsString(sarad.ref.Append("frequency"))
 }
 
+// Id returns a reference to field id of azurerm_sentinel_alert_rule_anomaly_duplicate.
 func (sarad sentinelAlertRuleAnomalyDuplicateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sarad.ref.Append("id"))
+	return terra.ReferenceAsString(sarad.ref.Append("id"))
 }
 
+// IsDefaultSettings returns a reference to field is_default_settings of azurerm_sentinel_alert_rule_anomaly_duplicate.
 func (sarad sentinelAlertRuleAnomalyDuplicateAttributes) IsDefaultSettings() terra.BoolValue {
-	return terra.ReferenceBool(sarad.ref.Append("is_default_settings"))
+	return terra.ReferenceAsBool(sarad.ref.Append("is_default_settings"))
 }
 
+// LogAnalyticsWorkspaceId returns a reference to field log_analytics_workspace_id of azurerm_sentinel_alert_rule_anomaly_duplicate.
 func (sarad sentinelAlertRuleAnomalyDuplicateAttributes) LogAnalyticsWorkspaceId() terra.StringValue {
-	return terra.ReferenceString(sarad.ref.Append("log_analytics_workspace_id"))
+	return terra.ReferenceAsString(sarad.ref.Append("log_analytics_workspace_id"))
 }
 
+// Mode returns a reference to field mode of azurerm_sentinel_alert_rule_anomaly_duplicate.
 func (sarad sentinelAlertRuleAnomalyDuplicateAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(sarad.ref.Append("mode"))
+	return terra.ReferenceAsString(sarad.ref.Append("mode"))
 }
 
+// Name returns a reference to field name of azurerm_sentinel_alert_rule_anomaly_duplicate.
 func (sarad sentinelAlertRuleAnomalyDuplicateAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sarad.ref.Append("name"))
+	return terra.ReferenceAsString(sarad.ref.Append("name"))
 }
 
+// SettingsDefinitionId returns a reference to field settings_definition_id of azurerm_sentinel_alert_rule_anomaly_duplicate.
 func (sarad sentinelAlertRuleAnomalyDuplicateAttributes) SettingsDefinitionId() terra.StringValue {
-	return terra.ReferenceString(sarad.ref.Append("settings_definition_id"))
+	return terra.ReferenceAsString(sarad.ref.Append("settings_definition_id"))
 }
 
+// Tactics returns a reference to field tactics of azurerm_sentinel_alert_rule_anomaly_duplicate.
 func (sarad sentinelAlertRuleAnomalyDuplicateAttributes) Tactics() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sarad.ref.Append("tactics"))
+	return terra.ReferenceAsList[terra.StringValue](sarad.ref.Append("tactics"))
 }
 
+// Techniques returns a reference to field techniques of azurerm_sentinel_alert_rule_anomaly_duplicate.
 func (sarad sentinelAlertRuleAnomalyDuplicateAttributes) Techniques() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sarad.ref.Append("techniques"))
+	return terra.ReferenceAsList[terra.StringValue](sarad.ref.Append("techniques"))
 }
 
 func (sarad sentinelAlertRuleAnomalyDuplicateAttributes) RequiredDataConnector() terra.ListValue[sentinelalertruleanomalyduplicate.RequiredDataConnectorAttributes] {
-	return terra.ReferenceList[sentinelalertruleanomalyduplicate.RequiredDataConnectorAttributes](sarad.ref.Append("required_data_connector"))
+	return terra.ReferenceAsList[sentinelalertruleanomalyduplicate.RequiredDataConnectorAttributes](sarad.ref.Append("required_data_connector"))
 }
 
 func (sarad sentinelAlertRuleAnomalyDuplicateAttributes) MultiSelectObservation() terra.ListValue[sentinelalertruleanomalyduplicate.MultiSelectObservationAttributes] {
-	return terra.ReferenceList[sentinelalertruleanomalyduplicate.MultiSelectObservationAttributes](sarad.ref.Append("multi_select_observation"))
+	return terra.ReferenceAsList[sentinelalertruleanomalyduplicate.MultiSelectObservationAttributes](sarad.ref.Append("multi_select_observation"))
 }
 
 func (sarad sentinelAlertRuleAnomalyDuplicateAttributes) PrioritizedExcludeObservation() terra.ListValue[sentinelalertruleanomalyduplicate.PrioritizedExcludeObservationAttributes] {
-	return terra.ReferenceList[sentinelalertruleanomalyduplicate.PrioritizedExcludeObservationAttributes](sarad.ref.Append("prioritized_exclude_observation"))
+	return terra.ReferenceAsList[sentinelalertruleanomalyduplicate.PrioritizedExcludeObservationAttributes](sarad.ref.Append("prioritized_exclude_observation"))
 }
 
 func (sarad sentinelAlertRuleAnomalyDuplicateAttributes) SingleSelectObservation() terra.ListValue[sentinelalertruleanomalyduplicate.SingleSelectObservationAttributes] {
-	return terra.ReferenceList[sentinelalertruleanomalyduplicate.SingleSelectObservationAttributes](sarad.ref.Append("single_select_observation"))
+	return terra.ReferenceAsList[sentinelalertruleanomalyduplicate.SingleSelectObservationAttributes](sarad.ref.Append("single_select_observation"))
 }
 
 func (sarad sentinelAlertRuleAnomalyDuplicateAttributes) ThresholdObservation() terra.ListValue[sentinelalertruleanomalyduplicate.ThresholdObservationAttributes] {
-	return terra.ReferenceList[sentinelalertruleanomalyduplicate.ThresholdObservationAttributes](sarad.ref.Append("threshold_observation"))
+	return terra.ReferenceAsList[sentinelalertruleanomalyduplicate.ThresholdObservationAttributes](sarad.ref.Append("threshold_observation"))
 }
 
 func (sarad sentinelAlertRuleAnomalyDuplicateAttributes) Timeouts() sentinelalertruleanomalyduplicate.TimeoutsAttributes {
-	return terra.ReferenceSingle[sentinelalertruleanomalyduplicate.TimeoutsAttributes](sarad.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[sentinelalertruleanomalyduplicate.TimeoutsAttributes](sarad.ref.Append("timeouts"))
 }
 
 type sentinelAlertRuleAnomalyDuplicateState struct {

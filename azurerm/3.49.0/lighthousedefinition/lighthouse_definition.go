@@ -71,180 +71,180 @@ type AuthorizationAttributes struct {
 	ref terra.Reference
 }
 
-func (a AuthorizationAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AuthorizationAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AuthorizationAttributes) InternalWithRef(ref terra.Reference) AuthorizationAttributes {
 	return AuthorizationAttributes{ref: ref}
 }
 
-func (a AuthorizationAttributes) InternalTokens() hclwrite.Tokens {
+func (a AuthorizationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a AuthorizationAttributes) DelegatedRoleDefinitionIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](a.ref.Append("delegated_role_definition_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](a.ref.Append("delegated_role_definition_ids"))
 }
 
 func (a AuthorizationAttributes) PrincipalDisplayName() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("principal_display_name"))
+	return terra.ReferenceAsString(a.ref.Append("principal_display_name"))
 }
 
 func (a AuthorizationAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("principal_id"))
+	return terra.ReferenceAsString(a.ref.Append("principal_id"))
 }
 
 func (a AuthorizationAttributes) RoleDefinitionId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("role_definition_id"))
+	return terra.ReferenceAsString(a.ref.Append("role_definition_id"))
 }
 
 type EligibleAuthorizationAttributes struct {
 	ref terra.Reference
 }
 
-func (ea EligibleAuthorizationAttributes) InternalRef() terra.Reference {
-	return ea.ref
+func (ea EligibleAuthorizationAttributes) InternalRef() (terra.Reference, error) {
+	return ea.ref, nil
 }
 
 func (ea EligibleAuthorizationAttributes) InternalWithRef(ref terra.Reference) EligibleAuthorizationAttributes {
 	return EligibleAuthorizationAttributes{ref: ref}
 }
 
-func (ea EligibleAuthorizationAttributes) InternalTokens() hclwrite.Tokens {
+func (ea EligibleAuthorizationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ea.ref.InternalTokens()
 }
 
 func (ea EligibleAuthorizationAttributes) PrincipalDisplayName() terra.StringValue {
-	return terra.ReferenceString(ea.ref.Append("principal_display_name"))
+	return terra.ReferenceAsString(ea.ref.Append("principal_display_name"))
 }
 
 func (ea EligibleAuthorizationAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(ea.ref.Append("principal_id"))
+	return terra.ReferenceAsString(ea.ref.Append("principal_id"))
 }
 
 func (ea EligibleAuthorizationAttributes) RoleDefinitionId() terra.StringValue {
-	return terra.ReferenceString(ea.ref.Append("role_definition_id"))
+	return terra.ReferenceAsString(ea.ref.Append("role_definition_id"))
 }
 
 func (ea EligibleAuthorizationAttributes) JustInTimeAccessPolicy() terra.ListValue[JustInTimeAccessPolicyAttributes] {
-	return terra.ReferenceList[JustInTimeAccessPolicyAttributes](ea.ref.Append("just_in_time_access_policy"))
+	return terra.ReferenceAsList[JustInTimeAccessPolicyAttributes](ea.ref.Append("just_in_time_access_policy"))
 }
 
 type JustInTimeAccessPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (jitap JustInTimeAccessPolicyAttributes) InternalRef() terra.Reference {
-	return jitap.ref
+func (jitap JustInTimeAccessPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return jitap.ref, nil
 }
 
 func (jitap JustInTimeAccessPolicyAttributes) InternalWithRef(ref terra.Reference) JustInTimeAccessPolicyAttributes {
 	return JustInTimeAccessPolicyAttributes{ref: ref}
 }
 
-func (jitap JustInTimeAccessPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (jitap JustInTimeAccessPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return jitap.ref.InternalTokens()
 }
 
 func (jitap JustInTimeAccessPolicyAttributes) MaximumActivationDuration() terra.StringValue {
-	return terra.ReferenceString(jitap.ref.Append("maximum_activation_duration"))
+	return terra.ReferenceAsString(jitap.ref.Append("maximum_activation_duration"))
 }
 
 func (jitap JustInTimeAccessPolicyAttributes) MultiFactorAuthProvider() terra.StringValue {
-	return terra.ReferenceString(jitap.ref.Append("multi_factor_auth_provider"))
+	return terra.ReferenceAsString(jitap.ref.Append("multi_factor_auth_provider"))
 }
 
 func (jitap JustInTimeAccessPolicyAttributes) Approver() terra.SetValue[ApproverAttributes] {
-	return terra.ReferenceSet[ApproverAttributes](jitap.ref.Append("approver"))
+	return terra.ReferenceAsSet[ApproverAttributes](jitap.ref.Append("approver"))
 }
 
 type ApproverAttributes struct {
 	ref terra.Reference
 }
 
-func (a ApproverAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a ApproverAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a ApproverAttributes) InternalWithRef(ref terra.Reference) ApproverAttributes {
 	return ApproverAttributes{ref: ref}
 }
 
-func (a ApproverAttributes) InternalTokens() hclwrite.Tokens {
+func (a ApproverAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a ApproverAttributes) PrincipalDisplayName() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("principal_display_name"))
+	return terra.ReferenceAsString(a.ref.Append("principal_display_name"))
 }
 
 func (a ApproverAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("principal_id"))
+	return terra.ReferenceAsString(a.ref.Append("principal_id"))
 }
 
 type PlanAttributes struct {
 	ref terra.Reference
 }
 
-func (p PlanAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p PlanAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p PlanAttributes) InternalWithRef(ref terra.Reference) PlanAttributes {
 	return PlanAttributes{ref: ref}
 }
 
-func (p PlanAttributes) InternalTokens() hclwrite.Tokens {
+func (p PlanAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
 func (p PlanAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("name"))
+	return terra.ReferenceAsString(p.ref.Append("name"))
 }
 
 func (p PlanAttributes) Product() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("product"))
+	return terra.ReferenceAsString(p.ref.Append("product"))
 }
 
 func (p PlanAttributes) Publisher() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("publisher"))
+	return terra.ReferenceAsString(p.ref.Append("publisher"))
 }
 
 func (p PlanAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("version"))
+	return terra.ReferenceAsString(p.ref.Append("version"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AuthorizationState struct {

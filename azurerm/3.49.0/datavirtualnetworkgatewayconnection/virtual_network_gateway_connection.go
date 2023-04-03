@@ -20,92 +20,92 @@ type IpsecPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (ip IpsecPolicyAttributes) InternalRef() terra.Reference {
-	return ip.ref
+func (ip IpsecPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return ip.ref, nil
 }
 
 func (ip IpsecPolicyAttributes) InternalWithRef(ref terra.Reference) IpsecPolicyAttributes {
 	return IpsecPolicyAttributes{ref: ref}
 }
 
-func (ip IpsecPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (ip IpsecPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ip.ref.InternalTokens()
 }
 
 func (ip IpsecPolicyAttributes) DhGroup() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("dh_group"))
+	return terra.ReferenceAsString(ip.ref.Append("dh_group"))
 }
 
 func (ip IpsecPolicyAttributes) IkeEncryption() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("ike_encryption"))
+	return terra.ReferenceAsString(ip.ref.Append("ike_encryption"))
 }
 
 func (ip IpsecPolicyAttributes) IkeIntegrity() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("ike_integrity"))
+	return terra.ReferenceAsString(ip.ref.Append("ike_integrity"))
 }
 
 func (ip IpsecPolicyAttributes) IpsecEncryption() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("ipsec_encryption"))
+	return terra.ReferenceAsString(ip.ref.Append("ipsec_encryption"))
 }
 
 func (ip IpsecPolicyAttributes) IpsecIntegrity() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("ipsec_integrity"))
+	return terra.ReferenceAsString(ip.ref.Append("ipsec_integrity"))
 }
 
 func (ip IpsecPolicyAttributes) PfsGroup() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("pfs_group"))
+	return terra.ReferenceAsString(ip.ref.Append("pfs_group"))
 }
 
 func (ip IpsecPolicyAttributes) SaDatasize() terra.NumberValue {
-	return terra.ReferenceNumber(ip.ref.Append("sa_datasize"))
+	return terra.ReferenceAsNumber(ip.ref.Append("sa_datasize"))
 }
 
 func (ip IpsecPolicyAttributes) SaLifetime() terra.NumberValue {
-	return terra.ReferenceNumber(ip.ref.Append("sa_lifetime"))
+	return terra.ReferenceAsNumber(ip.ref.Append("sa_lifetime"))
 }
 
 type TrafficSelectorPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (tsp TrafficSelectorPolicyAttributes) InternalRef() terra.Reference {
-	return tsp.ref
+func (tsp TrafficSelectorPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return tsp.ref, nil
 }
 
 func (tsp TrafficSelectorPolicyAttributes) InternalWithRef(ref terra.Reference) TrafficSelectorPolicyAttributes {
 	return TrafficSelectorPolicyAttributes{ref: ref}
 }
 
-func (tsp TrafficSelectorPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (tsp TrafficSelectorPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tsp.ref.InternalTokens()
 }
 
 func (tsp TrafficSelectorPolicyAttributes) LocalAddressCidrs() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](tsp.ref.Append("local_address_cidrs"))
+	return terra.ReferenceAsList[terra.StringValue](tsp.ref.Append("local_address_cidrs"))
 }
 
 func (tsp TrafficSelectorPolicyAttributes) RemoteAddressCidrs() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](tsp.ref.Append("remote_address_cidrs"))
+	return terra.ReferenceAsList[terra.StringValue](tsp.ref.Append("remote_address_cidrs"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type IpsecPolicyState struct {

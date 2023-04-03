@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewApigeeEnvironmentIamPolicy creates a new instance of [ApigeeEnvironmentIamPolicy].
 func NewApigeeEnvironmentIamPolicy(name string, args ApigeeEnvironmentIamPolicyArgs) *ApigeeEnvironmentIamPolicy {
 	return &ApigeeEnvironmentIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewApigeeEnvironmentIamPolicy(name string, args ApigeeEnvironmentIamPolicyA
 
 var _ terra.Resource = (*ApigeeEnvironmentIamPolicy)(nil)
 
+// ApigeeEnvironmentIamPolicy represents the Terraform resource google_apigee_environment_iam_policy.
 type ApigeeEnvironmentIamPolicy struct {
-	Name  string
-	Args  ApigeeEnvironmentIamPolicyArgs
-	state *apigeeEnvironmentIamPolicyState
+	Name      string
+	Args      ApigeeEnvironmentIamPolicyArgs
+	state     *apigeeEnvironmentIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApigeeEnvironmentIamPolicy].
 func (aeip *ApigeeEnvironmentIamPolicy) Type() string {
 	return "google_apigee_environment_iam_policy"
 }
 
+// LocalName returns the local name for [ApigeeEnvironmentIamPolicy].
 func (aeip *ApigeeEnvironmentIamPolicy) LocalName() string {
 	return aeip.Name
 }
 
+// Configuration returns the configuration (args) for [ApigeeEnvironmentIamPolicy].
 func (aeip *ApigeeEnvironmentIamPolicy) Configuration() interface{} {
 	return aeip.Args
 }
 
+// DependOn is used for other resources to depend on [ApigeeEnvironmentIamPolicy].
+func (aeip *ApigeeEnvironmentIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(aeip)
+}
+
+// Dependencies returns the list of resources [ApigeeEnvironmentIamPolicy] depends_on.
+func (aeip *ApigeeEnvironmentIamPolicy) Dependencies() terra.Dependencies {
+	return aeip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApigeeEnvironmentIamPolicy].
+func (aeip *ApigeeEnvironmentIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return aeip.Lifecycle
+}
+
+// Attributes returns the attributes for [ApigeeEnvironmentIamPolicy].
 func (aeip *ApigeeEnvironmentIamPolicy) Attributes() apigeeEnvironmentIamPolicyAttributes {
 	return apigeeEnvironmentIamPolicyAttributes{ref: terra.ReferenceResource(aeip)}
 }
 
+// ImportState imports the given attribute values into [ApigeeEnvironmentIamPolicy]'s state.
 func (aeip *ApigeeEnvironmentIamPolicy) ImportState(av io.Reader) error {
 	aeip.state = &apigeeEnvironmentIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(aeip.state); err != nil {
@@ -48,10 +72,12 @@ func (aeip *ApigeeEnvironmentIamPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApigeeEnvironmentIamPolicy] has state.
 func (aeip *ApigeeEnvironmentIamPolicy) State() (*apigeeEnvironmentIamPolicyState, bool) {
 	return aeip.state, aeip.state != nil
 }
 
+// StateMust returns the state for [ApigeeEnvironmentIamPolicy]. Panics if the state is nil.
 func (aeip *ApigeeEnvironmentIamPolicy) StateMust() *apigeeEnvironmentIamPolicyState {
 	if aeip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", aeip.Type(), aeip.LocalName()))
@@ -59,10 +85,7 @@ func (aeip *ApigeeEnvironmentIamPolicy) StateMust() *apigeeEnvironmentIamPolicyS
 	return aeip.state
 }
 
-func (aeip *ApigeeEnvironmentIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(aeip)
-}
-
+// ApigeeEnvironmentIamPolicyArgs contains the configurations for google_apigee_environment_iam_policy.
 type ApigeeEnvironmentIamPolicyArgs struct {
 	// EnvId: string, required
 	EnvId terra.StringValue `hcl:"env_id,attr" validate:"required"`
@@ -72,31 +95,34 @@ type ApigeeEnvironmentIamPolicyArgs struct {
 	OrgId terra.StringValue `hcl:"org_id,attr" validate:"required"`
 	// PolicyData: string, required
 	PolicyData terra.StringValue `hcl:"policy_data,attr" validate:"required"`
-	// DependsOn contains resources that ApigeeEnvironmentIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apigeeEnvironmentIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// EnvId returns a reference to field env_id of google_apigee_environment_iam_policy.
 func (aeip apigeeEnvironmentIamPolicyAttributes) EnvId() terra.StringValue {
-	return terra.ReferenceString(aeip.ref.Append("env_id"))
+	return terra.ReferenceAsString(aeip.ref.Append("env_id"))
 }
 
+// Etag returns a reference to field etag of google_apigee_environment_iam_policy.
 func (aeip apigeeEnvironmentIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(aeip.ref.Append("etag"))
+	return terra.ReferenceAsString(aeip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_apigee_environment_iam_policy.
 func (aeip apigeeEnvironmentIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(aeip.ref.Append("id"))
+	return terra.ReferenceAsString(aeip.ref.Append("id"))
 }
 
+// OrgId returns a reference to field org_id of google_apigee_environment_iam_policy.
 func (aeip apigeeEnvironmentIamPolicyAttributes) OrgId() terra.StringValue {
-	return terra.ReferenceString(aeip.ref.Append("org_id"))
+	return terra.ReferenceAsString(aeip.ref.Append("org_id"))
 }
 
+// PolicyData returns a reference to field policy_data of google_apigee_environment_iam_policy.
 func (aeip apigeeEnvironmentIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(aeip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(aeip.ref.Append("policy_data"))
 }
 
 type apigeeEnvironmentIamPolicyState struct {

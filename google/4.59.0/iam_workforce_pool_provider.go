@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewIamWorkforcePoolProvider creates a new instance of [IamWorkforcePoolProvider].
 func NewIamWorkforcePoolProvider(name string, args IamWorkforcePoolProviderArgs) *IamWorkforcePoolProvider {
 	return &IamWorkforcePoolProvider{
 		Args: args,
@@ -19,28 +20,51 @@ func NewIamWorkforcePoolProvider(name string, args IamWorkforcePoolProviderArgs)
 
 var _ terra.Resource = (*IamWorkforcePoolProvider)(nil)
 
+// IamWorkforcePoolProvider represents the Terraform resource google_iam_workforce_pool_provider.
 type IamWorkforcePoolProvider struct {
-	Name  string
-	Args  IamWorkforcePoolProviderArgs
-	state *iamWorkforcePoolProviderState
+	Name      string
+	Args      IamWorkforcePoolProviderArgs
+	state     *iamWorkforcePoolProviderState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IamWorkforcePoolProvider].
 func (iwpp *IamWorkforcePoolProvider) Type() string {
 	return "google_iam_workforce_pool_provider"
 }
 
+// LocalName returns the local name for [IamWorkforcePoolProvider].
 func (iwpp *IamWorkforcePoolProvider) LocalName() string {
 	return iwpp.Name
 }
 
+// Configuration returns the configuration (args) for [IamWorkforcePoolProvider].
 func (iwpp *IamWorkforcePoolProvider) Configuration() interface{} {
 	return iwpp.Args
 }
 
+// DependOn is used for other resources to depend on [IamWorkforcePoolProvider].
+func (iwpp *IamWorkforcePoolProvider) DependOn() terra.Reference {
+	return terra.ReferenceResource(iwpp)
+}
+
+// Dependencies returns the list of resources [IamWorkforcePoolProvider] depends_on.
+func (iwpp *IamWorkforcePoolProvider) Dependencies() terra.Dependencies {
+	return iwpp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IamWorkforcePoolProvider].
+func (iwpp *IamWorkforcePoolProvider) LifecycleManagement() *terra.Lifecycle {
+	return iwpp.Lifecycle
+}
+
+// Attributes returns the attributes for [IamWorkforcePoolProvider].
 func (iwpp *IamWorkforcePoolProvider) Attributes() iamWorkforcePoolProviderAttributes {
 	return iamWorkforcePoolProviderAttributes{ref: terra.ReferenceResource(iwpp)}
 }
 
+// ImportState imports the given attribute values into [IamWorkforcePoolProvider]'s state.
 func (iwpp *IamWorkforcePoolProvider) ImportState(av io.Reader) error {
 	iwpp.state = &iamWorkforcePoolProviderState{}
 	if err := json.NewDecoder(av).Decode(iwpp.state); err != nil {
@@ -49,10 +73,12 @@ func (iwpp *IamWorkforcePoolProvider) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IamWorkforcePoolProvider] has state.
 func (iwpp *IamWorkforcePoolProvider) State() (*iamWorkforcePoolProviderState, bool) {
 	return iwpp.state, iwpp.state != nil
 }
 
+// StateMust returns the state for [IamWorkforcePoolProvider]. Panics if the state is nil.
 func (iwpp *IamWorkforcePoolProvider) StateMust() *iamWorkforcePoolProviderState {
 	if iwpp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", iwpp.Type(), iwpp.LocalName()))
@@ -60,10 +86,7 @@ func (iwpp *IamWorkforcePoolProvider) StateMust() *iamWorkforcePoolProviderState
 	return iwpp.state
 }
 
-func (iwpp *IamWorkforcePoolProvider) DependOn() terra.Reference {
-	return terra.ReferenceResource(iwpp)
-}
-
+// IamWorkforcePoolProviderArgs contains the configurations for google_iam_workforce_pool_provider.
 type IamWorkforcePoolProviderArgs struct {
 	// AttributeCondition: string, optional
 	AttributeCondition terra.StringValue `hcl:"attribute_condition,attr"`
@@ -89,67 +112,76 @@ type IamWorkforcePoolProviderArgs struct {
 	Saml *iamworkforcepoolprovider.Saml `hcl:"saml,block"`
 	// Timeouts: optional
 	Timeouts *iamworkforcepoolprovider.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that IamWorkforcePoolProvider depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iamWorkforcePoolProviderAttributes struct {
 	ref terra.Reference
 }
 
+// AttributeCondition returns a reference to field attribute_condition of google_iam_workforce_pool_provider.
 func (iwpp iamWorkforcePoolProviderAttributes) AttributeCondition() terra.StringValue {
-	return terra.ReferenceString(iwpp.ref.Append("attribute_condition"))
+	return terra.ReferenceAsString(iwpp.ref.Append("attribute_condition"))
 }
 
+// AttributeMapping returns a reference to field attribute_mapping of google_iam_workforce_pool_provider.
 func (iwpp iamWorkforcePoolProviderAttributes) AttributeMapping() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](iwpp.ref.Append("attribute_mapping"))
+	return terra.ReferenceAsMap[terra.StringValue](iwpp.ref.Append("attribute_mapping"))
 }
 
+// Description returns a reference to field description of google_iam_workforce_pool_provider.
 func (iwpp iamWorkforcePoolProviderAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(iwpp.ref.Append("description"))
+	return terra.ReferenceAsString(iwpp.ref.Append("description"))
 }
 
+// Disabled returns a reference to field disabled of google_iam_workforce_pool_provider.
 func (iwpp iamWorkforcePoolProviderAttributes) Disabled() terra.BoolValue {
-	return terra.ReferenceBool(iwpp.ref.Append("disabled"))
+	return terra.ReferenceAsBool(iwpp.ref.Append("disabled"))
 }
 
+// DisplayName returns a reference to field display_name of google_iam_workforce_pool_provider.
 func (iwpp iamWorkforcePoolProviderAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(iwpp.ref.Append("display_name"))
+	return terra.ReferenceAsString(iwpp.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of google_iam_workforce_pool_provider.
 func (iwpp iamWorkforcePoolProviderAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(iwpp.ref.Append("id"))
+	return terra.ReferenceAsString(iwpp.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_iam_workforce_pool_provider.
 func (iwpp iamWorkforcePoolProviderAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(iwpp.ref.Append("location"))
+	return terra.ReferenceAsString(iwpp.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_iam_workforce_pool_provider.
 func (iwpp iamWorkforcePoolProviderAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(iwpp.ref.Append("name"))
+	return terra.ReferenceAsString(iwpp.ref.Append("name"))
 }
 
+// ProviderId returns a reference to field provider_id of google_iam_workforce_pool_provider.
 func (iwpp iamWorkforcePoolProviderAttributes) ProviderId() terra.StringValue {
-	return terra.ReferenceString(iwpp.ref.Append("provider_id"))
+	return terra.ReferenceAsString(iwpp.ref.Append("provider_id"))
 }
 
+// State returns a reference to field state of google_iam_workforce_pool_provider.
 func (iwpp iamWorkforcePoolProviderAttributes) State() terra.StringValue {
-	return terra.ReferenceString(iwpp.ref.Append("state"))
+	return terra.ReferenceAsString(iwpp.ref.Append("state"))
 }
 
+// WorkforcePoolId returns a reference to field workforce_pool_id of google_iam_workforce_pool_provider.
 func (iwpp iamWorkforcePoolProviderAttributes) WorkforcePoolId() terra.StringValue {
-	return terra.ReferenceString(iwpp.ref.Append("workforce_pool_id"))
+	return terra.ReferenceAsString(iwpp.ref.Append("workforce_pool_id"))
 }
 
 func (iwpp iamWorkforcePoolProviderAttributes) Oidc() terra.ListValue[iamworkforcepoolprovider.OidcAttributes] {
-	return terra.ReferenceList[iamworkforcepoolprovider.OidcAttributes](iwpp.ref.Append("oidc"))
+	return terra.ReferenceAsList[iamworkforcepoolprovider.OidcAttributes](iwpp.ref.Append("oidc"))
 }
 
 func (iwpp iamWorkforcePoolProviderAttributes) Saml() terra.ListValue[iamworkforcepoolprovider.SamlAttributes] {
-	return terra.ReferenceList[iamworkforcepoolprovider.SamlAttributes](iwpp.ref.Append("saml"))
+	return terra.ReferenceAsList[iamworkforcepoolprovider.SamlAttributes](iwpp.ref.Append("saml"))
 }
 
 func (iwpp iamWorkforcePoolProviderAttributes) Timeouts() iamworkforcepoolprovider.TimeoutsAttributes {
-	return terra.ReferenceSingle[iamworkforcepoolprovider.TimeoutsAttributes](iwpp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[iamworkforcepoolprovider.TimeoutsAttributes](iwpp.ref.Append("timeouts"))
 }
 
 type iamWorkforcePoolProviderState struct {

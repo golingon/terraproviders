@@ -13,28 +13,28 @@ type VpnInterfacesAttributes struct {
 	ref terra.Reference
 }
 
-func (vi VpnInterfacesAttributes) InternalRef() terra.Reference {
-	return vi.ref
+func (vi VpnInterfacesAttributes) InternalRef() (terra.Reference, error) {
+	return vi.ref, nil
 }
 
 func (vi VpnInterfacesAttributes) InternalWithRef(ref terra.Reference) VpnInterfacesAttributes {
 	return VpnInterfacesAttributes{ref: ref}
 }
 
-func (vi VpnInterfacesAttributes) InternalTokens() hclwrite.Tokens {
+func (vi VpnInterfacesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vi.ref.InternalTokens()
 }
 
 func (vi VpnInterfacesAttributes) Id() terra.NumberValue {
-	return terra.ReferenceNumber(vi.ref.Append("id"))
+	return terra.ReferenceAsNumber(vi.ref.Append("id"))
 }
 
 func (vi VpnInterfacesAttributes) InterconnectAttachment() terra.StringValue {
-	return terra.ReferenceString(vi.ref.Append("interconnect_attachment"))
+	return terra.ReferenceAsString(vi.ref.Append("interconnect_attachment"))
 }
 
 func (vi VpnInterfacesAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(vi.ref.Append("ip_address"))
+	return terra.ReferenceAsString(vi.ref.Append("ip_address"))
 }
 
 type VpnInterfacesState struct {

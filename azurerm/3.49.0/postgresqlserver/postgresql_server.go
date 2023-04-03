@@ -44,104 +44,104 @@ type IdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (i IdentityAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IdentityAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IdentityAttributes) InternalWithRef(ref terra.Reference) IdentityAttributes {
 	return IdentityAttributes{ref: ref}
 }
 
-func (i IdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (i IdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IdentityAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("principal_id"))
+	return terra.ReferenceAsString(i.ref.Append("principal_id"))
 }
 
 func (i IdentityAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(i.ref.Append("tenant_id"))
 }
 
 func (i IdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("type"))
+	return terra.ReferenceAsString(i.ref.Append("type"))
 }
 
 type ThreatDetectionPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (tdp ThreatDetectionPolicyAttributes) InternalRef() terra.Reference {
-	return tdp.ref
+func (tdp ThreatDetectionPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return tdp.ref, nil
 }
 
 func (tdp ThreatDetectionPolicyAttributes) InternalWithRef(ref terra.Reference) ThreatDetectionPolicyAttributes {
 	return ThreatDetectionPolicyAttributes{ref: ref}
 }
 
-func (tdp ThreatDetectionPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (tdp ThreatDetectionPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tdp.ref.InternalTokens()
 }
 
 func (tdp ThreatDetectionPolicyAttributes) DisabledAlerts() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](tdp.ref.Append("disabled_alerts"))
+	return terra.ReferenceAsSet[terra.StringValue](tdp.ref.Append("disabled_alerts"))
 }
 
 func (tdp ThreatDetectionPolicyAttributes) EmailAccountAdmins() terra.BoolValue {
-	return terra.ReferenceBool(tdp.ref.Append("email_account_admins"))
+	return terra.ReferenceAsBool(tdp.ref.Append("email_account_admins"))
 }
 
 func (tdp ThreatDetectionPolicyAttributes) EmailAddresses() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](tdp.ref.Append("email_addresses"))
+	return terra.ReferenceAsSet[terra.StringValue](tdp.ref.Append("email_addresses"))
 }
 
 func (tdp ThreatDetectionPolicyAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(tdp.ref.Append("enabled"))
+	return terra.ReferenceAsBool(tdp.ref.Append("enabled"))
 }
 
 func (tdp ThreatDetectionPolicyAttributes) RetentionDays() terra.NumberValue {
-	return terra.ReferenceNumber(tdp.ref.Append("retention_days"))
+	return terra.ReferenceAsNumber(tdp.ref.Append("retention_days"))
 }
 
 func (tdp ThreatDetectionPolicyAttributes) StorageAccountAccessKey() terra.StringValue {
-	return terra.ReferenceString(tdp.ref.Append("storage_account_access_key"))
+	return terra.ReferenceAsString(tdp.ref.Append("storage_account_access_key"))
 }
 
 func (tdp ThreatDetectionPolicyAttributes) StorageEndpoint() terra.StringValue {
-	return terra.ReferenceString(tdp.ref.Append("storage_endpoint"))
+	return terra.ReferenceAsString(tdp.ref.Append("storage_endpoint"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type IdentityState struct {

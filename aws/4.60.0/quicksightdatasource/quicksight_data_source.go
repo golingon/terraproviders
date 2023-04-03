@@ -252,7 +252,7 @@ func (c CredentialsAttributes) InternalWithRef(ref terra.Reference) CredentialsA
 	return CredentialsAttributes{ref: ref}
 }
 
-func (c CredentialsAttributes) InternalTokens() hclwrite.Tokens {
+func (c CredentialsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -276,7 +276,7 @@ func (cp CredentialPairAttributes) InternalWithRef(ref terra.Reference) Credenti
 	return CredentialPairAttributes{ref: ref}
 }
 
-func (cp CredentialPairAttributes) InternalTokens() hclwrite.Tokens {
+func (cp CredentialPairAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cp.ref.InternalTokens()
 }
 
@@ -300,7 +300,7 @@ func (p ParametersAttributes) InternalWithRef(ref terra.Reference) ParametersAtt
 	return ParametersAttributes{ref: ref}
 }
 
-func (p ParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (p ParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -396,7 +396,7 @@ func (ae AmazonElasticsearchAttributes) InternalWithRef(ref terra.Reference) Ama
 	return AmazonElasticsearchAttributes{ref: ref}
 }
 
-func (ae AmazonElasticsearchAttributes) InternalTokens() hclwrite.Tokens {
+func (ae AmazonElasticsearchAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ae.ref.InternalTokens()
 }
 
@@ -416,7 +416,7 @@ func (a AthenaAttributes) InternalWithRef(ref terra.Reference) AthenaAttributes 
 	return AthenaAttributes{ref: ref}
 }
 
-func (a AthenaAttributes) InternalTokens() hclwrite.Tokens {
+func (a AthenaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -436,7 +436,7 @@ func (a AuroraAttributes) InternalWithRef(ref terra.Reference) AuroraAttributes 
 	return AuroraAttributes{ref: ref}
 }
 
-func (a AuroraAttributes) InternalTokens() hclwrite.Tokens {
+func (a AuroraAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -464,7 +464,7 @@ func (ap AuroraPostgresqlAttributes) InternalWithRef(ref terra.Reference) Aurora
 	return AuroraPostgresqlAttributes{ref: ref}
 }
 
-func (ap AuroraPostgresqlAttributes) InternalTokens() hclwrite.Tokens {
+func (ap AuroraPostgresqlAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ap.ref.InternalTokens()
 }
 
@@ -492,7 +492,7 @@ func (aia AwsIotAnalyticsAttributes) InternalWithRef(ref terra.Reference) AwsIot
 	return AwsIotAnalyticsAttributes{ref: ref}
 }
 
-func (aia AwsIotAnalyticsAttributes) InternalTokens() hclwrite.Tokens {
+func (aia AwsIotAnalyticsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aia.ref.InternalTokens()
 }
 
@@ -512,7 +512,7 @@ func (j JiraAttributes) InternalWithRef(ref terra.Reference) JiraAttributes {
 	return JiraAttributes{ref: ref}
 }
 
-func (j JiraAttributes) InternalTokens() hclwrite.Tokens {
+func (j JiraAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return j.ref.InternalTokens()
 }
 
@@ -532,7 +532,7 @@ func (md MariaDbAttributes) InternalWithRef(ref terra.Reference) MariaDbAttribut
 	return MariaDbAttributes{ref: ref}
 }
 
-func (md MariaDbAttributes) InternalTokens() hclwrite.Tokens {
+func (md MariaDbAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return md.ref.InternalTokens()
 }
 
@@ -560,7 +560,7 @@ func (m MysqlAttributes) InternalWithRef(ref terra.Reference) MysqlAttributes {
 	return MysqlAttributes{ref: ref}
 }
 
-func (m MysqlAttributes) InternalTokens() hclwrite.Tokens {
+func (m MysqlAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -588,7 +588,7 @@ func (o OracleAttributes) InternalWithRef(ref terra.Reference) OracleAttributes 
 	return OracleAttributes{ref: ref}
 }
 
-func (o OracleAttributes) InternalTokens() hclwrite.Tokens {
+func (o OracleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return o.ref.InternalTokens()
 }
 
@@ -616,7 +616,7 @@ func (p PostgresqlAttributes) InternalWithRef(ref terra.Reference) PostgresqlAtt
 	return PostgresqlAttributes{ref: ref}
 }
 
-func (p PostgresqlAttributes) InternalTokens() hclwrite.Tokens {
+func (p PostgresqlAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -644,7 +644,7 @@ func (p PrestoAttributes) InternalWithRef(ref terra.Reference) PrestoAttributes 
 	return PrestoAttributes{ref: ref}
 }
 
-func (p PrestoAttributes) InternalTokens() hclwrite.Tokens {
+func (p PrestoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -672,7 +672,7 @@ func (r RdsAttributes) InternalWithRef(ref terra.Reference) RdsAttributes {
 	return RdsAttributes{ref: ref}
 }
 
-func (r RdsAttributes) InternalTokens() hclwrite.Tokens {
+func (r RdsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -696,7 +696,7 @@ func (r RedshiftAttributes) InternalWithRef(ref terra.Reference) RedshiftAttribu
 	return RedshiftAttributes{ref: ref}
 }
 
-func (r RedshiftAttributes) InternalTokens() hclwrite.Tokens {
+func (r RedshiftAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -728,7 +728,7 @@ func (s S3Attributes) InternalWithRef(ref terra.Reference) S3Attributes {
 	return S3Attributes{ref: ref}
 }
 
-func (s S3Attributes) InternalTokens() hclwrite.Tokens {
+func (s S3Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -748,7 +748,7 @@ func (mfl ManifestFileLocationAttributes) InternalWithRef(ref terra.Reference) M
 	return ManifestFileLocationAttributes{ref: ref}
 }
 
-func (mfl ManifestFileLocationAttributes) InternalTokens() hclwrite.Tokens {
+func (mfl ManifestFileLocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mfl.ref.InternalTokens()
 }
 
@@ -772,7 +772,7 @@ func (sn ServiceNowAttributes) InternalWithRef(ref terra.Reference) ServiceNowAt
 	return ServiceNowAttributes{ref: ref}
 }
 
-func (sn ServiceNowAttributes) InternalTokens() hclwrite.Tokens {
+func (sn ServiceNowAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sn.ref.InternalTokens()
 }
 
@@ -792,7 +792,7 @@ func (s SnowflakeAttributes) InternalWithRef(ref terra.Reference) SnowflakeAttri
 	return SnowflakeAttributes{ref: ref}
 }
 
-func (s SnowflakeAttributes) InternalTokens() hclwrite.Tokens {
+func (s SnowflakeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -820,7 +820,7 @@ func (s SparkAttributes) InternalWithRef(ref terra.Reference) SparkAttributes {
 	return SparkAttributes{ref: ref}
 }
 
-func (s SparkAttributes) InternalTokens() hclwrite.Tokens {
+func (s SparkAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -844,7 +844,7 @@ func (ss SqlServerAttributes) InternalWithRef(ref terra.Reference) SqlServerAttr
 	return SqlServerAttributes{ref: ref}
 }
 
-func (ss SqlServerAttributes) InternalTokens() hclwrite.Tokens {
+func (ss SqlServerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ss.ref.InternalTokens()
 }
 
@@ -872,7 +872,7 @@ func (t TeradataAttributes) InternalWithRef(ref terra.Reference) TeradataAttribu
 	return TeradataAttributes{ref: ref}
 }
 
-func (t TeradataAttributes) InternalTokens() hclwrite.Tokens {
+func (t TeradataAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -900,7 +900,7 @@ func (t TwitterAttributes) InternalWithRef(ref terra.Reference) TwitterAttribute
 	return TwitterAttributes{ref: ref}
 }
 
-func (t TwitterAttributes) InternalTokens() hclwrite.Tokens {
+func (t TwitterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -924,7 +924,7 @@ func (p PermissionAttributes) InternalWithRef(ref terra.Reference) PermissionAtt
 	return PermissionAttributes{ref: ref}
 }
 
-func (p PermissionAttributes) InternalTokens() hclwrite.Tokens {
+func (p PermissionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -948,7 +948,7 @@ func (sp SslPropertiesAttributes) InternalWithRef(ref terra.Reference) SslProper
 	return SslPropertiesAttributes{ref: ref}
 }
 
-func (sp SslPropertiesAttributes) InternalTokens() hclwrite.Tokens {
+func (sp SslPropertiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sp.ref.InternalTokens()
 }
 
@@ -968,7 +968,7 @@ func (vcp VpcConnectionPropertiesAttributes) InternalWithRef(ref terra.Reference
 	return VpcConnectionPropertiesAttributes{ref: ref}
 }
 
-func (vcp VpcConnectionPropertiesAttributes) InternalTokens() hclwrite.Tokens {
+func (vcp VpcConnectionPropertiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vcp.ref.InternalTokens()
 }
 

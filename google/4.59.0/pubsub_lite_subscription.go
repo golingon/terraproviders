@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewPubsubLiteSubscription creates a new instance of [PubsubLiteSubscription].
 func NewPubsubLiteSubscription(name string, args PubsubLiteSubscriptionArgs) *PubsubLiteSubscription {
 	return &PubsubLiteSubscription{
 		Args: args,
@@ -19,28 +20,51 @@ func NewPubsubLiteSubscription(name string, args PubsubLiteSubscriptionArgs) *Pu
 
 var _ terra.Resource = (*PubsubLiteSubscription)(nil)
 
+// PubsubLiteSubscription represents the Terraform resource google_pubsub_lite_subscription.
 type PubsubLiteSubscription struct {
-	Name  string
-	Args  PubsubLiteSubscriptionArgs
-	state *pubsubLiteSubscriptionState
+	Name      string
+	Args      PubsubLiteSubscriptionArgs
+	state     *pubsubLiteSubscriptionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PubsubLiteSubscription].
 func (pls *PubsubLiteSubscription) Type() string {
 	return "google_pubsub_lite_subscription"
 }
 
+// LocalName returns the local name for [PubsubLiteSubscription].
 func (pls *PubsubLiteSubscription) LocalName() string {
 	return pls.Name
 }
 
+// Configuration returns the configuration (args) for [PubsubLiteSubscription].
 func (pls *PubsubLiteSubscription) Configuration() interface{} {
 	return pls.Args
 }
 
+// DependOn is used for other resources to depend on [PubsubLiteSubscription].
+func (pls *PubsubLiteSubscription) DependOn() terra.Reference {
+	return terra.ReferenceResource(pls)
+}
+
+// Dependencies returns the list of resources [PubsubLiteSubscription] depends_on.
+func (pls *PubsubLiteSubscription) Dependencies() terra.Dependencies {
+	return pls.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PubsubLiteSubscription].
+func (pls *PubsubLiteSubscription) LifecycleManagement() *terra.Lifecycle {
+	return pls.Lifecycle
+}
+
+// Attributes returns the attributes for [PubsubLiteSubscription].
 func (pls *PubsubLiteSubscription) Attributes() pubsubLiteSubscriptionAttributes {
 	return pubsubLiteSubscriptionAttributes{ref: terra.ReferenceResource(pls)}
 }
 
+// ImportState imports the given attribute values into [PubsubLiteSubscription]'s state.
 func (pls *PubsubLiteSubscription) ImportState(av io.Reader) error {
 	pls.state = &pubsubLiteSubscriptionState{}
 	if err := json.NewDecoder(av).Decode(pls.state); err != nil {
@@ -49,10 +73,12 @@ func (pls *PubsubLiteSubscription) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PubsubLiteSubscription] has state.
 func (pls *PubsubLiteSubscription) State() (*pubsubLiteSubscriptionState, bool) {
 	return pls.state, pls.state != nil
 }
 
+// StateMust returns the state for [PubsubLiteSubscription]. Panics if the state is nil.
 func (pls *PubsubLiteSubscription) StateMust() *pubsubLiteSubscriptionState {
 	if pls.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pls.Type(), pls.LocalName()))
@@ -60,10 +86,7 @@ func (pls *PubsubLiteSubscription) StateMust() *pubsubLiteSubscriptionState {
 	return pls.state
 }
 
-func (pls *PubsubLiteSubscription) DependOn() terra.Reference {
-	return terra.ReferenceResource(pls)
-}
-
+// PubsubLiteSubscriptionArgs contains the configurations for google_pubsub_lite_subscription.
 type PubsubLiteSubscriptionArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -81,43 +104,47 @@ type PubsubLiteSubscriptionArgs struct {
 	DeliveryConfig *pubsublitesubscription.DeliveryConfig `hcl:"delivery_config,block"`
 	// Timeouts: optional
 	Timeouts *pubsublitesubscription.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that PubsubLiteSubscription depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type pubsubLiteSubscriptionAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of google_pubsub_lite_subscription.
 func (pls pubsubLiteSubscriptionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pls.ref.Append("id"))
+	return terra.ReferenceAsString(pls.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_pubsub_lite_subscription.
 func (pls pubsubLiteSubscriptionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pls.ref.Append("name"))
+	return terra.ReferenceAsString(pls.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_pubsub_lite_subscription.
 func (pls pubsubLiteSubscriptionAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(pls.ref.Append("project"))
+	return terra.ReferenceAsString(pls.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_pubsub_lite_subscription.
 func (pls pubsubLiteSubscriptionAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(pls.ref.Append("region"))
+	return terra.ReferenceAsString(pls.ref.Append("region"))
 }
 
+// Topic returns a reference to field topic of google_pubsub_lite_subscription.
 func (pls pubsubLiteSubscriptionAttributes) Topic() terra.StringValue {
-	return terra.ReferenceString(pls.ref.Append("topic"))
+	return terra.ReferenceAsString(pls.ref.Append("topic"))
 }
 
+// Zone returns a reference to field zone of google_pubsub_lite_subscription.
 func (pls pubsubLiteSubscriptionAttributes) Zone() terra.StringValue {
-	return terra.ReferenceString(pls.ref.Append("zone"))
+	return terra.ReferenceAsString(pls.ref.Append("zone"))
 }
 
 func (pls pubsubLiteSubscriptionAttributes) DeliveryConfig() terra.ListValue[pubsublitesubscription.DeliveryConfigAttributes] {
-	return terra.ReferenceList[pubsublitesubscription.DeliveryConfigAttributes](pls.ref.Append("delivery_config"))
+	return terra.ReferenceAsList[pubsublitesubscription.DeliveryConfigAttributes](pls.ref.Append("delivery_config"))
 }
 
 func (pls pubsubLiteSubscriptionAttributes) Timeouts() pubsublitesubscription.TimeoutsAttributes {
-	return terra.ReferenceSingle[pubsublitesubscription.TimeoutsAttributes](pls.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[pubsublitesubscription.TimeoutsAttributes](pls.ref.Append("timeouts"))
 }
 
 type pubsubLiteSubscriptionState struct {

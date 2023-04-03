@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataProtectionBackupInstanceBlobStorage creates a new instance of [DataProtectionBackupInstanceBlobStorage].
 func NewDataProtectionBackupInstanceBlobStorage(name string, args DataProtectionBackupInstanceBlobStorageArgs) *DataProtectionBackupInstanceBlobStorage {
 	return &DataProtectionBackupInstanceBlobStorage{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataProtectionBackupInstanceBlobStorage(name string, args DataProtection
 
 var _ terra.Resource = (*DataProtectionBackupInstanceBlobStorage)(nil)
 
+// DataProtectionBackupInstanceBlobStorage represents the Terraform resource azurerm_data_protection_backup_instance_blob_storage.
 type DataProtectionBackupInstanceBlobStorage struct {
-	Name  string
-	Args  DataProtectionBackupInstanceBlobStorageArgs
-	state *dataProtectionBackupInstanceBlobStorageState
+	Name      string
+	Args      DataProtectionBackupInstanceBlobStorageArgs
+	state     *dataProtectionBackupInstanceBlobStorageState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataProtectionBackupInstanceBlobStorage].
 func (dpbibs *DataProtectionBackupInstanceBlobStorage) Type() string {
 	return "azurerm_data_protection_backup_instance_blob_storage"
 }
 
+// LocalName returns the local name for [DataProtectionBackupInstanceBlobStorage].
 func (dpbibs *DataProtectionBackupInstanceBlobStorage) LocalName() string {
 	return dpbibs.Name
 }
 
+// Configuration returns the configuration (args) for [DataProtectionBackupInstanceBlobStorage].
 func (dpbibs *DataProtectionBackupInstanceBlobStorage) Configuration() interface{} {
 	return dpbibs.Args
 }
 
+// DependOn is used for other resources to depend on [DataProtectionBackupInstanceBlobStorage].
+func (dpbibs *DataProtectionBackupInstanceBlobStorage) DependOn() terra.Reference {
+	return terra.ReferenceResource(dpbibs)
+}
+
+// Dependencies returns the list of resources [DataProtectionBackupInstanceBlobStorage] depends_on.
+func (dpbibs *DataProtectionBackupInstanceBlobStorage) Dependencies() terra.Dependencies {
+	return dpbibs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataProtectionBackupInstanceBlobStorage].
+func (dpbibs *DataProtectionBackupInstanceBlobStorage) LifecycleManagement() *terra.Lifecycle {
+	return dpbibs.Lifecycle
+}
+
+// Attributes returns the attributes for [DataProtectionBackupInstanceBlobStorage].
 func (dpbibs *DataProtectionBackupInstanceBlobStorage) Attributes() dataProtectionBackupInstanceBlobStorageAttributes {
 	return dataProtectionBackupInstanceBlobStorageAttributes{ref: terra.ReferenceResource(dpbibs)}
 }
 
+// ImportState imports the given attribute values into [DataProtectionBackupInstanceBlobStorage]'s state.
 func (dpbibs *DataProtectionBackupInstanceBlobStorage) ImportState(av io.Reader) error {
 	dpbibs.state = &dataProtectionBackupInstanceBlobStorageState{}
 	if err := json.NewDecoder(av).Decode(dpbibs.state); err != nil {
@@ -49,10 +73,12 @@ func (dpbibs *DataProtectionBackupInstanceBlobStorage) ImportState(av io.Reader)
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataProtectionBackupInstanceBlobStorage] has state.
 func (dpbibs *DataProtectionBackupInstanceBlobStorage) State() (*dataProtectionBackupInstanceBlobStorageState, bool) {
 	return dpbibs.state, dpbibs.state != nil
 }
 
+// StateMust returns the state for [DataProtectionBackupInstanceBlobStorage]. Panics if the state is nil.
 func (dpbibs *DataProtectionBackupInstanceBlobStorage) StateMust() *dataProtectionBackupInstanceBlobStorageState {
 	if dpbibs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dpbibs.Type(), dpbibs.LocalName()))
@@ -60,10 +86,7 @@ func (dpbibs *DataProtectionBackupInstanceBlobStorage) StateMust() *dataProtecti
 	return dpbibs.state
 }
 
-func (dpbibs *DataProtectionBackupInstanceBlobStorage) DependOn() terra.Reference {
-	return terra.ReferenceResource(dpbibs)
-}
-
+// DataProtectionBackupInstanceBlobStorageArgs contains the configurations for azurerm_data_protection_backup_instance_blob_storage.
 type DataProtectionBackupInstanceBlobStorageArgs struct {
 	// BackupPolicyId: string, required
 	BackupPolicyId terra.StringValue `hcl:"backup_policy_id,attr" validate:"required"`
@@ -79,39 +102,43 @@ type DataProtectionBackupInstanceBlobStorageArgs struct {
 	VaultId terra.StringValue `hcl:"vault_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *dataprotectionbackupinstanceblobstorage.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataProtectionBackupInstanceBlobStorage depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataProtectionBackupInstanceBlobStorageAttributes struct {
 	ref terra.Reference
 }
 
+// BackupPolicyId returns a reference to field backup_policy_id of azurerm_data_protection_backup_instance_blob_storage.
 func (dpbibs dataProtectionBackupInstanceBlobStorageAttributes) BackupPolicyId() terra.StringValue {
-	return terra.ReferenceString(dpbibs.ref.Append("backup_policy_id"))
+	return terra.ReferenceAsString(dpbibs.ref.Append("backup_policy_id"))
 }
 
+// Id returns a reference to field id of azurerm_data_protection_backup_instance_blob_storage.
 func (dpbibs dataProtectionBackupInstanceBlobStorageAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dpbibs.ref.Append("id"))
+	return terra.ReferenceAsString(dpbibs.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_data_protection_backup_instance_blob_storage.
 func (dpbibs dataProtectionBackupInstanceBlobStorageAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(dpbibs.ref.Append("location"))
+	return terra.ReferenceAsString(dpbibs.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_data_protection_backup_instance_blob_storage.
 func (dpbibs dataProtectionBackupInstanceBlobStorageAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dpbibs.ref.Append("name"))
+	return terra.ReferenceAsString(dpbibs.ref.Append("name"))
 }
 
+// StorageAccountId returns a reference to field storage_account_id of azurerm_data_protection_backup_instance_blob_storage.
 func (dpbibs dataProtectionBackupInstanceBlobStorageAttributes) StorageAccountId() terra.StringValue {
-	return terra.ReferenceString(dpbibs.ref.Append("storage_account_id"))
+	return terra.ReferenceAsString(dpbibs.ref.Append("storage_account_id"))
 }
 
+// VaultId returns a reference to field vault_id of azurerm_data_protection_backup_instance_blob_storage.
 func (dpbibs dataProtectionBackupInstanceBlobStorageAttributes) VaultId() terra.StringValue {
-	return terra.ReferenceString(dpbibs.ref.Append("vault_id"))
+	return terra.ReferenceAsString(dpbibs.ref.Append("vault_id"))
 }
 
 func (dpbibs dataProtectionBackupInstanceBlobStorageAttributes) Timeouts() dataprotectionbackupinstanceblobstorage.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataprotectionbackupinstanceblobstorage.TimeoutsAttributes](dpbibs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataprotectionbackupinstanceblobstorage.TimeoutsAttributes](dpbibs.ref.Append("timeouts"))
 }
 
 type dataProtectionBackupInstanceBlobStorageState struct {

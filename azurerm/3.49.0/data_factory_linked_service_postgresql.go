@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFactoryLinkedServicePostgresql creates a new instance of [DataFactoryLinkedServicePostgresql].
 func NewDataFactoryLinkedServicePostgresql(name string, args DataFactoryLinkedServicePostgresqlArgs) *DataFactoryLinkedServicePostgresql {
 	return &DataFactoryLinkedServicePostgresql{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFactoryLinkedServicePostgresql(name string, args DataFactoryLinkedSe
 
 var _ terra.Resource = (*DataFactoryLinkedServicePostgresql)(nil)
 
+// DataFactoryLinkedServicePostgresql represents the Terraform resource azurerm_data_factory_linked_service_postgresql.
 type DataFactoryLinkedServicePostgresql struct {
-	Name  string
-	Args  DataFactoryLinkedServicePostgresqlArgs
-	state *dataFactoryLinkedServicePostgresqlState
+	Name      string
+	Args      DataFactoryLinkedServicePostgresqlArgs
+	state     *dataFactoryLinkedServicePostgresqlState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFactoryLinkedServicePostgresql].
 func (dflsp *DataFactoryLinkedServicePostgresql) Type() string {
 	return "azurerm_data_factory_linked_service_postgresql"
 }
 
+// LocalName returns the local name for [DataFactoryLinkedServicePostgresql].
 func (dflsp *DataFactoryLinkedServicePostgresql) LocalName() string {
 	return dflsp.Name
 }
 
+// Configuration returns the configuration (args) for [DataFactoryLinkedServicePostgresql].
 func (dflsp *DataFactoryLinkedServicePostgresql) Configuration() interface{} {
 	return dflsp.Args
 }
 
+// DependOn is used for other resources to depend on [DataFactoryLinkedServicePostgresql].
+func (dflsp *DataFactoryLinkedServicePostgresql) DependOn() terra.Reference {
+	return terra.ReferenceResource(dflsp)
+}
+
+// Dependencies returns the list of resources [DataFactoryLinkedServicePostgresql] depends_on.
+func (dflsp *DataFactoryLinkedServicePostgresql) Dependencies() terra.Dependencies {
+	return dflsp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFactoryLinkedServicePostgresql].
+func (dflsp *DataFactoryLinkedServicePostgresql) LifecycleManagement() *terra.Lifecycle {
+	return dflsp.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFactoryLinkedServicePostgresql].
 func (dflsp *DataFactoryLinkedServicePostgresql) Attributes() dataFactoryLinkedServicePostgresqlAttributes {
 	return dataFactoryLinkedServicePostgresqlAttributes{ref: terra.ReferenceResource(dflsp)}
 }
 
+// ImportState imports the given attribute values into [DataFactoryLinkedServicePostgresql]'s state.
 func (dflsp *DataFactoryLinkedServicePostgresql) ImportState(av io.Reader) error {
 	dflsp.state = &dataFactoryLinkedServicePostgresqlState{}
 	if err := json.NewDecoder(av).Decode(dflsp.state); err != nil {
@@ -49,10 +73,12 @@ func (dflsp *DataFactoryLinkedServicePostgresql) ImportState(av io.Reader) error
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFactoryLinkedServicePostgresql] has state.
 func (dflsp *DataFactoryLinkedServicePostgresql) State() (*dataFactoryLinkedServicePostgresqlState, bool) {
 	return dflsp.state, dflsp.state != nil
 }
 
+// StateMust returns the state for [DataFactoryLinkedServicePostgresql]. Panics if the state is nil.
 func (dflsp *DataFactoryLinkedServicePostgresql) StateMust() *dataFactoryLinkedServicePostgresqlState {
 	if dflsp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dflsp.Type(), dflsp.LocalName()))
@@ -60,10 +86,7 @@ func (dflsp *DataFactoryLinkedServicePostgresql) StateMust() *dataFactoryLinkedS
 	return dflsp.state
 }
 
-func (dflsp *DataFactoryLinkedServicePostgresql) DependOn() terra.Reference {
-	return terra.ReferenceResource(dflsp)
-}
-
+// DataFactoryLinkedServicePostgresqlArgs contains the configurations for azurerm_data_factory_linked_service_postgresql.
 type DataFactoryLinkedServicePostgresqlArgs struct {
 	// AdditionalProperties: map of string, optional
 	AdditionalProperties terra.MapValue[terra.StringValue] `hcl:"additional_properties,attr"`
@@ -85,51 +108,58 @@ type DataFactoryLinkedServicePostgresqlArgs struct {
 	Parameters terra.MapValue[terra.StringValue] `hcl:"parameters,attr"`
 	// Timeouts: optional
 	Timeouts *datafactorylinkedservicepostgresql.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataFactoryLinkedServicePostgresql depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFactoryLinkedServicePostgresqlAttributes struct {
 	ref terra.Reference
 }
 
+// AdditionalProperties returns a reference to field additional_properties of azurerm_data_factory_linked_service_postgresql.
 func (dflsp dataFactoryLinkedServicePostgresqlAttributes) AdditionalProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dflsp.ref.Append("additional_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](dflsp.ref.Append("additional_properties"))
 }
 
+// Annotations returns a reference to field annotations of azurerm_data_factory_linked_service_postgresql.
 func (dflsp dataFactoryLinkedServicePostgresqlAttributes) Annotations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dflsp.ref.Append("annotations"))
+	return terra.ReferenceAsList[terra.StringValue](dflsp.ref.Append("annotations"))
 }
 
+// ConnectionString returns a reference to field connection_string of azurerm_data_factory_linked_service_postgresql.
 func (dflsp dataFactoryLinkedServicePostgresqlAttributes) ConnectionString() terra.StringValue {
-	return terra.ReferenceString(dflsp.ref.Append("connection_string"))
+	return terra.ReferenceAsString(dflsp.ref.Append("connection_string"))
 }
 
+// DataFactoryId returns a reference to field data_factory_id of azurerm_data_factory_linked_service_postgresql.
 func (dflsp dataFactoryLinkedServicePostgresqlAttributes) DataFactoryId() terra.StringValue {
-	return terra.ReferenceString(dflsp.ref.Append("data_factory_id"))
+	return terra.ReferenceAsString(dflsp.ref.Append("data_factory_id"))
 }
 
+// Description returns a reference to field description of azurerm_data_factory_linked_service_postgresql.
 func (dflsp dataFactoryLinkedServicePostgresqlAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dflsp.ref.Append("description"))
+	return terra.ReferenceAsString(dflsp.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_data_factory_linked_service_postgresql.
 func (dflsp dataFactoryLinkedServicePostgresqlAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dflsp.ref.Append("id"))
+	return terra.ReferenceAsString(dflsp.ref.Append("id"))
 }
 
+// IntegrationRuntimeName returns a reference to field integration_runtime_name of azurerm_data_factory_linked_service_postgresql.
 func (dflsp dataFactoryLinkedServicePostgresqlAttributes) IntegrationRuntimeName() terra.StringValue {
-	return terra.ReferenceString(dflsp.ref.Append("integration_runtime_name"))
+	return terra.ReferenceAsString(dflsp.ref.Append("integration_runtime_name"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory_linked_service_postgresql.
 func (dflsp dataFactoryLinkedServicePostgresqlAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dflsp.ref.Append("name"))
+	return terra.ReferenceAsString(dflsp.ref.Append("name"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_data_factory_linked_service_postgresql.
 func (dflsp dataFactoryLinkedServicePostgresqlAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dflsp.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](dflsp.ref.Append("parameters"))
 }
 
 func (dflsp dataFactoryLinkedServicePostgresqlAttributes) Timeouts() datafactorylinkedservicepostgresql.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafactorylinkedservicepostgresql.TimeoutsAttributes](dflsp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafactorylinkedservicepostgresql.TimeoutsAttributes](dflsp.ref.Append("timeouts"))
 }
 
 type dataFactoryLinkedServicePostgresqlState struct {

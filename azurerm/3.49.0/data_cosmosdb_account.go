@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataCosmosdbAccount creates a new instance of [DataCosmosdbAccount].
 func NewDataCosmosdbAccount(name string, args DataCosmosdbAccountArgs) *DataCosmosdbAccount {
 	return &DataCosmosdbAccount{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataCosmosdbAccount(name string, args DataCosmosdbAccountArgs) *DataCosm
 
 var _ terra.DataResource = (*DataCosmosdbAccount)(nil)
 
+// DataCosmosdbAccount represents the Terraform data resource azurerm_cosmosdb_account.
 type DataCosmosdbAccount struct {
 	Name string
 	Args DataCosmosdbAccountArgs
 }
 
+// DataSource returns the Terraform object type for [DataCosmosdbAccount].
 func (ca *DataCosmosdbAccount) DataSource() string {
 	return "azurerm_cosmosdb_account"
 }
 
+// LocalName returns the local name for [DataCosmosdbAccount].
 func (ca *DataCosmosdbAccount) LocalName() string {
 	return ca.Name
 }
 
+// Configuration returns the configuration (args) for [DataCosmosdbAccount].
 func (ca *DataCosmosdbAccount) Configuration() interface{} {
 	return ca.Args
 }
 
+// Attributes returns the attributes for [DataCosmosdbAccount].
 func (ca *DataCosmosdbAccount) Attributes() dataCosmosdbAccountAttributes {
 	return dataCosmosdbAccountAttributes{ref: terra.ReferenceDataResource(ca)}
 }
 
+// DataCosmosdbAccountArgs contains the configurations for azurerm_cosmosdb_account.
 type DataCosmosdbAccountArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -59,102 +66,122 @@ type dataCosmosdbAccountAttributes struct {
 	ref terra.Reference
 }
 
+// EnableAutomaticFailover returns a reference to field enable_automatic_failover of azurerm_cosmosdb_account.
 func (ca dataCosmosdbAccountAttributes) EnableAutomaticFailover() terra.BoolValue {
-	return terra.ReferenceBool(ca.ref.Append("enable_automatic_failover"))
+	return terra.ReferenceAsBool(ca.ref.Append("enable_automatic_failover"))
 }
 
+// EnableFreeTier returns a reference to field enable_free_tier of azurerm_cosmosdb_account.
 func (ca dataCosmosdbAccountAttributes) EnableFreeTier() terra.BoolValue {
-	return terra.ReferenceBool(ca.ref.Append("enable_free_tier"))
+	return terra.ReferenceAsBool(ca.ref.Append("enable_free_tier"))
 }
 
+// EnableMultipleWriteLocations returns a reference to field enable_multiple_write_locations of azurerm_cosmosdb_account.
 func (ca dataCosmosdbAccountAttributes) EnableMultipleWriteLocations() terra.BoolValue {
-	return terra.ReferenceBool(ca.ref.Append("enable_multiple_write_locations"))
+	return terra.ReferenceAsBool(ca.ref.Append("enable_multiple_write_locations"))
 }
 
+// Endpoint returns a reference to field endpoint of azurerm_cosmosdb_account.
 func (ca dataCosmosdbAccountAttributes) Endpoint() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("endpoint"))
+	return terra.ReferenceAsString(ca.ref.Append("endpoint"))
 }
 
+// Id returns a reference to field id of azurerm_cosmosdb_account.
 func (ca dataCosmosdbAccountAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("id"))
+	return terra.ReferenceAsString(ca.ref.Append("id"))
 }
 
+// IpRangeFilter returns a reference to field ip_range_filter of azurerm_cosmosdb_account.
 func (ca dataCosmosdbAccountAttributes) IpRangeFilter() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("ip_range_filter"))
+	return terra.ReferenceAsString(ca.ref.Append("ip_range_filter"))
 }
 
+// IsVirtualNetworkFilterEnabled returns a reference to field is_virtual_network_filter_enabled of azurerm_cosmosdb_account.
 func (ca dataCosmosdbAccountAttributes) IsVirtualNetworkFilterEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ca.ref.Append("is_virtual_network_filter_enabled"))
+	return terra.ReferenceAsBool(ca.ref.Append("is_virtual_network_filter_enabled"))
 }
 
+// KeyVaultKeyId returns a reference to field key_vault_key_id of azurerm_cosmosdb_account.
 func (ca dataCosmosdbAccountAttributes) KeyVaultKeyId() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("key_vault_key_id"))
+	return terra.ReferenceAsString(ca.ref.Append("key_vault_key_id"))
 }
 
+// Kind returns a reference to field kind of azurerm_cosmosdb_account.
 func (ca dataCosmosdbAccountAttributes) Kind() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("kind"))
+	return terra.ReferenceAsString(ca.ref.Append("kind"))
 }
 
+// Location returns a reference to field location of azurerm_cosmosdb_account.
 func (ca dataCosmosdbAccountAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("location"))
+	return terra.ReferenceAsString(ca.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_cosmosdb_account.
 func (ca dataCosmosdbAccountAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("name"))
+	return terra.ReferenceAsString(ca.ref.Append("name"))
 }
 
+// OfferType returns a reference to field offer_type of azurerm_cosmosdb_account.
 func (ca dataCosmosdbAccountAttributes) OfferType() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("offer_type"))
+	return terra.ReferenceAsString(ca.ref.Append("offer_type"))
 }
 
+// PrimaryKey returns a reference to field primary_key of azurerm_cosmosdb_account.
 func (ca dataCosmosdbAccountAttributes) PrimaryKey() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("primary_key"))
+	return terra.ReferenceAsString(ca.ref.Append("primary_key"))
 }
 
+// PrimaryReadonlyKey returns a reference to field primary_readonly_key of azurerm_cosmosdb_account.
 func (ca dataCosmosdbAccountAttributes) PrimaryReadonlyKey() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("primary_readonly_key"))
+	return terra.ReferenceAsString(ca.ref.Append("primary_readonly_key"))
 }
 
+// ReadEndpoints returns a reference to field read_endpoints of azurerm_cosmosdb_account.
 func (ca dataCosmosdbAccountAttributes) ReadEndpoints() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ca.ref.Append("read_endpoints"))
+	return terra.ReferenceAsList[terra.StringValue](ca.ref.Append("read_endpoints"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_cosmosdb_account.
 func (ca dataCosmosdbAccountAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ca.ref.Append("resource_group_name"))
 }
 
+// SecondaryKey returns a reference to field secondary_key of azurerm_cosmosdb_account.
 func (ca dataCosmosdbAccountAttributes) SecondaryKey() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("secondary_key"))
+	return terra.ReferenceAsString(ca.ref.Append("secondary_key"))
 }
 
+// SecondaryReadonlyKey returns a reference to field secondary_readonly_key of azurerm_cosmosdb_account.
 func (ca dataCosmosdbAccountAttributes) SecondaryReadonlyKey() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("secondary_readonly_key"))
+	return terra.ReferenceAsString(ca.ref.Append("secondary_readonly_key"))
 }
 
+// Tags returns a reference to field tags of azurerm_cosmosdb_account.
 func (ca dataCosmosdbAccountAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ca.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ca.ref.Append("tags"))
 }
 
+// WriteEndpoints returns a reference to field write_endpoints of azurerm_cosmosdb_account.
 func (ca dataCosmosdbAccountAttributes) WriteEndpoints() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ca.ref.Append("write_endpoints"))
+	return terra.ReferenceAsList[terra.StringValue](ca.ref.Append("write_endpoints"))
 }
 
 func (ca dataCosmosdbAccountAttributes) Capabilities() terra.ListValue[datacosmosdbaccount.CapabilitiesAttributes] {
-	return terra.ReferenceList[datacosmosdbaccount.CapabilitiesAttributes](ca.ref.Append("capabilities"))
+	return terra.ReferenceAsList[datacosmosdbaccount.CapabilitiesAttributes](ca.ref.Append("capabilities"))
 }
 
 func (ca dataCosmosdbAccountAttributes) ConsistencyPolicy() terra.ListValue[datacosmosdbaccount.ConsistencyPolicyAttributes] {
-	return terra.ReferenceList[datacosmosdbaccount.ConsistencyPolicyAttributes](ca.ref.Append("consistency_policy"))
+	return terra.ReferenceAsList[datacosmosdbaccount.ConsistencyPolicyAttributes](ca.ref.Append("consistency_policy"))
 }
 
 func (ca dataCosmosdbAccountAttributes) GeoLocation() terra.ListValue[datacosmosdbaccount.GeoLocationAttributes] {
-	return terra.ReferenceList[datacosmosdbaccount.GeoLocationAttributes](ca.ref.Append("geo_location"))
+	return terra.ReferenceAsList[datacosmosdbaccount.GeoLocationAttributes](ca.ref.Append("geo_location"))
 }
 
 func (ca dataCosmosdbAccountAttributes) VirtualNetworkRule() terra.ListValue[datacosmosdbaccount.VirtualNetworkRuleAttributes] {
-	return terra.ReferenceList[datacosmosdbaccount.VirtualNetworkRuleAttributes](ca.ref.Append("virtual_network_rule"))
+	return terra.ReferenceAsList[datacosmosdbaccount.VirtualNetworkRuleAttributes](ca.ref.Append("virtual_network_rule"))
 }
 
 func (ca dataCosmosdbAccountAttributes) Timeouts() datacosmosdbaccount.TimeoutsAttributes {
-	return terra.ReferenceSingle[datacosmosdbaccount.TimeoutsAttributes](ca.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datacosmosdbaccount.TimeoutsAttributes](ca.ref.Append("timeouts"))
 }

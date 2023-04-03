@@ -54,144 +54,144 @@ type AppEngineRoutingOverrideAttributes struct {
 	ref terra.Reference
 }
 
-func (aero AppEngineRoutingOverrideAttributes) InternalRef() terra.Reference {
-	return aero.ref
+func (aero AppEngineRoutingOverrideAttributes) InternalRef() (terra.Reference, error) {
+	return aero.ref, nil
 }
 
 func (aero AppEngineRoutingOverrideAttributes) InternalWithRef(ref terra.Reference) AppEngineRoutingOverrideAttributes {
 	return AppEngineRoutingOverrideAttributes{ref: ref}
 }
 
-func (aero AppEngineRoutingOverrideAttributes) InternalTokens() hclwrite.Tokens {
+func (aero AppEngineRoutingOverrideAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aero.ref.InternalTokens()
 }
 
 func (aero AppEngineRoutingOverrideAttributes) Host() terra.StringValue {
-	return terra.ReferenceString(aero.ref.Append("host"))
+	return terra.ReferenceAsString(aero.ref.Append("host"))
 }
 
 func (aero AppEngineRoutingOverrideAttributes) Instance() terra.StringValue {
-	return terra.ReferenceString(aero.ref.Append("instance"))
+	return terra.ReferenceAsString(aero.ref.Append("instance"))
 }
 
 func (aero AppEngineRoutingOverrideAttributes) Service() terra.StringValue {
-	return terra.ReferenceString(aero.ref.Append("service"))
+	return terra.ReferenceAsString(aero.ref.Append("service"))
 }
 
 func (aero AppEngineRoutingOverrideAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(aero.ref.Append("version"))
+	return terra.ReferenceAsString(aero.ref.Append("version"))
 }
 
 type RateLimitsAttributes struct {
 	ref terra.Reference
 }
 
-func (rl RateLimitsAttributes) InternalRef() terra.Reference {
-	return rl.ref
+func (rl RateLimitsAttributes) InternalRef() (terra.Reference, error) {
+	return rl.ref, nil
 }
 
 func (rl RateLimitsAttributes) InternalWithRef(ref terra.Reference) RateLimitsAttributes {
 	return RateLimitsAttributes{ref: ref}
 }
 
-func (rl RateLimitsAttributes) InternalTokens() hclwrite.Tokens {
+func (rl RateLimitsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rl.ref.InternalTokens()
 }
 
 func (rl RateLimitsAttributes) MaxBurstSize() terra.NumberValue {
-	return terra.ReferenceNumber(rl.ref.Append("max_burst_size"))
+	return terra.ReferenceAsNumber(rl.ref.Append("max_burst_size"))
 }
 
 func (rl RateLimitsAttributes) MaxConcurrentDispatches() terra.NumberValue {
-	return terra.ReferenceNumber(rl.ref.Append("max_concurrent_dispatches"))
+	return terra.ReferenceAsNumber(rl.ref.Append("max_concurrent_dispatches"))
 }
 
 func (rl RateLimitsAttributes) MaxDispatchesPerSecond() terra.NumberValue {
-	return terra.ReferenceNumber(rl.ref.Append("max_dispatches_per_second"))
+	return terra.ReferenceAsNumber(rl.ref.Append("max_dispatches_per_second"))
 }
 
 type RetryConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (rc RetryConfigAttributes) InternalRef() terra.Reference {
-	return rc.ref
+func (rc RetryConfigAttributes) InternalRef() (terra.Reference, error) {
+	return rc.ref, nil
 }
 
 func (rc RetryConfigAttributes) InternalWithRef(ref terra.Reference) RetryConfigAttributes {
 	return RetryConfigAttributes{ref: ref}
 }
 
-func (rc RetryConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (rc RetryConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rc.ref.InternalTokens()
 }
 
 func (rc RetryConfigAttributes) MaxAttempts() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("max_attempts"))
+	return terra.ReferenceAsNumber(rc.ref.Append("max_attempts"))
 }
 
 func (rc RetryConfigAttributes) MaxBackoff() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("max_backoff"))
+	return terra.ReferenceAsString(rc.ref.Append("max_backoff"))
 }
 
 func (rc RetryConfigAttributes) MaxDoublings() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("max_doublings"))
+	return terra.ReferenceAsNumber(rc.ref.Append("max_doublings"))
 }
 
 func (rc RetryConfigAttributes) MaxRetryDuration() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("max_retry_duration"))
+	return terra.ReferenceAsString(rc.ref.Append("max_retry_duration"))
 }
 
 func (rc RetryConfigAttributes) MinBackoff() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("min_backoff"))
+	return terra.ReferenceAsString(rc.ref.Append("min_backoff"))
 }
 
 type StackdriverLoggingConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (slc StackdriverLoggingConfigAttributes) InternalRef() terra.Reference {
-	return slc.ref
+func (slc StackdriverLoggingConfigAttributes) InternalRef() (terra.Reference, error) {
+	return slc.ref, nil
 }
 
 func (slc StackdriverLoggingConfigAttributes) InternalWithRef(ref terra.Reference) StackdriverLoggingConfigAttributes {
 	return StackdriverLoggingConfigAttributes{ref: ref}
 }
 
-func (slc StackdriverLoggingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (slc StackdriverLoggingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return slc.ref.InternalTokens()
 }
 
 func (slc StackdriverLoggingConfigAttributes) SamplingRatio() terra.NumberValue {
-	return terra.ReferenceNumber(slc.ref.Append("sampling_ratio"))
+	return terra.ReferenceAsNumber(slc.ref.Append("sampling_ratio"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AppEngineRoutingOverrideState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMssqlServerDnsAlias creates a new instance of [MssqlServerDnsAlias].
 func NewMssqlServerDnsAlias(name string, args MssqlServerDnsAliasArgs) *MssqlServerDnsAlias {
 	return &MssqlServerDnsAlias{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMssqlServerDnsAlias(name string, args MssqlServerDnsAliasArgs) *MssqlSer
 
 var _ terra.Resource = (*MssqlServerDnsAlias)(nil)
 
+// MssqlServerDnsAlias represents the Terraform resource azurerm_mssql_server_dns_alias.
 type MssqlServerDnsAlias struct {
-	Name  string
-	Args  MssqlServerDnsAliasArgs
-	state *mssqlServerDnsAliasState
+	Name      string
+	Args      MssqlServerDnsAliasArgs
+	state     *mssqlServerDnsAliasState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MssqlServerDnsAlias].
 func (msda *MssqlServerDnsAlias) Type() string {
 	return "azurerm_mssql_server_dns_alias"
 }
 
+// LocalName returns the local name for [MssqlServerDnsAlias].
 func (msda *MssqlServerDnsAlias) LocalName() string {
 	return msda.Name
 }
 
+// Configuration returns the configuration (args) for [MssqlServerDnsAlias].
 func (msda *MssqlServerDnsAlias) Configuration() interface{} {
 	return msda.Args
 }
 
+// DependOn is used for other resources to depend on [MssqlServerDnsAlias].
+func (msda *MssqlServerDnsAlias) DependOn() terra.Reference {
+	return terra.ReferenceResource(msda)
+}
+
+// Dependencies returns the list of resources [MssqlServerDnsAlias] depends_on.
+func (msda *MssqlServerDnsAlias) Dependencies() terra.Dependencies {
+	return msda.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MssqlServerDnsAlias].
+func (msda *MssqlServerDnsAlias) LifecycleManagement() *terra.Lifecycle {
+	return msda.Lifecycle
+}
+
+// Attributes returns the attributes for [MssqlServerDnsAlias].
 func (msda *MssqlServerDnsAlias) Attributes() mssqlServerDnsAliasAttributes {
 	return mssqlServerDnsAliasAttributes{ref: terra.ReferenceResource(msda)}
 }
 
+// ImportState imports the given attribute values into [MssqlServerDnsAlias]'s state.
 func (msda *MssqlServerDnsAlias) ImportState(av io.Reader) error {
 	msda.state = &mssqlServerDnsAliasState{}
 	if err := json.NewDecoder(av).Decode(msda.state); err != nil {
@@ -49,10 +73,12 @@ func (msda *MssqlServerDnsAlias) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MssqlServerDnsAlias] has state.
 func (msda *MssqlServerDnsAlias) State() (*mssqlServerDnsAliasState, bool) {
 	return msda.state, msda.state != nil
 }
 
+// StateMust returns the state for [MssqlServerDnsAlias]. Panics if the state is nil.
 func (msda *MssqlServerDnsAlias) StateMust() *mssqlServerDnsAliasState {
 	if msda.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", msda.Type(), msda.LocalName()))
@@ -60,10 +86,7 @@ func (msda *MssqlServerDnsAlias) StateMust() *mssqlServerDnsAliasState {
 	return msda.state
 }
 
-func (msda *MssqlServerDnsAlias) DependOn() terra.Reference {
-	return terra.ReferenceResource(msda)
-}
-
+// MssqlServerDnsAliasArgs contains the configurations for azurerm_mssql_server_dns_alias.
 type MssqlServerDnsAliasArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -73,31 +96,33 @@ type MssqlServerDnsAliasArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *mssqlserverdnsalias.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MssqlServerDnsAlias depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mssqlServerDnsAliasAttributes struct {
 	ref terra.Reference
 }
 
+// DnsRecord returns a reference to field dns_record of azurerm_mssql_server_dns_alias.
 func (msda mssqlServerDnsAliasAttributes) DnsRecord() terra.StringValue {
-	return terra.ReferenceString(msda.ref.Append("dns_record"))
+	return terra.ReferenceAsString(msda.ref.Append("dns_record"))
 }
 
+// Id returns a reference to field id of azurerm_mssql_server_dns_alias.
 func (msda mssqlServerDnsAliasAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(msda.ref.Append("id"))
+	return terra.ReferenceAsString(msda.ref.Append("id"))
 }
 
+// MssqlServerId returns a reference to field mssql_server_id of azurerm_mssql_server_dns_alias.
 func (msda mssqlServerDnsAliasAttributes) MssqlServerId() terra.StringValue {
-	return terra.ReferenceString(msda.ref.Append("mssql_server_id"))
+	return terra.ReferenceAsString(msda.ref.Append("mssql_server_id"))
 }
 
+// Name returns a reference to field name of azurerm_mssql_server_dns_alias.
 func (msda mssqlServerDnsAliasAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(msda.ref.Append("name"))
+	return terra.ReferenceAsString(msda.ref.Append("name"))
 }
 
 func (msda mssqlServerDnsAliasAttributes) Timeouts() mssqlserverdnsalias.TimeoutsAttributes {
-	return terra.ReferenceSingle[mssqlserverdnsalias.TimeoutsAttributes](msda.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[mssqlserverdnsalias.TimeoutsAttributes](msda.ref.Append("timeouts"))
 }
 
 type mssqlServerDnsAliasState struct {

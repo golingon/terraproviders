@@ -76,7 +76,7 @@ func (hlac HumanLoopActivationConfigAttributes) InternalWithRef(ref terra.Refere
 	return HumanLoopActivationConfigAttributes{ref: ref}
 }
 
-func (hlac HumanLoopActivationConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (hlac HumanLoopActivationConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hlac.ref.InternalTokens()
 }
 
@@ -96,7 +96,7 @@ func (hlacc HumanLoopActivationConditionsConfigAttributes) InternalWithRef(ref t
 	return HumanLoopActivationConditionsConfigAttributes{ref: ref}
 }
 
-func (hlacc HumanLoopActivationConditionsConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (hlacc HumanLoopActivationConditionsConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hlacc.ref.InternalTokens()
 }
 
@@ -116,7 +116,7 @@ func (hlc HumanLoopConfigAttributes) InternalWithRef(ref terra.Reference) HumanL
 	return HumanLoopConfigAttributes{ref: ref}
 }
 
-func (hlc HumanLoopConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (hlc HumanLoopConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hlc.ref.InternalTokens()
 }
 
@@ -168,7 +168,7 @@ func (pwtp PublicWorkforceTaskPriceAttributes) InternalWithRef(ref terra.Referen
 	return PublicWorkforceTaskPriceAttributes{ref: ref}
 }
 
-func (pwtp PublicWorkforceTaskPriceAttributes) InternalTokens() hclwrite.Tokens {
+func (pwtp PublicWorkforceTaskPriceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pwtp.ref.InternalTokens()
 }
 
@@ -188,7 +188,7 @@ func (aiu AmountInUsdAttributes) InternalWithRef(ref terra.Reference) AmountInUs
 	return AmountInUsdAttributes{ref: ref}
 }
 
-func (aiu AmountInUsdAttributes) InternalTokens() hclwrite.Tokens {
+func (aiu AmountInUsdAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aiu.ref.InternalTokens()
 }
 
@@ -216,7 +216,7 @@ func (hlrs HumanLoopRequestSourceAttributes) InternalWithRef(ref terra.Reference
 	return HumanLoopRequestSourceAttributes{ref: ref}
 }
 
-func (hlrs HumanLoopRequestSourceAttributes) InternalTokens() hclwrite.Tokens {
+func (hlrs HumanLoopRequestSourceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hlrs.ref.InternalTokens()
 }
 
@@ -236,7 +236,7 @@ func (oc OutputConfigAttributes) InternalWithRef(ref terra.Reference) OutputConf
 	return OutputConfigAttributes{ref: ref}
 }
 
-func (oc OutputConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (oc OutputConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oc.ref.InternalTokens()
 }
 

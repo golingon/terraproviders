@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApiManagementApiDiagnostic creates a new instance of [ApiManagementApiDiagnostic].
 func NewApiManagementApiDiagnostic(name string, args ApiManagementApiDiagnosticArgs) *ApiManagementApiDiagnostic {
 	return &ApiManagementApiDiagnostic{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApiManagementApiDiagnostic(name string, args ApiManagementApiDiagnosticA
 
 var _ terra.Resource = (*ApiManagementApiDiagnostic)(nil)
 
+// ApiManagementApiDiagnostic represents the Terraform resource azurerm_api_management_api_diagnostic.
 type ApiManagementApiDiagnostic struct {
-	Name  string
-	Args  ApiManagementApiDiagnosticArgs
-	state *apiManagementApiDiagnosticState
+	Name      string
+	Args      ApiManagementApiDiagnosticArgs
+	state     *apiManagementApiDiagnosticState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiManagementApiDiagnostic].
 func (amad *ApiManagementApiDiagnostic) Type() string {
 	return "azurerm_api_management_api_diagnostic"
 }
 
+// LocalName returns the local name for [ApiManagementApiDiagnostic].
 func (amad *ApiManagementApiDiagnostic) LocalName() string {
 	return amad.Name
 }
 
+// Configuration returns the configuration (args) for [ApiManagementApiDiagnostic].
 func (amad *ApiManagementApiDiagnostic) Configuration() interface{} {
 	return amad.Args
 }
 
+// DependOn is used for other resources to depend on [ApiManagementApiDiagnostic].
+func (amad *ApiManagementApiDiagnostic) DependOn() terra.Reference {
+	return terra.ReferenceResource(amad)
+}
+
+// Dependencies returns the list of resources [ApiManagementApiDiagnostic] depends_on.
+func (amad *ApiManagementApiDiagnostic) Dependencies() terra.Dependencies {
+	return amad.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiManagementApiDiagnostic].
+func (amad *ApiManagementApiDiagnostic) LifecycleManagement() *terra.Lifecycle {
+	return amad.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiManagementApiDiagnostic].
 func (amad *ApiManagementApiDiagnostic) Attributes() apiManagementApiDiagnosticAttributes {
 	return apiManagementApiDiagnosticAttributes{ref: terra.ReferenceResource(amad)}
 }
 
+// ImportState imports the given attribute values into [ApiManagementApiDiagnostic]'s state.
 func (amad *ApiManagementApiDiagnostic) ImportState(av io.Reader) error {
 	amad.state = &apiManagementApiDiagnosticState{}
 	if err := json.NewDecoder(av).Decode(amad.state); err != nil {
@@ -49,10 +73,12 @@ func (amad *ApiManagementApiDiagnostic) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiManagementApiDiagnostic] has state.
 func (amad *ApiManagementApiDiagnostic) State() (*apiManagementApiDiagnosticState, bool) {
 	return amad.state, amad.state != nil
 }
 
+// StateMust returns the state for [ApiManagementApiDiagnostic]. Panics if the state is nil.
 func (amad *ApiManagementApiDiagnostic) StateMust() *apiManagementApiDiagnosticState {
 	if amad.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", amad.Type(), amad.LocalName()))
@@ -60,10 +86,7 @@ func (amad *ApiManagementApiDiagnostic) StateMust() *apiManagementApiDiagnosticS
 	return amad.state
 }
 
-func (amad *ApiManagementApiDiagnostic) DependOn() terra.Reference {
-	return terra.ReferenceResource(amad)
-}
-
+// ApiManagementApiDiagnosticArgs contains the configurations for azurerm_api_management_api_diagnostic.
 type ApiManagementApiDiagnosticArgs struct {
 	// AlwaysLogErrors: bool, optional
 	AlwaysLogErrors terra.BoolValue `hcl:"always_log_errors,attr"`
@@ -99,79 +122,89 @@ type ApiManagementApiDiagnosticArgs struct {
 	FrontendResponse *apimanagementapidiagnostic.FrontendResponse `hcl:"frontend_response,block"`
 	// Timeouts: optional
 	Timeouts *apimanagementapidiagnostic.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ApiManagementApiDiagnostic depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiManagementApiDiagnosticAttributes struct {
 	ref terra.Reference
 }
 
+// AlwaysLogErrors returns a reference to field always_log_errors of azurerm_api_management_api_diagnostic.
 func (amad apiManagementApiDiagnosticAttributes) AlwaysLogErrors() terra.BoolValue {
-	return terra.ReferenceBool(amad.ref.Append("always_log_errors"))
+	return terra.ReferenceAsBool(amad.ref.Append("always_log_errors"))
 }
 
+// ApiManagementLoggerId returns a reference to field api_management_logger_id of azurerm_api_management_api_diagnostic.
 func (amad apiManagementApiDiagnosticAttributes) ApiManagementLoggerId() terra.StringValue {
-	return terra.ReferenceString(amad.ref.Append("api_management_logger_id"))
+	return terra.ReferenceAsString(amad.ref.Append("api_management_logger_id"))
 }
 
+// ApiManagementName returns a reference to field api_management_name of azurerm_api_management_api_diagnostic.
 func (amad apiManagementApiDiagnosticAttributes) ApiManagementName() terra.StringValue {
-	return terra.ReferenceString(amad.ref.Append("api_management_name"))
+	return terra.ReferenceAsString(amad.ref.Append("api_management_name"))
 }
 
+// ApiName returns a reference to field api_name of azurerm_api_management_api_diagnostic.
 func (amad apiManagementApiDiagnosticAttributes) ApiName() terra.StringValue {
-	return terra.ReferenceString(amad.ref.Append("api_name"))
+	return terra.ReferenceAsString(amad.ref.Append("api_name"))
 }
 
+// HttpCorrelationProtocol returns a reference to field http_correlation_protocol of azurerm_api_management_api_diagnostic.
 func (amad apiManagementApiDiagnosticAttributes) HttpCorrelationProtocol() terra.StringValue {
-	return terra.ReferenceString(amad.ref.Append("http_correlation_protocol"))
+	return terra.ReferenceAsString(amad.ref.Append("http_correlation_protocol"))
 }
 
+// Id returns a reference to field id of azurerm_api_management_api_diagnostic.
 func (amad apiManagementApiDiagnosticAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(amad.ref.Append("id"))
+	return terra.ReferenceAsString(amad.ref.Append("id"))
 }
 
+// Identifier returns a reference to field identifier of azurerm_api_management_api_diagnostic.
 func (amad apiManagementApiDiagnosticAttributes) Identifier() terra.StringValue {
-	return terra.ReferenceString(amad.ref.Append("identifier"))
+	return terra.ReferenceAsString(amad.ref.Append("identifier"))
 }
 
+// LogClientIp returns a reference to field log_client_ip of azurerm_api_management_api_diagnostic.
 func (amad apiManagementApiDiagnosticAttributes) LogClientIp() terra.BoolValue {
-	return terra.ReferenceBool(amad.ref.Append("log_client_ip"))
+	return terra.ReferenceAsBool(amad.ref.Append("log_client_ip"))
 }
 
+// OperationNameFormat returns a reference to field operation_name_format of azurerm_api_management_api_diagnostic.
 func (amad apiManagementApiDiagnosticAttributes) OperationNameFormat() terra.StringValue {
-	return terra.ReferenceString(amad.ref.Append("operation_name_format"))
+	return terra.ReferenceAsString(amad.ref.Append("operation_name_format"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_api_management_api_diagnostic.
 func (amad apiManagementApiDiagnosticAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(amad.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(amad.ref.Append("resource_group_name"))
 }
 
+// SamplingPercentage returns a reference to field sampling_percentage of azurerm_api_management_api_diagnostic.
 func (amad apiManagementApiDiagnosticAttributes) SamplingPercentage() terra.NumberValue {
-	return terra.ReferenceNumber(amad.ref.Append("sampling_percentage"))
+	return terra.ReferenceAsNumber(amad.ref.Append("sampling_percentage"))
 }
 
+// Verbosity returns a reference to field verbosity of azurerm_api_management_api_diagnostic.
 func (amad apiManagementApiDiagnosticAttributes) Verbosity() terra.StringValue {
-	return terra.ReferenceString(amad.ref.Append("verbosity"))
+	return terra.ReferenceAsString(amad.ref.Append("verbosity"))
 }
 
 func (amad apiManagementApiDiagnosticAttributes) BackendRequest() terra.ListValue[apimanagementapidiagnostic.BackendRequestAttributes] {
-	return terra.ReferenceList[apimanagementapidiagnostic.BackendRequestAttributes](amad.ref.Append("backend_request"))
+	return terra.ReferenceAsList[apimanagementapidiagnostic.BackendRequestAttributes](amad.ref.Append("backend_request"))
 }
 
 func (amad apiManagementApiDiagnosticAttributes) BackendResponse() terra.ListValue[apimanagementapidiagnostic.BackendResponseAttributes] {
-	return terra.ReferenceList[apimanagementapidiagnostic.BackendResponseAttributes](amad.ref.Append("backend_response"))
+	return terra.ReferenceAsList[apimanagementapidiagnostic.BackendResponseAttributes](amad.ref.Append("backend_response"))
 }
 
 func (amad apiManagementApiDiagnosticAttributes) FrontendRequest() terra.ListValue[apimanagementapidiagnostic.FrontendRequestAttributes] {
-	return terra.ReferenceList[apimanagementapidiagnostic.FrontendRequestAttributes](amad.ref.Append("frontend_request"))
+	return terra.ReferenceAsList[apimanagementapidiagnostic.FrontendRequestAttributes](amad.ref.Append("frontend_request"))
 }
 
 func (amad apiManagementApiDiagnosticAttributes) FrontendResponse() terra.ListValue[apimanagementapidiagnostic.FrontendResponseAttributes] {
-	return terra.ReferenceList[apimanagementapidiagnostic.FrontendResponseAttributes](amad.ref.Append("frontend_response"))
+	return terra.ReferenceAsList[apimanagementapidiagnostic.FrontendResponseAttributes](amad.ref.Append("frontend_response"))
 }
 
 func (amad apiManagementApiDiagnosticAttributes) Timeouts() apimanagementapidiagnostic.TimeoutsAttributes {
-	return terra.ReferenceSingle[apimanagementapidiagnostic.TimeoutsAttributes](amad.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[apimanagementapidiagnostic.TimeoutsAttributes](amad.ref.Append("timeouts"))
 }
 
 type apiManagementApiDiagnosticState struct {

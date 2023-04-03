@@ -29,56 +29,56 @@ type LineChannelAttributes struct {
 	ref terra.Reference
 }
 
-func (lc LineChannelAttributes) InternalRef() terra.Reference {
-	return lc.ref
+func (lc LineChannelAttributes) InternalRef() (terra.Reference, error) {
+	return lc.ref, nil
 }
 
 func (lc LineChannelAttributes) InternalWithRef(ref terra.Reference) LineChannelAttributes {
 	return LineChannelAttributes{ref: ref}
 }
 
-func (lc LineChannelAttributes) InternalTokens() hclwrite.Tokens {
+func (lc LineChannelAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lc.ref.InternalTokens()
 }
 
 func (lc LineChannelAttributes) AccessToken() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("access_token"))
+	return terra.ReferenceAsString(lc.ref.Append("access_token"))
 }
 
 func (lc LineChannelAttributes) Secret() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("secret"))
+	return terra.ReferenceAsString(lc.ref.Append("secret"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type LineChannelState struct {

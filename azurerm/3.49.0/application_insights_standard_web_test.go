@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApplicationInsightsStandardWebTest creates a new instance of [ApplicationInsightsStandardWebTest].
 func NewApplicationInsightsStandardWebTest(name string, args ApplicationInsightsStandardWebTestArgs) *ApplicationInsightsStandardWebTest {
 	return &ApplicationInsightsStandardWebTest{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApplicationInsightsStandardWebTest(name string, args ApplicationInsights
 
 var _ terra.Resource = (*ApplicationInsightsStandardWebTest)(nil)
 
+// ApplicationInsightsStandardWebTest represents the Terraform resource azurerm_application_insights_standard_web_test.
 type ApplicationInsightsStandardWebTest struct {
-	Name  string
-	Args  ApplicationInsightsStandardWebTestArgs
-	state *applicationInsightsStandardWebTestState
+	Name      string
+	Args      ApplicationInsightsStandardWebTestArgs
+	state     *applicationInsightsStandardWebTestState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApplicationInsightsStandardWebTest].
 func (aiswt *ApplicationInsightsStandardWebTest) Type() string {
 	return "azurerm_application_insights_standard_web_test"
 }
 
+// LocalName returns the local name for [ApplicationInsightsStandardWebTest].
 func (aiswt *ApplicationInsightsStandardWebTest) LocalName() string {
 	return aiswt.Name
 }
 
+// Configuration returns the configuration (args) for [ApplicationInsightsStandardWebTest].
 func (aiswt *ApplicationInsightsStandardWebTest) Configuration() interface{} {
 	return aiswt.Args
 }
 
+// DependOn is used for other resources to depend on [ApplicationInsightsStandardWebTest].
+func (aiswt *ApplicationInsightsStandardWebTest) DependOn() terra.Reference {
+	return terra.ReferenceResource(aiswt)
+}
+
+// Dependencies returns the list of resources [ApplicationInsightsStandardWebTest] depends_on.
+func (aiswt *ApplicationInsightsStandardWebTest) Dependencies() terra.Dependencies {
+	return aiswt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApplicationInsightsStandardWebTest].
+func (aiswt *ApplicationInsightsStandardWebTest) LifecycleManagement() *terra.Lifecycle {
+	return aiswt.Lifecycle
+}
+
+// Attributes returns the attributes for [ApplicationInsightsStandardWebTest].
 func (aiswt *ApplicationInsightsStandardWebTest) Attributes() applicationInsightsStandardWebTestAttributes {
 	return applicationInsightsStandardWebTestAttributes{ref: terra.ReferenceResource(aiswt)}
 }
 
+// ImportState imports the given attribute values into [ApplicationInsightsStandardWebTest]'s state.
 func (aiswt *ApplicationInsightsStandardWebTest) ImportState(av io.Reader) error {
 	aiswt.state = &applicationInsightsStandardWebTestState{}
 	if err := json.NewDecoder(av).Decode(aiswt.state); err != nil {
@@ -49,10 +73,12 @@ func (aiswt *ApplicationInsightsStandardWebTest) ImportState(av io.Reader) error
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApplicationInsightsStandardWebTest] has state.
 func (aiswt *ApplicationInsightsStandardWebTest) State() (*applicationInsightsStandardWebTestState, bool) {
 	return aiswt.state, aiswt.state != nil
 }
 
+// StateMust returns the state for [ApplicationInsightsStandardWebTest]. Panics if the state is nil.
 func (aiswt *ApplicationInsightsStandardWebTest) StateMust() *applicationInsightsStandardWebTestState {
 	if aiswt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", aiswt.Type(), aiswt.LocalName()))
@@ -60,10 +86,7 @@ func (aiswt *ApplicationInsightsStandardWebTest) StateMust() *applicationInsight
 	return aiswt.state
 }
 
-func (aiswt *ApplicationInsightsStandardWebTest) DependOn() terra.Reference {
-	return terra.ReferenceResource(aiswt)
-}
-
+// ApplicationInsightsStandardWebTestArgs contains the configurations for azurerm_application_insights_standard_web_test.
 type ApplicationInsightsStandardWebTestArgs struct {
 	// ApplicationInsightsId: string, required
 	ApplicationInsightsId terra.StringValue `hcl:"application_insights_id,attr" validate:"required"`
@@ -95,75 +118,86 @@ type ApplicationInsightsStandardWebTestArgs struct {
 	Timeouts *applicationinsightsstandardwebtest.Timeouts `hcl:"timeouts,block"`
 	// ValidationRules: optional
 	ValidationRules *applicationinsightsstandardwebtest.ValidationRules `hcl:"validation_rules,block"`
-	// DependsOn contains resources that ApplicationInsightsStandardWebTest depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type applicationInsightsStandardWebTestAttributes struct {
 	ref terra.Reference
 }
 
+// ApplicationInsightsId returns a reference to field application_insights_id of azurerm_application_insights_standard_web_test.
 func (aiswt applicationInsightsStandardWebTestAttributes) ApplicationInsightsId() terra.StringValue {
-	return terra.ReferenceString(aiswt.ref.Append("application_insights_id"))
+	return terra.ReferenceAsString(aiswt.ref.Append("application_insights_id"))
 }
 
+// Description returns a reference to field description of azurerm_application_insights_standard_web_test.
 func (aiswt applicationInsightsStandardWebTestAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(aiswt.ref.Append("description"))
+	return terra.ReferenceAsString(aiswt.ref.Append("description"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_application_insights_standard_web_test.
 func (aiswt applicationInsightsStandardWebTestAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(aiswt.ref.Append("enabled"))
+	return terra.ReferenceAsBool(aiswt.ref.Append("enabled"))
 }
 
+// Frequency returns a reference to field frequency of azurerm_application_insights_standard_web_test.
 func (aiswt applicationInsightsStandardWebTestAttributes) Frequency() terra.NumberValue {
-	return terra.ReferenceNumber(aiswt.ref.Append("frequency"))
+	return terra.ReferenceAsNumber(aiswt.ref.Append("frequency"))
 }
 
+// GeoLocations returns a reference to field geo_locations of azurerm_application_insights_standard_web_test.
 func (aiswt applicationInsightsStandardWebTestAttributes) GeoLocations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](aiswt.ref.Append("geo_locations"))
+	return terra.ReferenceAsList[terra.StringValue](aiswt.ref.Append("geo_locations"))
 }
 
+// Id returns a reference to field id of azurerm_application_insights_standard_web_test.
 func (aiswt applicationInsightsStandardWebTestAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(aiswt.ref.Append("id"))
+	return terra.ReferenceAsString(aiswt.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_application_insights_standard_web_test.
 func (aiswt applicationInsightsStandardWebTestAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(aiswt.ref.Append("location"))
+	return terra.ReferenceAsString(aiswt.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_application_insights_standard_web_test.
 func (aiswt applicationInsightsStandardWebTestAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(aiswt.ref.Append("name"))
+	return terra.ReferenceAsString(aiswt.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_application_insights_standard_web_test.
 func (aiswt applicationInsightsStandardWebTestAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(aiswt.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(aiswt.ref.Append("resource_group_name"))
 }
 
+// RetryEnabled returns a reference to field retry_enabled of azurerm_application_insights_standard_web_test.
 func (aiswt applicationInsightsStandardWebTestAttributes) RetryEnabled() terra.BoolValue {
-	return terra.ReferenceBool(aiswt.ref.Append("retry_enabled"))
+	return terra.ReferenceAsBool(aiswt.ref.Append("retry_enabled"))
 }
 
+// SyntheticMonitorId returns a reference to field synthetic_monitor_id of azurerm_application_insights_standard_web_test.
 func (aiswt applicationInsightsStandardWebTestAttributes) SyntheticMonitorId() terra.StringValue {
-	return terra.ReferenceString(aiswt.ref.Append("synthetic_monitor_id"))
+	return terra.ReferenceAsString(aiswt.ref.Append("synthetic_monitor_id"))
 }
 
+// Tags returns a reference to field tags of azurerm_application_insights_standard_web_test.
 func (aiswt applicationInsightsStandardWebTestAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](aiswt.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](aiswt.ref.Append("tags"))
 }
 
+// Timeout returns a reference to field timeout of azurerm_application_insights_standard_web_test.
 func (aiswt applicationInsightsStandardWebTestAttributes) Timeout() terra.NumberValue {
-	return terra.ReferenceNumber(aiswt.ref.Append("timeout"))
+	return terra.ReferenceAsNumber(aiswt.ref.Append("timeout"))
 }
 
 func (aiswt applicationInsightsStandardWebTestAttributes) Request() terra.ListValue[applicationinsightsstandardwebtest.RequestAttributes] {
-	return terra.ReferenceList[applicationinsightsstandardwebtest.RequestAttributes](aiswt.ref.Append("request"))
+	return terra.ReferenceAsList[applicationinsightsstandardwebtest.RequestAttributes](aiswt.ref.Append("request"))
 }
 
 func (aiswt applicationInsightsStandardWebTestAttributes) Timeouts() applicationinsightsstandardwebtest.TimeoutsAttributes {
-	return terra.ReferenceSingle[applicationinsightsstandardwebtest.TimeoutsAttributes](aiswt.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[applicationinsightsstandardwebtest.TimeoutsAttributes](aiswt.ref.Append("timeouts"))
 }
 
 func (aiswt applicationInsightsStandardWebTestAttributes) ValidationRules() terra.ListValue[applicationinsightsstandardwebtest.ValidationRulesAttributes] {
-	return terra.ReferenceList[applicationinsightsstandardwebtest.ValidationRulesAttributes](aiswt.ref.Append("validation_rules"))
+	return terra.ReferenceAsList[applicationinsightsstandardwebtest.ValidationRulesAttributes](aiswt.ref.Append("validation_rules"))
 }
 
 type applicationInsightsStandardWebTestState struct {

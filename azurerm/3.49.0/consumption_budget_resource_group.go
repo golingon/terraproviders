@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewConsumptionBudgetResourceGroup creates a new instance of [ConsumptionBudgetResourceGroup].
 func NewConsumptionBudgetResourceGroup(name string, args ConsumptionBudgetResourceGroupArgs) *ConsumptionBudgetResourceGroup {
 	return &ConsumptionBudgetResourceGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewConsumptionBudgetResourceGroup(name string, args ConsumptionBudgetResour
 
 var _ terra.Resource = (*ConsumptionBudgetResourceGroup)(nil)
 
+// ConsumptionBudgetResourceGroup represents the Terraform resource azurerm_consumption_budget_resource_group.
 type ConsumptionBudgetResourceGroup struct {
-	Name  string
-	Args  ConsumptionBudgetResourceGroupArgs
-	state *consumptionBudgetResourceGroupState
+	Name      string
+	Args      ConsumptionBudgetResourceGroupArgs
+	state     *consumptionBudgetResourceGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ConsumptionBudgetResourceGroup].
 func (cbrg *ConsumptionBudgetResourceGroup) Type() string {
 	return "azurerm_consumption_budget_resource_group"
 }
 
+// LocalName returns the local name for [ConsumptionBudgetResourceGroup].
 func (cbrg *ConsumptionBudgetResourceGroup) LocalName() string {
 	return cbrg.Name
 }
 
+// Configuration returns the configuration (args) for [ConsumptionBudgetResourceGroup].
 func (cbrg *ConsumptionBudgetResourceGroup) Configuration() interface{} {
 	return cbrg.Args
 }
 
+// DependOn is used for other resources to depend on [ConsumptionBudgetResourceGroup].
+func (cbrg *ConsumptionBudgetResourceGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(cbrg)
+}
+
+// Dependencies returns the list of resources [ConsumptionBudgetResourceGroup] depends_on.
+func (cbrg *ConsumptionBudgetResourceGroup) Dependencies() terra.Dependencies {
+	return cbrg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ConsumptionBudgetResourceGroup].
+func (cbrg *ConsumptionBudgetResourceGroup) LifecycleManagement() *terra.Lifecycle {
+	return cbrg.Lifecycle
+}
+
+// Attributes returns the attributes for [ConsumptionBudgetResourceGroup].
 func (cbrg *ConsumptionBudgetResourceGroup) Attributes() consumptionBudgetResourceGroupAttributes {
 	return consumptionBudgetResourceGroupAttributes{ref: terra.ReferenceResource(cbrg)}
 }
 
+// ImportState imports the given attribute values into [ConsumptionBudgetResourceGroup]'s state.
 func (cbrg *ConsumptionBudgetResourceGroup) ImportState(av io.Reader) error {
 	cbrg.state = &consumptionBudgetResourceGroupState{}
 	if err := json.NewDecoder(av).Decode(cbrg.state); err != nil {
@@ -49,10 +73,12 @@ func (cbrg *ConsumptionBudgetResourceGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ConsumptionBudgetResourceGroup] has state.
 func (cbrg *ConsumptionBudgetResourceGroup) State() (*consumptionBudgetResourceGroupState, bool) {
 	return cbrg.state, cbrg.state != nil
 }
 
+// StateMust returns the state for [ConsumptionBudgetResourceGroup]. Panics if the state is nil.
 func (cbrg *ConsumptionBudgetResourceGroup) StateMust() *consumptionBudgetResourceGroupState {
 	if cbrg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cbrg.Type(), cbrg.LocalName()))
@@ -60,10 +86,7 @@ func (cbrg *ConsumptionBudgetResourceGroup) StateMust() *consumptionBudgetResour
 	return cbrg.state
 }
 
-func (cbrg *ConsumptionBudgetResourceGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(cbrg)
-}
-
+// ConsumptionBudgetResourceGroupArgs contains the configurations for azurerm_consumption_budget_resource_group.
 type ConsumptionBudgetResourceGroupArgs struct {
 	// Amount: number, required
 	Amount terra.NumberValue `hcl:"amount,attr" validate:"required"`
@@ -85,51 +108,55 @@ type ConsumptionBudgetResourceGroupArgs struct {
 	TimePeriod *consumptionbudgetresourcegroup.TimePeriod `hcl:"time_period,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *consumptionbudgetresourcegroup.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ConsumptionBudgetResourceGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type consumptionBudgetResourceGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Amount returns a reference to field amount of azurerm_consumption_budget_resource_group.
 func (cbrg consumptionBudgetResourceGroupAttributes) Amount() terra.NumberValue {
-	return terra.ReferenceNumber(cbrg.ref.Append("amount"))
+	return terra.ReferenceAsNumber(cbrg.ref.Append("amount"))
 }
 
+// Etag returns a reference to field etag of azurerm_consumption_budget_resource_group.
 func (cbrg consumptionBudgetResourceGroupAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(cbrg.ref.Append("etag"))
+	return terra.ReferenceAsString(cbrg.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of azurerm_consumption_budget_resource_group.
 func (cbrg consumptionBudgetResourceGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cbrg.ref.Append("id"))
+	return terra.ReferenceAsString(cbrg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_consumption_budget_resource_group.
 func (cbrg consumptionBudgetResourceGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cbrg.ref.Append("name"))
+	return terra.ReferenceAsString(cbrg.ref.Append("name"))
 }
 
+// ResourceGroupId returns a reference to field resource_group_id of azurerm_consumption_budget_resource_group.
 func (cbrg consumptionBudgetResourceGroupAttributes) ResourceGroupId() terra.StringValue {
-	return terra.ReferenceString(cbrg.ref.Append("resource_group_id"))
+	return terra.ReferenceAsString(cbrg.ref.Append("resource_group_id"))
 }
 
+// TimeGrain returns a reference to field time_grain of azurerm_consumption_budget_resource_group.
 func (cbrg consumptionBudgetResourceGroupAttributes) TimeGrain() terra.StringValue {
-	return terra.ReferenceString(cbrg.ref.Append("time_grain"))
+	return terra.ReferenceAsString(cbrg.ref.Append("time_grain"))
 }
 
 func (cbrg consumptionBudgetResourceGroupAttributes) Filter() terra.ListValue[consumptionbudgetresourcegroup.FilterAttributes] {
-	return terra.ReferenceList[consumptionbudgetresourcegroup.FilterAttributes](cbrg.ref.Append("filter"))
+	return terra.ReferenceAsList[consumptionbudgetresourcegroup.FilterAttributes](cbrg.ref.Append("filter"))
 }
 
 func (cbrg consumptionBudgetResourceGroupAttributes) Notification() terra.SetValue[consumptionbudgetresourcegroup.NotificationAttributes] {
-	return terra.ReferenceSet[consumptionbudgetresourcegroup.NotificationAttributes](cbrg.ref.Append("notification"))
+	return terra.ReferenceAsSet[consumptionbudgetresourcegroup.NotificationAttributes](cbrg.ref.Append("notification"))
 }
 
 func (cbrg consumptionBudgetResourceGroupAttributes) TimePeriod() terra.ListValue[consumptionbudgetresourcegroup.TimePeriodAttributes] {
-	return terra.ReferenceList[consumptionbudgetresourcegroup.TimePeriodAttributes](cbrg.ref.Append("time_period"))
+	return terra.ReferenceAsList[consumptionbudgetresourcegroup.TimePeriodAttributes](cbrg.ref.Append("time_period"))
 }
 
 func (cbrg consumptionBudgetResourceGroupAttributes) Timeouts() consumptionbudgetresourcegroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[consumptionbudgetresourcegroup.TimeoutsAttributes](cbrg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[consumptionbudgetresourcegroup.TimeoutsAttributes](cbrg.ref.Append("timeouts"))
 }
 
 type consumptionBudgetResourceGroupState struct {

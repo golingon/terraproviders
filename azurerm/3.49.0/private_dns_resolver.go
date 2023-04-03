@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewPrivateDnsResolver creates a new instance of [PrivateDnsResolver].
 func NewPrivateDnsResolver(name string, args PrivateDnsResolverArgs) *PrivateDnsResolver {
 	return &PrivateDnsResolver{
 		Args: args,
@@ -19,28 +20,51 @@ func NewPrivateDnsResolver(name string, args PrivateDnsResolverArgs) *PrivateDns
 
 var _ terra.Resource = (*PrivateDnsResolver)(nil)
 
+// PrivateDnsResolver represents the Terraform resource azurerm_private_dns_resolver.
 type PrivateDnsResolver struct {
-	Name  string
-	Args  PrivateDnsResolverArgs
-	state *privateDnsResolverState
+	Name      string
+	Args      PrivateDnsResolverArgs
+	state     *privateDnsResolverState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PrivateDnsResolver].
 func (pdr *PrivateDnsResolver) Type() string {
 	return "azurerm_private_dns_resolver"
 }
 
+// LocalName returns the local name for [PrivateDnsResolver].
 func (pdr *PrivateDnsResolver) LocalName() string {
 	return pdr.Name
 }
 
+// Configuration returns the configuration (args) for [PrivateDnsResolver].
 func (pdr *PrivateDnsResolver) Configuration() interface{} {
 	return pdr.Args
 }
 
+// DependOn is used for other resources to depend on [PrivateDnsResolver].
+func (pdr *PrivateDnsResolver) DependOn() terra.Reference {
+	return terra.ReferenceResource(pdr)
+}
+
+// Dependencies returns the list of resources [PrivateDnsResolver] depends_on.
+func (pdr *PrivateDnsResolver) Dependencies() terra.Dependencies {
+	return pdr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PrivateDnsResolver].
+func (pdr *PrivateDnsResolver) LifecycleManagement() *terra.Lifecycle {
+	return pdr.Lifecycle
+}
+
+// Attributes returns the attributes for [PrivateDnsResolver].
 func (pdr *PrivateDnsResolver) Attributes() privateDnsResolverAttributes {
 	return privateDnsResolverAttributes{ref: terra.ReferenceResource(pdr)}
 }
 
+// ImportState imports the given attribute values into [PrivateDnsResolver]'s state.
 func (pdr *PrivateDnsResolver) ImportState(av io.Reader) error {
 	pdr.state = &privateDnsResolverState{}
 	if err := json.NewDecoder(av).Decode(pdr.state); err != nil {
@@ -49,10 +73,12 @@ func (pdr *PrivateDnsResolver) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PrivateDnsResolver] has state.
 func (pdr *PrivateDnsResolver) State() (*privateDnsResolverState, bool) {
 	return pdr.state, pdr.state != nil
 }
 
+// StateMust returns the state for [PrivateDnsResolver]. Panics if the state is nil.
 func (pdr *PrivateDnsResolver) StateMust() *privateDnsResolverState {
 	if pdr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pdr.Type(), pdr.LocalName()))
@@ -60,10 +86,7 @@ func (pdr *PrivateDnsResolver) StateMust() *privateDnsResolverState {
 	return pdr.state
 }
 
-func (pdr *PrivateDnsResolver) DependOn() terra.Reference {
-	return terra.ReferenceResource(pdr)
-}
-
+// PrivateDnsResolverArgs contains the configurations for azurerm_private_dns_resolver.
 type PrivateDnsResolverArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,39 +102,43 @@ type PrivateDnsResolverArgs struct {
 	VirtualNetworkId terra.StringValue `hcl:"virtual_network_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *privatednsresolver.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that PrivateDnsResolver depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type privateDnsResolverAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_private_dns_resolver.
 func (pdr privateDnsResolverAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pdr.ref.Append("id"))
+	return terra.ReferenceAsString(pdr.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_private_dns_resolver.
 func (pdr privateDnsResolverAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(pdr.ref.Append("location"))
+	return terra.ReferenceAsString(pdr.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_private_dns_resolver.
 func (pdr privateDnsResolverAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pdr.ref.Append("name"))
+	return terra.ReferenceAsString(pdr.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_private_dns_resolver.
 func (pdr privateDnsResolverAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(pdr.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(pdr.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_private_dns_resolver.
 func (pdr privateDnsResolverAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](pdr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](pdr.ref.Append("tags"))
 }
 
+// VirtualNetworkId returns a reference to field virtual_network_id of azurerm_private_dns_resolver.
 func (pdr privateDnsResolverAttributes) VirtualNetworkId() terra.StringValue {
-	return terra.ReferenceString(pdr.ref.Append("virtual_network_id"))
+	return terra.ReferenceAsString(pdr.ref.Append("virtual_network_id"))
 }
 
 func (pdr privateDnsResolverAttributes) Timeouts() privatednsresolver.TimeoutsAttributes {
-	return terra.ReferenceSingle[privatednsresolver.TimeoutsAttributes](pdr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[privatednsresolver.TimeoutsAttributes](pdr.ref.Append("timeouts"))
 }
 
 type privateDnsResolverState struct {

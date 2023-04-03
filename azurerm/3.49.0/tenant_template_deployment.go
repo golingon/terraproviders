@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewTenantTemplateDeployment creates a new instance of [TenantTemplateDeployment].
 func NewTenantTemplateDeployment(name string, args TenantTemplateDeploymentArgs) *TenantTemplateDeployment {
 	return &TenantTemplateDeployment{
 		Args: args,
@@ -19,28 +20,51 @@ func NewTenantTemplateDeployment(name string, args TenantTemplateDeploymentArgs)
 
 var _ terra.Resource = (*TenantTemplateDeployment)(nil)
 
+// TenantTemplateDeployment represents the Terraform resource azurerm_tenant_template_deployment.
 type TenantTemplateDeployment struct {
-	Name  string
-	Args  TenantTemplateDeploymentArgs
-	state *tenantTemplateDeploymentState
+	Name      string
+	Args      TenantTemplateDeploymentArgs
+	state     *tenantTemplateDeploymentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [TenantTemplateDeployment].
 func (ttd *TenantTemplateDeployment) Type() string {
 	return "azurerm_tenant_template_deployment"
 }
 
+// LocalName returns the local name for [TenantTemplateDeployment].
 func (ttd *TenantTemplateDeployment) LocalName() string {
 	return ttd.Name
 }
 
+// Configuration returns the configuration (args) for [TenantTemplateDeployment].
 func (ttd *TenantTemplateDeployment) Configuration() interface{} {
 	return ttd.Args
 }
 
+// DependOn is used for other resources to depend on [TenantTemplateDeployment].
+func (ttd *TenantTemplateDeployment) DependOn() terra.Reference {
+	return terra.ReferenceResource(ttd)
+}
+
+// Dependencies returns the list of resources [TenantTemplateDeployment] depends_on.
+func (ttd *TenantTemplateDeployment) Dependencies() terra.Dependencies {
+	return ttd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [TenantTemplateDeployment].
+func (ttd *TenantTemplateDeployment) LifecycleManagement() *terra.Lifecycle {
+	return ttd.Lifecycle
+}
+
+// Attributes returns the attributes for [TenantTemplateDeployment].
 func (ttd *TenantTemplateDeployment) Attributes() tenantTemplateDeploymentAttributes {
 	return tenantTemplateDeploymentAttributes{ref: terra.ReferenceResource(ttd)}
 }
 
+// ImportState imports the given attribute values into [TenantTemplateDeployment]'s state.
 func (ttd *TenantTemplateDeployment) ImportState(av io.Reader) error {
 	ttd.state = &tenantTemplateDeploymentState{}
 	if err := json.NewDecoder(av).Decode(ttd.state); err != nil {
@@ -49,10 +73,12 @@ func (ttd *TenantTemplateDeployment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [TenantTemplateDeployment] has state.
 func (ttd *TenantTemplateDeployment) State() (*tenantTemplateDeploymentState, bool) {
 	return ttd.state, ttd.state != nil
 }
 
+// StateMust returns the state for [TenantTemplateDeployment]. Panics if the state is nil.
 func (ttd *TenantTemplateDeployment) StateMust() *tenantTemplateDeploymentState {
 	if ttd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ttd.Type(), ttd.LocalName()))
@@ -60,10 +86,7 @@ func (ttd *TenantTemplateDeployment) StateMust() *tenantTemplateDeploymentState 
 	return ttd.state
 }
 
-func (ttd *TenantTemplateDeployment) DependOn() terra.Reference {
-	return terra.ReferenceResource(ttd)
-}
-
+// TenantTemplateDeploymentArgs contains the configurations for azurerm_tenant_template_deployment.
 type TenantTemplateDeploymentArgs struct {
 	// DebugLevel: string, optional
 	DebugLevel terra.StringValue `hcl:"debug_level,attr"`
@@ -83,51 +106,58 @@ type TenantTemplateDeploymentArgs struct {
 	TemplateSpecVersionId terra.StringValue `hcl:"template_spec_version_id,attr"`
 	// Timeouts: optional
 	Timeouts *tenanttemplatedeployment.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that TenantTemplateDeployment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type tenantTemplateDeploymentAttributes struct {
 	ref terra.Reference
 }
 
+// DebugLevel returns a reference to field debug_level of azurerm_tenant_template_deployment.
 func (ttd tenantTemplateDeploymentAttributes) DebugLevel() terra.StringValue {
-	return terra.ReferenceString(ttd.ref.Append("debug_level"))
+	return terra.ReferenceAsString(ttd.ref.Append("debug_level"))
 }
 
+// Id returns a reference to field id of azurerm_tenant_template_deployment.
 func (ttd tenantTemplateDeploymentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ttd.ref.Append("id"))
+	return terra.ReferenceAsString(ttd.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_tenant_template_deployment.
 func (ttd tenantTemplateDeploymentAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ttd.ref.Append("location"))
+	return terra.ReferenceAsString(ttd.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_tenant_template_deployment.
 func (ttd tenantTemplateDeploymentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ttd.ref.Append("name"))
+	return terra.ReferenceAsString(ttd.ref.Append("name"))
 }
 
+// OutputContent returns a reference to field output_content of azurerm_tenant_template_deployment.
 func (ttd tenantTemplateDeploymentAttributes) OutputContent() terra.StringValue {
-	return terra.ReferenceString(ttd.ref.Append("output_content"))
+	return terra.ReferenceAsString(ttd.ref.Append("output_content"))
 }
 
+// ParametersContent returns a reference to field parameters_content of azurerm_tenant_template_deployment.
 func (ttd tenantTemplateDeploymentAttributes) ParametersContent() terra.StringValue {
-	return terra.ReferenceString(ttd.ref.Append("parameters_content"))
+	return terra.ReferenceAsString(ttd.ref.Append("parameters_content"))
 }
 
+// Tags returns a reference to field tags of azurerm_tenant_template_deployment.
 func (ttd tenantTemplateDeploymentAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ttd.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ttd.ref.Append("tags"))
 }
 
+// TemplateContent returns a reference to field template_content of azurerm_tenant_template_deployment.
 func (ttd tenantTemplateDeploymentAttributes) TemplateContent() terra.StringValue {
-	return terra.ReferenceString(ttd.ref.Append("template_content"))
+	return terra.ReferenceAsString(ttd.ref.Append("template_content"))
 }
 
+// TemplateSpecVersionId returns a reference to field template_spec_version_id of azurerm_tenant_template_deployment.
 func (ttd tenantTemplateDeploymentAttributes) TemplateSpecVersionId() terra.StringValue {
-	return terra.ReferenceString(ttd.ref.Append("template_spec_version_id"))
+	return terra.ReferenceAsString(ttd.ref.Append("template_spec_version_id"))
 }
 
 func (ttd tenantTemplateDeploymentAttributes) Timeouts() tenanttemplatedeployment.TimeoutsAttributes {
-	return terra.ReferenceSingle[tenanttemplatedeployment.TimeoutsAttributes](ttd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[tenanttemplatedeployment.TimeoutsAttributes](ttd.ref.Append("timeouts"))
 }
 
 type tenantTemplateDeploymentState struct {

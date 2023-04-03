@@ -31,112 +31,112 @@ type AttestationAttributes struct {
 	ref terra.Reference
 }
 
-func (a AttestationAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AttestationAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AttestationAttributes) InternalWithRef(ref terra.Reference) AttestationAttributes {
 	return AttestationAttributes{ref: ref}
 }
 
-func (a AttestationAttributes) InternalTokens() hclwrite.Tokens {
+func (a AttestationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a AttestationAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("content"))
+	return terra.ReferenceAsString(a.ref.Append("content"))
 }
 
 func (a AttestationAttributes) Format() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("format"))
+	return terra.ReferenceAsString(a.ref.Append("format"))
 }
 
 func (a AttestationAttributes) CertChains() terra.ListValue[CertChainsAttributes] {
-	return terra.ReferenceList[CertChainsAttributes](a.ref.Append("cert_chains"))
+	return terra.ReferenceAsList[CertChainsAttributes](a.ref.Append("cert_chains"))
 }
 
 func (a AttestationAttributes) ExternalProtectionLevelOptions() terra.ListValue[ExternalProtectionLevelOptionsAttributes] {
-	return terra.ReferenceList[ExternalProtectionLevelOptionsAttributes](a.ref.Append("external_protection_level_options"))
+	return terra.ReferenceAsList[ExternalProtectionLevelOptionsAttributes](a.ref.Append("external_protection_level_options"))
 }
 
 type CertChainsAttributes struct {
 	ref terra.Reference
 }
 
-func (cc CertChainsAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc CertChainsAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc CertChainsAttributes) InternalWithRef(ref terra.Reference) CertChainsAttributes {
 	return CertChainsAttributes{ref: ref}
 }
 
-func (cc CertChainsAttributes) InternalTokens() hclwrite.Tokens {
+func (cc CertChainsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
 func (cc CertChainsAttributes) CaviumCerts() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("cavium_certs"))
+	return terra.ReferenceAsString(cc.ref.Append("cavium_certs"))
 }
 
 func (cc CertChainsAttributes) GoogleCardCerts() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("google_card_certs"))
+	return terra.ReferenceAsString(cc.ref.Append("google_card_certs"))
 }
 
 func (cc CertChainsAttributes) GooglePartitionCerts() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("google_partition_certs"))
+	return terra.ReferenceAsString(cc.ref.Append("google_partition_certs"))
 }
 
 type ExternalProtectionLevelOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (eplo ExternalProtectionLevelOptionsAttributes) InternalRef() terra.Reference {
-	return eplo.ref
+func (eplo ExternalProtectionLevelOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return eplo.ref, nil
 }
 
 func (eplo ExternalProtectionLevelOptionsAttributes) InternalWithRef(ref terra.Reference) ExternalProtectionLevelOptionsAttributes {
 	return ExternalProtectionLevelOptionsAttributes{ref: ref}
 }
 
-func (eplo ExternalProtectionLevelOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (eplo ExternalProtectionLevelOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return eplo.ref.InternalTokens()
 }
 
 func (eplo ExternalProtectionLevelOptionsAttributes) EkmConnectionKeyPath() terra.StringValue {
-	return terra.ReferenceString(eplo.ref.Append("ekm_connection_key_path"))
+	return terra.ReferenceAsString(eplo.ref.Append("ekm_connection_key_path"))
 }
 
 func (eplo ExternalProtectionLevelOptionsAttributes) ExternalKeyUri() terra.StringValue {
-	return terra.ReferenceString(eplo.ref.Append("external_key_uri"))
+	return terra.ReferenceAsString(eplo.ref.Append("external_key_uri"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AttestationState struct {

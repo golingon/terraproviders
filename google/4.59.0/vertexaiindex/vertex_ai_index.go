@@ -62,151 +62,151 @@ type DeployedIndexesAttributes struct {
 	ref terra.Reference
 }
 
-func (di DeployedIndexesAttributes) InternalRef() terra.Reference {
-	return di.ref
+func (di DeployedIndexesAttributes) InternalRef() (terra.Reference, error) {
+	return di.ref, nil
 }
 
 func (di DeployedIndexesAttributes) InternalWithRef(ref terra.Reference) DeployedIndexesAttributes {
 	return DeployedIndexesAttributes{ref: ref}
 }
 
-func (di DeployedIndexesAttributes) InternalTokens() hclwrite.Tokens {
+func (di DeployedIndexesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return di.ref.InternalTokens()
 }
 
 func (di DeployedIndexesAttributes) DeployedIndexId() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("deployed_index_id"))
+	return terra.ReferenceAsString(di.ref.Append("deployed_index_id"))
 }
 
 func (di DeployedIndexesAttributes) IndexEndpoint() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("index_endpoint"))
+	return terra.ReferenceAsString(di.ref.Append("index_endpoint"))
 }
 
 type IndexStatsAttributes struct {
 	ref terra.Reference
 }
 
-func (is IndexStatsAttributes) InternalRef() terra.Reference {
-	return is.ref
+func (is IndexStatsAttributes) InternalRef() (terra.Reference, error) {
+	return is.ref, nil
 }
 
 func (is IndexStatsAttributes) InternalWithRef(ref terra.Reference) IndexStatsAttributes {
 	return IndexStatsAttributes{ref: ref}
 }
 
-func (is IndexStatsAttributes) InternalTokens() hclwrite.Tokens {
+func (is IndexStatsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return is.ref.InternalTokens()
 }
 
 func (is IndexStatsAttributes) ShardsCount() terra.NumberValue {
-	return terra.ReferenceNumber(is.ref.Append("shards_count"))
+	return terra.ReferenceAsNumber(is.ref.Append("shards_count"))
 }
 
 func (is IndexStatsAttributes) VectorsCount() terra.StringValue {
-	return terra.ReferenceString(is.ref.Append("vectors_count"))
+	return terra.ReferenceAsString(is.ref.Append("vectors_count"))
 }
 
 type MetadataAttributes struct {
 	ref terra.Reference
 }
 
-func (m MetadataAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MetadataAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MetadataAttributes) InternalWithRef(ref terra.Reference) MetadataAttributes {
 	return MetadataAttributes{ref: ref}
 }
 
-func (m MetadataAttributes) InternalTokens() hclwrite.Tokens {
+func (m MetadataAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
 func (m MetadataAttributes) ContentsDeltaUri() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("contents_delta_uri"))
+	return terra.ReferenceAsString(m.ref.Append("contents_delta_uri"))
 }
 
 func (m MetadataAttributes) IsCompleteOverwrite() terra.BoolValue {
-	return terra.ReferenceBool(m.ref.Append("is_complete_overwrite"))
+	return terra.ReferenceAsBool(m.ref.Append("is_complete_overwrite"))
 }
 
 func (m MetadataAttributes) Config() terra.ListValue[ConfigAttributes] {
-	return terra.ReferenceList[ConfigAttributes](m.ref.Append("config"))
+	return terra.ReferenceAsList[ConfigAttributes](m.ref.Append("config"))
 }
 
 type ConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConfigAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConfigAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConfigAttributes) InternalWithRef(ref terra.Reference) ConfigAttributes {
 	return ConfigAttributes{ref: ref}
 }
 
-func (c ConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ConfigAttributes) ApproximateNeighborsCount() terra.NumberValue {
-	return terra.ReferenceNumber(c.ref.Append("approximate_neighbors_count"))
+	return terra.ReferenceAsNumber(c.ref.Append("approximate_neighbors_count"))
 }
 
 func (c ConfigAttributes) Dimensions() terra.NumberValue {
-	return terra.ReferenceNumber(c.ref.Append("dimensions"))
+	return terra.ReferenceAsNumber(c.ref.Append("dimensions"))
 }
 
 func (c ConfigAttributes) DistanceMeasureType() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("distance_measure_type"))
+	return terra.ReferenceAsString(c.ref.Append("distance_measure_type"))
 }
 
 func (c ConfigAttributes) FeatureNormType() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("feature_norm_type"))
+	return terra.ReferenceAsString(c.ref.Append("feature_norm_type"))
 }
 
 func (c ConfigAttributes) AlgorithmConfig() terra.ListValue[AlgorithmConfigAttributes] {
-	return terra.ReferenceList[AlgorithmConfigAttributes](c.ref.Append("algorithm_config"))
+	return terra.ReferenceAsList[AlgorithmConfigAttributes](c.ref.Append("algorithm_config"))
 }
 
 type AlgorithmConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ac AlgorithmConfigAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac AlgorithmConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac AlgorithmConfigAttributes) InternalWithRef(ref terra.Reference) AlgorithmConfigAttributes {
 	return AlgorithmConfigAttributes{ref: ref}
 }
 
-func (ac AlgorithmConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ac AlgorithmConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
 func (ac AlgorithmConfigAttributes) BruteForceConfig() terra.ListValue[BruteForceConfigAttributes] {
-	return terra.ReferenceList[BruteForceConfigAttributes](ac.ref.Append("brute_force_config"))
+	return terra.ReferenceAsList[BruteForceConfigAttributes](ac.ref.Append("brute_force_config"))
 }
 
 func (ac AlgorithmConfigAttributes) TreeAhConfig() terra.ListValue[TreeAhConfigAttributes] {
-	return terra.ReferenceList[TreeAhConfigAttributes](ac.ref.Append("tree_ah_config"))
+	return terra.ReferenceAsList[TreeAhConfigAttributes](ac.ref.Append("tree_ah_config"))
 }
 
 type BruteForceConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (bfc BruteForceConfigAttributes) InternalRef() terra.Reference {
-	return bfc.ref
+func (bfc BruteForceConfigAttributes) InternalRef() (terra.Reference, error) {
+	return bfc.ref, nil
 }
 
 func (bfc BruteForceConfigAttributes) InternalWithRef(ref terra.Reference) BruteForceConfigAttributes {
 	return BruteForceConfigAttributes{ref: ref}
 }
 
-func (bfc BruteForceConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (bfc BruteForceConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bfc.ref.InternalTokens()
 }
 
@@ -214,52 +214,52 @@ type TreeAhConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (tac TreeAhConfigAttributes) InternalRef() terra.Reference {
-	return tac.ref
+func (tac TreeAhConfigAttributes) InternalRef() (terra.Reference, error) {
+	return tac.ref, nil
 }
 
 func (tac TreeAhConfigAttributes) InternalWithRef(ref terra.Reference) TreeAhConfigAttributes {
 	return TreeAhConfigAttributes{ref: ref}
 }
 
-func (tac TreeAhConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (tac TreeAhConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tac.ref.InternalTokens()
 }
 
 func (tac TreeAhConfigAttributes) LeafNodeEmbeddingCount() terra.NumberValue {
-	return terra.ReferenceNumber(tac.ref.Append("leaf_node_embedding_count"))
+	return terra.ReferenceAsNumber(tac.ref.Append("leaf_node_embedding_count"))
 }
 
 func (tac TreeAhConfigAttributes) LeafNodesToSearchPercent() terra.NumberValue {
-	return terra.ReferenceNumber(tac.ref.Append("leaf_nodes_to_search_percent"))
+	return terra.ReferenceAsNumber(tac.ref.Append("leaf_nodes_to_search_percent"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type DeployedIndexesState struct {

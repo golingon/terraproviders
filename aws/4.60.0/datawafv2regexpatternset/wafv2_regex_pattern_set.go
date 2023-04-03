@@ -21,7 +21,7 @@ func (re RegularExpressionAttributes) InternalWithRef(ref terra.Reference) Regul
 	return RegularExpressionAttributes{ref: ref}
 }
 
-func (re RegularExpressionAttributes) InternalTokens() hclwrite.Tokens {
+func (re RegularExpressionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return re.ref.InternalTokens()
 }
 

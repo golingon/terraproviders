@@ -27,112 +27,112 @@ type InboundIpRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (iir InboundIpRuleAttributes) InternalRef() terra.Reference {
-	return iir.ref
+func (iir InboundIpRuleAttributes) InternalRef() (terra.Reference, error) {
+	return iir.ref, nil
 }
 
 func (iir InboundIpRuleAttributes) InternalWithRef(ref terra.Reference) InboundIpRuleAttributes {
 	return InboundIpRuleAttributes{ref: ref}
 }
 
-func (iir InboundIpRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (iir InboundIpRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return iir.ref.InternalTokens()
 }
 
 func (iir InboundIpRuleAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(iir.ref.Append("action"))
+	return terra.ReferenceAsString(iir.ref.Append("action"))
 }
 
 func (iir InboundIpRuleAttributes) IpMask() terra.StringValue {
-	return terra.ReferenceString(iir.ref.Append("ip_mask"))
+	return terra.ReferenceAsString(iir.ref.Append("ip_mask"))
 }
 
 type InputMappingDefaultValuesAttributes struct {
 	ref terra.Reference
 }
 
-func (imdv InputMappingDefaultValuesAttributes) InternalRef() terra.Reference {
-	return imdv.ref
+func (imdv InputMappingDefaultValuesAttributes) InternalRef() (terra.Reference, error) {
+	return imdv.ref, nil
 }
 
 func (imdv InputMappingDefaultValuesAttributes) InternalWithRef(ref terra.Reference) InputMappingDefaultValuesAttributes {
 	return InputMappingDefaultValuesAttributes{ref: ref}
 }
 
-func (imdv InputMappingDefaultValuesAttributes) InternalTokens() hclwrite.Tokens {
+func (imdv InputMappingDefaultValuesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return imdv.ref.InternalTokens()
 }
 
 func (imdv InputMappingDefaultValuesAttributes) DataVersion() terra.StringValue {
-	return terra.ReferenceString(imdv.ref.Append("data_version"))
+	return terra.ReferenceAsString(imdv.ref.Append("data_version"))
 }
 
 func (imdv InputMappingDefaultValuesAttributes) EventType() terra.StringValue {
-	return terra.ReferenceString(imdv.ref.Append("event_type"))
+	return terra.ReferenceAsString(imdv.ref.Append("event_type"))
 }
 
 func (imdv InputMappingDefaultValuesAttributes) Subject() terra.StringValue {
-	return terra.ReferenceString(imdv.ref.Append("subject"))
+	return terra.ReferenceAsString(imdv.ref.Append("subject"))
 }
 
 type InputMappingFieldsAttributes struct {
 	ref terra.Reference
 }
 
-func (imf InputMappingFieldsAttributes) InternalRef() terra.Reference {
-	return imf.ref
+func (imf InputMappingFieldsAttributes) InternalRef() (terra.Reference, error) {
+	return imf.ref, nil
 }
 
 func (imf InputMappingFieldsAttributes) InternalWithRef(ref terra.Reference) InputMappingFieldsAttributes {
 	return InputMappingFieldsAttributes{ref: ref}
 }
 
-func (imf InputMappingFieldsAttributes) InternalTokens() hclwrite.Tokens {
+func (imf InputMappingFieldsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return imf.ref.InternalTokens()
 }
 
 func (imf InputMappingFieldsAttributes) DataVersion() terra.StringValue {
-	return terra.ReferenceString(imf.ref.Append("data_version"))
+	return terra.ReferenceAsString(imf.ref.Append("data_version"))
 }
 
 func (imf InputMappingFieldsAttributes) EventTime() terra.StringValue {
-	return terra.ReferenceString(imf.ref.Append("event_time"))
+	return terra.ReferenceAsString(imf.ref.Append("event_time"))
 }
 
 func (imf InputMappingFieldsAttributes) EventType() terra.StringValue {
-	return terra.ReferenceString(imf.ref.Append("event_type"))
+	return terra.ReferenceAsString(imf.ref.Append("event_type"))
 }
 
 func (imf InputMappingFieldsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(imf.ref.Append("id"))
+	return terra.ReferenceAsString(imf.ref.Append("id"))
 }
 
 func (imf InputMappingFieldsAttributes) Subject() terra.StringValue {
-	return terra.ReferenceString(imf.ref.Append("subject"))
+	return terra.ReferenceAsString(imf.ref.Append("subject"))
 }
 
 func (imf InputMappingFieldsAttributes) Topic() terra.StringValue {
-	return terra.ReferenceString(imf.ref.Append("topic"))
+	return terra.ReferenceAsString(imf.ref.Append("topic"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type InboundIpRuleState struct {

@@ -48,132 +48,132 @@ type MatchAttributes struct {
 	ref terra.Reference
 }
 
-func (m MatchAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MatchAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MatchAttributes) InternalWithRef(ref terra.Reference) MatchAttributes {
 	return MatchAttributes{ref: ref}
 }
 
-func (m MatchAttributes) InternalTokens() hclwrite.Tokens {
+func (m MatchAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
 func (m MatchAttributes) DestIpRanges() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](m.ref.Append("dest_ip_ranges"))
+	return terra.ReferenceAsList[terra.StringValue](m.ref.Append("dest_ip_ranges"))
 }
 
 func (m MatchAttributes) SrcIpRanges() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](m.ref.Append("src_ip_ranges"))
+	return terra.ReferenceAsList[terra.StringValue](m.ref.Append("src_ip_ranges"))
 }
 
 func (m MatchAttributes) Layer4Configs() terra.ListValue[Layer4ConfigsAttributes] {
-	return terra.ReferenceList[Layer4ConfigsAttributes](m.ref.Append("layer4_configs"))
+	return terra.ReferenceAsList[Layer4ConfigsAttributes](m.ref.Append("layer4_configs"))
 }
 
 func (m MatchAttributes) SrcSecureTags() terra.ListValue[SrcSecureTagsAttributes] {
-	return terra.ReferenceList[SrcSecureTagsAttributes](m.ref.Append("src_secure_tags"))
+	return terra.ReferenceAsList[SrcSecureTagsAttributes](m.ref.Append("src_secure_tags"))
 }
 
 type Layer4ConfigsAttributes struct {
 	ref terra.Reference
 }
 
-func (lc Layer4ConfigsAttributes) InternalRef() terra.Reference {
-	return lc.ref
+func (lc Layer4ConfigsAttributes) InternalRef() (terra.Reference, error) {
+	return lc.ref, nil
 }
 
 func (lc Layer4ConfigsAttributes) InternalWithRef(ref terra.Reference) Layer4ConfigsAttributes {
 	return Layer4ConfigsAttributes{ref: ref}
 }
 
-func (lc Layer4ConfigsAttributes) InternalTokens() hclwrite.Tokens {
+func (lc Layer4ConfigsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lc.ref.InternalTokens()
 }
 
 func (lc Layer4ConfigsAttributes) IpProtocol() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("ip_protocol"))
+	return terra.ReferenceAsString(lc.ref.Append("ip_protocol"))
 }
 
 func (lc Layer4ConfigsAttributes) Ports() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lc.ref.Append("ports"))
+	return terra.ReferenceAsList[terra.StringValue](lc.ref.Append("ports"))
 }
 
 type SrcSecureTagsAttributes struct {
 	ref terra.Reference
 }
 
-func (sst SrcSecureTagsAttributes) InternalRef() terra.Reference {
-	return sst.ref
+func (sst SrcSecureTagsAttributes) InternalRef() (terra.Reference, error) {
+	return sst.ref, nil
 }
 
 func (sst SrcSecureTagsAttributes) InternalWithRef(ref terra.Reference) SrcSecureTagsAttributes {
 	return SrcSecureTagsAttributes{ref: ref}
 }
 
-func (sst SrcSecureTagsAttributes) InternalTokens() hclwrite.Tokens {
+func (sst SrcSecureTagsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sst.ref.InternalTokens()
 }
 
 func (sst SrcSecureTagsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sst.ref.Append("name"))
+	return terra.ReferenceAsString(sst.ref.Append("name"))
 }
 
 func (sst SrcSecureTagsAttributes) State() terra.StringValue {
-	return terra.ReferenceString(sst.ref.Append("state"))
+	return terra.ReferenceAsString(sst.ref.Append("state"))
 }
 
 type TargetSecureTagsAttributes struct {
 	ref terra.Reference
 }
 
-func (tst TargetSecureTagsAttributes) InternalRef() terra.Reference {
-	return tst.ref
+func (tst TargetSecureTagsAttributes) InternalRef() (terra.Reference, error) {
+	return tst.ref, nil
 }
 
 func (tst TargetSecureTagsAttributes) InternalWithRef(ref terra.Reference) TargetSecureTagsAttributes {
 	return TargetSecureTagsAttributes{ref: ref}
 }
 
-func (tst TargetSecureTagsAttributes) InternalTokens() hclwrite.Tokens {
+func (tst TargetSecureTagsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tst.ref.InternalTokens()
 }
 
 func (tst TargetSecureTagsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(tst.ref.Append("name"))
+	return terra.ReferenceAsString(tst.ref.Append("name"))
 }
 
 func (tst TargetSecureTagsAttributes) State() terra.StringValue {
-	return terra.ReferenceString(tst.ref.Append("state"))
+	return terra.ReferenceAsString(tst.ref.Append("state"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type MatchState struct {

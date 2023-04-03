@@ -57,7 +57,7 @@ func (hs HierarchyStructureAttributes) InternalWithRef(ref terra.Reference) Hier
 	return HierarchyStructureAttributes{ref: ref}
 }
 
-func (hs HierarchyStructureAttributes) InternalTokens() hclwrite.Tokens {
+func (hs HierarchyStructureAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hs.ref.InternalTokens()
 }
 
@@ -93,7 +93,7 @@ func (lf LevelFiveAttributes) InternalWithRef(ref terra.Reference) LevelFiveAttr
 	return LevelFiveAttributes{ref: ref}
 }
 
-func (lf LevelFiveAttributes) InternalTokens() hclwrite.Tokens {
+func (lf LevelFiveAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lf.ref.InternalTokens()
 }
 
@@ -121,7 +121,7 @@ func (lf LevelFourAttributes) InternalWithRef(ref terra.Reference) LevelFourAttr
 	return LevelFourAttributes{ref: ref}
 }
 
-func (lf LevelFourAttributes) InternalTokens() hclwrite.Tokens {
+func (lf LevelFourAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lf.ref.InternalTokens()
 }
 
@@ -149,7 +149,7 @@ func (lo LevelOneAttributes) InternalWithRef(ref terra.Reference) LevelOneAttrib
 	return LevelOneAttributes{ref: ref}
 }
 
-func (lo LevelOneAttributes) InternalTokens() hclwrite.Tokens {
+func (lo LevelOneAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lo.ref.InternalTokens()
 }
 
@@ -177,7 +177,7 @@ func (lt LevelThreeAttributes) InternalWithRef(ref terra.Reference) LevelThreeAt
 	return LevelThreeAttributes{ref: ref}
 }
 
-func (lt LevelThreeAttributes) InternalTokens() hclwrite.Tokens {
+func (lt LevelThreeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lt.ref.InternalTokens()
 }
 
@@ -205,7 +205,7 @@ func (lt LevelTwoAttributes) InternalWithRef(ref terra.Reference) LevelTwoAttrib
 	return LevelTwoAttributes{ref: ref}
 }
 
-func (lt LevelTwoAttributes) InternalTokens() hclwrite.Tokens {
+func (lt LevelTwoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lt.ref.InternalTokens()
 }
 

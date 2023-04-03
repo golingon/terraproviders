@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeInstanceFromTemplate creates a new instance of [ComputeInstanceFromTemplate].
 func NewComputeInstanceFromTemplate(name string, args ComputeInstanceFromTemplateArgs) *ComputeInstanceFromTemplate {
 	return &ComputeInstanceFromTemplate{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeInstanceFromTemplate(name string, args ComputeInstanceFromTemplat
 
 var _ terra.Resource = (*ComputeInstanceFromTemplate)(nil)
 
+// ComputeInstanceFromTemplate represents the Terraform resource google_compute_instance_from_template.
 type ComputeInstanceFromTemplate struct {
-	Name  string
-	Args  ComputeInstanceFromTemplateArgs
-	state *computeInstanceFromTemplateState
+	Name      string
+	Args      ComputeInstanceFromTemplateArgs
+	state     *computeInstanceFromTemplateState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeInstanceFromTemplate].
 func (cift *ComputeInstanceFromTemplate) Type() string {
 	return "google_compute_instance_from_template"
 }
 
+// LocalName returns the local name for [ComputeInstanceFromTemplate].
 func (cift *ComputeInstanceFromTemplate) LocalName() string {
 	return cift.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeInstanceFromTemplate].
 func (cift *ComputeInstanceFromTemplate) Configuration() interface{} {
 	return cift.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeInstanceFromTemplate].
+func (cift *ComputeInstanceFromTemplate) DependOn() terra.Reference {
+	return terra.ReferenceResource(cift)
+}
+
+// Dependencies returns the list of resources [ComputeInstanceFromTemplate] depends_on.
+func (cift *ComputeInstanceFromTemplate) Dependencies() terra.Dependencies {
+	return cift.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeInstanceFromTemplate].
+func (cift *ComputeInstanceFromTemplate) LifecycleManagement() *terra.Lifecycle {
+	return cift.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeInstanceFromTemplate].
 func (cift *ComputeInstanceFromTemplate) Attributes() computeInstanceFromTemplateAttributes {
 	return computeInstanceFromTemplateAttributes{ref: terra.ReferenceResource(cift)}
 }
 
+// ImportState imports the given attribute values into [ComputeInstanceFromTemplate]'s state.
 func (cift *ComputeInstanceFromTemplate) ImportState(av io.Reader) error {
 	cift.state = &computeInstanceFromTemplateState{}
 	if err := json.NewDecoder(av).Decode(cift.state); err != nil {
@@ -49,10 +73,12 @@ func (cift *ComputeInstanceFromTemplate) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeInstanceFromTemplate] has state.
 func (cift *ComputeInstanceFromTemplate) State() (*computeInstanceFromTemplateState, bool) {
 	return cift.state, cift.state != nil
 }
 
+// StateMust returns the state for [ComputeInstanceFromTemplate]. Panics if the state is nil.
 func (cift *ComputeInstanceFromTemplate) StateMust() *computeInstanceFromTemplateState {
 	if cift.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cift.Type(), cift.LocalName()))
@@ -60,10 +86,7 @@ func (cift *ComputeInstanceFromTemplate) StateMust() *computeInstanceFromTemplat
 	return cift.state
 }
 
-func (cift *ComputeInstanceFromTemplate) DependOn() terra.Reference {
-	return terra.ReferenceResource(cift)
-}
-
+// ComputeInstanceFromTemplateArgs contains the configurations for google_compute_instance_from_template.
 type ComputeInstanceFromTemplateArgs struct {
 	// AllowStoppingForUpdate: bool, optional
 	AllowStoppingForUpdate terra.BoolValue `hcl:"allow_stopping_for_update,attr"`
@@ -127,163 +150,187 @@ type ComputeInstanceFromTemplateArgs struct {
 	ShieldedInstanceConfig *computeinstancefromtemplate.ShieldedInstanceConfig `hcl:"shielded_instance_config,block"`
 	// Timeouts: optional
 	Timeouts *computeinstancefromtemplate.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeInstanceFromTemplate depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeInstanceFromTemplateAttributes struct {
 	ref terra.Reference
 }
 
+// AllowStoppingForUpdate returns a reference to field allow_stopping_for_update of google_compute_instance_from_template.
 func (cift computeInstanceFromTemplateAttributes) AllowStoppingForUpdate() terra.BoolValue {
-	return terra.ReferenceBool(cift.ref.Append("allow_stopping_for_update"))
+	return terra.ReferenceAsBool(cift.ref.Append("allow_stopping_for_update"))
 }
 
+// CanIpForward returns a reference to field can_ip_forward of google_compute_instance_from_template.
 func (cift computeInstanceFromTemplateAttributes) CanIpForward() terra.BoolValue {
-	return terra.ReferenceBool(cift.ref.Append("can_ip_forward"))
+	return terra.ReferenceAsBool(cift.ref.Append("can_ip_forward"))
 }
 
+// CpuPlatform returns a reference to field cpu_platform of google_compute_instance_from_template.
 func (cift computeInstanceFromTemplateAttributes) CpuPlatform() terra.StringValue {
-	return terra.ReferenceString(cift.ref.Append("cpu_platform"))
+	return terra.ReferenceAsString(cift.ref.Append("cpu_platform"))
 }
 
+// CurrentStatus returns a reference to field current_status of google_compute_instance_from_template.
 func (cift computeInstanceFromTemplateAttributes) CurrentStatus() terra.StringValue {
-	return terra.ReferenceString(cift.ref.Append("current_status"))
+	return terra.ReferenceAsString(cift.ref.Append("current_status"))
 }
 
+// DeletionProtection returns a reference to field deletion_protection of google_compute_instance_from_template.
 func (cift computeInstanceFromTemplateAttributes) DeletionProtection() terra.BoolValue {
-	return terra.ReferenceBool(cift.ref.Append("deletion_protection"))
+	return terra.ReferenceAsBool(cift.ref.Append("deletion_protection"))
 }
 
+// Description returns a reference to field description of google_compute_instance_from_template.
 func (cift computeInstanceFromTemplateAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cift.ref.Append("description"))
+	return terra.ReferenceAsString(cift.ref.Append("description"))
 }
 
+// DesiredStatus returns a reference to field desired_status of google_compute_instance_from_template.
 func (cift computeInstanceFromTemplateAttributes) DesiredStatus() terra.StringValue {
-	return terra.ReferenceString(cift.ref.Append("desired_status"))
+	return terra.ReferenceAsString(cift.ref.Append("desired_status"))
 }
 
+// EnableDisplay returns a reference to field enable_display of google_compute_instance_from_template.
 func (cift computeInstanceFromTemplateAttributes) EnableDisplay() terra.BoolValue {
-	return terra.ReferenceBool(cift.ref.Append("enable_display"))
+	return terra.ReferenceAsBool(cift.ref.Append("enable_display"))
 }
 
+// Hostname returns a reference to field hostname of google_compute_instance_from_template.
 func (cift computeInstanceFromTemplateAttributes) Hostname() terra.StringValue {
-	return terra.ReferenceString(cift.ref.Append("hostname"))
+	return terra.ReferenceAsString(cift.ref.Append("hostname"))
 }
 
+// Id returns a reference to field id of google_compute_instance_from_template.
 func (cift computeInstanceFromTemplateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cift.ref.Append("id"))
+	return terra.ReferenceAsString(cift.ref.Append("id"))
 }
 
+// InstanceId returns a reference to field instance_id of google_compute_instance_from_template.
 func (cift computeInstanceFromTemplateAttributes) InstanceId() terra.StringValue {
-	return terra.ReferenceString(cift.ref.Append("instance_id"))
+	return terra.ReferenceAsString(cift.ref.Append("instance_id"))
 }
 
+// LabelFingerprint returns a reference to field label_fingerprint of google_compute_instance_from_template.
 func (cift computeInstanceFromTemplateAttributes) LabelFingerprint() terra.StringValue {
-	return terra.ReferenceString(cift.ref.Append("label_fingerprint"))
+	return terra.ReferenceAsString(cift.ref.Append("label_fingerprint"))
 }
 
+// Labels returns a reference to field labels of google_compute_instance_from_template.
 func (cift computeInstanceFromTemplateAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cift.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](cift.ref.Append("labels"))
 }
 
+// MachineType returns a reference to field machine_type of google_compute_instance_from_template.
 func (cift computeInstanceFromTemplateAttributes) MachineType() terra.StringValue {
-	return terra.ReferenceString(cift.ref.Append("machine_type"))
+	return terra.ReferenceAsString(cift.ref.Append("machine_type"))
 }
 
+// Metadata returns a reference to field metadata of google_compute_instance_from_template.
 func (cift computeInstanceFromTemplateAttributes) Metadata() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cift.ref.Append("metadata"))
+	return terra.ReferenceAsMap[terra.StringValue](cift.ref.Append("metadata"))
 }
 
+// MetadataFingerprint returns a reference to field metadata_fingerprint of google_compute_instance_from_template.
 func (cift computeInstanceFromTemplateAttributes) MetadataFingerprint() terra.StringValue {
-	return terra.ReferenceString(cift.ref.Append("metadata_fingerprint"))
+	return terra.ReferenceAsString(cift.ref.Append("metadata_fingerprint"))
 }
 
+// MetadataStartupScript returns a reference to field metadata_startup_script of google_compute_instance_from_template.
 func (cift computeInstanceFromTemplateAttributes) MetadataStartupScript() terra.StringValue {
-	return terra.ReferenceString(cift.ref.Append("metadata_startup_script"))
+	return terra.ReferenceAsString(cift.ref.Append("metadata_startup_script"))
 }
 
+// MinCpuPlatform returns a reference to field min_cpu_platform of google_compute_instance_from_template.
 func (cift computeInstanceFromTemplateAttributes) MinCpuPlatform() terra.StringValue {
-	return terra.ReferenceString(cift.ref.Append("min_cpu_platform"))
+	return terra.ReferenceAsString(cift.ref.Append("min_cpu_platform"))
 }
 
+// Name returns a reference to field name of google_compute_instance_from_template.
 func (cift computeInstanceFromTemplateAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cift.ref.Append("name"))
+	return terra.ReferenceAsString(cift.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_compute_instance_from_template.
 func (cift computeInstanceFromTemplateAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cift.ref.Append("project"))
+	return terra.ReferenceAsString(cift.ref.Append("project"))
 }
 
+// ResourcePolicies returns a reference to field resource_policies of google_compute_instance_from_template.
 func (cift computeInstanceFromTemplateAttributes) ResourcePolicies() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cift.ref.Append("resource_policies"))
+	return terra.ReferenceAsList[terra.StringValue](cift.ref.Append("resource_policies"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_instance_from_template.
 func (cift computeInstanceFromTemplateAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(cift.ref.Append("self_link"))
+	return terra.ReferenceAsString(cift.ref.Append("self_link"))
 }
 
+// SourceInstanceTemplate returns a reference to field source_instance_template of google_compute_instance_from_template.
 func (cift computeInstanceFromTemplateAttributes) SourceInstanceTemplate() terra.StringValue {
-	return terra.ReferenceString(cift.ref.Append("source_instance_template"))
+	return terra.ReferenceAsString(cift.ref.Append("source_instance_template"))
 }
 
+// Tags returns a reference to field tags of google_compute_instance_from_template.
 func (cift computeInstanceFromTemplateAttributes) Tags() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cift.ref.Append("tags"))
+	return terra.ReferenceAsSet[terra.StringValue](cift.ref.Append("tags"))
 }
 
+// TagsFingerprint returns a reference to field tags_fingerprint of google_compute_instance_from_template.
 func (cift computeInstanceFromTemplateAttributes) TagsFingerprint() terra.StringValue {
-	return terra.ReferenceString(cift.ref.Append("tags_fingerprint"))
+	return terra.ReferenceAsString(cift.ref.Append("tags_fingerprint"))
 }
 
+// Zone returns a reference to field zone of google_compute_instance_from_template.
 func (cift computeInstanceFromTemplateAttributes) Zone() terra.StringValue {
-	return terra.ReferenceString(cift.ref.Append("zone"))
+	return terra.ReferenceAsString(cift.ref.Append("zone"))
 }
 
 func (cift computeInstanceFromTemplateAttributes) AttachedDisk() terra.ListValue[computeinstancefromtemplate.AttachedDiskAttributes] {
-	return terra.ReferenceList[computeinstancefromtemplate.AttachedDiskAttributes](cift.ref.Append("attached_disk"))
+	return terra.ReferenceAsList[computeinstancefromtemplate.AttachedDiskAttributes](cift.ref.Append("attached_disk"))
 }
 
 func (cift computeInstanceFromTemplateAttributes) GuestAccelerator() terra.ListValue[computeinstancefromtemplate.GuestAcceleratorAttributes] {
-	return terra.ReferenceList[computeinstancefromtemplate.GuestAcceleratorAttributes](cift.ref.Append("guest_accelerator"))
+	return terra.ReferenceAsList[computeinstancefromtemplate.GuestAcceleratorAttributes](cift.ref.Append("guest_accelerator"))
 }
 
 func (cift computeInstanceFromTemplateAttributes) ScratchDisk() terra.ListValue[computeinstancefromtemplate.ScratchDiskAttributes] {
-	return terra.ReferenceList[computeinstancefromtemplate.ScratchDiskAttributes](cift.ref.Append("scratch_disk"))
+	return terra.ReferenceAsList[computeinstancefromtemplate.ScratchDiskAttributes](cift.ref.Append("scratch_disk"))
 }
 
 func (cift computeInstanceFromTemplateAttributes) ServiceAccount() terra.ListValue[computeinstancefromtemplate.ServiceAccountAttributes] {
-	return terra.ReferenceList[computeinstancefromtemplate.ServiceAccountAttributes](cift.ref.Append("service_account"))
+	return terra.ReferenceAsList[computeinstancefromtemplate.ServiceAccountAttributes](cift.ref.Append("service_account"))
 }
 
 func (cift computeInstanceFromTemplateAttributes) AdvancedMachineFeatures() terra.ListValue[computeinstancefromtemplate.AdvancedMachineFeaturesAttributes] {
-	return terra.ReferenceList[computeinstancefromtemplate.AdvancedMachineFeaturesAttributes](cift.ref.Append("advanced_machine_features"))
+	return terra.ReferenceAsList[computeinstancefromtemplate.AdvancedMachineFeaturesAttributes](cift.ref.Append("advanced_machine_features"))
 }
 
 func (cift computeInstanceFromTemplateAttributes) BootDisk() terra.ListValue[computeinstancefromtemplate.BootDiskAttributes] {
-	return terra.ReferenceList[computeinstancefromtemplate.BootDiskAttributes](cift.ref.Append("boot_disk"))
+	return terra.ReferenceAsList[computeinstancefromtemplate.BootDiskAttributes](cift.ref.Append("boot_disk"))
 }
 
 func (cift computeInstanceFromTemplateAttributes) ConfidentialInstanceConfig() terra.ListValue[computeinstancefromtemplate.ConfidentialInstanceConfigAttributes] {
-	return terra.ReferenceList[computeinstancefromtemplate.ConfidentialInstanceConfigAttributes](cift.ref.Append("confidential_instance_config"))
+	return terra.ReferenceAsList[computeinstancefromtemplate.ConfidentialInstanceConfigAttributes](cift.ref.Append("confidential_instance_config"))
 }
 
 func (cift computeInstanceFromTemplateAttributes) NetworkInterface() terra.ListValue[computeinstancefromtemplate.NetworkInterfaceAttributes] {
-	return terra.ReferenceList[computeinstancefromtemplate.NetworkInterfaceAttributes](cift.ref.Append("network_interface"))
+	return terra.ReferenceAsList[computeinstancefromtemplate.NetworkInterfaceAttributes](cift.ref.Append("network_interface"))
 }
 
 func (cift computeInstanceFromTemplateAttributes) ReservationAffinity() terra.ListValue[computeinstancefromtemplate.ReservationAffinityAttributes] {
-	return terra.ReferenceList[computeinstancefromtemplate.ReservationAffinityAttributes](cift.ref.Append("reservation_affinity"))
+	return terra.ReferenceAsList[computeinstancefromtemplate.ReservationAffinityAttributes](cift.ref.Append("reservation_affinity"))
 }
 
 func (cift computeInstanceFromTemplateAttributes) Scheduling() terra.ListValue[computeinstancefromtemplate.SchedulingAttributes] {
-	return terra.ReferenceList[computeinstancefromtemplate.SchedulingAttributes](cift.ref.Append("scheduling"))
+	return terra.ReferenceAsList[computeinstancefromtemplate.SchedulingAttributes](cift.ref.Append("scheduling"))
 }
 
 func (cift computeInstanceFromTemplateAttributes) ShieldedInstanceConfig() terra.ListValue[computeinstancefromtemplate.ShieldedInstanceConfigAttributes] {
-	return terra.ReferenceList[computeinstancefromtemplate.ShieldedInstanceConfigAttributes](cift.ref.Append("shielded_instance_config"))
+	return terra.ReferenceAsList[computeinstancefromtemplate.ShieldedInstanceConfigAttributes](cift.ref.Append("shielded_instance_config"))
 }
 
 func (cift computeInstanceFromTemplateAttributes) Timeouts() computeinstancefromtemplate.TimeoutsAttributes {
-	return terra.ReferenceSingle[computeinstancefromtemplate.TimeoutsAttributes](cift.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computeinstancefromtemplate.TimeoutsAttributes](cift.ref.Append("timeouts"))
 }
 
 type computeInstanceFromTemplateState struct {

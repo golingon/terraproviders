@@ -21,7 +21,7 @@ func (lt LaunchTemplateAttributes) InternalWithRef(ref terra.Reference) LaunchTe
 	return LaunchTemplateAttributes{ref: ref}
 }
 
-func (lt LaunchTemplateAttributes) InternalTokens() hclwrite.Tokens {
+func (lt LaunchTemplateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lt.ref.InternalTokens()
 }
 

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLogAnalyticsClusterCustomerManagedKey creates a new instance of [LogAnalyticsClusterCustomerManagedKey].
 func NewLogAnalyticsClusterCustomerManagedKey(name string, args LogAnalyticsClusterCustomerManagedKeyArgs) *LogAnalyticsClusterCustomerManagedKey {
 	return &LogAnalyticsClusterCustomerManagedKey{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLogAnalyticsClusterCustomerManagedKey(name string, args LogAnalyticsClus
 
 var _ terra.Resource = (*LogAnalyticsClusterCustomerManagedKey)(nil)
 
+// LogAnalyticsClusterCustomerManagedKey represents the Terraform resource azurerm_log_analytics_cluster_customer_managed_key.
 type LogAnalyticsClusterCustomerManagedKey struct {
-	Name  string
-	Args  LogAnalyticsClusterCustomerManagedKeyArgs
-	state *logAnalyticsClusterCustomerManagedKeyState
+	Name      string
+	Args      LogAnalyticsClusterCustomerManagedKeyArgs
+	state     *logAnalyticsClusterCustomerManagedKeyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LogAnalyticsClusterCustomerManagedKey].
 func (laccmk *LogAnalyticsClusterCustomerManagedKey) Type() string {
 	return "azurerm_log_analytics_cluster_customer_managed_key"
 }
 
+// LocalName returns the local name for [LogAnalyticsClusterCustomerManagedKey].
 func (laccmk *LogAnalyticsClusterCustomerManagedKey) LocalName() string {
 	return laccmk.Name
 }
 
+// Configuration returns the configuration (args) for [LogAnalyticsClusterCustomerManagedKey].
 func (laccmk *LogAnalyticsClusterCustomerManagedKey) Configuration() interface{} {
 	return laccmk.Args
 }
 
+// DependOn is used for other resources to depend on [LogAnalyticsClusterCustomerManagedKey].
+func (laccmk *LogAnalyticsClusterCustomerManagedKey) DependOn() terra.Reference {
+	return terra.ReferenceResource(laccmk)
+}
+
+// Dependencies returns the list of resources [LogAnalyticsClusterCustomerManagedKey] depends_on.
+func (laccmk *LogAnalyticsClusterCustomerManagedKey) Dependencies() terra.Dependencies {
+	return laccmk.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LogAnalyticsClusterCustomerManagedKey].
+func (laccmk *LogAnalyticsClusterCustomerManagedKey) LifecycleManagement() *terra.Lifecycle {
+	return laccmk.Lifecycle
+}
+
+// Attributes returns the attributes for [LogAnalyticsClusterCustomerManagedKey].
 func (laccmk *LogAnalyticsClusterCustomerManagedKey) Attributes() logAnalyticsClusterCustomerManagedKeyAttributes {
 	return logAnalyticsClusterCustomerManagedKeyAttributes{ref: terra.ReferenceResource(laccmk)}
 }
 
+// ImportState imports the given attribute values into [LogAnalyticsClusterCustomerManagedKey]'s state.
 func (laccmk *LogAnalyticsClusterCustomerManagedKey) ImportState(av io.Reader) error {
 	laccmk.state = &logAnalyticsClusterCustomerManagedKeyState{}
 	if err := json.NewDecoder(av).Decode(laccmk.state); err != nil {
@@ -49,10 +73,12 @@ func (laccmk *LogAnalyticsClusterCustomerManagedKey) ImportState(av io.Reader) e
 	return nil
 }
 
+// State returns the state and a bool indicating if [LogAnalyticsClusterCustomerManagedKey] has state.
 func (laccmk *LogAnalyticsClusterCustomerManagedKey) State() (*logAnalyticsClusterCustomerManagedKeyState, bool) {
 	return laccmk.state, laccmk.state != nil
 }
 
+// StateMust returns the state for [LogAnalyticsClusterCustomerManagedKey]. Panics if the state is nil.
 func (laccmk *LogAnalyticsClusterCustomerManagedKey) StateMust() *logAnalyticsClusterCustomerManagedKeyState {
 	if laccmk.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", laccmk.Type(), laccmk.LocalName()))
@@ -60,10 +86,7 @@ func (laccmk *LogAnalyticsClusterCustomerManagedKey) StateMust() *logAnalyticsCl
 	return laccmk.state
 }
 
-func (laccmk *LogAnalyticsClusterCustomerManagedKey) DependOn() terra.Reference {
-	return terra.ReferenceResource(laccmk)
-}
-
+// LogAnalyticsClusterCustomerManagedKeyArgs contains the configurations for azurerm_log_analytics_cluster_customer_managed_key.
 type LogAnalyticsClusterCustomerManagedKeyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -73,27 +96,28 @@ type LogAnalyticsClusterCustomerManagedKeyArgs struct {
 	LogAnalyticsClusterId terra.StringValue `hcl:"log_analytics_cluster_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *loganalyticsclustercustomermanagedkey.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LogAnalyticsClusterCustomerManagedKey depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type logAnalyticsClusterCustomerManagedKeyAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_log_analytics_cluster_customer_managed_key.
 func (laccmk logAnalyticsClusterCustomerManagedKeyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(laccmk.ref.Append("id"))
+	return terra.ReferenceAsString(laccmk.ref.Append("id"))
 }
 
+// KeyVaultKeyId returns a reference to field key_vault_key_id of azurerm_log_analytics_cluster_customer_managed_key.
 func (laccmk logAnalyticsClusterCustomerManagedKeyAttributes) KeyVaultKeyId() terra.StringValue {
-	return terra.ReferenceString(laccmk.ref.Append("key_vault_key_id"))
+	return terra.ReferenceAsString(laccmk.ref.Append("key_vault_key_id"))
 }
 
+// LogAnalyticsClusterId returns a reference to field log_analytics_cluster_id of azurerm_log_analytics_cluster_customer_managed_key.
 func (laccmk logAnalyticsClusterCustomerManagedKeyAttributes) LogAnalyticsClusterId() terra.StringValue {
-	return terra.ReferenceString(laccmk.ref.Append("log_analytics_cluster_id"))
+	return terra.ReferenceAsString(laccmk.ref.Append("log_analytics_cluster_id"))
 }
 
 func (laccmk logAnalyticsClusterCustomerManagedKeyAttributes) Timeouts() loganalyticsclustercustomermanagedkey.TimeoutsAttributes {
-	return terra.ReferenceSingle[loganalyticsclustercustomermanagedkey.TimeoutsAttributes](laccmk.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[loganalyticsclustercustomermanagedkey.TimeoutsAttributes](laccmk.ref.Append("timeouts"))
 }
 
 type logAnalyticsClusterCustomerManagedKeyState struct {

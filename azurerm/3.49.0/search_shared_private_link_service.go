@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSearchSharedPrivateLinkService creates a new instance of [SearchSharedPrivateLinkService].
 func NewSearchSharedPrivateLinkService(name string, args SearchSharedPrivateLinkServiceArgs) *SearchSharedPrivateLinkService {
 	return &SearchSharedPrivateLinkService{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSearchSharedPrivateLinkService(name string, args SearchSharedPrivateLink
 
 var _ terra.Resource = (*SearchSharedPrivateLinkService)(nil)
 
+// SearchSharedPrivateLinkService represents the Terraform resource azurerm_search_shared_private_link_service.
 type SearchSharedPrivateLinkService struct {
-	Name  string
-	Args  SearchSharedPrivateLinkServiceArgs
-	state *searchSharedPrivateLinkServiceState
+	Name      string
+	Args      SearchSharedPrivateLinkServiceArgs
+	state     *searchSharedPrivateLinkServiceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SearchSharedPrivateLinkService].
 func (sspls *SearchSharedPrivateLinkService) Type() string {
 	return "azurerm_search_shared_private_link_service"
 }
 
+// LocalName returns the local name for [SearchSharedPrivateLinkService].
 func (sspls *SearchSharedPrivateLinkService) LocalName() string {
 	return sspls.Name
 }
 
+// Configuration returns the configuration (args) for [SearchSharedPrivateLinkService].
 func (sspls *SearchSharedPrivateLinkService) Configuration() interface{} {
 	return sspls.Args
 }
 
+// DependOn is used for other resources to depend on [SearchSharedPrivateLinkService].
+func (sspls *SearchSharedPrivateLinkService) DependOn() terra.Reference {
+	return terra.ReferenceResource(sspls)
+}
+
+// Dependencies returns the list of resources [SearchSharedPrivateLinkService] depends_on.
+func (sspls *SearchSharedPrivateLinkService) Dependencies() terra.Dependencies {
+	return sspls.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SearchSharedPrivateLinkService].
+func (sspls *SearchSharedPrivateLinkService) LifecycleManagement() *terra.Lifecycle {
+	return sspls.Lifecycle
+}
+
+// Attributes returns the attributes for [SearchSharedPrivateLinkService].
 func (sspls *SearchSharedPrivateLinkService) Attributes() searchSharedPrivateLinkServiceAttributes {
 	return searchSharedPrivateLinkServiceAttributes{ref: terra.ReferenceResource(sspls)}
 }
 
+// ImportState imports the given attribute values into [SearchSharedPrivateLinkService]'s state.
 func (sspls *SearchSharedPrivateLinkService) ImportState(av io.Reader) error {
 	sspls.state = &searchSharedPrivateLinkServiceState{}
 	if err := json.NewDecoder(av).Decode(sspls.state); err != nil {
@@ -49,10 +73,12 @@ func (sspls *SearchSharedPrivateLinkService) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SearchSharedPrivateLinkService] has state.
 func (sspls *SearchSharedPrivateLinkService) State() (*searchSharedPrivateLinkServiceState, bool) {
 	return sspls.state, sspls.state != nil
 }
 
+// StateMust returns the state for [SearchSharedPrivateLinkService]. Panics if the state is nil.
 func (sspls *SearchSharedPrivateLinkService) StateMust() *searchSharedPrivateLinkServiceState {
 	if sspls.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sspls.Type(), sspls.LocalName()))
@@ -60,10 +86,7 @@ func (sspls *SearchSharedPrivateLinkService) StateMust() *searchSharedPrivateLin
 	return sspls.state
 }
 
-func (sspls *SearchSharedPrivateLinkService) DependOn() terra.Reference {
-	return terra.ReferenceResource(sspls)
-}
-
+// SearchSharedPrivateLinkServiceArgs contains the configurations for azurerm_search_shared_private_link_service.
 type SearchSharedPrivateLinkServiceArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,43 +102,48 @@ type SearchSharedPrivateLinkServiceArgs struct {
 	TargetResourceId terra.StringValue `hcl:"target_resource_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *searchsharedprivatelinkservice.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SearchSharedPrivateLinkService depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type searchSharedPrivateLinkServiceAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_search_shared_private_link_service.
 func (sspls searchSharedPrivateLinkServiceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sspls.ref.Append("id"))
+	return terra.ReferenceAsString(sspls.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_search_shared_private_link_service.
 func (sspls searchSharedPrivateLinkServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sspls.ref.Append("name"))
+	return terra.ReferenceAsString(sspls.ref.Append("name"))
 }
 
+// RequestMessage returns a reference to field request_message of azurerm_search_shared_private_link_service.
 func (sspls searchSharedPrivateLinkServiceAttributes) RequestMessage() terra.StringValue {
-	return terra.ReferenceString(sspls.ref.Append("request_message"))
+	return terra.ReferenceAsString(sspls.ref.Append("request_message"))
 }
 
+// SearchServiceId returns a reference to field search_service_id of azurerm_search_shared_private_link_service.
 func (sspls searchSharedPrivateLinkServiceAttributes) SearchServiceId() terra.StringValue {
-	return terra.ReferenceString(sspls.ref.Append("search_service_id"))
+	return terra.ReferenceAsString(sspls.ref.Append("search_service_id"))
 }
 
+// Status returns a reference to field status of azurerm_search_shared_private_link_service.
 func (sspls searchSharedPrivateLinkServiceAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(sspls.ref.Append("status"))
+	return terra.ReferenceAsString(sspls.ref.Append("status"))
 }
 
+// SubresourceName returns a reference to field subresource_name of azurerm_search_shared_private_link_service.
 func (sspls searchSharedPrivateLinkServiceAttributes) SubresourceName() terra.StringValue {
-	return terra.ReferenceString(sspls.ref.Append("subresource_name"))
+	return terra.ReferenceAsString(sspls.ref.Append("subresource_name"))
 }
 
+// TargetResourceId returns a reference to field target_resource_id of azurerm_search_shared_private_link_service.
 func (sspls searchSharedPrivateLinkServiceAttributes) TargetResourceId() terra.StringValue {
-	return terra.ReferenceString(sspls.ref.Append("target_resource_id"))
+	return terra.ReferenceAsString(sspls.ref.Append("target_resource_id"))
 }
 
 func (sspls searchSharedPrivateLinkServiceAttributes) Timeouts() searchsharedprivatelinkservice.TimeoutsAttributes {
-	return terra.ReferenceSingle[searchsharedprivatelinkservice.TimeoutsAttributes](sspls.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[searchsharedprivatelinkservice.TimeoutsAttributes](sspls.ref.Append("timeouts"))
 }
 
 type searchSharedPrivateLinkServiceState struct {

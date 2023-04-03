@@ -48,124 +48,124 @@ type DailyRecurrenceAttributes struct {
 	ref terra.Reference
 }
 
-func (dr DailyRecurrenceAttributes) InternalRef() terra.Reference {
-	return dr.ref
+func (dr DailyRecurrenceAttributes) InternalRef() (terra.Reference, error) {
+	return dr.ref, nil
 }
 
 func (dr DailyRecurrenceAttributes) InternalWithRef(ref terra.Reference) DailyRecurrenceAttributes {
 	return DailyRecurrenceAttributes{ref: ref}
 }
 
-func (dr DailyRecurrenceAttributes) InternalTokens() hclwrite.Tokens {
+func (dr DailyRecurrenceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dr.ref.InternalTokens()
 }
 
 func (dr DailyRecurrenceAttributes) Time() terra.StringValue {
-	return terra.ReferenceString(dr.ref.Append("time"))
+	return terra.ReferenceAsString(dr.ref.Append("time"))
 }
 
 type HourlyRecurrenceAttributes struct {
 	ref terra.Reference
 }
 
-func (hr HourlyRecurrenceAttributes) InternalRef() terra.Reference {
-	return hr.ref
+func (hr HourlyRecurrenceAttributes) InternalRef() (terra.Reference, error) {
+	return hr.ref, nil
 }
 
 func (hr HourlyRecurrenceAttributes) InternalWithRef(ref terra.Reference) HourlyRecurrenceAttributes {
 	return HourlyRecurrenceAttributes{ref: ref}
 }
 
-func (hr HourlyRecurrenceAttributes) InternalTokens() hclwrite.Tokens {
+func (hr HourlyRecurrenceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hr.ref.InternalTokens()
 }
 
 func (hr HourlyRecurrenceAttributes) Minute() terra.NumberValue {
-	return terra.ReferenceNumber(hr.ref.Append("minute"))
+	return terra.ReferenceAsNumber(hr.ref.Append("minute"))
 }
 
 type NotificationSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ns NotificationSettingsAttributes) InternalRef() terra.Reference {
-	return ns.ref
+func (ns NotificationSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ns.ref, nil
 }
 
 func (ns NotificationSettingsAttributes) InternalWithRef(ref terra.Reference) NotificationSettingsAttributes {
 	return NotificationSettingsAttributes{ref: ref}
 }
 
-func (ns NotificationSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ns NotificationSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ns.ref.InternalTokens()
 }
 
 func (ns NotificationSettingsAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(ns.ref.Append("status"))
+	return terra.ReferenceAsString(ns.ref.Append("status"))
 }
 
 func (ns NotificationSettingsAttributes) TimeInMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(ns.ref.Append("time_in_minutes"))
+	return terra.ReferenceAsNumber(ns.ref.Append("time_in_minutes"))
 }
 
 func (ns NotificationSettingsAttributes) WebhookUrl() terra.StringValue {
-	return terra.ReferenceString(ns.ref.Append("webhook_url"))
+	return terra.ReferenceAsString(ns.ref.Append("webhook_url"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type WeeklyRecurrenceAttributes struct {
 	ref terra.Reference
 }
 
-func (wr WeeklyRecurrenceAttributes) InternalRef() terra.Reference {
-	return wr.ref
+func (wr WeeklyRecurrenceAttributes) InternalRef() (terra.Reference, error) {
+	return wr.ref, nil
 }
 
 func (wr WeeklyRecurrenceAttributes) InternalWithRef(ref terra.Reference) WeeklyRecurrenceAttributes {
 	return WeeklyRecurrenceAttributes{ref: ref}
 }
 
-func (wr WeeklyRecurrenceAttributes) InternalTokens() hclwrite.Tokens {
+func (wr WeeklyRecurrenceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wr.ref.InternalTokens()
 }
 
 func (wr WeeklyRecurrenceAttributes) Time() terra.StringValue {
-	return terra.ReferenceString(wr.ref.Append("time"))
+	return terra.ReferenceAsString(wr.ref.Append("time"))
 }
 
 func (wr WeeklyRecurrenceAttributes) WeekDays() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](wr.ref.Append("week_days"))
+	return terra.ReferenceAsList[terra.StringValue](wr.ref.Append("week_days"))
 }
 
 type DailyRecurrenceState struct {

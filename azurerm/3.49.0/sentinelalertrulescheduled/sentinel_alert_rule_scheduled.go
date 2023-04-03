@@ -90,248 +90,248 @@ type AlertDetailsOverrideAttributes struct {
 	ref terra.Reference
 }
 
-func (ado AlertDetailsOverrideAttributes) InternalRef() terra.Reference {
-	return ado.ref
+func (ado AlertDetailsOverrideAttributes) InternalRef() (terra.Reference, error) {
+	return ado.ref, nil
 }
 
 func (ado AlertDetailsOverrideAttributes) InternalWithRef(ref terra.Reference) AlertDetailsOverrideAttributes {
 	return AlertDetailsOverrideAttributes{ref: ref}
 }
 
-func (ado AlertDetailsOverrideAttributes) InternalTokens() hclwrite.Tokens {
+func (ado AlertDetailsOverrideAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ado.ref.InternalTokens()
 }
 
 func (ado AlertDetailsOverrideAttributes) DescriptionFormat() terra.StringValue {
-	return terra.ReferenceString(ado.ref.Append("description_format"))
+	return terra.ReferenceAsString(ado.ref.Append("description_format"))
 }
 
 func (ado AlertDetailsOverrideAttributes) DisplayNameFormat() terra.StringValue {
-	return terra.ReferenceString(ado.ref.Append("display_name_format"))
+	return terra.ReferenceAsString(ado.ref.Append("display_name_format"))
 }
 
 func (ado AlertDetailsOverrideAttributes) SeverityColumnName() terra.StringValue {
-	return terra.ReferenceString(ado.ref.Append("severity_column_name"))
+	return terra.ReferenceAsString(ado.ref.Append("severity_column_name"))
 }
 
 func (ado AlertDetailsOverrideAttributes) TacticsColumnName() terra.StringValue {
-	return terra.ReferenceString(ado.ref.Append("tactics_column_name"))
+	return terra.ReferenceAsString(ado.ref.Append("tactics_column_name"))
 }
 
 func (ado AlertDetailsOverrideAttributes) DynamicProperty() terra.ListValue[DynamicPropertyAttributes] {
-	return terra.ReferenceList[DynamicPropertyAttributes](ado.ref.Append("dynamic_property"))
+	return terra.ReferenceAsList[DynamicPropertyAttributes](ado.ref.Append("dynamic_property"))
 }
 
 type DynamicPropertyAttributes struct {
 	ref terra.Reference
 }
 
-func (dp DynamicPropertyAttributes) InternalRef() terra.Reference {
-	return dp.ref
+func (dp DynamicPropertyAttributes) InternalRef() (terra.Reference, error) {
+	return dp.ref, nil
 }
 
 func (dp DynamicPropertyAttributes) InternalWithRef(ref terra.Reference) DynamicPropertyAttributes {
 	return DynamicPropertyAttributes{ref: ref}
 }
 
-func (dp DynamicPropertyAttributes) InternalTokens() hclwrite.Tokens {
+func (dp DynamicPropertyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dp.ref.InternalTokens()
 }
 
 func (dp DynamicPropertyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dp.ref.Append("name"))
+	return terra.ReferenceAsString(dp.ref.Append("name"))
 }
 
 func (dp DynamicPropertyAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(dp.ref.Append("value"))
+	return terra.ReferenceAsString(dp.ref.Append("value"))
 }
 
 type EntityMappingAttributes struct {
 	ref terra.Reference
 }
 
-func (em EntityMappingAttributes) InternalRef() terra.Reference {
-	return em.ref
+func (em EntityMappingAttributes) InternalRef() (terra.Reference, error) {
+	return em.ref, nil
 }
 
 func (em EntityMappingAttributes) InternalWithRef(ref terra.Reference) EntityMappingAttributes {
 	return EntityMappingAttributes{ref: ref}
 }
 
-func (em EntityMappingAttributes) InternalTokens() hclwrite.Tokens {
+func (em EntityMappingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return em.ref.InternalTokens()
 }
 
 func (em EntityMappingAttributes) EntityType() terra.StringValue {
-	return terra.ReferenceString(em.ref.Append("entity_type"))
+	return terra.ReferenceAsString(em.ref.Append("entity_type"))
 }
 
 func (em EntityMappingAttributes) FieldMapping() terra.ListValue[FieldMappingAttributes] {
-	return terra.ReferenceList[FieldMappingAttributes](em.ref.Append("field_mapping"))
+	return terra.ReferenceAsList[FieldMappingAttributes](em.ref.Append("field_mapping"))
 }
 
 type FieldMappingAttributes struct {
 	ref terra.Reference
 }
 
-func (fm FieldMappingAttributes) InternalRef() terra.Reference {
-	return fm.ref
+func (fm FieldMappingAttributes) InternalRef() (terra.Reference, error) {
+	return fm.ref, nil
 }
 
 func (fm FieldMappingAttributes) InternalWithRef(ref terra.Reference) FieldMappingAttributes {
 	return FieldMappingAttributes{ref: ref}
 }
 
-func (fm FieldMappingAttributes) InternalTokens() hclwrite.Tokens {
+func (fm FieldMappingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fm.ref.InternalTokens()
 }
 
 func (fm FieldMappingAttributes) ColumnName() terra.StringValue {
-	return terra.ReferenceString(fm.ref.Append("column_name"))
+	return terra.ReferenceAsString(fm.ref.Append("column_name"))
 }
 
 func (fm FieldMappingAttributes) Identifier() terra.StringValue {
-	return terra.ReferenceString(fm.ref.Append("identifier"))
+	return terra.ReferenceAsString(fm.ref.Append("identifier"))
 }
 
 type EventGroupingAttributes struct {
 	ref terra.Reference
 }
 
-func (eg EventGroupingAttributes) InternalRef() terra.Reference {
-	return eg.ref
+func (eg EventGroupingAttributes) InternalRef() (terra.Reference, error) {
+	return eg.ref, nil
 }
 
 func (eg EventGroupingAttributes) InternalWithRef(ref terra.Reference) EventGroupingAttributes {
 	return EventGroupingAttributes{ref: ref}
 }
 
-func (eg EventGroupingAttributes) InternalTokens() hclwrite.Tokens {
+func (eg EventGroupingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return eg.ref.InternalTokens()
 }
 
 func (eg EventGroupingAttributes) AggregationMethod() terra.StringValue {
-	return terra.ReferenceString(eg.ref.Append("aggregation_method"))
+	return terra.ReferenceAsString(eg.ref.Append("aggregation_method"))
 }
 
 type IncidentConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ic IncidentConfigurationAttributes) InternalRef() terra.Reference {
-	return ic.ref
+func (ic IncidentConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ic.ref, nil
 }
 
 func (ic IncidentConfigurationAttributes) InternalWithRef(ref terra.Reference) IncidentConfigurationAttributes {
 	return IncidentConfigurationAttributes{ref: ref}
 }
 
-func (ic IncidentConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ic IncidentConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ic.ref.InternalTokens()
 }
 
 func (ic IncidentConfigurationAttributes) CreateIncident() terra.BoolValue {
-	return terra.ReferenceBool(ic.ref.Append("create_incident"))
+	return terra.ReferenceAsBool(ic.ref.Append("create_incident"))
 }
 
 func (ic IncidentConfigurationAttributes) Grouping() terra.ListValue[GroupingAttributes] {
-	return terra.ReferenceList[GroupingAttributes](ic.ref.Append("grouping"))
+	return terra.ReferenceAsList[GroupingAttributes](ic.ref.Append("grouping"))
 }
 
 type GroupingAttributes struct {
 	ref terra.Reference
 }
 
-func (g GroupingAttributes) InternalRef() terra.Reference {
-	return g.ref
+func (g GroupingAttributes) InternalRef() (terra.Reference, error) {
+	return g.ref, nil
 }
 
 func (g GroupingAttributes) InternalWithRef(ref terra.Reference) GroupingAttributes {
 	return GroupingAttributes{ref: ref}
 }
 
-func (g GroupingAttributes) InternalTokens() hclwrite.Tokens {
+func (g GroupingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return g.ref.InternalTokens()
 }
 
 func (g GroupingAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(g.ref.Append("enabled"))
+	return terra.ReferenceAsBool(g.ref.Append("enabled"))
 }
 
 func (g GroupingAttributes) EntityMatchingMethod() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("entity_matching_method"))
+	return terra.ReferenceAsString(g.ref.Append("entity_matching_method"))
 }
 
 func (g GroupingAttributes) GroupByAlertDetails() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](g.ref.Append("group_by_alert_details"))
+	return terra.ReferenceAsList[terra.StringValue](g.ref.Append("group_by_alert_details"))
 }
 
 func (g GroupingAttributes) GroupByCustomDetails() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](g.ref.Append("group_by_custom_details"))
+	return terra.ReferenceAsList[terra.StringValue](g.ref.Append("group_by_custom_details"))
 }
 
 func (g GroupingAttributes) GroupByEntities() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](g.ref.Append("group_by_entities"))
+	return terra.ReferenceAsList[terra.StringValue](g.ref.Append("group_by_entities"))
 }
 
 func (g GroupingAttributes) LookbackDuration() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("lookback_duration"))
+	return terra.ReferenceAsString(g.ref.Append("lookback_duration"))
 }
 
 func (g GroupingAttributes) ReopenClosedIncidents() terra.BoolValue {
-	return terra.ReferenceBool(g.ref.Append("reopen_closed_incidents"))
+	return terra.ReferenceAsBool(g.ref.Append("reopen_closed_incidents"))
 }
 
 type SentinelEntityMappingAttributes struct {
 	ref terra.Reference
 }
 
-func (sem SentinelEntityMappingAttributes) InternalRef() terra.Reference {
-	return sem.ref
+func (sem SentinelEntityMappingAttributes) InternalRef() (terra.Reference, error) {
+	return sem.ref, nil
 }
 
 func (sem SentinelEntityMappingAttributes) InternalWithRef(ref terra.Reference) SentinelEntityMappingAttributes {
 	return SentinelEntityMappingAttributes{ref: ref}
 }
 
-func (sem SentinelEntityMappingAttributes) InternalTokens() hclwrite.Tokens {
+func (sem SentinelEntityMappingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sem.ref.InternalTokens()
 }
 
 func (sem SentinelEntityMappingAttributes) ColumnName() terra.StringValue {
-	return terra.ReferenceString(sem.ref.Append("column_name"))
+	return terra.ReferenceAsString(sem.ref.Append("column_name"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AlertDetailsOverrideState struct {

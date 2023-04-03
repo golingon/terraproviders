@@ -40,96 +40,96 @@ type IdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (i IdentityAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IdentityAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IdentityAttributes) InternalWithRef(ref terra.Reference) IdentityAttributes {
 	return IdentityAttributes{ref: ref}
 }
 
-func (i IdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (i IdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IdentityAttributes) IdentityIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i.ref.Append("identity_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](i.ref.Append("identity_ids"))
 }
 
 func (i IdentityAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("principal_id"))
+	return terra.ReferenceAsString(i.ref.Append("principal_id"))
 }
 
 func (i IdentityAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(i.ref.Append("tenant_id"))
 }
 
 func (i IdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("type"))
+	return terra.ReferenceAsString(i.ref.Append("type"))
 }
 
 type LiveTraceAttributes struct {
 	ref terra.Reference
 }
 
-func (lt LiveTraceAttributes) InternalRef() terra.Reference {
-	return lt.ref
+func (lt LiveTraceAttributes) InternalRef() (terra.Reference, error) {
+	return lt.ref, nil
 }
 
 func (lt LiveTraceAttributes) InternalWithRef(ref terra.Reference) LiveTraceAttributes {
 	return LiveTraceAttributes{ref: ref}
 }
 
-func (lt LiveTraceAttributes) InternalTokens() hclwrite.Tokens {
+func (lt LiveTraceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lt.ref.InternalTokens()
 }
 
 func (lt LiveTraceAttributes) ConnectivityLogsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(lt.ref.Append("connectivity_logs_enabled"))
+	return terra.ReferenceAsBool(lt.ref.Append("connectivity_logs_enabled"))
 }
 
 func (lt LiveTraceAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(lt.ref.Append("enabled"))
+	return terra.ReferenceAsBool(lt.ref.Append("enabled"))
 }
 
 func (lt LiveTraceAttributes) HttpRequestLogsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(lt.ref.Append("http_request_logs_enabled"))
+	return terra.ReferenceAsBool(lt.ref.Append("http_request_logs_enabled"))
 }
 
 func (lt LiveTraceAttributes) MessagingLogsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(lt.ref.Append("messaging_logs_enabled"))
+	return terra.ReferenceAsBool(lt.ref.Append("messaging_logs_enabled"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type IdentityState struct {

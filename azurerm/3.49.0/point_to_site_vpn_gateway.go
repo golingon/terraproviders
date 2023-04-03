@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewPointToSiteVpnGateway creates a new instance of [PointToSiteVpnGateway].
 func NewPointToSiteVpnGateway(name string, args PointToSiteVpnGatewayArgs) *PointToSiteVpnGateway {
 	return &PointToSiteVpnGateway{
 		Args: args,
@@ -19,28 +20,51 @@ func NewPointToSiteVpnGateway(name string, args PointToSiteVpnGatewayArgs) *Poin
 
 var _ terra.Resource = (*PointToSiteVpnGateway)(nil)
 
+// PointToSiteVpnGateway represents the Terraform resource azurerm_point_to_site_vpn_gateway.
 type PointToSiteVpnGateway struct {
-	Name  string
-	Args  PointToSiteVpnGatewayArgs
-	state *pointToSiteVpnGatewayState
+	Name      string
+	Args      PointToSiteVpnGatewayArgs
+	state     *pointToSiteVpnGatewayState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PointToSiteVpnGateway].
 func (ptsvg *PointToSiteVpnGateway) Type() string {
 	return "azurerm_point_to_site_vpn_gateway"
 }
 
+// LocalName returns the local name for [PointToSiteVpnGateway].
 func (ptsvg *PointToSiteVpnGateway) LocalName() string {
 	return ptsvg.Name
 }
 
+// Configuration returns the configuration (args) for [PointToSiteVpnGateway].
 func (ptsvg *PointToSiteVpnGateway) Configuration() interface{} {
 	return ptsvg.Args
 }
 
+// DependOn is used for other resources to depend on [PointToSiteVpnGateway].
+func (ptsvg *PointToSiteVpnGateway) DependOn() terra.Reference {
+	return terra.ReferenceResource(ptsvg)
+}
+
+// Dependencies returns the list of resources [PointToSiteVpnGateway] depends_on.
+func (ptsvg *PointToSiteVpnGateway) Dependencies() terra.Dependencies {
+	return ptsvg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PointToSiteVpnGateway].
+func (ptsvg *PointToSiteVpnGateway) LifecycleManagement() *terra.Lifecycle {
+	return ptsvg.Lifecycle
+}
+
+// Attributes returns the attributes for [PointToSiteVpnGateway].
 func (ptsvg *PointToSiteVpnGateway) Attributes() pointToSiteVpnGatewayAttributes {
 	return pointToSiteVpnGatewayAttributes{ref: terra.ReferenceResource(ptsvg)}
 }
 
+// ImportState imports the given attribute values into [PointToSiteVpnGateway]'s state.
 func (ptsvg *PointToSiteVpnGateway) ImportState(av io.Reader) error {
 	ptsvg.state = &pointToSiteVpnGatewayState{}
 	if err := json.NewDecoder(av).Decode(ptsvg.state); err != nil {
@@ -49,10 +73,12 @@ func (ptsvg *PointToSiteVpnGateway) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PointToSiteVpnGateway] has state.
 func (ptsvg *PointToSiteVpnGateway) State() (*pointToSiteVpnGatewayState, bool) {
 	return ptsvg.state, ptsvg.state != nil
 }
 
+// StateMust returns the state for [PointToSiteVpnGateway]. Panics if the state is nil.
 func (ptsvg *PointToSiteVpnGateway) StateMust() *pointToSiteVpnGatewayState {
 	if ptsvg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ptsvg.Type(), ptsvg.LocalName()))
@@ -60,10 +86,7 @@ func (ptsvg *PointToSiteVpnGateway) StateMust() *pointToSiteVpnGatewayState {
 	return ptsvg.state
 }
 
-func (ptsvg *PointToSiteVpnGateway) DependOn() terra.Reference {
-	return terra.ReferenceResource(ptsvg)
-}
-
+// PointToSiteVpnGatewayArgs contains the configurations for azurerm_point_to_site_vpn_gateway.
 type PointToSiteVpnGatewayArgs struct {
 	// DnsServers: list of string, optional
 	DnsServers terra.ListValue[terra.StringValue] `hcl:"dns_servers,attr"`
@@ -89,59 +112,67 @@ type PointToSiteVpnGatewayArgs struct {
 	ConnectionConfiguration *pointtositevpngateway.ConnectionConfiguration `hcl:"connection_configuration,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *pointtositevpngateway.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that PointToSiteVpnGateway depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type pointToSiteVpnGatewayAttributes struct {
 	ref terra.Reference
 }
 
+// DnsServers returns a reference to field dns_servers of azurerm_point_to_site_vpn_gateway.
 func (ptsvg pointToSiteVpnGatewayAttributes) DnsServers() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ptsvg.ref.Append("dns_servers"))
+	return terra.ReferenceAsList[terra.StringValue](ptsvg.ref.Append("dns_servers"))
 }
 
+// Id returns a reference to field id of azurerm_point_to_site_vpn_gateway.
 func (ptsvg pointToSiteVpnGatewayAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ptsvg.ref.Append("id"))
+	return terra.ReferenceAsString(ptsvg.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_point_to_site_vpn_gateway.
 func (ptsvg pointToSiteVpnGatewayAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ptsvg.ref.Append("location"))
+	return terra.ReferenceAsString(ptsvg.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_point_to_site_vpn_gateway.
 func (ptsvg pointToSiteVpnGatewayAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ptsvg.ref.Append("name"))
+	return terra.ReferenceAsString(ptsvg.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_point_to_site_vpn_gateway.
 func (ptsvg pointToSiteVpnGatewayAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ptsvg.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ptsvg.ref.Append("resource_group_name"))
 }
 
+// RoutingPreferenceInternetEnabled returns a reference to field routing_preference_internet_enabled of azurerm_point_to_site_vpn_gateway.
 func (ptsvg pointToSiteVpnGatewayAttributes) RoutingPreferenceInternetEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ptsvg.ref.Append("routing_preference_internet_enabled"))
+	return terra.ReferenceAsBool(ptsvg.ref.Append("routing_preference_internet_enabled"))
 }
 
+// ScaleUnit returns a reference to field scale_unit of azurerm_point_to_site_vpn_gateway.
 func (ptsvg pointToSiteVpnGatewayAttributes) ScaleUnit() terra.NumberValue {
-	return terra.ReferenceNumber(ptsvg.ref.Append("scale_unit"))
+	return terra.ReferenceAsNumber(ptsvg.ref.Append("scale_unit"))
 }
 
+// Tags returns a reference to field tags of azurerm_point_to_site_vpn_gateway.
 func (ptsvg pointToSiteVpnGatewayAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ptsvg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ptsvg.ref.Append("tags"))
 }
 
+// VirtualHubId returns a reference to field virtual_hub_id of azurerm_point_to_site_vpn_gateway.
 func (ptsvg pointToSiteVpnGatewayAttributes) VirtualHubId() terra.StringValue {
-	return terra.ReferenceString(ptsvg.ref.Append("virtual_hub_id"))
+	return terra.ReferenceAsString(ptsvg.ref.Append("virtual_hub_id"))
 }
 
+// VpnServerConfigurationId returns a reference to field vpn_server_configuration_id of azurerm_point_to_site_vpn_gateway.
 func (ptsvg pointToSiteVpnGatewayAttributes) VpnServerConfigurationId() terra.StringValue {
-	return terra.ReferenceString(ptsvg.ref.Append("vpn_server_configuration_id"))
+	return terra.ReferenceAsString(ptsvg.ref.Append("vpn_server_configuration_id"))
 }
 
 func (ptsvg pointToSiteVpnGatewayAttributes) ConnectionConfiguration() terra.ListValue[pointtositevpngateway.ConnectionConfigurationAttributes] {
-	return terra.ReferenceList[pointtositevpngateway.ConnectionConfigurationAttributes](ptsvg.ref.Append("connection_configuration"))
+	return terra.ReferenceAsList[pointtositevpngateway.ConnectionConfigurationAttributes](ptsvg.ref.Append("connection_configuration"))
 }
 
 func (ptsvg pointToSiteVpnGatewayAttributes) Timeouts() pointtositevpngateway.TimeoutsAttributes {
-	return terra.ReferenceSingle[pointtositevpngateway.TimeoutsAttributes](ptsvg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[pointtositevpngateway.TimeoutsAttributes](ptsvg.ref.Append("timeouts"))
 }
 
 type pointToSiteVpnGatewayState struct {

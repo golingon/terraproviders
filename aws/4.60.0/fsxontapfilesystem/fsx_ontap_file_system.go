@@ -46,7 +46,7 @@ func (e EndpointsAttributes) InternalWithRef(ref terra.Reference) EndpointsAttri
 	return EndpointsAttributes{ref: ref}
 }
 
-func (e EndpointsAttributes) InternalTokens() hclwrite.Tokens {
+func (e EndpointsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -70,7 +70,7 @@ func (i InterclusterAttributes) InternalWithRef(ref terra.Reference) Intercluste
 	return InterclusterAttributes{ref: ref}
 }
 
-func (i InterclusterAttributes) InternalTokens() hclwrite.Tokens {
+func (i InterclusterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -94,7 +94,7 @@ func (m ManagementAttributes) InternalWithRef(ref terra.Reference) ManagementAtt
 	return ManagementAttributes{ref: ref}
 }
 
-func (m ManagementAttributes) InternalTokens() hclwrite.Tokens {
+func (m ManagementAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -118,7 +118,7 @@ func (dic DiskIopsConfigurationAttributes) InternalWithRef(ref terra.Reference) 
 	return DiskIopsConfigurationAttributes{ref: ref}
 }
 
-func (dic DiskIopsConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (dic DiskIopsConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dic.ref.InternalTokens()
 }
 
@@ -142,7 +142,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

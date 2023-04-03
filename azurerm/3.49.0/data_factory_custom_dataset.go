@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFactoryCustomDataset creates a new instance of [DataFactoryCustomDataset].
 func NewDataFactoryCustomDataset(name string, args DataFactoryCustomDatasetArgs) *DataFactoryCustomDataset {
 	return &DataFactoryCustomDataset{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFactoryCustomDataset(name string, args DataFactoryCustomDatasetArgs)
 
 var _ terra.Resource = (*DataFactoryCustomDataset)(nil)
 
+// DataFactoryCustomDataset represents the Terraform resource azurerm_data_factory_custom_dataset.
 type DataFactoryCustomDataset struct {
-	Name  string
-	Args  DataFactoryCustomDatasetArgs
-	state *dataFactoryCustomDatasetState
+	Name      string
+	Args      DataFactoryCustomDatasetArgs
+	state     *dataFactoryCustomDatasetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFactoryCustomDataset].
 func (dfcd *DataFactoryCustomDataset) Type() string {
 	return "azurerm_data_factory_custom_dataset"
 }
 
+// LocalName returns the local name for [DataFactoryCustomDataset].
 func (dfcd *DataFactoryCustomDataset) LocalName() string {
 	return dfcd.Name
 }
 
+// Configuration returns the configuration (args) for [DataFactoryCustomDataset].
 func (dfcd *DataFactoryCustomDataset) Configuration() interface{} {
 	return dfcd.Args
 }
 
+// DependOn is used for other resources to depend on [DataFactoryCustomDataset].
+func (dfcd *DataFactoryCustomDataset) DependOn() terra.Reference {
+	return terra.ReferenceResource(dfcd)
+}
+
+// Dependencies returns the list of resources [DataFactoryCustomDataset] depends_on.
+func (dfcd *DataFactoryCustomDataset) Dependencies() terra.Dependencies {
+	return dfcd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFactoryCustomDataset].
+func (dfcd *DataFactoryCustomDataset) LifecycleManagement() *terra.Lifecycle {
+	return dfcd.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFactoryCustomDataset].
 func (dfcd *DataFactoryCustomDataset) Attributes() dataFactoryCustomDatasetAttributes {
 	return dataFactoryCustomDatasetAttributes{ref: terra.ReferenceResource(dfcd)}
 }
 
+// ImportState imports the given attribute values into [DataFactoryCustomDataset]'s state.
 func (dfcd *DataFactoryCustomDataset) ImportState(av io.Reader) error {
 	dfcd.state = &dataFactoryCustomDatasetState{}
 	if err := json.NewDecoder(av).Decode(dfcd.state); err != nil {
@@ -49,10 +73,12 @@ func (dfcd *DataFactoryCustomDataset) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFactoryCustomDataset] has state.
 func (dfcd *DataFactoryCustomDataset) State() (*dataFactoryCustomDatasetState, bool) {
 	return dfcd.state, dfcd.state != nil
 }
 
+// StateMust returns the state for [DataFactoryCustomDataset]. Panics if the state is nil.
 func (dfcd *DataFactoryCustomDataset) StateMust() *dataFactoryCustomDatasetState {
 	if dfcd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dfcd.Type(), dfcd.LocalName()))
@@ -60,10 +86,7 @@ func (dfcd *DataFactoryCustomDataset) StateMust() *dataFactoryCustomDatasetState
 	return dfcd.state
 }
 
-func (dfcd *DataFactoryCustomDataset) DependOn() terra.Reference {
-	return terra.ReferenceResource(dfcd)
-}
-
+// DataFactoryCustomDatasetArgs contains the configurations for azurerm_data_factory_custom_dataset.
 type DataFactoryCustomDatasetArgs struct {
 	// AdditionalProperties: map of string, optional
 	AdditionalProperties terra.MapValue[terra.StringValue] `hcl:"additional_properties,attr"`
@@ -91,63 +114,72 @@ type DataFactoryCustomDatasetArgs struct {
 	LinkedService *datafactorycustomdataset.LinkedService `hcl:"linked_service,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *datafactorycustomdataset.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataFactoryCustomDataset depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFactoryCustomDatasetAttributes struct {
 	ref terra.Reference
 }
 
+// AdditionalProperties returns a reference to field additional_properties of azurerm_data_factory_custom_dataset.
 func (dfcd dataFactoryCustomDatasetAttributes) AdditionalProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dfcd.ref.Append("additional_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](dfcd.ref.Append("additional_properties"))
 }
 
+// Annotations returns a reference to field annotations of azurerm_data_factory_custom_dataset.
 func (dfcd dataFactoryCustomDatasetAttributes) Annotations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dfcd.ref.Append("annotations"))
+	return terra.ReferenceAsList[terra.StringValue](dfcd.ref.Append("annotations"))
 }
 
+// DataFactoryId returns a reference to field data_factory_id of azurerm_data_factory_custom_dataset.
 func (dfcd dataFactoryCustomDatasetAttributes) DataFactoryId() terra.StringValue {
-	return terra.ReferenceString(dfcd.ref.Append("data_factory_id"))
+	return terra.ReferenceAsString(dfcd.ref.Append("data_factory_id"))
 }
 
+// Description returns a reference to field description of azurerm_data_factory_custom_dataset.
 func (dfcd dataFactoryCustomDatasetAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dfcd.ref.Append("description"))
+	return terra.ReferenceAsString(dfcd.ref.Append("description"))
 }
 
+// Folder returns a reference to field folder of azurerm_data_factory_custom_dataset.
 func (dfcd dataFactoryCustomDatasetAttributes) Folder() terra.StringValue {
-	return terra.ReferenceString(dfcd.ref.Append("folder"))
+	return terra.ReferenceAsString(dfcd.ref.Append("folder"))
 }
 
+// Id returns a reference to field id of azurerm_data_factory_custom_dataset.
 func (dfcd dataFactoryCustomDatasetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dfcd.ref.Append("id"))
+	return terra.ReferenceAsString(dfcd.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory_custom_dataset.
 func (dfcd dataFactoryCustomDatasetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dfcd.ref.Append("name"))
+	return terra.ReferenceAsString(dfcd.ref.Append("name"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_data_factory_custom_dataset.
 func (dfcd dataFactoryCustomDatasetAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dfcd.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](dfcd.ref.Append("parameters"))
 }
 
+// SchemaJson returns a reference to field schema_json of azurerm_data_factory_custom_dataset.
 func (dfcd dataFactoryCustomDatasetAttributes) SchemaJson() terra.StringValue {
-	return terra.ReferenceString(dfcd.ref.Append("schema_json"))
+	return terra.ReferenceAsString(dfcd.ref.Append("schema_json"))
 }
 
+// Type returns a reference to field type of azurerm_data_factory_custom_dataset.
 func (dfcd dataFactoryCustomDatasetAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(dfcd.ref.Append("type"))
+	return terra.ReferenceAsString(dfcd.ref.Append("type"))
 }
 
+// TypePropertiesJson returns a reference to field type_properties_json of azurerm_data_factory_custom_dataset.
 func (dfcd dataFactoryCustomDatasetAttributes) TypePropertiesJson() terra.StringValue {
-	return terra.ReferenceString(dfcd.ref.Append("type_properties_json"))
+	return terra.ReferenceAsString(dfcd.ref.Append("type_properties_json"))
 }
 
 func (dfcd dataFactoryCustomDatasetAttributes) LinkedService() terra.ListValue[datafactorycustomdataset.LinkedServiceAttributes] {
-	return terra.ReferenceList[datafactorycustomdataset.LinkedServiceAttributes](dfcd.ref.Append("linked_service"))
+	return terra.ReferenceAsList[datafactorycustomdataset.LinkedServiceAttributes](dfcd.ref.Append("linked_service"))
 }
 
 func (dfcd dataFactoryCustomDatasetAttributes) Timeouts() datafactorycustomdataset.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafactorycustomdataset.TimeoutsAttributes](dfcd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafactorycustomdataset.TimeoutsAttributes](dfcd.ref.Append("timeouts"))
 }
 
 type dataFactoryCustomDatasetState struct {

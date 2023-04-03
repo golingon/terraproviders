@@ -13,24 +13,24 @@ type MavenConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (mc MavenConfigAttributes) InternalRef() terra.Reference {
-	return mc.ref
+func (mc MavenConfigAttributes) InternalRef() (terra.Reference, error) {
+	return mc.ref, nil
 }
 
 func (mc MavenConfigAttributes) InternalWithRef(ref terra.Reference) MavenConfigAttributes {
 	return MavenConfigAttributes{ref: ref}
 }
 
-func (mc MavenConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (mc MavenConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mc.ref.InternalTokens()
 }
 
 func (mc MavenConfigAttributes) AllowSnapshotOverwrites() terra.BoolValue {
-	return terra.ReferenceBool(mc.ref.Append("allow_snapshot_overwrites"))
+	return terra.ReferenceAsBool(mc.ref.Append("allow_snapshot_overwrites"))
 }
 
 func (mc MavenConfigAttributes) VersionPolicy() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("version_policy"))
+	return terra.ReferenceAsString(mc.ref.Append("version_policy"))
 }
 
 type MavenConfigState struct {

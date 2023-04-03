@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCdnFrontdoorSecurityPolicy creates a new instance of [CdnFrontdoorSecurityPolicy].
 func NewCdnFrontdoorSecurityPolicy(name string, args CdnFrontdoorSecurityPolicyArgs) *CdnFrontdoorSecurityPolicy {
 	return &CdnFrontdoorSecurityPolicy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCdnFrontdoorSecurityPolicy(name string, args CdnFrontdoorSecurityPolicyA
 
 var _ terra.Resource = (*CdnFrontdoorSecurityPolicy)(nil)
 
+// CdnFrontdoorSecurityPolicy represents the Terraform resource azurerm_cdn_frontdoor_security_policy.
 type CdnFrontdoorSecurityPolicy struct {
-	Name  string
-	Args  CdnFrontdoorSecurityPolicyArgs
-	state *cdnFrontdoorSecurityPolicyState
+	Name      string
+	Args      CdnFrontdoorSecurityPolicyArgs
+	state     *cdnFrontdoorSecurityPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CdnFrontdoorSecurityPolicy].
 func (cfsp *CdnFrontdoorSecurityPolicy) Type() string {
 	return "azurerm_cdn_frontdoor_security_policy"
 }
 
+// LocalName returns the local name for [CdnFrontdoorSecurityPolicy].
 func (cfsp *CdnFrontdoorSecurityPolicy) LocalName() string {
 	return cfsp.Name
 }
 
+// Configuration returns the configuration (args) for [CdnFrontdoorSecurityPolicy].
 func (cfsp *CdnFrontdoorSecurityPolicy) Configuration() interface{} {
 	return cfsp.Args
 }
 
+// DependOn is used for other resources to depend on [CdnFrontdoorSecurityPolicy].
+func (cfsp *CdnFrontdoorSecurityPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(cfsp)
+}
+
+// Dependencies returns the list of resources [CdnFrontdoorSecurityPolicy] depends_on.
+func (cfsp *CdnFrontdoorSecurityPolicy) Dependencies() terra.Dependencies {
+	return cfsp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CdnFrontdoorSecurityPolicy].
+func (cfsp *CdnFrontdoorSecurityPolicy) LifecycleManagement() *terra.Lifecycle {
+	return cfsp.Lifecycle
+}
+
+// Attributes returns the attributes for [CdnFrontdoorSecurityPolicy].
 func (cfsp *CdnFrontdoorSecurityPolicy) Attributes() cdnFrontdoorSecurityPolicyAttributes {
 	return cdnFrontdoorSecurityPolicyAttributes{ref: terra.ReferenceResource(cfsp)}
 }
 
+// ImportState imports the given attribute values into [CdnFrontdoorSecurityPolicy]'s state.
 func (cfsp *CdnFrontdoorSecurityPolicy) ImportState(av io.Reader) error {
 	cfsp.state = &cdnFrontdoorSecurityPolicyState{}
 	if err := json.NewDecoder(av).Decode(cfsp.state); err != nil {
@@ -49,10 +73,12 @@ func (cfsp *CdnFrontdoorSecurityPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CdnFrontdoorSecurityPolicy] has state.
 func (cfsp *CdnFrontdoorSecurityPolicy) State() (*cdnFrontdoorSecurityPolicyState, bool) {
 	return cfsp.state, cfsp.state != nil
 }
 
+// StateMust returns the state for [CdnFrontdoorSecurityPolicy]. Panics if the state is nil.
 func (cfsp *CdnFrontdoorSecurityPolicy) StateMust() *cdnFrontdoorSecurityPolicyState {
 	if cfsp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cfsp.Type(), cfsp.LocalName()))
@@ -60,10 +86,7 @@ func (cfsp *CdnFrontdoorSecurityPolicy) StateMust() *cdnFrontdoorSecurityPolicyS
 	return cfsp.state
 }
 
-func (cfsp *CdnFrontdoorSecurityPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(cfsp)
-}
-
+// CdnFrontdoorSecurityPolicyArgs contains the configurations for azurerm_cdn_frontdoor_security_policy.
 type CdnFrontdoorSecurityPolicyArgs struct {
 	// CdnFrontdoorProfileId: string, required
 	CdnFrontdoorProfileId terra.StringValue `hcl:"cdn_frontdoor_profile_id,attr" validate:"required"`
@@ -75,31 +98,32 @@ type CdnFrontdoorSecurityPolicyArgs struct {
 	SecurityPolicies *cdnfrontdoorsecuritypolicy.SecurityPolicies `hcl:"security_policies,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *cdnfrontdoorsecuritypolicy.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that CdnFrontdoorSecurityPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cdnFrontdoorSecurityPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// CdnFrontdoorProfileId returns a reference to field cdn_frontdoor_profile_id of azurerm_cdn_frontdoor_security_policy.
 func (cfsp cdnFrontdoorSecurityPolicyAttributes) CdnFrontdoorProfileId() terra.StringValue {
-	return terra.ReferenceString(cfsp.ref.Append("cdn_frontdoor_profile_id"))
+	return terra.ReferenceAsString(cfsp.ref.Append("cdn_frontdoor_profile_id"))
 }
 
+// Id returns a reference to field id of azurerm_cdn_frontdoor_security_policy.
 func (cfsp cdnFrontdoorSecurityPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cfsp.ref.Append("id"))
+	return terra.ReferenceAsString(cfsp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_cdn_frontdoor_security_policy.
 func (cfsp cdnFrontdoorSecurityPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cfsp.ref.Append("name"))
+	return terra.ReferenceAsString(cfsp.ref.Append("name"))
 }
 
 func (cfsp cdnFrontdoorSecurityPolicyAttributes) SecurityPolicies() terra.ListValue[cdnfrontdoorsecuritypolicy.SecurityPoliciesAttributes] {
-	return terra.ReferenceList[cdnfrontdoorsecuritypolicy.SecurityPoliciesAttributes](cfsp.ref.Append("security_policies"))
+	return terra.ReferenceAsList[cdnfrontdoorsecuritypolicy.SecurityPoliciesAttributes](cfsp.ref.Append("security_policies"))
 }
 
 func (cfsp cdnFrontdoorSecurityPolicyAttributes) Timeouts() cdnfrontdoorsecuritypolicy.TimeoutsAttributes {
-	return terra.ReferenceSingle[cdnfrontdoorsecuritypolicy.TimeoutsAttributes](cfsp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cdnfrontdoorsecuritypolicy.TimeoutsAttributes](cfsp.ref.Append("timeouts"))
 }
 
 type cdnFrontdoorSecurityPolicyState struct {

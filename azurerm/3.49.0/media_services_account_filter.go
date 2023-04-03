@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMediaServicesAccountFilter creates a new instance of [MediaServicesAccountFilter].
 func NewMediaServicesAccountFilter(name string, args MediaServicesAccountFilterArgs) *MediaServicesAccountFilter {
 	return &MediaServicesAccountFilter{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMediaServicesAccountFilter(name string, args MediaServicesAccountFilterA
 
 var _ terra.Resource = (*MediaServicesAccountFilter)(nil)
 
+// MediaServicesAccountFilter represents the Terraform resource azurerm_media_services_account_filter.
 type MediaServicesAccountFilter struct {
-	Name  string
-	Args  MediaServicesAccountFilterArgs
-	state *mediaServicesAccountFilterState
+	Name      string
+	Args      MediaServicesAccountFilterArgs
+	state     *mediaServicesAccountFilterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MediaServicesAccountFilter].
 func (msaf *MediaServicesAccountFilter) Type() string {
 	return "azurerm_media_services_account_filter"
 }
 
+// LocalName returns the local name for [MediaServicesAccountFilter].
 func (msaf *MediaServicesAccountFilter) LocalName() string {
 	return msaf.Name
 }
 
+// Configuration returns the configuration (args) for [MediaServicesAccountFilter].
 func (msaf *MediaServicesAccountFilter) Configuration() interface{} {
 	return msaf.Args
 }
 
+// DependOn is used for other resources to depend on [MediaServicesAccountFilter].
+func (msaf *MediaServicesAccountFilter) DependOn() terra.Reference {
+	return terra.ReferenceResource(msaf)
+}
+
+// Dependencies returns the list of resources [MediaServicesAccountFilter] depends_on.
+func (msaf *MediaServicesAccountFilter) Dependencies() terra.Dependencies {
+	return msaf.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MediaServicesAccountFilter].
+func (msaf *MediaServicesAccountFilter) LifecycleManagement() *terra.Lifecycle {
+	return msaf.Lifecycle
+}
+
+// Attributes returns the attributes for [MediaServicesAccountFilter].
 func (msaf *MediaServicesAccountFilter) Attributes() mediaServicesAccountFilterAttributes {
 	return mediaServicesAccountFilterAttributes{ref: terra.ReferenceResource(msaf)}
 }
 
+// ImportState imports the given attribute values into [MediaServicesAccountFilter]'s state.
 func (msaf *MediaServicesAccountFilter) ImportState(av io.Reader) error {
 	msaf.state = &mediaServicesAccountFilterState{}
 	if err := json.NewDecoder(av).Decode(msaf.state); err != nil {
@@ -49,10 +73,12 @@ func (msaf *MediaServicesAccountFilter) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MediaServicesAccountFilter] has state.
 func (msaf *MediaServicesAccountFilter) State() (*mediaServicesAccountFilterState, bool) {
 	return msaf.state, msaf.state != nil
 }
 
+// StateMust returns the state for [MediaServicesAccountFilter]. Panics if the state is nil.
 func (msaf *MediaServicesAccountFilter) StateMust() *mediaServicesAccountFilterState {
 	if msaf.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", msaf.Type(), msaf.LocalName()))
@@ -60,10 +86,7 @@ func (msaf *MediaServicesAccountFilter) StateMust() *mediaServicesAccountFilterS
 	return msaf.state
 }
 
-func (msaf *MediaServicesAccountFilter) DependOn() terra.Reference {
-	return terra.ReferenceResource(msaf)
-}
-
+// MediaServicesAccountFilterArgs contains the configurations for azurerm_media_services_account_filter.
 type MediaServicesAccountFilterArgs struct {
 	// FirstQualityBitrate: number, optional
 	FirstQualityBitrate terra.NumberValue `hcl:"first_quality_bitrate,attr"`
@@ -81,43 +104,46 @@ type MediaServicesAccountFilterArgs struct {
 	Timeouts *mediaservicesaccountfilter.Timeouts `hcl:"timeouts,block"`
 	// TrackSelection: min=0
 	TrackSelection []mediaservicesaccountfilter.TrackSelection `hcl:"track_selection,block" validate:"min=0"`
-	// DependsOn contains resources that MediaServicesAccountFilter depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mediaServicesAccountFilterAttributes struct {
 	ref terra.Reference
 }
 
+// FirstQualityBitrate returns a reference to field first_quality_bitrate of azurerm_media_services_account_filter.
 func (msaf mediaServicesAccountFilterAttributes) FirstQualityBitrate() terra.NumberValue {
-	return terra.ReferenceNumber(msaf.ref.Append("first_quality_bitrate"))
+	return terra.ReferenceAsNumber(msaf.ref.Append("first_quality_bitrate"))
 }
 
+// Id returns a reference to field id of azurerm_media_services_account_filter.
 func (msaf mediaServicesAccountFilterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(msaf.ref.Append("id"))
+	return terra.ReferenceAsString(msaf.ref.Append("id"))
 }
 
+// MediaServicesAccountName returns a reference to field media_services_account_name of azurerm_media_services_account_filter.
 func (msaf mediaServicesAccountFilterAttributes) MediaServicesAccountName() terra.StringValue {
-	return terra.ReferenceString(msaf.ref.Append("media_services_account_name"))
+	return terra.ReferenceAsString(msaf.ref.Append("media_services_account_name"))
 }
 
+// Name returns a reference to field name of azurerm_media_services_account_filter.
 func (msaf mediaServicesAccountFilterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(msaf.ref.Append("name"))
+	return terra.ReferenceAsString(msaf.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_media_services_account_filter.
 func (msaf mediaServicesAccountFilterAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(msaf.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(msaf.ref.Append("resource_group_name"))
 }
 
 func (msaf mediaServicesAccountFilterAttributes) PresentationTimeRange() terra.ListValue[mediaservicesaccountfilter.PresentationTimeRangeAttributes] {
-	return terra.ReferenceList[mediaservicesaccountfilter.PresentationTimeRangeAttributes](msaf.ref.Append("presentation_time_range"))
+	return terra.ReferenceAsList[mediaservicesaccountfilter.PresentationTimeRangeAttributes](msaf.ref.Append("presentation_time_range"))
 }
 
 func (msaf mediaServicesAccountFilterAttributes) Timeouts() mediaservicesaccountfilter.TimeoutsAttributes {
-	return terra.ReferenceSingle[mediaservicesaccountfilter.TimeoutsAttributes](msaf.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[mediaservicesaccountfilter.TimeoutsAttributes](msaf.ref.Append("timeouts"))
 }
 
 func (msaf mediaServicesAccountFilterAttributes) TrackSelection() terra.ListValue[mediaservicesaccountfilter.TrackSelectionAttributes] {
-	return terra.ReferenceList[mediaservicesaccountfilter.TrackSelectionAttributes](msaf.ref.Append("track_selection"))
+	return terra.ReferenceAsList[mediaservicesaccountfilter.TrackSelectionAttributes](msaf.ref.Append("track_selection"))
 }
 
 type mediaServicesAccountFilterState struct {

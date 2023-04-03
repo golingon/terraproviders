@@ -35,7 +35,7 @@ func (de DnsEntryAttributes) InternalWithRef(ref terra.Reference) DnsEntryAttrib
 	return DnsEntryAttributes{ref: ref}
 }
 
-func (de DnsEntryAttributes) InternalTokens() hclwrite.Tokens {
+func (de DnsEntryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return de.ref.InternalTokens()
 }
 
@@ -59,7 +59,7 @@ func (do DnsOptionsAttributes) InternalWithRef(ref terra.Reference) DnsOptionsAt
 	return DnsOptionsAttributes{ref: ref}
 }
 
-func (do DnsOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (do DnsOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return do.ref.InternalTokens()
 }
 
@@ -79,7 +79,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSubnet creates a new instance of [Subnet].
 func NewSubnet(name string, args SubnetArgs) *Subnet {
 	return &Subnet{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSubnet(name string, args SubnetArgs) *Subnet {
 
 var _ terra.Resource = (*Subnet)(nil)
 
+// Subnet represents the Terraform resource azurerm_subnet.
 type Subnet struct {
-	Name  string
-	Args  SubnetArgs
-	state *subnetState
+	Name      string
+	Args      SubnetArgs
+	state     *subnetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Subnet].
 func (s *Subnet) Type() string {
 	return "azurerm_subnet"
 }
 
+// LocalName returns the local name for [Subnet].
 func (s *Subnet) LocalName() string {
 	return s.Name
 }
 
+// Configuration returns the configuration (args) for [Subnet].
 func (s *Subnet) Configuration() interface{} {
 	return s.Args
 }
 
+// DependOn is used for other resources to depend on [Subnet].
+func (s *Subnet) DependOn() terra.Reference {
+	return terra.ReferenceResource(s)
+}
+
+// Dependencies returns the list of resources [Subnet] depends_on.
+func (s *Subnet) Dependencies() terra.Dependencies {
+	return s.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Subnet].
+func (s *Subnet) LifecycleManagement() *terra.Lifecycle {
+	return s.Lifecycle
+}
+
+// Attributes returns the attributes for [Subnet].
 func (s *Subnet) Attributes() subnetAttributes {
 	return subnetAttributes{ref: terra.ReferenceResource(s)}
 }
 
+// ImportState imports the given attribute values into [Subnet]'s state.
 func (s *Subnet) ImportState(av io.Reader) error {
 	s.state = &subnetState{}
 	if err := json.NewDecoder(av).Decode(s.state); err != nil {
@@ -49,10 +73,12 @@ func (s *Subnet) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Subnet] has state.
 func (s *Subnet) State() (*subnetState, bool) {
 	return s.state, s.state != nil
 }
 
+// StateMust returns the state for [Subnet]. Panics if the state is nil.
 func (s *Subnet) StateMust() *subnetState {
 	if s.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", s.Type(), s.LocalName()))
@@ -60,10 +86,7 @@ func (s *Subnet) StateMust() *subnetState {
 	return s.state
 }
 
-func (s *Subnet) DependOn() terra.Reference {
-	return terra.ReferenceResource(s)
-}
-
+// SubnetArgs contains the configurations for azurerm_subnet.
 type SubnetArgs struct {
 	// AddressPrefixes: list of string, required
 	AddressPrefixes terra.ListValue[terra.StringValue] `hcl:"address_prefixes,attr" validate:"required"`
@@ -91,63 +114,72 @@ type SubnetArgs struct {
 	Delegation []subnet.Delegation `hcl:"delegation,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *subnet.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that Subnet depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type subnetAttributes struct {
 	ref terra.Reference
 }
 
+// AddressPrefixes returns a reference to field address_prefixes of azurerm_subnet.
 func (s subnetAttributes) AddressPrefixes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](s.ref.Append("address_prefixes"))
+	return terra.ReferenceAsList[terra.StringValue](s.ref.Append("address_prefixes"))
 }
 
+// EnforcePrivateLinkEndpointNetworkPolicies returns a reference to field enforce_private_link_endpoint_network_policies of azurerm_subnet.
 func (s subnetAttributes) EnforcePrivateLinkEndpointNetworkPolicies() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("enforce_private_link_endpoint_network_policies"))
+	return terra.ReferenceAsBool(s.ref.Append("enforce_private_link_endpoint_network_policies"))
 }
 
+// EnforcePrivateLinkServiceNetworkPolicies returns a reference to field enforce_private_link_service_network_policies of azurerm_subnet.
 func (s subnetAttributes) EnforcePrivateLinkServiceNetworkPolicies() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("enforce_private_link_service_network_policies"))
+	return terra.ReferenceAsBool(s.ref.Append("enforce_private_link_service_network_policies"))
 }
 
+// Id returns a reference to field id of azurerm_subnet.
 func (s subnetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("id"))
+	return terra.ReferenceAsString(s.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_subnet.
 func (s subnetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
+// PrivateEndpointNetworkPoliciesEnabled returns a reference to field private_endpoint_network_policies_enabled of azurerm_subnet.
 func (s subnetAttributes) PrivateEndpointNetworkPoliciesEnabled() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("private_endpoint_network_policies_enabled"))
+	return terra.ReferenceAsBool(s.ref.Append("private_endpoint_network_policies_enabled"))
 }
 
+// PrivateLinkServiceNetworkPoliciesEnabled returns a reference to field private_link_service_network_policies_enabled of azurerm_subnet.
 func (s subnetAttributes) PrivateLinkServiceNetworkPoliciesEnabled() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("private_link_service_network_policies_enabled"))
+	return terra.ReferenceAsBool(s.ref.Append("private_link_service_network_policies_enabled"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_subnet.
 func (s subnetAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(s.ref.Append("resource_group_name"))
 }
 
+// ServiceEndpointPolicyIds returns a reference to field service_endpoint_policy_ids of azurerm_subnet.
 func (s subnetAttributes) ServiceEndpointPolicyIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("service_endpoint_policy_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("service_endpoint_policy_ids"))
 }
 
+// ServiceEndpoints returns a reference to field service_endpoints of azurerm_subnet.
 func (s subnetAttributes) ServiceEndpoints() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("service_endpoints"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("service_endpoints"))
 }
 
+// VirtualNetworkName returns a reference to field virtual_network_name of azurerm_subnet.
 func (s subnetAttributes) VirtualNetworkName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("virtual_network_name"))
+	return terra.ReferenceAsString(s.ref.Append("virtual_network_name"))
 }
 
 func (s subnetAttributes) Delegation() terra.ListValue[subnet.DelegationAttributes] {
-	return terra.ReferenceList[subnet.DelegationAttributes](s.ref.Append("delegation"))
+	return terra.ReferenceAsList[subnet.DelegationAttributes](s.ref.Append("delegation"))
 }
 
 func (s subnetAttributes) Timeouts() subnet.TimeoutsAttributes {
-	return terra.ReferenceSingle[subnet.TimeoutsAttributes](s.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[subnet.TimeoutsAttributes](s.ref.Append("timeouts"))
 }
 
 type subnetState struct {

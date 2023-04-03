@@ -37,112 +37,112 @@ type SqlServerUserDetailsAttributes struct {
 	ref terra.Reference
 }
 
-func (ssud SqlServerUserDetailsAttributes) InternalRef() terra.Reference {
-	return ssud.ref
+func (ssud SqlServerUserDetailsAttributes) InternalRef() (terra.Reference, error) {
+	return ssud.ref, nil
 }
 
 func (ssud SqlServerUserDetailsAttributes) InternalWithRef(ref terra.Reference) SqlServerUserDetailsAttributes {
 	return SqlServerUserDetailsAttributes{ref: ref}
 }
 
-func (ssud SqlServerUserDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (ssud SqlServerUserDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ssud.ref.InternalTokens()
 }
 
 func (ssud SqlServerUserDetailsAttributes) Disabled() terra.BoolValue {
-	return terra.ReferenceBool(ssud.ref.Append("disabled"))
+	return terra.ReferenceAsBool(ssud.ref.Append("disabled"))
 }
 
 func (ssud SqlServerUserDetailsAttributes) ServerRoles() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ssud.ref.Append("server_roles"))
+	return terra.ReferenceAsList[terra.StringValue](ssud.ref.Append("server_roles"))
 }
 
 type PasswordPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (pp PasswordPolicyAttributes) InternalRef() terra.Reference {
-	return pp.ref
+func (pp PasswordPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return pp.ref, nil
 }
 
 func (pp PasswordPolicyAttributes) InternalWithRef(ref terra.Reference) PasswordPolicyAttributes {
 	return PasswordPolicyAttributes{ref: ref}
 }
 
-func (pp PasswordPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (pp PasswordPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pp.ref.InternalTokens()
 }
 
 func (pp PasswordPolicyAttributes) AllowedFailedAttempts() terra.NumberValue {
-	return terra.ReferenceNumber(pp.ref.Append("allowed_failed_attempts"))
+	return terra.ReferenceAsNumber(pp.ref.Append("allowed_failed_attempts"))
 }
 
 func (pp PasswordPolicyAttributes) EnableFailedAttemptsCheck() terra.BoolValue {
-	return terra.ReferenceBool(pp.ref.Append("enable_failed_attempts_check"))
+	return terra.ReferenceAsBool(pp.ref.Append("enable_failed_attempts_check"))
 }
 
 func (pp PasswordPolicyAttributes) EnablePasswordVerification() terra.BoolValue {
-	return terra.ReferenceBool(pp.ref.Append("enable_password_verification"))
+	return terra.ReferenceAsBool(pp.ref.Append("enable_password_verification"))
 }
 
 func (pp PasswordPolicyAttributes) PasswordExpirationDuration() terra.StringValue {
-	return terra.ReferenceString(pp.ref.Append("password_expiration_duration"))
+	return terra.ReferenceAsString(pp.ref.Append("password_expiration_duration"))
 }
 
 func (pp PasswordPolicyAttributes) Status() terra.ListValue[StatusAttributes] {
-	return terra.ReferenceList[StatusAttributes](pp.ref.Append("status"))
+	return terra.ReferenceAsList[StatusAttributes](pp.ref.Append("status"))
 }
 
 type StatusAttributes struct {
 	ref terra.Reference
 }
 
-func (s StatusAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s StatusAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s StatusAttributes) InternalWithRef(ref terra.Reference) StatusAttributes {
 	return StatusAttributes{ref: ref}
 }
 
-func (s StatusAttributes) InternalTokens() hclwrite.Tokens {
+func (s StatusAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s StatusAttributes) Locked() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("locked"))
+	return terra.ReferenceAsBool(s.ref.Append("locked"))
 }
 
 func (s StatusAttributes) PasswordExpirationTime() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("password_expiration_time"))
+	return terra.ReferenceAsString(s.ref.Append("password_expiration_time"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type SqlServerUserDetailsState struct {

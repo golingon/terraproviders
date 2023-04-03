@@ -94,7 +94,7 @@ func (cs CapacitySpecificationAttributes) InternalWithRef(ref terra.Reference) C
 	return CapacitySpecificationAttributes{ref: ref}
 }
 
-func (cs CapacitySpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (cs CapacitySpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cs.ref.InternalTokens()
 }
 
@@ -122,7 +122,7 @@ func (c CommentAttributes) InternalWithRef(ref terra.Reference) CommentAttribute
 	return CommentAttributes{ref: ref}
 }
 
-func (c CommentAttributes) InternalTokens() hclwrite.Tokens {
+func (c CommentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -142,7 +142,7 @@ func (es EncryptionSpecificationAttributes) InternalWithRef(ref terra.Reference)
 	return EncryptionSpecificationAttributes{ref: ref}
 }
 
-func (es EncryptionSpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (es EncryptionSpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return es.ref.InternalTokens()
 }
 
@@ -166,7 +166,7 @@ func (pitr PointInTimeRecoveryAttributes) InternalWithRef(ref terra.Reference) P
 	return PointInTimeRecoveryAttributes{ref: ref}
 }
 
-func (pitr PointInTimeRecoveryAttributes) InternalTokens() hclwrite.Tokens {
+func (pitr PointInTimeRecoveryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pitr.ref.InternalTokens()
 }
 
@@ -186,7 +186,7 @@ func (sd SchemaDefinitionAttributes) InternalWithRef(ref terra.Reference) Schema
 	return SchemaDefinitionAttributes{ref: ref}
 }
 
-func (sd SchemaDefinitionAttributes) InternalTokens() hclwrite.Tokens {
+func (sd SchemaDefinitionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sd.ref.InternalTokens()
 }
 
@@ -218,7 +218,7 @@ func (ck ClusteringKeyAttributes) InternalWithRef(ref terra.Reference) Clusterin
 	return ClusteringKeyAttributes{ref: ref}
 }
 
-func (ck ClusteringKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (ck ClusteringKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ck.ref.InternalTokens()
 }
 
@@ -242,7 +242,7 @@ func (c ColumnAttributes) InternalWithRef(ref terra.Reference) ColumnAttributes 
 	return ColumnAttributes{ref: ref}
 }
 
-func (c ColumnAttributes) InternalTokens() hclwrite.Tokens {
+func (c ColumnAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -266,7 +266,7 @@ func (pk PartitionKeyAttributes) InternalWithRef(ref terra.Reference) PartitionK
 	return PartitionKeyAttributes{ref: ref}
 }
 
-func (pk PartitionKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (pk PartitionKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pk.ref.InternalTokens()
 }
 
@@ -286,7 +286,7 @@ func (sc StaticColumnAttributes) InternalWithRef(ref terra.Reference) StaticColu
 	return StaticColumnAttributes{ref: ref}
 }
 
-func (sc StaticColumnAttributes) InternalTokens() hclwrite.Tokens {
+func (sc StaticColumnAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -306,7 +306,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -334,7 +334,7 @@ func (t TtlAttributes) InternalWithRef(ref terra.Reference) TtlAttributes {
 	return TtlAttributes{ref: ref}
 }
 
-func (t TtlAttributes) InternalTokens() hclwrite.Tokens {
+func (t TtlAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

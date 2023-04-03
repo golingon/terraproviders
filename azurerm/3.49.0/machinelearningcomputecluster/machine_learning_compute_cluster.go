@@ -45,116 +45,116 @@ type IdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (i IdentityAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IdentityAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IdentityAttributes) InternalWithRef(ref terra.Reference) IdentityAttributes {
 	return IdentityAttributes{ref: ref}
 }
 
-func (i IdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (i IdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IdentityAttributes) IdentityIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i.ref.Append("identity_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](i.ref.Append("identity_ids"))
 }
 
 func (i IdentityAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("principal_id"))
+	return terra.ReferenceAsString(i.ref.Append("principal_id"))
 }
 
 func (i IdentityAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(i.ref.Append("tenant_id"))
 }
 
 func (i IdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("type"))
+	return terra.ReferenceAsString(i.ref.Append("type"))
 }
 
 type ScaleSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ss ScaleSettingsAttributes) InternalRef() terra.Reference {
-	return ss.ref
+func (ss ScaleSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ss.ref, nil
 }
 
 func (ss ScaleSettingsAttributes) InternalWithRef(ref terra.Reference) ScaleSettingsAttributes {
 	return ScaleSettingsAttributes{ref: ref}
 }
 
-func (ss ScaleSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ss ScaleSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ss.ref.InternalTokens()
 }
 
 func (ss ScaleSettingsAttributes) MaxNodeCount() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("max_node_count"))
+	return terra.ReferenceAsNumber(ss.ref.Append("max_node_count"))
 }
 
 func (ss ScaleSettingsAttributes) MinNodeCount() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("min_node_count"))
+	return terra.ReferenceAsNumber(ss.ref.Append("min_node_count"))
 }
 
 func (ss ScaleSettingsAttributes) ScaleDownNodesAfterIdleDuration() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("scale_down_nodes_after_idle_duration"))
+	return terra.ReferenceAsString(ss.ref.Append("scale_down_nodes_after_idle_duration"))
 }
 
 type SshAttributes struct {
 	ref terra.Reference
 }
 
-func (s SshAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SshAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SshAttributes) InternalWithRef(ref terra.Reference) SshAttributes {
 	return SshAttributes{ref: ref}
 }
 
-func (s SshAttributes) InternalTokens() hclwrite.Tokens {
+func (s SshAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SshAttributes) AdminPassword() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("admin_password"))
+	return terra.ReferenceAsString(s.ref.Append("admin_password"))
 }
 
 func (s SshAttributes) AdminUsername() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("admin_username"))
+	return terra.ReferenceAsString(s.ref.Append("admin_username"))
 }
 
 func (s SshAttributes) KeyValue() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("key_value"))
+	return terra.ReferenceAsString(s.ref.Append("key_value"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type IdentityState struct {

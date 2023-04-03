@@ -34,104 +34,104 @@ type UrlDispatchRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (udr UrlDispatchRuleAttributes) InternalRef() terra.Reference {
-	return udr.ref
+func (udr UrlDispatchRuleAttributes) InternalRef() (terra.Reference, error) {
+	return udr.ref, nil
 }
 
 func (udr UrlDispatchRuleAttributes) InternalWithRef(ref terra.Reference) UrlDispatchRuleAttributes {
 	return UrlDispatchRuleAttributes{ref: ref}
 }
 
-func (udr UrlDispatchRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (udr UrlDispatchRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return udr.ref.InternalTokens()
 }
 
 func (udr UrlDispatchRuleAttributes) Domain() terra.StringValue {
-	return terra.ReferenceString(udr.ref.Append("domain"))
+	return terra.ReferenceAsString(udr.ref.Append("domain"))
 }
 
 func (udr UrlDispatchRuleAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(udr.ref.Append("path"))
+	return terra.ReferenceAsString(udr.ref.Append("path"))
 }
 
 func (udr UrlDispatchRuleAttributes) Service() terra.StringValue {
-	return terra.ReferenceString(udr.ref.Append("service"))
+	return terra.ReferenceAsString(udr.ref.Append("service"))
 }
 
 type FeatureSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (fs FeatureSettingsAttributes) InternalRef() terra.Reference {
-	return fs.ref
+func (fs FeatureSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return fs.ref, nil
 }
 
 func (fs FeatureSettingsAttributes) InternalWithRef(ref terra.Reference) FeatureSettingsAttributes {
 	return FeatureSettingsAttributes{ref: ref}
 }
 
-func (fs FeatureSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (fs FeatureSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fs.ref.InternalTokens()
 }
 
 func (fs FeatureSettingsAttributes) SplitHealthChecks() terra.BoolValue {
-	return terra.ReferenceBool(fs.ref.Append("split_health_checks"))
+	return terra.ReferenceAsBool(fs.ref.Append("split_health_checks"))
 }
 
 type IapAttributes struct {
 	ref terra.Reference
 }
 
-func (i IapAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IapAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IapAttributes) InternalWithRef(ref terra.Reference) IapAttributes {
 	return IapAttributes{ref: ref}
 }
 
-func (i IapAttributes) InternalTokens() hclwrite.Tokens {
+func (i IapAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IapAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(i.ref.Append("enabled"))
+	return terra.ReferenceAsBool(i.ref.Append("enabled"))
 }
 
 func (i IapAttributes) Oauth2ClientId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("oauth2_client_id"))
+	return terra.ReferenceAsString(i.ref.Append("oauth2_client_id"))
 }
 
 func (i IapAttributes) Oauth2ClientSecret() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("oauth2_client_secret"))
+	return terra.ReferenceAsString(i.ref.Append("oauth2_client_secret"))
 }
 
 func (i IapAttributes) Oauth2ClientSecretSha256() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("oauth2_client_secret_sha256"))
+	return terra.ReferenceAsString(i.ref.Append("oauth2_client_secret_sha256"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type UrlDispatchRuleState struct {

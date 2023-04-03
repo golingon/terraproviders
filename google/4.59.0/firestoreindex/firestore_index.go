@@ -27,52 +27,52 @@ type FieldsAttributes struct {
 	ref terra.Reference
 }
 
-func (f FieldsAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FieldsAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FieldsAttributes) InternalWithRef(ref terra.Reference) FieldsAttributes {
 	return FieldsAttributes{ref: ref}
 }
 
-func (f FieldsAttributes) InternalTokens() hclwrite.Tokens {
+func (f FieldsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
 func (f FieldsAttributes) ArrayConfig() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("array_config"))
+	return terra.ReferenceAsString(f.ref.Append("array_config"))
 }
 
 func (f FieldsAttributes) FieldPath() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("field_path"))
+	return terra.ReferenceAsString(f.ref.Append("field_path"))
 }
 
 func (f FieldsAttributes) Order() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("order"))
+	return terra.ReferenceAsString(f.ref.Append("order"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type FieldsState struct {

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataPlatformImage creates a new instance of [DataPlatformImage].
 func NewDataPlatformImage(name string, args DataPlatformImageArgs) *DataPlatformImage {
 	return &DataPlatformImage{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataPlatformImage(name string, args DataPlatformImageArgs) *DataPlatform
 
 var _ terra.DataResource = (*DataPlatformImage)(nil)
 
+// DataPlatformImage represents the Terraform data resource azurerm_platform_image.
 type DataPlatformImage struct {
 	Name string
 	Args DataPlatformImageArgs
 }
 
+// DataSource returns the Terraform object type for [DataPlatformImage].
 func (pi *DataPlatformImage) DataSource() string {
 	return "azurerm_platform_image"
 }
 
+// LocalName returns the local name for [DataPlatformImage].
 func (pi *DataPlatformImage) LocalName() string {
 	return pi.Name
 }
 
+// Configuration returns the configuration (args) for [DataPlatformImage].
 func (pi *DataPlatformImage) Configuration() interface{} {
 	return pi.Args
 }
 
+// Attributes returns the attributes for [DataPlatformImage].
 func (pi *DataPlatformImage) Attributes() dataPlatformImageAttributes {
 	return dataPlatformImageAttributes{ref: terra.ReferenceDataResource(pi)}
 }
 
+// DataPlatformImageArgs contains the configurations for azurerm_platform_image.
 type DataPlatformImageArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -57,30 +64,36 @@ type dataPlatformImageAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_platform_image.
 func (pi dataPlatformImageAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("id"))
+	return terra.ReferenceAsString(pi.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_platform_image.
 func (pi dataPlatformImageAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("location"))
+	return terra.ReferenceAsString(pi.ref.Append("location"))
 }
 
+// Offer returns a reference to field offer of azurerm_platform_image.
 func (pi dataPlatformImageAttributes) Offer() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("offer"))
+	return terra.ReferenceAsString(pi.ref.Append("offer"))
 }
 
+// Publisher returns a reference to field publisher of azurerm_platform_image.
 func (pi dataPlatformImageAttributes) Publisher() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("publisher"))
+	return terra.ReferenceAsString(pi.ref.Append("publisher"))
 }
 
+// Sku returns a reference to field sku of azurerm_platform_image.
 func (pi dataPlatformImageAttributes) Sku() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("sku"))
+	return terra.ReferenceAsString(pi.ref.Append("sku"))
 }
 
+// Version returns a reference to field version of azurerm_platform_image.
 func (pi dataPlatformImageAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("version"))
+	return terra.ReferenceAsString(pi.ref.Append("version"))
 }
 
 func (pi dataPlatformImageAttributes) Timeouts() dataplatformimage.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataplatformimage.TimeoutsAttributes](pi.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataplatformimage.TimeoutsAttributes](pi.ref.Append("timeouts"))
 }

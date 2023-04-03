@@ -53,7 +53,7 @@ func (pi PartitionIndexAttributes) InternalWithRef(ref terra.Reference) Partitio
 	return PartitionIndexAttributes{ref: ref}
 }
 
-func (pi PartitionIndexAttributes) InternalTokens() hclwrite.Tokens {
+func (pi PartitionIndexAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pi.ref.InternalTokens()
 }
 
@@ -81,7 +81,7 @@ func (pk PartitionKeysAttributes) InternalWithRef(ref terra.Reference) Partition
 	return PartitionKeysAttributes{ref: ref}
 }
 
-func (pk PartitionKeysAttributes) InternalTokens() hclwrite.Tokens {
+func (pk PartitionKeysAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pk.ref.InternalTokens()
 }
 
@@ -109,7 +109,7 @@ func (sd StorageDescriptorAttributes) InternalWithRef(ref terra.Reference) Stora
 	return StorageDescriptorAttributes{ref: ref}
 }
 
-func (sd StorageDescriptorAttributes) InternalTokens() hclwrite.Tokens {
+func (sd StorageDescriptorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sd.ref.InternalTokens()
 }
 
@@ -177,7 +177,7 @@ func (c ColumnsAttributes) InternalWithRef(ref terra.Reference) ColumnsAttribute
 	return ColumnsAttributes{ref: ref}
 }
 
-func (c ColumnsAttributes) InternalTokens() hclwrite.Tokens {
+func (c ColumnsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -209,7 +209,7 @@ func (sr SchemaReferenceAttributes) InternalWithRef(ref terra.Reference) SchemaR
 	return SchemaReferenceAttributes{ref: ref}
 }
 
-func (sr SchemaReferenceAttributes) InternalTokens() hclwrite.Tokens {
+func (sr SchemaReferenceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sr.ref.InternalTokens()
 }
 
@@ -237,7 +237,7 @@ func (si SchemaIdAttributes) InternalWithRef(ref terra.Reference) SchemaIdAttrib
 	return SchemaIdAttributes{ref: ref}
 }
 
-func (si SchemaIdAttributes) InternalTokens() hclwrite.Tokens {
+func (si SchemaIdAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return si.ref.InternalTokens()
 }
 
@@ -265,7 +265,7 @@ func (sdi SerDeInfoAttributes) InternalWithRef(ref terra.Reference) SerDeInfoAtt
 	return SerDeInfoAttributes{ref: ref}
 }
 
-func (sdi SerDeInfoAttributes) InternalTokens() hclwrite.Tokens {
+func (sdi SerDeInfoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sdi.ref.InternalTokens()
 }
 
@@ -293,7 +293,7 @@ func (si SkewedInfoAttributes) InternalWithRef(ref terra.Reference) SkewedInfoAt
 	return SkewedInfoAttributes{ref: ref}
 }
 
-func (si SkewedInfoAttributes) InternalTokens() hclwrite.Tokens {
+func (si SkewedInfoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return si.ref.InternalTokens()
 }
 
@@ -321,7 +321,7 @@ func (sc SortColumnsAttributes) InternalWithRef(ref terra.Reference) SortColumns
 	return SortColumnsAttributes{ref: ref}
 }
 
-func (sc SortColumnsAttributes) InternalTokens() hclwrite.Tokens {
+func (sc SortColumnsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -345,7 +345,7 @@ func (tt TargetTableAttributes) InternalWithRef(ref terra.Reference) TargetTable
 	return TargetTableAttributes{ref: ref}
 }
 
-func (tt TargetTableAttributes) InternalTokens() hclwrite.Tokens {
+func (tt TargetTableAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tt.ref.InternalTokens()
 }
 

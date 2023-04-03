@@ -116,7 +116,7 @@ func (es EphemeralStorageAttributes) InternalWithRef(ref terra.Reference) Epheme
 	return EphemeralStorageAttributes{ref: ref}
 }
 
-func (es EphemeralStorageAttributes) InternalTokens() hclwrite.Tokens {
+func (es EphemeralStorageAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return es.ref.InternalTokens()
 }
 
@@ -136,7 +136,7 @@ func (ia InferenceAcceleratorAttributes) InternalWithRef(ref terra.Reference) In
 	return InferenceAcceleratorAttributes{ref: ref}
 }
 
-func (ia InferenceAcceleratorAttributes) InternalTokens() hclwrite.Tokens {
+func (ia InferenceAcceleratorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ia.ref.InternalTokens()
 }
 
@@ -160,7 +160,7 @@ func (pc PlacementConstraintsAttributes) InternalWithRef(ref terra.Reference) Pl
 	return PlacementConstraintsAttributes{ref: ref}
 }
 
-func (pc PlacementConstraintsAttributes) InternalTokens() hclwrite.Tokens {
+func (pc PlacementConstraintsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
@@ -184,7 +184,7 @@ func (pc ProxyConfigurationAttributes) InternalWithRef(ref terra.Reference) Prox
 	return ProxyConfigurationAttributes{ref: ref}
 }
 
-func (pc ProxyConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (pc ProxyConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
@@ -212,7 +212,7 @@ func (rp RuntimePlatformAttributes) InternalWithRef(ref terra.Reference) Runtime
 	return RuntimePlatformAttributes{ref: ref}
 }
 
-func (rp RuntimePlatformAttributes) InternalTokens() hclwrite.Tokens {
+func (rp RuntimePlatformAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rp.ref.InternalTokens()
 }
 
@@ -236,7 +236,7 @@ func (v VolumeAttributes) InternalWithRef(ref terra.Reference) VolumeAttributes 
 	return VolumeAttributes{ref: ref}
 }
 
-func (v VolumeAttributes) InternalTokens() hclwrite.Tokens {
+func (v VolumeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 
@@ -272,7 +272,7 @@ func (dvc DockerVolumeConfigurationAttributes) InternalWithRef(ref terra.Referen
 	return DockerVolumeConfigurationAttributes{ref: ref}
 }
 
-func (dvc DockerVolumeConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (dvc DockerVolumeConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dvc.ref.InternalTokens()
 }
 
@@ -308,7 +308,7 @@ func (evc EfsVolumeConfigurationAttributes) InternalWithRef(ref terra.Reference)
 	return EfsVolumeConfigurationAttributes{ref: ref}
 }
 
-func (evc EfsVolumeConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (evc EfsVolumeConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return evc.ref.InternalTokens()
 }
 
@@ -344,7 +344,7 @@ func (ac EfsVolumeConfigurationAuthorizationConfigAttributes) InternalWithRef(re
 	return EfsVolumeConfigurationAuthorizationConfigAttributes{ref: ref}
 }
 
-func (ac EfsVolumeConfigurationAuthorizationConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ac EfsVolumeConfigurationAuthorizationConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
@@ -368,7 +368,7 @@ func (fwfsvc FsxWindowsFileServerVolumeConfigurationAttributes) InternalWithRef(
 	return FsxWindowsFileServerVolumeConfigurationAttributes{ref: ref}
 }
 
-func (fwfsvc FsxWindowsFileServerVolumeConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (fwfsvc FsxWindowsFileServerVolumeConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fwfsvc.ref.InternalTokens()
 }
 
@@ -396,7 +396,7 @@ func (ac FsxWindowsFileServerVolumeConfigurationAuthorizationConfigAttributes) I
 	return FsxWindowsFileServerVolumeConfigurationAuthorizationConfigAttributes{ref: ref}
 }
 
-func (ac FsxWindowsFileServerVolumeConfigurationAuthorizationConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ac FsxWindowsFileServerVolumeConfigurationAuthorizationConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewServicebusQueue creates a new instance of [ServicebusQueue].
 func NewServicebusQueue(name string, args ServicebusQueueArgs) *ServicebusQueue {
 	return &ServicebusQueue{
 		Args: args,
@@ -19,28 +20,51 @@ func NewServicebusQueue(name string, args ServicebusQueueArgs) *ServicebusQueue 
 
 var _ terra.Resource = (*ServicebusQueue)(nil)
 
+// ServicebusQueue represents the Terraform resource azurerm_servicebus_queue.
 type ServicebusQueue struct {
-	Name  string
-	Args  ServicebusQueueArgs
-	state *servicebusQueueState
+	Name      string
+	Args      ServicebusQueueArgs
+	state     *servicebusQueueState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ServicebusQueue].
 func (sq *ServicebusQueue) Type() string {
 	return "azurerm_servicebus_queue"
 }
 
+// LocalName returns the local name for [ServicebusQueue].
 func (sq *ServicebusQueue) LocalName() string {
 	return sq.Name
 }
 
+// Configuration returns the configuration (args) for [ServicebusQueue].
 func (sq *ServicebusQueue) Configuration() interface{} {
 	return sq.Args
 }
 
+// DependOn is used for other resources to depend on [ServicebusQueue].
+func (sq *ServicebusQueue) DependOn() terra.Reference {
+	return terra.ReferenceResource(sq)
+}
+
+// Dependencies returns the list of resources [ServicebusQueue] depends_on.
+func (sq *ServicebusQueue) Dependencies() terra.Dependencies {
+	return sq.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ServicebusQueue].
+func (sq *ServicebusQueue) LifecycleManagement() *terra.Lifecycle {
+	return sq.Lifecycle
+}
+
+// Attributes returns the attributes for [ServicebusQueue].
 func (sq *ServicebusQueue) Attributes() servicebusQueueAttributes {
 	return servicebusQueueAttributes{ref: terra.ReferenceResource(sq)}
 }
 
+// ImportState imports the given attribute values into [ServicebusQueue]'s state.
 func (sq *ServicebusQueue) ImportState(av io.Reader) error {
 	sq.state = &servicebusQueueState{}
 	if err := json.NewDecoder(av).Decode(sq.state); err != nil {
@@ -49,10 +73,12 @@ func (sq *ServicebusQueue) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ServicebusQueue] has state.
 func (sq *ServicebusQueue) State() (*servicebusQueueState, bool) {
 	return sq.state, sq.state != nil
 }
 
+// StateMust returns the state for [ServicebusQueue]. Panics if the state is nil.
 func (sq *ServicebusQueue) StateMust() *servicebusQueueState {
 	if sq.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sq.Type(), sq.LocalName()))
@@ -60,10 +86,7 @@ func (sq *ServicebusQueue) StateMust() *servicebusQueueState {
 	return sq.state
 }
 
-func (sq *ServicebusQueue) DependOn() terra.Reference {
-	return terra.ReferenceResource(sq)
-}
-
+// ServicebusQueueArgs contains the configurations for azurerm_servicebus_queue.
 type ServicebusQueueArgs struct {
 	// AutoDeleteOnIdle: string, optional
 	AutoDeleteOnIdle terra.StringValue `hcl:"auto_delete_on_idle,attr"`
@@ -105,91 +128,108 @@ type ServicebusQueueArgs struct {
 	Status terra.StringValue `hcl:"status,attr"`
 	// Timeouts: optional
 	Timeouts *servicebusqueue.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ServicebusQueue depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type servicebusQueueAttributes struct {
 	ref terra.Reference
 }
 
+// AutoDeleteOnIdle returns a reference to field auto_delete_on_idle of azurerm_servicebus_queue.
 func (sq servicebusQueueAttributes) AutoDeleteOnIdle() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("auto_delete_on_idle"))
+	return terra.ReferenceAsString(sq.ref.Append("auto_delete_on_idle"))
 }
 
+// DeadLetteringOnMessageExpiration returns a reference to field dead_lettering_on_message_expiration of azurerm_servicebus_queue.
 func (sq servicebusQueueAttributes) DeadLetteringOnMessageExpiration() terra.BoolValue {
-	return terra.ReferenceBool(sq.ref.Append("dead_lettering_on_message_expiration"))
+	return terra.ReferenceAsBool(sq.ref.Append("dead_lettering_on_message_expiration"))
 }
 
+// DefaultMessageTtl returns a reference to field default_message_ttl of azurerm_servicebus_queue.
 func (sq servicebusQueueAttributes) DefaultMessageTtl() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("default_message_ttl"))
+	return terra.ReferenceAsString(sq.ref.Append("default_message_ttl"))
 }
 
+// DuplicateDetectionHistoryTimeWindow returns a reference to field duplicate_detection_history_time_window of azurerm_servicebus_queue.
 func (sq servicebusQueueAttributes) DuplicateDetectionHistoryTimeWindow() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("duplicate_detection_history_time_window"))
+	return terra.ReferenceAsString(sq.ref.Append("duplicate_detection_history_time_window"))
 }
 
+// EnableBatchedOperations returns a reference to field enable_batched_operations of azurerm_servicebus_queue.
 func (sq servicebusQueueAttributes) EnableBatchedOperations() terra.BoolValue {
-	return terra.ReferenceBool(sq.ref.Append("enable_batched_operations"))
+	return terra.ReferenceAsBool(sq.ref.Append("enable_batched_operations"))
 }
 
+// EnableExpress returns a reference to field enable_express of azurerm_servicebus_queue.
 func (sq servicebusQueueAttributes) EnableExpress() terra.BoolValue {
-	return terra.ReferenceBool(sq.ref.Append("enable_express"))
+	return terra.ReferenceAsBool(sq.ref.Append("enable_express"))
 }
 
+// EnablePartitioning returns a reference to field enable_partitioning of azurerm_servicebus_queue.
 func (sq servicebusQueueAttributes) EnablePartitioning() terra.BoolValue {
-	return terra.ReferenceBool(sq.ref.Append("enable_partitioning"))
+	return terra.ReferenceAsBool(sq.ref.Append("enable_partitioning"))
 }
 
+// ForwardDeadLetteredMessagesTo returns a reference to field forward_dead_lettered_messages_to of azurerm_servicebus_queue.
 func (sq servicebusQueueAttributes) ForwardDeadLetteredMessagesTo() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("forward_dead_lettered_messages_to"))
+	return terra.ReferenceAsString(sq.ref.Append("forward_dead_lettered_messages_to"))
 }
 
+// ForwardTo returns a reference to field forward_to of azurerm_servicebus_queue.
 func (sq servicebusQueueAttributes) ForwardTo() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("forward_to"))
+	return terra.ReferenceAsString(sq.ref.Append("forward_to"))
 }
 
+// Id returns a reference to field id of azurerm_servicebus_queue.
 func (sq servicebusQueueAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("id"))
+	return terra.ReferenceAsString(sq.ref.Append("id"))
 }
 
+// LockDuration returns a reference to field lock_duration of azurerm_servicebus_queue.
 func (sq servicebusQueueAttributes) LockDuration() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("lock_duration"))
+	return terra.ReferenceAsString(sq.ref.Append("lock_duration"))
 }
 
+// MaxDeliveryCount returns a reference to field max_delivery_count of azurerm_servicebus_queue.
 func (sq servicebusQueueAttributes) MaxDeliveryCount() terra.NumberValue {
-	return terra.ReferenceNumber(sq.ref.Append("max_delivery_count"))
+	return terra.ReferenceAsNumber(sq.ref.Append("max_delivery_count"))
 }
 
+// MaxMessageSizeInKilobytes returns a reference to field max_message_size_in_kilobytes of azurerm_servicebus_queue.
 func (sq servicebusQueueAttributes) MaxMessageSizeInKilobytes() terra.NumberValue {
-	return terra.ReferenceNumber(sq.ref.Append("max_message_size_in_kilobytes"))
+	return terra.ReferenceAsNumber(sq.ref.Append("max_message_size_in_kilobytes"))
 }
 
+// MaxSizeInMegabytes returns a reference to field max_size_in_megabytes of azurerm_servicebus_queue.
 func (sq servicebusQueueAttributes) MaxSizeInMegabytes() terra.NumberValue {
-	return terra.ReferenceNumber(sq.ref.Append("max_size_in_megabytes"))
+	return terra.ReferenceAsNumber(sq.ref.Append("max_size_in_megabytes"))
 }
 
+// Name returns a reference to field name of azurerm_servicebus_queue.
 func (sq servicebusQueueAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("name"))
+	return terra.ReferenceAsString(sq.ref.Append("name"))
 }
 
+// NamespaceId returns a reference to field namespace_id of azurerm_servicebus_queue.
 func (sq servicebusQueueAttributes) NamespaceId() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("namespace_id"))
+	return terra.ReferenceAsString(sq.ref.Append("namespace_id"))
 }
 
+// RequiresDuplicateDetection returns a reference to field requires_duplicate_detection of azurerm_servicebus_queue.
 func (sq servicebusQueueAttributes) RequiresDuplicateDetection() terra.BoolValue {
-	return terra.ReferenceBool(sq.ref.Append("requires_duplicate_detection"))
+	return terra.ReferenceAsBool(sq.ref.Append("requires_duplicate_detection"))
 }
 
+// RequiresSession returns a reference to field requires_session of azurerm_servicebus_queue.
 func (sq servicebusQueueAttributes) RequiresSession() terra.BoolValue {
-	return terra.ReferenceBool(sq.ref.Append("requires_session"))
+	return terra.ReferenceAsBool(sq.ref.Append("requires_session"))
 }
 
+// Status returns a reference to field status of azurerm_servicebus_queue.
 func (sq servicebusQueueAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("status"))
+	return terra.ReferenceAsString(sq.ref.Append("status"))
 }
 
 func (sq servicebusQueueAttributes) Timeouts() servicebusqueue.TimeoutsAttributes {
-	return terra.ReferenceSingle[servicebusqueue.TimeoutsAttributes](sq.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[servicebusqueue.TimeoutsAttributes](sq.ref.Append("timeouts"))
 }
 
 type servicebusQueueState struct {

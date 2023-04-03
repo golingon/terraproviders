@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewContainerNodePool creates a new instance of [ContainerNodePool].
 func NewContainerNodePool(name string, args ContainerNodePoolArgs) *ContainerNodePool {
 	return &ContainerNodePool{
 		Args: args,
@@ -19,28 +20,51 @@ func NewContainerNodePool(name string, args ContainerNodePoolArgs) *ContainerNod
 
 var _ terra.Resource = (*ContainerNodePool)(nil)
 
+// ContainerNodePool represents the Terraform resource google_container_node_pool.
 type ContainerNodePool struct {
-	Name  string
-	Args  ContainerNodePoolArgs
-	state *containerNodePoolState
+	Name      string
+	Args      ContainerNodePoolArgs
+	state     *containerNodePoolState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ContainerNodePool].
 func (cnp *ContainerNodePool) Type() string {
 	return "google_container_node_pool"
 }
 
+// LocalName returns the local name for [ContainerNodePool].
 func (cnp *ContainerNodePool) LocalName() string {
 	return cnp.Name
 }
 
+// Configuration returns the configuration (args) for [ContainerNodePool].
 func (cnp *ContainerNodePool) Configuration() interface{} {
 	return cnp.Args
 }
 
+// DependOn is used for other resources to depend on [ContainerNodePool].
+func (cnp *ContainerNodePool) DependOn() terra.Reference {
+	return terra.ReferenceResource(cnp)
+}
+
+// Dependencies returns the list of resources [ContainerNodePool] depends_on.
+func (cnp *ContainerNodePool) Dependencies() terra.Dependencies {
+	return cnp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ContainerNodePool].
+func (cnp *ContainerNodePool) LifecycleManagement() *terra.Lifecycle {
+	return cnp.Lifecycle
+}
+
+// Attributes returns the attributes for [ContainerNodePool].
 func (cnp *ContainerNodePool) Attributes() containerNodePoolAttributes {
 	return containerNodePoolAttributes{ref: terra.ReferenceResource(cnp)}
 }
 
+// ImportState imports the given attribute values into [ContainerNodePool]'s state.
 func (cnp *ContainerNodePool) ImportState(av io.Reader) error {
 	cnp.state = &containerNodePoolState{}
 	if err := json.NewDecoder(av).Decode(cnp.state); err != nil {
@@ -49,10 +73,12 @@ func (cnp *ContainerNodePool) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ContainerNodePool] has state.
 func (cnp *ContainerNodePool) State() (*containerNodePoolState, bool) {
 	return cnp.state, cnp.state != nil
 }
 
+// StateMust returns the state for [ContainerNodePool]. Panics if the state is nil.
 func (cnp *ContainerNodePool) StateMust() *containerNodePoolState {
 	if cnp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cnp.Type(), cnp.LocalName()))
@@ -60,10 +86,7 @@ func (cnp *ContainerNodePool) StateMust() *containerNodePoolState {
 	return cnp.state
 }
 
-func (cnp *ContainerNodePool) DependOn() terra.Reference {
-	return terra.ReferenceResource(cnp)
-}
-
+// ContainerNodePoolArgs contains the configurations for google_container_node_pool.
 type ContainerNodePoolArgs struct {
 	// Cluster: string, required
 	Cluster terra.StringValue `hcl:"cluster,attr" validate:"required"`
@@ -101,95 +124,107 @@ type ContainerNodePoolArgs struct {
 	Timeouts *containernodepool.Timeouts `hcl:"timeouts,block"`
 	// UpgradeSettings: optional
 	UpgradeSettings *containernodepool.UpgradeSettings `hcl:"upgrade_settings,block"`
-	// DependsOn contains resources that ContainerNodePool depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type containerNodePoolAttributes struct {
 	ref terra.Reference
 }
 
+// Cluster returns a reference to field cluster of google_container_node_pool.
 func (cnp containerNodePoolAttributes) Cluster() terra.StringValue {
-	return terra.ReferenceString(cnp.ref.Append("cluster"))
+	return terra.ReferenceAsString(cnp.ref.Append("cluster"))
 }
 
+// Id returns a reference to field id of google_container_node_pool.
 func (cnp containerNodePoolAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cnp.ref.Append("id"))
+	return terra.ReferenceAsString(cnp.ref.Append("id"))
 }
 
+// InitialNodeCount returns a reference to field initial_node_count of google_container_node_pool.
 func (cnp containerNodePoolAttributes) InitialNodeCount() terra.NumberValue {
-	return terra.ReferenceNumber(cnp.ref.Append("initial_node_count"))
+	return terra.ReferenceAsNumber(cnp.ref.Append("initial_node_count"))
 }
 
+// InstanceGroupUrls returns a reference to field instance_group_urls of google_container_node_pool.
 func (cnp containerNodePoolAttributes) InstanceGroupUrls() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cnp.ref.Append("instance_group_urls"))
+	return terra.ReferenceAsList[terra.StringValue](cnp.ref.Append("instance_group_urls"))
 }
 
+// Location returns a reference to field location of google_container_node_pool.
 func (cnp containerNodePoolAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(cnp.ref.Append("location"))
+	return terra.ReferenceAsString(cnp.ref.Append("location"))
 }
 
+// ManagedInstanceGroupUrls returns a reference to field managed_instance_group_urls of google_container_node_pool.
 func (cnp containerNodePoolAttributes) ManagedInstanceGroupUrls() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cnp.ref.Append("managed_instance_group_urls"))
+	return terra.ReferenceAsList[terra.StringValue](cnp.ref.Append("managed_instance_group_urls"))
 }
 
+// MaxPodsPerNode returns a reference to field max_pods_per_node of google_container_node_pool.
 func (cnp containerNodePoolAttributes) MaxPodsPerNode() terra.NumberValue {
-	return terra.ReferenceNumber(cnp.ref.Append("max_pods_per_node"))
+	return terra.ReferenceAsNumber(cnp.ref.Append("max_pods_per_node"))
 }
 
+// Name returns a reference to field name of google_container_node_pool.
 func (cnp containerNodePoolAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cnp.ref.Append("name"))
+	return terra.ReferenceAsString(cnp.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of google_container_node_pool.
 func (cnp containerNodePoolAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(cnp.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(cnp.ref.Append("name_prefix"))
 }
 
+// NodeCount returns a reference to field node_count of google_container_node_pool.
 func (cnp containerNodePoolAttributes) NodeCount() terra.NumberValue {
-	return terra.ReferenceNumber(cnp.ref.Append("node_count"))
+	return terra.ReferenceAsNumber(cnp.ref.Append("node_count"))
 }
 
+// NodeLocations returns a reference to field node_locations of google_container_node_pool.
 func (cnp containerNodePoolAttributes) NodeLocations() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cnp.ref.Append("node_locations"))
+	return terra.ReferenceAsSet[terra.StringValue](cnp.ref.Append("node_locations"))
 }
 
+// Operation returns a reference to field operation of google_container_node_pool.
 func (cnp containerNodePoolAttributes) Operation() terra.StringValue {
-	return terra.ReferenceString(cnp.ref.Append("operation"))
+	return terra.ReferenceAsString(cnp.ref.Append("operation"))
 }
 
+// Project returns a reference to field project of google_container_node_pool.
 func (cnp containerNodePoolAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cnp.ref.Append("project"))
+	return terra.ReferenceAsString(cnp.ref.Append("project"))
 }
 
+// Version returns a reference to field version of google_container_node_pool.
 func (cnp containerNodePoolAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(cnp.ref.Append("version"))
+	return terra.ReferenceAsString(cnp.ref.Append("version"))
 }
 
 func (cnp containerNodePoolAttributes) Autoscaling() terra.ListValue[containernodepool.AutoscalingAttributes] {
-	return terra.ReferenceList[containernodepool.AutoscalingAttributes](cnp.ref.Append("autoscaling"))
+	return terra.ReferenceAsList[containernodepool.AutoscalingAttributes](cnp.ref.Append("autoscaling"))
 }
 
 func (cnp containerNodePoolAttributes) Management() terra.ListValue[containernodepool.ManagementAttributes] {
-	return terra.ReferenceList[containernodepool.ManagementAttributes](cnp.ref.Append("management"))
+	return terra.ReferenceAsList[containernodepool.ManagementAttributes](cnp.ref.Append("management"))
 }
 
 func (cnp containerNodePoolAttributes) NetworkConfig() terra.ListValue[containernodepool.NetworkConfigAttributes] {
-	return terra.ReferenceList[containernodepool.NetworkConfigAttributes](cnp.ref.Append("network_config"))
+	return terra.ReferenceAsList[containernodepool.NetworkConfigAttributes](cnp.ref.Append("network_config"))
 }
 
 func (cnp containerNodePoolAttributes) NodeConfig() terra.ListValue[containernodepool.NodeConfigAttributes] {
-	return terra.ReferenceList[containernodepool.NodeConfigAttributes](cnp.ref.Append("node_config"))
+	return terra.ReferenceAsList[containernodepool.NodeConfigAttributes](cnp.ref.Append("node_config"))
 }
 
 func (cnp containerNodePoolAttributes) PlacementPolicy() terra.ListValue[containernodepool.PlacementPolicyAttributes] {
-	return terra.ReferenceList[containernodepool.PlacementPolicyAttributes](cnp.ref.Append("placement_policy"))
+	return terra.ReferenceAsList[containernodepool.PlacementPolicyAttributes](cnp.ref.Append("placement_policy"))
 }
 
 func (cnp containerNodePoolAttributes) Timeouts() containernodepool.TimeoutsAttributes {
-	return terra.ReferenceSingle[containernodepool.TimeoutsAttributes](cnp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[containernodepool.TimeoutsAttributes](cnp.ref.Append("timeouts"))
 }
 
 func (cnp containerNodePoolAttributes) UpgradeSettings() terra.ListValue[containernodepool.UpgradeSettingsAttributes] {
-	return terra.ReferenceList[containernodepool.UpgradeSettingsAttributes](cnp.ref.Append("upgrade_settings"))
+	return terra.ReferenceAsList[containernodepool.UpgradeSettingsAttributes](cnp.ref.Append("upgrade_settings"))
 }
 
 type containerNodePoolState struct {

@@ -47,112 +47,112 @@ type CatalogInfoAttributes struct {
 	ref terra.Reference
 }
 
-func (ci CatalogInfoAttributes) InternalRef() terra.Reference {
-	return ci.ref
+func (ci CatalogInfoAttributes) InternalRef() (terra.Reference, error) {
+	return ci.ref, nil
 }
 
 func (ci CatalogInfoAttributes) InternalWithRef(ref terra.Reference) CatalogInfoAttributes {
 	return CatalogInfoAttributes{ref: ref}
 }
 
-func (ci CatalogInfoAttributes) InternalTokens() hclwrite.Tokens {
+func (ci CatalogInfoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ci.ref.InternalTokens()
 }
 
 func (ci CatalogInfoAttributes) AdministratorLogin() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("administrator_login"))
+	return terra.ReferenceAsString(ci.ref.Append("administrator_login"))
 }
 
 func (ci CatalogInfoAttributes) AdministratorPassword() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("administrator_password"))
+	return terra.ReferenceAsString(ci.ref.Append("administrator_password"))
 }
 
 func (ci CatalogInfoAttributes) PricingTier() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("pricing_tier"))
+	return terra.ReferenceAsString(ci.ref.Append("pricing_tier"))
 }
 
 func (ci CatalogInfoAttributes) ServerEndpoint() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("server_endpoint"))
+	return terra.ReferenceAsString(ci.ref.Append("server_endpoint"))
 }
 
 type CustomSetupScriptAttributes struct {
 	ref terra.Reference
 }
 
-func (css CustomSetupScriptAttributes) InternalRef() terra.Reference {
-	return css.ref
+func (css CustomSetupScriptAttributes) InternalRef() (terra.Reference, error) {
+	return css.ref, nil
 }
 
 func (css CustomSetupScriptAttributes) InternalWithRef(ref terra.Reference) CustomSetupScriptAttributes {
 	return CustomSetupScriptAttributes{ref: ref}
 }
 
-func (css CustomSetupScriptAttributes) InternalTokens() hclwrite.Tokens {
+func (css CustomSetupScriptAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return css.ref.InternalTokens()
 }
 
 func (css CustomSetupScriptAttributes) BlobContainerUri() terra.StringValue {
-	return terra.ReferenceString(css.ref.Append("blob_container_uri"))
+	return terra.ReferenceAsString(css.ref.Append("blob_container_uri"))
 }
 
 func (css CustomSetupScriptAttributes) SasToken() terra.StringValue {
-	return terra.ReferenceString(css.ref.Append("sas_token"))
+	return terra.ReferenceAsString(css.ref.Append("sas_token"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type VnetIntegrationAttributes struct {
 	ref terra.Reference
 }
 
-func (vi VnetIntegrationAttributes) InternalRef() terra.Reference {
-	return vi.ref
+func (vi VnetIntegrationAttributes) InternalRef() (terra.Reference, error) {
+	return vi.ref, nil
 }
 
 func (vi VnetIntegrationAttributes) InternalWithRef(ref terra.Reference) VnetIntegrationAttributes {
 	return VnetIntegrationAttributes{ref: ref}
 }
 
-func (vi VnetIntegrationAttributes) InternalTokens() hclwrite.Tokens {
+func (vi VnetIntegrationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vi.ref.InternalTokens()
 }
 
 func (vi VnetIntegrationAttributes) SubnetName() terra.StringValue {
-	return terra.ReferenceString(vi.ref.Append("subnet_name"))
+	return terra.ReferenceAsString(vi.ref.Append("subnet_name"))
 }
 
 func (vi VnetIntegrationAttributes) VnetId() terra.StringValue {
-	return terra.ReferenceString(vi.ref.Append("vnet_id"))
+	return terra.ReferenceAsString(vi.ref.Append("vnet_id"))
 }
 
 type CatalogInfoState struct {

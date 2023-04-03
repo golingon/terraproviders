@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataDatabaseMigrationService creates a new instance of [DataDatabaseMigrationService].
 func NewDataDatabaseMigrationService(name string, args DataDatabaseMigrationServiceArgs) *DataDatabaseMigrationService {
 	return &DataDatabaseMigrationService{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataDatabaseMigrationService(name string, args DataDatabaseMigrationServ
 
 var _ terra.DataResource = (*DataDatabaseMigrationService)(nil)
 
+// DataDatabaseMigrationService represents the Terraform data resource azurerm_database_migration_service.
 type DataDatabaseMigrationService struct {
 	Name string
 	Args DataDatabaseMigrationServiceArgs
 }
 
+// DataSource returns the Terraform object type for [DataDatabaseMigrationService].
 func (dms *DataDatabaseMigrationService) DataSource() string {
 	return "azurerm_database_migration_service"
 }
 
+// LocalName returns the local name for [DataDatabaseMigrationService].
 func (dms *DataDatabaseMigrationService) LocalName() string {
 	return dms.Name
 }
 
+// Configuration returns the configuration (args) for [DataDatabaseMigrationService].
 func (dms *DataDatabaseMigrationService) Configuration() interface{} {
 	return dms.Args
 }
 
+// Attributes returns the attributes for [DataDatabaseMigrationService].
 func (dms *DataDatabaseMigrationService) Attributes() dataDatabaseMigrationServiceAttributes {
 	return dataDatabaseMigrationServiceAttributes{ref: terra.ReferenceDataResource(dms)}
 }
 
+// DataDatabaseMigrationServiceArgs contains the configurations for azurerm_database_migration_service.
 type DataDatabaseMigrationServiceArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,34 +58,41 @@ type dataDatabaseMigrationServiceAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_database_migration_service.
 func (dms dataDatabaseMigrationServiceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dms.ref.Append("id"))
+	return terra.ReferenceAsString(dms.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_database_migration_service.
 func (dms dataDatabaseMigrationServiceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(dms.ref.Append("location"))
+	return terra.ReferenceAsString(dms.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_database_migration_service.
 func (dms dataDatabaseMigrationServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dms.ref.Append("name"))
+	return terra.ReferenceAsString(dms.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_database_migration_service.
 func (dms dataDatabaseMigrationServiceAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(dms.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(dms.ref.Append("resource_group_name"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_database_migration_service.
 func (dms dataDatabaseMigrationServiceAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(dms.ref.Append("sku_name"))
+	return terra.ReferenceAsString(dms.ref.Append("sku_name"))
 }
 
+// SubnetId returns a reference to field subnet_id of azurerm_database_migration_service.
 func (dms dataDatabaseMigrationServiceAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(dms.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(dms.ref.Append("subnet_id"))
 }
 
+// Tags returns a reference to field tags of azurerm_database_migration_service.
 func (dms dataDatabaseMigrationServiceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dms.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dms.ref.Append("tags"))
 }
 
 func (dms dataDatabaseMigrationServiceAttributes) Timeouts() datadatabasemigrationservice.TimeoutsAttributes {
-	return terra.ReferenceSingle[datadatabasemigrationservice.TimeoutsAttributes](dms.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datadatabasemigrationservice.TimeoutsAttributes](dms.ref.Append("timeouts"))
 }

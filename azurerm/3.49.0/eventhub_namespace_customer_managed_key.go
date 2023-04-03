@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEventhubNamespaceCustomerManagedKey creates a new instance of [EventhubNamespaceCustomerManagedKey].
 func NewEventhubNamespaceCustomerManagedKey(name string, args EventhubNamespaceCustomerManagedKeyArgs) *EventhubNamespaceCustomerManagedKey {
 	return &EventhubNamespaceCustomerManagedKey{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEventhubNamespaceCustomerManagedKey(name string, args EventhubNamespaceC
 
 var _ terra.Resource = (*EventhubNamespaceCustomerManagedKey)(nil)
 
+// EventhubNamespaceCustomerManagedKey represents the Terraform resource azurerm_eventhub_namespace_customer_managed_key.
 type EventhubNamespaceCustomerManagedKey struct {
-	Name  string
-	Args  EventhubNamespaceCustomerManagedKeyArgs
-	state *eventhubNamespaceCustomerManagedKeyState
+	Name      string
+	Args      EventhubNamespaceCustomerManagedKeyArgs
+	state     *eventhubNamespaceCustomerManagedKeyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EventhubNamespaceCustomerManagedKey].
 func (encmk *EventhubNamespaceCustomerManagedKey) Type() string {
 	return "azurerm_eventhub_namespace_customer_managed_key"
 }
 
+// LocalName returns the local name for [EventhubNamespaceCustomerManagedKey].
 func (encmk *EventhubNamespaceCustomerManagedKey) LocalName() string {
 	return encmk.Name
 }
 
+// Configuration returns the configuration (args) for [EventhubNamespaceCustomerManagedKey].
 func (encmk *EventhubNamespaceCustomerManagedKey) Configuration() interface{} {
 	return encmk.Args
 }
 
+// DependOn is used for other resources to depend on [EventhubNamespaceCustomerManagedKey].
+func (encmk *EventhubNamespaceCustomerManagedKey) DependOn() terra.Reference {
+	return terra.ReferenceResource(encmk)
+}
+
+// Dependencies returns the list of resources [EventhubNamespaceCustomerManagedKey] depends_on.
+func (encmk *EventhubNamespaceCustomerManagedKey) Dependencies() terra.Dependencies {
+	return encmk.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EventhubNamespaceCustomerManagedKey].
+func (encmk *EventhubNamespaceCustomerManagedKey) LifecycleManagement() *terra.Lifecycle {
+	return encmk.Lifecycle
+}
+
+// Attributes returns the attributes for [EventhubNamespaceCustomerManagedKey].
 func (encmk *EventhubNamespaceCustomerManagedKey) Attributes() eventhubNamespaceCustomerManagedKeyAttributes {
 	return eventhubNamespaceCustomerManagedKeyAttributes{ref: terra.ReferenceResource(encmk)}
 }
 
+// ImportState imports the given attribute values into [EventhubNamespaceCustomerManagedKey]'s state.
 func (encmk *EventhubNamespaceCustomerManagedKey) ImportState(av io.Reader) error {
 	encmk.state = &eventhubNamespaceCustomerManagedKeyState{}
 	if err := json.NewDecoder(av).Decode(encmk.state); err != nil {
@@ -49,10 +73,12 @@ func (encmk *EventhubNamespaceCustomerManagedKey) ImportState(av io.Reader) erro
 	return nil
 }
 
+// State returns the state and a bool indicating if [EventhubNamespaceCustomerManagedKey] has state.
 func (encmk *EventhubNamespaceCustomerManagedKey) State() (*eventhubNamespaceCustomerManagedKeyState, bool) {
 	return encmk.state, encmk.state != nil
 }
 
+// StateMust returns the state for [EventhubNamespaceCustomerManagedKey]. Panics if the state is nil.
 func (encmk *EventhubNamespaceCustomerManagedKey) StateMust() *eventhubNamespaceCustomerManagedKeyState {
 	if encmk.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", encmk.Type(), encmk.LocalName()))
@@ -60,10 +86,7 @@ func (encmk *EventhubNamespaceCustomerManagedKey) StateMust() *eventhubNamespace
 	return encmk.state
 }
 
-func (encmk *EventhubNamespaceCustomerManagedKey) DependOn() terra.Reference {
-	return terra.ReferenceResource(encmk)
-}
-
+// EventhubNamespaceCustomerManagedKeyArgs contains the configurations for azurerm_eventhub_namespace_customer_managed_key.
 type EventhubNamespaceCustomerManagedKeyArgs struct {
 	// EventhubNamespaceId: string, required
 	EventhubNamespaceId terra.StringValue `hcl:"eventhub_namespace_id,attr" validate:"required"`
@@ -73,27 +96,28 @@ type EventhubNamespaceCustomerManagedKeyArgs struct {
 	KeyVaultKeyIds terra.SetValue[terra.StringValue] `hcl:"key_vault_key_ids,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *eventhubnamespacecustomermanagedkey.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that EventhubNamespaceCustomerManagedKey depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type eventhubNamespaceCustomerManagedKeyAttributes struct {
 	ref terra.Reference
 }
 
+// EventhubNamespaceId returns a reference to field eventhub_namespace_id of azurerm_eventhub_namespace_customer_managed_key.
 func (encmk eventhubNamespaceCustomerManagedKeyAttributes) EventhubNamespaceId() terra.StringValue {
-	return terra.ReferenceString(encmk.ref.Append("eventhub_namespace_id"))
+	return terra.ReferenceAsString(encmk.ref.Append("eventhub_namespace_id"))
 }
 
+// Id returns a reference to field id of azurerm_eventhub_namespace_customer_managed_key.
 func (encmk eventhubNamespaceCustomerManagedKeyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(encmk.ref.Append("id"))
+	return terra.ReferenceAsString(encmk.ref.Append("id"))
 }
 
+// KeyVaultKeyIds returns a reference to field key_vault_key_ids of azurerm_eventhub_namespace_customer_managed_key.
 func (encmk eventhubNamespaceCustomerManagedKeyAttributes) KeyVaultKeyIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](encmk.ref.Append("key_vault_key_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](encmk.ref.Append("key_vault_key_ids"))
 }
 
 func (encmk eventhubNamespaceCustomerManagedKeyAttributes) Timeouts() eventhubnamespacecustomermanagedkey.TimeoutsAttributes {
-	return terra.ReferenceSingle[eventhubnamespacecustomermanagedkey.TimeoutsAttributes](encmk.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[eventhubnamespacecustomermanagedkey.TimeoutsAttributes](encmk.ref.Append("timeouts"))
 }
 
 type eventhubNamespaceCustomerManagedKeyState struct {

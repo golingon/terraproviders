@@ -26,7 +26,7 @@ func (sta ScalableTargetActionAttributes) InternalWithRef(ref terra.Reference) S
 	return ScalableTargetActionAttributes{ref: ref}
 }
 
-func (sta ScalableTargetActionAttributes) InternalTokens() hclwrite.Tokens {
+func (sta ScalableTargetActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sta.ref.InternalTokens()
 }
 

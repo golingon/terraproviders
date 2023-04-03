@@ -33,7 +33,7 @@ func (smd StreamModeDetailsAttributes) InternalWithRef(ref terra.Reference) Stre
 	return StreamModeDetailsAttributes{ref: ref}
 }
 
-func (smd StreamModeDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (smd StreamModeDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return smd.ref.InternalTokens()
 }
 
@@ -53,7 +53,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

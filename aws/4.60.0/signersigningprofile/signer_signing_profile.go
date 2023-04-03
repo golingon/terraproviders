@@ -28,7 +28,7 @@ func (rr RevocationRecordAttributes) InternalWithRef(ref terra.Reference) Revoca
 	return RevocationRecordAttributes{ref: ref}
 }
 
-func (rr RevocationRecordAttributes) InternalTokens() hclwrite.Tokens {
+func (rr RevocationRecordAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rr.ref.InternalTokens()
 }
 
@@ -56,7 +56,7 @@ func (svp SignatureValidityPeriodAttributes) InternalWithRef(ref terra.Reference
 	return SignatureValidityPeriodAttributes{ref: ref}
 }
 
-func (svp SignatureValidityPeriodAttributes) InternalTokens() hclwrite.Tokens {
+func (svp SignatureValidityPeriodAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return svp.ref.InternalTokens()
 }
 

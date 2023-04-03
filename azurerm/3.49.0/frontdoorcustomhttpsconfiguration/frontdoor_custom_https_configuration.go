@@ -33,76 +33,76 @@ type CustomHttpsConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (chc CustomHttpsConfigurationAttributes) InternalRef() terra.Reference {
-	return chc.ref
+func (chc CustomHttpsConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return chc.ref, nil
 }
 
 func (chc CustomHttpsConfigurationAttributes) InternalWithRef(ref terra.Reference) CustomHttpsConfigurationAttributes {
 	return CustomHttpsConfigurationAttributes{ref: ref}
 }
 
-func (chc CustomHttpsConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (chc CustomHttpsConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return chc.ref.InternalTokens()
 }
 
 func (chc CustomHttpsConfigurationAttributes) AzureKeyVaultCertificateSecretName() terra.StringValue {
-	return terra.ReferenceString(chc.ref.Append("azure_key_vault_certificate_secret_name"))
+	return terra.ReferenceAsString(chc.ref.Append("azure_key_vault_certificate_secret_name"))
 }
 
 func (chc CustomHttpsConfigurationAttributes) AzureKeyVaultCertificateSecretVersion() terra.StringValue {
-	return terra.ReferenceString(chc.ref.Append("azure_key_vault_certificate_secret_version"))
+	return terra.ReferenceAsString(chc.ref.Append("azure_key_vault_certificate_secret_version"))
 }
 
 func (chc CustomHttpsConfigurationAttributes) AzureKeyVaultCertificateVaultId() terra.StringValue {
-	return terra.ReferenceString(chc.ref.Append("azure_key_vault_certificate_vault_id"))
+	return terra.ReferenceAsString(chc.ref.Append("azure_key_vault_certificate_vault_id"))
 }
 
 func (chc CustomHttpsConfigurationAttributes) CertificateSource() terra.StringValue {
-	return terra.ReferenceString(chc.ref.Append("certificate_source"))
+	return terra.ReferenceAsString(chc.ref.Append("certificate_source"))
 }
 
 func (chc CustomHttpsConfigurationAttributes) MinimumTlsVersion() terra.StringValue {
-	return terra.ReferenceString(chc.ref.Append("minimum_tls_version"))
+	return terra.ReferenceAsString(chc.ref.Append("minimum_tls_version"))
 }
 
 func (chc CustomHttpsConfigurationAttributes) ProvisioningState() terra.StringValue {
-	return terra.ReferenceString(chc.ref.Append("provisioning_state"))
+	return terra.ReferenceAsString(chc.ref.Append("provisioning_state"))
 }
 
 func (chc CustomHttpsConfigurationAttributes) ProvisioningSubstate() terra.StringValue {
-	return terra.ReferenceString(chc.ref.Append("provisioning_substate"))
+	return terra.ReferenceAsString(chc.ref.Append("provisioning_substate"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type CustomHttpsConfigurationState struct {

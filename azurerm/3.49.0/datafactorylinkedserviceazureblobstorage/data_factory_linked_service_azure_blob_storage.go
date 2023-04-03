@@ -36,80 +36,80 @@ type KeyVaultSasTokenAttributes struct {
 	ref terra.Reference
 }
 
-func (kvst KeyVaultSasTokenAttributes) InternalRef() terra.Reference {
-	return kvst.ref
+func (kvst KeyVaultSasTokenAttributes) InternalRef() (terra.Reference, error) {
+	return kvst.ref, nil
 }
 
 func (kvst KeyVaultSasTokenAttributes) InternalWithRef(ref terra.Reference) KeyVaultSasTokenAttributes {
 	return KeyVaultSasTokenAttributes{ref: ref}
 }
 
-func (kvst KeyVaultSasTokenAttributes) InternalTokens() hclwrite.Tokens {
+func (kvst KeyVaultSasTokenAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kvst.ref.InternalTokens()
 }
 
 func (kvst KeyVaultSasTokenAttributes) LinkedServiceName() terra.StringValue {
-	return terra.ReferenceString(kvst.ref.Append("linked_service_name"))
+	return terra.ReferenceAsString(kvst.ref.Append("linked_service_name"))
 }
 
 func (kvst KeyVaultSasTokenAttributes) SecretName() terra.StringValue {
-	return terra.ReferenceString(kvst.ref.Append("secret_name"))
+	return terra.ReferenceAsString(kvst.ref.Append("secret_name"))
 }
 
 type ServicePrincipalLinkedKeyVaultKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (splkvk ServicePrincipalLinkedKeyVaultKeyAttributes) InternalRef() terra.Reference {
-	return splkvk.ref
+func (splkvk ServicePrincipalLinkedKeyVaultKeyAttributes) InternalRef() (terra.Reference, error) {
+	return splkvk.ref, nil
 }
 
 func (splkvk ServicePrincipalLinkedKeyVaultKeyAttributes) InternalWithRef(ref terra.Reference) ServicePrincipalLinkedKeyVaultKeyAttributes {
 	return ServicePrincipalLinkedKeyVaultKeyAttributes{ref: ref}
 }
 
-func (splkvk ServicePrincipalLinkedKeyVaultKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (splkvk ServicePrincipalLinkedKeyVaultKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return splkvk.ref.InternalTokens()
 }
 
 func (splkvk ServicePrincipalLinkedKeyVaultKeyAttributes) LinkedServiceName() terra.StringValue {
-	return terra.ReferenceString(splkvk.ref.Append("linked_service_name"))
+	return terra.ReferenceAsString(splkvk.ref.Append("linked_service_name"))
 }
 
 func (splkvk ServicePrincipalLinkedKeyVaultKeyAttributes) SecretName() terra.StringValue {
-	return terra.ReferenceString(splkvk.ref.Append("secret_name"))
+	return terra.ReferenceAsString(splkvk.ref.Append("secret_name"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type KeyVaultSasTokenState struct {

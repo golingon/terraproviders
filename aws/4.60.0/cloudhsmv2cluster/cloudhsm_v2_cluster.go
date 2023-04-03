@@ -30,7 +30,7 @@ func (cc ClusterCertificatesAttributes) InternalWithRef(ref terra.Reference) Clu
 	return ClusterCertificatesAttributes{ref: ref}
 }
 
-func (cc ClusterCertificatesAttributes) InternalTokens() hclwrite.Tokens {
+func (cc ClusterCertificatesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -66,7 +66,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

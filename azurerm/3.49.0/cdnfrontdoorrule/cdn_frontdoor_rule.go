@@ -332,912 +332,912 @@ type ActionsAttributes struct {
 	ref terra.Reference
 }
 
-func (a ActionsAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a ActionsAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a ActionsAttributes) InternalWithRef(ref terra.Reference) ActionsAttributes {
 	return ActionsAttributes{ref: ref}
 }
 
-func (a ActionsAttributes) InternalTokens() hclwrite.Tokens {
+func (a ActionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a ActionsAttributes) RequestHeaderAction() terra.ListValue[RequestHeaderActionAttributes] {
-	return terra.ReferenceList[RequestHeaderActionAttributes](a.ref.Append("request_header_action"))
+	return terra.ReferenceAsList[RequestHeaderActionAttributes](a.ref.Append("request_header_action"))
 }
 
 func (a ActionsAttributes) ResponseHeaderAction() terra.ListValue[ResponseHeaderActionAttributes] {
-	return terra.ReferenceList[ResponseHeaderActionAttributes](a.ref.Append("response_header_action"))
+	return terra.ReferenceAsList[ResponseHeaderActionAttributes](a.ref.Append("response_header_action"))
 }
 
 func (a ActionsAttributes) RouteConfigurationOverrideAction() terra.ListValue[RouteConfigurationOverrideActionAttributes] {
-	return terra.ReferenceList[RouteConfigurationOverrideActionAttributes](a.ref.Append("route_configuration_override_action"))
+	return terra.ReferenceAsList[RouteConfigurationOverrideActionAttributes](a.ref.Append("route_configuration_override_action"))
 }
 
 func (a ActionsAttributes) UrlRedirectAction() terra.ListValue[UrlRedirectActionAttributes] {
-	return terra.ReferenceList[UrlRedirectActionAttributes](a.ref.Append("url_redirect_action"))
+	return terra.ReferenceAsList[UrlRedirectActionAttributes](a.ref.Append("url_redirect_action"))
 }
 
 func (a ActionsAttributes) UrlRewriteAction() terra.ListValue[UrlRewriteActionAttributes] {
-	return terra.ReferenceList[UrlRewriteActionAttributes](a.ref.Append("url_rewrite_action"))
+	return terra.ReferenceAsList[UrlRewriteActionAttributes](a.ref.Append("url_rewrite_action"))
 }
 
 type RequestHeaderActionAttributes struct {
 	ref terra.Reference
 }
 
-func (rha RequestHeaderActionAttributes) InternalRef() terra.Reference {
-	return rha.ref
+func (rha RequestHeaderActionAttributes) InternalRef() (terra.Reference, error) {
+	return rha.ref, nil
 }
 
 func (rha RequestHeaderActionAttributes) InternalWithRef(ref terra.Reference) RequestHeaderActionAttributes {
 	return RequestHeaderActionAttributes{ref: ref}
 }
 
-func (rha RequestHeaderActionAttributes) InternalTokens() hclwrite.Tokens {
+func (rha RequestHeaderActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rha.ref.InternalTokens()
 }
 
 func (rha RequestHeaderActionAttributes) HeaderAction() terra.StringValue {
-	return terra.ReferenceString(rha.ref.Append("header_action"))
+	return terra.ReferenceAsString(rha.ref.Append("header_action"))
 }
 
 func (rha RequestHeaderActionAttributes) HeaderName() terra.StringValue {
-	return terra.ReferenceString(rha.ref.Append("header_name"))
+	return terra.ReferenceAsString(rha.ref.Append("header_name"))
 }
 
 func (rha RequestHeaderActionAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(rha.ref.Append("value"))
+	return terra.ReferenceAsString(rha.ref.Append("value"))
 }
 
 type ResponseHeaderActionAttributes struct {
 	ref terra.Reference
 }
 
-func (rha ResponseHeaderActionAttributes) InternalRef() terra.Reference {
-	return rha.ref
+func (rha ResponseHeaderActionAttributes) InternalRef() (terra.Reference, error) {
+	return rha.ref, nil
 }
 
 func (rha ResponseHeaderActionAttributes) InternalWithRef(ref terra.Reference) ResponseHeaderActionAttributes {
 	return ResponseHeaderActionAttributes{ref: ref}
 }
 
-func (rha ResponseHeaderActionAttributes) InternalTokens() hclwrite.Tokens {
+func (rha ResponseHeaderActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rha.ref.InternalTokens()
 }
 
 func (rha ResponseHeaderActionAttributes) HeaderAction() terra.StringValue {
-	return terra.ReferenceString(rha.ref.Append("header_action"))
+	return terra.ReferenceAsString(rha.ref.Append("header_action"))
 }
 
 func (rha ResponseHeaderActionAttributes) HeaderName() terra.StringValue {
-	return terra.ReferenceString(rha.ref.Append("header_name"))
+	return terra.ReferenceAsString(rha.ref.Append("header_name"))
 }
 
 func (rha ResponseHeaderActionAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(rha.ref.Append("value"))
+	return terra.ReferenceAsString(rha.ref.Append("value"))
 }
 
 type RouteConfigurationOverrideActionAttributes struct {
 	ref terra.Reference
 }
 
-func (rcoa RouteConfigurationOverrideActionAttributes) InternalRef() terra.Reference {
-	return rcoa.ref
+func (rcoa RouteConfigurationOverrideActionAttributes) InternalRef() (terra.Reference, error) {
+	return rcoa.ref, nil
 }
 
 func (rcoa RouteConfigurationOverrideActionAttributes) InternalWithRef(ref terra.Reference) RouteConfigurationOverrideActionAttributes {
 	return RouteConfigurationOverrideActionAttributes{ref: ref}
 }
 
-func (rcoa RouteConfigurationOverrideActionAttributes) InternalTokens() hclwrite.Tokens {
+func (rcoa RouteConfigurationOverrideActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rcoa.ref.InternalTokens()
 }
 
 func (rcoa RouteConfigurationOverrideActionAttributes) CacheBehavior() terra.StringValue {
-	return terra.ReferenceString(rcoa.ref.Append("cache_behavior"))
+	return terra.ReferenceAsString(rcoa.ref.Append("cache_behavior"))
 }
 
 func (rcoa RouteConfigurationOverrideActionAttributes) CacheDuration() terra.StringValue {
-	return terra.ReferenceString(rcoa.ref.Append("cache_duration"))
+	return terra.ReferenceAsString(rcoa.ref.Append("cache_duration"))
 }
 
 func (rcoa RouteConfigurationOverrideActionAttributes) CdnFrontdoorOriginGroupId() terra.StringValue {
-	return terra.ReferenceString(rcoa.ref.Append("cdn_frontdoor_origin_group_id"))
+	return terra.ReferenceAsString(rcoa.ref.Append("cdn_frontdoor_origin_group_id"))
 }
 
 func (rcoa RouteConfigurationOverrideActionAttributes) CompressionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(rcoa.ref.Append("compression_enabled"))
+	return terra.ReferenceAsBool(rcoa.ref.Append("compression_enabled"))
 }
 
 func (rcoa RouteConfigurationOverrideActionAttributes) ForwardingProtocol() terra.StringValue {
-	return terra.ReferenceString(rcoa.ref.Append("forwarding_protocol"))
+	return terra.ReferenceAsString(rcoa.ref.Append("forwarding_protocol"))
 }
 
 func (rcoa RouteConfigurationOverrideActionAttributes) QueryStringCachingBehavior() terra.StringValue {
-	return terra.ReferenceString(rcoa.ref.Append("query_string_caching_behavior"))
+	return terra.ReferenceAsString(rcoa.ref.Append("query_string_caching_behavior"))
 }
 
 func (rcoa RouteConfigurationOverrideActionAttributes) QueryStringParameters() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rcoa.ref.Append("query_string_parameters"))
+	return terra.ReferenceAsList[terra.StringValue](rcoa.ref.Append("query_string_parameters"))
 }
 
 type UrlRedirectActionAttributes struct {
 	ref terra.Reference
 }
 
-func (ura UrlRedirectActionAttributes) InternalRef() terra.Reference {
-	return ura.ref
+func (ura UrlRedirectActionAttributes) InternalRef() (terra.Reference, error) {
+	return ura.ref, nil
 }
 
 func (ura UrlRedirectActionAttributes) InternalWithRef(ref terra.Reference) UrlRedirectActionAttributes {
 	return UrlRedirectActionAttributes{ref: ref}
 }
 
-func (ura UrlRedirectActionAttributes) InternalTokens() hclwrite.Tokens {
+func (ura UrlRedirectActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ura.ref.InternalTokens()
 }
 
 func (ura UrlRedirectActionAttributes) DestinationFragment() terra.StringValue {
-	return terra.ReferenceString(ura.ref.Append("destination_fragment"))
+	return terra.ReferenceAsString(ura.ref.Append("destination_fragment"))
 }
 
 func (ura UrlRedirectActionAttributes) DestinationHostname() terra.StringValue {
-	return terra.ReferenceString(ura.ref.Append("destination_hostname"))
+	return terra.ReferenceAsString(ura.ref.Append("destination_hostname"))
 }
 
 func (ura UrlRedirectActionAttributes) DestinationPath() terra.StringValue {
-	return terra.ReferenceString(ura.ref.Append("destination_path"))
+	return terra.ReferenceAsString(ura.ref.Append("destination_path"))
 }
 
 func (ura UrlRedirectActionAttributes) QueryString() terra.StringValue {
-	return terra.ReferenceString(ura.ref.Append("query_string"))
+	return terra.ReferenceAsString(ura.ref.Append("query_string"))
 }
 
 func (ura UrlRedirectActionAttributes) RedirectProtocol() terra.StringValue {
-	return terra.ReferenceString(ura.ref.Append("redirect_protocol"))
+	return terra.ReferenceAsString(ura.ref.Append("redirect_protocol"))
 }
 
 func (ura UrlRedirectActionAttributes) RedirectType() terra.StringValue {
-	return terra.ReferenceString(ura.ref.Append("redirect_type"))
+	return terra.ReferenceAsString(ura.ref.Append("redirect_type"))
 }
 
 type UrlRewriteActionAttributes struct {
 	ref terra.Reference
 }
 
-func (ura UrlRewriteActionAttributes) InternalRef() terra.Reference {
-	return ura.ref
+func (ura UrlRewriteActionAttributes) InternalRef() (terra.Reference, error) {
+	return ura.ref, nil
 }
 
 func (ura UrlRewriteActionAttributes) InternalWithRef(ref terra.Reference) UrlRewriteActionAttributes {
 	return UrlRewriteActionAttributes{ref: ref}
 }
 
-func (ura UrlRewriteActionAttributes) InternalTokens() hclwrite.Tokens {
+func (ura UrlRewriteActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ura.ref.InternalTokens()
 }
 
 func (ura UrlRewriteActionAttributes) Destination() terra.StringValue {
-	return terra.ReferenceString(ura.ref.Append("destination"))
+	return terra.ReferenceAsString(ura.ref.Append("destination"))
 }
 
 func (ura UrlRewriteActionAttributes) PreserveUnmatchedPath() terra.BoolValue {
-	return terra.ReferenceBool(ura.ref.Append("preserve_unmatched_path"))
+	return terra.ReferenceAsBool(ura.ref.Append("preserve_unmatched_path"))
 }
 
 func (ura UrlRewriteActionAttributes) SourcePattern() terra.StringValue {
-	return terra.ReferenceString(ura.ref.Append("source_pattern"))
+	return terra.ReferenceAsString(ura.ref.Append("source_pattern"))
 }
 
 type ConditionsAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConditionsAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConditionsAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConditionsAttributes) InternalWithRef(ref terra.Reference) ConditionsAttributes {
 	return ConditionsAttributes{ref: ref}
 }
 
-func (c ConditionsAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConditionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ConditionsAttributes) ClientPortCondition() terra.ListValue[ClientPortConditionAttributes] {
-	return terra.ReferenceList[ClientPortConditionAttributes](c.ref.Append("client_port_condition"))
+	return terra.ReferenceAsList[ClientPortConditionAttributes](c.ref.Append("client_port_condition"))
 }
 
 func (c ConditionsAttributes) CookiesCondition() terra.ListValue[CookiesConditionAttributes] {
-	return terra.ReferenceList[CookiesConditionAttributes](c.ref.Append("cookies_condition"))
+	return terra.ReferenceAsList[CookiesConditionAttributes](c.ref.Append("cookies_condition"))
 }
 
 func (c ConditionsAttributes) HostNameCondition() terra.ListValue[HostNameConditionAttributes] {
-	return terra.ReferenceList[HostNameConditionAttributes](c.ref.Append("host_name_condition"))
+	return terra.ReferenceAsList[HostNameConditionAttributes](c.ref.Append("host_name_condition"))
 }
 
 func (c ConditionsAttributes) HttpVersionCondition() terra.ListValue[HttpVersionConditionAttributes] {
-	return terra.ReferenceList[HttpVersionConditionAttributes](c.ref.Append("http_version_condition"))
+	return terra.ReferenceAsList[HttpVersionConditionAttributes](c.ref.Append("http_version_condition"))
 }
 
 func (c ConditionsAttributes) IsDeviceCondition() terra.ListValue[IsDeviceConditionAttributes] {
-	return terra.ReferenceList[IsDeviceConditionAttributes](c.ref.Append("is_device_condition"))
+	return terra.ReferenceAsList[IsDeviceConditionAttributes](c.ref.Append("is_device_condition"))
 }
 
 func (c ConditionsAttributes) PostArgsCondition() terra.ListValue[PostArgsConditionAttributes] {
-	return terra.ReferenceList[PostArgsConditionAttributes](c.ref.Append("post_args_condition"))
+	return terra.ReferenceAsList[PostArgsConditionAttributes](c.ref.Append("post_args_condition"))
 }
 
 func (c ConditionsAttributes) QueryStringCondition() terra.ListValue[QueryStringConditionAttributes] {
-	return terra.ReferenceList[QueryStringConditionAttributes](c.ref.Append("query_string_condition"))
+	return terra.ReferenceAsList[QueryStringConditionAttributes](c.ref.Append("query_string_condition"))
 }
 
 func (c ConditionsAttributes) RemoteAddressCondition() terra.ListValue[RemoteAddressConditionAttributes] {
-	return terra.ReferenceList[RemoteAddressConditionAttributes](c.ref.Append("remote_address_condition"))
+	return terra.ReferenceAsList[RemoteAddressConditionAttributes](c.ref.Append("remote_address_condition"))
 }
 
 func (c ConditionsAttributes) RequestBodyCondition() terra.ListValue[RequestBodyConditionAttributes] {
-	return terra.ReferenceList[RequestBodyConditionAttributes](c.ref.Append("request_body_condition"))
+	return terra.ReferenceAsList[RequestBodyConditionAttributes](c.ref.Append("request_body_condition"))
 }
 
 func (c ConditionsAttributes) RequestHeaderCondition() terra.ListValue[RequestHeaderConditionAttributes] {
-	return terra.ReferenceList[RequestHeaderConditionAttributes](c.ref.Append("request_header_condition"))
+	return terra.ReferenceAsList[RequestHeaderConditionAttributes](c.ref.Append("request_header_condition"))
 }
 
 func (c ConditionsAttributes) RequestMethodCondition() terra.ListValue[RequestMethodConditionAttributes] {
-	return terra.ReferenceList[RequestMethodConditionAttributes](c.ref.Append("request_method_condition"))
+	return terra.ReferenceAsList[RequestMethodConditionAttributes](c.ref.Append("request_method_condition"))
 }
 
 func (c ConditionsAttributes) RequestSchemeCondition() terra.ListValue[RequestSchemeConditionAttributes] {
-	return terra.ReferenceList[RequestSchemeConditionAttributes](c.ref.Append("request_scheme_condition"))
+	return terra.ReferenceAsList[RequestSchemeConditionAttributes](c.ref.Append("request_scheme_condition"))
 }
 
 func (c ConditionsAttributes) RequestUriCondition() terra.ListValue[RequestUriConditionAttributes] {
-	return terra.ReferenceList[RequestUriConditionAttributes](c.ref.Append("request_uri_condition"))
+	return terra.ReferenceAsList[RequestUriConditionAttributes](c.ref.Append("request_uri_condition"))
 }
 
 func (c ConditionsAttributes) ServerPortCondition() terra.ListValue[ServerPortConditionAttributes] {
-	return terra.ReferenceList[ServerPortConditionAttributes](c.ref.Append("server_port_condition"))
+	return terra.ReferenceAsList[ServerPortConditionAttributes](c.ref.Append("server_port_condition"))
 }
 
 func (c ConditionsAttributes) SocketAddressCondition() terra.ListValue[SocketAddressConditionAttributes] {
-	return terra.ReferenceList[SocketAddressConditionAttributes](c.ref.Append("socket_address_condition"))
+	return terra.ReferenceAsList[SocketAddressConditionAttributes](c.ref.Append("socket_address_condition"))
 }
 
 func (c ConditionsAttributes) SslProtocolCondition() terra.ListValue[SslProtocolConditionAttributes] {
-	return terra.ReferenceList[SslProtocolConditionAttributes](c.ref.Append("ssl_protocol_condition"))
+	return terra.ReferenceAsList[SslProtocolConditionAttributes](c.ref.Append("ssl_protocol_condition"))
 }
 
 func (c ConditionsAttributes) UrlFileExtensionCondition() terra.ListValue[UrlFileExtensionConditionAttributes] {
-	return terra.ReferenceList[UrlFileExtensionConditionAttributes](c.ref.Append("url_file_extension_condition"))
+	return terra.ReferenceAsList[UrlFileExtensionConditionAttributes](c.ref.Append("url_file_extension_condition"))
 }
 
 func (c ConditionsAttributes) UrlFilenameCondition() terra.ListValue[UrlFilenameConditionAttributes] {
-	return terra.ReferenceList[UrlFilenameConditionAttributes](c.ref.Append("url_filename_condition"))
+	return terra.ReferenceAsList[UrlFilenameConditionAttributes](c.ref.Append("url_filename_condition"))
 }
 
 func (c ConditionsAttributes) UrlPathCondition() terra.ListValue[UrlPathConditionAttributes] {
-	return terra.ReferenceList[UrlPathConditionAttributes](c.ref.Append("url_path_condition"))
+	return terra.ReferenceAsList[UrlPathConditionAttributes](c.ref.Append("url_path_condition"))
 }
 
 type ClientPortConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (cpc ClientPortConditionAttributes) InternalRef() terra.Reference {
-	return cpc.ref
+func (cpc ClientPortConditionAttributes) InternalRef() (terra.Reference, error) {
+	return cpc.ref, nil
 }
 
 func (cpc ClientPortConditionAttributes) InternalWithRef(ref terra.Reference) ClientPortConditionAttributes {
 	return ClientPortConditionAttributes{ref: ref}
 }
 
-func (cpc ClientPortConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (cpc ClientPortConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cpc.ref.InternalTokens()
 }
 
 func (cpc ClientPortConditionAttributes) MatchValues() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cpc.ref.Append("match_values"))
+	return terra.ReferenceAsList[terra.StringValue](cpc.ref.Append("match_values"))
 }
 
 func (cpc ClientPortConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(cpc.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(cpc.ref.Append("negate_condition"))
 }
 
 func (cpc ClientPortConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(cpc.ref.Append("operator"))
+	return terra.ReferenceAsString(cpc.ref.Append("operator"))
 }
 
 type CookiesConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (cc CookiesConditionAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc CookiesConditionAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc CookiesConditionAttributes) InternalWithRef(ref terra.Reference) CookiesConditionAttributes {
 	return CookiesConditionAttributes{ref: ref}
 }
 
-func (cc CookiesConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (cc CookiesConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
 func (cc CookiesConditionAttributes) CookieName() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("cookie_name"))
+	return terra.ReferenceAsString(cc.ref.Append("cookie_name"))
 }
 
 func (cc CookiesConditionAttributes) MatchValues() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cc.ref.Append("match_values"))
+	return terra.ReferenceAsList[terra.StringValue](cc.ref.Append("match_values"))
 }
 
 func (cc CookiesConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(cc.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(cc.ref.Append("negate_condition"))
 }
 
 func (cc CookiesConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("operator"))
+	return terra.ReferenceAsString(cc.ref.Append("operator"))
 }
 
 func (cc CookiesConditionAttributes) Transforms() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cc.ref.Append("transforms"))
+	return terra.ReferenceAsSet[terra.StringValue](cc.ref.Append("transforms"))
 }
 
 type HostNameConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (hnc HostNameConditionAttributes) InternalRef() terra.Reference {
-	return hnc.ref
+func (hnc HostNameConditionAttributes) InternalRef() (terra.Reference, error) {
+	return hnc.ref, nil
 }
 
 func (hnc HostNameConditionAttributes) InternalWithRef(ref terra.Reference) HostNameConditionAttributes {
 	return HostNameConditionAttributes{ref: ref}
 }
 
-func (hnc HostNameConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (hnc HostNameConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hnc.ref.InternalTokens()
 }
 
 func (hnc HostNameConditionAttributes) MatchValues() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](hnc.ref.Append("match_values"))
+	return terra.ReferenceAsList[terra.StringValue](hnc.ref.Append("match_values"))
 }
 
 func (hnc HostNameConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(hnc.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(hnc.ref.Append("negate_condition"))
 }
 
 func (hnc HostNameConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(hnc.ref.Append("operator"))
+	return terra.ReferenceAsString(hnc.ref.Append("operator"))
 }
 
 func (hnc HostNameConditionAttributes) Transforms() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](hnc.ref.Append("transforms"))
+	return terra.ReferenceAsSet[terra.StringValue](hnc.ref.Append("transforms"))
 }
 
 type HttpVersionConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (hvc HttpVersionConditionAttributes) InternalRef() terra.Reference {
-	return hvc.ref
+func (hvc HttpVersionConditionAttributes) InternalRef() (terra.Reference, error) {
+	return hvc.ref, nil
 }
 
 func (hvc HttpVersionConditionAttributes) InternalWithRef(ref terra.Reference) HttpVersionConditionAttributes {
 	return HttpVersionConditionAttributes{ref: ref}
 }
 
-func (hvc HttpVersionConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (hvc HttpVersionConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hvc.ref.InternalTokens()
 }
 
 func (hvc HttpVersionConditionAttributes) MatchValues() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](hvc.ref.Append("match_values"))
+	return terra.ReferenceAsSet[terra.StringValue](hvc.ref.Append("match_values"))
 }
 
 func (hvc HttpVersionConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(hvc.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(hvc.ref.Append("negate_condition"))
 }
 
 func (hvc HttpVersionConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(hvc.ref.Append("operator"))
+	return terra.ReferenceAsString(hvc.ref.Append("operator"))
 }
 
 type IsDeviceConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (idc IsDeviceConditionAttributes) InternalRef() terra.Reference {
-	return idc.ref
+func (idc IsDeviceConditionAttributes) InternalRef() (terra.Reference, error) {
+	return idc.ref, nil
 }
 
 func (idc IsDeviceConditionAttributes) InternalWithRef(ref terra.Reference) IsDeviceConditionAttributes {
 	return IsDeviceConditionAttributes{ref: ref}
 }
 
-func (idc IsDeviceConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (idc IsDeviceConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return idc.ref.InternalTokens()
 }
 
 func (idc IsDeviceConditionAttributes) MatchValues() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](idc.ref.Append("match_values"))
+	return terra.ReferenceAsList[terra.StringValue](idc.ref.Append("match_values"))
 }
 
 func (idc IsDeviceConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(idc.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(idc.ref.Append("negate_condition"))
 }
 
 func (idc IsDeviceConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(idc.ref.Append("operator"))
+	return terra.ReferenceAsString(idc.ref.Append("operator"))
 }
 
 type PostArgsConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (pac PostArgsConditionAttributes) InternalRef() terra.Reference {
-	return pac.ref
+func (pac PostArgsConditionAttributes) InternalRef() (terra.Reference, error) {
+	return pac.ref, nil
 }
 
 func (pac PostArgsConditionAttributes) InternalWithRef(ref terra.Reference) PostArgsConditionAttributes {
 	return PostArgsConditionAttributes{ref: ref}
 }
 
-func (pac PostArgsConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (pac PostArgsConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pac.ref.InternalTokens()
 }
 
 func (pac PostArgsConditionAttributes) MatchValues() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](pac.ref.Append("match_values"))
+	return terra.ReferenceAsList[terra.StringValue](pac.ref.Append("match_values"))
 }
 
 func (pac PostArgsConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(pac.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(pac.ref.Append("negate_condition"))
 }
 
 func (pac PostArgsConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(pac.ref.Append("operator"))
+	return terra.ReferenceAsString(pac.ref.Append("operator"))
 }
 
 func (pac PostArgsConditionAttributes) PostArgsName() terra.StringValue {
-	return terra.ReferenceString(pac.ref.Append("post_args_name"))
+	return terra.ReferenceAsString(pac.ref.Append("post_args_name"))
 }
 
 func (pac PostArgsConditionAttributes) Transforms() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](pac.ref.Append("transforms"))
+	return terra.ReferenceAsSet[terra.StringValue](pac.ref.Append("transforms"))
 }
 
 type QueryStringConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (qsc QueryStringConditionAttributes) InternalRef() terra.Reference {
-	return qsc.ref
+func (qsc QueryStringConditionAttributes) InternalRef() (terra.Reference, error) {
+	return qsc.ref, nil
 }
 
 func (qsc QueryStringConditionAttributes) InternalWithRef(ref terra.Reference) QueryStringConditionAttributes {
 	return QueryStringConditionAttributes{ref: ref}
 }
 
-func (qsc QueryStringConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (qsc QueryStringConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return qsc.ref.InternalTokens()
 }
 
 func (qsc QueryStringConditionAttributes) MatchValues() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](qsc.ref.Append("match_values"))
+	return terra.ReferenceAsList[terra.StringValue](qsc.ref.Append("match_values"))
 }
 
 func (qsc QueryStringConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(qsc.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(qsc.ref.Append("negate_condition"))
 }
 
 func (qsc QueryStringConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(qsc.ref.Append("operator"))
+	return terra.ReferenceAsString(qsc.ref.Append("operator"))
 }
 
 func (qsc QueryStringConditionAttributes) Transforms() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](qsc.ref.Append("transforms"))
+	return terra.ReferenceAsSet[terra.StringValue](qsc.ref.Append("transforms"))
 }
 
 type RemoteAddressConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (rac RemoteAddressConditionAttributes) InternalRef() terra.Reference {
-	return rac.ref
+func (rac RemoteAddressConditionAttributes) InternalRef() (terra.Reference, error) {
+	return rac.ref, nil
 }
 
 func (rac RemoteAddressConditionAttributes) InternalWithRef(ref terra.Reference) RemoteAddressConditionAttributes {
 	return RemoteAddressConditionAttributes{ref: ref}
 }
 
-func (rac RemoteAddressConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (rac RemoteAddressConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rac.ref.InternalTokens()
 }
 
 func (rac RemoteAddressConditionAttributes) MatchValues() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rac.ref.Append("match_values"))
+	return terra.ReferenceAsList[terra.StringValue](rac.ref.Append("match_values"))
 }
 
 func (rac RemoteAddressConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(rac.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(rac.ref.Append("negate_condition"))
 }
 
 func (rac RemoteAddressConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(rac.ref.Append("operator"))
+	return terra.ReferenceAsString(rac.ref.Append("operator"))
 }
 
 type RequestBodyConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (rbc RequestBodyConditionAttributes) InternalRef() terra.Reference {
-	return rbc.ref
+func (rbc RequestBodyConditionAttributes) InternalRef() (terra.Reference, error) {
+	return rbc.ref, nil
 }
 
 func (rbc RequestBodyConditionAttributes) InternalWithRef(ref terra.Reference) RequestBodyConditionAttributes {
 	return RequestBodyConditionAttributes{ref: ref}
 }
 
-func (rbc RequestBodyConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (rbc RequestBodyConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rbc.ref.InternalTokens()
 }
 
 func (rbc RequestBodyConditionAttributes) MatchValues() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rbc.ref.Append("match_values"))
+	return terra.ReferenceAsList[terra.StringValue](rbc.ref.Append("match_values"))
 }
 
 func (rbc RequestBodyConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(rbc.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(rbc.ref.Append("negate_condition"))
 }
 
 func (rbc RequestBodyConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(rbc.ref.Append("operator"))
+	return terra.ReferenceAsString(rbc.ref.Append("operator"))
 }
 
 func (rbc RequestBodyConditionAttributes) Transforms() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rbc.ref.Append("transforms"))
+	return terra.ReferenceAsSet[terra.StringValue](rbc.ref.Append("transforms"))
 }
 
 type RequestHeaderConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (rhc RequestHeaderConditionAttributes) InternalRef() terra.Reference {
-	return rhc.ref
+func (rhc RequestHeaderConditionAttributes) InternalRef() (terra.Reference, error) {
+	return rhc.ref, nil
 }
 
 func (rhc RequestHeaderConditionAttributes) InternalWithRef(ref terra.Reference) RequestHeaderConditionAttributes {
 	return RequestHeaderConditionAttributes{ref: ref}
 }
 
-func (rhc RequestHeaderConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (rhc RequestHeaderConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rhc.ref.InternalTokens()
 }
 
 func (rhc RequestHeaderConditionAttributes) HeaderName() terra.StringValue {
-	return terra.ReferenceString(rhc.ref.Append("header_name"))
+	return terra.ReferenceAsString(rhc.ref.Append("header_name"))
 }
 
 func (rhc RequestHeaderConditionAttributes) MatchValues() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rhc.ref.Append("match_values"))
+	return terra.ReferenceAsList[terra.StringValue](rhc.ref.Append("match_values"))
 }
 
 func (rhc RequestHeaderConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(rhc.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(rhc.ref.Append("negate_condition"))
 }
 
 func (rhc RequestHeaderConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(rhc.ref.Append("operator"))
+	return terra.ReferenceAsString(rhc.ref.Append("operator"))
 }
 
 func (rhc RequestHeaderConditionAttributes) Transforms() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rhc.ref.Append("transforms"))
+	return terra.ReferenceAsSet[terra.StringValue](rhc.ref.Append("transforms"))
 }
 
 type RequestMethodConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (rmc RequestMethodConditionAttributes) InternalRef() terra.Reference {
-	return rmc.ref
+func (rmc RequestMethodConditionAttributes) InternalRef() (terra.Reference, error) {
+	return rmc.ref, nil
 }
 
 func (rmc RequestMethodConditionAttributes) InternalWithRef(ref terra.Reference) RequestMethodConditionAttributes {
 	return RequestMethodConditionAttributes{ref: ref}
 }
 
-func (rmc RequestMethodConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (rmc RequestMethodConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rmc.ref.InternalTokens()
 }
 
 func (rmc RequestMethodConditionAttributes) MatchValues() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rmc.ref.Append("match_values"))
+	return terra.ReferenceAsSet[terra.StringValue](rmc.ref.Append("match_values"))
 }
 
 func (rmc RequestMethodConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(rmc.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(rmc.ref.Append("negate_condition"))
 }
 
 func (rmc RequestMethodConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(rmc.ref.Append("operator"))
+	return terra.ReferenceAsString(rmc.ref.Append("operator"))
 }
 
 type RequestSchemeConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (rsc RequestSchemeConditionAttributes) InternalRef() terra.Reference {
-	return rsc.ref
+func (rsc RequestSchemeConditionAttributes) InternalRef() (terra.Reference, error) {
+	return rsc.ref, nil
 }
 
 func (rsc RequestSchemeConditionAttributes) InternalWithRef(ref terra.Reference) RequestSchemeConditionAttributes {
 	return RequestSchemeConditionAttributes{ref: ref}
 }
 
-func (rsc RequestSchemeConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (rsc RequestSchemeConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rsc.ref.InternalTokens()
 }
 
 func (rsc RequestSchemeConditionAttributes) MatchValues() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rsc.ref.Append("match_values"))
+	return terra.ReferenceAsList[terra.StringValue](rsc.ref.Append("match_values"))
 }
 
 func (rsc RequestSchemeConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(rsc.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(rsc.ref.Append("negate_condition"))
 }
 
 func (rsc RequestSchemeConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(rsc.ref.Append("operator"))
+	return terra.ReferenceAsString(rsc.ref.Append("operator"))
 }
 
 type RequestUriConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (ruc RequestUriConditionAttributes) InternalRef() terra.Reference {
-	return ruc.ref
+func (ruc RequestUriConditionAttributes) InternalRef() (terra.Reference, error) {
+	return ruc.ref, nil
 }
 
 func (ruc RequestUriConditionAttributes) InternalWithRef(ref terra.Reference) RequestUriConditionAttributes {
 	return RequestUriConditionAttributes{ref: ref}
 }
 
-func (ruc RequestUriConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (ruc RequestUriConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ruc.ref.InternalTokens()
 }
 
 func (ruc RequestUriConditionAttributes) MatchValues() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ruc.ref.Append("match_values"))
+	return terra.ReferenceAsList[terra.StringValue](ruc.ref.Append("match_values"))
 }
 
 func (ruc RequestUriConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(ruc.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(ruc.ref.Append("negate_condition"))
 }
 
 func (ruc RequestUriConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(ruc.ref.Append("operator"))
+	return terra.ReferenceAsString(ruc.ref.Append("operator"))
 }
 
 func (ruc RequestUriConditionAttributes) Transforms() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ruc.ref.Append("transforms"))
+	return terra.ReferenceAsSet[terra.StringValue](ruc.ref.Append("transforms"))
 }
 
 type ServerPortConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (spc ServerPortConditionAttributes) InternalRef() terra.Reference {
-	return spc.ref
+func (spc ServerPortConditionAttributes) InternalRef() (terra.Reference, error) {
+	return spc.ref, nil
 }
 
 func (spc ServerPortConditionAttributes) InternalWithRef(ref terra.Reference) ServerPortConditionAttributes {
 	return ServerPortConditionAttributes{ref: ref}
 }
 
-func (spc ServerPortConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (spc ServerPortConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return spc.ref.InternalTokens()
 }
 
 func (spc ServerPortConditionAttributes) MatchValues() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](spc.ref.Append("match_values"))
+	return terra.ReferenceAsSet[terra.StringValue](spc.ref.Append("match_values"))
 }
 
 func (spc ServerPortConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(spc.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(spc.ref.Append("negate_condition"))
 }
 
 func (spc ServerPortConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(spc.ref.Append("operator"))
+	return terra.ReferenceAsString(spc.ref.Append("operator"))
 }
 
 type SocketAddressConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (sac SocketAddressConditionAttributes) InternalRef() terra.Reference {
-	return sac.ref
+func (sac SocketAddressConditionAttributes) InternalRef() (terra.Reference, error) {
+	return sac.ref, nil
 }
 
 func (sac SocketAddressConditionAttributes) InternalWithRef(ref terra.Reference) SocketAddressConditionAttributes {
 	return SocketAddressConditionAttributes{ref: ref}
 }
 
-func (sac SocketAddressConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (sac SocketAddressConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sac.ref.InternalTokens()
 }
 
 func (sac SocketAddressConditionAttributes) MatchValues() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sac.ref.Append("match_values"))
+	return terra.ReferenceAsList[terra.StringValue](sac.ref.Append("match_values"))
 }
 
 func (sac SocketAddressConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(sac.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(sac.ref.Append("negate_condition"))
 }
 
 func (sac SocketAddressConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(sac.ref.Append("operator"))
+	return terra.ReferenceAsString(sac.ref.Append("operator"))
 }
 
 type SslProtocolConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (spc SslProtocolConditionAttributes) InternalRef() terra.Reference {
-	return spc.ref
+func (spc SslProtocolConditionAttributes) InternalRef() (terra.Reference, error) {
+	return spc.ref, nil
 }
 
 func (spc SslProtocolConditionAttributes) InternalWithRef(ref terra.Reference) SslProtocolConditionAttributes {
 	return SslProtocolConditionAttributes{ref: ref}
 }
 
-func (spc SslProtocolConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (spc SslProtocolConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return spc.ref.InternalTokens()
 }
 
 func (spc SslProtocolConditionAttributes) MatchValues() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](spc.ref.Append("match_values"))
+	return terra.ReferenceAsSet[terra.StringValue](spc.ref.Append("match_values"))
 }
 
 func (spc SslProtocolConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(spc.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(spc.ref.Append("negate_condition"))
 }
 
 func (spc SslProtocolConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(spc.ref.Append("operator"))
+	return terra.ReferenceAsString(spc.ref.Append("operator"))
 }
 
 type UrlFileExtensionConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (ufec UrlFileExtensionConditionAttributes) InternalRef() terra.Reference {
-	return ufec.ref
+func (ufec UrlFileExtensionConditionAttributes) InternalRef() (terra.Reference, error) {
+	return ufec.ref, nil
 }
 
 func (ufec UrlFileExtensionConditionAttributes) InternalWithRef(ref terra.Reference) UrlFileExtensionConditionAttributes {
 	return UrlFileExtensionConditionAttributes{ref: ref}
 }
 
-func (ufec UrlFileExtensionConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (ufec UrlFileExtensionConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ufec.ref.InternalTokens()
 }
 
 func (ufec UrlFileExtensionConditionAttributes) MatchValues() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ufec.ref.Append("match_values"))
+	return terra.ReferenceAsList[terra.StringValue](ufec.ref.Append("match_values"))
 }
 
 func (ufec UrlFileExtensionConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(ufec.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(ufec.ref.Append("negate_condition"))
 }
 
 func (ufec UrlFileExtensionConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(ufec.ref.Append("operator"))
+	return terra.ReferenceAsString(ufec.ref.Append("operator"))
 }
 
 func (ufec UrlFileExtensionConditionAttributes) Transforms() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ufec.ref.Append("transforms"))
+	return terra.ReferenceAsSet[terra.StringValue](ufec.ref.Append("transforms"))
 }
 
 type UrlFilenameConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (ufc UrlFilenameConditionAttributes) InternalRef() terra.Reference {
-	return ufc.ref
+func (ufc UrlFilenameConditionAttributes) InternalRef() (terra.Reference, error) {
+	return ufc.ref, nil
 }
 
 func (ufc UrlFilenameConditionAttributes) InternalWithRef(ref terra.Reference) UrlFilenameConditionAttributes {
 	return UrlFilenameConditionAttributes{ref: ref}
 }
 
-func (ufc UrlFilenameConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (ufc UrlFilenameConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ufc.ref.InternalTokens()
 }
 
 func (ufc UrlFilenameConditionAttributes) MatchValues() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ufc.ref.Append("match_values"))
+	return terra.ReferenceAsList[terra.StringValue](ufc.ref.Append("match_values"))
 }
 
 func (ufc UrlFilenameConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(ufc.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(ufc.ref.Append("negate_condition"))
 }
 
 func (ufc UrlFilenameConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(ufc.ref.Append("operator"))
+	return terra.ReferenceAsString(ufc.ref.Append("operator"))
 }
 
 func (ufc UrlFilenameConditionAttributes) Transforms() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ufc.ref.Append("transforms"))
+	return terra.ReferenceAsSet[terra.StringValue](ufc.ref.Append("transforms"))
 }
 
 type UrlPathConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (upc UrlPathConditionAttributes) InternalRef() terra.Reference {
-	return upc.ref
+func (upc UrlPathConditionAttributes) InternalRef() (terra.Reference, error) {
+	return upc.ref, nil
 }
 
 func (upc UrlPathConditionAttributes) InternalWithRef(ref terra.Reference) UrlPathConditionAttributes {
 	return UrlPathConditionAttributes{ref: ref}
 }
 
-func (upc UrlPathConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (upc UrlPathConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return upc.ref.InternalTokens()
 }
 
 func (upc UrlPathConditionAttributes) MatchValues() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](upc.ref.Append("match_values"))
+	return terra.ReferenceAsList[terra.StringValue](upc.ref.Append("match_values"))
 }
 
 func (upc UrlPathConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(upc.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(upc.ref.Append("negate_condition"))
 }
 
 func (upc UrlPathConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(upc.ref.Append("operator"))
+	return terra.ReferenceAsString(upc.ref.Append("operator"))
 }
 
 func (upc UrlPathConditionAttributes) Transforms() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](upc.ref.Append("transforms"))
+	return terra.ReferenceAsSet[terra.StringValue](upc.ref.Append("transforms"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ActionsState struct {

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataKeyVault creates a new instance of [DataKeyVault].
 func NewDataKeyVault(name string, args DataKeyVaultArgs) *DataKeyVault {
 	return &DataKeyVault{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataKeyVault(name string, args DataKeyVaultArgs) *DataKeyVault {
 
 var _ terra.DataResource = (*DataKeyVault)(nil)
 
+// DataKeyVault represents the Terraform data resource azurerm_key_vault.
 type DataKeyVault struct {
 	Name string
 	Args DataKeyVaultArgs
 }
 
+// DataSource returns the Terraform object type for [DataKeyVault].
 func (kv *DataKeyVault) DataSource() string {
 	return "azurerm_key_vault"
 }
 
+// LocalName returns the local name for [DataKeyVault].
 func (kv *DataKeyVault) LocalName() string {
 	return kv.Name
 }
 
+// Configuration returns the configuration (args) for [DataKeyVault].
 func (kv *DataKeyVault) Configuration() interface{} {
 	return kv.Args
 }
 
+// Attributes returns the attributes for [DataKeyVault].
 func (kv *DataKeyVault) Attributes() dataKeyVaultAttributes {
 	return dataKeyVaultAttributes{ref: terra.ReferenceDataResource(kv)}
 }
 
+// DataKeyVaultArgs contains the configurations for azurerm_key_vault.
 type DataKeyVaultArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -55,70 +62,84 @@ type dataKeyVaultAttributes struct {
 	ref terra.Reference
 }
 
+// EnableRbacAuthorization returns a reference to field enable_rbac_authorization of azurerm_key_vault.
 func (kv dataKeyVaultAttributes) EnableRbacAuthorization() terra.BoolValue {
-	return terra.ReferenceBool(kv.ref.Append("enable_rbac_authorization"))
+	return terra.ReferenceAsBool(kv.ref.Append("enable_rbac_authorization"))
 }
 
+// EnabledForDeployment returns a reference to field enabled_for_deployment of azurerm_key_vault.
 func (kv dataKeyVaultAttributes) EnabledForDeployment() terra.BoolValue {
-	return terra.ReferenceBool(kv.ref.Append("enabled_for_deployment"))
+	return terra.ReferenceAsBool(kv.ref.Append("enabled_for_deployment"))
 }
 
+// EnabledForDiskEncryption returns a reference to field enabled_for_disk_encryption of azurerm_key_vault.
 func (kv dataKeyVaultAttributes) EnabledForDiskEncryption() terra.BoolValue {
-	return terra.ReferenceBool(kv.ref.Append("enabled_for_disk_encryption"))
+	return terra.ReferenceAsBool(kv.ref.Append("enabled_for_disk_encryption"))
 }
 
+// EnabledForTemplateDeployment returns a reference to field enabled_for_template_deployment of azurerm_key_vault.
 func (kv dataKeyVaultAttributes) EnabledForTemplateDeployment() terra.BoolValue {
-	return terra.ReferenceBool(kv.ref.Append("enabled_for_template_deployment"))
+	return terra.ReferenceAsBool(kv.ref.Append("enabled_for_template_deployment"))
 }
 
+// Id returns a reference to field id of azurerm_key_vault.
 func (kv dataKeyVaultAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kv.ref.Append("id"))
+	return terra.ReferenceAsString(kv.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_key_vault.
 func (kv dataKeyVaultAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(kv.ref.Append("location"))
+	return terra.ReferenceAsString(kv.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_key_vault.
 func (kv dataKeyVaultAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(kv.ref.Append("name"))
+	return terra.ReferenceAsString(kv.ref.Append("name"))
 }
 
+// PublicNetworkAccessEnabled returns a reference to field public_network_access_enabled of azurerm_key_vault.
 func (kv dataKeyVaultAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(kv.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(kv.ref.Append("public_network_access_enabled"))
 }
 
+// PurgeProtectionEnabled returns a reference to field purge_protection_enabled of azurerm_key_vault.
 func (kv dataKeyVaultAttributes) PurgeProtectionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(kv.ref.Append("purge_protection_enabled"))
+	return terra.ReferenceAsBool(kv.ref.Append("purge_protection_enabled"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_key_vault.
 func (kv dataKeyVaultAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(kv.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(kv.ref.Append("resource_group_name"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_key_vault.
 func (kv dataKeyVaultAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(kv.ref.Append("sku_name"))
+	return terra.ReferenceAsString(kv.ref.Append("sku_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_key_vault.
 func (kv dataKeyVaultAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](kv.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](kv.ref.Append("tags"))
 }
 
+// TenantId returns a reference to field tenant_id of azurerm_key_vault.
 func (kv dataKeyVaultAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(kv.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(kv.ref.Append("tenant_id"))
 }
 
+// VaultUri returns a reference to field vault_uri of azurerm_key_vault.
 func (kv dataKeyVaultAttributes) VaultUri() terra.StringValue {
-	return terra.ReferenceString(kv.ref.Append("vault_uri"))
+	return terra.ReferenceAsString(kv.ref.Append("vault_uri"))
 }
 
 func (kv dataKeyVaultAttributes) AccessPolicy() terra.ListValue[datakeyvault.AccessPolicyAttributes] {
-	return terra.ReferenceList[datakeyvault.AccessPolicyAttributes](kv.ref.Append("access_policy"))
+	return terra.ReferenceAsList[datakeyvault.AccessPolicyAttributes](kv.ref.Append("access_policy"))
 }
 
 func (kv dataKeyVaultAttributes) NetworkAcls() terra.ListValue[datakeyvault.NetworkAclsAttributes] {
-	return terra.ReferenceList[datakeyvault.NetworkAclsAttributes](kv.ref.Append("network_acls"))
+	return terra.ReferenceAsList[datakeyvault.NetworkAclsAttributes](kv.ref.Append("network_acls"))
 }
 
 func (kv dataKeyVaultAttributes) Timeouts() datakeyvault.TimeoutsAttributes {
-	return terra.ReferenceSingle[datakeyvault.TimeoutsAttributes](kv.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datakeyvault.TimeoutsAttributes](kv.ref.Append("timeouts"))
 }

@@ -99,7 +99,7 @@ func (dc DynamodbConfigAttributes) InternalWithRef(ref terra.Reference) Dynamodb
 	return DynamodbConfigAttributes{ref: ref}
 }
 
-func (dc DynamodbConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (dc DynamodbConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dc.ref.InternalTokens()
 }
 
@@ -135,7 +135,7 @@ func (dsc DeltaSyncConfigAttributes) InternalWithRef(ref terra.Reference) DeltaS
 	return DeltaSyncConfigAttributes{ref: ref}
 }
 
-func (dsc DeltaSyncConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (dsc DeltaSyncConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dsc.ref.InternalTokens()
 }
 
@@ -163,7 +163,7 @@ func (ec ElasticsearchConfigAttributes) InternalWithRef(ref terra.Reference) Ela
 	return ElasticsearchConfigAttributes{ref: ref}
 }
 
-func (ec ElasticsearchConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ec ElasticsearchConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 
@@ -187,7 +187,7 @@ func (ebc EventBridgeConfigAttributes) InternalWithRef(ref terra.Reference) Even
 	return EventBridgeConfigAttributes{ref: ref}
 }
 
-func (ebc EventBridgeConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ebc EventBridgeConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ebc.ref.InternalTokens()
 }
 
@@ -207,7 +207,7 @@ func (hc HttpConfigAttributes) InternalWithRef(ref terra.Reference) HttpConfigAt
 	return HttpConfigAttributes{ref: ref}
 }
 
-func (hc HttpConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (hc HttpConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hc.ref.InternalTokens()
 }
 
@@ -231,7 +231,7 @@ func (ac AuthorizationConfigAttributes) InternalWithRef(ref terra.Reference) Aut
 	return AuthorizationConfigAttributes{ref: ref}
 }
 
-func (ac AuthorizationConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ac AuthorizationConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
@@ -255,7 +255,7 @@ func (aic AwsIamConfigAttributes) InternalWithRef(ref terra.Reference) AwsIamCon
 	return AwsIamConfigAttributes{ref: ref}
 }
 
-func (aic AwsIamConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (aic AwsIamConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aic.ref.InternalTokens()
 }
 
@@ -279,7 +279,7 @@ func (lc LambdaConfigAttributes) InternalWithRef(ref terra.Reference) LambdaConf
 	return LambdaConfigAttributes{ref: ref}
 }
 
-func (lc LambdaConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (lc LambdaConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lc.ref.InternalTokens()
 }
 
@@ -299,7 +299,7 @@ func (rdc RelationalDatabaseConfigAttributes) InternalWithRef(ref terra.Referenc
 	return RelationalDatabaseConfigAttributes{ref: ref}
 }
 
-func (rdc RelationalDatabaseConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (rdc RelationalDatabaseConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rdc.ref.InternalTokens()
 }
 
@@ -323,7 +323,7 @@ func (hec HttpEndpointConfigAttributes) InternalWithRef(ref terra.Reference) Htt
 	return HttpEndpointConfigAttributes{ref: ref}
 }
 
-func (hec HttpEndpointConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (hec HttpEndpointConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hec.ref.InternalTokens()
 }
 

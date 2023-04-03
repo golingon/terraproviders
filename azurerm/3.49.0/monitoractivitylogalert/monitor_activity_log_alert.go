@@ -80,188 +80,188 @@ type ActionAttributes struct {
 	ref terra.Reference
 }
 
-func (a ActionAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a ActionAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a ActionAttributes) InternalWithRef(ref terra.Reference) ActionAttributes {
 	return ActionAttributes{ref: ref}
 }
 
-func (a ActionAttributes) InternalTokens() hclwrite.Tokens {
+func (a ActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a ActionAttributes) ActionGroupId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("action_group_id"))
+	return terra.ReferenceAsString(a.ref.Append("action_group_id"))
 }
 
 func (a ActionAttributes) WebhookProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](a.ref.Append("webhook_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](a.ref.Append("webhook_properties"))
 }
 
 type CriteriaAttributes struct {
 	ref terra.Reference
 }
 
-func (c CriteriaAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CriteriaAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CriteriaAttributes) InternalWithRef(ref terra.Reference) CriteriaAttributes {
 	return CriteriaAttributes{ref: ref}
 }
 
-func (c CriteriaAttributes) InternalTokens() hclwrite.Tokens {
+func (c CriteriaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c CriteriaAttributes) Caller() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("caller"))
+	return terra.ReferenceAsString(c.ref.Append("caller"))
 }
 
 func (c CriteriaAttributes) Category() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("category"))
+	return terra.ReferenceAsString(c.ref.Append("category"))
 }
 
 func (c CriteriaAttributes) Level() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("level"))
+	return terra.ReferenceAsString(c.ref.Append("level"))
 }
 
 func (c CriteriaAttributes) OperationName() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("operation_name"))
+	return terra.ReferenceAsString(c.ref.Append("operation_name"))
 }
 
 func (c CriteriaAttributes) RecommendationCategory() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("recommendation_category"))
+	return terra.ReferenceAsString(c.ref.Append("recommendation_category"))
 }
 
 func (c CriteriaAttributes) RecommendationImpact() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("recommendation_impact"))
+	return terra.ReferenceAsString(c.ref.Append("recommendation_impact"))
 }
 
 func (c CriteriaAttributes) RecommendationType() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("recommendation_type"))
+	return terra.ReferenceAsString(c.ref.Append("recommendation_type"))
 }
 
 func (c CriteriaAttributes) ResourceGroup() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("resource_group"))
+	return terra.ReferenceAsString(c.ref.Append("resource_group"))
 }
 
 func (c CriteriaAttributes) ResourceId() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("resource_id"))
+	return terra.ReferenceAsString(c.ref.Append("resource_id"))
 }
 
 func (c CriteriaAttributes) ResourceProvider() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("resource_provider"))
+	return terra.ReferenceAsString(c.ref.Append("resource_provider"))
 }
 
 func (c CriteriaAttributes) ResourceType() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("resource_type"))
+	return terra.ReferenceAsString(c.ref.Append("resource_type"))
 }
 
 func (c CriteriaAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("status"))
+	return terra.ReferenceAsString(c.ref.Append("status"))
 }
 
 func (c CriteriaAttributes) SubStatus() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("sub_status"))
+	return terra.ReferenceAsString(c.ref.Append("sub_status"))
 }
 
 func (c CriteriaAttributes) ResourceHealth() terra.ListValue[ResourceHealthAttributes] {
-	return terra.ReferenceList[ResourceHealthAttributes](c.ref.Append("resource_health"))
+	return terra.ReferenceAsList[ResourceHealthAttributes](c.ref.Append("resource_health"))
 }
 
 func (c CriteriaAttributes) ServiceHealth() terra.ListValue[ServiceHealthAttributes] {
-	return terra.ReferenceList[ServiceHealthAttributes](c.ref.Append("service_health"))
+	return terra.ReferenceAsList[ServiceHealthAttributes](c.ref.Append("service_health"))
 }
 
 type ResourceHealthAttributes struct {
 	ref terra.Reference
 }
 
-func (rh ResourceHealthAttributes) InternalRef() terra.Reference {
-	return rh.ref
+func (rh ResourceHealthAttributes) InternalRef() (terra.Reference, error) {
+	return rh.ref, nil
 }
 
 func (rh ResourceHealthAttributes) InternalWithRef(ref terra.Reference) ResourceHealthAttributes {
 	return ResourceHealthAttributes{ref: ref}
 }
 
-func (rh ResourceHealthAttributes) InternalTokens() hclwrite.Tokens {
+func (rh ResourceHealthAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rh.ref.InternalTokens()
 }
 
 func (rh ResourceHealthAttributes) Current() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rh.ref.Append("current"))
+	return terra.ReferenceAsSet[terra.StringValue](rh.ref.Append("current"))
 }
 
 func (rh ResourceHealthAttributes) Previous() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rh.ref.Append("previous"))
+	return terra.ReferenceAsSet[terra.StringValue](rh.ref.Append("previous"))
 }
 
 func (rh ResourceHealthAttributes) Reason() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rh.ref.Append("reason"))
+	return terra.ReferenceAsSet[terra.StringValue](rh.ref.Append("reason"))
 }
 
 type ServiceHealthAttributes struct {
 	ref terra.Reference
 }
 
-func (sh ServiceHealthAttributes) InternalRef() terra.Reference {
-	return sh.ref
+func (sh ServiceHealthAttributes) InternalRef() (terra.Reference, error) {
+	return sh.ref, nil
 }
 
 func (sh ServiceHealthAttributes) InternalWithRef(ref terra.Reference) ServiceHealthAttributes {
 	return ServiceHealthAttributes{ref: ref}
 }
 
-func (sh ServiceHealthAttributes) InternalTokens() hclwrite.Tokens {
+func (sh ServiceHealthAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sh.ref.InternalTokens()
 }
 
 func (sh ServiceHealthAttributes) Events() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sh.ref.Append("events"))
+	return terra.ReferenceAsSet[terra.StringValue](sh.ref.Append("events"))
 }
 
 func (sh ServiceHealthAttributes) Locations() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sh.ref.Append("locations"))
+	return terra.ReferenceAsSet[terra.StringValue](sh.ref.Append("locations"))
 }
 
 func (sh ServiceHealthAttributes) Services() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sh.ref.Append("services"))
+	return terra.ReferenceAsSet[terra.StringValue](sh.ref.Append("services"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ActionState struct {

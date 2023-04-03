@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewTagsTagValueIamMember creates a new instance of [TagsTagValueIamMember].
 func NewTagsTagValueIamMember(name string, args TagsTagValueIamMemberArgs) *TagsTagValueIamMember {
 	return &TagsTagValueIamMember{
 		Args: args,
@@ -19,28 +20,51 @@ func NewTagsTagValueIamMember(name string, args TagsTagValueIamMemberArgs) *Tags
 
 var _ terra.Resource = (*TagsTagValueIamMember)(nil)
 
+// TagsTagValueIamMember represents the Terraform resource google_tags_tag_value_iam_member.
 type TagsTagValueIamMember struct {
-	Name  string
-	Args  TagsTagValueIamMemberArgs
-	state *tagsTagValueIamMemberState
+	Name      string
+	Args      TagsTagValueIamMemberArgs
+	state     *tagsTagValueIamMemberState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [TagsTagValueIamMember].
 func (ttvim *TagsTagValueIamMember) Type() string {
 	return "google_tags_tag_value_iam_member"
 }
 
+// LocalName returns the local name for [TagsTagValueIamMember].
 func (ttvim *TagsTagValueIamMember) LocalName() string {
 	return ttvim.Name
 }
 
+// Configuration returns the configuration (args) for [TagsTagValueIamMember].
 func (ttvim *TagsTagValueIamMember) Configuration() interface{} {
 	return ttvim.Args
 }
 
+// DependOn is used for other resources to depend on [TagsTagValueIamMember].
+func (ttvim *TagsTagValueIamMember) DependOn() terra.Reference {
+	return terra.ReferenceResource(ttvim)
+}
+
+// Dependencies returns the list of resources [TagsTagValueIamMember] depends_on.
+func (ttvim *TagsTagValueIamMember) Dependencies() terra.Dependencies {
+	return ttvim.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [TagsTagValueIamMember].
+func (ttvim *TagsTagValueIamMember) LifecycleManagement() *terra.Lifecycle {
+	return ttvim.Lifecycle
+}
+
+// Attributes returns the attributes for [TagsTagValueIamMember].
 func (ttvim *TagsTagValueIamMember) Attributes() tagsTagValueIamMemberAttributes {
 	return tagsTagValueIamMemberAttributes{ref: terra.ReferenceResource(ttvim)}
 }
 
+// ImportState imports the given attribute values into [TagsTagValueIamMember]'s state.
 func (ttvim *TagsTagValueIamMember) ImportState(av io.Reader) error {
 	ttvim.state = &tagsTagValueIamMemberState{}
 	if err := json.NewDecoder(av).Decode(ttvim.state); err != nil {
@@ -49,10 +73,12 @@ func (ttvim *TagsTagValueIamMember) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [TagsTagValueIamMember] has state.
 func (ttvim *TagsTagValueIamMember) State() (*tagsTagValueIamMemberState, bool) {
 	return ttvim.state, ttvim.state != nil
 }
 
+// StateMust returns the state for [TagsTagValueIamMember]. Panics if the state is nil.
 func (ttvim *TagsTagValueIamMember) StateMust() *tagsTagValueIamMemberState {
 	if ttvim.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ttvim.Type(), ttvim.LocalName()))
@@ -60,10 +86,7 @@ func (ttvim *TagsTagValueIamMember) StateMust() *tagsTagValueIamMemberState {
 	return ttvim.state
 }
 
-func (ttvim *TagsTagValueIamMember) DependOn() terra.Reference {
-	return terra.ReferenceResource(ttvim)
-}
-
+// TagsTagValueIamMemberArgs contains the configurations for google_tags_tag_value_iam_member.
 type TagsTagValueIamMemberArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -75,35 +98,38 @@ type TagsTagValueIamMemberArgs struct {
 	TagValue terra.StringValue `hcl:"tag_value,attr" validate:"required"`
 	// Condition: optional
 	Condition *tagstagvalueiammember.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that TagsTagValueIamMember depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type tagsTagValueIamMemberAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_tags_tag_value_iam_member.
 func (ttvim tagsTagValueIamMemberAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(ttvim.ref.Append("etag"))
+	return terra.ReferenceAsString(ttvim.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_tags_tag_value_iam_member.
 func (ttvim tagsTagValueIamMemberAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ttvim.ref.Append("id"))
+	return terra.ReferenceAsString(ttvim.ref.Append("id"))
 }
 
+// Member returns a reference to field member of google_tags_tag_value_iam_member.
 func (ttvim tagsTagValueIamMemberAttributes) Member() terra.StringValue {
-	return terra.ReferenceString(ttvim.ref.Append("member"))
+	return terra.ReferenceAsString(ttvim.ref.Append("member"))
 }
 
+// Role returns a reference to field role of google_tags_tag_value_iam_member.
 func (ttvim tagsTagValueIamMemberAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(ttvim.ref.Append("role"))
+	return terra.ReferenceAsString(ttvim.ref.Append("role"))
 }
 
+// TagValue returns a reference to field tag_value of google_tags_tag_value_iam_member.
 func (ttvim tagsTagValueIamMemberAttributes) TagValue() terra.StringValue {
-	return terra.ReferenceString(ttvim.ref.Append("tag_value"))
+	return terra.ReferenceAsString(ttvim.ref.Append("tag_value"))
 }
 
 func (ttvim tagsTagValueIamMemberAttributes) Condition() terra.ListValue[tagstagvalueiammember.ConditionAttributes] {
-	return terra.ReferenceList[tagstagvalueiammember.ConditionAttributes](ttvim.ref.Append("condition"))
+	return terra.ReferenceAsList[tagstagvalueiammember.ConditionAttributes](ttvim.ref.Append("condition"))
 }
 
 type tagsTagValueIamMemberState struct {

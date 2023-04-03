@@ -52,140 +52,140 @@ type IdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (i IdentityAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IdentityAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IdentityAttributes) InternalWithRef(ref terra.Reference) IdentityAttributes {
 	return IdentityAttributes{ref: ref}
 }
 
-func (i IdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (i IdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IdentityAttributes) IdentityIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i.ref.Append("identity_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](i.ref.Append("identity_ids"))
 }
 
 func (i IdentityAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("principal_id"))
+	return terra.ReferenceAsString(i.ref.Append("principal_id"))
 }
 
 func (i IdentityAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(i.ref.Append("tenant_id"))
 }
 
 func (i IdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("type"))
+	return terra.ReferenceAsString(i.ref.Append("type"))
 }
 
 type OptimizedAutoScaleAttributes struct {
 	ref terra.Reference
 }
 
-func (oas OptimizedAutoScaleAttributes) InternalRef() terra.Reference {
-	return oas.ref
+func (oas OptimizedAutoScaleAttributes) InternalRef() (terra.Reference, error) {
+	return oas.ref, nil
 }
 
 func (oas OptimizedAutoScaleAttributes) InternalWithRef(ref terra.Reference) OptimizedAutoScaleAttributes {
 	return OptimizedAutoScaleAttributes{ref: ref}
 }
 
-func (oas OptimizedAutoScaleAttributes) InternalTokens() hclwrite.Tokens {
+func (oas OptimizedAutoScaleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oas.ref.InternalTokens()
 }
 
 func (oas OptimizedAutoScaleAttributes) MaximumInstances() terra.NumberValue {
-	return terra.ReferenceNumber(oas.ref.Append("maximum_instances"))
+	return terra.ReferenceAsNumber(oas.ref.Append("maximum_instances"))
 }
 
 func (oas OptimizedAutoScaleAttributes) MinimumInstances() terra.NumberValue {
-	return terra.ReferenceNumber(oas.ref.Append("minimum_instances"))
+	return terra.ReferenceAsNumber(oas.ref.Append("minimum_instances"))
 }
 
 type SkuAttributes struct {
 	ref terra.Reference
 }
 
-func (s SkuAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SkuAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SkuAttributes) InternalWithRef(ref terra.Reference) SkuAttributes {
 	return SkuAttributes{ref: ref}
 }
 
-func (s SkuAttributes) InternalTokens() hclwrite.Tokens {
+func (s SkuAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SkuAttributes) Capacity() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("capacity"))
+	return terra.ReferenceAsNumber(s.ref.Append("capacity"))
 }
 
 func (s SkuAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type VirtualNetworkConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (vnc VirtualNetworkConfigurationAttributes) InternalRef() terra.Reference {
-	return vnc.ref
+func (vnc VirtualNetworkConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return vnc.ref, nil
 }
 
 func (vnc VirtualNetworkConfigurationAttributes) InternalWithRef(ref terra.Reference) VirtualNetworkConfigurationAttributes {
 	return VirtualNetworkConfigurationAttributes{ref: ref}
 }
 
-func (vnc VirtualNetworkConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (vnc VirtualNetworkConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vnc.ref.InternalTokens()
 }
 
 func (vnc VirtualNetworkConfigurationAttributes) DataManagementPublicIpId() terra.StringValue {
-	return terra.ReferenceString(vnc.ref.Append("data_management_public_ip_id"))
+	return terra.ReferenceAsString(vnc.ref.Append("data_management_public_ip_id"))
 }
 
 func (vnc VirtualNetworkConfigurationAttributes) EnginePublicIpId() terra.StringValue {
-	return terra.ReferenceString(vnc.ref.Append("engine_public_ip_id"))
+	return terra.ReferenceAsString(vnc.ref.Append("engine_public_ip_id"))
 }
 
 func (vnc VirtualNetworkConfigurationAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(vnc.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(vnc.ref.Append("subnet_id"))
 }
 
 type IdentityState struct {

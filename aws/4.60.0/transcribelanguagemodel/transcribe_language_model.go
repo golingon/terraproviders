@@ -33,7 +33,7 @@ func (idc InputDataConfigAttributes) InternalWithRef(ref terra.Reference) InputD
 	return InputDataConfigAttributes{ref: ref}
 }
 
-func (idc InputDataConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (idc InputDataConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return idc.ref.InternalTokens()
 }
 
@@ -61,7 +61,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

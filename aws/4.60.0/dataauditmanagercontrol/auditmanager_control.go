@@ -26,7 +26,7 @@ func (cms ControlMappingSourcesAttributes) InternalWithRef(ref terra.Reference) 
 	return ControlMappingSourcesAttributes{ref: ref}
 }
 
-func (cms ControlMappingSourcesAttributes) InternalTokens() hclwrite.Tokens {
+func (cms ControlMappingSourcesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cms.ref.InternalTokens()
 }
 
@@ -74,7 +74,7 @@ func (sk SourceKeywordAttributes) InternalWithRef(ref terra.Reference) SourceKey
 	return SourceKeywordAttributes{ref: ref}
 }
 
-func (sk SourceKeywordAttributes) InternalTokens() hclwrite.Tokens {
+func (sk SourceKeywordAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sk.ref.InternalTokens()
 }
 

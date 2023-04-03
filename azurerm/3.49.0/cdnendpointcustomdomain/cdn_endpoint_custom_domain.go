@@ -40,88 +40,88 @@ type CdnManagedHttpsAttributes struct {
 	ref terra.Reference
 }
 
-func (cmh CdnManagedHttpsAttributes) InternalRef() terra.Reference {
-	return cmh.ref
+func (cmh CdnManagedHttpsAttributes) InternalRef() (terra.Reference, error) {
+	return cmh.ref, nil
 }
 
 func (cmh CdnManagedHttpsAttributes) InternalWithRef(ref terra.Reference) CdnManagedHttpsAttributes {
 	return CdnManagedHttpsAttributes{ref: ref}
 }
 
-func (cmh CdnManagedHttpsAttributes) InternalTokens() hclwrite.Tokens {
+func (cmh CdnManagedHttpsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cmh.ref.InternalTokens()
 }
 
 func (cmh CdnManagedHttpsAttributes) CertificateType() terra.StringValue {
-	return terra.ReferenceString(cmh.ref.Append("certificate_type"))
+	return terra.ReferenceAsString(cmh.ref.Append("certificate_type"))
 }
 
 func (cmh CdnManagedHttpsAttributes) ProtocolType() terra.StringValue {
-	return terra.ReferenceString(cmh.ref.Append("protocol_type"))
+	return terra.ReferenceAsString(cmh.ref.Append("protocol_type"))
 }
 
 func (cmh CdnManagedHttpsAttributes) TlsVersion() terra.StringValue {
-	return terra.ReferenceString(cmh.ref.Append("tls_version"))
+	return terra.ReferenceAsString(cmh.ref.Append("tls_version"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type UserManagedHttpsAttributes struct {
 	ref terra.Reference
 }
 
-func (umh UserManagedHttpsAttributes) InternalRef() terra.Reference {
-	return umh.ref
+func (umh UserManagedHttpsAttributes) InternalRef() (terra.Reference, error) {
+	return umh.ref, nil
 }
 
 func (umh UserManagedHttpsAttributes) InternalWithRef(ref terra.Reference) UserManagedHttpsAttributes {
 	return UserManagedHttpsAttributes{ref: ref}
 }
 
-func (umh UserManagedHttpsAttributes) InternalTokens() hclwrite.Tokens {
+func (umh UserManagedHttpsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return umh.ref.InternalTokens()
 }
 
 func (umh UserManagedHttpsAttributes) KeyVaultCertificateId() terra.StringValue {
-	return terra.ReferenceString(umh.ref.Append("key_vault_certificate_id"))
+	return terra.ReferenceAsString(umh.ref.Append("key_vault_certificate_id"))
 }
 
 func (umh UserManagedHttpsAttributes) KeyVaultSecretId() terra.StringValue {
-	return terra.ReferenceString(umh.ref.Append("key_vault_secret_id"))
+	return terra.ReferenceAsString(umh.ref.Append("key_vault_secret_id"))
 }
 
 func (umh UserManagedHttpsAttributes) TlsVersion() terra.StringValue {
-	return terra.ReferenceString(umh.ref.Append("tls_version"))
+	return terra.ReferenceAsString(umh.ref.Append("tls_version"))
 }
 
 type CdnManagedHttpsState struct {

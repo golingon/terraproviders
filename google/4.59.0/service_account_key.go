@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewServiceAccountKey creates a new instance of [ServiceAccountKey].
 func NewServiceAccountKey(name string, args ServiceAccountKeyArgs) *ServiceAccountKey {
 	return &ServiceAccountKey{
 		Args: args,
@@ -18,28 +19,51 @@ func NewServiceAccountKey(name string, args ServiceAccountKeyArgs) *ServiceAccou
 
 var _ terra.Resource = (*ServiceAccountKey)(nil)
 
+// ServiceAccountKey represents the Terraform resource google_service_account_key.
 type ServiceAccountKey struct {
-	Name  string
-	Args  ServiceAccountKeyArgs
-	state *serviceAccountKeyState
+	Name      string
+	Args      ServiceAccountKeyArgs
+	state     *serviceAccountKeyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ServiceAccountKey].
 func (sak *ServiceAccountKey) Type() string {
 	return "google_service_account_key"
 }
 
+// LocalName returns the local name for [ServiceAccountKey].
 func (sak *ServiceAccountKey) LocalName() string {
 	return sak.Name
 }
 
+// Configuration returns the configuration (args) for [ServiceAccountKey].
 func (sak *ServiceAccountKey) Configuration() interface{} {
 	return sak.Args
 }
 
+// DependOn is used for other resources to depend on [ServiceAccountKey].
+func (sak *ServiceAccountKey) DependOn() terra.Reference {
+	return terra.ReferenceResource(sak)
+}
+
+// Dependencies returns the list of resources [ServiceAccountKey] depends_on.
+func (sak *ServiceAccountKey) Dependencies() terra.Dependencies {
+	return sak.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ServiceAccountKey].
+func (sak *ServiceAccountKey) LifecycleManagement() *terra.Lifecycle {
+	return sak.Lifecycle
+}
+
+// Attributes returns the attributes for [ServiceAccountKey].
 func (sak *ServiceAccountKey) Attributes() serviceAccountKeyAttributes {
 	return serviceAccountKeyAttributes{ref: terra.ReferenceResource(sak)}
 }
 
+// ImportState imports the given attribute values into [ServiceAccountKey]'s state.
 func (sak *ServiceAccountKey) ImportState(av io.Reader) error {
 	sak.state = &serviceAccountKeyState{}
 	if err := json.NewDecoder(av).Decode(sak.state); err != nil {
@@ -48,10 +72,12 @@ func (sak *ServiceAccountKey) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ServiceAccountKey] has state.
 func (sak *ServiceAccountKey) State() (*serviceAccountKeyState, bool) {
 	return sak.state, sak.state != nil
 }
 
+// StateMust returns the state for [ServiceAccountKey]. Panics if the state is nil.
 func (sak *ServiceAccountKey) StateMust() *serviceAccountKeyState {
 	if sak.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sak.Type(), sak.LocalName()))
@@ -59,10 +85,7 @@ func (sak *ServiceAccountKey) StateMust() *serviceAccountKeyState {
 	return sak.state
 }
 
-func (sak *ServiceAccountKey) DependOn() terra.Reference {
-	return terra.ReferenceResource(sak)
-}
-
+// ServiceAccountKeyArgs contains the configurations for google_service_account_key.
 type ServiceAccountKeyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -78,59 +101,69 @@ type ServiceAccountKeyArgs struct {
 	PublicKeyType terra.StringValue `hcl:"public_key_type,attr"`
 	// ServiceAccountId: string, required
 	ServiceAccountId terra.StringValue `hcl:"service_account_id,attr" validate:"required"`
-	// DependsOn contains resources that ServiceAccountKey depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type serviceAccountKeyAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of google_service_account_key.
 func (sak serviceAccountKeyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sak.ref.Append("id"))
+	return terra.ReferenceAsString(sak.ref.Append("id"))
 }
 
+// Keepers returns a reference to field keepers of google_service_account_key.
 func (sak serviceAccountKeyAttributes) Keepers() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sak.ref.Append("keepers"))
+	return terra.ReferenceAsMap[terra.StringValue](sak.ref.Append("keepers"))
 }
 
+// KeyAlgorithm returns a reference to field key_algorithm of google_service_account_key.
 func (sak serviceAccountKeyAttributes) KeyAlgorithm() terra.StringValue {
-	return terra.ReferenceString(sak.ref.Append("key_algorithm"))
+	return terra.ReferenceAsString(sak.ref.Append("key_algorithm"))
 }
 
+// Name returns a reference to field name of google_service_account_key.
 func (sak serviceAccountKeyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sak.ref.Append("name"))
+	return terra.ReferenceAsString(sak.ref.Append("name"))
 }
 
+// PrivateKey returns a reference to field private_key of google_service_account_key.
 func (sak serviceAccountKeyAttributes) PrivateKey() terra.StringValue {
-	return terra.ReferenceString(sak.ref.Append("private_key"))
+	return terra.ReferenceAsString(sak.ref.Append("private_key"))
 }
 
+// PrivateKeyType returns a reference to field private_key_type of google_service_account_key.
 func (sak serviceAccountKeyAttributes) PrivateKeyType() terra.StringValue {
-	return terra.ReferenceString(sak.ref.Append("private_key_type"))
+	return terra.ReferenceAsString(sak.ref.Append("private_key_type"))
 }
 
+// PublicKey returns a reference to field public_key of google_service_account_key.
 func (sak serviceAccountKeyAttributes) PublicKey() terra.StringValue {
-	return terra.ReferenceString(sak.ref.Append("public_key"))
+	return terra.ReferenceAsString(sak.ref.Append("public_key"))
 }
 
+// PublicKeyData returns a reference to field public_key_data of google_service_account_key.
 func (sak serviceAccountKeyAttributes) PublicKeyData() terra.StringValue {
-	return terra.ReferenceString(sak.ref.Append("public_key_data"))
+	return terra.ReferenceAsString(sak.ref.Append("public_key_data"))
 }
 
+// PublicKeyType returns a reference to field public_key_type of google_service_account_key.
 func (sak serviceAccountKeyAttributes) PublicKeyType() terra.StringValue {
-	return terra.ReferenceString(sak.ref.Append("public_key_type"))
+	return terra.ReferenceAsString(sak.ref.Append("public_key_type"))
 }
 
+// ServiceAccountId returns a reference to field service_account_id of google_service_account_key.
 func (sak serviceAccountKeyAttributes) ServiceAccountId() terra.StringValue {
-	return terra.ReferenceString(sak.ref.Append("service_account_id"))
+	return terra.ReferenceAsString(sak.ref.Append("service_account_id"))
 }
 
+// ValidAfter returns a reference to field valid_after of google_service_account_key.
 func (sak serviceAccountKeyAttributes) ValidAfter() terra.StringValue {
-	return terra.ReferenceString(sak.ref.Append("valid_after"))
+	return terra.ReferenceAsString(sak.ref.Append("valid_after"))
 }
 
+// ValidBefore returns a reference to field valid_before of google_service_account_key.
 func (sak serviceAccountKeyAttributes) ValidBefore() terra.StringValue {
-	return terra.ReferenceString(sak.ref.Append("valid_before"))
+	return terra.ReferenceAsString(sak.ref.Append("valid_before"))
 }
 
 type serviceAccountKeyState struct {

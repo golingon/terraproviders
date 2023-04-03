@@ -61,160 +61,160 @@ type AcceleratorConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ac AcceleratorConfigAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac AcceleratorConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac AcceleratorConfigAttributes) InternalWithRef(ref terra.Reference) AcceleratorConfigAttributes {
 	return AcceleratorConfigAttributes{ref: ref}
 }
 
-func (ac AcceleratorConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ac AcceleratorConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
 func (ac AcceleratorConfigAttributes) CoreCount() terra.NumberValue {
-	return terra.ReferenceNumber(ac.ref.Append("core_count"))
+	return terra.ReferenceAsNumber(ac.ref.Append("core_count"))
 }
 
 func (ac AcceleratorConfigAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("type"))
+	return terra.ReferenceAsString(ac.ref.Append("type"))
 }
 
 type ContainerImageAttributes struct {
 	ref terra.Reference
 }
 
-func (ci ContainerImageAttributes) InternalRef() terra.Reference {
-	return ci.ref
+func (ci ContainerImageAttributes) InternalRef() (terra.Reference, error) {
+	return ci.ref, nil
 }
 
 func (ci ContainerImageAttributes) InternalWithRef(ref terra.Reference) ContainerImageAttributes {
 	return ContainerImageAttributes{ref: ref}
 }
 
-func (ci ContainerImageAttributes) InternalTokens() hclwrite.Tokens {
+func (ci ContainerImageAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ci.ref.InternalTokens()
 }
 
 func (ci ContainerImageAttributes) Repository() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("repository"))
+	return terra.ReferenceAsString(ci.ref.Append("repository"))
 }
 
 func (ci ContainerImageAttributes) Tag() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("tag"))
+	return terra.ReferenceAsString(ci.ref.Append("tag"))
 }
 
 type ReservationAffinityAttributes struct {
 	ref terra.Reference
 }
 
-func (ra ReservationAffinityAttributes) InternalRef() terra.Reference {
-	return ra.ref
+func (ra ReservationAffinityAttributes) InternalRef() (terra.Reference, error) {
+	return ra.ref, nil
 }
 
 func (ra ReservationAffinityAttributes) InternalWithRef(ref terra.Reference) ReservationAffinityAttributes {
 	return ReservationAffinityAttributes{ref: ref}
 }
 
-func (ra ReservationAffinityAttributes) InternalTokens() hclwrite.Tokens {
+func (ra ReservationAffinityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ra.ref.InternalTokens()
 }
 
 func (ra ReservationAffinityAttributes) ConsumeReservationType() terra.StringValue {
-	return terra.ReferenceString(ra.ref.Append("consume_reservation_type"))
+	return terra.ReferenceAsString(ra.ref.Append("consume_reservation_type"))
 }
 
 func (ra ReservationAffinityAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(ra.ref.Append("key"))
+	return terra.ReferenceAsString(ra.ref.Append("key"))
 }
 
 func (ra ReservationAffinityAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ra.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](ra.ref.Append("values"))
 }
 
 type ShieldedInstanceConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (sic ShieldedInstanceConfigAttributes) InternalRef() terra.Reference {
-	return sic.ref
+func (sic ShieldedInstanceConfigAttributes) InternalRef() (terra.Reference, error) {
+	return sic.ref, nil
 }
 
 func (sic ShieldedInstanceConfigAttributes) InternalWithRef(ref terra.Reference) ShieldedInstanceConfigAttributes {
 	return ShieldedInstanceConfigAttributes{ref: ref}
 }
 
-func (sic ShieldedInstanceConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sic ShieldedInstanceConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sic.ref.InternalTokens()
 }
 
 func (sic ShieldedInstanceConfigAttributes) EnableIntegrityMonitoring() terra.BoolValue {
-	return terra.ReferenceBool(sic.ref.Append("enable_integrity_monitoring"))
+	return terra.ReferenceAsBool(sic.ref.Append("enable_integrity_monitoring"))
 }
 
 func (sic ShieldedInstanceConfigAttributes) EnableSecureBoot() terra.BoolValue {
-	return terra.ReferenceBool(sic.ref.Append("enable_secure_boot"))
+	return terra.ReferenceAsBool(sic.ref.Append("enable_secure_boot"))
 }
 
 func (sic ShieldedInstanceConfigAttributes) EnableVtpm() terra.BoolValue {
-	return terra.ReferenceBool(sic.ref.Append("enable_vtpm"))
+	return terra.ReferenceAsBool(sic.ref.Append("enable_vtpm"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type VmImageAttributes struct {
 	ref terra.Reference
 }
 
-func (vi VmImageAttributes) InternalRef() terra.Reference {
-	return vi.ref
+func (vi VmImageAttributes) InternalRef() (terra.Reference, error) {
+	return vi.ref, nil
 }
 
 func (vi VmImageAttributes) InternalWithRef(ref terra.Reference) VmImageAttributes {
 	return VmImageAttributes{ref: ref}
 }
 
-func (vi VmImageAttributes) InternalTokens() hclwrite.Tokens {
+func (vi VmImageAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vi.ref.InternalTokens()
 }
 
 func (vi VmImageAttributes) ImageFamily() terra.StringValue {
-	return terra.ReferenceString(vi.ref.Append("image_family"))
+	return terra.ReferenceAsString(vi.ref.Append("image_family"))
 }
 
 func (vi VmImageAttributes) ImageName() terra.StringValue {
-	return terra.ReferenceString(vi.ref.Append("image_name"))
+	return terra.ReferenceAsString(vi.ref.Append("image_name"))
 }
 
 func (vi VmImageAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(vi.ref.Append("project"))
+	return terra.ReferenceAsString(vi.ref.Append("project"))
 }
 
 type AcceleratorConfigState struct {

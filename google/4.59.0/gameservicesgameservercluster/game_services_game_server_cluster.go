@@ -32,72 +32,72 @@ type ConnectionInfoAttributes struct {
 	ref terra.Reference
 }
 
-func (ci ConnectionInfoAttributes) InternalRef() terra.Reference {
-	return ci.ref
+func (ci ConnectionInfoAttributes) InternalRef() (terra.Reference, error) {
+	return ci.ref, nil
 }
 
 func (ci ConnectionInfoAttributes) InternalWithRef(ref terra.Reference) ConnectionInfoAttributes {
 	return ConnectionInfoAttributes{ref: ref}
 }
 
-func (ci ConnectionInfoAttributes) InternalTokens() hclwrite.Tokens {
+func (ci ConnectionInfoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ci.ref.InternalTokens()
 }
 
 func (ci ConnectionInfoAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("namespace"))
+	return terra.ReferenceAsString(ci.ref.Append("namespace"))
 }
 
 func (ci ConnectionInfoAttributes) GkeClusterReference() terra.ListValue[GkeClusterReferenceAttributes] {
-	return terra.ReferenceList[GkeClusterReferenceAttributes](ci.ref.Append("gke_cluster_reference"))
+	return terra.ReferenceAsList[GkeClusterReferenceAttributes](ci.ref.Append("gke_cluster_reference"))
 }
 
 type GkeClusterReferenceAttributes struct {
 	ref terra.Reference
 }
 
-func (gcr GkeClusterReferenceAttributes) InternalRef() terra.Reference {
-	return gcr.ref
+func (gcr GkeClusterReferenceAttributes) InternalRef() (terra.Reference, error) {
+	return gcr.ref, nil
 }
 
 func (gcr GkeClusterReferenceAttributes) InternalWithRef(ref terra.Reference) GkeClusterReferenceAttributes {
 	return GkeClusterReferenceAttributes{ref: ref}
 }
 
-func (gcr GkeClusterReferenceAttributes) InternalTokens() hclwrite.Tokens {
+func (gcr GkeClusterReferenceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gcr.ref.InternalTokens()
 }
 
 func (gcr GkeClusterReferenceAttributes) Cluster() terra.StringValue {
-	return terra.ReferenceString(gcr.ref.Append("cluster"))
+	return terra.ReferenceAsString(gcr.ref.Append("cluster"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ConnectionInfoState struct {

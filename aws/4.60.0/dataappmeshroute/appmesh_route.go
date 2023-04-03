@@ -214,7 +214,7 @@ func (s SpecAttributes) InternalWithRef(ref terra.Reference) SpecAttributes {
 	return SpecAttributes{ref: ref}
 }
 
-func (s SpecAttributes) InternalTokens() hclwrite.Tokens {
+func (s SpecAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -250,7 +250,7 @@ func (gr GrpcRouteAttributes) InternalWithRef(ref terra.Reference) GrpcRouteAttr
 	return GrpcRouteAttributes{ref: ref}
 }
 
-func (gr GrpcRouteAttributes) InternalTokens() hclwrite.Tokens {
+func (gr GrpcRouteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gr.ref.InternalTokens()
 }
 
@@ -282,7 +282,7 @@ func (a GrpcRouteActionAttributes) InternalWithRef(ref terra.Reference) GrpcRout
 	return GrpcRouteActionAttributes{ref: ref}
 }
 
-func (a GrpcRouteActionAttributes) InternalTokens() hclwrite.Tokens {
+func (a GrpcRouteActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -302,7 +302,7 @@ func (wt GrpcRouteActionWeightedTargetAttributes) InternalWithRef(ref terra.Refe
 	return GrpcRouteActionWeightedTargetAttributes{ref: ref}
 }
 
-func (wt GrpcRouteActionWeightedTargetAttributes) InternalTokens() hclwrite.Tokens {
+func (wt GrpcRouteActionWeightedTargetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wt.ref.InternalTokens()
 }
 
@@ -330,7 +330,7 @@ func (m GrpcRouteMatchAttributes) InternalWithRef(ref terra.Reference) GrpcRoute
 	return GrpcRouteMatchAttributes{ref: ref}
 }
 
-func (m GrpcRouteMatchAttributes) InternalTokens() hclwrite.Tokens {
+func (m GrpcRouteMatchAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -366,7 +366,7 @@ func (m MetadataAttributes) InternalWithRef(ref terra.Reference) MetadataAttribu
 	return MetadataAttributes{ref: ref}
 }
 
-func (m MetadataAttributes) InternalTokens() hclwrite.Tokens {
+func (m MetadataAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -394,7 +394,7 @@ func (m MetadataMatchAttributes) InternalWithRef(ref terra.Reference) MetadataMa
 	return MetadataMatchAttributes{ref: ref}
 }
 
-func (m MetadataMatchAttributes) InternalTokens() hclwrite.Tokens {
+func (m MetadataMatchAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -430,7 +430,7 @@ func (r MetadataMatchRangeAttributes) InternalWithRef(ref terra.Reference) Metad
 	return MetadataMatchRangeAttributes{ref: ref}
 }
 
-func (r MetadataMatchRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (r MetadataMatchRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -454,7 +454,7 @@ func (rp GrpcRouteRetryPolicyAttributes) InternalWithRef(ref terra.Reference) Gr
 	return GrpcRouteRetryPolicyAttributes{ref: ref}
 }
 
-func (rp GrpcRouteRetryPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (rp GrpcRouteRetryPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rp.ref.InternalTokens()
 }
 
@@ -490,7 +490,7 @@ func (prt GrpcRouteRetryPolicyPerRetryTimeoutAttributes) InternalWithRef(ref ter
 	return GrpcRouteRetryPolicyPerRetryTimeoutAttributes{ref: ref}
 }
 
-func (prt GrpcRouteRetryPolicyPerRetryTimeoutAttributes) InternalTokens() hclwrite.Tokens {
+func (prt GrpcRouteRetryPolicyPerRetryTimeoutAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return prt.ref.InternalTokens()
 }
 
@@ -514,7 +514,7 @@ func (t GrpcRouteTimeoutAttributes) InternalWithRef(ref terra.Reference) GrpcRou
 	return GrpcRouteTimeoutAttributes{ref: ref}
 }
 
-func (t GrpcRouteTimeoutAttributes) InternalTokens() hclwrite.Tokens {
+func (t GrpcRouteTimeoutAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -538,7 +538,7 @@ func (i GrpcRouteTimeoutIdleAttributes) InternalWithRef(ref terra.Reference) Grp
 	return GrpcRouteTimeoutIdleAttributes{ref: ref}
 }
 
-func (i GrpcRouteTimeoutIdleAttributes) InternalTokens() hclwrite.Tokens {
+func (i GrpcRouteTimeoutIdleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -562,7 +562,7 @@ func (pr GrpcRouteTimeoutPerRequestAttributes) InternalWithRef(ref terra.Referen
 	return GrpcRouteTimeoutPerRequestAttributes{ref: ref}
 }
 
-func (pr GrpcRouteTimeoutPerRequestAttributes) InternalTokens() hclwrite.Tokens {
+func (pr GrpcRouteTimeoutPerRequestAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pr.ref.InternalTokens()
 }
 
@@ -586,7 +586,7 @@ func (hr Http2RouteAttributes) InternalWithRef(ref terra.Reference) Http2RouteAt
 	return Http2RouteAttributes{ref: ref}
 }
 
-func (hr Http2RouteAttributes) InternalTokens() hclwrite.Tokens {
+func (hr Http2RouteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hr.ref.InternalTokens()
 }
 
@@ -618,7 +618,7 @@ func (a Http2RouteActionAttributes) InternalWithRef(ref terra.Reference) Http2Ro
 	return Http2RouteActionAttributes{ref: ref}
 }
 
-func (a Http2RouteActionAttributes) InternalTokens() hclwrite.Tokens {
+func (a Http2RouteActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -638,7 +638,7 @@ func (wt Http2RouteActionWeightedTargetAttributes) InternalWithRef(ref terra.Ref
 	return Http2RouteActionWeightedTargetAttributes{ref: ref}
 }
 
-func (wt Http2RouteActionWeightedTargetAttributes) InternalTokens() hclwrite.Tokens {
+func (wt Http2RouteActionWeightedTargetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wt.ref.InternalTokens()
 }
 
@@ -666,7 +666,7 @@ func (m Http2RouteMatchAttributes) InternalWithRef(ref terra.Reference) Http2Rou
 	return Http2RouteMatchAttributes{ref: ref}
 }
 
-func (m Http2RouteMatchAttributes) InternalTokens() hclwrite.Tokens {
+func (m Http2RouteMatchAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -702,7 +702,7 @@ func (h Http2RouteMatchHeaderAttributes) InternalWithRef(ref terra.Reference) Ht
 	return Http2RouteMatchHeaderAttributes{ref: ref}
 }
 
-func (h Http2RouteMatchHeaderAttributes) InternalTokens() hclwrite.Tokens {
+func (h Http2RouteMatchHeaderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 
@@ -730,7 +730,7 @@ func (m Http2RouteMatchHeaderMatchAttributes) InternalWithRef(ref terra.Referenc
 	return Http2RouteMatchHeaderMatchAttributes{ref: ref}
 }
 
-func (m Http2RouteMatchHeaderMatchAttributes) InternalTokens() hclwrite.Tokens {
+func (m Http2RouteMatchHeaderMatchAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -766,7 +766,7 @@ func (r Http2RouteMatchHeaderMatchRangeAttributes) InternalWithRef(ref terra.Ref
 	return Http2RouteMatchHeaderMatchRangeAttributes{ref: ref}
 }
 
-func (r Http2RouteMatchHeaderMatchRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (r Http2RouteMatchHeaderMatchRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -790,7 +790,7 @@ func (rp Http2RouteRetryPolicyAttributes) InternalWithRef(ref terra.Reference) H
 	return Http2RouteRetryPolicyAttributes{ref: ref}
 }
 
-func (rp Http2RouteRetryPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (rp Http2RouteRetryPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rp.ref.InternalTokens()
 }
 
@@ -822,7 +822,7 @@ func (prt Http2RouteRetryPolicyPerRetryTimeoutAttributes) InternalWithRef(ref te
 	return Http2RouteRetryPolicyPerRetryTimeoutAttributes{ref: ref}
 }
 
-func (prt Http2RouteRetryPolicyPerRetryTimeoutAttributes) InternalTokens() hclwrite.Tokens {
+func (prt Http2RouteRetryPolicyPerRetryTimeoutAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return prt.ref.InternalTokens()
 }
 
@@ -846,7 +846,7 @@ func (t Http2RouteTimeoutAttributes) InternalWithRef(ref terra.Reference) Http2R
 	return Http2RouteTimeoutAttributes{ref: ref}
 }
 
-func (t Http2RouteTimeoutAttributes) InternalTokens() hclwrite.Tokens {
+func (t Http2RouteTimeoutAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -870,7 +870,7 @@ func (i Http2RouteTimeoutIdleAttributes) InternalWithRef(ref terra.Reference) Ht
 	return Http2RouteTimeoutIdleAttributes{ref: ref}
 }
 
-func (i Http2RouteTimeoutIdleAttributes) InternalTokens() hclwrite.Tokens {
+func (i Http2RouteTimeoutIdleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -894,7 +894,7 @@ func (pr Http2RouteTimeoutPerRequestAttributes) InternalWithRef(ref terra.Refere
 	return Http2RouteTimeoutPerRequestAttributes{ref: ref}
 }
 
-func (pr Http2RouteTimeoutPerRequestAttributes) InternalTokens() hclwrite.Tokens {
+func (pr Http2RouteTimeoutPerRequestAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pr.ref.InternalTokens()
 }
 
@@ -918,7 +918,7 @@ func (hr HttpRouteAttributes) InternalWithRef(ref terra.Reference) HttpRouteAttr
 	return HttpRouteAttributes{ref: ref}
 }
 
-func (hr HttpRouteAttributes) InternalTokens() hclwrite.Tokens {
+func (hr HttpRouteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hr.ref.InternalTokens()
 }
 
@@ -950,7 +950,7 @@ func (a HttpRouteActionAttributes) InternalWithRef(ref terra.Reference) HttpRout
 	return HttpRouteActionAttributes{ref: ref}
 }
 
-func (a HttpRouteActionAttributes) InternalTokens() hclwrite.Tokens {
+func (a HttpRouteActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -970,7 +970,7 @@ func (wt HttpRouteActionWeightedTargetAttributes) InternalWithRef(ref terra.Refe
 	return HttpRouteActionWeightedTargetAttributes{ref: ref}
 }
 
-func (wt HttpRouteActionWeightedTargetAttributes) InternalTokens() hclwrite.Tokens {
+func (wt HttpRouteActionWeightedTargetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wt.ref.InternalTokens()
 }
 
@@ -998,7 +998,7 @@ func (m HttpRouteMatchAttributes) InternalWithRef(ref terra.Reference) HttpRoute
 	return HttpRouteMatchAttributes{ref: ref}
 }
 
-func (m HttpRouteMatchAttributes) InternalTokens() hclwrite.Tokens {
+func (m HttpRouteMatchAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -1034,7 +1034,7 @@ func (h HttpRouteMatchHeaderAttributes) InternalWithRef(ref terra.Reference) Htt
 	return HttpRouteMatchHeaderAttributes{ref: ref}
 }
 
-func (h HttpRouteMatchHeaderAttributes) InternalTokens() hclwrite.Tokens {
+func (h HttpRouteMatchHeaderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 
@@ -1062,7 +1062,7 @@ func (m HttpRouteMatchHeaderMatchAttributes) InternalWithRef(ref terra.Reference
 	return HttpRouteMatchHeaderMatchAttributes{ref: ref}
 }
 
-func (m HttpRouteMatchHeaderMatchAttributes) InternalTokens() hclwrite.Tokens {
+func (m HttpRouteMatchHeaderMatchAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -1098,7 +1098,7 @@ func (r HttpRouteMatchHeaderMatchRangeAttributes) InternalWithRef(ref terra.Refe
 	return HttpRouteMatchHeaderMatchRangeAttributes{ref: ref}
 }
 
-func (r HttpRouteMatchHeaderMatchRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (r HttpRouteMatchHeaderMatchRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -1122,7 +1122,7 @@ func (rp HttpRouteRetryPolicyAttributes) InternalWithRef(ref terra.Reference) Ht
 	return HttpRouteRetryPolicyAttributes{ref: ref}
 }
 
-func (rp HttpRouteRetryPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (rp HttpRouteRetryPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rp.ref.InternalTokens()
 }
 
@@ -1154,7 +1154,7 @@ func (prt HttpRouteRetryPolicyPerRetryTimeoutAttributes) InternalWithRef(ref ter
 	return HttpRouteRetryPolicyPerRetryTimeoutAttributes{ref: ref}
 }
 
-func (prt HttpRouteRetryPolicyPerRetryTimeoutAttributes) InternalTokens() hclwrite.Tokens {
+func (prt HttpRouteRetryPolicyPerRetryTimeoutAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return prt.ref.InternalTokens()
 }
 
@@ -1178,7 +1178,7 @@ func (t HttpRouteTimeoutAttributes) InternalWithRef(ref terra.Reference) HttpRou
 	return HttpRouteTimeoutAttributes{ref: ref}
 }
 
-func (t HttpRouteTimeoutAttributes) InternalTokens() hclwrite.Tokens {
+func (t HttpRouteTimeoutAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -1202,7 +1202,7 @@ func (i HttpRouteTimeoutIdleAttributes) InternalWithRef(ref terra.Reference) Htt
 	return HttpRouteTimeoutIdleAttributes{ref: ref}
 }
 
-func (i HttpRouteTimeoutIdleAttributes) InternalTokens() hclwrite.Tokens {
+func (i HttpRouteTimeoutIdleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -1226,7 +1226,7 @@ func (pr HttpRouteTimeoutPerRequestAttributes) InternalWithRef(ref terra.Referen
 	return HttpRouteTimeoutPerRequestAttributes{ref: ref}
 }
 
-func (pr HttpRouteTimeoutPerRequestAttributes) InternalTokens() hclwrite.Tokens {
+func (pr HttpRouteTimeoutPerRequestAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pr.ref.InternalTokens()
 }
 
@@ -1250,7 +1250,7 @@ func (tr TcpRouteAttributes) InternalWithRef(ref terra.Reference) TcpRouteAttrib
 	return TcpRouteAttributes{ref: ref}
 }
 
-func (tr TcpRouteAttributes) InternalTokens() hclwrite.Tokens {
+func (tr TcpRouteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tr.ref.InternalTokens()
 }
 
@@ -1278,7 +1278,7 @@ func (a TcpRouteActionAttributes) InternalWithRef(ref terra.Reference) TcpRouteA
 	return TcpRouteActionAttributes{ref: ref}
 }
 
-func (a TcpRouteActionAttributes) InternalTokens() hclwrite.Tokens {
+func (a TcpRouteActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -1298,7 +1298,7 @@ func (wt TcpRouteActionWeightedTargetAttributes) InternalWithRef(ref terra.Refer
 	return TcpRouteActionWeightedTargetAttributes{ref: ref}
 }
 
-func (wt TcpRouteActionWeightedTargetAttributes) InternalTokens() hclwrite.Tokens {
+func (wt TcpRouteActionWeightedTargetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wt.ref.InternalTokens()
 }
 
@@ -1326,7 +1326,7 @@ func (m TcpRouteMatchAttributes) InternalWithRef(ref terra.Reference) TcpRouteMa
 	return TcpRouteMatchAttributes{ref: ref}
 }
 
-func (m TcpRouteMatchAttributes) InternalTokens() hclwrite.Tokens {
+func (m TcpRouteMatchAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -1346,7 +1346,7 @@ func (t TcpRouteTimeoutAttributes) InternalWithRef(ref terra.Reference) TcpRoute
 	return TcpRouteTimeoutAttributes{ref: ref}
 }
 
-func (t TcpRouteTimeoutAttributes) InternalTokens() hclwrite.Tokens {
+func (t TcpRouteTimeoutAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -1366,7 +1366,7 @@ func (i TcpRouteTimeoutIdleAttributes) InternalWithRef(ref terra.Reference) TcpR
 	return TcpRouteTimeoutIdleAttributes{ref: ref}
 }
 
-func (i TcpRouteTimeoutIdleAttributes) InternalTokens() hclwrite.Tokens {
+func (i TcpRouteTimeoutIdleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 

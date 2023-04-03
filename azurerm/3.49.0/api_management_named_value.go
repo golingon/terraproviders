@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApiManagementNamedValue creates a new instance of [ApiManagementNamedValue].
 func NewApiManagementNamedValue(name string, args ApiManagementNamedValueArgs) *ApiManagementNamedValue {
 	return &ApiManagementNamedValue{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApiManagementNamedValue(name string, args ApiManagementNamedValueArgs) *
 
 var _ terra.Resource = (*ApiManagementNamedValue)(nil)
 
+// ApiManagementNamedValue represents the Terraform resource azurerm_api_management_named_value.
 type ApiManagementNamedValue struct {
-	Name  string
-	Args  ApiManagementNamedValueArgs
-	state *apiManagementNamedValueState
+	Name      string
+	Args      ApiManagementNamedValueArgs
+	state     *apiManagementNamedValueState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiManagementNamedValue].
 func (amnv *ApiManagementNamedValue) Type() string {
 	return "azurerm_api_management_named_value"
 }
 
+// LocalName returns the local name for [ApiManagementNamedValue].
 func (amnv *ApiManagementNamedValue) LocalName() string {
 	return amnv.Name
 }
 
+// Configuration returns the configuration (args) for [ApiManagementNamedValue].
 func (amnv *ApiManagementNamedValue) Configuration() interface{} {
 	return amnv.Args
 }
 
+// DependOn is used for other resources to depend on [ApiManagementNamedValue].
+func (amnv *ApiManagementNamedValue) DependOn() terra.Reference {
+	return terra.ReferenceResource(amnv)
+}
+
+// Dependencies returns the list of resources [ApiManagementNamedValue] depends_on.
+func (amnv *ApiManagementNamedValue) Dependencies() terra.Dependencies {
+	return amnv.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiManagementNamedValue].
+func (amnv *ApiManagementNamedValue) LifecycleManagement() *terra.Lifecycle {
+	return amnv.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiManagementNamedValue].
 func (amnv *ApiManagementNamedValue) Attributes() apiManagementNamedValueAttributes {
 	return apiManagementNamedValueAttributes{ref: terra.ReferenceResource(amnv)}
 }
 
+// ImportState imports the given attribute values into [ApiManagementNamedValue]'s state.
 func (amnv *ApiManagementNamedValue) ImportState(av io.Reader) error {
 	amnv.state = &apiManagementNamedValueState{}
 	if err := json.NewDecoder(av).Decode(amnv.state); err != nil {
@@ -49,10 +73,12 @@ func (amnv *ApiManagementNamedValue) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiManagementNamedValue] has state.
 func (amnv *ApiManagementNamedValue) State() (*apiManagementNamedValueState, bool) {
 	return amnv.state, amnv.state != nil
 }
 
+// StateMust returns the state for [ApiManagementNamedValue]. Panics if the state is nil.
 func (amnv *ApiManagementNamedValue) StateMust() *apiManagementNamedValueState {
 	if amnv.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", amnv.Type(), amnv.LocalName()))
@@ -60,10 +86,7 @@ func (amnv *ApiManagementNamedValue) StateMust() *apiManagementNamedValueState {
 	return amnv.state
 }
 
-func (amnv *ApiManagementNamedValue) DependOn() terra.Reference {
-	return terra.ReferenceResource(amnv)
-}
-
+// ApiManagementNamedValueArgs contains the configurations for azurerm_api_management_named_value.
 type ApiManagementNamedValueArgs struct {
 	// ApiManagementName: string, required
 	ApiManagementName terra.StringValue `hcl:"api_management_name,attr" validate:"required"`
@@ -85,51 +108,57 @@ type ApiManagementNamedValueArgs struct {
 	Timeouts *apimanagementnamedvalue.Timeouts `hcl:"timeouts,block"`
 	// ValueFromKeyVault: optional
 	ValueFromKeyVault *apimanagementnamedvalue.ValueFromKeyVault `hcl:"value_from_key_vault,block"`
-	// DependsOn contains resources that ApiManagementNamedValue depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiManagementNamedValueAttributes struct {
 	ref terra.Reference
 }
 
+// ApiManagementName returns a reference to field api_management_name of azurerm_api_management_named_value.
 func (amnv apiManagementNamedValueAttributes) ApiManagementName() terra.StringValue {
-	return terra.ReferenceString(amnv.ref.Append("api_management_name"))
+	return terra.ReferenceAsString(amnv.ref.Append("api_management_name"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_api_management_named_value.
 func (amnv apiManagementNamedValueAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(amnv.ref.Append("display_name"))
+	return terra.ReferenceAsString(amnv.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of azurerm_api_management_named_value.
 func (amnv apiManagementNamedValueAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(amnv.ref.Append("id"))
+	return terra.ReferenceAsString(amnv.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_api_management_named_value.
 func (amnv apiManagementNamedValueAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(amnv.ref.Append("name"))
+	return terra.ReferenceAsString(amnv.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_api_management_named_value.
 func (amnv apiManagementNamedValueAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(amnv.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(amnv.ref.Append("resource_group_name"))
 }
 
+// Secret returns a reference to field secret of azurerm_api_management_named_value.
 func (amnv apiManagementNamedValueAttributes) Secret() terra.BoolValue {
-	return terra.ReferenceBool(amnv.ref.Append("secret"))
+	return terra.ReferenceAsBool(amnv.ref.Append("secret"))
 }
 
+// Tags returns a reference to field tags of azurerm_api_management_named_value.
 func (amnv apiManagementNamedValueAttributes) Tags() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](amnv.ref.Append("tags"))
+	return terra.ReferenceAsList[terra.StringValue](amnv.ref.Append("tags"))
 }
 
+// Value returns a reference to field value of azurerm_api_management_named_value.
 func (amnv apiManagementNamedValueAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(amnv.ref.Append("value"))
+	return terra.ReferenceAsString(amnv.ref.Append("value"))
 }
 
 func (amnv apiManagementNamedValueAttributes) Timeouts() apimanagementnamedvalue.TimeoutsAttributes {
-	return terra.ReferenceSingle[apimanagementnamedvalue.TimeoutsAttributes](amnv.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[apimanagementnamedvalue.TimeoutsAttributes](amnv.ref.Append("timeouts"))
 }
 
 func (amnv apiManagementNamedValueAttributes) ValueFromKeyVault() terra.ListValue[apimanagementnamedvalue.ValueFromKeyVaultAttributes] {
-	return terra.ReferenceList[apimanagementnamedvalue.ValueFromKeyVaultAttributes](amnv.ref.Append("value_from_key_vault"))
+	return terra.ReferenceAsList[apimanagementnamedvalue.ValueFromKeyVaultAttributes](amnv.ref.Append("value_from_key_vault"))
 }
 
 type apiManagementNamedValueState struct {

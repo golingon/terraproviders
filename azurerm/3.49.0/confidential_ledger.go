@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewConfidentialLedger creates a new instance of [ConfidentialLedger].
 func NewConfidentialLedger(name string, args ConfidentialLedgerArgs) *ConfidentialLedger {
 	return &ConfidentialLedger{
 		Args: args,
@@ -19,28 +20,51 @@ func NewConfidentialLedger(name string, args ConfidentialLedgerArgs) *Confidenti
 
 var _ terra.Resource = (*ConfidentialLedger)(nil)
 
+// ConfidentialLedger represents the Terraform resource azurerm_confidential_ledger.
 type ConfidentialLedger struct {
-	Name  string
-	Args  ConfidentialLedgerArgs
-	state *confidentialLedgerState
+	Name      string
+	Args      ConfidentialLedgerArgs
+	state     *confidentialLedgerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ConfidentialLedger].
 func (cl *ConfidentialLedger) Type() string {
 	return "azurerm_confidential_ledger"
 }
 
+// LocalName returns the local name for [ConfidentialLedger].
 func (cl *ConfidentialLedger) LocalName() string {
 	return cl.Name
 }
 
+// Configuration returns the configuration (args) for [ConfidentialLedger].
 func (cl *ConfidentialLedger) Configuration() interface{} {
 	return cl.Args
 }
 
+// DependOn is used for other resources to depend on [ConfidentialLedger].
+func (cl *ConfidentialLedger) DependOn() terra.Reference {
+	return terra.ReferenceResource(cl)
+}
+
+// Dependencies returns the list of resources [ConfidentialLedger] depends_on.
+func (cl *ConfidentialLedger) Dependencies() terra.Dependencies {
+	return cl.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ConfidentialLedger].
+func (cl *ConfidentialLedger) LifecycleManagement() *terra.Lifecycle {
+	return cl.Lifecycle
+}
+
+// Attributes returns the attributes for [ConfidentialLedger].
 func (cl *ConfidentialLedger) Attributes() confidentialLedgerAttributes {
 	return confidentialLedgerAttributes{ref: terra.ReferenceResource(cl)}
 }
 
+// ImportState imports the given attribute values into [ConfidentialLedger]'s state.
 func (cl *ConfidentialLedger) ImportState(av io.Reader) error {
 	cl.state = &confidentialLedgerState{}
 	if err := json.NewDecoder(av).Decode(cl.state); err != nil {
@@ -49,10 +73,12 @@ func (cl *ConfidentialLedger) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ConfidentialLedger] has state.
 func (cl *ConfidentialLedger) State() (*confidentialLedgerState, bool) {
 	return cl.state, cl.state != nil
 }
 
+// StateMust returns the state for [ConfidentialLedger]. Panics if the state is nil.
 func (cl *ConfidentialLedger) StateMust() *confidentialLedgerState {
 	if cl.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cl.Type(), cl.LocalName()))
@@ -60,10 +86,7 @@ func (cl *ConfidentialLedger) StateMust() *confidentialLedgerState {
 	return cl.state
 }
 
-func (cl *ConfidentialLedger) DependOn() terra.Reference {
-	return terra.ReferenceResource(cl)
-}
-
+// ConfidentialLedgerArgs contains the configurations for azurerm_confidential_ledger.
 type ConfidentialLedgerArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -83,55 +106,61 @@ type ConfidentialLedgerArgs struct {
 	CertificateBasedSecurityPrincipal []confidentialledger.CertificateBasedSecurityPrincipal `hcl:"certificate_based_security_principal,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *confidentialledger.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ConfidentialLedger depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type confidentialLedgerAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_confidential_ledger.
 func (cl confidentialLedgerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cl.ref.Append("id"))
+	return terra.ReferenceAsString(cl.ref.Append("id"))
 }
 
+// IdentityServiceEndpoint returns a reference to field identity_service_endpoint of azurerm_confidential_ledger.
 func (cl confidentialLedgerAttributes) IdentityServiceEndpoint() terra.StringValue {
-	return terra.ReferenceString(cl.ref.Append("identity_service_endpoint"))
+	return terra.ReferenceAsString(cl.ref.Append("identity_service_endpoint"))
 }
 
+// LedgerEndpoint returns a reference to field ledger_endpoint of azurerm_confidential_ledger.
 func (cl confidentialLedgerAttributes) LedgerEndpoint() terra.StringValue {
-	return terra.ReferenceString(cl.ref.Append("ledger_endpoint"))
+	return terra.ReferenceAsString(cl.ref.Append("ledger_endpoint"))
 }
 
+// LedgerType returns a reference to field ledger_type of azurerm_confidential_ledger.
 func (cl confidentialLedgerAttributes) LedgerType() terra.StringValue {
-	return terra.ReferenceString(cl.ref.Append("ledger_type"))
+	return terra.ReferenceAsString(cl.ref.Append("ledger_type"))
 }
 
+// Location returns a reference to field location of azurerm_confidential_ledger.
 func (cl confidentialLedgerAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(cl.ref.Append("location"))
+	return terra.ReferenceAsString(cl.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_confidential_ledger.
 func (cl confidentialLedgerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cl.ref.Append("name"))
+	return terra.ReferenceAsString(cl.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_confidential_ledger.
 func (cl confidentialLedgerAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(cl.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(cl.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_confidential_ledger.
 func (cl confidentialLedgerAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cl.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](cl.ref.Append("tags"))
 }
 
 func (cl confidentialLedgerAttributes) AzureadBasedServicePrincipal() terra.ListValue[confidentialledger.AzureadBasedServicePrincipalAttributes] {
-	return terra.ReferenceList[confidentialledger.AzureadBasedServicePrincipalAttributes](cl.ref.Append("azuread_based_service_principal"))
+	return terra.ReferenceAsList[confidentialledger.AzureadBasedServicePrincipalAttributes](cl.ref.Append("azuread_based_service_principal"))
 }
 
 func (cl confidentialLedgerAttributes) CertificateBasedSecurityPrincipal() terra.ListValue[confidentialledger.CertificateBasedSecurityPrincipalAttributes] {
-	return terra.ReferenceList[confidentialledger.CertificateBasedSecurityPrincipalAttributes](cl.ref.Append("certificate_based_security_principal"))
+	return terra.ReferenceAsList[confidentialledger.CertificateBasedSecurityPrincipalAttributes](cl.ref.Append("certificate_based_security_principal"))
 }
 
 func (cl confidentialLedgerAttributes) Timeouts() confidentialledger.TimeoutsAttributes {
-	return terra.ReferenceSingle[confidentialledger.TimeoutsAttributes](cl.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[confidentialledger.TimeoutsAttributes](cl.ref.Append("timeouts"))
 }
 
 type confidentialLedgerState struct {

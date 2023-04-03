@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSpringCloudAppRedisAssociation creates a new instance of [SpringCloudAppRedisAssociation].
 func NewSpringCloudAppRedisAssociation(name string, args SpringCloudAppRedisAssociationArgs) *SpringCloudAppRedisAssociation {
 	return &SpringCloudAppRedisAssociation{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSpringCloudAppRedisAssociation(name string, args SpringCloudAppRedisAsso
 
 var _ terra.Resource = (*SpringCloudAppRedisAssociation)(nil)
 
+// SpringCloudAppRedisAssociation represents the Terraform resource azurerm_spring_cloud_app_redis_association.
 type SpringCloudAppRedisAssociation struct {
-	Name  string
-	Args  SpringCloudAppRedisAssociationArgs
-	state *springCloudAppRedisAssociationState
+	Name      string
+	Args      SpringCloudAppRedisAssociationArgs
+	state     *springCloudAppRedisAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SpringCloudAppRedisAssociation].
 func (scara *SpringCloudAppRedisAssociation) Type() string {
 	return "azurerm_spring_cloud_app_redis_association"
 }
 
+// LocalName returns the local name for [SpringCloudAppRedisAssociation].
 func (scara *SpringCloudAppRedisAssociation) LocalName() string {
 	return scara.Name
 }
 
+// Configuration returns the configuration (args) for [SpringCloudAppRedisAssociation].
 func (scara *SpringCloudAppRedisAssociation) Configuration() interface{} {
 	return scara.Args
 }
 
+// DependOn is used for other resources to depend on [SpringCloudAppRedisAssociation].
+func (scara *SpringCloudAppRedisAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(scara)
+}
+
+// Dependencies returns the list of resources [SpringCloudAppRedisAssociation] depends_on.
+func (scara *SpringCloudAppRedisAssociation) Dependencies() terra.Dependencies {
+	return scara.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SpringCloudAppRedisAssociation].
+func (scara *SpringCloudAppRedisAssociation) LifecycleManagement() *terra.Lifecycle {
+	return scara.Lifecycle
+}
+
+// Attributes returns the attributes for [SpringCloudAppRedisAssociation].
 func (scara *SpringCloudAppRedisAssociation) Attributes() springCloudAppRedisAssociationAttributes {
 	return springCloudAppRedisAssociationAttributes{ref: terra.ReferenceResource(scara)}
 }
 
+// ImportState imports the given attribute values into [SpringCloudAppRedisAssociation]'s state.
 func (scara *SpringCloudAppRedisAssociation) ImportState(av io.Reader) error {
 	scara.state = &springCloudAppRedisAssociationState{}
 	if err := json.NewDecoder(av).Decode(scara.state); err != nil {
@@ -49,10 +73,12 @@ func (scara *SpringCloudAppRedisAssociation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SpringCloudAppRedisAssociation] has state.
 func (scara *SpringCloudAppRedisAssociation) State() (*springCloudAppRedisAssociationState, bool) {
 	return scara.state, scara.state != nil
 }
 
+// StateMust returns the state for [SpringCloudAppRedisAssociation]. Panics if the state is nil.
 func (scara *SpringCloudAppRedisAssociation) StateMust() *springCloudAppRedisAssociationState {
 	if scara.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", scara.Type(), scara.LocalName()))
@@ -60,10 +86,7 @@ func (scara *SpringCloudAppRedisAssociation) StateMust() *springCloudAppRedisAss
 	return scara.state
 }
 
-func (scara *SpringCloudAppRedisAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(scara)
-}
-
+// SpringCloudAppRedisAssociationArgs contains the configurations for azurerm_spring_cloud_app_redis_association.
 type SpringCloudAppRedisAssociationArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,39 +102,43 @@ type SpringCloudAppRedisAssociationArgs struct {
 	SslEnabled terra.BoolValue `hcl:"ssl_enabled,attr"`
 	// Timeouts: optional
 	Timeouts *springcloudappredisassociation.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SpringCloudAppRedisAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type springCloudAppRedisAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_spring_cloud_app_redis_association.
 func (scara springCloudAppRedisAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(scara.ref.Append("id"))
+	return terra.ReferenceAsString(scara.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_spring_cloud_app_redis_association.
 func (scara springCloudAppRedisAssociationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(scara.ref.Append("name"))
+	return terra.ReferenceAsString(scara.ref.Append("name"))
 }
 
+// RedisAccessKey returns a reference to field redis_access_key of azurerm_spring_cloud_app_redis_association.
 func (scara springCloudAppRedisAssociationAttributes) RedisAccessKey() terra.StringValue {
-	return terra.ReferenceString(scara.ref.Append("redis_access_key"))
+	return terra.ReferenceAsString(scara.ref.Append("redis_access_key"))
 }
 
+// RedisCacheId returns a reference to field redis_cache_id of azurerm_spring_cloud_app_redis_association.
 func (scara springCloudAppRedisAssociationAttributes) RedisCacheId() terra.StringValue {
-	return terra.ReferenceString(scara.ref.Append("redis_cache_id"))
+	return terra.ReferenceAsString(scara.ref.Append("redis_cache_id"))
 }
 
+// SpringCloudAppId returns a reference to field spring_cloud_app_id of azurerm_spring_cloud_app_redis_association.
 func (scara springCloudAppRedisAssociationAttributes) SpringCloudAppId() terra.StringValue {
-	return terra.ReferenceString(scara.ref.Append("spring_cloud_app_id"))
+	return terra.ReferenceAsString(scara.ref.Append("spring_cloud_app_id"))
 }
 
+// SslEnabled returns a reference to field ssl_enabled of azurerm_spring_cloud_app_redis_association.
 func (scara springCloudAppRedisAssociationAttributes) SslEnabled() terra.BoolValue {
-	return terra.ReferenceBool(scara.ref.Append("ssl_enabled"))
+	return terra.ReferenceAsBool(scara.ref.Append("ssl_enabled"))
 }
 
 func (scara springCloudAppRedisAssociationAttributes) Timeouts() springcloudappredisassociation.TimeoutsAttributes {
-	return terra.ReferenceSingle[springcloudappredisassociation.TimeoutsAttributes](scara.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[springcloudappredisassociation.TimeoutsAttributes](scara.ref.Append("timeouts"))
 }
 
 type springCloudAppRedisAssociationState struct {

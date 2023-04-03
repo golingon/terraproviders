@@ -46,100 +46,100 @@ type PolicyDefinitionGroupAttributes struct {
 	ref terra.Reference
 }
 
-func (pdg PolicyDefinitionGroupAttributes) InternalRef() terra.Reference {
-	return pdg.ref
+func (pdg PolicyDefinitionGroupAttributes) InternalRef() (terra.Reference, error) {
+	return pdg.ref, nil
 }
 
 func (pdg PolicyDefinitionGroupAttributes) InternalWithRef(ref terra.Reference) PolicyDefinitionGroupAttributes {
 	return PolicyDefinitionGroupAttributes{ref: ref}
 }
 
-func (pdg PolicyDefinitionGroupAttributes) InternalTokens() hclwrite.Tokens {
+func (pdg PolicyDefinitionGroupAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pdg.ref.InternalTokens()
 }
 
 func (pdg PolicyDefinitionGroupAttributes) AdditionalMetadataResourceId() terra.StringValue {
-	return terra.ReferenceString(pdg.ref.Append("additional_metadata_resource_id"))
+	return terra.ReferenceAsString(pdg.ref.Append("additional_metadata_resource_id"))
 }
 
 func (pdg PolicyDefinitionGroupAttributes) Category() terra.StringValue {
-	return terra.ReferenceString(pdg.ref.Append("category"))
+	return terra.ReferenceAsString(pdg.ref.Append("category"))
 }
 
 func (pdg PolicyDefinitionGroupAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(pdg.ref.Append("description"))
+	return terra.ReferenceAsString(pdg.ref.Append("description"))
 }
 
 func (pdg PolicyDefinitionGroupAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(pdg.ref.Append("display_name"))
+	return terra.ReferenceAsString(pdg.ref.Append("display_name"))
 }
 
 func (pdg PolicyDefinitionGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pdg.ref.Append("name"))
+	return terra.ReferenceAsString(pdg.ref.Append("name"))
 }
 
 type PolicyDefinitionReferenceAttributes struct {
 	ref terra.Reference
 }
 
-func (pdr PolicyDefinitionReferenceAttributes) InternalRef() terra.Reference {
-	return pdr.ref
+func (pdr PolicyDefinitionReferenceAttributes) InternalRef() (terra.Reference, error) {
+	return pdr.ref, nil
 }
 
 func (pdr PolicyDefinitionReferenceAttributes) InternalWithRef(ref terra.Reference) PolicyDefinitionReferenceAttributes {
 	return PolicyDefinitionReferenceAttributes{ref: ref}
 }
 
-func (pdr PolicyDefinitionReferenceAttributes) InternalTokens() hclwrite.Tokens {
+func (pdr PolicyDefinitionReferenceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pdr.ref.InternalTokens()
 }
 
 func (pdr PolicyDefinitionReferenceAttributes) ParameterValues() terra.StringValue {
-	return terra.ReferenceString(pdr.ref.Append("parameter_values"))
+	return terra.ReferenceAsString(pdr.ref.Append("parameter_values"))
 }
 
 func (pdr PolicyDefinitionReferenceAttributes) PolicyDefinitionId() terra.StringValue {
-	return terra.ReferenceString(pdr.ref.Append("policy_definition_id"))
+	return terra.ReferenceAsString(pdr.ref.Append("policy_definition_id"))
 }
 
 func (pdr PolicyDefinitionReferenceAttributes) PolicyGroupNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](pdr.ref.Append("policy_group_names"))
+	return terra.ReferenceAsSet[terra.StringValue](pdr.ref.Append("policy_group_names"))
 }
 
 func (pdr PolicyDefinitionReferenceAttributes) ReferenceId() terra.StringValue {
-	return terra.ReferenceString(pdr.ref.Append("reference_id"))
+	return terra.ReferenceAsString(pdr.ref.Append("reference_id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type PolicyDefinitionGroupState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataProtectionBackupVault creates a new instance of [DataProtectionBackupVault].
 func NewDataProtectionBackupVault(name string, args DataProtectionBackupVaultArgs) *DataProtectionBackupVault {
 	return &DataProtectionBackupVault{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataProtectionBackupVault(name string, args DataProtectionBackupVaultArg
 
 var _ terra.Resource = (*DataProtectionBackupVault)(nil)
 
+// DataProtectionBackupVault represents the Terraform resource azurerm_data_protection_backup_vault.
 type DataProtectionBackupVault struct {
-	Name  string
-	Args  DataProtectionBackupVaultArgs
-	state *dataProtectionBackupVaultState
+	Name      string
+	Args      DataProtectionBackupVaultArgs
+	state     *dataProtectionBackupVaultState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataProtectionBackupVault].
 func (dpbv *DataProtectionBackupVault) Type() string {
 	return "azurerm_data_protection_backup_vault"
 }
 
+// LocalName returns the local name for [DataProtectionBackupVault].
 func (dpbv *DataProtectionBackupVault) LocalName() string {
 	return dpbv.Name
 }
 
+// Configuration returns the configuration (args) for [DataProtectionBackupVault].
 func (dpbv *DataProtectionBackupVault) Configuration() interface{} {
 	return dpbv.Args
 }
 
+// DependOn is used for other resources to depend on [DataProtectionBackupVault].
+func (dpbv *DataProtectionBackupVault) DependOn() terra.Reference {
+	return terra.ReferenceResource(dpbv)
+}
+
+// Dependencies returns the list of resources [DataProtectionBackupVault] depends_on.
+func (dpbv *DataProtectionBackupVault) Dependencies() terra.Dependencies {
+	return dpbv.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataProtectionBackupVault].
+func (dpbv *DataProtectionBackupVault) LifecycleManagement() *terra.Lifecycle {
+	return dpbv.Lifecycle
+}
+
+// Attributes returns the attributes for [DataProtectionBackupVault].
 func (dpbv *DataProtectionBackupVault) Attributes() dataProtectionBackupVaultAttributes {
 	return dataProtectionBackupVaultAttributes{ref: terra.ReferenceResource(dpbv)}
 }
 
+// ImportState imports the given attribute values into [DataProtectionBackupVault]'s state.
 func (dpbv *DataProtectionBackupVault) ImportState(av io.Reader) error {
 	dpbv.state = &dataProtectionBackupVaultState{}
 	if err := json.NewDecoder(av).Decode(dpbv.state); err != nil {
@@ -49,10 +73,12 @@ func (dpbv *DataProtectionBackupVault) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataProtectionBackupVault] has state.
 func (dpbv *DataProtectionBackupVault) State() (*dataProtectionBackupVaultState, bool) {
 	return dpbv.state, dpbv.state != nil
 }
 
+// StateMust returns the state for [DataProtectionBackupVault]. Panics if the state is nil.
 func (dpbv *DataProtectionBackupVault) StateMust() *dataProtectionBackupVaultState {
 	if dpbv.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dpbv.Type(), dpbv.LocalName()))
@@ -60,10 +86,7 @@ func (dpbv *DataProtectionBackupVault) StateMust() *dataProtectionBackupVaultSta
 	return dpbv.state
 }
 
-func (dpbv *DataProtectionBackupVault) DependOn() terra.Reference {
-	return terra.ReferenceResource(dpbv)
-}
-
+// DataProtectionBackupVaultArgs contains the configurations for azurerm_data_protection_backup_vault.
 type DataProtectionBackupVaultArgs struct {
 	// DatastoreType: string, required
 	DatastoreType terra.StringValue `hcl:"datastore_type,attr" validate:"required"`
@@ -83,47 +106,52 @@ type DataProtectionBackupVaultArgs struct {
 	Identity *dataprotectionbackupvault.Identity `hcl:"identity,block"`
 	// Timeouts: optional
 	Timeouts *dataprotectionbackupvault.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataProtectionBackupVault depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataProtectionBackupVaultAttributes struct {
 	ref terra.Reference
 }
 
+// DatastoreType returns a reference to field datastore_type of azurerm_data_protection_backup_vault.
 func (dpbv dataProtectionBackupVaultAttributes) DatastoreType() terra.StringValue {
-	return terra.ReferenceString(dpbv.ref.Append("datastore_type"))
+	return terra.ReferenceAsString(dpbv.ref.Append("datastore_type"))
 }
 
+// Id returns a reference to field id of azurerm_data_protection_backup_vault.
 func (dpbv dataProtectionBackupVaultAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dpbv.ref.Append("id"))
+	return terra.ReferenceAsString(dpbv.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_data_protection_backup_vault.
 func (dpbv dataProtectionBackupVaultAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(dpbv.ref.Append("location"))
+	return terra.ReferenceAsString(dpbv.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_data_protection_backup_vault.
 func (dpbv dataProtectionBackupVaultAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dpbv.ref.Append("name"))
+	return terra.ReferenceAsString(dpbv.ref.Append("name"))
 }
 
+// Redundancy returns a reference to field redundancy of azurerm_data_protection_backup_vault.
 func (dpbv dataProtectionBackupVaultAttributes) Redundancy() terra.StringValue {
-	return terra.ReferenceString(dpbv.ref.Append("redundancy"))
+	return terra.ReferenceAsString(dpbv.ref.Append("redundancy"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_data_protection_backup_vault.
 func (dpbv dataProtectionBackupVaultAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(dpbv.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(dpbv.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_data_protection_backup_vault.
 func (dpbv dataProtectionBackupVaultAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dpbv.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dpbv.ref.Append("tags"))
 }
 
 func (dpbv dataProtectionBackupVaultAttributes) Identity() terra.ListValue[dataprotectionbackupvault.IdentityAttributes] {
-	return terra.ReferenceList[dataprotectionbackupvault.IdentityAttributes](dpbv.ref.Append("identity"))
+	return terra.ReferenceAsList[dataprotectionbackupvault.IdentityAttributes](dpbv.ref.Append("identity"))
 }
 
 func (dpbv dataProtectionBackupVaultAttributes) Timeouts() dataprotectionbackupvault.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataprotectionbackupvault.TimeoutsAttributes](dpbv.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataprotectionbackupvault.TimeoutsAttributes](dpbv.ref.Append("timeouts"))
 }
 
 type dataProtectionBackupVaultState struct {

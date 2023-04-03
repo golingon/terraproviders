@@ -29,7 +29,7 @@ func (ap AllowedPublishersAttributes) InternalWithRef(ref terra.Reference) Allow
 	return AllowedPublishersAttributes{ref: ref}
 }
 
-func (ap AllowedPublishersAttributes) InternalTokens() hclwrite.Tokens {
+func (ap AllowedPublishersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ap.ref.InternalTokens()
 }
 
@@ -49,7 +49,7 @@ func (p PoliciesAttributes) InternalWithRef(ref terra.Reference) PoliciesAttribu
 	return PoliciesAttributes{ref: ref}
 }
 
-func (p PoliciesAttributes) InternalTokens() hclwrite.Tokens {
+func (p PoliciesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 

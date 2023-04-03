@@ -50,7 +50,7 @@ func (so SamlOptionsAttributes) InternalWithRef(ref terra.Reference) SamlOptions
 	return SamlOptionsAttributes{ref: ref}
 }
 
-func (so SamlOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (so SamlOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return so.ref.InternalTokens()
 }
 
@@ -94,7 +94,7 @@ func (i IdpAttributes) InternalWithRef(ref terra.Reference) IdpAttributes {
 	return IdpAttributes{ref: ref}
 }
 
-func (i IdpAttributes) InternalTokens() hclwrite.Tokens {
+func (i IdpAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -118,7 +118,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

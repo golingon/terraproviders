@@ -24,7 +24,7 @@ func (ca CacheAttributesAttributes) InternalWithRef(ref terra.Reference) CacheAt
 	return CacheAttributesAttributes{ref: ref}
 }
 
-func (ca CacheAttributesAttributes) InternalTokens() hclwrite.Tokens {
+func (ca CacheAttributesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ca.ref.InternalTokens()
 }
 

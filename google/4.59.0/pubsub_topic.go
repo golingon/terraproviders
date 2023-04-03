@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewPubsubTopic creates a new instance of [PubsubTopic].
 func NewPubsubTopic(name string, args PubsubTopicArgs) *PubsubTopic {
 	return &PubsubTopic{
 		Args: args,
@@ -19,28 +20,51 @@ func NewPubsubTopic(name string, args PubsubTopicArgs) *PubsubTopic {
 
 var _ terra.Resource = (*PubsubTopic)(nil)
 
+// PubsubTopic represents the Terraform resource google_pubsub_topic.
 type PubsubTopic struct {
-	Name  string
-	Args  PubsubTopicArgs
-	state *pubsubTopicState
+	Name      string
+	Args      PubsubTopicArgs
+	state     *pubsubTopicState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PubsubTopic].
 func (pt *PubsubTopic) Type() string {
 	return "google_pubsub_topic"
 }
 
+// LocalName returns the local name for [PubsubTopic].
 func (pt *PubsubTopic) LocalName() string {
 	return pt.Name
 }
 
+// Configuration returns the configuration (args) for [PubsubTopic].
 func (pt *PubsubTopic) Configuration() interface{} {
 	return pt.Args
 }
 
+// DependOn is used for other resources to depend on [PubsubTopic].
+func (pt *PubsubTopic) DependOn() terra.Reference {
+	return terra.ReferenceResource(pt)
+}
+
+// Dependencies returns the list of resources [PubsubTopic] depends_on.
+func (pt *PubsubTopic) Dependencies() terra.Dependencies {
+	return pt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PubsubTopic].
+func (pt *PubsubTopic) LifecycleManagement() *terra.Lifecycle {
+	return pt.Lifecycle
+}
+
+// Attributes returns the attributes for [PubsubTopic].
 func (pt *PubsubTopic) Attributes() pubsubTopicAttributes {
 	return pubsubTopicAttributes{ref: terra.ReferenceResource(pt)}
 }
 
+// ImportState imports the given attribute values into [PubsubTopic]'s state.
 func (pt *PubsubTopic) ImportState(av io.Reader) error {
 	pt.state = &pubsubTopicState{}
 	if err := json.NewDecoder(av).Decode(pt.state); err != nil {
@@ -49,10 +73,12 @@ func (pt *PubsubTopic) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PubsubTopic] has state.
 func (pt *PubsubTopic) State() (*pubsubTopicState, bool) {
 	return pt.state, pt.state != nil
 }
 
+// StateMust returns the state for [PubsubTopic]. Panics if the state is nil.
 func (pt *PubsubTopic) StateMust() *pubsubTopicState {
 	if pt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pt.Type(), pt.LocalName()))
@@ -60,10 +86,7 @@ func (pt *PubsubTopic) StateMust() *pubsubTopicState {
 	return pt.state
 }
 
-func (pt *PubsubTopic) DependOn() terra.Reference {
-	return terra.ReferenceResource(pt)
-}
-
+// PubsubTopicArgs contains the configurations for google_pubsub_topic.
 type PubsubTopicArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -83,47 +106,51 @@ type PubsubTopicArgs struct {
 	SchemaSettings *pubsubtopic.SchemaSettings `hcl:"schema_settings,block"`
 	// Timeouts: optional
 	Timeouts *pubsubtopic.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that PubsubTopic depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type pubsubTopicAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of google_pubsub_topic.
 func (pt pubsubTopicAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pt.ref.Append("id"))
+	return terra.ReferenceAsString(pt.ref.Append("id"))
 }
 
+// KmsKeyName returns a reference to field kms_key_name of google_pubsub_topic.
 func (pt pubsubTopicAttributes) KmsKeyName() terra.StringValue {
-	return terra.ReferenceString(pt.ref.Append("kms_key_name"))
+	return terra.ReferenceAsString(pt.ref.Append("kms_key_name"))
 }
 
+// Labels returns a reference to field labels of google_pubsub_topic.
 func (pt pubsubTopicAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](pt.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](pt.ref.Append("labels"))
 }
 
+// MessageRetentionDuration returns a reference to field message_retention_duration of google_pubsub_topic.
 func (pt pubsubTopicAttributes) MessageRetentionDuration() terra.StringValue {
-	return terra.ReferenceString(pt.ref.Append("message_retention_duration"))
+	return terra.ReferenceAsString(pt.ref.Append("message_retention_duration"))
 }
 
+// Name returns a reference to field name of google_pubsub_topic.
 func (pt pubsubTopicAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pt.ref.Append("name"))
+	return terra.ReferenceAsString(pt.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_pubsub_topic.
 func (pt pubsubTopicAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(pt.ref.Append("project"))
+	return terra.ReferenceAsString(pt.ref.Append("project"))
 }
 
 func (pt pubsubTopicAttributes) MessageStoragePolicy() terra.ListValue[pubsubtopic.MessageStoragePolicyAttributes] {
-	return terra.ReferenceList[pubsubtopic.MessageStoragePolicyAttributes](pt.ref.Append("message_storage_policy"))
+	return terra.ReferenceAsList[pubsubtopic.MessageStoragePolicyAttributes](pt.ref.Append("message_storage_policy"))
 }
 
 func (pt pubsubTopicAttributes) SchemaSettings() terra.ListValue[pubsubtopic.SchemaSettingsAttributes] {
-	return terra.ReferenceList[pubsubtopic.SchemaSettingsAttributes](pt.ref.Append("schema_settings"))
+	return terra.ReferenceAsList[pubsubtopic.SchemaSettingsAttributes](pt.ref.Append("schema_settings"))
 }
 
 func (pt pubsubTopicAttributes) Timeouts() pubsubtopic.TimeoutsAttributes {
-	return terra.ReferenceSingle[pubsubtopic.TimeoutsAttributes](pt.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[pubsubtopic.TimeoutsAttributes](pt.ref.Append("timeouts"))
 }
 
 type pubsubTopicState struct {

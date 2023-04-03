@@ -45,7 +45,7 @@ func (o OidcAttributes) InternalWithRef(ref terra.Reference) OidcAttributes {
 	return OidcAttributes{ref: ref}
 }
 
-func (o OidcAttributes) InternalTokens() hclwrite.Tokens {
+func (o OidcAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return o.ref.InternalTokens()
 }
 
@@ -93,7 +93,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

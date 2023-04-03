@@ -35,7 +35,7 @@ func (ar ActivatedRuleAttributes) InternalWithRef(ref terra.Reference) Activated
 	return ActivatedRuleAttributes{ref: ref}
 }
 
-func (ar ActivatedRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (ar ActivatedRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ar.ref.InternalTokens()
 }
 
@@ -67,7 +67,7 @@ func (a ActionAttributes) InternalWithRef(ref terra.Reference) ActionAttributes 
 	return ActionAttributes{ref: ref}
 }
 
-func (a ActionAttributes) InternalTokens() hclwrite.Tokens {
+func (a ActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 

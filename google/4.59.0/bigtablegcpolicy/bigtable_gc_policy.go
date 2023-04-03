@@ -23,44 +23,44 @@ type MaxAgeAttributes struct {
 	ref terra.Reference
 }
 
-func (ma MaxAgeAttributes) InternalRef() terra.Reference {
-	return ma.ref
+func (ma MaxAgeAttributes) InternalRef() (terra.Reference, error) {
+	return ma.ref, nil
 }
 
 func (ma MaxAgeAttributes) InternalWithRef(ref terra.Reference) MaxAgeAttributes {
 	return MaxAgeAttributes{ref: ref}
 }
 
-func (ma MaxAgeAttributes) InternalTokens() hclwrite.Tokens {
+func (ma MaxAgeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ma.ref.InternalTokens()
 }
 
 func (ma MaxAgeAttributes) Days() terra.NumberValue {
-	return terra.ReferenceNumber(ma.ref.Append("days"))
+	return terra.ReferenceAsNumber(ma.ref.Append("days"))
 }
 
 func (ma MaxAgeAttributes) Duration() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("duration"))
+	return terra.ReferenceAsString(ma.ref.Append("duration"))
 }
 
 type MaxVersionAttributes struct {
 	ref terra.Reference
 }
 
-func (mv MaxVersionAttributes) InternalRef() terra.Reference {
-	return mv.ref
+func (mv MaxVersionAttributes) InternalRef() (terra.Reference, error) {
+	return mv.ref, nil
 }
 
 func (mv MaxVersionAttributes) InternalWithRef(ref terra.Reference) MaxVersionAttributes {
 	return MaxVersionAttributes{ref: ref}
 }
 
-func (mv MaxVersionAttributes) InternalTokens() hclwrite.Tokens {
+func (mv MaxVersionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mv.ref.InternalTokens()
 }
 
 func (mv MaxVersionAttributes) Number() terra.NumberValue {
-	return terra.ReferenceNumber(mv.ref.Append("number"))
+	return terra.ReferenceAsNumber(mv.ref.Append("number"))
 }
 
 type MaxAgeState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewIotTimeSeriesInsightsEventSourceEventhub creates a new instance of [IotTimeSeriesInsightsEventSourceEventhub].
 func NewIotTimeSeriesInsightsEventSourceEventhub(name string, args IotTimeSeriesInsightsEventSourceEventhubArgs) *IotTimeSeriesInsightsEventSourceEventhub {
 	return &IotTimeSeriesInsightsEventSourceEventhub{
 		Args: args,
@@ -19,28 +20,51 @@ func NewIotTimeSeriesInsightsEventSourceEventhub(name string, args IotTimeSeries
 
 var _ terra.Resource = (*IotTimeSeriesInsightsEventSourceEventhub)(nil)
 
+// IotTimeSeriesInsightsEventSourceEventhub represents the Terraform resource azurerm_iot_time_series_insights_event_source_eventhub.
 type IotTimeSeriesInsightsEventSourceEventhub struct {
-	Name  string
-	Args  IotTimeSeriesInsightsEventSourceEventhubArgs
-	state *iotTimeSeriesInsightsEventSourceEventhubState
+	Name      string
+	Args      IotTimeSeriesInsightsEventSourceEventhubArgs
+	state     *iotTimeSeriesInsightsEventSourceEventhubState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IotTimeSeriesInsightsEventSourceEventhub].
 func (itsiese *IotTimeSeriesInsightsEventSourceEventhub) Type() string {
 	return "azurerm_iot_time_series_insights_event_source_eventhub"
 }
 
+// LocalName returns the local name for [IotTimeSeriesInsightsEventSourceEventhub].
 func (itsiese *IotTimeSeriesInsightsEventSourceEventhub) LocalName() string {
 	return itsiese.Name
 }
 
+// Configuration returns the configuration (args) for [IotTimeSeriesInsightsEventSourceEventhub].
 func (itsiese *IotTimeSeriesInsightsEventSourceEventhub) Configuration() interface{} {
 	return itsiese.Args
 }
 
+// DependOn is used for other resources to depend on [IotTimeSeriesInsightsEventSourceEventhub].
+func (itsiese *IotTimeSeriesInsightsEventSourceEventhub) DependOn() terra.Reference {
+	return terra.ReferenceResource(itsiese)
+}
+
+// Dependencies returns the list of resources [IotTimeSeriesInsightsEventSourceEventhub] depends_on.
+func (itsiese *IotTimeSeriesInsightsEventSourceEventhub) Dependencies() terra.Dependencies {
+	return itsiese.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IotTimeSeriesInsightsEventSourceEventhub].
+func (itsiese *IotTimeSeriesInsightsEventSourceEventhub) LifecycleManagement() *terra.Lifecycle {
+	return itsiese.Lifecycle
+}
+
+// Attributes returns the attributes for [IotTimeSeriesInsightsEventSourceEventhub].
 func (itsiese *IotTimeSeriesInsightsEventSourceEventhub) Attributes() iotTimeSeriesInsightsEventSourceEventhubAttributes {
 	return iotTimeSeriesInsightsEventSourceEventhubAttributes{ref: terra.ReferenceResource(itsiese)}
 }
 
+// ImportState imports the given attribute values into [IotTimeSeriesInsightsEventSourceEventhub]'s state.
 func (itsiese *IotTimeSeriesInsightsEventSourceEventhub) ImportState(av io.Reader) error {
 	itsiese.state = &iotTimeSeriesInsightsEventSourceEventhubState{}
 	if err := json.NewDecoder(av).Decode(itsiese.state); err != nil {
@@ -49,10 +73,12 @@ func (itsiese *IotTimeSeriesInsightsEventSourceEventhub) ImportState(av io.Reade
 	return nil
 }
 
+// State returns the state and a bool indicating if [IotTimeSeriesInsightsEventSourceEventhub] has state.
 func (itsiese *IotTimeSeriesInsightsEventSourceEventhub) State() (*iotTimeSeriesInsightsEventSourceEventhubState, bool) {
 	return itsiese.state, itsiese.state != nil
 }
 
+// StateMust returns the state for [IotTimeSeriesInsightsEventSourceEventhub]. Panics if the state is nil.
 func (itsiese *IotTimeSeriesInsightsEventSourceEventhub) StateMust() *iotTimeSeriesInsightsEventSourceEventhubState {
 	if itsiese.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", itsiese.Type(), itsiese.LocalName()))
@@ -60,10 +86,7 @@ func (itsiese *IotTimeSeriesInsightsEventSourceEventhub) StateMust() *iotTimeSer
 	return itsiese.state
 }
 
-func (itsiese *IotTimeSeriesInsightsEventSourceEventhub) DependOn() terra.Reference {
-	return terra.ReferenceResource(itsiese)
-}
-
+// IotTimeSeriesInsightsEventSourceEventhubArgs contains the configurations for azurerm_iot_time_series_insights_event_source_eventhub.
 type IotTimeSeriesInsightsEventSourceEventhubArgs struct {
 	// ConsumerGroupName: string, required
 	ConsumerGroupName terra.StringValue `hcl:"consumer_group_name,attr" validate:"required"`
@@ -91,63 +114,73 @@ type IotTimeSeriesInsightsEventSourceEventhubArgs struct {
 	TimestampPropertyName terra.StringValue `hcl:"timestamp_property_name,attr"`
 	// Timeouts: optional
 	Timeouts *iottimeseriesinsightseventsourceeventhub.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that IotTimeSeriesInsightsEventSourceEventhub depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iotTimeSeriesInsightsEventSourceEventhubAttributes struct {
 	ref terra.Reference
 }
 
+// ConsumerGroupName returns a reference to field consumer_group_name of azurerm_iot_time_series_insights_event_source_eventhub.
 func (itsiese iotTimeSeriesInsightsEventSourceEventhubAttributes) ConsumerGroupName() terra.StringValue {
-	return terra.ReferenceString(itsiese.ref.Append("consumer_group_name"))
+	return terra.ReferenceAsString(itsiese.ref.Append("consumer_group_name"))
 }
 
+// EnvironmentId returns a reference to field environment_id of azurerm_iot_time_series_insights_event_source_eventhub.
 func (itsiese iotTimeSeriesInsightsEventSourceEventhubAttributes) EnvironmentId() terra.StringValue {
-	return terra.ReferenceString(itsiese.ref.Append("environment_id"))
+	return terra.ReferenceAsString(itsiese.ref.Append("environment_id"))
 }
 
+// EventSourceResourceId returns a reference to field event_source_resource_id of azurerm_iot_time_series_insights_event_source_eventhub.
 func (itsiese iotTimeSeriesInsightsEventSourceEventhubAttributes) EventSourceResourceId() terra.StringValue {
-	return terra.ReferenceString(itsiese.ref.Append("event_source_resource_id"))
+	return terra.ReferenceAsString(itsiese.ref.Append("event_source_resource_id"))
 }
 
+// EventhubName returns a reference to field eventhub_name of azurerm_iot_time_series_insights_event_source_eventhub.
 func (itsiese iotTimeSeriesInsightsEventSourceEventhubAttributes) EventhubName() terra.StringValue {
-	return terra.ReferenceString(itsiese.ref.Append("eventhub_name"))
+	return terra.ReferenceAsString(itsiese.ref.Append("eventhub_name"))
 }
 
+// Id returns a reference to field id of azurerm_iot_time_series_insights_event_source_eventhub.
 func (itsiese iotTimeSeriesInsightsEventSourceEventhubAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(itsiese.ref.Append("id"))
+	return terra.ReferenceAsString(itsiese.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_iot_time_series_insights_event_source_eventhub.
 func (itsiese iotTimeSeriesInsightsEventSourceEventhubAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(itsiese.ref.Append("location"))
+	return terra.ReferenceAsString(itsiese.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_iot_time_series_insights_event_source_eventhub.
 func (itsiese iotTimeSeriesInsightsEventSourceEventhubAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(itsiese.ref.Append("name"))
+	return terra.ReferenceAsString(itsiese.ref.Append("name"))
 }
 
+// NamespaceName returns a reference to field namespace_name of azurerm_iot_time_series_insights_event_source_eventhub.
 func (itsiese iotTimeSeriesInsightsEventSourceEventhubAttributes) NamespaceName() terra.StringValue {
-	return terra.ReferenceString(itsiese.ref.Append("namespace_name"))
+	return terra.ReferenceAsString(itsiese.ref.Append("namespace_name"))
 }
 
+// SharedAccessKey returns a reference to field shared_access_key of azurerm_iot_time_series_insights_event_source_eventhub.
 func (itsiese iotTimeSeriesInsightsEventSourceEventhubAttributes) SharedAccessKey() terra.StringValue {
-	return terra.ReferenceString(itsiese.ref.Append("shared_access_key"))
+	return terra.ReferenceAsString(itsiese.ref.Append("shared_access_key"))
 }
 
+// SharedAccessKeyName returns a reference to field shared_access_key_name of azurerm_iot_time_series_insights_event_source_eventhub.
 func (itsiese iotTimeSeriesInsightsEventSourceEventhubAttributes) SharedAccessKeyName() terra.StringValue {
-	return terra.ReferenceString(itsiese.ref.Append("shared_access_key_name"))
+	return terra.ReferenceAsString(itsiese.ref.Append("shared_access_key_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_iot_time_series_insights_event_source_eventhub.
 func (itsiese iotTimeSeriesInsightsEventSourceEventhubAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](itsiese.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](itsiese.ref.Append("tags"))
 }
 
+// TimestampPropertyName returns a reference to field timestamp_property_name of azurerm_iot_time_series_insights_event_source_eventhub.
 func (itsiese iotTimeSeriesInsightsEventSourceEventhubAttributes) TimestampPropertyName() terra.StringValue {
-	return terra.ReferenceString(itsiese.ref.Append("timestamp_property_name"))
+	return terra.ReferenceAsString(itsiese.ref.Append("timestamp_property_name"))
 }
 
 func (itsiese iotTimeSeriesInsightsEventSourceEventhubAttributes) Timeouts() iottimeseriesinsightseventsourceeventhub.TimeoutsAttributes {
-	return terra.ReferenceSingle[iottimeseriesinsightseventsourceeventhub.TimeoutsAttributes](itsiese.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[iottimeseriesinsightseventsourceeventhub.TimeoutsAttributes](itsiese.ref.Append("timeouts"))
 }
 
 type iotTimeSeriesInsightsEventSourceEventhubState struct {

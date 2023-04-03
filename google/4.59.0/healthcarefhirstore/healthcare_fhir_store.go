@@ -46,120 +46,120 @@ type NotificationConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (nc NotificationConfigAttributes) InternalRef() terra.Reference {
-	return nc.ref
+func (nc NotificationConfigAttributes) InternalRef() (terra.Reference, error) {
+	return nc.ref, nil
 }
 
 func (nc NotificationConfigAttributes) InternalWithRef(ref terra.Reference) NotificationConfigAttributes {
 	return NotificationConfigAttributes{ref: ref}
 }
 
-func (nc NotificationConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (nc NotificationConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nc.ref.InternalTokens()
 }
 
 func (nc NotificationConfigAttributes) PubsubTopic() terra.StringValue {
-	return terra.ReferenceString(nc.ref.Append("pubsub_topic"))
+	return terra.ReferenceAsString(nc.ref.Append("pubsub_topic"))
 }
 
 type StreamConfigsAttributes struct {
 	ref terra.Reference
 }
 
-func (sc StreamConfigsAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc StreamConfigsAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc StreamConfigsAttributes) InternalWithRef(ref terra.Reference) StreamConfigsAttributes {
 	return StreamConfigsAttributes{ref: ref}
 }
 
-func (sc StreamConfigsAttributes) InternalTokens() hclwrite.Tokens {
+func (sc StreamConfigsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
 func (sc StreamConfigsAttributes) ResourceTypes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sc.ref.Append("resource_types"))
+	return terra.ReferenceAsList[terra.StringValue](sc.ref.Append("resource_types"))
 }
 
 func (sc StreamConfigsAttributes) BigqueryDestination() terra.ListValue[BigqueryDestinationAttributes] {
-	return terra.ReferenceList[BigqueryDestinationAttributes](sc.ref.Append("bigquery_destination"))
+	return terra.ReferenceAsList[BigqueryDestinationAttributes](sc.ref.Append("bigquery_destination"))
 }
 
 type BigqueryDestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (bd BigqueryDestinationAttributes) InternalRef() terra.Reference {
-	return bd.ref
+func (bd BigqueryDestinationAttributes) InternalRef() (terra.Reference, error) {
+	return bd.ref, nil
 }
 
 func (bd BigqueryDestinationAttributes) InternalWithRef(ref terra.Reference) BigqueryDestinationAttributes {
 	return BigqueryDestinationAttributes{ref: ref}
 }
 
-func (bd BigqueryDestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (bd BigqueryDestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bd.ref.InternalTokens()
 }
 
 func (bd BigqueryDestinationAttributes) DatasetUri() terra.StringValue {
-	return terra.ReferenceString(bd.ref.Append("dataset_uri"))
+	return terra.ReferenceAsString(bd.ref.Append("dataset_uri"))
 }
 
 func (bd BigqueryDestinationAttributes) SchemaConfig() terra.ListValue[SchemaConfigAttributes] {
-	return terra.ReferenceList[SchemaConfigAttributes](bd.ref.Append("schema_config"))
+	return terra.ReferenceAsList[SchemaConfigAttributes](bd.ref.Append("schema_config"))
 }
 
 type SchemaConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (sc SchemaConfigAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc SchemaConfigAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc SchemaConfigAttributes) InternalWithRef(ref terra.Reference) SchemaConfigAttributes {
 	return SchemaConfigAttributes{ref: ref}
 }
 
-func (sc SchemaConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sc SchemaConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
 func (sc SchemaConfigAttributes) RecursiveStructureDepth() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("recursive_structure_depth"))
+	return terra.ReferenceAsNumber(sc.ref.Append("recursive_structure_depth"))
 }
 
 func (sc SchemaConfigAttributes) SchemaType() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("schema_type"))
+	return terra.ReferenceAsString(sc.ref.Append("schema_type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type NotificationConfigState struct {

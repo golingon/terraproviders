@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCdnFrontdoorProfile creates a new instance of [CdnFrontdoorProfile].
 func NewCdnFrontdoorProfile(name string, args CdnFrontdoorProfileArgs) *CdnFrontdoorProfile {
 	return &CdnFrontdoorProfile{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCdnFrontdoorProfile(name string, args CdnFrontdoorProfileArgs) *CdnFront
 
 var _ terra.Resource = (*CdnFrontdoorProfile)(nil)
 
+// CdnFrontdoorProfile represents the Terraform resource azurerm_cdn_frontdoor_profile.
 type CdnFrontdoorProfile struct {
-	Name  string
-	Args  CdnFrontdoorProfileArgs
-	state *cdnFrontdoorProfileState
+	Name      string
+	Args      CdnFrontdoorProfileArgs
+	state     *cdnFrontdoorProfileState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CdnFrontdoorProfile].
 func (cfp *CdnFrontdoorProfile) Type() string {
 	return "azurerm_cdn_frontdoor_profile"
 }
 
+// LocalName returns the local name for [CdnFrontdoorProfile].
 func (cfp *CdnFrontdoorProfile) LocalName() string {
 	return cfp.Name
 }
 
+// Configuration returns the configuration (args) for [CdnFrontdoorProfile].
 func (cfp *CdnFrontdoorProfile) Configuration() interface{} {
 	return cfp.Args
 }
 
+// DependOn is used for other resources to depend on [CdnFrontdoorProfile].
+func (cfp *CdnFrontdoorProfile) DependOn() terra.Reference {
+	return terra.ReferenceResource(cfp)
+}
+
+// Dependencies returns the list of resources [CdnFrontdoorProfile] depends_on.
+func (cfp *CdnFrontdoorProfile) Dependencies() terra.Dependencies {
+	return cfp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CdnFrontdoorProfile].
+func (cfp *CdnFrontdoorProfile) LifecycleManagement() *terra.Lifecycle {
+	return cfp.Lifecycle
+}
+
+// Attributes returns the attributes for [CdnFrontdoorProfile].
 func (cfp *CdnFrontdoorProfile) Attributes() cdnFrontdoorProfileAttributes {
 	return cdnFrontdoorProfileAttributes{ref: terra.ReferenceResource(cfp)}
 }
 
+// ImportState imports the given attribute values into [CdnFrontdoorProfile]'s state.
 func (cfp *CdnFrontdoorProfile) ImportState(av io.Reader) error {
 	cfp.state = &cdnFrontdoorProfileState{}
 	if err := json.NewDecoder(av).Decode(cfp.state); err != nil {
@@ -49,10 +73,12 @@ func (cfp *CdnFrontdoorProfile) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CdnFrontdoorProfile] has state.
 func (cfp *CdnFrontdoorProfile) State() (*cdnFrontdoorProfileState, bool) {
 	return cfp.state, cfp.state != nil
 }
 
+// StateMust returns the state for [CdnFrontdoorProfile]. Panics if the state is nil.
 func (cfp *CdnFrontdoorProfile) StateMust() *cdnFrontdoorProfileState {
 	if cfp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cfp.Type(), cfp.LocalName()))
@@ -60,10 +86,7 @@ func (cfp *CdnFrontdoorProfile) StateMust() *cdnFrontdoorProfileState {
 	return cfp.state
 }
 
-func (cfp *CdnFrontdoorProfile) DependOn() terra.Reference {
-	return terra.ReferenceResource(cfp)
-}
-
+// CdnFrontdoorProfileArgs contains the configurations for azurerm_cdn_frontdoor_profile.
 type CdnFrontdoorProfileArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,43 +102,48 @@ type CdnFrontdoorProfileArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// Timeouts: optional
 	Timeouts *cdnfrontdoorprofile.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that CdnFrontdoorProfile depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cdnFrontdoorProfileAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_cdn_frontdoor_profile.
 func (cfp cdnFrontdoorProfileAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cfp.ref.Append("id"))
+	return terra.ReferenceAsString(cfp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_cdn_frontdoor_profile.
 func (cfp cdnFrontdoorProfileAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cfp.ref.Append("name"))
+	return terra.ReferenceAsString(cfp.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_cdn_frontdoor_profile.
 func (cfp cdnFrontdoorProfileAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(cfp.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(cfp.ref.Append("resource_group_name"))
 }
 
+// ResourceGuid returns a reference to field resource_guid of azurerm_cdn_frontdoor_profile.
 func (cfp cdnFrontdoorProfileAttributes) ResourceGuid() terra.StringValue {
-	return terra.ReferenceString(cfp.ref.Append("resource_guid"))
+	return terra.ReferenceAsString(cfp.ref.Append("resource_guid"))
 }
 
+// ResponseTimeoutSeconds returns a reference to field response_timeout_seconds of azurerm_cdn_frontdoor_profile.
 func (cfp cdnFrontdoorProfileAttributes) ResponseTimeoutSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(cfp.ref.Append("response_timeout_seconds"))
+	return terra.ReferenceAsNumber(cfp.ref.Append("response_timeout_seconds"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_cdn_frontdoor_profile.
 func (cfp cdnFrontdoorProfileAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(cfp.ref.Append("sku_name"))
+	return terra.ReferenceAsString(cfp.ref.Append("sku_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_cdn_frontdoor_profile.
 func (cfp cdnFrontdoorProfileAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cfp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](cfp.ref.Append("tags"))
 }
 
 func (cfp cdnFrontdoorProfileAttributes) Timeouts() cdnfrontdoorprofile.TimeoutsAttributes {
-	return terra.ReferenceSingle[cdnfrontdoorprofile.TimeoutsAttributes](cfp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cdnfrontdoorprofile.TimeoutsAttributes](cfp.ref.Append("timeouts"))
 }
 
 type cdnFrontdoorProfileState struct {

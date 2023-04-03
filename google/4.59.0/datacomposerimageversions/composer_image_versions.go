@@ -13,24 +13,24 @@ type ImageVersionsAttributes struct {
 	ref terra.Reference
 }
 
-func (iv ImageVersionsAttributes) InternalRef() terra.Reference {
-	return iv.ref
+func (iv ImageVersionsAttributes) InternalRef() (terra.Reference, error) {
+	return iv.ref, nil
 }
 
 func (iv ImageVersionsAttributes) InternalWithRef(ref terra.Reference) ImageVersionsAttributes {
 	return ImageVersionsAttributes{ref: ref}
 }
 
-func (iv ImageVersionsAttributes) InternalTokens() hclwrite.Tokens {
+func (iv ImageVersionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return iv.ref.InternalTokens()
 }
 
 func (iv ImageVersionsAttributes) ImageVersionId() terra.StringValue {
-	return terra.ReferenceString(iv.ref.Append("image_version_id"))
+	return terra.ReferenceAsString(iv.ref.Append("image_version_id"))
 }
 
 func (iv ImageVersionsAttributes) SupportedPythonVersions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](iv.ref.Append("supported_python_versions"))
+	return terra.ReferenceAsList[terra.StringValue](iv.ref.Append("supported_python_versions"))
 }
 
 type ImageVersionsState struct {

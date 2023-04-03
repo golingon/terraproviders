@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewIntegrationServiceEnvironment creates a new instance of [IntegrationServiceEnvironment].
 func NewIntegrationServiceEnvironment(name string, args IntegrationServiceEnvironmentArgs) *IntegrationServiceEnvironment {
 	return &IntegrationServiceEnvironment{
 		Args: args,
@@ -19,28 +20,51 @@ func NewIntegrationServiceEnvironment(name string, args IntegrationServiceEnviro
 
 var _ terra.Resource = (*IntegrationServiceEnvironment)(nil)
 
+// IntegrationServiceEnvironment represents the Terraform resource azurerm_integration_service_environment.
 type IntegrationServiceEnvironment struct {
-	Name  string
-	Args  IntegrationServiceEnvironmentArgs
-	state *integrationServiceEnvironmentState
+	Name      string
+	Args      IntegrationServiceEnvironmentArgs
+	state     *integrationServiceEnvironmentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IntegrationServiceEnvironment].
 func (ise *IntegrationServiceEnvironment) Type() string {
 	return "azurerm_integration_service_environment"
 }
 
+// LocalName returns the local name for [IntegrationServiceEnvironment].
 func (ise *IntegrationServiceEnvironment) LocalName() string {
 	return ise.Name
 }
 
+// Configuration returns the configuration (args) for [IntegrationServiceEnvironment].
 func (ise *IntegrationServiceEnvironment) Configuration() interface{} {
 	return ise.Args
 }
 
+// DependOn is used for other resources to depend on [IntegrationServiceEnvironment].
+func (ise *IntegrationServiceEnvironment) DependOn() terra.Reference {
+	return terra.ReferenceResource(ise)
+}
+
+// Dependencies returns the list of resources [IntegrationServiceEnvironment] depends_on.
+func (ise *IntegrationServiceEnvironment) Dependencies() terra.Dependencies {
+	return ise.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IntegrationServiceEnvironment].
+func (ise *IntegrationServiceEnvironment) LifecycleManagement() *terra.Lifecycle {
+	return ise.Lifecycle
+}
+
+// Attributes returns the attributes for [IntegrationServiceEnvironment].
 func (ise *IntegrationServiceEnvironment) Attributes() integrationServiceEnvironmentAttributes {
 	return integrationServiceEnvironmentAttributes{ref: terra.ReferenceResource(ise)}
 }
 
+// ImportState imports the given attribute values into [IntegrationServiceEnvironment]'s state.
 func (ise *IntegrationServiceEnvironment) ImportState(av io.Reader) error {
 	ise.state = &integrationServiceEnvironmentState{}
 	if err := json.NewDecoder(av).Decode(ise.state); err != nil {
@@ -49,10 +73,12 @@ func (ise *IntegrationServiceEnvironment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IntegrationServiceEnvironment] has state.
 func (ise *IntegrationServiceEnvironment) State() (*integrationServiceEnvironmentState, bool) {
 	return ise.state, ise.state != nil
 }
 
+// StateMust returns the state for [IntegrationServiceEnvironment]. Panics if the state is nil.
 func (ise *IntegrationServiceEnvironment) StateMust() *integrationServiceEnvironmentState {
 	if ise.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ise.Type(), ise.LocalName()))
@@ -60,10 +86,7 @@ func (ise *IntegrationServiceEnvironment) StateMust() *integrationServiceEnviron
 	return ise.state
 }
 
-func (ise *IntegrationServiceEnvironment) DependOn() terra.Reference {
-	return terra.ReferenceResource(ise)
-}
-
+// IntegrationServiceEnvironmentArgs contains the configurations for azurerm_integration_service_environment.
 type IntegrationServiceEnvironmentArgs struct {
 	// AccessEndpointType: string, required
 	AccessEndpointType terra.StringValue `hcl:"access_endpoint_type,attr" validate:"required"`
@@ -83,63 +106,73 @@ type IntegrationServiceEnvironmentArgs struct {
 	VirtualNetworkSubnetIds terra.SetValue[terra.StringValue] `hcl:"virtual_network_subnet_ids,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *integrationserviceenvironment.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that IntegrationServiceEnvironment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type integrationServiceEnvironmentAttributes struct {
 	ref terra.Reference
 }
 
+// AccessEndpointType returns a reference to field access_endpoint_type of azurerm_integration_service_environment.
 func (ise integrationServiceEnvironmentAttributes) AccessEndpointType() terra.StringValue {
-	return terra.ReferenceString(ise.ref.Append("access_endpoint_type"))
+	return terra.ReferenceAsString(ise.ref.Append("access_endpoint_type"))
 }
 
+// ConnectorEndpointIpAddresses returns a reference to field connector_endpoint_ip_addresses of azurerm_integration_service_environment.
 func (ise integrationServiceEnvironmentAttributes) ConnectorEndpointIpAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ise.ref.Append("connector_endpoint_ip_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](ise.ref.Append("connector_endpoint_ip_addresses"))
 }
 
+// ConnectorOutboundIpAddresses returns a reference to field connector_outbound_ip_addresses of azurerm_integration_service_environment.
 func (ise integrationServiceEnvironmentAttributes) ConnectorOutboundIpAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ise.ref.Append("connector_outbound_ip_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](ise.ref.Append("connector_outbound_ip_addresses"))
 }
 
+// Id returns a reference to field id of azurerm_integration_service_environment.
 func (ise integrationServiceEnvironmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ise.ref.Append("id"))
+	return terra.ReferenceAsString(ise.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_integration_service_environment.
 func (ise integrationServiceEnvironmentAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ise.ref.Append("location"))
+	return terra.ReferenceAsString(ise.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_integration_service_environment.
 func (ise integrationServiceEnvironmentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ise.ref.Append("name"))
+	return terra.ReferenceAsString(ise.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_integration_service_environment.
 func (ise integrationServiceEnvironmentAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ise.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ise.ref.Append("resource_group_name"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_integration_service_environment.
 func (ise integrationServiceEnvironmentAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(ise.ref.Append("sku_name"))
+	return terra.ReferenceAsString(ise.ref.Append("sku_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_integration_service_environment.
 func (ise integrationServiceEnvironmentAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ise.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ise.ref.Append("tags"))
 }
 
+// VirtualNetworkSubnetIds returns a reference to field virtual_network_subnet_ids of azurerm_integration_service_environment.
 func (ise integrationServiceEnvironmentAttributes) VirtualNetworkSubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ise.ref.Append("virtual_network_subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](ise.ref.Append("virtual_network_subnet_ids"))
 }
 
+// WorkflowEndpointIpAddresses returns a reference to field workflow_endpoint_ip_addresses of azurerm_integration_service_environment.
 func (ise integrationServiceEnvironmentAttributes) WorkflowEndpointIpAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ise.ref.Append("workflow_endpoint_ip_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](ise.ref.Append("workflow_endpoint_ip_addresses"))
 }
 
+// WorkflowOutboundIpAddresses returns a reference to field workflow_outbound_ip_addresses of azurerm_integration_service_environment.
 func (ise integrationServiceEnvironmentAttributes) WorkflowOutboundIpAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ise.ref.Append("workflow_outbound_ip_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](ise.ref.Append("workflow_outbound_ip_addresses"))
 }
 
 func (ise integrationServiceEnvironmentAttributes) Timeouts() integrationserviceenvironment.TimeoutsAttributes {
-	return terra.ReferenceSingle[integrationserviceenvironment.TimeoutsAttributes](ise.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[integrationserviceenvironment.TimeoutsAttributes](ise.ref.Append("timeouts"))
 }
 
 type integrationServiceEnvironmentState struct {

@@ -111,7 +111,7 @@ func (cc CloudwatchConfigurationAttributes) InternalWithRef(ref terra.Reference)
 	return CloudwatchConfigurationAttributes{ref: ref}
 }
 
-func (cc CloudwatchConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (cc CloudwatchConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -135,7 +135,7 @@ func (ls LogStreamsAttributes) InternalWithRef(ref terra.Reference) LogStreamsAt
 	return LogStreamsAttributes{ref: ref}
 }
 
-func (ls LogStreamsAttributes) InternalTokens() hclwrite.Tokens {
+func (ls LogStreamsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ls.ref.InternalTokens()
 }
 
@@ -195,7 +195,7 @@ func (ev EbsVolumeAttributes) InternalWithRef(ref terra.Reference) EbsVolumeAttr
 	return EbsVolumeAttributes{ref: ref}
 }
 
-func (ev EbsVolumeAttributes) InternalTokens() hclwrite.Tokens {
+func (ev EbsVolumeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ev.ref.InternalTokens()
 }
 
@@ -239,7 +239,7 @@ func (lbas LoadBasedAutoScalingAttributes) InternalWithRef(ref terra.Reference) 
 	return LoadBasedAutoScalingAttributes{ref: ref}
 }
 
-func (lbas LoadBasedAutoScalingAttributes) InternalTokens() hclwrite.Tokens {
+func (lbas LoadBasedAutoScalingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lbas.ref.InternalTokens()
 }
 
@@ -267,7 +267,7 @@ func (d DownscalingAttributes) InternalWithRef(ref terra.Reference) DownscalingA
 	return DownscalingAttributes{ref: ref}
 }
 
-func (d DownscalingAttributes) InternalTokens() hclwrite.Tokens {
+func (d DownscalingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -311,7 +311,7 @@ func (u UpscalingAttributes) InternalWithRef(ref terra.Reference) UpscalingAttri
 	return UpscalingAttributes{ref: ref}
 }
 
-func (u UpscalingAttributes) InternalTokens() hclwrite.Tokens {
+func (u UpscalingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return u.ref.InternalTokens()
 }
 

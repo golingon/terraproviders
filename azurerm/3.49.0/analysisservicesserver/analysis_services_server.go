@@ -31,60 +31,60 @@ type Ipv4FirewallRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (ifr Ipv4FirewallRuleAttributes) InternalRef() terra.Reference {
-	return ifr.ref
+func (ifr Ipv4FirewallRuleAttributes) InternalRef() (terra.Reference, error) {
+	return ifr.ref, nil
 }
 
 func (ifr Ipv4FirewallRuleAttributes) InternalWithRef(ref terra.Reference) Ipv4FirewallRuleAttributes {
 	return Ipv4FirewallRuleAttributes{ref: ref}
 }
 
-func (ifr Ipv4FirewallRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (ifr Ipv4FirewallRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ifr.ref.InternalTokens()
 }
 
 func (ifr Ipv4FirewallRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ifr.ref.Append("name"))
+	return terra.ReferenceAsString(ifr.ref.Append("name"))
 }
 
 func (ifr Ipv4FirewallRuleAttributes) RangeEnd() terra.StringValue {
-	return terra.ReferenceString(ifr.ref.Append("range_end"))
+	return terra.ReferenceAsString(ifr.ref.Append("range_end"))
 }
 
 func (ifr Ipv4FirewallRuleAttributes) RangeStart() terra.StringValue {
-	return terra.ReferenceString(ifr.ref.Append("range_start"))
+	return terra.ReferenceAsString(ifr.ref.Append("range_start"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type Ipv4FirewallRuleState struct {

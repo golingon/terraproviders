@@ -26,7 +26,7 @@ func (ip InlinePolicyAttributes) InternalWithRef(ref terra.Reference) InlinePoli
 	return InlinePolicyAttributes{ref: ref}
 }
 
-func (ip InlinePolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (ip InlinePolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ip.ref.InternalTokens()
 }
 

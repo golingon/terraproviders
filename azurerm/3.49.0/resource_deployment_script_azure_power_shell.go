@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewResourceDeploymentScriptAzurePowerShell creates a new instance of [ResourceDeploymentScriptAzurePowerShell].
 func NewResourceDeploymentScriptAzurePowerShell(name string, args ResourceDeploymentScriptAzurePowerShellArgs) *ResourceDeploymentScriptAzurePowerShell {
 	return &ResourceDeploymentScriptAzurePowerShell{
 		Args: args,
@@ -19,28 +20,51 @@ func NewResourceDeploymentScriptAzurePowerShell(name string, args ResourceDeploy
 
 var _ terra.Resource = (*ResourceDeploymentScriptAzurePowerShell)(nil)
 
+// ResourceDeploymentScriptAzurePowerShell represents the Terraform resource azurerm_resource_deployment_script_azure_power_shell.
 type ResourceDeploymentScriptAzurePowerShell struct {
-	Name  string
-	Args  ResourceDeploymentScriptAzurePowerShellArgs
-	state *resourceDeploymentScriptAzurePowerShellState
+	Name      string
+	Args      ResourceDeploymentScriptAzurePowerShellArgs
+	state     *resourceDeploymentScriptAzurePowerShellState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ResourceDeploymentScriptAzurePowerShell].
 func (rdsaps *ResourceDeploymentScriptAzurePowerShell) Type() string {
 	return "azurerm_resource_deployment_script_azure_power_shell"
 }
 
+// LocalName returns the local name for [ResourceDeploymentScriptAzurePowerShell].
 func (rdsaps *ResourceDeploymentScriptAzurePowerShell) LocalName() string {
 	return rdsaps.Name
 }
 
+// Configuration returns the configuration (args) for [ResourceDeploymentScriptAzurePowerShell].
 func (rdsaps *ResourceDeploymentScriptAzurePowerShell) Configuration() interface{} {
 	return rdsaps.Args
 }
 
+// DependOn is used for other resources to depend on [ResourceDeploymentScriptAzurePowerShell].
+func (rdsaps *ResourceDeploymentScriptAzurePowerShell) DependOn() terra.Reference {
+	return terra.ReferenceResource(rdsaps)
+}
+
+// Dependencies returns the list of resources [ResourceDeploymentScriptAzurePowerShell] depends_on.
+func (rdsaps *ResourceDeploymentScriptAzurePowerShell) Dependencies() terra.Dependencies {
+	return rdsaps.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ResourceDeploymentScriptAzurePowerShell].
+func (rdsaps *ResourceDeploymentScriptAzurePowerShell) LifecycleManagement() *terra.Lifecycle {
+	return rdsaps.Lifecycle
+}
+
+// Attributes returns the attributes for [ResourceDeploymentScriptAzurePowerShell].
 func (rdsaps *ResourceDeploymentScriptAzurePowerShell) Attributes() resourceDeploymentScriptAzurePowerShellAttributes {
 	return resourceDeploymentScriptAzurePowerShellAttributes{ref: terra.ReferenceResource(rdsaps)}
 }
 
+// ImportState imports the given attribute values into [ResourceDeploymentScriptAzurePowerShell]'s state.
 func (rdsaps *ResourceDeploymentScriptAzurePowerShell) ImportState(av io.Reader) error {
 	rdsaps.state = &resourceDeploymentScriptAzurePowerShellState{}
 	if err := json.NewDecoder(av).Decode(rdsaps.state); err != nil {
@@ -49,10 +73,12 @@ func (rdsaps *ResourceDeploymentScriptAzurePowerShell) ImportState(av io.Reader)
 	return nil
 }
 
+// State returns the state and a bool indicating if [ResourceDeploymentScriptAzurePowerShell] has state.
 func (rdsaps *ResourceDeploymentScriptAzurePowerShell) State() (*resourceDeploymentScriptAzurePowerShellState, bool) {
 	return rdsaps.state, rdsaps.state != nil
 }
 
+// StateMust returns the state for [ResourceDeploymentScriptAzurePowerShell]. Panics if the state is nil.
 func (rdsaps *ResourceDeploymentScriptAzurePowerShell) StateMust() *resourceDeploymentScriptAzurePowerShellState {
 	if rdsaps.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rdsaps.Type(), rdsaps.LocalName()))
@@ -60,10 +86,7 @@ func (rdsaps *ResourceDeploymentScriptAzurePowerShell) StateMust() *resourceDepl
 	return rdsaps.state
 }
 
-func (rdsaps *ResourceDeploymentScriptAzurePowerShell) DependOn() terra.Reference {
-	return terra.ReferenceResource(rdsaps)
-}
-
+// ResourceDeploymentScriptAzurePowerShellArgs contains the configurations for azurerm_resource_deployment_script_azure_power_shell.
 type ResourceDeploymentScriptAzurePowerShellArgs struct {
 	// CleanupPreference: string, optional
 	CleanupPreference terra.StringValue `hcl:"cleanup_preference,attr"`
@@ -103,91 +126,104 @@ type ResourceDeploymentScriptAzurePowerShellArgs struct {
 	StorageAccount *resourcedeploymentscriptazurepowershell.StorageAccount `hcl:"storage_account,block"`
 	// Timeouts: optional
 	Timeouts *resourcedeploymentscriptazurepowershell.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ResourceDeploymentScriptAzurePowerShell depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type resourceDeploymentScriptAzurePowerShellAttributes struct {
 	ref terra.Reference
 }
 
+// CleanupPreference returns a reference to field cleanup_preference of azurerm_resource_deployment_script_azure_power_shell.
 func (rdsaps resourceDeploymentScriptAzurePowerShellAttributes) CleanupPreference() terra.StringValue {
-	return terra.ReferenceString(rdsaps.ref.Append("cleanup_preference"))
+	return terra.ReferenceAsString(rdsaps.ref.Append("cleanup_preference"))
 }
 
+// CommandLine returns a reference to field command_line of azurerm_resource_deployment_script_azure_power_shell.
 func (rdsaps resourceDeploymentScriptAzurePowerShellAttributes) CommandLine() terra.StringValue {
-	return terra.ReferenceString(rdsaps.ref.Append("command_line"))
+	return terra.ReferenceAsString(rdsaps.ref.Append("command_line"))
 }
 
+// ForceUpdateTag returns a reference to field force_update_tag of azurerm_resource_deployment_script_azure_power_shell.
 func (rdsaps resourceDeploymentScriptAzurePowerShellAttributes) ForceUpdateTag() terra.StringValue {
-	return terra.ReferenceString(rdsaps.ref.Append("force_update_tag"))
+	return terra.ReferenceAsString(rdsaps.ref.Append("force_update_tag"))
 }
 
+// Id returns a reference to field id of azurerm_resource_deployment_script_azure_power_shell.
 func (rdsaps resourceDeploymentScriptAzurePowerShellAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rdsaps.ref.Append("id"))
+	return terra.ReferenceAsString(rdsaps.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_resource_deployment_script_azure_power_shell.
 func (rdsaps resourceDeploymentScriptAzurePowerShellAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(rdsaps.ref.Append("location"))
+	return terra.ReferenceAsString(rdsaps.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_resource_deployment_script_azure_power_shell.
 func (rdsaps resourceDeploymentScriptAzurePowerShellAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rdsaps.ref.Append("name"))
+	return terra.ReferenceAsString(rdsaps.ref.Append("name"))
 }
 
+// Outputs returns a reference to field outputs of azurerm_resource_deployment_script_azure_power_shell.
 func (rdsaps resourceDeploymentScriptAzurePowerShellAttributes) Outputs() terra.StringValue {
-	return terra.ReferenceString(rdsaps.ref.Append("outputs"))
+	return terra.ReferenceAsString(rdsaps.ref.Append("outputs"))
 }
 
+// PrimaryScriptUri returns a reference to field primary_script_uri of azurerm_resource_deployment_script_azure_power_shell.
 func (rdsaps resourceDeploymentScriptAzurePowerShellAttributes) PrimaryScriptUri() terra.StringValue {
-	return terra.ReferenceString(rdsaps.ref.Append("primary_script_uri"))
+	return terra.ReferenceAsString(rdsaps.ref.Append("primary_script_uri"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_resource_deployment_script_azure_power_shell.
 func (rdsaps resourceDeploymentScriptAzurePowerShellAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(rdsaps.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(rdsaps.ref.Append("resource_group_name"))
 }
 
+// RetentionInterval returns a reference to field retention_interval of azurerm_resource_deployment_script_azure_power_shell.
 func (rdsaps resourceDeploymentScriptAzurePowerShellAttributes) RetentionInterval() terra.StringValue {
-	return terra.ReferenceString(rdsaps.ref.Append("retention_interval"))
+	return terra.ReferenceAsString(rdsaps.ref.Append("retention_interval"))
 }
 
+// ScriptContent returns a reference to field script_content of azurerm_resource_deployment_script_azure_power_shell.
 func (rdsaps resourceDeploymentScriptAzurePowerShellAttributes) ScriptContent() terra.StringValue {
-	return terra.ReferenceString(rdsaps.ref.Append("script_content"))
+	return terra.ReferenceAsString(rdsaps.ref.Append("script_content"))
 }
 
+// SupportingScriptUris returns a reference to field supporting_script_uris of azurerm_resource_deployment_script_azure_power_shell.
 func (rdsaps resourceDeploymentScriptAzurePowerShellAttributes) SupportingScriptUris() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rdsaps.ref.Append("supporting_script_uris"))
+	return terra.ReferenceAsList[terra.StringValue](rdsaps.ref.Append("supporting_script_uris"))
 }
 
+// Tags returns a reference to field tags of azurerm_resource_deployment_script_azure_power_shell.
 func (rdsaps resourceDeploymentScriptAzurePowerShellAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rdsaps.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](rdsaps.ref.Append("tags"))
 }
 
+// Timeout returns a reference to field timeout of azurerm_resource_deployment_script_azure_power_shell.
 func (rdsaps resourceDeploymentScriptAzurePowerShellAttributes) Timeout() terra.StringValue {
-	return terra.ReferenceString(rdsaps.ref.Append("timeout"))
+	return terra.ReferenceAsString(rdsaps.ref.Append("timeout"))
 }
 
+// Version returns a reference to field version of azurerm_resource_deployment_script_azure_power_shell.
 func (rdsaps resourceDeploymentScriptAzurePowerShellAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(rdsaps.ref.Append("version"))
+	return terra.ReferenceAsString(rdsaps.ref.Append("version"))
 }
 
 func (rdsaps resourceDeploymentScriptAzurePowerShellAttributes) Container() terra.ListValue[resourcedeploymentscriptazurepowershell.ContainerAttributes] {
-	return terra.ReferenceList[resourcedeploymentscriptazurepowershell.ContainerAttributes](rdsaps.ref.Append("container"))
+	return terra.ReferenceAsList[resourcedeploymentscriptazurepowershell.ContainerAttributes](rdsaps.ref.Append("container"))
 }
 
 func (rdsaps resourceDeploymentScriptAzurePowerShellAttributes) EnvironmentVariable() terra.SetValue[resourcedeploymentscriptazurepowershell.EnvironmentVariableAttributes] {
-	return terra.ReferenceSet[resourcedeploymentscriptazurepowershell.EnvironmentVariableAttributes](rdsaps.ref.Append("environment_variable"))
+	return terra.ReferenceAsSet[resourcedeploymentscriptazurepowershell.EnvironmentVariableAttributes](rdsaps.ref.Append("environment_variable"))
 }
 
 func (rdsaps resourceDeploymentScriptAzurePowerShellAttributes) Identity() terra.ListValue[resourcedeploymentscriptazurepowershell.IdentityAttributes] {
-	return terra.ReferenceList[resourcedeploymentscriptazurepowershell.IdentityAttributes](rdsaps.ref.Append("identity"))
+	return terra.ReferenceAsList[resourcedeploymentscriptazurepowershell.IdentityAttributes](rdsaps.ref.Append("identity"))
 }
 
 func (rdsaps resourceDeploymentScriptAzurePowerShellAttributes) StorageAccount() terra.ListValue[resourcedeploymentscriptazurepowershell.StorageAccountAttributes] {
-	return terra.ReferenceList[resourcedeploymentscriptazurepowershell.StorageAccountAttributes](rdsaps.ref.Append("storage_account"))
+	return terra.ReferenceAsList[resourcedeploymentscriptazurepowershell.StorageAccountAttributes](rdsaps.ref.Append("storage_account"))
 }
 
 func (rdsaps resourceDeploymentScriptAzurePowerShellAttributes) Timeouts() resourcedeploymentscriptazurepowershell.TimeoutsAttributes {
-	return terra.ReferenceSingle[resourcedeploymentscriptazurepowershell.TimeoutsAttributes](rdsaps.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[resourcedeploymentscriptazurepowershell.TimeoutsAttributes](rdsaps.ref.Append("timeouts"))
 }
 
 type resourceDeploymentScriptAzurePowerShellState struct {

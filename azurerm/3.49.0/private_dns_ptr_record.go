@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewPrivateDnsPtrRecord creates a new instance of [PrivateDnsPtrRecord].
 func NewPrivateDnsPtrRecord(name string, args PrivateDnsPtrRecordArgs) *PrivateDnsPtrRecord {
 	return &PrivateDnsPtrRecord{
 		Args: args,
@@ -19,28 +20,51 @@ func NewPrivateDnsPtrRecord(name string, args PrivateDnsPtrRecordArgs) *PrivateD
 
 var _ terra.Resource = (*PrivateDnsPtrRecord)(nil)
 
+// PrivateDnsPtrRecord represents the Terraform resource azurerm_private_dns_ptr_record.
 type PrivateDnsPtrRecord struct {
-	Name  string
-	Args  PrivateDnsPtrRecordArgs
-	state *privateDnsPtrRecordState
+	Name      string
+	Args      PrivateDnsPtrRecordArgs
+	state     *privateDnsPtrRecordState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PrivateDnsPtrRecord].
 func (pdpr *PrivateDnsPtrRecord) Type() string {
 	return "azurerm_private_dns_ptr_record"
 }
 
+// LocalName returns the local name for [PrivateDnsPtrRecord].
 func (pdpr *PrivateDnsPtrRecord) LocalName() string {
 	return pdpr.Name
 }
 
+// Configuration returns the configuration (args) for [PrivateDnsPtrRecord].
 func (pdpr *PrivateDnsPtrRecord) Configuration() interface{} {
 	return pdpr.Args
 }
 
+// DependOn is used for other resources to depend on [PrivateDnsPtrRecord].
+func (pdpr *PrivateDnsPtrRecord) DependOn() terra.Reference {
+	return terra.ReferenceResource(pdpr)
+}
+
+// Dependencies returns the list of resources [PrivateDnsPtrRecord] depends_on.
+func (pdpr *PrivateDnsPtrRecord) Dependencies() terra.Dependencies {
+	return pdpr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PrivateDnsPtrRecord].
+func (pdpr *PrivateDnsPtrRecord) LifecycleManagement() *terra.Lifecycle {
+	return pdpr.Lifecycle
+}
+
+// Attributes returns the attributes for [PrivateDnsPtrRecord].
 func (pdpr *PrivateDnsPtrRecord) Attributes() privateDnsPtrRecordAttributes {
 	return privateDnsPtrRecordAttributes{ref: terra.ReferenceResource(pdpr)}
 }
 
+// ImportState imports the given attribute values into [PrivateDnsPtrRecord]'s state.
 func (pdpr *PrivateDnsPtrRecord) ImportState(av io.Reader) error {
 	pdpr.state = &privateDnsPtrRecordState{}
 	if err := json.NewDecoder(av).Decode(pdpr.state); err != nil {
@@ -49,10 +73,12 @@ func (pdpr *PrivateDnsPtrRecord) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PrivateDnsPtrRecord] has state.
 func (pdpr *PrivateDnsPtrRecord) State() (*privateDnsPtrRecordState, bool) {
 	return pdpr.state, pdpr.state != nil
 }
 
+// StateMust returns the state for [PrivateDnsPtrRecord]. Panics if the state is nil.
 func (pdpr *PrivateDnsPtrRecord) StateMust() *privateDnsPtrRecordState {
 	if pdpr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pdpr.Type(), pdpr.LocalName()))
@@ -60,10 +86,7 @@ func (pdpr *PrivateDnsPtrRecord) StateMust() *privateDnsPtrRecordState {
 	return pdpr.state
 }
 
-func (pdpr *PrivateDnsPtrRecord) DependOn() terra.Reference {
-	return terra.ReferenceResource(pdpr)
-}
-
+// PrivateDnsPtrRecordArgs contains the configurations for azurerm_private_dns_ptr_record.
 type PrivateDnsPtrRecordArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -81,47 +104,53 @@ type PrivateDnsPtrRecordArgs struct {
 	ZoneName terra.StringValue `hcl:"zone_name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *privatednsptrrecord.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that PrivateDnsPtrRecord depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type privateDnsPtrRecordAttributes struct {
 	ref terra.Reference
 }
 
+// Fqdn returns a reference to field fqdn of azurerm_private_dns_ptr_record.
 func (pdpr privateDnsPtrRecordAttributes) Fqdn() terra.StringValue {
-	return terra.ReferenceString(pdpr.ref.Append("fqdn"))
+	return terra.ReferenceAsString(pdpr.ref.Append("fqdn"))
 }
 
+// Id returns a reference to field id of azurerm_private_dns_ptr_record.
 func (pdpr privateDnsPtrRecordAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pdpr.ref.Append("id"))
+	return terra.ReferenceAsString(pdpr.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_private_dns_ptr_record.
 func (pdpr privateDnsPtrRecordAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pdpr.ref.Append("name"))
+	return terra.ReferenceAsString(pdpr.ref.Append("name"))
 }
 
+// Records returns a reference to field records of azurerm_private_dns_ptr_record.
 func (pdpr privateDnsPtrRecordAttributes) Records() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](pdpr.ref.Append("records"))
+	return terra.ReferenceAsSet[terra.StringValue](pdpr.ref.Append("records"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_private_dns_ptr_record.
 func (pdpr privateDnsPtrRecordAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(pdpr.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(pdpr.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_private_dns_ptr_record.
 func (pdpr privateDnsPtrRecordAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](pdpr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](pdpr.ref.Append("tags"))
 }
 
+// Ttl returns a reference to field ttl of azurerm_private_dns_ptr_record.
 func (pdpr privateDnsPtrRecordAttributes) Ttl() terra.NumberValue {
-	return terra.ReferenceNumber(pdpr.ref.Append("ttl"))
+	return terra.ReferenceAsNumber(pdpr.ref.Append("ttl"))
 }
 
+// ZoneName returns a reference to field zone_name of azurerm_private_dns_ptr_record.
 func (pdpr privateDnsPtrRecordAttributes) ZoneName() terra.StringValue {
-	return terra.ReferenceString(pdpr.ref.Append("zone_name"))
+	return terra.ReferenceAsString(pdpr.ref.Append("zone_name"))
 }
 
 func (pdpr privateDnsPtrRecordAttributes) Timeouts() privatednsptrrecord.TimeoutsAttributes {
-	return terra.ReferenceSingle[privatednsptrrecord.TimeoutsAttributes](pdpr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[privatednsptrrecord.TimeoutsAttributes](pdpr.ref.Append("timeouts"))
 }
 
 type privateDnsPtrRecordState struct {

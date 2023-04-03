@@ -42,92 +42,92 @@ type RetentionPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (rp RetentionPolicyAttributes) InternalRef() terra.Reference {
-	return rp.ref
+func (rp RetentionPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return rp.ref, nil
 }
 
 func (rp RetentionPolicyAttributes) InternalWithRef(ref terra.Reference) RetentionPolicyAttributes {
 	return RetentionPolicyAttributes{ref: ref}
 }
 
-func (rp RetentionPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (rp RetentionPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rp.ref.InternalTokens()
 }
 
 func (rp RetentionPolicyAttributes) Days() terra.NumberValue {
-	return terra.ReferenceNumber(rp.ref.Append("days"))
+	return terra.ReferenceAsNumber(rp.ref.Append("days"))
 }
 
 func (rp RetentionPolicyAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(rp.ref.Append("enabled"))
+	return terra.ReferenceAsBool(rp.ref.Append("enabled"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type TrafficAnalyticsAttributes struct {
 	ref terra.Reference
 }
 
-func (ta TrafficAnalyticsAttributes) InternalRef() terra.Reference {
-	return ta.ref
+func (ta TrafficAnalyticsAttributes) InternalRef() (terra.Reference, error) {
+	return ta.ref, nil
 }
 
 func (ta TrafficAnalyticsAttributes) InternalWithRef(ref terra.Reference) TrafficAnalyticsAttributes {
 	return TrafficAnalyticsAttributes{ref: ref}
 }
 
-func (ta TrafficAnalyticsAttributes) InternalTokens() hclwrite.Tokens {
+func (ta TrafficAnalyticsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ta.ref.InternalTokens()
 }
 
 func (ta TrafficAnalyticsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(ta.ref.Append("enabled"))
+	return terra.ReferenceAsBool(ta.ref.Append("enabled"))
 }
 
 func (ta TrafficAnalyticsAttributes) IntervalInMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(ta.ref.Append("interval_in_minutes"))
+	return terra.ReferenceAsNumber(ta.ref.Append("interval_in_minutes"))
 }
 
 func (ta TrafficAnalyticsAttributes) WorkspaceId() terra.StringValue {
-	return terra.ReferenceString(ta.ref.Append("workspace_id"))
+	return terra.ReferenceAsString(ta.ref.Append("workspace_id"))
 }
 
 func (ta TrafficAnalyticsAttributes) WorkspaceRegion() terra.StringValue {
-	return terra.ReferenceString(ta.ref.Append("workspace_region"))
+	return terra.ReferenceAsString(ta.ref.Append("workspace_region"))
 }
 
 func (ta TrafficAnalyticsAttributes) WorkspaceResourceId() terra.StringValue {
-	return terra.ReferenceString(ta.ref.Append("workspace_resource_id"))
+	return terra.ReferenceAsString(ta.ref.Append("workspace_resource_id"))
 }
 
 type RetentionPolicyState struct {

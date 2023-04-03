@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataAppService creates a new instance of [DataAppService].
 func NewDataAppService(name string, args DataAppServiceArgs) *DataAppService {
 	return &DataAppService{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataAppService(name string, args DataAppServiceArgs) *DataAppService {
 
 var _ terra.DataResource = (*DataAppService)(nil)
 
+// DataAppService represents the Terraform data resource azurerm_app_service.
 type DataAppService struct {
 	Name string
 	Args DataAppServiceArgs
 }
 
+// DataSource returns the Terraform object type for [DataAppService].
 func (as *DataAppService) DataSource() string {
 	return "azurerm_app_service"
 }
 
+// LocalName returns the local name for [DataAppService].
 func (as *DataAppService) LocalName() string {
 	return as.Name
 }
 
+// Configuration returns the configuration (args) for [DataAppService].
 func (as *DataAppService) Configuration() interface{} {
 	return as.Args
 }
 
+// Attributes returns the attributes for [DataAppService].
 func (as *DataAppService) Attributes() dataAppServiceAttributes {
 	return dataAppServiceAttributes{ref: terra.ReferenceDataResource(as)}
 }
 
+// DataAppServiceArgs contains the configurations for azurerm_app_service.
 type DataAppServiceArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -59,90 +66,107 @@ type dataAppServiceAttributes struct {
 	ref terra.Reference
 }
 
+// AppServicePlanId returns a reference to field app_service_plan_id of azurerm_app_service.
 func (as dataAppServiceAttributes) AppServicePlanId() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("app_service_plan_id"))
+	return terra.ReferenceAsString(as.ref.Append("app_service_plan_id"))
 }
 
+// AppSettings returns a reference to field app_settings of azurerm_app_service.
 func (as dataAppServiceAttributes) AppSettings() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](as.ref.Append("app_settings"))
+	return terra.ReferenceAsMap[terra.StringValue](as.ref.Append("app_settings"))
 }
 
+// ClientAffinityEnabled returns a reference to field client_affinity_enabled of azurerm_app_service.
 func (as dataAppServiceAttributes) ClientAffinityEnabled() terra.BoolValue {
-	return terra.ReferenceBool(as.ref.Append("client_affinity_enabled"))
+	return terra.ReferenceAsBool(as.ref.Append("client_affinity_enabled"))
 }
 
+// ClientCertEnabled returns a reference to field client_cert_enabled of azurerm_app_service.
 func (as dataAppServiceAttributes) ClientCertEnabled() terra.BoolValue {
-	return terra.ReferenceBool(as.ref.Append("client_cert_enabled"))
+	return terra.ReferenceAsBool(as.ref.Append("client_cert_enabled"))
 }
 
+// CustomDomainVerificationId returns a reference to field custom_domain_verification_id of azurerm_app_service.
 func (as dataAppServiceAttributes) CustomDomainVerificationId() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("custom_domain_verification_id"))
+	return terra.ReferenceAsString(as.ref.Append("custom_domain_verification_id"))
 }
 
+// DefaultSiteHostname returns a reference to field default_site_hostname of azurerm_app_service.
 func (as dataAppServiceAttributes) DefaultSiteHostname() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("default_site_hostname"))
+	return terra.ReferenceAsString(as.ref.Append("default_site_hostname"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_app_service.
 func (as dataAppServiceAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(as.ref.Append("enabled"))
+	return terra.ReferenceAsBool(as.ref.Append("enabled"))
 }
 
+// HttpsOnly returns a reference to field https_only of azurerm_app_service.
 func (as dataAppServiceAttributes) HttpsOnly() terra.BoolValue {
-	return terra.ReferenceBool(as.ref.Append("https_only"))
+	return terra.ReferenceAsBool(as.ref.Append("https_only"))
 }
 
+// Id returns a reference to field id of azurerm_app_service.
 func (as dataAppServiceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("id"))
+	return terra.ReferenceAsString(as.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_app_service.
 func (as dataAppServiceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("location"))
+	return terra.ReferenceAsString(as.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_app_service.
 func (as dataAppServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("name"))
+	return terra.ReferenceAsString(as.ref.Append("name"))
 }
 
+// OutboundIpAddressList returns a reference to field outbound_ip_address_list of azurerm_app_service.
 func (as dataAppServiceAttributes) OutboundIpAddressList() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](as.ref.Append("outbound_ip_address_list"))
+	return terra.ReferenceAsList[terra.StringValue](as.ref.Append("outbound_ip_address_list"))
 }
 
+// OutboundIpAddresses returns a reference to field outbound_ip_addresses of azurerm_app_service.
 func (as dataAppServiceAttributes) OutboundIpAddresses() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("outbound_ip_addresses"))
+	return terra.ReferenceAsString(as.ref.Append("outbound_ip_addresses"))
 }
 
+// PossibleOutboundIpAddressList returns a reference to field possible_outbound_ip_address_list of azurerm_app_service.
 func (as dataAppServiceAttributes) PossibleOutboundIpAddressList() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](as.ref.Append("possible_outbound_ip_address_list"))
+	return terra.ReferenceAsList[terra.StringValue](as.ref.Append("possible_outbound_ip_address_list"))
 }
 
+// PossibleOutboundIpAddresses returns a reference to field possible_outbound_ip_addresses of azurerm_app_service.
 func (as dataAppServiceAttributes) PossibleOutboundIpAddresses() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("possible_outbound_ip_addresses"))
+	return terra.ReferenceAsString(as.ref.Append("possible_outbound_ip_addresses"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_app_service.
 func (as dataAppServiceAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(as.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_app_service.
 func (as dataAppServiceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](as.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](as.ref.Append("tags"))
 }
 
 func (as dataAppServiceAttributes) ConnectionString() terra.ListValue[dataappservice.ConnectionStringAttributes] {
-	return terra.ReferenceList[dataappservice.ConnectionStringAttributes](as.ref.Append("connection_string"))
+	return terra.ReferenceAsList[dataappservice.ConnectionStringAttributes](as.ref.Append("connection_string"))
 }
 
 func (as dataAppServiceAttributes) SiteConfig() terra.ListValue[dataappservice.SiteConfigAttributes] {
-	return terra.ReferenceList[dataappservice.SiteConfigAttributes](as.ref.Append("site_config"))
+	return terra.ReferenceAsList[dataappservice.SiteConfigAttributes](as.ref.Append("site_config"))
 }
 
 func (as dataAppServiceAttributes) SiteCredential() terra.ListValue[dataappservice.SiteCredentialAttributes] {
-	return terra.ReferenceList[dataappservice.SiteCredentialAttributes](as.ref.Append("site_credential"))
+	return terra.ReferenceAsList[dataappservice.SiteCredentialAttributes](as.ref.Append("site_credential"))
 }
 
 func (as dataAppServiceAttributes) SourceControl() terra.ListValue[dataappservice.SourceControlAttributes] {
-	return terra.ReferenceList[dataappservice.SourceControlAttributes](as.ref.Append("source_control"))
+	return terra.ReferenceAsList[dataappservice.SourceControlAttributes](as.ref.Append("source_control"))
 }
 
 func (as dataAppServiceAttributes) Timeouts() dataappservice.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataappservice.TimeoutsAttributes](as.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataappservice.TimeoutsAttributes](as.ref.Append("timeouts"))
 }

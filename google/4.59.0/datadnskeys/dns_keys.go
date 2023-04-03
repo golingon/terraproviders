@@ -25,156 +25,156 @@ type KeySigningKeysAttributes struct {
 	ref terra.Reference
 }
 
-func (ksk KeySigningKeysAttributes) InternalRef() terra.Reference {
-	return ksk.ref
+func (ksk KeySigningKeysAttributes) InternalRef() (terra.Reference, error) {
+	return ksk.ref, nil
 }
 
 func (ksk KeySigningKeysAttributes) InternalWithRef(ref terra.Reference) KeySigningKeysAttributes {
 	return KeySigningKeysAttributes{ref: ref}
 }
 
-func (ksk KeySigningKeysAttributes) InternalTokens() hclwrite.Tokens {
+func (ksk KeySigningKeysAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ksk.ref.InternalTokens()
 }
 
 func (ksk KeySigningKeysAttributes) Algorithm() terra.StringValue {
-	return terra.ReferenceString(ksk.ref.Append("algorithm"))
+	return terra.ReferenceAsString(ksk.ref.Append("algorithm"))
 }
 
 func (ksk KeySigningKeysAttributes) CreationTime() terra.StringValue {
-	return terra.ReferenceString(ksk.ref.Append("creation_time"))
+	return terra.ReferenceAsString(ksk.ref.Append("creation_time"))
 }
 
 func (ksk KeySigningKeysAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ksk.ref.Append("description"))
+	return terra.ReferenceAsString(ksk.ref.Append("description"))
 }
 
 func (ksk KeySigningKeysAttributes) DsRecord() terra.StringValue {
-	return terra.ReferenceString(ksk.ref.Append("ds_record"))
+	return terra.ReferenceAsString(ksk.ref.Append("ds_record"))
 }
 
 func (ksk KeySigningKeysAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ksk.ref.Append("id"))
+	return terra.ReferenceAsString(ksk.ref.Append("id"))
 }
 
 func (ksk KeySigningKeysAttributes) IsActive() terra.BoolValue {
-	return terra.ReferenceBool(ksk.ref.Append("is_active"))
+	return terra.ReferenceAsBool(ksk.ref.Append("is_active"))
 }
 
 func (ksk KeySigningKeysAttributes) KeyLength() terra.NumberValue {
-	return terra.ReferenceNumber(ksk.ref.Append("key_length"))
+	return terra.ReferenceAsNumber(ksk.ref.Append("key_length"))
 }
 
 func (ksk KeySigningKeysAttributes) KeyTag() terra.NumberValue {
-	return terra.ReferenceNumber(ksk.ref.Append("key_tag"))
+	return terra.ReferenceAsNumber(ksk.ref.Append("key_tag"))
 }
 
 func (ksk KeySigningKeysAttributes) PublicKey() terra.StringValue {
-	return terra.ReferenceString(ksk.ref.Append("public_key"))
+	return terra.ReferenceAsString(ksk.ref.Append("public_key"))
 }
 
 func (ksk KeySigningKeysAttributes) Digests() terra.ListValue[KeySigningKeysDigestsAttributes] {
-	return terra.ReferenceList[KeySigningKeysDigestsAttributes](ksk.ref.Append("digests"))
+	return terra.ReferenceAsList[KeySigningKeysDigestsAttributes](ksk.ref.Append("digests"))
 }
 
 type KeySigningKeysDigestsAttributes struct {
 	ref terra.Reference
 }
 
-func (d KeySigningKeysDigestsAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d KeySigningKeysDigestsAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d KeySigningKeysDigestsAttributes) InternalWithRef(ref terra.Reference) KeySigningKeysDigestsAttributes {
 	return KeySigningKeysDigestsAttributes{ref: ref}
 }
 
-func (d KeySigningKeysDigestsAttributes) InternalTokens() hclwrite.Tokens {
+func (d KeySigningKeysDigestsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d KeySigningKeysDigestsAttributes) Digest() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("digest"))
+	return terra.ReferenceAsString(d.ref.Append("digest"))
 }
 
 func (d KeySigningKeysDigestsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("type"))
+	return terra.ReferenceAsString(d.ref.Append("type"))
 }
 
 type ZoneSigningKeysAttributes struct {
 	ref terra.Reference
 }
 
-func (zsk ZoneSigningKeysAttributes) InternalRef() terra.Reference {
-	return zsk.ref
+func (zsk ZoneSigningKeysAttributes) InternalRef() (terra.Reference, error) {
+	return zsk.ref, nil
 }
 
 func (zsk ZoneSigningKeysAttributes) InternalWithRef(ref terra.Reference) ZoneSigningKeysAttributes {
 	return ZoneSigningKeysAttributes{ref: ref}
 }
 
-func (zsk ZoneSigningKeysAttributes) InternalTokens() hclwrite.Tokens {
+func (zsk ZoneSigningKeysAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return zsk.ref.InternalTokens()
 }
 
 func (zsk ZoneSigningKeysAttributes) Algorithm() terra.StringValue {
-	return terra.ReferenceString(zsk.ref.Append("algorithm"))
+	return terra.ReferenceAsString(zsk.ref.Append("algorithm"))
 }
 
 func (zsk ZoneSigningKeysAttributes) CreationTime() terra.StringValue {
-	return terra.ReferenceString(zsk.ref.Append("creation_time"))
+	return terra.ReferenceAsString(zsk.ref.Append("creation_time"))
 }
 
 func (zsk ZoneSigningKeysAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(zsk.ref.Append("description"))
+	return terra.ReferenceAsString(zsk.ref.Append("description"))
 }
 
 func (zsk ZoneSigningKeysAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(zsk.ref.Append("id"))
+	return terra.ReferenceAsString(zsk.ref.Append("id"))
 }
 
 func (zsk ZoneSigningKeysAttributes) IsActive() terra.BoolValue {
-	return terra.ReferenceBool(zsk.ref.Append("is_active"))
+	return terra.ReferenceAsBool(zsk.ref.Append("is_active"))
 }
 
 func (zsk ZoneSigningKeysAttributes) KeyLength() terra.NumberValue {
-	return terra.ReferenceNumber(zsk.ref.Append("key_length"))
+	return terra.ReferenceAsNumber(zsk.ref.Append("key_length"))
 }
 
 func (zsk ZoneSigningKeysAttributes) KeyTag() terra.NumberValue {
-	return terra.ReferenceNumber(zsk.ref.Append("key_tag"))
+	return terra.ReferenceAsNumber(zsk.ref.Append("key_tag"))
 }
 
 func (zsk ZoneSigningKeysAttributes) PublicKey() terra.StringValue {
-	return terra.ReferenceString(zsk.ref.Append("public_key"))
+	return terra.ReferenceAsString(zsk.ref.Append("public_key"))
 }
 
 func (zsk ZoneSigningKeysAttributes) Digests() terra.ListValue[ZoneSigningKeysDigestsAttributes] {
-	return terra.ReferenceList[ZoneSigningKeysDigestsAttributes](zsk.ref.Append("digests"))
+	return terra.ReferenceAsList[ZoneSigningKeysDigestsAttributes](zsk.ref.Append("digests"))
 }
 
 type ZoneSigningKeysDigestsAttributes struct {
 	ref terra.Reference
 }
 
-func (d ZoneSigningKeysDigestsAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d ZoneSigningKeysDigestsAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d ZoneSigningKeysDigestsAttributes) InternalWithRef(ref terra.Reference) ZoneSigningKeysDigestsAttributes {
 	return ZoneSigningKeysDigestsAttributes{ref: ref}
 }
 
-func (d ZoneSigningKeysDigestsAttributes) InternalTokens() hclwrite.Tokens {
+func (d ZoneSigningKeysDigestsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d ZoneSigningKeysDigestsAttributes) Digest() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("digest"))
+	return terra.ReferenceAsString(d.ref.Append("digest"))
 }
 
 func (d ZoneSigningKeysDigestsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("type"))
+	return terra.ReferenceAsString(d.ref.Append("type"))
 }
 
 type KeySigningKeysState struct {

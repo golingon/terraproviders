@@ -20,76 +20,76 @@ type BackendAddressPoolAttributes struct {
 	ref terra.Reference
 }
 
-func (bap BackendAddressPoolAttributes) InternalRef() terra.Reference {
-	return bap.ref
+func (bap BackendAddressPoolAttributes) InternalRef() (terra.Reference, error) {
+	return bap.ref, nil
 }
 
 func (bap BackendAddressPoolAttributes) InternalWithRef(ref terra.Reference) BackendAddressPoolAttributes {
 	return BackendAddressPoolAttributes{ref: ref}
 }
 
-func (bap BackendAddressPoolAttributes) InternalTokens() hclwrite.Tokens {
+func (bap BackendAddressPoolAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bap.ref.InternalTokens()
 }
 
 func (bap BackendAddressPoolAttributes) Fqdns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](bap.ref.Append("fqdns"))
+	return terra.ReferenceAsSet[terra.StringValue](bap.ref.Append("fqdns"))
 }
 
 func (bap BackendAddressPoolAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bap.ref.Append("id"))
+	return terra.ReferenceAsString(bap.ref.Append("id"))
 }
 
 func (bap BackendAddressPoolAttributes) IpAddresses() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](bap.ref.Append("ip_addresses"))
+	return terra.ReferenceAsSet[terra.StringValue](bap.ref.Append("ip_addresses"))
 }
 
 func (bap BackendAddressPoolAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(bap.ref.Append("name"))
+	return terra.ReferenceAsString(bap.ref.Append("name"))
 }
 
 type IdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (i IdentityAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IdentityAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IdentityAttributes) InternalWithRef(ref terra.Reference) IdentityAttributes {
 	return IdentityAttributes{ref: ref}
 }
 
-func (i IdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (i IdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IdentityAttributes) IdentityIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](i.ref.Append("identity_ids"))
+	return terra.ReferenceAsList[terra.StringValue](i.ref.Append("identity_ids"))
 }
 
 func (i IdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("type"))
+	return terra.ReferenceAsString(i.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type BackendAddressPoolState struct {

@@ -50,128 +50,128 @@ type DatasetAttributes struct {
 	ref terra.Reference
 }
 
-func (d DatasetAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DatasetAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DatasetAttributes) InternalWithRef(ref terra.Reference) DatasetAttributes {
 	return DatasetAttributes{ref: ref}
 }
 
-func (d DatasetAttributes) InternalTokens() hclwrite.Tokens {
+func (d DatasetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d DatasetAttributes) TargetTypes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](d.ref.Append("target_types"))
+	return terra.ReferenceAsList[terra.StringValue](d.ref.Append("target_types"))
 }
 
 func (d DatasetAttributes) Dataset() terra.ListValue[DatasetDatasetAttributes] {
-	return terra.ReferenceList[DatasetDatasetAttributes](d.ref.Append("dataset"))
+	return terra.ReferenceAsList[DatasetDatasetAttributes](d.ref.Append("dataset"))
 }
 
 type DatasetDatasetAttributes struct {
 	ref terra.Reference
 }
 
-func (d DatasetDatasetAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DatasetDatasetAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DatasetDatasetAttributes) InternalWithRef(ref terra.Reference) DatasetDatasetAttributes {
 	return DatasetDatasetAttributes{ref: ref}
 }
 
-func (d DatasetDatasetAttributes) InternalTokens() hclwrite.Tokens {
+func (d DatasetDatasetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d DatasetDatasetAttributes) DatasetId() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("dataset_id"))
+	return terra.ReferenceAsString(d.ref.Append("dataset_id"))
 }
 
 func (d DatasetDatasetAttributes) ProjectId() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("project_id"))
+	return terra.ReferenceAsString(d.ref.Append("project_id"))
 }
 
 type RoutineAttributes struct {
 	ref terra.Reference
 }
 
-func (r RoutineAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RoutineAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RoutineAttributes) InternalWithRef(ref terra.Reference) RoutineAttributes {
 	return RoutineAttributes{ref: ref}
 }
 
-func (r RoutineAttributes) InternalTokens() hclwrite.Tokens {
+func (r RoutineAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RoutineAttributes) DatasetId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("dataset_id"))
+	return terra.ReferenceAsString(r.ref.Append("dataset_id"))
 }
 
 func (r RoutineAttributes) ProjectId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("project_id"))
+	return terra.ReferenceAsString(r.ref.Append("project_id"))
 }
 
 func (r RoutineAttributes) RoutineId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("routine_id"))
+	return terra.ReferenceAsString(r.ref.Append("routine_id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type ViewAttributes struct {
 	ref terra.Reference
 }
 
-func (v ViewAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v ViewAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v ViewAttributes) InternalWithRef(ref terra.Reference) ViewAttributes {
 	return ViewAttributes{ref: ref}
 }
 
-func (v ViewAttributes) InternalTokens() hclwrite.Tokens {
+func (v ViewAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 
 func (v ViewAttributes) DatasetId() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("dataset_id"))
+	return terra.ReferenceAsString(v.ref.Append("dataset_id"))
 }
 
 func (v ViewAttributes) ProjectId() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("project_id"))
+	return terra.ReferenceAsString(v.ref.Append("project_id"))
 }
 
 func (v ViewAttributes) TableId() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("table_id"))
+	return terra.ReferenceAsString(v.ref.Append("table_id"))
 }
 
 type DatasetState struct {

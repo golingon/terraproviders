@@ -4,6 +4,7 @@ package google
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataOrganization creates a new instance of [DataOrganization].
 func NewDataOrganization(name string, args DataOrganizationArgs) *DataOrganization {
 	return &DataOrganization{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataOrganization(name string, args DataOrganizationArgs) *DataOrganizati
 
 var _ terra.DataResource = (*DataOrganization)(nil)
 
+// DataOrganization represents the Terraform data resource google_organization.
 type DataOrganization struct {
 	Name string
 	Args DataOrganizationArgs
 }
 
+// DataSource returns the Terraform object type for [DataOrganization].
 func (o *DataOrganization) DataSource() string {
 	return "google_organization"
 }
 
+// LocalName returns the local name for [DataOrganization].
 func (o *DataOrganization) LocalName() string {
 	return o.Name
 }
 
+// Configuration returns the configuration (args) for [DataOrganization].
 func (o *DataOrganization) Configuration() interface{} {
 	return o.Args
 }
 
+// Attributes returns the attributes for [DataOrganization].
 func (o *DataOrganization) Attributes() dataOrganizationAttributes {
 	return dataOrganizationAttributes{ref: terra.ReferenceDataResource(o)}
 }
 
+// DataOrganizationArgs contains the configurations for google_organization.
 type DataOrganizationArgs struct {
 	// Domain: string, optional
 	Domain terra.StringValue `hcl:"domain,attr"`
@@ -46,34 +53,42 @@ type dataOrganizationAttributes struct {
 	ref terra.Reference
 }
 
+// CreateTime returns a reference to field create_time of google_organization.
 func (o dataOrganizationAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("create_time"))
+	return terra.ReferenceAsString(o.ref.Append("create_time"))
 }
 
+// DirectoryCustomerId returns a reference to field directory_customer_id of google_organization.
 func (o dataOrganizationAttributes) DirectoryCustomerId() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("directory_customer_id"))
+	return terra.ReferenceAsString(o.ref.Append("directory_customer_id"))
 }
 
+// Domain returns a reference to field domain of google_organization.
 func (o dataOrganizationAttributes) Domain() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("domain"))
+	return terra.ReferenceAsString(o.ref.Append("domain"))
 }
 
+// Id returns a reference to field id of google_organization.
 func (o dataOrganizationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("id"))
+	return terra.ReferenceAsString(o.ref.Append("id"))
 }
 
+// LifecycleState returns a reference to field lifecycle_state of google_organization.
 func (o dataOrganizationAttributes) LifecycleState() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("lifecycle_state"))
+	return terra.ReferenceAsString(o.ref.Append("lifecycle_state"))
 }
 
+// Name returns a reference to field name of google_organization.
 func (o dataOrganizationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("name"))
+	return terra.ReferenceAsString(o.ref.Append("name"))
 }
 
+// OrgId returns a reference to field org_id of google_organization.
 func (o dataOrganizationAttributes) OrgId() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("org_id"))
+	return terra.ReferenceAsString(o.ref.Append("org_id"))
 }
 
+// Organization returns a reference to field organization of google_organization.
 func (o dataOrganizationAttributes) Organization() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("organization"))
+	return terra.ReferenceAsString(o.ref.Append("organization"))
 }

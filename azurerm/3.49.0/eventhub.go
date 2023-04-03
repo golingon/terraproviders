@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEventhub creates a new instance of [Eventhub].
 func NewEventhub(name string, args EventhubArgs) *Eventhub {
 	return &Eventhub{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEventhub(name string, args EventhubArgs) *Eventhub {
 
 var _ terra.Resource = (*Eventhub)(nil)
 
+// Eventhub represents the Terraform resource azurerm_eventhub.
 type Eventhub struct {
-	Name  string
-	Args  EventhubArgs
-	state *eventhubState
+	Name      string
+	Args      EventhubArgs
+	state     *eventhubState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Eventhub].
 func (e *Eventhub) Type() string {
 	return "azurerm_eventhub"
 }
 
+// LocalName returns the local name for [Eventhub].
 func (e *Eventhub) LocalName() string {
 	return e.Name
 }
 
+// Configuration returns the configuration (args) for [Eventhub].
 func (e *Eventhub) Configuration() interface{} {
 	return e.Args
 }
 
+// DependOn is used for other resources to depend on [Eventhub].
+func (e *Eventhub) DependOn() terra.Reference {
+	return terra.ReferenceResource(e)
+}
+
+// Dependencies returns the list of resources [Eventhub] depends_on.
+func (e *Eventhub) Dependencies() terra.Dependencies {
+	return e.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Eventhub].
+func (e *Eventhub) LifecycleManagement() *terra.Lifecycle {
+	return e.Lifecycle
+}
+
+// Attributes returns the attributes for [Eventhub].
 func (e *Eventhub) Attributes() eventhubAttributes {
 	return eventhubAttributes{ref: terra.ReferenceResource(e)}
 }
 
+// ImportState imports the given attribute values into [Eventhub]'s state.
 func (e *Eventhub) ImportState(av io.Reader) error {
 	e.state = &eventhubState{}
 	if err := json.NewDecoder(av).Decode(e.state); err != nil {
@@ -49,10 +73,12 @@ func (e *Eventhub) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Eventhub] has state.
 func (e *Eventhub) State() (*eventhubState, bool) {
 	return e.state, e.state != nil
 }
 
+// StateMust returns the state for [Eventhub]. Panics if the state is nil.
 func (e *Eventhub) StateMust() *eventhubState {
 	if e.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", e.Type(), e.LocalName()))
@@ -60,10 +86,7 @@ func (e *Eventhub) StateMust() *eventhubState {
 	return e.state
 }
 
-func (e *Eventhub) DependOn() terra.Reference {
-	return terra.ReferenceResource(e)
-}
-
+// EventhubArgs contains the configurations for azurerm_eventhub.
 type EventhubArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -83,51 +106,57 @@ type EventhubArgs struct {
 	CaptureDescription *eventhub.CaptureDescription `hcl:"capture_description,block"`
 	// Timeouts: optional
 	Timeouts *eventhub.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that Eventhub depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type eventhubAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_eventhub.
 func (e eventhubAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("id"))
+	return terra.ReferenceAsString(e.ref.Append("id"))
 }
 
+// MessageRetention returns a reference to field message_retention of azurerm_eventhub.
 func (e eventhubAttributes) MessageRetention() terra.NumberValue {
-	return terra.ReferenceNumber(e.ref.Append("message_retention"))
+	return terra.ReferenceAsNumber(e.ref.Append("message_retention"))
 }
 
+// Name returns a reference to field name of azurerm_eventhub.
 func (e eventhubAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("name"))
+	return terra.ReferenceAsString(e.ref.Append("name"))
 }
 
+// NamespaceName returns a reference to field namespace_name of azurerm_eventhub.
 func (e eventhubAttributes) NamespaceName() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("namespace_name"))
+	return terra.ReferenceAsString(e.ref.Append("namespace_name"))
 }
 
+// PartitionCount returns a reference to field partition_count of azurerm_eventhub.
 func (e eventhubAttributes) PartitionCount() terra.NumberValue {
-	return terra.ReferenceNumber(e.ref.Append("partition_count"))
+	return terra.ReferenceAsNumber(e.ref.Append("partition_count"))
 }
 
+// PartitionIds returns a reference to field partition_ids of azurerm_eventhub.
 func (e eventhubAttributes) PartitionIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](e.ref.Append("partition_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](e.ref.Append("partition_ids"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_eventhub.
 func (e eventhubAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(e.ref.Append("resource_group_name"))
 }
 
+// Status returns a reference to field status of azurerm_eventhub.
 func (e eventhubAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("status"))
+	return terra.ReferenceAsString(e.ref.Append("status"))
 }
 
 func (e eventhubAttributes) CaptureDescription() terra.ListValue[eventhub.CaptureDescriptionAttributes] {
-	return terra.ReferenceList[eventhub.CaptureDescriptionAttributes](e.ref.Append("capture_description"))
+	return terra.ReferenceAsList[eventhub.CaptureDescriptionAttributes](e.ref.Append("capture_description"))
 }
 
 func (e eventhubAttributes) Timeouts() eventhub.TimeoutsAttributes {
-	return terra.ReferenceSingle[eventhub.TimeoutsAttributes](e.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[eventhub.TimeoutsAttributes](e.ref.Append("timeouts"))
 }
 
 type eventhubState struct {

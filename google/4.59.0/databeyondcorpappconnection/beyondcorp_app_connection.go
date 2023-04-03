@@ -15,56 +15,56 @@ type ApplicationEndpointAttributes struct {
 	ref terra.Reference
 }
 
-func (ae ApplicationEndpointAttributes) InternalRef() terra.Reference {
-	return ae.ref
+func (ae ApplicationEndpointAttributes) InternalRef() (terra.Reference, error) {
+	return ae.ref, nil
 }
 
 func (ae ApplicationEndpointAttributes) InternalWithRef(ref terra.Reference) ApplicationEndpointAttributes {
 	return ApplicationEndpointAttributes{ref: ref}
 }
 
-func (ae ApplicationEndpointAttributes) InternalTokens() hclwrite.Tokens {
+func (ae ApplicationEndpointAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ae.ref.InternalTokens()
 }
 
 func (ae ApplicationEndpointAttributes) Host() terra.StringValue {
-	return terra.ReferenceString(ae.ref.Append("host"))
+	return terra.ReferenceAsString(ae.ref.Append("host"))
 }
 
 func (ae ApplicationEndpointAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(ae.ref.Append("port"))
+	return terra.ReferenceAsNumber(ae.ref.Append("port"))
 }
 
 type GatewayAttributes struct {
 	ref terra.Reference
 }
 
-func (g GatewayAttributes) InternalRef() terra.Reference {
-	return g.ref
+func (g GatewayAttributes) InternalRef() (terra.Reference, error) {
+	return g.ref, nil
 }
 
 func (g GatewayAttributes) InternalWithRef(ref terra.Reference) GatewayAttributes {
 	return GatewayAttributes{ref: ref}
 }
 
-func (g GatewayAttributes) InternalTokens() hclwrite.Tokens {
+func (g GatewayAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return g.ref.InternalTokens()
 }
 
 func (g GatewayAttributes) AppGateway() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("app_gateway"))
+	return terra.ReferenceAsString(g.ref.Append("app_gateway"))
 }
 
 func (g GatewayAttributes) IngressPort() terra.NumberValue {
-	return terra.ReferenceNumber(g.ref.Append("ingress_port"))
+	return terra.ReferenceAsNumber(g.ref.Append("ingress_port"))
 }
 
 func (g GatewayAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("type"))
+	return terra.ReferenceAsString(g.ref.Append("type"))
 }
 
 func (g GatewayAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("uri"))
+	return terra.ReferenceAsString(g.ref.Append("uri"))
 }
 
 type ApplicationEndpointState struct {

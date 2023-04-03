@@ -31,7 +31,7 @@ func (s SummariesAttributes) InternalWithRef(ref terra.Reference) SummariesAttri
 	return SummariesAttributes{ref: ref}
 }
 
-func (s SummariesAttributes) InternalTokens() hclwrite.Tokens {
+func (s SummariesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -63,7 +63,7 @@ func (cs ConstraintSummariesAttributes) InternalWithRef(ref terra.Reference) Con
 	return ConstraintSummariesAttributes{ref: ref}
 }
 
-func (cs ConstraintSummariesAttributes) InternalTokens() hclwrite.Tokens {
+func (cs ConstraintSummariesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cs.ref.InternalTokens()
 }
 
@@ -87,7 +87,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

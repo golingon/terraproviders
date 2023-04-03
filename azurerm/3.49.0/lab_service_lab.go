@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLabServiceLab creates a new instance of [LabServiceLab].
 func NewLabServiceLab(name string, args LabServiceLabArgs) *LabServiceLab {
 	return &LabServiceLab{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLabServiceLab(name string, args LabServiceLabArgs) *LabServiceLab {
 
 var _ terra.Resource = (*LabServiceLab)(nil)
 
+// LabServiceLab represents the Terraform resource azurerm_lab_service_lab.
 type LabServiceLab struct {
-	Name  string
-	Args  LabServiceLabArgs
-	state *labServiceLabState
+	Name      string
+	Args      LabServiceLabArgs
+	state     *labServiceLabState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LabServiceLab].
 func (lsl *LabServiceLab) Type() string {
 	return "azurerm_lab_service_lab"
 }
 
+// LocalName returns the local name for [LabServiceLab].
 func (lsl *LabServiceLab) LocalName() string {
 	return lsl.Name
 }
 
+// Configuration returns the configuration (args) for [LabServiceLab].
 func (lsl *LabServiceLab) Configuration() interface{} {
 	return lsl.Args
 }
 
+// DependOn is used for other resources to depend on [LabServiceLab].
+func (lsl *LabServiceLab) DependOn() terra.Reference {
+	return terra.ReferenceResource(lsl)
+}
+
+// Dependencies returns the list of resources [LabServiceLab] depends_on.
+func (lsl *LabServiceLab) Dependencies() terra.Dependencies {
+	return lsl.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LabServiceLab].
+func (lsl *LabServiceLab) LifecycleManagement() *terra.Lifecycle {
+	return lsl.Lifecycle
+}
+
+// Attributes returns the attributes for [LabServiceLab].
 func (lsl *LabServiceLab) Attributes() labServiceLabAttributes {
 	return labServiceLabAttributes{ref: terra.ReferenceResource(lsl)}
 }
 
+// ImportState imports the given attribute values into [LabServiceLab]'s state.
 func (lsl *LabServiceLab) ImportState(av io.Reader) error {
 	lsl.state = &labServiceLabState{}
 	if err := json.NewDecoder(av).Decode(lsl.state); err != nil {
@@ -49,10 +73,12 @@ func (lsl *LabServiceLab) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LabServiceLab] has state.
 func (lsl *LabServiceLab) State() (*labServiceLabState, bool) {
 	return lsl.state, lsl.state != nil
 }
 
+// StateMust returns the state for [LabServiceLab]. Panics if the state is nil.
 func (lsl *LabServiceLab) StateMust() *labServiceLabState {
 	if lsl.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lsl.Type(), lsl.LocalName()))
@@ -60,10 +86,7 @@ func (lsl *LabServiceLab) StateMust() *labServiceLabState {
 	return lsl.state
 }
 
-func (lsl *LabServiceLab) DependOn() terra.Reference {
-	return terra.ReferenceResource(lsl)
-}
-
+// LabServiceLabArgs contains the configurations for azurerm_lab_service_lab.
 type LabServiceLabArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -95,71 +118,77 @@ type LabServiceLabArgs struct {
 	Timeouts *labservicelab.Timeouts `hcl:"timeouts,block"`
 	// VirtualMachine: required
 	VirtualMachine *labservicelab.VirtualMachine `hcl:"virtual_machine,block" validate:"required"`
-	// DependsOn contains resources that LabServiceLab depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type labServiceLabAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of azurerm_lab_service_lab.
 func (lsl labServiceLabAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(lsl.ref.Append("description"))
+	return terra.ReferenceAsString(lsl.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_lab_service_lab.
 func (lsl labServiceLabAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lsl.ref.Append("id"))
+	return terra.ReferenceAsString(lsl.ref.Append("id"))
 }
 
+// LabPlanId returns a reference to field lab_plan_id of azurerm_lab_service_lab.
 func (lsl labServiceLabAttributes) LabPlanId() terra.StringValue {
-	return terra.ReferenceString(lsl.ref.Append("lab_plan_id"))
+	return terra.ReferenceAsString(lsl.ref.Append("lab_plan_id"))
 }
 
+// Location returns a reference to field location of azurerm_lab_service_lab.
 func (lsl labServiceLabAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(lsl.ref.Append("location"))
+	return terra.ReferenceAsString(lsl.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_lab_service_lab.
 func (lsl labServiceLabAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lsl.ref.Append("name"))
+	return terra.ReferenceAsString(lsl.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_lab_service_lab.
 func (lsl labServiceLabAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(lsl.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(lsl.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_lab_service_lab.
 func (lsl labServiceLabAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lsl.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](lsl.ref.Append("tags"))
 }
 
+// Title returns a reference to field title of azurerm_lab_service_lab.
 func (lsl labServiceLabAttributes) Title() terra.StringValue {
-	return terra.ReferenceString(lsl.ref.Append("title"))
+	return terra.ReferenceAsString(lsl.ref.Append("title"))
 }
 
 func (lsl labServiceLabAttributes) AutoShutdown() terra.ListValue[labservicelab.AutoShutdownAttributes] {
-	return terra.ReferenceList[labservicelab.AutoShutdownAttributes](lsl.ref.Append("auto_shutdown"))
+	return terra.ReferenceAsList[labservicelab.AutoShutdownAttributes](lsl.ref.Append("auto_shutdown"))
 }
 
 func (lsl labServiceLabAttributes) ConnectionSetting() terra.ListValue[labservicelab.ConnectionSettingAttributes] {
-	return terra.ReferenceList[labservicelab.ConnectionSettingAttributes](lsl.ref.Append("connection_setting"))
+	return terra.ReferenceAsList[labservicelab.ConnectionSettingAttributes](lsl.ref.Append("connection_setting"))
 }
 
 func (lsl labServiceLabAttributes) Network() terra.ListValue[labservicelab.NetworkAttributes] {
-	return terra.ReferenceList[labservicelab.NetworkAttributes](lsl.ref.Append("network"))
+	return terra.ReferenceAsList[labservicelab.NetworkAttributes](lsl.ref.Append("network"))
 }
 
 func (lsl labServiceLabAttributes) Roster() terra.ListValue[labservicelab.RosterAttributes] {
-	return terra.ReferenceList[labservicelab.RosterAttributes](lsl.ref.Append("roster"))
+	return terra.ReferenceAsList[labservicelab.RosterAttributes](lsl.ref.Append("roster"))
 }
 
 func (lsl labServiceLabAttributes) Security() terra.ListValue[labservicelab.SecurityAttributes] {
-	return terra.ReferenceList[labservicelab.SecurityAttributes](lsl.ref.Append("security"))
+	return terra.ReferenceAsList[labservicelab.SecurityAttributes](lsl.ref.Append("security"))
 }
 
 func (lsl labServiceLabAttributes) Timeouts() labservicelab.TimeoutsAttributes {
-	return terra.ReferenceSingle[labservicelab.TimeoutsAttributes](lsl.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[labservicelab.TimeoutsAttributes](lsl.ref.Append("timeouts"))
 }
 
 func (lsl labServiceLabAttributes) VirtualMachine() terra.ListValue[labservicelab.VirtualMachineAttributes] {
-	return terra.ReferenceList[labservicelab.VirtualMachineAttributes](lsl.ref.Append("virtual_machine"))
+	return terra.ReferenceAsList[labservicelab.VirtualMachineAttributes](lsl.ref.Append("virtual_machine"))
 }
 
 type labServiceLabState struct {

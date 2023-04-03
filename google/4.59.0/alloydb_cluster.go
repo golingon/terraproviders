@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAlloydbCluster creates a new instance of [AlloydbCluster].
 func NewAlloydbCluster(name string, args AlloydbClusterArgs) *AlloydbCluster {
 	return &AlloydbCluster{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAlloydbCluster(name string, args AlloydbClusterArgs) *AlloydbCluster {
 
 var _ terra.Resource = (*AlloydbCluster)(nil)
 
+// AlloydbCluster represents the Terraform resource google_alloydb_cluster.
 type AlloydbCluster struct {
-	Name  string
-	Args  AlloydbClusterArgs
-	state *alloydbClusterState
+	Name      string
+	Args      AlloydbClusterArgs
+	state     *alloydbClusterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AlloydbCluster].
 func (ac *AlloydbCluster) Type() string {
 	return "google_alloydb_cluster"
 }
 
+// LocalName returns the local name for [AlloydbCluster].
 func (ac *AlloydbCluster) LocalName() string {
 	return ac.Name
 }
 
+// Configuration returns the configuration (args) for [AlloydbCluster].
 func (ac *AlloydbCluster) Configuration() interface{} {
 	return ac.Args
 }
 
+// DependOn is used for other resources to depend on [AlloydbCluster].
+func (ac *AlloydbCluster) DependOn() terra.Reference {
+	return terra.ReferenceResource(ac)
+}
+
+// Dependencies returns the list of resources [AlloydbCluster] depends_on.
+func (ac *AlloydbCluster) Dependencies() terra.Dependencies {
+	return ac.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AlloydbCluster].
+func (ac *AlloydbCluster) LifecycleManagement() *terra.Lifecycle {
+	return ac.Lifecycle
+}
+
+// Attributes returns the attributes for [AlloydbCluster].
 func (ac *AlloydbCluster) Attributes() alloydbClusterAttributes {
 	return alloydbClusterAttributes{ref: terra.ReferenceResource(ac)}
 }
 
+// ImportState imports the given attribute values into [AlloydbCluster]'s state.
 func (ac *AlloydbCluster) ImportState(av io.Reader) error {
 	ac.state = &alloydbClusterState{}
 	if err := json.NewDecoder(av).Decode(ac.state); err != nil {
@@ -49,10 +73,12 @@ func (ac *AlloydbCluster) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AlloydbCluster] has state.
 func (ac *AlloydbCluster) State() (*alloydbClusterState, bool) {
 	return ac.state, ac.state != nil
 }
 
+// StateMust returns the state for [AlloydbCluster]. Panics if the state is nil.
 func (ac *AlloydbCluster) StateMust() *alloydbClusterState {
 	if ac.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ac.Type(), ac.LocalName()))
@@ -60,10 +86,7 @@ func (ac *AlloydbCluster) StateMust() *alloydbClusterState {
 	return ac.state
 }
 
-func (ac *AlloydbCluster) DependOn() terra.Reference {
-	return terra.ReferenceResource(ac)
-}
-
+// AlloydbClusterArgs contains the configurations for google_alloydb_cluster.
 type AlloydbClusterArgs struct {
 	// ClusterId: string, required
 	ClusterId terra.StringValue `hcl:"cluster_id,attr" validate:"required"`
@@ -89,71 +112,79 @@ type AlloydbClusterArgs struct {
 	InitialUser *alloydbcluster.InitialUser `hcl:"initial_user,block"`
 	// Timeouts: optional
 	Timeouts *alloydbcluster.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that AlloydbCluster depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type alloydbClusterAttributes struct {
 	ref terra.Reference
 }
 
+// ClusterId returns a reference to field cluster_id of google_alloydb_cluster.
 func (ac alloydbClusterAttributes) ClusterId() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("cluster_id"))
+	return terra.ReferenceAsString(ac.ref.Append("cluster_id"))
 }
 
+// DatabaseVersion returns a reference to field database_version of google_alloydb_cluster.
 func (ac alloydbClusterAttributes) DatabaseVersion() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("database_version"))
+	return terra.ReferenceAsString(ac.ref.Append("database_version"))
 }
 
+// DisplayName returns a reference to field display_name of google_alloydb_cluster.
 func (ac alloydbClusterAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("display_name"))
+	return terra.ReferenceAsString(ac.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of google_alloydb_cluster.
 func (ac alloydbClusterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("id"))
+	return terra.ReferenceAsString(ac.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_alloydb_cluster.
 func (ac alloydbClusterAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ac.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](ac.ref.Append("labels"))
 }
 
+// Location returns a reference to field location of google_alloydb_cluster.
 func (ac alloydbClusterAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("location"))
+	return terra.ReferenceAsString(ac.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_alloydb_cluster.
 func (ac alloydbClusterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("name"))
+	return terra.ReferenceAsString(ac.ref.Append("name"))
 }
 
+// Network returns a reference to field network of google_alloydb_cluster.
 func (ac alloydbClusterAttributes) Network() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("network"))
+	return terra.ReferenceAsString(ac.ref.Append("network"))
 }
 
+// Project returns a reference to field project of google_alloydb_cluster.
 func (ac alloydbClusterAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("project"))
+	return terra.ReferenceAsString(ac.ref.Append("project"))
 }
 
+// Uid returns a reference to field uid of google_alloydb_cluster.
 func (ac alloydbClusterAttributes) Uid() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("uid"))
+	return terra.ReferenceAsString(ac.ref.Append("uid"))
 }
 
 func (ac alloydbClusterAttributes) BackupSource() terra.ListValue[alloydbcluster.BackupSourceAttributes] {
-	return terra.ReferenceList[alloydbcluster.BackupSourceAttributes](ac.ref.Append("backup_source"))
+	return terra.ReferenceAsList[alloydbcluster.BackupSourceAttributes](ac.ref.Append("backup_source"))
 }
 
 func (ac alloydbClusterAttributes) MigrationSource() terra.ListValue[alloydbcluster.MigrationSourceAttributes] {
-	return terra.ReferenceList[alloydbcluster.MigrationSourceAttributes](ac.ref.Append("migration_source"))
+	return terra.ReferenceAsList[alloydbcluster.MigrationSourceAttributes](ac.ref.Append("migration_source"))
 }
 
 func (ac alloydbClusterAttributes) AutomatedBackupPolicy() terra.ListValue[alloydbcluster.AutomatedBackupPolicyAttributes] {
-	return terra.ReferenceList[alloydbcluster.AutomatedBackupPolicyAttributes](ac.ref.Append("automated_backup_policy"))
+	return terra.ReferenceAsList[alloydbcluster.AutomatedBackupPolicyAttributes](ac.ref.Append("automated_backup_policy"))
 }
 
 func (ac alloydbClusterAttributes) InitialUser() terra.ListValue[alloydbcluster.InitialUserAttributes] {
-	return terra.ReferenceList[alloydbcluster.InitialUserAttributes](ac.ref.Append("initial_user"))
+	return terra.ReferenceAsList[alloydbcluster.InitialUserAttributes](ac.ref.Append("initial_user"))
 }
 
 func (ac alloydbClusterAttributes) Timeouts() alloydbcluster.TimeoutsAttributes {
-	return terra.ReferenceSingle[alloydbcluster.TimeoutsAttributes](ac.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[alloydbcluster.TimeoutsAttributes](ac.ref.Append("timeouts"))
 }
 
 type alloydbClusterState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewManagementLock creates a new instance of [ManagementLock].
 func NewManagementLock(name string, args ManagementLockArgs) *ManagementLock {
 	return &ManagementLock{
 		Args: args,
@@ -19,28 +20,51 @@ func NewManagementLock(name string, args ManagementLockArgs) *ManagementLock {
 
 var _ terra.Resource = (*ManagementLock)(nil)
 
+// ManagementLock represents the Terraform resource azurerm_management_lock.
 type ManagementLock struct {
-	Name  string
-	Args  ManagementLockArgs
-	state *managementLockState
+	Name      string
+	Args      ManagementLockArgs
+	state     *managementLockState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ManagementLock].
 func (ml *ManagementLock) Type() string {
 	return "azurerm_management_lock"
 }
 
+// LocalName returns the local name for [ManagementLock].
 func (ml *ManagementLock) LocalName() string {
 	return ml.Name
 }
 
+// Configuration returns the configuration (args) for [ManagementLock].
 func (ml *ManagementLock) Configuration() interface{} {
 	return ml.Args
 }
 
+// DependOn is used for other resources to depend on [ManagementLock].
+func (ml *ManagementLock) DependOn() terra.Reference {
+	return terra.ReferenceResource(ml)
+}
+
+// Dependencies returns the list of resources [ManagementLock] depends_on.
+func (ml *ManagementLock) Dependencies() terra.Dependencies {
+	return ml.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ManagementLock].
+func (ml *ManagementLock) LifecycleManagement() *terra.Lifecycle {
+	return ml.Lifecycle
+}
+
+// Attributes returns the attributes for [ManagementLock].
 func (ml *ManagementLock) Attributes() managementLockAttributes {
 	return managementLockAttributes{ref: terra.ReferenceResource(ml)}
 }
 
+// ImportState imports the given attribute values into [ManagementLock]'s state.
 func (ml *ManagementLock) ImportState(av io.Reader) error {
 	ml.state = &managementLockState{}
 	if err := json.NewDecoder(av).Decode(ml.state); err != nil {
@@ -49,10 +73,12 @@ func (ml *ManagementLock) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ManagementLock] has state.
 func (ml *ManagementLock) State() (*managementLockState, bool) {
 	return ml.state, ml.state != nil
 }
 
+// StateMust returns the state for [ManagementLock]. Panics if the state is nil.
 func (ml *ManagementLock) StateMust() *managementLockState {
 	if ml.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ml.Type(), ml.LocalName()))
@@ -60,10 +86,7 @@ func (ml *ManagementLock) StateMust() *managementLockState {
 	return ml.state
 }
 
-func (ml *ManagementLock) DependOn() terra.Reference {
-	return terra.ReferenceResource(ml)
-}
-
+// ManagementLockArgs contains the configurations for azurerm_management_lock.
 type ManagementLockArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,35 +100,38 @@ type ManagementLockArgs struct {
 	Scope terra.StringValue `hcl:"scope,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *managementlock.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ManagementLock depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type managementLockAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_management_lock.
 func (ml managementLockAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ml.ref.Append("id"))
+	return terra.ReferenceAsString(ml.ref.Append("id"))
 }
 
+// LockLevel returns a reference to field lock_level of azurerm_management_lock.
 func (ml managementLockAttributes) LockLevel() terra.StringValue {
-	return terra.ReferenceString(ml.ref.Append("lock_level"))
+	return terra.ReferenceAsString(ml.ref.Append("lock_level"))
 }
 
+// Name returns a reference to field name of azurerm_management_lock.
 func (ml managementLockAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ml.ref.Append("name"))
+	return terra.ReferenceAsString(ml.ref.Append("name"))
 }
 
+// Notes returns a reference to field notes of azurerm_management_lock.
 func (ml managementLockAttributes) Notes() terra.StringValue {
-	return terra.ReferenceString(ml.ref.Append("notes"))
+	return terra.ReferenceAsString(ml.ref.Append("notes"))
 }
 
+// Scope returns a reference to field scope of azurerm_management_lock.
 func (ml managementLockAttributes) Scope() terra.StringValue {
-	return terra.ReferenceString(ml.ref.Append("scope"))
+	return terra.ReferenceAsString(ml.ref.Append("scope"))
 }
 
 func (ml managementLockAttributes) Timeouts() managementlock.TimeoutsAttributes {
-	return terra.ReferenceSingle[managementlock.TimeoutsAttributes](ml.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[managementlock.TimeoutsAttributes](ml.ref.Append("timeouts"))
 }
 
 type managementLockState struct {

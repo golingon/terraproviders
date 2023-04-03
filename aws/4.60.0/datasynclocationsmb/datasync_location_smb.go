@@ -24,7 +24,7 @@ func (mo MountOptionsAttributes) InternalWithRef(ref terra.Reference) MountOptio
 	return MountOptionsAttributes{ref: ref}
 }
 
-func (mo MountOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (mo MountOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mo.ref.InternalTokens()
 }
 

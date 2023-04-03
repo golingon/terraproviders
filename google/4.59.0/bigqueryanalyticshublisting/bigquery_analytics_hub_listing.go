@@ -39,96 +39,96 @@ type BigqueryDatasetAttributes struct {
 	ref terra.Reference
 }
 
-func (bd BigqueryDatasetAttributes) InternalRef() terra.Reference {
-	return bd.ref
+func (bd BigqueryDatasetAttributes) InternalRef() (terra.Reference, error) {
+	return bd.ref, nil
 }
 
 func (bd BigqueryDatasetAttributes) InternalWithRef(ref terra.Reference) BigqueryDatasetAttributes {
 	return BigqueryDatasetAttributes{ref: ref}
 }
 
-func (bd BigqueryDatasetAttributes) InternalTokens() hclwrite.Tokens {
+func (bd BigqueryDatasetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bd.ref.InternalTokens()
 }
 
 func (bd BigqueryDatasetAttributes) Dataset() terra.StringValue {
-	return terra.ReferenceString(bd.ref.Append("dataset"))
+	return terra.ReferenceAsString(bd.ref.Append("dataset"))
 }
 
 type DataProviderAttributes struct {
 	ref terra.Reference
 }
 
-func (dp DataProviderAttributes) InternalRef() terra.Reference {
-	return dp.ref
+func (dp DataProviderAttributes) InternalRef() (terra.Reference, error) {
+	return dp.ref, nil
 }
 
 func (dp DataProviderAttributes) InternalWithRef(ref terra.Reference) DataProviderAttributes {
 	return DataProviderAttributes{ref: ref}
 }
 
-func (dp DataProviderAttributes) InternalTokens() hclwrite.Tokens {
+func (dp DataProviderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dp.ref.InternalTokens()
 }
 
 func (dp DataProviderAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dp.ref.Append("name"))
+	return terra.ReferenceAsString(dp.ref.Append("name"))
 }
 
 func (dp DataProviderAttributes) PrimaryContact() terra.StringValue {
-	return terra.ReferenceString(dp.ref.Append("primary_contact"))
+	return terra.ReferenceAsString(dp.ref.Append("primary_contact"))
 }
 
 type PublisherAttributes struct {
 	ref terra.Reference
 }
 
-func (p PublisherAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p PublisherAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p PublisherAttributes) InternalWithRef(ref terra.Reference) PublisherAttributes {
 	return PublisherAttributes{ref: ref}
 }
 
-func (p PublisherAttributes) InternalTokens() hclwrite.Tokens {
+func (p PublisherAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
 func (p PublisherAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("name"))
+	return terra.ReferenceAsString(p.ref.Append("name"))
 }
 
 func (p PublisherAttributes) PrimaryContact() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("primary_contact"))
+	return terra.ReferenceAsString(p.ref.Append("primary_contact"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type BigqueryDatasetState struct {

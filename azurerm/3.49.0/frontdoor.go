@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewFrontdoor creates a new instance of [Frontdoor].
 func NewFrontdoor(name string, args FrontdoorArgs) *Frontdoor {
 	return &Frontdoor{
 		Args: args,
@@ -19,28 +20,51 @@ func NewFrontdoor(name string, args FrontdoorArgs) *Frontdoor {
 
 var _ terra.Resource = (*Frontdoor)(nil)
 
+// Frontdoor represents the Terraform resource azurerm_frontdoor.
 type Frontdoor struct {
-	Name  string
-	Args  FrontdoorArgs
-	state *frontdoorState
+	Name      string
+	Args      FrontdoorArgs
+	state     *frontdoorState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Frontdoor].
 func (f *Frontdoor) Type() string {
 	return "azurerm_frontdoor"
 }
 
+// LocalName returns the local name for [Frontdoor].
 func (f *Frontdoor) LocalName() string {
 	return f.Name
 }
 
+// Configuration returns the configuration (args) for [Frontdoor].
 func (f *Frontdoor) Configuration() interface{} {
 	return f.Args
 }
 
+// DependOn is used for other resources to depend on [Frontdoor].
+func (f *Frontdoor) DependOn() terra.Reference {
+	return terra.ReferenceResource(f)
+}
+
+// Dependencies returns the list of resources [Frontdoor] depends_on.
+func (f *Frontdoor) Dependencies() terra.Dependencies {
+	return f.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Frontdoor].
+func (f *Frontdoor) LifecycleManagement() *terra.Lifecycle {
+	return f.Lifecycle
+}
+
+// Attributes returns the attributes for [Frontdoor].
 func (f *Frontdoor) Attributes() frontdoorAttributes {
 	return frontdoorAttributes{ref: terra.ReferenceResource(f)}
 }
 
+// ImportState imports the given attribute values into [Frontdoor]'s state.
 func (f *Frontdoor) ImportState(av io.Reader) error {
 	f.state = &frontdoorState{}
 	if err := json.NewDecoder(av).Decode(f.state); err != nil {
@@ -49,10 +73,12 @@ func (f *Frontdoor) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Frontdoor] has state.
 func (f *Frontdoor) State() (*frontdoorState, bool) {
 	return f.state, f.state != nil
 }
 
+// StateMust returns the state for [Frontdoor]. Panics if the state is nil.
 func (f *Frontdoor) StateMust() *frontdoorState {
 	if f.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", f.Type(), f.LocalName()))
@@ -60,10 +86,7 @@ func (f *Frontdoor) StateMust() *frontdoorState {
 	return f.state
 }
 
-func (f *Frontdoor) DependOn() terra.Reference {
-	return terra.ReferenceResource(f)
-}
-
+// FrontdoorArgs contains the configurations for azurerm_frontdoor.
 type FrontdoorArgs struct {
 	// FriendlyName: string, optional
 	FriendlyName terra.StringValue `hcl:"friendly_name,attr"`
@@ -93,95 +116,106 @@ type FrontdoorArgs struct {
 	RoutingRule []frontdoor.RoutingRule `hcl:"routing_rule,block" validate:"min=1,max=500"`
 	// Timeouts: optional
 	Timeouts *frontdoor.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that Frontdoor depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type frontdoorAttributes struct {
 	ref terra.Reference
 }
 
+// BackendPoolHealthProbes returns a reference to field backend_pool_health_probes of azurerm_frontdoor.
 func (f frontdoorAttributes) BackendPoolHealthProbes() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](f.ref.Append("backend_pool_health_probes"))
+	return terra.ReferenceAsMap[terra.StringValue](f.ref.Append("backend_pool_health_probes"))
 }
 
+// BackendPoolLoadBalancingSettings returns a reference to field backend_pool_load_balancing_settings of azurerm_frontdoor.
 func (f frontdoorAttributes) BackendPoolLoadBalancingSettings() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](f.ref.Append("backend_pool_load_balancing_settings"))
+	return terra.ReferenceAsMap[terra.StringValue](f.ref.Append("backend_pool_load_balancing_settings"))
 }
 
+// BackendPools returns a reference to field backend_pools of azurerm_frontdoor.
 func (f frontdoorAttributes) BackendPools() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](f.ref.Append("backend_pools"))
+	return terra.ReferenceAsMap[terra.StringValue](f.ref.Append("backend_pools"))
 }
 
+// Cname returns a reference to field cname of azurerm_frontdoor.
 func (f frontdoorAttributes) Cname() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("cname"))
+	return terra.ReferenceAsString(f.ref.Append("cname"))
 }
 
+// FriendlyName returns a reference to field friendly_name of azurerm_frontdoor.
 func (f frontdoorAttributes) FriendlyName() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("friendly_name"))
+	return terra.ReferenceAsString(f.ref.Append("friendly_name"))
 }
 
+// FrontendEndpoints returns a reference to field frontend_endpoints of azurerm_frontdoor.
 func (f frontdoorAttributes) FrontendEndpoints() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](f.ref.Append("frontend_endpoints"))
+	return terra.ReferenceAsMap[terra.StringValue](f.ref.Append("frontend_endpoints"))
 }
 
+// HeaderFrontdoorId returns a reference to field header_frontdoor_id of azurerm_frontdoor.
 func (f frontdoorAttributes) HeaderFrontdoorId() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("header_frontdoor_id"))
+	return terra.ReferenceAsString(f.ref.Append("header_frontdoor_id"))
 }
 
+// Id returns a reference to field id of azurerm_frontdoor.
 func (f frontdoorAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("id"))
+	return terra.ReferenceAsString(f.ref.Append("id"))
 }
 
+// LoadBalancerEnabled returns a reference to field load_balancer_enabled of azurerm_frontdoor.
 func (f frontdoorAttributes) LoadBalancerEnabled() terra.BoolValue {
-	return terra.ReferenceBool(f.ref.Append("load_balancer_enabled"))
+	return terra.ReferenceAsBool(f.ref.Append("load_balancer_enabled"))
 }
 
+// Name returns a reference to field name of azurerm_frontdoor.
 func (f frontdoorAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("name"))
+	return terra.ReferenceAsString(f.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_frontdoor.
 func (f frontdoorAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(f.ref.Append("resource_group_name"))
 }
 
+// RoutingRules returns a reference to field routing_rules of azurerm_frontdoor.
 func (f frontdoorAttributes) RoutingRules() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](f.ref.Append("routing_rules"))
+	return terra.ReferenceAsMap[terra.StringValue](f.ref.Append("routing_rules"))
 }
 
+// Tags returns a reference to field tags of azurerm_frontdoor.
 func (f frontdoorAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](f.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](f.ref.Append("tags"))
 }
 
 func (f frontdoorAttributes) ExplicitResourceOrder() terra.ListValue[frontdoor.ExplicitResourceOrderAttributes] {
-	return terra.ReferenceList[frontdoor.ExplicitResourceOrderAttributes](f.ref.Append("explicit_resource_order"))
+	return terra.ReferenceAsList[frontdoor.ExplicitResourceOrderAttributes](f.ref.Append("explicit_resource_order"))
 }
 
 func (f frontdoorAttributes) BackendPool() terra.ListValue[frontdoor.BackendPoolAttributes] {
-	return terra.ReferenceList[frontdoor.BackendPoolAttributes](f.ref.Append("backend_pool"))
+	return terra.ReferenceAsList[frontdoor.BackendPoolAttributes](f.ref.Append("backend_pool"))
 }
 
 func (f frontdoorAttributes) BackendPoolHealthProbe() terra.ListValue[frontdoor.BackendPoolHealthProbeAttributes] {
-	return terra.ReferenceList[frontdoor.BackendPoolHealthProbeAttributes](f.ref.Append("backend_pool_health_probe"))
+	return terra.ReferenceAsList[frontdoor.BackendPoolHealthProbeAttributes](f.ref.Append("backend_pool_health_probe"))
 }
 
 func (f frontdoorAttributes) BackendPoolLoadBalancing() terra.ListValue[frontdoor.BackendPoolLoadBalancingAttributes] {
-	return terra.ReferenceList[frontdoor.BackendPoolLoadBalancingAttributes](f.ref.Append("backend_pool_load_balancing"))
+	return terra.ReferenceAsList[frontdoor.BackendPoolLoadBalancingAttributes](f.ref.Append("backend_pool_load_balancing"))
 }
 
 func (f frontdoorAttributes) BackendPoolSettings() terra.ListValue[frontdoor.BackendPoolSettingsAttributes] {
-	return terra.ReferenceList[frontdoor.BackendPoolSettingsAttributes](f.ref.Append("backend_pool_settings"))
+	return terra.ReferenceAsList[frontdoor.BackendPoolSettingsAttributes](f.ref.Append("backend_pool_settings"))
 }
 
 func (f frontdoorAttributes) FrontendEndpoint() terra.ListValue[frontdoor.FrontendEndpointAttributes] {
-	return terra.ReferenceList[frontdoor.FrontendEndpointAttributes](f.ref.Append("frontend_endpoint"))
+	return terra.ReferenceAsList[frontdoor.FrontendEndpointAttributes](f.ref.Append("frontend_endpoint"))
 }
 
 func (f frontdoorAttributes) RoutingRule() terra.ListValue[frontdoor.RoutingRuleAttributes] {
-	return terra.ReferenceList[frontdoor.RoutingRuleAttributes](f.ref.Append("routing_rule"))
+	return terra.ReferenceAsList[frontdoor.RoutingRuleAttributes](f.ref.Append("routing_rule"))
 }
 
 func (f frontdoorAttributes) Timeouts() frontdoor.TimeoutsAttributes {
-	return terra.ReferenceSingle[frontdoor.TimeoutsAttributes](f.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[frontdoor.TimeoutsAttributes](f.ref.Append("timeouts"))
 }
 
 type frontdoorState struct {

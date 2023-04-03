@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeDiskIamBinding creates a new instance of [ComputeDiskIamBinding].
 func NewComputeDiskIamBinding(name string, args ComputeDiskIamBindingArgs) *ComputeDiskIamBinding {
 	return &ComputeDiskIamBinding{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeDiskIamBinding(name string, args ComputeDiskIamBindingArgs) *Comp
 
 var _ terra.Resource = (*ComputeDiskIamBinding)(nil)
 
+// ComputeDiskIamBinding represents the Terraform resource google_compute_disk_iam_binding.
 type ComputeDiskIamBinding struct {
-	Name  string
-	Args  ComputeDiskIamBindingArgs
-	state *computeDiskIamBindingState
+	Name      string
+	Args      ComputeDiskIamBindingArgs
+	state     *computeDiskIamBindingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeDiskIamBinding].
 func (cdib *ComputeDiskIamBinding) Type() string {
 	return "google_compute_disk_iam_binding"
 }
 
+// LocalName returns the local name for [ComputeDiskIamBinding].
 func (cdib *ComputeDiskIamBinding) LocalName() string {
 	return cdib.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeDiskIamBinding].
 func (cdib *ComputeDiskIamBinding) Configuration() interface{} {
 	return cdib.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeDiskIamBinding].
+func (cdib *ComputeDiskIamBinding) DependOn() terra.Reference {
+	return terra.ReferenceResource(cdib)
+}
+
+// Dependencies returns the list of resources [ComputeDiskIamBinding] depends_on.
+func (cdib *ComputeDiskIamBinding) Dependencies() terra.Dependencies {
+	return cdib.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeDiskIamBinding].
+func (cdib *ComputeDiskIamBinding) LifecycleManagement() *terra.Lifecycle {
+	return cdib.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeDiskIamBinding].
 func (cdib *ComputeDiskIamBinding) Attributes() computeDiskIamBindingAttributes {
 	return computeDiskIamBindingAttributes{ref: terra.ReferenceResource(cdib)}
 }
 
+// ImportState imports the given attribute values into [ComputeDiskIamBinding]'s state.
 func (cdib *ComputeDiskIamBinding) ImportState(av io.Reader) error {
 	cdib.state = &computeDiskIamBindingState{}
 	if err := json.NewDecoder(av).Decode(cdib.state); err != nil {
@@ -49,10 +73,12 @@ func (cdib *ComputeDiskIamBinding) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeDiskIamBinding] has state.
 func (cdib *ComputeDiskIamBinding) State() (*computeDiskIamBindingState, bool) {
 	return cdib.state, cdib.state != nil
 }
 
+// StateMust returns the state for [ComputeDiskIamBinding]. Panics if the state is nil.
 func (cdib *ComputeDiskIamBinding) StateMust() *computeDiskIamBindingState {
 	if cdib.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cdib.Type(), cdib.LocalName()))
@@ -60,10 +86,7 @@ func (cdib *ComputeDiskIamBinding) StateMust() *computeDiskIamBindingState {
 	return cdib.state
 }
 
-func (cdib *ComputeDiskIamBinding) DependOn() terra.Reference {
-	return terra.ReferenceResource(cdib)
-}
-
+// ComputeDiskIamBindingArgs contains the configurations for google_compute_disk_iam_binding.
 type ComputeDiskIamBindingArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,43 +102,48 @@ type ComputeDiskIamBindingArgs struct {
 	Zone terra.StringValue `hcl:"zone,attr"`
 	// Condition: optional
 	Condition *computediskiambinding.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that ComputeDiskIamBinding depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeDiskIamBindingAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_compute_disk_iam_binding.
 func (cdib computeDiskIamBindingAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(cdib.ref.Append("etag"))
+	return terra.ReferenceAsString(cdib.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_compute_disk_iam_binding.
 func (cdib computeDiskIamBindingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cdib.ref.Append("id"))
+	return terra.ReferenceAsString(cdib.ref.Append("id"))
 }
 
+// Members returns a reference to field members of google_compute_disk_iam_binding.
 func (cdib computeDiskIamBindingAttributes) Members() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cdib.ref.Append("members"))
+	return terra.ReferenceAsSet[terra.StringValue](cdib.ref.Append("members"))
 }
 
+// Name returns a reference to field name of google_compute_disk_iam_binding.
 func (cdib computeDiskIamBindingAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cdib.ref.Append("name"))
+	return terra.ReferenceAsString(cdib.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_compute_disk_iam_binding.
 func (cdib computeDiskIamBindingAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cdib.ref.Append("project"))
+	return terra.ReferenceAsString(cdib.ref.Append("project"))
 }
 
+// Role returns a reference to field role of google_compute_disk_iam_binding.
 func (cdib computeDiskIamBindingAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(cdib.ref.Append("role"))
+	return terra.ReferenceAsString(cdib.ref.Append("role"))
 }
 
+// Zone returns a reference to field zone of google_compute_disk_iam_binding.
 func (cdib computeDiskIamBindingAttributes) Zone() terra.StringValue {
-	return terra.ReferenceString(cdib.ref.Append("zone"))
+	return terra.ReferenceAsString(cdib.ref.Append("zone"))
 }
 
 func (cdib computeDiskIamBindingAttributes) Condition() terra.ListValue[computediskiambinding.ConditionAttributes] {
-	return terra.ReferenceList[computediskiambinding.ConditionAttributes](cdib.ref.Append("condition"))
+	return terra.ReferenceAsList[computediskiambinding.ConditionAttributes](cdib.ref.Append("condition"))
 }
 
 type computeDiskIamBindingState struct {

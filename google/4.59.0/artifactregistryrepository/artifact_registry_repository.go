@@ -27,52 +27,52 @@ type MavenConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (mc MavenConfigAttributes) InternalRef() terra.Reference {
-	return mc.ref
+func (mc MavenConfigAttributes) InternalRef() (terra.Reference, error) {
+	return mc.ref, nil
 }
 
 func (mc MavenConfigAttributes) InternalWithRef(ref terra.Reference) MavenConfigAttributes {
 	return MavenConfigAttributes{ref: ref}
 }
 
-func (mc MavenConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (mc MavenConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mc.ref.InternalTokens()
 }
 
 func (mc MavenConfigAttributes) AllowSnapshotOverwrites() terra.BoolValue {
-	return terra.ReferenceBool(mc.ref.Append("allow_snapshot_overwrites"))
+	return terra.ReferenceAsBool(mc.ref.Append("allow_snapshot_overwrites"))
 }
 
 func (mc MavenConfigAttributes) VersionPolicy() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("version_policy"))
+	return terra.ReferenceAsString(mc.ref.Append("version_policy"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type MavenConfigState struct {

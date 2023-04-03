@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataprocMetastoreService creates a new instance of [DataprocMetastoreService].
 func NewDataprocMetastoreService(name string, args DataprocMetastoreServiceArgs) *DataprocMetastoreService {
 	return &DataprocMetastoreService{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataprocMetastoreService(name string, args DataprocMetastoreServiceArgs)
 
 var _ terra.Resource = (*DataprocMetastoreService)(nil)
 
+// DataprocMetastoreService represents the Terraform resource google_dataproc_metastore_service.
 type DataprocMetastoreService struct {
-	Name  string
-	Args  DataprocMetastoreServiceArgs
-	state *dataprocMetastoreServiceState
+	Name      string
+	Args      DataprocMetastoreServiceArgs
+	state     *dataprocMetastoreServiceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataprocMetastoreService].
 func (dms *DataprocMetastoreService) Type() string {
 	return "google_dataproc_metastore_service"
 }
 
+// LocalName returns the local name for [DataprocMetastoreService].
 func (dms *DataprocMetastoreService) LocalName() string {
 	return dms.Name
 }
 
+// Configuration returns the configuration (args) for [DataprocMetastoreService].
 func (dms *DataprocMetastoreService) Configuration() interface{} {
 	return dms.Args
 }
 
+// DependOn is used for other resources to depend on [DataprocMetastoreService].
+func (dms *DataprocMetastoreService) DependOn() terra.Reference {
+	return terra.ReferenceResource(dms)
+}
+
+// Dependencies returns the list of resources [DataprocMetastoreService] depends_on.
+func (dms *DataprocMetastoreService) Dependencies() terra.Dependencies {
+	return dms.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataprocMetastoreService].
+func (dms *DataprocMetastoreService) LifecycleManagement() *terra.Lifecycle {
+	return dms.Lifecycle
+}
+
+// Attributes returns the attributes for [DataprocMetastoreService].
 func (dms *DataprocMetastoreService) Attributes() dataprocMetastoreServiceAttributes {
 	return dataprocMetastoreServiceAttributes{ref: terra.ReferenceResource(dms)}
 }
 
+// ImportState imports the given attribute values into [DataprocMetastoreService]'s state.
 func (dms *DataprocMetastoreService) ImportState(av io.Reader) error {
 	dms.state = &dataprocMetastoreServiceState{}
 	if err := json.NewDecoder(av).Decode(dms.state); err != nil {
@@ -49,10 +73,12 @@ func (dms *DataprocMetastoreService) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataprocMetastoreService] has state.
 func (dms *DataprocMetastoreService) State() (*dataprocMetastoreServiceState, bool) {
 	return dms.state, dms.state != nil
 }
 
+// StateMust returns the state for [DataprocMetastoreService]. Panics if the state is nil.
 func (dms *DataprocMetastoreService) StateMust() *dataprocMetastoreServiceState {
 	if dms.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dms.Type(), dms.LocalName()))
@@ -60,10 +86,7 @@ func (dms *DataprocMetastoreService) StateMust() *dataprocMetastoreServiceState 
 	return dms.state
 }
 
-func (dms *DataprocMetastoreService) DependOn() terra.Reference {
-	return terra.ReferenceResource(dms)
-}
-
+// DataprocMetastoreServiceArgs contains the configurations for google_dataproc_metastore_service.
 type DataprocMetastoreServiceArgs struct {
 	// DatabaseType: string, optional
 	DatabaseType terra.StringValue `hcl:"database_type,attr"`
@@ -97,99 +120,113 @@ type DataprocMetastoreServiceArgs struct {
 	TelemetryConfig *dataprocmetastoreservice.TelemetryConfig `hcl:"telemetry_config,block"`
 	// Timeouts: optional
 	Timeouts *dataprocmetastoreservice.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataprocMetastoreService depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataprocMetastoreServiceAttributes struct {
 	ref terra.Reference
 }
 
+// ArtifactGcsUri returns a reference to field artifact_gcs_uri of google_dataproc_metastore_service.
 func (dms dataprocMetastoreServiceAttributes) ArtifactGcsUri() terra.StringValue {
-	return terra.ReferenceString(dms.ref.Append("artifact_gcs_uri"))
+	return terra.ReferenceAsString(dms.ref.Append("artifact_gcs_uri"))
 }
 
+// DatabaseType returns a reference to field database_type of google_dataproc_metastore_service.
 func (dms dataprocMetastoreServiceAttributes) DatabaseType() terra.StringValue {
-	return terra.ReferenceString(dms.ref.Append("database_type"))
+	return terra.ReferenceAsString(dms.ref.Append("database_type"))
 }
 
+// EndpointUri returns a reference to field endpoint_uri of google_dataproc_metastore_service.
 func (dms dataprocMetastoreServiceAttributes) EndpointUri() terra.StringValue {
-	return terra.ReferenceString(dms.ref.Append("endpoint_uri"))
+	return terra.ReferenceAsString(dms.ref.Append("endpoint_uri"))
 }
 
+// Id returns a reference to field id of google_dataproc_metastore_service.
 func (dms dataprocMetastoreServiceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dms.ref.Append("id"))
+	return terra.ReferenceAsString(dms.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_dataproc_metastore_service.
 func (dms dataprocMetastoreServiceAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dms.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](dms.ref.Append("labels"))
 }
 
+// Location returns a reference to field location of google_dataproc_metastore_service.
 func (dms dataprocMetastoreServiceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(dms.ref.Append("location"))
+	return terra.ReferenceAsString(dms.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_dataproc_metastore_service.
 func (dms dataprocMetastoreServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dms.ref.Append("name"))
+	return terra.ReferenceAsString(dms.ref.Append("name"))
 }
 
+// Network returns a reference to field network of google_dataproc_metastore_service.
 func (dms dataprocMetastoreServiceAttributes) Network() terra.StringValue {
-	return terra.ReferenceString(dms.ref.Append("network"))
+	return terra.ReferenceAsString(dms.ref.Append("network"))
 }
 
+// Port returns a reference to field port of google_dataproc_metastore_service.
 func (dms dataprocMetastoreServiceAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(dms.ref.Append("port"))
+	return terra.ReferenceAsNumber(dms.ref.Append("port"))
 }
 
+// Project returns a reference to field project of google_dataproc_metastore_service.
 func (dms dataprocMetastoreServiceAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(dms.ref.Append("project"))
+	return terra.ReferenceAsString(dms.ref.Append("project"))
 }
 
+// ReleaseChannel returns a reference to field release_channel of google_dataproc_metastore_service.
 func (dms dataprocMetastoreServiceAttributes) ReleaseChannel() terra.StringValue {
-	return terra.ReferenceString(dms.ref.Append("release_channel"))
+	return terra.ReferenceAsString(dms.ref.Append("release_channel"))
 }
 
+// ServiceId returns a reference to field service_id of google_dataproc_metastore_service.
 func (dms dataprocMetastoreServiceAttributes) ServiceId() terra.StringValue {
-	return terra.ReferenceString(dms.ref.Append("service_id"))
+	return terra.ReferenceAsString(dms.ref.Append("service_id"))
 }
 
+// State returns a reference to field state of google_dataproc_metastore_service.
 func (dms dataprocMetastoreServiceAttributes) State() terra.StringValue {
-	return terra.ReferenceString(dms.ref.Append("state"))
+	return terra.ReferenceAsString(dms.ref.Append("state"))
 }
 
+// StateMessage returns a reference to field state_message of google_dataproc_metastore_service.
 func (dms dataprocMetastoreServiceAttributes) StateMessage() terra.StringValue {
-	return terra.ReferenceString(dms.ref.Append("state_message"))
+	return terra.ReferenceAsString(dms.ref.Append("state_message"))
 }
 
+// Tier returns a reference to field tier of google_dataproc_metastore_service.
 func (dms dataprocMetastoreServiceAttributes) Tier() terra.StringValue {
-	return terra.ReferenceString(dms.ref.Append("tier"))
+	return terra.ReferenceAsString(dms.ref.Append("tier"))
 }
 
+// Uid returns a reference to field uid of google_dataproc_metastore_service.
 func (dms dataprocMetastoreServiceAttributes) Uid() terra.StringValue {
-	return terra.ReferenceString(dms.ref.Append("uid"))
+	return terra.ReferenceAsString(dms.ref.Append("uid"))
 }
 
 func (dms dataprocMetastoreServiceAttributes) EncryptionConfig() terra.ListValue[dataprocmetastoreservice.EncryptionConfigAttributes] {
-	return terra.ReferenceList[dataprocmetastoreservice.EncryptionConfigAttributes](dms.ref.Append("encryption_config"))
+	return terra.ReferenceAsList[dataprocmetastoreservice.EncryptionConfigAttributes](dms.ref.Append("encryption_config"))
 }
 
 func (dms dataprocMetastoreServiceAttributes) HiveMetastoreConfig() terra.ListValue[dataprocmetastoreservice.HiveMetastoreConfigAttributes] {
-	return terra.ReferenceList[dataprocmetastoreservice.HiveMetastoreConfigAttributes](dms.ref.Append("hive_metastore_config"))
+	return terra.ReferenceAsList[dataprocmetastoreservice.HiveMetastoreConfigAttributes](dms.ref.Append("hive_metastore_config"))
 }
 
 func (dms dataprocMetastoreServiceAttributes) MaintenanceWindow() terra.ListValue[dataprocmetastoreservice.MaintenanceWindowAttributes] {
-	return terra.ReferenceList[dataprocmetastoreservice.MaintenanceWindowAttributes](dms.ref.Append("maintenance_window"))
+	return terra.ReferenceAsList[dataprocmetastoreservice.MaintenanceWindowAttributes](dms.ref.Append("maintenance_window"))
 }
 
 func (dms dataprocMetastoreServiceAttributes) NetworkConfig() terra.ListValue[dataprocmetastoreservice.NetworkConfigAttributes] {
-	return terra.ReferenceList[dataprocmetastoreservice.NetworkConfigAttributes](dms.ref.Append("network_config"))
+	return terra.ReferenceAsList[dataprocmetastoreservice.NetworkConfigAttributes](dms.ref.Append("network_config"))
 }
 
 func (dms dataprocMetastoreServiceAttributes) TelemetryConfig() terra.ListValue[dataprocmetastoreservice.TelemetryConfigAttributes] {
-	return terra.ReferenceList[dataprocmetastoreservice.TelemetryConfigAttributes](dms.ref.Append("telemetry_config"))
+	return terra.ReferenceAsList[dataprocmetastoreservice.TelemetryConfigAttributes](dms.ref.Append("telemetry_config"))
 }
 
 func (dms dataprocMetastoreServiceAttributes) Timeouts() dataprocmetastoreservice.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataprocmetastoreservice.TimeoutsAttributes](dms.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataprocmetastoreservice.TimeoutsAttributes](dms.ref.Append("timeouts"))
 }
 
 type dataprocMetastoreServiceState struct {

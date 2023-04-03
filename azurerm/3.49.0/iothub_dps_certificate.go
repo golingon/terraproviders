@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewIothubDpsCertificate creates a new instance of [IothubDpsCertificate].
 func NewIothubDpsCertificate(name string, args IothubDpsCertificateArgs) *IothubDpsCertificate {
 	return &IothubDpsCertificate{
 		Args: args,
@@ -19,28 +20,51 @@ func NewIothubDpsCertificate(name string, args IothubDpsCertificateArgs) *Iothub
 
 var _ terra.Resource = (*IothubDpsCertificate)(nil)
 
+// IothubDpsCertificate represents the Terraform resource azurerm_iothub_dps_certificate.
 type IothubDpsCertificate struct {
-	Name  string
-	Args  IothubDpsCertificateArgs
-	state *iothubDpsCertificateState
+	Name      string
+	Args      IothubDpsCertificateArgs
+	state     *iothubDpsCertificateState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IothubDpsCertificate].
 func (idc *IothubDpsCertificate) Type() string {
 	return "azurerm_iothub_dps_certificate"
 }
 
+// LocalName returns the local name for [IothubDpsCertificate].
 func (idc *IothubDpsCertificate) LocalName() string {
 	return idc.Name
 }
 
+// Configuration returns the configuration (args) for [IothubDpsCertificate].
 func (idc *IothubDpsCertificate) Configuration() interface{} {
 	return idc.Args
 }
 
+// DependOn is used for other resources to depend on [IothubDpsCertificate].
+func (idc *IothubDpsCertificate) DependOn() terra.Reference {
+	return terra.ReferenceResource(idc)
+}
+
+// Dependencies returns the list of resources [IothubDpsCertificate] depends_on.
+func (idc *IothubDpsCertificate) Dependencies() terra.Dependencies {
+	return idc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IothubDpsCertificate].
+func (idc *IothubDpsCertificate) LifecycleManagement() *terra.Lifecycle {
+	return idc.Lifecycle
+}
+
+// Attributes returns the attributes for [IothubDpsCertificate].
 func (idc *IothubDpsCertificate) Attributes() iothubDpsCertificateAttributes {
 	return iothubDpsCertificateAttributes{ref: terra.ReferenceResource(idc)}
 }
 
+// ImportState imports the given attribute values into [IothubDpsCertificate]'s state.
 func (idc *IothubDpsCertificate) ImportState(av io.Reader) error {
 	idc.state = &iothubDpsCertificateState{}
 	if err := json.NewDecoder(av).Decode(idc.state); err != nil {
@@ -49,10 +73,12 @@ func (idc *IothubDpsCertificate) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IothubDpsCertificate] has state.
 func (idc *IothubDpsCertificate) State() (*iothubDpsCertificateState, bool) {
 	return idc.state, idc.state != nil
 }
 
+// StateMust returns the state for [IothubDpsCertificate]. Panics if the state is nil.
 func (idc *IothubDpsCertificate) StateMust() *iothubDpsCertificateState {
 	if idc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", idc.Type(), idc.LocalName()))
@@ -60,10 +86,7 @@ func (idc *IothubDpsCertificate) StateMust() *iothubDpsCertificateState {
 	return idc.state
 }
 
-func (idc *IothubDpsCertificate) DependOn() terra.Reference {
-	return terra.ReferenceResource(idc)
-}
-
+// IothubDpsCertificateArgs contains the configurations for azurerm_iothub_dps_certificate.
 type IothubDpsCertificateArgs struct {
 	// CertificateContent: string, required
 	CertificateContent terra.StringValue `hcl:"certificate_content,attr" validate:"required"`
@@ -79,39 +102,43 @@ type IothubDpsCertificateArgs struct {
 	ResourceGroupName terra.StringValue `hcl:"resource_group_name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *iothubdpscertificate.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that IothubDpsCertificate depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iothubDpsCertificateAttributes struct {
 	ref terra.Reference
 }
 
+// CertificateContent returns a reference to field certificate_content of azurerm_iothub_dps_certificate.
 func (idc iothubDpsCertificateAttributes) CertificateContent() terra.StringValue {
-	return terra.ReferenceString(idc.ref.Append("certificate_content"))
+	return terra.ReferenceAsString(idc.ref.Append("certificate_content"))
 }
 
+// Id returns a reference to field id of azurerm_iothub_dps_certificate.
 func (idc iothubDpsCertificateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(idc.ref.Append("id"))
+	return terra.ReferenceAsString(idc.ref.Append("id"))
 }
 
+// IotDpsName returns a reference to field iot_dps_name of azurerm_iothub_dps_certificate.
 func (idc iothubDpsCertificateAttributes) IotDpsName() terra.StringValue {
-	return terra.ReferenceString(idc.ref.Append("iot_dps_name"))
+	return terra.ReferenceAsString(idc.ref.Append("iot_dps_name"))
 }
 
+// IsVerified returns a reference to field is_verified of azurerm_iothub_dps_certificate.
 func (idc iothubDpsCertificateAttributes) IsVerified() terra.BoolValue {
-	return terra.ReferenceBool(idc.ref.Append("is_verified"))
+	return terra.ReferenceAsBool(idc.ref.Append("is_verified"))
 }
 
+// Name returns a reference to field name of azurerm_iothub_dps_certificate.
 func (idc iothubDpsCertificateAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(idc.ref.Append("name"))
+	return terra.ReferenceAsString(idc.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_iothub_dps_certificate.
 func (idc iothubDpsCertificateAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(idc.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(idc.ref.Append("resource_group_name"))
 }
 
 func (idc iothubDpsCertificateAttributes) Timeouts() iothubdpscertificate.TimeoutsAttributes {
-	return terra.ReferenceSingle[iothubdpscertificate.TimeoutsAttributes](idc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[iothubdpscertificate.TimeoutsAttributes](idc.ref.Append("timeouts"))
 }
 
 type iothubDpsCertificateState struct {

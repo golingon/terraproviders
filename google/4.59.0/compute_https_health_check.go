@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeHttpsHealthCheck creates a new instance of [ComputeHttpsHealthCheck].
 func NewComputeHttpsHealthCheck(name string, args ComputeHttpsHealthCheckArgs) *ComputeHttpsHealthCheck {
 	return &ComputeHttpsHealthCheck{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeHttpsHealthCheck(name string, args ComputeHttpsHealthCheckArgs) *
 
 var _ terra.Resource = (*ComputeHttpsHealthCheck)(nil)
 
+// ComputeHttpsHealthCheck represents the Terraform resource google_compute_https_health_check.
 type ComputeHttpsHealthCheck struct {
-	Name  string
-	Args  ComputeHttpsHealthCheckArgs
-	state *computeHttpsHealthCheckState
+	Name      string
+	Args      ComputeHttpsHealthCheckArgs
+	state     *computeHttpsHealthCheckState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeHttpsHealthCheck].
 func (chhc *ComputeHttpsHealthCheck) Type() string {
 	return "google_compute_https_health_check"
 }
 
+// LocalName returns the local name for [ComputeHttpsHealthCheck].
 func (chhc *ComputeHttpsHealthCheck) LocalName() string {
 	return chhc.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeHttpsHealthCheck].
 func (chhc *ComputeHttpsHealthCheck) Configuration() interface{} {
 	return chhc.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeHttpsHealthCheck].
+func (chhc *ComputeHttpsHealthCheck) DependOn() terra.Reference {
+	return terra.ReferenceResource(chhc)
+}
+
+// Dependencies returns the list of resources [ComputeHttpsHealthCheck] depends_on.
+func (chhc *ComputeHttpsHealthCheck) Dependencies() terra.Dependencies {
+	return chhc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeHttpsHealthCheck].
+func (chhc *ComputeHttpsHealthCheck) LifecycleManagement() *terra.Lifecycle {
+	return chhc.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeHttpsHealthCheck].
 func (chhc *ComputeHttpsHealthCheck) Attributes() computeHttpsHealthCheckAttributes {
 	return computeHttpsHealthCheckAttributes{ref: terra.ReferenceResource(chhc)}
 }
 
+// ImportState imports the given attribute values into [ComputeHttpsHealthCheck]'s state.
 func (chhc *ComputeHttpsHealthCheck) ImportState(av io.Reader) error {
 	chhc.state = &computeHttpsHealthCheckState{}
 	if err := json.NewDecoder(av).Decode(chhc.state); err != nil {
@@ -49,10 +73,12 @@ func (chhc *ComputeHttpsHealthCheck) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeHttpsHealthCheck] has state.
 func (chhc *ComputeHttpsHealthCheck) State() (*computeHttpsHealthCheckState, bool) {
 	return chhc.state, chhc.state != nil
 }
 
+// StateMust returns the state for [ComputeHttpsHealthCheck]. Panics if the state is nil.
 func (chhc *ComputeHttpsHealthCheck) StateMust() *computeHttpsHealthCheckState {
 	if chhc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", chhc.Type(), chhc.LocalName()))
@@ -60,10 +86,7 @@ func (chhc *ComputeHttpsHealthCheck) StateMust() *computeHttpsHealthCheckState {
 	return chhc.state
 }
 
-func (chhc *ComputeHttpsHealthCheck) DependOn() terra.Reference {
-	return terra.ReferenceResource(chhc)
-}
-
+// ComputeHttpsHealthCheckArgs contains the configurations for google_compute_https_health_check.
 type ComputeHttpsHealthCheckArgs struct {
 	// CheckIntervalSec: number, optional
 	CheckIntervalSec terra.NumberValue `hcl:"check_interval_sec,attr"`
@@ -89,67 +112,78 @@ type ComputeHttpsHealthCheckArgs struct {
 	UnhealthyThreshold terra.NumberValue `hcl:"unhealthy_threshold,attr"`
 	// Timeouts: optional
 	Timeouts *computehttpshealthcheck.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeHttpsHealthCheck depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeHttpsHealthCheckAttributes struct {
 	ref terra.Reference
 }
 
+// CheckIntervalSec returns a reference to field check_interval_sec of google_compute_https_health_check.
 func (chhc computeHttpsHealthCheckAttributes) CheckIntervalSec() terra.NumberValue {
-	return terra.ReferenceNumber(chhc.ref.Append("check_interval_sec"))
+	return terra.ReferenceAsNumber(chhc.ref.Append("check_interval_sec"))
 }
 
+// CreationTimestamp returns a reference to field creation_timestamp of google_compute_https_health_check.
 func (chhc computeHttpsHealthCheckAttributes) CreationTimestamp() terra.StringValue {
-	return terra.ReferenceString(chhc.ref.Append("creation_timestamp"))
+	return terra.ReferenceAsString(chhc.ref.Append("creation_timestamp"))
 }
 
+// Description returns a reference to field description of google_compute_https_health_check.
 func (chhc computeHttpsHealthCheckAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(chhc.ref.Append("description"))
+	return terra.ReferenceAsString(chhc.ref.Append("description"))
 }
 
+// HealthyThreshold returns a reference to field healthy_threshold of google_compute_https_health_check.
 func (chhc computeHttpsHealthCheckAttributes) HealthyThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(chhc.ref.Append("healthy_threshold"))
+	return terra.ReferenceAsNumber(chhc.ref.Append("healthy_threshold"))
 }
 
+// Host returns a reference to field host of google_compute_https_health_check.
 func (chhc computeHttpsHealthCheckAttributes) Host() terra.StringValue {
-	return terra.ReferenceString(chhc.ref.Append("host"))
+	return terra.ReferenceAsString(chhc.ref.Append("host"))
 }
 
+// Id returns a reference to field id of google_compute_https_health_check.
 func (chhc computeHttpsHealthCheckAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(chhc.ref.Append("id"))
+	return terra.ReferenceAsString(chhc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_compute_https_health_check.
 func (chhc computeHttpsHealthCheckAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(chhc.ref.Append("name"))
+	return terra.ReferenceAsString(chhc.ref.Append("name"))
 }
 
+// Port returns a reference to field port of google_compute_https_health_check.
 func (chhc computeHttpsHealthCheckAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(chhc.ref.Append("port"))
+	return terra.ReferenceAsNumber(chhc.ref.Append("port"))
 }
 
+// Project returns a reference to field project of google_compute_https_health_check.
 func (chhc computeHttpsHealthCheckAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(chhc.ref.Append("project"))
+	return terra.ReferenceAsString(chhc.ref.Append("project"))
 }
 
+// RequestPath returns a reference to field request_path of google_compute_https_health_check.
 func (chhc computeHttpsHealthCheckAttributes) RequestPath() terra.StringValue {
-	return terra.ReferenceString(chhc.ref.Append("request_path"))
+	return terra.ReferenceAsString(chhc.ref.Append("request_path"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_https_health_check.
 func (chhc computeHttpsHealthCheckAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(chhc.ref.Append("self_link"))
+	return terra.ReferenceAsString(chhc.ref.Append("self_link"))
 }
 
+// TimeoutSec returns a reference to field timeout_sec of google_compute_https_health_check.
 func (chhc computeHttpsHealthCheckAttributes) TimeoutSec() terra.NumberValue {
-	return terra.ReferenceNumber(chhc.ref.Append("timeout_sec"))
+	return terra.ReferenceAsNumber(chhc.ref.Append("timeout_sec"))
 }
 
+// UnhealthyThreshold returns a reference to field unhealthy_threshold of google_compute_https_health_check.
 func (chhc computeHttpsHealthCheckAttributes) UnhealthyThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(chhc.ref.Append("unhealthy_threshold"))
+	return terra.ReferenceAsNumber(chhc.ref.Append("unhealthy_threshold"))
 }
 
 func (chhc computeHttpsHealthCheckAttributes) Timeouts() computehttpshealthcheck.TimeoutsAttributes {
-	return terra.ReferenceSingle[computehttpshealthcheck.TimeoutsAttributes](chhc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computehttpshealthcheck.TimeoutsAttributes](chhc.ref.Append("timeouts"))
 }
 
 type computeHttpsHealthCheckState struct {

@@ -21,7 +21,7 @@ func (ce ClusterEndpointsAttributes) InternalWithRef(ref terra.Reference) Cluste
 	return ClusterEndpointsAttributes{ref: ref}
 }
 
-func (ce ClusterEndpointsAttributes) InternalTokens() hclwrite.Tokens {
+func (ce ClusterEndpointsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ce.ref.InternalTokens()
 }
 

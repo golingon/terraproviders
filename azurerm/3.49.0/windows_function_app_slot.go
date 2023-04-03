@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewWindowsFunctionAppSlot creates a new instance of [WindowsFunctionAppSlot].
 func NewWindowsFunctionAppSlot(name string, args WindowsFunctionAppSlotArgs) *WindowsFunctionAppSlot {
 	return &WindowsFunctionAppSlot{
 		Args: args,
@@ -19,28 +20,51 @@ func NewWindowsFunctionAppSlot(name string, args WindowsFunctionAppSlotArgs) *Wi
 
 var _ terra.Resource = (*WindowsFunctionAppSlot)(nil)
 
+// WindowsFunctionAppSlot represents the Terraform resource azurerm_windows_function_app_slot.
 type WindowsFunctionAppSlot struct {
-	Name  string
-	Args  WindowsFunctionAppSlotArgs
-	state *windowsFunctionAppSlotState
+	Name      string
+	Args      WindowsFunctionAppSlotArgs
+	state     *windowsFunctionAppSlotState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [WindowsFunctionAppSlot].
 func (wfas *WindowsFunctionAppSlot) Type() string {
 	return "azurerm_windows_function_app_slot"
 }
 
+// LocalName returns the local name for [WindowsFunctionAppSlot].
 func (wfas *WindowsFunctionAppSlot) LocalName() string {
 	return wfas.Name
 }
 
+// Configuration returns the configuration (args) for [WindowsFunctionAppSlot].
 func (wfas *WindowsFunctionAppSlot) Configuration() interface{} {
 	return wfas.Args
 }
 
+// DependOn is used for other resources to depend on [WindowsFunctionAppSlot].
+func (wfas *WindowsFunctionAppSlot) DependOn() terra.Reference {
+	return terra.ReferenceResource(wfas)
+}
+
+// Dependencies returns the list of resources [WindowsFunctionAppSlot] depends_on.
+func (wfas *WindowsFunctionAppSlot) Dependencies() terra.Dependencies {
+	return wfas.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [WindowsFunctionAppSlot].
+func (wfas *WindowsFunctionAppSlot) LifecycleManagement() *terra.Lifecycle {
+	return wfas.Lifecycle
+}
+
+// Attributes returns the attributes for [WindowsFunctionAppSlot].
 func (wfas *WindowsFunctionAppSlot) Attributes() windowsFunctionAppSlotAttributes {
 	return windowsFunctionAppSlotAttributes{ref: terra.ReferenceResource(wfas)}
 }
 
+// ImportState imports the given attribute values into [WindowsFunctionAppSlot]'s state.
 func (wfas *WindowsFunctionAppSlot) ImportState(av io.Reader) error {
 	wfas.state = &windowsFunctionAppSlotState{}
 	if err := json.NewDecoder(av).Decode(wfas.state); err != nil {
@@ -49,10 +73,12 @@ func (wfas *WindowsFunctionAppSlot) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [WindowsFunctionAppSlot] has state.
 func (wfas *WindowsFunctionAppSlot) State() (*windowsFunctionAppSlotState, bool) {
 	return wfas.state, wfas.state != nil
 }
 
+// StateMust returns the state for [WindowsFunctionAppSlot]. Panics if the state is nil.
 func (wfas *WindowsFunctionAppSlot) StateMust() *windowsFunctionAppSlotState {
 	if wfas.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", wfas.Type(), wfas.LocalName()))
@@ -60,10 +86,7 @@ func (wfas *WindowsFunctionAppSlot) StateMust() *windowsFunctionAppSlotState {
 	return wfas.state
 }
 
-func (wfas *WindowsFunctionAppSlot) DependOn() terra.Reference {
-	return terra.ReferenceResource(wfas)
-}
-
+// WindowsFunctionAppSlotArgs contains the configurations for azurerm_windows_function_app_slot.
 type WindowsFunctionAppSlotArgs struct {
 	// AppSettings: map of string, optional
 	AppSettings terra.MapValue[terra.StringValue] `hcl:"app_settings,attr"`
@@ -125,159 +148,185 @@ type WindowsFunctionAppSlotArgs struct {
 	StorageAccount []windowsfunctionappslot.StorageAccount `hcl:"storage_account,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *windowsfunctionappslot.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that WindowsFunctionAppSlot depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type windowsFunctionAppSlotAttributes struct {
 	ref terra.Reference
 }
 
+// AppSettings returns a reference to field app_settings of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) AppSettings() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](wfas.ref.Append("app_settings"))
+	return terra.ReferenceAsMap[terra.StringValue](wfas.ref.Append("app_settings"))
 }
 
+// BuiltinLoggingEnabled returns a reference to field builtin_logging_enabled of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) BuiltinLoggingEnabled() terra.BoolValue {
-	return terra.ReferenceBool(wfas.ref.Append("builtin_logging_enabled"))
+	return terra.ReferenceAsBool(wfas.ref.Append("builtin_logging_enabled"))
 }
 
+// ClientCertificateEnabled returns a reference to field client_certificate_enabled of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) ClientCertificateEnabled() terra.BoolValue {
-	return terra.ReferenceBool(wfas.ref.Append("client_certificate_enabled"))
+	return terra.ReferenceAsBool(wfas.ref.Append("client_certificate_enabled"))
 }
 
+// ClientCertificateExclusionPaths returns a reference to field client_certificate_exclusion_paths of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) ClientCertificateExclusionPaths() terra.StringValue {
-	return terra.ReferenceString(wfas.ref.Append("client_certificate_exclusion_paths"))
+	return terra.ReferenceAsString(wfas.ref.Append("client_certificate_exclusion_paths"))
 }
 
+// ClientCertificateMode returns a reference to field client_certificate_mode of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) ClientCertificateMode() terra.StringValue {
-	return terra.ReferenceString(wfas.ref.Append("client_certificate_mode"))
+	return terra.ReferenceAsString(wfas.ref.Append("client_certificate_mode"))
 }
 
+// ContentShareForceDisabled returns a reference to field content_share_force_disabled of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) ContentShareForceDisabled() terra.BoolValue {
-	return terra.ReferenceBool(wfas.ref.Append("content_share_force_disabled"))
+	return terra.ReferenceAsBool(wfas.ref.Append("content_share_force_disabled"))
 }
 
+// CustomDomainVerificationId returns a reference to field custom_domain_verification_id of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) CustomDomainVerificationId() terra.StringValue {
-	return terra.ReferenceString(wfas.ref.Append("custom_domain_verification_id"))
+	return terra.ReferenceAsString(wfas.ref.Append("custom_domain_verification_id"))
 }
 
+// DailyMemoryTimeQuota returns a reference to field daily_memory_time_quota of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) DailyMemoryTimeQuota() terra.NumberValue {
-	return terra.ReferenceNumber(wfas.ref.Append("daily_memory_time_quota"))
+	return terra.ReferenceAsNumber(wfas.ref.Append("daily_memory_time_quota"))
 }
 
+// DefaultHostname returns a reference to field default_hostname of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) DefaultHostname() terra.StringValue {
-	return terra.ReferenceString(wfas.ref.Append("default_hostname"))
+	return terra.ReferenceAsString(wfas.ref.Append("default_hostname"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(wfas.ref.Append("enabled"))
+	return terra.ReferenceAsBool(wfas.ref.Append("enabled"))
 }
 
+// FunctionAppId returns a reference to field function_app_id of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) FunctionAppId() terra.StringValue {
-	return terra.ReferenceString(wfas.ref.Append("function_app_id"))
+	return terra.ReferenceAsString(wfas.ref.Append("function_app_id"))
 }
 
+// FunctionsExtensionVersion returns a reference to field functions_extension_version of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) FunctionsExtensionVersion() terra.StringValue {
-	return terra.ReferenceString(wfas.ref.Append("functions_extension_version"))
+	return terra.ReferenceAsString(wfas.ref.Append("functions_extension_version"))
 }
 
+// HttpsOnly returns a reference to field https_only of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) HttpsOnly() terra.BoolValue {
-	return terra.ReferenceBool(wfas.ref.Append("https_only"))
+	return terra.ReferenceAsBool(wfas.ref.Append("https_only"))
 }
 
+// Id returns a reference to field id of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(wfas.ref.Append("id"))
+	return terra.ReferenceAsString(wfas.ref.Append("id"))
 }
 
+// KeyVaultReferenceIdentityId returns a reference to field key_vault_reference_identity_id of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) KeyVaultReferenceIdentityId() terra.StringValue {
-	return terra.ReferenceString(wfas.ref.Append("key_vault_reference_identity_id"))
+	return terra.ReferenceAsString(wfas.ref.Append("key_vault_reference_identity_id"))
 }
 
+// Kind returns a reference to field kind of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) Kind() terra.StringValue {
-	return terra.ReferenceString(wfas.ref.Append("kind"))
+	return terra.ReferenceAsString(wfas.ref.Append("kind"))
 }
 
+// Name returns a reference to field name of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(wfas.ref.Append("name"))
+	return terra.ReferenceAsString(wfas.ref.Append("name"))
 }
 
+// OutboundIpAddressList returns a reference to field outbound_ip_address_list of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) OutboundIpAddressList() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](wfas.ref.Append("outbound_ip_address_list"))
+	return terra.ReferenceAsList[terra.StringValue](wfas.ref.Append("outbound_ip_address_list"))
 }
 
+// OutboundIpAddresses returns a reference to field outbound_ip_addresses of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) OutboundIpAddresses() terra.StringValue {
-	return terra.ReferenceString(wfas.ref.Append("outbound_ip_addresses"))
+	return terra.ReferenceAsString(wfas.ref.Append("outbound_ip_addresses"))
 }
 
+// PossibleOutboundIpAddressList returns a reference to field possible_outbound_ip_address_list of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) PossibleOutboundIpAddressList() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](wfas.ref.Append("possible_outbound_ip_address_list"))
+	return terra.ReferenceAsList[terra.StringValue](wfas.ref.Append("possible_outbound_ip_address_list"))
 }
 
+// PossibleOutboundIpAddresses returns a reference to field possible_outbound_ip_addresses of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) PossibleOutboundIpAddresses() terra.StringValue {
-	return terra.ReferenceString(wfas.ref.Append("possible_outbound_ip_addresses"))
+	return terra.ReferenceAsString(wfas.ref.Append("possible_outbound_ip_addresses"))
 }
 
+// ServicePlanId returns a reference to field service_plan_id of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) ServicePlanId() terra.StringValue {
-	return terra.ReferenceString(wfas.ref.Append("service_plan_id"))
+	return terra.ReferenceAsString(wfas.ref.Append("service_plan_id"))
 }
 
+// StorageAccountAccessKey returns a reference to field storage_account_access_key of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) StorageAccountAccessKey() terra.StringValue {
-	return terra.ReferenceString(wfas.ref.Append("storage_account_access_key"))
+	return terra.ReferenceAsString(wfas.ref.Append("storage_account_access_key"))
 }
 
+// StorageAccountName returns a reference to field storage_account_name of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) StorageAccountName() terra.StringValue {
-	return terra.ReferenceString(wfas.ref.Append("storage_account_name"))
+	return terra.ReferenceAsString(wfas.ref.Append("storage_account_name"))
 }
 
+// StorageKeyVaultSecretId returns a reference to field storage_key_vault_secret_id of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) StorageKeyVaultSecretId() terra.StringValue {
-	return terra.ReferenceString(wfas.ref.Append("storage_key_vault_secret_id"))
+	return terra.ReferenceAsString(wfas.ref.Append("storage_key_vault_secret_id"))
 }
 
+// StorageUsesManagedIdentity returns a reference to field storage_uses_managed_identity of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) StorageUsesManagedIdentity() terra.BoolValue {
-	return terra.ReferenceBool(wfas.ref.Append("storage_uses_managed_identity"))
+	return terra.ReferenceAsBool(wfas.ref.Append("storage_uses_managed_identity"))
 }
 
+// Tags returns a reference to field tags of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](wfas.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](wfas.ref.Append("tags"))
 }
 
+// VirtualNetworkSubnetId returns a reference to field virtual_network_subnet_id of azurerm_windows_function_app_slot.
 func (wfas windowsFunctionAppSlotAttributes) VirtualNetworkSubnetId() terra.StringValue {
-	return terra.ReferenceString(wfas.ref.Append("virtual_network_subnet_id"))
+	return terra.ReferenceAsString(wfas.ref.Append("virtual_network_subnet_id"))
 }
 
 func (wfas windowsFunctionAppSlotAttributes) SiteCredential() terra.ListValue[windowsfunctionappslot.SiteCredentialAttributes] {
-	return terra.ReferenceList[windowsfunctionappslot.SiteCredentialAttributes](wfas.ref.Append("site_credential"))
+	return terra.ReferenceAsList[windowsfunctionappslot.SiteCredentialAttributes](wfas.ref.Append("site_credential"))
 }
 
 func (wfas windowsFunctionAppSlotAttributes) AuthSettings() terra.ListValue[windowsfunctionappslot.AuthSettingsAttributes] {
-	return terra.ReferenceList[windowsfunctionappslot.AuthSettingsAttributes](wfas.ref.Append("auth_settings"))
+	return terra.ReferenceAsList[windowsfunctionappslot.AuthSettingsAttributes](wfas.ref.Append("auth_settings"))
 }
 
 func (wfas windowsFunctionAppSlotAttributes) AuthSettingsV2() terra.ListValue[windowsfunctionappslot.AuthSettingsV2Attributes] {
-	return terra.ReferenceList[windowsfunctionappslot.AuthSettingsV2Attributes](wfas.ref.Append("auth_settings_v2"))
+	return terra.ReferenceAsList[windowsfunctionappslot.AuthSettingsV2Attributes](wfas.ref.Append("auth_settings_v2"))
 }
 
 func (wfas windowsFunctionAppSlotAttributes) Backup() terra.ListValue[windowsfunctionappslot.BackupAttributes] {
-	return terra.ReferenceList[windowsfunctionappslot.BackupAttributes](wfas.ref.Append("backup"))
+	return terra.ReferenceAsList[windowsfunctionappslot.BackupAttributes](wfas.ref.Append("backup"))
 }
 
 func (wfas windowsFunctionAppSlotAttributes) ConnectionString() terra.SetValue[windowsfunctionappslot.ConnectionStringAttributes] {
-	return terra.ReferenceSet[windowsfunctionappslot.ConnectionStringAttributes](wfas.ref.Append("connection_string"))
+	return terra.ReferenceAsSet[windowsfunctionappslot.ConnectionStringAttributes](wfas.ref.Append("connection_string"))
 }
 
 func (wfas windowsFunctionAppSlotAttributes) Identity() terra.ListValue[windowsfunctionappslot.IdentityAttributes] {
-	return terra.ReferenceList[windowsfunctionappslot.IdentityAttributes](wfas.ref.Append("identity"))
+	return terra.ReferenceAsList[windowsfunctionappslot.IdentityAttributes](wfas.ref.Append("identity"))
 }
 
 func (wfas windowsFunctionAppSlotAttributes) SiteConfig() terra.ListValue[windowsfunctionappslot.SiteConfigAttributes] {
-	return terra.ReferenceList[windowsfunctionappslot.SiteConfigAttributes](wfas.ref.Append("site_config"))
+	return terra.ReferenceAsList[windowsfunctionappslot.SiteConfigAttributes](wfas.ref.Append("site_config"))
 }
 
 func (wfas windowsFunctionAppSlotAttributes) StorageAccount() terra.SetValue[windowsfunctionappslot.StorageAccountAttributes] {
-	return terra.ReferenceSet[windowsfunctionappslot.StorageAccountAttributes](wfas.ref.Append("storage_account"))
+	return terra.ReferenceAsSet[windowsfunctionappslot.StorageAccountAttributes](wfas.ref.Append("storage_account"))
 }
 
 func (wfas windowsFunctionAppSlotAttributes) Timeouts() windowsfunctionappslot.TimeoutsAttributes {
-	return terra.ReferenceSingle[windowsfunctionappslot.TimeoutsAttributes](wfas.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[windowsfunctionappslot.TimeoutsAttributes](wfas.ref.Append("timeouts"))
 }
 
 type windowsFunctionAppSlotState struct {

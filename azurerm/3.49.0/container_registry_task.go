@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewContainerRegistryTask creates a new instance of [ContainerRegistryTask].
 func NewContainerRegistryTask(name string, args ContainerRegistryTaskArgs) *ContainerRegistryTask {
 	return &ContainerRegistryTask{
 		Args: args,
@@ -19,28 +20,51 @@ func NewContainerRegistryTask(name string, args ContainerRegistryTaskArgs) *Cont
 
 var _ terra.Resource = (*ContainerRegistryTask)(nil)
 
+// ContainerRegistryTask represents the Terraform resource azurerm_container_registry_task.
 type ContainerRegistryTask struct {
-	Name  string
-	Args  ContainerRegistryTaskArgs
-	state *containerRegistryTaskState
+	Name      string
+	Args      ContainerRegistryTaskArgs
+	state     *containerRegistryTaskState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ContainerRegistryTask].
 func (crt *ContainerRegistryTask) Type() string {
 	return "azurerm_container_registry_task"
 }
 
+// LocalName returns the local name for [ContainerRegistryTask].
 func (crt *ContainerRegistryTask) LocalName() string {
 	return crt.Name
 }
 
+// Configuration returns the configuration (args) for [ContainerRegistryTask].
 func (crt *ContainerRegistryTask) Configuration() interface{} {
 	return crt.Args
 }
 
+// DependOn is used for other resources to depend on [ContainerRegistryTask].
+func (crt *ContainerRegistryTask) DependOn() terra.Reference {
+	return terra.ReferenceResource(crt)
+}
+
+// Dependencies returns the list of resources [ContainerRegistryTask] depends_on.
+func (crt *ContainerRegistryTask) Dependencies() terra.Dependencies {
+	return crt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ContainerRegistryTask].
+func (crt *ContainerRegistryTask) LifecycleManagement() *terra.Lifecycle {
+	return crt.Lifecycle
+}
+
+// Attributes returns the attributes for [ContainerRegistryTask].
 func (crt *ContainerRegistryTask) Attributes() containerRegistryTaskAttributes {
 	return containerRegistryTaskAttributes{ref: terra.ReferenceResource(crt)}
 }
 
+// ImportState imports the given attribute values into [ContainerRegistryTask]'s state.
 func (crt *ContainerRegistryTask) ImportState(av io.Reader) error {
 	crt.state = &containerRegistryTaskState{}
 	if err := json.NewDecoder(av).Decode(crt.state); err != nil {
@@ -49,10 +73,12 @@ func (crt *ContainerRegistryTask) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ContainerRegistryTask] has state.
 func (crt *ContainerRegistryTask) State() (*containerRegistryTaskState, bool) {
 	return crt.state, crt.state != nil
 }
 
+// StateMust returns the state for [ContainerRegistryTask]. Panics if the state is nil.
 func (crt *ContainerRegistryTask) StateMust() *containerRegistryTaskState {
 	if crt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", crt.Type(), crt.LocalName()))
@@ -60,10 +86,7 @@ func (crt *ContainerRegistryTask) StateMust() *containerRegistryTaskState {
 	return crt.state
 }
 
-func (crt *ContainerRegistryTask) DependOn() terra.Reference {
-	return terra.ReferenceResource(crt)
-}
-
+// ContainerRegistryTaskArgs contains the configurations for azurerm_container_registry_task.
 type ContainerRegistryTaskArgs struct {
 	// AgentPoolName: string, optional
 	AgentPoolName terra.StringValue `hcl:"agent_pool_name,attr"`
@@ -105,91 +128,98 @@ type ContainerRegistryTaskArgs struct {
 	Timeouts *containerregistrytask.Timeouts `hcl:"timeouts,block"`
 	// TimerTrigger: min=0
 	TimerTrigger []containerregistrytask.TimerTrigger `hcl:"timer_trigger,block" validate:"min=0"`
-	// DependsOn contains resources that ContainerRegistryTask depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type containerRegistryTaskAttributes struct {
 	ref terra.Reference
 }
 
+// AgentPoolName returns a reference to field agent_pool_name of azurerm_container_registry_task.
 func (crt containerRegistryTaskAttributes) AgentPoolName() terra.StringValue {
-	return terra.ReferenceString(crt.ref.Append("agent_pool_name"))
+	return terra.ReferenceAsString(crt.ref.Append("agent_pool_name"))
 }
 
+// ContainerRegistryId returns a reference to field container_registry_id of azurerm_container_registry_task.
 func (crt containerRegistryTaskAttributes) ContainerRegistryId() terra.StringValue {
-	return terra.ReferenceString(crt.ref.Append("container_registry_id"))
+	return terra.ReferenceAsString(crt.ref.Append("container_registry_id"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_container_registry_task.
 func (crt containerRegistryTaskAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(crt.ref.Append("enabled"))
+	return terra.ReferenceAsBool(crt.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of azurerm_container_registry_task.
 func (crt containerRegistryTaskAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(crt.ref.Append("id"))
+	return terra.ReferenceAsString(crt.ref.Append("id"))
 }
 
+// IsSystemTask returns a reference to field is_system_task of azurerm_container_registry_task.
 func (crt containerRegistryTaskAttributes) IsSystemTask() terra.BoolValue {
-	return terra.ReferenceBool(crt.ref.Append("is_system_task"))
+	return terra.ReferenceAsBool(crt.ref.Append("is_system_task"))
 }
 
+// LogTemplate returns a reference to field log_template of azurerm_container_registry_task.
 func (crt containerRegistryTaskAttributes) LogTemplate() terra.StringValue {
-	return terra.ReferenceString(crt.ref.Append("log_template"))
+	return terra.ReferenceAsString(crt.ref.Append("log_template"))
 }
 
+// Name returns a reference to field name of azurerm_container_registry_task.
 func (crt containerRegistryTaskAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(crt.ref.Append("name"))
+	return terra.ReferenceAsString(crt.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of azurerm_container_registry_task.
 func (crt containerRegistryTaskAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](crt.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](crt.ref.Append("tags"))
 }
 
+// TimeoutInSeconds returns a reference to field timeout_in_seconds of azurerm_container_registry_task.
 func (crt containerRegistryTaskAttributes) TimeoutInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(crt.ref.Append("timeout_in_seconds"))
+	return terra.ReferenceAsNumber(crt.ref.Append("timeout_in_seconds"))
 }
 
 func (crt containerRegistryTaskAttributes) AgentSetting() terra.ListValue[containerregistrytask.AgentSettingAttributes] {
-	return terra.ReferenceList[containerregistrytask.AgentSettingAttributes](crt.ref.Append("agent_setting"))
+	return terra.ReferenceAsList[containerregistrytask.AgentSettingAttributes](crt.ref.Append("agent_setting"))
 }
 
 func (crt containerRegistryTaskAttributes) BaseImageTrigger() terra.ListValue[containerregistrytask.BaseImageTriggerAttributes] {
-	return terra.ReferenceList[containerregistrytask.BaseImageTriggerAttributes](crt.ref.Append("base_image_trigger"))
+	return terra.ReferenceAsList[containerregistrytask.BaseImageTriggerAttributes](crt.ref.Append("base_image_trigger"))
 }
 
 func (crt containerRegistryTaskAttributes) DockerStep() terra.ListValue[containerregistrytask.DockerStepAttributes] {
-	return terra.ReferenceList[containerregistrytask.DockerStepAttributes](crt.ref.Append("docker_step"))
+	return terra.ReferenceAsList[containerregistrytask.DockerStepAttributes](crt.ref.Append("docker_step"))
 }
 
 func (crt containerRegistryTaskAttributes) EncodedStep() terra.ListValue[containerregistrytask.EncodedStepAttributes] {
-	return terra.ReferenceList[containerregistrytask.EncodedStepAttributes](crt.ref.Append("encoded_step"))
+	return terra.ReferenceAsList[containerregistrytask.EncodedStepAttributes](crt.ref.Append("encoded_step"))
 }
 
 func (crt containerRegistryTaskAttributes) FileStep() terra.ListValue[containerregistrytask.FileStepAttributes] {
-	return terra.ReferenceList[containerregistrytask.FileStepAttributes](crt.ref.Append("file_step"))
+	return terra.ReferenceAsList[containerregistrytask.FileStepAttributes](crt.ref.Append("file_step"))
 }
 
 func (crt containerRegistryTaskAttributes) Identity() terra.ListValue[containerregistrytask.IdentityAttributes] {
-	return terra.ReferenceList[containerregistrytask.IdentityAttributes](crt.ref.Append("identity"))
+	return terra.ReferenceAsList[containerregistrytask.IdentityAttributes](crt.ref.Append("identity"))
 }
 
 func (crt containerRegistryTaskAttributes) Platform() terra.ListValue[containerregistrytask.PlatformAttributes] {
-	return terra.ReferenceList[containerregistrytask.PlatformAttributes](crt.ref.Append("platform"))
+	return terra.ReferenceAsList[containerregistrytask.PlatformAttributes](crt.ref.Append("platform"))
 }
 
 func (crt containerRegistryTaskAttributes) RegistryCredential() terra.ListValue[containerregistrytask.RegistryCredentialAttributes] {
-	return terra.ReferenceList[containerregistrytask.RegistryCredentialAttributes](crt.ref.Append("registry_credential"))
+	return terra.ReferenceAsList[containerregistrytask.RegistryCredentialAttributes](crt.ref.Append("registry_credential"))
 }
 
 func (crt containerRegistryTaskAttributes) SourceTrigger() terra.ListValue[containerregistrytask.SourceTriggerAttributes] {
-	return terra.ReferenceList[containerregistrytask.SourceTriggerAttributes](crt.ref.Append("source_trigger"))
+	return terra.ReferenceAsList[containerregistrytask.SourceTriggerAttributes](crt.ref.Append("source_trigger"))
 }
 
 func (crt containerRegistryTaskAttributes) Timeouts() containerregistrytask.TimeoutsAttributes {
-	return terra.ReferenceSingle[containerregistrytask.TimeoutsAttributes](crt.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[containerregistrytask.TimeoutsAttributes](crt.ref.Append("timeouts"))
 }
 
 func (crt containerRegistryTaskAttributes) TimerTrigger() terra.ListValue[containerregistrytask.TimerTriggerAttributes] {
-	return terra.ReferenceList[containerregistrytask.TimerTriggerAttributes](crt.ref.Append("timer_trigger"))
+	return terra.ReferenceAsList[containerregistrytask.TimerTriggerAttributes](crt.ref.Append("timer_trigger"))
 }
 
 type containerRegistryTaskState struct {

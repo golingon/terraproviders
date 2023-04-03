@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSqlElasticpool creates a new instance of [SqlElasticpool].
 func NewSqlElasticpool(name string, args SqlElasticpoolArgs) *SqlElasticpool {
 	return &SqlElasticpool{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSqlElasticpool(name string, args SqlElasticpoolArgs) *SqlElasticpool {
 
 var _ terra.Resource = (*SqlElasticpool)(nil)
 
+// SqlElasticpool represents the Terraform resource azurerm_sql_elasticpool.
 type SqlElasticpool struct {
-	Name  string
-	Args  SqlElasticpoolArgs
-	state *sqlElasticpoolState
+	Name      string
+	Args      SqlElasticpoolArgs
+	state     *sqlElasticpoolState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SqlElasticpool].
 func (se *SqlElasticpool) Type() string {
 	return "azurerm_sql_elasticpool"
 }
 
+// LocalName returns the local name for [SqlElasticpool].
 func (se *SqlElasticpool) LocalName() string {
 	return se.Name
 }
 
+// Configuration returns the configuration (args) for [SqlElasticpool].
 func (se *SqlElasticpool) Configuration() interface{} {
 	return se.Args
 }
 
+// DependOn is used for other resources to depend on [SqlElasticpool].
+func (se *SqlElasticpool) DependOn() terra.Reference {
+	return terra.ReferenceResource(se)
+}
+
+// Dependencies returns the list of resources [SqlElasticpool] depends_on.
+func (se *SqlElasticpool) Dependencies() terra.Dependencies {
+	return se.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SqlElasticpool].
+func (se *SqlElasticpool) LifecycleManagement() *terra.Lifecycle {
+	return se.Lifecycle
+}
+
+// Attributes returns the attributes for [SqlElasticpool].
 func (se *SqlElasticpool) Attributes() sqlElasticpoolAttributes {
 	return sqlElasticpoolAttributes{ref: terra.ReferenceResource(se)}
 }
 
+// ImportState imports the given attribute values into [SqlElasticpool]'s state.
 func (se *SqlElasticpool) ImportState(av io.Reader) error {
 	se.state = &sqlElasticpoolState{}
 	if err := json.NewDecoder(av).Decode(se.state); err != nil {
@@ -49,10 +73,12 @@ func (se *SqlElasticpool) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SqlElasticpool] has state.
 func (se *SqlElasticpool) State() (*sqlElasticpoolState, bool) {
 	return se.state, se.state != nil
 }
 
+// StateMust returns the state for [SqlElasticpool]. Panics if the state is nil.
 func (se *SqlElasticpool) StateMust() *sqlElasticpoolState {
 	if se.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", se.Type(), se.LocalName()))
@@ -60,10 +86,7 @@ func (se *SqlElasticpool) StateMust() *sqlElasticpoolState {
 	return se.state
 }
 
-func (se *SqlElasticpool) DependOn() terra.Reference {
-	return terra.ReferenceResource(se)
-}
-
+// SqlElasticpoolArgs contains the configurations for azurerm_sql_elasticpool.
 type SqlElasticpoolArgs struct {
 	// DbDtuMax: number, optional
 	DbDtuMax terra.NumberValue `hcl:"db_dtu_max,attr"`
@@ -89,63 +112,73 @@ type SqlElasticpoolArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// Timeouts: optional
 	Timeouts *sqlelasticpool.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SqlElasticpool depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sqlElasticpoolAttributes struct {
 	ref terra.Reference
 }
 
+// CreationDate returns a reference to field creation_date of azurerm_sql_elasticpool.
 func (se sqlElasticpoolAttributes) CreationDate() terra.StringValue {
-	return terra.ReferenceString(se.ref.Append("creation_date"))
+	return terra.ReferenceAsString(se.ref.Append("creation_date"))
 }
 
+// DbDtuMax returns a reference to field db_dtu_max of azurerm_sql_elasticpool.
 func (se sqlElasticpoolAttributes) DbDtuMax() terra.NumberValue {
-	return terra.ReferenceNumber(se.ref.Append("db_dtu_max"))
+	return terra.ReferenceAsNumber(se.ref.Append("db_dtu_max"))
 }
 
+// DbDtuMin returns a reference to field db_dtu_min of azurerm_sql_elasticpool.
 func (se sqlElasticpoolAttributes) DbDtuMin() terra.NumberValue {
-	return terra.ReferenceNumber(se.ref.Append("db_dtu_min"))
+	return terra.ReferenceAsNumber(se.ref.Append("db_dtu_min"))
 }
 
+// Dtu returns a reference to field dtu of azurerm_sql_elasticpool.
 func (se sqlElasticpoolAttributes) Dtu() terra.NumberValue {
-	return terra.ReferenceNumber(se.ref.Append("dtu"))
+	return terra.ReferenceAsNumber(se.ref.Append("dtu"))
 }
 
+// Edition returns a reference to field edition of azurerm_sql_elasticpool.
 func (se sqlElasticpoolAttributes) Edition() terra.StringValue {
-	return terra.ReferenceString(se.ref.Append("edition"))
+	return terra.ReferenceAsString(se.ref.Append("edition"))
 }
 
+// Id returns a reference to field id of azurerm_sql_elasticpool.
 func (se sqlElasticpoolAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(se.ref.Append("id"))
+	return terra.ReferenceAsString(se.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_sql_elasticpool.
 func (se sqlElasticpoolAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(se.ref.Append("location"))
+	return terra.ReferenceAsString(se.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_sql_elasticpool.
 func (se sqlElasticpoolAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(se.ref.Append("name"))
+	return terra.ReferenceAsString(se.ref.Append("name"))
 }
 
+// PoolSize returns a reference to field pool_size of azurerm_sql_elasticpool.
 func (se sqlElasticpoolAttributes) PoolSize() terra.NumberValue {
-	return terra.ReferenceNumber(se.ref.Append("pool_size"))
+	return terra.ReferenceAsNumber(se.ref.Append("pool_size"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_sql_elasticpool.
 func (se sqlElasticpoolAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(se.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(se.ref.Append("resource_group_name"))
 }
 
+// ServerName returns a reference to field server_name of azurerm_sql_elasticpool.
 func (se sqlElasticpoolAttributes) ServerName() terra.StringValue {
-	return terra.ReferenceString(se.ref.Append("server_name"))
+	return terra.ReferenceAsString(se.ref.Append("server_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_sql_elasticpool.
 func (se sqlElasticpoolAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](se.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](se.ref.Append("tags"))
 }
 
 func (se sqlElasticpoolAttributes) Timeouts() sqlelasticpool.TimeoutsAttributes {
-	return terra.ReferenceSingle[sqlelasticpool.TimeoutsAttributes](se.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[sqlelasticpool.TimeoutsAttributes](se.ref.Append("timeouts"))
 }
 
 type sqlElasticpoolState struct {

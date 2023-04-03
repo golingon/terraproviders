@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLb creates a new instance of [Lb].
 func NewLb(name string, args LbArgs) *Lb {
 	return &Lb{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLb(name string, args LbArgs) *Lb {
 
 var _ terra.Resource = (*Lb)(nil)
 
+// Lb represents the Terraform resource azurerm_lb.
 type Lb struct {
-	Name  string
-	Args  LbArgs
-	state *lbState
+	Name      string
+	Args      LbArgs
+	state     *lbState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Lb].
 func (l *Lb) Type() string {
 	return "azurerm_lb"
 }
 
+// LocalName returns the local name for [Lb].
 func (l *Lb) LocalName() string {
 	return l.Name
 }
 
+// Configuration returns the configuration (args) for [Lb].
 func (l *Lb) Configuration() interface{} {
 	return l.Args
 }
 
+// DependOn is used for other resources to depend on [Lb].
+func (l *Lb) DependOn() terra.Reference {
+	return terra.ReferenceResource(l)
+}
+
+// Dependencies returns the list of resources [Lb] depends_on.
+func (l *Lb) Dependencies() terra.Dependencies {
+	return l.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Lb].
+func (l *Lb) LifecycleManagement() *terra.Lifecycle {
+	return l.Lifecycle
+}
+
+// Attributes returns the attributes for [Lb].
 func (l *Lb) Attributes() lbAttributes {
 	return lbAttributes{ref: terra.ReferenceResource(l)}
 }
 
+// ImportState imports the given attribute values into [Lb]'s state.
 func (l *Lb) ImportState(av io.Reader) error {
 	l.state = &lbState{}
 	if err := json.NewDecoder(av).Decode(l.state); err != nil {
@@ -49,10 +73,12 @@ func (l *Lb) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Lb] has state.
 func (l *Lb) State() (*lbState, bool) {
 	return l.state, l.state != nil
 }
 
+// StateMust returns the state for [Lb]. Panics if the state is nil.
 func (l *Lb) StateMust() *lbState {
 	if l.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", l.Type(), l.LocalName()))
@@ -60,10 +86,7 @@ func (l *Lb) StateMust() *lbState {
 	return l.state
 }
 
-func (l *Lb) DependOn() terra.Reference {
-	return terra.ReferenceResource(l)
-}
-
+// LbArgs contains the configurations for azurerm_lb.
 type LbArgs struct {
 	// EdgeZone: string, optional
 	EdgeZone terra.StringValue `hcl:"edge_zone,attr"`
@@ -85,59 +108,67 @@ type LbArgs struct {
 	FrontendIpConfiguration []lb.FrontendIpConfiguration `hcl:"frontend_ip_configuration,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *lb.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that Lb depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lbAttributes struct {
 	ref terra.Reference
 }
 
+// EdgeZone returns a reference to field edge_zone of azurerm_lb.
 func (l lbAttributes) EdgeZone() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("edge_zone"))
+	return terra.ReferenceAsString(l.ref.Append("edge_zone"))
 }
 
+// Id returns a reference to field id of azurerm_lb.
 func (l lbAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("id"))
+	return terra.ReferenceAsString(l.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_lb.
 func (l lbAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("location"))
+	return terra.ReferenceAsString(l.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_lb.
 func (l lbAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("name"))
+	return terra.ReferenceAsString(l.ref.Append("name"))
 }
 
+// PrivateIpAddress returns a reference to field private_ip_address of azurerm_lb.
 func (l lbAttributes) PrivateIpAddress() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("private_ip_address"))
+	return terra.ReferenceAsString(l.ref.Append("private_ip_address"))
 }
 
+// PrivateIpAddresses returns a reference to field private_ip_addresses of azurerm_lb.
 func (l lbAttributes) PrivateIpAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](l.ref.Append("private_ip_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](l.ref.Append("private_ip_addresses"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_lb.
 func (l lbAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(l.ref.Append("resource_group_name"))
 }
 
+// Sku returns a reference to field sku of azurerm_lb.
 func (l lbAttributes) Sku() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("sku"))
+	return terra.ReferenceAsString(l.ref.Append("sku"))
 }
 
+// SkuTier returns a reference to field sku_tier of azurerm_lb.
 func (l lbAttributes) SkuTier() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("sku_tier"))
+	return terra.ReferenceAsString(l.ref.Append("sku_tier"))
 }
 
+// Tags returns a reference to field tags of azurerm_lb.
 func (l lbAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](l.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](l.ref.Append("tags"))
 }
 
 func (l lbAttributes) FrontendIpConfiguration() terra.ListValue[lb.FrontendIpConfigurationAttributes] {
-	return terra.ReferenceList[lb.FrontendIpConfigurationAttributes](l.ref.Append("frontend_ip_configuration"))
+	return terra.ReferenceAsList[lb.FrontendIpConfigurationAttributes](l.ref.Append("frontend_ip_configuration"))
 }
 
 func (l lbAttributes) Timeouts() lb.TimeoutsAttributes {
-	return terra.ReferenceSingle[lb.TimeoutsAttributes](l.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[lb.TimeoutsAttributes](l.ref.Append("timeouts"))
 }
 
 type lbState struct {

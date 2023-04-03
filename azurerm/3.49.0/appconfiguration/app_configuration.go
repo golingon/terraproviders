@@ -44,200 +44,200 @@ type PrimaryReadKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (prk PrimaryReadKeyAttributes) InternalRef() terra.Reference {
-	return prk.ref
+func (prk PrimaryReadKeyAttributes) InternalRef() (terra.Reference, error) {
+	return prk.ref, nil
 }
 
 func (prk PrimaryReadKeyAttributes) InternalWithRef(ref terra.Reference) PrimaryReadKeyAttributes {
 	return PrimaryReadKeyAttributes{ref: ref}
 }
 
-func (prk PrimaryReadKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (prk PrimaryReadKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return prk.ref.InternalTokens()
 }
 
 func (prk PrimaryReadKeyAttributes) ConnectionString() terra.StringValue {
-	return terra.ReferenceString(prk.ref.Append("connection_string"))
+	return terra.ReferenceAsString(prk.ref.Append("connection_string"))
 }
 
 func (prk PrimaryReadKeyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(prk.ref.Append("id"))
+	return terra.ReferenceAsString(prk.ref.Append("id"))
 }
 
 func (prk PrimaryReadKeyAttributes) Secret() terra.StringValue {
-	return terra.ReferenceString(prk.ref.Append("secret"))
+	return terra.ReferenceAsString(prk.ref.Append("secret"))
 }
 
 type PrimaryWriteKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (pwk PrimaryWriteKeyAttributes) InternalRef() terra.Reference {
-	return pwk.ref
+func (pwk PrimaryWriteKeyAttributes) InternalRef() (terra.Reference, error) {
+	return pwk.ref, nil
 }
 
 func (pwk PrimaryWriteKeyAttributes) InternalWithRef(ref terra.Reference) PrimaryWriteKeyAttributes {
 	return PrimaryWriteKeyAttributes{ref: ref}
 }
 
-func (pwk PrimaryWriteKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (pwk PrimaryWriteKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pwk.ref.InternalTokens()
 }
 
 func (pwk PrimaryWriteKeyAttributes) ConnectionString() terra.StringValue {
-	return terra.ReferenceString(pwk.ref.Append("connection_string"))
+	return terra.ReferenceAsString(pwk.ref.Append("connection_string"))
 }
 
 func (pwk PrimaryWriteKeyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pwk.ref.Append("id"))
+	return terra.ReferenceAsString(pwk.ref.Append("id"))
 }
 
 func (pwk PrimaryWriteKeyAttributes) Secret() terra.StringValue {
-	return terra.ReferenceString(pwk.ref.Append("secret"))
+	return terra.ReferenceAsString(pwk.ref.Append("secret"))
 }
 
 type SecondaryReadKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (srk SecondaryReadKeyAttributes) InternalRef() terra.Reference {
-	return srk.ref
+func (srk SecondaryReadKeyAttributes) InternalRef() (terra.Reference, error) {
+	return srk.ref, nil
 }
 
 func (srk SecondaryReadKeyAttributes) InternalWithRef(ref terra.Reference) SecondaryReadKeyAttributes {
 	return SecondaryReadKeyAttributes{ref: ref}
 }
 
-func (srk SecondaryReadKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (srk SecondaryReadKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return srk.ref.InternalTokens()
 }
 
 func (srk SecondaryReadKeyAttributes) ConnectionString() terra.StringValue {
-	return terra.ReferenceString(srk.ref.Append("connection_string"))
+	return terra.ReferenceAsString(srk.ref.Append("connection_string"))
 }
 
 func (srk SecondaryReadKeyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(srk.ref.Append("id"))
+	return terra.ReferenceAsString(srk.ref.Append("id"))
 }
 
 func (srk SecondaryReadKeyAttributes) Secret() terra.StringValue {
-	return terra.ReferenceString(srk.ref.Append("secret"))
+	return terra.ReferenceAsString(srk.ref.Append("secret"))
 }
 
 type SecondaryWriteKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (swk SecondaryWriteKeyAttributes) InternalRef() terra.Reference {
-	return swk.ref
+func (swk SecondaryWriteKeyAttributes) InternalRef() (terra.Reference, error) {
+	return swk.ref, nil
 }
 
 func (swk SecondaryWriteKeyAttributes) InternalWithRef(ref terra.Reference) SecondaryWriteKeyAttributes {
 	return SecondaryWriteKeyAttributes{ref: ref}
 }
 
-func (swk SecondaryWriteKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (swk SecondaryWriteKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return swk.ref.InternalTokens()
 }
 
 func (swk SecondaryWriteKeyAttributes) ConnectionString() terra.StringValue {
-	return terra.ReferenceString(swk.ref.Append("connection_string"))
+	return terra.ReferenceAsString(swk.ref.Append("connection_string"))
 }
 
 func (swk SecondaryWriteKeyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(swk.ref.Append("id"))
+	return terra.ReferenceAsString(swk.ref.Append("id"))
 }
 
 func (swk SecondaryWriteKeyAttributes) Secret() terra.StringValue {
-	return terra.ReferenceString(swk.ref.Append("secret"))
+	return terra.ReferenceAsString(swk.ref.Append("secret"))
 }
 
 type EncryptionAttributes struct {
 	ref terra.Reference
 }
 
-func (e EncryptionAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EncryptionAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EncryptionAttributes) InternalWithRef(ref terra.Reference) EncryptionAttributes {
 	return EncryptionAttributes{ref: ref}
 }
 
-func (e EncryptionAttributes) InternalTokens() hclwrite.Tokens {
+func (e EncryptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
 func (e EncryptionAttributes) IdentityClientId() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("identity_client_id"))
+	return terra.ReferenceAsString(e.ref.Append("identity_client_id"))
 }
 
 func (e EncryptionAttributes) KeyVaultKeyIdentifier() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("key_vault_key_identifier"))
+	return terra.ReferenceAsString(e.ref.Append("key_vault_key_identifier"))
 }
 
 type IdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (i IdentityAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IdentityAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IdentityAttributes) InternalWithRef(ref terra.Reference) IdentityAttributes {
 	return IdentityAttributes{ref: ref}
 }
 
-func (i IdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (i IdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IdentityAttributes) IdentityIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i.ref.Append("identity_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](i.ref.Append("identity_ids"))
 }
 
 func (i IdentityAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("principal_id"))
+	return terra.ReferenceAsString(i.ref.Append("principal_id"))
 }
 
 func (i IdentityAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(i.ref.Append("tenant_id"))
 }
 
 func (i IdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("type"))
+	return terra.ReferenceAsString(i.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type PrimaryReadKeyState struct {

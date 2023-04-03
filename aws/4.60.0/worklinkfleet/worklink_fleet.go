@@ -35,7 +35,7 @@ func (ip IdentityProviderAttributes) InternalWithRef(ref terra.Reference) Identi
 	return IdentityProviderAttributes{ref: ref}
 }
 
-func (ip IdentityProviderAttributes) InternalTokens() hclwrite.Tokens {
+func (ip IdentityProviderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ip.ref.InternalTokens()
 }
 
@@ -59,7 +59,7 @@ func (n NetworkAttributes) InternalWithRef(ref terra.Reference) NetworkAttribute
 	return NetworkAttributes{ref: ref}
 }
 
-func (n NetworkAttributes) InternalTokens() hclwrite.Tokens {
+func (n NetworkAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return n.ref.InternalTokens()
 }
 

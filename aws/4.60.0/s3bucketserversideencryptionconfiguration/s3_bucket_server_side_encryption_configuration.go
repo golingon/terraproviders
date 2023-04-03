@@ -33,7 +33,7 @@ func (r RuleAttributes) InternalWithRef(ref terra.Reference) RuleAttributes {
 	return RuleAttributes{ref: ref}
 }
 
-func (r RuleAttributes) InternalTokens() hclwrite.Tokens {
+func (r RuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -57,7 +57,7 @@ func (assebd ApplyServerSideEncryptionByDefaultAttributes) InternalWithRef(ref t
 	return ApplyServerSideEncryptionByDefaultAttributes{ref: ref}
 }
 
-func (assebd ApplyServerSideEncryptionByDefaultAttributes) InternalTokens() hclwrite.Tokens {
+func (assebd ApplyServerSideEncryptionByDefaultAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return assebd.ref.InternalTokens()
 }
 

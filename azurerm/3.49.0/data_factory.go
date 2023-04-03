@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFactory creates a new instance of [DataFactory].
 func NewDataFactory(name string, args DataFactoryArgs) *DataFactory {
 	return &DataFactory{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFactory(name string, args DataFactoryArgs) *DataFactory {
 
 var _ terra.Resource = (*DataFactory)(nil)
 
+// DataFactory represents the Terraform resource azurerm_data_factory.
 type DataFactory struct {
-	Name  string
-	Args  DataFactoryArgs
-	state *dataFactoryState
+	Name      string
+	Args      DataFactoryArgs
+	state     *dataFactoryState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFactory].
 func (df *DataFactory) Type() string {
 	return "azurerm_data_factory"
 }
 
+// LocalName returns the local name for [DataFactory].
 func (df *DataFactory) LocalName() string {
 	return df.Name
 }
 
+// Configuration returns the configuration (args) for [DataFactory].
 func (df *DataFactory) Configuration() interface{} {
 	return df.Args
 }
 
+// DependOn is used for other resources to depend on [DataFactory].
+func (df *DataFactory) DependOn() terra.Reference {
+	return terra.ReferenceResource(df)
+}
+
+// Dependencies returns the list of resources [DataFactory] depends_on.
+func (df *DataFactory) Dependencies() terra.Dependencies {
+	return df.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFactory].
+func (df *DataFactory) LifecycleManagement() *terra.Lifecycle {
+	return df.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFactory].
 func (df *DataFactory) Attributes() dataFactoryAttributes {
 	return dataFactoryAttributes{ref: terra.ReferenceResource(df)}
 }
 
+// ImportState imports the given attribute values into [DataFactory]'s state.
 func (df *DataFactory) ImportState(av io.Reader) error {
 	df.state = &dataFactoryState{}
 	if err := json.NewDecoder(av).Decode(df.state); err != nil {
@@ -49,10 +73,12 @@ func (df *DataFactory) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFactory] has state.
 func (df *DataFactory) State() (*dataFactoryState, bool) {
 	return df.state, df.state != nil
 }
 
+// StateMust returns the state for [DataFactory]. Panics if the state is nil.
 func (df *DataFactory) StateMust() *dataFactoryState {
 	if df.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", df.Type(), df.LocalName()))
@@ -60,10 +86,7 @@ func (df *DataFactory) StateMust() *dataFactoryState {
 	return df.state
 }
 
-func (df *DataFactory) DependOn() terra.Reference {
-	return terra.ReferenceResource(df)
-}
-
+// DataFactoryArgs contains the configurations for azurerm_data_factory.
 type DataFactoryArgs struct {
 	// CustomerManagedKeyId: string, optional
 	CustomerManagedKeyId terra.StringValue `hcl:"customer_managed_key_id,attr"`
@@ -95,71 +118,79 @@ type DataFactoryArgs struct {
 	Timeouts *datafactory.Timeouts `hcl:"timeouts,block"`
 	// VstsConfiguration: optional
 	VstsConfiguration *datafactory.VstsConfiguration `hcl:"vsts_configuration,block"`
-	// DependsOn contains resources that DataFactory depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFactoryAttributes struct {
 	ref terra.Reference
 }
 
+// CustomerManagedKeyId returns a reference to field customer_managed_key_id of azurerm_data_factory.
 func (df dataFactoryAttributes) CustomerManagedKeyId() terra.StringValue {
-	return terra.ReferenceString(df.ref.Append("customer_managed_key_id"))
+	return terra.ReferenceAsString(df.ref.Append("customer_managed_key_id"))
 }
 
+// CustomerManagedKeyIdentityId returns a reference to field customer_managed_key_identity_id of azurerm_data_factory.
 func (df dataFactoryAttributes) CustomerManagedKeyIdentityId() terra.StringValue {
-	return terra.ReferenceString(df.ref.Append("customer_managed_key_identity_id"))
+	return terra.ReferenceAsString(df.ref.Append("customer_managed_key_identity_id"))
 }
 
+// Id returns a reference to field id of azurerm_data_factory.
 func (df dataFactoryAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(df.ref.Append("id"))
+	return terra.ReferenceAsString(df.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_data_factory.
 func (df dataFactoryAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(df.ref.Append("location"))
+	return terra.ReferenceAsString(df.ref.Append("location"))
 }
 
+// ManagedVirtualNetworkEnabled returns a reference to field managed_virtual_network_enabled of azurerm_data_factory.
 func (df dataFactoryAttributes) ManagedVirtualNetworkEnabled() terra.BoolValue {
-	return terra.ReferenceBool(df.ref.Append("managed_virtual_network_enabled"))
+	return terra.ReferenceAsBool(df.ref.Append("managed_virtual_network_enabled"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory.
 func (df dataFactoryAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(df.ref.Append("name"))
+	return terra.ReferenceAsString(df.ref.Append("name"))
 }
 
+// PublicNetworkEnabled returns a reference to field public_network_enabled of azurerm_data_factory.
 func (df dataFactoryAttributes) PublicNetworkEnabled() terra.BoolValue {
-	return terra.ReferenceBool(df.ref.Append("public_network_enabled"))
+	return terra.ReferenceAsBool(df.ref.Append("public_network_enabled"))
 }
 
+// PurviewId returns a reference to field purview_id of azurerm_data_factory.
 func (df dataFactoryAttributes) PurviewId() terra.StringValue {
-	return terra.ReferenceString(df.ref.Append("purview_id"))
+	return terra.ReferenceAsString(df.ref.Append("purview_id"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_data_factory.
 func (df dataFactoryAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(df.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(df.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_data_factory.
 func (df dataFactoryAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](df.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](df.ref.Append("tags"))
 }
 
 func (df dataFactoryAttributes) GithubConfiguration() terra.ListValue[datafactory.GithubConfigurationAttributes] {
-	return terra.ReferenceList[datafactory.GithubConfigurationAttributes](df.ref.Append("github_configuration"))
+	return terra.ReferenceAsList[datafactory.GithubConfigurationAttributes](df.ref.Append("github_configuration"))
 }
 
 func (df dataFactoryAttributes) GlobalParameter() terra.SetValue[datafactory.GlobalParameterAttributes] {
-	return terra.ReferenceSet[datafactory.GlobalParameterAttributes](df.ref.Append("global_parameter"))
+	return terra.ReferenceAsSet[datafactory.GlobalParameterAttributes](df.ref.Append("global_parameter"))
 }
 
 func (df dataFactoryAttributes) Identity() terra.ListValue[datafactory.IdentityAttributes] {
-	return terra.ReferenceList[datafactory.IdentityAttributes](df.ref.Append("identity"))
+	return terra.ReferenceAsList[datafactory.IdentityAttributes](df.ref.Append("identity"))
 }
 
 func (df dataFactoryAttributes) Timeouts() datafactory.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafactory.TimeoutsAttributes](df.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafactory.TimeoutsAttributes](df.ref.Append("timeouts"))
 }
 
 func (df dataFactoryAttributes) VstsConfiguration() terra.ListValue[datafactory.VstsConfigurationAttributes] {
-	return terra.ReferenceList[datafactory.VstsConfigurationAttributes](df.ref.Append("vsts_configuration"))
+	return terra.ReferenceAsList[datafactory.VstsConfigurationAttributes](df.ref.Append("vsts_configuration"))
 }
 
 type dataFactoryState struct {

@@ -80,7 +80,7 @@ func (ss SpaceSettingsAttributes) InternalWithRef(ref terra.Reference) SpaceSett
 	return SpaceSettingsAttributes{ref: ref}
 }
 
-func (ss SpaceSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ss SpaceSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ss.ref.InternalTokens()
 }
 
@@ -104,7 +104,7 @@ func (jsas JupyterServerAppSettingsAttributes) InternalWithRef(ref terra.Referen
 	return JupyterServerAppSettingsAttributes{ref: ref}
 }
 
-func (jsas JupyterServerAppSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (jsas JupyterServerAppSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return jsas.ref.InternalTokens()
 }
 
@@ -132,7 +132,7 @@ func (cr CodeRepositoryAttributes) InternalWithRef(ref terra.Reference) CodeRepo
 	return CodeRepositoryAttributes{ref: ref}
 }
 
-func (cr CodeRepositoryAttributes) InternalTokens() hclwrite.Tokens {
+func (cr CodeRepositoryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cr.ref.InternalTokens()
 }
 
@@ -152,7 +152,7 @@ func (drs JupyterServerAppSettingsDefaultResourceSpecAttributes) InternalWithRef
 	return JupyterServerAppSettingsDefaultResourceSpecAttributes{ref: ref}
 }
 
-func (drs JupyterServerAppSettingsDefaultResourceSpecAttributes) InternalTokens() hclwrite.Tokens {
+func (drs JupyterServerAppSettingsDefaultResourceSpecAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return drs.ref.InternalTokens()
 }
 
@@ -184,7 +184,7 @@ func (kgas KernelGatewayAppSettingsAttributes) InternalWithRef(ref terra.Referen
 	return KernelGatewayAppSettingsAttributes{ref: ref}
 }
 
-func (kgas KernelGatewayAppSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (kgas KernelGatewayAppSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kgas.ref.InternalTokens()
 }
 
@@ -212,7 +212,7 @@ func (ci CustomImageAttributes) InternalWithRef(ref terra.Reference) CustomImage
 	return CustomImageAttributes{ref: ref}
 }
 
-func (ci CustomImageAttributes) InternalTokens() hclwrite.Tokens {
+func (ci CustomImageAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ci.ref.InternalTokens()
 }
 
@@ -240,7 +240,7 @@ func (drs KernelGatewayAppSettingsDefaultResourceSpecAttributes) InternalWithRef
 	return KernelGatewayAppSettingsDefaultResourceSpecAttributes{ref: ref}
 }
 
-func (drs KernelGatewayAppSettingsDefaultResourceSpecAttributes) InternalTokens() hclwrite.Tokens {
+func (drs KernelGatewayAppSettingsDefaultResourceSpecAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return drs.ref.InternalTokens()
 }
 

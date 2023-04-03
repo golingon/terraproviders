@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCloudRunServiceIamMember creates a new instance of [CloudRunServiceIamMember].
 func NewCloudRunServiceIamMember(name string, args CloudRunServiceIamMemberArgs) *CloudRunServiceIamMember {
 	return &CloudRunServiceIamMember{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCloudRunServiceIamMember(name string, args CloudRunServiceIamMemberArgs)
 
 var _ terra.Resource = (*CloudRunServiceIamMember)(nil)
 
+// CloudRunServiceIamMember represents the Terraform resource google_cloud_run_service_iam_member.
 type CloudRunServiceIamMember struct {
-	Name  string
-	Args  CloudRunServiceIamMemberArgs
-	state *cloudRunServiceIamMemberState
+	Name      string
+	Args      CloudRunServiceIamMemberArgs
+	state     *cloudRunServiceIamMemberState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudRunServiceIamMember].
 func (crsim *CloudRunServiceIamMember) Type() string {
 	return "google_cloud_run_service_iam_member"
 }
 
+// LocalName returns the local name for [CloudRunServiceIamMember].
 func (crsim *CloudRunServiceIamMember) LocalName() string {
 	return crsim.Name
 }
 
+// Configuration returns the configuration (args) for [CloudRunServiceIamMember].
 func (crsim *CloudRunServiceIamMember) Configuration() interface{} {
 	return crsim.Args
 }
 
+// DependOn is used for other resources to depend on [CloudRunServiceIamMember].
+func (crsim *CloudRunServiceIamMember) DependOn() terra.Reference {
+	return terra.ReferenceResource(crsim)
+}
+
+// Dependencies returns the list of resources [CloudRunServiceIamMember] depends_on.
+func (crsim *CloudRunServiceIamMember) Dependencies() terra.Dependencies {
+	return crsim.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudRunServiceIamMember].
+func (crsim *CloudRunServiceIamMember) LifecycleManagement() *terra.Lifecycle {
+	return crsim.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudRunServiceIamMember].
 func (crsim *CloudRunServiceIamMember) Attributes() cloudRunServiceIamMemberAttributes {
 	return cloudRunServiceIamMemberAttributes{ref: terra.ReferenceResource(crsim)}
 }
 
+// ImportState imports the given attribute values into [CloudRunServiceIamMember]'s state.
 func (crsim *CloudRunServiceIamMember) ImportState(av io.Reader) error {
 	crsim.state = &cloudRunServiceIamMemberState{}
 	if err := json.NewDecoder(av).Decode(crsim.state); err != nil {
@@ -49,10 +73,12 @@ func (crsim *CloudRunServiceIamMember) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudRunServiceIamMember] has state.
 func (crsim *CloudRunServiceIamMember) State() (*cloudRunServiceIamMemberState, bool) {
 	return crsim.state, crsim.state != nil
 }
 
+// StateMust returns the state for [CloudRunServiceIamMember]. Panics if the state is nil.
 func (crsim *CloudRunServiceIamMember) StateMust() *cloudRunServiceIamMemberState {
 	if crsim.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", crsim.Type(), crsim.LocalName()))
@@ -60,10 +86,7 @@ func (crsim *CloudRunServiceIamMember) StateMust() *cloudRunServiceIamMemberStat
 	return crsim.state
 }
 
-func (crsim *CloudRunServiceIamMember) DependOn() terra.Reference {
-	return terra.ReferenceResource(crsim)
-}
-
+// CloudRunServiceIamMemberArgs contains the configurations for google_cloud_run_service_iam_member.
 type CloudRunServiceIamMemberArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,43 +102,48 @@ type CloudRunServiceIamMemberArgs struct {
 	Service terra.StringValue `hcl:"service,attr" validate:"required"`
 	// Condition: optional
 	Condition *cloudrunserviceiammember.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that CloudRunServiceIamMember depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudRunServiceIamMemberAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_cloud_run_service_iam_member.
 func (crsim cloudRunServiceIamMemberAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(crsim.ref.Append("etag"))
+	return terra.ReferenceAsString(crsim.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_cloud_run_service_iam_member.
 func (crsim cloudRunServiceIamMemberAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(crsim.ref.Append("id"))
+	return terra.ReferenceAsString(crsim.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_cloud_run_service_iam_member.
 func (crsim cloudRunServiceIamMemberAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(crsim.ref.Append("location"))
+	return terra.ReferenceAsString(crsim.ref.Append("location"))
 }
 
+// Member returns a reference to field member of google_cloud_run_service_iam_member.
 func (crsim cloudRunServiceIamMemberAttributes) Member() terra.StringValue {
-	return terra.ReferenceString(crsim.ref.Append("member"))
+	return terra.ReferenceAsString(crsim.ref.Append("member"))
 }
 
+// Project returns a reference to field project of google_cloud_run_service_iam_member.
 func (crsim cloudRunServiceIamMemberAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(crsim.ref.Append("project"))
+	return terra.ReferenceAsString(crsim.ref.Append("project"))
 }
 
+// Role returns a reference to field role of google_cloud_run_service_iam_member.
 func (crsim cloudRunServiceIamMemberAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(crsim.ref.Append("role"))
+	return terra.ReferenceAsString(crsim.ref.Append("role"))
 }
 
+// Service returns a reference to field service of google_cloud_run_service_iam_member.
 func (crsim cloudRunServiceIamMemberAttributes) Service() terra.StringValue {
-	return terra.ReferenceString(crsim.ref.Append("service"))
+	return terra.ReferenceAsString(crsim.ref.Append("service"))
 }
 
 func (crsim cloudRunServiceIamMemberAttributes) Condition() terra.ListValue[cloudrunserviceiammember.ConditionAttributes] {
-	return terra.ReferenceList[cloudrunserviceiammember.ConditionAttributes](crsim.ref.Append("condition"))
+	return terra.ReferenceAsList[cloudrunserviceiammember.ConditionAttributes](crsim.ref.Append("condition"))
 }
 
 type cloudRunServiceIamMemberState struct {

@@ -41,7 +41,7 @@ func (s SpecAttributes) InternalWithRef(ref terra.Reference) SpecAttributes {
 	return SpecAttributes{ref: ref}
 }
 
-func (s SpecAttributes) InternalTokens() hclwrite.Tokens {
+func (s SpecAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -61,7 +61,7 @@ func (p ProviderAttributes) InternalWithRef(ref terra.Reference) ProviderAttribu
 	return ProviderAttributes{ref: ref}
 }
 
-func (p ProviderAttributes) InternalTokens() hclwrite.Tokens {
+func (p ProviderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -85,7 +85,7 @@ func (vn VirtualNodeAttributes) InternalWithRef(ref terra.Reference) VirtualNode
 	return VirtualNodeAttributes{ref: ref}
 }
 
-func (vn VirtualNodeAttributes) InternalTokens() hclwrite.Tokens {
+func (vn VirtualNodeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vn.ref.InternalTokens()
 }
 
@@ -105,7 +105,7 @@ func (vr VirtualRouterAttributes) InternalWithRef(ref terra.Reference) VirtualRo
 	return VirtualRouterAttributes{ref: ref}
 }
 
-func (vr VirtualRouterAttributes) InternalTokens() hclwrite.Tokens {
+func (vr VirtualRouterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vr.ref.InternalTokens()
 }
 

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSpringCloudCustomDomain creates a new instance of [SpringCloudCustomDomain].
 func NewSpringCloudCustomDomain(name string, args SpringCloudCustomDomainArgs) *SpringCloudCustomDomain {
 	return &SpringCloudCustomDomain{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSpringCloudCustomDomain(name string, args SpringCloudCustomDomainArgs) *
 
 var _ terra.Resource = (*SpringCloudCustomDomain)(nil)
 
+// SpringCloudCustomDomain represents the Terraform resource azurerm_spring_cloud_custom_domain.
 type SpringCloudCustomDomain struct {
-	Name  string
-	Args  SpringCloudCustomDomainArgs
-	state *springCloudCustomDomainState
+	Name      string
+	Args      SpringCloudCustomDomainArgs
+	state     *springCloudCustomDomainState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SpringCloudCustomDomain].
 func (sccd *SpringCloudCustomDomain) Type() string {
 	return "azurerm_spring_cloud_custom_domain"
 }
 
+// LocalName returns the local name for [SpringCloudCustomDomain].
 func (sccd *SpringCloudCustomDomain) LocalName() string {
 	return sccd.Name
 }
 
+// Configuration returns the configuration (args) for [SpringCloudCustomDomain].
 func (sccd *SpringCloudCustomDomain) Configuration() interface{} {
 	return sccd.Args
 }
 
+// DependOn is used for other resources to depend on [SpringCloudCustomDomain].
+func (sccd *SpringCloudCustomDomain) DependOn() terra.Reference {
+	return terra.ReferenceResource(sccd)
+}
+
+// Dependencies returns the list of resources [SpringCloudCustomDomain] depends_on.
+func (sccd *SpringCloudCustomDomain) Dependencies() terra.Dependencies {
+	return sccd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SpringCloudCustomDomain].
+func (sccd *SpringCloudCustomDomain) LifecycleManagement() *terra.Lifecycle {
+	return sccd.Lifecycle
+}
+
+// Attributes returns the attributes for [SpringCloudCustomDomain].
 func (sccd *SpringCloudCustomDomain) Attributes() springCloudCustomDomainAttributes {
 	return springCloudCustomDomainAttributes{ref: terra.ReferenceResource(sccd)}
 }
 
+// ImportState imports the given attribute values into [SpringCloudCustomDomain]'s state.
 func (sccd *SpringCloudCustomDomain) ImportState(av io.Reader) error {
 	sccd.state = &springCloudCustomDomainState{}
 	if err := json.NewDecoder(av).Decode(sccd.state); err != nil {
@@ -49,10 +73,12 @@ func (sccd *SpringCloudCustomDomain) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SpringCloudCustomDomain] has state.
 func (sccd *SpringCloudCustomDomain) State() (*springCloudCustomDomainState, bool) {
 	return sccd.state, sccd.state != nil
 }
 
+// StateMust returns the state for [SpringCloudCustomDomain]. Panics if the state is nil.
 func (sccd *SpringCloudCustomDomain) StateMust() *springCloudCustomDomainState {
 	if sccd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sccd.Type(), sccd.LocalName()))
@@ -60,10 +86,7 @@ func (sccd *SpringCloudCustomDomain) StateMust() *springCloudCustomDomainState {
 	return sccd.state
 }
 
-func (sccd *SpringCloudCustomDomain) DependOn() terra.Reference {
-	return terra.ReferenceResource(sccd)
-}
-
+// SpringCloudCustomDomainArgs contains the configurations for azurerm_spring_cloud_custom_domain.
 type SpringCloudCustomDomainArgs struct {
 	// CertificateName: string, optional
 	CertificateName terra.StringValue `hcl:"certificate_name,attr"`
@@ -77,35 +100,38 @@ type SpringCloudCustomDomainArgs struct {
 	Thumbprint terra.StringValue `hcl:"thumbprint,attr"`
 	// Timeouts: optional
 	Timeouts *springcloudcustomdomain.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SpringCloudCustomDomain depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type springCloudCustomDomainAttributes struct {
 	ref terra.Reference
 }
 
+// CertificateName returns a reference to field certificate_name of azurerm_spring_cloud_custom_domain.
 func (sccd springCloudCustomDomainAttributes) CertificateName() terra.StringValue {
-	return terra.ReferenceString(sccd.ref.Append("certificate_name"))
+	return terra.ReferenceAsString(sccd.ref.Append("certificate_name"))
 }
 
+// Id returns a reference to field id of azurerm_spring_cloud_custom_domain.
 func (sccd springCloudCustomDomainAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sccd.ref.Append("id"))
+	return terra.ReferenceAsString(sccd.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_spring_cloud_custom_domain.
 func (sccd springCloudCustomDomainAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sccd.ref.Append("name"))
+	return terra.ReferenceAsString(sccd.ref.Append("name"))
 }
 
+// SpringCloudAppId returns a reference to field spring_cloud_app_id of azurerm_spring_cloud_custom_domain.
 func (sccd springCloudCustomDomainAttributes) SpringCloudAppId() terra.StringValue {
-	return terra.ReferenceString(sccd.ref.Append("spring_cloud_app_id"))
+	return terra.ReferenceAsString(sccd.ref.Append("spring_cloud_app_id"))
 }
 
+// Thumbprint returns a reference to field thumbprint of azurerm_spring_cloud_custom_domain.
 func (sccd springCloudCustomDomainAttributes) Thumbprint() terra.StringValue {
-	return terra.ReferenceString(sccd.ref.Append("thumbprint"))
+	return terra.ReferenceAsString(sccd.ref.Append("thumbprint"))
 }
 
 func (sccd springCloudCustomDomainAttributes) Timeouts() springcloudcustomdomain.TimeoutsAttributes {
-	return terra.ReferenceSingle[springcloudcustomdomain.TimeoutsAttributes](sccd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[springcloudcustomdomain.TimeoutsAttributes](sccd.ref.Append("timeouts"))
 }
 
 type springCloudCustomDomainState struct {

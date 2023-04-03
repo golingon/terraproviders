@@ -24,7 +24,7 @@ func (tc TraceConfigurationAttributes) InternalWithRef(ref terra.Reference) Trac
 	return TraceConfigurationAttributes{ref: ref}
 }
 
-func (tc TraceConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (tc TraceConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tc.ref.InternalTokens()
 }
 

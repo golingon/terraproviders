@@ -75,208 +75,208 @@ type ContactAttributes struct {
 	ref terra.Reference
 }
 
-func (c ContactAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ContactAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ContactAttributes) InternalWithRef(ref terra.Reference) ContactAttributes {
 	return ContactAttributes{ref: ref}
 }
 
-func (c ContactAttributes) InternalTokens() hclwrite.Tokens {
+func (c ContactAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ContactAttributes) Email() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("email"))
+	return terra.ReferenceAsString(c.ref.Append("email"))
 }
 
 func (c ContactAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("name"))
+	return terra.ReferenceAsString(c.ref.Append("name"))
 }
 
 func (c ContactAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("url"))
+	return terra.ReferenceAsString(c.ref.Append("url"))
 }
 
 type ImportAttributes struct {
 	ref terra.Reference
 }
 
-func (i ImportAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i ImportAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i ImportAttributes) InternalWithRef(ref terra.Reference) ImportAttributes {
 	return ImportAttributes{ref: ref}
 }
 
-func (i ImportAttributes) InternalTokens() hclwrite.Tokens {
+func (i ImportAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i ImportAttributes) ContentFormat() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("content_format"))
+	return terra.ReferenceAsString(i.ref.Append("content_format"))
 }
 
 func (i ImportAttributes) ContentValue() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("content_value"))
+	return terra.ReferenceAsString(i.ref.Append("content_value"))
 }
 
 func (i ImportAttributes) WsdlSelector() terra.ListValue[WsdlSelectorAttributes] {
-	return terra.ReferenceList[WsdlSelectorAttributes](i.ref.Append("wsdl_selector"))
+	return terra.ReferenceAsList[WsdlSelectorAttributes](i.ref.Append("wsdl_selector"))
 }
 
 type WsdlSelectorAttributes struct {
 	ref terra.Reference
 }
 
-func (ws WsdlSelectorAttributes) InternalRef() terra.Reference {
-	return ws.ref
+func (ws WsdlSelectorAttributes) InternalRef() (terra.Reference, error) {
+	return ws.ref, nil
 }
 
 func (ws WsdlSelectorAttributes) InternalWithRef(ref terra.Reference) WsdlSelectorAttributes {
 	return WsdlSelectorAttributes{ref: ref}
 }
 
-func (ws WsdlSelectorAttributes) InternalTokens() hclwrite.Tokens {
+func (ws WsdlSelectorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ws.ref.InternalTokens()
 }
 
 func (ws WsdlSelectorAttributes) EndpointName() terra.StringValue {
-	return terra.ReferenceString(ws.ref.Append("endpoint_name"))
+	return terra.ReferenceAsString(ws.ref.Append("endpoint_name"))
 }
 
 func (ws WsdlSelectorAttributes) ServiceName() terra.StringValue {
-	return terra.ReferenceString(ws.ref.Append("service_name"))
+	return terra.ReferenceAsString(ws.ref.Append("service_name"))
 }
 
 type LicenseAttributes struct {
 	ref terra.Reference
 }
 
-func (l LicenseAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l LicenseAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l LicenseAttributes) InternalWithRef(ref terra.Reference) LicenseAttributes {
 	return LicenseAttributes{ref: ref}
 }
 
-func (l LicenseAttributes) InternalTokens() hclwrite.Tokens {
+func (l LicenseAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 
 func (l LicenseAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("name"))
+	return terra.ReferenceAsString(l.ref.Append("name"))
 }
 
 func (l LicenseAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("url"))
+	return terra.ReferenceAsString(l.ref.Append("url"))
 }
 
 type Oauth2AuthorizationAttributes struct {
 	ref terra.Reference
 }
 
-func (oa Oauth2AuthorizationAttributes) InternalRef() terra.Reference {
-	return oa.ref
+func (oa Oauth2AuthorizationAttributes) InternalRef() (terra.Reference, error) {
+	return oa.ref, nil
 }
 
 func (oa Oauth2AuthorizationAttributes) InternalWithRef(ref terra.Reference) Oauth2AuthorizationAttributes {
 	return Oauth2AuthorizationAttributes{ref: ref}
 }
 
-func (oa Oauth2AuthorizationAttributes) InternalTokens() hclwrite.Tokens {
+func (oa Oauth2AuthorizationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oa.ref.InternalTokens()
 }
 
 func (oa Oauth2AuthorizationAttributes) AuthorizationServerName() terra.StringValue {
-	return terra.ReferenceString(oa.ref.Append("authorization_server_name"))
+	return terra.ReferenceAsString(oa.ref.Append("authorization_server_name"))
 }
 
 func (oa Oauth2AuthorizationAttributes) Scope() terra.StringValue {
-	return terra.ReferenceString(oa.ref.Append("scope"))
+	return terra.ReferenceAsString(oa.ref.Append("scope"))
 }
 
 type OpenidAuthenticationAttributes struct {
 	ref terra.Reference
 }
 
-func (oa OpenidAuthenticationAttributes) InternalRef() terra.Reference {
-	return oa.ref
+func (oa OpenidAuthenticationAttributes) InternalRef() (terra.Reference, error) {
+	return oa.ref, nil
 }
 
 func (oa OpenidAuthenticationAttributes) InternalWithRef(ref terra.Reference) OpenidAuthenticationAttributes {
 	return OpenidAuthenticationAttributes{ref: ref}
 }
 
-func (oa OpenidAuthenticationAttributes) InternalTokens() hclwrite.Tokens {
+func (oa OpenidAuthenticationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oa.ref.InternalTokens()
 }
 
 func (oa OpenidAuthenticationAttributes) BearerTokenSendingMethods() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](oa.ref.Append("bearer_token_sending_methods"))
+	return terra.ReferenceAsSet[terra.StringValue](oa.ref.Append("bearer_token_sending_methods"))
 }
 
 func (oa OpenidAuthenticationAttributes) OpenidProviderName() terra.StringValue {
-	return terra.ReferenceString(oa.ref.Append("openid_provider_name"))
+	return terra.ReferenceAsString(oa.ref.Append("openid_provider_name"))
 }
 
 type SubscriptionKeyParameterNamesAttributes struct {
 	ref terra.Reference
 }
 
-func (skpn SubscriptionKeyParameterNamesAttributes) InternalRef() terra.Reference {
-	return skpn.ref
+func (skpn SubscriptionKeyParameterNamesAttributes) InternalRef() (terra.Reference, error) {
+	return skpn.ref, nil
 }
 
 func (skpn SubscriptionKeyParameterNamesAttributes) InternalWithRef(ref terra.Reference) SubscriptionKeyParameterNamesAttributes {
 	return SubscriptionKeyParameterNamesAttributes{ref: ref}
 }
 
-func (skpn SubscriptionKeyParameterNamesAttributes) InternalTokens() hclwrite.Tokens {
+func (skpn SubscriptionKeyParameterNamesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return skpn.ref.InternalTokens()
 }
 
 func (skpn SubscriptionKeyParameterNamesAttributes) Header() terra.StringValue {
-	return terra.ReferenceString(skpn.ref.Append("header"))
+	return terra.ReferenceAsString(skpn.ref.Append("header"))
 }
 
 func (skpn SubscriptionKeyParameterNamesAttributes) Query() terra.StringValue {
-	return terra.ReferenceString(skpn.ref.Append("query"))
+	return terra.ReferenceAsString(skpn.ref.Append("query"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ContactState struct {

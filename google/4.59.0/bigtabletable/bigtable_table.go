@@ -21,40 +21,40 @@ type ColumnFamilyAttributes struct {
 	ref terra.Reference
 }
 
-func (cf ColumnFamilyAttributes) InternalRef() terra.Reference {
-	return cf.ref
+func (cf ColumnFamilyAttributes) InternalRef() (terra.Reference, error) {
+	return cf.ref, nil
 }
 
 func (cf ColumnFamilyAttributes) InternalWithRef(ref terra.Reference) ColumnFamilyAttributes {
 	return ColumnFamilyAttributes{ref: ref}
 }
 
-func (cf ColumnFamilyAttributes) InternalTokens() hclwrite.Tokens {
+func (cf ColumnFamilyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cf.ref.InternalTokens()
 }
 
 func (cf ColumnFamilyAttributes) Family() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("family"))
+	return terra.ReferenceAsString(cf.ref.Append("family"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 type ColumnFamilyState struct {

@@ -27,52 +27,52 @@ type GroupKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (gk GroupKeyAttributes) InternalRef() terra.Reference {
-	return gk.ref
+func (gk GroupKeyAttributes) InternalRef() (terra.Reference, error) {
+	return gk.ref, nil
 }
 
 func (gk GroupKeyAttributes) InternalWithRef(ref terra.Reference) GroupKeyAttributes {
 	return GroupKeyAttributes{ref: ref}
 }
 
-func (gk GroupKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (gk GroupKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gk.ref.InternalTokens()
 }
 
 func (gk GroupKeyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(gk.ref.Append("id"))
+	return terra.ReferenceAsString(gk.ref.Append("id"))
 }
 
 func (gk GroupKeyAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(gk.ref.Append("namespace"))
+	return terra.ReferenceAsString(gk.ref.Append("namespace"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type GroupKeyState struct {

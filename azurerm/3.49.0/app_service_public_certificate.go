@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAppServicePublicCertificate creates a new instance of [AppServicePublicCertificate].
 func NewAppServicePublicCertificate(name string, args AppServicePublicCertificateArgs) *AppServicePublicCertificate {
 	return &AppServicePublicCertificate{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAppServicePublicCertificate(name string, args AppServicePublicCertificat
 
 var _ terra.Resource = (*AppServicePublicCertificate)(nil)
 
+// AppServicePublicCertificate represents the Terraform resource azurerm_app_service_public_certificate.
 type AppServicePublicCertificate struct {
-	Name  string
-	Args  AppServicePublicCertificateArgs
-	state *appServicePublicCertificateState
+	Name      string
+	Args      AppServicePublicCertificateArgs
+	state     *appServicePublicCertificateState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AppServicePublicCertificate].
 func (aspc *AppServicePublicCertificate) Type() string {
 	return "azurerm_app_service_public_certificate"
 }
 
+// LocalName returns the local name for [AppServicePublicCertificate].
 func (aspc *AppServicePublicCertificate) LocalName() string {
 	return aspc.Name
 }
 
+// Configuration returns the configuration (args) for [AppServicePublicCertificate].
 func (aspc *AppServicePublicCertificate) Configuration() interface{} {
 	return aspc.Args
 }
 
+// DependOn is used for other resources to depend on [AppServicePublicCertificate].
+func (aspc *AppServicePublicCertificate) DependOn() terra.Reference {
+	return terra.ReferenceResource(aspc)
+}
+
+// Dependencies returns the list of resources [AppServicePublicCertificate] depends_on.
+func (aspc *AppServicePublicCertificate) Dependencies() terra.Dependencies {
+	return aspc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AppServicePublicCertificate].
+func (aspc *AppServicePublicCertificate) LifecycleManagement() *terra.Lifecycle {
+	return aspc.Lifecycle
+}
+
+// Attributes returns the attributes for [AppServicePublicCertificate].
 func (aspc *AppServicePublicCertificate) Attributes() appServicePublicCertificateAttributes {
 	return appServicePublicCertificateAttributes{ref: terra.ReferenceResource(aspc)}
 }
 
+// ImportState imports the given attribute values into [AppServicePublicCertificate]'s state.
 func (aspc *AppServicePublicCertificate) ImportState(av io.Reader) error {
 	aspc.state = &appServicePublicCertificateState{}
 	if err := json.NewDecoder(av).Decode(aspc.state); err != nil {
@@ -49,10 +73,12 @@ func (aspc *AppServicePublicCertificate) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AppServicePublicCertificate] has state.
 func (aspc *AppServicePublicCertificate) State() (*appServicePublicCertificateState, bool) {
 	return aspc.state, aspc.state != nil
 }
 
+// StateMust returns the state for [AppServicePublicCertificate]. Panics if the state is nil.
 func (aspc *AppServicePublicCertificate) StateMust() *appServicePublicCertificateState {
 	if aspc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", aspc.Type(), aspc.LocalName()))
@@ -60,10 +86,7 @@ func (aspc *AppServicePublicCertificate) StateMust() *appServicePublicCertificat
 	return aspc.state
 }
 
-func (aspc *AppServicePublicCertificate) DependOn() terra.Reference {
-	return terra.ReferenceResource(aspc)
-}
-
+// AppServicePublicCertificateArgs contains the configurations for azurerm_app_service_public_certificate.
 type AppServicePublicCertificateArgs struct {
 	// AppServiceName: string, required
 	AppServiceName terra.StringValue `hcl:"app_service_name,attr" validate:"required"`
@@ -79,43 +102,48 @@ type AppServicePublicCertificateArgs struct {
 	ResourceGroupName terra.StringValue `hcl:"resource_group_name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *appservicepubliccertificate.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that AppServicePublicCertificate depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type appServicePublicCertificateAttributes struct {
 	ref terra.Reference
 }
 
+// AppServiceName returns a reference to field app_service_name of azurerm_app_service_public_certificate.
 func (aspc appServicePublicCertificateAttributes) AppServiceName() terra.StringValue {
-	return terra.ReferenceString(aspc.ref.Append("app_service_name"))
+	return terra.ReferenceAsString(aspc.ref.Append("app_service_name"))
 }
 
+// Blob returns a reference to field blob of azurerm_app_service_public_certificate.
 func (aspc appServicePublicCertificateAttributes) Blob() terra.StringValue {
-	return terra.ReferenceString(aspc.ref.Append("blob"))
+	return terra.ReferenceAsString(aspc.ref.Append("blob"))
 }
 
+// CertificateLocation returns a reference to field certificate_location of azurerm_app_service_public_certificate.
 func (aspc appServicePublicCertificateAttributes) CertificateLocation() terra.StringValue {
-	return terra.ReferenceString(aspc.ref.Append("certificate_location"))
+	return terra.ReferenceAsString(aspc.ref.Append("certificate_location"))
 }
 
+// CertificateName returns a reference to field certificate_name of azurerm_app_service_public_certificate.
 func (aspc appServicePublicCertificateAttributes) CertificateName() terra.StringValue {
-	return terra.ReferenceString(aspc.ref.Append("certificate_name"))
+	return terra.ReferenceAsString(aspc.ref.Append("certificate_name"))
 }
 
+// Id returns a reference to field id of azurerm_app_service_public_certificate.
 func (aspc appServicePublicCertificateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(aspc.ref.Append("id"))
+	return terra.ReferenceAsString(aspc.ref.Append("id"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_app_service_public_certificate.
 func (aspc appServicePublicCertificateAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(aspc.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(aspc.ref.Append("resource_group_name"))
 }
 
+// Thumbprint returns a reference to field thumbprint of azurerm_app_service_public_certificate.
 func (aspc appServicePublicCertificateAttributes) Thumbprint() terra.StringValue {
-	return terra.ReferenceString(aspc.ref.Append("thumbprint"))
+	return terra.ReferenceAsString(aspc.ref.Append("thumbprint"))
 }
 
 func (aspc appServicePublicCertificateAttributes) Timeouts() appservicepubliccertificate.TimeoutsAttributes {
-	return terra.ReferenceSingle[appservicepubliccertificate.TimeoutsAttributes](aspc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[appservicepubliccertificate.TimeoutsAttributes](aspc.ref.Append("timeouts"))
 }
 
 type appServicePublicCertificateState struct {

@@ -132,312 +132,312 @@ type KubeletConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (kc KubeletConfigAttributes) InternalRef() terra.Reference {
-	return kc.ref
+func (kc KubeletConfigAttributes) InternalRef() (terra.Reference, error) {
+	return kc.ref, nil
 }
 
 func (kc KubeletConfigAttributes) InternalWithRef(ref terra.Reference) KubeletConfigAttributes {
 	return KubeletConfigAttributes{ref: ref}
 }
 
-func (kc KubeletConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (kc KubeletConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kc.ref.InternalTokens()
 }
 
 func (kc KubeletConfigAttributes) AllowedUnsafeSysctls() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](kc.ref.Append("allowed_unsafe_sysctls"))
+	return terra.ReferenceAsSet[terra.StringValue](kc.ref.Append("allowed_unsafe_sysctls"))
 }
 
 func (kc KubeletConfigAttributes) ContainerLogMaxLine() terra.NumberValue {
-	return terra.ReferenceNumber(kc.ref.Append("container_log_max_line"))
+	return terra.ReferenceAsNumber(kc.ref.Append("container_log_max_line"))
 }
 
 func (kc KubeletConfigAttributes) ContainerLogMaxSizeMb() terra.NumberValue {
-	return terra.ReferenceNumber(kc.ref.Append("container_log_max_size_mb"))
+	return terra.ReferenceAsNumber(kc.ref.Append("container_log_max_size_mb"))
 }
 
 func (kc KubeletConfigAttributes) CpuCfsQuotaEnabled() terra.BoolValue {
-	return terra.ReferenceBool(kc.ref.Append("cpu_cfs_quota_enabled"))
+	return terra.ReferenceAsBool(kc.ref.Append("cpu_cfs_quota_enabled"))
 }
 
 func (kc KubeletConfigAttributes) CpuCfsQuotaPeriod() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("cpu_cfs_quota_period"))
+	return terra.ReferenceAsString(kc.ref.Append("cpu_cfs_quota_period"))
 }
 
 func (kc KubeletConfigAttributes) CpuManagerPolicy() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("cpu_manager_policy"))
+	return terra.ReferenceAsString(kc.ref.Append("cpu_manager_policy"))
 }
 
 func (kc KubeletConfigAttributes) ImageGcHighThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(kc.ref.Append("image_gc_high_threshold"))
+	return terra.ReferenceAsNumber(kc.ref.Append("image_gc_high_threshold"))
 }
 
 func (kc KubeletConfigAttributes) ImageGcLowThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(kc.ref.Append("image_gc_low_threshold"))
+	return terra.ReferenceAsNumber(kc.ref.Append("image_gc_low_threshold"))
 }
 
 func (kc KubeletConfigAttributes) PodMaxPid() terra.NumberValue {
-	return terra.ReferenceNumber(kc.ref.Append("pod_max_pid"))
+	return terra.ReferenceAsNumber(kc.ref.Append("pod_max_pid"))
 }
 
 func (kc KubeletConfigAttributes) TopologyManagerPolicy() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("topology_manager_policy"))
+	return terra.ReferenceAsString(kc.ref.Append("topology_manager_policy"))
 }
 
 type LinuxOsConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (loc LinuxOsConfigAttributes) InternalRef() terra.Reference {
-	return loc.ref
+func (loc LinuxOsConfigAttributes) InternalRef() (terra.Reference, error) {
+	return loc.ref, nil
 }
 
 func (loc LinuxOsConfigAttributes) InternalWithRef(ref terra.Reference) LinuxOsConfigAttributes {
 	return LinuxOsConfigAttributes{ref: ref}
 }
 
-func (loc LinuxOsConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (loc LinuxOsConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return loc.ref.InternalTokens()
 }
 
 func (loc LinuxOsConfigAttributes) SwapFileSizeMb() terra.NumberValue {
-	return terra.ReferenceNumber(loc.ref.Append("swap_file_size_mb"))
+	return terra.ReferenceAsNumber(loc.ref.Append("swap_file_size_mb"))
 }
 
 func (loc LinuxOsConfigAttributes) TransparentHugePageDefrag() terra.StringValue {
-	return terra.ReferenceString(loc.ref.Append("transparent_huge_page_defrag"))
+	return terra.ReferenceAsString(loc.ref.Append("transparent_huge_page_defrag"))
 }
 
 func (loc LinuxOsConfigAttributes) TransparentHugePageEnabled() terra.StringValue {
-	return terra.ReferenceString(loc.ref.Append("transparent_huge_page_enabled"))
+	return terra.ReferenceAsString(loc.ref.Append("transparent_huge_page_enabled"))
 }
 
 func (loc LinuxOsConfigAttributes) SysctlConfig() terra.ListValue[SysctlConfigAttributes] {
-	return terra.ReferenceList[SysctlConfigAttributes](loc.ref.Append("sysctl_config"))
+	return terra.ReferenceAsList[SysctlConfigAttributes](loc.ref.Append("sysctl_config"))
 }
 
 type SysctlConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (sc SysctlConfigAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc SysctlConfigAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc SysctlConfigAttributes) InternalWithRef(ref terra.Reference) SysctlConfigAttributes {
 	return SysctlConfigAttributes{ref: ref}
 }
 
-func (sc SysctlConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sc SysctlConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
 func (sc SysctlConfigAttributes) FsAioMaxNr() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("fs_aio_max_nr"))
+	return terra.ReferenceAsNumber(sc.ref.Append("fs_aio_max_nr"))
 }
 
 func (sc SysctlConfigAttributes) FsFileMax() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("fs_file_max"))
+	return terra.ReferenceAsNumber(sc.ref.Append("fs_file_max"))
 }
 
 func (sc SysctlConfigAttributes) FsInotifyMaxUserWatches() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("fs_inotify_max_user_watches"))
+	return terra.ReferenceAsNumber(sc.ref.Append("fs_inotify_max_user_watches"))
 }
 
 func (sc SysctlConfigAttributes) FsNrOpen() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("fs_nr_open"))
+	return terra.ReferenceAsNumber(sc.ref.Append("fs_nr_open"))
 }
 
 func (sc SysctlConfigAttributes) KernelThreadsMax() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("kernel_threads_max"))
+	return terra.ReferenceAsNumber(sc.ref.Append("kernel_threads_max"))
 }
 
 func (sc SysctlConfigAttributes) NetCoreNetdevMaxBacklog() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("net_core_netdev_max_backlog"))
+	return terra.ReferenceAsNumber(sc.ref.Append("net_core_netdev_max_backlog"))
 }
 
 func (sc SysctlConfigAttributes) NetCoreOptmemMax() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("net_core_optmem_max"))
+	return terra.ReferenceAsNumber(sc.ref.Append("net_core_optmem_max"))
 }
 
 func (sc SysctlConfigAttributes) NetCoreRmemDefault() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("net_core_rmem_default"))
+	return terra.ReferenceAsNumber(sc.ref.Append("net_core_rmem_default"))
 }
 
 func (sc SysctlConfigAttributes) NetCoreRmemMax() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("net_core_rmem_max"))
+	return terra.ReferenceAsNumber(sc.ref.Append("net_core_rmem_max"))
 }
 
 func (sc SysctlConfigAttributes) NetCoreSomaxconn() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("net_core_somaxconn"))
+	return terra.ReferenceAsNumber(sc.ref.Append("net_core_somaxconn"))
 }
 
 func (sc SysctlConfigAttributes) NetCoreWmemDefault() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("net_core_wmem_default"))
+	return terra.ReferenceAsNumber(sc.ref.Append("net_core_wmem_default"))
 }
 
 func (sc SysctlConfigAttributes) NetCoreWmemMax() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("net_core_wmem_max"))
+	return terra.ReferenceAsNumber(sc.ref.Append("net_core_wmem_max"))
 }
 
 func (sc SysctlConfigAttributes) NetIpv4IpLocalPortRangeMax() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("net_ipv4_ip_local_port_range_max"))
+	return terra.ReferenceAsNumber(sc.ref.Append("net_ipv4_ip_local_port_range_max"))
 }
 
 func (sc SysctlConfigAttributes) NetIpv4IpLocalPortRangeMin() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("net_ipv4_ip_local_port_range_min"))
+	return terra.ReferenceAsNumber(sc.ref.Append("net_ipv4_ip_local_port_range_min"))
 }
 
 func (sc SysctlConfigAttributes) NetIpv4NeighDefaultGcThresh1() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("net_ipv4_neigh_default_gc_thresh1"))
+	return terra.ReferenceAsNumber(sc.ref.Append("net_ipv4_neigh_default_gc_thresh1"))
 }
 
 func (sc SysctlConfigAttributes) NetIpv4NeighDefaultGcThresh2() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("net_ipv4_neigh_default_gc_thresh2"))
+	return terra.ReferenceAsNumber(sc.ref.Append("net_ipv4_neigh_default_gc_thresh2"))
 }
 
 func (sc SysctlConfigAttributes) NetIpv4NeighDefaultGcThresh3() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("net_ipv4_neigh_default_gc_thresh3"))
+	return terra.ReferenceAsNumber(sc.ref.Append("net_ipv4_neigh_default_gc_thresh3"))
 }
 
 func (sc SysctlConfigAttributes) NetIpv4TcpFinTimeout() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("net_ipv4_tcp_fin_timeout"))
+	return terra.ReferenceAsNumber(sc.ref.Append("net_ipv4_tcp_fin_timeout"))
 }
 
 func (sc SysctlConfigAttributes) NetIpv4TcpKeepaliveIntvl() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("net_ipv4_tcp_keepalive_intvl"))
+	return terra.ReferenceAsNumber(sc.ref.Append("net_ipv4_tcp_keepalive_intvl"))
 }
 
 func (sc SysctlConfigAttributes) NetIpv4TcpKeepaliveProbes() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("net_ipv4_tcp_keepalive_probes"))
+	return terra.ReferenceAsNumber(sc.ref.Append("net_ipv4_tcp_keepalive_probes"))
 }
 
 func (sc SysctlConfigAttributes) NetIpv4TcpKeepaliveTime() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("net_ipv4_tcp_keepalive_time"))
+	return terra.ReferenceAsNumber(sc.ref.Append("net_ipv4_tcp_keepalive_time"))
 }
 
 func (sc SysctlConfigAttributes) NetIpv4TcpMaxSynBacklog() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("net_ipv4_tcp_max_syn_backlog"))
+	return terra.ReferenceAsNumber(sc.ref.Append("net_ipv4_tcp_max_syn_backlog"))
 }
 
 func (sc SysctlConfigAttributes) NetIpv4TcpMaxTwBuckets() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("net_ipv4_tcp_max_tw_buckets"))
+	return terra.ReferenceAsNumber(sc.ref.Append("net_ipv4_tcp_max_tw_buckets"))
 }
 
 func (sc SysctlConfigAttributes) NetIpv4TcpTwReuse() terra.BoolValue {
-	return terra.ReferenceBool(sc.ref.Append("net_ipv4_tcp_tw_reuse"))
+	return terra.ReferenceAsBool(sc.ref.Append("net_ipv4_tcp_tw_reuse"))
 }
 
 func (sc SysctlConfigAttributes) NetNetfilterNfConntrackBuckets() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("net_netfilter_nf_conntrack_buckets"))
+	return terra.ReferenceAsNumber(sc.ref.Append("net_netfilter_nf_conntrack_buckets"))
 }
 
 func (sc SysctlConfigAttributes) NetNetfilterNfConntrackMax() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("net_netfilter_nf_conntrack_max"))
+	return terra.ReferenceAsNumber(sc.ref.Append("net_netfilter_nf_conntrack_max"))
 }
 
 func (sc SysctlConfigAttributes) VmMaxMapCount() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("vm_max_map_count"))
+	return terra.ReferenceAsNumber(sc.ref.Append("vm_max_map_count"))
 }
 
 func (sc SysctlConfigAttributes) VmSwappiness() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("vm_swappiness"))
+	return terra.ReferenceAsNumber(sc.ref.Append("vm_swappiness"))
 }
 
 func (sc SysctlConfigAttributes) VmVfsCachePressure() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("vm_vfs_cache_pressure"))
+	return terra.ReferenceAsNumber(sc.ref.Append("vm_vfs_cache_pressure"))
 }
 
 type NodeNetworkProfileAttributes struct {
 	ref terra.Reference
 }
 
-func (nnp NodeNetworkProfileAttributes) InternalRef() terra.Reference {
-	return nnp.ref
+func (nnp NodeNetworkProfileAttributes) InternalRef() (terra.Reference, error) {
+	return nnp.ref, nil
 }
 
 func (nnp NodeNetworkProfileAttributes) InternalWithRef(ref terra.Reference) NodeNetworkProfileAttributes {
 	return NodeNetworkProfileAttributes{ref: ref}
 }
 
-func (nnp NodeNetworkProfileAttributes) InternalTokens() hclwrite.Tokens {
+func (nnp NodeNetworkProfileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nnp.ref.InternalTokens()
 }
 
 func (nnp NodeNetworkProfileAttributes) NodePublicIpTags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](nnp.ref.Append("node_public_ip_tags"))
+	return terra.ReferenceAsMap[terra.StringValue](nnp.ref.Append("node_public_ip_tags"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type UpgradeSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (us UpgradeSettingsAttributes) InternalRef() terra.Reference {
-	return us.ref
+func (us UpgradeSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return us.ref, nil
 }
 
 func (us UpgradeSettingsAttributes) InternalWithRef(ref terra.Reference) UpgradeSettingsAttributes {
 	return UpgradeSettingsAttributes{ref: ref}
 }
 
-func (us UpgradeSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (us UpgradeSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return us.ref.InternalTokens()
 }
 
 func (us UpgradeSettingsAttributes) MaxSurge() terra.StringValue {
-	return terra.ReferenceString(us.ref.Append("max_surge"))
+	return terra.ReferenceAsString(us.ref.Append("max_surge"))
 }
 
 type WindowsProfileAttributes struct {
 	ref terra.Reference
 }
 
-func (wp WindowsProfileAttributes) InternalRef() terra.Reference {
-	return wp.ref
+func (wp WindowsProfileAttributes) InternalRef() (terra.Reference, error) {
+	return wp.ref, nil
 }
 
 func (wp WindowsProfileAttributes) InternalWithRef(ref terra.Reference) WindowsProfileAttributes {
 	return WindowsProfileAttributes{ref: ref}
 }
 
-func (wp WindowsProfileAttributes) InternalTokens() hclwrite.Tokens {
+func (wp WindowsProfileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wp.ref.InternalTokens()
 }
 
 func (wp WindowsProfileAttributes) OutboundNatEnabled() terra.BoolValue {
-	return terra.ReferenceBool(wp.ref.Append("outbound_nat_enabled"))
+	return terra.ReferenceAsBool(wp.ref.Append("outbound_nat_enabled"))
 }
 
 type KubeletConfigState struct {

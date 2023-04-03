@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEventarcGoogleChannelConfig creates a new instance of [EventarcGoogleChannelConfig].
 func NewEventarcGoogleChannelConfig(name string, args EventarcGoogleChannelConfigArgs) *EventarcGoogleChannelConfig {
 	return &EventarcGoogleChannelConfig{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEventarcGoogleChannelConfig(name string, args EventarcGoogleChannelConfi
 
 var _ terra.Resource = (*EventarcGoogleChannelConfig)(nil)
 
+// EventarcGoogleChannelConfig represents the Terraform resource google_eventarc_google_channel_config.
 type EventarcGoogleChannelConfig struct {
-	Name  string
-	Args  EventarcGoogleChannelConfigArgs
-	state *eventarcGoogleChannelConfigState
+	Name      string
+	Args      EventarcGoogleChannelConfigArgs
+	state     *eventarcGoogleChannelConfigState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EventarcGoogleChannelConfig].
 func (egcc *EventarcGoogleChannelConfig) Type() string {
 	return "google_eventarc_google_channel_config"
 }
 
+// LocalName returns the local name for [EventarcGoogleChannelConfig].
 func (egcc *EventarcGoogleChannelConfig) LocalName() string {
 	return egcc.Name
 }
 
+// Configuration returns the configuration (args) for [EventarcGoogleChannelConfig].
 func (egcc *EventarcGoogleChannelConfig) Configuration() interface{} {
 	return egcc.Args
 }
 
+// DependOn is used for other resources to depend on [EventarcGoogleChannelConfig].
+func (egcc *EventarcGoogleChannelConfig) DependOn() terra.Reference {
+	return terra.ReferenceResource(egcc)
+}
+
+// Dependencies returns the list of resources [EventarcGoogleChannelConfig] depends_on.
+func (egcc *EventarcGoogleChannelConfig) Dependencies() terra.Dependencies {
+	return egcc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EventarcGoogleChannelConfig].
+func (egcc *EventarcGoogleChannelConfig) LifecycleManagement() *terra.Lifecycle {
+	return egcc.Lifecycle
+}
+
+// Attributes returns the attributes for [EventarcGoogleChannelConfig].
 func (egcc *EventarcGoogleChannelConfig) Attributes() eventarcGoogleChannelConfigAttributes {
 	return eventarcGoogleChannelConfigAttributes{ref: terra.ReferenceResource(egcc)}
 }
 
+// ImportState imports the given attribute values into [EventarcGoogleChannelConfig]'s state.
 func (egcc *EventarcGoogleChannelConfig) ImportState(av io.Reader) error {
 	egcc.state = &eventarcGoogleChannelConfigState{}
 	if err := json.NewDecoder(av).Decode(egcc.state); err != nil {
@@ -49,10 +73,12 @@ func (egcc *EventarcGoogleChannelConfig) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EventarcGoogleChannelConfig] has state.
 func (egcc *EventarcGoogleChannelConfig) State() (*eventarcGoogleChannelConfigState, bool) {
 	return egcc.state, egcc.state != nil
 }
 
+// StateMust returns the state for [EventarcGoogleChannelConfig]. Panics if the state is nil.
 func (egcc *EventarcGoogleChannelConfig) StateMust() *eventarcGoogleChannelConfigState {
 	if egcc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", egcc.Type(), egcc.LocalName()))
@@ -60,10 +86,7 @@ func (egcc *EventarcGoogleChannelConfig) StateMust() *eventarcGoogleChannelConfi
 	return egcc.state
 }
 
-func (egcc *EventarcGoogleChannelConfig) DependOn() terra.Reference {
-	return terra.ReferenceResource(egcc)
-}
-
+// EventarcGoogleChannelConfigArgs contains the configurations for google_eventarc_google_channel_config.
 type EventarcGoogleChannelConfigArgs struct {
 	// CryptoKeyName: string, optional
 	CryptoKeyName terra.StringValue `hcl:"crypto_key_name,attr"`
@@ -77,39 +100,43 @@ type EventarcGoogleChannelConfigArgs struct {
 	Project terra.StringValue `hcl:"project,attr"`
 	// Timeouts: optional
 	Timeouts *eventarcgooglechannelconfig.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that EventarcGoogleChannelConfig depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type eventarcGoogleChannelConfigAttributes struct {
 	ref terra.Reference
 }
 
+// CryptoKeyName returns a reference to field crypto_key_name of google_eventarc_google_channel_config.
 func (egcc eventarcGoogleChannelConfigAttributes) CryptoKeyName() terra.StringValue {
-	return terra.ReferenceString(egcc.ref.Append("crypto_key_name"))
+	return terra.ReferenceAsString(egcc.ref.Append("crypto_key_name"))
 }
 
+// Id returns a reference to field id of google_eventarc_google_channel_config.
 func (egcc eventarcGoogleChannelConfigAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(egcc.ref.Append("id"))
+	return terra.ReferenceAsString(egcc.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_eventarc_google_channel_config.
 func (egcc eventarcGoogleChannelConfigAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(egcc.ref.Append("location"))
+	return terra.ReferenceAsString(egcc.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_eventarc_google_channel_config.
 func (egcc eventarcGoogleChannelConfigAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(egcc.ref.Append("name"))
+	return terra.ReferenceAsString(egcc.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_eventarc_google_channel_config.
 func (egcc eventarcGoogleChannelConfigAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(egcc.ref.Append("project"))
+	return terra.ReferenceAsString(egcc.ref.Append("project"))
 }
 
+// UpdateTime returns a reference to field update_time of google_eventarc_google_channel_config.
 func (egcc eventarcGoogleChannelConfigAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(egcc.ref.Append("update_time"))
+	return terra.ReferenceAsString(egcc.ref.Append("update_time"))
 }
 
 func (egcc eventarcGoogleChannelConfigAttributes) Timeouts() eventarcgooglechannelconfig.TimeoutsAttributes {
-	return terra.ReferenceSingle[eventarcgooglechannelconfig.TimeoutsAttributes](egcc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[eventarcgooglechannelconfig.TimeoutsAttributes](egcc.ref.Append("timeouts"))
 }
 
 type eventarcGoogleChannelConfigState struct {

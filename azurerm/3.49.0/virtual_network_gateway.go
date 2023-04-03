@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewVirtualNetworkGateway creates a new instance of [VirtualNetworkGateway].
 func NewVirtualNetworkGateway(name string, args VirtualNetworkGatewayArgs) *VirtualNetworkGateway {
 	return &VirtualNetworkGateway{
 		Args: args,
@@ -19,28 +20,51 @@ func NewVirtualNetworkGateway(name string, args VirtualNetworkGatewayArgs) *Virt
 
 var _ terra.Resource = (*VirtualNetworkGateway)(nil)
 
+// VirtualNetworkGateway represents the Terraform resource azurerm_virtual_network_gateway.
 type VirtualNetworkGateway struct {
-	Name  string
-	Args  VirtualNetworkGatewayArgs
-	state *virtualNetworkGatewayState
+	Name      string
+	Args      VirtualNetworkGatewayArgs
+	state     *virtualNetworkGatewayState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VirtualNetworkGateway].
 func (vng *VirtualNetworkGateway) Type() string {
 	return "azurerm_virtual_network_gateway"
 }
 
+// LocalName returns the local name for [VirtualNetworkGateway].
 func (vng *VirtualNetworkGateway) LocalName() string {
 	return vng.Name
 }
 
+// Configuration returns the configuration (args) for [VirtualNetworkGateway].
 func (vng *VirtualNetworkGateway) Configuration() interface{} {
 	return vng.Args
 }
 
+// DependOn is used for other resources to depend on [VirtualNetworkGateway].
+func (vng *VirtualNetworkGateway) DependOn() terra.Reference {
+	return terra.ReferenceResource(vng)
+}
+
+// Dependencies returns the list of resources [VirtualNetworkGateway] depends_on.
+func (vng *VirtualNetworkGateway) Dependencies() terra.Dependencies {
+	return vng.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VirtualNetworkGateway].
+func (vng *VirtualNetworkGateway) LifecycleManagement() *terra.Lifecycle {
+	return vng.Lifecycle
+}
+
+// Attributes returns the attributes for [VirtualNetworkGateway].
 func (vng *VirtualNetworkGateway) Attributes() virtualNetworkGatewayAttributes {
 	return virtualNetworkGatewayAttributes{ref: terra.ReferenceResource(vng)}
 }
 
+// ImportState imports the given attribute values into [VirtualNetworkGateway]'s state.
 func (vng *VirtualNetworkGateway) ImportState(av io.Reader) error {
 	vng.state = &virtualNetworkGatewayState{}
 	if err := json.NewDecoder(av).Decode(vng.state); err != nil {
@@ -49,10 +73,12 @@ func (vng *VirtualNetworkGateway) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [VirtualNetworkGateway] has state.
 func (vng *VirtualNetworkGateway) State() (*virtualNetworkGatewayState, bool) {
 	return vng.state, vng.state != nil
 }
 
+// StateMust returns the state for [VirtualNetworkGateway]. Panics if the state is nil.
 func (vng *VirtualNetworkGateway) StateMust() *virtualNetworkGatewayState {
 	if vng.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", vng.Type(), vng.LocalName()))
@@ -60,10 +86,7 @@ func (vng *VirtualNetworkGateway) StateMust() *virtualNetworkGatewayState {
 	return vng.state
 }
 
-func (vng *VirtualNetworkGateway) DependOn() terra.Reference {
-	return terra.ReferenceResource(vng)
-}
-
+// VirtualNetworkGatewayArgs contains the configurations for azurerm_virtual_network_gateway.
 type VirtualNetworkGatewayArgs struct {
 	// ActiveActive: bool, optional
 	ActiveActive terra.BoolValue `hcl:"active_active,attr"`
@@ -103,87 +126,99 @@ type VirtualNetworkGatewayArgs struct {
 	Timeouts *virtualnetworkgateway.Timeouts `hcl:"timeouts,block"`
 	// VpnClientConfiguration: optional
 	VpnClientConfiguration *virtualnetworkgateway.VpnClientConfiguration `hcl:"vpn_client_configuration,block"`
-	// DependsOn contains resources that VirtualNetworkGateway depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type virtualNetworkGatewayAttributes struct {
 	ref terra.Reference
 }
 
+// ActiveActive returns a reference to field active_active of azurerm_virtual_network_gateway.
 func (vng virtualNetworkGatewayAttributes) ActiveActive() terra.BoolValue {
-	return terra.ReferenceBool(vng.ref.Append("active_active"))
+	return terra.ReferenceAsBool(vng.ref.Append("active_active"))
 }
 
+// DefaultLocalNetworkGatewayId returns a reference to field default_local_network_gateway_id of azurerm_virtual_network_gateway.
 func (vng virtualNetworkGatewayAttributes) DefaultLocalNetworkGatewayId() terra.StringValue {
-	return terra.ReferenceString(vng.ref.Append("default_local_network_gateway_id"))
+	return terra.ReferenceAsString(vng.ref.Append("default_local_network_gateway_id"))
 }
 
+// EdgeZone returns a reference to field edge_zone of azurerm_virtual_network_gateway.
 func (vng virtualNetworkGatewayAttributes) EdgeZone() terra.StringValue {
-	return terra.ReferenceString(vng.ref.Append("edge_zone"))
+	return terra.ReferenceAsString(vng.ref.Append("edge_zone"))
 }
 
+// EnableBgp returns a reference to field enable_bgp of azurerm_virtual_network_gateway.
 func (vng virtualNetworkGatewayAttributes) EnableBgp() terra.BoolValue {
-	return terra.ReferenceBool(vng.ref.Append("enable_bgp"))
+	return terra.ReferenceAsBool(vng.ref.Append("enable_bgp"))
 }
 
+// Generation returns a reference to field generation of azurerm_virtual_network_gateway.
 func (vng virtualNetworkGatewayAttributes) Generation() terra.StringValue {
-	return terra.ReferenceString(vng.ref.Append("generation"))
+	return terra.ReferenceAsString(vng.ref.Append("generation"))
 }
 
+// Id returns a reference to field id of azurerm_virtual_network_gateway.
 func (vng virtualNetworkGatewayAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vng.ref.Append("id"))
+	return terra.ReferenceAsString(vng.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_virtual_network_gateway.
 func (vng virtualNetworkGatewayAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(vng.ref.Append("location"))
+	return terra.ReferenceAsString(vng.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_virtual_network_gateway.
 func (vng virtualNetworkGatewayAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(vng.ref.Append("name"))
+	return terra.ReferenceAsString(vng.ref.Append("name"))
 }
 
+// PrivateIpAddressEnabled returns a reference to field private_ip_address_enabled of azurerm_virtual_network_gateway.
 func (vng virtualNetworkGatewayAttributes) PrivateIpAddressEnabled() terra.BoolValue {
-	return terra.ReferenceBool(vng.ref.Append("private_ip_address_enabled"))
+	return terra.ReferenceAsBool(vng.ref.Append("private_ip_address_enabled"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_virtual_network_gateway.
 func (vng virtualNetworkGatewayAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(vng.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(vng.ref.Append("resource_group_name"))
 }
 
+// Sku returns a reference to field sku of azurerm_virtual_network_gateway.
 func (vng virtualNetworkGatewayAttributes) Sku() terra.StringValue {
-	return terra.ReferenceString(vng.ref.Append("sku"))
+	return terra.ReferenceAsString(vng.ref.Append("sku"))
 }
 
+// Tags returns a reference to field tags of azurerm_virtual_network_gateway.
 func (vng virtualNetworkGatewayAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](vng.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](vng.ref.Append("tags"))
 }
 
+// Type returns a reference to field type of azurerm_virtual_network_gateway.
 func (vng virtualNetworkGatewayAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(vng.ref.Append("type"))
+	return terra.ReferenceAsString(vng.ref.Append("type"))
 }
 
+// VpnType returns a reference to field vpn_type of azurerm_virtual_network_gateway.
 func (vng virtualNetworkGatewayAttributes) VpnType() terra.StringValue {
-	return terra.ReferenceString(vng.ref.Append("vpn_type"))
+	return terra.ReferenceAsString(vng.ref.Append("vpn_type"))
 }
 
 func (vng virtualNetworkGatewayAttributes) BgpSettings() terra.ListValue[virtualnetworkgateway.BgpSettingsAttributes] {
-	return terra.ReferenceList[virtualnetworkgateway.BgpSettingsAttributes](vng.ref.Append("bgp_settings"))
+	return terra.ReferenceAsList[virtualnetworkgateway.BgpSettingsAttributes](vng.ref.Append("bgp_settings"))
 }
 
 func (vng virtualNetworkGatewayAttributes) CustomRoute() terra.ListValue[virtualnetworkgateway.CustomRouteAttributes] {
-	return terra.ReferenceList[virtualnetworkgateway.CustomRouteAttributes](vng.ref.Append("custom_route"))
+	return terra.ReferenceAsList[virtualnetworkgateway.CustomRouteAttributes](vng.ref.Append("custom_route"))
 }
 
 func (vng virtualNetworkGatewayAttributes) IpConfiguration() terra.ListValue[virtualnetworkgateway.IpConfigurationAttributes] {
-	return terra.ReferenceList[virtualnetworkgateway.IpConfigurationAttributes](vng.ref.Append("ip_configuration"))
+	return terra.ReferenceAsList[virtualnetworkgateway.IpConfigurationAttributes](vng.ref.Append("ip_configuration"))
 }
 
 func (vng virtualNetworkGatewayAttributes) Timeouts() virtualnetworkgateway.TimeoutsAttributes {
-	return terra.ReferenceSingle[virtualnetworkgateway.TimeoutsAttributes](vng.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[virtualnetworkgateway.TimeoutsAttributes](vng.ref.Append("timeouts"))
 }
 
 func (vng virtualNetworkGatewayAttributes) VpnClientConfiguration() terra.ListValue[virtualnetworkgateway.VpnClientConfigurationAttributes] {
-	return terra.ReferenceList[virtualnetworkgateway.VpnClientConfigurationAttributes](vng.ref.Append("vpn_client_configuration"))
+	return terra.ReferenceAsList[virtualnetworkgateway.VpnClientConfigurationAttributes](vng.ref.Append("vpn_client_configuration"))
 }
 
 type virtualNetworkGatewayState struct {

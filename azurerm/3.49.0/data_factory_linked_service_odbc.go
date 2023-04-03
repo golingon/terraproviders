@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFactoryLinkedServiceOdbc creates a new instance of [DataFactoryLinkedServiceOdbc].
 func NewDataFactoryLinkedServiceOdbc(name string, args DataFactoryLinkedServiceOdbcArgs) *DataFactoryLinkedServiceOdbc {
 	return &DataFactoryLinkedServiceOdbc{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFactoryLinkedServiceOdbc(name string, args DataFactoryLinkedServiceO
 
 var _ terra.Resource = (*DataFactoryLinkedServiceOdbc)(nil)
 
+// DataFactoryLinkedServiceOdbc represents the Terraform resource azurerm_data_factory_linked_service_odbc.
 type DataFactoryLinkedServiceOdbc struct {
-	Name  string
-	Args  DataFactoryLinkedServiceOdbcArgs
-	state *dataFactoryLinkedServiceOdbcState
+	Name      string
+	Args      DataFactoryLinkedServiceOdbcArgs
+	state     *dataFactoryLinkedServiceOdbcState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFactoryLinkedServiceOdbc].
 func (dflso *DataFactoryLinkedServiceOdbc) Type() string {
 	return "azurerm_data_factory_linked_service_odbc"
 }
 
+// LocalName returns the local name for [DataFactoryLinkedServiceOdbc].
 func (dflso *DataFactoryLinkedServiceOdbc) LocalName() string {
 	return dflso.Name
 }
 
+// Configuration returns the configuration (args) for [DataFactoryLinkedServiceOdbc].
 func (dflso *DataFactoryLinkedServiceOdbc) Configuration() interface{} {
 	return dflso.Args
 }
 
+// DependOn is used for other resources to depend on [DataFactoryLinkedServiceOdbc].
+func (dflso *DataFactoryLinkedServiceOdbc) DependOn() terra.Reference {
+	return terra.ReferenceResource(dflso)
+}
+
+// Dependencies returns the list of resources [DataFactoryLinkedServiceOdbc] depends_on.
+func (dflso *DataFactoryLinkedServiceOdbc) Dependencies() terra.Dependencies {
+	return dflso.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFactoryLinkedServiceOdbc].
+func (dflso *DataFactoryLinkedServiceOdbc) LifecycleManagement() *terra.Lifecycle {
+	return dflso.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFactoryLinkedServiceOdbc].
 func (dflso *DataFactoryLinkedServiceOdbc) Attributes() dataFactoryLinkedServiceOdbcAttributes {
 	return dataFactoryLinkedServiceOdbcAttributes{ref: terra.ReferenceResource(dflso)}
 }
 
+// ImportState imports the given attribute values into [DataFactoryLinkedServiceOdbc]'s state.
 func (dflso *DataFactoryLinkedServiceOdbc) ImportState(av io.Reader) error {
 	dflso.state = &dataFactoryLinkedServiceOdbcState{}
 	if err := json.NewDecoder(av).Decode(dflso.state); err != nil {
@@ -49,10 +73,12 @@ func (dflso *DataFactoryLinkedServiceOdbc) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFactoryLinkedServiceOdbc] has state.
 func (dflso *DataFactoryLinkedServiceOdbc) State() (*dataFactoryLinkedServiceOdbcState, bool) {
 	return dflso.state, dflso.state != nil
 }
 
+// StateMust returns the state for [DataFactoryLinkedServiceOdbc]. Panics if the state is nil.
 func (dflso *DataFactoryLinkedServiceOdbc) StateMust() *dataFactoryLinkedServiceOdbcState {
 	if dflso.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dflso.Type(), dflso.LocalName()))
@@ -60,10 +86,7 @@ func (dflso *DataFactoryLinkedServiceOdbc) StateMust() *dataFactoryLinkedService
 	return dflso.state
 }
 
-func (dflso *DataFactoryLinkedServiceOdbc) DependOn() terra.Reference {
-	return terra.ReferenceResource(dflso)
-}
-
+// DataFactoryLinkedServiceOdbcArgs contains the configurations for azurerm_data_factory_linked_service_odbc.
 type DataFactoryLinkedServiceOdbcArgs struct {
 	// AdditionalProperties: map of string, optional
 	AdditionalProperties terra.MapValue[terra.StringValue] `hcl:"additional_properties,attr"`
@@ -87,55 +110,62 @@ type DataFactoryLinkedServiceOdbcArgs struct {
 	BasicAuthentication *datafactorylinkedserviceodbc.BasicAuthentication `hcl:"basic_authentication,block"`
 	// Timeouts: optional
 	Timeouts *datafactorylinkedserviceodbc.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataFactoryLinkedServiceOdbc depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFactoryLinkedServiceOdbcAttributes struct {
 	ref terra.Reference
 }
 
+// AdditionalProperties returns a reference to field additional_properties of azurerm_data_factory_linked_service_odbc.
 func (dflso dataFactoryLinkedServiceOdbcAttributes) AdditionalProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dflso.ref.Append("additional_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](dflso.ref.Append("additional_properties"))
 }
 
+// Annotations returns a reference to field annotations of azurerm_data_factory_linked_service_odbc.
 func (dflso dataFactoryLinkedServiceOdbcAttributes) Annotations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dflso.ref.Append("annotations"))
+	return terra.ReferenceAsList[terra.StringValue](dflso.ref.Append("annotations"))
 }
 
+// ConnectionString returns a reference to field connection_string of azurerm_data_factory_linked_service_odbc.
 func (dflso dataFactoryLinkedServiceOdbcAttributes) ConnectionString() terra.StringValue {
-	return terra.ReferenceString(dflso.ref.Append("connection_string"))
+	return terra.ReferenceAsString(dflso.ref.Append("connection_string"))
 }
 
+// DataFactoryId returns a reference to field data_factory_id of azurerm_data_factory_linked_service_odbc.
 func (dflso dataFactoryLinkedServiceOdbcAttributes) DataFactoryId() terra.StringValue {
-	return terra.ReferenceString(dflso.ref.Append("data_factory_id"))
+	return terra.ReferenceAsString(dflso.ref.Append("data_factory_id"))
 }
 
+// Description returns a reference to field description of azurerm_data_factory_linked_service_odbc.
 func (dflso dataFactoryLinkedServiceOdbcAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dflso.ref.Append("description"))
+	return terra.ReferenceAsString(dflso.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_data_factory_linked_service_odbc.
 func (dflso dataFactoryLinkedServiceOdbcAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dflso.ref.Append("id"))
+	return terra.ReferenceAsString(dflso.ref.Append("id"))
 }
 
+// IntegrationRuntimeName returns a reference to field integration_runtime_name of azurerm_data_factory_linked_service_odbc.
 func (dflso dataFactoryLinkedServiceOdbcAttributes) IntegrationRuntimeName() terra.StringValue {
-	return terra.ReferenceString(dflso.ref.Append("integration_runtime_name"))
+	return terra.ReferenceAsString(dflso.ref.Append("integration_runtime_name"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory_linked_service_odbc.
 func (dflso dataFactoryLinkedServiceOdbcAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dflso.ref.Append("name"))
+	return terra.ReferenceAsString(dflso.ref.Append("name"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_data_factory_linked_service_odbc.
 func (dflso dataFactoryLinkedServiceOdbcAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dflso.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](dflso.ref.Append("parameters"))
 }
 
 func (dflso dataFactoryLinkedServiceOdbcAttributes) BasicAuthentication() terra.ListValue[datafactorylinkedserviceodbc.BasicAuthenticationAttributes] {
-	return terra.ReferenceList[datafactorylinkedserviceodbc.BasicAuthenticationAttributes](dflso.ref.Append("basic_authentication"))
+	return terra.ReferenceAsList[datafactorylinkedserviceodbc.BasicAuthenticationAttributes](dflso.ref.Append("basic_authentication"))
 }
 
 func (dflso dataFactoryLinkedServiceOdbcAttributes) Timeouts() datafactorylinkedserviceodbc.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafactorylinkedserviceodbc.TimeoutsAttributes](dflso.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafactorylinkedserviceodbc.TimeoutsAttributes](dflso.ref.Append("timeouts"))
 }
 
 type dataFactoryLinkedServiceOdbcState struct {

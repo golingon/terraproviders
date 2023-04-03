@@ -25,100 +25,100 @@ type BackendAddressAttributes struct {
 	ref terra.Reference
 }
 
-func (ba BackendAddressAttributes) InternalRef() terra.Reference {
-	return ba.ref
+func (ba BackendAddressAttributes) InternalRef() (terra.Reference, error) {
+	return ba.ref, nil
 }
 
 func (ba BackendAddressAttributes) InternalWithRef(ref terra.Reference) BackendAddressAttributes {
 	return BackendAddressAttributes{ref: ref}
 }
 
-func (ba BackendAddressAttributes) InternalTokens() hclwrite.Tokens {
+func (ba BackendAddressAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ba.ref.InternalTokens()
 }
 
 func (ba BackendAddressAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("ip_address"))
+	return terra.ReferenceAsString(ba.ref.Append("ip_address"))
 }
 
 func (ba BackendAddressAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("name"))
+	return terra.ReferenceAsString(ba.ref.Append("name"))
 }
 
 func (ba BackendAddressAttributes) VirtualNetworkId() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("virtual_network_id"))
+	return terra.ReferenceAsString(ba.ref.Append("virtual_network_id"))
 }
 
 func (ba BackendAddressAttributes) InboundNatRulePortMapping() terra.ListValue[InboundNatRulePortMappingAttributes] {
-	return terra.ReferenceList[InboundNatRulePortMappingAttributes](ba.ref.Append("inbound_nat_rule_port_mapping"))
+	return terra.ReferenceAsList[InboundNatRulePortMappingAttributes](ba.ref.Append("inbound_nat_rule_port_mapping"))
 }
 
 type InboundNatRulePortMappingAttributes struct {
 	ref terra.Reference
 }
 
-func (inrpm InboundNatRulePortMappingAttributes) InternalRef() terra.Reference {
-	return inrpm.ref
+func (inrpm InboundNatRulePortMappingAttributes) InternalRef() (terra.Reference, error) {
+	return inrpm.ref, nil
 }
 
 func (inrpm InboundNatRulePortMappingAttributes) InternalWithRef(ref terra.Reference) InboundNatRulePortMappingAttributes {
 	return InboundNatRulePortMappingAttributes{ref: ref}
 }
 
-func (inrpm InboundNatRulePortMappingAttributes) InternalTokens() hclwrite.Tokens {
+func (inrpm InboundNatRulePortMappingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return inrpm.ref.InternalTokens()
 }
 
 func (inrpm InboundNatRulePortMappingAttributes) BackendPort() terra.NumberValue {
-	return terra.ReferenceNumber(inrpm.ref.Append("backend_port"))
+	return terra.ReferenceAsNumber(inrpm.ref.Append("backend_port"))
 }
 
 func (inrpm InboundNatRulePortMappingAttributes) FrontendPort() terra.NumberValue {
-	return terra.ReferenceNumber(inrpm.ref.Append("frontend_port"))
+	return terra.ReferenceAsNumber(inrpm.ref.Append("frontend_port"))
 }
 
 func (inrpm InboundNatRulePortMappingAttributes) InboundNatRuleName() terra.StringValue {
-	return terra.ReferenceString(inrpm.ref.Append("inbound_nat_rule_name"))
+	return terra.ReferenceAsString(inrpm.ref.Append("inbound_nat_rule_name"))
 }
 
 type BackendIpConfigurationsAttributes struct {
 	ref terra.Reference
 }
 
-func (bic BackendIpConfigurationsAttributes) InternalRef() terra.Reference {
-	return bic.ref
+func (bic BackendIpConfigurationsAttributes) InternalRef() (terra.Reference, error) {
+	return bic.ref, nil
 }
 
 func (bic BackendIpConfigurationsAttributes) InternalWithRef(ref terra.Reference) BackendIpConfigurationsAttributes {
 	return BackendIpConfigurationsAttributes{ref: ref}
 }
 
-func (bic BackendIpConfigurationsAttributes) InternalTokens() hclwrite.Tokens {
+func (bic BackendIpConfigurationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bic.ref.InternalTokens()
 }
 
 func (bic BackendIpConfigurationsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bic.ref.Append("id"))
+	return terra.ReferenceAsString(bic.ref.Append("id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type BackendAddressState struct {

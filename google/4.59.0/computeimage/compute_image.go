@@ -41,100 +41,100 @@ type GuestOsFeaturesAttributes struct {
 	ref terra.Reference
 }
 
-func (gof GuestOsFeaturesAttributes) InternalRef() terra.Reference {
-	return gof.ref
+func (gof GuestOsFeaturesAttributes) InternalRef() (terra.Reference, error) {
+	return gof.ref, nil
 }
 
 func (gof GuestOsFeaturesAttributes) InternalWithRef(ref terra.Reference) GuestOsFeaturesAttributes {
 	return GuestOsFeaturesAttributes{ref: ref}
 }
 
-func (gof GuestOsFeaturesAttributes) InternalTokens() hclwrite.Tokens {
+func (gof GuestOsFeaturesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gof.ref.InternalTokens()
 }
 
 func (gof GuestOsFeaturesAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(gof.ref.Append("type"))
+	return terra.ReferenceAsString(gof.ref.Append("type"))
 }
 
 type ImageEncryptionKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (iek ImageEncryptionKeyAttributes) InternalRef() terra.Reference {
-	return iek.ref
+func (iek ImageEncryptionKeyAttributes) InternalRef() (terra.Reference, error) {
+	return iek.ref, nil
 }
 
 func (iek ImageEncryptionKeyAttributes) InternalWithRef(ref terra.Reference) ImageEncryptionKeyAttributes {
 	return ImageEncryptionKeyAttributes{ref: ref}
 }
 
-func (iek ImageEncryptionKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (iek ImageEncryptionKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return iek.ref.InternalTokens()
 }
 
 func (iek ImageEncryptionKeyAttributes) KmsKeySelfLink() terra.StringValue {
-	return terra.ReferenceString(iek.ref.Append("kms_key_self_link"))
+	return terra.ReferenceAsString(iek.ref.Append("kms_key_self_link"))
 }
 
 func (iek ImageEncryptionKeyAttributes) KmsKeyServiceAccount() terra.StringValue {
-	return terra.ReferenceString(iek.ref.Append("kms_key_service_account"))
+	return terra.ReferenceAsString(iek.ref.Append("kms_key_service_account"))
 }
 
 type RawDiskAttributes struct {
 	ref terra.Reference
 }
 
-func (rd RawDiskAttributes) InternalRef() terra.Reference {
-	return rd.ref
+func (rd RawDiskAttributes) InternalRef() (terra.Reference, error) {
+	return rd.ref, nil
 }
 
 func (rd RawDiskAttributes) InternalWithRef(ref terra.Reference) RawDiskAttributes {
 	return RawDiskAttributes{ref: ref}
 }
 
-func (rd RawDiskAttributes) InternalTokens() hclwrite.Tokens {
+func (rd RawDiskAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rd.ref.InternalTokens()
 }
 
 func (rd RawDiskAttributes) ContainerType() terra.StringValue {
-	return terra.ReferenceString(rd.ref.Append("container_type"))
+	return terra.ReferenceAsString(rd.ref.Append("container_type"))
 }
 
 func (rd RawDiskAttributes) Sha1() terra.StringValue {
-	return terra.ReferenceString(rd.ref.Append("sha1"))
+	return terra.ReferenceAsString(rd.ref.Append("sha1"))
 }
 
 func (rd RawDiskAttributes) Source() terra.StringValue {
-	return terra.ReferenceString(rd.ref.Append("source"))
+	return terra.ReferenceAsString(rd.ref.Append("source"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type GuestOsFeaturesState struct {

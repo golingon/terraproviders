@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataprocClusterIamBinding creates a new instance of [DataprocClusterIamBinding].
 func NewDataprocClusterIamBinding(name string, args DataprocClusterIamBindingArgs) *DataprocClusterIamBinding {
 	return &DataprocClusterIamBinding{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataprocClusterIamBinding(name string, args DataprocClusterIamBindingArg
 
 var _ terra.Resource = (*DataprocClusterIamBinding)(nil)
 
+// DataprocClusterIamBinding represents the Terraform resource google_dataproc_cluster_iam_binding.
 type DataprocClusterIamBinding struct {
-	Name  string
-	Args  DataprocClusterIamBindingArgs
-	state *dataprocClusterIamBindingState
+	Name      string
+	Args      DataprocClusterIamBindingArgs
+	state     *dataprocClusterIamBindingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataprocClusterIamBinding].
 func (dcib *DataprocClusterIamBinding) Type() string {
 	return "google_dataproc_cluster_iam_binding"
 }
 
+// LocalName returns the local name for [DataprocClusterIamBinding].
 func (dcib *DataprocClusterIamBinding) LocalName() string {
 	return dcib.Name
 }
 
+// Configuration returns the configuration (args) for [DataprocClusterIamBinding].
 func (dcib *DataprocClusterIamBinding) Configuration() interface{} {
 	return dcib.Args
 }
 
+// DependOn is used for other resources to depend on [DataprocClusterIamBinding].
+func (dcib *DataprocClusterIamBinding) DependOn() terra.Reference {
+	return terra.ReferenceResource(dcib)
+}
+
+// Dependencies returns the list of resources [DataprocClusterIamBinding] depends_on.
+func (dcib *DataprocClusterIamBinding) Dependencies() terra.Dependencies {
+	return dcib.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataprocClusterIamBinding].
+func (dcib *DataprocClusterIamBinding) LifecycleManagement() *terra.Lifecycle {
+	return dcib.Lifecycle
+}
+
+// Attributes returns the attributes for [DataprocClusterIamBinding].
 func (dcib *DataprocClusterIamBinding) Attributes() dataprocClusterIamBindingAttributes {
 	return dataprocClusterIamBindingAttributes{ref: terra.ReferenceResource(dcib)}
 }
 
+// ImportState imports the given attribute values into [DataprocClusterIamBinding]'s state.
 func (dcib *DataprocClusterIamBinding) ImportState(av io.Reader) error {
 	dcib.state = &dataprocClusterIamBindingState{}
 	if err := json.NewDecoder(av).Decode(dcib.state); err != nil {
@@ -49,10 +73,12 @@ func (dcib *DataprocClusterIamBinding) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataprocClusterIamBinding] has state.
 func (dcib *DataprocClusterIamBinding) State() (*dataprocClusterIamBindingState, bool) {
 	return dcib.state, dcib.state != nil
 }
 
+// StateMust returns the state for [DataprocClusterIamBinding]. Panics if the state is nil.
 func (dcib *DataprocClusterIamBinding) StateMust() *dataprocClusterIamBindingState {
 	if dcib.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dcib.Type(), dcib.LocalName()))
@@ -60,10 +86,7 @@ func (dcib *DataprocClusterIamBinding) StateMust() *dataprocClusterIamBindingSta
 	return dcib.state
 }
 
-func (dcib *DataprocClusterIamBinding) DependOn() terra.Reference {
-	return terra.ReferenceResource(dcib)
-}
-
+// DataprocClusterIamBindingArgs contains the configurations for google_dataproc_cluster_iam_binding.
 type DataprocClusterIamBindingArgs struct {
 	// Cluster: string, required
 	Cluster terra.StringValue `hcl:"cluster,attr" validate:"required"`
@@ -79,43 +102,48 @@ type DataprocClusterIamBindingArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *dataprocclusteriambinding.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that DataprocClusterIamBinding depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataprocClusterIamBindingAttributes struct {
 	ref terra.Reference
 }
 
+// Cluster returns a reference to field cluster of google_dataproc_cluster_iam_binding.
 func (dcib dataprocClusterIamBindingAttributes) Cluster() terra.StringValue {
-	return terra.ReferenceString(dcib.ref.Append("cluster"))
+	return terra.ReferenceAsString(dcib.ref.Append("cluster"))
 }
 
+// Etag returns a reference to field etag of google_dataproc_cluster_iam_binding.
 func (dcib dataprocClusterIamBindingAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(dcib.ref.Append("etag"))
+	return terra.ReferenceAsString(dcib.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_dataproc_cluster_iam_binding.
 func (dcib dataprocClusterIamBindingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dcib.ref.Append("id"))
+	return terra.ReferenceAsString(dcib.ref.Append("id"))
 }
 
+// Members returns a reference to field members of google_dataproc_cluster_iam_binding.
 func (dcib dataprocClusterIamBindingAttributes) Members() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dcib.ref.Append("members"))
+	return terra.ReferenceAsSet[terra.StringValue](dcib.ref.Append("members"))
 }
 
+// Project returns a reference to field project of google_dataproc_cluster_iam_binding.
 func (dcib dataprocClusterIamBindingAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(dcib.ref.Append("project"))
+	return terra.ReferenceAsString(dcib.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_dataproc_cluster_iam_binding.
 func (dcib dataprocClusterIamBindingAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(dcib.ref.Append("region"))
+	return terra.ReferenceAsString(dcib.ref.Append("region"))
 }
 
+// Role returns a reference to field role of google_dataproc_cluster_iam_binding.
 func (dcib dataprocClusterIamBindingAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(dcib.ref.Append("role"))
+	return terra.ReferenceAsString(dcib.ref.Append("role"))
 }
 
 func (dcib dataprocClusterIamBindingAttributes) Condition() terra.ListValue[dataprocclusteriambinding.ConditionAttributes] {
-	return terra.ReferenceList[dataprocclusteriambinding.ConditionAttributes](dcib.ref.Append("condition"))
+	return terra.ReferenceAsList[dataprocclusteriambinding.ConditionAttributes](dcib.ref.Append("condition"))
 }
 
 type dataprocClusterIamBindingState struct {

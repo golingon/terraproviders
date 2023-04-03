@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewVertexAiTensorboard creates a new instance of [VertexAiTensorboard].
 func NewVertexAiTensorboard(name string, args VertexAiTensorboardArgs) *VertexAiTensorboard {
 	return &VertexAiTensorboard{
 		Args: args,
@@ -19,28 +20,51 @@ func NewVertexAiTensorboard(name string, args VertexAiTensorboardArgs) *VertexAi
 
 var _ terra.Resource = (*VertexAiTensorboard)(nil)
 
+// VertexAiTensorboard represents the Terraform resource google_vertex_ai_tensorboard.
 type VertexAiTensorboard struct {
-	Name  string
-	Args  VertexAiTensorboardArgs
-	state *vertexAiTensorboardState
+	Name      string
+	Args      VertexAiTensorboardArgs
+	state     *vertexAiTensorboardState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VertexAiTensorboard].
 func (vat *VertexAiTensorboard) Type() string {
 	return "google_vertex_ai_tensorboard"
 }
 
+// LocalName returns the local name for [VertexAiTensorboard].
 func (vat *VertexAiTensorboard) LocalName() string {
 	return vat.Name
 }
 
+// Configuration returns the configuration (args) for [VertexAiTensorboard].
 func (vat *VertexAiTensorboard) Configuration() interface{} {
 	return vat.Args
 }
 
+// DependOn is used for other resources to depend on [VertexAiTensorboard].
+func (vat *VertexAiTensorboard) DependOn() terra.Reference {
+	return terra.ReferenceResource(vat)
+}
+
+// Dependencies returns the list of resources [VertexAiTensorboard] depends_on.
+func (vat *VertexAiTensorboard) Dependencies() terra.Dependencies {
+	return vat.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VertexAiTensorboard].
+func (vat *VertexAiTensorboard) LifecycleManagement() *terra.Lifecycle {
+	return vat.Lifecycle
+}
+
+// Attributes returns the attributes for [VertexAiTensorboard].
 func (vat *VertexAiTensorboard) Attributes() vertexAiTensorboardAttributes {
 	return vertexAiTensorboardAttributes{ref: terra.ReferenceResource(vat)}
 }
 
+// ImportState imports the given attribute values into [VertexAiTensorboard]'s state.
 func (vat *VertexAiTensorboard) ImportState(av io.Reader) error {
 	vat.state = &vertexAiTensorboardState{}
 	if err := json.NewDecoder(av).Decode(vat.state); err != nil {
@@ -49,10 +73,12 @@ func (vat *VertexAiTensorboard) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [VertexAiTensorboard] has state.
 func (vat *VertexAiTensorboard) State() (*vertexAiTensorboardState, bool) {
 	return vat.state, vat.state != nil
 }
 
+// StateMust returns the state for [VertexAiTensorboard]. Panics if the state is nil.
 func (vat *VertexAiTensorboard) StateMust() *vertexAiTensorboardState {
 	if vat.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", vat.Type(), vat.LocalName()))
@@ -60,10 +86,7 @@ func (vat *VertexAiTensorboard) StateMust() *vertexAiTensorboardState {
 	return vat.state
 }
 
-func (vat *VertexAiTensorboard) DependOn() terra.Reference {
-	return terra.ReferenceResource(vat)
-}
-
+// VertexAiTensorboardArgs contains the configurations for google_vertex_ai_tensorboard.
 type VertexAiTensorboardArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -81,63 +104,72 @@ type VertexAiTensorboardArgs struct {
 	EncryptionSpec *vertexaitensorboard.EncryptionSpec `hcl:"encryption_spec,block"`
 	// Timeouts: optional
 	Timeouts *vertexaitensorboard.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that VertexAiTensorboard depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type vertexAiTensorboardAttributes struct {
 	ref terra.Reference
 }
 
+// BlobStoragePathPrefix returns a reference to field blob_storage_path_prefix of google_vertex_ai_tensorboard.
 func (vat vertexAiTensorboardAttributes) BlobStoragePathPrefix() terra.StringValue {
-	return terra.ReferenceString(vat.ref.Append("blob_storage_path_prefix"))
+	return terra.ReferenceAsString(vat.ref.Append("blob_storage_path_prefix"))
 }
 
+// CreateTime returns a reference to field create_time of google_vertex_ai_tensorboard.
 func (vat vertexAiTensorboardAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(vat.ref.Append("create_time"))
+	return terra.ReferenceAsString(vat.ref.Append("create_time"))
 }
 
+// Description returns a reference to field description of google_vertex_ai_tensorboard.
 func (vat vertexAiTensorboardAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(vat.ref.Append("description"))
+	return terra.ReferenceAsString(vat.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of google_vertex_ai_tensorboard.
 func (vat vertexAiTensorboardAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(vat.ref.Append("display_name"))
+	return terra.ReferenceAsString(vat.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of google_vertex_ai_tensorboard.
 func (vat vertexAiTensorboardAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vat.ref.Append("id"))
+	return terra.ReferenceAsString(vat.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_vertex_ai_tensorboard.
 func (vat vertexAiTensorboardAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](vat.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](vat.ref.Append("labels"))
 }
 
+// Name returns a reference to field name of google_vertex_ai_tensorboard.
 func (vat vertexAiTensorboardAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(vat.ref.Append("name"))
+	return terra.ReferenceAsString(vat.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_vertex_ai_tensorboard.
 func (vat vertexAiTensorboardAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(vat.ref.Append("project"))
+	return terra.ReferenceAsString(vat.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_vertex_ai_tensorboard.
 func (vat vertexAiTensorboardAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(vat.ref.Append("region"))
+	return terra.ReferenceAsString(vat.ref.Append("region"))
 }
 
+// RunCount returns a reference to field run_count of google_vertex_ai_tensorboard.
 func (vat vertexAiTensorboardAttributes) RunCount() terra.StringValue {
-	return terra.ReferenceString(vat.ref.Append("run_count"))
+	return terra.ReferenceAsString(vat.ref.Append("run_count"))
 }
 
+// UpdateTime returns a reference to field update_time of google_vertex_ai_tensorboard.
 func (vat vertexAiTensorboardAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(vat.ref.Append("update_time"))
+	return terra.ReferenceAsString(vat.ref.Append("update_time"))
 }
 
 func (vat vertexAiTensorboardAttributes) EncryptionSpec() terra.ListValue[vertexaitensorboard.EncryptionSpecAttributes] {
-	return terra.ReferenceList[vertexaitensorboard.EncryptionSpecAttributes](vat.ref.Append("encryption_spec"))
+	return terra.ReferenceAsList[vertexaitensorboard.EncryptionSpecAttributes](vat.ref.Append("encryption_spec"))
 }
 
 func (vat vertexAiTensorboardAttributes) Timeouts() vertexaitensorboard.TimeoutsAttributes {
-	return terra.ReferenceSingle[vertexaitensorboard.TimeoutsAttributes](vat.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[vertexaitensorboard.TimeoutsAttributes](vat.ref.Append("timeouts"))
 }
 
 type vertexAiTensorboardState struct {

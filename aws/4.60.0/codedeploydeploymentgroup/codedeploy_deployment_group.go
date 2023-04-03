@@ -161,7 +161,7 @@ func (ac AlarmConfigurationAttributes) InternalWithRef(ref terra.Reference) Alar
 	return AlarmConfigurationAttributes{ref: ref}
 }
 
-func (ac AlarmConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ac AlarmConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
@@ -189,7 +189,7 @@ func (arc AutoRollbackConfigurationAttributes) InternalWithRef(ref terra.Referen
 	return AutoRollbackConfigurationAttributes{ref: ref}
 }
 
-func (arc AutoRollbackConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (arc AutoRollbackConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return arc.ref.InternalTokens()
 }
 
@@ -213,7 +213,7 @@ func (bgdc BlueGreenDeploymentConfigAttributes) InternalWithRef(ref terra.Refere
 	return BlueGreenDeploymentConfigAttributes{ref: ref}
 }
 
-func (bgdc BlueGreenDeploymentConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (bgdc BlueGreenDeploymentConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bgdc.ref.InternalTokens()
 }
 
@@ -241,7 +241,7 @@ func (dro DeploymentReadyOptionAttributes) InternalWithRef(ref terra.Reference) 
 	return DeploymentReadyOptionAttributes{ref: ref}
 }
 
-func (dro DeploymentReadyOptionAttributes) InternalTokens() hclwrite.Tokens {
+func (dro DeploymentReadyOptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dro.ref.InternalTokens()
 }
 
@@ -265,7 +265,7 @@ func (gfpo GreenFleetProvisioningOptionAttributes) InternalWithRef(ref terra.Ref
 	return GreenFleetProvisioningOptionAttributes{ref: ref}
 }
 
-func (gfpo GreenFleetProvisioningOptionAttributes) InternalTokens() hclwrite.Tokens {
+func (gfpo GreenFleetProvisioningOptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gfpo.ref.InternalTokens()
 }
 
@@ -285,7 +285,7 @@ func (tbiods TerminateBlueInstancesOnDeploymentSuccessAttributes) InternalWithRe
 	return TerminateBlueInstancesOnDeploymentSuccessAttributes{ref: ref}
 }
 
-func (tbiods TerminateBlueInstancesOnDeploymentSuccessAttributes) InternalTokens() hclwrite.Tokens {
+func (tbiods TerminateBlueInstancesOnDeploymentSuccessAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tbiods.ref.InternalTokens()
 }
 
@@ -309,7 +309,7 @@ func (ds DeploymentStyleAttributes) InternalWithRef(ref terra.Reference) Deploym
 	return DeploymentStyleAttributes{ref: ref}
 }
 
-func (ds DeploymentStyleAttributes) InternalTokens() hclwrite.Tokens {
+func (ds DeploymentStyleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ds.ref.InternalTokens()
 }
 
@@ -333,7 +333,7 @@ func (etf Ec2TagFilterAttributes) InternalWithRef(ref terra.Reference) Ec2TagFil
 	return Ec2TagFilterAttributes{ref: ref}
 }
 
-func (etf Ec2TagFilterAttributes) InternalTokens() hclwrite.Tokens {
+func (etf Ec2TagFilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return etf.ref.InternalTokens()
 }
 
@@ -361,7 +361,7 @@ func (ets Ec2TagSetAttributes) InternalWithRef(ref terra.Reference) Ec2TagSetAtt
 	return Ec2TagSetAttributes{ref: ref}
 }
 
-func (ets Ec2TagSetAttributes) InternalTokens() hclwrite.Tokens {
+func (ets Ec2TagSetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ets.ref.InternalTokens()
 }
 
@@ -381,7 +381,7 @@ func (etf Ec2TagSetEc2TagFilterAttributes) InternalWithRef(ref terra.Reference) 
 	return Ec2TagSetEc2TagFilterAttributes{ref: ref}
 }
 
-func (etf Ec2TagSetEc2TagFilterAttributes) InternalTokens() hclwrite.Tokens {
+func (etf Ec2TagSetEc2TagFilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return etf.ref.InternalTokens()
 }
 
@@ -409,7 +409,7 @@ func (es EcsServiceAttributes) InternalWithRef(ref terra.Reference) EcsServiceAt
 	return EcsServiceAttributes{ref: ref}
 }
 
-func (es EcsServiceAttributes) InternalTokens() hclwrite.Tokens {
+func (es EcsServiceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return es.ref.InternalTokens()
 }
 
@@ -433,7 +433,7 @@ func (lbi LoadBalancerInfoAttributes) InternalWithRef(ref terra.Reference) LoadB
 	return LoadBalancerInfoAttributes{ref: ref}
 }
 
-func (lbi LoadBalancerInfoAttributes) InternalTokens() hclwrite.Tokens {
+func (lbi LoadBalancerInfoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lbi.ref.InternalTokens()
 }
 
@@ -461,7 +461,7 @@ func (ei ElbInfoAttributes) InternalWithRef(ref terra.Reference) ElbInfoAttribut
 	return ElbInfoAttributes{ref: ref}
 }
 
-func (ei ElbInfoAttributes) InternalTokens() hclwrite.Tokens {
+func (ei ElbInfoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ei.ref.InternalTokens()
 }
 
@@ -481,7 +481,7 @@ func (tgi TargetGroupInfoAttributes) InternalWithRef(ref terra.Reference) Target
 	return TargetGroupInfoAttributes{ref: ref}
 }
 
-func (tgi TargetGroupInfoAttributes) InternalTokens() hclwrite.Tokens {
+func (tgi TargetGroupInfoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tgi.ref.InternalTokens()
 }
 
@@ -501,7 +501,7 @@ func (tgpi TargetGroupPairInfoAttributes) InternalWithRef(ref terra.Reference) T
 	return TargetGroupPairInfoAttributes{ref: ref}
 }
 
-func (tgpi TargetGroupPairInfoAttributes) InternalTokens() hclwrite.Tokens {
+func (tgpi TargetGroupPairInfoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tgpi.ref.InternalTokens()
 }
 
@@ -529,7 +529,7 @@ func (ptr ProdTrafficRouteAttributes) InternalWithRef(ref terra.Reference) ProdT
 	return ProdTrafficRouteAttributes{ref: ref}
 }
 
-func (ptr ProdTrafficRouteAttributes) InternalTokens() hclwrite.Tokens {
+func (ptr ProdTrafficRouteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ptr.ref.InternalTokens()
 }
 
@@ -549,7 +549,7 @@ func (tg TargetGroupAttributes) InternalWithRef(ref terra.Reference) TargetGroup
 	return TargetGroupAttributes{ref: ref}
 }
 
-func (tg TargetGroupAttributes) InternalTokens() hclwrite.Tokens {
+func (tg TargetGroupAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tg.ref.InternalTokens()
 }
 
@@ -569,7 +569,7 @@ func (ttr TestTrafficRouteAttributes) InternalWithRef(ref terra.Reference) TestT
 	return TestTrafficRouteAttributes{ref: ref}
 }
 
-func (ttr TestTrafficRouteAttributes) InternalTokens() hclwrite.Tokens {
+func (ttr TestTrafficRouteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ttr.ref.InternalTokens()
 }
 
@@ -589,7 +589,7 @@ func (opitf OnPremisesInstanceTagFilterAttributes) InternalWithRef(ref terra.Ref
 	return OnPremisesInstanceTagFilterAttributes{ref: ref}
 }
 
-func (opitf OnPremisesInstanceTagFilterAttributes) InternalTokens() hclwrite.Tokens {
+func (opitf OnPremisesInstanceTagFilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return opitf.ref.InternalTokens()
 }
 
@@ -617,7 +617,7 @@ func (tc TriggerConfigurationAttributes) InternalWithRef(ref terra.Reference) Tr
 	return TriggerConfigurationAttributes{ref: ref}
 }
 
-func (tc TriggerConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (tc TriggerConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tc.ref.InternalTokens()
 }
 

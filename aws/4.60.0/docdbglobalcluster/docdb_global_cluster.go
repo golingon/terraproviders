@@ -30,7 +30,7 @@ func (gcm GlobalClusterMembersAttributes) InternalWithRef(ref terra.Reference) G
 	return GlobalClusterMembersAttributes{ref: ref}
 }
 
-func (gcm GlobalClusterMembersAttributes) InternalTokens() hclwrite.Tokens {
+func (gcm GlobalClusterMembersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gcm.ref.InternalTokens()
 }
 
@@ -54,7 +54,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

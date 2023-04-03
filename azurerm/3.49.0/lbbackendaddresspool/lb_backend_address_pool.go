@@ -33,64 +33,64 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type TunnelInterfaceAttributes struct {
 	ref terra.Reference
 }
 
-func (ti TunnelInterfaceAttributes) InternalRef() terra.Reference {
-	return ti.ref
+func (ti TunnelInterfaceAttributes) InternalRef() (terra.Reference, error) {
+	return ti.ref, nil
 }
 
 func (ti TunnelInterfaceAttributes) InternalWithRef(ref terra.Reference) TunnelInterfaceAttributes {
 	return TunnelInterfaceAttributes{ref: ref}
 }
 
-func (ti TunnelInterfaceAttributes) InternalTokens() hclwrite.Tokens {
+func (ti TunnelInterfaceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ti.ref.InternalTokens()
 }
 
 func (ti TunnelInterfaceAttributes) Identifier() terra.NumberValue {
-	return terra.ReferenceNumber(ti.ref.Append("identifier"))
+	return terra.ReferenceAsNumber(ti.ref.Append("identifier"))
 }
 
 func (ti TunnelInterfaceAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(ti.ref.Append("port"))
+	return terra.ReferenceAsNumber(ti.ref.Append("port"))
 }
 
 func (ti TunnelInterfaceAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(ti.ref.Append("protocol"))
+	return terra.ReferenceAsString(ti.ref.Append("protocol"))
 }
 
 func (ti TunnelInterfaceAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ti.ref.Append("type"))
+	return terra.ReferenceAsString(ti.ref.Append("type"))
 }
 
 type TimeoutsState struct {

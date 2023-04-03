@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSubscriptionPolicyAssignment creates a new instance of [SubscriptionPolicyAssignment].
 func NewSubscriptionPolicyAssignment(name string, args SubscriptionPolicyAssignmentArgs) *SubscriptionPolicyAssignment {
 	return &SubscriptionPolicyAssignment{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSubscriptionPolicyAssignment(name string, args SubscriptionPolicyAssignm
 
 var _ terra.Resource = (*SubscriptionPolicyAssignment)(nil)
 
+// SubscriptionPolicyAssignment represents the Terraform resource azurerm_subscription_policy_assignment.
 type SubscriptionPolicyAssignment struct {
-	Name  string
-	Args  SubscriptionPolicyAssignmentArgs
-	state *subscriptionPolicyAssignmentState
+	Name      string
+	Args      SubscriptionPolicyAssignmentArgs
+	state     *subscriptionPolicyAssignmentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SubscriptionPolicyAssignment].
 func (spa *SubscriptionPolicyAssignment) Type() string {
 	return "azurerm_subscription_policy_assignment"
 }
 
+// LocalName returns the local name for [SubscriptionPolicyAssignment].
 func (spa *SubscriptionPolicyAssignment) LocalName() string {
 	return spa.Name
 }
 
+// Configuration returns the configuration (args) for [SubscriptionPolicyAssignment].
 func (spa *SubscriptionPolicyAssignment) Configuration() interface{} {
 	return spa.Args
 }
 
+// DependOn is used for other resources to depend on [SubscriptionPolicyAssignment].
+func (spa *SubscriptionPolicyAssignment) DependOn() terra.Reference {
+	return terra.ReferenceResource(spa)
+}
+
+// Dependencies returns the list of resources [SubscriptionPolicyAssignment] depends_on.
+func (spa *SubscriptionPolicyAssignment) Dependencies() terra.Dependencies {
+	return spa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SubscriptionPolicyAssignment].
+func (spa *SubscriptionPolicyAssignment) LifecycleManagement() *terra.Lifecycle {
+	return spa.Lifecycle
+}
+
+// Attributes returns the attributes for [SubscriptionPolicyAssignment].
 func (spa *SubscriptionPolicyAssignment) Attributes() subscriptionPolicyAssignmentAttributes {
 	return subscriptionPolicyAssignmentAttributes{ref: terra.ReferenceResource(spa)}
 }
 
+// ImportState imports the given attribute values into [SubscriptionPolicyAssignment]'s state.
 func (spa *SubscriptionPolicyAssignment) ImportState(av io.Reader) error {
 	spa.state = &subscriptionPolicyAssignmentState{}
 	if err := json.NewDecoder(av).Decode(spa.state); err != nil {
@@ -49,10 +73,12 @@ func (spa *SubscriptionPolicyAssignment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SubscriptionPolicyAssignment] has state.
 func (spa *SubscriptionPolicyAssignment) State() (*subscriptionPolicyAssignmentState, bool) {
 	return spa.state, spa.state != nil
 }
 
+// StateMust returns the state for [SubscriptionPolicyAssignment]. Panics if the state is nil.
 func (spa *SubscriptionPolicyAssignment) StateMust() *subscriptionPolicyAssignmentState {
 	if spa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", spa.Type(), spa.LocalName()))
@@ -60,10 +86,7 @@ func (spa *SubscriptionPolicyAssignment) StateMust() *subscriptionPolicyAssignme
 	return spa.state
 }
 
-func (spa *SubscriptionPolicyAssignment) DependOn() terra.Reference {
-	return terra.ReferenceResource(spa)
-}
-
+// SubscriptionPolicyAssignmentArgs contains the configurations for azurerm_subscription_policy_assignment.
 type SubscriptionPolicyAssignmentArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -97,75 +120,84 @@ type SubscriptionPolicyAssignmentArgs struct {
 	ResourceSelectors []subscriptionpolicyassignment.ResourceSelectors `hcl:"resource_selectors,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *subscriptionpolicyassignment.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SubscriptionPolicyAssignment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type subscriptionPolicyAssignmentAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of azurerm_subscription_policy_assignment.
 func (spa subscriptionPolicyAssignmentAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(spa.ref.Append("description"))
+	return terra.ReferenceAsString(spa.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_subscription_policy_assignment.
 func (spa subscriptionPolicyAssignmentAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(spa.ref.Append("display_name"))
+	return terra.ReferenceAsString(spa.ref.Append("display_name"))
 }
 
+// Enforce returns a reference to field enforce of azurerm_subscription_policy_assignment.
 func (spa subscriptionPolicyAssignmentAttributes) Enforce() terra.BoolValue {
-	return terra.ReferenceBool(spa.ref.Append("enforce"))
+	return terra.ReferenceAsBool(spa.ref.Append("enforce"))
 }
 
+// Id returns a reference to field id of azurerm_subscription_policy_assignment.
 func (spa subscriptionPolicyAssignmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(spa.ref.Append("id"))
+	return terra.ReferenceAsString(spa.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_subscription_policy_assignment.
 func (spa subscriptionPolicyAssignmentAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(spa.ref.Append("location"))
+	return terra.ReferenceAsString(spa.ref.Append("location"))
 }
 
+// Metadata returns a reference to field metadata of azurerm_subscription_policy_assignment.
 func (spa subscriptionPolicyAssignmentAttributes) Metadata() terra.StringValue {
-	return terra.ReferenceString(spa.ref.Append("metadata"))
+	return terra.ReferenceAsString(spa.ref.Append("metadata"))
 }
 
+// Name returns a reference to field name of azurerm_subscription_policy_assignment.
 func (spa subscriptionPolicyAssignmentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(spa.ref.Append("name"))
+	return terra.ReferenceAsString(spa.ref.Append("name"))
 }
 
+// NotScopes returns a reference to field not_scopes of azurerm_subscription_policy_assignment.
 func (spa subscriptionPolicyAssignmentAttributes) NotScopes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](spa.ref.Append("not_scopes"))
+	return terra.ReferenceAsList[terra.StringValue](spa.ref.Append("not_scopes"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_subscription_policy_assignment.
 func (spa subscriptionPolicyAssignmentAttributes) Parameters() terra.StringValue {
-	return terra.ReferenceString(spa.ref.Append("parameters"))
+	return terra.ReferenceAsString(spa.ref.Append("parameters"))
 }
 
+// PolicyDefinitionId returns a reference to field policy_definition_id of azurerm_subscription_policy_assignment.
 func (spa subscriptionPolicyAssignmentAttributes) PolicyDefinitionId() terra.StringValue {
-	return terra.ReferenceString(spa.ref.Append("policy_definition_id"))
+	return terra.ReferenceAsString(spa.ref.Append("policy_definition_id"))
 }
 
+// SubscriptionId returns a reference to field subscription_id of azurerm_subscription_policy_assignment.
 func (spa subscriptionPolicyAssignmentAttributes) SubscriptionId() terra.StringValue {
-	return terra.ReferenceString(spa.ref.Append("subscription_id"))
+	return terra.ReferenceAsString(spa.ref.Append("subscription_id"))
 }
 
 func (spa subscriptionPolicyAssignmentAttributes) Identity() terra.ListValue[subscriptionpolicyassignment.IdentityAttributes] {
-	return terra.ReferenceList[subscriptionpolicyassignment.IdentityAttributes](spa.ref.Append("identity"))
+	return terra.ReferenceAsList[subscriptionpolicyassignment.IdentityAttributes](spa.ref.Append("identity"))
 }
 
 func (spa subscriptionPolicyAssignmentAttributes) NonComplianceMessage() terra.ListValue[subscriptionpolicyassignment.NonComplianceMessageAttributes] {
-	return terra.ReferenceList[subscriptionpolicyassignment.NonComplianceMessageAttributes](spa.ref.Append("non_compliance_message"))
+	return terra.ReferenceAsList[subscriptionpolicyassignment.NonComplianceMessageAttributes](spa.ref.Append("non_compliance_message"))
 }
 
 func (spa subscriptionPolicyAssignmentAttributes) Overrides() terra.ListValue[subscriptionpolicyassignment.OverridesAttributes] {
-	return terra.ReferenceList[subscriptionpolicyassignment.OverridesAttributes](spa.ref.Append("overrides"))
+	return terra.ReferenceAsList[subscriptionpolicyassignment.OverridesAttributes](spa.ref.Append("overrides"))
 }
 
 func (spa subscriptionPolicyAssignmentAttributes) ResourceSelectors() terra.ListValue[subscriptionpolicyassignment.ResourceSelectorsAttributes] {
-	return terra.ReferenceList[subscriptionpolicyassignment.ResourceSelectorsAttributes](spa.ref.Append("resource_selectors"))
+	return terra.ReferenceAsList[subscriptionpolicyassignment.ResourceSelectorsAttributes](spa.ref.Append("resource_selectors"))
 }
 
 func (spa subscriptionPolicyAssignmentAttributes) Timeouts() subscriptionpolicyassignment.TimeoutsAttributes {
-	return terra.ReferenceSingle[subscriptionpolicyassignment.TimeoutsAttributes](spa.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[subscriptionpolicyassignment.TimeoutsAttributes](spa.ref.Append("timeouts"))
 }
 
 type subscriptionPolicyAssignmentState struct {

@@ -36,80 +36,80 @@ type DestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (d DestinationAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DestinationAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DestinationAttributes) InternalWithRef(ref terra.Reference) DestinationAttributes {
 	return DestinationAttributes{ref: ref}
 }
 
-func (d DestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (d DestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d DestinationAttributes) AddressPrefix() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("address_prefix"))
+	return terra.ReferenceAsString(d.ref.Append("address_prefix"))
 }
 
 func (d DestinationAttributes) AddressPrefixType() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("address_prefix_type"))
+	return terra.ReferenceAsString(d.ref.Append("address_prefix_type"))
 }
 
 type SourceAttributes struct {
 	ref terra.Reference
 }
 
-func (s SourceAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SourceAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SourceAttributes) InternalWithRef(ref terra.Reference) SourceAttributes {
 	return SourceAttributes{ref: ref}
 }
 
-func (s SourceAttributes) InternalTokens() hclwrite.Tokens {
+func (s SourceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SourceAttributes) AddressPrefix() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("address_prefix"))
+	return terra.ReferenceAsString(s.ref.Append("address_prefix"))
 }
 
 func (s SourceAttributes) AddressPrefixType() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("address_prefix_type"))
+	return terra.ReferenceAsString(s.ref.Append("address_prefix_type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type DestinationState struct {

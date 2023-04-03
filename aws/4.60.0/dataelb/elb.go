@@ -25,7 +25,7 @@ func (al AccessLogsAttributes) InternalWithRef(ref terra.Reference) AccessLogsAt
 	return AccessLogsAttributes{ref: ref}
 }
 
-func (al AccessLogsAttributes) InternalTokens() hclwrite.Tokens {
+func (al AccessLogsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return al.ref.InternalTokens()
 }
 
@@ -57,7 +57,7 @@ func (hc HealthCheckAttributes) InternalWithRef(ref terra.Reference) HealthCheck
 	return HealthCheckAttributes{ref: ref}
 }
 
-func (hc HealthCheckAttributes) InternalTokens() hclwrite.Tokens {
+func (hc HealthCheckAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hc.ref.InternalTokens()
 }
 
@@ -93,7 +93,7 @@ func (l ListenerAttributes) InternalWithRef(ref terra.Reference) ListenerAttribu
 	return ListenerAttributes{ref: ref}
 }
 
-func (l ListenerAttributes) InternalTokens() hclwrite.Tokens {
+func (l ListenerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 

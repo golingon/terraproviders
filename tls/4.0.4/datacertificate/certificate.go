@@ -13,15 +13,15 @@ type CertificatesAttributes struct {
 	ref terra.Reference
 }
 
-func (c CertificatesAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CertificatesAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CertificatesAttributes) InternalWithRef(ref terra.Reference) CertificatesAttributes {
 	return CertificatesAttributes{ref: ref}
 }
 
-func (c CertificatesAttributes) InternalTokens() hclwrite.Tokens {
+func (c CertificatesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 

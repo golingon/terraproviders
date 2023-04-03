@@ -59,7 +59,7 @@ func (r RouteAttributes) InternalWithRef(ref terra.Reference) RouteAttributes {
 	return RouteAttributes{ref: ref}
 }
 
-func (r RouteAttributes) InternalTokens() hclwrite.Tokens {
+func (r RouteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -131,7 +131,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

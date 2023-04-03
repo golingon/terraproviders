@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataNetappSnapshotPolicy creates a new instance of [DataNetappSnapshotPolicy].
 func NewDataNetappSnapshotPolicy(name string, args DataNetappSnapshotPolicyArgs) *DataNetappSnapshotPolicy {
 	return &DataNetappSnapshotPolicy{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataNetappSnapshotPolicy(name string, args DataNetappSnapshotPolicyArgs)
 
 var _ terra.DataResource = (*DataNetappSnapshotPolicy)(nil)
 
+// DataNetappSnapshotPolicy represents the Terraform data resource azurerm_netapp_snapshot_policy.
 type DataNetappSnapshotPolicy struct {
 	Name string
 	Args DataNetappSnapshotPolicyArgs
 }
 
+// DataSource returns the Terraform object type for [DataNetappSnapshotPolicy].
 func (nsp *DataNetappSnapshotPolicy) DataSource() string {
 	return "azurerm_netapp_snapshot_policy"
 }
 
+// LocalName returns the local name for [DataNetappSnapshotPolicy].
 func (nsp *DataNetappSnapshotPolicy) LocalName() string {
 	return nsp.Name
 }
 
+// Configuration returns the configuration (args) for [DataNetappSnapshotPolicy].
 func (nsp *DataNetappSnapshotPolicy) Configuration() interface{} {
 	return nsp.Args
 }
 
+// Attributes returns the attributes for [DataNetappSnapshotPolicy].
 func (nsp *DataNetappSnapshotPolicy) Attributes() dataNetappSnapshotPolicyAttributes {
 	return dataNetappSnapshotPolicyAttributes{ref: terra.ReferenceDataResource(nsp)}
 }
 
+// DataNetappSnapshotPolicyArgs contains the configurations for azurerm_netapp_snapshot_policy.
 type DataNetappSnapshotPolicyArgs struct {
 	// AccountName: string, required
 	AccountName terra.StringValue `hcl:"account_name,attr" validate:"required"`
@@ -61,50 +68,57 @@ type dataNetappSnapshotPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// AccountName returns a reference to field account_name of azurerm_netapp_snapshot_policy.
 func (nsp dataNetappSnapshotPolicyAttributes) AccountName() terra.StringValue {
-	return terra.ReferenceString(nsp.ref.Append("account_name"))
+	return terra.ReferenceAsString(nsp.ref.Append("account_name"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_netapp_snapshot_policy.
 func (nsp dataNetappSnapshotPolicyAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(nsp.ref.Append("enabled"))
+	return terra.ReferenceAsBool(nsp.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of azurerm_netapp_snapshot_policy.
 func (nsp dataNetappSnapshotPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(nsp.ref.Append("id"))
+	return terra.ReferenceAsString(nsp.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_netapp_snapshot_policy.
 func (nsp dataNetappSnapshotPolicyAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(nsp.ref.Append("location"))
+	return terra.ReferenceAsString(nsp.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_netapp_snapshot_policy.
 func (nsp dataNetappSnapshotPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(nsp.ref.Append("name"))
+	return terra.ReferenceAsString(nsp.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_netapp_snapshot_policy.
 func (nsp dataNetappSnapshotPolicyAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(nsp.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(nsp.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_netapp_snapshot_policy.
 func (nsp dataNetappSnapshotPolicyAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](nsp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](nsp.ref.Append("tags"))
 }
 
 func (nsp dataNetappSnapshotPolicyAttributes) DailySchedule() terra.ListValue[datanetappsnapshotpolicy.DailyScheduleAttributes] {
-	return terra.ReferenceList[datanetappsnapshotpolicy.DailyScheduleAttributes](nsp.ref.Append("daily_schedule"))
+	return terra.ReferenceAsList[datanetappsnapshotpolicy.DailyScheduleAttributes](nsp.ref.Append("daily_schedule"))
 }
 
 func (nsp dataNetappSnapshotPolicyAttributes) HourlySchedule() terra.ListValue[datanetappsnapshotpolicy.HourlyScheduleAttributes] {
-	return terra.ReferenceList[datanetappsnapshotpolicy.HourlyScheduleAttributes](nsp.ref.Append("hourly_schedule"))
+	return terra.ReferenceAsList[datanetappsnapshotpolicy.HourlyScheduleAttributes](nsp.ref.Append("hourly_schedule"))
 }
 
 func (nsp dataNetappSnapshotPolicyAttributes) MonthlySchedule() terra.ListValue[datanetappsnapshotpolicy.MonthlyScheduleAttributes] {
-	return terra.ReferenceList[datanetappsnapshotpolicy.MonthlyScheduleAttributes](nsp.ref.Append("monthly_schedule"))
+	return terra.ReferenceAsList[datanetappsnapshotpolicy.MonthlyScheduleAttributes](nsp.ref.Append("monthly_schedule"))
 }
 
 func (nsp dataNetappSnapshotPolicyAttributes) WeeklySchedule() terra.ListValue[datanetappsnapshotpolicy.WeeklyScheduleAttributes] {
-	return terra.ReferenceList[datanetappsnapshotpolicy.WeeklyScheduleAttributes](nsp.ref.Append("weekly_schedule"))
+	return terra.ReferenceAsList[datanetappsnapshotpolicy.WeeklyScheduleAttributes](nsp.ref.Append("weekly_schedule"))
 }
 
 func (nsp dataNetappSnapshotPolicyAttributes) Timeouts() datanetappsnapshotpolicy.TimeoutsAttributes {
-	return terra.ReferenceSingle[datanetappsnapshotpolicy.TimeoutsAttributes](nsp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datanetappsnapshotpolicy.TimeoutsAttributes](nsp.ref.Append("timeouts"))
 }

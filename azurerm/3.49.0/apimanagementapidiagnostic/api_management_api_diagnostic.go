@@ -142,432 +142,432 @@ type BackendRequestAttributes struct {
 	ref terra.Reference
 }
 
-func (br BackendRequestAttributes) InternalRef() terra.Reference {
-	return br.ref
+func (br BackendRequestAttributes) InternalRef() (terra.Reference, error) {
+	return br.ref, nil
 }
 
 func (br BackendRequestAttributes) InternalWithRef(ref terra.Reference) BackendRequestAttributes {
 	return BackendRequestAttributes{ref: ref}
 }
 
-func (br BackendRequestAttributes) InternalTokens() hclwrite.Tokens {
+func (br BackendRequestAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return br.ref.InternalTokens()
 }
 
 func (br BackendRequestAttributes) BodyBytes() terra.NumberValue {
-	return terra.ReferenceNumber(br.ref.Append("body_bytes"))
+	return terra.ReferenceAsNumber(br.ref.Append("body_bytes"))
 }
 
 func (br BackendRequestAttributes) HeadersToLog() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](br.ref.Append("headers_to_log"))
+	return terra.ReferenceAsSet[terra.StringValue](br.ref.Append("headers_to_log"))
 }
 
 func (br BackendRequestAttributes) DataMasking() terra.ListValue[BackendRequestDataMaskingAttributes] {
-	return terra.ReferenceList[BackendRequestDataMaskingAttributes](br.ref.Append("data_masking"))
+	return terra.ReferenceAsList[BackendRequestDataMaskingAttributes](br.ref.Append("data_masking"))
 }
 
 type BackendRequestDataMaskingAttributes struct {
 	ref terra.Reference
 }
 
-func (dm BackendRequestDataMaskingAttributes) InternalRef() terra.Reference {
-	return dm.ref
+func (dm BackendRequestDataMaskingAttributes) InternalRef() (terra.Reference, error) {
+	return dm.ref, nil
 }
 
 func (dm BackendRequestDataMaskingAttributes) InternalWithRef(ref terra.Reference) BackendRequestDataMaskingAttributes {
 	return BackendRequestDataMaskingAttributes{ref: ref}
 }
 
-func (dm BackendRequestDataMaskingAttributes) InternalTokens() hclwrite.Tokens {
+func (dm BackendRequestDataMaskingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dm.ref.InternalTokens()
 }
 
 func (dm BackendRequestDataMaskingAttributes) Headers() terra.ListValue[BackendRequestDataMaskingHeadersAttributes] {
-	return terra.ReferenceList[BackendRequestDataMaskingHeadersAttributes](dm.ref.Append("headers"))
+	return terra.ReferenceAsList[BackendRequestDataMaskingHeadersAttributes](dm.ref.Append("headers"))
 }
 
 func (dm BackendRequestDataMaskingAttributes) QueryParams() terra.ListValue[BackendRequestDataMaskingQueryParamsAttributes] {
-	return terra.ReferenceList[BackendRequestDataMaskingQueryParamsAttributes](dm.ref.Append("query_params"))
+	return terra.ReferenceAsList[BackendRequestDataMaskingQueryParamsAttributes](dm.ref.Append("query_params"))
 }
 
 type BackendRequestDataMaskingHeadersAttributes struct {
 	ref terra.Reference
 }
 
-func (h BackendRequestDataMaskingHeadersAttributes) InternalRef() terra.Reference {
-	return h.ref
+func (h BackendRequestDataMaskingHeadersAttributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h BackendRequestDataMaskingHeadersAttributes) InternalWithRef(ref terra.Reference) BackendRequestDataMaskingHeadersAttributes {
 	return BackendRequestDataMaskingHeadersAttributes{ref: ref}
 }
 
-func (h BackendRequestDataMaskingHeadersAttributes) InternalTokens() hclwrite.Tokens {
+func (h BackendRequestDataMaskingHeadersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 
 func (h BackendRequestDataMaskingHeadersAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("mode"))
+	return terra.ReferenceAsString(h.ref.Append("mode"))
 }
 
 func (h BackendRequestDataMaskingHeadersAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("value"))
+	return terra.ReferenceAsString(h.ref.Append("value"))
 }
 
 type BackendRequestDataMaskingQueryParamsAttributes struct {
 	ref terra.Reference
 }
 
-func (qp BackendRequestDataMaskingQueryParamsAttributes) InternalRef() terra.Reference {
-	return qp.ref
+func (qp BackendRequestDataMaskingQueryParamsAttributes) InternalRef() (terra.Reference, error) {
+	return qp.ref, nil
 }
 
 func (qp BackendRequestDataMaskingQueryParamsAttributes) InternalWithRef(ref terra.Reference) BackendRequestDataMaskingQueryParamsAttributes {
 	return BackendRequestDataMaskingQueryParamsAttributes{ref: ref}
 }
 
-func (qp BackendRequestDataMaskingQueryParamsAttributes) InternalTokens() hclwrite.Tokens {
+func (qp BackendRequestDataMaskingQueryParamsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return qp.ref.InternalTokens()
 }
 
 func (qp BackendRequestDataMaskingQueryParamsAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(qp.ref.Append("mode"))
+	return terra.ReferenceAsString(qp.ref.Append("mode"))
 }
 
 func (qp BackendRequestDataMaskingQueryParamsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(qp.ref.Append("value"))
+	return terra.ReferenceAsString(qp.ref.Append("value"))
 }
 
 type BackendResponseAttributes struct {
 	ref terra.Reference
 }
 
-func (br BackendResponseAttributes) InternalRef() terra.Reference {
-	return br.ref
+func (br BackendResponseAttributes) InternalRef() (terra.Reference, error) {
+	return br.ref, nil
 }
 
 func (br BackendResponseAttributes) InternalWithRef(ref terra.Reference) BackendResponseAttributes {
 	return BackendResponseAttributes{ref: ref}
 }
 
-func (br BackendResponseAttributes) InternalTokens() hclwrite.Tokens {
+func (br BackendResponseAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return br.ref.InternalTokens()
 }
 
 func (br BackendResponseAttributes) BodyBytes() terra.NumberValue {
-	return terra.ReferenceNumber(br.ref.Append("body_bytes"))
+	return terra.ReferenceAsNumber(br.ref.Append("body_bytes"))
 }
 
 func (br BackendResponseAttributes) HeadersToLog() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](br.ref.Append("headers_to_log"))
+	return terra.ReferenceAsSet[terra.StringValue](br.ref.Append("headers_to_log"))
 }
 
 func (br BackendResponseAttributes) DataMasking() terra.ListValue[BackendResponseDataMaskingAttributes] {
-	return terra.ReferenceList[BackendResponseDataMaskingAttributes](br.ref.Append("data_masking"))
+	return terra.ReferenceAsList[BackendResponseDataMaskingAttributes](br.ref.Append("data_masking"))
 }
 
 type BackendResponseDataMaskingAttributes struct {
 	ref terra.Reference
 }
 
-func (dm BackendResponseDataMaskingAttributes) InternalRef() terra.Reference {
-	return dm.ref
+func (dm BackendResponseDataMaskingAttributes) InternalRef() (terra.Reference, error) {
+	return dm.ref, nil
 }
 
 func (dm BackendResponseDataMaskingAttributes) InternalWithRef(ref terra.Reference) BackendResponseDataMaskingAttributes {
 	return BackendResponseDataMaskingAttributes{ref: ref}
 }
 
-func (dm BackendResponseDataMaskingAttributes) InternalTokens() hclwrite.Tokens {
+func (dm BackendResponseDataMaskingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dm.ref.InternalTokens()
 }
 
 func (dm BackendResponseDataMaskingAttributes) Headers() terra.ListValue[BackendResponseDataMaskingHeadersAttributes] {
-	return terra.ReferenceList[BackendResponseDataMaskingHeadersAttributes](dm.ref.Append("headers"))
+	return terra.ReferenceAsList[BackendResponseDataMaskingHeadersAttributes](dm.ref.Append("headers"))
 }
 
 func (dm BackendResponseDataMaskingAttributes) QueryParams() terra.ListValue[BackendResponseDataMaskingQueryParamsAttributes] {
-	return terra.ReferenceList[BackendResponseDataMaskingQueryParamsAttributes](dm.ref.Append("query_params"))
+	return terra.ReferenceAsList[BackendResponseDataMaskingQueryParamsAttributes](dm.ref.Append("query_params"))
 }
 
 type BackendResponseDataMaskingHeadersAttributes struct {
 	ref terra.Reference
 }
 
-func (h BackendResponseDataMaskingHeadersAttributes) InternalRef() terra.Reference {
-	return h.ref
+func (h BackendResponseDataMaskingHeadersAttributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h BackendResponseDataMaskingHeadersAttributes) InternalWithRef(ref terra.Reference) BackendResponseDataMaskingHeadersAttributes {
 	return BackendResponseDataMaskingHeadersAttributes{ref: ref}
 }
 
-func (h BackendResponseDataMaskingHeadersAttributes) InternalTokens() hclwrite.Tokens {
+func (h BackendResponseDataMaskingHeadersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 
 func (h BackendResponseDataMaskingHeadersAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("mode"))
+	return terra.ReferenceAsString(h.ref.Append("mode"))
 }
 
 func (h BackendResponseDataMaskingHeadersAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("value"))
+	return terra.ReferenceAsString(h.ref.Append("value"))
 }
 
 type BackendResponseDataMaskingQueryParamsAttributes struct {
 	ref terra.Reference
 }
 
-func (qp BackendResponseDataMaskingQueryParamsAttributes) InternalRef() terra.Reference {
-	return qp.ref
+func (qp BackendResponseDataMaskingQueryParamsAttributes) InternalRef() (terra.Reference, error) {
+	return qp.ref, nil
 }
 
 func (qp BackendResponseDataMaskingQueryParamsAttributes) InternalWithRef(ref terra.Reference) BackendResponseDataMaskingQueryParamsAttributes {
 	return BackendResponseDataMaskingQueryParamsAttributes{ref: ref}
 }
 
-func (qp BackendResponseDataMaskingQueryParamsAttributes) InternalTokens() hclwrite.Tokens {
+func (qp BackendResponseDataMaskingQueryParamsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return qp.ref.InternalTokens()
 }
 
 func (qp BackendResponseDataMaskingQueryParamsAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(qp.ref.Append("mode"))
+	return terra.ReferenceAsString(qp.ref.Append("mode"))
 }
 
 func (qp BackendResponseDataMaskingQueryParamsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(qp.ref.Append("value"))
+	return terra.ReferenceAsString(qp.ref.Append("value"))
 }
 
 type FrontendRequestAttributes struct {
 	ref terra.Reference
 }
 
-func (fr FrontendRequestAttributes) InternalRef() terra.Reference {
-	return fr.ref
+func (fr FrontendRequestAttributes) InternalRef() (terra.Reference, error) {
+	return fr.ref, nil
 }
 
 func (fr FrontendRequestAttributes) InternalWithRef(ref terra.Reference) FrontendRequestAttributes {
 	return FrontendRequestAttributes{ref: ref}
 }
 
-func (fr FrontendRequestAttributes) InternalTokens() hclwrite.Tokens {
+func (fr FrontendRequestAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fr.ref.InternalTokens()
 }
 
 func (fr FrontendRequestAttributes) BodyBytes() terra.NumberValue {
-	return terra.ReferenceNumber(fr.ref.Append("body_bytes"))
+	return terra.ReferenceAsNumber(fr.ref.Append("body_bytes"))
 }
 
 func (fr FrontendRequestAttributes) HeadersToLog() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](fr.ref.Append("headers_to_log"))
+	return terra.ReferenceAsSet[terra.StringValue](fr.ref.Append("headers_to_log"))
 }
 
 func (fr FrontendRequestAttributes) DataMasking() terra.ListValue[FrontendRequestDataMaskingAttributes] {
-	return terra.ReferenceList[FrontendRequestDataMaskingAttributes](fr.ref.Append("data_masking"))
+	return terra.ReferenceAsList[FrontendRequestDataMaskingAttributes](fr.ref.Append("data_masking"))
 }
 
 type FrontendRequestDataMaskingAttributes struct {
 	ref terra.Reference
 }
 
-func (dm FrontendRequestDataMaskingAttributes) InternalRef() terra.Reference {
-	return dm.ref
+func (dm FrontendRequestDataMaskingAttributes) InternalRef() (terra.Reference, error) {
+	return dm.ref, nil
 }
 
 func (dm FrontendRequestDataMaskingAttributes) InternalWithRef(ref terra.Reference) FrontendRequestDataMaskingAttributes {
 	return FrontendRequestDataMaskingAttributes{ref: ref}
 }
 
-func (dm FrontendRequestDataMaskingAttributes) InternalTokens() hclwrite.Tokens {
+func (dm FrontendRequestDataMaskingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dm.ref.InternalTokens()
 }
 
 func (dm FrontendRequestDataMaskingAttributes) Headers() terra.ListValue[FrontendRequestDataMaskingHeadersAttributes] {
-	return terra.ReferenceList[FrontendRequestDataMaskingHeadersAttributes](dm.ref.Append("headers"))
+	return terra.ReferenceAsList[FrontendRequestDataMaskingHeadersAttributes](dm.ref.Append("headers"))
 }
 
 func (dm FrontendRequestDataMaskingAttributes) QueryParams() terra.ListValue[FrontendRequestDataMaskingQueryParamsAttributes] {
-	return terra.ReferenceList[FrontendRequestDataMaskingQueryParamsAttributes](dm.ref.Append("query_params"))
+	return terra.ReferenceAsList[FrontendRequestDataMaskingQueryParamsAttributes](dm.ref.Append("query_params"))
 }
 
 type FrontendRequestDataMaskingHeadersAttributes struct {
 	ref terra.Reference
 }
 
-func (h FrontendRequestDataMaskingHeadersAttributes) InternalRef() terra.Reference {
-	return h.ref
+func (h FrontendRequestDataMaskingHeadersAttributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h FrontendRequestDataMaskingHeadersAttributes) InternalWithRef(ref terra.Reference) FrontendRequestDataMaskingHeadersAttributes {
 	return FrontendRequestDataMaskingHeadersAttributes{ref: ref}
 }
 
-func (h FrontendRequestDataMaskingHeadersAttributes) InternalTokens() hclwrite.Tokens {
+func (h FrontendRequestDataMaskingHeadersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 
 func (h FrontendRequestDataMaskingHeadersAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("mode"))
+	return terra.ReferenceAsString(h.ref.Append("mode"))
 }
 
 func (h FrontendRequestDataMaskingHeadersAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("value"))
+	return terra.ReferenceAsString(h.ref.Append("value"))
 }
 
 type FrontendRequestDataMaskingQueryParamsAttributes struct {
 	ref terra.Reference
 }
 
-func (qp FrontendRequestDataMaskingQueryParamsAttributes) InternalRef() terra.Reference {
-	return qp.ref
+func (qp FrontendRequestDataMaskingQueryParamsAttributes) InternalRef() (terra.Reference, error) {
+	return qp.ref, nil
 }
 
 func (qp FrontendRequestDataMaskingQueryParamsAttributes) InternalWithRef(ref terra.Reference) FrontendRequestDataMaskingQueryParamsAttributes {
 	return FrontendRequestDataMaskingQueryParamsAttributes{ref: ref}
 }
 
-func (qp FrontendRequestDataMaskingQueryParamsAttributes) InternalTokens() hclwrite.Tokens {
+func (qp FrontendRequestDataMaskingQueryParamsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return qp.ref.InternalTokens()
 }
 
 func (qp FrontendRequestDataMaskingQueryParamsAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(qp.ref.Append("mode"))
+	return terra.ReferenceAsString(qp.ref.Append("mode"))
 }
 
 func (qp FrontendRequestDataMaskingQueryParamsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(qp.ref.Append("value"))
+	return terra.ReferenceAsString(qp.ref.Append("value"))
 }
 
 type FrontendResponseAttributes struct {
 	ref terra.Reference
 }
 
-func (fr FrontendResponseAttributes) InternalRef() terra.Reference {
-	return fr.ref
+func (fr FrontendResponseAttributes) InternalRef() (terra.Reference, error) {
+	return fr.ref, nil
 }
 
 func (fr FrontendResponseAttributes) InternalWithRef(ref terra.Reference) FrontendResponseAttributes {
 	return FrontendResponseAttributes{ref: ref}
 }
 
-func (fr FrontendResponseAttributes) InternalTokens() hclwrite.Tokens {
+func (fr FrontendResponseAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fr.ref.InternalTokens()
 }
 
 func (fr FrontendResponseAttributes) BodyBytes() terra.NumberValue {
-	return terra.ReferenceNumber(fr.ref.Append("body_bytes"))
+	return terra.ReferenceAsNumber(fr.ref.Append("body_bytes"))
 }
 
 func (fr FrontendResponseAttributes) HeadersToLog() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](fr.ref.Append("headers_to_log"))
+	return terra.ReferenceAsSet[terra.StringValue](fr.ref.Append("headers_to_log"))
 }
 
 func (fr FrontendResponseAttributes) DataMasking() terra.ListValue[FrontendResponseDataMaskingAttributes] {
-	return terra.ReferenceList[FrontendResponseDataMaskingAttributes](fr.ref.Append("data_masking"))
+	return terra.ReferenceAsList[FrontendResponseDataMaskingAttributes](fr.ref.Append("data_masking"))
 }
 
 type FrontendResponseDataMaskingAttributes struct {
 	ref terra.Reference
 }
 
-func (dm FrontendResponseDataMaskingAttributes) InternalRef() terra.Reference {
-	return dm.ref
+func (dm FrontendResponseDataMaskingAttributes) InternalRef() (terra.Reference, error) {
+	return dm.ref, nil
 }
 
 func (dm FrontendResponseDataMaskingAttributes) InternalWithRef(ref terra.Reference) FrontendResponseDataMaskingAttributes {
 	return FrontendResponseDataMaskingAttributes{ref: ref}
 }
 
-func (dm FrontendResponseDataMaskingAttributes) InternalTokens() hclwrite.Tokens {
+func (dm FrontendResponseDataMaskingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dm.ref.InternalTokens()
 }
 
 func (dm FrontendResponseDataMaskingAttributes) Headers() terra.ListValue[FrontendResponseDataMaskingHeadersAttributes] {
-	return terra.ReferenceList[FrontendResponseDataMaskingHeadersAttributes](dm.ref.Append("headers"))
+	return terra.ReferenceAsList[FrontendResponseDataMaskingHeadersAttributes](dm.ref.Append("headers"))
 }
 
 func (dm FrontendResponseDataMaskingAttributes) QueryParams() terra.ListValue[FrontendResponseDataMaskingQueryParamsAttributes] {
-	return terra.ReferenceList[FrontendResponseDataMaskingQueryParamsAttributes](dm.ref.Append("query_params"))
+	return terra.ReferenceAsList[FrontendResponseDataMaskingQueryParamsAttributes](dm.ref.Append("query_params"))
 }
 
 type FrontendResponseDataMaskingHeadersAttributes struct {
 	ref terra.Reference
 }
 
-func (h FrontendResponseDataMaskingHeadersAttributes) InternalRef() terra.Reference {
-	return h.ref
+func (h FrontendResponseDataMaskingHeadersAttributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h FrontendResponseDataMaskingHeadersAttributes) InternalWithRef(ref terra.Reference) FrontendResponseDataMaskingHeadersAttributes {
 	return FrontendResponseDataMaskingHeadersAttributes{ref: ref}
 }
 
-func (h FrontendResponseDataMaskingHeadersAttributes) InternalTokens() hclwrite.Tokens {
+func (h FrontendResponseDataMaskingHeadersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 
 func (h FrontendResponseDataMaskingHeadersAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("mode"))
+	return terra.ReferenceAsString(h.ref.Append("mode"))
 }
 
 func (h FrontendResponseDataMaskingHeadersAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("value"))
+	return terra.ReferenceAsString(h.ref.Append("value"))
 }
 
 type FrontendResponseDataMaskingQueryParamsAttributes struct {
 	ref terra.Reference
 }
 
-func (qp FrontendResponseDataMaskingQueryParamsAttributes) InternalRef() terra.Reference {
-	return qp.ref
+func (qp FrontendResponseDataMaskingQueryParamsAttributes) InternalRef() (terra.Reference, error) {
+	return qp.ref, nil
 }
 
 func (qp FrontendResponseDataMaskingQueryParamsAttributes) InternalWithRef(ref terra.Reference) FrontendResponseDataMaskingQueryParamsAttributes {
 	return FrontendResponseDataMaskingQueryParamsAttributes{ref: ref}
 }
 
-func (qp FrontendResponseDataMaskingQueryParamsAttributes) InternalTokens() hclwrite.Tokens {
+func (qp FrontendResponseDataMaskingQueryParamsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return qp.ref.InternalTokens()
 }
 
 func (qp FrontendResponseDataMaskingQueryParamsAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(qp.ref.Append("mode"))
+	return terra.ReferenceAsString(qp.ref.Append("mode"))
 }
 
 func (qp FrontendResponseDataMaskingQueryParamsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(qp.ref.Append("value"))
+	return terra.ReferenceAsString(qp.ref.Append("value"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type BackendRequestState struct {

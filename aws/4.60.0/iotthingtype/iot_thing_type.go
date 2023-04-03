@@ -26,7 +26,7 @@ func (p PropertiesAttributes) InternalWithRef(ref terra.Reference) PropertiesAtt
 	return PropertiesAttributes{ref: ref}
 }
 
-func (p PropertiesAttributes) InternalTokens() hclwrite.Tokens {
+func (p PropertiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 

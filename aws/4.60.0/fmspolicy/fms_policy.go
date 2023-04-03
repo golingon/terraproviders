@@ -40,7 +40,7 @@ func (em ExcludeMapAttributes) InternalWithRef(ref terra.Reference) ExcludeMapAt
 	return ExcludeMapAttributes{ref: ref}
 }
 
-func (em ExcludeMapAttributes) InternalTokens() hclwrite.Tokens {
+func (em ExcludeMapAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return em.ref.InternalTokens()
 }
 
@@ -64,7 +64,7 @@ func (im IncludeMapAttributes) InternalWithRef(ref terra.Reference) IncludeMapAt
 	return IncludeMapAttributes{ref: ref}
 }
 
-func (im IncludeMapAttributes) InternalTokens() hclwrite.Tokens {
+func (im IncludeMapAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return im.ref.InternalTokens()
 }
 
@@ -88,7 +88,7 @@ func (sspd SecurityServicePolicyDataAttributes) InternalWithRef(ref terra.Refere
 	return SecurityServicePolicyDataAttributes{ref: ref}
 }
 
-func (sspd SecurityServicePolicyDataAttributes) InternalTokens() hclwrite.Tokens {
+func (sspd SecurityServicePolicyDataAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sspd.ref.InternalTokens()
 }
 

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewManagedDisk creates a new instance of [ManagedDisk].
 func NewManagedDisk(name string, args ManagedDiskArgs) *ManagedDisk {
 	return &ManagedDisk{
 		Args: args,
@@ -19,28 +20,51 @@ func NewManagedDisk(name string, args ManagedDiskArgs) *ManagedDisk {
 
 var _ terra.Resource = (*ManagedDisk)(nil)
 
+// ManagedDisk represents the Terraform resource azurerm_managed_disk.
 type ManagedDisk struct {
-	Name  string
-	Args  ManagedDiskArgs
-	state *managedDiskState
+	Name      string
+	Args      ManagedDiskArgs
+	state     *managedDiskState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ManagedDisk].
 func (md *ManagedDisk) Type() string {
 	return "azurerm_managed_disk"
 }
 
+// LocalName returns the local name for [ManagedDisk].
 func (md *ManagedDisk) LocalName() string {
 	return md.Name
 }
 
+// Configuration returns the configuration (args) for [ManagedDisk].
 func (md *ManagedDisk) Configuration() interface{} {
 	return md.Args
 }
 
+// DependOn is used for other resources to depend on [ManagedDisk].
+func (md *ManagedDisk) DependOn() terra.Reference {
+	return terra.ReferenceResource(md)
+}
+
+// Dependencies returns the list of resources [ManagedDisk] depends_on.
+func (md *ManagedDisk) Dependencies() terra.Dependencies {
+	return md.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ManagedDisk].
+func (md *ManagedDisk) LifecycleManagement() *terra.Lifecycle {
+	return md.Lifecycle
+}
+
+// Attributes returns the attributes for [ManagedDisk].
 func (md *ManagedDisk) Attributes() managedDiskAttributes {
 	return managedDiskAttributes{ref: terra.ReferenceResource(md)}
 }
 
+// ImportState imports the given attribute values into [ManagedDisk]'s state.
 func (md *ManagedDisk) ImportState(av io.Reader) error {
 	md.state = &managedDiskState{}
 	if err := json.NewDecoder(av).Decode(md.state); err != nil {
@@ -49,10 +73,12 @@ func (md *ManagedDisk) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ManagedDisk] has state.
 func (md *ManagedDisk) State() (*managedDiskState, bool) {
 	return md.state, md.state != nil
 }
 
+// StateMust returns the state for [ManagedDisk]. Panics if the state is nil.
 func (md *ManagedDisk) StateMust() *managedDiskState {
 	if md.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", md.Type(), md.LocalName()))
@@ -60,10 +86,7 @@ func (md *ManagedDisk) StateMust() *managedDiskState {
 	return md.state
 }
 
-func (md *ManagedDisk) DependOn() terra.Reference {
-	return terra.ReferenceResource(md)
-}
-
+// ManagedDiskArgs contains the configurations for azurerm_managed_disk.
 type ManagedDiskArgs struct {
 	// CreateOption: string, required
 	CreateOption terra.StringValue `hcl:"create_option,attr" validate:"required"`
@@ -135,151 +158,182 @@ type ManagedDiskArgs struct {
 	EncryptionSettings *manageddisk.EncryptionSettings `hcl:"encryption_settings,block"`
 	// Timeouts: optional
 	Timeouts *manageddisk.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ManagedDisk depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type managedDiskAttributes struct {
 	ref terra.Reference
 }
 
+// CreateOption returns a reference to field create_option of azurerm_managed_disk.
 func (md managedDiskAttributes) CreateOption() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("create_option"))
+	return terra.ReferenceAsString(md.ref.Append("create_option"))
 }
 
+// DiskAccessId returns a reference to field disk_access_id of azurerm_managed_disk.
 func (md managedDiskAttributes) DiskAccessId() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("disk_access_id"))
+	return terra.ReferenceAsString(md.ref.Append("disk_access_id"))
 }
 
+// DiskEncryptionSetId returns a reference to field disk_encryption_set_id of azurerm_managed_disk.
 func (md managedDiskAttributes) DiskEncryptionSetId() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("disk_encryption_set_id"))
+	return terra.ReferenceAsString(md.ref.Append("disk_encryption_set_id"))
 }
 
+// DiskIopsReadOnly returns a reference to field disk_iops_read_only of azurerm_managed_disk.
 func (md managedDiskAttributes) DiskIopsReadOnly() terra.NumberValue {
-	return terra.ReferenceNumber(md.ref.Append("disk_iops_read_only"))
+	return terra.ReferenceAsNumber(md.ref.Append("disk_iops_read_only"))
 }
 
+// DiskIopsReadWrite returns a reference to field disk_iops_read_write of azurerm_managed_disk.
 func (md managedDiskAttributes) DiskIopsReadWrite() terra.NumberValue {
-	return terra.ReferenceNumber(md.ref.Append("disk_iops_read_write"))
+	return terra.ReferenceAsNumber(md.ref.Append("disk_iops_read_write"))
 }
 
+// DiskMbpsReadOnly returns a reference to field disk_mbps_read_only of azurerm_managed_disk.
 func (md managedDiskAttributes) DiskMbpsReadOnly() terra.NumberValue {
-	return terra.ReferenceNumber(md.ref.Append("disk_mbps_read_only"))
+	return terra.ReferenceAsNumber(md.ref.Append("disk_mbps_read_only"))
 }
 
+// DiskMbpsReadWrite returns a reference to field disk_mbps_read_write of azurerm_managed_disk.
 func (md managedDiskAttributes) DiskMbpsReadWrite() terra.NumberValue {
-	return terra.ReferenceNumber(md.ref.Append("disk_mbps_read_write"))
+	return terra.ReferenceAsNumber(md.ref.Append("disk_mbps_read_write"))
 }
 
+// DiskSizeGb returns a reference to field disk_size_gb of azurerm_managed_disk.
 func (md managedDiskAttributes) DiskSizeGb() terra.NumberValue {
-	return terra.ReferenceNumber(md.ref.Append("disk_size_gb"))
+	return terra.ReferenceAsNumber(md.ref.Append("disk_size_gb"))
 }
 
+// EdgeZone returns a reference to field edge_zone of azurerm_managed_disk.
 func (md managedDiskAttributes) EdgeZone() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("edge_zone"))
+	return terra.ReferenceAsString(md.ref.Append("edge_zone"))
 }
 
+// GalleryImageReferenceId returns a reference to field gallery_image_reference_id of azurerm_managed_disk.
 func (md managedDiskAttributes) GalleryImageReferenceId() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("gallery_image_reference_id"))
+	return terra.ReferenceAsString(md.ref.Append("gallery_image_reference_id"))
 }
 
+// HyperVGeneration returns a reference to field hyper_v_generation of azurerm_managed_disk.
 func (md managedDiskAttributes) HyperVGeneration() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("hyper_v_generation"))
+	return terra.ReferenceAsString(md.ref.Append("hyper_v_generation"))
 }
 
+// Id returns a reference to field id of azurerm_managed_disk.
 func (md managedDiskAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("id"))
+	return terra.ReferenceAsString(md.ref.Append("id"))
 }
 
+// ImageReferenceId returns a reference to field image_reference_id of azurerm_managed_disk.
 func (md managedDiskAttributes) ImageReferenceId() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("image_reference_id"))
+	return terra.ReferenceAsString(md.ref.Append("image_reference_id"))
 }
 
+// Location returns a reference to field location of azurerm_managed_disk.
 func (md managedDiskAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("location"))
+	return terra.ReferenceAsString(md.ref.Append("location"))
 }
 
+// LogicalSectorSize returns a reference to field logical_sector_size of azurerm_managed_disk.
 func (md managedDiskAttributes) LogicalSectorSize() terra.NumberValue {
-	return terra.ReferenceNumber(md.ref.Append("logical_sector_size"))
+	return terra.ReferenceAsNumber(md.ref.Append("logical_sector_size"))
 }
 
+// MaxShares returns a reference to field max_shares of azurerm_managed_disk.
 func (md managedDiskAttributes) MaxShares() terra.NumberValue {
-	return terra.ReferenceNumber(md.ref.Append("max_shares"))
+	return terra.ReferenceAsNumber(md.ref.Append("max_shares"))
 }
 
+// Name returns a reference to field name of azurerm_managed_disk.
 func (md managedDiskAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("name"))
+	return terra.ReferenceAsString(md.ref.Append("name"))
 }
 
+// NetworkAccessPolicy returns a reference to field network_access_policy of azurerm_managed_disk.
 func (md managedDiskAttributes) NetworkAccessPolicy() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("network_access_policy"))
+	return terra.ReferenceAsString(md.ref.Append("network_access_policy"))
 }
 
+// OnDemandBurstingEnabled returns a reference to field on_demand_bursting_enabled of azurerm_managed_disk.
 func (md managedDiskAttributes) OnDemandBurstingEnabled() terra.BoolValue {
-	return terra.ReferenceBool(md.ref.Append("on_demand_bursting_enabled"))
+	return terra.ReferenceAsBool(md.ref.Append("on_demand_bursting_enabled"))
 }
 
+// OsType returns a reference to field os_type of azurerm_managed_disk.
 func (md managedDiskAttributes) OsType() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("os_type"))
+	return terra.ReferenceAsString(md.ref.Append("os_type"))
 }
 
+// PublicNetworkAccessEnabled returns a reference to field public_network_access_enabled of azurerm_managed_disk.
 func (md managedDiskAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(md.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(md.ref.Append("public_network_access_enabled"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_managed_disk.
 func (md managedDiskAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(md.ref.Append("resource_group_name"))
 }
 
+// SecureVmDiskEncryptionSetId returns a reference to field secure_vm_disk_encryption_set_id of azurerm_managed_disk.
 func (md managedDiskAttributes) SecureVmDiskEncryptionSetId() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("secure_vm_disk_encryption_set_id"))
+	return terra.ReferenceAsString(md.ref.Append("secure_vm_disk_encryption_set_id"))
 }
 
+// SecurityType returns a reference to field security_type of azurerm_managed_disk.
 func (md managedDiskAttributes) SecurityType() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("security_type"))
+	return terra.ReferenceAsString(md.ref.Append("security_type"))
 }
 
+// SourceResourceId returns a reference to field source_resource_id of azurerm_managed_disk.
 func (md managedDiskAttributes) SourceResourceId() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("source_resource_id"))
+	return terra.ReferenceAsString(md.ref.Append("source_resource_id"))
 }
 
+// SourceUri returns a reference to field source_uri of azurerm_managed_disk.
 func (md managedDiskAttributes) SourceUri() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("source_uri"))
+	return terra.ReferenceAsString(md.ref.Append("source_uri"))
 }
 
+// StorageAccountId returns a reference to field storage_account_id of azurerm_managed_disk.
 func (md managedDiskAttributes) StorageAccountId() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("storage_account_id"))
+	return terra.ReferenceAsString(md.ref.Append("storage_account_id"))
 }
 
+// StorageAccountType returns a reference to field storage_account_type of azurerm_managed_disk.
 func (md managedDiskAttributes) StorageAccountType() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("storage_account_type"))
+	return terra.ReferenceAsString(md.ref.Append("storage_account_type"))
 }
 
+// Tags returns a reference to field tags of azurerm_managed_disk.
 func (md managedDiskAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](md.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](md.ref.Append("tags"))
 }
 
+// Tier returns a reference to field tier of azurerm_managed_disk.
 func (md managedDiskAttributes) Tier() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("tier"))
+	return terra.ReferenceAsString(md.ref.Append("tier"))
 }
 
+// TrustedLaunchEnabled returns a reference to field trusted_launch_enabled of azurerm_managed_disk.
 func (md managedDiskAttributes) TrustedLaunchEnabled() terra.BoolValue {
-	return terra.ReferenceBool(md.ref.Append("trusted_launch_enabled"))
+	return terra.ReferenceAsBool(md.ref.Append("trusted_launch_enabled"))
 }
 
+// UploadSizeBytes returns a reference to field upload_size_bytes of azurerm_managed_disk.
 func (md managedDiskAttributes) UploadSizeBytes() terra.NumberValue {
-	return terra.ReferenceNumber(md.ref.Append("upload_size_bytes"))
+	return terra.ReferenceAsNumber(md.ref.Append("upload_size_bytes"))
 }
 
+// Zone returns a reference to field zone of azurerm_managed_disk.
 func (md managedDiskAttributes) Zone() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("zone"))
+	return terra.ReferenceAsString(md.ref.Append("zone"))
 }
 
 func (md managedDiskAttributes) EncryptionSettings() terra.ListValue[manageddisk.EncryptionSettingsAttributes] {
-	return terra.ReferenceList[manageddisk.EncryptionSettingsAttributes](md.ref.Append("encryption_settings"))
+	return terra.ReferenceAsList[manageddisk.EncryptionSettingsAttributes](md.ref.Append("encryption_settings"))
 }
 
 func (md managedDiskAttributes) Timeouts() manageddisk.TimeoutsAttributes {
-	return terra.ReferenceSingle[manageddisk.TimeoutsAttributes](md.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[manageddisk.TimeoutsAttributes](md.ref.Append("timeouts"))
 }
 
 type managedDiskState struct {

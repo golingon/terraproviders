@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLogAnalyticsLinkedStorageAccount creates a new instance of [LogAnalyticsLinkedStorageAccount].
 func NewLogAnalyticsLinkedStorageAccount(name string, args LogAnalyticsLinkedStorageAccountArgs) *LogAnalyticsLinkedStorageAccount {
 	return &LogAnalyticsLinkedStorageAccount{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLogAnalyticsLinkedStorageAccount(name string, args LogAnalyticsLinkedSto
 
 var _ terra.Resource = (*LogAnalyticsLinkedStorageAccount)(nil)
 
+// LogAnalyticsLinkedStorageAccount represents the Terraform resource azurerm_log_analytics_linked_storage_account.
 type LogAnalyticsLinkedStorageAccount struct {
-	Name  string
-	Args  LogAnalyticsLinkedStorageAccountArgs
-	state *logAnalyticsLinkedStorageAccountState
+	Name      string
+	Args      LogAnalyticsLinkedStorageAccountArgs
+	state     *logAnalyticsLinkedStorageAccountState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LogAnalyticsLinkedStorageAccount].
 func (lalsa *LogAnalyticsLinkedStorageAccount) Type() string {
 	return "azurerm_log_analytics_linked_storage_account"
 }
 
+// LocalName returns the local name for [LogAnalyticsLinkedStorageAccount].
 func (lalsa *LogAnalyticsLinkedStorageAccount) LocalName() string {
 	return lalsa.Name
 }
 
+// Configuration returns the configuration (args) for [LogAnalyticsLinkedStorageAccount].
 func (lalsa *LogAnalyticsLinkedStorageAccount) Configuration() interface{} {
 	return lalsa.Args
 }
 
+// DependOn is used for other resources to depend on [LogAnalyticsLinkedStorageAccount].
+func (lalsa *LogAnalyticsLinkedStorageAccount) DependOn() terra.Reference {
+	return terra.ReferenceResource(lalsa)
+}
+
+// Dependencies returns the list of resources [LogAnalyticsLinkedStorageAccount] depends_on.
+func (lalsa *LogAnalyticsLinkedStorageAccount) Dependencies() terra.Dependencies {
+	return lalsa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LogAnalyticsLinkedStorageAccount].
+func (lalsa *LogAnalyticsLinkedStorageAccount) LifecycleManagement() *terra.Lifecycle {
+	return lalsa.Lifecycle
+}
+
+// Attributes returns the attributes for [LogAnalyticsLinkedStorageAccount].
 func (lalsa *LogAnalyticsLinkedStorageAccount) Attributes() logAnalyticsLinkedStorageAccountAttributes {
 	return logAnalyticsLinkedStorageAccountAttributes{ref: terra.ReferenceResource(lalsa)}
 }
 
+// ImportState imports the given attribute values into [LogAnalyticsLinkedStorageAccount]'s state.
 func (lalsa *LogAnalyticsLinkedStorageAccount) ImportState(av io.Reader) error {
 	lalsa.state = &logAnalyticsLinkedStorageAccountState{}
 	if err := json.NewDecoder(av).Decode(lalsa.state); err != nil {
@@ -49,10 +73,12 @@ func (lalsa *LogAnalyticsLinkedStorageAccount) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LogAnalyticsLinkedStorageAccount] has state.
 func (lalsa *LogAnalyticsLinkedStorageAccount) State() (*logAnalyticsLinkedStorageAccountState, bool) {
 	return lalsa.state, lalsa.state != nil
 }
 
+// StateMust returns the state for [LogAnalyticsLinkedStorageAccount]. Panics if the state is nil.
 func (lalsa *LogAnalyticsLinkedStorageAccount) StateMust() *logAnalyticsLinkedStorageAccountState {
 	if lalsa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lalsa.Type(), lalsa.LocalName()))
@@ -60,10 +86,7 @@ func (lalsa *LogAnalyticsLinkedStorageAccount) StateMust() *logAnalyticsLinkedSt
 	return lalsa.state
 }
 
-func (lalsa *LogAnalyticsLinkedStorageAccount) DependOn() terra.Reference {
-	return terra.ReferenceResource(lalsa)
-}
-
+// LogAnalyticsLinkedStorageAccountArgs contains the configurations for azurerm_log_analytics_linked_storage_account.
 type LogAnalyticsLinkedStorageAccountArgs struct {
 	// DataSourceType: string, required
 	DataSourceType terra.StringValue `hcl:"data_source_type,attr" validate:"required"`
@@ -77,35 +100,38 @@ type LogAnalyticsLinkedStorageAccountArgs struct {
 	WorkspaceResourceId terra.StringValue `hcl:"workspace_resource_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *loganalyticslinkedstorageaccount.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LogAnalyticsLinkedStorageAccount depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type logAnalyticsLinkedStorageAccountAttributes struct {
 	ref terra.Reference
 }
 
+// DataSourceType returns a reference to field data_source_type of azurerm_log_analytics_linked_storage_account.
 func (lalsa logAnalyticsLinkedStorageAccountAttributes) DataSourceType() terra.StringValue {
-	return terra.ReferenceString(lalsa.ref.Append("data_source_type"))
+	return terra.ReferenceAsString(lalsa.ref.Append("data_source_type"))
 }
 
+// Id returns a reference to field id of azurerm_log_analytics_linked_storage_account.
 func (lalsa logAnalyticsLinkedStorageAccountAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lalsa.ref.Append("id"))
+	return terra.ReferenceAsString(lalsa.ref.Append("id"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_log_analytics_linked_storage_account.
 func (lalsa logAnalyticsLinkedStorageAccountAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(lalsa.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(lalsa.ref.Append("resource_group_name"))
 }
 
+// StorageAccountIds returns a reference to field storage_account_ids of azurerm_log_analytics_linked_storage_account.
 func (lalsa logAnalyticsLinkedStorageAccountAttributes) StorageAccountIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](lalsa.ref.Append("storage_account_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](lalsa.ref.Append("storage_account_ids"))
 }
 
+// WorkspaceResourceId returns a reference to field workspace_resource_id of azurerm_log_analytics_linked_storage_account.
 func (lalsa logAnalyticsLinkedStorageAccountAttributes) WorkspaceResourceId() terra.StringValue {
-	return terra.ReferenceString(lalsa.ref.Append("workspace_resource_id"))
+	return terra.ReferenceAsString(lalsa.ref.Append("workspace_resource_id"))
 }
 
 func (lalsa logAnalyticsLinkedStorageAccountAttributes) Timeouts() loganalyticslinkedstorageaccount.TimeoutsAttributes {
-	return terra.ReferenceSingle[loganalyticslinkedstorageaccount.TimeoutsAttributes](lalsa.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[loganalyticslinkedstorageaccount.TimeoutsAttributes](lalsa.ref.Append("timeouts"))
 }
 
 type logAnalyticsLinkedStorageAccountState struct {

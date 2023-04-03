@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCloudTasksQueueIamMember creates a new instance of [CloudTasksQueueIamMember].
 func NewCloudTasksQueueIamMember(name string, args CloudTasksQueueIamMemberArgs) *CloudTasksQueueIamMember {
 	return &CloudTasksQueueIamMember{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCloudTasksQueueIamMember(name string, args CloudTasksQueueIamMemberArgs)
 
 var _ terra.Resource = (*CloudTasksQueueIamMember)(nil)
 
+// CloudTasksQueueIamMember represents the Terraform resource google_cloud_tasks_queue_iam_member.
 type CloudTasksQueueIamMember struct {
-	Name  string
-	Args  CloudTasksQueueIamMemberArgs
-	state *cloudTasksQueueIamMemberState
+	Name      string
+	Args      CloudTasksQueueIamMemberArgs
+	state     *cloudTasksQueueIamMemberState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudTasksQueueIamMember].
 func (ctqim *CloudTasksQueueIamMember) Type() string {
 	return "google_cloud_tasks_queue_iam_member"
 }
 
+// LocalName returns the local name for [CloudTasksQueueIamMember].
 func (ctqim *CloudTasksQueueIamMember) LocalName() string {
 	return ctqim.Name
 }
 
+// Configuration returns the configuration (args) for [CloudTasksQueueIamMember].
 func (ctqim *CloudTasksQueueIamMember) Configuration() interface{} {
 	return ctqim.Args
 }
 
+// DependOn is used for other resources to depend on [CloudTasksQueueIamMember].
+func (ctqim *CloudTasksQueueIamMember) DependOn() terra.Reference {
+	return terra.ReferenceResource(ctqim)
+}
+
+// Dependencies returns the list of resources [CloudTasksQueueIamMember] depends_on.
+func (ctqim *CloudTasksQueueIamMember) Dependencies() terra.Dependencies {
+	return ctqim.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudTasksQueueIamMember].
+func (ctqim *CloudTasksQueueIamMember) LifecycleManagement() *terra.Lifecycle {
+	return ctqim.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudTasksQueueIamMember].
 func (ctqim *CloudTasksQueueIamMember) Attributes() cloudTasksQueueIamMemberAttributes {
 	return cloudTasksQueueIamMemberAttributes{ref: terra.ReferenceResource(ctqim)}
 }
 
+// ImportState imports the given attribute values into [CloudTasksQueueIamMember]'s state.
 func (ctqim *CloudTasksQueueIamMember) ImportState(av io.Reader) error {
 	ctqim.state = &cloudTasksQueueIamMemberState{}
 	if err := json.NewDecoder(av).Decode(ctqim.state); err != nil {
@@ -49,10 +73,12 @@ func (ctqim *CloudTasksQueueIamMember) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudTasksQueueIamMember] has state.
 func (ctqim *CloudTasksQueueIamMember) State() (*cloudTasksQueueIamMemberState, bool) {
 	return ctqim.state, ctqim.state != nil
 }
 
+// StateMust returns the state for [CloudTasksQueueIamMember]. Panics if the state is nil.
 func (ctqim *CloudTasksQueueIamMember) StateMust() *cloudTasksQueueIamMemberState {
 	if ctqim.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ctqim.Type(), ctqim.LocalName()))
@@ -60,10 +86,7 @@ func (ctqim *CloudTasksQueueIamMember) StateMust() *cloudTasksQueueIamMemberStat
 	return ctqim.state
 }
 
-func (ctqim *CloudTasksQueueIamMember) DependOn() terra.Reference {
-	return terra.ReferenceResource(ctqim)
-}
-
+// CloudTasksQueueIamMemberArgs contains the configurations for google_cloud_tasks_queue_iam_member.
 type CloudTasksQueueIamMemberArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,43 +102,48 @@ type CloudTasksQueueIamMemberArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *cloudtasksqueueiammember.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that CloudTasksQueueIamMember depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudTasksQueueIamMemberAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_cloud_tasks_queue_iam_member.
 func (ctqim cloudTasksQueueIamMemberAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(ctqim.ref.Append("etag"))
+	return terra.ReferenceAsString(ctqim.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_cloud_tasks_queue_iam_member.
 func (ctqim cloudTasksQueueIamMemberAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ctqim.ref.Append("id"))
+	return terra.ReferenceAsString(ctqim.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_cloud_tasks_queue_iam_member.
 func (ctqim cloudTasksQueueIamMemberAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ctqim.ref.Append("location"))
+	return terra.ReferenceAsString(ctqim.ref.Append("location"))
 }
 
+// Member returns a reference to field member of google_cloud_tasks_queue_iam_member.
 func (ctqim cloudTasksQueueIamMemberAttributes) Member() terra.StringValue {
-	return terra.ReferenceString(ctqim.ref.Append("member"))
+	return terra.ReferenceAsString(ctqim.ref.Append("member"))
 }
 
+// Name returns a reference to field name of google_cloud_tasks_queue_iam_member.
 func (ctqim cloudTasksQueueIamMemberAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ctqim.ref.Append("name"))
+	return terra.ReferenceAsString(ctqim.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_cloud_tasks_queue_iam_member.
 func (ctqim cloudTasksQueueIamMemberAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ctqim.ref.Append("project"))
+	return terra.ReferenceAsString(ctqim.ref.Append("project"))
 }
 
+// Role returns a reference to field role of google_cloud_tasks_queue_iam_member.
 func (ctqim cloudTasksQueueIamMemberAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(ctqim.ref.Append("role"))
+	return terra.ReferenceAsString(ctqim.ref.Append("role"))
 }
 
 func (ctqim cloudTasksQueueIamMemberAttributes) Condition() terra.ListValue[cloudtasksqueueiammember.ConditionAttributes] {
-	return terra.ReferenceList[cloudtasksqueueiammember.ConditionAttributes](ctqim.ref.Append("condition"))
+	return terra.ReferenceAsList[cloudtasksqueueiammember.ConditionAttributes](ctqim.ref.Append("condition"))
 }
 
 type cloudTasksQueueIamMemberState struct {

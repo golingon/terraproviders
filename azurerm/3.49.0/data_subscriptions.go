@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataSubscriptions creates a new instance of [DataSubscriptions].
 func NewDataSubscriptions(name string, args DataSubscriptionsArgs) *DataSubscriptions {
 	return &DataSubscriptions{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataSubscriptions(name string, args DataSubscriptionsArgs) *DataSubscrip
 
 var _ terra.DataResource = (*DataSubscriptions)(nil)
 
+// DataSubscriptions represents the Terraform data resource azurerm_subscriptions.
 type DataSubscriptions struct {
 	Name string
 	Args DataSubscriptionsArgs
 }
 
+// DataSource returns the Terraform object type for [DataSubscriptions].
 func (s *DataSubscriptions) DataSource() string {
 	return "azurerm_subscriptions"
 }
 
+// LocalName returns the local name for [DataSubscriptions].
 func (s *DataSubscriptions) LocalName() string {
 	return s.Name
 }
 
+// Configuration returns the configuration (args) for [DataSubscriptions].
 func (s *DataSubscriptions) Configuration() interface{} {
 	return s.Args
 }
 
+// Attributes returns the attributes for [DataSubscriptions].
 func (s *DataSubscriptions) Attributes() dataSubscriptionsAttributes {
 	return dataSubscriptionsAttributes{ref: terra.ReferenceDataResource(s)}
 }
 
+// DataSubscriptionsArgs contains the configurations for azurerm_subscriptions.
 type DataSubscriptionsArgs struct {
 	// DisplayNameContains: string, optional
 	DisplayNameContains terra.StringValue `hcl:"display_name_contains,attr"`
@@ -53,22 +60,25 @@ type dataSubscriptionsAttributes struct {
 	ref terra.Reference
 }
 
+// DisplayNameContains returns a reference to field display_name_contains of azurerm_subscriptions.
 func (s dataSubscriptionsAttributes) DisplayNameContains() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("display_name_contains"))
+	return terra.ReferenceAsString(s.ref.Append("display_name_contains"))
 }
 
+// DisplayNamePrefix returns a reference to field display_name_prefix of azurerm_subscriptions.
 func (s dataSubscriptionsAttributes) DisplayNamePrefix() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("display_name_prefix"))
+	return terra.ReferenceAsString(s.ref.Append("display_name_prefix"))
 }
 
+// Id returns a reference to field id of azurerm_subscriptions.
 func (s dataSubscriptionsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("id"))
+	return terra.ReferenceAsString(s.ref.Append("id"))
 }
 
 func (s dataSubscriptionsAttributes) Subscriptions() terra.ListValue[datasubscriptions.SubscriptionsAttributes] {
-	return terra.ReferenceList[datasubscriptions.SubscriptionsAttributes](s.ref.Append("subscriptions"))
+	return terra.ReferenceAsList[datasubscriptions.SubscriptionsAttributes](s.ref.Append("subscriptions"))
 }
 
 func (s dataSubscriptionsAttributes) Timeouts() datasubscriptions.TimeoutsAttributes {
-	return terra.ReferenceSingle[datasubscriptions.TimeoutsAttributes](s.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datasubscriptions.TimeoutsAttributes](s.ref.Append("timeouts"))
 }

@@ -30,72 +30,72 @@ type NodeTypeFlexibilityAttributes struct {
 	ref terra.Reference
 }
 
-func (ntf NodeTypeFlexibilityAttributes) InternalRef() terra.Reference {
-	return ntf.ref
+func (ntf NodeTypeFlexibilityAttributes) InternalRef() (terra.Reference, error) {
+	return ntf.ref, nil
 }
 
 func (ntf NodeTypeFlexibilityAttributes) InternalWithRef(ref terra.Reference) NodeTypeFlexibilityAttributes {
 	return NodeTypeFlexibilityAttributes{ref: ref}
 }
 
-func (ntf NodeTypeFlexibilityAttributes) InternalTokens() hclwrite.Tokens {
+func (ntf NodeTypeFlexibilityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ntf.ref.InternalTokens()
 }
 
 func (ntf NodeTypeFlexibilityAttributes) Cpus() terra.StringValue {
-	return terra.ReferenceString(ntf.ref.Append("cpus"))
+	return terra.ReferenceAsString(ntf.ref.Append("cpus"))
 }
 
 func (ntf NodeTypeFlexibilityAttributes) LocalSsd() terra.StringValue {
-	return terra.ReferenceString(ntf.ref.Append("local_ssd"))
+	return terra.ReferenceAsString(ntf.ref.Append("local_ssd"))
 }
 
 func (ntf NodeTypeFlexibilityAttributes) Memory() terra.StringValue {
-	return terra.ReferenceString(ntf.ref.Append("memory"))
+	return terra.ReferenceAsString(ntf.ref.Append("memory"))
 }
 
 type ServerBindingAttributes struct {
 	ref terra.Reference
 }
 
-func (sb ServerBindingAttributes) InternalRef() terra.Reference {
-	return sb.ref
+func (sb ServerBindingAttributes) InternalRef() (terra.Reference, error) {
+	return sb.ref, nil
 }
 
 func (sb ServerBindingAttributes) InternalWithRef(ref terra.Reference) ServerBindingAttributes {
 	return ServerBindingAttributes{ref: ref}
 }
 
-func (sb ServerBindingAttributes) InternalTokens() hclwrite.Tokens {
+func (sb ServerBindingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sb.ref.InternalTokens()
 }
 
 func (sb ServerBindingAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("type"))
+	return terra.ReferenceAsString(sb.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type NodeTypeFlexibilityState struct {

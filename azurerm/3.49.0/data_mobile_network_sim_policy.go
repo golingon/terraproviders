@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataMobileNetworkSimPolicy creates a new instance of [DataMobileNetworkSimPolicy].
 func NewDataMobileNetworkSimPolicy(name string, args DataMobileNetworkSimPolicyArgs) *DataMobileNetworkSimPolicy {
 	return &DataMobileNetworkSimPolicy{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataMobileNetworkSimPolicy(name string, args DataMobileNetworkSimPolicyA
 
 var _ terra.DataResource = (*DataMobileNetworkSimPolicy)(nil)
 
+// DataMobileNetworkSimPolicy represents the Terraform data resource azurerm_mobile_network_sim_policy.
 type DataMobileNetworkSimPolicy struct {
 	Name string
 	Args DataMobileNetworkSimPolicyArgs
 }
 
+// DataSource returns the Terraform object type for [DataMobileNetworkSimPolicy].
 func (mnsp *DataMobileNetworkSimPolicy) DataSource() string {
 	return "azurerm_mobile_network_sim_policy"
 }
 
+// LocalName returns the local name for [DataMobileNetworkSimPolicy].
 func (mnsp *DataMobileNetworkSimPolicy) LocalName() string {
 	return mnsp.Name
 }
 
+// Configuration returns the configuration (args) for [DataMobileNetworkSimPolicy].
 func (mnsp *DataMobileNetworkSimPolicy) Configuration() interface{} {
 	return mnsp.Args
 }
 
+// Attributes returns the attributes for [DataMobileNetworkSimPolicy].
 func (mnsp *DataMobileNetworkSimPolicy) Attributes() dataMobileNetworkSimPolicyAttributes {
 	return dataMobileNetworkSimPolicyAttributes{ref: terra.ReferenceDataResource(mnsp)}
 }
 
+// DataMobileNetworkSimPolicyArgs contains the configurations for azurerm_mobile_network_sim_policy.
 type DataMobileNetworkSimPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -55,46 +62,54 @@ type dataMobileNetworkSimPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// DefaultSliceId returns a reference to field default_slice_id of azurerm_mobile_network_sim_policy.
 func (mnsp dataMobileNetworkSimPolicyAttributes) DefaultSliceId() terra.StringValue {
-	return terra.ReferenceString(mnsp.ref.Append("default_slice_id"))
+	return terra.ReferenceAsString(mnsp.ref.Append("default_slice_id"))
 }
 
+// Id returns a reference to field id of azurerm_mobile_network_sim_policy.
 func (mnsp dataMobileNetworkSimPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mnsp.ref.Append("id"))
+	return terra.ReferenceAsString(mnsp.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_mobile_network_sim_policy.
 func (mnsp dataMobileNetworkSimPolicyAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(mnsp.ref.Append("location"))
+	return terra.ReferenceAsString(mnsp.ref.Append("location"))
 }
 
+// MobileNetworkId returns a reference to field mobile_network_id of azurerm_mobile_network_sim_policy.
 func (mnsp dataMobileNetworkSimPolicyAttributes) MobileNetworkId() terra.StringValue {
-	return terra.ReferenceString(mnsp.ref.Append("mobile_network_id"))
+	return terra.ReferenceAsString(mnsp.ref.Append("mobile_network_id"))
 }
 
+// Name returns a reference to field name of azurerm_mobile_network_sim_policy.
 func (mnsp dataMobileNetworkSimPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mnsp.ref.Append("name"))
+	return terra.ReferenceAsString(mnsp.ref.Append("name"))
 }
 
+// RatFrequencySelectionPriorityIndex returns a reference to field rat_frequency_selection_priority_index of azurerm_mobile_network_sim_policy.
 func (mnsp dataMobileNetworkSimPolicyAttributes) RatFrequencySelectionPriorityIndex() terra.NumberValue {
-	return terra.ReferenceNumber(mnsp.ref.Append("rat_frequency_selection_priority_index"))
+	return terra.ReferenceAsNumber(mnsp.ref.Append("rat_frequency_selection_priority_index"))
 }
 
+// RegistrationTimerInSeconds returns a reference to field registration_timer_in_seconds of azurerm_mobile_network_sim_policy.
 func (mnsp dataMobileNetworkSimPolicyAttributes) RegistrationTimerInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(mnsp.ref.Append("registration_timer_in_seconds"))
+	return terra.ReferenceAsNumber(mnsp.ref.Append("registration_timer_in_seconds"))
 }
 
+// Tags returns a reference to field tags of azurerm_mobile_network_sim_policy.
 func (mnsp dataMobileNetworkSimPolicyAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mnsp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mnsp.ref.Append("tags"))
 }
 
 func (mnsp dataMobileNetworkSimPolicyAttributes) Slice() terra.ListValue[datamobilenetworksimpolicy.SliceAttributes] {
-	return terra.ReferenceList[datamobilenetworksimpolicy.SliceAttributes](mnsp.ref.Append("slice"))
+	return terra.ReferenceAsList[datamobilenetworksimpolicy.SliceAttributes](mnsp.ref.Append("slice"))
 }
 
 func (mnsp dataMobileNetworkSimPolicyAttributes) UserEquipmentAggregateMaximumBitRate() terra.ListValue[datamobilenetworksimpolicy.UserEquipmentAggregateMaximumBitRateAttributes] {
-	return terra.ReferenceList[datamobilenetworksimpolicy.UserEquipmentAggregateMaximumBitRateAttributes](mnsp.ref.Append("user_equipment_aggregate_maximum_bit_rate"))
+	return terra.ReferenceAsList[datamobilenetworksimpolicy.UserEquipmentAggregateMaximumBitRateAttributes](mnsp.ref.Append("user_equipment_aggregate_maximum_bit_rate"))
 }
 
 func (mnsp dataMobileNetworkSimPolicyAttributes) Timeouts() datamobilenetworksimpolicy.TimeoutsAttributes {
-	return terra.ReferenceSingle[datamobilenetworksimpolicy.TimeoutsAttributes](mnsp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datamobilenetworksimpolicy.TimeoutsAttributes](mnsp.ref.Append("timeouts"))
 }

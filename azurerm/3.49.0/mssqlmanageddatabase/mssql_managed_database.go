@@ -33,64 +33,64 @@ type LongTermRetentionPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (ltrp LongTermRetentionPolicyAttributes) InternalRef() terra.Reference {
-	return ltrp.ref
+func (ltrp LongTermRetentionPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return ltrp.ref, nil
 }
 
 func (ltrp LongTermRetentionPolicyAttributes) InternalWithRef(ref terra.Reference) LongTermRetentionPolicyAttributes {
 	return LongTermRetentionPolicyAttributes{ref: ref}
 }
 
-func (ltrp LongTermRetentionPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (ltrp LongTermRetentionPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ltrp.ref.InternalTokens()
 }
 
 func (ltrp LongTermRetentionPolicyAttributes) MonthlyRetention() terra.StringValue {
-	return terra.ReferenceString(ltrp.ref.Append("monthly_retention"))
+	return terra.ReferenceAsString(ltrp.ref.Append("monthly_retention"))
 }
 
 func (ltrp LongTermRetentionPolicyAttributes) WeekOfYear() terra.NumberValue {
-	return terra.ReferenceNumber(ltrp.ref.Append("week_of_year"))
+	return terra.ReferenceAsNumber(ltrp.ref.Append("week_of_year"))
 }
 
 func (ltrp LongTermRetentionPolicyAttributes) WeeklyRetention() terra.StringValue {
-	return terra.ReferenceString(ltrp.ref.Append("weekly_retention"))
+	return terra.ReferenceAsString(ltrp.ref.Append("weekly_retention"))
 }
 
 func (ltrp LongTermRetentionPolicyAttributes) YearlyRetention() terra.StringValue {
-	return terra.ReferenceString(ltrp.ref.Append("yearly_retention"))
+	return terra.ReferenceAsString(ltrp.ref.Append("yearly_retention"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type LongTermRetentionPolicyState struct {

@@ -21,7 +21,7 @@ func (l LocationAttributes) InternalWithRef(ref terra.Reference) LocationAttribu
 	return LocationAttributes{ref: ref}
 }
 
-func (l LocationAttributes) InternalTokens() hclwrite.Tokens {
+func (l LocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 

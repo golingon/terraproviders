@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataCosmosdbMongoDatabase creates a new instance of [DataCosmosdbMongoDatabase].
 func NewDataCosmosdbMongoDatabase(name string, args DataCosmosdbMongoDatabaseArgs) *DataCosmosdbMongoDatabase {
 	return &DataCosmosdbMongoDatabase{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataCosmosdbMongoDatabase(name string, args DataCosmosdbMongoDatabaseArg
 
 var _ terra.DataResource = (*DataCosmosdbMongoDatabase)(nil)
 
+// DataCosmosdbMongoDatabase represents the Terraform data resource azurerm_cosmosdb_mongo_database.
 type DataCosmosdbMongoDatabase struct {
 	Name string
 	Args DataCosmosdbMongoDatabaseArgs
 }
 
+// DataSource returns the Terraform object type for [DataCosmosdbMongoDatabase].
 func (cmd *DataCosmosdbMongoDatabase) DataSource() string {
 	return "azurerm_cosmosdb_mongo_database"
 }
 
+// LocalName returns the local name for [DataCosmosdbMongoDatabase].
 func (cmd *DataCosmosdbMongoDatabase) LocalName() string {
 	return cmd.Name
 }
 
+// Configuration returns the configuration (args) for [DataCosmosdbMongoDatabase].
 func (cmd *DataCosmosdbMongoDatabase) Configuration() interface{} {
 	return cmd.Args
 }
 
+// Attributes returns the attributes for [DataCosmosdbMongoDatabase].
 func (cmd *DataCosmosdbMongoDatabase) Attributes() dataCosmosdbMongoDatabaseAttributes {
 	return dataCosmosdbMongoDatabaseAttributes{ref: terra.ReferenceDataResource(cmd)}
 }
 
+// DataCosmosdbMongoDatabaseArgs contains the configurations for azurerm_cosmosdb_mongo_database.
 type DataCosmosdbMongoDatabaseArgs struct {
 	// AccountName: string, required
 	AccountName terra.StringValue `hcl:"account_name,attr" validate:"required"`
@@ -53,26 +60,31 @@ type dataCosmosdbMongoDatabaseAttributes struct {
 	ref terra.Reference
 }
 
+// AccountName returns a reference to field account_name of azurerm_cosmosdb_mongo_database.
 func (cmd dataCosmosdbMongoDatabaseAttributes) AccountName() terra.StringValue {
-	return terra.ReferenceString(cmd.ref.Append("account_name"))
+	return terra.ReferenceAsString(cmd.ref.Append("account_name"))
 }
 
+// Id returns a reference to field id of azurerm_cosmosdb_mongo_database.
 func (cmd dataCosmosdbMongoDatabaseAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cmd.ref.Append("id"))
+	return terra.ReferenceAsString(cmd.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_cosmosdb_mongo_database.
 func (cmd dataCosmosdbMongoDatabaseAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cmd.ref.Append("name"))
+	return terra.ReferenceAsString(cmd.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_cosmosdb_mongo_database.
 func (cmd dataCosmosdbMongoDatabaseAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(cmd.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(cmd.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_cosmosdb_mongo_database.
 func (cmd dataCosmosdbMongoDatabaseAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cmd.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](cmd.ref.Append("tags"))
 }
 
 func (cmd dataCosmosdbMongoDatabaseAttributes) Timeouts() datacosmosdbmongodatabase.TimeoutsAttributes {
-	return terra.ReferenceSingle[datacosmosdbmongodatabase.TimeoutsAttributes](cmd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datacosmosdbmongodatabase.TimeoutsAttributes](cmd.ref.Append("timeouts"))
 }

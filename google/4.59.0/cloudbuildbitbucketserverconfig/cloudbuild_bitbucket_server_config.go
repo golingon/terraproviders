@@ -36,80 +36,80 @@ type ConnectedRepositoriesAttributes struct {
 	ref terra.Reference
 }
 
-func (cr ConnectedRepositoriesAttributes) InternalRef() terra.Reference {
-	return cr.ref
+func (cr ConnectedRepositoriesAttributes) InternalRef() (terra.Reference, error) {
+	return cr.ref, nil
 }
 
 func (cr ConnectedRepositoriesAttributes) InternalWithRef(ref terra.Reference) ConnectedRepositoriesAttributes {
 	return ConnectedRepositoriesAttributes{ref: ref}
 }
 
-func (cr ConnectedRepositoriesAttributes) InternalTokens() hclwrite.Tokens {
+func (cr ConnectedRepositoriesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cr.ref.InternalTokens()
 }
 
 func (cr ConnectedRepositoriesAttributes) ProjectKey() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("project_key"))
+	return terra.ReferenceAsString(cr.ref.Append("project_key"))
 }
 
 func (cr ConnectedRepositoriesAttributes) RepoSlug() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("repo_slug"))
+	return terra.ReferenceAsString(cr.ref.Append("repo_slug"))
 }
 
 type SecretsAttributes struct {
 	ref terra.Reference
 }
 
-func (s SecretsAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SecretsAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SecretsAttributes) InternalWithRef(ref terra.Reference) SecretsAttributes {
 	return SecretsAttributes{ref: ref}
 }
 
-func (s SecretsAttributes) InternalTokens() hclwrite.Tokens {
+func (s SecretsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SecretsAttributes) AdminAccessTokenVersionName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("admin_access_token_version_name"))
+	return terra.ReferenceAsString(s.ref.Append("admin_access_token_version_name"))
 }
 
 func (s SecretsAttributes) ReadAccessTokenVersionName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("read_access_token_version_name"))
+	return terra.ReferenceAsString(s.ref.Append("read_access_token_version_name"))
 }
 
 func (s SecretsAttributes) WebhookSecretVersionName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("webhook_secret_version_name"))
+	return terra.ReferenceAsString(s.ref.Append("webhook_secret_version_name"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ConnectedRepositoriesState struct {

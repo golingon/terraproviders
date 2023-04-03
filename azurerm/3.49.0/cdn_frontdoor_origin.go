@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCdnFrontdoorOrigin creates a new instance of [CdnFrontdoorOrigin].
 func NewCdnFrontdoorOrigin(name string, args CdnFrontdoorOriginArgs) *CdnFrontdoorOrigin {
 	return &CdnFrontdoorOrigin{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCdnFrontdoorOrigin(name string, args CdnFrontdoorOriginArgs) *CdnFrontdo
 
 var _ terra.Resource = (*CdnFrontdoorOrigin)(nil)
 
+// CdnFrontdoorOrigin represents the Terraform resource azurerm_cdn_frontdoor_origin.
 type CdnFrontdoorOrigin struct {
-	Name  string
-	Args  CdnFrontdoorOriginArgs
-	state *cdnFrontdoorOriginState
+	Name      string
+	Args      CdnFrontdoorOriginArgs
+	state     *cdnFrontdoorOriginState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CdnFrontdoorOrigin].
 func (cfo *CdnFrontdoorOrigin) Type() string {
 	return "azurerm_cdn_frontdoor_origin"
 }
 
+// LocalName returns the local name for [CdnFrontdoorOrigin].
 func (cfo *CdnFrontdoorOrigin) LocalName() string {
 	return cfo.Name
 }
 
+// Configuration returns the configuration (args) for [CdnFrontdoorOrigin].
 func (cfo *CdnFrontdoorOrigin) Configuration() interface{} {
 	return cfo.Args
 }
 
+// DependOn is used for other resources to depend on [CdnFrontdoorOrigin].
+func (cfo *CdnFrontdoorOrigin) DependOn() terra.Reference {
+	return terra.ReferenceResource(cfo)
+}
+
+// Dependencies returns the list of resources [CdnFrontdoorOrigin] depends_on.
+func (cfo *CdnFrontdoorOrigin) Dependencies() terra.Dependencies {
+	return cfo.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CdnFrontdoorOrigin].
+func (cfo *CdnFrontdoorOrigin) LifecycleManagement() *terra.Lifecycle {
+	return cfo.Lifecycle
+}
+
+// Attributes returns the attributes for [CdnFrontdoorOrigin].
 func (cfo *CdnFrontdoorOrigin) Attributes() cdnFrontdoorOriginAttributes {
 	return cdnFrontdoorOriginAttributes{ref: terra.ReferenceResource(cfo)}
 }
 
+// ImportState imports the given attribute values into [CdnFrontdoorOrigin]'s state.
 func (cfo *CdnFrontdoorOrigin) ImportState(av io.Reader) error {
 	cfo.state = &cdnFrontdoorOriginState{}
 	if err := json.NewDecoder(av).Decode(cfo.state); err != nil {
@@ -49,10 +73,12 @@ func (cfo *CdnFrontdoorOrigin) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CdnFrontdoorOrigin] has state.
 func (cfo *CdnFrontdoorOrigin) State() (*cdnFrontdoorOriginState, bool) {
 	return cfo.state, cfo.state != nil
 }
 
+// StateMust returns the state for [CdnFrontdoorOrigin]. Panics if the state is nil.
 func (cfo *CdnFrontdoorOrigin) StateMust() *cdnFrontdoorOriginState {
 	if cfo.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cfo.Type(), cfo.LocalName()))
@@ -60,10 +86,7 @@ func (cfo *CdnFrontdoorOrigin) StateMust() *cdnFrontdoorOriginState {
 	return cfo.state
 }
 
-func (cfo *CdnFrontdoorOrigin) DependOn() terra.Reference {
-	return terra.ReferenceResource(cfo)
-}
-
+// CdnFrontdoorOriginArgs contains the configurations for azurerm_cdn_frontdoor_origin.
 type CdnFrontdoorOriginArgs struct {
 	// CdnFrontdoorOriginGroupId: string, required
 	CdnFrontdoorOriginGroupId terra.StringValue `hcl:"cdn_frontdoor_origin_group_id,attr" validate:"required"`
@@ -93,67 +116,77 @@ type CdnFrontdoorOriginArgs struct {
 	PrivateLink *cdnfrontdoororigin.PrivateLink `hcl:"private_link,block"`
 	// Timeouts: optional
 	Timeouts *cdnfrontdoororigin.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that CdnFrontdoorOrigin depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cdnFrontdoorOriginAttributes struct {
 	ref terra.Reference
 }
 
+// CdnFrontdoorOriginGroupId returns a reference to field cdn_frontdoor_origin_group_id of azurerm_cdn_frontdoor_origin.
 func (cfo cdnFrontdoorOriginAttributes) CdnFrontdoorOriginGroupId() terra.StringValue {
-	return terra.ReferenceString(cfo.ref.Append("cdn_frontdoor_origin_group_id"))
+	return terra.ReferenceAsString(cfo.ref.Append("cdn_frontdoor_origin_group_id"))
 }
 
+// CertificateNameCheckEnabled returns a reference to field certificate_name_check_enabled of azurerm_cdn_frontdoor_origin.
 func (cfo cdnFrontdoorOriginAttributes) CertificateNameCheckEnabled() terra.BoolValue {
-	return terra.ReferenceBool(cfo.ref.Append("certificate_name_check_enabled"))
+	return terra.ReferenceAsBool(cfo.ref.Append("certificate_name_check_enabled"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_cdn_frontdoor_origin.
 func (cfo cdnFrontdoorOriginAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(cfo.ref.Append("enabled"))
+	return terra.ReferenceAsBool(cfo.ref.Append("enabled"))
 }
 
+// HealthProbesEnabled returns a reference to field health_probes_enabled of azurerm_cdn_frontdoor_origin.
 func (cfo cdnFrontdoorOriginAttributes) HealthProbesEnabled() terra.BoolValue {
-	return terra.ReferenceBool(cfo.ref.Append("health_probes_enabled"))
+	return terra.ReferenceAsBool(cfo.ref.Append("health_probes_enabled"))
 }
 
+// HostName returns a reference to field host_name of azurerm_cdn_frontdoor_origin.
 func (cfo cdnFrontdoorOriginAttributes) HostName() terra.StringValue {
-	return terra.ReferenceString(cfo.ref.Append("host_name"))
+	return terra.ReferenceAsString(cfo.ref.Append("host_name"))
 }
 
+// HttpPort returns a reference to field http_port of azurerm_cdn_frontdoor_origin.
 func (cfo cdnFrontdoorOriginAttributes) HttpPort() terra.NumberValue {
-	return terra.ReferenceNumber(cfo.ref.Append("http_port"))
+	return terra.ReferenceAsNumber(cfo.ref.Append("http_port"))
 }
 
+// HttpsPort returns a reference to field https_port of azurerm_cdn_frontdoor_origin.
 func (cfo cdnFrontdoorOriginAttributes) HttpsPort() terra.NumberValue {
-	return terra.ReferenceNumber(cfo.ref.Append("https_port"))
+	return terra.ReferenceAsNumber(cfo.ref.Append("https_port"))
 }
 
+// Id returns a reference to field id of azurerm_cdn_frontdoor_origin.
 func (cfo cdnFrontdoorOriginAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cfo.ref.Append("id"))
+	return terra.ReferenceAsString(cfo.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_cdn_frontdoor_origin.
 func (cfo cdnFrontdoorOriginAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cfo.ref.Append("name"))
+	return terra.ReferenceAsString(cfo.ref.Append("name"))
 }
 
+// OriginHostHeader returns a reference to field origin_host_header of azurerm_cdn_frontdoor_origin.
 func (cfo cdnFrontdoorOriginAttributes) OriginHostHeader() terra.StringValue {
-	return terra.ReferenceString(cfo.ref.Append("origin_host_header"))
+	return terra.ReferenceAsString(cfo.ref.Append("origin_host_header"))
 }
 
+// Priority returns a reference to field priority of azurerm_cdn_frontdoor_origin.
 func (cfo cdnFrontdoorOriginAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(cfo.ref.Append("priority"))
+	return terra.ReferenceAsNumber(cfo.ref.Append("priority"))
 }
 
+// Weight returns a reference to field weight of azurerm_cdn_frontdoor_origin.
 func (cfo cdnFrontdoorOriginAttributes) Weight() terra.NumberValue {
-	return terra.ReferenceNumber(cfo.ref.Append("weight"))
+	return terra.ReferenceAsNumber(cfo.ref.Append("weight"))
 }
 
 func (cfo cdnFrontdoorOriginAttributes) PrivateLink() terra.ListValue[cdnfrontdoororigin.PrivateLinkAttributes] {
-	return terra.ReferenceList[cdnfrontdoororigin.PrivateLinkAttributes](cfo.ref.Append("private_link"))
+	return terra.ReferenceAsList[cdnfrontdoororigin.PrivateLinkAttributes](cfo.ref.Append("private_link"))
 }
 
 func (cfo cdnFrontdoorOriginAttributes) Timeouts() cdnfrontdoororigin.TimeoutsAttributes {
-	return terra.ReferenceSingle[cdnfrontdoororigin.TimeoutsAttributes](cfo.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cdnfrontdoororigin.TimeoutsAttributes](cfo.ref.Append("timeouts"))
 }
 
 type cdnFrontdoorOriginState struct {

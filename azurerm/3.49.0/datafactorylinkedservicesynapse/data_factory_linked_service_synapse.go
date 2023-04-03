@@ -29,56 +29,56 @@ type KeyVaultPasswordAttributes struct {
 	ref terra.Reference
 }
 
-func (kvp KeyVaultPasswordAttributes) InternalRef() terra.Reference {
-	return kvp.ref
+func (kvp KeyVaultPasswordAttributes) InternalRef() (terra.Reference, error) {
+	return kvp.ref, nil
 }
 
 func (kvp KeyVaultPasswordAttributes) InternalWithRef(ref terra.Reference) KeyVaultPasswordAttributes {
 	return KeyVaultPasswordAttributes{ref: ref}
 }
 
-func (kvp KeyVaultPasswordAttributes) InternalTokens() hclwrite.Tokens {
+func (kvp KeyVaultPasswordAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kvp.ref.InternalTokens()
 }
 
 func (kvp KeyVaultPasswordAttributes) LinkedServiceName() terra.StringValue {
-	return terra.ReferenceString(kvp.ref.Append("linked_service_name"))
+	return terra.ReferenceAsString(kvp.ref.Append("linked_service_name"))
 }
 
 func (kvp KeyVaultPasswordAttributes) SecretName() terra.StringValue {
-	return terra.ReferenceString(kvp.ref.Append("secret_name"))
+	return terra.ReferenceAsString(kvp.ref.Append("secret_name"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type KeyVaultPasswordState struct {

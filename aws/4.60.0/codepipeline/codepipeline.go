@@ -71,7 +71,7 @@ func (as ArtifactStoreAttributes) InternalWithRef(ref terra.Reference) ArtifactS
 	return ArtifactStoreAttributes{ref: ref}
 }
 
-func (as ArtifactStoreAttributes) InternalTokens() hclwrite.Tokens {
+func (as ArtifactStoreAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return as.ref.InternalTokens()
 }
 
@@ -103,7 +103,7 @@ func (ek EncryptionKeyAttributes) InternalWithRef(ref terra.Reference) Encryptio
 	return EncryptionKeyAttributes{ref: ref}
 }
 
-func (ek EncryptionKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (ek EncryptionKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ek.ref.InternalTokens()
 }
 
@@ -127,7 +127,7 @@ func (s StageAttributes) InternalWithRef(ref terra.Reference) StageAttributes {
 	return StageAttributes{ref: ref}
 }
 
-func (s StageAttributes) InternalTokens() hclwrite.Tokens {
+func (s StageAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -151,7 +151,7 @@ func (a ActionAttributes) InternalWithRef(ref terra.Reference) ActionAttributes 
 	return ActionAttributes{ref: ref}
 }
 
-func (a ActionAttributes) InternalTokens() hclwrite.Tokens {
+func (a ActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 

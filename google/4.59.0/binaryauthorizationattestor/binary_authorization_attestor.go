@@ -45,112 +45,112 @@ type AttestationAuthorityNoteAttributes struct {
 	ref terra.Reference
 }
 
-func (aan AttestationAuthorityNoteAttributes) InternalRef() terra.Reference {
-	return aan.ref
+func (aan AttestationAuthorityNoteAttributes) InternalRef() (terra.Reference, error) {
+	return aan.ref, nil
 }
 
 func (aan AttestationAuthorityNoteAttributes) InternalWithRef(ref terra.Reference) AttestationAuthorityNoteAttributes {
 	return AttestationAuthorityNoteAttributes{ref: ref}
 }
 
-func (aan AttestationAuthorityNoteAttributes) InternalTokens() hclwrite.Tokens {
+func (aan AttestationAuthorityNoteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aan.ref.InternalTokens()
 }
 
 func (aan AttestationAuthorityNoteAttributes) DelegationServiceAccountEmail() terra.StringValue {
-	return terra.ReferenceString(aan.ref.Append("delegation_service_account_email"))
+	return terra.ReferenceAsString(aan.ref.Append("delegation_service_account_email"))
 }
 
 func (aan AttestationAuthorityNoteAttributes) NoteReference() terra.StringValue {
-	return terra.ReferenceString(aan.ref.Append("note_reference"))
+	return terra.ReferenceAsString(aan.ref.Append("note_reference"))
 }
 
 func (aan AttestationAuthorityNoteAttributes) PublicKeys() terra.ListValue[PublicKeysAttributes] {
-	return terra.ReferenceList[PublicKeysAttributes](aan.ref.Append("public_keys"))
+	return terra.ReferenceAsList[PublicKeysAttributes](aan.ref.Append("public_keys"))
 }
 
 type PublicKeysAttributes struct {
 	ref terra.Reference
 }
 
-func (pk PublicKeysAttributes) InternalRef() terra.Reference {
-	return pk.ref
+func (pk PublicKeysAttributes) InternalRef() (terra.Reference, error) {
+	return pk.ref, nil
 }
 
 func (pk PublicKeysAttributes) InternalWithRef(ref terra.Reference) PublicKeysAttributes {
 	return PublicKeysAttributes{ref: ref}
 }
 
-func (pk PublicKeysAttributes) InternalTokens() hclwrite.Tokens {
+func (pk PublicKeysAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pk.ref.InternalTokens()
 }
 
 func (pk PublicKeysAttributes) AsciiArmoredPgpPublicKey() terra.StringValue {
-	return terra.ReferenceString(pk.ref.Append("ascii_armored_pgp_public_key"))
+	return terra.ReferenceAsString(pk.ref.Append("ascii_armored_pgp_public_key"))
 }
 
 func (pk PublicKeysAttributes) Comment() terra.StringValue {
-	return terra.ReferenceString(pk.ref.Append("comment"))
+	return terra.ReferenceAsString(pk.ref.Append("comment"))
 }
 
 func (pk PublicKeysAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pk.ref.Append("id"))
+	return terra.ReferenceAsString(pk.ref.Append("id"))
 }
 
 func (pk PublicKeysAttributes) PkixPublicKey() terra.ListValue[PkixPublicKeyAttributes] {
-	return terra.ReferenceList[PkixPublicKeyAttributes](pk.ref.Append("pkix_public_key"))
+	return terra.ReferenceAsList[PkixPublicKeyAttributes](pk.ref.Append("pkix_public_key"))
 }
 
 type PkixPublicKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (ppk PkixPublicKeyAttributes) InternalRef() terra.Reference {
-	return ppk.ref
+func (ppk PkixPublicKeyAttributes) InternalRef() (terra.Reference, error) {
+	return ppk.ref, nil
 }
 
 func (ppk PkixPublicKeyAttributes) InternalWithRef(ref terra.Reference) PkixPublicKeyAttributes {
 	return PkixPublicKeyAttributes{ref: ref}
 }
 
-func (ppk PkixPublicKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (ppk PkixPublicKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ppk.ref.InternalTokens()
 }
 
 func (ppk PkixPublicKeyAttributes) PublicKeyPem() terra.StringValue {
-	return terra.ReferenceString(ppk.ref.Append("public_key_pem"))
+	return terra.ReferenceAsString(ppk.ref.Append("public_key_pem"))
 }
 
 func (ppk PkixPublicKeyAttributes) SignatureAlgorithm() terra.StringValue {
-	return terra.ReferenceString(ppk.ref.Append("signature_algorithm"))
+	return terra.ReferenceAsString(ppk.ref.Append("signature_algorithm"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AttestationAuthorityNoteState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeInterconnectAttachment creates a new instance of [ComputeInterconnectAttachment].
 func NewComputeInterconnectAttachment(name string, args ComputeInterconnectAttachmentArgs) *ComputeInterconnectAttachment {
 	return &ComputeInterconnectAttachment{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeInterconnectAttachment(name string, args ComputeInterconnectAttac
 
 var _ terra.Resource = (*ComputeInterconnectAttachment)(nil)
 
+// ComputeInterconnectAttachment represents the Terraform resource google_compute_interconnect_attachment.
 type ComputeInterconnectAttachment struct {
-	Name  string
-	Args  ComputeInterconnectAttachmentArgs
-	state *computeInterconnectAttachmentState
+	Name      string
+	Args      ComputeInterconnectAttachmentArgs
+	state     *computeInterconnectAttachmentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeInterconnectAttachment].
 func (cia *ComputeInterconnectAttachment) Type() string {
 	return "google_compute_interconnect_attachment"
 }
 
+// LocalName returns the local name for [ComputeInterconnectAttachment].
 func (cia *ComputeInterconnectAttachment) LocalName() string {
 	return cia.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeInterconnectAttachment].
 func (cia *ComputeInterconnectAttachment) Configuration() interface{} {
 	return cia.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeInterconnectAttachment].
+func (cia *ComputeInterconnectAttachment) DependOn() terra.Reference {
+	return terra.ReferenceResource(cia)
+}
+
+// Dependencies returns the list of resources [ComputeInterconnectAttachment] depends_on.
+func (cia *ComputeInterconnectAttachment) Dependencies() terra.Dependencies {
+	return cia.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeInterconnectAttachment].
+func (cia *ComputeInterconnectAttachment) LifecycleManagement() *terra.Lifecycle {
+	return cia.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeInterconnectAttachment].
 func (cia *ComputeInterconnectAttachment) Attributes() computeInterconnectAttachmentAttributes {
 	return computeInterconnectAttachmentAttributes{ref: terra.ReferenceResource(cia)}
 }
 
+// ImportState imports the given attribute values into [ComputeInterconnectAttachment]'s state.
 func (cia *ComputeInterconnectAttachment) ImportState(av io.Reader) error {
 	cia.state = &computeInterconnectAttachmentState{}
 	if err := json.NewDecoder(av).Decode(cia.state); err != nil {
@@ -49,10 +73,12 @@ func (cia *ComputeInterconnectAttachment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeInterconnectAttachment] has state.
 func (cia *ComputeInterconnectAttachment) State() (*computeInterconnectAttachmentState, bool) {
 	return cia.state, cia.state != nil
 }
 
+// StateMust returns the state for [ComputeInterconnectAttachment]. Panics if the state is nil.
 func (cia *ComputeInterconnectAttachment) StateMust() *computeInterconnectAttachmentState {
 	if cia.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cia.Type(), cia.LocalName()))
@@ -60,10 +86,7 @@ func (cia *ComputeInterconnectAttachment) StateMust() *computeInterconnectAttach
 	return cia.state
 }
 
-func (cia *ComputeInterconnectAttachment) DependOn() terra.Reference {
-	return terra.ReferenceResource(cia)
-}
-
+// ComputeInterconnectAttachmentArgs contains the configurations for google_compute_interconnect_attachment.
 type ComputeInterconnectAttachmentArgs struct {
 	// AdminEnabled: bool, optional
 	AdminEnabled terra.BoolValue `hcl:"admin_enabled,attr"`
@@ -101,115 +124,137 @@ type ComputeInterconnectAttachmentArgs struct {
 	PrivateInterconnectInfo []computeinterconnectattachment.PrivateInterconnectInfo `hcl:"private_interconnect_info,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *computeinterconnectattachment.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeInterconnectAttachment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeInterconnectAttachmentAttributes struct {
 	ref terra.Reference
 }
 
+// AdminEnabled returns a reference to field admin_enabled of google_compute_interconnect_attachment.
 func (cia computeInterconnectAttachmentAttributes) AdminEnabled() terra.BoolValue {
-	return terra.ReferenceBool(cia.ref.Append("admin_enabled"))
+	return terra.ReferenceAsBool(cia.ref.Append("admin_enabled"))
 }
 
+// Bandwidth returns a reference to field bandwidth of google_compute_interconnect_attachment.
 func (cia computeInterconnectAttachmentAttributes) Bandwidth() terra.StringValue {
-	return terra.ReferenceString(cia.ref.Append("bandwidth"))
+	return terra.ReferenceAsString(cia.ref.Append("bandwidth"))
 }
 
+// CandidateSubnets returns a reference to field candidate_subnets of google_compute_interconnect_attachment.
 func (cia computeInterconnectAttachmentAttributes) CandidateSubnets() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cia.ref.Append("candidate_subnets"))
+	return terra.ReferenceAsList[terra.StringValue](cia.ref.Append("candidate_subnets"))
 }
 
+// CloudRouterIpAddress returns a reference to field cloud_router_ip_address of google_compute_interconnect_attachment.
 func (cia computeInterconnectAttachmentAttributes) CloudRouterIpAddress() terra.StringValue {
-	return terra.ReferenceString(cia.ref.Append("cloud_router_ip_address"))
+	return terra.ReferenceAsString(cia.ref.Append("cloud_router_ip_address"))
 }
 
+// CreationTimestamp returns a reference to field creation_timestamp of google_compute_interconnect_attachment.
 func (cia computeInterconnectAttachmentAttributes) CreationTimestamp() terra.StringValue {
-	return terra.ReferenceString(cia.ref.Append("creation_timestamp"))
+	return terra.ReferenceAsString(cia.ref.Append("creation_timestamp"))
 }
 
+// CustomerRouterIpAddress returns a reference to field customer_router_ip_address of google_compute_interconnect_attachment.
 func (cia computeInterconnectAttachmentAttributes) CustomerRouterIpAddress() terra.StringValue {
-	return terra.ReferenceString(cia.ref.Append("customer_router_ip_address"))
+	return terra.ReferenceAsString(cia.ref.Append("customer_router_ip_address"))
 }
 
+// Description returns a reference to field description of google_compute_interconnect_attachment.
 func (cia computeInterconnectAttachmentAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cia.ref.Append("description"))
+	return terra.ReferenceAsString(cia.ref.Append("description"))
 }
 
+// EdgeAvailabilityDomain returns a reference to field edge_availability_domain of google_compute_interconnect_attachment.
 func (cia computeInterconnectAttachmentAttributes) EdgeAvailabilityDomain() terra.StringValue {
-	return terra.ReferenceString(cia.ref.Append("edge_availability_domain"))
+	return terra.ReferenceAsString(cia.ref.Append("edge_availability_domain"))
 }
 
+// Encryption returns a reference to field encryption of google_compute_interconnect_attachment.
 func (cia computeInterconnectAttachmentAttributes) Encryption() terra.StringValue {
-	return terra.ReferenceString(cia.ref.Append("encryption"))
+	return terra.ReferenceAsString(cia.ref.Append("encryption"))
 }
 
+// GoogleReferenceId returns a reference to field google_reference_id of google_compute_interconnect_attachment.
 func (cia computeInterconnectAttachmentAttributes) GoogleReferenceId() terra.StringValue {
-	return terra.ReferenceString(cia.ref.Append("google_reference_id"))
+	return terra.ReferenceAsString(cia.ref.Append("google_reference_id"))
 }
 
+// Id returns a reference to field id of google_compute_interconnect_attachment.
 func (cia computeInterconnectAttachmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cia.ref.Append("id"))
+	return terra.ReferenceAsString(cia.ref.Append("id"))
 }
 
+// Interconnect returns a reference to field interconnect of google_compute_interconnect_attachment.
 func (cia computeInterconnectAttachmentAttributes) Interconnect() terra.StringValue {
-	return terra.ReferenceString(cia.ref.Append("interconnect"))
+	return terra.ReferenceAsString(cia.ref.Append("interconnect"))
 }
 
+// IpsecInternalAddresses returns a reference to field ipsec_internal_addresses of google_compute_interconnect_attachment.
 func (cia computeInterconnectAttachmentAttributes) IpsecInternalAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cia.ref.Append("ipsec_internal_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](cia.ref.Append("ipsec_internal_addresses"))
 }
 
+// Mtu returns a reference to field mtu of google_compute_interconnect_attachment.
 func (cia computeInterconnectAttachmentAttributes) Mtu() terra.StringValue {
-	return terra.ReferenceString(cia.ref.Append("mtu"))
+	return terra.ReferenceAsString(cia.ref.Append("mtu"))
 }
 
+// Name returns a reference to field name of google_compute_interconnect_attachment.
 func (cia computeInterconnectAttachmentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cia.ref.Append("name"))
+	return terra.ReferenceAsString(cia.ref.Append("name"))
 }
 
+// PairingKey returns a reference to field pairing_key of google_compute_interconnect_attachment.
 func (cia computeInterconnectAttachmentAttributes) PairingKey() terra.StringValue {
-	return terra.ReferenceString(cia.ref.Append("pairing_key"))
+	return terra.ReferenceAsString(cia.ref.Append("pairing_key"))
 }
 
+// PartnerAsn returns a reference to field partner_asn of google_compute_interconnect_attachment.
 func (cia computeInterconnectAttachmentAttributes) PartnerAsn() terra.StringValue {
-	return terra.ReferenceString(cia.ref.Append("partner_asn"))
+	return terra.ReferenceAsString(cia.ref.Append("partner_asn"))
 }
 
+// Project returns a reference to field project of google_compute_interconnect_attachment.
 func (cia computeInterconnectAttachmentAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cia.ref.Append("project"))
+	return terra.ReferenceAsString(cia.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_compute_interconnect_attachment.
 func (cia computeInterconnectAttachmentAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(cia.ref.Append("region"))
+	return terra.ReferenceAsString(cia.ref.Append("region"))
 }
 
+// Router returns a reference to field router of google_compute_interconnect_attachment.
 func (cia computeInterconnectAttachmentAttributes) Router() terra.StringValue {
-	return terra.ReferenceString(cia.ref.Append("router"))
+	return terra.ReferenceAsString(cia.ref.Append("router"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_interconnect_attachment.
 func (cia computeInterconnectAttachmentAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(cia.ref.Append("self_link"))
+	return terra.ReferenceAsString(cia.ref.Append("self_link"))
 }
 
+// State returns a reference to field state of google_compute_interconnect_attachment.
 func (cia computeInterconnectAttachmentAttributes) State() terra.StringValue {
-	return terra.ReferenceString(cia.ref.Append("state"))
+	return terra.ReferenceAsString(cia.ref.Append("state"))
 }
 
+// Type returns a reference to field type of google_compute_interconnect_attachment.
 func (cia computeInterconnectAttachmentAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(cia.ref.Append("type"))
+	return terra.ReferenceAsString(cia.ref.Append("type"))
 }
 
+// VlanTag8021Q returns a reference to field vlan_tag8021q of google_compute_interconnect_attachment.
 func (cia computeInterconnectAttachmentAttributes) VlanTag8021Q() terra.NumberValue {
-	return terra.ReferenceNumber(cia.ref.Append("vlan_tag8021q"))
+	return terra.ReferenceAsNumber(cia.ref.Append("vlan_tag8021q"))
 }
 
 func (cia computeInterconnectAttachmentAttributes) PrivateInterconnectInfo() terra.ListValue[computeinterconnectattachment.PrivateInterconnectInfoAttributes] {
-	return terra.ReferenceList[computeinterconnectattachment.PrivateInterconnectInfoAttributes](cia.ref.Append("private_interconnect_info"))
+	return terra.ReferenceAsList[computeinterconnectattachment.PrivateInterconnectInfoAttributes](cia.ref.Append("private_interconnect_info"))
 }
 
 func (cia computeInterconnectAttachmentAttributes) Timeouts() computeinterconnectattachment.TimeoutsAttributes {
-	return terra.ReferenceSingle[computeinterconnectattachment.TimeoutsAttributes](cia.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computeinterconnectattachment.TimeoutsAttributes](cia.ref.Append("timeouts"))
 }
 
 type computeInterconnectAttachmentState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewContainerRegistryWebhook creates a new instance of [ContainerRegistryWebhook].
 func NewContainerRegistryWebhook(name string, args ContainerRegistryWebhookArgs) *ContainerRegistryWebhook {
 	return &ContainerRegistryWebhook{
 		Args: args,
@@ -19,28 +20,51 @@ func NewContainerRegistryWebhook(name string, args ContainerRegistryWebhookArgs)
 
 var _ terra.Resource = (*ContainerRegistryWebhook)(nil)
 
+// ContainerRegistryWebhook represents the Terraform resource azurerm_container_registry_webhook.
 type ContainerRegistryWebhook struct {
-	Name  string
-	Args  ContainerRegistryWebhookArgs
-	state *containerRegistryWebhookState
+	Name      string
+	Args      ContainerRegistryWebhookArgs
+	state     *containerRegistryWebhookState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ContainerRegistryWebhook].
 func (crw *ContainerRegistryWebhook) Type() string {
 	return "azurerm_container_registry_webhook"
 }
 
+// LocalName returns the local name for [ContainerRegistryWebhook].
 func (crw *ContainerRegistryWebhook) LocalName() string {
 	return crw.Name
 }
 
+// Configuration returns the configuration (args) for [ContainerRegistryWebhook].
 func (crw *ContainerRegistryWebhook) Configuration() interface{} {
 	return crw.Args
 }
 
+// DependOn is used for other resources to depend on [ContainerRegistryWebhook].
+func (crw *ContainerRegistryWebhook) DependOn() terra.Reference {
+	return terra.ReferenceResource(crw)
+}
+
+// Dependencies returns the list of resources [ContainerRegistryWebhook] depends_on.
+func (crw *ContainerRegistryWebhook) Dependencies() terra.Dependencies {
+	return crw.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ContainerRegistryWebhook].
+func (crw *ContainerRegistryWebhook) LifecycleManagement() *terra.Lifecycle {
+	return crw.Lifecycle
+}
+
+// Attributes returns the attributes for [ContainerRegistryWebhook].
 func (crw *ContainerRegistryWebhook) Attributes() containerRegistryWebhookAttributes {
 	return containerRegistryWebhookAttributes{ref: terra.ReferenceResource(crw)}
 }
 
+// ImportState imports the given attribute values into [ContainerRegistryWebhook]'s state.
 func (crw *ContainerRegistryWebhook) ImportState(av io.Reader) error {
 	crw.state = &containerRegistryWebhookState{}
 	if err := json.NewDecoder(av).Decode(crw.state); err != nil {
@@ -49,10 +73,12 @@ func (crw *ContainerRegistryWebhook) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ContainerRegistryWebhook] has state.
 func (crw *ContainerRegistryWebhook) State() (*containerRegistryWebhookState, bool) {
 	return crw.state, crw.state != nil
 }
 
+// StateMust returns the state for [ContainerRegistryWebhook]. Panics if the state is nil.
 func (crw *ContainerRegistryWebhook) StateMust() *containerRegistryWebhookState {
 	if crw.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", crw.Type(), crw.LocalName()))
@@ -60,10 +86,7 @@ func (crw *ContainerRegistryWebhook) StateMust() *containerRegistryWebhookState 
 	return crw.state
 }
 
-func (crw *ContainerRegistryWebhook) DependOn() terra.Reference {
-	return terra.ReferenceResource(crw)
-}
-
+// ContainerRegistryWebhookArgs contains the configurations for azurerm_container_registry_webhook.
 type ContainerRegistryWebhookArgs struct {
 	// Actions: set of string, required
 	Actions terra.SetValue[terra.StringValue] `hcl:"actions,attr" validate:"required"`
@@ -89,59 +112,68 @@ type ContainerRegistryWebhookArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// Timeouts: optional
 	Timeouts *containerregistrywebhook.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ContainerRegistryWebhook depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type containerRegistryWebhookAttributes struct {
 	ref terra.Reference
 }
 
+// Actions returns a reference to field actions of azurerm_container_registry_webhook.
 func (crw containerRegistryWebhookAttributes) Actions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](crw.ref.Append("actions"))
+	return terra.ReferenceAsSet[terra.StringValue](crw.ref.Append("actions"))
 }
 
+// CustomHeaders returns a reference to field custom_headers of azurerm_container_registry_webhook.
 func (crw containerRegistryWebhookAttributes) CustomHeaders() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](crw.ref.Append("custom_headers"))
+	return terra.ReferenceAsMap[terra.StringValue](crw.ref.Append("custom_headers"))
 }
 
+// Id returns a reference to field id of azurerm_container_registry_webhook.
 func (crw containerRegistryWebhookAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(crw.ref.Append("id"))
+	return terra.ReferenceAsString(crw.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_container_registry_webhook.
 func (crw containerRegistryWebhookAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(crw.ref.Append("location"))
+	return terra.ReferenceAsString(crw.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_container_registry_webhook.
 func (crw containerRegistryWebhookAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(crw.ref.Append("name"))
+	return terra.ReferenceAsString(crw.ref.Append("name"))
 }
 
+// RegistryName returns a reference to field registry_name of azurerm_container_registry_webhook.
 func (crw containerRegistryWebhookAttributes) RegistryName() terra.StringValue {
-	return terra.ReferenceString(crw.ref.Append("registry_name"))
+	return terra.ReferenceAsString(crw.ref.Append("registry_name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_container_registry_webhook.
 func (crw containerRegistryWebhookAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(crw.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(crw.ref.Append("resource_group_name"))
 }
 
+// Scope returns a reference to field scope of azurerm_container_registry_webhook.
 func (crw containerRegistryWebhookAttributes) Scope() terra.StringValue {
-	return terra.ReferenceString(crw.ref.Append("scope"))
+	return terra.ReferenceAsString(crw.ref.Append("scope"))
 }
 
+// ServiceUri returns a reference to field service_uri of azurerm_container_registry_webhook.
 func (crw containerRegistryWebhookAttributes) ServiceUri() terra.StringValue {
-	return terra.ReferenceString(crw.ref.Append("service_uri"))
+	return terra.ReferenceAsString(crw.ref.Append("service_uri"))
 }
 
+// Status returns a reference to field status of azurerm_container_registry_webhook.
 func (crw containerRegistryWebhookAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(crw.ref.Append("status"))
+	return terra.ReferenceAsString(crw.ref.Append("status"))
 }
 
+// Tags returns a reference to field tags of azurerm_container_registry_webhook.
 func (crw containerRegistryWebhookAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](crw.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](crw.ref.Append("tags"))
 }
 
 func (crw containerRegistryWebhookAttributes) Timeouts() containerregistrywebhook.TimeoutsAttributes {
-	return terra.ReferenceSingle[containerregistrywebhook.TimeoutsAttributes](crw.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[containerregistrywebhook.TimeoutsAttributes](crw.ref.Append("timeouts"))
 }
 
 type containerRegistryWebhookState struct {

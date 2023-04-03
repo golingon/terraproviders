@@ -34,7 +34,7 @@ func (p ProtocolAttributes) InternalWithRef(ref terra.Reference) ProtocolAttribu
 	return ProtocolAttributes{ref: ref}
 }
 
-func (p ProtocolAttributes) InternalTokens() hclwrite.Tokens {
+func (p ProtocolAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -54,7 +54,7 @@ func (n NfsAttributes) InternalWithRef(ref terra.Reference) NfsAttributes {
 	return NfsAttributes{ref: ref}
 }
 
-func (n NfsAttributes) InternalTokens() hclwrite.Tokens {
+func (n NfsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return n.ref.InternalTokens()
 }
 
@@ -74,7 +74,7 @@ func (mo MountOptionsAttributes) InternalWithRef(ref terra.Reference) MountOptio
 	return MountOptionsAttributes{ref: ref}
 }
 
-func (mo MountOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (mo MountOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mo.ref.InternalTokens()
 }
 

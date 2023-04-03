@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewFederatedIdentityCredential creates a new instance of [FederatedIdentityCredential].
 func NewFederatedIdentityCredential(name string, args FederatedIdentityCredentialArgs) *FederatedIdentityCredential {
 	return &FederatedIdentityCredential{
 		Args: args,
@@ -19,28 +20,51 @@ func NewFederatedIdentityCredential(name string, args FederatedIdentityCredentia
 
 var _ terra.Resource = (*FederatedIdentityCredential)(nil)
 
+// FederatedIdentityCredential represents the Terraform resource azurerm_federated_identity_credential.
 type FederatedIdentityCredential struct {
-	Name  string
-	Args  FederatedIdentityCredentialArgs
-	state *federatedIdentityCredentialState
+	Name      string
+	Args      FederatedIdentityCredentialArgs
+	state     *federatedIdentityCredentialState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [FederatedIdentityCredential].
 func (fic *FederatedIdentityCredential) Type() string {
 	return "azurerm_federated_identity_credential"
 }
 
+// LocalName returns the local name for [FederatedIdentityCredential].
 func (fic *FederatedIdentityCredential) LocalName() string {
 	return fic.Name
 }
 
+// Configuration returns the configuration (args) for [FederatedIdentityCredential].
 func (fic *FederatedIdentityCredential) Configuration() interface{} {
 	return fic.Args
 }
 
+// DependOn is used for other resources to depend on [FederatedIdentityCredential].
+func (fic *FederatedIdentityCredential) DependOn() terra.Reference {
+	return terra.ReferenceResource(fic)
+}
+
+// Dependencies returns the list of resources [FederatedIdentityCredential] depends_on.
+func (fic *FederatedIdentityCredential) Dependencies() terra.Dependencies {
+	return fic.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [FederatedIdentityCredential].
+func (fic *FederatedIdentityCredential) LifecycleManagement() *terra.Lifecycle {
+	return fic.Lifecycle
+}
+
+// Attributes returns the attributes for [FederatedIdentityCredential].
 func (fic *FederatedIdentityCredential) Attributes() federatedIdentityCredentialAttributes {
 	return federatedIdentityCredentialAttributes{ref: terra.ReferenceResource(fic)}
 }
 
+// ImportState imports the given attribute values into [FederatedIdentityCredential]'s state.
 func (fic *FederatedIdentityCredential) ImportState(av io.Reader) error {
 	fic.state = &federatedIdentityCredentialState{}
 	if err := json.NewDecoder(av).Decode(fic.state); err != nil {
@@ -49,10 +73,12 @@ func (fic *FederatedIdentityCredential) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [FederatedIdentityCredential] has state.
 func (fic *FederatedIdentityCredential) State() (*federatedIdentityCredentialState, bool) {
 	return fic.state, fic.state != nil
 }
 
+// StateMust returns the state for [FederatedIdentityCredential]. Panics if the state is nil.
 func (fic *FederatedIdentityCredential) StateMust() *federatedIdentityCredentialState {
 	if fic.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", fic.Type(), fic.LocalName()))
@@ -60,10 +86,7 @@ func (fic *FederatedIdentityCredential) StateMust() *federatedIdentityCredential
 	return fic.state
 }
 
-func (fic *FederatedIdentityCredential) DependOn() terra.Reference {
-	return terra.ReferenceResource(fic)
-}
-
+// FederatedIdentityCredentialArgs contains the configurations for azurerm_federated_identity_credential.
 type FederatedIdentityCredentialArgs struct {
 	// Audience: list of string, required
 	Audience terra.ListValue[terra.StringValue] `hcl:"audience,attr" validate:"required"`
@@ -81,43 +104,48 @@ type FederatedIdentityCredentialArgs struct {
 	Subject terra.StringValue `hcl:"subject,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *federatedidentitycredential.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that FederatedIdentityCredential depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type federatedIdentityCredentialAttributes struct {
 	ref terra.Reference
 }
 
+// Audience returns a reference to field audience of azurerm_federated_identity_credential.
 func (fic federatedIdentityCredentialAttributes) Audience() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](fic.ref.Append("audience"))
+	return terra.ReferenceAsList[terra.StringValue](fic.ref.Append("audience"))
 }
 
+// Id returns a reference to field id of azurerm_federated_identity_credential.
 func (fic federatedIdentityCredentialAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(fic.ref.Append("id"))
+	return terra.ReferenceAsString(fic.ref.Append("id"))
 }
 
+// Issuer returns a reference to field issuer of azurerm_federated_identity_credential.
 func (fic federatedIdentityCredentialAttributes) Issuer() terra.StringValue {
-	return terra.ReferenceString(fic.ref.Append("issuer"))
+	return terra.ReferenceAsString(fic.ref.Append("issuer"))
 }
 
+// Name returns a reference to field name of azurerm_federated_identity_credential.
 func (fic federatedIdentityCredentialAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(fic.ref.Append("name"))
+	return terra.ReferenceAsString(fic.ref.Append("name"))
 }
 
+// ParentId returns a reference to field parent_id of azurerm_federated_identity_credential.
 func (fic federatedIdentityCredentialAttributes) ParentId() terra.StringValue {
-	return terra.ReferenceString(fic.ref.Append("parent_id"))
+	return terra.ReferenceAsString(fic.ref.Append("parent_id"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_federated_identity_credential.
 func (fic federatedIdentityCredentialAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(fic.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(fic.ref.Append("resource_group_name"))
 }
 
+// Subject returns a reference to field subject of azurerm_federated_identity_credential.
 func (fic federatedIdentityCredentialAttributes) Subject() terra.StringValue {
-	return terra.ReferenceString(fic.ref.Append("subject"))
+	return terra.ReferenceAsString(fic.ref.Append("subject"))
 }
 
 func (fic federatedIdentityCredentialAttributes) Timeouts() federatedidentitycredential.TimeoutsAttributes {
-	return terra.ReferenceSingle[federatedidentitycredential.TimeoutsAttributes](fic.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[federatedidentitycredential.TimeoutsAttributes](fic.ref.Append("timeouts"))
 }
 
 type federatedIdentityCredentialState struct {

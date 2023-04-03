@@ -547,7 +547,7 @@ func (ec ElasticsearchConfigurationAttributes) InternalWithRef(ref terra.Referen
 	return ElasticsearchConfigurationAttributes{ref: ref}
 }
 
-func (ec ElasticsearchConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ec ElasticsearchConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 
@@ -615,7 +615,7 @@ func (clo ElasticsearchConfigurationCloudwatchLoggingOptionsAttributes) Internal
 	return ElasticsearchConfigurationCloudwatchLoggingOptionsAttributes{ref: ref}
 }
 
-func (clo ElasticsearchConfigurationCloudwatchLoggingOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (clo ElasticsearchConfigurationCloudwatchLoggingOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return clo.ref.InternalTokens()
 }
 
@@ -643,7 +643,7 @@ func (pc ElasticsearchConfigurationProcessingConfigurationAttributes) InternalWi
 	return ElasticsearchConfigurationProcessingConfigurationAttributes{ref: ref}
 }
 
-func (pc ElasticsearchConfigurationProcessingConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (pc ElasticsearchConfigurationProcessingConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
@@ -667,7 +667,7 @@ func (p ElasticsearchConfigurationProcessingConfigurationProcessorsAttributes) I
 	return ElasticsearchConfigurationProcessingConfigurationProcessorsAttributes{ref: ref}
 }
 
-func (p ElasticsearchConfigurationProcessingConfigurationProcessorsAttributes) InternalTokens() hclwrite.Tokens {
+func (p ElasticsearchConfigurationProcessingConfigurationProcessorsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -691,7 +691,7 @@ func (p ElasticsearchConfigurationProcessingConfigurationProcessorsParametersAtt
 	return ElasticsearchConfigurationProcessingConfigurationProcessorsParametersAttributes{ref: ref}
 }
 
-func (p ElasticsearchConfigurationProcessingConfigurationProcessorsParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (p ElasticsearchConfigurationProcessingConfigurationProcessorsParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -715,7 +715,7 @@ func (vc VpcConfigAttributes) InternalWithRef(ref terra.Reference) VpcConfigAttr
 	return VpcConfigAttributes{ref: ref}
 }
 
-func (vc VpcConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (vc VpcConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vc.ref.InternalTokens()
 }
 
@@ -747,7 +747,7 @@ func (esc ExtendedS3ConfigurationAttributes) InternalWithRef(ref terra.Reference
 	return ExtendedS3ConfigurationAttributes{ref: ref}
 }
 
-func (esc ExtendedS3ConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (esc ExtendedS3ConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return esc.ref.InternalTokens()
 }
 
@@ -819,7 +819,7 @@ func (clo ExtendedS3ConfigurationCloudwatchLoggingOptionsAttributes) InternalWit
 	return ExtendedS3ConfigurationCloudwatchLoggingOptionsAttributes{ref: ref}
 }
 
-func (clo ExtendedS3ConfigurationCloudwatchLoggingOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (clo ExtendedS3ConfigurationCloudwatchLoggingOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return clo.ref.InternalTokens()
 }
 
@@ -847,7 +847,7 @@ func (dfcc DataFormatConversionConfigurationAttributes) InternalWithRef(ref terr
 	return DataFormatConversionConfigurationAttributes{ref: ref}
 }
 
-func (dfcc DataFormatConversionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (dfcc DataFormatConversionConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dfcc.ref.InternalTokens()
 }
 
@@ -879,7 +879,7 @@ func (ifc InputFormatConfigurationAttributes) InternalWithRef(ref terra.Referenc
 	return InputFormatConfigurationAttributes{ref: ref}
 }
 
-func (ifc InputFormatConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ifc InputFormatConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ifc.ref.InternalTokens()
 }
 
@@ -899,7 +899,7 @@ func (d DeserializerAttributes) InternalWithRef(ref terra.Reference) Deserialize
 	return DeserializerAttributes{ref: ref}
 }
 
-func (d DeserializerAttributes) InternalTokens() hclwrite.Tokens {
+func (d DeserializerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -923,7 +923,7 @@ func (hjsd HiveJsonSerDeAttributes) InternalWithRef(ref terra.Reference) HiveJso
 	return HiveJsonSerDeAttributes{ref: ref}
 }
 
-func (hjsd HiveJsonSerDeAttributes) InternalTokens() hclwrite.Tokens {
+func (hjsd HiveJsonSerDeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hjsd.ref.InternalTokens()
 }
 
@@ -943,7 +943,7 @@ func (oxjsd OpenXJsonSerDeAttributes) InternalWithRef(ref terra.Reference) OpenX
 	return OpenXJsonSerDeAttributes{ref: ref}
 }
 
-func (oxjsd OpenXJsonSerDeAttributes) InternalTokens() hclwrite.Tokens {
+func (oxjsd OpenXJsonSerDeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oxjsd.ref.InternalTokens()
 }
 
@@ -971,7 +971,7 @@ func (ofc OutputFormatConfigurationAttributes) InternalWithRef(ref terra.Referen
 	return OutputFormatConfigurationAttributes{ref: ref}
 }
 
-func (ofc OutputFormatConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ofc OutputFormatConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ofc.ref.InternalTokens()
 }
 
@@ -991,7 +991,7 @@ func (s SerializerAttributes) InternalWithRef(ref terra.Reference) SerializerAtt
 	return SerializerAttributes{ref: ref}
 }
 
-func (s SerializerAttributes) InternalTokens() hclwrite.Tokens {
+func (s SerializerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -1015,7 +1015,7 @@ func (osd OrcSerDeAttributes) InternalWithRef(ref terra.Reference) OrcSerDeAttri
 	return OrcSerDeAttributes{ref: ref}
 }
 
-func (osd OrcSerDeAttributes) InternalTokens() hclwrite.Tokens {
+func (osd OrcSerDeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return osd.ref.InternalTokens()
 }
 
@@ -1071,7 +1071,7 @@ func (psd ParquetSerDeAttributes) InternalWithRef(ref terra.Reference) ParquetSe
 	return ParquetSerDeAttributes{ref: ref}
 }
 
-func (psd ParquetSerDeAttributes) InternalTokens() hclwrite.Tokens {
+func (psd ParquetSerDeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return psd.ref.InternalTokens()
 }
 
@@ -1111,7 +1111,7 @@ func (sc SchemaConfigurationAttributes) InternalWithRef(ref terra.Reference) Sch
 	return SchemaConfigurationAttributes{ref: ref}
 }
 
-func (sc SchemaConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (sc SchemaConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -1151,7 +1151,7 @@ func (dpc DynamicPartitioningConfigurationAttributes) InternalWithRef(ref terra.
 	return DynamicPartitioningConfigurationAttributes{ref: ref}
 }
 
-func (dpc DynamicPartitioningConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (dpc DynamicPartitioningConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dpc.ref.InternalTokens()
 }
 
@@ -1175,7 +1175,7 @@ func (pc ExtendedS3ConfigurationProcessingConfigurationAttributes) InternalWithR
 	return ExtendedS3ConfigurationProcessingConfigurationAttributes{ref: ref}
 }
 
-func (pc ExtendedS3ConfigurationProcessingConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (pc ExtendedS3ConfigurationProcessingConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
@@ -1199,7 +1199,7 @@ func (p ExtendedS3ConfigurationProcessingConfigurationProcessorsAttributes) Inte
 	return ExtendedS3ConfigurationProcessingConfigurationProcessorsAttributes{ref: ref}
 }
 
-func (p ExtendedS3ConfigurationProcessingConfigurationProcessorsAttributes) InternalTokens() hclwrite.Tokens {
+func (p ExtendedS3ConfigurationProcessingConfigurationProcessorsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -1223,7 +1223,7 @@ func (p ExtendedS3ConfigurationProcessingConfigurationProcessorsParametersAttrib
 	return ExtendedS3ConfigurationProcessingConfigurationProcessorsParametersAttributes{ref: ref}
 }
 
-func (p ExtendedS3ConfigurationProcessingConfigurationProcessorsParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (p ExtendedS3ConfigurationProcessingConfigurationProcessorsParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -1247,7 +1247,7 @@ func (sbc ExtendedS3ConfigurationS3BackupConfigurationAttributes) InternalWithRe
 	return ExtendedS3ConfigurationS3BackupConfigurationAttributes{ref: ref}
 }
 
-func (sbc ExtendedS3ConfigurationS3BackupConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (sbc ExtendedS3ConfigurationS3BackupConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sbc.ref.InternalTokens()
 }
 
@@ -1299,7 +1299,7 @@ func (clo ExtendedS3ConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAt
 	return ExtendedS3ConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes{ref: ref}
 }
 
-func (clo ExtendedS3ConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (clo ExtendedS3ConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return clo.ref.InternalTokens()
 }
 
@@ -1327,7 +1327,7 @@ func (hec HttpEndpointConfigurationAttributes) InternalWithRef(ref terra.Referen
 	return HttpEndpointConfigurationAttributes{ref: ref}
 }
 
-func (hec HttpEndpointConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (hec HttpEndpointConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hec.ref.InternalTokens()
 }
 
@@ -1387,7 +1387,7 @@ func (clo HttpEndpointConfigurationCloudwatchLoggingOptionsAttributes) InternalW
 	return HttpEndpointConfigurationCloudwatchLoggingOptionsAttributes{ref: ref}
 }
 
-func (clo HttpEndpointConfigurationCloudwatchLoggingOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (clo HttpEndpointConfigurationCloudwatchLoggingOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return clo.ref.InternalTokens()
 }
 
@@ -1415,7 +1415,7 @@ func (pc HttpEndpointConfigurationProcessingConfigurationAttributes) InternalWit
 	return HttpEndpointConfigurationProcessingConfigurationAttributes{ref: ref}
 }
 
-func (pc HttpEndpointConfigurationProcessingConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (pc HttpEndpointConfigurationProcessingConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
@@ -1439,7 +1439,7 @@ func (p HttpEndpointConfigurationProcessingConfigurationProcessorsAttributes) In
 	return HttpEndpointConfigurationProcessingConfigurationProcessorsAttributes{ref: ref}
 }
 
-func (p HttpEndpointConfigurationProcessingConfigurationProcessorsAttributes) InternalTokens() hclwrite.Tokens {
+func (p HttpEndpointConfigurationProcessingConfigurationProcessorsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -1463,7 +1463,7 @@ func (p HttpEndpointConfigurationProcessingConfigurationProcessorsParametersAttr
 	return HttpEndpointConfigurationProcessingConfigurationProcessorsParametersAttributes{ref: ref}
 }
 
-func (p HttpEndpointConfigurationProcessingConfigurationProcessorsParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (p HttpEndpointConfigurationProcessingConfigurationProcessorsParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -1487,7 +1487,7 @@ func (rc RequestConfigurationAttributes) InternalWithRef(ref terra.Reference) Re
 	return RequestConfigurationAttributes{ref: ref}
 }
 
-func (rc RequestConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (rc RequestConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rc.ref.InternalTokens()
 }
 
@@ -1511,7 +1511,7 @@ func (ca CommonAttributesAttributes) InternalWithRef(ref terra.Reference) Common
 	return CommonAttributesAttributes{ref: ref}
 }
 
-func (ca CommonAttributesAttributes) InternalTokens() hclwrite.Tokens {
+func (ca CommonAttributesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ca.ref.InternalTokens()
 }
 
@@ -1535,7 +1535,7 @@ func (ksc KinesisSourceConfigurationAttributes) InternalWithRef(ref terra.Refere
 	return KinesisSourceConfigurationAttributes{ref: ref}
 }
 
-func (ksc KinesisSourceConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ksc KinesisSourceConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ksc.ref.InternalTokens()
 }
 
@@ -1559,7 +1559,7 @@ func (rc RedshiftConfigurationAttributes) InternalWithRef(ref terra.Reference) R
 	return RedshiftConfigurationAttributes{ref: ref}
 }
 
-func (rc RedshiftConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (rc RedshiftConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rc.ref.InternalTokens()
 }
 
@@ -1623,7 +1623,7 @@ func (clo RedshiftConfigurationCloudwatchLoggingOptionsAttributes) InternalWithR
 	return RedshiftConfigurationCloudwatchLoggingOptionsAttributes{ref: ref}
 }
 
-func (clo RedshiftConfigurationCloudwatchLoggingOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (clo RedshiftConfigurationCloudwatchLoggingOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return clo.ref.InternalTokens()
 }
 
@@ -1651,7 +1651,7 @@ func (pc RedshiftConfigurationProcessingConfigurationAttributes) InternalWithRef
 	return RedshiftConfigurationProcessingConfigurationAttributes{ref: ref}
 }
 
-func (pc RedshiftConfigurationProcessingConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (pc RedshiftConfigurationProcessingConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
@@ -1675,7 +1675,7 @@ func (p RedshiftConfigurationProcessingConfigurationProcessorsAttributes) Intern
 	return RedshiftConfigurationProcessingConfigurationProcessorsAttributes{ref: ref}
 }
 
-func (p RedshiftConfigurationProcessingConfigurationProcessorsAttributes) InternalTokens() hclwrite.Tokens {
+func (p RedshiftConfigurationProcessingConfigurationProcessorsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -1699,7 +1699,7 @@ func (p RedshiftConfigurationProcessingConfigurationProcessorsParametersAttribut
 	return RedshiftConfigurationProcessingConfigurationProcessorsParametersAttributes{ref: ref}
 }
 
-func (p RedshiftConfigurationProcessingConfigurationProcessorsParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (p RedshiftConfigurationProcessingConfigurationProcessorsParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -1723,7 +1723,7 @@ func (sbc RedshiftConfigurationS3BackupConfigurationAttributes) InternalWithRef(
 	return RedshiftConfigurationS3BackupConfigurationAttributes{ref: ref}
 }
 
-func (sbc RedshiftConfigurationS3BackupConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (sbc RedshiftConfigurationS3BackupConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sbc.ref.InternalTokens()
 }
 
@@ -1775,7 +1775,7 @@ func (clo RedshiftConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttr
 	return RedshiftConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes{ref: ref}
 }
 
-func (clo RedshiftConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (clo RedshiftConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return clo.ref.InternalTokens()
 }
 
@@ -1803,7 +1803,7 @@ func (sc S3ConfigurationAttributes) InternalWithRef(ref terra.Reference) S3Confi
 	return S3ConfigurationAttributes{ref: ref}
 }
 
-func (sc S3ConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (sc S3ConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -1855,7 +1855,7 @@ func (clo S3ConfigurationCloudwatchLoggingOptionsAttributes) InternalWithRef(ref
 	return S3ConfigurationCloudwatchLoggingOptionsAttributes{ref: ref}
 }
 
-func (clo S3ConfigurationCloudwatchLoggingOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (clo S3ConfigurationCloudwatchLoggingOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return clo.ref.InternalTokens()
 }
 
@@ -1883,7 +1883,7 @@ func (sse ServerSideEncryptionAttributes) InternalWithRef(ref terra.Reference) S
 	return ServerSideEncryptionAttributes{ref: ref}
 }
 
-func (sse ServerSideEncryptionAttributes) InternalTokens() hclwrite.Tokens {
+func (sse ServerSideEncryptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sse.ref.InternalTokens()
 }
 
@@ -1911,7 +1911,7 @@ func (sc SplunkConfigurationAttributes) InternalWithRef(ref terra.Reference) Spl
 	return SplunkConfigurationAttributes{ref: ref}
 }
 
-func (sc SplunkConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (sc SplunkConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -1959,7 +1959,7 @@ func (clo SplunkConfigurationCloudwatchLoggingOptionsAttributes) InternalWithRef
 	return SplunkConfigurationCloudwatchLoggingOptionsAttributes{ref: ref}
 }
 
-func (clo SplunkConfigurationCloudwatchLoggingOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (clo SplunkConfigurationCloudwatchLoggingOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return clo.ref.InternalTokens()
 }
 
@@ -1987,7 +1987,7 @@ func (pc SplunkConfigurationProcessingConfigurationAttributes) InternalWithRef(r
 	return SplunkConfigurationProcessingConfigurationAttributes{ref: ref}
 }
 
-func (pc SplunkConfigurationProcessingConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (pc SplunkConfigurationProcessingConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
@@ -2011,7 +2011,7 @@ func (p SplunkConfigurationProcessingConfigurationProcessorsAttributes) Internal
 	return SplunkConfigurationProcessingConfigurationProcessorsAttributes{ref: ref}
 }
 
-func (p SplunkConfigurationProcessingConfigurationProcessorsAttributes) InternalTokens() hclwrite.Tokens {
+func (p SplunkConfigurationProcessingConfigurationProcessorsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -2035,7 +2035,7 @@ func (p SplunkConfigurationProcessingConfigurationProcessorsParametersAttributes
 	return SplunkConfigurationProcessingConfigurationProcessorsParametersAttributes{ref: ref}
 }
 
-func (p SplunkConfigurationProcessingConfigurationProcessorsParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (p SplunkConfigurationProcessingConfigurationProcessorsParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -2059,7 +2059,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

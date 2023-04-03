@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewKeyVaultManagedHardwareSecurityModule creates a new instance of [KeyVaultManagedHardwareSecurityModule].
 func NewKeyVaultManagedHardwareSecurityModule(name string, args KeyVaultManagedHardwareSecurityModuleArgs) *KeyVaultManagedHardwareSecurityModule {
 	return &KeyVaultManagedHardwareSecurityModule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewKeyVaultManagedHardwareSecurityModule(name string, args KeyVaultManagedH
 
 var _ terra.Resource = (*KeyVaultManagedHardwareSecurityModule)(nil)
 
+// KeyVaultManagedHardwareSecurityModule represents the Terraform resource azurerm_key_vault_managed_hardware_security_module.
 type KeyVaultManagedHardwareSecurityModule struct {
-	Name  string
-	Args  KeyVaultManagedHardwareSecurityModuleArgs
-	state *keyVaultManagedHardwareSecurityModuleState
+	Name      string
+	Args      KeyVaultManagedHardwareSecurityModuleArgs
+	state     *keyVaultManagedHardwareSecurityModuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [KeyVaultManagedHardwareSecurityModule].
 func (kvmhsm *KeyVaultManagedHardwareSecurityModule) Type() string {
 	return "azurerm_key_vault_managed_hardware_security_module"
 }
 
+// LocalName returns the local name for [KeyVaultManagedHardwareSecurityModule].
 func (kvmhsm *KeyVaultManagedHardwareSecurityModule) LocalName() string {
 	return kvmhsm.Name
 }
 
+// Configuration returns the configuration (args) for [KeyVaultManagedHardwareSecurityModule].
 func (kvmhsm *KeyVaultManagedHardwareSecurityModule) Configuration() interface{} {
 	return kvmhsm.Args
 }
 
+// DependOn is used for other resources to depend on [KeyVaultManagedHardwareSecurityModule].
+func (kvmhsm *KeyVaultManagedHardwareSecurityModule) DependOn() terra.Reference {
+	return terra.ReferenceResource(kvmhsm)
+}
+
+// Dependencies returns the list of resources [KeyVaultManagedHardwareSecurityModule] depends_on.
+func (kvmhsm *KeyVaultManagedHardwareSecurityModule) Dependencies() terra.Dependencies {
+	return kvmhsm.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [KeyVaultManagedHardwareSecurityModule].
+func (kvmhsm *KeyVaultManagedHardwareSecurityModule) LifecycleManagement() *terra.Lifecycle {
+	return kvmhsm.Lifecycle
+}
+
+// Attributes returns the attributes for [KeyVaultManagedHardwareSecurityModule].
 func (kvmhsm *KeyVaultManagedHardwareSecurityModule) Attributes() keyVaultManagedHardwareSecurityModuleAttributes {
 	return keyVaultManagedHardwareSecurityModuleAttributes{ref: terra.ReferenceResource(kvmhsm)}
 }
 
+// ImportState imports the given attribute values into [KeyVaultManagedHardwareSecurityModule]'s state.
 func (kvmhsm *KeyVaultManagedHardwareSecurityModule) ImportState(av io.Reader) error {
 	kvmhsm.state = &keyVaultManagedHardwareSecurityModuleState{}
 	if err := json.NewDecoder(av).Decode(kvmhsm.state); err != nil {
@@ -49,10 +73,12 @@ func (kvmhsm *KeyVaultManagedHardwareSecurityModule) ImportState(av io.Reader) e
 	return nil
 }
 
+// State returns the state and a bool indicating if [KeyVaultManagedHardwareSecurityModule] has state.
 func (kvmhsm *KeyVaultManagedHardwareSecurityModule) State() (*keyVaultManagedHardwareSecurityModuleState, bool) {
 	return kvmhsm.state, kvmhsm.state != nil
 }
 
+// StateMust returns the state for [KeyVaultManagedHardwareSecurityModule]. Panics if the state is nil.
 func (kvmhsm *KeyVaultManagedHardwareSecurityModule) StateMust() *keyVaultManagedHardwareSecurityModuleState {
 	if kvmhsm.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", kvmhsm.Type(), kvmhsm.LocalName()))
@@ -60,10 +86,7 @@ func (kvmhsm *KeyVaultManagedHardwareSecurityModule) StateMust() *keyVaultManage
 	return kvmhsm.state
 }
 
-func (kvmhsm *KeyVaultManagedHardwareSecurityModule) DependOn() terra.Reference {
-	return terra.ReferenceResource(kvmhsm)
-}
-
+// KeyVaultManagedHardwareSecurityModuleArgs contains the configurations for azurerm_key_vault_managed_hardware_security_module.
 type KeyVaultManagedHardwareSecurityModuleArgs struct {
 	// AdminObjectIds: set of string, required
 	AdminObjectIds terra.SetValue[terra.StringValue] `hcl:"admin_object_ids,attr" validate:"required"`
@@ -91,67 +114,77 @@ type KeyVaultManagedHardwareSecurityModuleArgs struct {
 	NetworkAcls *keyvaultmanagedhardwaresecuritymodule.NetworkAcls `hcl:"network_acls,block"`
 	// Timeouts: optional
 	Timeouts *keyvaultmanagedhardwaresecuritymodule.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that KeyVaultManagedHardwareSecurityModule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type keyVaultManagedHardwareSecurityModuleAttributes struct {
 	ref terra.Reference
 }
 
+// AdminObjectIds returns a reference to field admin_object_ids of azurerm_key_vault_managed_hardware_security_module.
 func (kvmhsm keyVaultManagedHardwareSecurityModuleAttributes) AdminObjectIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](kvmhsm.ref.Append("admin_object_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](kvmhsm.ref.Append("admin_object_ids"))
 }
 
+// HsmUri returns a reference to field hsm_uri of azurerm_key_vault_managed_hardware_security_module.
 func (kvmhsm keyVaultManagedHardwareSecurityModuleAttributes) HsmUri() terra.StringValue {
-	return terra.ReferenceString(kvmhsm.ref.Append("hsm_uri"))
+	return terra.ReferenceAsString(kvmhsm.ref.Append("hsm_uri"))
 }
 
+// Id returns a reference to field id of azurerm_key_vault_managed_hardware_security_module.
 func (kvmhsm keyVaultManagedHardwareSecurityModuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kvmhsm.ref.Append("id"))
+	return terra.ReferenceAsString(kvmhsm.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_key_vault_managed_hardware_security_module.
 func (kvmhsm keyVaultManagedHardwareSecurityModuleAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(kvmhsm.ref.Append("location"))
+	return terra.ReferenceAsString(kvmhsm.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_key_vault_managed_hardware_security_module.
 func (kvmhsm keyVaultManagedHardwareSecurityModuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(kvmhsm.ref.Append("name"))
+	return terra.ReferenceAsString(kvmhsm.ref.Append("name"))
 }
 
+// PublicNetworkAccessEnabled returns a reference to field public_network_access_enabled of azurerm_key_vault_managed_hardware_security_module.
 func (kvmhsm keyVaultManagedHardwareSecurityModuleAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(kvmhsm.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(kvmhsm.ref.Append("public_network_access_enabled"))
 }
 
+// PurgeProtectionEnabled returns a reference to field purge_protection_enabled of azurerm_key_vault_managed_hardware_security_module.
 func (kvmhsm keyVaultManagedHardwareSecurityModuleAttributes) PurgeProtectionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(kvmhsm.ref.Append("purge_protection_enabled"))
+	return terra.ReferenceAsBool(kvmhsm.ref.Append("purge_protection_enabled"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_key_vault_managed_hardware_security_module.
 func (kvmhsm keyVaultManagedHardwareSecurityModuleAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(kvmhsm.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(kvmhsm.ref.Append("resource_group_name"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_key_vault_managed_hardware_security_module.
 func (kvmhsm keyVaultManagedHardwareSecurityModuleAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(kvmhsm.ref.Append("sku_name"))
+	return terra.ReferenceAsString(kvmhsm.ref.Append("sku_name"))
 }
 
+// SoftDeleteRetentionDays returns a reference to field soft_delete_retention_days of azurerm_key_vault_managed_hardware_security_module.
 func (kvmhsm keyVaultManagedHardwareSecurityModuleAttributes) SoftDeleteRetentionDays() terra.NumberValue {
-	return terra.ReferenceNumber(kvmhsm.ref.Append("soft_delete_retention_days"))
+	return terra.ReferenceAsNumber(kvmhsm.ref.Append("soft_delete_retention_days"))
 }
 
+// Tags returns a reference to field tags of azurerm_key_vault_managed_hardware_security_module.
 func (kvmhsm keyVaultManagedHardwareSecurityModuleAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](kvmhsm.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](kvmhsm.ref.Append("tags"))
 }
 
+// TenantId returns a reference to field tenant_id of azurerm_key_vault_managed_hardware_security_module.
 func (kvmhsm keyVaultManagedHardwareSecurityModuleAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(kvmhsm.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(kvmhsm.ref.Append("tenant_id"))
 }
 
 func (kvmhsm keyVaultManagedHardwareSecurityModuleAttributes) NetworkAcls() terra.ListValue[keyvaultmanagedhardwaresecuritymodule.NetworkAclsAttributes] {
-	return terra.ReferenceList[keyvaultmanagedhardwaresecuritymodule.NetworkAclsAttributes](kvmhsm.ref.Append("network_acls"))
+	return terra.ReferenceAsList[keyvaultmanagedhardwaresecuritymodule.NetworkAclsAttributes](kvmhsm.ref.Append("network_acls"))
 }
 
 func (kvmhsm keyVaultManagedHardwareSecurityModuleAttributes) Timeouts() keyvaultmanagedhardwaresecuritymodule.TimeoutsAttributes {
-	return terra.ReferenceSingle[keyvaultmanagedhardwaresecuritymodule.TimeoutsAttributes](kvmhsm.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[keyvaultmanagedhardwaresecuritymodule.TimeoutsAttributes](kvmhsm.ref.Append("timeouts"))
 }
 
 type keyVaultManagedHardwareSecurityModuleState struct {

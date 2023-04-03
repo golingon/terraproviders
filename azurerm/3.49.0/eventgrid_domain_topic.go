@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEventgridDomainTopic creates a new instance of [EventgridDomainTopic].
 func NewEventgridDomainTopic(name string, args EventgridDomainTopicArgs) *EventgridDomainTopic {
 	return &EventgridDomainTopic{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEventgridDomainTopic(name string, args EventgridDomainTopicArgs) *Eventg
 
 var _ terra.Resource = (*EventgridDomainTopic)(nil)
 
+// EventgridDomainTopic represents the Terraform resource azurerm_eventgrid_domain_topic.
 type EventgridDomainTopic struct {
-	Name  string
-	Args  EventgridDomainTopicArgs
-	state *eventgridDomainTopicState
+	Name      string
+	Args      EventgridDomainTopicArgs
+	state     *eventgridDomainTopicState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EventgridDomainTopic].
 func (edt *EventgridDomainTopic) Type() string {
 	return "azurerm_eventgrid_domain_topic"
 }
 
+// LocalName returns the local name for [EventgridDomainTopic].
 func (edt *EventgridDomainTopic) LocalName() string {
 	return edt.Name
 }
 
+// Configuration returns the configuration (args) for [EventgridDomainTopic].
 func (edt *EventgridDomainTopic) Configuration() interface{} {
 	return edt.Args
 }
 
+// DependOn is used for other resources to depend on [EventgridDomainTopic].
+func (edt *EventgridDomainTopic) DependOn() terra.Reference {
+	return terra.ReferenceResource(edt)
+}
+
+// Dependencies returns the list of resources [EventgridDomainTopic] depends_on.
+func (edt *EventgridDomainTopic) Dependencies() terra.Dependencies {
+	return edt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EventgridDomainTopic].
+func (edt *EventgridDomainTopic) LifecycleManagement() *terra.Lifecycle {
+	return edt.Lifecycle
+}
+
+// Attributes returns the attributes for [EventgridDomainTopic].
 func (edt *EventgridDomainTopic) Attributes() eventgridDomainTopicAttributes {
 	return eventgridDomainTopicAttributes{ref: terra.ReferenceResource(edt)}
 }
 
+// ImportState imports the given attribute values into [EventgridDomainTopic]'s state.
 func (edt *EventgridDomainTopic) ImportState(av io.Reader) error {
 	edt.state = &eventgridDomainTopicState{}
 	if err := json.NewDecoder(av).Decode(edt.state); err != nil {
@@ -49,10 +73,12 @@ func (edt *EventgridDomainTopic) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EventgridDomainTopic] has state.
 func (edt *EventgridDomainTopic) State() (*eventgridDomainTopicState, bool) {
 	return edt.state, edt.state != nil
 }
 
+// StateMust returns the state for [EventgridDomainTopic]. Panics if the state is nil.
 func (edt *EventgridDomainTopic) StateMust() *eventgridDomainTopicState {
 	if edt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", edt.Type(), edt.LocalName()))
@@ -60,10 +86,7 @@ func (edt *EventgridDomainTopic) StateMust() *eventgridDomainTopicState {
 	return edt.state
 }
 
-func (edt *EventgridDomainTopic) DependOn() terra.Reference {
-	return terra.ReferenceResource(edt)
-}
-
+// EventgridDomainTopicArgs contains the configurations for azurerm_eventgrid_domain_topic.
 type EventgridDomainTopicArgs struct {
 	// DomainName: string, required
 	DomainName terra.StringValue `hcl:"domain_name,attr" validate:"required"`
@@ -75,31 +98,33 @@ type EventgridDomainTopicArgs struct {
 	ResourceGroupName terra.StringValue `hcl:"resource_group_name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *eventgriddomaintopic.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that EventgridDomainTopic depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type eventgridDomainTopicAttributes struct {
 	ref terra.Reference
 }
 
+// DomainName returns a reference to field domain_name of azurerm_eventgrid_domain_topic.
 func (edt eventgridDomainTopicAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(edt.ref.Append("domain_name"))
+	return terra.ReferenceAsString(edt.ref.Append("domain_name"))
 }
 
+// Id returns a reference to field id of azurerm_eventgrid_domain_topic.
 func (edt eventgridDomainTopicAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(edt.ref.Append("id"))
+	return terra.ReferenceAsString(edt.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_eventgrid_domain_topic.
 func (edt eventgridDomainTopicAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(edt.ref.Append("name"))
+	return terra.ReferenceAsString(edt.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_eventgrid_domain_topic.
 func (edt eventgridDomainTopicAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(edt.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(edt.ref.Append("resource_group_name"))
 }
 
 func (edt eventgridDomainTopicAttributes) Timeouts() eventgriddomaintopic.TimeoutsAttributes {
-	return terra.ReferenceSingle[eventgriddomaintopic.TimeoutsAttributes](edt.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[eventgriddomaintopic.TimeoutsAttributes](edt.ref.Append("timeouts"))
 }
 
 type eventgridDomainTopicState struct {

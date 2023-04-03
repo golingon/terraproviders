@@ -26,176 +26,176 @@ type MultiSelectObservationAttributes struct {
 	ref terra.Reference
 }
 
-func (mso MultiSelectObservationAttributes) InternalRef() terra.Reference {
-	return mso.ref
+func (mso MultiSelectObservationAttributes) InternalRef() (terra.Reference, error) {
+	return mso.ref, nil
 }
 
 func (mso MultiSelectObservationAttributes) InternalWithRef(ref terra.Reference) MultiSelectObservationAttributes {
 	return MultiSelectObservationAttributes{ref: ref}
 }
 
-func (mso MultiSelectObservationAttributes) InternalTokens() hclwrite.Tokens {
+func (mso MultiSelectObservationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mso.ref.InternalTokens()
 }
 
 func (mso MultiSelectObservationAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(mso.ref.Append("description"))
+	return terra.ReferenceAsString(mso.ref.Append("description"))
 }
 
 func (mso MultiSelectObservationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mso.ref.Append("name"))
+	return terra.ReferenceAsString(mso.ref.Append("name"))
 }
 
 func (mso MultiSelectObservationAttributes) SupportedValues() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](mso.ref.Append("supported_values"))
+	return terra.ReferenceAsList[terra.StringValue](mso.ref.Append("supported_values"))
 }
 
 func (mso MultiSelectObservationAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](mso.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](mso.ref.Append("values"))
 }
 
 type PrioritizedExcludeObservationAttributes struct {
 	ref terra.Reference
 }
 
-func (peo PrioritizedExcludeObservationAttributes) InternalRef() terra.Reference {
-	return peo.ref
+func (peo PrioritizedExcludeObservationAttributes) InternalRef() (terra.Reference, error) {
+	return peo.ref, nil
 }
 
 func (peo PrioritizedExcludeObservationAttributes) InternalWithRef(ref terra.Reference) PrioritizedExcludeObservationAttributes {
 	return PrioritizedExcludeObservationAttributes{ref: ref}
 }
 
-func (peo PrioritizedExcludeObservationAttributes) InternalTokens() hclwrite.Tokens {
+func (peo PrioritizedExcludeObservationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return peo.ref.InternalTokens()
 }
 
 func (peo PrioritizedExcludeObservationAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(peo.ref.Append("description"))
+	return terra.ReferenceAsString(peo.ref.Append("description"))
 }
 
 func (peo PrioritizedExcludeObservationAttributes) Exclude() terra.StringValue {
-	return terra.ReferenceString(peo.ref.Append("exclude"))
+	return terra.ReferenceAsString(peo.ref.Append("exclude"))
 }
 
 func (peo PrioritizedExcludeObservationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(peo.ref.Append("name"))
+	return terra.ReferenceAsString(peo.ref.Append("name"))
 }
 
 func (peo PrioritizedExcludeObservationAttributes) Prioritize() terra.StringValue {
-	return terra.ReferenceString(peo.ref.Append("prioritize"))
+	return terra.ReferenceAsString(peo.ref.Append("prioritize"))
 }
 
 type RequiredDataConnectorAttributes struct {
 	ref terra.Reference
 }
 
-func (rdc RequiredDataConnectorAttributes) InternalRef() terra.Reference {
-	return rdc.ref
+func (rdc RequiredDataConnectorAttributes) InternalRef() (terra.Reference, error) {
+	return rdc.ref, nil
 }
 
 func (rdc RequiredDataConnectorAttributes) InternalWithRef(ref terra.Reference) RequiredDataConnectorAttributes {
 	return RequiredDataConnectorAttributes{ref: ref}
 }
 
-func (rdc RequiredDataConnectorAttributes) InternalTokens() hclwrite.Tokens {
+func (rdc RequiredDataConnectorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rdc.ref.InternalTokens()
 }
 
 func (rdc RequiredDataConnectorAttributes) ConnectorId() terra.StringValue {
-	return terra.ReferenceString(rdc.ref.Append("connector_id"))
+	return terra.ReferenceAsString(rdc.ref.Append("connector_id"))
 }
 
 func (rdc RequiredDataConnectorAttributes) DataTypes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rdc.ref.Append("data_types"))
+	return terra.ReferenceAsList[terra.StringValue](rdc.ref.Append("data_types"))
 }
 
 type SingleSelectObservationAttributes struct {
 	ref terra.Reference
 }
 
-func (sso SingleSelectObservationAttributes) InternalRef() terra.Reference {
-	return sso.ref
+func (sso SingleSelectObservationAttributes) InternalRef() (terra.Reference, error) {
+	return sso.ref, nil
 }
 
 func (sso SingleSelectObservationAttributes) InternalWithRef(ref terra.Reference) SingleSelectObservationAttributes {
 	return SingleSelectObservationAttributes{ref: ref}
 }
 
-func (sso SingleSelectObservationAttributes) InternalTokens() hclwrite.Tokens {
+func (sso SingleSelectObservationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sso.ref.InternalTokens()
 }
 
 func (sso SingleSelectObservationAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(sso.ref.Append("description"))
+	return terra.ReferenceAsString(sso.ref.Append("description"))
 }
 
 func (sso SingleSelectObservationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sso.ref.Append("name"))
+	return terra.ReferenceAsString(sso.ref.Append("name"))
 }
 
 func (sso SingleSelectObservationAttributes) SupportedValues() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sso.ref.Append("supported_values"))
+	return terra.ReferenceAsList[terra.StringValue](sso.ref.Append("supported_values"))
 }
 
 func (sso SingleSelectObservationAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(sso.ref.Append("value"))
+	return terra.ReferenceAsString(sso.ref.Append("value"))
 }
 
 type ThresholdObservationAttributes struct {
 	ref terra.Reference
 }
 
-func (to ThresholdObservationAttributes) InternalRef() terra.Reference {
-	return to.ref
+func (to ThresholdObservationAttributes) InternalRef() (terra.Reference, error) {
+	return to.ref, nil
 }
 
 func (to ThresholdObservationAttributes) InternalWithRef(ref terra.Reference) ThresholdObservationAttributes {
 	return ThresholdObservationAttributes{ref: ref}
 }
 
-func (to ThresholdObservationAttributes) InternalTokens() hclwrite.Tokens {
+func (to ThresholdObservationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return to.ref.InternalTokens()
 }
 
 func (to ThresholdObservationAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(to.ref.Append("description"))
+	return terra.ReferenceAsString(to.ref.Append("description"))
 }
 
 func (to ThresholdObservationAttributes) Max() terra.StringValue {
-	return terra.ReferenceString(to.ref.Append("max"))
+	return terra.ReferenceAsString(to.ref.Append("max"))
 }
 
 func (to ThresholdObservationAttributes) Min() terra.StringValue {
-	return terra.ReferenceString(to.ref.Append("min"))
+	return terra.ReferenceAsString(to.ref.Append("min"))
 }
 
 func (to ThresholdObservationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(to.ref.Append("name"))
+	return terra.ReferenceAsString(to.ref.Append("name"))
 }
 
 func (to ThresholdObservationAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(to.ref.Append("value"))
+	return terra.ReferenceAsString(to.ref.Append("value"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type MultiSelectObservationState struct {

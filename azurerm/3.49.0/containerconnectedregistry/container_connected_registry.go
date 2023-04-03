@@ -33,64 +33,64 @@ type NotificationAttributes struct {
 	ref terra.Reference
 }
 
-func (n NotificationAttributes) InternalRef() terra.Reference {
-	return n.ref
+func (n NotificationAttributes) InternalRef() (terra.Reference, error) {
+	return n.ref, nil
 }
 
 func (n NotificationAttributes) InternalWithRef(ref terra.Reference) NotificationAttributes {
 	return NotificationAttributes{ref: ref}
 }
 
-func (n NotificationAttributes) InternalTokens() hclwrite.Tokens {
+func (n NotificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return n.ref.InternalTokens()
 }
 
 func (n NotificationAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("action"))
+	return terra.ReferenceAsString(n.ref.Append("action"))
 }
 
 func (n NotificationAttributes) Digest() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("digest"))
+	return terra.ReferenceAsString(n.ref.Append("digest"))
 }
 
 func (n NotificationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("name"))
+	return terra.ReferenceAsString(n.ref.Append("name"))
 }
 
 func (n NotificationAttributes) Tag() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("tag"))
+	return terra.ReferenceAsString(n.ref.Append("tag"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type NotificationState struct {

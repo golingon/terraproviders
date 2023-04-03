@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBigqueryDataTransferConfig creates a new instance of [BigqueryDataTransferConfig].
 func NewBigqueryDataTransferConfig(name string, args BigqueryDataTransferConfigArgs) *BigqueryDataTransferConfig {
 	return &BigqueryDataTransferConfig{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBigqueryDataTransferConfig(name string, args BigqueryDataTransferConfigA
 
 var _ terra.Resource = (*BigqueryDataTransferConfig)(nil)
 
+// BigqueryDataTransferConfig represents the Terraform resource google_bigquery_data_transfer_config.
 type BigqueryDataTransferConfig struct {
-	Name  string
-	Args  BigqueryDataTransferConfigArgs
-	state *bigqueryDataTransferConfigState
+	Name      string
+	Args      BigqueryDataTransferConfigArgs
+	state     *bigqueryDataTransferConfigState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BigqueryDataTransferConfig].
 func (bdtc *BigqueryDataTransferConfig) Type() string {
 	return "google_bigquery_data_transfer_config"
 }
 
+// LocalName returns the local name for [BigqueryDataTransferConfig].
 func (bdtc *BigqueryDataTransferConfig) LocalName() string {
 	return bdtc.Name
 }
 
+// Configuration returns the configuration (args) for [BigqueryDataTransferConfig].
 func (bdtc *BigqueryDataTransferConfig) Configuration() interface{} {
 	return bdtc.Args
 }
 
+// DependOn is used for other resources to depend on [BigqueryDataTransferConfig].
+func (bdtc *BigqueryDataTransferConfig) DependOn() terra.Reference {
+	return terra.ReferenceResource(bdtc)
+}
+
+// Dependencies returns the list of resources [BigqueryDataTransferConfig] depends_on.
+func (bdtc *BigqueryDataTransferConfig) Dependencies() terra.Dependencies {
+	return bdtc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BigqueryDataTransferConfig].
+func (bdtc *BigqueryDataTransferConfig) LifecycleManagement() *terra.Lifecycle {
+	return bdtc.Lifecycle
+}
+
+// Attributes returns the attributes for [BigqueryDataTransferConfig].
 func (bdtc *BigqueryDataTransferConfig) Attributes() bigqueryDataTransferConfigAttributes {
 	return bigqueryDataTransferConfigAttributes{ref: terra.ReferenceResource(bdtc)}
 }
 
+// ImportState imports the given attribute values into [BigqueryDataTransferConfig]'s state.
 func (bdtc *BigqueryDataTransferConfig) ImportState(av io.Reader) error {
 	bdtc.state = &bigqueryDataTransferConfigState{}
 	if err := json.NewDecoder(av).Decode(bdtc.state); err != nil {
@@ -49,10 +73,12 @@ func (bdtc *BigqueryDataTransferConfig) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BigqueryDataTransferConfig] has state.
 func (bdtc *BigqueryDataTransferConfig) State() (*bigqueryDataTransferConfigState, bool) {
 	return bdtc.state, bdtc.state != nil
 }
 
+// StateMust returns the state for [BigqueryDataTransferConfig]. Panics if the state is nil.
 func (bdtc *BigqueryDataTransferConfig) StateMust() *bigqueryDataTransferConfigState {
 	if bdtc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bdtc.Type(), bdtc.LocalName()))
@@ -60,10 +86,7 @@ func (bdtc *BigqueryDataTransferConfig) StateMust() *bigqueryDataTransferConfigS
 	return bdtc.state
 }
 
-func (bdtc *BigqueryDataTransferConfig) DependOn() terra.Reference {
-	return terra.ReferenceResource(bdtc)
-}
-
+// BigqueryDataTransferConfigArgs contains the configurations for google_bigquery_data_transfer_config.
 type BigqueryDataTransferConfigArgs struct {
 	// DataRefreshWindowDays: number, optional
 	DataRefreshWindowDays terra.NumberValue `hcl:"data_refresh_window_days,attr"`
@@ -97,79 +120,90 @@ type BigqueryDataTransferConfigArgs struct {
 	SensitiveParams *bigquerydatatransferconfig.SensitiveParams `hcl:"sensitive_params,block"`
 	// Timeouts: optional
 	Timeouts *bigquerydatatransferconfig.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that BigqueryDataTransferConfig depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type bigqueryDataTransferConfigAttributes struct {
 	ref terra.Reference
 }
 
+// DataRefreshWindowDays returns a reference to field data_refresh_window_days of google_bigquery_data_transfer_config.
 func (bdtc bigqueryDataTransferConfigAttributes) DataRefreshWindowDays() terra.NumberValue {
-	return terra.ReferenceNumber(bdtc.ref.Append("data_refresh_window_days"))
+	return terra.ReferenceAsNumber(bdtc.ref.Append("data_refresh_window_days"))
 }
 
+// DataSourceId returns a reference to field data_source_id of google_bigquery_data_transfer_config.
 func (bdtc bigqueryDataTransferConfigAttributes) DataSourceId() terra.StringValue {
-	return terra.ReferenceString(bdtc.ref.Append("data_source_id"))
+	return terra.ReferenceAsString(bdtc.ref.Append("data_source_id"))
 }
 
+// DestinationDatasetId returns a reference to field destination_dataset_id of google_bigquery_data_transfer_config.
 func (bdtc bigqueryDataTransferConfigAttributes) DestinationDatasetId() terra.StringValue {
-	return terra.ReferenceString(bdtc.ref.Append("destination_dataset_id"))
+	return terra.ReferenceAsString(bdtc.ref.Append("destination_dataset_id"))
 }
 
+// Disabled returns a reference to field disabled of google_bigquery_data_transfer_config.
 func (bdtc bigqueryDataTransferConfigAttributes) Disabled() terra.BoolValue {
-	return terra.ReferenceBool(bdtc.ref.Append("disabled"))
+	return terra.ReferenceAsBool(bdtc.ref.Append("disabled"))
 }
 
+// DisplayName returns a reference to field display_name of google_bigquery_data_transfer_config.
 func (bdtc bigqueryDataTransferConfigAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(bdtc.ref.Append("display_name"))
+	return terra.ReferenceAsString(bdtc.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of google_bigquery_data_transfer_config.
 func (bdtc bigqueryDataTransferConfigAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bdtc.ref.Append("id"))
+	return terra.ReferenceAsString(bdtc.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_bigquery_data_transfer_config.
 func (bdtc bigqueryDataTransferConfigAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(bdtc.ref.Append("location"))
+	return terra.ReferenceAsString(bdtc.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_bigquery_data_transfer_config.
 func (bdtc bigqueryDataTransferConfigAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(bdtc.ref.Append("name"))
+	return terra.ReferenceAsString(bdtc.ref.Append("name"))
 }
 
+// NotificationPubsubTopic returns a reference to field notification_pubsub_topic of google_bigquery_data_transfer_config.
 func (bdtc bigqueryDataTransferConfigAttributes) NotificationPubsubTopic() terra.StringValue {
-	return terra.ReferenceString(bdtc.ref.Append("notification_pubsub_topic"))
+	return terra.ReferenceAsString(bdtc.ref.Append("notification_pubsub_topic"))
 }
 
+// Params returns a reference to field params of google_bigquery_data_transfer_config.
 func (bdtc bigqueryDataTransferConfigAttributes) Params() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bdtc.ref.Append("params"))
+	return terra.ReferenceAsMap[terra.StringValue](bdtc.ref.Append("params"))
 }
 
+// Project returns a reference to field project of google_bigquery_data_transfer_config.
 func (bdtc bigqueryDataTransferConfigAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(bdtc.ref.Append("project"))
+	return terra.ReferenceAsString(bdtc.ref.Append("project"))
 }
 
+// Schedule returns a reference to field schedule of google_bigquery_data_transfer_config.
 func (bdtc bigqueryDataTransferConfigAttributes) Schedule() terra.StringValue {
-	return terra.ReferenceString(bdtc.ref.Append("schedule"))
+	return terra.ReferenceAsString(bdtc.ref.Append("schedule"))
 }
 
+// ServiceAccountName returns a reference to field service_account_name of google_bigquery_data_transfer_config.
 func (bdtc bigqueryDataTransferConfigAttributes) ServiceAccountName() terra.StringValue {
-	return terra.ReferenceString(bdtc.ref.Append("service_account_name"))
+	return terra.ReferenceAsString(bdtc.ref.Append("service_account_name"))
 }
 
 func (bdtc bigqueryDataTransferConfigAttributes) EmailPreferences() terra.ListValue[bigquerydatatransferconfig.EmailPreferencesAttributes] {
-	return terra.ReferenceList[bigquerydatatransferconfig.EmailPreferencesAttributes](bdtc.ref.Append("email_preferences"))
+	return terra.ReferenceAsList[bigquerydatatransferconfig.EmailPreferencesAttributes](bdtc.ref.Append("email_preferences"))
 }
 
 func (bdtc bigqueryDataTransferConfigAttributes) ScheduleOptions() terra.ListValue[bigquerydatatransferconfig.ScheduleOptionsAttributes] {
-	return terra.ReferenceList[bigquerydatatransferconfig.ScheduleOptionsAttributes](bdtc.ref.Append("schedule_options"))
+	return terra.ReferenceAsList[bigquerydatatransferconfig.ScheduleOptionsAttributes](bdtc.ref.Append("schedule_options"))
 }
 
 func (bdtc bigqueryDataTransferConfigAttributes) SensitiveParams() terra.ListValue[bigquerydatatransferconfig.SensitiveParamsAttributes] {
-	return terra.ReferenceList[bigquerydatatransferconfig.SensitiveParamsAttributes](bdtc.ref.Append("sensitive_params"))
+	return terra.ReferenceAsList[bigquerydatatransferconfig.SensitiveParamsAttributes](bdtc.ref.Append("sensitive_params"))
 }
 
 func (bdtc bigqueryDataTransferConfigAttributes) Timeouts() bigquerydatatransferconfig.TimeoutsAttributes {
-	return terra.ReferenceSingle[bigquerydatatransferconfig.TimeoutsAttributes](bdtc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[bigquerydatatransferconfig.TimeoutsAttributes](bdtc.ref.Append("timeouts"))
 }
 
 type bigqueryDataTransferConfigState struct {

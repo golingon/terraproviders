@@ -66,160 +66,160 @@ type ReleaseCriteriaAttributes struct {
 	ref terra.Reference
 }
 
-func (rc ReleaseCriteriaAttributes) InternalRef() terra.Reference {
-	return rc.ref
+func (rc ReleaseCriteriaAttributes) InternalRef() (terra.Reference, error) {
+	return rc.ref, nil
 }
 
 func (rc ReleaseCriteriaAttributes) InternalWithRef(ref terra.Reference) ReleaseCriteriaAttributes {
 	return ReleaseCriteriaAttributes{ref: ref}
 }
 
-func (rc ReleaseCriteriaAttributes) InternalTokens() hclwrite.Tokens {
+func (rc ReleaseCriteriaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rc.ref.InternalTokens()
 }
 
 func (rc ReleaseCriteriaAttributes) BatchSize() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("batch_size"))
+	return terra.ReferenceAsNumber(rc.ref.Append("batch_size"))
 }
 
 func (rc ReleaseCriteriaAttributes) MessageCount() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("message_count"))
+	return terra.ReferenceAsNumber(rc.ref.Append("message_count"))
 }
 
 func (rc ReleaseCriteriaAttributes) Recurrence() terra.ListValue[RecurrenceAttributes] {
-	return terra.ReferenceList[RecurrenceAttributes](rc.ref.Append("recurrence"))
+	return terra.ReferenceAsList[RecurrenceAttributes](rc.ref.Append("recurrence"))
 }
 
 type RecurrenceAttributes struct {
 	ref terra.Reference
 }
 
-func (r RecurrenceAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RecurrenceAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RecurrenceAttributes) InternalWithRef(ref terra.Reference) RecurrenceAttributes {
 	return RecurrenceAttributes{ref: ref}
 }
 
-func (r RecurrenceAttributes) InternalTokens() hclwrite.Tokens {
+func (r RecurrenceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RecurrenceAttributes) EndTime() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("end_time"))
+	return terra.ReferenceAsString(r.ref.Append("end_time"))
 }
 
 func (r RecurrenceAttributes) Frequency() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("frequency"))
+	return terra.ReferenceAsString(r.ref.Append("frequency"))
 }
 
 func (r RecurrenceAttributes) Interval() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("interval"))
+	return terra.ReferenceAsNumber(r.ref.Append("interval"))
 }
 
 func (r RecurrenceAttributes) StartTime() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("start_time"))
+	return terra.ReferenceAsString(r.ref.Append("start_time"))
 }
 
 func (r RecurrenceAttributes) TimeZone() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("time_zone"))
+	return terra.ReferenceAsString(r.ref.Append("time_zone"))
 }
 
 func (r RecurrenceAttributes) Schedule() terra.ListValue[ScheduleAttributes] {
-	return terra.ReferenceList[ScheduleAttributes](r.ref.Append("schedule"))
+	return terra.ReferenceAsList[ScheduleAttributes](r.ref.Append("schedule"))
 }
 
 type ScheduleAttributes struct {
 	ref terra.Reference
 }
 
-func (s ScheduleAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ScheduleAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ScheduleAttributes) InternalWithRef(ref terra.Reference) ScheduleAttributes {
 	return ScheduleAttributes{ref: ref}
 }
 
-func (s ScheduleAttributes) InternalTokens() hclwrite.Tokens {
+func (s ScheduleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s ScheduleAttributes) Hours() terra.SetValue[terra.NumberValue] {
-	return terra.ReferenceSet[terra.NumberValue](s.ref.Append("hours"))
+	return terra.ReferenceAsSet[terra.NumberValue](s.ref.Append("hours"))
 }
 
 func (s ScheduleAttributes) Minutes() terra.SetValue[terra.NumberValue] {
-	return terra.ReferenceSet[terra.NumberValue](s.ref.Append("minutes"))
+	return terra.ReferenceAsSet[terra.NumberValue](s.ref.Append("minutes"))
 }
 
 func (s ScheduleAttributes) MonthDays() terra.SetValue[terra.NumberValue] {
-	return terra.ReferenceSet[terra.NumberValue](s.ref.Append("month_days"))
+	return terra.ReferenceAsSet[terra.NumberValue](s.ref.Append("month_days"))
 }
 
 func (s ScheduleAttributes) WeekDays() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("week_days"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("week_days"))
 }
 
 func (s ScheduleAttributes) Monthly() terra.SetValue[MonthlyAttributes] {
-	return terra.ReferenceSet[MonthlyAttributes](s.ref.Append("monthly"))
+	return terra.ReferenceAsSet[MonthlyAttributes](s.ref.Append("monthly"))
 }
 
 type MonthlyAttributes struct {
 	ref terra.Reference
 }
 
-func (m MonthlyAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MonthlyAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MonthlyAttributes) InternalWithRef(ref terra.Reference) MonthlyAttributes {
 	return MonthlyAttributes{ref: ref}
 }
 
-func (m MonthlyAttributes) InternalTokens() hclwrite.Tokens {
+func (m MonthlyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
 func (m MonthlyAttributes) Week() terra.NumberValue {
-	return terra.ReferenceNumber(m.ref.Append("week"))
+	return terra.ReferenceAsNumber(m.ref.Append("week"))
 }
 
 func (m MonthlyAttributes) Weekday() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("weekday"))
+	return terra.ReferenceAsString(m.ref.Append("weekday"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ReleaseCriteriaState struct {

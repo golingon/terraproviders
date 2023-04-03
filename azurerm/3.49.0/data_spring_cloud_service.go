@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataSpringCloudService creates a new instance of [DataSpringCloudService].
 func NewDataSpringCloudService(name string, args DataSpringCloudServiceArgs) *DataSpringCloudService {
 	return &DataSpringCloudService{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataSpringCloudService(name string, args DataSpringCloudServiceArgs) *Da
 
 var _ terra.DataResource = (*DataSpringCloudService)(nil)
 
+// DataSpringCloudService represents the Terraform data resource azurerm_spring_cloud_service.
 type DataSpringCloudService struct {
 	Name string
 	Args DataSpringCloudServiceArgs
 }
 
+// DataSource returns the Terraform object type for [DataSpringCloudService].
 func (scs *DataSpringCloudService) DataSource() string {
 	return "azurerm_spring_cloud_service"
 }
 
+// LocalName returns the local name for [DataSpringCloudService].
 func (scs *DataSpringCloudService) LocalName() string {
 	return scs.Name
 }
 
+// Configuration returns the configuration (args) for [DataSpringCloudService].
 func (scs *DataSpringCloudService) Configuration() interface{} {
 	return scs.Args
 }
 
+// Attributes returns the attributes for [DataSpringCloudService].
 func (scs *DataSpringCloudService) Attributes() dataSpringCloudServiceAttributes {
 	return dataSpringCloudServiceAttributes{ref: terra.ReferenceDataResource(scs)}
 }
 
+// DataSpringCloudServiceArgs contains the configurations for azurerm_spring_cloud_service.
 type DataSpringCloudServiceArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -55,38 +62,44 @@ type dataSpringCloudServiceAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_spring_cloud_service.
 func (scs dataSpringCloudServiceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(scs.ref.Append("id"))
+	return terra.ReferenceAsString(scs.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_spring_cloud_service.
 func (scs dataSpringCloudServiceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(scs.ref.Append("location"))
+	return terra.ReferenceAsString(scs.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_spring_cloud_service.
 func (scs dataSpringCloudServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(scs.ref.Append("name"))
+	return terra.ReferenceAsString(scs.ref.Append("name"))
 }
 
+// OutboundPublicIpAddresses returns a reference to field outbound_public_ip_addresses of azurerm_spring_cloud_service.
 func (scs dataSpringCloudServiceAttributes) OutboundPublicIpAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](scs.ref.Append("outbound_public_ip_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](scs.ref.Append("outbound_public_ip_addresses"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_spring_cloud_service.
 func (scs dataSpringCloudServiceAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(scs.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(scs.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_spring_cloud_service.
 func (scs dataSpringCloudServiceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](scs.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](scs.ref.Append("tags"))
 }
 
 func (scs dataSpringCloudServiceAttributes) ConfigServerGitSetting() terra.ListValue[dataspringcloudservice.ConfigServerGitSettingAttributes] {
-	return terra.ReferenceList[dataspringcloudservice.ConfigServerGitSettingAttributes](scs.ref.Append("config_server_git_setting"))
+	return terra.ReferenceAsList[dataspringcloudservice.ConfigServerGitSettingAttributes](scs.ref.Append("config_server_git_setting"))
 }
 
 func (scs dataSpringCloudServiceAttributes) RequiredNetworkTrafficRules() terra.ListValue[dataspringcloudservice.RequiredNetworkTrafficRulesAttributes] {
-	return terra.ReferenceList[dataspringcloudservice.RequiredNetworkTrafficRulesAttributes](scs.ref.Append("required_network_traffic_rules"))
+	return terra.ReferenceAsList[dataspringcloudservice.RequiredNetworkTrafficRulesAttributes](scs.ref.Append("required_network_traffic_rules"))
 }
 
 func (scs dataSpringCloudServiceAttributes) Timeouts() dataspringcloudservice.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataspringcloudservice.TimeoutsAttributes](scs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataspringcloudservice.TimeoutsAttributes](scs.ref.Append("timeouts"))
 }

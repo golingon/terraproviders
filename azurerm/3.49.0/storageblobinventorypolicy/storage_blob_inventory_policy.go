@@ -54,116 +54,116 @@ type RulesAttributes struct {
 	ref terra.Reference
 }
 
-func (r RulesAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RulesAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RulesAttributes) InternalWithRef(ref terra.Reference) RulesAttributes {
 	return RulesAttributes{ref: ref}
 }
 
-func (r RulesAttributes) InternalTokens() hclwrite.Tokens {
+func (r RulesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RulesAttributes) Format() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("format"))
+	return terra.ReferenceAsString(r.ref.Append("format"))
 }
 
 func (r RulesAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("name"))
+	return terra.ReferenceAsString(r.ref.Append("name"))
 }
 
 func (r RulesAttributes) Schedule() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("schedule"))
+	return terra.ReferenceAsString(r.ref.Append("schedule"))
 }
 
 func (r RulesAttributes) SchemaFields() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("schema_fields"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("schema_fields"))
 }
 
 func (r RulesAttributes) Scope() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("scope"))
+	return terra.ReferenceAsString(r.ref.Append("scope"))
 }
 
 func (r RulesAttributes) StorageContainerName() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("storage_container_name"))
+	return terra.ReferenceAsString(r.ref.Append("storage_container_name"))
 }
 
 func (r RulesAttributes) Filter() terra.ListValue[FilterAttributes] {
-	return terra.ReferenceList[FilterAttributes](r.ref.Append("filter"))
+	return terra.ReferenceAsList[FilterAttributes](r.ref.Append("filter"))
 }
 
 type FilterAttributes struct {
 	ref terra.Reference
 }
 
-func (f FilterAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FilterAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes {
 	return FilterAttributes{ref: ref}
 }
 
-func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
+func (f FilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
 func (f FilterAttributes) BlobTypes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](f.ref.Append("blob_types"))
+	return terra.ReferenceAsSet[terra.StringValue](f.ref.Append("blob_types"))
 }
 
 func (f FilterAttributes) ExcludePrefixes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](f.ref.Append("exclude_prefixes"))
+	return terra.ReferenceAsSet[terra.StringValue](f.ref.Append("exclude_prefixes"))
 }
 
 func (f FilterAttributes) IncludeBlobVersions() terra.BoolValue {
-	return terra.ReferenceBool(f.ref.Append("include_blob_versions"))
+	return terra.ReferenceAsBool(f.ref.Append("include_blob_versions"))
 }
 
 func (f FilterAttributes) IncludeDeleted() terra.BoolValue {
-	return terra.ReferenceBool(f.ref.Append("include_deleted"))
+	return terra.ReferenceAsBool(f.ref.Append("include_deleted"))
 }
 
 func (f FilterAttributes) IncludeSnapshots() terra.BoolValue {
-	return terra.ReferenceBool(f.ref.Append("include_snapshots"))
+	return terra.ReferenceAsBool(f.ref.Append("include_snapshots"))
 }
 
 func (f FilterAttributes) PrefixMatch() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](f.ref.Append("prefix_match"))
+	return terra.ReferenceAsSet[terra.StringValue](f.ref.Append("prefix_match"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type RulesState struct {

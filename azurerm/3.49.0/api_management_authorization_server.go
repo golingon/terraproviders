@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApiManagementAuthorizationServer creates a new instance of [ApiManagementAuthorizationServer].
 func NewApiManagementAuthorizationServer(name string, args ApiManagementAuthorizationServerArgs) *ApiManagementAuthorizationServer {
 	return &ApiManagementAuthorizationServer{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApiManagementAuthorizationServer(name string, args ApiManagementAuthoriz
 
 var _ terra.Resource = (*ApiManagementAuthorizationServer)(nil)
 
+// ApiManagementAuthorizationServer represents the Terraform resource azurerm_api_management_authorization_server.
 type ApiManagementAuthorizationServer struct {
-	Name  string
-	Args  ApiManagementAuthorizationServerArgs
-	state *apiManagementAuthorizationServerState
+	Name      string
+	Args      ApiManagementAuthorizationServerArgs
+	state     *apiManagementAuthorizationServerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiManagementAuthorizationServer].
 func (amas *ApiManagementAuthorizationServer) Type() string {
 	return "azurerm_api_management_authorization_server"
 }
 
+// LocalName returns the local name for [ApiManagementAuthorizationServer].
 func (amas *ApiManagementAuthorizationServer) LocalName() string {
 	return amas.Name
 }
 
+// Configuration returns the configuration (args) for [ApiManagementAuthorizationServer].
 func (amas *ApiManagementAuthorizationServer) Configuration() interface{} {
 	return amas.Args
 }
 
+// DependOn is used for other resources to depend on [ApiManagementAuthorizationServer].
+func (amas *ApiManagementAuthorizationServer) DependOn() terra.Reference {
+	return terra.ReferenceResource(amas)
+}
+
+// Dependencies returns the list of resources [ApiManagementAuthorizationServer] depends_on.
+func (amas *ApiManagementAuthorizationServer) Dependencies() terra.Dependencies {
+	return amas.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiManagementAuthorizationServer].
+func (amas *ApiManagementAuthorizationServer) LifecycleManagement() *terra.Lifecycle {
+	return amas.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiManagementAuthorizationServer].
 func (amas *ApiManagementAuthorizationServer) Attributes() apiManagementAuthorizationServerAttributes {
 	return apiManagementAuthorizationServerAttributes{ref: terra.ReferenceResource(amas)}
 }
 
+// ImportState imports the given attribute values into [ApiManagementAuthorizationServer]'s state.
 func (amas *ApiManagementAuthorizationServer) ImportState(av io.Reader) error {
 	amas.state = &apiManagementAuthorizationServerState{}
 	if err := json.NewDecoder(av).Decode(amas.state); err != nil {
@@ -49,10 +73,12 @@ func (amas *ApiManagementAuthorizationServer) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiManagementAuthorizationServer] has state.
 func (amas *ApiManagementAuthorizationServer) State() (*apiManagementAuthorizationServerState, bool) {
 	return amas.state, amas.state != nil
 }
 
+// StateMust returns the state for [ApiManagementAuthorizationServer]. Panics if the state is nil.
 func (amas *ApiManagementAuthorizationServer) StateMust() *apiManagementAuthorizationServerState {
 	if amas.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", amas.Type(), amas.LocalName()))
@@ -60,10 +86,7 @@ func (amas *ApiManagementAuthorizationServer) StateMust() *apiManagementAuthoriz
 	return amas.state
 }
 
-func (amas *ApiManagementAuthorizationServer) DependOn() terra.Reference {
-	return terra.ReferenceResource(amas)
-}
-
+// ApiManagementAuthorizationServerArgs contains the configurations for azurerm_api_management_authorization_server.
 type ApiManagementAuthorizationServerArgs struct {
 	// ApiManagementName: string, required
 	ApiManagementName terra.StringValue `hcl:"api_management_name,attr" validate:"required"`
@@ -107,95 +130,112 @@ type ApiManagementAuthorizationServerArgs struct {
 	Timeouts *apimanagementauthorizationserver.Timeouts `hcl:"timeouts,block"`
 	// TokenBodyParameter: min=0
 	TokenBodyParameter []apimanagementauthorizationserver.TokenBodyParameter `hcl:"token_body_parameter,block" validate:"min=0"`
-	// DependsOn contains resources that ApiManagementAuthorizationServer depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiManagementAuthorizationServerAttributes struct {
 	ref terra.Reference
 }
 
+// ApiManagementName returns a reference to field api_management_name of azurerm_api_management_authorization_server.
 func (amas apiManagementAuthorizationServerAttributes) ApiManagementName() terra.StringValue {
-	return terra.ReferenceString(amas.ref.Append("api_management_name"))
+	return terra.ReferenceAsString(amas.ref.Append("api_management_name"))
 }
 
+// AuthorizationEndpoint returns a reference to field authorization_endpoint of azurerm_api_management_authorization_server.
 func (amas apiManagementAuthorizationServerAttributes) AuthorizationEndpoint() terra.StringValue {
-	return terra.ReferenceString(amas.ref.Append("authorization_endpoint"))
+	return terra.ReferenceAsString(amas.ref.Append("authorization_endpoint"))
 }
 
+// AuthorizationMethods returns a reference to field authorization_methods of azurerm_api_management_authorization_server.
 func (amas apiManagementAuthorizationServerAttributes) AuthorizationMethods() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](amas.ref.Append("authorization_methods"))
+	return terra.ReferenceAsSet[terra.StringValue](amas.ref.Append("authorization_methods"))
 }
 
+// BearerTokenSendingMethods returns a reference to field bearer_token_sending_methods of azurerm_api_management_authorization_server.
 func (amas apiManagementAuthorizationServerAttributes) BearerTokenSendingMethods() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](amas.ref.Append("bearer_token_sending_methods"))
+	return terra.ReferenceAsSet[terra.StringValue](amas.ref.Append("bearer_token_sending_methods"))
 }
 
+// ClientAuthenticationMethod returns a reference to field client_authentication_method of azurerm_api_management_authorization_server.
 func (amas apiManagementAuthorizationServerAttributes) ClientAuthenticationMethod() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](amas.ref.Append("client_authentication_method"))
+	return terra.ReferenceAsSet[terra.StringValue](amas.ref.Append("client_authentication_method"))
 }
 
+// ClientId returns a reference to field client_id of azurerm_api_management_authorization_server.
 func (amas apiManagementAuthorizationServerAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(amas.ref.Append("client_id"))
+	return terra.ReferenceAsString(amas.ref.Append("client_id"))
 }
 
+// ClientRegistrationEndpoint returns a reference to field client_registration_endpoint of azurerm_api_management_authorization_server.
 func (amas apiManagementAuthorizationServerAttributes) ClientRegistrationEndpoint() terra.StringValue {
-	return terra.ReferenceString(amas.ref.Append("client_registration_endpoint"))
+	return terra.ReferenceAsString(amas.ref.Append("client_registration_endpoint"))
 }
 
+// ClientSecret returns a reference to field client_secret of azurerm_api_management_authorization_server.
 func (amas apiManagementAuthorizationServerAttributes) ClientSecret() terra.StringValue {
-	return terra.ReferenceString(amas.ref.Append("client_secret"))
+	return terra.ReferenceAsString(amas.ref.Append("client_secret"))
 }
 
+// DefaultScope returns a reference to field default_scope of azurerm_api_management_authorization_server.
 func (amas apiManagementAuthorizationServerAttributes) DefaultScope() terra.StringValue {
-	return terra.ReferenceString(amas.ref.Append("default_scope"))
+	return terra.ReferenceAsString(amas.ref.Append("default_scope"))
 }
 
+// Description returns a reference to field description of azurerm_api_management_authorization_server.
 func (amas apiManagementAuthorizationServerAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(amas.ref.Append("description"))
+	return terra.ReferenceAsString(amas.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_api_management_authorization_server.
 func (amas apiManagementAuthorizationServerAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(amas.ref.Append("display_name"))
+	return terra.ReferenceAsString(amas.ref.Append("display_name"))
 }
 
+// GrantTypes returns a reference to field grant_types of azurerm_api_management_authorization_server.
 func (amas apiManagementAuthorizationServerAttributes) GrantTypes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](amas.ref.Append("grant_types"))
+	return terra.ReferenceAsSet[terra.StringValue](amas.ref.Append("grant_types"))
 }
 
+// Id returns a reference to field id of azurerm_api_management_authorization_server.
 func (amas apiManagementAuthorizationServerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(amas.ref.Append("id"))
+	return terra.ReferenceAsString(amas.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_api_management_authorization_server.
 func (amas apiManagementAuthorizationServerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(amas.ref.Append("name"))
+	return terra.ReferenceAsString(amas.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_api_management_authorization_server.
 func (amas apiManagementAuthorizationServerAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(amas.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(amas.ref.Append("resource_group_name"))
 }
 
+// ResourceOwnerPassword returns a reference to field resource_owner_password of azurerm_api_management_authorization_server.
 func (amas apiManagementAuthorizationServerAttributes) ResourceOwnerPassword() terra.StringValue {
-	return terra.ReferenceString(amas.ref.Append("resource_owner_password"))
+	return terra.ReferenceAsString(amas.ref.Append("resource_owner_password"))
 }
 
+// ResourceOwnerUsername returns a reference to field resource_owner_username of azurerm_api_management_authorization_server.
 func (amas apiManagementAuthorizationServerAttributes) ResourceOwnerUsername() terra.StringValue {
-	return terra.ReferenceString(amas.ref.Append("resource_owner_username"))
+	return terra.ReferenceAsString(amas.ref.Append("resource_owner_username"))
 }
 
+// SupportState returns a reference to field support_state of azurerm_api_management_authorization_server.
 func (amas apiManagementAuthorizationServerAttributes) SupportState() terra.BoolValue {
-	return terra.ReferenceBool(amas.ref.Append("support_state"))
+	return terra.ReferenceAsBool(amas.ref.Append("support_state"))
 }
 
+// TokenEndpoint returns a reference to field token_endpoint of azurerm_api_management_authorization_server.
 func (amas apiManagementAuthorizationServerAttributes) TokenEndpoint() terra.StringValue {
-	return terra.ReferenceString(amas.ref.Append("token_endpoint"))
+	return terra.ReferenceAsString(amas.ref.Append("token_endpoint"))
 }
 
 func (amas apiManagementAuthorizationServerAttributes) Timeouts() apimanagementauthorizationserver.TimeoutsAttributes {
-	return terra.ReferenceSingle[apimanagementauthorizationserver.TimeoutsAttributes](amas.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[apimanagementauthorizationserver.TimeoutsAttributes](amas.ref.Append("timeouts"))
 }
 
 func (amas apiManagementAuthorizationServerAttributes) TokenBodyParameter() terra.ListValue[apimanagementauthorizationserver.TokenBodyParameterAttributes] {
-	return terra.ReferenceList[apimanagementauthorizationserver.TokenBodyParameterAttributes](amas.ref.Append("token_body_parameter"))
+	return terra.ReferenceAsList[apimanagementauthorizationserver.TokenBodyParameterAttributes](amas.ref.Append("token_body_parameter"))
 }
 
 type apiManagementAuthorizationServerState struct {

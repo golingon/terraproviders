@@ -74,7 +74,7 @@ func (cc CorsConfigAttributes) InternalWithRef(ref terra.Reference) CorsConfigAt
 	return CorsConfigAttributes{ref: ref}
 }
 
-func (cc CorsConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (cc CorsConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -118,7 +118,7 @@ func (acah AccessControlAllowHeadersAttributes) InternalWithRef(ref terra.Refere
 	return AccessControlAllowHeadersAttributes{ref: ref}
 }
 
-func (acah AccessControlAllowHeadersAttributes) InternalTokens() hclwrite.Tokens {
+func (acah AccessControlAllowHeadersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return acah.ref.InternalTokens()
 }
 
@@ -138,7 +138,7 @@ func (acam AccessControlAllowMethodsAttributes) InternalWithRef(ref terra.Refere
 	return AccessControlAllowMethodsAttributes{ref: ref}
 }
 
-func (acam AccessControlAllowMethodsAttributes) InternalTokens() hclwrite.Tokens {
+func (acam AccessControlAllowMethodsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return acam.ref.InternalTokens()
 }
 
@@ -158,7 +158,7 @@ func (acao AccessControlAllowOriginsAttributes) InternalWithRef(ref terra.Refere
 	return AccessControlAllowOriginsAttributes{ref: ref}
 }
 
-func (acao AccessControlAllowOriginsAttributes) InternalTokens() hclwrite.Tokens {
+func (acao AccessControlAllowOriginsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return acao.ref.InternalTokens()
 }
 
@@ -178,7 +178,7 @@ func (aceh AccessControlExposeHeadersAttributes) InternalWithRef(ref terra.Refer
 	return AccessControlExposeHeadersAttributes{ref: ref}
 }
 
-func (aceh AccessControlExposeHeadersAttributes) InternalTokens() hclwrite.Tokens {
+func (aceh AccessControlExposeHeadersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aceh.ref.InternalTokens()
 }
 
@@ -198,7 +198,7 @@ func (chc CustomHeadersConfigAttributes) InternalWithRef(ref terra.Reference) Cu
 	return CustomHeadersConfigAttributes{ref: ref}
 }
 
-func (chc CustomHeadersConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (chc CustomHeadersConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return chc.ref.InternalTokens()
 }
 
@@ -218,7 +218,7 @@ func (i ItemsAttributes) InternalWithRef(ref terra.Reference) ItemsAttributes {
 	return ItemsAttributes{ref: ref}
 }
 
-func (i ItemsAttributes) InternalTokens() hclwrite.Tokens {
+func (i ItemsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -246,7 +246,7 @@ func (shc SecurityHeadersConfigAttributes) InternalWithRef(ref terra.Reference) 
 	return SecurityHeadersConfigAttributes{ref: ref}
 }
 
-func (shc SecurityHeadersConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (shc SecurityHeadersConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return shc.ref.InternalTokens()
 }
 
@@ -286,7 +286,7 @@ func (csp ContentSecurityPolicyAttributes) InternalWithRef(ref terra.Reference) 
 	return ContentSecurityPolicyAttributes{ref: ref}
 }
 
-func (csp ContentSecurityPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (csp ContentSecurityPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return csp.ref.InternalTokens()
 }
 
@@ -310,7 +310,7 @@ func (cto ContentTypeOptionsAttributes) InternalWithRef(ref terra.Reference) Con
 	return ContentTypeOptionsAttributes{ref: ref}
 }
 
-func (cto ContentTypeOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (cto ContentTypeOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cto.ref.InternalTokens()
 }
 
@@ -330,7 +330,7 @@ func (fo FrameOptionsAttributes) InternalWithRef(ref terra.Reference) FrameOptio
 	return FrameOptionsAttributes{ref: ref}
 }
 
-func (fo FrameOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (fo FrameOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fo.ref.InternalTokens()
 }
 
@@ -354,7 +354,7 @@ func (rp ReferrerPolicyAttributes) InternalWithRef(ref terra.Reference) Referrer
 	return ReferrerPolicyAttributes{ref: ref}
 }
 
-func (rp ReferrerPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (rp ReferrerPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rp.ref.InternalTokens()
 }
 
@@ -378,7 +378,7 @@ func (sts StrictTransportSecurityAttributes) InternalWithRef(ref terra.Reference
 	return StrictTransportSecurityAttributes{ref: ref}
 }
 
-func (sts StrictTransportSecurityAttributes) InternalTokens() hclwrite.Tokens {
+func (sts StrictTransportSecurityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sts.ref.InternalTokens()
 }
 
@@ -410,7 +410,7 @@ func (xp XssProtectionAttributes) InternalWithRef(ref terra.Reference) XssProtec
 	return XssProtectionAttributes{ref: ref}
 }
 
-func (xp XssProtectionAttributes) InternalTokens() hclwrite.Tokens {
+func (xp XssProtectionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return xp.ref.InternalTokens()
 }
 
@@ -442,7 +442,7 @@ func (sthc ServerTimingHeadersConfigAttributes) InternalWithRef(ref terra.Refere
 	return ServerTimingHeadersConfigAttributes{ref: ref}
 }
 
-func (sthc ServerTimingHeadersConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sthc ServerTimingHeadersConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sthc.ref.InternalTokens()
 }
 

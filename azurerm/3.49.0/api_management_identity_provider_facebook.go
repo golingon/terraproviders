@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApiManagementIdentityProviderFacebook creates a new instance of [ApiManagementIdentityProviderFacebook].
 func NewApiManagementIdentityProviderFacebook(name string, args ApiManagementIdentityProviderFacebookArgs) *ApiManagementIdentityProviderFacebook {
 	return &ApiManagementIdentityProviderFacebook{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApiManagementIdentityProviderFacebook(name string, args ApiManagementIde
 
 var _ terra.Resource = (*ApiManagementIdentityProviderFacebook)(nil)
 
+// ApiManagementIdentityProviderFacebook represents the Terraform resource azurerm_api_management_identity_provider_facebook.
 type ApiManagementIdentityProviderFacebook struct {
-	Name  string
-	Args  ApiManagementIdentityProviderFacebookArgs
-	state *apiManagementIdentityProviderFacebookState
+	Name      string
+	Args      ApiManagementIdentityProviderFacebookArgs
+	state     *apiManagementIdentityProviderFacebookState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiManagementIdentityProviderFacebook].
 func (amipf *ApiManagementIdentityProviderFacebook) Type() string {
 	return "azurerm_api_management_identity_provider_facebook"
 }
 
+// LocalName returns the local name for [ApiManagementIdentityProviderFacebook].
 func (amipf *ApiManagementIdentityProviderFacebook) LocalName() string {
 	return amipf.Name
 }
 
+// Configuration returns the configuration (args) for [ApiManagementIdentityProviderFacebook].
 func (amipf *ApiManagementIdentityProviderFacebook) Configuration() interface{} {
 	return amipf.Args
 }
 
+// DependOn is used for other resources to depend on [ApiManagementIdentityProviderFacebook].
+func (amipf *ApiManagementIdentityProviderFacebook) DependOn() terra.Reference {
+	return terra.ReferenceResource(amipf)
+}
+
+// Dependencies returns the list of resources [ApiManagementIdentityProviderFacebook] depends_on.
+func (amipf *ApiManagementIdentityProviderFacebook) Dependencies() terra.Dependencies {
+	return amipf.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiManagementIdentityProviderFacebook].
+func (amipf *ApiManagementIdentityProviderFacebook) LifecycleManagement() *terra.Lifecycle {
+	return amipf.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiManagementIdentityProviderFacebook].
 func (amipf *ApiManagementIdentityProviderFacebook) Attributes() apiManagementIdentityProviderFacebookAttributes {
 	return apiManagementIdentityProviderFacebookAttributes{ref: terra.ReferenceResource(amipf)}
 }
 
+// ImportState imports the given attribute values into [ApiManagementIdentityProviderFacebook]'s state.
 func (amipf *ApiManagementIdentityProviderFacebook) ImportState(av io.Reader) error {
 	amipf.state = &apiManagementIdentityProviderFacebookState{}
 	if err := json.NewDecoder(av).Decode(amipf.state); err != nil {
@@ -49,10 +73,12 @@ func (amipf *ApiManagementIdentityProviderFacebook) ImportState(av io.Reader) er
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiManagementIdentityProviderFacebook] has state.
 func (amipf *ApiManagementIdentityProviderFacebook) State() (*apiManagementIdentityProviderFacebookState, bool) {
 	return amipf.state, amipf.state != nil
 }
 
+// StateMust returns the state for [ApiManagementIdentityProviderFacebook]. Panics if the state is nil.
 func (amipf *ApiManagementIdentityProviderFacebook) StateMust() *apiManagementIdentityProviderFacebookState {
 	if amipf.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", amipf.Type(), amipf.LocalName()))
@@ -60,10 +86,7 @@ func (amipf *ApiManagementIdentityProviderFacebook) StateMust() *apiManagementId
 	return amipf.state
 }
 
-func (amipf *ApiManagementIdentityProviderFacebook) DependOn() terra.Reference {
-	return terra.ReferenceResource(amipf)
-}
-
+// ApiManagementIdentityProviderFacebookArgs contains the configurations for azurerm_api_management_identity_provider_facebook.
 type ApiManagementIdentityProviderFacebookArgs struct {
 	// ApiManagementName: string, required
 	ApiManagementName terra.StringValue `hcl:"api_management_name,attr" validate:"required"`
@@ -77,35 +100,38 @@ type ApiManagementIdentityProviderFacebookArgs struct {
 	ResourceGroupName terra.StringValue `hcl:"resource_group_name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *apimanagementidentityproviderfacebook.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ApiManagementIdentityProviderFacebook depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiManagementIdentityProviderFacebookAttributes struct {
 	ref terra.Reference
 }
 
+// ApiManagementName returns a reference to field api_management_name of azurerm_api_management_identity_provider_facebook.
 func (amipf apiManagementIdentityProviderFacebookAttributes) ApiManagementName() terra.StringValue {
-	return terra.ReferenceString(amipf.ref.Append("api_management_name"))
+	return terra.ReferenceAsString(amipf.ref.Append("api_management_name"))
 }
 
+// AppId returns a reference to field app_id of azurerm_api_management_identity_provider_facebook.
 func (amipf apiManagementIdentityProviderFacebookAttributes) AppId() terra.StringValue {
-	return terra.ReferenceString(amipf.ref.Append("app_id"))
+	return terra.ReferenceAsString(amipf.ref.Append("app_id"))
 }
 
+// AppSecret returns a reference to field app_secret of azurerm_api_management_identity_provider_facebook.
 func (amipf apiManagementIdentityProviderFacebookAttributes) AppSecret() terra.StringValue {
-	return terra.ReferenceString(amipf.ref.Append("app_secret"))
+	return terra.ReferenceAsString(amipf.ref.Append("app_secret"))
 }
 
+// Id returns a reference to field id of azurerm_api_management_identity_provider_facebook.
 func (amipf apiManagementIdentityProviderFacebookAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(amipf.ref.Append("id"))
+	return terra.ReferenceAsString(amipf.ref.Append("id"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_api_management_identity_provider_facebook.
 func (amipf apiManagementIdentityProviderFacebookAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(amipf.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(amipf.ref.Append("resource_group_name"))
 }
 
 func (amipf apiManagementIdentityProviderFacebookAttributes) Timeouts() apimanagementidentityproviderfacebook.TimeoutsAttributes {
-	return terra.ReferenceSingle[apimanagementidentityproviderfacebook.TimeoutsAttributes](amipf.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[apimanagementidentityproviderfacebook.TimeoutsAttributes](amipf.ref.Append("timeouts"))
 }
 
 type apiManagementIdentityProviderFacebookState struct {

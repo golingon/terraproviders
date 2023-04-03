@@ -58,164 +58,164 @@ type CollectorIlbAttributes struct {
 	ref terra.Reference
 }
 
-func (ci CollectorIlbAttributes) InternalRef() terra.Reference {
-	return ci.ref
+func (ci CollectorIlbAttributes) InternalRef() (terra.Reference, error) {
+	return ci.ref, nil
 }
 
 func (ci CollectorIlbAttributes) InternalWithRef(ref terra.Reference) CollectorIlbAttributes {
 	return CollectorIlbAttributes{ref: ref}
 }
 
-func (ci CollectorIlbAttributes) InternalTokens() hclwrite.Tokens {
+func (ci CollectorIlbAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ci.ref.InternalTokens()
 }
 
 func (ci CollectorIlbAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("url"))
+	return terra.ReferenceAsString(ci.ref.Append("url"))
 }
 
 type FilterAttributes struct {
 	ref terra.Reference
 }
 
-func (f FilterAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FilterAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes {
 	return FilterAttributes{ref: ref}
 }
 
-func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
+func (f FilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
 func (f FilterAttributes) CidrRanges() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](f.ref.Append("cidr_ranges"))
+	return terra.ReferenceAsList[terra.StringValue](f.ref.Append("cidr_ranges"))
 }
 
 func (f FilterAttributes) Direction() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("direction"))
+	return terra.ReferenceAsString(f.ref.Append("direction"))
 }
 
 func (f FilterAttributes) IpProtocols() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](f.ref.Append("ip_protocols"))
+	return terra.ReferenceAsList[terra.StringValue](f.ref.Append("ip_protocols"))
 }
 
 type MirroredResourcesAttributes struct {
 	ref terra.Reference
 }
 
-func (mr MirroredResourcesAttributes) InternalRef() terra.Reference {
-	return mr.ref
+func (mr MirroredResourcesAttributes) InternalRef() (terra.Reference, error) {
+	return mr.ref, nil
 }
 
 func (mr MirroredResourcesAttributes) InternalWithRef(ref terra.Reference) MirroredResourcesAttributes {
 	return MirroredResourcesAttributes{ref: ref}
 }
 
-func (mr MirroredResourcesAttributes) InternalTokens() hclwrite.Tokens {
+func (mr MirroredResourcesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mr.ref.InternalTokens()
 }
 
 func (mr MirroredResourcesAttributes) Tags() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](mr.ref.Append("tags"))
+	return terra.ReferenceAsList[terra.StringValue](mr.ref.Append("tags"))
 }
 
 func (mr MirroredResourcesAttributes) Instances() terra.ListValue[InstancesAttributes] {
-	return terra.ReferenceList[InstancesAttributes](mr.ref.Append("instances"))
+	return terra.ReferenceAsList[InstancesAttributes](mr.ref.Append("instances"))
 }
 
 func (mr MirroredResourcesAttributes) Subnetworks() terra.ListValue[SubnetworksAttributes] {
-	return terra.ReferenceList[SubnetworksAttributes](mr.ref.Append("subnetworks"))
+	return terra.ReferenceAsList[SubnetworksAttributes](mr.ref.Append("subnetworks"))
 }
 
 type InstancesAttributes struct {
 	ref terra.Reference
 }
 
-func (i InstancesAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i InstancesAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i InstancesAttributes) InternalWithRef(ref terra.Reference) InstancesAttributes {
 	return InstancesAttributes{ref: ref}
 }
 
-func (i InstancesAttributes) InternalTokens() hclwrite.Tokens {
+func (i InstancesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i InstancesAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("url"))
+	return terra.ReferenceAsString(i.ref.Append("url"))
 }
 
 type SubnetworksAttributes struct {
 	ref terra.Reference
 }
 
-func (s SubnetworksAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SubnetworksAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SubnetworksAttributes) InternalWithRef(ref terra.Reference) SubnetworksAttributes {
 	return SubnetworksAttributes{ref: ref}
 }
 
-func (s SubnetworksAttributes) InternalTokens() hclwrite.Tokens {
+func (s SubnetworksAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SubnetworksAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("url"))
+	return terra.ReferenceAsString(s.ref.Append("url"))
 }
 
 type NetworkAttributes struct {
 	ref terra.Reference
 }
 
-func (n NetworkAttributes) InternalRef() terra.Reference {
-	return n.ref
+func (n NetworkAttributes) InternalRef() (terra.Reference, error) {
+	return n.ref, nil
 }
 
 func (n NetworkAttributes) InternalWithRef(ref terra.Reference) NetworkAttributes {
 	return NetworkAttributes{ref: ref}
 }
 
-func (n NetworkAttributes) InternalTokens() hclwrite.Tokens {
+func (n NetworkAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return n.ref.InternalTokens()
 }
 
 func (n NetworkAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("url"))
+	return terra.ReferenceAsString(n.ref.Append("url"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type CollectorIlbState struct {

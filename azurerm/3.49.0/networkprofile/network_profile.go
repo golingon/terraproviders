@@ -36,80 +36,80 @@ type ContainerNetworkInterfaceAttributes struct {
 	ref terra.Reference
 }
 
-func (cni ContainerNetworkInterfaceAttributes) InternalRef() terra.Reference {
-	return cni.ref
+func (cni ContainerNetworkInterfaceAttributes) InternalRef() (terra.Reference, error) {
+	return cni.ref, nil
 }
 
 func (cni ContainerNetworkInterfaceAttributes) InternalWithRef(ref terra.Reference) ContainerNetworkInterfaceAttributes {
 	return ContainerNetworkInterfaceAttributes{ref: ref}
 }
 
-func (cni ContainerNetworkInterfaceAttributes) InternalTokens() hclwrite.Tokens {
+func (cni ContainerNetworkInterfaceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cni.ref.InternalTokens()
 }
 
 func (cni ContainerNetworkInterfaceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cni.ref.Append("name"))
+	return terra.ReferenceAsString(cni.ref.Append("name"))
 }
 
 func (cni ContainerNetworkInterfaceAttributes) IpConfiguration() terra.ListValue[IpConfigurationAttributes] {
-	return terra.ReferenceList[IpConfigurationAttributes](cni.ref.Append("ip_configuration"))
+	return terra.ReferenceAsList[IpConfigurationAttributes](cni.ref.Append("ip_configuration"))
 }
 
 type IpConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ic IpConfigurationAttributes) InternalRef() terra.Reference {
-	return ic.ref
+func (ic IpConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ic.ref, nil
 }
 
 func (ic IpConfigurationAttributes) InternalWithRef(ref terra.Reference) IpConfigurationAttributes {
 	return IpConfigurationAttributes{ref: ref}
 }
 
-func (ic IpConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ic IpConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ic.ref.InternalTokens()
 }
 
 func (ic IpConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("name"))
+	return terra.ReferenceAsString(ic.ref.Append("name"))
 }
 
 func (ic IpConfigurationAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(ic.ref.Append("subnet_id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ContainerNetworkInterfaceState struct {

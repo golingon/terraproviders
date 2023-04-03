@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewStorageBucketAcl creates a new instance of [StorageBucketAcl].
 func NewStorageBucketAcl(name string, args StorageBucketAclArgs) *StorageBucketAcl {
 	return &StorageBucketAcl{
 		Args: args,
@@ -18,28 +19,51 @@ func NewStorageBucketAcl(name string, args StorageBucketAclArgs) *StorageBucketA
 
 var _ terra.Resource = (*StorageBucketAcl)(nil)
 
+// StorageBucketAcl represents the Terraform resource google_storage_bucket_acl.
 type StorageBucketAcl struct {
-	Name  string
-	Args  StorageBucketAclArgs
-	state *storageBucketAclState
+	Name      string
+	Args      StorageBucketAclArgs
+	state     *storageBucketAclState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [StorageBucketAcl].
 func (sba *StorageBucketAcl) Type() string {
 	return "google_storage_bucket_acl"
 }
 
+// LocalName returns the local name for [StorageBucketAcl].
 func (sba *StorageBucketAcl) LocalName() string {
 	return sba.Name
 }
 
+// Configuration returns the configuration (args) for [StorageBucketAcl].
 func (sba *StorageBucketAcl) Configuration() interface{} {
 	return sba.Args
 }
 
+// DependOn is used for other resources to depend on [StorageBucketAcl].
+func (sba *StorageBucketAcl) DependOn() terra.Reference {
+	return terra.ReferenceResource(sba)
+}
+
+// Dependencies returns the list of resources [StorageBucketAcl] depends_on.
+func (sba *StorageBucketAcl) Dependencies() terra.Dependencies {
+	return sba.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [StorageBucketAcl].
+func (sba *StorageBucketAcl) LifecycleManagement() *terra.Lifecycle {
+	return sba.Lifecycle
+}
+
+// Attributes returns the attributes for [StorageBucketAcl].
 func (sba *StorageBucketAcl) Attributes() storageBucketAclAttributes {
 	return storageBucketAclAttributes{ref: terra.ReferenceResource(sba)}
 }
 
+// ImportState imports the given attribute values into [StorageBucketAcl]'s state.
 func (sba *StorageBucketAcl) ImportState(av io.Reader) error {
 	sba.state = &storageBucketAclState{}
 	if err := json.NewDecoder(av).Decode(sba.state); err != nil {
@@ -48,10 +72,12 @@ func (sba *StorageBucketAcl) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [StorageBucketAcl] has state.
 func (sba *StorageBucketAcl) State() (*storageBucketAclState, bool) {
 	return sba.state, sba.state != nil
 }
 
+// StateMust returns the state for [StorageBucketAcl]. Panics if the state is nil.
 func (sba *StorageBucketAcl) StateMust() *storageBucketAclState {
 	if sba.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sba.Type(), sba.LocalName()))
@@ -59,10 +85,7 @@ func (sba *StorageBucketAcl) StateMust() *storageBucketAclState {
 	return sba.state
 }
 
-func (sba *StorageBucketAcl) DependOn() terra.Reference {
-	return terra.ReferenceResource(sba)
-}
-
+// StorageBucketAclArgs contains the configurations for google_storage_bucket_acl.
 type StorageBucketAclArgs struct {
 	// Bucket: string, required
 	Bucket terra.StringValue `hcl:"bucket,attr" validate:"required"`
@@ -74,31 +97,34 @@ type StorageBucketAclArgs struct {
 	PredefinedAcl terra.StringValue `hcl:"predefined_acl,attr"`
 	// RoleEntity: list of string, optional
 	RoleEntity terra.ListValue[terra.StringValue] `hcl:"role_entity,attr"`
-	// DependsOn contains resources that StorageBucketAcl depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type storageBucketAclAttributes struct {
 	ref terra.Reference
 }
 
+// Bucket returns a reference to field bucket of google_storage_bucket_acl.
 func (sba storageBucketAclAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(sba.ref.Append("bucket"))
+	return terra.ReferenceAsString(sba.ref.Append("bucket"))
 }
 
+// DefaultAcl returns a reference to field default_acl of google_storage_bucket_acl.
 func (sba storageBucketAclAttributes) DefaultAcl() terra.StringValue {
-	return terra.ReferenceString(sba.ref.Append("default_acl"))
+	return terra.ReferenceAsString(sba.ref.Append("default_acl"))
 }
 
+// Id returns a reference to field id of google_storage_bucket_acl.
 func (sba storageBucketAclAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sba.ref.Append("id"))
+	return terra.ReferenceAsString(sba.ref.Append("id"))
 }
 
+// PredefinedAcl returns a reference to field predefined_acl of google_storage_bucket_acl.
 func (sba storageBucketAclAttributes) PredefinedAcl() terra.StringValue {
-	return terra.ReferenceString(sba.ref.Append("predefined_acl"))
+	return terra.ReferenceAsString(sba.ref.Append("predefined_acl"))
 }
 
+// RoleEntity returns a reference to field role_entity of google_storage_bucket_acl.
 func (sba storageBucketAclAttributes) RoleEntity() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sba.ref.Append("role_entity"))
+	return terra.ReferenceAsList[terra.StringValue](sba.ref.Append("role_entity"))
 }
 
 type storageBucketAclState struct {

@@ -36,80 +36,80 @@ type ManagementNetworkProfileAttributes struct {
 	ref terra.Reference
 }
 
-func (mnp ManagementNetworkProfileAttributes) InternalRef() terra.Reference {
-	return mnp.ref
+func (mnp ManagementNetworkProfileAttributes) InternalRef() (terra.Reference, error) {
+	return mnp.ref, nil
 }
 
 func (mnp ManagementNetworkProfileAttributes) InternalWithRef(ref terra.Reference) ManagementNetworkProfileAttributes {
 	return ManagementNetworkProfileAttributes{ref: ref}
 }
 
-func (mnp ManagementNetworkProfileAttributes) InternalTokens() hclwrite.Tokens {
+func (mnp ManagementNetworkProfileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mnp.ref.InternalTokens()
 }
 
 func (mnp ManagementNetworkProfileAttributes) NetworkInterfacePrivateIpAddresses() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](mnp.ref.Append("network_interface_private_ip_addresses"))
+	return terra.ReferenceAsSet[terra.StringValue](mnp.ref.Append("network_interface_private_ip_addresses"))
 }
 
 func (mnp ManagementNetworkProfileAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(mnp.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(mnp.ref.Append("subnet_id"))
 }
 
 type NetworkProfileAttributes struct {
 	ref terra.Reference
 }
 
-func (np NetworkProfileAttributes) InternalRef() terra.Reference {
-	return np.ref
+func (np NetworkProfileAttributes) InternalRef() (terra.Reference, error) {
+	return np.ref, nil
 }
 
 func (np NetworkProfileAttributes) InternalWithRef(ref terra.Reference) NetworkProfileAttributes {
 	return NetworkProfileAttributes{ref: ref}
 }
 
-func (np NetworkProfileAttributes) InternalTokens() hclwrite.Tokens {
+func (np NetworkProfileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return np.ref.InternalTokens()
 }
 
 func (np NetworkProfileAttributes) NetworkInterfacePrivateIpAddresses() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](np.ref.Append("network_interface_private_ip_addresses"))
+	return terra.ReferenceAsSet[terra.StringValue](np.ref.Append("network_interface_private_ip_addresses"))
 }
 
 func (np NetworkProfileAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(np.ref.Append("subnet_id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ManagementNetworkProfileState struct {

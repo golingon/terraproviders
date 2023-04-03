@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFactoryIntegrationRuntimeAzure creates a new instance of [DataFactoryIntegrationRuntimeAzure].
 func NewDataFactoryIntegrationRuntimeAzure(name string, args DataFactoryIntegrationRuntimeAzureArgs) *DataFactoryIntegrationRuntimeAzure {
 	return &DataFactoryIntegrationRuntimeAzure{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFactoryIntegrationRuntimeAzure(name string, args DataFactoryIntegrat
 
 var _ terra.Resource = (*DataFactoryIntegrationRuntimeAzure)(nil)
 
+// DataFactoryIntegrationRuntimeAzure represents the Terraform resource azurerm_data_factory_integration_runtime_azure.
 type DataFactoryIntegrationRuntimeAzure struct {
-	Name  string
-	Args  DataFactoryIntegrationRuntimeAzureArgs
-	state *dataFactoryIntegrationRuntimeAzureState
+	Name      string
+	Args      DataFactoryIntegrationRuntimeAzureArgs
+	state     *dataFactoryIntegrationRuntimeAzureState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFactoryIntegrationRuntimeAzure].
 func (dfira *DataFactoryIntegrationRuntimeAzure) Type() string {
 	return "azurerm_data_factory_integration_runtime_azure"
 }
 
+// LocalName returns the local name for [DataFactoryIntegrationRuntimeAzure].
 func (dfira *DataFactoryIntegrationRuntimeAzure) LocalName() string {
 	return dfira.Name
 }
 
+// Configuration returns the configuration (args) for [DataFactoryIntegrationRuntimeAzure].
 func (dfira *DataFactoryIntegrationRuntimeAzure) Configuration() interface{} {
 	return dfira.Args
 }
 
+// DependOn is used for other resources to depend on [DataFactoryIntegrationRuntimeAzure].
+func (dfira *DataFactoryIntegrationRuntimeAzure) DependOn() terra.Reference {
+	return terra.ReferenceResource(dfira)
+}
+
+// Dependencies returns the list of resources [DataFactoryIntegrationRuntimeAzure] depends_on.
+func (dfira *DataFactoryIntegrationRuntimeAzure) Dependencies() terra.Dependencies {
+	return dfira.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFactoryIntegrationRuntimeAzure].
+func (dfira *DataFactoryIntegrationRuntimeAzure) LifecycleManagement() *terra.Lifecycle {
+	return dfira.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFactoryIntegrationRuntimeAzure].
 func (dfira *DataFactoryIntegrationRuntimeAzure) Attributes() dataFactoryIntegrationRuntimeAzureAttributes {
 	return dataFactoryIntegrationRuntimeAzureAttributes{ref: terra.ReferenceResource(dfira)}
 }
 
+// ImportState imports the given attribute values into [DataFactoryIntegrationRuntimeAzure]'s state.
 func (dfira *DataFactoryIntegrationRuntimeAzure) ImportState(av io.Reader) error {
 	dfira.state = &dataFactoryIntegrationRuntimeAzureState{}
 	if err := json.NewDecoder(av).Decode(dfira.state); err != nil {
@@ -49,10 +73,12 @@ func (dfira *DataFactoryIntegrationRuntimeAzure) ImportState(av io.Reader) error
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFactoryIntegrationRuntimeAzure] has state.
 func (dfira *DataFactoryIntegrationRuntimeAzure) State() (*dataFactoryIntegrationRuntimeAzureState, bool) {
 	return dfira.state, dfira.state != nil
 }
 
+// StateMust returns the state for [DataFactoryIntegrationRuntimeAzure]. Panics if the state is nil.
 func (dfira *DataFactoryIntegrationRuntimeAzure) StateMust() *dataFactoryIntegrationRuntimeAzureState {
 	if dfira.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dfira.Type(), dfira.LocalName()))
@@ -60,10 +86,7 @@ func (dfira *DataFactoryIntegrationRuntimeAzure) StateMust() *dataFactoryIntegra
 	return dfira.state
 }
 
-func (dfira *DataFactoryIntegrationRuntimeAzure) DependOn() terra.Reference {
-	return terra.ReferenceResource(dfira)
-}
-
+// DataFactoryIntegrationRuntimeAzureArgs contains the configurations for azurerm_data_factory_integration_runtime_azure.
 type DataFactoryIntegrationRuntimeAzureArgs struct {
 	// CleanupEnabled: bool, optional
 	CleanupEnabled terra.BoolValue `hcl:"cleanup_enabled,attr"`
@@ -87,55 +110,63 @@ type DataFactoryIntegrationRuntimeAzureArgs struct {
 	VirtualNetworkEnabled terra.BoolValue `hcl:"virtual_network_enabled,attr"`
 	// Timeouts: optional
 	Timeouts *datafactoryintegrationruntimeazure.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataFactoryIntegrationRuntimeAzure depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFactoryIntegrationRuntimeAzureAttributes struct {
 	ref terra.Reference
 }
 
+// CleanupEnabled returns a reference to field cleanup_enabled of azurerm_data_factory_integration_runtime_azure.
 func (dfira dataFactoryIntegrationRuntimeAzureAttributes) CleanupEnabled() terra.BoolValue {
-	return terra.ReferenceBool(dfira.ref.Append("cleanup_enabled"))
+	return terra.ReferenceAsBool(dfira.ref.Append("cleanup_enabled"))
 }
 
+// ComputeType returns a reference to field compute_type of azurerm_data_factory_integration_runtime_azure.
 func (dfira dataFactoryIntegrationRuntimeAzureAttributes) ComputeType() terra.StringValue {
-	return terra.ReferenceString(dfira.ref.Append("compute_type"))
+	return terra.ReferenceAsString(dfira.ref.Append("compute_type"))
 }
 
+// CoreCount returns a reference to field core_count of azurerm_data_factory_integration_runtime_azure.
 func (dfira dataFactoryIntegrationRuntimeAzureAttributes) CoreCount() terra.NumberValue {
-	return terra.ReferenceNumber(dfira.ref.Append("core_count"))
+	return terra.ReferenceAsNumber(dfira.ref.Append("core_count"))
 }
 
+// DataFactoryId returns a reference to field data_factory_id of azurerm_data_factory_integration_runtime_azure.
 func (dfira dataFactoryIntegrationRuntimeAzureAttributes) DataFactoryId() terra.StringValue {
-	return terra.ReferenceString(dfira.ref.Append("data_factory_id"))
+	return terra.ReferenceAsString(dfira.ref.Append("data_factory_id"))
 }
 
+// Description returns a reference to field description of azurerm_data_factory_integration_runtime_azure.
 func (dfira dataFactoryIntegrationRuntimeAzureAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dfira.ref.Append("description"))
+	return terra.ReferenceAsString(dfira.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_data_factory_integration_runtime_azure.
 func (dfira dataFactoryIntegrationRuntimeAzureAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dfira.ref.Append("id"))
+	return terra.ReferenceAsString(dfira.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_data_factory_integration_runtime_azure.
 func (dfira dataFactoryIntegrationRuntimeAzureAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(dfira.ref.Append("location"))
+	return terra.ReferenceAsString(dfira.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory_integration_runtime_azure.
 func (dfira dataFactoryIntegrationRuntimeAzureAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dfira.ref.Append("name"))
+	return terra.ReferenceAsString(dfira.ref.Append("name"))
 }
 
+// TimeToLiveMin returns a reference to field time_to_live_min of azurerm_data_factory_integration_runtime_azure.
 func (dfira dataFactoryIntegrationRuntimeAzureAttributes) TimeToLiveMin() terra.NumberValue {
-	return terra.ReferenceNumber(dfira.ref.Append("time_to_live_min"))
+	return terra.ReferenceAsNumber(dfira.ref.Append("time_to_live_min"))
 }
 
+// VirtualNetworkEnabled returns a reference to field virtual_network_enabled of azurerm_data_factory_integration_runtime_azure.
 func (dfira dataFactoryIntegrationRuntimeAzureAttributes) VirtualNetworkEnabled() terra.BoolValue {
-	return terra.ReferenceBool(dfira.ref.Append("virtual_network_enabled"))
+	return terra.ReferenceAsBool(dfira.ref.Append("virtual_network_enabled"))
 }
 
 func (dfira dataFactoryIntegrationRuntimeAzureAttributes) Timeouts() datafactoryintegrationruntimeazure.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafactoryintegrationruntimeazure.TimeoutsAttributes](dfira.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafactoryintegrationruntimeazure.TimeoutsAttributes](dfira.ref.Append("timeouts"))
 }
 
 type dataFactoryIntegrationRuntimeAzureState struct {

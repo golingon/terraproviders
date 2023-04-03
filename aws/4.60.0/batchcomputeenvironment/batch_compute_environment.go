@@ -77,7 +77,7 @@ func (cr ComputeResourcesAttributes) InternalWithRef(ref terra.Reference) Comput
 	return ComputeResourcesAttributes{ref: ref}
 }
 
-func (cr ComputeResourcesAttributes) InternalTokens() hclwrite.Tokens {
+func (cr ComputeResourcesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cr.ref.InternalTokens()
 }
 
@@ -157,7 +157,7 @@ func (ec Ec2ConfigurationAttributes) InternalWithRef(ref terra.Reference) Ec2Con
 	return Ec2ConfigurationAttributes{ref: ref}
 }
 
-func (ec Ec2ConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ec Ec2ConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 
@@ -181,7 +181,7 @@ func (lt LaunchTemplateAttributes) InternalWithRef(ref terra.Reference) LaunchTe
 	return LaunchTemplateAttributes{ref: ref}
 }
 
-func (lt LaunchTemplateAttributes) InternalTokens() hclwrite.Tokens {
+func (lt LaunchTemplateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lt.ref.InternalTokens()
 }
 
@@ -209,7 +209,7 @@ func (ec EksConfigurationAttributes) InternalWithRef(ref terra.Reference) EksCon
 	return EksConfigurationAttributes{ref: ref}
 }
 
-func (ec EksConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ec EksConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLbProbe creates a new instance of [LbProbe].
 func NewLbProbe(name string, args LbProbeArgs) *LbProbe {
 	return &LbProbe{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLbProbe(name string, args LbProbeArgs) *LbProbe {
 
 var _ terra.Resource = (*LbProbe)(nil)
 
+// LbProbe represents the Terraform resource azurerm_lb_probe.
 type LbProbe struct {
-	Name  string
-	Args  LbProbeArgs
-	state *lbProbeState
+	Name      string
+	Args      LbProbeArgs
+	state     *lbProbeState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LbProbe].
 func (lp *LbProbe) Type() string {
 	return "azurerm_lb_probe"
 }
 
+// LocalName returns the local name for [LbProbe].
 func (lp *LbProbe) LocalName() string {
 	return lp.Name
 }
 
+// Configuration returns the configuration (args) for [LbProbe].
 func (lp *LbProbe) Configuration() interface{} {
 	return lp.Args
 }
 
+// DependOn is used for other resources to depend on [LbProbe].
+func (lp *LbProbe) DependOn() terra.Reference {
+	return terra.ReferenceResource(lp)
+}
+
+// Dependencies returns the list of resources [LbProbe] depends_on.
+func (lp *LbProbe) Dependencies() terra.Dependencies {
+	return lp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LbProbe].
+func (lp *LbProbe) LifecycleManagement() *terra.Lifecycle {
+	return lp.Lifecycle
+}
+
+// Attributes returns the attributes for [LbProbe].
 func (lp *LbProbe) Attributes() lbProbeAttributes {
 	return lbProbeAttributes{ref: terra.ReferenceResource(lp)}
 }
 
+// ImportState imports the given attribute values into [LbProbe]'s state.
 func (lp *LbProbe) ImportState(av io.Reader) error {
 	lp.state = &lbProbeState{}
 	if err := json.NewDecoder(av).Decode(lp.state); err != nil {
@@ -49,10 +73,12 @@ func (lp *LbProbe) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LbProbe] has state.
 func (lp *LbProbe) State() (*lbProbeState, bool) {
 	return lp.state, lp.state != nil
 }
 
+// StateMust returns the state for [LbProbe]. Panics if the state is nil.
 func (lp *LbProbe) StateMust() *lbProbeState {
 	if lp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lp.Type(), lp.LocalName()))
@@ -60,10 +86,7 @@ func (lp *LbProbe) StateMust() *lbProbeState {
 	return lp.state
 }
 
-func (lp *LbProbe) DependOn() terra.Reference {
-	return terra.ReferenceResource(lp)
-}
-
+// LbProbeArgs contains the configurations for azurerm_lb_probe.
 type LbProbeArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -85,55 +108,63 @@ type LbProbeArgs struct {
 	RequestPath terra.StringValue `hcl:"request_path,attr"`
 	// Timeouts: optional
 	Timeouts *lbprobe.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LbProbe depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lbProbeAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_lb_probe.
 func (lp lbProbeAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("id"))
+	return terra.ReferenceAsString(lp.ref.Append("id"))
 }
 
+// IntervalInSeconds returns a reference to field interval_in_seconds of azurerm_lb_probe.
 func (lp lbProbeAttributes) IntervalInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(lp.ref.Append("interval_in_seconds"))
+	return terra.ReferenceAsNumber(lp.ref.Append("interval_in_seconds"))
 }
 
+// LoadBalancerRules returns a reference to field load_balancer_rules of azurerm_lb_probe.
 func (lp lbProbeAttributes) LoadBalancerRules() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](lp.ref.Append("load_balancer_rules"))
+	return terra.ReferenceAsSet[terra.StringValue](lp.ref.Append("load_balancer_rules"))
 }
 
+// LoadbalancerId returns a reference to field loadbalancer_id of azurerm_lb_probe.
 func (lp lbProbeAttributes) LoadbalancerId() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("loadbalancer_id"))
+	return terra.ReferenceAsString(lp.ref.Append("loadbalancer_id"))
 }
 
+// Name returns a reference to field name of azurerm_lb_probe.
 func (lp lbProbeAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("name"))
+	return terra.ReferenceAsString(lp.ref.Append("name"))
 }
 
+// NumberOfProbes returns a reference to field number_of_probes of azurerm_lb_probe.
 func (lp lbProbeAttributes) NumberOfProbes() terra.NumberValue {
-	return terra.ReferenceNumber(lp.ref.Append("number_of_probes"))
+	return terra.ReferenceAsNumber(lp.ref.Append("number_of_probes"))
 }
 
+// Port returns a reference to field port of azurerm_lb_probe.
 func (lp lbProbeAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(lp.ref.Append("port"))
+	return terra.ReferenceAsNumber(lp.ref.Append("port"))
 }
 
+// ProbeThreshold returns a reference to field probe_threshold of azurerm_lb_probe.
 func (lp lbProbeAttributes) ProbeThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(lp.ref.Append("probe_threshold"))
+	return terra.ReferenceAsNumber(lp.ref.Append("probe_threshold"))
 }
 
+// Protocol returns a reference to field protocol of azurerm_lb_probe.
 func (lp lbProbeAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("protocol"))
+	return terra.ReferenceAsString(lp.ref.Append("protocol"))
 }
 
+// RequestPath returns a reference to field request_path of azurerm_lb_probe.
 func (lp lbProbeAttributes) RequestPath() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("request_path"))
+	return terra.ReferenceAsString(lp.ref.Append("request_path"))
 }
 
 func (lp lbProbeAttributes) Timeouts() lbprobe.TimeoutsAttributes {
-	return terra.ReferenceSingle[lbprobe.TimeoutsAttributes](lp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[lbprobe.TimeoutsAttributes](lp.ref.Append("timeouts"))
 }
 
 type lbProbeState struct {

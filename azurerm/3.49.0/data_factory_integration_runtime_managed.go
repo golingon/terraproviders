@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFactoryIntegrationRuntimeManaged creates a new instance of [DataFactoryIntegrationRuntimeManaged].
 func NewDataFactoryIntegrationRuntimeManaged(name string, args DataFactoryIntegrationRuntimeManagedArgs) *DataFactoryIntegrationRuntimeManaged {
 	return &DataFactoryIntegrationRuntimeManaged{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFactoryIntegrationRuntimeManaged(name string, args DataFactoryIntegr
 
 var _ terra.Resource = (*DataFactoryIntegrationRuntimeManaged)(nil)
 
+// DataFactoryIntegrationRuntimeManaged represents the Terraform resource azurerm_data_factory_integration_runtime_managed.
 type DataFactoryIntegrationRuntimeManaged struct {
-	Name  string
-	Args  DataFactoryIntegrationRuntimeManagedArgs
-	state *dataFactoryIntegrationRuntimeManagedState
+	Name      string
+	Args      DataFactoryIntegrationRuntimeManagedArgs
+	state     *dataFactoryIntegrationRuntimeManagedState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFactoryIntegrationRuntimeManaged].
 func (dfirm *DataFactoryIntegrationRuntimeManaged) Type() string {
 	return "azurerm_data_factory_integration_runtime_managed"
 }
 
+// LocalName returns the local name for [DataFactoryIntegrationRuntimeManaged].
 func (dfirm *DataFactoryIntegrationRuntimeManaged) LocalName() string {
 	return dfirm.Name
 }
 
+// Configuration returns the configuration (args) for [DataFactoryIntegrationRuntimeManaged].
 func (dfirm *DataFactoryIntegrationRuntimeManaged) Configuration() interface{} {
 	return dfirm.Args
 }
 
+// DependOn is used for other resources to depend on [DataFactoryIntegrationRuntimeManaged].
+func (dfirm *DataFactoryIntegrationRuntimeManaged) DependOn() terra.Reference {
+	return terra.ReferenceResource(dfirm)
+}
+
+// Dependencies returns the list of resources [DataFactoryIntegrationRuntimeManaged] depends_on.
+func (dfirm *DataFactoryIntegrationRuntimeManaged) Dependencies() terra.Dependencies {
+	return dfirm.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFactoryIntegrationRuntimeManaged].
+func (dfirm *DataFactoryIntegrationRuntimeManaged) LifecycleManagement() *terra.Lifecycle {
+	return dfirm.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFactoryIntegrationRuntimeManaged].
 func (dfirm *DataFactoryIntegrationRuntimeManaged) Attributes() dataFactoryIntegrationRuntimeManagedAttributes {
 	return dataFactoryIntegrationRuntimeManagedAttributes{ref: terra.ReferenceResource(dfirm)}
 }
 
+// ImportState imports the given attribute values into [DataFactoryIntegrationRuntimeManaged]'s state.
 func (dfirm *DataFactoryIntegrationRuntimeManaged) ImportState(av io.Reader) error {
 	dfirm.state = &dataFactoryIntegrationRuntimeManagedState{}
 	if err := json.NewDecoder(av).Decode(dfirm.state); err != nil {
@@ -49,10 +73,12 @@ func (dfirm *DataFactoryIntegrationRuntimeManaged) ImportState(av io.Reader) err
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFactoryIntegrationRuntimeManaged] has state.
 func (dfirm *DataFactoryIntegrationRuntimeManaged) State() (*dataFactoryIntegrationRuntimeManagedState, bool) {
 	return dfirm.state, dfirm.state != nil
 }
 
+// StateMust returns the state for [DataFactoryIntegrationRuntimeManaged]. Panics if the state is nil.
 func (dfirm *DataFactoryIntegrationRuntimeManaged) StateMust() *dataFactoryIntegrationRuntimeManagedState {
 	if dfirm.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dfirm.Type(), dfirm.LocalName()))
@@ -60,10 +86,7 @@ func (dfirm *DataFactoryIntegrationRuntimeManaged) StateMust() *dataFactoryInteg
 	return dfirm.state
 }
 
-func (dfirm *DataFactoryIntegrationRuntimeManaged) DependOn() terra.Reference {
-	return terra.ReferenceResource(dfirm)
-}
-
+// DataFactoryIntegrationRuntimeManagedArgs contains the configurations for azurerm_data_factory_integration_runtime_managed.
 type DataFactoryIntegrationRuntimeManagedArgs struct {
 	// DataFactoryId: string, required
 	DataFactoryId terra.StringValue `hcl:"data_factory_id,attr" validate:"required"`
@@ -93,67 +116,75 @@ type DataFactoryIntegrationRuntimeManagedArgs struct {
 	Timeouts *datafactoryintegrationruntimemanaged.Timeouts `hcl:"timeouts,block"`
 	// VnetIntegration: optional
 	VnetIntegration *datafactoryintegrationruntimemanaged.VnetIntegration `hcl:"vnet_integration,block"`
-	// DependsOn contains resources that DataFactoryIntegrationRuntimeManaged depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFactoryIntegrationRuntimeManagedAttributes struct {
 	ref terra.Reference
 }
 
+// DataFactoryId returns a reference to field data_factory_id of azurerm_data_factory_integration_runtime_managed.
 func (dfirm dataFactoryIntegrationRuntimeManagedAttributes) DataFactoryId() terra.StringValue {
-	return terra.ReferenceString(dfirm.ref.Append("data_factory_id"))
+	return terra.ReferenceAsString(dfirm.ref.Append("data_factory_id"))
 }
 
+// Description returns a reference to field description of azurerm_data_factory_integration_runtime_managed.
 func (dfirm dataFactoryIntegrationRuntimeManagedAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dfirm.ref.Append("description"))
+	return terra.ReferenceAsString(dfirm.ref.Append("description"))
 }
 
+// Edition returns a reference to field edition of azurerm_data_factory_integration_runtime_managed.
 func (dfirm dataFactoryIntegrationRuntimeManagedAttributes) Edition() terra.StringValue {
-	return terra.ReferenceString(dfirm.ref.Append("edition"))
+	return terra.ReferenceAsString(dfirm.ref.Append("edition"))
 }
 
+// Id returns a reference to field id of azurerm_data_factory_integration_runtime_managed.
 func (dfirm dataFactoryIntegrationRuntimeManagedAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dfirm.ref.Append("id"))
+	return terra.ReferenceAsString(dfirm.ref.Append("id"))
 }
 
+// LicenseType returns a reference to field license_type of azurerm_data_factory_integration_runtime_managed.
 func (dfirm dataFactoryIntegrationRuntimeManagedAttributes) LicenseType() terra.StringValue {
-	return terra.ReferenceString(dfirm.ref.Append("license_type"))
+	return terra.ReferenceAsString(dfirm.ref.Append("license_type"))
 }
 
+// Location returns a reference to field location of azurerm_data_factory_integration_runtime_managed.
 func (dfirm dataFactoryIntegrationRuntimeManagedAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(dfirm.ref.Append("location"))
+	return terra.ReferenceAsString(dfirm.ref.Append("location"))
 }
 
+// MaxParallelExecutionsPerNode returns a reference to field max_parallel_executions_per_node of azurerm_data_factory_integration_runtime_managed.
 func (dfirm dataFactoryIntegrationRuntimeManagedAttributes) MaxParallelExecutionsPerNode() terra.NumberValue {
-	return terra.ReferenceNumber(dfirm.ref.Append("max_parallel_executions_per_node"))
+	return terra.ReferenceAsNumber(dfirm.ref.Append("max_parallel_executions_per_node"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory_integration_runtime_managed.
 func (dfirm dataFactoryIntegrationRuntimeManagedAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dfirm.ref.Append("name"))
+	return terra.ReferenceAsString(dfirm.ref.Append("name"))
 }
 
+// NodeSize returns a reference to field node_size of azurerm_data_factory_integration_runtime_managed.
 func (dfirm dataFactoryIntegrationRuntimeManagedAttributes) NodeSize() terra.StringValue {
-	return terra.ReferenceString(dfirm.ref.Append("node_size"))
+	return terra.ReferenceAsString(dfirm.ref.Append("node_size"))
 }
 
+// NumberOfNodes returns a reference to field number_of_nodes of azurerm_data_factory_integration_runtime_managed.
 func (dfirm dataFactoryIntegrationRuntimeManagedAttributes) NumberOfNodes() terra.NumberValue {
-	return terra.ReferenceNumber(dfirm.ref.Append("number_of_nodes"))
+	return terra.ReferenceAsNumber(dfirm.ref.Append("number_of_nodes"))
 }
 
 func (dfirm dataFactoryIntegrationRuntimeManagedAttributes) CatalogInfo() terra.ListValue[datafactoryintegrationruntimemanaged.CatalogInfoAttributes] {
-	return terra.ReferenceList[datafactoryintegrationruntimemanaged.CatalogInfoAttributes](dfirm.ref.Append("catalog_info"))
+	return terra.ReferenceAsList[datafactoryintegrationruntimemanaged.CatalogInfoAttributes](dfirm.ref.Append("catalog_info"))
 }
 
 func (dfirm dataFactoryIntegrationRuntimeManagedAttributes) CustomSetupScript() terra.ListValue[datafactoryintegrationruntimemanaged.CustomSetupScriptAttributes] {
-	return terra.ReferenceList[datafactoryintegrationruntimemanaged.CustomSetupScriptAttributes](dfirm.ref.Append("custom_setup_script"))
+	return terra.ReferenceAsList[datafactoryintegrationruntimemanaged.CustomSetupScriptAttributes](dfirm.ref.Append("custom_setup_script"))
 }
 
 func (dfirm dataFactoryIntegrationRuntimeManagedAttributes) Timeouts() datafactoryintegrationruntimemanaged.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafactoryintegrationruntimemanaged.TimeoutsAttributes](dfirm.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafactoryintegrationruntimemanaged.TimeoutsAttributes](dfirm.ref.Append("timeouts"))
 }
 
 func (dfirm dataFactoryIntegrationRuntimeManagedAttributes) VnetIntegration() terra.ListValue[datafactoryintegrationruntimemanaged.VnetIntegrationAttributes] {
-	return terra.ReferenceList[datafactoryintegrationruntimemanaged.VnetIntegrationAttributes](dfirm.ref.Append("vnet_integration"))
+	return terra.ReferenceAsList[datafactoryintegrationruntimemanaged.VnetIntegrationAttributes](dfirm.ref.Append("vnet_integration"))
 }
 
 type dataFactoryIntegrationRuntimeManagedState struct {

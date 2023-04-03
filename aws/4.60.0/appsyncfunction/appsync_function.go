@@ -40,7 +40,7 @@ func (r RuntimeAttributes) InternalWithRef(ref terra.Reference) RuntimeAttribute
 	return RuntimeAttributes{ref: ref}
 }
 
-func (r RuntimeAttributes) InternalTokens() hclwrite.Tokens {
+func (r RuntimeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -64,7 +64,7 @@ func (sc SyncConfigAttributes) InternalWithRef(ref terra.Reference) SyncConfigAt
 	return SyncConfigAttributes{ref: ref}
 }
 
-func (sc SyncConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sc SyncConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -92,7 +92,7 @@ func (lchc LambdaConflictHandlerConfigAttributes) InternalWithRef(ref terra.Refe
 	return LambdaConflictHandlerConfigAttributes{ref: ref}
 }
 
-func (lchc LambdaConflictHandlerConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (lchc LambdaConflictHandlerConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lchc.ref.InternalTokens()
 }
 

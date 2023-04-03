@@ -23,7 +23,7 @@ func (cn CacheNodesAttributes) InternalWithRef(ref terra.Reference) CacheNodesAt
 	return CacheNodesAttributes{ref: ref}
 }
 
-func (cn CacheNodesAttributes) InternalTokens() hclwrite.Tokens {
+func (cn CacheNodesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cn.ref.InternalTokens()
 }
 
@@ -59,7 +59,7 @@ func (ldc LogDeliveryConfigurationAttributes) InternalWithRef(ref terra.Referenc
 	return LogDeliveryConfigurationAttributes{ref: ref}
 }
 
-func (ldc LogDeliveryConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ldc LogDeliveryConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ldc.ref.InternalTokens()
 }
 

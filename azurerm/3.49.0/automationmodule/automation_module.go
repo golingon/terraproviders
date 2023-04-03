@@ -36,80 +36,80 @@ type ModuleLinkAttributes struct {
 	ref terra.Reference
 }
 
-func (ml ModuleLinkAttributes) InternalRef() terra.Reference {
-	return ml.ref
+func (ml ModuleLinkAttributes) InternalRef() (terra.Reference, error) {
+	return ml.ref, nil
 }
 
 func (ml ModuleLinkAttributes) InternalWithRef(ref terra.Reference) ModuleLinkAttributes {
 	return ModuleLinkAttributes{ref: ref}
 }
 
-func (ml ModuleLinkAttributes) InternalTokens() hclwrite.Tokens {
+func (ml ModuleLinkAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ml.ref.InternalTokens()
 }
 
 func (ml ModuleLinkAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(ml.ref.Append("uri"))
+	return terra.ReferenceAsString(ml.ref.Append("uri"))
 }
 
 func (ml ModuleLinkAttributes) Hash() terra.ListValue[HashAttributes] {
-	return terra.ReferenceList[HashAttributes](ml.ref.Append("hash"))
+	return terra.ReferenceAsList[HashAttributes](ml.ref.Append("hash"))
 }
 
 type HashAttributes struct {
 	ref terra.Reference
 }
 
-func (h HashAttributes) InternalRef() terra.Reference {
-	return h.ref
+func (h HashAttributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h HashAttributes) InternalWithRef(ref terra.Reference) HashAttributes {
 	return HashAttributes{ref: ref}
 }
 
-func (h HashAttributes) InternalTokens() hclwrite.Tokens {
+func (h HashAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 
 func (h HashAttributes) Algorithm() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("algorithm"))
+	return terra.ReferenceAsString(h.ref.Append("algorithm"))
 }
 
 func (h HashAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("value"))
+	return terra.ReferenceAsString(h.ref.Append("value"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ModuleLinkState struct {

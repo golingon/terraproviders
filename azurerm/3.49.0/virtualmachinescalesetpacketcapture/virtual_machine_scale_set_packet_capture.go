@@ -47,116 +47,116 @@ type FilterAttributes struct {
 	ref terra.Reference
 }
 
-func (f FilterAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FilterAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes {
 	return FilterAttributes{ref: ref}
 }
 
-func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
+func (f FilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
 func (f FilterAttributes) LocalIpAddress() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("local_ip_address"))
+	return terra.ReferenceAsString(f.ref.Append("local_ip_address"))
 }
 
 func (f FilterAttributes) LocalPort() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("local_port"))
+	return terra.ReferenceAsString(f.ref.Append("local_port"))
 }
 
 func (f FilterAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("protocol"))
+	return terra.ReferenceAsString(f.ref.Append("protocol"))
 }
 
 func (f FilterAttributes) RemoteIpAddress() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("remote_ip_address"))
+	return terra.ReferenceAsString(f.ref.Append("remote_ip_address"))
 }
 
 func (f FilterAttributes) RemotePort() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("remote_port"))
+	return terra.ReferenceAsString(f.ref.Append("remote_port"))
 }
 
 type MachineScopeAttributes struct {
 	ref terra.Reference
 }
 
-func (ms MachineScopeAttributes) InternalRef() terra.Reference {
-	return ms.ref
+func (ms MachineScopeAttributes) InternalRef() (terra.Reference, error) {
+	return ms.ref, nil
 }
 
 func (ms MachineScopeAttributes) InternalWithRef(ref terra.Reference) MachineScopeAttributes {
 	return MachineScopeAttributes{ref: ref}
 }
 
-func (ms MachineScopeAttributes) InternalTokens() hclwrite.Tokens {
+func (ms MachineScopeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ms.ref.InternalTokens()
 }
 
 func (ms MachineScopeAttributes) ExcludeInstanceIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ms.ref.Append("exclude_instance_ids"))
+	return terra.ReferenceAsList[terra.StringValue](ms.ref.Append("exclude_instance_ids"))
 }
 
 func (ms MachineScopeAttributes) IncludeInstanceIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ms.ref.Append("include_instance_ids"))
+	return terra.ReferenceAsList[terra.StringValue](ms.ref.Append("include_instance_ids"))
 }
 
 type StorageLocationAttributes struct {
 	ref terra.Reference
 }
 
-func (sl StorageLocationAttributes) InternalRef() terra.Reference {
-	return sl.ref
+func (sl StorageLocationAttributes) InternalRef() (terra.Reference, error) {
+	return sl.ref, nil
 }
 
 func (sl StorageLocationAttributes) InternalWithRef(ref terra.Reference) StorageLocationAttributes {
 	return StorageLocationAttributes{ref: ref}
 }
 
-func (sl StorageLocationAttributes) InternalTokens() hclwrite.Tokens {
+func (sl StorageLocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sl.ref.InternalTokens()
 }
 
 func (sl StorageLocationAttributes) FilePath() terra.StringValue {
-	return terra.ReferenceString(sl.ref.Append("file_path"))
+	return terra.ReferenceAsString(sl.ref.Append("file_path"))
 }
 
 func (sl StorageLocationAttributes) StorageAccountId() terra.StringValue {
-	return terra.ReferenceString(sl.ref.Append("storage_account_id"))
+	return terra.ReferenceAsString(sl.ref.Append("storage_account_id"))
 }
 
 func (sl StorageLocationAttributes) StoragePath() terra.StringValue {
-	return terra.ReferenceString(sl.ref.Append("storage_path"))
+	return terra.ReferenceAsString(sl.ref.Append("storage_path"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type FilterState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewTemplateDeployment creates a new instance of [TemplateDeployment].
 func NewTemplateDeployment(name string, args TemplateDeploymentArgs) *TemplateDeployment {
 	return &TemplateDeployment{
 		Args: args,
@@ -19,28 +20,51 @@ func NewTemplateDeployment(name string, args TemplateDeploymentArgs) *TemplateDe
 
 var _ terra.Resource = (*TemplateDeployment)(nil)
 
+// TemplateDeployment represents the Terraform resource azurerm_template_deployment.
 type TemplateDeployment struct {
-	Name  string
-	Args  TemplateDeploymentArgs
-	state *templateDeploymentState
+	Name      string
+	Args      TemplateDeploymentArgs
+	state     *templateDeploymentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [TemplateDeployment].
 func (td *TemplateDeployment) Type() string {
 	return "azurerm_template_deployment"
 }
 
+// LocalName returns the local name for [TemplateDeployment].
 func (td *TemplateDeployment) LocalName() string {
 	return td.Name
 }
 
+// Configuration returns the configuration (args) for [TemplateDeployment].
 func (td *TemplateDeployment) Configuration() interface{} {
 	return td.Args
 }
 
+// DependOn is used for other resources to depend on [TemplateDeployment].
+func (td *TemplateDeployment) DependOn() terra.Reference {
+	return terra.ReferenceResource(td)
+}
+
+// Dependencies returns the list of resources [TemplateDeployment] depends_on.
+func (td *TemplateDeployment) Dependencies() terra.Dependencies {
+	return td.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [TemplateDeployment].
+func (td *TemplateDeployment) LifecycleManagement() *terra.Lifecycle {
+	return td.Lifecycle
+}
+
+// Attributes returns the attributes for [TemplateDeployment].
 func (td *TemplateDeployment) Attributes() templateDeploymentAttributes {
 	return templateDeploymentAttributes{ref: terra.ReferenceResource(td)}
 }
 
+// ImportState imports the given attribute values into [TemplateDeployment]'s state.
 func (td *TemplateDeployment) ImportState(av io.Reader) error {
 	td.state = &templateDeploymentState{}
 	if err := json.NewDecoder(av).Decode(td.state); err != nil {
@@ -49,10 +73,12 @@ func (td *TemplateDeployment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [TemplateDeployment] has state.
 func (td *TemplateDeployment) State() (*templateDeploymentState, bool) {
 	return td.state, td.state != nil
 }
 
+// StateMust returns the state for [TemplateDeployment]. Panics if the state is nil.
 func (td *TemplateDeployment) StateMust() *templateDeploymentState {
 	if td.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", td.Type(), td.LocalName()))
@@ -60,10 +86,7 @@ func (td *TemplateDeployment) StateMust() *templateDeploymentState {
 	return td.state
 }
 
-func (td *TemplateDeployment) DependOn() terra.Reference {
-	return terra.ReferenceResource(td)
-}
-
+// TemplateDeploymentArgs contains the configurations for azurerm_template_deployment.
 type TemplateDeploymentArgs struct {
 	// DeploymentMode: string, required
 	DeploymentMode terra.StringValue `hcl:"deployment_mode,attr" validate:"required"`
@@ -81,47 +104,53 @@ type TemplateDeploymentArgs struct {
 	TemplateBody terra.StringValue `hcl:"template_body,attr"`
 	// Timeouts: optional
 	Timeouts *templatedeployment.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that TemplateDeployment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type templateDeploymentAttributes struct {
 	ref terra.Reference
 }
 
+// DeploymentMode returns a reference to field deployment_mode of azurerm_template_deployment.
 func (td templateDeploymentAttributes) DeploymentMode() terra.StringValue {
-	return terra.ReferenceString(td.ref.Append("deployment_mode"))
+	return terra.ReferenceAsString(td.ref.Append("deployment_mode"))
 }
 
+// Id returns a reference to field id of azurerm_template_deployment.
 func (td templateDeploymentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(td.ref.Append("id"))
+	return terra.ReferenceAsString(td.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_template_deployment.
 func (td templateDeploymentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(td.ref.Append("name"))
+	return terra.ReferenceAsString(td.ref.Append("name"))
 }
 
+// Outputs returns a reference to field outputs of azurerm_template_deployment.
 func (td templateDeploymentAttributes) Outputs() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](td.ref.Append("outputs"))
+	return terra.ReferenceAsMap[terra.StringValue](td.ref.Append("outputs"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_template_deployment.
 func (td templateDeploymentAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](td.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](td.ref.Append("parameters"))
 }
 
+// ParametersBody returns a reference to field parameters_body of azurerm_template_deployment.
 func (td templateDeploymentAttributes) ParametersBody() terra.StringValue {
-	return terra.ReferenceString(td.ref.Append("parameters_body"))
+	return terra.ReferenceAsString(td.ref.Append("parameters_body"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_template_deployment.
 func (td templateDeploymentAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(td.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(td.ref.Append("resource_group_name"))
 }
 
+// TemplateBody returns a reference to field template_body of azurerm_template_deployment.
 func (td templateDeploymentAttributes) TemplateBody() terra.StringValue {
-	return terra.ReferenceString(td.ref.Append("template_body"))
+	return terra.ReferenceAsString(td.ref.Append("template_body"))
 }
 
 func (td templateDeploymentAttributes) Timeouts() templatedeployment.TimeoutsAttributes {
-	return terra.ReferenceSingle[templatedeployment.TimeoutsAttributes](td.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[templatedeployment.TimeoutsAttributes](td.ref.Append("timeouts"))
 }
 
 type templateDeploymentState struct {

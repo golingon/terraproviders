@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataResources creates a new instance of [DataResources].
 func NewDataResources(name string, args DataResourcesArgs) *DataResources {
 	return &DataResources{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataResources(name string, args DataResourcesArgs) *DataResources {
 
 var _ terra.DataResource = (*DataResources)(nil)
 
+// DataResources represents the Terraform data resource azurerm_resources.
 type DataResources struct {
 	Name string
 	Args DataResourcesArgs
 }
 
+// DataSource returns the Terraform object type for [DataResources].
 func (r *DataResources) DataSource() string {
 	return "azurerm_resources"
 }
 
+// LocalName returns the local name for [DataResources].
 func (r *DataResources) LocalName() string {
 	return r.Name
 }
 
+// Configuration returns the configuration (args) for [DataResources].
 func (r *DataResources) Configuration() interface{} {
 	return r.Args
 }
 
+// Attributes returns the attributes for [DataResources].
 func (r *DataResources) Attributes() dataResourcesAttributes {
 	return dataResourcesAttributes{ref: terra.ReferenceDataResource(r)}
 }
 
+// DataResourcesArgs contains the configurations for azurerm_resources.
 type DataResourcesArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -57,30 +64,35 @@ type dataResourcesAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_resources.
 func (r dataResourcesAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("id"))
+	return terra.ReferenceAsString(r.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_resources.
 func (r dataResourcesAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("name"))
+	return terra.ReferenceAsString(r.ref.Append("name"))
 }
 
+// RequiredTags returns a reference to field required_tags of azurerm_resources.
 func (r dataResourcesAttributes) RequiredTags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](r.ref.Append("required_tags"))
+	return terra.ReferenceAsMap[terra.StringValue](r.ref.Append("required_tags"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_resources.
 func (r dataResourcesAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(r.ref.Append("resource_group_name"))
 }
 
+// Type returns a reference to field type of azurerm_resources.
 func (r dataResourcesAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("type"))
+	return terra.ReferenceAsString(r.ref.Append("type"))
 }
 
 func (r dataResourcesAttributes) Resources() terra.ListValue[dataresources.ResourcesAttributes] {
-	return terra.ReferenceList[dataresources.ResourcesAttributes](r.ref.Append("resources"))
+	return terra.ReferenceAsList[dataresources.ResourcesAttributes](r.ref.Append("resources"))
 }
 
 func (r dataResourcesAttributes) Timeouts() dataresources.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataresources.TimeoutsAttributes](r.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataresources.TimeoutsAttributes](r.ref.Append("timeouts"))
 }

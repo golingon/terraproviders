@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewIotTimeSeriesInsightsReferenceDataSet creates a new instance of [IotTimeSeriesInsightsReferenceDataSet].
 func NewIotTimeSeriesInsightsReferenceDataSet(name string, args IotTimeSeriesInsightsReferenceDataSetArgs) *IotTimeSeriesInsightsReferenceDataSet {
 	return &IotTimeSeriesInsightsReferenceDataSet{
 		Args: args,
@@ -19,28 +20,51 @@ func NewIotTimeSeriesInsightsReferenceDataSet(name string, args IotTimeSeriesIns
 
 var _ terra.Resource = (*IotTimeSeriesInsightsReferenceDataSet)(nil)
 
+// IotTimeSeriesInsightsReferenceDataSet represents the Terraform resource azurerm_iot_time_series_insights_reference_data_set.
 type IotTimeSeriesInsightsReferenceDataSet struct {
-	Name  string
-	Args  IotTimeSeriesInsightsReferenceDataSetArgs
-	state *iotTimeSeriesInsightsReferenceDataSetState
+	Name      string
+	Args      IotTimeSeriesInsightsReferenceDataSetArgs
+	state     *iotTimeSeriesInsightsReferenceDataSetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IotTimeSeriesInsightsReferenceDataSet].
 func (itsirds *IotTimeSeriesInsightsReferenceDataSet) Type() string {
 	return "azurerm_iot_time_series_insights_reference_data_set"
 }
 
+// LocalName returns the local name for [IotTimeSeriesInsightsReferenceDataSet].
 func (itsirds *IotTimeSeriesInsightsReferenceDataSet) LocalName() string {
 	return itsirds.Name
 }
 
+// Configuration returns the configuration (args) for [IotTimeSeriesInsightsReferenceDataSet].
 func (itsirds *IotTimeSeriesInsightsReferenceDataSet) Configuration() interface{} {
 	return itsirds.Args
 }
 
+// DependOn is used for other resources to depend on [IotTimeSeriesInsightsReferenceDataSet].
+func (itsirds *IotTimeSeriesInsightsReferenceDataSet) DependOn() terra.Reference {
+	return terra.ReferenceResource(itsirds)
+}
+
+// Dependencies returns the list of resources [IotTimeSeriesInsightsReferenceDataSet] depends_on.
+func (itsirds *IotTimeSeriesInsightsReferenceDataSet) Dependencies() terra.Dependencies {
+	return itsirds.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IotTimeSeriesInsightsReferenceDataSet].
+func (itsirds *IotTimeSeriesInsightsReferenceDataSet) LifecycleManagement() *terra.Lifecycle {
+	return itsirds.Lifecycle
+}
+
+// Attributes returns the attributes for [IotTimeSeriesInsightsReferenceDataSet].
 func (itsirds *IotTimeSeriesInsightsReferenceDataSet) Attributes() iotTimeSeriesInsightsReferenceDataSetAttributes {
 	return iotTimeSeriesInsightsReferenceDataSetAttributes{ref: terra.ReferenceResource(itsirds)}
 }
 
+// ImportState imports the given attribute values into [IotTimeSeriesInsightsReferenceDataSet]'s state.
 func (itsirds *IotTimeSeriesInsightsReferenceDataSet) ImportState(av io.Reader) error {
 	itsirds.state = &iotTimeSeriesInsightsReferenceDataSetState{}
 	if err := json.NewDecoder(av).Decode(itsirds.state); err != nil {
@@ -49,10 +73,12 @@ func (itsirds *IotTimeSeriesInsightsReferenceDataSet) ImportState(av io.Reader) 
 	return nil
 }
 
+// State returns the state and a bool indicating if [IotTimeSeriesInsightsReferenceDataSet] has state.
 func (itsirds *IotTimeSeriesInsightsReferenceDataSet) State() (*iotTimeSeriesInsightsReferenceDataSetState, bool) {
 	return itsirds.state, itsirds.state != nil
 }
 
+// StateMust returns the state for [IotTimeSeriesInsightsReferenceDataSet]. Panics if the state is nil.
 func (itsirds *IotTimeSeriesInsightsReferenceDataSet) StateMust() *iotTimeSeriesInsightsReferenceDataSetState {
 	if itsirds.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", itsirds.Type(), itsirds.LocalName()))
@@ -60,10 +86,7 @@ func (itsirds *IotTimeSeriesInsightsReferenceDataSet) StateMust() *iotTimeSeries
 	return itsirds.state
 }
 
-func (itsirds *IotTimeSeriesInsightsReferenceDataSet) DependOn() terra.Reference {
-	return terra.ReferenceResource(itsirds)
-}
-
+// IotTimeSeriesInsightsReferenceDataSetArgs contains the configurations for azurerm_iot_time_series_insights_reference_data_set.
 type IotTimeSeriesInsightsReferenceDataSetArgs struct {
 	// DataStringComparisonBehavior: string, optional
 	DataStringComparisonBehavior terra.StringValue `hcl:"data_string_comparison_behavior,attr"`
@@ -81,43 +104,47 @@ type IotTimeSeriesInsightsReferenceDataSetArgs struct {
 	KeyProperty []iottimeseriesinsightsreferencedataset.KeyProperty `hcl:"key_property,block" validate:"min=1"`
 	// Timeouts: optional
 	Timeouts *iottimeseriesinsightsreferencedataset.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that IotTimeSeriesInsightsReferenceDataSet depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iotTimeSeriesInsightsReferenceDataSetAttributes struct {
 	ref terra.Reference
 }
 
+// DataStringComparisonBehavior returns a reference to field data_string_comparison_behavior of azurerm_iot_time_series_insights_reference_data_set.
 func (itsirds iotTimeSeriesInsightsReferenceDataSetAttributes) DataStringComparisonBehavior() terra.StringValue {
-	return terra.ReferenceString(itsirds.ref.Append("data_string_comparison_behavior"))
+	return terra.ReferenceAsString(itsirds.ref.Append("data_string_comparison_behavior"))
 }
 
+// Id returns a reference to field id of azurerm_iot_time_series_insights_reference_data_set.
 func (itsirds iotTimeSeriesInsightsReferenceDataSetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(itsirds.ref.Append("id"))
+	return terra.ReferenceAsString(itsirds.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_iot_time_series_insights_reference_data_set.
 func (itsirds iotTimeSeriesInsightsReferenceDataSetAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(itsirds.ref.Append("location"))
+	return terra.ReferenceAsString(itsirds.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_iot_time_series_insights_reference_data_set.
 func (itsirds iotTimeSeriesInsightsReferenceDataSetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(itsirds.ref.Append("name"))
+	return terra.ReferenceAsString(itsirds.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of azurerm_iot_time_series_insights_reference_data_set.
 func (itsirds iotTimeSeriesInsightsReferenceDataSetAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](itsirds.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](itsirds.ref.Append("tags"))
 }
 
+// TimeSeriesInsightsEnvironmentId returns a reference to field time_series_insights_environment_id of azurerm_iot_time_series_insights_reference_data_set.
 func (itsirds iotTimeSeriesInsightsReferenceDataSetAttributes) TimeSeriesInsightsEnvironmentId() terra.StringValue {
-	return terra.ReferenceString(itsirds.ref.Append("time_series_insights_environment_id"))
+	return terra.ReferenceAsString(itsirds.ref.Append("time_series_insights_environment_id"))
 }
 
 func (itsirds iotTimeSeriesInsightsReferenceDataSetAttributes) KeyProperty() terra.SetValue[iottimeseriesinsightsreferencedataset.KeyPropertyAttributes] {
-	return terra.ReferenceSet[iottimeseriesinsightsreferencedataset.KeyPropertyAttributes](itsirds.ref.Append("key_property"))
+	return terra.ReferenceAsSet[iottimeseriesinsightsreferencedataset.KeyPropertyAttributes](itsirds.ref.Append("key_property"))
 }
 
 func (itsirds iotTimeSeriesInsightsReferenceDataSetAttributes) Timeouts() iottimeseriesinsightsreferencedataset.TimeoutsAttributes {
-	return terra.ReferenceSingle[iottimeseriesinsightsreferencedataset.TimeoutsAttributes](itsirds.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[iottimeseriesinsightsreferencedataset.TimeoutsAttributes](itsirds.ref.Append("timeouts"))
 }
 
 type iotTimeSeriesInsightsReferenceDataSetState struct {

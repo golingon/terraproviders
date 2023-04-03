@@ -76,7 +76,7 @@ func (r ResourcesAttributes) InternalWithRef(ref terra.Reference) ResourcesAttri
 	return ResourcesAttributes{ref: ref}
 }
 
-func (r ResourcesAttributes) InternalTokens() hclwrite.Tokens {
+func (r ResourcesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -100,7 +100,7 @@ func (ag AutoscalingGroupsAttributes) InternalWithRef(ref terra.Reference) Autos
 	return AutoscalingGroupsAttributes{ref: ref}
 }
 
-func (ag AutoscalingGroupsAttributes) InternalTokens() hclwrite.Tokens {
+func (ag AutoscalingGroupsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ag.ref.InternalTokens()
 }
 
@@ -120,7 +120,7 @@ func (lt LaunchTemplateAttributes) InternalWithRef(ref terra.Reference) LaunchTe
 	return LaunchTemplateAttributes{ref: ref}
 }
 
-func (lt LaunchTemplateAttributes) InternalTokens() hclwrite.Tokens {
+func (lt LaunchTemplateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lt.ref.InternalTokens()
 }
 
@@ -148,7 +148,7 @@ func (ra RemoteAccessAttributes) InternalWithRef(ref terra.Reference) RemoteAcce
 	return RemoteAccessAttributes{ref: ref}
 }
 
-func (ra RemoteAccessAttributes) InternalTokens() hclwrite.Tokens {
+func (ra RemoteAccessAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ra.ref.InternalTokens()
 }
 
@@ -172,7 +172,7 @@ func (sc ScalingConfigAttributes) InternalWithRef(ref terra.Reference) ScalingCo
 	return ScalingConfigAttributes{ref: ref}
 }
 
-func (sc ScalingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sc ScalingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -200,7 +200,7 @@ func (t TaintAttributes) InternalWithRef(ref terra.Reference) TaintAttributes {
 	return TaintAttributes{ref: ref}
 }
 
-func (t TaintAttributes) InternalTokens() hclwrite.Tokens {
+func (t TaintAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -228,7 +228,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -256,7 +256,7 @@ func (uc UpdateConfigAttributes) InternalWithRef(ref terra.Reference) UpdateConf
 	return UpdateConfigAttributes{ref: ref}
 }
 
-func (uc UpdateConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (uc UpdateConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return uc.ref.InternalTokens()
 }
 

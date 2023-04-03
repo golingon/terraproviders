@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataShareDatasetDataLakeGen2 creates a new instance of [DataShareDatasetDataLakeGen2].
 func NewDataShareDatasetDataLakeGen2(name string, args DataShareDatasetDataLakeGen2Args) *DataShareDatasetDataLakeGen2 {
 	return &DataShareDatasetDataLakeGen2{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataShareDatasetDataLakeGen2(name string, args DataShareDatasetDataLakeG
 
 var _ terra.Resource = (*DataShareDatasetDataLakeGen2)(nil)
 
+// DataShareDatasetDataLakeGen2 represents the Terraform resource azurerm_data_share_dataset_data_lake_gen2.
 type DataShareDatasetDataLakeGen2 struct {
-	Name  string
-	Args  DataShareDatasetDataLakeGen2Args
-	state *dataShareDatasetDataLakeGen2State
+	Name      string
+	Args      DataShareDatasetDataLakeGen2Args
+	state     *dataShareDatasetDataLakeGen2State
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataShareDatasetDataLakeGen2].
 func (dsddlg *DataShareDatasetDataLakeGen2) Type() string {
 	return "azurerm_data_share_dataset_data_lake_gen2"
 }
 
+// LocalName returns the local name for [DataShareDatasetDataLakeGen2].
 func (dsddlg *DataShareDatasetDataLakeGen2) LocalName() string {
 	return dsddlg.Name
 }
 
+// Configuration returns the configuration (args) for [DataShareDatasetDataLakeGen2].
 func (dsddlg *DataShareDatasetDataLakeGen2) Configuration() interface{} {
 	return dsddlg.Args
 }
 
+// DependOn is used for other resources to depend on [DataShareDatasetDataLakeGen2].
+func (dsddlg *DataShareDatasetDataLakeGen2) DependOn() terra.Reference {
+	return terra.ReferenceResource(dsddlg)
+}
+
+// Dependencies returns the list of resources [DataShareDatasetDataLakeGen2] depends_on.
+func (dsddlg *DataShareDatasetDataLakeGen2) Dependencies() terra.Dependencies {
+	return dsddlg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataShareDatasetDataLakeGen2].
+func (dsddlg *DataShareDatasetDataLakeGen2) LifecycleManagement() *terra.Lifecycle {
+	return dsddlg.Lifecycle
+}
+
+// Attributes returns the attributes for [DataShareDatasetDataLakeGen2].
 func (dsddlg *DataShareDatasetDataLakeGen2) Attributes() dataShareDatasetDataLakeGen2Attributes {
 	return dataShareDatasetDataLakeGen2Attributes{ref: terra.ReferenceResource(dsddlg)}
 }
 
+// ImportState imports the given attribute values into [DataShareDatasetDataLakeGen2]'s state.
 func (dsddlg *DataShareDatasetDataLakeGen2) ImportState(av io.Reader) error {
 	dsddlg.state = &dataShareDatasetDataLakeGen2State{}
 	if err := json.NewDecoder(av).Decode(dsddlg.state); err != nil {
@@ -49,10 +73,12 @@ func (dsddlg *DataShareDatasetDataLakeGen2) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataShareDatasetDataLakeGen2] has state.
 func (dsddlg *DataShareDatasetDataLakeGen2) State() (*dataShareDatasetDataLakeGen2State, bool) {
 	return dsddlg.state, dsddlg.state != nil
 }
 
+// StateMust returns the state for [DataShareDatasetDataLakeGen2]. Panics if the state is nil.
 func (dsddlg *DataShareDatasetDataLakeGen2) StateMust() *dataShareDatasetDataLakeGen2State {
 	if dsddlg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dsddlg.Type(), dsddlg.LocalName()))
@@ -60,10 +86,7 @@ func (dsddlg *DataShareDatasetDataLakeGen2) StateMust() *dataShareDatasetDataLak
 	return dsddlg.state
 }
 
-func (dsddlg *DataShareDatasetDataLakeGen2) DependOn() terra.Reference {
-	return terra.ReferenceResource(dsddlg)
-}
-
+// DataShareDatasetDataLakeGen2Args contains the configurations for azurerm_data_share_dataset_data_lake_gen2.
 type DataShareDatasetDataLakeGen2Args struct {
 	// FilePath: string, optional
 	FilePath terra.StringValue `hcl:"file_path,attr"`
@@ -81,47 +104,53 @@ type DataShareDatasetDataLakeGen2Args struct {
 	StorageAccountId terra.StringValue `hcl:"storage_account_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *datasharedatasetdatalakegen2.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataShareDatasetDataLakeGen2 depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataShareDatasetDataLakeGen2Attributes struct {
 	ref terra.Reference
 }
 
+// DisplayName returns a reference to field display_name of azurerm_data_share_dataset_data_lake_gen2.
 func (dsddlg dataShareDatasetDataLakeGen2Attributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(dsddlg.ref.Append("display_name"))
+	return terra.ReferenceAsString(dsddlg.ref.Append("display_name"))
 }
 
+// FilePath returns a reference to field file_path of azurerm_data_share_dataset_data_lake_gen2.
 func (dsddlg dataShareDatasetDataLakeGen2Attributes) FilePath() terra.StringValue {
-	return terra.ReferenceString(dsddlg.ref.Append("file_path"))
+	return terra.ReferenceAsString(dsddlg.ref.Append("file_path"))
 }
 
+// FileSystemName returns a reference to field file_system_name of azurerm_data_share_dataset_data_lake_gen2.
 func (dsddlg dataShareDatasetDataLakeGen2Attributes) FileSystemName() terra.StringValue {
-	return terra.ReferenceString(dsddlg.ref.Append("file_system_name"))
+	return terra.ReferenceAsString(dsddlg.ref.Append("file_system_name"))
 }
 
+// FolderPath returns a reference to field folder_path of azurerm_data_share_dataset_data_lake_gen2.
 func (dsddlg dataShareDatasetDataLakeGen2Attributes) FolderPath() terra.StringValue {
-	return terra.ReferenceString(dsddlg.ref.Append("folder_path"))
+	return terra.ReferenceAsString(dsddlg.ref.Append("folder_path"))
 }
 
+// Id returns a reference to field id of azurerm_data_share_dataset_data_lake_gen2.
 func (dsddlg dataShareDatasetDataLakeGen2Attributes) Id() terra.StringValue {
-	return terra.ReferenceString(dsddlg.ref.Append("id"))
+	return terra.ReferenceAsString(dsddlg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_data_share_dataset_data_lake_gen2.
 func (dsddlg dataShareDatasetDataLakeGen2Attributes) Name() terra.StringValue {
-	return terra.ReferenceString(dsddlg.ref.Append("name"))
+	return terra.ReferenceAsString(dsddlg.ref.Append("name"))
 }
 
+// ShareId returns a reference to field share_id of azurerm_data_share_dataset_data_lake_gen2.
 func (dsddlg dataShareDatasetDataLakeGen2Attributes) ShareId() terra.StringValue {
-	return terra.ReferenceString(dsddlg.ref.Append("share_id"))
+	return terra.ReferenceAsString(dsddlg.ref.Append("share_id"))
 }
 
+// StorageAccountId returns a reference to field storage_account_id of azurerm_data_share_dataset_data_lake_gen2.
 func (dsddlg dataShareDatasetDataLakeGen2Attributes) StorageAccountId() terra.StringValue {
-	return terra.ReferenceString(dsddlg.ref.Append("storage_account_id"))
+	return terra.ReferenceAsString(dsddlg.ref.Append("storage_account_id"))
 }
 
 func (dsddlg dataShareDatasetDataLakeGen2Attributes) Timeouts() datasharedatasetdatalakegen2.TimeoutsAttributes {
-	return terra.ReferenceSingle[datasharedatasetdatalakegen2.TimeoutsAttributes](dsddlg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datasharedatasetdatalakegen2.TimeoutsAttributes](dsddlg.ref.Append("timeouts"))
 }
 
 type dataShareDatasetDataLakeGen2State struct {

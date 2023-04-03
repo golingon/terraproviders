@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewStreamAnalyticsStreamInputBlob creates a new instance of [StreamAnalyticsStreamInputBlob].
 func NewStreamAnalyticsStreamInputBlob(name string, args StreamAnalyticsStreamInputBlobArgs) *StreamAnalyticsStreamInputBlob {
 	return &StreamAnalyticsStreamInputBlob{
 		Args: args,
@@ -19,28 +20,51 @@ func NewStreamAnalyticsStreamInputBlob(name string, args StreamAnalyticsStreamIn
 
 var _ terra.Resource = (*StreamAnalyticsStreamInputBlob)(nil)
 
+// StreamAnalyticsStreamInputBlob represents the Terraform resource azurerm_stream_analytics_stream_input_blob.
 type StreamAnalyticsStreamInputBlob struct {
-	Name  string
-	Args  StreamAnalyticsStreamInputBlobArgs
-	state *streamAnalyticsStreamInputBlobState
+	Name      string
+	Args      StreamAnalyticsStreamInputBlobArgs
+	state     *streamAnalyticsStreamInputBlobState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [StreamAnalyticsStreamInputBlob].
 func (sasib *StreamAnalyticsStreamInputBlob) Type() string {
 	return "azurerm_stream_analytics_stream_input_blob"
 }
 
+// LocalName returns the local name for [StreamAnalyticsStreamInputBlob].
 func (sasib *StreamAnalyticsStreamInputBlob) LocalName() string {
 	return sasib.Name
 }
 
+// Configuration returns the configuration (args) for [StreamAnalyticsStreamInputBlob].
 func (sasib *StreamAnalyticsStreamInputBlob) Configuration() interface{} {
 	return sasib.Args
 }
 
+// DependOn is used for other resources to depend on [StreamAnalyticsStreamInputBlob].
+func (sasib *StreamAnalyticsStreamInputBlob) DependOn() terra.Reference {
+	return terra.ReferenceResource(sasib)
+}
+
+// Dependencies returns the list of resources [StreamAnalyticsStreamInputBlob] depends_on.
+func (sasib *StreamAnalyticsStreamInputBlob) Dependencies() terra.Dependencies {
+	return sasib.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [StreamAnalyticsStreamInputBlob].
+func (sasib *StreamAnalyticsStreamInputBlob) LifecycleManagement() *terra.Lifecycle {
+	return sasib.Lifecycle
+}
+
+// Attributes returns the attributes for [StreamAnalyticsStreamInputBlob].
 func (sasib *StreamAnalyticsStreamInputBlob) Attributes() streamAnalyticsStreamInputBlobAttributes {
 	return streamAnalyticsStreamInputBlobAttributes{ref: terra.ReferenceResource(sasib)}
 }
 
+// ImportState imports the given attribute values into [StreamAnalyticsStreamInputBlob]'s state.
 func (sasib *StreamAnalyticsStreamInputBlob) ImportState(av io.Reader) error {
 	sasib.state = &streamAnalyticsStreamInputBlobState{}
 	if err := json.NewDecoder(av).Decode(sasib.state); err != nil {
@@ -49,10 +73,12 @@ func (sasib *StreamAnalyticsStreamInputBlob) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [StreamAnalyticsStreamInputBlob] has state.
 func (sasib *StreamAnalyticsStreamInputBlob) State() (*streamAnalyticsStreamInputBlobState, bool) {
 	return sasib.state, sasib.state != nil
 }
 
+// StateMust returns the state for [StreamAnalyticsStreamInputBlob]. Panics if the state is nil.
 func (sasib *StreamAnalyticsStreamInputBlob) StateMust() *streamAnalyticsStreamInputBlobState {
 	if sasib.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sasib.Type(), sasib.LocalName()))
@@ -60,10 +86,7 @@ func (sasib *StreamAnalyticsStreamInputBlob) StateMust() *streamAnalyticsStreamI
 	return sasib.state
 }
 
-func (sasib *StreamAnalyticsStreamInputBlob) DependOn() terra.Reference {
-	return terra.ReferenceResource(sasib)
-}
-
+// StreamAnalyticsStreamInputBlobArgs contains the configurations for azurerm_stream_analytics_stream_input_blob.
 type StreamAnalyticsStreamInputBlobArgs struct {
 	// DateFormat: string, required
 	DateFormat terra.StringValue `hcl:"date_format,attr" validate:"required"`
@@ -89,59 +112,67 @@ type StreamAnalyticsStreamInputBlobArgs struct {
 	Serialization *streamanalyticsstreaminputblob.Serialization `hcl:"serialization,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *streamanalyticsstreaminputblob.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that StreamAnalyticsStreamInputBlob depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type streamAnalyticsStreamInputBlobAttributes struct {
 	ref terra.Reference
 }
 
+// DateFormat returns a reference to field date_format of azurerm_stream_analytics_stream_input_blob.
 func (sasib streamAnalyticsStreamInputBlobAttributes) DateFormat() terra.StringValue {
-	return terra.ReferenceString(sasib.ref.Append("date_format"))
+	return terra.ReferenceAsString(sasib.ref.Append("date_format"))
 }
 
+// Id returns a reference to field id of azurerm_stream_analytics_stream_input_blob.
 func (sasib streamAnalyticsStreamInputBlobAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sasib.ref.Append("id"))
+	return terra.ReferenceAsString(sasib.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_stream_analytics_stream_input_blob.
 func (sasib streamAnalyticsStreamInputBlobAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sasib.ref.Append("name"))
+	return terra.ReferenceAsString(sasib.ref.Append("name"))
 }
 
+// PathPattern returns a reference to field path_pattern of azurerm_stream_analytics_stream_input_blob.
 func (sasib streamAnalyticsStreamInputBlobAttributes) PathPattern() terra.StringValue {
-	return terra.ReferenceString(sasib.ref.Append("path_pattern"))
+	return terra.ReferenceAsString(sasib.ref.Append("path_pattern"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_stream_analytics_stream_input_blob.
 func (sasib streamAnalyticsStreamInputBlobAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(sasib.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(sasib.ref.Append("resource_group_name"))
 }
 
+// StorageAccountKey returns a reference to field storage_account_key of azurerm_stream_analytics_stream_input_blob.
 func (sasib streamAnalyticsStreamInputBlobAttributes) StorageAccountKey() terra.StringValue {
-	return terra.ReferenceString(sasib.ref.Append("storage_account_key"))
+	return terra.ReferenceAsString(sasib.ref.Append("storage_account_key"))
 }
 
+// StorageAccountName returns a reference to field storage_account_name of azurerm_stream_analytics_stream_input_blob.
 func (sasib streamAnalyticsStreamInputBlobAttributes) StorageAccountName() terra.StringValue {
-	return terra.ReferenceString(sasib.ref.Append("storage_account_name"))
+	return terra.ReferenceAsString(sasib.ref.Append("storage_account_name"))
 }
 
+// StorageContainerName returns a reference to field storage_container_name of azurerm_stream_analytics_stream_input_blob.
 func (sasib streamAnalyticsStreamInputBlobAttributes) StorageContainerName() terra.StringValue {
-	return terra.ReferenceString(sasib.ref.Append("storage_container_name"))
+	return terra.ReferenceAsString(sasib.ref.Append("storage_container_name"))
 }
 
+// StreamAnalyticsJobName returns a reference to field stream_analytics_job_name of azurerm_stream_analytics_stream_input_blob.
 func (sasib streamAnalyticsStreamInputBlobAttributes) StreamAnalyticsJobName() terra.StringValue {
-	return terra.ReferenceString(sasib.ref.Append("stream_analytics_job_name"))
+	return terra.ReferenceAsString(sasib.ref.Append("stream_analytics_job_name"))
 }
 
+// TimeFormat returns a reference to field time_format of azurerm_stream_analytics_stream_input_blob.
 func (sasib streamAnalyticsStreamInputBlobAttributes) TimeFormat() terra.StringValue {
-	return terra.ReferenceString(sasib.ref.Append("time_format"))
+	return terra.ReferenceAsString(sasib.ref.Append("time_format"))
 }
 
 func (sasib streamAnalyticsStreamInputBlobAttributes) Serialization() terra.ListValue[streamanalyticsstreaminputblob.SerializationAttributes] {
-	return terra.ReferenceList[streamanalyticsstreaminputblob.SerializationAttributes](sasib.ref.Append("serialization"))
+	return terra.ReferenceAsList[streamanalyticsstreaminputblob.SerializationAttributes](sasib.ref.Append("serialization"))
 }
 
 func (sasib streamAnalyticsStreamInputBlobAttributes) Timeouts() streamanalyticsstreaminputblob.TimeoutsAttributes {
-	return terra.ReferenceSingle[streamanalyticsstreaminputblob.TimeoutsAttributes](sasib.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[streamanalyticsstreaminputblob.TimeoutsAttributes](sasib.ref.Append("timeouts"))
 }
 
 type streamAnalyticsStreamInputBlobState struct {

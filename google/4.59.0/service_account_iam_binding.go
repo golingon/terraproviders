@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewServiceAccountIamBinding creates a new instance of [ServiceAccountIamBinding].
 func NewServiceAccountIamBinding(name string, args ServiceAccountIamBindingArgs) *ServiceAccountIamBinding {
 	return &ServiceAccountIamBinding{
 		Args: args,
@@ -19,28 +20,51 @@ func NewServiceAccountIamBinding(name string, args ServiceAccountIamBindingArgs)
 
 var _ terra.Resource = (*ServiceAccountIamBinding)(nil)
 
+// ServiceAccountIamBinding represents the Terraform resource google_service_account_iam_binding.
 type ServiceAccountIamBinding struct {
-	Name  string
-	Args  ServiceAccountIamBindingArgs
-	state *serviceAccountIamBindingState
+	Name      string
+	Args      ServiceAccountIamBindingArgs
+	state     *serviceAccountIamBindingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ServiceAccountIamBinding].
 func (saib *ServiceAccountIamBinding) Type() string {
 	return "google_service_account_iam_binding"
 }
 
+// LocalName returns the local name for [ServiceAccountIamBinding].
 func (saib *ServiceAccountIamBinding) LocalName() string {
 	return saib.Name
 }
 
+// Configuration returns the configuration (args) for [ServiceAccountIamBinding].
 func (saib *ServiceAccountIamBinding) Configuration() interface{} {
 	return saib.Args
 }
 
+// DependOn is used for other resources to depend on [ServiceAccountIamBinding].
+func (saib *ServiceAccountIamBinding) DependOn() terra.Reference {
+	return terra.ReferenceResource(saib)
+}
+
+// Dependencies returns the list of resources [ServiceAccountIamBinding] depends_on.
+func (saib *ServiceAccountIamBinding) Dependencies() terra.Dependencies {
+	return saib.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ServiceAccountIamBinding].
+func (saib *ServiceAccountIamBinding) LifecycleManagement() *terra.Lifecycle {
+	return saib.Lifecycle
+}
+
+// Attributes returns the attributes for [ServiceAccountIamBinding].
 func (saib *ServiceAccountIamBinding) Attributes() serviceAccountIamBindingAttributes {
 	return serviceAccountIamBindingAttributes{ref: terra.ReferenceResource(saib)}
 }
 
+// ImportState imports the given attribute values into [ServiceAccountIamBinding]'s state.
 func (saib *ServiceAccountIamBinding) ImportState(av io.Reader) error {
 	saib.state = &serviceAccountIamBindingState{}
 	if err := json.NewDecoder(av).Decode(saib.state); err != nil {
@@ -49,10 +73,12 @@ func (saib *ServiceAccountIamBinding) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ServiceAccountIamBinding] has state.
 func (saib *ServiceAccountIamBinding) State() (*serviceAccountIamBindingState, bool) {
 	return saib.state, saib.state != nil
 }
 
+// StateMust returns the state for [ServiceAccountIamBinding]. Panics if the state is nil.
 func (saib *ServiceAccountIamBinding) StateMust() *serviceAccountIamBindingState {
 	if saib.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", saib.Type(), saib.LocalName()))
@@ -60,10 +86,7 @@ func (saib *ServiceAccountIamBinding) StateMust() *serviceAccountIamBindingState
 	return saib.state
 }
 
-func (saib *ServiceAccountIamBinding) DependOn() terra.Reference {
-	return terra.ReferenceResource(saib)
-}
-
+// ServiceAccountIamBindingArgs contains the configurations for google_service_account_iam_binding.
 type ServiceAccountIamBindingArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -75,35 +98,38 @@ type ServiceAccountIamBindingArgs struct {
 	ServiceAccountId terra.StringValue `hcl:"service_account_id,attr" validate:"required"`
 	// Condition: optional
 	Condition *serviceaccountiambinding.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that ServiceAccountIamBinding depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type serviceAccountIamBindingAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_service_account_iam_binding.
 func (saib serviceAccountIamBindingAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(saib.ref.Append("etag"))
+	return terra.ReferenceAsString(saib.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_service_account_iam_binding.
 func (saib serviceAccountIamBindingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(saib.ref.Append("id"))
+	return terra.ReferenceAsString(saib.ref.Append("id"))
 }
 
+// Members returns a reference to field members of google_service_account_iam_binding.
 func (saib serviceAccountIamBindingAttributes) Members() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](saib.ref.Append("members"))
+	return terra.ReferenceAsSet[terra.StringValue](saib.ref.Append("members"))
 }
 
+// Role returns a reference to field role of google_service_account_iam_binding.
 func (saib serviceAccountIamBindingAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(saib.ref.Append("role"))
+	return terra.ReferenceAsString(saib.ref.Append("role"))
 }
 
+// ServiceAccountId returns a reference to field service_account_id of google_service_account_iam_binding.
 func (saib serviceAccountIamBindingAttributes) ServiceAccountId() terra.StringValue {
-	return terra.ReferenceString(saib.ref.Append("service_account_id"))
+	return terra.ReferenceAsString(saib.ref.Append("service_account_id"))
 }
 
 func (saib serviceAccountIamBindingAttributes) Condition() terra.ListValue[serviceaccountiambinding.ConditionAttributes] {
-	return terra.ReferenceList[serviceaccountiambinding.ConditionAttributes](saib.ref.Append("condition"))
+	return terra.ReferenceAsList[serviceaccountiambinding.ConditionAttributes](saib.ref.Append("condition"))
 }
 
 type serviceAccountIamBindingState struct {

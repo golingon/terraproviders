@@ -26,7 +26,7 @@ func (ve VpcEndpointAttributes) InternalWithRef(ref terra.Reference) VpcEndpoint
 	return VpcEndpointAttributes{ref: ref}
 }
 
-func (ve VpcEndpointAttributes) InternalTokens() hclwrite.Tokens {
+func (ve VpcEndpointAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ve.ref.InternalTokens()
 }
 
@@ -54,7 +54,7 @@ func (ni NetworkInterfaceAttributes) InternalWithRef(ref terra.Reference) Networ
 	return NetworkInterfaceAttributes{ref: ref}
 }
 
-func (ni NetworkInterfaceAttributes) InternalTokens() hclwrite.Tokens {
+func (ni NetworkInterfaceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ni.ref.InternalTokens()
 }
 

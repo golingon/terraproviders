@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLoggingMetric creates a new instance of [LoggingMetric].
 func NewLoggingMetric(name string, args LoggingMetricArgs) *LoggingMetric {
 	return &LoggingMetric{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLoggingMetric(name string, args LoggingMetricArgs) *LoggingMetric {
 
 var _ terra.Resource = (*LoggingMetric)(nil)
 
+// LoggingMetric represents the Terraform resource google_logging_metric.
 type LoggingMetric struct {
-	Name  string
-	Args  LoggingMetricArgs
-	state *loggingMetricState
+	Name      string
+	Args      LoggingMetricArgs
+	state     *loggingMetricState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LoggingMetric].
 func (lm *LoggingMetric) Type() string {
 	return "google_logging_metric"
 }
 
+// LocalName returns the local name for [LoggingMetric].
 func (lm *LoggingMetric) LocalName() string {
 	return lm.Name
 }
 
+// Configuration returns the configuration (args) for [LoggingMetric].
 func (lm *LoggingMetric) Configuration() interface{} {
 	return lm.Args
 }
 
+// DependOn is used for other resources to depend on [LoggingMetric].
+func (lm *LoggingMetric) DependOn() terra.Reference {
+	return terra.ReferenceResource(lm)
+}
+
+// Dependencies returns the list of resources [LoggingMetric] depends_on.
+func (lm *LoggingMetric) Dependencies() terra.Dependencies {
+	return lm.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LoggingMetric].
+func (lm *LoggingMetric) LifecycleManagement() *terra.Lifecycle {
+	return lm.Lifecycle
+}
+
+// Attributes returns the attributes for [LoggingMetric].
 func (lm *LoggingMetric) Attributes() loggingMetricAttributes {
 	return loggingMetricAttributes{ref: terra.ReferenceResource(lm)}
 }
 
+// ImportState imports the given attribute values into [LoggingMetric]'s state.
 func (lm *LoggingMetric) ImportState(av io.Reader) error {
 	lm.state = &loggingMetricState{}
 	if err := json.NewDecoder(av).Decode(lm.state); err != nil {
@@ -49,10 +73,12 @@ func (lm *LoggingMetric) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LoggingMetric] has state.
 func (lm *LoggingMetric) State() (*loggingMetricState, bool) {
 	return lm.state, lm.state != nil
 }
 
+// StateMust returns the state for [LoggingMetric]. Panics if the state is nil.
 func (lm *LoggingMetric) StateMust() *loggingMetricState {
 	if lm.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lm.Type(), lm.LocalName()))
@@ -60,10 +86,7 @@ func (lm *LoggingMetric) StateMust() *loggingMetricState {
 	return lm.state
 }
 
-func (lm *LoggingMetric) DependOn() terra.Reference {
-	return terra.ReferenceResource(lm)
-}
-
+// LoggingMetricArgs contains the configurations for google_logging_metric.
 type LoggingMetricArgs struct {
 	// BucketName: string, optional
 	BucketName terra.StringValue `hcl:"bucket_name,attr"`
@@ -87,55 +110,61 @@ type LoggingMetricArgs struct {
 	MetricDescriptor *loggingmetric.MetricDescriptor `hcl:"metric_descriptor,block"`
 	// Timeouts: optional
 	Timeouts *loggingmetric.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LoggingMetric depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type loggingMetricAttributes struct {
 	ref terra.Reference
 }
 
+// BucketName returns a reference to field bucket_name of google_logging_metric.
 func (lm loggingMetricAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(lm.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(lm.ref.Append("bucket_name"))
 }
 
+// Description returns a reference to field description of google_logging_metric.
 func (lm loggingMetricAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(lm.ref.Append("description"))
+	return terra.ReferenceAsString(lm.ref.Append("description"))
 }
 
+// Filter returns a reference to field filter of google_logging_metric.
 func (lm loggingMetricAttributes) Filter() terra.StringValue {
-	return terra.ReferenceString(lm.ref.Append("filter"))
+	return terra.ReferenceAsString(lm.ref.Append("filter"))
 }
 
+// Id returns a reference to field id of google_logging_metric.
 func (lm loggingMetricAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lm.ref.Append("id"))
+	return terra.ReferenceAsString(lm.ref.Append("id"))
 }
 
+// LabelExtractors returns a reference to field label_extractors of google_logging_metric.
 func (lm loggingMetricAttributes) LabelExtractors() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lm.ref.Append("label_extractors"))
+	return terra.ReferenceAsMap[terra.StringValue](lm.ref.Append("label_extractors"))
 }
 
+// Name returns a reference to field name of google_logging_metric.
 func (lm loggingMetricAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lm.ref.Append("name"))
+	return terra.ReferenceAsString(lm.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_logging_metric.
 func (lm loggingMetricAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(lm.ref.Append("project"))
+	return terra.ReferenceAsString(lm.ref.Append("project"))
 }
 
+// ValueExtractor returns a reference to field value_extractor of google_logging_metric.
 func (lm loggingMetricAttributes) ValueExtractor() terra.StringValue {
-	return terra.ReferenceString(lm.ref.Append("value_extractor"))
+	return terra.ReferenceAsString(lm.ref.Append("value_extractor"))
 }
 
 func (lm loggingMetricAttributes) BucketOptions() terra.ListValue[loggingmetric.BucketOptionsAttributes] {
-	return terra.ReferenceList[loggingmetric.BucketOptionsAttributes](lm.ref.Append("bucket_options"))
+	return terra.ReferenceAsList[loggingmetric.BucketOptionsAttributes](lm.ref.Append("bucket_options"))
 }
 
 func (lm loggingMetricAttributes) MetricDescriptor() terra.ListValue[loggingmetric.MetricDescriptorAttributes] {
-	return terra.ReferenceList[loggingmetric.MetricDescriptorAttributes](lm.ref.Append("metric_descriptor"))
+	return terra.ReferenceAsList[loggingmetric.MetricDescriptorAttributes](lm.ref.Append("metric_descriptor"))
 }
 
 func (lm loggingMetricAttributes) Timeouts() loggingmetric.TimeoutsAttributes {
-	return terra.ReferenceSingle[loggingmetric.TimeoutsAttributes](lm.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[loggingmetric.TimeoutsAttributes](lm.ref.Append("timeouts"))
 }
 
 type loggingMetricState struct {

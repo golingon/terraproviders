@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCloudRunServiceIamPolicy creates a new instance of [CloudRunServiceIamPolicy].
 func NewCloudRunServiceIamPolicy(name string, args CloudRunServiceIamPolicyArgs) *CloudRunServiceIamPolicy {
 	return &CloudRunServiceIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCloudRunServiceIamPolicy(name string, args CloudRunServiceIamPolicyArgs)
 
 var _ terra.Resource = (*CloudRunServiceIamPolicy)(nil)
 
+// CloudRunServiceIamPolicy represents the Terraform resource google_cloud_run_service_iam_policy.
 type CloudRunServiceIamPolicy struct {
-	Name  string
-	Args  CloudRunServiceIamPolicyArgs
-	state *cloudRunServiceIamPolicyState
+	Name      string
+	Args      CloudRunServiceIamPolicyArgs
+	state     *cloudRunServiceIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudRunServiceIamPolicy].
 func (crsip *CloudRunServiceIamPolicy) Type() string {
 	return "google_cloud_run_service_iam_policy"
 }
 
+// LocalName returns the local name for [CloudRunServiceIamPolicy].
 func (crsip *CloudRunServiceIamPolicy) LocalName() string {
 	return crsip.Name
 }
 
+// Configuration returns the configuration (args) for [CloudRunServiceIamPolicy].
 func (crsip *CloudRunServiceIamPolicy) Configuration() interface{} {
 	return crsip.Args
 }
 
+// DependOn is used for other resources to depend on [CloudRunServiceIamPolicy].
+func (crsip *CloudRunServiceIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(crsip)
+}
+
+// Dependencies returns the list of resources [CloudRunServiceIamPolicy] depends_on.
+func (crsip *CloudRunServiceIamPolicy) Dependencies() terra.Dependencies {
+	return crsip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudRunServiceIamPolicy].
+func (crsip *CloudRunServiceIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return crsip.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudRunServiceIamPolicy].
 func (crsip *CloudRunServiceIamPolicy) Attributes() cloudRunServiceIamPolicyAttributes {
 	return cloudRunServiceIamPolicyAttributes{ref: terra.ReferenceResource(crsip)}
 }
 
+// ImportState imports the given attribute values into [CloudRunServiceIamPolicy]'s state.
 func (crsip *CloudRunServiceIamPolicy) ImportState(av io.Reader) error {
 	crsip.state = &cloudRunServiceIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(crsip.state); err != nil {
@@ -48,10 +72,12 @@ func (crsip *CloudRunServiceIamPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudRunServiceIamPolicy] has state.
 func (crsip *CloudRunServiceIamPolicy) State() (*cloudRunServiceIamPolicyState, bool) {
 	return crsip.state, crsip.state != nil
 }
 
+// StateMust returns the state for [CloudRunServiceIamPolicy]. Panics if the state is nil.
 func (crsip *CloudRunServiceIamPolicy) StateMust() *cloudRunServiceIamPolicyState {
 	if crsip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", crsip.Type(), crsip.LocalName()))
@@ -59,10 +85,7 @@ func (crsip *CloudRunServiceIamPolicy) StateMust() *cloudRunServiceIamPolicyStat
 	return crsip.state
 }
 
-func (crsip *CloudRunServiceIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(crsip)
-}
-
+// CloudRunServiceIamPolicyArgs contains the configurations for google_cloud_run_service_iam_policy.
 type CloudRunServiceIamPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -74,35 +97,39 @@ type CloudRunServiceIamPolicyArgs struct {
 	Project terra.StringValue `hcl:"project,attr"`
 	// Service: string, required
 	Service terra.StringValue `hcl:"service,attr" validate:"required"`
-	// DependsOn contains resources that CloudRunServiceIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudRunServiceIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_cloud_run_service_iam_policy.
 func (crsip cloudRunServiceIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(crsip.ref.Append("etag"))
+	return terra.ReferenceAsString(crsip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_cloud_run_service_iam_policy.
 func (crsip cloudRunServiceIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(crsip.ref.Append("id"))
+	return terra.ReferenceAsString(crsip.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_cloud_run_service_iam_policy.
 func (crsip cloudRunServiceIamPolicyAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(crsip.ref.Append("location"))
+	return terra.ReferenceAsString(crsip.ref.Append("location"))
 }
 
+// PolicyData returns a reference to field policy_data of google_cloud_run_service_iam_policy.
 func (crsip cloudRunServiceIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(crsip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(crsip.ref.Append("policy_data"))
 }
 
+// Project returns a reference to field project of google_cloud_run_service_iam_policy.
 func (crsip cloudRunServiceIamPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(crsip.ref.Append("project"))
+	return terra.ReferenceAsString(crsip.ref.Append("project"))
 }
 
+// Service returns a reference to field service of google_cloud_run_service_iam_policy.
 func (crsip cloudRunServiceIamPolicyAttributes) Service() terra.StringValue {
-	return terra.ReferenceString(crsip.ref.Append("service"))
+	return terra.ReferenceAsString(crsip.ref.Append("service"))
 }
 
 type cloudRunServiceIamPolicyState struct {

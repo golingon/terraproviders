@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewPrivatecaCertificateTemplateIamPolicy creates a new instance of [PrivatecaCertificateTemplateIamPolicy].
 func NewPrivatecaCertificateTemplateIamPolicy(name string, args PrivatecaCertificateTemplateIamPolicyArgs) *PrivatecaCertificateTemplateIamPolicy {
 	return &PrivatecaCertificateTemplateIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewPrivatecaCertificateTemplateIamPolicy(name string, args PrivatecaCertifi
 
 var _ terra.Resource = (*PrivatecaCertificateTemplateIamPolicy)(nil)
 
+// PrivatecaCertificateTemplateIamPolicy represents the Terraform resource google_privateca_certificate_template_iam_policy.
 type PrivatecaCertificateTemplateIamPolicy struct {
-	Name  string
-	Args  PrivatecaCertificateTemplateIamPolicyArgs
-	state *privatecaCertificateTemplateIamPolicyState
+	Name      string
+	Args      PrivatecaCertificateTemplateIamPolicyArgs
+	state     *privatecaCertificateTemplateIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PrivatecaCertificateTemplateIamPolicy].
 func (pctip *PrivatecaCertificateTemplateIamPolicy) Type() string {
 	return "google_privateca_certificate_template_iam_policy"
 }
 
+// LocalName returns the local name for [PrivatecaCertificateTemplateIamPolicy].
 func (pctip *PrivatecaCertificateTemplateIamPolicy) LocalName() string {
 	return pctip.Name
 }
 
+// Configuration returns the configuration (args) for [PrivatecaCertificateTemplateIamPolicy].
 func (pctip *PrivatecaCertificateTemplateIamPolicy) Configuration() interface{} {
 	return pctip.Args
 }
 
+// DependOn is used for other resources to depend on [PrivatecaCertificateTemplateIamPolicy].
+func (pctip *PrivatecaCertificateTemplateIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(pctip)
+}
+
+// Dependencies returns the list of resources [PrivatecaCertificateTemplateIamPolicy] depends_on.
+func (pctip *PrivatecaCertificateTemplateIamPolicy) Dependencies() terra.Dependencies {
+	return pctip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PrivatecaCertificateTemplateIamPolicy].
+func (pctip *PrivatecaCertificateTemplateIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return pctip.Lifecycle
+}
+
+// Attributes returns the attributes for [PrivatecaCertificateTemplateIamPolicy].
 func (pctip *PrivatecaCertificateTemplateIamPolicy) Attributes() privatecaCertificateTemplateIamPolicyAttributes {
 	return privatecaCertificateTemplateIamPolicyAttributes{ref: terra.ReferenceResource(pctip)}
 }
 
+// ImportState imports the given attribute values into [PrivatecaCertificateTemplateIamPolicy]'s state.
 func (pctip *PrivatecaCertificateTemplateIamPolicy) ImportState(av io.Reader) error {
 	pctip.state = &privatecaCertificateTemplateIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(pctip.state); err != nil {
@@ -48,10 +72,12 @@ func (pctip *PrivatecaCertificateTemplateIamPolicy) ImportState(av io.Reader) er
 	return nil
 }
 
+// State returns the state and a bool indicating if [PrivatecaCertificateTemplateIamPolicy] has state.
 func (pctip *PrivatecaCertificateTemplateIamPolicy) State() (*privatecaCertificateTemplateIamPolicyState, bool) {
 	return pctip.state, pctip.state != nil
 }
 
+// StateMust returns the state for [PrivatecaCertificateTemplateIamPolicy]. Panics if the state is nil.
 func (pctip *PrivatecaCertificateTemplateIamPolicy) StateMust() *privatecaCertificateTemplateIamPolicyState {
 	if pctip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pctip.Type(), pctip.LocalName()))
@@ -59,10 +85,7 @@ func (pctip *PrivatecaCertificateTemplateIamPolicy) StateMust() *privatecaCertif
 	return pctip.state
 }
 
-func (pctip *PrivatecaCertificateTemplateIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(pctip)
-}
-
+// PrivatecaCertificateTemplateIamPolicyArgs contains the configurations for google_privateca_certificate_template_iam_policy.
 type PrivatecaCertificateTemplateIamPolicyArgs struct {
 	// CertificateTemplate: string, required
 	CertificateTemplate terra.StringValue `hcl:"certificate_template,attr" validate:"required"`
@@ -74,35 +97,39 @@ type PrivatecaCertificateTemplateIamPolicyArgs struct {
 	PolicyData terra.StringValue `hcl:"policy_data,attr" validate:"required"`
 	// Project: string, optional
 	Project terra.StringValue `hcl:"project,attr"`
-	// DependsOn contains resources that PrivatecaCertificateTemplateIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type privatecaCertificateTemplateIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// CertificateTemplate returns a reference to field certificate_template of google_privateca_certificate_template_iam_policy.
 func (pctip privatecaCertificateTemplateIamPolicyAttributes) CertificateTemplate() terra.StringValue {
-	return terra.ReferenceString(pctip.ref.Append("certificate_template"))
+	return terra.ReferenceAsString(pctip.ref.Append("certificate_template"))
 }
 
+// Etag returns a reference to field etag of google_privateca_certificate_template_iam_policy.
 func (pctip privatecaCertificateTemplateIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(pctip.ref.Append("etag"))
+	return terra.ReferenceAsString(pctip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_privateca_certificate_template_iam_policy.
 func (pctip privatecaCertificateTemplateIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pctip.ref.Append("id"))
+	return terra.ReferenceAsString(pctip.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_privateca_certificate_template_iam_policy.
 func (pctip privatecaCertificateTemplateIamPolicyAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(pctip.ref.Append("location"))
+	return terra.ReferenceAsString(pctip.ref.Append("location"))
 }
 
+// PolicyData returns a reference to field policy_data of google_privateca_certificate_template_iam_policy.
 func (pctip privatecaCertificateTemplateIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(pctip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(pctip.ref.Append("policy_data"))
 }
 
+// Project returns a reference to field project of google_privateca_certificate_template_iam_policy.
 func (pctip privatecaCertificateTemplateIamPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(pctip.ref.Append("project"))
+	return terra.ReferenceAsString(pctip.ref.Append("project"))
 }
 
 type privatecaCertificateTemplateIamPolicyState struct {

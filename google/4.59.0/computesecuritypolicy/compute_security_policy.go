@@ -148,444 +148,444 @@ type AdaptiveProtectionConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (apc AdaptiveProtectionConfigAttributes) InternalRef() terra.Reference {
-	return apc.ref
+func (apc AdaptiveProtectionConfigAttributes) InternalRef() (terra.Reference, error) {
+	return apc.ref, nil
 }
 
 func (apc AdaptiveProtectionConfigAttributes) InternalWithRef(ref terra.Reference) AdaptiveProtectionConfigAttributes {
 	return AdaptiveProtectionConfigAttributes{ref: ref}
 }
 
-func (apc AdaptiveProtectionConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (apc AdaptiveProtectionConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return apc.ref.InternalTokens()
 }
 
 func (apc AdaptiveProtectionConfigAttributes) Layer7DdosDefenseConfig() terra.ListValue[Layer7DdosDefenseConfigAttributes] {
-	return terra.ReferenceList[Layer7DdosDefenseConfigAttributes](apc.ref.Append("layer_7_ddos_defense_config"))
+	return terra.ReferenceAsList[Layer7DdosDefenseConfigAttributes](apc.ref.Append("layer_7_ddos_defense_config"))
 }
 
 type Layer7DdosDefenseConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (l7ddc Layer7DdosDefenseConfigAttributes) InternalRef() terra.Reference {
-	return l7ddc.ref
+func (l7ddc Layer7DdosDefenseConfigAttributes) InternalRef() (terra.Reference, error) {
+	return l7ddc.ref, nil
 }
 
 func (l7ddc Layer7DdosDefenseConfigAttributes) InternalWithRef(ref terra.Reference) Layer7DdosDefenseConfigAttributes {
 	return Layer7DdosDefenseConfigAttributes{ref: ref}
 }
 
-func (l7ddc Layer7DdosDefenseConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (l7ddc Layer7DdosDefenseConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l7ddc.ref.InternalTokens()
 }
 
 func (l7ddc Layer7DdosDefenseConfigAttributes) Enable() terra.BoolValue {
-	return terra.ReferenceBool(l7ddc.ref.Append("enable"))
+	return terra.ReferenceAsBool(l7ddc.ref.Append("enable"))
 }
 
 func (l7ddc Layer7DdosDefenseConfigAttributes) RuleVisibility() terra.StringValue {
-	return terra.ReferenceString(l7ddc.ref.Append("rule_visibility"))
+	return terra.ReferenceAsString(l7ddc.ref.Append("rule_visibility"))
 }
 
 type AdvancedOptionsConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (aoc AdvancedOptionsConfigAttributes) InternalRef() terra.Reference {
-	return aoc.ref
+func (aoc AdvancedOptionsConfigAttributes) InternalRef() (terra.Reference, error) {
+	return aoc.ref, nil
 }
 
 func (aoc AdvancedOptionsConfigAttributes) InternalWithRef(ref terra.Reference) AdvancedOptionsConfigAttributes {
 	return AdvancedOptionsConfigAttributes{ref: ref}
 }
 
-func (aoc AdvancedOptionsConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (aoc AdvancedOptionsConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aoc.ref.InternalTokens()
 }
 
 func (aoc AdvancedOptionsConfigAttributes) JsonParsing() terra.StringValue {
-	return terra.ReferenceString(aoc.ref.Append("json_parsing"))
+	return terra.ReferenceAsString(aoc.ref.Append("json_parsing"))
 }
 
 func (aoc AdvancedOptionsConfigAttributes) LogLevel() terra.StringValue {
-	return terra.ReferenceString(aoc.ref.Append("log_level"))
+	return terra.ReferenceAsString(aoc.ref.Append("log_level"))
 }
 
 func (aoc AdvancedOptionsConfigAttributes) JsonCustomConfig() terra.ListValue[JsonCustomConfigAttributes] {
-	return terra.ReferenceList[JsonCustomConfigAttributes](aoc.ref.Append("json_custom_config"))
+	return terra.ReferenceAsList[JsonCustomConfigAttributes](aoc.ref.Append("json_custom_config"))
 }
 
 type JsonCustomConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (jcc JsonCustomConfigAttributes) InternalRef() terra.Reference {
-	return jcc.ref
+func (jcc JsonCustomConfigAttributes) InternalRef() (terra.Reference, error) {
+	return jcc.ref, nil
 }
 
 func (jcc JsonCustomConfigAttributes) InternalWithRef(ref terra.Reference) JsonCustomConfigAttributes {
 	return JsonCustomConfigAttributes{ref: ref}
 }
 
-func (jcc JsonCustomConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (jcc JsonCustomConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return jcc.ref.InternalTokens()
 }
 
 func (jcc JsonCustomConfigAttributes) ContentTypes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](jcc.ref.Append("content_types"))
+	return terra.ReferenceAsSet[terra.StringValue](jcc.ref.Append("content_types"))
 }
 
 type RecaptchaOptionsConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (roc RecaptchaOptionsConfigAttributes) InternalRef() terra.Reference {
-	return roc.ref
+func (roc RecaptchaOptionsConfigAttributes) InternalRef() (terra.Reference, error) {
+	return roc.ref, nil
 }
 
 func (roc RecaptchaOptionsConfigAttributes) InternalWithRef(ref terra.Reference) RecaptchaOptionsConfigAttributes {
 	return RecaptchaOptionsConfigAttributes{ref: ref}
 }
 
-func (roc RecaptchaOptionsConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (roc RecaptchaOptionsConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return roc.ref.InternalTokens()
 }
 
 func (roc RecaptchaOptionsConfigAttributes) RedirectSiteKey() terra.StringValue {
-	return terra.ReferenceString(roc.ref.Append("redirect_site_key"))
+	return terra.ReferenceAsString(roc.ref.Append("redirect_site_key"))
 }
 
 type RuleAttributes struct {
 	ref terra.Reference
 }
 
-func (r RuleAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RuleAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RuleAttributes) InternalWithRef(ref terra.Reference) RuleAttributes {
 	return RuleAttributes{ref: ref}
 }
 
-func (r RuleAttributes) InternalTokens() hclwrite.Tokens {
+func (r RuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RuleAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("action"))
+	return terra.ReferenceAsString(r.ref.Append("action"))
 }
 
 func (r RuleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("description"))
+	return terra.ReferenceAsString(r.ref.Append("description"))
 }
 
 func (r RuleAttributes) Preview() terra.BoolValue {
-	return terra.ReferenceBool(r.ref.Append("preview"))
+	return terra.ReferenceAsBool(r.ref.Append("preview"))
 }
 
 func (r RuleAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("priority"))
+	return terra.ReferenceAsNumber(r.ref.Append("priority"))
 }
 
 func (r RuleAttributes) HeaderAction() terra.ListValue[HeaderActionAttributes] {
-	return terra.ReferenceList[HeaderActionAttributes](r.ref.Append("header_action"))
+	return terra.ReferenceAsList[HeaderActionAttributes](r.ref.Append("header_action"))
 }
 
 func (r RuleAttributes) Match() terra.ListValue[MatchAttributes] {
-	return terra.ReferenceList[MatchAttributes](r.ref.Append("match"))
+	return terra.ReferenceAsList[MatchAttributes](r.ref.Append("match"))
 }
 
 func (r RuleAttributes) RateLimitOptions() terra.ListValue[RateLimitOptionsAttributes] {
-	return terra.ReferenceList[RateLimitOptionsAttributes](r.ref.Append("rate_limit_options"))
+	return terra.ReferenceAsList[RateLimitOptionsAttributes](r.ref.Append("rate_limit_options"))
 }
 
 func (r RuleAttributes) RedirectOptions() terra.ListValue[RedirectOptionsAttributes] {
-	return terra.ReferenceList[RedirectOptionsAttributes](r.ref.Append("redirect_options"))
+	return terra.ReferenceAsList[RedirectOptionsAttributes](r.ref.Append("redirect_options"))
 }
 
 type HeaderActionAttributes struct {
 	ref terra.Reference
 }
 
-func (ha HeaderActionAttributes) InternalRef() terra.Reference {
-	return ha.ref
+func (ha HeaderActionAttributes) InternalRef() (terra.Reference, error) {
+	return ha.ref, nil
 }
 
 func (ha HeaderActionAttributes) InternalWithRef(ref terra.Reference) HeaderActionAttributes {
 	return HeaderActionAttributes{ref: ref}
 }
 
-func (ha HeaderActionAttributes) InternalTokens() hclwrite.Tokens {
+func (ha HeaderActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ha.ref.InternalTokens()
 }
 
 func (ha HeaderActionAttributes) RequestHeadersToAdds() terra.ListValue[RequestHeadersToAddsAttributes] {
-	return terra.ReferenceList[RequestHeadersToAddsAttributes](ha.ref.Append("request_headers_to_adds"))
+	return terra.ReferenceAsList[RequestHeadersToAddsAttributes](ha.ref.Append("request_headers_to_adds"))
 }
 
 type RequestHeadersToAddsAttributes struct {
 	ref terra.Reference
 }
 
-func (rhta RequestHeadersToAddsAttributes) InternalRef() terra.Reference {
-	return rhta.ref
+func (rhta RequestHeadersToAddsAttributes) InternalRef() (terra.Reference, error) {
+	return rhta.ref, nil
 }
 
 func (rhta RequestHeadersToAddsAttributes) InternalWithRef(ref terra.Reference) RequestHeadersToAddsAttributes {
 	return RequestHeadersToAddsAttributes{ref: ref}
 }
 
-func (rhta RequestHeadersToAddsAttributes) InternalTokens() hclwrite.Tokens {
+func (rhta RequestHeadersToAddsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rhta.ref.InternalTokens()
 }
 
 func (rhta RequestHeadersToAddsAttributes) HeaderName() terra.StringValue {
-	return terra.ReferenceString(rhta.ref.Append("header_name"))
+	return terra.ReferenceAsString(rhta.ref.Append("header_name"))
 }
 
 func (rhta RequestHeadersToAddsAttributes) HeaderValue() terra.StringValue {
-	return terra.ReferenceString(rhta.ref.Append("header_value"))
+	return terra.ReferenceAsString(rhta.ref.Append("header_value"))
 }
 
 type MatchAttributes struct {
 	ref terra.Reference
 }
 
-func (m MatchAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MatchAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MatchAttributes) InternalWithRef(ref terra.Reference) MatchAttributes {
 	return MatchAttributes{ref: ref}
 }
 
-func (m MatchAttributes) InternalTokens() hclwrite.Tokens {
+func (m MatchAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
 func (m MatchAttributes) VersionedExpr() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("versioned_expr"))
+	return terra.ReferenceAsString(m.ref.Append("versioned_expr"))
 }
 
 func (m MatchAttributes) Config() terra.ListValue[ConfigAttributes] {
-	return terra.ReferenceList[ConfigAttributes](m.ref.Append("config"))
+	return terra.ReferenceAsList[ConfigAttributes](m.ref.Append("config"))
 }
 
 func (m MatchAttributes) Expr() terra.ListValue[ExprAttributes] {
-	return terra.ReferenceList[ExprAttributes](m.ref.Append("expr"))
+	return terra.ReferenceAsList[ExprAttributes](m.ref.Append("expr"))
 }
 
 type ConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConfigAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConfigAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConfigAttributes) InternalWithRef(ref terra.Reference) ConfigAttributes {
 	return ConfigAttributes{ref: ref}
 }
 
-func (c ConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ConfigAttributes) SrcIpRanges() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](c.ref.Append("src_ip_ranges"))
+	return terra.ReferenceAsSet[terra.StringValue](c.ref.Append("src_ip_ranges"))
 }
 
 type ExprAttributes struct {
 	ref terra.Reference
 }
 
-func (e ExprAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e ExprAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e ExprAttributes) InternalWithRef(ref terra.Reference) ExprAttributes {
 	return ExprAttributes{ref: ref}
 }
 
-func (e ExprAttributes) InternalTokens() hclwrite.Tokens {
+func (e ExprAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
 func (e ExprAttributes) Expression() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("expression"))
+	return terra.ReferenceAsString(e.ref.Append("expression"))
 }
 
 type RateLimitOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (rlo RateLimitOptionsAttributes) InternalRef() terra.Reference {
-	return rlo.ref
+func (rlo RateLimitOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return rlo.ref, nil
 }
 
 func (rlo RateLimitOptionsAttributes) InternalWithRef(ref terra.Reference) RateLimitOptionsAttributes {
 	return RateLimitOptionsAttributes{ref: ref}
 }
 
-func (rlo RateLimitOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (rlo RateLimitOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rlo.ref.InternalTokens()
 }
 
 func (rlo RateLimitOptionsAttributes) BanDurationSec() terra.NumberValue {
-	return terra.ReferenceNumber(rlo.ref.Append("ban_duration_sec"))
+	return terra.ReferenceAsNumber(rlo.ref.Append("ban_duration_sec"))
 }
 
 func (rlo RateLimitOptionsAttributes) ConformAction() terra.StringValue {
-	return terra.ReferenceString(rlo.ref.Append("conform_action"))
+	return terra.ReferenceAsString(rlo.ref.Append("conform_action"))
 }
 
 func (rlo RateLimitOptionsAttributes) EnforceOnKey() terra.StringValue {
-	return terra.ReferenceString(rlo.ref.Append("enforce_on_key"))
+	return terra.ReferenceAsString(rlo.ref.Append("enforce_on_key"))
 }
 
 func (rlo RateLimitOptionsAttributes) EnforceOnKeyName() terra.StringValue {
-	return terra.ReferenceString(rlo.ref.Append("enforce_on_key_name"))
+	return terra.ReferenceAsString(rlo.ref.Append("enforce_on_key_name"))
 }
 
 func (rlo RateLimitOptionsAttributes) ExceedAction() terra.StringValue {
-	return terra.ReferenceString(rlo.ref.Append("exceed_action"))
+	return terra.ReferenceAsString(rlo.ref.Append("exceed_action"))
 }
 
 func (rlo RateLimitOptionsAttributes) BanThreshold() terra.ListValue[BanThresholdAttributes] {
-	return terra.ReferenceList[BanThresholdAttributes](rlo.ref.Append("ban_threshold"))
+	return terra.ReferenceAsList[BanThresholdAttributes](rlo.ref.Append("ban_threshold"))
 }
 
 func (rlo RateLimitOptionsAttributes) ExceedRedirectOptions() terra.ListValue[ExceedRedirectOptionsAttributes] {
-	return terra.ReferenceList[ExceedRedirectOptionsAttributes](rlo.ref.Append("exceed_redirect_options"))
+	return terra.ReferenceAsList[ExceedRedirectOptionsAttributes](rlo.ref.Append("exceed_redirect_options"))
 }
 
 func (rlo RateLimitOptionsAttributes) RateLimitThreshold() terra.ListValue[RateLimitThresholdAttributes] {
-	return terra.ReferenceList[RateLimitThresholdAttributes](rlo.ref.Append("rate_limit_threshold"))
+	return terra.ReferenceAsList[RateLimitThresholdAttributes](rlo.ref.Append("rate_limit_threshold"))
 }
 
 type BanThresholdAttributes struct {
 	ref terra.Reference
 }
 
-func (bt BanThresholdAttributes) InternalRef() terra.Reference {
-	return bt.ref
+func (bt BanThresholdAttributes) InternalRef() (terra.Reference, error) {
+	return bt.ref, nil
 }
 
 func (bt BanThresholdAttributes) InternalWithRef(ref terra.Reference) BanThresholdAttributes {
 	return BanThresholdAttributes{ref: ref}
 }
 
-func (bt BanThresholdAttributes) InternalTokens() hclwrite.Tokens {
+func (bt BanThresholdAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bt.ref.InternalTokens()
 }
 
 func (bt BanThresholdAttributes) Count() terra.NumberValue {
-	return terra.ReferenceNumber(bt.ref.Append("count"))
+	return terra.ReferenceAsNumber(bt.ref.Append("count"))
 }
 
 func (bt BanThresholdAttributes) IntervalSec() terra.NumberValue {
-	return terra.ReferenceNumber(bt.ref.Append("interval_sec"))
+	return terra.ReferenceAsNumber(bt.ref.Append("interval_sec"))
 }
 
 type ExceedRedirectOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (ero ExceedRedirectOptionsAttributes) InternalRef() terra.Reference {
-	return ero.ref
+func (ero ExceedRedirectOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return ero.ref, nil
 }
 
 func (ero ExceedRedirectOptionsAttributes) InternalWithRef(ref terra.Reference) ExceedRedirectOptionsAttributes {
 	return ExceedRedirectOptionsAttributes{ref: ref}
 }
 
-func (ero ExceedRedirectOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (ero ExceedRedirectOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ero.ref.InternalTokens()
 }
 
 func (ero ExceedRedirectOptionsAttributes) Target() terra.StringValue {
-	return terra.ReferenceString(ero.ref.Append("target"))
+	return terra.ReferenceAsString(ero.ref.Append("target"))
 }
 
 func (ero ExceedRedirectOptionsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ero.ref.Append("type"))
+	return terra.ReferenceAsString(ero.ref.Append("type"))
 }
 
 type RateLimitThresholdAttributes struct {
 	ref terra.Reference
 }
 
-func (rlt RateLimitThresholdAttributes) InternalRef() terra.Reference {
-	return rlt.ref
+func (rlt RateLimitThresholdAttributes) InternalRef() (terra.Reference, error) {
+	return rlt.ref, nil
 }
 
 func (rlt RateLimitThresholdAttributes) InternalWithRef(ref terra.Reference) RateLimitThresholdAttributes {
 	return RateLimitThresholdAttributes{ref: ref}
 }
 
-func (rlt RateLimitThresholdAttributes) InternalTokens() hclwrite.Tokens {
+func (rlt RateLimitThresholdAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rlt.ref.InternalTokens()
 }
 
 func (rlt RateLimitThresholdAttributes) Count() terra.NumberValue {
-	return terra.ReferenceNumber(rlt.ref.Append("count"))
+	return terra.ReferenceAsNumber(rlt.ref.Append("count"))
 }
 
 func (rlt RateLimitThresholdAttributes) IntervalSec() terra.NumberValue {
-	return terra.ReferenceNumber(rlt.ref.Append("interval_sec"))
+	return terra.ReferenceAsNumber(rlt.ref.Append("interval_sec"))
 }
 
 type RedirectOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (ro RedirectOptionsAttributes) InternalRef() terra.Reference {
-	return ro.ref
+func (ro RedirectOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return ro.ref, nil
 }
 
 func (ro RedirectOptionsAttributes) InternalWithRef(ref terra.Reference) RedirectOptionsAttributes {
 	return RedirectOptionsAttributes{ref: ref}
 }
 
-func (ro RedirectOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (ro RedirectOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ro.ref.InternalTokens()
 }
 
 func (ro RedirectOptionsAttributes) Target() terra.StringValue {
-	return terra.ReferenceString(ro.ref.Append("target"))
+	return terra.ReferenceAsString(ro.ref.Append("target"))
 }
 
 func (ro RedirectOptionsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ro.ref.Append("type"))
+	return terra.ReferenceAsString(ro.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AdaptiveProtectionConfigState struct {

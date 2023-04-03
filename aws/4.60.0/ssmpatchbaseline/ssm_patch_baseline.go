@@ -55,7 +55,7 @@ func (ar ApprovalRuleAttributes) InternalWithRef(ref terra.Reference) ApprovalRu
 	return ApprovalRuleAttributes{ref: ref}
 }
 
-func (ar ApprovalRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (ar ApprovalRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ar.ref.InternalTokens()
 }
 
@@ -91,7 +91,7 @@ func (pf PatchFilterAttributes) InternalWithRef(ref terra.Reference) PatchFilter
 	return PatchFilterAttributes{ref: ref}
 }
 
-func (pf PatchFilterAttributes) InternalTokens() hclwrite.Tokens {
+func (pf PatchFilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pf.ref.InternalTokens()
 }
 
@@ -115,7 +115,7 @@ func (gf GlobalFilterAttributes) InternalWithRef(ref terra.Reference) GlobalFilt
 	return GlobalFilterAttributes{ref: ref}
 }
 
-func (gf GlobalFilterAttributes) InternalTokens() hclwrite.Tokens {
+func (gf GlobalFilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gf.ref.InternalTokens()
 }
 
@@ -139,7 +139,7 @@ func (s SourceAttributes) InternalWithRef(ref terra.Reference) SourceAttributes 
 	return SourceAttributes{ref: ref}
 }
 
-func (s SourceAttributes) InternalTokens() hclwrite.Tokens {
+func (s SourceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApplicationSecurityGroup creates a new instance of [ApplicationSecurityGroup].
 func NewApplicationSecurityGroup(name string, args ApplicationSecurityGroupArgs) *ApplicationSecurityGroup {
 	return &ApplicationSecurityGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApplicationSecurityGroup(name string, args ApplicationSecurityGroupArgs)
 
 var _ terra.Resource = (*ApplicationSecurityGroup)(nil)
 
+// ApplicationSecurityGroup represents the Terraform resource azurerm_application_security_group.
 type ApplicationSecurityGroup struct {
-	Name  string
-	Args  ApplicationSecurityGroupArgs
-	state *applicationSecurityGroupState
+	Name      string
+	Args      ApplicationSecurityGroupArgs
+	state     *applicationSecurityGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApplicationSecurityGroup].
 func (asg *ApplicationSecurityGroup) Type() string {
 	return "azurerm_application_security_group"
 }
 
+// LocalName returns the local name for [ApplicationSecurityGroup].
 func (asg *ApplicationSecurityGroup) LocalName() string {
 	return asg.Name
 }
 
+// Configuration returns the configuration (args) for [ApplicationSecurityGroup].
 func (asg *ApplicationSecurityGroup) Configuration() interface{} {
 	return asg.Args
 }
 
+// DependOn is used for other resources to depend on [ApplicationSecurityGroup].
+func (asg *ApplicationSecurityGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(asg)
+}
+
+// Dependencies returns the list of resources [ApplicationSecurityGroup] depends_on.
+func (asg *ApplicationSecurityGroup) Dependencies() terra.Dependencies {
+	return asg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApplicationSecurityGroup].
+func (asg *ApplicationSecurityGroup) LifecycleManagement() *terra.Lifecycle {
+	return asg.Lifecycle
+}
+
+// Attributes returns the attributes for [ApplicationSecurityGroup].
 func (asg *ApplicationSecurityGroup) Attributes() applicationSecurityGroupAttributes {
 	return applicationSecurityGroupAttributes{ref: terra.ReferenceResource(asg)}
 }
 
+// ImportState imports the given attribute values into [ApplicationSecurityGroup]'s state.
 func (asg *ApplicationSecurityGroup) ImportState(av io.Reader) error {
 	asg.state = &applicationSecurityGroupState{}
 	if err := json.NewDecoder(av).Decode(asg.state); err != nil {
@@ -49,10 +73,12 @@ func (asg *ApplicationSecurityGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApplicationSecurityGroup] has state.
 func (asg *ApplicationSecurityGroup) State() (*applicationSecurityGroupState, bool) {
 	return asg.state, asg.state != nil
 }
 
+// StateMust returns the state for [ApplicationSecurityGroup]. Panics if the state is nil.
 func (asg *ApplicationSecurityGroup) StateMust() *applicationSecurityGroupState {
 	if asg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", asg.Type(), asg.LocalName()))
@@ -60,10 +86,7 @@ func (asg *ApplicationSecurityGroup) StateMust() *applicationSecurityGroupState 
 	return asg.state
 }
 
-func (asg *ApplicationSecurityGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(asg)
-}
-
+// ApplicationSecurityGroupArgs contains the configurations for azurerm_application_security_group.
 type ApplicationSecurityGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,35 +100,38 @@ type ApplicationSecurityGroupArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// Timeouts: optional
 	Timeouts *applicationsecuritygroup.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ApplicationSecurityGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type applicationSecurityGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_application_security_group.
 func (asg applicationSecurityGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(asg.ref.Append("id"))
+	return terra.ReferenceAsString(asg.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_application_security_group.
 func (asg applicationSecurityGroupAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(asg.ref.Append("location"))
+	return terra.ReferenceAsString(asg.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_application_security_group.
 func (asg applicationSecurityGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(asg.ref.Append("name"))
+	return terra.ReferenceAsString(asg.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_application_security_group.
 func (asg applicationSecurityGroupAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(asg.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(asg.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_application_security_group.
 func (asg applicationSecurityGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](asg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](asg.ref.Append("tags"))
 }
 
 func (asg applicationSecurityGroupAttributes) Timeouts() applicationsecuritygroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[applicationsecuritygroup.TimeoutsAttributes](asg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[applicationsecuritygroup.TimeoutsAttributes](asg.ref.Append("timeouts"))
 }
 
 type applicationSecurityGroupState struct {

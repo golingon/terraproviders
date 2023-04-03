@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBigqueryTable creates a new instance of [BigqueryTable].
 func NewBigqueryTable(name string, args BigqueryTableArgs) *BigqueryTable {
 	return &BigqueryTable{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBigqueryTable(name string, args BigqueryTableArgs) *BigqueryTable {
 
 var _ terra.Resource = (*BigqueryTable)(nil)
 
+// BigqueryTable represents the Terraform resource google_bigquery_table.
 type BigqueryTable struct {
-	Name  string
-	Args  BigqueryTableArgs
-	state *bigqueryTableState
+	Name      string
+	Args      BigqueryTableArgs
+	state     *bigqueryTableState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BigqueryTable].
 func (bt *BigqueryTable) Type() string {
 	return "google_bigquery_table"
 }
 
+// LocalName returns the local name for [BigqueryTable].
 func (bt *BigqueryTable) LocalName() string {
 	return bt.Name
 }
 
+// Configuration returns the configuration (args) for [BigqueryTable].
 func (bt *BigqueryTable) Configuration() interface{} {
 	return bt.Args
 }
 
+// DependOn is used for other resources to depend on [BigqueryTable].
+func (bt *BigqueryTable) DependOn() terra.Reference {
+	return terra.ReferenceResource(bt)
+}
+
+// Dependencies returns the list of resources [BigqueryTable] depends_on.
+func (bt *BigqueryTable) Dependencies() terra.Dependencies {
+	return bt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BigqueryTable].
+func (bt *BigqueryTable) LifecycleManagement() *terra.Lifecycle {
+	return bt.Lifecycle
+}
+
+// Attributes returns the attributes for [BigqueryTable].
 func (bt *BigqueryTable) Attributes() bigqueryTableAttributes {
 	return bigqueryTableAttributes{ref: terra.ReferenceResource(bt)}
 }
 
+// ImportState imports the given attribute values into [BigqueryTable]'s state.
 func (bt *BigqueryTable) ImportState(av io.Reader) error {
 	bt.state = &bigqueryTableState{}
 	if err := json.NewDecoder(av).Decode(bt.state); err != nil {
@@ -49,10 +73,12 @@ func (bt *BigqueryTable) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BigqueryTable] has state.
 func (bt *BigqueryTable) State() (*bigqueryTableState, bool) {
 	return bt.state, bt.state != nil
 }
 
+// StateMust returns the state for [BigqueryTable]. Panics if the state is nil.
 func (bt *BigqueryTable) StateMust() *bigqueryTableState {
 	if bt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bt.Type(), bt.LocalName()))
@@ -60,10 +86,7 @@ func (bt *BigqueryTable) StateMust() *bigqueryTableState {
 	return bt.state
 }
 
-func (bt *BigqueryTable) DependOn() terra.Reference {
-	return terra.ReferenceResource(bt)
-}
-
+// BigqueryTableArgs contains the configurations for google_bigquery_table.
 type BigqueryTableArgs struct {
 	// Clustering: list of string, optional
 	Clustering terra.ListValue[terra.StringValue] `hcl:"clustering,attr"`
@@ -99,115 +122,133 @@ type BigqueryTableArgs struct {
 	TimePartitioning *bigquerytable.TimePartitioning `hcl:"time_partitioning,block"`
 	// View: optional
 	View *bigquerytable.View `hcl:"view,block"`
-	// DependsOn contains resources that BigqueryTable depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type bigqueryTableAttributes struct {
 	ref terra.Reference
 }
 
+// Clustering returns a reference to field clustering of google_bigquery_table.
 func (bt bigqueryTableAttributes) Clustering() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](bt.ref.Append("clustering"))
+	return terra.ReferenceAsList[terra.StringValue](bt.ref.Append("clustering"))
 }
 
+// CreationTime returns a reference to field creation_time of google_bigquery_table.
 func (bt bigqueryTableAttributes) CreationTime() terra.NumberValue {
-	return terra.ReferenceNumber(bt.ref.Append("creation_time"))
+	return terra.ReferenceAsNumber(bt.ref.Append("creation_time"))
 }
 
+// DatasetId returns a reference to field dataset_id of google_bigquery_table.
 func (bt bigqueryTableAttributes) DatasetId() terra.StringValue {
-	return terra.ReferenceString(bt.ref.Append("dataset_id"))
+	return terra.ReferenceAsString(bt.ref.Append("dataset_id"))
 }
 
+// DeletionProtection returns a reference to field deletion_protection of google_bigquery_table.
 func (bt bigqueryTableAttributes) DeletionProtection() terra.BoolValue {
-	return terra.ReferenceBool(bt.ref.Append("deletion_protection"))
+	return terra.ReferenceAsBool(bt.ref.Append("deletion_protection"))
 }
 
+// Description returns a reference to field description of google_bigquery_table.
 func (bt bigqueryTableAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(bt.ref.Append("description"))
+	return terra.ReferenceAsString(bt.ref.Append("description"))
 }
 
+// Etag returns a reference to field etag of google_bigquery_table.
 func (bt bigqueryTableAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(bt.ref.Append("etag"))
+	return terra.ReferenceAsString(bt.ref.Append("etag"))
 }
 
+// ExpirationTime returns a reference to field expiration_time of google_bigquery_table.
 func (bt bigqueryTableAttributes) ExpirationTime() terra.NumberValue {
-	return terra.ReferenceNumber(bt.ref.Append("expiration_time"))
+	return terra.ReferenceAsNumber(bt.ref.Append("expiration_time"))
 }
 
+// FriendlyName returns a reference to field friendly_name of google_bigquery_table.
 func (bt bigqueryTableAttributes) FriendlyName() terra.StringValue {
-	return terra.ReferenceString(bt.ref.Append("friendly_name"))
+	return terra.ReferenceAsString(bt.ref.Append("friendly_name"))
 }
 
+// Id returns a reference to field id of google_bigquery_table.
 func (bt bigqueryTableAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bt.ref.Append("id"))
+	return terra.ReferenceAsString(bt.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_bigquery_table.
 func (bt bigqueryTableAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bt.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](bt.ref.Append("labels"))
 }
 
+// LastModifiedTime returns a reference to field last_modified_time of google_bigquery_table.
 func (bt bigqueryTableAttributes) LastModifiedTime() terra.NumberValue {
-	return terra.ReferenceNumber(bt.ref.Append("last_modified_time"))
+	return terra.ReferenceAsNumber(bt.ref.Append("last_modified_time"))
 }
 
+// Location returns a reference to field location of google_bigquery_table.
 func (bt bigqueryTableAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(bt.ref.Append("location"))
+	return terra.ReferenceAsString(bt.ref.Append("location"))
 }
 
+// NumBytes returns a reference to field num_bytes of google_bigquery_table.
 func (bt bigqueryTableAttributes) NumBytes() terra.NumberValue {
-	return terra.ReferenceNumber(bt.ref.Append("num_bytes"))
+	return terra.ReferenceAsNumber(bt.ref.Append("num_bytes"))
 }
 
+// NumLongTermBytes returns a reference to field num_long_term_bytes of google_bigquery_table.
 func (bt bigqueryTableAttributes) NumLongTermBytes() terra.NumberValue {
-	return terra.ReferenceNumber(bt.ref.Append("num_long_term_bytes"))
+	return terra.ReferenceAsNumber(bt.ref.Append("num_long_term_bytes"))
 }
 
+// NumRows returns a reference to field num_rows of google_bigquery_table.
 func (bt bigqueryTableAttributes) NumRows() terra.NumberValue {
-	return terra.ReferenceNumber(bt.ref.Append("num_rows"))
+	return terra.ReferenceAsNumber(bt.ref.Append("num_rows"))
 }
 
+// Project returns a reference to field project of google_bigquery_table.
 func (bt bigqueryTableAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(bt.ref.Append("project"))
+	return terra.ReferenceAsString(bt.ref.Append("project"))
 }
 
+// Schema returns a reference to field schema of google_bigquery_table.
 func (bt bigqueryTableAttributes) Schema() terra.StringValue {
-	return terra.ReferenceString(bt.ref.Append("schema"))
+	return terra.ReferenceAsString(bt.ref.Append("schema"))
 }
 
+// SelfLink returns a reference to field self_link of google_bigquery_table.
 func (bt bigqueryTableAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(bt.ref.Append("self_link"))
+	return terra.ReferenceAsString(bt.ref.Append("self_link"))
 }
 
+// TableId returns a reference to field table_id of google_bigquery_table.
 func (bt bigqueryTableAttributes) TableId() terra.StringValue {
-	return terra.ReferenceString(bt.ref.Append("table_id"))
+	return terra.ReferenceAsString(bt.ref.Append("table_id"))
 }
 
+// Type returns a reference to field type of google_bigquery_table.
 func (bt bigqueryTableAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(bt.ref.Append("type"))
+	return terra.ReferenceAsString(bt.ref.Append("type"))
 }
 
 func (bt bigqueryTableAttributes) EncryptionConfiguration() terra.ListValue[bigquerytable.EncryptionConfigurationAttributes] {
-	return terra.ReferenceList[bigquerytable.EncryptionConfigurationAttributes](bt.ref.Append("encryption_configuration"))
+	return terra.ReferenceAsList[bigquerytable.EncryptionConfigurationAttributes](bt.ref.Append("encryption_configuration"))
 }
 
 func (bt bigqueryTableAttributes) ExternalDataConfiguration() terra.ListValue[bigquerytable.ExternalDataConfigurationAttributes] {
-	return terra.ReferenceList[bigquerytable.ExternalDataConfigurationAttributes](bt.ref.Append("external_data_configuration"))
+	return terra.ReferenceAsList[bigquerytable.ExternalDataConfigurationAttributes](bt.ref.Append("external_data_configuration"))
 }
 
 func (bt bigqueryTableAttributes) MaterializedView() terra.ListValue[bigquerytable.MaterializedViewAttributes] {
-	return terra.ReferenceList[bigquerytable.MaterializedViewAttributes](bt.ref.Append("materialized_view"))
+	return terra.ReferenceAsList[bigquerytable.MaterializedViewAttributes](bt.ref.Append("materialized_view"))
 }
 
 func (bt bigqueryTableAttributes) RangePartitioning() terra.ListValue[bigquerytable.RangePartitioningAttributes] {
-	return terra.ReferenceList[bigquerytable.RangePartitioningAttributes](bt.ref.Append("range_partitioning"))
+	return terra.ReferenceAsList[bigquerytable.RangePartitioningAttributes](bt.ref.Append("range_partitioning"))
 }
 
 func (bt bigqueryTableAttributes) TimePartitioning() terra.ListValue[bigquerytable.TimePartitioningAttributes] {
-	return terra.ReferenceList[bigquerytable.TimePartitioningAttributes](bt.ref.Append("time_partitioning"))
+	return terra.ReferenceAsList[bigquerytable.TimePartitioningAttributes](bt.ref.Append("time_partitioning"))
 }
 
 func (bt bigqueryTableAttributes) View() terra.ListValue[bigquerytable.ViewAttributes] {
-	return terra.ReferenceList[bigquerytable.ViewAttributes](bt.ref.Append("view"))
+	return terra.ReferenceAsList[bigquerytable.ViewAttributes](bt.ref.Append("view"))
 }
 
 type bigqueryTableState struct {

@@ -22,100 +22,100 @@ type HighAvailabilityAttributes struct {
 	ref terra.Reference
 }
 
-func (ha HighAvailabilityAttributes) InternalRef() terra.Reference {
-	return ha.ref
+func (ha HighAvailabilityAttributes) InternalRef() (terra.Reference, error) {
+	return ha.ref, nil
 }
 
 func (ha HighAvailabilityAttributes) InternalWithRef(ref terra.Reference) HighAvailabilityAttributes {
 	return HighAvailabilityAttributes{ref: ref}
 }
 
-func (ha HighAvailabilityAttributes) InternalTokens() hclwrite.Tokens {
+func (ha HighAvailabilityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ha.ref.InternalTokens()
 }
 
 func (ha HighAvailabilityAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(ha.ref.Append("mode"))
+	return terra.ReferenceAsString(ha.ref.Append("mode"))
 }
 
 func (ha HighAvailabilityAttributes) StandbyAvailabilityZone() terra.StringValue {
-	return terra.ReferenceString(ha.ref.Append("standby_availability_zone"))
+	return terra.ReferenceAsString(ha.ref.Append("standby_availability_zone"))
 }
 
 type MaintenanceWindowAttributes struct {
 	ref terra.Reference
 }
 
-func (mw MaintenanceWindowAttributes) InternalRef() terra.Reference {
-	return mw.ref
+func (mw MaintenanceWindowAttributes) InternalRef() (terra.Reference, error) {
+	return mw.ref, nil
 }
 
 func (mw MaintenanceWindowAttributes) InternalWithRef(ref terra.Reference) MaintenanceWindowAttributes {
 	return MaintenanceWindowAttributes{ref: ref}
 }
 
-func (mw MaintenanceWindowAttributes) InternalTokens() hclwrite.Tokens {
+func (mw MaintenanceWindowAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mw.ref.InternalTokens()
 }
 
 func (mw MaintenanceWindowAttributes) DayOfWeek() terra.NumberValue {
-	return terra.ReferenceNumber(mw.ref.Append("day_of_week"))
+	return terra.ReferenceAsNumber(mw.ref.Append("day_of_week"))
 }
 
 func (mw MaintenanceWindowAttributes) StartHour() terra.NumberValue {
-	return terra.ReferenceNumber(mw.ref.Append("start_hour"))
+	return terra.ReferenceAsNumber(mw.ref.Append("start_hour"))
 }
 
 func (mw MaintenanceWindowAttributes) StartMinute() terra.NumberValue {
-	return terra.ReferenceNumber(mw.ref.Append("start_minute"))
+	return terra.ReferenceAsNumber(mw.ref.Append("start_minute"))
 }
 
 type StorageAttributes struct {
 	ref terra.Reference
 }
 
-func (s StorageAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s StorageAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s StorageAttributes) InternalWithRef(ref terra.Reference) StorageAttributes {
 	return StorageAttributes{ref: ref}
 }
 
-func (s StorageAttributes) InternalTokens() hclwrite.Tokens {
+func (s StorageAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s StorageAttributes) AutoGrowEnabled() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("auto_grow_enabled"))
+	return terra.ReferenceAsBool(s.ref.Append("auto_grow_enabled"))
 }
 
 func (s StorageAttributes) Iops() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("iops"))
+	return terra.ReferenceAsNumber(s.ref.Append("iops"))
 }
 
 func (s StorageAttributes) SizeGb() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("size_gb"))
+	return terra.ReferenceAsNumber(s.ref.Append("size_gb"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type HighAvailabilityState struct {

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataIothub creates a new instance of [DataIothub].
 func NewDataIothub(name string, args DataIothubArgs) *DataIothub {
 	return &DataIothub{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataIothub(name string, args DataIothubArgs) *DataIothub {
 
 var _ terra.DataResource = (*DataIothub)(nil)
 
+// DataIothub represents the Terraform data resource azurerm_iothub.
 type DataIothub struct {
 	Name string
 	Args DataIothubArgs
 }
 
+// DataSource returns the Terraform object type for [DataIothub].
 func (i *DataIothub) DataSource() string {
 	return "azurerm_iothub"
 }
 
+// LocalName returns the local name for [DataIothub].
 func (i *DataIothub) LocalName() string {
 	return i.Name
 }
 
+// Configuration returns the configuration (args) for [DataIothub].
 func (i *DataIothub) Configuration() interface{} {
 	return i.Args
 }
 
+// Attributes returns the attributes for [DataIothub].
 func (i *DataIothub) Attributes() dataIothubAttributes {
 	return dataIothubAttributes{ref: terra.ReferenceDataResource(i)}
 }
 
+// DataIothubArgs contains the configurations for azurerm_iothub.
 type DataIothubArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -55,30 +62,35 @@ type dataIothubAttributes struct {
 	ref terra.Reference
 }
 
+// Hostname returns a reference to field hostname of azurerm_iothub.
 func (i dataIothubAttributes) Hostname() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("hostname"))
+	return terra.ReferenceAsString(i.ref.Append("hostname"))
 }
 
+// Id returns a reference to field id of azurerm_iothub.
 func (i dataIothubAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("id"))
+	return terra.ReferenceAsString(i.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_iothub.
 func (i dataIothubAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("name"))
+	return terra.ReferenceAsString(i.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_iothub.
 func (i dataIothubAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(i.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_iothub.
 func (i dataIothubAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](i.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](i.ref.Append("tags"))
 }
 
 func (i dataIothubAttributes) Identity() terra.ListValue[dataiothub.IdentityAttributes] {
-	return terra.ReferenceList[dataiothub.IdentityAttributes](i.ref.Append("identity"))
+	return terra.ReferenceAsList[dataiothub.IdentityAttributes](i.ref.Append("identity"))
 }
 
 func (i dataIothubAttributes) Timeouts() dataiothub.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataiothub.TimeoutsAttributes](i.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataiothub.TimeoutsAttributes](i.ref.Append("timeouts"))
 }

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCloudiotRegistryIamPolicy creates a new instance of [CloudiotRegistryIamPolicy].
 func NewCloudiotRegistryIamPolicy(name string, args CloudiotRegistryIamPolicyArgs) *CloudiotRegistryIamPolicy {
 	return &CloudiotRegistryIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCloudiotRegistryIamPolicy(name string, args CloudiotRegistryIamPolicyArg
 
 var _ terra.Resource = (*CloudiotRegistryIamPolicy)(nil)
 
+// CloudiotRegistryIamPolicy represents the Terraform resource google_cloudiot_registry_iam_policy.
 type CloudiotRegistryIamPolicy struct {
-	Name  string
-	Args  CloudiotRegistryIamPolicyArgs
-	state *cloudiotRegistryIamPolicyState
+	Name      string
+	Args      CloudiotRegistryIamPolicyArgs
+	state     *cloudiotRegistryIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudiotRegistryIamPolicy].
 func (crip *CloudiotRegistryIamPolicy) Type() string {
 	return "google_cloudiot_registry_iam_policy"
 }
 
+// LocalName returns the local name for [CloudiotRegistryIamPolicy].
 func (crip *CloudiotRegistryIamPolicy) LocalName() string {
 	return crip.Name
 }
 
+// Configuration returns the configuration (args) for [CloudiotRegistryIamPolicy].
 func (crip *CloudiotRegistryIamPolicy) Configuration() interface{} {
 	return crip.Args
 }
 
+// DependOn is used for other resources to depend on [CloudiotRegistryIamPolicy].
+func (crip *CloudiotRegistryIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(crip)
+}
+
+// Dependencies returns the list of resources [CloudiotRegistryIamPolicy] depends_on.
+func (crip *CloudiotRegistryIamPolicy) Dependencies() terra.Dependencies {
+	return crip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudiotRegistryIamPolicy].
+func (crip *CloudiotRegistryIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return crip.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudiotRegistryIamPolicy].
 func (crip *CloudiotRegistryIamPolicy) Attributes() cloudiotRegistryIamPolicyAttributes {
 	return cloudiotRegistryIamPolicyAttributes{ref: terra.ReferenceResource(crip)}
 }
 
+// ImportState imports the given attribute values into [CloudiotRegistryIamPolicy]'s state.
 func (crip *CloudiotRegistryIamPolicy) ImportState(av io.Reader) error {
 	crip.state = &cloudiotRegistryIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(crip.state); err != nil {
@@ -48,10 +72,12 @@ func (crip *CloudiotRegistryIamPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudiotRegistryIamPolicy] has state.
 func (crip *CloudiotRegistryIamPolicy) State() (*cloudiotRegistryIamPolicyState, bool) {
 	return crip.state, crip.state != nil
 }
 
+// StateMust returns the state for [CloudiotRegistryIamPolicy]. Panics if the state is nil.
 func (crip *CloudiotRegistryIamPolicy) StateMust() *cloudiotRegistryIamPolicyState {
 	if crip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", crip.Type(), crip.LocalName()))
@@ -59,10 +85,7 @@ func (crip *CloudiotRegistryIamPolicy) StateMust() *cloudiotRegistryIamPolicySta
 	return crip.state
 }
 
-func (crip *CloudiotRegistryIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(crip)
-}
-
+// CloudiotRegistryIamPolicyArgs contains the configurations for google_cloudiot_registry_iam_policy.
 type CloudiotRegistryIamPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -74,35 +97,39 @@ type CloudiotRegistryIamPolicyArgs struct {
 	Project terra.StringValue `hcl:"project,attr"`
 	// Region: string, optional
 	Region terra.StringValue `hcl:"region,attr"`
-	// DependsOn contains resources that CloudiotRegistryIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudiotRegistryIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_cloudiot_registry_iam_policy.
 func (crip cloudiotRegistryIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(crip.ref.Append("etag"))
+	return terra.ReferenceAsString(crip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_cloudiot_registry_iam_policy.
 func (crip cloudiotRegistryIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(crip.ref.Append("id"))
+	return terra.ReferenceAsString(crip.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_cloudiot_registry_iam_policy.
 func (crip cloudiotRegistryIamPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(crip.ref.Append("name"))
+	return terra.ReferenceAsString(crip.ref.Append("name"))
 }
 
+// PolicyData returns a reference to field policy_data of google_cloudiot_registry_iam_policy.
 func (crip cloudiotRegistryIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(crip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(crip.ref.Append("policy_data"))
 }
 
+// Project returns a reference to field project of google_cloudiot_registry_iam_policy.
 func (crip cloudiotRegistryIamPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(crip.ref.Append("project"))
+	return terra.ReferenceAsString(crip.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_cloudiot_registry_iam_policy.
 func (crip cloudiotRegistryIamPolicyAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(crip.ref.Append("region"))
+	return terra.ReferenceAsString(crip.ref.Append("region"))
 }
 
 type cloudiotRegistryIamPolicyState struct {

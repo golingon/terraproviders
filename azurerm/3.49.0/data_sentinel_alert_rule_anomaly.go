@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataSentinelAlertRuleAnomaly creates a new instance of [DataSentinelAlertRuleAnomaly].
 func NewDataSentinelAlertRuleAnomaly(name string, args DataSentinelAlertRuleAnomalyArgs) *DataSentinelAlertRuleAnomaly {
 	return &DataSentinelAlertRuleAnomaly{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataSentinelAlertRuleAnomaly(name string, args DataSentinelAlertRuleAnom
 
 var _ terra.DataResource = (*DataSentinelAlertRuleAnomaly)(nil)
 
+// DataSentinelAlertRuleAnomaly represents the Terraform data resource azurerm_sentinel_alert_rule_anomaly.
 type DataSentinelAlertRuleAnomaly struct {
 	Name string
 	Args DataSentinelAlertRuleAnomalyArgs
 }
 
+// DataSource returns the Terraform object type for [DataSentinelAlertRuleAnomaly].
 func (sara *DataSentinelAlertRuleAnomaly) DataSource() string {
 	return "azurerm_sentinel_alert_rule_anomaly"
 }
 
+// LocalName returns the local name for [DataSentinelAlertRuleAnomaly].
 func (sara *DataSentinelAlertRuleAnomaly) LocalName() string {
 	return sara.Name
 }
 
+// Configuration returns the configuration (args) for [DataSentinelAlertRuleAnomaly].
 func (sara *DataSentinelAlertRuleAnomaly) Configuration() interface{} {
 	return sara.Args
 }
 
+// Attributes returns the attributes for [DataSentinelAlertRuleAnomaly].
 func (sara *DataSentinelAlertRuleAnomaly) Attributes() dataSentinelAlertRuleAnomalyAttributes {
 	return dataSentinelAlertRuleAnomalyAttributes{ref: terra.ReferenceDataResource(sara)}
 }
 
+// DataSentinelAlertRuleAnomalyArgs contains the configurations for azurerm_sentinel_alert_rule_anomaly.
 type DataSentinelAlertRuleAnomalyArgs struct {
 	// DisplayName: string, optional
 	DisplayName terra.StringValue `hcl:"display_name,attr"`
@@ -63,78 +70,91 @@ type dataSentinelAlertRuleAnomalyAttributes struct {
 	ref terra.Reference
 }
 
+// AnomalySettingsVersion returns a reference to field anomaly_settings_version of azurerm_sentinel_alert_rule_anomaly.
 func (sara dataSentinelAlertRuleAnomalyAttributes) AnomalySettingsVersion() terra.NumberValue {
-	return terra.ReferenceNumber(sara.ref.Append("anomaly_settings_version"))
+	return terra.ReferenceAsNumber(sara.ref.Append("anomaly_settings_version"))
 }
 
+// AnomalyVersion returns a reference to field anomaly_version of azurerm_sentinel_alert_rule_anomaly.
 func (sara dataSentinelAlertRuleAnomalyAttributes) AnomalyVersion() terra.StringValue {
-	return terra.ReferenceString(sara.ref.Append("anomaly_version"))
+	return terra.ReferenceAsString(sara.ref.Append("anomaly_version"))
 }
 
+// Description returns a reference to field description of azurerm_sentinel_alert_rule_anomaly.
 func (sara dataSentinelAlertRuleAnomalyAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(sara.ref.Append("description"))
+	return terra.ReferenceAsString(sara.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_sentinel_alert_rule_anomaly.
 func (sara dataSentinelAlertRuleAnomalyAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(sara.ref.Append("display_name"))
+	return terra.ReferenceAsString(sara.ref.Append("display_name"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_sentinel_alert_rule_anomaly.
 func (sara dataSentinelAlertRuleAnomalyAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(sara.ref.Append("enabled"))
+	return terra.ReferenceAsBool(sara.ref.Append("enabled"))
 }
 
+// Frequency returns a reference to field frequency of azurerm_sentinel_alert_rule_anomaly.
 func (sara dataSentinelAlertRuleAnomalyAttributes) Frequency() terra.StringValue {
-	return terra.ReferenceString(sara.ref.Append("frequency"))
+	return terra.ReferenceAsString(sara.ref.Append("frequency"))
 }
 
+// Id returns a reference to field id of azurerm_sentinel_alert_rule_anomaly.
 func (sara dataSentinelAlertRuleAnomalyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sara.ref.Append("id"))
+	return terra.ReferenceAsString(sara.ref.Append("id"))
 }
 
+// LogAnalyticsWorkspaceId returns a reference to field log_analytics_workspace_id of azurerm_sentinel_alert_rule_anomaly.
 func (sara dataSentinelAlertRuleAnomalyAttributes) LogAnalyticsWorkspaceId() terra.StringValue {
-	return terra.ReferenceString(sara.ref.Append("log_analytics_workspace_id"))
+	return terra.ReferenceAsString(sara.ref.Append("log_analytics_workspace_id"))
 }
 
+// Mode returns a reference to field mode of azurerm_sentinel_alert_rule_anomaly.
 func (sara dataSentinelAlertRuleAnomalyAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(sara.ref.Append("mode"))
+	return terra.ReferenceAsString(sara.ref.Append("mode"))
 }
 
+// Name returns a reference to field name of azurerm_sentinel_alert_rule_anomaly.
 func (sara dataSentinelAlertRuleAnomalyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sara.ref.Append("name"))
+	return terra.ReferenceAsString(sara.ref.Append("name"))
 }
 
+// SettingsDefinitionId returns a reference to field settings_definition_id of azurerm_sentinel_alert_rule_anomaly.
 func (sara dataSentinelAlertRuleAnomalyAttributes) SettingsDefinitionId() terra.StringValue {
-	return terra.ReferenceString(sara.ref.Append("settings_definition_id"))
+	return terra.ReferenceAsString(sara.ref.Append("settings_definition_id"))
 }
 
+// Tactics returns a reference to field tactics of azurerm_sentinel_alert_rule_anomaly.
 func (sara dataSentinelAlertRuleAnomalyAttributes) Tactics() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sara.ref.Append("tactics"))
+	return terra.ReferenceAsList[terra.StringValue](sara.ref.Append("tactics"))
 }
 
+// Techniques returns a reference to field techniques of azurerm_sentinel_alert_rule_anomaly.
 func (sara dataSentinelAlertRuleAnomalyAttributes) Techniques() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sara.ref.Append("techniques"))
+	return terra.ReferenceAsList[terra.StringValue](sara.ref.Append("techniques"))
 }
 
 func (sara dataSentinelAlertRuleAnomalyAttributes) MultiSelectObservation() terra.ListValue[datasentinelalertruleanomaly.MultiSelectObservationAttributes] {
-	return terra.ReferenceList[datasentinelalertruleanomaly.MultiSelectObservationAttributes](sara.ref.Append("multi_select_observation"))
+	return terra.ReferenceAsList[datasentinelalertruleanomaly.MultiSelectObservationAttributes](sara.ref.Append("multi_select_observation"))
 }
 
 func (sara dataSentinelAlertRuleAnomalyAttributes) PrioritizedExcludeObservation() terra.ListValue[datasentinelalertruleanomaly.PrioritizedExcludeObservationAttributes] {
-	return terra.ReferenceList[datasentinelalertruleanomaly.PrioritizedExcludeObservationAttributes](sara.ref.Append("prioritized_exclude_observation"))
+	return terra.ReferenceAsList[datasentinelalertruleanomaly.PrioritizedExcludeObservationAttributes](sara.ref.Append("prioritized_exclude_observation"))
 }
 
 func (sara dataSentinelAlertRuleAnomalyAttributes) RequiredDataConnector() terra.ListValue[datasentinelalertruleanomaly.RequiredDataConnectorAttributes] {
-	return terra.ReferenceList[datasentinelalertruleanomaly.RequiredDataConnectorAttributes](sara.ref.Append("required_data_connector"))
+	return terra.ReferenceAsList[datasentinelalertruleanomaly.RequiredDataConnectorAttributes](sara.ref.Append("required_data_connector"))
 }
 
 func (sara dataSentinelAlertRuleAnomalyAttributes) SingleSelectObservation() terra.ListValue[datasentinelalertruleanomaly.SingleSelectObservationAttributes] {
-	return terra.ReferenceList[datasentinelalertruleanomaly.SingleSelectObservationAttributes](sara.ref.Append("single_select_observation"))
+	return terra.ReferenceAsList[datasentinelalertruleanomaly.SingleSelectObservationAttributes](sara.ref.Append("single_select_observation"))
 }
 
 func (sara dataSentinelAlertRuleAnomalyAttributes) ThresholdObservation() terra.ListValue[datasentinelalertruleanomaly.ThresholdObservationAttributes] {
-	return terra.ReferenceList[datasentinelalertruleanomaly.ThresholdObservationAttributes](sara.ref.Append("threshold_observation"))
+	return terra.ReferenceAsList[datasentinelalertruleanomaly.ThresholdObservationAttributes](sara.ref.Append("threshold_observation"))
 }
 
 func (sara dataSentinelAlertRuleAnomalyAttributes) Timeouts() datasentinelalertruleanomaly.TimeoutsAttributes {
-	return terra.ReferenceSingle[datasentinelalertruleanomaly.TimeoutsAttributes](sara.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datasentinelalertruleanomaly.TimeoutsAttributes](sara.ref.Append("timeouts"))
 }

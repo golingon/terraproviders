@@ -34,7 +34,7 @@ func (mt MetricTransformationAttributes) InternalWithRef(ref terra.Reference) Me
 	return MetricTransformationAttributes{ref: ref}
 }
 
-func (mt MetricTransformationAttributes) InternalTokens() hclwrite.Tokens {
+func (mt MetricTransformationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mt.ref.InternalTokens()
 }
 

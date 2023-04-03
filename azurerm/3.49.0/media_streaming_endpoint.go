@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMediaStreamingEndpoint creates a new instance of [MediaStreamingEndpoint].
 func NewMediaStreamingEndpoint(name string, args MediaStreamingEndpointArgs) *MediaStreamingEndpoint {
 	return &MediaStreamingEndpoint{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMediaStreamingEndpoint(name string, args MediaStreamingEndpointArgs) *Me
 
 var _ terra.Resource = (*MediaStreamingEndpoint)(nil)
 
+// MediaStreamingEndpoint represents the Terraform resource azurerm_media_streaming_endpoint.
 type MediaStreamingEndpoint struct {
-	Name  string
-	Args  MediaStreamingEndpointArgs
-	state *mediaStreamingEndpointState
+	Name      string
+	Args      MediaStreamingEndpointArgs
+	state     *mediaStreamingEndpointState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MediaStreamingEndpoint].
 func (mse *MediaStreamingEndpoint) Type() string {
 	return "azurerm_media_streaming_endpoint"
 }
 
+// LocalName returns the local name for [MediaStreamingEndpoint].
 func (mse *MediaStreamingEndpoint) LocalName() string {
 	return mse.Name
 }
 
+// Configuration returns the configuration (args) for [MediaStreamingEndpoint].
 func (mse *MediaStreamingEndpoint) Configuration() interface{} {
 	return mse.Args
 }
 
+// DependOn is used for other resources to depend on [MediaStreamingEndpoint].
+func (mse *MediaStreamingEndpoint) DependOn() terra.Reference {
+	return terra.ReferenceResource(mse)
+}
+
+// Dependencies returns the list of resources [MediaStreamingEndpoint] depends_on.
+func (mse *MediaStreamingEndpoint) Dependencies() terra.Dependencies {
+	return mse.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MediaStreamingEndpoint].
+func (mse *MediaStreamingEndpoint) LifecycleManagement() *terra.Lifecycle {
+	return mse.Lifecycle
+}
+
+// Attributes returns the attributes for [MediaStreamingEndpoint].
 func (mse *MediaStreamingEndpoint) Attributes() mediaStreamingEndpointAttributes {
 	return mediaStreamingEndpointAttributes{ref: terra.ReferenceResource(mse)}
 }
 
+// ImportState imports the given attribute values into [MediaStreamingEndpoint]'s state.
 func (mse *MediaStreamingEndpoint) ImportState(av io.Reader) error {
 	mse.state = &mediaStreamingEndpointState{}
 	if err := json.NewDecoder(av).Decode(mse.state); err != nil {
@@ -49,10 +73,12 @@ func (mse *MediaStreamingEndpoint) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MediaStreamingEndpoint] has state.
 func (mse *MediaStreamingEndpoint) State() (*mediaStreamingEndpointState, bool) {
 	return mse.state, mse.state != nil
 }
 
+// StateMust returns the state for [MediaStreamingEndpoint]. Panics if the state is nil.
 func (mse *MediaStreamingEndpoint) StateMust() *mediaStreamingEndpointState {
 	if mse.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mse.Type(), mse.LocalName()))
@@ -60,10 +86,7 @@ func (mse *MediaStreamingEndpoint) StateMust() *mediaStreamingEndpointState {
 	return mse.state
 }
 
-func (mse *MediaStreamingEndpoint) DependOn() terra.Reference {
-	return terra.ReferenceResource(mse)
-}
-
+// MediaStreamingEndpointArgs contains the configurations for azurerm_media_streaming_endpoint.
 type MediaStreamingEndpointArgs struct {
 	// AutoStartEnabled: bool, optional
 	AutoStartEnabled terra.BoolValue `hcl:"auto_start_enabled,attr"`
@@ -101,87 +124,100 @@ type MediaStreamingEndpointArgs struct {
 	CrossSiteAccessPolicy *mediastreamingendpoint.CrossSiteAccessPolicy `hcl:"cross_site_access_policy,block"`
 	// Timeouts: optional
 	Timeouts *mediastreamingendpoint.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MediaStreamingEndpoint depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mediaStreamingEndpointAttributes struct {
 	ref terra.Reference
 }
 
+// AutoStartEnabled returns a reference to field auto_start_enabled of azurerm_media_streaming_endpoint.
 func (mse mediaStreamingEndpointAttributes) AutoStartEnabled() terra.BoolValue {
-	return terra.ReferenceBool(mse.ref.Append("auto_start_enabled"))
+	return terra.ReferenceAsBool(mse.ref.Append("auto_start_enabled"))
 }
 
+// CdnEnabled returns a reference to field cdn_enabled of azurerm_media_streaming_endpoint.
 func (mse mediaStreamingEndpointAttributes) CdnEnabled() terra.BoolValue {
-	return terra.ReferenceBool(mse.ref.Append("cdn_enabled"))
+	return terra.ReferenceAsBool(mse.ref.Append("cdn_enabled"))
 }
 
+// CdnProfile returns a reference to field cdn_profile of azurerm_media_streaming_endpoint.
 func (mse mediaStreamingEndpointAttributes) CdnProfile() terra.StringValue {
-	return terra.ReferenceString(mse.ref.Append("cdn_profile"))
+	return terra.ReferenceAsString(mse.ref.Append("cdn_profile"))
 }
 
+// CdnProvider returns a reference to field cdn_provider of azurerm_media_streaming_endpoint.
 func (mse mediaStreamingEndpointAttributes) CdnProvider() terra.StringValue {
-	return terra.ReferenceString(mse.ref.Append("cdn_provider"))
+	return terra.ReferenceAsString(mse.ref.Append("cdn_provider"))
 }
 
+// CustomHostNames returns a reference to field custom_host_names of azurerm_media_streaming_endpoint.
 func (mse mediaStreamingEndpointAttributes) CustomHostNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](mse.ref.Append("custom_host_names"))
+	return terra.ReferenceAsSet[terra.StringValue](mse.ref.Append("custom_host_names"))
 }
 
+// Description returns a reference to field description of azurerm_media_streaming_endpoint.
 func (mse mediaStreamingEndpointAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(mse.ref.Append("description"))
+	return terra.ReferenceAsString(mse.ref.Append("description"))
 }
 
+// HostName returns a reference to field host_name of azurerm_media_streaming_endpoint.
 func (mse mediaStreamingEndpointAttributes) HostName() terra.StringValue {
-	return terra.ReferenceString(mse.ref.Append("host_name"))
+	return terra.ReferenceAsString(mse.ref.Append("host_name"))
 }
 
+// Id returns a reference to field id of azurerm_media_streaming_endpoint.
 func (mse mediaStreamingEndpointAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mse.ref.Append("id"))
+	return terra.ReferenceAsString(mse.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_media_streaming_endpoint.
 func (mse mediaStreamingEndpointAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(mse.ref.Append("location"))
+	return terra.ReferenceAsString(mse.ref.Append("location"))
 }
 
+// MaxCacheAgeSeconds returns a reference to field max_cache_age_seconds of azurerm_media_streaming_endpoint.
 func (mse mediaStreamingEndpointAttributes) MaxCacheAgeSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(mse.ref.Append("max_cache_age_seconds"))
+	return terra.ReferenceAsNumber(mse.ref.Append("max_cache_age_seconds"))
 }
 
+// MediaServicesAccountName returns a reference to field media_services_account_name of azurerm_media_streaming_endpoint.
 func (mse mediaStreamingEndpointAttributes) MediaServicesAccountName() terra.StringValue {
-	return terra.ReferenceString(mse.ref.Append("media_services_account_name"))
+	return terra.ReferenceAsString(mse.ref.Append("media_services_account_name"))
 }
 
+// Name returns a reference to field name of azurerm_media_streaming_endpoint.
 func (mse mediaStreamingEndpointAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mse.ref.Append("name"))
+	return terra.ReferenceAsString(mse.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_media_streaming_endpoint.
 func (mse mediaStreamingEndpointAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(mse.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(mse.ref.Append("resource_group_name"))
 }
 
+// ScaleUnits returns a reference to field scale_units of azurerm_media_streaming_endpoint.
 func (mse mediaStreamingEndpointAttributes) ScaleUnits() terra.NumberValue {
-	return terra.ReferenceNumber(mse.ref.Append("scale_units"))
+	return terra.ReferenceAsNumber(mse.ref.Append("scale_units"))
 }
 
+// Tags returns a reference to field tags of azurerm_media_streaming_endpoint.
 func (mse mediaStreamingEndpointAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mse.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mse.ref.Append("tags"))
 }
 
 func (mse mediaStreamingEndpointAttributes) Sku() terra.ListValue[mediastreamingendpoint.SkuAttributes] {
-	return terra.ReferenceList[mediastreamingendpoint.SkuAttributes](mse.ref.Append("sku"))
+	return terra.ReferenceAsList[mediastreamingendpoint.SkuAttributes](mse.ref.Append("sku"))
 }
 
 func (mse mediaStreamingEndpointAttributes) AccessControl() terra.ListValue[mediastreamingendpoint.AccessControlAttributes] {
-	return terra.ReferenceList[mediastreamingendpoint.AccessControlAttributes](mse.ref.Append("access_control"))
+	return terra.ReferenceAsList[mediastreamingendpoint.AccessControlAttributes](mse.ref.Append("access_control"))
 }
 
 func (mse mediaStreamingEndpointAttributes) CrossSiteAccessPolicy() terra.ListValue[mediastreamingendpoint.CrossSiteAccessPolicyAttributes] {
-	return terra.ReferenceList[mediastreamingendpoint.CrossSiteAccessPolicyAttributes](mse.ref.Append("cross_site_access_policy"))
+	return terra.ReferenceAsList[mediastreamingendpoint.CrossSiteAccessPolicyAttributes](mse.ref.Append("cross_site_access_policy"))
 }
 
 func (mse mediaStreamingEndpointAttributes) Timeouts() mediastreamingendpoint.TimeoutsAttributes {
-	return terra.ReferenceSingle[mediastreamingendpoint.TimeoutsAttributes](mse.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[mediastreamingendpoint.TimeoutsAttributes](mse.ref.Append("timeouts"))
 }
 
 type mediaStreamingEndpointState struct {

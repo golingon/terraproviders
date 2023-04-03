@@ -39,7 +39,7 @@ func (cd CatalogDataAttributes) InternalWithRef(ref terra.Reference) CatalogData
 	return CatalogDataAttributes{ref: ref}
 }
 
-func (cd CatalogDataAttributes) InternalTokens() hclwrite.Tokens {
+func (cd CatalogDataAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cd.ref.InternalTokens()
 }
 
@@ -79,7 +79,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

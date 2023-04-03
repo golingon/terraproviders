@@ -24,92 +24,92 @@ type DevicePropertiesAttributes struct {
 	ref terra.Reference
 }
 
-func (dp DevicePropertiesAttributes) InternalRef() terra.Reference {
-	return dp.ref
+func (dp DevicePropertiesAttributes) InternalRef() (terra.Reference, error) {
+	return dp.ref, nil
 }
 
 func (dp DevicePropertiesAttributes) InternalWithRef(ref terra.Reference) DevicePropertiesAttributes {
 	return DevicePropertiesAttributes{ref: ref}
 }
 
-func (dp DevicePropertiesAttributes) InternalTokens() hclwrite.Tokens {
+func (dp DevicePropertiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dp.ref.InternalTokens()
 }
 
 func (dp DevicePropertiesAttributes) Capacity() terra.NumberValue {
-	return terra.ReferenceNumber(dp.ref.Append("capacity"))
+	return terra.ReferenceAsNumber(dp.ref.Append("capacity"))
 }
 
 func (dp DevicePropertiesAttributes) ConfiguredRoleTypes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dp.ref.Append("configured_role_types"))
+	return terra.ReferenceAsList[terra.StringValue](dp.ref.Append("configured_role_types"))
 }
 
 func (dp DevicePropertiesAttributes) Culture() terra.StringValue {
-	return terra.ReferenceString(dp.ref.Append("culture"))
+	return terra.ReferenceAsString(dp.ref.Append("culture"))
 }
 
 func (dp DevicePropertiesAttributes) HcsVersion() terra.StringValue {
-	return terra.ReferenceString(dp.ref.Append("hcs_version"))
+	return terra.ReferenceAsString(dp.ref.Append("hcs_version"))
 }
 
 func (dp DevicePropertiesAttributes) Model() terra.StringValue {
-	return terra.ReferenceString(dp.ref.Append("model"))
+	return terra.ReferenceAsString(dp.ref.Append("model"))
 }
 
 func (dp DevicePropertiesAttributes) NodeCount() terra.NumberValue {
-	return terra.ReferenceNumber(dp.ref.Append("node_count"))
+	return terra.ReferenceAsNumber(dp.ref.Append("node_count"))
 }
 
 func (dp DevicePropertiesAttributes) SerialNumber() terra.StringValue {
-	return terra.ReferenceString(dp.ref.Append("serial_number"))
+	return terra.ReferenceAsString(dp.ref.Append("serial_number"))
 }
 
 func (dp DevicePropertiesAttributes) SoftwareVersion() terra.StringValue {
-	return terra.ReferenceString(dp.ref.Append("software_version"))
+	return terra.ReferenceAsString(dp.ref.Append("software_version"))
 }
 
 func (dp DevicePropertiesAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(dp.ref.Append("status"))
+	return terra.ReferenceAsString(dp.ref.Append("status"))
 }
 
 func (dp DevicePropertiesAttributes) TimeZone() terra.StringValue {
-	return terra.ReferenceString(dp.ref.Append("time_zone"))
+	return terra.ReferenceAsString(dp.ref.Append("time_zone"))
 }
 
 func (dp DevicePropertiesAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(dp.ref.Append("type"))
+	return terra.ReferenceAsString(dp.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type DevicePropertiesState struct {

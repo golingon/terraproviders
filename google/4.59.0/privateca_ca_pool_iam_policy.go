@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewPrivatecaCaPoolIamPolicy creates a new instance of [PrivatecaCaPoolIamPolicy].
 func NewPrivatecaCaPoolIamPolicy(name string, args PrivatecaCaPoolIamPolicyArgs) *PrivatecaCaPoolIamPolicy {
 	return &PrivatecaCaPoolIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewPrivatecaCaPoolIamPolicy(name string, args PrivatecaCaPoolIamPolicyArgs)
 
 var _ terra.Resource = (*PrivatecaCaPoolIamPolicy)(nil)
 
+// PrivatecaCaPoolIamPolicy represents the Terraform resource google_privateca_ca_pool_iam_policy.
 type PrivatecaCaPoolIamPolicy struct {
-	Name  string
-	Args  PrivatecaCaPoolIamPolicyArgs
-	state *privatecaCaPoolIamPolicyState
+	Name      string
+	Args      PrivatecaCaPoolIamPolicyArgs
+	state     *privatecaCaPoolIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PrivatecaCaPoolIamPolicy].
 func (pcpip *PrivatecaCaPoolIamPolicy) Type() string {
 	return "google_privateca_ca_pool_iam_policy"
 }
 
+// LocalName returns the local name for [PrivatecaCaPoolIamPolicy].
 func (pcpip *PrivatecaCaPoolIamPolicy) LocalName() string {
 	return pcpip.Name
 }
 
+// Configuration returns the configuration (args) for [PrivatecaCaPoolIamPolicy].
 func (pcpip *PrivatecaCaPoolIamPolicy) Configuration() interface{} {
 	return pcpip.Args
 }
 
+// DependOn is used for other resources to depend on [PrivatecaCaPoolIamPolicy].
+func (pcpip *PrivatecaCaPoolIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(pcpip)
+}
+
+// Dependencies returns the list of resources [PrivatecaCaPoolIamPolicy] depends_on.
+func (pcpip *PrivatecaCaPoolIamPolicy) Dependencies() terra.Dependencies {
+	return pcpip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PrivatecaCaPoolIamPolicy].
+func (pcpip *PrivatecaCaPoolIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return pcpip.Lifecycle
+}
+
+// Attributes returns the attributes for [PrivatecaCaPoolIamPolicy].
 func (pcpip *PrivatecaCaPoolIamPolicy) Attributes() privatecaCaPoolIamPolicyAttributes {
 	return privatecaCaPoolIamPolicyAttributes{ref: terra.ReferenceResource(pcpip)}
 }
 
+// ImportState imports the given attribute values into [PrivatecaCaPoolIamPolicy]'s state.
 func (pcpip *PrivatecaCaPoolIamPolicy) ImportState(av io.Reader) error {
 	pcpip.state = &privatecaCaPoolIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(pcpip.state); err != nil {
@@ -48,10 +72,12 @@ func (pcpip *PrivatecaCaPoolIamPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PrivatecaCaPoolIamPolicy] has state.
 func (pcpip *PrivatecaCaPoolIamPolicy) State() (*privatecaCaPoolIamPolicyState, bool) {
 	return pcpip.state, pcpip.state != nil
 }
 
+// StateMust returns the state for [PrivatecaCaPoolIamPolicy]. Panics if the state is nil.
 func (pcpip *PrivatecaCaPoolIamPolicy) StateMust() *privatecaCaPoolIamPolicyState {
 	if pcpip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pcpip.Type(), pcpip.LocalName()))
@@ -59,10 +85,7 @@ func (pcpip *PrivatecaCaPoolIamPolicy) StateMust() *privatecaCaPoolIamPolicyStat
 	return pcpip.state
 }
 
-func (pcpip *PrivatecaCaPoolIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(pcpip)
-}
-
+// PrivatecaCaPoolIamPolicyArgs contains the configurations for google_privateca_ca_pool_iam_policy.
 type PrivatecaCaPoolIamPolicyArgs struct {
 	// CaPool: string, required
 	CaPool terra.StringValue `hcl:"ca_pool,attr" validate:"required"`
@@ -74,35 +97,39 @@ type PrivatecaCaPoolIamPolicyArgs struct {
 	PolicyData terra.StringValue `hcl:"policy_data,attr" validate:"required"`
 	// Project: string, optional
 	Project terra.StringValue `hcl:"project,attr"`
-	// DependsOn contains resources that PrivatecaCaPoolIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type privatecaCaPoolIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// CaPool returns a reference to field ca_pool of google_privateca_ca_pool_iam_policy.
 func (pcpip privatecaCaPoolIamPolicyAttributes) CaPool() terra.StringValue {
-	return terra.ReferenceString(pcpip.ref.Append("ca_pool"))
+	return terra.ReferenceAsString(pcpip.ref.Append("ca_pool"))
 }
 
+// Etag returns a reference to field etag of google_privateca_ca_pool_iam_policy.
 func (pcpip privatecaCaPoolIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(pcpip.ref.Append("etag"))
+	return terra.ReferenceAsString(pcpip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_privateca_ca_pool_iam_policy.
 func (pcpip privatecaCaPoolIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pcpip.ref.Append("id"))
+	return terra.ReferenceAsString(pcpip.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_privateca_ca_pool_iam_policy.
 func (pcpip privatecaCaPoolIamPolicyAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(pcpip.ref.Append("location"))
+	return terra.ReferenceAsString(pcpip.ref.Append("location"))
 }
 
+// PolicyData returns a reference to field policy_data of google_privateca_ca_pool_iam_policy.
 func (pcpip privatecaCaPoolIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(pcpip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(pcpip.ref.Append("policy_data"))
 }
 
+// Project returns a reference to field project of google_privateca_ca_pool_iam_policy.
 func (pcpip privatecaCaPoolIamPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(pcpip.ref.Append("project"))
+	return terra.ReferenceAsString(pcpip.ref.Append("project"))
 }
 
 type privatecaCaPoolIamPolicyState struct {

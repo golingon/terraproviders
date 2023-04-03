@@ -25,48 +25,48 @@ type SpeechToTextSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (stts SpeechToTextSettingsAttributes) InternalRef() terra.Reference {
-	return stts.ref
+func (stts SpeechToTextSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return stts.ref, nil
 }
 
 func (stts SpeechToTextSettingsAttributes) InternalWithRef(ref terra.Reference) SpeechToTextSettingsAttributes {
 	return SpeechToTextSettingsAttributes{ref: ref}
 }
 
-func (stts SpeechToTextSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (stts SpeechToTextSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return stts.ref.InternalTokens()
 }
 
 func (stts SpeechToTextSettingsAttributes) EnableSpeechAdaptation() terra.BoolValue {
-	return terra.ReferenceBool(stts.ref.Append("enable_speech_adaptation"))
+	return terra.ReferenceAsBool(stts.ref.Append("enable_speech_adaptation"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type SpeechToTextSettingsState struct {

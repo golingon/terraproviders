@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewVirtualMachineScaleSet creates a new instance of [VirtualMachineScaleSet].
 func NewVirtualMachineScaleSet(name string, args VirtualMachineScaleSetArgs) *VirtualMachineScaleSet {
 	return &VirtualMachineScaleSet{
 		Args: args,
@@ -19,28 +20,51 @@ func NewVirtualMachineScaleSet(name string, args VirtualMachineScaleSetArgs) *Vi
 
 var _ terra.Resource = (*VirtualMachineScaleSet)(nil)
 
+// VirtualMachineScaleSet represents the Terraform resource azurerm_virtual_machine_scale_set.
 type VirtualMachineScaleSet struct {
-	Name  string
-	Args  VirtualMachineScaleSetArgs
-	state *virtualMachineScaleSetState
+	Name      string
+	Args      VirtualMachineScaleSetArgs
+	state     *virtualMachineScaleSetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VirtualMachineScaleSet].
 func (vmss *VirtualMachineScaleSet) Type() string {
 	return "azurerm_virtual_machine_scale_set"
 }
 
+// LocalName returns the local name for [VirtualMachineScaleSet].
 func (vmss *VirtualMachineScaleSet) LocalName() string {
 	return vmss.Name
 }
 
+// Configuration returns the configuration (args) for [VirtualMachineScaleSet].
 func (vmss *VirtualMachineScaleSet) Configuration() interface{} {
 	return vmss.Args
 }
 
+// DependOn is used for other resources to depend on [VirtualMachineScaleSet].
+func (vmss *VirtualMachineScaleSet) DependOn() terra.Reference {
+	return terra.ReferenceResource(vmss)
+}
+
+// Dependencies returns the list of resources [VirtualMachineScaleSet] depends_on.
+func (vmss *VirtualMachineScaleSet) Dependencies() terra.Dependencies {
+	return vmss.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VirtualMachineScaleSet].
+func (vmss *VirtualMachineScaleSet) LifecycleManagement() *terra.Lifecycle {
+	return vmss.Lifecycle
+}
+
+// Attributes returns the attributes for [VirtualMachineScaleSet].
 func (vmss *VirtualMachineScaleSet) Attributes() virtualMachineScaleSetAttributes {
 	return virtualMachineScaleSetAttributes{ref: terra.ReferenceResource(vmss)}
 }
 
+// ImportState imports the given attribute values into [VirtualMachineScaleSet]'s state.
 func (vmss *VirtualMachineScaleSet) ImportState(av io.Reader) error {
 	vmss.state = &virtualMachineScaleSetState{}
 	if err := json.NewDecoder(av).Decode(vmss.state); err != nil {
@@ -49,10 +73,12 @@ func (vmss *VirtualMachineScaleSet) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [VirtualMachineScaleSet] has state.
 func (vmss *VirtualMachineScaleSet) State() (*virtualMachineScaleSetState, bool) {
 	return vmss.state, vmss.state != nil
 }
 
+// StateMust returns the state for [VirtualMachineScaleSet]. Panics if the state is nil.
 func (vmss *VirtualMachineScaleSet) StateMust() *virtualMachineScaleSetState {
 	if vmss.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", vmss.Type(), vmss.LocalName()))
@@ -60,10 +86,7 @@ func (vmss *VirtualMachineScaleSet) StateMust() *virtualMachineScaleSetState {
 	return vmss.state
 }
 
-func (vmss *VirtualMachineScaleSet) DependOn() terra.Reference {
-	return terra.ReferenceResource(vmss)
-}
-
+// VirtualMachineScaleSetArgs contains the configurations for azurerm_virtual_machine_scale_set.
 type VirtualMachineScaleSetArgs struct {
 	// AutomaticOsUpgrade: bool, optional
 	AutomaticOsUpgrade terra.BoolValue `hcl:"automatic_os_upgrade,attr"`
@@ -125,131 +148,144 @@ type VirtualMachineScaleSetArgs struct {
 	StorageProfileOsDisk *virtualmachinescaleset.StorageProfileOsDisk `hcl:"storage_profile_os_disk,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *virtualmachinescaleset.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that VirtualMachineScaleSet depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type virtualMachineScaleSetAttributes struct {
 	ref terra.Reference
 }
 
+// AutomaticOsUpgrade returns a reference to field automatic_os_upgrade of azurerm_virtual_machine_scale_set.
 func (vmss virtualMachineScaleSetAttributes) AutomaticOsUpgrade() terra.BoolValue {
-	return terra.ReferenceBool(vmss.ref.Append("automatic_os_upgrade"))
+	return terra.ReferenceAsBool(vmss.ref.Append("automatic_os_upgrade"))
 }
 
+// EvictionPolicy returns a reference to field eviction_policy of azurerm_virtual_machine_scale_set.
 func (vmss virtualMachineScaleSetAttributes) EvictionPolicy() terra.StringValue {
-	return terra.ReferenceString(vmss.ref.Append("eviction_policy"))
+	return terra.ReferenceAsString(vmss.ref.Append("eviction_policy"))
 }
 
+// HealthProbeId returns a reference to field health_probe_id of azurerm_virtual_machine_scale_set.
 func (vmss virtualMachineScaleSetAttributes) HealthProbeId() terra.StringValue {
-	return terra.ReferenceString(vmss.ref.Append("health_probe_id"))
+	return terra.ReferenceAsString(vmss.ref.Append("health_probe_id"))
 }
 
+// Id returns a reference to field id of azurerm_virtual_machine_scale_set.
 func (vmss virtualMachineScaleSetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vmss.ref.Append("id"))
+	return terra.ReferenceAsString(vmss.ref.Append("id"))
 }
 
+// LicenseType returns a reference to field license_type of azurerm_virtual_machine_scale_set.
 func (vmss virtualMachineScaleSetAttributes) LicenseType() terra.StringValue {
-	return terra.ReferenceString(vmss.ref.Append("license_type"))
+	return terra.ReferenceAsString(vmss.ref.Append("license_type"))
 }
 
+// Location returns a reference to field location of azurerm_virtual_machine_scale_set.
 func (vmss virtualMachineScaleSetAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(vmss.ref.Append("location"))
+	return terra.ReferenceAsString(vmss.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_virtual_machine_scale_set.
 func (vmss virtualMachineScaleSetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(vmss.ref.Append("name"))
+	return terra.ReferenceAsString(vmss.ref.Append("name"))
 }
 
+// Overprovision returns a reference to field overprovision of azurerm_virtual_machine_scale_set.
 func (vmss virtualMachineScaleSetAttributes) Overprovision() terra.BoolValue {
-	return terra.ReferenceBool(vmss.ref.Append("overprovision"))
+	return terra.ReferenceAsBool(vmss.ref.Append("overprovision"))
 }
 
+// Priority returns a reference to field priority of azurerm_virtual_machine_scale_set.
 func (vmss virtualMachineScaleSetAttributes) Priority() terra.StringValue {
-	return terra.ReferenceString(vmss.ref.Append("priority"))
+	return terra.ReferenceAsString(vmss.ref.Append("priority"))
 }
 
+// ProximityPlacementGroupId returns a reference to field proximity_placement_group_id of azurerm_virtual_machine_scale_set.
 func (vmss virtualMachineScaleSetAttributes) ProximityPlacementGroupId() terra.StringValue {
-	return terra.ReferenceString(vmss.ref.Append("proximity_placement_group_id"))
+	return terra.ReferenceAsString(vmss.ref.Append("proximity_placement_group_id"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_virtual_machine_scale_set.
 func (vmss virtualMachineScaleSetAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(vmss.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(vmss.ref.Append("resource_group_name"))
 }
 
+// SinglePlacementGroup returns a reference to field single_placement_group of azurerm_virtual_machine_scale_set.
 func (vmss virtualMachineScaleSetAttributes) SinglePlacementGroup() terra.BoolValue {
-	return terra.ReferenceBool(vmss.ref.Append("single_placement_group"))
+	return terra.ReferenceAsBool(vmss.ref.Append("single_placement_group"))
 }
 
+// Tags returns a reference to field tags of azurerm_virtual_machine_scale_set.
 func (vmss virtualMachineScaleSetAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](vmss.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](vmss.ref.Append("tags"))
 }
 
+// UpgradePolicyMode returns a reference to field upgrade_policy_mode of azurerm_virtual_machine_scale_set.
 func (vmss virtualMachineScaleSetAttributes) UpgradePolicyMode() terra.StringValue {
-	return terra.ReferenceString(vmss.ref.Append("upgrade_policy_mode"))
+	return terra.ReferenceAsString(vmss.ref.Append("upgrade_policy_mode"))
 }
 
+// Zones returns a reference to field zones of azurerm_virtual_machine_scale_set.
 func (vmss virtualMachineScaleSetAttributes) Zones() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](vmss.ref.Append("zones"))
+	return terra.ReferenceAsList[terra.StringValue](vmss.ref.Append("zones"))
 }
 
 func (vmss virtualMachineScaleSetAttributes) BootDiagnostics() terra.ListValue[virtualmachinescaleset.BootDiagnosticsAttributes] {
-	return terra.ReferenceList[virtualmachinescaleset.BootDiagnosticsAttributes](vmss.ref.Append("boot_diagnostics"))
+	return terra.ReferenceAsList[virtualmachinescaleset.BootDiagnosticsAttributes](vmss.ref.Append("boot_diagnostics"))
 }
 
 func (vmss virtualMachineScaleSetAttributes) Extension() terra.SetValue[virtualmachinescaleset.ExtensionAttributes] {
-	return terra.ReferenceSet[virtualmachinescaleset.ExtensionAttributes](vmss.ref.Append("extension"))
+	return terra.ReferenceAsSet[virtualmachinescaleset.ExtensionAttributes](vmss.ref.Append("extension"))
 }
 
 func (vmss virtualMachineScaleSetAttributes) Identity() terra.ListValue[virtualmachinescaleset.IdentityAttributes] {
-	return terra.ReferenceList[virtualmachinescaleset.IdentityAttributes](vmss.ref.Append("identity"))
+	return terra.ReferenceAsList[virtualmachinescaleset.IdentityAttributes](vmss.ref.Append("identity"))
 }
 
 func (vmss virtualMachineScaleSetAttributes) NetworkProfile() terra.SetValue[virtualmachinescaleset.NetworkProfileAttributes] {
-	return terra.ReferenceSet[virtualmachinescaleset.NetworkProfileAttributes](vmss.ref.Append("network_profile"))
+	return terra.ReferenceAsSet[virtualmachinescaleset.NetworkProfileAttributes](vmss.ref.Append("network_profile"))
 }
 
 func (vmss virtualMachineScaleSetAttributes) OsProfile() terra.ListValue[virtualmachinescaleset.OsProfileAttributes] {
-	return terra.ReferenceList[virtualmachinescaleset.OsProfileAttributes](vmss.ref.Append("os_profile"))
+	return terra.ReferenceAsList[virtualmachinescaleset.OsProfileAttributes](vmss.ref.Append("os_profile"))
 }
 
 func (vmss virtualMachineScaleSetAttributes) OsProfileLinuxConfig() terra.SetValue[virtualmachinescaleset.OsProfileLinuxConfigAttributes] {
-	return terra.ReferenceSet[virtualmachinescaleset.OsProfileLinuxConfigAttributes](vmss.ref.Append("os_profile_linux_config"))
+	return terra.ReferenceAsSet[virtualmachinescaleset.OsProfileLinuxConfigAttributes](vmss.ref.Append("os_profile_linux_config"))
 }
 
 func (vmss virtualMachineScaleSetAttributes) OsProfileSecrets() terra.SetValue[virtualmachinescaleset.OsProfileSecretsAttributes] {
-	return terra.ReferenceSet[virtualmachinescaleset.OsProfileSecretsAttributes](vmss.ref.Append("os_profile_secrets"))
+	return terra.ReferenceAsSet[virtualmachinescaleset.OsProfileSecretsAttributes](vmss.ref.Append("os_profile_secrets"))
 }
 
 func (vmss virtualMachineScaleSetAttributes) OsProfileWindowsConfig() terra.SetValue[virtualmachinescaleset.OsProfileWindowsConfigAttributes] {
-	return terra.ReferenceSet[virtualmachinescaleset.OsProfileWindowsConfigAttributes](vmss.ref.Append("os_profile_windows_config"))
+	return terra.ReferenceAsSet[virtualmachinescaleset.OsProfileWindowsConfigAttributes](vmss.ref.Append("os_profile_windows_config"))
 }
 
 func (vmss virtualMachineScaleSetAttributes) Plan() terra.SetValue[virtualmachinescaleset.PlanAttributes] {
-	return terra.ReferenceSet[virtualmachinescaleset.PlanAttributes](vmss.ref.Append("plan"))
+	return terra.ReferenceAsSet[virtualmachinescaleset.PlanAttributes](vmss.ref.Append("plan"))
 }
 
 func (vmss virtualMachineScaleSetAttributes) RollingUpgradePolicy() terra.ListValue[virtualmachinescaleset.RollingUpgradePolicyAttributes] {
-	return terra.ReferenceList[virtualmachinescaleset.RollingUpgradePolicyAttributes](vmss.ref.Append("rolling_upgrade_policy"))
+	return terra.ReferenceAsList[virtualmachinescaleset.RollingUpgradePolicyAttributes](vmss.ref.Append("rolling_upgrade_policy"))
 }
 
 func (vmss virtualMachineScaleSetAttributes) Sku() terra.ListValue[virtualmachinescaleset.SkuAttributes] {
-	return terra.ReferenceList[virtualmachinescaleset.SkuAttributes](vmss.ref.Append("sku"))
+	return terra.ReferenceAsList[virtualmachinescaleset.SkuAttributes](vmss.ref.Append("sku"))
 }
 
 func (vmss virtualMachineScaleSetAttributes) StorageProfileDataDisk() terra.ListValue[virtualmachinescaleset.StorageProfileDataDiskAttributes] {
-	return terra.ReferenceList[virtualmachinescaleset.StorageProfileDataDiskAttributes](vmss.ref.Append("storage_profile_data_disk"))
+	return terra.ReferenceAsList[virtualmachinescaleset.StorageProfileDataDiskAttributes](vmss.ref.Append("storage_profile_data_disk"))
 }
 
 func (vmss virtualMachineScaleSetAttributes) StorageProfileImageReference() terra.SetValue[virtualmachinescaleset.StorageProfileImageReferenceAttributes] {
-	return terra.ReferenceSet[virtualmachinescaleset.StorageProfileImageReferenceAttributes](vmss.ref.Append("storage_profile_image_reference"))
+	return terra.ReferenceAsSet[virtualmachinescaleset.StorageProfileImageReferenceAttributes](vmss.ref.Append("storage_profile_image_reference"))
 }
 
 func (vmss virtualMachineScaleSetAttributes) StorageProfileOsDisk() terra.SetValue[virtualmachinescaleset.StorageProfileOsDiskAttributes] {
-	return terra.ReferenceSet[virtualmachinescaleset.StorageProfileOsDiskAttributes](vmss.ref.Append("storage_profile_os_disk"))
+	return terra.ReferenceAsSet[virtualmachinescaleset.StorageProfileOsDiskAttributes](vmss.ref.Append("storage_profile_os_disk"))
 }
 
 func (vmss virtualMachineScaleSetAttributes) Timeouts() virtualmachinescaleset.TimeoutsAttributes {
-	return terra.ReferenceSingle[virtualmachinescaleset.TimeoutsAttributes](vmss.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[virtualmachinescaleset.TimeoutsAttributes](vmss.ref.Append("timeouts"))
 }
 
 type virtualMachineScaleSetState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewWebPubsubSharedPrivateLinkResource creates a new instance of [WebPubsubSharedPrivateLinkResource].
 func NewWebPubsubSharedPrivateLinkResource(name string, args WebPubsubSharedPrivateLinkResourceArgs) *WebPubsubSharedPrivateLinkResource {
 	return &WebPubsubSharedPrivateLinkResource{
 		Args: args,
@@ -19,28 +20,51 @@ func NewWebPubsubSharedPrivateLinkResource(name string, args WebPubsubSharedPriv
 
 var _ terra.Resource = (*WebPubsubSharedPrivateLinkResource)(nil)
 
+// WebPubsubSharedPrivateLinkResource represents the Terraform resource azurerm_web_pubsub_shared_private_link_resource.
 type WebPubsubSharedPrivateLinkResource struct {
-	Name  string
-	Args  WebPubsubSharedPrivateLinkResourceArgs
-	state *webPubsubSharedPrivateLinkResourceState
+	Name      string
+	Args      WebPubsubSharedPrivateLinkResourceArgs
+	state     *webPubsubSharedPrivateLinkResourceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [WebPubsubSharedPrivateLinkResource].
 func (wpsplr *WebPubsubSharedPrivateLinkResource) Type() string {
 	return "azurerm_web_pubsub_shared_private_link_resource"
 }
 
+// LocalName returns the local name for [WebPubsubSharedPrivateLinkResource].
 func (wpsplr *WebPubsubSharedPrivateLinkResource) LocalName() string {
 	return wpsplr.Name
 }
 
+// Configuration returns the configuration (args) for [WebPubsubSharedPrivateLinkResource].
 func (wpsplr *WebPubsubSharedPrivateLinkResource) Configuration() interface{} {
 	return wpsplr.Args
 }
 
+// DependOn is used for other resources to depend on [WebPubsubSharedPrivateLinkResource].
+func (wpsplr *WebPubsubSharedPrivateLinkResource) DependOn() terra.Reference {
+	return terra.ReferenceResource(wpsplr)
+}
+
+// Dependencies returns the list of resources [WebPubsubSharedPrivateLinkResource] depends_on.
+func (wpsplr *WebPubsubSharedPrivateLinkResource) Dependencies() terra.Dependencies {
+	return wpsplr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [WebPubsubSharedPrivateLinkResource].
+func (wpsplr *WebPubsubSharedPrivateLinkResource) LifecycleManagement() *terra.Lifecycle {
+	return wpsplr.Lifecycle
+}
+
+// Attributes returns the attributes for [WebPubsubSharedPrivateLinkResource].
 func (wpsplr *WebPubsubSharedPrivateLinkResource) Attributes() webPubsubSharedPrivateLinkResourceAttributes {
 	return webPubsubSharedPrivateLinkResourceAttributes{ref: terra.ReferenceResource(wpsplr)}
 }
 
+// ImportState imports the given attribute values into [WebPubsubSharedPrivateLinkResource]'s state.
 func (wpsplr *WebPubsubSharedPrivateLinkResource) ImportState(av io.Reader) error {
 	wpsplr.state = &webPubsubSharedPrivateLinkResourceState{}
 	if err := json.NewDecoder(av).Decode(wpsplr.state); err != nil {
@@ -49,10 +73,12 @@ func (wpsplr *WebPubsubSharedPrivateLinkResource) ImportState(av io.Reader) erro
 	return nil
 }
 
+// State returns the state and a bool indicating if [WebPubsubSharedPrivateLinkResource] has state.
 func (wpsplr *WebPubsubSharedPrivateLinkResource) State() (*webPubsubSharedPrivateLinkResourceState, bool) {
 	return wpsplr.state, wpsplr.state != nil
 }
 
+// StateMust returns the state for [WebPubsubSharedPrivateLinkResource]. Panics if the state is nil.
 func (wpsplr *WebPubsubSharedPrivateLinkResource) StateMust() *webPubsubSharedPrivateLinkResourceState {
 	if wpsplr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", wpsplr.Type(), wpsplr.LocalName()))
@@ -60,10 +86,7 @@ func (wpsplr *WebPubsubSharedPrivateLinkResource) StateMust() *webPubsubSharedPr
 	return wpsplr.state
 }
 
-func (wpsplr *WebPubsubSharedPrivateLinkResource) DependOn() terra.Reference {
-	return terra.ReferenceResource(wpsplr)
-}
-
+// WebPubsubSharedPrivateLinkResourceArgs contains the configurations for azurerm_web_pubsub_shared_private_link_resource.
 type WebPubsubSharedPrivateLinkResourceArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,43 +102,48 @@ type WebPubsubSharedPrivateLinkResourceArgs struct {
 	WebPubsubId terra.StringValue `hcl:"web_pubsub_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *webpubsubsharedprivatelinkresource.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that WebPubsubSharedPrivateLinkResource depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type webPubsubSharedPrivateLinkResourceAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_web_pubsub_shared_private_link_resource.
 func (wpsplr webPubsubSharedPrivateLinkResourceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(wpsplr.ref.Append("id"))
+	return terra.ReferenceAsString(wpsplr.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_web_pubsub_shared_private_link_resource.
 func (wpsplr webPubsubSharedPrivateLinkResourceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(wpsplr.ref.Append("name"))
+	return terra.ReferenceAsString(wpsplr.ref.Append("name"))
 }
 
+// RequestMessage returns a reference to field request_message of azurerm_web_pubsub_shared_private_link_resource.
 func (wpsplr webPubsubSharedPrivateLinkResourceAttributes) RequestMessage() terra.StringValue {
-	return terra.ReferenceString(wpsplr.ref.Append("request_message"))
+	return terra.ReferenceAsString(wpsplr.ref.Append("request_message"))
 }
 
+// Status returns a reference to field status of azurerm_web_pubsub_shared_private_link_resource.
 func (wpsplr webPubsubSharedPrivateLinkResourceAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(wpsplr.ref.Append("status"))
+	return terra.ReferenceAsString(wpsplr.ref.Append("status"))
 }
 
+// SubresourceName returns a reference to field subresource_name of azurerm_web_pubsub_shared_private_link_resource.
 func (wpsplr webPubsubSharedPrivateLinkResourceAttributes) SubresourceName() terra.StringValue {
-	return terra.ReferenceString(wpsplr.ref.Append("subresource_name"))
+	return terra.ReferenceAsString(wpsplr.ref.Append("subresource_name"))
 }
 
+// TargetResourceId returns a reference to field target_resource_id of azurerm_web_pubsub_shared_private_link_resource.
 func (wpsplr webPubsubSharedPrivateLinkResourceAttributes) TargetResourceId() terra.StringValue {
-	return terra.ReferenceString(wpsplr.ref.Append("target_resource_id"))
+	return terra.ReferenceAsString(wpsplr.ref.Append("target_resource_id"))
 }
 
+// WebPubsubId returns a reference to field web_pubsub_id of azurerm_web_pubsub_shared_private_link_resource.
 func (wpsplr webPubsubSharedPrivateLinkResourceAttributes) WebPubsubId() terra.StringValue {
-	return terra.ReferenceString(wpsplr.ref.Append("web_pubsub_id"))
+	return terra.ReferenceAsString(wpsplr.ref.Append("web_pubsub_id"))
 }
 
 func (wpsplr webPubsubSharedPrivateLinkResourceAttributes) Timeouts() webpubsubsharedprivatelinkresource.TimeoutsAttributes {
-	return terra.ReferenceSingle[webpubsubsharedprivatelinkresource.TimeoutsAttributes](wpsplr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[webpubsubsharedprivatelinkresource.TimeoutsAttributes](wpsplr.ref.Append("timeouts"))
 }
 
 type webPubsubSharedPrivateLinkResourceState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNetworkManagerManagementGroupConnection creates a new instance of [NetworkManagerManagementGroupConnection].
 func NewNetworkManagerManagementGroupConnection(name string, args NetworkManagerManagementGroupConnectionArgs) *NetworkManagerManagementGroupConnection {
 	return &NetworkManagerManagementGroupConnection{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNetworkManagerManagementGroupConnection(name string, args NetworkManager
 
 var _ terra.Resource = (*NetworkManagerManagementGroupConnection)(nil)
 
+// NetworkManagerManagementGroupConnection represents the Terraform resource azurerm_network_manager_management_group_connection.
 type NetworkManagerManagementGroupConnection struct {
-	Name  string
-	Args  NetworkManagerManagementGroupConnectionArgs
-	state *networkManagerManagementGroupConnectionState
+	Name      string
+	Args      NetworkManagerManagementGroupConnectionArgs
+	state     *networkManagerManagementGroupConnectionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NetworkManagerManagementGroupConnection].
 func (nmmgc *NetworkManagerManagementGroupConnection) Type() string {
 	return "azurerm_network_manager_management_group_connection"
 }
 
+// LocalName returns the local name for [NetworkManagerManagementGroupConnection].
 func (nmmgc *NetworkManagerManagementGroupConnection) LocalName() string {
 	return nmmgc.Name
 }
 
+// Configuration returns the configuration (args) for [NetworkManagerManagementGroupConnection].
 func (nmmgc *NetworkManagerManagementGroupConnection) Configuration() interface{} {
 	return nmmgc.Args
 }
 
+// DependOn is used for other resources to depend on [NetworkManagerManagementGroupConnection].
+func (nmmgc *NetworkManagerManagementGroupConnection) DependOn() terra.Reference {
+	return terra.ReferenceResource(nmmgc)
+}
+
+// Dependencies returns the list of resources [NetworkManagerManagementGroupConnection] depends_on.
+func (nmmgc *NetworkManagerManagementGroupConnection) Dependencies() terra.Dependencies {
+	return nmmgc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NetworkManagerManagementGroupConnection].
+func (nmmgc *NetworkManagerManagementGroupConnection) LifecycleManagement() *terra.Lifecycle {
+	return nmmgc.Lifecycle
+}
+
+// Attributes returns the attributes for [NetworkManagerManagementGroupConnection].
 func (nmmgc *NetworkManagerManagementGroupConnection) Attributes() networkManagerManagementGroupConnectionAttributes {
 	return networkManagerManagementGroupConnectionAttributes{ref: terra.ReferenceResource(nmmgc)}
 }
 
+// ImportState imports the given attribute values into [NetworkManagerManagementGroupConnection]'s state.
 func (nmmgc *NetworkManagerManagementGroupConnection) ImportState(av io.Reader) error {
 	nmmgc.state = &networkManagerManagementGroupConnectionState{}
 	if err := json.NewDecoder(av).Decode(nmmgc.state); err != nil {
@@ -49,10 +73,12 @@ func (nmmgc *NetworkManagerManagementGroupConnection) ImportState(av io.Reader) 
 	return nil
 }
 
+// State returns the state and a bool indicating if [NetworkManagerManagementGroupConnection] has state.
 func (nmmgc *NetworkManagerManagementGroupConnection) State() (*networkManagerManagementGroupConnectionState, bool) {
 	return nmmgc.state, nmmgc.state != nil
 }
 
+// StateMust returns the state for [NetworkManagerManagementGroupConnection]. Panics if the state is nil.
 func (nmmgc *NetworkManagerManagementGroupConnection) StateMust() *networkManagerManagementGroupConnectionState {
 	if nmmgc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", nmmgc.Type(), nmmgc.LocalName()))
@@ -60,10 +86,7 @@ func (nmmgc *NetworkManagerManagementGroupConnection) StateMust() *networkManage
 	return nmmgc.state
 }
 
-func (nmmgc *NetworkManagerManagementGroupConnection) DependOn() terra.Reference {
-	return terra.ReferenceResource(nmmgc)
-}
-
+// NetworkManagerManagementGroupConnectionArgs contains the configurations for azurerm_network_manager_management_group_connection.
 type NetworkManagerManagementGroupConnectionArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -77,39 +100,43 @@ type NetworkManagerManagementGroupConnectionArgs struct {
 	NetworkManagerId terra.StringValue `hcl:"network_manager_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *networkmanagermanagementgroupconnection.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that NetworkManagerManagementGroupConnection depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type networkManagerManagementGroupConnectionAttributes struct {
 	ref terra.Reference
 }
 
+// ConnectionState returns a reference to field connection_state of azurerm_network_manager_management_group_connection.
 func (nmmgc networkManagerManagementGroupConnectionAttributes) ConnectionState() terra.StringValue {
-	return terra.ReferenceString(nmmgc.ref.Append("connection_state"))
+	return terra.ReferenceAsString(nmmgc.ref.Append("connection_state"))
 }
 
+// Description returns a reference to field description of azurerm_network_manager_management_group_connection.
 func (nmmgc networkManagerManagementGroupConnectionAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(nmmgc.ref.Append("description"))
+	return terra.ReferenceAsString(nmmgc.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_network_manager_management_group_connection.
 func (nmmgc networkManagerManagementGroupConnectionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(nmmgc.ref.Append("id"))
+	return terra.ReferenceAsString(nmmgc.ref.Append("id"))
 }
 
+// ManagementGroupId returns a reference to field management_group_id of azurerm_network_manager_management_group_connection.
 func (nmmgc networkManagerManagementGroupConnectionAttributes) ManagementGroupId() terra.StringValue {
-	return terra.ReferenceString(nmmgc.ref.Append("management_group_id"))
+	return terra.ReferenceAsString(nmmgc.ref.Append("management_group_id"))
 }
 
+// Name returns a reference to field name of azurerm_network_manager_management_group_connection.
 func (nmmgc networkManagerManagementGroupConnectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(nmmgc.ref.Append("name"))
+	return terra.ReferenceAsString(nmmgc.ref.Append("name"))
 }
 
+// NetworkManagerId returns a reference to field network_manager_id of azurerm_network_manager_management_group_connection.
 func (nmmgc networkManagerManagementGroupConnectionAttributes) NetworkManagerId() terra.StringValue {
-	return terra.ReferenceString(nmmgc.ref.Append("network_manager_id"))
+	return terra.ReferenceAsString(nmmgc.ref.Append("network_manager_id"))
 }
 
 func (nmmgc networkManagerManagementGroupConnectionAttributes) Timeouts() networkmanagermanagementgroupconnection.TimeoutsAttributes {
-	return terra.ReferenceSingle[networkmanagermanagementgroupconnection.TimeoutsAttributes](nmmgc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[networkmanagermanagementgroupconnection.TimeoutsAttributes](nmmgc.ref.Append("timeouts"))
 }
 
 type networkManagerManagementGroupConnectionState struct {

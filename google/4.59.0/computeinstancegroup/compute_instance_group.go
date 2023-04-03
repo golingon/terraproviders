@@ -27,52 +27,52 @@ type NamedPortAttributes struct {
 	ref terra.Reference
 }
 
-func (np NamedPortAttributes) InternalRef() terra.Reference {
-	return np.ref
+func (np NamedPortAttributes) InternalRef() (terra.Reference, error) {
+	return np.ref, nil
 }
 
 func (np NamedPortAttributes) InternalWithRef(ref terra.Reference) NamedPortAttributes {
 	return NamedPortAttributes{ref: ref}
 }
 
-func (np NamedPortAttributes) InternalTokens() hclwrite.Tokens {
+func (np NamedPortAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return np.ref.InternalTokens()
 }
 
 func (np NamedPortAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("name"))
+	return terra.ReferenceAsString(np.ref.Append("name"))
 }
 
 func (np NamedPortAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(np.ref.Append("port"))
+	return terra.ReferenceAsNumber(np.ref.Append("port"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type NamedPortState struct {

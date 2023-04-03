@@ -22,108 +22,108 @@ type LogConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (lc LogConfigAttributes) InternalRef() terra.Reference {
-	return lc.ref
+func (lc LogConfigAttributes) InternalRef() (terra.Reference, error) {
+	return lc.ref, nil
 }
 
 func (lc LogConfigAttributes) InternalWithRef(ref terra.Reference) LogConfigAttributes {
 	return LogConfigAttributes{ref: ref}
 }
 
-func (lc LogConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (lc LogConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lc.ref.InternalTokens()
 }
 
 func (lc LogConfigAttributes) Enable() terra.BoolValue {
-	return terra.ReferenceBool(lc.ref.Append("enable"))
+	return terra.ReferenceAsBool(lc.ref.Append("enable"))
 }
 
 func (lc LogConfigAttributes) Filter() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("filter"))
+	return terra.ReferenceAsString(lc.ref.Append("filter"))
 }
 
 type RulesAttributes struct {
 	ref terra.Reference
 }
 
-func (r RulesAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RulesAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RulesAttributes) InternalWithRef(ref terra.Reference) RulesAttributes {
 	return RulesAttributes{ref: ref}
 }
 
-func (r RulesAttributes) InternalTokens() hclwrite.Tokens {
+func (r RulesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RulesAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("description"))
+	return terra.ReferenceAsString(r.ref.Append("description"))
 }
 
 func (r RulesAttributes) Match() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("match"))
+	return terra.ReferenceAsString(r.ref.Append("match"))
 }
 
 func (r RulesAttributes) RuleNumber() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("rule_number"))
+	return terra.ReferenceAsNumber(r.ref.Append("rule_number"))
 }
 
 func (r RulesAttributes) Action() terra.ListValue[ActionAttributes] {
-	return terra.ReferenceList[ActionAttributes](r.ref.Append("action"))
+	return terra.ReferenceAsList[ActionAttributes](r.ref.Append("action"))
 }
 
 type ActionAttributes struct {
 	ref terra.Reference
 }
 
-func (a ActionAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a ActionAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a ActionAttributes) InternalWithRef(ref terra.Reference) ActionAttributes {
 	return ActionAttributes{ref: ref}
 }
 
-func (a ActionAttributes) InternalTokens() hclwrite.Tokens {
+func (a ActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a ActionAttributes) SourceNatActiveIps() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](a.ref.Append("source_nat_active_ips"))
+	return terra.ReferenceAsSet[terra.StringValue](a.ref.Append("source_nat_active_ips"))
 }
 
 func (a ActionAttributes) SourceNatDrainIps() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](a.ref.Append("source_nat_drain_ips"))
+	return terra.ReferenceAsSet[terra.StringValue](a.ref.Append("source_nat_drain_ips"))
 }
 
 type SubnetworkAttributes struct {
 	ref terra.Reference
 }
 
-func (s SubnetworkAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SubnetworkAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SubnetworkAttributes) InternalWithRef(ref terra.Reference) SubnetworkAttributes {
 	return SubnetworkAttributes{ref: ref}
 }
 
-func (s SubnetworkAttributes) InternalTokens() hclwrite.Tokens {
+func (s SubnetworkAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SubnetworkAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 func (s SubnetworkAttributes) SecondaryIpRangeNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("secondary_ip_range_names"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("secondary_ip_range_names"))
 }
 
 func (s SubnetworkAttributes) SourceIpRangesToNat() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("source_ip_ranges_to_nat"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("source_ip_ranges_to_nat"))
 }
 
 type LogConfigState struct {

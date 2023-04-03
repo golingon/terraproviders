@@ -27,72 +27,72 @@ type ErrorAttributes struct {
 	ref terra.Reference
 }
 
-func (e ErrorAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e ErrorAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e ErrorAttributes) InternalWithRef(ref terra.Reference) ErrorAttributes {
 	return ErrorAttributes{ref: ref}
 }
 
-func (e ErrorAttributes) InternalTokens() hclwrite.Tokens {
+func (e ErrorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
 func (e ErrorAttributes) Details() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](e.ref.Append("details"))
+	return terra.ReferenceAsMap[terra.StringValue](e.ref.Append("details"))
 }
 
 func (e ErrorAttributes) Message() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("message"))
+	return terra.ReferenceAsString(e.ref.Append("message"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type VpcPeeringConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (vpc VpcPeeringConfigAttributes) InternalRef() terra.Reference {
-	return vpc.ref
+func (vpc VpcPeeringConfigAttributes) InternalRef() (terra.Reference, error) {
+	return vpc.ref, nil
 }
 
 func (vpc VpcPeeringConfigAttributes) InternalWithRef(ref terra.Reference) VpcPeeringConfigAttributes {
 	return VpcPeeringConfigAttributes{ref: ref}
 }
 
-func (vpc VpcPeeringConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (vpc VpcPeeringConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vpc.ref.InternalTokens()
 }
 
 func (vpc VpcPeeringConfigAttributes) Subnet() terra.StringValue {
-	return terra.ReferenceString(vpc.ref.Append("subnet"))
+	return terra.ReferenceAsString(vpc.ref.Append("subnet"))
 }
 
 func (vpc VpcPeeringConfigAttributes) Vpc() terra.StringValue {
-	return terra.ReferenceString(vpc.ref.Append("vpc"))
+	return terra.ReferenceAsString(vpc.ref.Append("vpc"))
 }
 
 type ErrorState struct {

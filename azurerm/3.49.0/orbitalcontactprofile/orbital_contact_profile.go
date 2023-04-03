@@ -59,136 +59,136 @@ type LinksAttributes struct {
 	ref terra.Reference
 }
 
-func (l LinksAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l LinksAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l LinksAttributes) InternalWithRef(ref terra.Reference) LinksAttributes {
 	return LinksAttributes{ref: ref}
 }
 
-func (l LinksAttributes) InternalTokens() hclwrite.Tokens {
+func (l LinksAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 
 func (l LinksAttributes) Direction() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("direction"))
+	return terra.ReferenceAsString(l.ref.Append("direction"))
 }
 
 func (l LinksAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("name"))
+	return terra.ReferenceAsString(l.ref.Append("name"))
 }
 
 func (l LinksAttributes) Polarization() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("polarization"))
+	return terra.ReferenceAsString(l.ref.Append("polarization"))
 }
 
 func (l LinksAttributes) Channels() terra.ListValue[ChannelsAttributes] {
-	return terra.ReferenceList[ChannelsAttributes](l.ref.Append("channels"))
+	return terra.ReferenceAsList[ChannelsAttributes](l.ref.Append("channels"))
 }
 
 type ChannelsAttributes struct {
 	ref terra.Reference
 }
 
-func (c ChannelsAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ChannelsAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ChannelsAttributes) InternalWithRef(ref terra.Reference) ChannelsAttributes {
 	return ChannelsAttributes{ref: ref}
 }
 
-func (c ChannelsAttributes) InternalTokens() hclwrite.Tokens {
+func (c ChannelsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ChannelsAttributes) BandwidthMhz() terra.NumberValue {
-	return terra.ReferenceNumber(c.ref.Append("bandwidth_mhz"))
+	return terra.ReferenceAsNumber(c.ref.Append("bandwidth_mhz"))
 }
 
 func (c ChannelsAttributes) CenterFrequencyMhz() terra.NumberValue {
-	return terra.ReferenceNumber(c.ref.Append("center_frequency_mhz"))
+	return terra.ReferenceAsNumber(c.ref.Append("center_frequency_mhz"))
 }
 
 func (c ChannelsAttributes) DemodulationConfiguration() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("demodulation_configuration"))
+	return terra.ReferenceAsString(c.ref.Append("demodulation_configuration"))
 }
 
 func (c ChannelsAttributes) ModulationConfiguration() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("modulation_configuration"))
+	return terra.ReferenceAsString(c.ref.Append("modulation_configuration"))
 }
 
 func (c ChannelsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("name"))
+	return terra.ReferenceAsString(c.ref.Append("name"))
 }
 
 func (c ChannelsAttributes) EndPoint() terra.SetValue[EndPointAttributes] {
-	return terra.ReferenceSet[EndPointAttributes](c.ref.Append("end_point"))
+	return terra.ReferenceAsSet[EndPointAttributes](c.ref.Append("end_point"))
 }
 
 type EndPointAttributes struct {
 	ref terra.Reference
 }
 
-func (ep EndPointAttributes) InternalRef() terra.Reference {
-	return ep.ref
+func (ep EndPointAttributes) InternalRef() (terra.Reference, error) {
+	return ep.ref, nil
 }
 
 func (ep EndPointAttributes) InternalWithRef(ref terra.Reference) EndPointAttributes {
 	return EndPointAttributes{ref: ref}
 }
 
-func (ep EndPointAttributes) InternalTokens() hclwrite.Tokens {
+func (ep EndPointAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ep.ref.InternalTokens()
 }
 
 func (ep EndPointAttributes) EndPointName() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("end_point_name"))
+	return terra.ReferenceAsString(ep.ref.Append("end_point_name"))
 }
 
 func (ep EndPointAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("ip_address"))
+	return terra.ReferenceAsString(ep.ref.Append("ip_address"))
 }
 
 func (ep EndPointAttributes) Port() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("port"))
+	return terra.ReferenceAsString(ep.ref.Append("port"))
 }
 
 func (ep EndPointAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("protocol"))
+	return terra.ReferenceAsString(ep.ref.Append("protocol"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type LinksState struct {

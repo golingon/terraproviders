@@ -18,52 +18,52 @@ type StorageProfileAttributes struct {
 	ref terra.Reference
 }
 
-func (sp StorageProfileAttributes) InternalRef() terra.Reference {
-	return sp.ref
+func (sp StorageProfileAttributes) InternalRef() (terra.Reference, error) {
+	return sp.ref, nil
 }
 
 func (sp StorageProfileAttributes) InternalWithRef(ref terra.Reference) StorageProfileAttributes {
 	return StorageProfileAttributes{ref: ref}
 }
 
-func (sp StorageProfileAttributes) InternalTokens() hclwrite.Tokens {
+func (sp StorageProfileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sp.ref.InternalTokens()
 }
 
 func (sp StorageProfileAttributes) AutoGrow() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("auto_grow"))
+	return terra.ReferenceAsString(sp.ref.Append("auto_grow"))
 }
 
 func (sp StorageProfileAttributes) BackupRetentionDays() terra.NumberValue {
-	return terra.ReferenceNumber(sp.ref.Append("backup_retention_days"))
+	return terra.ReferenceAsNumber(sp.ref.Append("backup_retention_days"))
 }
 
 func (sp StorageProfileAttributes) GeoRedundantBackup() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("geo_redundant_backup"))
+	return terra.ReferenceAsString(sp.ref.Append("geo_redundant_backup"))
 }
 
 func (sp StorageProfileAttributes) StorageMb() terra.NumberValue {
-	return terra.ReferenceNumber(sp.ref.Append("storage_mb"))
+	return terra.ReferenceAsNumber(sp.ref.Append("storage_mb"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type StorageProfileState struct {

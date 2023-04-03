@@ -27,52 +27,52 @@ type SplitAttributes struct {
 	ref terra.Reference
 }
 
-func (s SplitAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SplitAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SplitAttributes) InternalWithRef(ref terra.Reference) SplitAttributes {
 	return SplitAttributes{ref: ref}
 }
 
-func (s SplitAttributes) InternalTokens() hclwrite.Tokens {
+func (s SplitAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SplitAttributes) Allocations() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](s.ref.Append("allocations"))
+	return terra.ReferenceAsMap[terra.StringValue](s.ref.Append("allocations"))
 }
 
 func (s SplitAttributes) ShardBy() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("shard_by"))
+	return terra.ReferenceAsString(s.ref.Append("shard_by"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type SplitState struct {

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataKubernetesServiceVersions creates a new instance of [DataKubernetesServiceVersions].
 func NewDataKubernetesServiceVersions(name string, args DataKubernetesServiceVersionsArgs) *DataKubernetesServiceVersions {
 	return &DataKubernetesServiceVersions{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataKubernetesServiceVersions(name string, args DataKubernetesServiceVer
 
 var _ terra.DataResource = (*DataKubernetesServiceVersions)(nil)
 
+// DataKubernetesServiceVersions represents the Terraform data resource azurerm_kubernetes_service_versions.
 type DataKubernetesServiceVersions struct {
 	Name string
 	Args DataKubernetesServiceVersionsArgs
 }
 
+// DataSource returns the Terraform object type for [DataKubernetesServiceVersions].
 func (ksv *DataKubernetesServiceVersions) DataSource() string {
 	return "azurerm_kubernetes_service_versions"
 }
 
+// LocalName returns the local name for [DataKubernetesServiceVersions].
 func (ksv *DataKubernetesServiceVersions) LocalName() string {
 	return ksv.Name
 }
 
+// Configuration returns the configuration (args) for [DataKubernetesServiceVersions].
 func (ksv *DataKubernetesServiceVersions) Configuration() interface{} {
 	return ksv.Args
 }
 
+// Attributes returns the attributes for [DataKubernetesServiceVersions].
 func (ksv *DataKubernetesServiceVersions) Attributes() dataKubernetesServiceVersionsAttributes {
 	return dataKubernetesServiceVersionsAttributes{ref: terra.ReferenceDataResource(ksv)}
 }
 
+// DataKubernetesServiceVersionsArgs contains the configurations for azurerm_kubernetes_service_versions.
 type DataKubernetesServiceVersionsArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,30 +60,36 @@ type dataKubernetesServiceVersionsAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_kubernetes_service_versions.
 func (ksv dataKubernetesServiceVersionsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ksv.ref.Append("id"))
+	return terra.ReferenceAsString(ksv.ref.Append("id"))
 }
 
+// IncludePreview returns a reference to field include_preview of azurerm_kubernetes_service_versions.
 func (ksv dataKubernetesServiceVersionsAttributes) IncludePreview() terra.BoolValue {
-	return terra.ReferenceBool(ksv.ref.Append("include_preview"))
+	return terra.ReferenceAsBool(ksv.ref.Append("include_preview"))
 }
 
+// LatestVersion returns a reference to field latest_version of azurerm_kubernetes_service_versions.
 func (ksv dataKubernetesServiceVersionsAttributes) LatestVersion() terra.StringValue {
-	return terra.ReferenceString(ksv.ref.Append("latest_version"))
+	return terra.ReferenceAsString(ksv.ref.Append("latest_version"))
 }
 
+// Location returns a reference to field location of azurerm_kubernetes_service_versions.
 func (ksv dataKubernetesServiceVersionsAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ksv.ref.Append("location"))
+	return terra.ReferenceAsString(ksv.ref.Append("location"))
 }
 
+// VersionPrefix returns a reference to field version_prefix of azurerm_kubernetes_service_versions.
 func (ksv dataKubernetesServiceVersionsAttributes) VersionPrefix() terra.StringValue {
-	return terra.ReferenceString(ksv.ref.Append("version_prefix"))
+	return terra.ReferenceAsString(ksv.ref.Append("version_prefix"))
 }
 
+// Versions returns a reference to field versions of azurerm_kubernetes_service_versions.
 func (ksv dataKubernetesServiceVersionsAttributes) Versions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ksv.ref.Append("versions"))
+	return terra.ReferenceAsList[terra.StringValue](ksv.ref.Append("versions"))
 }
 
 func (ksv dataKubernetesServiceVersionsAttributes) Timeouts() datakubernetesserviceversions.TimeoutsAttributes {
-	return terra.ReferenceSingle[datakubernetesserviceversions.TimeoutsAttributes](ksv.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datakubernetesserviceversions.TimeoutsAttributes](ksv.ref.Append("timeouts"))
 }

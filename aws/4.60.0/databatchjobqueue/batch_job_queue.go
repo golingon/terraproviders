@@ -21,7 +21,7 @@ func (ceo ComputeEnvironmentOrderAttributes) InternalWithRef(ref terra.Reference
 	return ComputeEnvironmentOrderAttributes{ref: ref}
 }
 
-func (ceo ComputeEnvironmentOrderAttributes) InternalTokens() hclwrite.Tokens {
+func (ceo ComputeEnvironmentOrderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ceo.ref.InternalTokens()
 }
 

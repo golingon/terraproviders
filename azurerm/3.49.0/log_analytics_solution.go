@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLogAnalyticsSolution creates a new instance of [LogAnalyticsSolution].
 func NewLogAnalyticsSolution(name string, args LogAnalyticsSolutionArgs) *LogAnalyticsSolution {
 	return &LogAnalyticsSolution{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLogAnalyticsSolution(name string, args LogAnalyticsSolutionArgs) *LogAna
 
 var _ terra.Resource = (*LogAnalyticsSolution)(nil)
 
+// LogAnalyticsSolution represents the Terraform resource azurerm_log_analytics_solution.
 type LogAnalyticsSolution struct {
-	Name  string
-	Args  LogAnalyticsSolutionArgs
-	state *logAnalyticsSolutionState
+	Name      string
+	Args      LogAnalyticsSolutionArgs
+	state     *logAnalyticsSolutionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LogAnalyticsSolution].
 func (las *LogAnalyticsSolution) Type() string {
 	return "azurerm_log_analytics_solution"
 }
 
+// LocalName returns the local name for [LogAnalyticsSolution].
 func (las *LogAnalyticsSolution) LocalName() string {
 	return las.Name
 }
 
+// Configuration returns the configuration (args) for [LogAnalyticsSolution].
 func (las *LogAnalyticsSolution) Configuration() interface{} {
 	return las.Args
 }
 
+// DependOn is used for other resources to depend on [LogAnalyticsSolution].
+func (las *LogAnalyticsSolution) DependOn() terra.Reference {
+	return terra.ReferenceResource(las)
+}
+
+// Dependencies returns the list of resources [LogAnalyticsSolution] depends_on.
+func (las *LogAnalyticsSolution) Dependencies() terra.Dependencies {
+	return las.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LogAnalyticsSolution].
+func (las *LogAnalyticsSolution) LifecycleManagement() *terra.Lifecycle {
+	return las.Lifecycle
+}
+
+// Attributes returns the attributes for [LogAnalyticsSolution].
 func (las *LogAnalyticsSolution) Attributes() logAnalyticsSolutionAttributes {
 	return logAnalyticsSolutionAttributes{ref: terra.ReferenceResource(las)}
 }
 
+// ImportState imports the given attribute values into [LogAnalyticsSolution]'s state.
 func (las *LogAnalyticsSolution) ImportState(av io.Reader) error {
 	las.state = &logAnalyticsSolutionState{}
 	if err := json.NewDecoder(av).Decode(las.state); err != nil {
@@ -49,10 +73,12 @@ func (las *LogAnalyticsSolution) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LogAnalyticsSolution] has state.
 func (las *LogAnalyticsSolution) State() (*logAnalyticsSolutionState, bool) {
 	return las.state, las.state != nil
 }
 
+// StateMust returns the state for [LogAnalyticsSolution]. Panics if the state is nil.
 func (las *LogAnalyticsSolution) StateMust() *logAnalyticsSolutionState {
 	if las.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", las.Type(), las.LocalName()))
@@ -60,10 +86,7 @@ func (las *LogAnalyticsSolution) StateMust() *logAnalyticsSolutionState {
 	return las.state
 }
 
-func (las *LogAnalyticsSolution) DependOn() terra.Reference {
-	return terra.ReferenceResource(las)
-}
-
+// LogAnalyticsSolutionArgs contains the configurations for azurerm_log_analytics_solution.
 type LogAnalyticsSolutionArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -83,47 +106,52 @@ type LogAnalyticsSolutionArgs struct {
 	Plan *loganalyticssolution.Plan `hcl:"plan,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *loganalyticssolution.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LogAnalyticsSolution depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type logAnalyticsSolutionAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_log_analytics_solution.
 func (las logAnalyticsSolutionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(las.ref.Append("id"))
+	return terra.ReferenceAsString(las.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_log_analytics_solution.
 func (las logAnalyticsSolutionAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(las.ref.Append("location"))
+	return terra.ReferenceAsString(las.ref.Append("location"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_log_analytics_solution.
 func (las logAnalyticsSolutionAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(las.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(las.ref.Append("resource_group_name"))
 }
 
+// SolutionName returns a reference to field solution_name of azurerm_log_analytics_solution.
 func (las logAnalyticsSolutionAttributes) SolutionName() terra.StringValue {
-	return terra.ReferenceString(las.ref.Append("solution_name"))
+	return terra.ReferenceAsString(las.ref.Append("solution_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_log_analytics_solution.
 func (las logAnalyticsSolutionAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](las.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](las.ref.Append("tags"))
 }
 
+// WorkspaceName returns a reference to field workspace_name of azurerm_log_analytics_solution.
 func (las logAnalyticsSolutionAttributes) WorkspaceName() terra.StringValue {
-	return terra.ReferenceString(las.ref.Append("workspace_name"))
+	return terra.ReferenceAsString(las.ref.Append("workspace_name"))
 }
 
+// WorkspaceResourceId returns a reference to field workspace_resource_id of azurerm_log_analytics_solution.
 func (las logAnalyticsSolutionAttributes) WorkspaceResourceId() terra.StringValue {
-	return terra.ReferenceString(las.ref.Append("workspace_resource_id"))
+	return terra.ReferenceAsString(las.ref.Append("workspace_resource_id"))
 }
 
 func (las logAnalyticsSolutionAttributes) Plan() terra.ListValue[loganalyticssolution.PlanAttributes] {
-	return terra.ReferenceList[loganalyticssolution.PlanAttributes](las.ref.Append("plan"))
+	return terra.ReferenceAsList[loganalyticssolution.PlanAttributes](las.ref.Append("plan"))
 }
 
 func (las logAnalyticsSolutionAttributes) Timeouts() loganalyticssolution.TimeoutsAttributes {
-	return terra.ReferenceSingle[loganalyticssolution.TimeoutsAttributes](las.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[loganalyticssolution.TimeoutsAttributes](las.ref.Append("timeouts"))
 }
 
 type logAnalyticsSolutionState struct {

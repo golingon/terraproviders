@@ -86,228 +86,228 @@ type AadAdminAttributes struct {
 	ref terra.Reference
 }
 
-func (aa AadAdminAttributes) InternalRef() terra.Reference {
-	return aa.ref
+func (aa AadAdminAttributes) InternalRef() (terra.Reference, error) {
+	return aa.ref, nil
 }
 
 func (aa AadAdminAttributes) InternalWithRef(ref terra.Reference) AadAdminAttributes {
 	return AadAdminAttributes{ref: ref}
 }
 
-func (aa AadAdminAttributes) InternalTokens() hclwrite.Tokens {
+func (aa AadAdminAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aa.ref.InternalTokens()
 }
 
 func (aa AadAdminAttributes) Login() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("login"))
+	return terra.ReferenceAsString(aa.ref.Append("login"))
 }
 
 func (aa AadAdminAttributes) ObjectId() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("object_id"))
+	return terra.ReferenceAsString(aa.ref.Append("object_id"))
 }
 
 func (aa AadAdminAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(aa.ref.Append("tenant_id"))
 }
 
 type SqlAadAdminAttributes struct {
 	ref terra.Reference
 }
 
-func (saa SqlAadAdminAttributes) InternalRef() terra.Reference {
-	return saa.ref
+func (saa SqlAadAdminAttributes) InternalRef() (terra.Reference, error) {
+	return saa.ref, nil
 }
 
 func (saa SqlAadAdminAttributes) InternalWithRef(ref terra.Reference) SqlAadAdminAttributes {
 	return SqlAadAdminAttributes{ref: ref}
 }
 
-func (saa SqlAadAdminAttributes) InternalTokens() hclwrite.Tokens {
+func (saa SqlAadAdminAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return saa.ref.InternalTokens()
 }
 
 func (saa SqlAadAdminAttributes) Login() terra.StringValue {
-	return terra.ReferenceString(saa.ref.Append("login"))
+	return terra.ReferenceAsString(saa.ref.Append("login"))
 }
 
 func (saa SqlAadAdminAttributes) ObjectId() terra.StringValue {
-	return terra.ReferenceString(saa.ref.Append("object_id"))
+	return terra.ReferenceAsString(saa.ref.Append("object_id"))
 }
 
 func (saa SqlAadAdminAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(saa.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(saa.ref.Append("tenant_id"))
 }
 
 type AzureDevopsRepoAttributes struct {
 	ref terra.Reference
 }
 
-func (adr AzureDevopsRepoAttributes) InternalRef() terra.Reference {
-	return adr.ref
+func (adr AzureDevopsRepoAttributes) InternalRef() (terra.Reference, error) {
+	return adr.ref, nil
 }
 
 func (adr AzureDevopsRepoAttributes) InternalWithRef(ref terra.Reference) AzureDevopsRepoAttributes {
 	return AzureDevopsRepoAttributes{ref: ref}
 }
 
-func (adr AzureDevopsRepoAttributes) InternalTokens() hclwrite.Tokens {
+func (adr AzureDevopsRepoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return adr.ref.InternalTokens()
 }
 
 func (adr AzureDevopsRepoAttributes) AccountName() terra.StringValue {
-	return terra.ReferenceString(adr.ref.Append("account_name"))
+	return terra.ReferenceAsString(adr.ref.Append("account_name"))
 }
 
 func (adr AzureDevopsRepoAttributes) BranchName() terra.StringValue {
-	return terra.ReferenceString(adr.ref.Append("branch_name"))
+	return terra.ReferenceAsString(adr.ref.Append("branch_name"))
 }
 
 func (adr AzureDevopsRepoAttributes) LastCommitId() terra.StringValue {
-	return terra.ReferenceString(adr.ref.Append("last_commit_id"))
+	return terra.ReferenceAsString(adr.ref.Append("last_commit_id"))
 }
 
 func (adr AzureDevopsRepoAttributes) ProjectName() terra.StringValue {
-	return terra.ReferenceString(adr.ref.Append("project_name"))
+	return terra.ReferenceAsString(adr.ref.Append("project_name"))
 }
 
 func (adr AzureDevopsRepoAttributes) RepositoryName() terra.StringValue {
-	return terra.ReferenceString(adr.ref.Append("repository_name"))
+	return terra.ReferenceAsString(adr.ref.Append("repository_name"))
 }
 
 func (adr AzureDevopsRepoAttributes) RootFolder() terra.StringValue {
-	return terra.ReferenceString(adr.ref.Append("root_folder"))
+	return terra.ReferenceAsString(adr.ref.Append("root_folder"))
 }
 
 func (adr AzureDevopsRepoAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(adr.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(adr.ref.Append("tenant_id"))
 }
 
 type CustomerManagedKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (cmk CustomerManagedKeyAttributes) InternalRef() terra.Reference {
-	return cmk.ref
+func (cmk CustomerManagedKeyAttributes) InternalRef() (terra.Reference, error) {
+	return cmk.ref, nil
 }
 
 func (cmk CustomerManagedKeyAttributes) InternalWithRef(ref terra.Reference) CustomerManagedKeyAttributes {
 	return CustomerManagedKeyAttributes{ref: ref}
 }
 
-func (cmk CustomerManagedKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (cmk CustomerManagedKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cmk.ref.InternalTokens()
 }
 
 func (cmk CustomerManagedKeyAttributes) KeyName() terra.StringValue {
-	return terra.ReferenceString(cmk.ref.Append("key_name"))
+	return terra.ReferenceAsString(cmk.ref.Append("key_name"))
 }
 
 func (cmk CustomerManagedKeyAttributes) KeyVersionlessId() terra.StringValue {
-	return terra.ReferenceString(cmk.ref.Append("key_versionless_id"))
+	return terra.ReferenceAsString(cmk.ref.Append("key_versionless_id"))
 }
 
 type GithubRepoAttributes struct {
 	ref terra.Reference
 }
 
-func (gr GithubRepoAttributes) InternalRef() terra.Reference {
-	return gr.ref
+func (gr GithubRepoAttributes) InternalRef() (terra.Reference, error) {
+	return gr.ref, nil
 }
 
 func (gr GithubRepoAttributes) InternalWithRef(ref terra.Reference) GithubRepoAttributes {
 	return GithubRepoAttributes{ref: ref}
 }
 
-func (gr GithubRepoAttributes) InternalTokens() hclwrite.Tokens {
+func (gr GithubRepoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gr.ref.InternalTokens()
 }
 
 func (gr GithubRepoAttributes) AccountName() terra.StringValue {
-	return terra.ReferenceString(gr.ref.Append("account_name"))
+	return terra.ReferenceAsString(gr.ref.Append("account_name"))
 }
 
 func (gr GithubRepoAttributes) BranchName() terra.StringValue {
-	return terra.ReferenceString(gr.ref.Append("branch_name"))
+	return terra.ReferenceAsString(gr.ref.Append("branch_name"))
 }
 
 func (gr GithubRepoAttributes) GitUrl() terra.StringValue {
-	return terra.ReferenceString(gr.ref.Append("git_url"))
+	return terra.ReferenceAsString(gr.ref.Append("git_url"))
 }
 
 func (gr GithubRepoAttributes) LastCommitId() terra.StringValue {
-	return terra.ReferenceString(gr.ref.Append("last_commit_id"))
+	return terra.ReferenceAsString(gr.ref.Append("last_commit_id"))
 }
 
 func (gr GithubRepoAttributes) RepositoryName() terra.StringValue {
-	return terra.ReferenceString(gr.ref.Append("repository_name"))
+	return terra.ReferenceAsString(gr.ref.Append("repository_name"))
 }
 
 func (gr GithubRepoAttributes) RootFolder() terra.StringValue {
-	return terra.ReferenceString(gr.ref.Append("root_folder"))
+	return terra.ReferenceAsString(gr.ref.Append("root_folder"))
 }
 
 type IdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (i IdentityAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IdentityAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IdentityAttributes) InternalWithRef(ref terra.Reference) IdentityAttributes {
 	return IdentityAttributes{ref: ref}
 }
 
-func (i IdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (i IdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IdentityAttributes) IdentityIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i.ref.Append("identity_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](i.ref.Append("identity_ids"))
 }
 
 func (i IdentityAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("principal_id"))
+	return terra.ReferenceAsString(i.ref.Append("principal_id"))
 }
 
 func (i IdentityAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(i.ref.Append("tenant_id"))
 }
 
 func (i IdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("type"))
+	return terra.ReferenceAsString(i.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AadAdminState struct {

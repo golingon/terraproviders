@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBotChannelWebChat creates a new instance of [BotChannelWebChat].
 func NewBotChannelWebChat(name string, args BotChannelWebChatArgs) *BotChannelWebChat {
 	return &BotChannelWebChat{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBotChannelWebChat(name string, args BotChannelWebChatArgs) *BotChannelWe
 
 var _ terra.Resource = (*BotChannelWebChat)(nil)
 
+// BotChannelWebChat represents the Terraform resource azurerm_bot_channel_web_chat.
 type BotChannelWebChat struct {
-	Name  string
-	Args  BotChannelWebChatArgs
-	state *botChannelWebChatState
+	Name      string
+	Args      BotChannelWebChatArgs
+	state     *botChannelWebChatState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BotChannelWebChat].
 func (bcwc *BotChannelWebChat) Type() string {
 	return "azurerm_bot_channel_web_chat"
 }
 
+// LocalName returns the local name for [BotChannelWebChat].
 func (bcwc *BotChannelWebChat) LocalName() string {
 	return bcwc.Name
 }
 
+// Configuration returns the configuration (args) for [BotChannelWebChat].
 func (bcwc *BotChannelWebChat) Configuration() interface{} {
 	return bcwc.Args
 }
 
+// DependOn is used for other resources to depend on [BotChannelWebChat].
+func (bcwc *BotChannelWebChat) DependOn() terra.Reference {
+	return terra.ReferenceResource(bcwc)
+}
+
+// Dependencies returns the list of resources [BotChannelWebChat] depends_on.
+func (bcwc *BotChannelWebChat) Dependencies() terra.Dependencies {
+	return bcwc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BotChannelWebChat].
+func (bcwc *BotChannelWebChat) LifecycleManagement() *terra.Lifecycle {
+	return bcwc.Lifecycle
+}
+
+// Attributes returns the attributes for [BotChannelWebChat].
 func (bcwc *BotChannelWebChat) Attributes() botChannelWebChatAttributes {
 	return botChannelWebChatAttributes{ref: terra.ReferenceResource(bcwc)}
 }
 
+// ImportState imports the given attribute values into [BotChannelWebChat]'s state.
 func (bcwc *BotChannelWebChat) ImportState(av io.Reader) error {
 	bcwc.state = &botChannelWebChatState{}
 	if err := json.NewDecoder(av).Decode(bcwc.state); err != nil {
@@ -49,10 +73,12 @@ func (bcwc *BotChannelWebChat) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BotChannelWebChat] has state.
 func (bcwc *BotChannelWebChat) State() (*botChannelWebChatState, bool) {
 	return bcwc.state, bcwc.state != nil
 }
 
+// StateMust returns the state for [BotChannelWebChat]. Panics if the state is nil.
 func (bcwc *BotChannelWebChat) StateMust() *botChannelWebChatState {
 	if bcwc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bcwc.Type(), bcwc.LocalName()))
@@ -60,10 +86,7 @@ func (bcwc *BotChannelWebChat) StateMust() *botChannelWebChatState {
 	return bcwc.state
 }
 
-func (bcwc *BotChannelWebChat) DependOn() terra.Reference {
-	return terra.ReferenceResource(bcwc)
-}
-
+// BotChannelWebChatArgs contains the configurations for azurerm_bot_channel_web_chat.
 type BotChannelWebChatArgs struct {
 	// BotName: string, required
 	BotName terra.StringValue `hcl:"bot_name,attr" validate:"required"`
@@ -77,35 +100,38 @@ type BotChannelWebChatArgs struct {
 	SiteNames terra.SetValue[terra.StringValue] `hcl:"site_names,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *botchannelwebchat.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that BotChannelWebChat depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type botChannelWebChatAttributes struct {
 	ref terra.Reference
 }
 
+// BotName returns a reference to field bot_name of azurerm_bot_channel_web_chat.
 func (bcwc botChannelWebChatAttributes) BotName() terra.StringValue {
-	return terra.ReferenceString(bcwc.ref.Append("bot_name"))
+	return terra.ReferenceAsString(bcwc.ref.Append("bot_name"))
 }
 
+// Id returns a reference to field id of azurerm_bot_channel_web_chat.
 func (bcwc botChannelWebChatAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bcwc.ref.Append("id"))
+	return terra.ReferenceAsString(bcwc.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_bot_channel_web_chat.
 func (bcwc botChannelWebChatAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(bcwc.ref.Append("location"))
+	return terra.ReferenceAsString(bcwc.ref.Append("location"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_bot_channel_web_chat.
 func (bcwc botChannelWebChatAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(bcwc.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(bcwc.ref.Append("resource_group_name"))
 }
 
+// SiteNames returns a reference to field site_names of azurerm_bot_channel_web_chat.
 func (bcwc botChannelWebChatAttributes) SiteNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](bcwc.ref.Append("site_names"))
+	return terra.ReferenceAsSet[terra.StringValue](bcwc.ref.Append("site_names"))
 }
 
 func (bcwc botChannelWebChatAttributes) Timeouts() botchannelwebchat.TimeoutsAttributes {
-	return terra.ReferenceSingle[botchannelwebchat.TimeoutsAttributes](bcwc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[botchannelwebchat.TimeoutsAttributes](bcwc.ref.Append("timeouts"))
 }
 
 type botChannelWebChatState struct {

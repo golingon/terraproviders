@@ -35,7 +35,7 @@ func (svsc ServerlessV2ScalingConfigurationAttributes) InternalWithRef(ref terra
 	return ServerlessV2ScalingConfigurationAttributes{ref: ref}
 }
 
-func (svsc ServerlessV2ScalingConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (svsc ServerlessV2ScalingConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return svsc.ref.InternalTokens()
 }
 
@@ -59,7 +59,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

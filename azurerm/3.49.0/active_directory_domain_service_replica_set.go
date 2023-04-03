@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewActiveDirectoryDomainServiceReplicaSet creates a new instance of [ActiveDirectoryDomainServiceReplicaSet].
 func NewActiveDirectoryDomainServiceReplicaSet(name string, args ActiveDirectoryDomainServiceReplicaSetArgs) *ActiveDirectoryDomainServiceReplicaSet {
 	return &ActiveDirectoryDomainServiceReplicaSet{
 		Args: args,
@@ -19,28 +20,51 @@ func NewActiveDirectoryDomainServiceReplicaSet(name string, args ActiveDirectory
 
 var _ terra.Resource = (*ActiveDirectoryDomainServiceReplicaSet)(nil)
 
+// ActiveDirectoryDomainServiceReplicaSet represents the Terraform resource azurerm_active_directory_domain_service_replica_set.
 type ActiveDirectoryDomainServiceReplicaSet struct {
-	Name  string
-	Args  ActiveDirectoryDomainServiceReplicaSetArgs
-	state *activeDirectoryDomainServiceReplicaSetState
+	Name      string
+	Args      ActiveDirectoryDomainServiceReplicaSetArgs
+	state     *activeDirectoryDomainServiceReplicaSetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ActiveDirectoryDomainServiceReplicaSet].
 func (addsrs *ActiveDirectoryDomainServiceReplicaSet) Type() string {
 	return "azurerm_active_directory_domain_service_replica_set"
 }
 
+// LocalName returns the local name for [ActiveDirectoryDomainServiceReplicaSet].
 func (addsrs *ActiveDirectoryDomainServiceReplicaSet) LocalName() string {
 	return addsrs.Name
 }
 
+// Configuration returns the configuration (args) for [ActiveDirectoryDomainServiceReplicaSet].
 func (addsrs *ActiveDirectoryDomainServiceReplicaSet) Configuration() interface{} {
 	return addsrs.Args
 }
 
+// DependOn is used for other resources to depend on [ActiveDirectoryDomainServiceReplicaSet].
+func (addsrs *ActiveDirectoryDomainServiceReplicaSet) DependOn() terra.Reference {
+	return terra.ReferenceResource(addsrs)
+}
+
+// Dependencies returns the list of resources [ActiveDirectoryDomainServiceReplicaSet] depends_on.
+func (addsrs *ActiveDirectoryDomainServiceReplicaSet) Dependencies() terra.Dependencies {
+	return addsrs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ActiveDirectoryDomainServiceReplicaSet].
+func (addsrs *ActiveDirectoryDomainServiceReplicaSet) LifecycleManagement() *terra.Lifecycle {
+	return addsrs.Lifecycle
+}
+
+// Attributes returns the attributes for [ActiveDirectoryDomainServiceReplicaSet].
 func (addsrs *ActiveDirectoryDomainServiceReplicaSet) Attributes() activeDirectoryDomainServiceReplicaSetAttributes {
 	return activeDirectoryDomainServiceReplicaSetAttributes{ref: terra.ReferenceResource(addsrs)}
 }
 
+// ImportState imports the given attribute values into [ActiveDirectoryDomainServiceReplicaSet]'s state.
 func (addsrs *ActiveDirectoryDomainServiceReplicaSet) ImportState(av io.Reader) error {
 	addsrs.state = &activeDirectoryDomainServiceReplicaSetState{}
 	if err := json.NewDecoder(av).Decode(addsrs.state); err != nil {
@@ -49,10 +73,12 @@ func (addsrs *ActiveDirectoryDomainServiceReplicaSet) ImportState(av io.Reader) 
 	return nil
 }
 
+// State returns the state and a bool indicating if [ActiveDirectoryDomainServiceReplicaSet] has state.
 func (addsrs *ActiveDirectoryDomainServiceReplicaSet) State() (*activeDirectoryDomainServiceReplicaSetState, bool) {
 	return addsrs.state, addsrs.state != nil
 }
 
+// StateMust returns the state for [ActiveDirectoryDomainServiceReplicaSet]. Panics if the state is nil.
 func (addsrs *ActiveDirectoryDomainServiceReplicaSet) StateMust() *activeDirectoryDomainServiceReplicaSetState {
 	if addsrs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", addsrs.Type(), addsrs.LocalName()))
@@ -60,10 +86,7 @@ func (addsrs *ActiveDirectoryDomainServiceReplicaSet) StateMust() *activeDirecto
 	return addsrs.state
 }
 
-func (addsrs *ActiveDirectoryDomainServiceReplicaSet) DependOn() terra.Reference {
-	return terra.ReferenceResource(addsrs)
-}
-
+// ActiveDirectoryDomainServiceReplicaSetArgs contains the configurations for azurerm_active_directory_domain_service_replica_set.
 type ActiveDirectoryDomainServiceReplicaSetArgs struct {
 	// DomainServiceId: string, required
 	DomainServiceId terra.StringValue `hcl:"domain_service_id,attr" validate:"required"`
@@ -75,43 +98,48 @@ type ActiveDirectoryDomainServiceReplicaSetArgs struct {
 	SubnetId terra.StringValue `hcl:"subnet_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *activedirectorydomainservicereplicaset.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ActiveDirectoryDomainServiceReplicaSet depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type activeDirectoryDomainServiceReplicaSetAttributes struct {
 	ref terra.Reference
 }
 
+// DomainControllerIpAddresses returns a reference to field domain_controller_ip_addresses of azurerm_active_directory_domain_service_replica_set.
 func (addsrs activeDirectoryDomainServiceReplicaSetAttributes) DomainControllerIpAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](addsrs.ref.Append("domain_controller_ip_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](addsrs.ref.Append("domain_controller_ip_addresses"))
 }
 
+// DomainServiceId returns a reference to field domain_service_id of azurerm_active_directory_domain_service_replica_set.
 func (addsrs activeDirectoryDomainServiceReplicaSetAttributes) DomainServiceId() terra.StringValue {
-	return terra.ReferenceString(addsrs.ref.Append("domain_service_id"))
+	return terra.ReferenceAsString(addsrs.ref.Append("domain_service_id"))
 }
 
+// ExternalAccessIpAddress returns a reference to field external_access_ip_address of azurerm_active_directory_domain_service_replica_set.
 func (addsrs activeDirectoryDomainServiceReplicaSetAttributes) ExternalAccessIpAddress() terra.StringValue {
-	return terra.ReferenceString(addsrs.ref.Append("external_access_ip_address"))
+	return terra.ReferenceAsString(addsrs.ref.Append("external_access_ip_address"))
 }
 
+// Id returns a reference to field id of azurerm_active_directory_domain_service_replica_set.
 func (addsrs activeDirectoryDomainServiceReplicaSetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(addsrs.ref.Append("id"))
+	return terra.ReferenceAsString(addsrs.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_active_directory_domain_service_replica_set.
 func (addsrs activeDirectoryDomainServiceReplicaSetAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(addsrs.ref.Append("location"))
+	return terra.ReferenceAsString(addsrs.ref.Append("location"))
 }
 
+// ServiceStatus returns a reference to field service_status of azurerm_active_directory_domain_service_replica_set.
 func (addsrs activeDirectoryDomainServiceReplicaSetAttributes) ServiceStatus() terra.StringValue {
-	return terra.ReferenceString(addsrs.ref.Append("service_status"))
+	return terra.ReferenceAsString(addsrs.ref.Append("service_status"))
 }
 
+// SubnetId returns a reference to field subnet_id of azurerm_active_directory_domain_service_replica_set.
 func (addsrs activeDirectoryDomainServiceReplicaSetAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(addsrs.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(addsrs.ref.Append("subnet_id"))
 }
 
 func (addsrs activeDirectoryDomainServiceReplicaSetAttributes) Timeouts() activedirectorydomainservicereplicaset.TimeoutsAttributes {
-	return terra.ReferenceSingle[activedirectorydomainservicereplicaset.TimeoutsAttributes](addsrs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[activedirectorydomainservicereplicaset.TimeoutsAttributes](addsrs.ref.Append("timeouts"))
 }
 
 type activeDirectoryDomainServiceReplicaSetState struct {

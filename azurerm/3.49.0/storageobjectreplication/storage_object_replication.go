@@ -33,68 +33,68 @@ type RulesAttributes struct {
 	ref terra.Reference
 }
 
-func (r RulesAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RulesAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RulesAttributes) InternalWithRef(ref terra.Reference) RulesAttributes {
 	return RulesAttributes{ref: ref}
 }
 
-func (r RulesAttributes) InternalTokens() hclwrite.Tokens {
+func (r RulesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RulesAttributes) CopyBlobsCreatedAfter() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("copy_blobs_created_after"))
+	return terra.ReferenceAsString(r.ref.Append("copy_blobs_created_after"))
 }
 
 func (r RulesAttributes) DestinationContainerName() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("destination_container_name"))
+	return terra.ReferenceAsString(r.ref.Append("destination_container_name"))
 }
 
 func (r RulesAttributes) FilterOutBlobsWithPrefix() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](r.ref.Append("filter_out_blobs_with_prefix"))
+	return terra.ReferenceAsSet[terra.StringValue](r.ref.Append("filter_out_blobs_with_prefix"))
 }
 
 func (r RulesAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("name"))
+	return terra.ReferenceAsString(r.ref.Append("name"))
 }
 
 func (r RulesAttributes) SourceContainerName() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("source_container_name"))
+	return terra.ReferenceAsString(r.ref.Append("source_container_name"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type RulesState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBotChannelSms creates a new instance of [BotChannelSms].
 func NewBotChannelSms(name string, args BotChannelSmsArgs) *BotChannelSms {
 	return &BotChannelSms{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBotChannelSms(name string, args BotChannelSmsArgs) *BotChannelSms {
 
 var _ terra.Resource = (*BotChannelSms)(nil)
 
+// BotChannelSms represents the Terraform resource azurerm_bot_channel_sms.
 type BotChannelSms struct {
-	Name  string
-	Args  BotChannelSmsArgs
-	state *botChannelSmsState
+	Name      string
+	Args      BotChannelSmsArgs
+	state     *botChannelSmsState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BotChannelSms].
 func (bcs *BotChannelSms) Type() string {
 	return "azurerm_bot_channel_sms"
 }
 
+// LocalName returns the local name for [BotChannelSms].
 func (bcs *BotChannelSms) LocalName() string {
 	return bcs.Name
 }
 
+// Configuration returns the configuration (args) for [BotChannelSms].
 func (bcs *BotChannelSms) Configuration() interface{} {
 	return bcs.Args
 }
 
+// DependOn is used for other resources to depend on [BotChannelSms].
+func (bcs *BotChannelSms) DependOn() terra.Reference {
+	return terra.ReferenceResource(bcs)
+}
+
+// Dependencies returns the list of resources [BotChannelSms] depends_on.
+func (bcs *BotChannelSms) Dependencies() terra.Dependencies {
+	return bcs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BotChannelSms].
+func (bcs *BotChannelSms) LifecycleManagement() *terra.Lifecycle {
+	return bcs.Lifecycle
+}
+
+// Attributes returns the attributes for [BotChannelSms].
 func (bcs *BotChannelSms) Attributes() botChannelSmsAttributes {
 	return botChannelSmsAttributes{ref: terra.ReferenceResource(bcs)}
 }
 
+// ImportState imports the given attribute values into [BotChannelSms]'s state.
 func (bcs *BotChannelSms) ImportState(av io.Reader) error {
 	bcs.state = &botChannelSmsState{}
 	if err := json.NewDecoder(av).Decode(bcs.state); err != nil {
@@ -49,10 +73,12 @@ func (bcs *BotChannelSms) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BotChannelSms] has state.
 func (bcs *BotChannelSms) State() (*botChannelSmsState, bool) {
 	return bcs.state, bcs.state != nil
 }
 
+// StateMust returns the state for [BotChannelSms]. Panics if the state is nil.
 func (bcs *BotChannelSms) StateMust() *botChannelSmsState {
 	if bcs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bcs.Type(), bcs.LocalName()))
@@ -60,10 +86,7 @@ func (bcs *BotChannelSms) StateMust() *botChannelSmsState {
 	return bcs.state
 }
 
-func (bcs *BotChannelSms) DependOn() terra.Reference {
-	return terra.ReferenceResource(bcs)
-}
-
+// BotChannelSmsArgs contains the configurations for azurerm_bot_channel_sms.
 type BotChannelSmsArgs struct {
 	// BotName: string, required
 	BotName terra.StringValue `hcl:"bot_name,attr" validate:"required"`
@@ -81,43 +104,48 @@ type BotChannelSmsArgs struct {
 	SmsChannelAuthToken terra.StringValue `hcl:"sms_channel_auth_token,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *botchannelsms.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that BotChannelSms depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type botChannelSmsAttributes struct {
 	ref terra.Reference
 }
 
+// BotName returns a reference to field bot_name of azurerm_bot_channel_sms.
 func (bcs botChannelSmsAttributes) BotName() terra.StringValue {
-	return terra.ReferenceString(bcs.ref.Append("bot_name"))
+	return terra.ReferenceAsString(bcs.ref.Append("bot_name"))
 }
 
+// Id returns a reference to field id of azurerm_bot_channel_sms.
 func (bcs botChannelSmsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bcs.ref.Append("id"))
+	return terra.ReferenceAsString(bcs.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_bot_channel_sms.
 func (bcs botChannelSmsAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(bcs.ref.Append("location"))
+	return terra.ReferenceAsString(bcs.ref.Append("location"))
 }
 
+// PhoneNumber returns a reference to field phone_number of azurerm_bot_channel_sms.
 func (bcs botChannelSmsAttributes) PhoneNumber() terra.StringValue {
-	return terra.ReferenceString(bcs.ref.Append("phone_number"))
+	return terra.ReferenceAsString(bcs.ref.Append("phone_number"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_bot_channel_sms.
 func (bcs botChannelSmsAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(bcs.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(bcs.ref.Append("resource_group_name"))
 }
 
+// SmsChannelAccountSecurityId returns a reference to field sms_channel_account_security_id of azurerm_bot_channel_sms.
 func (bcs botChannelSmsAttributes) SmsChannelAccountSecurityId() terra.StringValue {
-	return terra.ReferenceString(bcs.ref.Append("sms_channel_account_security_id"))
+	return terra.ReferenceAsString(bcs.ref.Append("sms_channel_account_security_id"))
 }
 
+// SmsChannelAuthToken returns a reference to field sms_channel_auth_token of azurerm_bot_channel_sms.
 func (bcs botChannelSmsAttributes) SmsChannelAuthToken() terra.StringValue {
-	return terra.ReferenceString(bcs.ref.Append("sms_channel_auth_token"))
+	return terra.ReferenceAsString(bcs.ref.Append("sms_channel_auth_token"))
 }
 
 func (bcs botChannelSmsAttributes) Timeouts() botchannelsms.TimeoutsAttributes {
-	return terra.ReferenceSingle[botchannelsms.TimeoutsAttributes](bcs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[botchannelsms.TimeoutsAttributes](bcs.ref.Append("timeouts"))
 }
 
 type botChannelSmsState struct {

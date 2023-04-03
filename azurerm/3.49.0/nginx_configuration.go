@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNginxConfiguration creates a new instance of [NginxConfiguration].
 func NewNginxConfiguration(name string, args NginxConfigurationArgs) *NginxConfiguration {
 	return &NginxConfiguration{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNginxConfiguration(name string, args NginxConfigurationArgs) *NginxConfi
 
 var _ terra.Resource = (*NginxConfiguration)(nil)
 
+// NginxConfiguration represents the Terraform resource azurerm_nginx_configuration.
 type NginxConfiguration struct {
-	Name  string
-	Args  NginxConfigurationArgs
-	state *nginxConfigurationState
+	Name      string
+	Args      NginxConfigurationArgs
+	state     *nginxConfigurationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NginxConfiguration].
 func (nc *NginxConfiguration) Type() string {
 	return "azurerm_nginx_configuration"
 }
 
+// LocalName returns the local name for [NginxConfiguration].
 func (nc *NginxConfiguration) LocalName() string {
 	return nc.Name
 }
 
+// Configuration returns the configuration (args) for [NginxConfiguration].
 func (nc *NginxConfiguration) Configuration() interface{} {
 	return nc.Args
 }
 
+// DependOn is used for other resources to depend on [NginxConfiguration].
+func (nc *NginxConfiguration) DependOn() terra.Reference {
+	return terra.ReferenceResource(nc)
+}
+
+// Dependencies returns the list of resources [NginxConfiguration] depends_on.
+func (nc *NginxConfiguration) Dependencies() terra.Dependencies {
+	return nc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NginxConfiguration].
+func (nc *NginxConfiguration) LifecycleManagement() *terra.Lifecycle {
+	return nc.Lifecycle
+}
+
+// Attributes returns the attributes for [NginxConfiguration].
 func (nc *NginxConfiguration) Attributes() nginxConfigurationAttributes {
 	return nginxConfigurationAttributes{ref: terra.ReferenceResource(nc)}
 }
 
+// ImportState imports the given attribute values into [NginxConfiguration]'s state.
 func (nc *NginxConfiguration) ImportState(av io.Reader) error {
 	nc.state = &nginxConfigurationState{}
 	if err := json.NewDecoder(av).Decode(nc.state); err != nil {
@@ -49,10 +73,12 @@ func (nc *NginxConfiguration) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NginxConfiguration] has state.
 func (nc *NginxConfiguration) State() (*nginxConfigurationState, bool) {
 	return nc.state, nc.state != nil
 }
 
+// StateMust returns the state for [NginxConfiguration]. Panics if the state is nil.
 func (nc *NginxConfiguration) StateMust() *nginxConfigurationState {
 	if nc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", nc.Type(), nc.LocalName()))
@@ -60,10 +86,7 @@ func (nc *NginxConfiguration) StateMust() *nginxConfigurationState {
 	return nc.state
 }
 
-func (nc *NginxConfiguration) DependOn() terra.Reference {
-	return terra.ReferenceResource(nc)
-}
-
+// NginxConfigurationArgs contains the configurations for azurerm_nginx_configuration.
 type NginxConfigurationArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,39 +102,41 @@ type NginxConfigurationArgs struct {
 	ProtectedFile []nginxconfiguration.ProtectedFile `hcl:"protected_file,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *nginxconfiguration.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that NginxConfiguration depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type nginxConfigurationAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_nginx_configuration.
 func (nc nginxConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(nc.ref.Append("id"))
+	return terra.ReferenceAsString(nc.ref.Append("id"))
 }
 
+// NginxDeploymentId returns a reference to field nginx_deployment_id of azurerm_nginx_configuration.
 func (nc nginxConfigurationAttributes) NginxDeploymentId() terra.StringValue {
-	return terra.ReferenceString(nc.ref.Append("nginx_deployment_id"))
+	return terra.ReferenceAsString(nc.ref.Append("nginx_deployment_id"))
 }
 
+// PackageData returns a reference to field package_data of azurerm_nginx_configuration.
 func (nc nginxConfigurationAttributes) PackageData() terra.StringValue {
-	return terra.ReferenceString(nc.ref.Append("package_data"))
+	return terra.ReferenceAsString(nc.ref.Append("package_data"))
 }
 
+// RootFile returns a reference to field root_file of azurerm_nginx_configuration.
 func (nc nginxConfigurationAttributes) RootFile() terra.StringValue {
-	return terra.ReferenceString(nc.ref.Append("root_file"))
+	return terra.ReferenceAsString(nc.ref.Append("root_file"))
 }
 
 func (nc nginxConfigurationAttributes) ConfigFile() terra.SetValue[nginxconfiguration.ConfigFileAttributes] {
-	return terra.ReferenceSet[nginxconfiguration.ConfigFileAttributes](nc.ref.Append("config_file"))
+	return terra.ReferenceAsSet[nginxconfiguration.ConfigFileAttributes](nc.ref.Append("config_file"))
 }
 
 func (nc nginxConfigurationAttributes) ProtectedFile() terra.SetValue[nginxconfiguration.ProtectedFileAttributes] {
-	return terra.ReferenceSet[nginxconfiguration.ProtectedFileAttributes](nc.ref.Append("protected_file"))
+	return terra.ReferenceAsSet[nginxconfiguration.ProtectedFileAttributes](nc.ref.Append("protected_file"))
 }
 
 func (nc nginxConfigurationAttributes) Timeouts() nginxconfiguration.TimeoutsAttributes {
-	return terra.ReferenceSingle[nginxconfiguration.TimeoutsAttributes](nc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[nginxconfiguration.TimeoutsAttributes](nc.ref.Append("timeouts"))
 }
 
 type nginxConfigurationState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSpringCloudDevToolPortal creates a new instance of [SpringCloudDevToolPortal].
 func NewSpringCloudDevToolPortal(name string, args SpringCloudDevToolPortalArgs) *SpringCloudDevToolPortal {
 	return &SpringCloudDevToolPortal{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSpringCloudDevToolPortal(name string, args SpringCloudDevToolPortalArgs)
 
 var _ terra.Resource = (*SpringCloudDevToolPortal)(nil)
 
+// SpringCloudDevToolPortal represents the Terraform resource azurerm_spring_cloud_dev_tool_portal.
 type SpringCloudDevToolPortal struct {
-	Name  string
-	Args  SpringCloudDevToolPortalArgs
-	state *springCloudDevToolPortalState
+	Name      string
+	Args      SpringCloudDevToolPortalArgs
+	state     *springCloudDevToolPortalState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SpringCloudDevToolPortal].
 func (scdtp *SpringCloudDevToolPortal) Type() string {
 	return "azurerm_spring_cloud_dev_tool_portal"
 }
 
+// LocalName returns the local name for [SpringCloudDevToolPortal].
 func (scdtp *SpringCloudDevToolPortal) LocalName() string {
 	return scdtp.Name
 }
 
+// Configuration returns the configuration (args) for [SpringCloudDevToolPortal].
 func (scdtp *SpringCloudDevToolPortal) Configuration() interface{} {
 	return scdtp.Args
 }
 
+// DependOn is used for other resources to depend on [SpringCloudDevToolPortal].
+func (scdtp *SpringCloudDevToolPortal) DependOn() terra.Reference {
+	return terra.ReferenceResource(scdtp)
+}
+
+// Dependencies returns the list of resources [SpringCloudDevToolPortal] depends_on.
+func (scdtp *SpringCloudDevToolPortal) Dependencies() terra.Dependencies {
+	return scdtp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SpringCloudDevToolPortal].
+func (scdtp *SpringCloudDevToolPortal) LifecycleManagement() *terra.Lifecycle {
+	return scdtp.Lifecycle
+}
+
+// Attributes returns the attributes for [SpringCloudDevToolPortal].
 func (scdtp *SpringCloudDevToolPortal) Attributes() springCloudDevToolPortalAttributes {
 	return springCloudDevToolPortalAttributes{ref: terra.ReferenceResource(scdtp)}
 }
 
+// ImportState imports the given attribute values into [SpringCloudDevToolPortal]'s state.
 func (scdtp *SpringCloudDevToolPortal) ImportState(av io.Reader) error {
 	scdtp.state = &springCloudDevToolPortalState{}
 	if err := json.NewDecoder(av).Decode(scdtp.state); err != nil {
@@ -49,10 +73,12 @@ func (scdtp *SpringCloudDevToolPortal) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SpringCloudDevToolPortal] has state.
 func (scdtp *SpringCloudDevToolPortal) State() (*springCloudDevToolPortalState, bool) {
 	return scdtp.state, scdtp.state != nil
 }
 
+// StateMust returns the state for [SpringCloudDevToolPortal]. Panics if the state is nil.
 func (scdtp *SpringCloudDevToolPortal) StateMust() *springCloudDevToolPortalState {
 	if scdtp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", scdtp.Type(), scdtp.LocalName()))
@@ -60,10 +86,7 @@ func (scdtp *SpringCloudDevToolPortal) StateMust() *springCloudDevToolPortalStat
 	return scdtp.state
 }
 
-func (scdtp *SpringCloudDevToolPortal) DependOn() terra.Reference {
-	return terra.ReferenceResource(scdtp)
-}
-
+// SpringCloudDevToolPortalArgs contains the configurations for azurerm_spring_cloud_dev_tool_portal.
 type SpringCloudDevToolPortalArgs struct {
 	// ApplicationAcceleratorEnabled: bool, optional
 	ApplicationAcceleratorEnabled terra.BoolValue `hcl:"application_accelerator_enabled,attr"`
@@ -81,43 +104,47 @@ type SpringCloudDevToolPortalArgs struct {
 	Sso *springclouddevtoolportal.Sso `hcl:"sso,block"`
 	// Timeouts: optional
 	Timeouts *springclouddevtoolportal.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SpringCloudDevToolPortal depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type springCloudDevToolPortalAttributes struct {
 	ref terra.Reference
 }
 
+// ApplicationAcceleratorEnabled returns a reference to field application_accelerator_enabled of azurerm_spring_cloud_dev_tool_portal.
 func (scdtp springCloudDevToolPortalAttributes) ApplicationAcceleratorEnabled() terra.BoolValue {
-	return terra.ReferenceBool(scdtp.ref.Append("application_accelerator_enabled"))
+	return terra.ReferenceAsBool(scdtp.ref.Append("application_accelerator_enabled"))
 }
 
+// ApplicationLiveViewEnabled returns a reference to field application_live_view_enabled of azurerm_spring_cloud_dev_tool_portal.
 func (scdtp springCloudDevToolPortalAttributes) ApplicationLiveViewEnabled() terra.BoolValue {
-	return terra.ReferenceBool(scdtp.ref.Append("application_live_view_enabled"))
+	return terra.ReferenceAsBool(scdtp.ref.Append("application_live_view_enabled"))
 }
 
+// Id returns a reference to field id of azurerm_spring_cloud_dev_tool_portal.
 func (scdtp springCloudDevToolPortalAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(scdtp.ref.Append("id"))
+	return terra.ReferenceAsString(scdtp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_spring_cloud_dev_tool_portal.
 func (scdtp springCloudDevToolPortalAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(scdtp.ref.Append("name"))
+	return terra.ReferenceAsString(scdtp.ref.Append("name"))
 }
 
+// PublicNetworkAccessEnabled returns a reference to field public_network_access_enabled of azurerm_spring_cloud_dev_tool_portal.
 func (scdtp springCloudDevToolPortalAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(scdtp.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(scdtp.ref.Append("public_network_access_enabled"))
 }
 
+// SpringCloudServiceId returns a reference to field spring_cloud_service_id of azurerm_spring_cloud_dev_tool_portal.
 func (scdtp springCloudDevToolPortalAttributes) SpringCloudServiceId() terra.StringValue {
-	return terra.ReferenceString(scdtp.ref.Append("spring_cloud_service_id"))
+	return terra.ReferenceAsString(scdtp.ref.Append("spring_cloud_service_id"))
 }
 
 func (scdtp springCloudDevToolPortalAttributes) Sso() terra.ListValue[springclouddevtoolportal.SsoAttributes] {
-	return terra.ReferenceList[springclouddevtoolportal.SsoAttributes](scdtp.ref.Append("sso"))
+	return terra.ReferenceAsList[springclouddevtoolportal.SsoAttributes](scdtp.ref.Append("sso"))
 }
 
 func (scdtp springCloudDevToolPortalAttributes) Timeouts() springclouddevtoolportal.TimeoutsAttributes {
-	return terra.ReferenceSingle[springclouddevtoolportal.TimeoutsAttributes](scdtp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[springclouddevtoolportal.TimeoutsAttributes](scdtp.ref.Append("timeouts"))
 }
 
 type springCloudDevToolPortalState struct {

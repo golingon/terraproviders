@@ -21,7 +21,7 @@ func (par PoolAddressRangesAttributes) InternalWithRef(ref terra.Reference) Pool
 	return PoolAddressRangesAttributes{ref: ref}
 }
 
-func (par PoolAddressRangesAttributes) InternalTokens() hclwrite.Tokens {
+func (par PoolAddressRangesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return par.ref.InternalTokens()
 }
 

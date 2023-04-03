@@ -167,412 +167,412 @@ type PolicyOptionAttributes struct {
 	ref terra.Reference
 }
 
-func (po PolicyOptionAttributes) InternalRef() terra.Reference {
-	return po.ref
+func (po PolicyOptionAttributes) InternalRef() (terra.Reference, error) {
+	return po.ref, nil
 }
 
 func (po PolicyOptionAttributes) InternalWithRef(ref terra.Reference) PolicyOptionAttributes {
 	return PolicyOptionAttributes{ref: ref}
 }
 
-func (po PolicyOptionAttributes) InternalTokens() hclwrite.Tokens {
+func (po PolicyOptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return po.ref.InternalTokens()
 }
 
 func (po PolicyOptionAttributes) ClearKeyConfigurationEnabled() terra.BoolValue {
-	return terra.ReferenceBool(po.ref.Append("clear_key_configuration_enabled"))
+	return terra.ReferenceAsBool(po.ref.Append("clear_key_configuration_enabled"))
 }
 
 func (po PolicyOptionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(po.ref.Append("name"))
+	return terra.ReferenceAsString(po.ref.Append("name"))
 }
 
 func (po PolicyOptionAttributes) OpenRestrictionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(po.ref.Append("open_restriction_enabled"))
+	return terra.ReferenceAsBool(po.ref.Append("open_restriction_enabled"))
 }
 
 func (po PolicyOptionAttributes) PlayreadyResponseCustomData() terra.StringValue {
-	return terra.ReferenceString(po.ref.Append("playready_response_custom_data"))
+	return terra.ReferenceAsString(po.ref.Append("playready_response_custom_data"))
 }
 
 func (po PolicyOptionAttributes) WidevineConfigurationTemplate() terra.StringValue {
-	return terra.ReferenceString(po.ref.Append("widevine_configuration_template"))
+	return terra.ReferenceAsString(po.ref.Append("widevine_configuration_template"))
 }
 
 func (po PolicyOptionAttributes) FairplayConfiguration() terra.ListValue[FairplayConfigurationAttributes] {
-	return terra.ReferenceList[FairplayConfigurationAttributes](po.ref.Append("fairplay_configuration"))
+	return terra.ReferenceAsList[FairplayConfigurationAttributes](po.ref.Append("fairplay_configuration"))
 }
 
 func (po PolicyOptionAttributes) PlayreadyConfigurationLicense() terra.ListValue[PlayreadyConfigurationLicenseAttributes] {
-	return terra.ReferenceList[PlayreadyConfigurationLicenseAttributes](po.ref.Append("playready_configuration_license"))
+	return terra.ReferenceAsList[PlayreadyConfigurationLicenseAttributes](po.ref.Append("playready_configuration_license"))
 }
 
 func (po PolicyOptionAttributes) TokenRestriction() terra.ListValue[TokenRestrictionAttributes] {
-	return terra.ReferenceList[TokenRestrictionAttributes](po.ref.Append("token_restriction"))
+	return terra.ReferenceAsList[TokenRestrictionAttributes](po.ref.Append("token_restriction"))
 }
 
 type FairplayConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (fc FairplayConfigurationAttributes) InternalRef() terra.Reference {
-	return fc.ref
+func (fc FairplayConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return fc.ref, nil
 }
 
 func (fc FairplayConfigurationAttributes) InternalWithRef(ref terra.Reference) FairplayConfigurationAttributes {
 	return FairplayConfigurationAttributes{ref: ref}
 }
 
-func (fc FairplayConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (fc FairplayConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fc.ref.InternalTokens()
 }
 
 func (fc FairplayConfigurationAttributes) Ask() terra.StringValue {
-	return terra.ReferenceString(fc.ref.Append("ask"))
+	return terra.ReferenceAsString(fc.ref.Append("ask"))
 }
 
 func (fc FairplayConfigurationAttributes) Pfx() terra.StringValue {
-	return terra.ReferenceString(fc.ref.Append("pfx"))
+	return terra.ReferenceAsString(fc.ref.Append("pfx"))
 }
 
 func (fc FairplayConfigurationAttributes) PfxPassword() terra.StringValue {
-	return terra.ReferenceString(fc.ref.Append("pfx_password"))
+	return terra.ReferenceAsString(fc.ref.Append("pfx_password"))
 }
 
 func (fc FairplayConfigurationAttributes) RentalAndLeaseKeyType() terra.StringValue {
-	return terra.ReferenceString(fc.ref.Append("rental_and_lease_key_type"))
+	return terra.ReferenceAsString(fc.ref.Append("rental_and_lease_key_type"))
 }
 
 func (fc FairplayConfigurationAttributes) RentalDurationSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(fc.ref.Append("rental_duration_seconds"))
+	return terra.ReferenceAsNumber(fc.ref.Append("rental_duration_seconds"))
 }
 
 func (fc FairplayConfigurationAttributes) OfflineRentalConfiguration() terra.ListValue[OfflineRentalConfigurationAttributes] {
-	return terra.ReferenceList[OfflineRentalConfigurationAttributes](fc.ref.Append("offline_rental_configuration"))
+	return terra.ReferenceAsList[OfflineRentalConfigurationAttributes](fc.ref.Append("offline_rental_configuration"))
 }
 
 type OfflineRentalConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (orc OfflineRentalConfigurationAttributes) InternalRef() terra.Reference {
-	return orc.ref
+func (orc OfflineRentalConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return orc.ref, nil
 }
 
 func (orc OfflineRentalConfigurationAttributes) InternalWithRef(ref terra.Reference) OfflineRentalConfigurationAttributes {
 	return OfflineRentalConfigurationAttributes{ref: ref}
 }
 
-func (orc OfflineRentalConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (orc OfflineRentalConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return orc.ref.InternalTokens()
 }
 
 func (orc OfflineRentalConfigurationAttributes) PlaybackDurationSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(orc.ref.Append("playback_duration_seconds"))
+	return terra.ReferenceAsNumber(orc.ref.Append("playback_duration_seconds"))
 }
 
 func (orc OfflineRentalConfigurationAttributes) StorageDurationSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(orc.ref.Append("storage_duration_seconds"))
+	return terra.ReferenceAsNumber(orc.ref.Append("storage_duration_seconds"))
 }
 
 type PlayreadyConfigurationLicenseAttributes struct {
 	ref terra.Reference
 }
 
-func (pcl PlayreadyConfigurationLicenseAttributes) InternalRef() terra.Reference {
-	return pcl.ref
+func (pcl PlayreadyConfigurationLicenseAttributes) InternalRef() (terra.Reference, error) {
+	return pcl.ref, nil
 }
 
 func (pcl PlayreadyConfigurationLicenseAttributes) InternalWithRef(ref terra.Reference) PlayreadyConfigurationLicenseAttributes {
 	return PlayreadyConfigurationLicenseAttributes{ref: ref}
 }
 
-func (pcl PlayreadyConfigurationLicenseAttributes) InternalTokens() hclwrite.Tokens {
+func (pcl PlayreadyConfigurationLicenseAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pcl.ref.InternalTokens()
 }
 
 func (pcl PlayreadyConfigurationLicenseAttributes) AllowTestDevices() terra.BoolValue {
-	return terra.ReferenceBool(pcl.ref.Append("allow_test_devices"))
+	return terra.ReferenceAsBool(pcl.ref.Append("allow_test_devices"))
 }
 
 func (pcl PlayreadyConfigurationLicenseAttributes) BeginDate() terra.StringValue {
-	return terra.ReferenceString(pcl.ref.Append("begin_date"))
+	return terra.ReferenceAsString(pcl.ref.Append("begin_date"))
 }
 
 func (pcl PlayreadyConfigurationLicenseAttributes) ContentKeyLocationFromHeaderEnabled() terra.BoolValue {
-	return terra.ReferenceBool(pcl.ref.Append("content_key_location_from_header_enabled"))
+	return terra.ReferenceAsBool(pcl.ref.Append("content_key_location_from_header_enabled"))
 }
 
 func (pcl PlayreadyConfigurationLicenseAttributes) ContentKeyLocationFromKeyId() terra.StringValue {
-	return terra.ReferenceString(pcl.ref.Append("content_key_location_from_key_id"))
+	return terra.ReferenceAsString(pcl.ref.Append("content_key_location_from_key_id"))
 }
 
 func (pcl PlayreadyConfigurationLicenseAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(pcl.ref.Append("content_type"))
+	return terra.ReferenceAsString(pcl.ref.Append("content_type"))
 }
 
 func (pcl PlayreadyConfigurationLicenseAttributes) ExpirationDate() terra.StringValue {
-	return terra.ReferenceString(pcl.ref.Append("expiration_date"))
+	return terra.ReferenceAsString(pcl.ref.Append("expiration_date"))
 }
 
 func (pcl PlayreadyConfigurationLicenseAttributes) GracePeriod() terra.StringValue {
-	return terra.ReferenceString(pcl.ref.Append("grace_period"))
+	return terra.ReferenceAsString(pcl.ref.Append("grace_period"))
 }
 
 func (pcl PlayreadyConfigurationLicenseAttributes) LicenseType() terra.StringValue {
-	return terra.ReferenceString(pcl.ref.Append("license_type"))
+	return terra.ReferenceAsString(pcl.ref.Append("license_type"))
 }
 
 func (pcl PlayreadyConfigurationLicenseAttributes) RelativeBeginDate() terra.StringValue {
-	return terra.ReferenceString(pcl.ref.Append("relative_begin_date"))
+	return terra.ReferenceAsString(pcl.ref.Append("relative_begin_date"))
 }
 
 func (pcl PlayreadyConfigurationLicenseAttributes) RelativeExpirationDate() terra.StringValue {
-	return terra.ReferenceString(pcl.ref.Append("relative_expiration_date"))
+	return terra.ReferenceAsString(pcl.ref.Append("relative_expiration_date"))
 }
 
 func (pcl PlayreadyConfigurationLicenseAttributes) SecurityLevel() terra.StringValue {
-	return terra.ReferenceString(pcl.ref.Append("security_level"))
+	return terra.ReferenceAsString(pcl.ref.Append("security_level"))
 }
 
 func (pcl PlayreadyConfigurationLicenseAttributes) PlayRight() terra.ListValue[PlayRightAttributes] {
-	return terra.ReferenceList[PlayRightAttributes](pcl.ref.Append("play_right"))
+	return terra.ReferenceAsList[PlayRightAttributes](pcl.ref.Append("play_right"))
 }
 
 type PlayRightAttributes struct {
 	ref terra.Reference
 }
 
-func (pr PlayRightAttributes) InternalRef() terra.Reference {
-	return pr.ref
+func (pr PlayRightAttributes) InternalRef() (terra.Reference, error) {
+	return pr.ref, nil
 }
 
 func (pr PlayRightAttributes) InternalWithRef(ref terra.Reference) PlayRightAttributes {
 	return PlayRightAttributes{ref: ref}
 }
 
-func (pr PlayRightAttributes) InternalTokens() hclwrite.Tokens {
+func (pr PlayRightAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pr.ref.InternalTokens()
 }
 
 func (pr PlayRightAttributes) AgcAndColorStripeRestriction() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("agc_and_color_stripe_restriction"))
+	return terra.ReferenceAsNumber(pr.ref.Append("agc_and_color_stripe_restriction"))
 }
 
 func (pr PlayRightAttributes) AllowPassingVideoContentToUnknownOutput() terra.StringValue {
-	return terra.ReferenceString(pr.ref.Append("allow_passing_video_content_to_unknown_output"))
+	return terra.ReferenceAsString(pr.ref.Append("allow_passing_video_content_to_unknown_output"))
 }
 
 func (pr PlayRightAttributes) AnalogVideoOpl() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("analog_video_opl"))
+	return terra.ReferenceAsNumber(pr.ref.Append("analog_video_opl"))
 }
 
 func (pr PlayRightAttributes) CompressedDigitalAudioOpl() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("compressed_digital_audio_opl"))
+	return terra.ReferenceAsNumber(pr.ref.Append("compressed_digital_audio_opl"))
 }
 
 func (pr PlayRightAttributes) CompressedDigitalVideoOpl() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("compressed_digital_video_opl"))
+	return terra.ReferenceAsNumber(pr.ref.Append("compressed_digital_video_opl"))
 }
 
 func (pr PlayRightAttributes) DigitalVideoOnlyContentRestriction() terra.BoolValue {
-	return terra.ReferenceBool(pr.ref.Append("digital_video_only_content_restriction"))
+	return terra.ReferenceAsBool(pr.ref.Append("digital_video_only_content_restriction"))
 }
 
 func (pr PlayRightAttributes) FirstPlayExpiration() terra.StringValue {
-	return terra.ReferenceString(pr.ref.Append("first_play_expiration"))
+	return terra.ReferenceAsString(pr.ref.Append("first_play_expiration"))
 }
 
 func (pr PlayRightAttributes) ImageConstraintForAnalogComponentVideoRestriction() terra.BoolValue {
-	return terra.ReferenceBool(pr.ref.Append("image_constraint_for_analog_component_video_restriction"))
+	return terra.ReferenceAsBool(pr.ref.Append("image_constraint_for_analog_component_video_restriction"))
 }
 
 func (pr PlayRightAttributes) ImageConstraintForAnalogComputerMonitorRestriction() terra.BoolValue {
-	return terra.ReferenceBool(pr.ref.Append("image_constraint_for_analog_computer_monitor_restriction"))
+	return terra.ReferenceAsBool(pr.ref.Append("image_constraint_for_analog_computer_monitor_restriction"))
 }
 
 func (pr PlayRightAttributes) ScmsRestriction() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("scms_restriction"))
+	return terra.ReferenceAsNumber(pr.ref.Append("scms_restriction"))
 }
 
 func (pr PlayRightAttributes) UncompressedDigitalAudioOpl() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("uncompressed_digital_audio_opl"))
+	return terra.ReferenceAsNumber(pr.ref.Append("uncompressed_digital_audio_opl"))
 }
 
 func (pr PlayRightAttributes) UncompressedDigitalVideoOpl() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("uncompressed_digital_video_opl"))
+	return terra.ReferenceAsNumber(pr.ref.Append("uncompressed_digital_video_opl"))
 }
 
 func (pr PlayRightAttributes) ExplicitAnalogTelevisionOutputRestriction() terra.ListValue[ExplicitAnalogTelevisionOutputRestrictionAttributes] {
-	return terra.ReferenceList[ExplicitAnalogTelevisionOutputRestrictionAttributes](pr.ref.Append("explicit_analog_television_output_restriction"))
+	return terra.ReferenceAsList[ExplicitAnalogTelevisionOutputRestrictionAttributes](pr.ref.Append("explicit_analog_television_output_restriction"))
 }
 
 type ExplicitAnalogTelevisionOutputRestrictionAttributes struct {
 	ref terra.Reference
 }
 
-func (eator ExplicitAnalogTelevisionOutputRestrictionAttributes) InternalRef() terra.Reference {
-	return eator.ref
+func (eator ExplicitAnalogTelevisionOutputRestrictionAttributes) InternalRef() (terra.Reference, error) {
+	return eator.ref, nil
 }
 
 func (eator ExplicitAnalogTelevisionOutputRestrictionAttributes) InternalWithRef(ref terra.Reference) ExplicitAnalogTelevisionOutputRestrictionAttributes {
 	return ExplicitAnalogTelevisionOutputRestrictionAttributes{ref: ref}
 }
 
-func (eator ExplicitAnalogTelevisionOutputRestrictionAttributes) InternalTokens() hclwrite.Tokens {
+func (eator ExplicitAnalogTelevisionOutputRestrictionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return eator.ref.InternalTokens()
 }
 
 func (eator ExplicitAnalogTelevisionOutputRestrictionAttributes) BestEffortEnforced() terra.BoolValue {
-	return terra.ReferenceBool(eator.ref.Append("best_effort_enforced"))
+	return terra.ReferenceAsBool(eator.ref.Append("best_effort_enforced"))
 }
 
 func (eator ExplicitAnalogTelevisionOutputRestrictionAttributes) ControlBits() terra.NumberValue {
-	return terra.ReferenceNumber(eator.ref.Append("control_bits"))
+	return terra.ReferenceAsNumber(eator.ref.Append("control_bits"))
 }
 
 type TokenRestrictionAttributes struct {
 	ref terra.Reference
 }
 
-func (tr TokenRestrictionAttributes) InternalRef() terra.Reference {
-	return tr.ref
+func (tr TokenRestrictionAttributes) InternalRef() (terra.Reference, error) {
+	return tr.ref, nil
 }
 
 func (tr TokenRestrictionAttributes) InternalWithRef(ref terra.Reference) TokenRestrictionAttributes {
 	return TokenRestrictionAttributes{ref: ref}
 }
 
-func (tr TokenRestrictionAttributes) InternalTokens() hclwrite.Tokens {
+func (tr TokenRestrictionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tr.ref.InternalTokens()
 }
 
 func (tr TokenRestrictionAttributes) Audience() terra.StringValue {
-	return terra.ReferenceString(tr.ref.Append("audience"))
+	return terra.ReferenceAsString(tr.ref.Append("audience"))
 }
 
 func (tr TokenRestrictionAttributes) Issuer() terra.StringValue {
-	return terra.ReferenceString(tr.ref.Append("issuer"))
+	return terra.ReferenceAsString(tr.ref.Append("issuer"))
 }
 
 func (tr TokenRestrictionAttributes) OpenIdConnectDiscoveryDocument() terra.StringValue {
-	return terra.ReferenceString(tr.ref.Append("open_id_connect_discovery_document"))
+	return terra.ReferenceAsString(tr.ref.Append("open_id_connect_discovery_document"))
 }
 
 func (tr TokenRestrictionAttributes) PrimaryRsaTokenKeyExponent() terra.StringValue {
-	return terra.ReferenceString(tr.ref.Append("primary_rsa_token_key_exponent"))
+	return terra.ReferenceAsString(tr.ref.Append("primary_rsa_token_key_exponent"))
 }
 
 func (tr TokenRestrictionAttributes) PrimaryRsaTokenKeyModulus() terra.StringValue {
-	return terra.ReferenceString(tr.ref.Append("primary_rsa_token_key_modulus"))
+	return terra.ReferenceAsString(tr.ref.Append("primary_rsa_token_key_modulus"))
 }
 
 func (tr TokenRestrictionAttributes) PrimarySymmetricTokenKey() terra.StringValue {
-	return terra.ReferenceString(tr.ref.Append("primary_symmetric_token_key"))
+	return terra.ReferenceAsString(tr.ref.Append("primary_symmetric_token_key"))
 }
 
 func (tr TokenRestrictionAttributes) PrimaryX509TokenKeyRaw() terra.StringValue {
-	return terra.ReferenceString(tr.ref.Append("primary_x509_token_key_raw"))
+	return terra.ReferenceAsString(tr.ref.Append("primary_x509_token_key_raw"))
 }
 
 func (tr TokenRestrictionAttributes) TokenType() terra.StringValue {
-	return terra.ReferenceString(tr.ref.Append("token_type"))
+	return terra.ReferenceAsString(tr.ref.Append("token_type"))
 }
 
 func (tr TokenRestrictionAttributes) AlternateKey() terra.ListValue[AlternateKeyAttributes] {
-	return terra.ReferenceList[AlternateKeyAttributes](tr.ref.Append("alternate_key"))
+	return terra.ReferenceAsList[AlternateKeyAttributes](tr.ref.Append("alternate_key"))
 }
 
 func (tr TokenRestrictionAttributes) RequiredClaim() terra.ListValue[RequiredClaimAttributes] {
-	return terra.ReferenceList[RequiredClaimAttributes](tr.ref.Append("required_claim"))
+	return terra.ReferenceAsList[RequiredClaimAttributes](tr.ref.Append("required_claim"))
 }
 
 type AlternateKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (ak AlternateKeyAttributes) InternalRef() terra.Reference {
-	return ak.ref
+func (ak AlternateKeyAttributes) InternalRef() (terra.Reference, error) {
+	return ak.ref, nil
 }
 
 func (ak AlternateKeyAttributes) InternalWithRef(ref terra.Reference) AlternateKeyAttributes {
 	return AlternateKeyAttributes{ref: ref}
 }
 
-func (ak AlternateKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (ak AlternateKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ak.ref.InternalTokens()
 }
 
 func (ak AlternateKeyAttributes) RsaTokenKeyExponent() terra.StringValue {
-	return terra.ReferenceString(ak.ref.Append("rsa_token_key_exponent"))
+	return terra.ReferenceAsString(ak.ref.Append("rsa_token_key_exponent"))
 }
 
 func (ak AlternateKeyAttributes) RsaTokenKeyModulus() terra.StringValue {
-	return terra.ReferenceString(ak.ref.Append("rsa_token_key_modulus"))
+	return terra.ReferenceAsString(ak.ref.Append("rsa_token_key_modulus"))
 }
 
 func (ak AlternateKeyAttributes) SymmetricTokenKey() terra.StringValue {
-	return terra.ReferenceString(ak.ref.Append("symmetric_token_key"))
+	return terra.ReferenceAsString(ak.ref.Append("symmetric_token_key"))
 }
 
 func (ak AlternateKeyAttributes) X509TokenKeyRaw() terra.StringValue {
-	return terra.ReferenceString(ak.ref.Append("x509_token_key_raw"))
+	return terra.ReferenceAsString(ak.ref.Append("x509_token_key_raw"))
 }
 
 type RequiredClaimAttributes struct {
 	ref terra.Reference
 }
 
-func (rc RequiredClaimAttributes) InternalRef() terra.Reference {
-	return rc.ref
+func (rc RequiredClaimAttributes) InternalRef() (terra.Reference, error) {
+	return rc.ref, nil
 }
 
 func (rc RequiredClaimAttributes) InternalWithRef(ref terra.Reference) RequiredClaimAttributes {
 	return RequiredClaimAttributes{ref: ref}
 }
 
-func (rc RequiredClaimAttributes) InternalTokens() hclwrite.Tokens {
+func (rc RequiredClaimAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rc.ref.InternalTokens()
 }
 
 func (rc RequiredClaimAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("type"))
+	return terra.ReferenceAsString(rc.ref.Append("type"))
 }
 
 func (rc RequiredClaimAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("value"))
+	return terra.ReferenceAsString(rc.ref.Append("value"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type PolicyOptionState struct {

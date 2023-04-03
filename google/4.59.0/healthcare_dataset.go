@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewHealthcareDataset creates a new instance of [HealthcareDataset].
 func NewHealthcareDataset(name string, args HealthcareDatasetArgs) *HealthcareDataset {
 	return &HealthcareDataset{
 		Args: args,
@@ -19,28 +20,51 @@ func NewHealthcareDataset(name string, args HealthcareDatasetArgs) *HealthcareDa
 
 var _ terra.Resource = (*HealthcareDataset)(nil)
 
+// HealthcareDataset represents the Terraform resource google_healthcare_dataset.
 type HealthcareDataset struct {
-	Name  string
-	Args  HealthcareDatasetArgs
-	state *healthcareDatasetState
+	Name      string
+	Args      HealthcareDatasetArgs
+	state     *healthcareDatasetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [HealthcareDataset].
 func (hd *HealthcareDataset) Type() string {
 	return "google_healthcare_dataset"
 }
 
+// LocalName returns the local name for [HealthcareDataset].
 func (hd *HealthcareDataset) LocalName() string {
 	return hd.Name
 }
 
+// Configuration returns the configuration (args) for [HealthcareDataset].
 func (hd *HealthcareDataset) Configuration() interface{} {
 	return hd.Args
 }
 
+// DependOn is used for other resources to depend on [HealthcareDataset].
+func (hd *HealthcareDataset) DependOn() terra.Reference {
+	return terra.ReferenceResource(hd)
+}
+
+// Dependencies returns the list of resources [HealthcareDataset] depends_on.
+func (hd *HealthcareDataset) Dependencies() terra.Dependencies {
+	return hd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [HealthcareDataset].
+func (hd *HealthcareDataset) LifecycleManagement() *terra.Lifecycle {
+	return hd.Lifecycle
+}
+
+// Attributes returns the attributes for [HealthcareDataset].
 func (hd *HealthcareDataset) Attributes() healthcareDatasetAttributes {
 	return healthcareDatasetAttributes{ref: terra.ReferenceResource(hd)}
 }
 
+// ImportState imports the given attribute values into [HealthcareDataset]'s state.
 func (hd *HealthcareDataset) ImportState(av io.Reader) error {
 	hd.state = &healthcareDatasetState{}
 	if err := json.NewDecoder(av).Decode(hd.state); err != nil {
@@ -49,10 +73,12 @@ func (hd *HealthcareDataset) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [HealthcareDataset] has state.
 func (hd *HealthcareDataset) State() (*healthcareDatasetState, bool) {
 	return hd.state, hd.state != nil
 }
 
+// StateMust returns the state for [HealthcareDataset]. Panics if the state is nil.
 func (hd *HealthcareDataset) StateMust() *healthcareDatasetState {
 	if hd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", hd.Type(), hd.LocalName()))
@@ -60,10 +86,7 @@ func (hd *HealthcareDataset) StateMust() *healthcareDatasetState {
 	return hd.state
 }
 
-func (hd *HealthcareDataset) DependOn() terra.Reference {
-	return terra.ReferenceResource(hd)
-}
-
+// HealthcareDatasetArgs contains the configurations for google_healthcare_dataset.
 type HealthcareDatasetArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,39 +100,43 @@ type HealthcareDatasetArgs struct {
 	TimeZone terra.StringValue `hcl:"time_zone,attr"`
 	// Timeouts: optional
 	Timeouts *healthcaredataset.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that HealthcareDataset depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type healthcareDatasetAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of google_healthcare_dataset.
 func (hd healthcareDatasetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(hd.ref.Append("id"))
+	return terra.ReferenceAsString(hd.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_healthcare_dataset.
 func (hd healthcareDatasetAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(hd.ref.Append("location"))
+	return terra.ReferenceAsString(hd.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_healthcare_dataset.
 func (hd healthcareDatasetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(hd.ref.Append("name"))
+	return terra.ReferenceAsString(hd.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_healthcare_dataset.
 func (hd healthcareDatasetAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(hd.ref.Append("project"))
+	return terra.ReferenceAsString(hd.ref.Append("project"))
 }
 
+// SelfLink returns a reference to field self_link of google_healthcare_dataset.
 func (hd healthcareDatasetAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(hd.ref.Append("self_link"))
+	return terra.ReferenceAsString(hd.ref.Append("self_link"))
 }
 
+// TimeZone returns a reference to field time_zone of google_healthcare_dataset.
 func (hd healthcareDatasetAttributes) TimeZone() terra.StringValue {
-	return terra.ReferenceString(hd.ref.Append("time_zone"))
+	return terra.ReferenceAsString(hd.ref.Append("time_zone"))
 }
 
 func (hd healthcareDatasetAttributes) Timeouts() healthcaredataset.TimeoutsAttributes {
-	return terra.ReferenceSingle[healthcaredataset.TimeoutsAttributes](hd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[healthcaredataset.TimeoutsAttributes](hd.ref.Append("timeouts"))
 }
 
 type healthcareDatasetState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSccSourceIamMember creates a new instance of [SccSourceIamMember].
 func NewSccSourceIamMember(name string, args SccSourceIamMemberArgs) *SccSourceIamMember {
 	return &SccSourceIamMember{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSccSourceIamMember(name string, args SccSourceIamMemberArgs) *SccSourceI
 
 var _ terra.Resource = (*SccSourceIamMember)(nil)
 
+// SccSourceIamMember represents the Terraform resource google_scc_source_iam_member.
 type SccSourceIamMember struct {
-	Name  string
-	Args  SccSourceIamMemberArgs
-	state *sccSourceIamMemberState
+	Name      string
+	Args      SccSourceIamMemberArgs
+	state     *sccSourceIamMemberState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SccSourceIamMember].
 func (ssim *SccSourceIamMember) Type() string {
 	return "google_scc_source_iam_member"
 }
 
+// LocalName returns the local name for [SccSourceIamMember].
 func (ssim *SccSourceIamMember) LocalName() string {
 	return ssim.Name
 }
 
+// Configuration returns the configuration (args) for [SccSourceIamMember].
 func (ssim *SccSourceIamMember) Configuration() interface{} {
 	return ssim.Args
 }
 
+// DependOn is used for other resources to depend on [SccSourceIamMember].
+func (ssim *SccSourceIamMember) DependOn() terra.Reference {
+	return terra.ReferenceResource(ssim)
+}
+
+// Dependencies returns the list of resources [SccSourceIamMember] depends_on.
+func (ssim *SccSourceIamMember) Dependencies() terra.Dependencies {
+	return ssim.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SccSourceIamMember].
+func (ssim *SccSourceIamMember) LifecycleManagement() *terra.Lifecycle {
+	return ssim.Lifecycle
+}
+
+// Attributes returns the attributes for [SccSourceIamMember].
 func (ssim *SccSourceIamMember) Attributes() sccSourceIamMemberAttributes {
 	return sccSourceIamMemberAttributes{ref: terra.ReferenceResource(ssim)}
 }
 
+// ImportState imports the given attribute values into [SccSourceIamMember]'s state.
 func (ssim *SccSourceIamMember) ImportState(av io.Reader) error {
 	ssim.state = &sccSourceIamMemberState{}
 	if err := json.NewDecoder(av).Decode(ssim.state); err != nil {
@@ -49,10 +73,12 @@ func (ssim *SccSourceIamMember) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SccSourceIamMember] has state.
 func (ssim *SccSourceIamMember) State() (*sccSourceIamMemberState, bool) {
 	return ssim.state, ssim.state != nil
 }
 
+// StateMust returns the state for [SccSourceIamMember]. Panics if the state is nil.
 func (ssim *SccSourceIamMember) StateMust() *sccSourceIamMemberState {
 	if ssim.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ssim.Type(), ssim.LocalName()))
@@ -60,10 +86,7 @@ func (ssim *SccSourceIamMember) StateMust() *sccSourceIamMemberState {
 	return ssim.state
 }
 
-func (ssim *SccSourceIamMember) DependOn() terra.Reference {
-	return terra.ReferenceResource(ssim)
-}
-
+// SccSourceIamMemberArgs contains the configurations for google_scc_source_iam_member.
 type SccSourceIamMemberArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,39 +100,43 @@ type SccSourceIamMemberArgs struct {
 	Source terra.StringValue `hcl:"source,attr" validate:"required"`
 	// Condition: optional
 	Condition *sccsourceiammember.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that SccSourceIamMember depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sccSourceIamMemberAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_scc_source_iam_member.
 func (ssim sccSourceIamMemberAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(ssim.ref.Append("etag"))
+	return terra.ReferenceAsString(ssim.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_scc_source_iam_member.
 func (ssim sccSourceIamMemberAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ssim.ref.Append("id"))
+	return terra.ReferenceAsString(ssim.ref.Append("id"))
 }
 
+// Member returns a reference to field member of google_scc_source_iam_member.
 func (ssim sccSourceIamMemberAttributes) Member() terra.StringValue {
-	return terra.ReferenceString(ssim.ref.Append("member"))
+	return terra.ReferenceAsString(ssim.ref.Append("member"))
 }
 
+// Organization returns a reference to field organization of google_scc_source_iam_member.
 func (ssim sccSourceIamMemberAttributes) Organization() terra.StringValue {
-	return terra.ReferenceString(ssim.ref.Append("organization"))
+	return terra.ReferenceAsString(ssim.ref.Append("organization"))
 }
 
+// Role returns a reference to field role of google_scc_source_iam_member.
 func (ssim sccSourceIamMemberAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(ssim.ref.Append("role"))
+	return terra.ReferenceAsString(ssim.ref.Append("role"))
 }
 
+// Source returns a reference to field source of google_scc_source_iam_member.
 func (ssim sccSourceIamMemberAttributes) Source() terra.StringValue {
-	return terra.ReferenceString(ssim.ref.Append("source"))
+	return terra.ReferenceAsString(ssim.ref.Append("source"))
 }
 
 func (ssim sccSourceIamMemberAttributes) Condition() terra.ListValue[sccsourceiammember.ConditionAttributes] {
-	return terra.ReferenceList[sccsourceiammember.ConditionAttributes](ssim.ref.Append("condition"))
+	return terra.ReferenceAsList[sccsourceiammember.ConditionAttributes](ssim.ref.Append("condition"))
 }
 
 type sccSourceIamMemberState struct {

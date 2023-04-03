@@ -15,152 +15,152 @@ type BestRoutesAttributes struct {
 	ref terra.Reference
 }
 
-func (br BestRoutesAttributes) InternalRef() terra.Reference {
-	return br.ref
+func (br BestRoutesAttributes) InternalRef() (terra.Reference, error) {
+	return br.ref, nil
 }
 
 func (br BestRoutesAttributes) InternalWithRef(ref terra.Reference) BestRoutesAttributes {
 	return BestRoutesAttributes{ref: ref}
 }
 
-func (br BestRoutesAttributes) InternalTokens() hclwrite.Tokens {
+func (br BestRoutesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return br.ref.InternalTokens()
 }
 
 func (br BestRoutesAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(br.ref.Append("description"))
+	return terra.ReferenceAsString(br.ref.Append("description"))
 }
 
 func (br BestRoutesAttributes) DestRange() terra.StringValue {
-	return terra.ReferenceString(br.ref.Append("dest_range"))
+	return terra.ReferenceAsString(br.ref.Append("dest_range"))
 }
 
 func (br BestRoutesAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(br.ref.Append("name"))
+	return terra.ReferenceAsString(br.ref.Append("name"))
 }
 
 func (br BestRoutesAttributes) Network() terra.StringValue {
-	return terra.ReferenceString(br.ref.Append("network"))
+	return terra.ReferenceAsString(br.ref.Append("network"))
 }
 
 func (br BestRoutesAttributes) NextHopGateway() terra.StringValue {
-	return terra.ReferenceString(br.ref.Append("next_hop_gateway"))
+	return terra.ReferenceAsString(br.ref.Append("next_hop_gateway"))
 }
 
 func (br BestRoutesAttributes) NextHopIlb() terra.StringValue {
-	return terra.ReferenceString(br.ref.Append("next_hop_ilb"))
+	return terra.ReferenceAsString(br.ref.Append("next_hop_ilb"))
 }
 
 func (br BestRoutesAttributes) NextHopInstance() terra.StringValue {
-	return terra.ReferenceString(br.ref.Append("next_hop_instance"))
+	return terra.ReferenceAsString(br.ref.Append("next_hop_instance"))
 }
 
 func (br BestRoutesAttributes) NextHopInstanceZone() terra.StringValue {
-	return terra.ReferenceString(br.ref.Append("next_hop_instance_zone"))
+	return terra.ReferenceAsString(br.ref.Append("next_hop_instance_zone"))
 }
 
 func (br BestRoutesAttributes) NextHopIp() terra.StringValue {
-	return terra.ReferenceString(br.ref.Append("next_hop_ip"))
+	return terra.ReferenceAsString(br.ref.Append("next_hop_ip"))
 }
 
 func (br BestRoutesAttributes) NextHopNetwork() terra.StringValue {
-	return terra.ReferenceString(br.ref.Append("next_hop_network"))
+	return terra.ReferenceAsString(br.ref.Append("next_hop_network"))
 }
 
 func (br BestRoutesAttributes) NextHopVpnTunnel() terra.StringValue {
-	return terra.ReferenceString(br.ref.Append("next_hop_vpn_tunnel"))
+	return terra.ReferenceAsString(br.ref.Append("next_hop_vpn_tunnel"))
 }
 
 func (br BestRoutesAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(br.ref.Append("priority"))
+	return terra.ReferenceAsNumber(br.ref.Append("priority"))
 }
 
 func (br BestRoutesAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(br.ref.Append("project"))
+	return terra.ReferenceAsString(br.ref.Append("project"))
 }
 
 func (br BestRoutesAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(br.ref.Append("self_link"))
+	return terra.ReferenceAsString(br.ref.Append("self_link"))
 }
 
 func (br BestRoutesAttributes) Tags() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](br.ref.Append("tags"))
+	return terra.ReferenceAsSet[terra.StringValue](br.ref.Append("tags"))
 }
 
 type BestRoutesForRouterAttributes struct {
 	ref terra.Reference
 }
 
-func (brfr BestRoutesForRouterAttributes) InternalRef() terra.Reference {
-	return brfr.ref
+func (brfr BestRoutesForRouterAttributes) InternalRef() (terra.Reference, error) {
+	return brfr.ref, nil
 }
 
 func (brfr BestRoutesForRouterAttributes) InternalWithRef(ref terra.Reference) BestRoutesForRouterAttributes {
 	return BestRoutesForRouterAttributes{ref: ref}
 }
 
-func (brfr BestRoutesForRouterAttributes) InternalTokens() hclwrite.Tokens {
+func (brfr BestRoutesForRouterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return brfr.ref.InternalTokens()
 }
 
 func (brfr BestRoutesForRouterAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(brfr.ref.Append("description"))
+	return terra.ReferenceAsString(brfr.ref.Append("description"))
 }
 
 func (brfr BestRoutesForRouterAttributes) DestRange() terra.StringValue {
-	return terra.ReferenceString(brfr.ref.Append("dest_range"))
+	return terra.ReferenceAsString(brfr.ref.Append("dest_range"))
 }
 
 func (brfr BestRoutesForRouterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(brfr.ref.Append("name"))
+	return terra.ReferenceAsString(brfr.ref.Append("name"))
 }
 
 func (brfr BestRoutesForRouterAttributes) Network() terra.StringValue {
-	return terra.ReferenceString(brfr.ref.Append("network"))
+	return terra.ReferenceAsString(brfr.ref.Append("network"))
 }
 
 func (brfr BestRoutesForRouterAttributes) NextHopGateway() terra.StringValue {
-	return terra.ReferenceString(brfr.ref.Append("next_hop_gateway"))
+	return terra.ReferenceAsString(brfr.ref.Append("next_hop_gateway"))
 }
 
 func (brfr BestRoutesForRouterAttributes) NextHopIlb() terra.StringValue {
-	return terra.ReferenceString(brfr.ref.Append("next_hop_ilb"))
+	return terra.ReferenceAsString(brfr.ref.Append("next_hop_ilb"))
 }
 
 func (brfr BestRoutesForRouterAttributes) NextHopInstance() terra.StringValue {
-	return terra.ReferenceString(brfr.ref.Append("next_hop_instance"))
+	return terra.ReferenceAsString(brfr.ref.Append("next_hop_instance"))
 }
 
 func (brfr BestRoutesForRouterAttributes) NextHopInstanceZone() terra.StringValue {
-	return terra.ReferenceString(brfr.ref.Append("next_hop_instance_zone"))
+	return terra.ReferenceAsString(brfr.ref.Append("next_hop_instance_zone"))
 }
 
 func (brfr BestRoutesForRouterAttributes) NextHopIp() terra.StringValue {
-	return terra.ReferenceString(brfr.ref.Append("next_hop_ip"))
+	return terra.ReferenceAsString(brfr.ref.Append("next_hop_ip"))
 }
 
 func (brfr BestRoutesForRouterAttributes) NextHopNetwork() terra.StringValue {
-	return terra.ReferenceString(brfr.ref.Append("next_hop_network"))
+	return terra.ReferenceAsString(brfr.ref.Append("next_hop_network"))
 }
 
 func (brfr BestRoutesForRouterAttributes) NextHopVpnTunnel() terra.StringValue {
-	return terra.ReferenceString(brfr.ref.Append("next_hop_vpn_tunnel"))
+	return terra.ReferenceAsString(brfr.ref.Append("next_hop_vpn_tunnel"))
 }
 
 func (brfr BestRoutesForRouterAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(brfr.ref.Append("priority"))
+	return terra.ReferenceAsNumber(brfr.ref.Append("priority"))
 }
 
 func (brfr BestRoutesForRouterAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(brfr.ref.Append("project"))
+	return terra.ReferenceAsString(brfr.ref.Append("project"))
 }
 
 func (brfr BestRoutesForRouterAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(brfr.ref.Append("self_link"))
+	return terra.ReferenceAsString(brfr.ref.Append("self_link"))
 }
 
 func (brfr BestRoutesForRouterAttributes) Tags() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](brfr.ref.Append("tags"))
+	return terra.ReferenceAsSet[terra.StringValue](brfr.ref.Append("tags"))
 }
 
 type BestRoutesState struct {

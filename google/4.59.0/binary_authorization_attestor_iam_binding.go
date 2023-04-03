@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBinaryAuthorizationAttestorIamBinding creates a new instance of [BinaryAuthorizationAttestorIamBinding].
 func NewBinaryAuthorizationAttestorIamBinding(name string, args BinaryAuthorizationAttestorIamBindingArgs) *BinaryAuthorizationAttestorIamBinding {
 	return &BinaryAuthorizationAttestorIamBinding{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBinaryAuthorizationAttestorIamBinding(name string, args BinaryAuthorizat
 
 var _ terra.Resource = (*BinaryAuthorizationAttestorIamBinding)(nil)
 
+// BinaryAuthorizationAttestorIamBinding represents the Terraform resource google_binary_authorization_attestor_iam_binding.
 type BinaryAuthorizationAttestorIamBinding struct {
-	Name  string
-	Args  BinaryAuthorizationAttestorIamBindingArgs
-	state *binaryAuthorizationAttestorIamBindingState
+	Name      string
+	Args      BinaryAuthorizationAttestorIamBindingArgs
+	state     *binaryAuthorizationAttestorIamBindingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BinaryAuthorizationAttestorIamBinding].
 func (baaib *BinaryAuthorizationAttestorIamBinding) Type() string {
 	return "google_binary_authorization_attestor_iam_binding"
 }
 
+// LocalName returns the local name for [BinaryAuthorizationAttestorIamBinding].
 func (baaib *BinaryAuthorizationAttestorIamBinding) LocalName() string {
 	return baaib.Name
 }
 
+// Configuration returns the configuration (args) for [BinaryAuthorizationAttestorIamBinding].
 func (baaib *BinaryAuthorizationAttestorIamBinding) Configuration() interface{} {
 	return baaib.Args
 }
 
+// DependOn is used for other resources to depend on [BinaryAuthorizationAttestorIamBinding].
+func (baaib *BinaryAuthorizationAttestorIamBinding) DependOn() terra.Reference {
+	return terra.ReferenceResource(baaib)
+}
+
+// Dependencies returns the list of resources [BinaryAuthorizationAttestorIamBinding] depends_on.
+func (baaib *BinaryAuthorizationAttestorIamBinding) Dependencies() terra.Dependencies {
+	return baaib.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BinaryAuthorizationAttestorIamBinding].
+func (baaib *BinaryAuthorizationAttestorIamBinding) LifecycleManagement() *terra.Lifecycle {
+	return baaib.Lifecycle
+}
+
+// Attributes returns the attributes for [BinaryAuthorizationAttestorIamBinding].
 func (baaib *BinaryAuthorizationAttestorIamBinding) Attributes() binaryAuthorizationAttestorIamBindingAttributes {
 	return binaryAuthorizationAttestorIamBindingAttributes{ref: terra.ReferenceResource(baaib)}
 }
 
+// ImportState imports the given attribute values into [BinaryAuthorizationAttestorIamBinding]'s state.
 func (baaib *BinaryAuthorizationAttestorIamBinding) ImportState(av io.Reader) error {
 	baaib.state = &binaryAuthorizationAttestorIamBindingState{}
 	if err := json.NewDecoder(av).Decode(baaib.state); err != nil {
@@ -49,10 +73,12 @@ func (baaib *BinaryAuthorizationAttestorIamBinding) ImportState(av io.Reader) er
 	return nil
 }
 
+// State returns the state and a bool indicating if [BinaryAuthorizationAttestorIamBinding] has state.
 func (baaib *BinaryAuthorizationAttestorIamBinding) State() (*binaryAuthorizationAttestorIamBindingState, bool) {
 	return baaib.state, baaib.state != nil
 }
 
+// StateMust returns the state for [BinaryAuthorizationAttestorIamBinding]. Panics if the state is nil.
 func (baaib *BinaryAuthorizationAttestorIamBinding) StateMust() *binaryAuthorizationAttestorIamBindingState {
 	if baaib.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", baaib.Type(), baaib.LocalName()))
@@ -60,10 +86,7 @@ func (baaib *BinaryAuthorizationAttestorIamBinding) StateMust() *binaryAuthoriza
 	return baaib.state
 }
 
-func (baaib *BinaryAuthorizationAttestorIamBinding) DependOn() terra.Reference {
-	return terra.ReferenceResource(baaib)
-}
-
+// BinaryAuthorizationAttestorIamBindingArgs contains the configurations for google_binary_authorization_attestor_iam_binding.
 type BinaryAuthorizationAttestorIamBindingArgs struct {
 	// Attestor: string, required
 	Attestor terra.StringValue `hcl:"attestor,attr" validate:"required"`
@@ -77,39 +100,43 @@ type BinaryAuthorizationAttestorIamBindingArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *binaryauthorizationattestoriambinding.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that BinaryAuthorizationAttestorIamBinding depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type binaryAuthorizationAttestorIamBindingAttributes struct {
 	ref terra.Reference
 }
 
+// Attestor returns a reference to field attestor of google_binary_authorization_attestor_iam_binding.
 func (baaib binaryAuthorizationAttestorIamBindingAttributes) Attestor() terra.StringValue {
-	return terra.ReferenceString(baaib.ref.Append("attestor"))
+	return terra.ReferenceAsString(baaib.ref.Append("attestor"))
 }
 
+// Etag returns a reference to field etag of google_binary_authorization_attestor_iam_binding.
 func (baaib binaryAuthorizationAttestorIamBindingAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(baaib.ref.Append("etag"))
+	return terra.ReferenceAsString(baaib.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_binary_authorization_attestor_iam_binding.
 func (baaib binaryAuthorizationAttestorIamBindingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(baaib.ref.Append("id"))
+	return terra.ReferenceAsString(baaib.ref.Append("id"))
 }
 
+// Members returns a reference to field members of google_binary_authorization_attestor_iam_binding.
 func (baaib binaryAuthorizationAttestorIamBindingAttributes) Members() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](baaib.ref.Append("members"))
+	return terra.ReferenceAsSet[terra.StringValue](baaib.ref.Append("members"))
 }
 
+// Project returns a reference to field project of google_binary_authorization_attestor_iam_binding.
 func (baaib binaryAuthorizationAttestorIamBindingAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(baaib.ref.Append("project"))
+	return terra.ReferenceAsString(baaib.ref.Append("project"))
 }
 
+// Role returns a reference to field role of google_binary_authorization_attestor_iam_binding.
 func (baaib binaryAuthorizationAttestorIamBindingAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(baaib.ref.Append("role"))
+	return terra.ReferenceAsString(baaib.ref.Append("role"))
 }
 
 func (baaib binaryAuthorizationAttestorIamBindingAttributes) Condition() terra.ListValue[binaryauthorizationattestoriambinding.ConditionAttributes] {
-	return terra.ReferenceList[binaryauthorizationattestoriambinding.ConditionAttributes](baaib.ref.Append("condition"))
+	return terra.ReferenceAsList[binaryauthorizationattestoriambinding.ConditionAttributes](baaib.ref.Append("condition"))
 }
 
 type binaryAuthorizationAttestorIamBindingState struct {

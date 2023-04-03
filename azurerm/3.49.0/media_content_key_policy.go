@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMediaContentKeyPolicy creates a new instance of [MediaContentKeyPolicy].
 func NewMediaContentKeyPolicy(name string, args MediaContentKeyPolicyArgs) *MediaContentKeyPolicy {
 	return &MediaContentKeyPolicy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMediaContentKeyPolicy(name string, args MediaContentKeyPolicyArgs) *Medi
 
 var _ terra.Resource = (*MediaContentKeyPolicy)(nil)
 
+// MediaContentKeyPolicy represents the Terraform resource azurerm_media_content_key_policy.
 type MediaContentKeyPolicy struct {
-	Name  string
-	Args  MediaContentKeyPolicyArgs
-	state *mediaContentKeyPolicyState
+	Name      string
+	Args      MediaContentKeyPolicyArgs
+	state     *mediaContentKeyPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MediaContentKeyPolicy].
 func (mckp *MediaContentKeyPolicy) Type() string {
 	return "azurerm_media_content_key_policy"
 }
 
+// LocalName returns the local name for [MediaContentKeyPolicy].
 func (mckp *MediaContentKeyPolicy) LocalName() string {
 	return mckp.Name
 }
 
+// Configuration returns the configuration (args) for [MediaContentKeyPolicy].
 func (mckp *MediaContentKeyPolicy) Configuration() interface{} {
 	return mckp.Args
 }
 
+// DependOn is used for other resources to depend on [MediaContentKeyPolicy].
+func (mckp *MediaContentKeyPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(mckp)
+}
+
+// Dependencies returns the list of resources [MediaContentKeyPolicy] depends_on.
+func (mckp *MediaContentKeyPolicy) Dependencies() terra.Dependencies {
+	return mckp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MediaContentKeyPolicy].
+func (mckp *MediaContentKeyPolicy) LifecycleManagement() *terra.Lifecycle {
+	return mckp.Lifecycle
+}
+
+// Attributes returns the attributes for [MediaContentKeyPolicy].
 func (mckp *MediaContentKeyPolicy) Attributes() mediaContentKeyPolicyAttributes {
 	return mediaContentKeyPolicyAttributes{ref: terra.ReferenceResource(mckp)}
 }
 
+// ImportState imports the given attribute values into [MediaContentKeyPolicy]'s state.
 func (mckp *MediaContentKeyPolicy) ImportState(av io.Reader) error {
 	mckp.state = &mediaContentKeyPolicyState{}
 	if err := json.NewDecoder(av).Decode(mckp.state); err != nil {
@@ -49,10 +73,12 @@ func (mckp *MediaContentKeyPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MediaContentKeyPolicy] has state.
 func (mckp *MediaContentKeyPolicy) State() (*mediaContentKeyPolicyState, bool) {
 	return mckp.state, mckp.state != nil
 }
 
+// StateMust returns the state for [MediaContentKeyPolicy]. Panics if the state is nil.
 func (mckp *MediaContentKeyPolicy) StateMust() *mediaContentKeyPolicyState {
 	if mckp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mckp.Type(), mckp.LocalName()))
@@ -60,10 +86,7 @@ func (mckp *MediaContentKeyPolicy) StateMust() *mediaContentKeyPolicyState {
 	return mckp.state
 }
 
-func (mckp *MediaContentKeyPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(mckp)
-}
-
+// MediaContentKeyPolicyArgs contains the configurations for azurerm_media_content_key_policy.
 type MediaContentKeyPolicyArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -79,39 +102,42 @@ type MediaContentKeyPolicyArgs struct {
 	PolicyOption []mediacontentkeypolicy.PolicyOption `hcl:"policy_option,block" validate:"min=1"`
 	// Timeouts: optional
 	Timeouts *mediacontentkeypolicy.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MediaContentKeyPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mediaContentKeyPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of azurerm_media_content_key_policy.
 func (mckp mediaContentKeyPolicyAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(mckp.ref.Append("description"))
+	return terra.ReferenceAsString(mckp.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_media_content_key_policy.
 func (mckp mediaContentKeyPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mckp.ref.Append("id"))
+	return terra.ReferenceAsString(mckp.ref.Append("id"))
 }
 
+// MediaServicesAccountName returns a reference to field media_services_account_name of azurerm_media_content_key_policy.
 func (mckp mediaContentKeyPolicyAttributes) MediaServicesAccountName() terra.StringValue {
-	return terra.ReferenceString(mckp.ref.Append("media_services_account_name"))
+	return terra.ReferenceAsString(mckp.ref.Append("media_services_account_name"))
 }
 
+// Name returns a reference to field name of azurerm_media_content_key_policy.
 func (mckp mediaContentKeyPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mckp.ref.Append("name"))
+	return terra.ReferenceAsString(mckp.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_media_content_key_policy.
 func (mckp mediaContentKeyPolicyAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(mckp.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(mckp.ref.Append("resource_group_name"))
 }
 
 func (mckp mediaContentKeyPolicyAttributes) PolicyOption() terra.SetValue[mediacontentkeypolicy.PolicyOptionAttributes] {
-	return terra.ReferenceSet[mediacontentkeypolicy.PolicyOptionAttributes](mckp.ref.Append("policy_option"))
+	return terra.ReferenceAsSet[mediacontentkeypolicy.PolicyOptionAttributes](mckp.ref.Append("policy_option"))
 }
 
 func (mckp mediaContentKeyPolicyAttributes) Timeouts() mediacontentkeypolicy.TimeoutsAttributes {
-	return terra.ReferenceSingle[mediacontentkeypolicy.TimeoutsAttributes](mckp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[mediacontentkeypolicy.TimeoutsAttributes](mckp.ref.Append("timeouts"))
 }
 
 type mediaContentKeyPolicyState struct {

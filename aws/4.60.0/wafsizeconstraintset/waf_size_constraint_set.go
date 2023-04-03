@@ -37,7 +37,7 @@ func (sc SizeConstraintsAttributes) InternalWithRef(ref terra.Reference) SizeCon
 	return SizeConstraintsAttributes{ref: ref}
 }
 
-func (sc SizeConstraintsAttributes) InternalTokens() hclwrite.Tokens {
+func (sc SizeConstraintsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -69,7 +69,7 @@ func (ftm FieldToMatchAttributes) InternalWithRef(ref terra.Reference) FieldToMa
 	return FieldToMatchAttributes{ref: ref}
 }
 
-func (ftm FieldToMatchAttributes) InternalTokens() hclwrite.Tokens {
+func (ftm FieldToMatchAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ftm.ref.InternalTokens()
 }
 

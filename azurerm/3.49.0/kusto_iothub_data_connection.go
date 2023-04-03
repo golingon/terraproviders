@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewKustoIothubDataConnection creates a new instance of [KustoIothubDataConnection].
 func NewKustoIothubDataConnection(name string, args KustoIothubDataConnectionArgs) *KustoIothubDataConnection {
 	return &KustoIothubDataConnection{
 		Args: args,
@@ -19,28 +20,51 @@ func NewKustoIothubDataConnection(name string, args KustoIothubDataConnectionArg
 
 var _ terra.Resource = (*KustoIothubDataConnection)(nil)
 
+// KustoIothubDataConnection represents the Terraform resource azurerm_kusto_iothub_data_connection.
 type KustoIothubDataConnection struct {
-	Name  string
-	Args  KustoIothubDataConnectionArgs
-	state *kustoIothubDataConnectionState
+	Name      string
+	Args      KustoIothubDataConnectionArgs
+	state     *kustoIothubDataConnectionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [KustoIothubDataConnection].
 func (kidc *KustoIothubDataConnection) Type() string {
 	return "azurerm_kusto_iothub_data_connection"
 }
 
+// LocalName returns the local name for [KustoIothubDataConnection].
 func (kidc *KustoIothubDataConnection) LocalName() string {
 	return kidc.Name
 }
 
+// Configuration returns the configuration (args) for [KustoIothubDataConnection].
 func (kidc *KustoIothubDataConnection) Configuration() interface{} {
 	return kidc.Args
 }
 
+// DependOn is used for other resources to depend on [KustoIothubDataConnection].
+func (kidc *KustoIothubDataConnection) DependOn() terra.Reference {
+	return terra.ReferenceResource(kidc)
+}
+
+// Dependencies returns the list of resources [KustoIothubDataConnection] depends_on.
+func (kidc *KustoIothubDataConnection) Dependencies() terra.Dependencies {
+	return kidc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [KustoIothubDataConnection].
+func (kidc *KustoIothubDataConnection) LifecycleManagement() *terra.Lifecycle {
+	return kidc.Lifecycle
+}
+
+// Attributes returns the attributes for [KustoIothubDataConnection].
 func (kidc *KustoIothubDataConnection) Attributes() kustoIothubDataConnectionAttributes {
 	return kustoIothubDataConnectionAttributes{ref: terra.ReferenceResource(kidc)}
 }
 
+// ImportState imports the given attribute values into [KustoIothubDataConnection]'s state.
 func (kidc *KustoIothubDataConnection) ImportState(av io.Reader) error {
 	kidc.state = &kustoIothubDataConnectionState{}
 	if err := json.NewDecoder(av).Decode(kidc.state); err != nil {
@@ -49,10 +73,12 @@ func (kidc *KustoIothubDataConnection) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [KustoIothubDataConnection] has state.
 func (kidc *KustoIothubDataConnection) State() (*kustoIothubDataConnectionState, bool) {
 	return kidc.state, kidc.state != nil
 }
 
+// StateMust returns the state for [KustoIothubDataConnection]. Panics if the state is nil.
 func (kidc *KustoIothubDataConnection) StateMust() *kustoIothubDataConnectionState {
 	if kidc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", kidc.Type(), kidc.LocalName()))
@@ -60,10 +86,7 @@ func (kidc *KustoIothubDataConnection) StateMust() *kustoIothubDataConnectionSta
 	return kidc.state
 }
 
-func (kidc *KustoIothubDataConnection) DependOn() terra.Reference {
-	return terra.ReferenceResource(kidc)
-}
-
+// KustoIothubDataConnectionArgs contains the configurations for azurerm_kusto_iothub_data_connection.
 type KustoIothubDataConnectionArgs struct {
 	// ClusterName: string, required
 	ClusterName terra.StringValue `hcl:"cluster_name,attr" validate:"required"`
@@ -95,71 +118,83 @@ type KustoIothubDataConnectionArgs struct {
 	TableName terra.StringValue `hcl:"table_name,attr"`
 	// Timeouts: optional
 	Timeouts *kustoiothubdataconnection.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that KustoIothubDataConnection depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type kustoIothubDataConnectionAttributes struct {
 	ref terra.Reference
 }
 
+// ClusterName returns a reference to field cluster_name of azurerm_kusto_iothub_data_connection.
 func (kidc kustoIothubDataConnectionAttributes) ClusterName() terra.StringValue {
-	return terra.ReferenceString(kidc.ref.Append("cluster_name"))
+	return terra.ReferenceAsString(kidc.ref.Append("cluster_name"))
 }
 
+// ConsumerGroup returns a reference to field consumer_group of azurerm_kusto_iothub_data_connection.
 func (kidc kustoIothubDataConnectionAttributes) ConsumerGroup() terra.StringValue {
-	return terra.ReferenceString(kidc.ref.Append("consumer_group"))
+	return terra.ReferenceAsString(kidc.ref.Append("consumer_group"))
 }
 
+// DataFormat returns a reference to field data_format of azurerm_kusto_iothub_data_connection.
 func (kidc kustoIothubDataConnectionAttributes) DataFormat() terra.StringValue {
-	return terra.ReferenceString(kidc.ref.Append("data_format"))
+	return terra.ReferenceAsString(kidc.ref.Append("data_format"))
 }
 
+// DatabaseName returns a reference to field database_name of azurerm_kusto_iothub_data_connection.
 func (kidc kustoIothubDataConnectionAttributes) DatabaseName() terra.StringValue {
-	return terra.ReferenceString(kidc.ref.Append("database_name"))
+	return terra.ReferenceAsString(kidc.ref.Append("database_name"))
 }
 
+// DatabaseRoutingType returns a reference to field database_routing_type of azurerm_kusto_iothub_data_connection.
 func (kidc kustoIothubDataConnectionAttributes) DatabaseRoutingType() terra.StringValue {
-	return terra.ReferenceString(kidc.ref.Append("database_routing_type"))
+	return terra.ReferenceAsString(kidc.ref.Append("database_routing_type"))
 }
 
+// EventSystemProperties returns a reference to field event_system_properties of azurerm_kusto_iothub_data_connection.
 func (kidc kustoIothubDataConnectionAttributes) EventSystemProperties() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](kidc.ref.Append("event_system_properties"))
+	return terra.ReferenceAsSet[terra.StringValue](kidc.ref.Append("event_system_properties"))
 }
 
+// Id returns a reference to field id of azurerm_kusto_iothub_data_connection.
 func (kidc kustoIothubDataConnectionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kidc.ref.Append("id"))
+	return terra.ReferenceAsString(kidc.ref.Append("id"))
 }
 
+// IothubId returns a reference to field iothub_id of azurerm_kusto_iothub_data_connection.
 func (kidc kustoIothubDataConnectionAttributes) IothubId() terra.StringValue {
-	return terra.ReferenceString(kidc.ref.Append("iothub_id"))
+	return terra.ReferenceAsString(kidc.ref.Append("iothub_id"))
 }
 
+// Location returns a reference to field location of azurerm_kusto_iothub_data_connection.
 func (kidc kustoIothubDataConnectionAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(kidc.ref.Append("location"))
+	return terra.ReferenceAsString(kidc.ref.Append("location"))
 }
 
+// MappingRuleName returns a reference to field mapping_rule_name of azurerm_kusto_iothub_data_connection.
 func (kidc kustoIothubDataConnectionAttributes) MappingRuleName() terra.StringValue {
-	return terra.ReferenceString(kidc.ref.Append("mapping_rule_name"))
+	return terra.ReferenceAsString(kidc.ref.Append("mapping_rule_name"))
 }
 
+// Name returns a reference to field name of azurerm_kusto_iothub_data_connection.
 func (kidc kustoIothubDataConnectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(kidc.ref.Append("name"))
+	return terra.ReferenceAsString(kidc.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_kusto_iothub_data_connection.
 func (kidc kustoIothubDataConnectionAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(kidc.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(kidc.ref.Append("resource_group_name"))
 }
 
+// SharedAccessPolicyName returns a reference to field shared_access_policy_name of azurerm_kusto_iothub_data_connection.
 func (kidc kustoIothubDataConnectionAttributes) SharedAccessPolicyName() terra.StringValue {
-	return terra.ReferenceString(kidc.ref.Append("shared_access_policy_name"))
+	return terra.ReferenceAsString(kidc.ref.Append("shared_access_policy_name"))
 }
 
+// TableName returns a reference to field table_name of azurerm_kusto_iothub_data_connection.
 func (kidc kustoIothubDataConnectionAttributes) TableName() terra.StringValue {
-	return terra.ReferenceString(kidc.ref.Append("table_name"))
+	return terra.ReferenceAsString(kidc.ref.Append("table_name"))
 }
 
 func (kidc kustoIothubDataConnectionAttributes) Timeouts() kustoiothubdataconnection.TimeoutsAttributes {
-	return terra.ReferenceSingle[kustoiothubdataconnection.TimeoutsAttributes](kidc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[kustoiothubdataconnection.TimeoutsAttributes](kidc.ref.Append("timeouts"))
 }
 
 type kustoIothubDataConnectionState struct {

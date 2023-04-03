@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApiManagementTag creates a new instance of [ApiManagementTag].
 func NewApiManagementTag(name string, args ApiManagementTagArgs) *ApiManagementTag {
 	return &ApiManagementTag{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApiManagementTag(name string, args ApiManagementTagArgs) *ApiManagementT
 
 var _ terra.Resource = (*ApiManagementTag)(nil)
 
+// ApiManagementTag represents the Terraform resource azurerm_api_management_tag.
 type ApiManagementTag struct {
-	Name  string
-	Args  ApiManagementTagArgs
-	state *apiManagementTagState
+	Name      string
+	Args      ApiManagementTagArgs
+	state     *apiManagementTagState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiManagementTag].
 func (amt *ApiManagementTag) Type() string {
 	return "azurerm_api_management_tag"
 }
 
+// LocalName returns the local name for [ApiManagementTag].
 func (amt *ApiManagementTag) LocalName() string {
 	return amt.Name
 }
 
+// Configuration returns the configuration (args) for [ApiManagementTag].
 func (amt *ApiManagementTag) Configuration() interface{} {
 	return amt.Args
 }
 
+// DependOn is used for other resources to depend on [ApiManagementTag].
+func (amt *ApiManagementTag) DependOn() terra.Reference {
+	return terra.ReferenceResource(amt)
+}
+
+// Dependencies returns the list of resources [ApiManagementTag] depends_on.
+func (amt *ApiManagementTag) Dependencies() terra.Dependencies {
+	return amt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiManagementTag].
+func (amt *ApiManagementTag) LifecycleManagement() *terra.Lifecycle {
+	return amt.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiManagementTag].
 func (amt *ApiManagementTag) Attributes() apiManagementTagAttributes {
 	return apiManagementTagAttributes{ref: terra.ReferenceResource(amt)}
 }
 
+// ImportState imports the given attribute values into [ApiManagementTag]'s state.
 func (amt *ApiManagementTag) ImportState(av io.Reader) error {
 	amt.state = &apiManagementTagState{}
 	if err := json.NewDecoder(av).Decode(amt.state); err != nil {
@@ -49,10 +73,12 @@ func (amt *ApiManagementTag) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiManagementTag] has state.
 func (amt *ApiManagementTag) State() (*apiManagementTagState, bool) {
 	return amt.state, amt.state != nil
 }
 
+// StateMust returns the state for [ApiManagementTag]. Panics if the state is nil.
 func (amt *ApiManagementTag) StateMust() *apiManagementTagState {
 	if amt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", amt.Type(), amt.LocalName()))
@@ -60,10 +86,7 @@ func (amt *ApiManagementTag) StateMust() *apiManagementTagState {
 	return amt.state
 }
 
-func (amt *ApiManagementTag) DependOn() terra.Reference {
-	return terra.ReferenceResource(amt)
-}
-
+// ApiManagementTagArgs contains the configurations for azurerm_api_management_tag.
 type ApiManagementTagArgs struct {
 	// ApiManagementId: string, required
 	ApiManagementId terra.StringValue `hcl:"api_management_id,attr" validate:"required"`
@@ -75,31 +98,33 @@ type ApiManagementTagArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *apimanagementtag.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ApiManagementTag depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiManagementTagAttributes struct {
 	ref terra.Reference
 }
 
+// ApiManagementId returns a reference to field api_management_id of azurerm_api_management_tag.
 func (amt apiManagementTagAttributes) ApiManagementId() terra.StringValue {
-	return terra.ReferenceString(amt.ref.Append("api_management_id"))
+	return terra.ReferenceAsString(amt.ref.Append("api_management_id"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_api_management_tag.
 func (amt apiManagementTagAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(amt.ref.Append("display_name"))
+	return terra.ReferenceAsString(amt.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of azurerm_api_management_tag.
 func (amt apiManagementTagAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(amt.ref.Append("id"))
+	return terra.ReferenceAsString(amt.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_api_management_tag.
 func (amt apiManagementTagAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(amt.ref.Append("name"))
+	return terra.ReferenceAsString(amt.ref.Append("name"))
 }
 
 func (amt apiManagementTagAttributes) Timeouts() apimanagementtag.TimeoutsAttributes {
-	return terra.ReferenceSingle[apimanagementtag.TimeoutsAttributes](amt.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[apimanagementtag.TimeoutsAttributes](amt.ref.Append("timeouts"))
 }
 
 type apiManagementTagState struct {

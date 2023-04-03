@@ -29,60 +29,60 @@ type ClientScopedSubscriptionAttributes struct {
 	ref terra.Reference
 }
 
-func (css ClientScopedSubscriptionAttributes) InternalRef() terra.Reference {
-	return css.ref
+func (css ClientScopedSubscriptionAttributes) InternalRef() (terra.Reference, error) {
+	return css.ref, nil
 }
 
 func (css ClientScopedSubscriptionAttributes) InternalWithRef(ref terra.Reference) ClientScopedSubscriptionAttributes {
 	return ClientScopedSubscriptionAttributes{ref: ref}
 }
 
-func (css ClientScopedSubscriptionAttributes) InternalTokens() hclwrite.Tokens {
+func (css ClientScopedSubscriptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return css.ref.InternalTokens()
 }
 
 func (css ClientScopedSubscriptionAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(css.ref.Append("client_id"))
+	return terra.ReferenceAsString(css.ref.Append("client_id"))
 }
 
 func (css ClientScopedSubscriptionAttributes) IsClientScopedSubscriptionDurable() terra.BoolValue {
-	return terra.ReferenceBool(css.ref.Append("is_client_scoped_subscription_durable"))
+	return terra.ReferenceAsBool(css.ref.Append("is_client_scoped_subscription_durable"))
 }
 
 func (css ClientScopedSubscriptionAttributes) IsClientScopedSubscriptionShareable() terra.BoolValue {
-	return terra.ReferenceBool(css.ref.Append("is_client_scoped_subscription_shareable"))
+	return terra.ReferenceAsBool(css.ref.Append("is_client_scoped_subscription_shareable"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ClientScopedSubscriptionState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSynapseManagedPrivateEndpoint creates a new instance of [SynapseManagedPrivateEndpoint].
 func NewSynapseManagedPrivateEndpoint(name string, args SynapseManagedPrivateEndpointArgs) *SynapseManagedPrivateEndpoint {
 	return &SynapseManagedPrivateEndpoint{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSynapseManagedPrivateEndpoint(name string, args SynapseManagedPrivateEnd
 
 var _ terra.Resource = (*SynapseManagedPrivateEndpoint)(nil)
 
+// SynapseManagedPrivateEndpoint represents the Terraform resource azurerm_synapse_managed_private_endpoint.
 type SynapseManagedPrivateEndpoint struct {
-	Name  string
-	Args  SynapseManagedPrivateEndpointArgs
-	state *synapseManagedPrivateEndpointState
+	Name      string
+	Args      SynapseManagedPrivateEndpointArgs
+	state     *synapseManagedPrivateEndpointState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SynapseManagedPrivateEndpoint].
 func (smpe *SynapseManagedPrivateEndpoint) Type() string {
 	return "azurerm_synapse_managed_private_endpoint"
 }
 
+// LocalName returns the local name for [SynapseManagedPrivateEndpoint].
 func (smpe *SynapseManagedPrivateEndpoint) LocalName() string {
 	return smpe.Name
 }
 
+// Configuration returns the configuration (args) for [SynapseManagedPrivateEndpoint].
 func (smpe *SynapseManagedPrivateEndpoint) Configuration() interface{} {
 	return smpe.Args
 }
 
+// DependOn is used for other resources to depend on [SynapseManagedPrivateEndpoint].
+func (smpe *SynapseManagedPrivateEndpoint) DependOn() terra.Reference {
+	return terra.ReferenceResource(smpe)
+}
+
+// Dependencies returns the list of resources [SynapseManagedPrivateEndpoint] depends_on.
+func (smpe *SynapseManagedPrivateEndpoint) Dependencies() terra.Dependencies {
+	return smpe.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SynapseManagedPrivateEndpoint].
+func (smpe *SynapseManagedPrivateEndpoint) LifecycleManagement() *terra.Lifecycle {
+	return smpe.Lifecycle
+}
+
+// Attributes returns the attributes for [SynapseManagedPrivateEndpoint].
 func (smpe *SynapseManagedPrivateEndpoint) Attributes() synapseManagedPrivateEndpointAttributes {
 	return synapseManagedPrivateEndpointAttributes{ref: terra.ReferenceResource(smpe)}
 }
 
+// ImportState imports the given attribute values into [SynapseManagedPrivateEndpoint]'s state.
 func (smpe *SynapseManagedPrivateEndpoint) ImportState(av io.Reader) error {
 	smpe.state = &synapseManagedPrivateEndpointState{}
 	if err := json.NewDecoder(av).Decode(smpe.state); err != nil {
@@ -49,10 +73,12 @@ func (smpe *SynapseManagedPrivateEndpoint) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SynapseManagedPrivateEndpoint] has state.
 func (smpe *SynapseManagedPrivateEndpoint) State() (*synapseManagedPrivateEndpointState, bool) {
 	return smpe.state, smpe.state != nil
 }
 
+// StateMust returns the state for [SynapseManagedPrivateEndpoint]. Panics if the state is nil.
 func (smpe *SynapseManagedPrivateEndpoint) StateMust() *synapseManagedPrivateEndpointState {
 	if smpe.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", smpe.Type(), smpe.LocalName()))
@@ -60,10 +86,7 @@ func (smpe *SynapseManagedPrivateEndpoint) StateMust() *synapseManagedPrivateEnd
 	return smpe.state
 }
 
-func (smpe *SynapseManagedPrivateEndpoint) DependOn() terra.Reference {
-	return terra.ReferenceResource(smpe)
-}
-
+// SynapseManagedPrivateEndpointArgs contains the configurations for azurerm_synapse_managed_private_endpoint.
 type SynapseManagedPrivateEndpointArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,35 +100,38 @@ type SynapseManagedPrivateEndpointArgs struct {
 	TargetResourceId terra.StringValue `hcl:"target_resource_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *synapsemanagedprivateendpoint.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SynapseManagedPrivateEndpoint depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type synapseManagedPrivateEndpointAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_synapse_managed_private_endpoint.
 func (smpe synapseManagedPrivateEndpointAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(smpe.ref.Append("id"))
+	return terra.ReferenceAsString(smpe.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_synapse_managed_private_endpoint.
 func (smpe synapseManagedPrivateEndpointAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(smpe.ref.Append("name"))
+	return terra.ReferenceAsString(smpe.ref.Append("name"))
 }
 
+// SubresourceName returns a reference to field subresource_name of azurerm_synapse_managed_private_endpoint.
 func (smpe synapseManagedPrivateEndpointAttributes) SubresourceName() terra.StringValue {
-	return terra.ReferenceString(smpe.ref.Append("subresource_name"))
+	return terra.ReferenceAsString(smpe.ref.Append("subresource_name"))
 }
 
+// SynapseWorkspaceId returns a reference to field synapse_workspace_id of azurerm_synapse_managed_private_endpoint.
 func (smpe synapseManagedPrivateEndpointAttributes) SynapseWorkspaceId() terra.StringValue {
-	return terra.ReferenceString(smpe.ref.Append("synapse_workspace_id"))
+	return terra.ReferenceAsString(smpe.ref.Append("synapse_workspace_id"))
 }
 
+// TargetResourceId returns a reference to field target_resource_id of azurerm_synapse_managed_private_endpoint.
 func (smpe synapseManagedPrivateEndpointAttributes) TargetResourceId() terra.StringValue {
-	return terra.ReferenceString(smpe.ref.Append("target_resource_id"))
+	return terra.ReferenceAsString(smpe.ref.Append("target_resource_id"))
 }
 
 func (smpe synapseManagedPrivateEndpointAttributes) Timeouts() synapsemanagedprivateendpoint.TimeoutsAttributes {
-	return terra.ReferenceSingle[synapsemanagedprivateendpoint.TimeoutsAttributes](smpe.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[synapsemanagedprivateendpoint.TimeoutsAttributes](smpe.ref.Append("timeouts"))
 }
 
 type synapseManagedPrivateEndpointState struct {

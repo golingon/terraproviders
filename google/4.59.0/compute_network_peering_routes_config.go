@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeNetworkPeeringRoutesConfig creates a new instance of [ComputeNetworkPeeringRoutesConfig].
 func NewComputeNetworkPeeringRoutesConfig(name string, args ComputeNetworkPeeringRoutesConfigArgs) *ComputeNetworkPeeringRoutesConfig {
 	return &ComputeNetworkPeeringRoutesConfig{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeNetworkPeeringRoutesConfig(name string, args ComputeNetworkPeerin
 
 var _ terra.Resource = (*ComputeNetworkPeeringRoutesConfig)(nil)
 
+// ComputeNetworkPeeringRoutesConfig represents the Terraform resource google_compute_network_peering_routes_config.
 type ComputeNetworkPeeringRoutesConfig struct {
-	Name  string
-	Args  ComputeNetworkPeeringRoutesConfigArgs
-	state *computeNetworkPeeringRoutesConfigState
+	Name      string
+	Args      ComputeNetworkPeeringRoutesConfigArgs
+	state     *computeNetworkPeeringRoutesConfigState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeNetworkPeeringRoutesConfig].
 func (cnprc *ComputeNetworkPeeringRoutesConfig) Type() string {
 	return "google_compute_network_peering_routes_config"
 }
 
+// LocalName returns the local name for [ComputeNetworkPeeringRoutesConfig].
 func (cnprc *ComputeNetworkPeeringRoutesConfig) LocalName() string {
 	return cnprc.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeNetworkPeeringRoutesConfig].
 func (cnprc *ComputeNetworkPeeringRoutesConfig) Configuration() interface{} {
 	return cnprc.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeNetworkPeeringRoutesConfig].
+func (cnprc *ComputeNetworkPeeringRoutesConfig) DependOn() terra.Reference {
+	return terra.ReferenceResource(cnprc)
+}
+
+// Dependencies returns the list of resources [ComputeNetworkPeeringRoutesConfig] depends_on.
+func (cnprc *ComputeNetworkPeeringRoutesConfig) Dependencies() terra.Dependencies {
+	return cnprc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeNetworkPeeringRoutesConfig].
+func (cnprc *ComputeNetworkPeeringRoutesConfig) LifecycleManagement() *terra.Lifecycle {
+	return cnprc.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeNetworkPeeringRoutesConfig].
 func (cnprc *ComputeNetworkPeeringRoutesConfig) Attributes() computeNetworkPeeringRoutesConfigAttributes {
 	return computeNetworkPeeringRoutesConfigAttributes{ref: terra.ReferenceResource(cnprc)}
 }
 
+// ImportState imports the given attribute values into [ComputeNetworkPeeringRoutesConfig]'s state.
 func (cnprc *ComputeNetworkPeeringRoutesConfig) ImportState(av io.Reader) error {
 	cnprc.state = &computeNetworkPeeringRoutesConfigState{}
 	if err := json.NewDecoder(av).Decode(cnprc.state); err != nil {
@@ -49,10 +73,12 @@ func (cnprc *ComputeNetworkPeeringRoutesConfig) ImportState(av io.Reader) error 
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeNetworkPeeringRoutesConfig] has state.
 func (cnprc *ComputeNetworkPeeringRoutesConfig) State() (*computeNetworkPeeringRoutesConfigState, bool) {
 	return cnprc.state, cnprc.state != nil
 }
 
+// StateMust returns the state for [ComputeNetworkPeeringRoutesConfig]. Panics if the state is nil.
 func (cnprc *ComputeNetworkPeeringRoutesConfig) StateMust() *computeNetworkPeeringRoutesConfigState {
 	if cnprc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cnprc.Type(), cnprc.LocalName()))
@@ -60,10 +86,7 @@ func (cnprc *ComputeNetworkPeeringRoutesConfig) StateMust() *computeNetworkPeeri
 	return cnprc.state
 }
 
-func (cnprc *ComputeNetworkPeeringRoutesConfig) DependOn() terra.Reference {
-	return terra.ReferenceResource(cnprc)
-}
-
+// ComputeNetworkPeeringRoutesConfigArgs contains the configurations for google_compute_network_peering_routes_config.
 type ComputeNetworkPeeringRoutesConfigArgs struct {
 	// ExportCustomRoutes: bool, required
 	ExportCustomRoutes terra.BoolValue `hcl:"export_custom_routes,attr" validate:"required"`
@@ -79,39 +102,43 @@ type ComputeNetworkPeeringRoutesConfigArgs struct {
 	Project terra.StringValue `hcl:"project,attr"`
 	// Timeouts: optional
 	Timeouts *computenetworkpeeringroutesconfig.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeNetworkPeeringRoutesConfig depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeNetworkPeeringRoutesConfigAttributes struct {
 	ref terra.Reference
 }
 
+// ExportCustomRoutes returns a reference to field export_custom_routes of google_compute_network_peering_routes_config.
 func (cnprc computeNetworkPeeringRoutesConfigAttributes) ExportCustomRoutes() terra.BoolValue {
-	return terra.ReferenceBool(cnprc.ref.Append("export_custom_routes"))
+	return terra.ReferenceAsBool(cnprc.ref.Append("export_custom_routes"))
 }
 
+// Id returns a reference to field id of google_compute_network_peering_routes_config.
 func (cnprc computeNetworkPeeringRoutesConfigAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cnprc.ref.Append("id"))
+	return terra.ReferenceAsString(cnprc.ref.Append("id"))
 }
 
+// ImportCustomRoutes returns a reference to field import_custom_routes of google_compute_network_peering_routes_config.
 func (cnprc computeNetworkPeeringRoutesConfigAttributes) ImportCustomRoutes() terra.BoolValue {
-	return terra.ReferenceBool(cnprc.ref.Append("import_custom_routes"))
+	return terra.ReferenceAsBool(cnprc.ref.Append("import_custom_routes"))
 }
 
+// Network returns a reference to field network of google_compute_network_peering_routes_config.
 func (cnprc computeNetworkPeeringRoutesConfigAttributes) Network() terra.StringValue {
-	return terra.ReferenceString(cnprc.ref.Append("network"))
+	return terra.ReferenceAsString(cnprc.ref.Append("network"))
 }
 
+// Peering returns a reference to field peering of google_compute_network_peering_routes_config.
 func (cnprc computeNetworkPeeringRoutesConfigAttributes) Peering() terra.StringValue {
-	return terra.ReferenceString(cnprc.ref.Append("peering"))
+	return terra.ReferenceAsString(cnprc.ref.Append("peering"))
 }
 
+// Project returns a reference to field project of google_compute_network_peering_routes_config.
 func (cnprc computeNetworkPeeringRoutesConfigAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cnprc.ref.Append("project"))
+	return terra.ReferenceAsString(cnprc.ref.Append("project"))
 }
 
 func (cnprc computeNetworkPeeringRoutesConfigAttributes) Timeouts() computenetworkpeeringroutesconfig.TimeoutsAttributes {
-	return terra.ReferenceSingle[computenetworkpeeringroutesconfig.TimeoutsAttributes](cnprc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computenetworkpeeringroutesconfig.TimeoutsAttributes](cnprc.ref.Append("timeouts"))
 }
 
 type computeNetworkPeeringRoutesConfigState struct {

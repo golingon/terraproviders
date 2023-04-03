@@ -62,7 +62,7 @@ func (cc ContentConfigAttributes) InternalWithRef(ref terra.Reference) ContentCo
 	return ContentConfigAttributes{ref: ref}
 }
 
-func (cc ContentConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (cc ContentConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -86,7 +86,7 @@ func (ccp ContentConfigPermissionsAttributes) InternalWithRef(ref terra.Referenc
 	return ContentConfigPermissionsAttributes{ref: ref}
 }
 
-func (ccp ContentConfigPermissionsAttributes) InternalTokens() hclwrite.Tokens {
+func (ccp ContentConfigPermissionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ccp.ref.InternalTokens()
 }
 
@@ -114,7 +114,7 @@ func (n NotificationsAttributes) InternalWithRef(ref terra.Reference) Notificati
 	return NotificationsAttributes{ref: ref}
 }
 
-func (n NotificationsAttributes) InternalTokens() hclwrite.Tokens {
+func (n NotificationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return n.ref.InternalTokens()
 }
 
@@ -146,7 +146,7 @@ func (tc ThumbnailConfigAttributes) InternalWithRef(ref terra.Reference) Thumbna
 	return ThumbnailConfigAttributes{ref: ref}
 }
 
-func (tc ThumbnailConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (tc ThumbnailConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tc.ref.InternalTokens()
 }
 
@@ -170,7 +170,7 @@ func (tcp ThumbnailConfigPermissionsAttributes) InternalWithRef(ref terra.Refere
 	return ThumbnailConfigPermissionsAttributes{ref: ref}
 }
 
-func (tcp ThumbnailConfigPermissionsAttributes) InternalTokens() hclwrite.Tokens {
+func (tcp ThumbnailConfigPermissionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tcp.ref.InternalTokens()
 }
 

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBotServiceAzureBot creates a new instance of [BotServiceAzureBot].
 func NewBotServiceAzureBot(name string, args BotServiceAzureBotArgs) *BotServiceAzureBot {
 	return &BotServiceAzureBot{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBotServiceAzureBot(name string, args BotServiceAzureBotArgs) *BotService
 
 var _ terra.Resource = (*BotServiceAzureBot)(nil)
 
+// BotServiceAzureBot represents the Terraform resource azurerm_bot_service_azure_bot.
 type BotServiceAzureBot struct {
-	Name  string
-	Args  BotServiceAzureBotArgs
-	state *botServiceAzureBotState
+	Name      string
+	Args      BotServiceAzureBotArgs
+	state     *botServiceAzureBotState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BotServiceAzureBot].
 func (bsab *BotServiceAzureBot) Type() string {
 	return "azurerm_bot_service_azure_bot"
 }
 
+// LocalName returns the local name for [BotServiceAzureBot].
 func (bsab *BotServiceAzureBot) LocalName() string {
 	return bsab.Name
 }
 
+// Configuration returns the configuration (args) for [BotServiceAzureBot].
 func (bsab *BotServiceAzureBot) Configuration() interface{} {
 	return bsab.Args
 }
 
+// DependOn is used for other resources to depend on [BotServiceAzureBot].
+func (bsab *BotServiceAzureBot) DependOn() terra.Reference {
+	return terra.ReferenceResource(bsab)
+}
+
+// Dependencies returns the list of resources [BotServiceAzureBot] depends_on.
+func (bsab *BotServiceAzureBot) Dependencies() terra.Dependencies {
+	return bsab.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BotServiceAzureBot].
+func (bsab *BotServiceAzureBot) LifecycleManagement() *terra.Lifecycle {
+	return bsab.Lifecycle
+}
+
+// Attributes returns the attributes for [BotServiceAzureBot].
 func (bsab *BotServiceAzureBot) Attributes() botServiceAzureBotAttributes {
 	return botServiceAzureBotAttributes{ref: terra.ReferenceResource(bsab)}
 }
 
+// ImportState imports the given attribute values into [BotServiceAzureBot]'s state.
 func (bsab *BotServiceAzureBot) ImportState(av io.Reader) error {
 	bsab.state = &botServiceAzureBotState{}
 	if err := json.NewDecoder(av).Decode(bsab.state); err != nil {
@@ -49,10 +73,12 @@ func (bsab *BotServiceAzureBot) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BotServiceAzureBot] has state.
 func (bsab *BotServiceAzureBot) State() (*botServiceAzureBotState, bool) {
 	return bsab.state, bsab.state != nil
 }
 
+// StateMust returns the state for [BotServiceAzureBot]. Panics if the state is nil.
 func (bsab *BotServiceAzureBot) StateMust() *botServiceAzureBotState {
 	if bsab.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bsab.Type(), bsab.LocalName()))
@@ -60,10 +86,7 @@ func (bsab *BotServiceAzureBot) StateMust() *botServiceAzureBotState {
 	return bsab.state
 }
 
-func (bsab *BotServiceAzureBot) DependOn() terra.Reference {
-	return terra.ReferenceResource(bsab)
-}
-
+// BotServiceAzureBotArgs contains the configurations for azurerm_bot_service_azure_bot.
 type BotServiceAzureBotArgs struct {
 	// DeveloperAppInsightsApiKey: string, optional
 	DeveloperAppInsightsApiKey terra.StringValue `hcl:"developer_app_insights_api_key,attr"`
@@ -103,87 +126,103 @@ type BotServiceAzureBotArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// Timeouts: optional
 	Timeouts *botserviceazurebot.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that BotServiceAzureBot depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type botServiceAzureBotAttributes struct {
 	ref terra.Reference
 }
 
+// DeveloperAppInsightsApiKey returns a reference to field developer_app_insights_api_key of azurerm_bot_service_azure_bot.
 func (bsab botServiceAzureBotAttributes) DeveloperAppInsightsApiKey() terra.StringValue {
-	return terra.ReferenceString(bsab.ref.Append("developer_app_insights_api_key"))
+	return terra.ReferenceAsString(bsab.ref.Append("developer_app_insights_api_key"))
 }
 
+// DeveloperAppInsightsApplicationId returns a reference to field developer_app_insights_application_id of azurerm_bot_service_azure_bot.
 func (bsab botServiceAzureBotAttributes) DeveloperAppInsightsApplicationId() terra.StringValue {
-	return terra.ReferenceString(bsab.ref.Append("developer_app_insights_application_id"))
+	return terra.ReferenceAsString(bsab.ref.Append("developer_app_insights_application_id"))
 }
 
+// DeveloperAppInsightsKey returns a reference to field developer_app_insights_key of azurerm_bot_service_azure_bot.
 func (bsab botServiceAzureBotAttributes) DeveloperAppInsightsKey() terra.StringValue {
-	return terra.ReferenceString(bsab.ref.Append("developer_app_insights_key"))
+	return terra.ReferenceAsString(bsab.ref.Append("developer_app_insights_key"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_bot_service_azure_bot.
 func (bsab botServiceAzureBotAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(bsab.ref.Append("display_name"))
+	return terra.ReferenceAsString(bsab.ref.Append("display_name"))
 }
 
+// Endpoint returns a reference to field endpoint of azurerm_bot_service_azure_bot.
 func (bsab botServiceAzureBotAttributes) Endpoint() terra.StringValue {
-	return terra.ReferenceString(bsab.ref.Append("endpoint"))
+	return terra.ReferenceAsString(bsab.ref.Append("endpoint"))
 }
 
+// Id returns a reference to field id of azurerm_bot_service_azure_bot.
 func (bsab botServiceAzureBotAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bsab.ref.Append("id"))
+	return terra.ReferenceAsString(bsab.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_bot_service_azure_bot.
 func (bsab botServiceAzureBotAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(bsab.ref.Append("location"))
+	return terra.ReferenceAsString(bsab.ref.Append("location"))
 }
 
+// LuisAppIds returns a reference to field luis_app_ids of azurerm_bot_service_azure_bot.
 func (bsab botServiceAzureBotAttributes) LuisAppIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](bsab.ref.Append("luis_app_ids"))
+	return terra.ReferenceAsList[terra.StringValue](bsab.ref.Append("luis_app_ids"))
 }
 
+// LuisKey returns a reference to field luis_key of azurerm_bot_service_azure_bot.
 func (bsab botServiceAzureBotAttributes) LuisKey() terra.StringValue {
-	return terra.ReferenceString(bsab.ref.Append("luis_key"))
+	return terra.ReferenceAsString(bsab.ref.Append("luis_key"))
 }
 
+// MicrosoftAppId returns a reference to field microsoft_app_id of azurerm_bot_service_azure_bot.
 func (bsab botServiceAzureBotAttributes) MicrosoftAppId() terra.StringValue {
-	return terra.ReferenceString(bsab.ref.Append("microsoft_app_id"))
+	return terra.ReferenceAsString(bsab.ref.Append("microsoft_app_id"))
 }
 
+// MicrosoftAppMsiId returns a reference to field microsoft_app_msi_id of azurerm_bot_service_azure_bot.
 func (bsab botServiceAzureBotAttributes) MicrosoftAppMsiId() terra.StringValue {
-	return terra.ReferenceString(bsab.ref.Append("microsoft_app_msi_id"))
+	return terra.ReferenceAsString(bsab.ref.Append("microsoft_app_msi_id"))
 }
 
+// MicrosoftAppTenantId returns a reference to field microsoft_app_tenant_id of azurerm_bot_service_azure_bot.
 func (bsab botServiceAzureBotAttributes) MicrosoftAppTenantId() terra.StringValue {
-	return terra.ReferenceString(bsab.ref.Append("microsoft_app_tenant_id"))
+	return terra.ReferenceAsString(bsab.ref.Append("microsoft_app_tenant_id"))
 }
 
+// MicrosoftAppType returns a reference to field microsoft_app_type of azurerm_bot_service_azure_bot.
 func (bsab botServiceAzureBotAttributes) MicrosoftAppType() terra.StringValue {
-	return terra.ReferenceString(bsab.ref.Append("microsoft_app_type"))
+	return terra.ReferenceAsString(bsab.ref.Append("microsoft_app_type"))
 }
 
+// Name returns a reference to field name of azurerm_bot_service_azure_bot.
 func (bsab botServiceAzureBotAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(bsab.ref.Append("name"))
+	return terra.ReferenceAsString(bsab.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_bot_service_azure_bot.
 func (bsab botServiceAzureBotAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(bsab.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(bsab.ref.Append("resource_group_name"))
 }
 
+// Sku returns a reference to field sku of azurerm_bot_service_azure_bot.
 func (bsab botServiceAzureBotAttributes) Sku() terra.StringValue {
-	return terra.ReferenceString(bsab.ref.Append("sku"))
+	return terra.ReferenceAsString(bsab.ref.Append("sku"))
 }
 
+// StreamingEndpointEnabled returns a reference to field streaming_endpoint_enabled of azurerm_bot_service_azure_bot.
 func (bsab botServiceAzureBotAttributes) StreamingEndpointEnabled() terra.BoolValue {
-	return terra.ReferenceBool(bsab.ref.Append("streaming_endpoint_enabled"))
+	return terra.ReferenceAsBool(bsab.ref.Append("streaming_endpoint_enabled"))
 }
 
+// Tags returns a reference to field tags of azurerm_bot_service_azure_bot.
 func (bsab botServiceAzureBotAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bsab.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](bsab.ref.Append("tags"))
 }
 
 func (bsab botServiceAzureBotAttributes) Timeouts() botserviceazurebot.TimeoutsAttributes {
-	return terra.ReferenceSingle[botserviceazurebot.TimeoutsAttributes](bsab.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[botserviceazurebot.TimeoutsAttributes](bsab.ref.Append("timeouts"))
 }
 
 type botServiceAzureBotState struct {

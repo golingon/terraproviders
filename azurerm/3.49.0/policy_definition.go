@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewPolicyDefinition creates a new instance of [PolicyDefinition].
 func NewPolicyDefinition(name string, args PolicyDefinitionArgs) *PolicyDefinition {
 	return &PolicyDefinition{
 		Args: args,
@@ -19,28 +20,51 @@ func NewPolicyDefinition(name string, args PolicyDefinitionArgs) *PolicyDefiniti
 
 var _ terra.Resource = (*PolicyDefinition)(nil)
 
+// PolicyDefinition represents the Terraform resource azurerm_policy_definition.
 type PolicyDefinition struct {
-	Name  string
-	Args  PolicyDefinitionArgs
-	state *policyDefinitionState
+	Name      string
+	Args      PolicyDefinitionArgs
+	state     *policyDefinitionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PolicyDefinition].
 func (pd *PolicyDefinition) Type() string {
 	return "azurerm_policy_definition"
 }
 
+// LocalName returns the local name for [PolicyDefinition].
 func (pd *PolicyDefinition) LocalName() string {
 	return pd.Name
 }
 
+// Configuration returns the configuration (args) for [PolicyDefinition].
 func (pd *PolicyDefinition) Configuration() interface{} {
 	return pd.Args
 }
 
+// DependOn is used for other resources to depend on [PolicyDefinition].
+func (pd *PolicyDefinition) DependOn() terra.Reference {
+	return terra.ReferenceResource(pd)
+}
+
+// Dependencies returns the list of resources [PolicyDefinition] depends_on.
+func (pd *PolicyDefinition) Dependencies() terra.Dependencies {
+	return pd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PolicyDefinition].
+func (pd *PolicyDefinition) LifecycleManagement() *terra.Lifecycle {
+	return pd.Lifecycle
+}
+
+// Attributes returns the attributes for [PolicyDefinition].
 func (pd *PolicyDefinition) Attributes() policyDefinitionAttributes {
 	return policyDefinitionAttributes{ref: terra.ReferenceResource(pd)}
 }
 
+// ImportState imports the given attribute values into [PolicyDefinition]'s state.
 func (pd *PolicyDefinition) ImportState(av io.Reader) error {
 	pd.state = &policyDefinitionState{}
 	if err := json.NewDecoder(av).Decode(pd.state); err != nil {
@@ -49,10 +73,12 @@ func (pd *PolicyDefinition) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PolicyDefinition] has state.
 func (pd *PolicyDefinition) State() (*policyDefinitionState, bool) {
 	return pd.state, pd.state != nil
 }
 
+// StateMust returns the state for [PolicyDefinition]. Panics if the state is nil.
 func (pd *PolicyDefinition) StateMust() *policyDefinitionState {
 	if pd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pd.Type(), pd.LocalName()))
@@ -60,10 +86,7 @@ func (pd *PolicyDefinition) StateMust() *policyDefinitionState {
 	return pd.state
 }
 
-func (pd *PolicyDefinition) DependOn() terra.Reference {
-	return terra.ReferenceResource(pd)
-}
-
+// PolicyDefinitionArgs contains the configurations for azurerm_policy_definition.
 type PolicyDefinitionArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -87,59 +110,68 @@ type PolicyDefinitionArgs struct {
 	PolicyType terra.StringValue `hcl:"policy_type,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *policydefinition.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that PolicyDefinition depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type policyDefinitionAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of azurerm_policy_definition.
 func (pd policyDefinitionAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(pd.ref.Append("description"))
+	return terra.ReferenceAsString(pd.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_policy_definition.
 func (pd policyDefinitionAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(pd.ref.Append("display_name"))
+	return terra.ReferenceAsString(pd.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of azurerm_policy_definition.
 func (pd policyDefinitionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pd.ref.Append("id"))
+	return terra.ReferenceAsString(pd.ref.Append("id"))
 }
 
+// ManagementGroupId returns a reference to field management_group_id of azurerm_policy_definition.
 func (pd policyDefinitionAttributes) ManagementGroupId() terra.StringValue {
-	return terra.ReferenceString(pd.ref.Append("management_group_id"))
+	return terra.ReferenceAsString(pd.ref.Append("management_group_id"))
 }
 
+// Metadata returns a reference to field metadata of azurerm_policy_definition.
 func (pd policyDefinitionAttributes) Metadata() terra.StringValue {
-	return terra.ReferenceString(pd.ref.Append("metadata"))
+	return terra.ReferenceAsString(pd.ref.Append("metadata"))
 }
 
+// Mode returns a reference to field mode of azurerm_policy_definition.
 func (pd policyDefinitionAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(pd.ref.Append("mode"))
+	return terra.ReferenceAsString(pd.ref.Append("mode"))
 }
 
+// Name returns a reference to field name of azurerm_policy_definition.
 func (pd policyDefinitionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pd.ref.Append("name"))
+	return terra.ReferenceAsString(pd.ref.Append("name"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_policy_definition.
 func (pd policyDefinitionAttributes) Parameters() terra.StringValue {
-	return terra.ReferenceString(pd.ref.Append("parameters"))
+	return terra.ReferenceAsString(pd.ref.Append("parameters"))
 }
 
+// PolicyRule returns a reference to field policy_rule of azurerm_policy_definition.
 func (pd policyDefinitionAttributes) PolicyRule() terra.StringValue {
-	return terra.ReferenceString(pd.ref.Append("policy_rule"))
+	return terra.ReferenceAsString(pd.ref.Append("policy_rule"))
 }
 
+// PolicyType returns a reference to field policy_type of azurerm_policy_definition.
 func (pd policyDefinitionAttributes) PolicyType() terra.StringValue {
-	return terra.ReferenceString(pd.ref.Append("policy_type"))
+	return terra.ReferenceAsString(pd.ref.Append("policy_type"))
 }
 
+// RoleDefinitionIds returns a reference to field role_definition_ids of azurerm_policy_definition.
 func (pd policyDefinitionAttributes) RoleDefinitionIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](pd.ref.Append("role_definition_ids"))
+	return terra.ReferenceAsList[terra.StringValue](pd.ref.Append("role_definition_ids"))
 }
 
 func (pd policyDefinitionAttributes) Timeouts() policydefinition.TimeoutsAttributes {
-	return terra.ReferenceSingle[policydefinition.TimeoutsAttributes](pd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[policydefinition.TimeoutsAttributes](pd.ref.Append("timeouts"))
 }
 
 type policyDefinitionState struct {

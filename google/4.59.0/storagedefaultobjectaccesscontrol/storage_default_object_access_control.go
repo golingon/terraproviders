@@ -22,52 +22,52 @@ type ProjectTeamAttributes struct {
 	ref terra.Reference
 }
 
-func (pt ProjectTeamAttributes) InternalRef() terra.Reference {
-	return pt.ref
+func (pt ProjectTeamAttributes) InternalRef() (terra.Reference, error) {
+	return pt.ref, nil
 }
 
 func (pt ProjectTeamAttributes) InternalWithRef(ref terra.Reference) ProjectTeamAttributes {
 	return ProjectTeamAttributes{ref: ref}
 }
 
-func (pt ProjectTeamAttributes) InternalTokens() hclwrite.Tokens {
+func (pt ProjectTeamAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pt.ref.InternalTokens()
 }
 
 func (pt ProjectTeamAttributes) ProjectNumber() terra.StringValue {
-	return terra.ReferenceString(pt.ref.Append("project_number"))
+	return terra.ReferenceAsString(pt.ref.Append("project_number"))
 }
 
 func (pt ProjectTeamAttributes) Team() terra.StringValue {
-	return terra.ReferenceString(pt.ref.Append("team"))
+	return terra.ReferenceAsString(pt.ref.Append("team"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ProjectTeamState struct {

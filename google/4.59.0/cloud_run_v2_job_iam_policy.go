@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCloudRunV2JobIamPolicy creates a new instance of [CloudRunV2JobIamPolicy].
 func NewCloudRunV2JobIamPolicy(name string, args CloudRunV2JobIamPolicyArgs) *CloudRunV2JobIamPolicy {
 	return &CloudRunV2JobIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCloudRunV2JobIamPolicy(name string, args CloudRunV2JobIamPolicyArgs) *Cl
 
 var _ terra.Resource = (*CloudRunV2JobIamPolicy)(nil)
 
+// CloudRunV2JobIamPolicy represents the Terraform resource google_cloud_run_v2_job_iam_policy.
 type CloudRunV2JobIamPolicy struct {
-	Name  string
-	Args  CloudRunV2JobIamPolicyArgs
-	state *cloudRunV2JobIamPolicyState
+	Name      string
+	Args      CloudRunV2JobIamPolicyArgs
+	state     *cloudRunV2JobIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudRunV2JobIamPolicy].
 func (crvjip *CloudRunV2JobIamPolicy) Type() string {
 	return "google_cloud_run_v2_job_iam_policy"
 }
 
+// LocalName returns the local name for [CloudRunV2JobIamPolicy].
 func (crvjip *CloudRunV2JobIamPolicy) LocalName() string {
 	return crvjip.Name
 }
 
+// Configuration returns the configuration (args) for [CloudRunV2JobIamPolicy].
 func (crvjip *CloudRunV2JobIamPolicy) Configuration() interface{} {
 	return crvjip.Args
 }
 
+// DependOn is used for other resources to depend on [CloudRunV2JobIamPolicy].
+func (crvjip *CloudRunV2JobIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(crvjip)
+}
+
+// Dependencies returns the list of resources [CloudRunV2JobIamPolicy] depends_on.
+func (crvjip *CloudRunV2JobIamPolicy) Dependencies() terra.Dependencies {
+	return crvjip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudRunV2JobIamPolicy].
+func (crvjip *CloudRunV2JobIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return crvjip.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudRunV2JobIamPolicy].
 func (crvjip *CloudRunV2JobIamPolicy) Attributes() cloudRunV2JobIamPolicyAttributes {
 	return cloudRunV2JobIamPolicyAttributes{ref: terra.ReferenceResource(crvjip)}
 }
 
+// ImportState imports the given attribute values into [CloudRunV2JobIamPolicy]'s state.
 func (crvjip *CloudRunV2JobIamPolicy) ImportState(av io.Reader) error {
 	crvjip.state = &cloudRunV2JobIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(crvjip.state); err != nil {
@@ -48,10 +72,12 @@ func (crvjip *CloudRunV2JobIamPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudRunV2JobIamPolicy] has state.
 func (crvjip *CloudRunV2JobIamPolicy) State() (*cloudRunV2JobIamPolicyState, bool) {
 	return crvjip.state, crvjip.state != nil
 }
 
+// StateMust returns the state for [CloudRunV2JobIamPolicy]. Panics if the state is nil.
 func (crvjip *CloudRunV2JobIamPolicy) StateMust() *cloudRunV2JobIamPolicyState {
 	if crvjip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", crvjip.Type(), crvjip.LocalName()))
@@ -59,10 +85,7 @@ func (crvjip *CloudRunV2JobIamPolicy) StateMust() *cloudRunV2JobIamPolicyState {
 	return crvjip.state
 }
 
-func (crvjip *CloudRunV2JobIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(crvjip)
-}
-
+// CloudRunV2JobIamPolicyArgs contains the configurations for google_cloud_run_v2_job_iam_policy.
 type CloudRunV2JobIamPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -74,35 +97,39 @@ type CloudRunV2JobIamPolicyArgs struct {
 	PolicyData terra.StringValue `hcl:"policy_data,attr" validate:"required"`
 	// Project: string, optional
 	Project terra.StringValue `hcl:"project,attr"`
-	// DependsOn contains resources that CloudRunV2JobIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudRunV2JobIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_cloud_run_v2_job_iam_policy.
 func (crvjip cloudRunV2JobIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(crvjip.ref.Append("etag"))
+	return terra.ReferenceAsString(crvjip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_cloud_run_v2_job_iam_policy.
 func (crvjip cloudRunV2JobIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(crvjip.ref.Append("id"))
+	return terra.ReferenceAsString(crvjip.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_cloud_run_v2_job_iam_policy.
 func (crvjip cloudRunV2JobIamPolicyAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(crvjip.ref.Append("location"))
+	return terra.ReferenceAsString(crvjip.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_cloud_run_v2_job_iam_policy.
 func (crvjip cloudRunV2JobIamPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(crvjip.ref.Append("name"))
+	return terra.ReferenceAsString(crvjip.ref.Append("name"))
 }
 
+// PolicyData returns a reference to field policy_data of google_cloud_run_v2_job_iam_policy.
 func (crvjip cloudRunV2JobIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(crvjip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(crvjip.ref.Append("policy_data"))
 }
 
+// Project returns a reference to field project of google_cloud_run_v2_job_iam_policy.
 func (crvjip cloudRunV2JobIamPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(crvjip.ref.Append("project"))
+	return terra.ReferenceAsString(crvjip.ref.Append("project"))
 }
 
 type cloudRunV2JobIamPolicyState struct {

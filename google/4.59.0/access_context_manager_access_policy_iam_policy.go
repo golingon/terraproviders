@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewAccessContextManagerAccessPolicyIamPolicy creates a new instance of [AccessContextManagerAccessPolicyIamPolicy].
 func NewAccessContextManagerAccessPolicyIamPolicy(name string, args AccessContextManagerAccessPolicyIamPolicyArgs) *AccessContextManagerAccessPolicyIamPolicy {
 	return &AccessContextManagerAccessPolicyIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewAccessContextManagerAccessPolicyIamPolicy(name string, args AccessContex
 
 var _ terra.Resource = (*AccessContextManagerAccessPolicyIamPolicy)(nil)
 
+// AccessContextManagerAccessPolicyIamPolicy represents the Terraform resource google_access_context_manager_access_policy_iam_policy.
 type AccessContextManagerAccessPolicyIamPolicy struct {
-	Name  string
-	Args  AccessContextManagerAccessPolicyIamPolicyArgs
-	state *accessContextManagerAccessPolicyIamPolicyState
+	Name      string
+	Args      AccessContextManagerAccessPolicyIamPolicyArgs
+	state     *accessContextManagerAccessPolicyIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AccessContextManagerAccessPolicyIamPolicy].
 func (acmapip *AccessContextManagerAccessPolicyIamPolicy) Type() string {
 	return "google_access_context_manager_access_policy_iam_policy"
 }
 
+// LocalName returns the local name for [AccessContextManagerAccessPolicyIamPolicy].
 func (acmapip *AccessContextManagerAccessPolicyIamPolicy) LocalName() string {
 	return acmapip.Name
 }
 
+// Configuration returns the configuration (args) for [AccessContextManagerAccessPolicyIamPolicy].
 func (acmapip *AccessContextManagerAccessPolicyIamPolicy) Configuration() interface{} {
 	return acmapip.Args
 }
 
+// DependOn is used for other resources to depend on [AccessContextManagerAccessPolicyIamPolicy].
+func (acmapip *AccessContextManagerAccessPolicyIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(acmapip)
+}
+
+// Dependencies returns the list of resources [AccessContextManagerAccessPolicyIamPolicy] depends_on.
+func (acmapip *AccessContextManagerAccessPolicyIamPolicy) Dependencies() terra.Dependencies {
+	return acmapip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AccessContextManagerAccessPolicyIamPolicy].
+func (acmapip *AccessContextManagerAccessPolicyIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return acmapip.Lifecycle
+}
+
+// Attributes returns the attributes for [AccessContextManagerAccessPolicyIamPolicy].
 func (acmapip *AccessContextManagerAccessPolicyIamPolicy) Attributes() accessContextManagerAccessPolicyIamPolicyAttributes {
 	return accessContextManagerAccessPolicyIamPolicyAttributes{ref: terra.ReferenceResource(acmapip)}
 }
 
+// ImportState imports the given attribute values into [AccessContextManagerAccessPolicyIamPolicy]'s state.
 func (acmapip *AccessContextManagerAccessPolicyIamPolicy) ImportState(av io.Reader) error {
 	acmapip.state = &accessContextManagerAccessPolicyIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(acmapip.state); err != nil {
@@ -48,10 +72,12 @@ func (acmapip *AccessContextManagerAccessPolicyIamPolicy) ImportState(av io.Read
 	return nil
 }
 
+// State returns the state and a bool indicating if [AccessContextManagerAccessPolicyIamPolicy] has state.
 func (acmapip *AccessContextManagerAccessPolicyIamPolicy) State() (*accessContextManagerAccessPolicyIamPolicyState, bool) {
 	return acmapip.state, acmapip.state != nil
 }
 
+// StateMust returns the state for [AccessContextManagerAccessPolicyIamPolicy]. Panics if the state is nil.
 func (acmapip *AccessContextManagerAccessPolicyIamPolicy) StateMust() *accessContextManagerAccessPolicyIamPolicyState {
 	if acmapip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", acmapip.Type(), acmapip.LocalName()))
@@ -59,10 +85,7 @@ func (acmapip *AccessContextManagerAccessPolicyIamPolicy) StateMust() *accessCon
 	return acmapip.state
 }
 
-func (acmapip *AccessContextManagerAccessPolicyIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(acmapip)
-}
-
+// AccessContextManagerAccessPolicyIamPolicyArgs contains the configurations for google_access_context_manager_access_policy_iam_policy.
 type AccessContextManagerAccessPolicyIamPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,27 +93,29 @@ type AccessContextManagerAccessPolicyIamPolicyArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// PolicyData: string, required
 	PolicyData terra.StringValue `hcl:"policy_data,attr" validate:"required"`
-	// DependsOn contains resources that AccessContextManagerAccessPolicyIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type accessContextManagerAccessPolicyIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_access_context_manager_access_policy_iam_policy.
 func (acmapip accessContextManagerAccessPolicyIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(acmapip.ref.Append("etag"))
+	return terra.ReferenceAsString(acmapip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_access_context_manager_access_policy_iam_policy.
 func (acmapip accessContextManagerAccessPolicyIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(acmapip.ref.Append("id"))
+	return terra.ReferenceAsString(acmapip.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_access_context_manager_access_policy_iam_policy.
 func (acmapip accessContextManagerAccessPolicyIamPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(acmapip.ref.Append("name"))
+	return terra.ReferenceAsString(acmapip.ref.Append("name"))
 }
 
+// PolicyData returns a reference to field policy_data of google_access_context_manager_access_policy_iam_policy.
 func (acmapip accessContextManagerAccessPolicyIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(acmapip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(acmapip.ref.Append("policy_data"))
 }
 
 type accessContextManagerAccessPolicyIamPolicyState struct {

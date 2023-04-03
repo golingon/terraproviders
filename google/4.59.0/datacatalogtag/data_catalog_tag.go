@@ -35,76 +35,76 @@ type FieldsAttributes struct {
 	ref terra.Reference
 }
 
-func (f FieldsAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FieldsAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FieldsAttributes) InternalWithRef(ref terra.Reference) FieldsAttributes {
 	return FieldsAttributes{ref: ref}
 }
 
-func (f FieldsAttributes) InternalTokens() hclwrite.Tokens {
+func (f FieldsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
 func (f FieldsAttributes) BoolValue() terra.BoolValue {
-	return terra.ReferenceBool(f.ref.Append("bool_value"))
+	return terra.ReferenceAsBool(f.ref.Append("bool_value"))
 }
 
 func (f FieldsAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("display_name"))
+	return terra.ReferenceAsString(f.ref.Append("display_name"))
 }
 
 func (f FieldsAttributes) DoubleValue() terra.NumberValue {
-	return terra.ReferenceNumber(f.ref.Append("double_value"))
+	return terra.ReferenceAsNumber(f.ref.Append("double_value"))
 }
 
 func (f FieldsAttributes) EnumValue() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("enum_value"))
+	return terra.ReferenceAsString(f.ref.Append("enum_value"))
 }
 
 func (f FieldsAttributes) FieldName() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("field_name"))
+	return terra.ReferenceAsString(f.ref.Append("field_name"))
 }
 
 func (f FieldsAttributes) Order() terra.NumberValue {
-	return terra.ReferenceNumber(f.ref.Append("order"))
+	return terra.ReferenceAsNumber(f.ref.Append("order"))
 }
 
 func (f FieldsAttributes) StringValue() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("string_value"))
+	return terra.ReferenceAsString(f.ref.Append("string_value"))
 }
 
 func (f FieldsAttributes) TimestampValue() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("timestamp_value"))
+	return terra.ReferenceAsString(f.ref.Append("timestamp_value"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type FieldsState struct {

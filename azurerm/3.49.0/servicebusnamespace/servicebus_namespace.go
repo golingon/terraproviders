@@ -38,92 +38,92 @@ type CustomerManagedKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (cmk CustomerManagedKeyAttributes) InternalRef() terra.Reference {
-	return cmk.ref
+func (cmk CustomerManagedKeyAttributes) InternalRef() (terra.Reference, error) {
+	return cmk.ref, nil
 }
 
 func (cmk CustomerManagedKeyAttributes) InternalWithRef(ref terra.Reference) CustomerManagedKeyAttributes {
 	return CustomerManagedKeyAttributes{ref: ref}
 }
 
-func (cmk CustomerManagedKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (cmk CustomerManagedKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cmk.ref.InternalTokens()
 }
 
 func (cmk CustomerManagedKeyAttributes) IdentityId() terra.StringValue {
-	return terra.ReferenceString(cmk.ref.Append("identity_id"))
+	return terra.ReferenceAsString(cmk.ref.Append("identity_id"))
 }
 
 func (cmk CustomerManagedKeyAttributes) InfrastructureEncryptionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(cmk.ref.Append("infrastructure_encryption_enabled"))
+	return terra.ReferenceAsBool(cmk.ref.Append("infrastructure_encryption_enabled"))
 }
 
 func (cmk CustomerManagedKeyAttributes) KeyVaultKeyId() terra.StringValue {
-	return terra.ReferenceString(cmk.ref.Append("key_vault_key_id"))
+	return terra.ReferenceAsString(cmk.ref.Append("key_vault_key_id"))
 }
 
 type IdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (i IdentityAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IdentityAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IdentityAttributes) InternalWithRef(ref terra.Reference) IdentityAttributes {
 	return IdentityAttributes{ref: ref}
 }
 
-func (i IdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (i IdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IdentityAttributes) IdentityIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i.ref.Append("identity_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](i.ref.Append("identity_ids"))
 }
 
 func (i IdentityAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("principal_id"))
+	return terra.ReferenceAsString(i.ref.Append("principal_id"))
 }
 
 func (i IdentityAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(i.ref.Append("tenant_id"))
 }
 
 func (i IdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("type"))
+	return terra.ReferenceAsString(i.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type CustomerManagedKeyState struct {

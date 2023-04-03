@@ -18,56 +18,56 @@ type NatIpConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (nic NatIpConfigurationAttributes) InternalRef() terra.Reference {
-	return nic.ref
+func (nic NatIpConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return nic.ref, nil
 }
 
 func (nic NatIpConfigurationAttributes) InternalWithRef(ref terra.Reference) NatIpConfigurationAttributes {
 	return NatIpConfigurationAttributes{ref: ref}
 }
 
-func (nic NatIpConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (nic NatIpConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nic.ref.InternalTokens()
 }
 
 func (nic NatIpConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(nic.ref.Append("name"))
+	return terra.ReferenceAsString(nic.ref.Append("name"))
 }
 
 func (nic NatIpConfigurationAttributes) Primary() terra.BoolValue {
-	return terra.ReferenceBool(nic.ref.Append("primary"))
+	return terra.ReferenceAsBool(nic.ref.Append("primary"))
 }
 
 func (nic NatIpConfigurationAttributes) PrivateIpAddress() terra.StringValue {
-	return terra.ReferenceString(nic.ref.Append("private_ip_address"))
+	return terra.ReferenceAsString(nic.ref.Append("private_ip_address"))
 }
 
 func (nic NatIpConfigurationAttributes) PrivateIpAddressVersion() terra.StringValue {
-	return terra.ReferenceString(nic.ref.Append("private_ip_address_version"))
+	return terra.ReferenceAsString(nic.ref.Append("private_ip_address_version"))
 }
 
 func (nic NatIpConfigurationAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(nic.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(nic.ref.Append("subnet_id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type NatIpConfigurationState struct {

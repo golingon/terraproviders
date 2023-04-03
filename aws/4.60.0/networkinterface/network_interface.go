@@ -26,7 +26,7 @@ func (a AttachmentAttributes) InternalWithRef(ref terra.Reference) AttachmentAtt
 	return AttachmentAttributes{ref: ref}
 }
 
-func (a AttachmentAttributes) InternalTokens() hclwrite.Tokens {
+func (a AttachmentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeRegionNetworkFirewallPolicyRule creates a new instance of [ComputeRegionNetworkFirewallPolicyRule].
 func NewComputeRegionNetworkFirewallPolicyRule(name string, args ComputeRegionNetworkFirewallPolicyRuleArgs) *ComputeRegionNetworkFirewallPolicyRule {
 	return &ComputeRegionNetworkFirewallPolicyRule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeRegionNetworkFirewallPolicyRule(name string, args ComputeRegionNe
 
 var _ terra.Resource = (*ComputeRegionNetworkFirewallPolicyRule)(nil)
 
+// ComputeRegionNetworkFirewallPolicyRule represents the Terraform resource google_compute_region_network_firewall_policy_rule.
 type ComputeRegionNetworkFirewallPolicyRule struct {
-	Name  string
-	Args  ComputeRegionNetworkFirewallPolicyRuleArgs
-	state *computeRegionNetworkFirewallPolicyRuleState
+	Name      string
+	Args      ComputeRegionNetworkFirewallPolicyRuleArgs
+	state     *computeRegionNetworkFirewallPolicyRuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeRegionNetworkFirewallPolicyRule].
 func (crnfpr *ComputeRegionNetworkFirewallPolicyRule) Type() string {
 	return "google_compute_region_network_firewall_policy_rule"
 }
 
+// LocalName returns the local name for [ComputeRegionNetworkFirewallPolicyRule].
 func (crnfpr *ComputeRegionNetworkFirewallPolicyRule) LocalName() string {
 	return crnfpr.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeRegionNetworkFirewallPolicyRule].
 func (crnfpr *ComputeRegionNetworkFirewallPolicyRule) Configuration() interface{} {
 	return crnfpr.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeRegionNetworkFirewallPolicyRule].
+func (crnfpr *ComputeRegionNetworkFirewallPolicyRule) DependOn() terra.Reference {
+	return terra.ReferenceResource(crnfpr)
+}
+
+// Dependencies returns the list of resources [ComputeRegionNetworkFirewallPolicyRule] depends_on.
+func (crnfpr *ComputeRegionNetworkFirewallPolicyRule) Dependencies() terra.Dependencies {
+	return crnfpr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeRegionNetworkFirewallPolicyRule].
+func (crnfpr *ComputeRegionNetworkFirewallPolicyRule) LifecycleManagement() *terra.Lifecycle {
+	return crnfpr.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeRegionNetworkFirewallPolicyRule].
 func (crnfpr *ComputeRegionNetworkFirewallPolicyRule) Attributes() computeRegionNetworkFirewallPolicyRuleAttributes {
 	return computeRegionNetworkFirewallPolicyRuleAttributes{ref: terra.ReferenceResource(crnfpr)}
 }
 
+// ImportState imports the given attribute values into [ComputeRegionNetworkFirewallPolicyRule]'s state.
 func (crnfpr *ComputeRegionNetworkFirewallPolicyRule) ImportState(av io.Reader) error {
 	crnfpr.state = &computeRegionNetworkFirewallPolicyRuleState{}
 	if err := json.NewDecoder(av).Decode(crnfpr.state); err != nil {
@@ -49,10 +73,12 @@ func (crnfpr *ComputeRegionNetworkFirewallPolicyRule) ImportState(av io.Reader) 
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeRegionNetworkFirewallPolicyRule] has state.
 func (crnfpr *ComputeRegionNetworkFirewallPolicyRule) State() (*computeRegionNetworkFirewallPolicyRuleState, bool) {
 	return crnfpr.state, crnfpr.state != nil
 }
 
+// StateMust returns the state for [ComputeRegionNetworkFirewallPolicyRule]. Panics if the state is nil.
 func (crnfpr *ComputeRegionNetworkFirewallPolicyRule) StateMust() *computeRegionNetworkFirewallPolicyRuleState {
 	if crnfpr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", crnfpr.Type(), crnfpr.LocalName()))
@@ -60,10 +86,7 @@ func (crnfpr *ComputeRegionNetworkFirewallPolicyRule) StateMust() *computeRegion
 	return crnfpr.state
 }
 
-func (crnfpr *ComputeRegionNetworkFirewallPolicyRule) DependOn() terra.Reference {
-	return terra.ReferenceResource(crnfpr)
-}
-
+// ComputeRegionNetworkFirewallPolicyRuleArgs contains the configurations for google_compute_region_network_firewall_policy_rule.
 type ComputeRegionNetworkFirewallPolicyRuleArgs struct {
 	// Action: string, required
 	Action terra.StringValue `hcl:"action,attr" validate:"required"`
@@ -95,79 +118,91 @@ type ComputeRegionNetworkFirewallPolicyRuleArgs struct {
 	TargetSecureTags []computeregionnetworkfirewallpolicyrule.TargetSecureTags `hcl:"target_secure_tags,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *computeregionnetworkfirewallpolicyrule.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeRegionNetworkFirewallPolicyRule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeRegionNetworkFirewallPolicyRuleAttributes struct {
 	ref terra.Reference
 }
 
+// Action returns a reference to field action of google_compute_region_network_firewall_policy_rule.
 func (crnfpr computeRegionNetworkFirewallPolicyRuleAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(crnfpr.ref.Append("action"))
+	return terra.ReferenceAsString(crnfpr.ref.Append("action"))
 }
 
+// Description returns a reference to field description of google_compute_region_network_firewall_policy_rule.
 func (crnfpr computeRegionNetworkFirewallPolicyRuleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(crnfpr.ref.Append("description"))
+	return terra.ReferenceAsString(crnfpr.ref.Append("description"))
 }
 
+// Direction returns a reference to field direction of google_compute_region_network_firewall_policy_rule.
 func (crnfpr computeRegionNetworkFirewallPolicyRuleAttributes) Direction() terra.StringValue {
-	return terra.ReferenceString(crnfpr.ref.Append("direction"))
+	return terra.ReferenceAsString(crnfpr.ref.Append("direction"))
 }
 
+// Disabled returns a reference to field disabled of google_compute_region_network_firewall_policy_rule.
 func (crnfpr computeRegionNetworkFirewallPolicyRuleAttributes) Disabled() terra.BoolValue {
-	return terra.ReferenceBool(crnfpr.ref.Append("disabled"))
+	return terra.ReferenceAsBool(crnfpr.ref.Append("disabled"))
 }
 
+// EnableLogging returns a reference to field enable_logging of google_compute_region_network_firewall_policy_rule.
 func (crnfpr computeRegionNetworkFirewallPolicyRuleAttributes) EnableLogging() terra.BoolValue {
-	return terra.ReferenceBool(crnfpr.ref.Append("enable_logging"))
+	return terra.ReferenceAsBool(crnfpr.ref.Append("enable_logging"))
 }
 
+// FirewallPolicy returns a reference to field firewall_policy of google_compute_region_network_firewall_policy_rule.
 func (crnfpr computeRegionNetworkFirewallPolicyRuleAttributes) FirewallPolicy() terra.StringValue {
-	return terra.ReferenceString(crnfpr.ref.Append("firewall_policy"))
+	return terra.ReferenceAsString(crnfpr.ref.Append("firewall_policy"))
 }
 
+// Id returns a reference to field id of google_compute_region_network_firewall_policy_rule.
 func (crnfpr computeRegionNetworkFirewallPolicyRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(crnfpr.ref.Append("id"))
+	return terra.ReferenceAsString(crnfpr.ref.Append("id"))
 }
 
+// Kind returns a reference to field kind of google_compute_region_network_firewall_policy_rule.
 func (crnfpr computeRegionNetworkFirewallPolicyRuleAttributes) Kind() terra.StringValue {
-	return terra.ReferenceString(crnfpr.ref.Append("kind"))
+	return terra.ReferenceAsString(crnfpr.ref.Append("kind"))
 }
 
+// Priority returns a reference to field priority of google_compute_region_network_firewall_policy_rule.
 func (crnfpr computeRegionNetworkFirewallPolicyRuleAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(crnfpr.ref.Append("priority"))
+	return terra.ReferenceAsNumber(crnfpr.ref.Append("priority"))
 }
 
+// Project returns a reference to field project of google_compute_region_network_firewall_policy_rule.
 func (crnfpr computeRegionNetworkFirewallPolicyRuleAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(crnfpr.ref.Append("project"))
+	return terra.ReferenceAsString(crnfpr.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_compute_region_network_firewall_policy_rule.
 func (crnfpr computeRegionNetworkFirewallPolicyRuleAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(crnfpr.ref.Append("region"))
+	return terra.ReferenceAsString(crnfpr.ref.Append("region"))
 }
 
+// RuleName returns a reference to field rule_name of google_compute_region_network_firewall_policy_rule.
 func (crnfpr computeRegionNetworkFirewallPolicyRuleAttributes) RuleName() terra.StringValue {
-	return terra.ReferenceString(crnfpr.ref.Append("rule_name"))
+	return terra.ReferenceAsString(crnfpr.ref.Append("rule_name"))
 }
 
+// RuleTupleCount returns a reference to field rule_tuple_count of google_compute_region_network_firewall_policy_rule.
 func (crnfpr computeRegionNetworkFirewallPolicyRuleAttributes) RuleTupleCount() terra.NumberValue {
-	return terra.ReferenceNumber(crnfpr.ref.Append("rule_tuple_count"))
+	return terra.ReferenceAsNumber(crnfpr.ref.Append("rule_tuple_count"))
 }
 
+// TargetServiceAccounts returns a reference to field target_service_accounts of google_compute_region_network_firewall_policy_rule.
 func (crnfpr computeRegionNetworkFirewallPolicyRuleAttributes) TargetServiceAccounts() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](crnfpr.ref.Append("target_service_accounts"))
+	return terra.ReferenceAsList[terra.StringValue](crnfpr.ref.Append("target_service_accounts"))
 }
 
 func (crnfpr computeRegionNetworkFirewallPolicyRuleAttributes) Match() terra.ListValue[computeregionnetworkfirewallpolicyrule.MatchAttributes] {
-	return terra.ReferenceList[computeregionnetworkfirewallpolicyrule.MatchAttributes](crnfpr.ref.Append("match"))
+	return terra.ReferenceAsList[computeregionnetworkfirewallpolicyrule.MatchAttributes](crnfpr.ref.Append("match"))
 }
 
 func (crnfpr computeRegionNetworkFirewallPolicyRuleAttributes) TargetSecureTags() terra.ListValue[computeregionnetworkfirewallpolicyrule.TargetSecureTagsAttributes] {
-	return terra.ReferenceList[computeregionnetworkfirewallpolicyrule.TargetSecureTagsAttributes](crnfpr.ref.Append("target_secure_tags"))
+	return terra.ReferenceAsList[computeregionnetworkfirewallpolicyrule.TargetSecureTagsAttributes](crnfpr.ref.Append("target_secure_tags"))
 }
 
 func (crnfpr computeRegionNetworkFirewallPolicyRuleAttributes) Timeouts() computeregionnetworkfirewallpolicyrule.TimeoutsAttributes {
-	return terra.ReferenceSingle[computeregionnetworkfirewallpolicyrule.TimeoutsAttributes](crnfpr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computeregionnetworkfirewallpolicyrule.TimeoutsAttributes](crnfpr.ref.Append("timeouts"))
 }
 
 type computeRegionNetworkFirewallPolicyRuleState struct {

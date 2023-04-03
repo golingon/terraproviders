@@ -188,508 +188,508 @@ type BackendAttributes struct {
 	ref terra.Reference
 }
 
-func (b BackendAttributes) InternalRef() terra.Reference {
-	return b.ref
+func (b BackendAttributes) InternalRef() (terra.Reference, error) {
+	return b.ref, nil
 }
 
 func (b BackendAttributes) InternalWithRef(ref terra.Reference) BackendAttributes {
 	return BackendAttributes{ref: ref}
 }
 
-func (b BackendAttributes) InternalTokens() hclwrite.Tokens {
+func (b BackendAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return b.ref.InternalTokens()
 }
 
 func (b BackendAttributes) BalancingMode() terra.StringValue {
-	return terra.ReferenceString(b.ref.Append("balancing_mode"))
+	return terra.ReferenceAsString(b.ref.Append("balancing_mode"))
 }
 
 func (b BackendAttributes) CapacityScaler() terra.NumberValue {
-	return terra.ReferenceNumber(b.ref.Append("capacity_scaler"))
+	return terra.ReferenceAsNumber(b.ref.Append("capacity_scaler"))
 }
 
 func (b BackendAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(b.ref.Append("description"))
+	return terra.ReferenceAsString(b.ref.Append("description"))
 }
 
 func (b BackendAttributes) Failover() terra.BoolValue {
-	return terra.ReferenceBool(b.ref.Append("failover"))
+	return terra.ReferenceAsBool(b.ref.Append("failover"))
 }
 
 func (b BackendAttributes) Group() terra.StringValue {
-	return terra.ReferenceString(b.ref.Append("group"))
+	return terra.ReferenceAsString(b.ref.Append("group"))
 }
 
 func (b BackendAttributes) MaxConnections() terra.NumberValue {
-	return terra.ReferenceNumber(b.ref.Append("max_connections"))
+	return terra.ReferenceAsNumber(b.ref.Append("max_connections"))
 }
 
 func (b BackendAttributes) MaxConnectionsPerEndpoint() terra.NumberValue {
-	return terra.ReferenceNumber(b.ref.Append("max_connections_per_endpoint"))
+	return terra.ReferenceAsNumber(b.ref.Append("max_connections_per_endpoint"))
 }
 
 func (b BackendAttributes) MaxConnectionsPerInstance() terra.NumberValue {
-	return terra.ReferenceNumber(b.ref.Append("max_connections_per_instance"))
+	return terra.ReferenceAsNumber(b.ref.Append("max_connections_per_instance"))
 }
 
 func (b BackendAttributes) MaxRate() terra.NumberValue {
-	return terra.ReferenceNumber(b.ref.Append("max_rate"))
+	return terra.ReferenceAsNumber(b.ref.Append("max_rate"))
 }
 
 func (b BackendAttributes) MaxRatePerEndpoint() terra.NumberValue {
-	return terra.ReferenceNumber(b.ref.Append("max_rate_per_endpoint"))
+	return terra.ReferenceAsNumber(b.ref.Append("max_rate_per_endpoint"))
 }
 
 func (b BackendAttributes) MaxRatePerInstance() terra.NumberValue {
-	return terra.ReferenceNumber(b.ref.Append("max_rate_per_instance"))
+	return terra.ReferenceAsNumber(b.ref.Append("max_rate_per_instance"))
 }
 
 func (b BackendAttributes) MaxUtilization() terra.NumberValue {
-	return terra.ReferenceNumber(b.ref.Append("max_utilization"))
+	return terra.ReferenceAsNumber(b.ref.Append("max_utilization"))
 }
 
 type CdnPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (cp CdnPolicyAttributes) InternalRef() terra.Reference {
-	return cp.ref
+func (cp CdnPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return cp.ref, nil
 }
 
 func (cp CdnPolicyAttributes) InternalWithRef(ref terra.Reference) CdnPolicyAttributes {
 	return CdnPolicyAttributes{ref: ref}
 }
 
-func (cp CdnPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (cp CdnPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cp.ref.InternalTokens()
 }
 
 func (cp CdnPolicyAttributes) CacheMode() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("cache_mode"))
+	return terra.ReferenceAsString(cp.ref.Append("cache_mode"))
 }
 
 func (cp CdnPolicyAttributes) ClientTtl() terra.NumberValue {
-	return terra.ReferenceNumber(cp.ref.Append("client_ttl"))
+	return terra.ReferenceAsNumber(cp.ref.Append("client_ttl"))
 }
 
 func (cp CdnPolicyAttributes) DefaultTtl() terra.NumberValue {
-	return terra.ReferenceNumber(cp.ref.Append("default_ttl"))
+	return terra.ReferenceAsNumber(cp.ref.Append("default_ttl"))
 }
 
 func (cp CdnPolicyAttributes) MaxTtl() terra.NumberValue {
-	return terra.ReferenceNumber(cp.ref.Append("max_ttl"))
+	return terra.ReferenceAsNumber(cp.ref.Append("max_ttl"))
 }
 
 func (cp CdnPolicyAttributes) NegativeCaching() terra.BoolValue {
-	return terra.ReferenceBool(cp.ref.Append("negative_caching"))
+	return terra.ReferenceAsBool(cp.ref.Append("negative_caching"))
 }
 
 func (cp CdnPolicyAttributes) ServeWhileStale() terra.NumberValue {
-	return terra.ReferenceNumber(cp.ref.Append("serve_while_stale"))
+	return terra.ReferenceAsNumber(cp.ref.Append("serve_while_stale"))
 }
 
 func (cp CdnPolicyAttributes) SignedUrlCacheMaxAgeSec() terra.NumberValue {
-	return terra.ReferenceNumber(cp.ref.Append("signed_url_cache_max_age_sec"))
+	return terra.ReferenceAsNumber(cp.ref.Append("signed_url_cache_max_age_sec"))
 }
 
 func (cp CdnPolicyAttributes) CacheKeyPolicy() terra.ListValue[CacheKeyPolicyAttributes] {
-	return terra.ReferenceList[CacheKeyPolicyAttributes](cp.ref.Append("cache_key_policy"))
+	return terra.ReferenceAsList[CacheKeyPolicyAttributes](cp.ref.Append("cache_key_policy"))
 }
 
 func (cp CdnPolicyAttributes) NegativeCachingPolicy() terra.ListValue[NegativeCachingPolicyAttributes] {
-	return terra.ReferenceList[NegativeCachingPolicyAttributes](cp.ref.Append("negative_caching_policy"))
+	return terra.ReferenceAsList[NegativeCachingPolicyAttributes](cp.ref.Append("negative_caching_policy"))
 }
 
 type CacheKeyPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (ckp CacheKeyPolicyAttributes) InternalRef() terra.Reference {
-	return ckp.ref
+func (ckp CacheKeyPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return ckp.ref, nil
 }
 
 func (ckp CacheKeyPolicyAttributes) InternalWithRef(ref terra.Reference) CacheKeyPolicyAttributes {
 	return CacheKeyPolicyAttributes{ref: ref}
 }
 
-func (ckp CacheKeyPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (ckp CacheKeyPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ckp.ref.InternalTokens()
 }
 
 func (ckp CacheKeyPolicyAttributes) IncludeHost() terra.BoolValue {
-	return terra.ReferenceBool(ckp.ref.Append("include_host"))
+	return terra.ReferenceAsBool(ckp.ref.Append("include_host"))
 }
 
 func (ckp CacheKeyPolicyAttributes) IncludeNamedCookies() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ckp.ref.Append("include_named_cookies"))
+	return terra.ReferenceAsList[terra.StringValue](ckp.ref.Append("include_named_cookies"))
 }
 
 func (ckp CacheKeyPolicyAttributes) IncludeProtocol() terra.BoolValue {
-	return terra.ReferenceBool(ckp.ref.Append("include_protocol"))
+	return terra.ReferenceAsBool(ckp.ref.Append("include_protocol"))
 }
 
 func (ckp CacheKeyPolicyAttributes) IncludeQueryString() terra.BoolValue {
-	return terra.ReferenceBool(ckp.ref.Append("include_query_string"))
+	return terra.ReferenceAsBool(ckp.ref.Append("include_query_string"))
 }
 
 func (ckp CacheKeyPolicyAttributes) QueryStringBlacklist() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ckp.ref.Append("query_string_blacklist"))
+	return terra.ReferenceAsSet[terra.StringValue](ckp.ref.Append("query_string_blacklist"))
 }
 
 func (ckp CacheKeyPolicyAttributes) QueryStringWhitelist() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ckp.ref.Append("query_string_whitelist"))
+	return terra.ReferenceAsSet[terra.StringValue](ckp.ref.Append("query_string_whitelist"))
 }
 
 type NegativeCachingPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (ncp NegativeCachingPolicyAttributes) InternalRef() terra.Reference {
-	return ncp.ref
+func (ncp NegativeCachingPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return ncp.ref, nil
 }
 
 func (ncp NegativeCachingPolicyAttributes) InternalWithRef(ref terra.Reference) NegativeCachingPolicyAttributes {
 	return NegativeCachingPolicyAttributes{ref: ref}
 }
 
-func (ncp NegativeCachingPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (ncp NegativeCachingPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ncp.ref.InternalTokens()
 }
 
 func (ncp NegativeCachingPolicyAttributes) Code() terra.NumberValue {
-	return terra.ReferenceNumber(ncp.ref.Append("code"))
+	return terra.ReferenceAsNumber(ncp.ref.Append("code"))
 }
 
 type CircuitBreakersAttributes struct {
 	ref terra.Reference
 }
 
-func (cb CircuitBreakersAttributes) InternalRef() terra.Reference {
-	return cb.ref
+func (cb CircuitBreakersAttributes) InternalRef() (terra.Reference, error) {
+	return cb.ref, nil
 }
 
 func (cb CircuitBreakersAttributes) InternalWithRef(ref terra.Reference) CircuitBreakersAttributes {
 	return CircuitBreakersAttributes{ref: ref}
 }
 
-func (cb CircuitBreakersAttributes) InternalTokens() hclwrite.Tokens {
+func (cb CircuitBreakersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cb.ref.InternalTokens()
 }
 
 func (cb CircuitBreakersAttributes) MaxConnections() terra.NumberValue {
-	return terra.ReferenceNumber(cb.ref.Append("max_connections"))
+	return terra.ReferenceAsNumber(cb.ref.Append("max_connections"))
 }
 
 func (cb CircuitBreakersAttributes) MaxPendingRequests() terra.NumberValue {
-	return terra.ReferenceNumber(cb.ref.Append("max_pending_requests"))
+	return terra.ReferenceAsNumber(cb.ref.Append("max_pending_requests"))
 }
 
 func (cb CircuitBreakersAttributes) MaxRequests() terra.NumberValue {
-	return terra.ReferenceNumber(cb.ref.Append("max_requests"))
+	return terra.ReferenceAsNumber(cb.ref.Append("max_requests"))
 }
 
 func (cb CircuitBreakersAttributes) MaxRequestsPerConnection() terra.NumberValue {
-	return terra.ReferenceNumber(cb.ref.Append("max_requests_per_connection"))
+	return terra.ReferenceAsNumber(cb.ref.Append("max_requests_per_connection"))
 }
 
 func (cb CircuitBreakersAttributes) MaxRetries() terra.NumberValue {
-	return terra.ReferenceNumber(cb.ref.Append("max_retries"))
+	return terra.ReferenceAsNumber(cb.ref.Append("max_retries"))
 }
 
 type ConsistentHashAttributes struct {
 	ref terra.Reference
 }
 
-func (ch ConsistentHashAttributes) InternalRef() terra.Reference {
-	return ch.ref
+func (ch ConsistentHashAttributes) InternalRef() (terra.Reference, error) {
+	return ch.ref, nil
 }
 
 func (ch ConsistentHashAttributes) InternalWithRef(ref terra.Reference) ConsistentHashAttributes {
 	return ConsistentHashAttributes{ref: ref}
 }
 
-func (ch ConsistentHashAttributes) InternalTokens() hclwrite.Tokens {
+func (ch ConsistentHashAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ch.ref.InternalTokens()
 }
 
 func (ch ConsistentHashAttributes) HttpHeaderName() terra.StringValue {
-	return terra.ReferenceString(ch.ref.Append("http_header_name"))
+	return terra.ReferenceAsString(ch.ref.Append("http_header_name"))
 }
 
 func (ch ConsistentHashAttributes) MinimumRingSize() terra.NumberValue {
-	return terra.ReferenceNumber(ch.ref.Append("minimum_ring_size"))
+	return terra.ReferenceAsNumber(ch.ref.Append("minimum_ring_size"))
 }
 
 func (ch ConsistentHashAttributes) HttpCookie() terra.ListValue[HttpCookieAttributes] {
-	return terra.ReferenceList[HttpCookieAttributes](ch.ref.Append("http_cookie"))
+	return terra.ReferenceAsList[HttpCookieAttributes](ch.ref.Append("http_cookie"))
 }
 
 type HttpCookieAttributes struct {
 	ref terra.Reference
 }
 
-func (hc HttpCookieAttributes) InternalRef() terra.Reference {
-	return hc.ref
+func (hc HttpCookieAttributes) InternalRef() (terra.Reference, error) {
+	return hc.ref, nil
 }
 
 func (hc HttpCookieAttributes) InternalWithRef(ref terra.Reference) HttpCookieAttributes {
 	return HttpCookieAttributes{ref: ref}
 }
 
-func (hc HttpCookieAttributes) InternalTokens() hclwrite.Tokens {
+func (hc HttpCookieAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hc.ref.InternalTokens()
 }
 
 func (hc HttpCookieAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("name"))
+	return terra.ReferenceAsString(hc.ref.Append("name"))
 }
 
 func (hc HttpCookieAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("path"))
+	return terra.ReferenceAsString(hc.ref.Append("path"))
 }
 
 func (hc HttpCookieAttributes) Ttl() terra.ListValue[TtlAttributes] {
-	return terra.ReferenceList[TtlAttributes](hc.ref.Append("ttl"))
+	return terra.ReferenceAsList[TtlAttributes](hc.ref.Append("ttl"))
 }
 
 type TtlAttributes struct {
 	ref terra.Reference
 }
 
-func (t TtlAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TtlAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TtlAttributes) InternalWithRef(ref terra.Reference) TtlAttributes {
 	return TtlAttributes{ref: ref}
 }
 
-func (t TtlAttributes) InternalTokens() hclwrite.Tokens {
+func (t TtlAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TtlAttributes) Nanos() terra.NumberValue {
-	return terra.ReferenceNumber(t.ref.Append("nanos"))
+	return terra.ReferenceAsNumber(t.ref.Append("nanos"))
 }
 
 func (t TtlAttributes) Seconds() terra.NumberValue {
-	return terra.ReferenceNumber(t.ref.Append("seconds"))
+	return terra.ReferenceAsNumber(t.ref.Append("seconds"))
 }
 
 type FailoverPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (fp FailoverPolicyAttributes) InternalRef() terra.Reference {
-	return fp.ref
+func (fp FailoverPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return fp.ref, nil
 }
 
 func (fp FailoverPolicyAttributes) InternalWithRef(ref terra.Reference) FailoverPolicyAttributes {
 	return FailoverPolicyAttributes{ref: ref}
 }
 
-func (fp FailoverPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (fp FailoverPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fp.ref.InternalTokens()
 }
 
 func (fp FailoverPolicyAttributes) DisableConnectionDrainOnFailover() terra.BoolValue {
-	return terra.ReferenceBool(fp.ref.Append("disable_connection_drain_on_failover"))
+	return terra.ReferenceAsBool(fp.ref.Append("disable_connection_drain_on_failover"))
 }
 
 func (fp FailoverPolicyAttributes) DropTrafficIfUnhealthy() terra.BoolValue {
-	return terra.ReferenceBool(fp.ref.Append("drop_traffic_if_unhealthy"))
+	return terra.ReferenceAsBool(fp.ref.Append("drop_traffic_if_unhealthy"))
 }
 
 func (fp FailoverPolicyAttributes) FailoverRatio() terra.NumberValue {
-	return terra.ReferenceNumber(fp.ref.Append("failover_ratio"))
+	return terra.ReferenceAsNumber(fp.ref.Append("failover_ratio"))
 }
 
 type IapAttributes struct {
 	ref terra.Reference
 }
 
-func (i IapAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IapAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IapAttributes) InternalWithRef(ref terra.Reference) IapAttributes {
 	return IapAttributes{ref: ref}
 }
 
-func (i IapAttributes) InternalTokens() hclwrite.Tokens {
+func (i IapAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IapAttributes) Oauth2ClientId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("oauth2_client_id"))
+	return terra.ReferenceAsString(i.ref.Append("oauth2_client_id"))
 }
 
 func (i IapAttributes) Oauth2ClientSecret() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("oauth2_client_secret"))
+	return terra.ReferenceAsString(i.ref.Append("oauth2_client_secret"))
 }
 
 func (i IapAttributes) Oauth2ClientSecretSha256() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("oauth2_client_secret_sha256"))
+	return terra.ReferenceAsString(i.ref.Append("oauth2_client_secret_sha256"))
 }
 
 type LogConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (lc LogConfigAttributes) InternalRef() terra.Reference {
-	return lc.ref
+func (lc LogConfigAttributes) InternalRef() (terra.Reference, error) {
+	return lc.ref, nil
 }
 
 func (lc LogConfigAttributes) InternalWithRef(ref terra.Reference) LogConfigAttributes {
 	return LogConfigAttributes{ref: ref}
 }
 
-func (lc LogConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (lc LogConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lc.ref.InternalTokens()
 }
 
 func (lc LogConfigAttributes) Enable() terra.BoolValue {
-	return terra.ReferenceBool(lc.ref.Append("enable"))
+	return terra.ReferenceAsBool(lc.ref.Append("enable"))
 }
 
 func (lc LogConfigAttributes) SampleRate() terra.NumberValue {
-	return terra.ReferenceNumber(lc.ref.Append("sample_rate"))
+	return terra.ReferenceAsNumber(lc.ref.Append("sample_rate"))
 }
 
 type OutlierDetectionAttributes struct {
 	ref terra.Reference
 }
 
-func (od OutlierDetectionAttributes) InternalRef() terra.Reference {
-	return od.ref
+func (od OutlierDetectionAttributes) InternalRef() (terra.Reference, error) {
+	return od.ref, nil
 }
 
 func (od OutlierDetectionAttributes) InternalWithRef(ref terra.Reference) OutlierDetectionAttributes {
 	return OutlierDetectionAttributes{ref: ref}
 }
 
-func (od OutlierDetectionAttributes) InternalTokens() hclwrite.Tokens {
+func (od OutlierDetectionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return od.ref.InternalTokens()
 }
 
 func (od OutlierDetectionAttributes) ConsecutiveErrors() terra.NumberValue {
-	return terra.ReferenceNumber(od.ref.Append("consecutive_errors"))
+	return terra.ReferenceAsNumber(od.ref.Append("consecutive_errors"))
 }
 
 func (od OutlierDetectionAttributes) ConsecutiveGatewayFailure() terra.NumberValue {
-	return terra.ReferenceNumber(od.ref.Append("consecutive_gateway_failure"))
+	return terra.ReferenceAsNumber(od.ref.Append("consecutive_gateway_failure"))
 }
 
 func (od OutlierDetectionAttributes) EnforcingConsecutiveErrors() terra.NumberValue {
-	return terra.ReferenceNumber(od.ref.Append("enforcing_consecutive_errors"))
+	return terra.ReferenceAsNumber(od.ref.Append("enforcing_consecutive_errors"))
 }
 
 func (od OutlierDetectionAttributes) EnforcingConsecutiveGatewayFailure() terra.NumberValue {
-	return terra.ReferenceNumber(od.ref.Append("enforcing_consecutive_gateway_failure"))
+	return terra.ReferenceAsNumber(od.ref.Append("enforcing_consecutive_gateway_failure"))
 }
 
 func (od OutlierDetectionAttributes) EnforcingSuccessRate() terra.NumberValue {
-	return terra.ReferenceNumber(od.ref.Append("enforcing_success_rate"))
+	return terra.ReferenceAsNumber(od.ref.Append("enforcing_success_rate"))
 }
 
 func (od OutlierDetectionAttributes) MaxEjectionPercent() terra.NumberValue {
-	return terra.ReferenceNumber(od.ref.Append("max_ejection_percent"))
+	return terra.ReferenceAsNumber(od.ref.Append("max_ejection_percent"))
 }
 
 func (od OutlierDetectionAttributes) SuccessRateMinimumHosts() terra.NumberValue {
-	return terra.ReferenceNumber(od.ref.Append("success_rate_minimum_hosts"))
+	return terra.ReferenceAsNumber(od.ref.Append("success_rate_minimum_hosts"))
 }
 
 func (od OutlierDetectionAttributes) SuccessRateRequestVolume() terra.NumberValue {
-	return terra.ReferenceNumber(od.ref.Append("success_rate_request_volume"))
+	return terra.ReferenceAsNumber(od.ref.Append("success_rate_request_volume"))
 }
 
 func (od OutlierDetectionAttributes) SuccessRateStdevFactor() terra.NumberValue {
-	return terra.ReferenceNumber(od.ref.Append("success_rate_stdev_factor"))
+	return terra.ReferenceAsNumber(od.ref.Append("success_rate_stdev_factor"))
 }
 
 func (od OutlierDetectionAttributes) BaseEjectionTime() terra.ListValue[BaseEjectionTimeAttributes] {
-	return terra.ReferenceList[BaseEjectionTimeAttributes](od.ref.Append("base_ejection_time"))
+	return terra.ReferenceAsList[BaseEjectionTimeAttributes](od.ref.Append("base_ejection_time"))
 }
 
 func (od OutlierDetectionAttributes) Interval() terra.ListValue[IntervalAttributes] {
-	return terra.ReferenceList[IntervalAttributes](od.ref.Append("interval"))
+	return terra.ReferenceAsList[IntervalAttributes](od.ref.Append("interval"))
 }
 
 type BaseEjectionTimeAttributes struct {
 	ref terra.Reference
 }
 
-func (bet BaseEjectionTimeAttributes) InternalRef() terra.Reference {
-	return bet.ref
+func (bet BaseEjectionTimeAttributes) InternalRef() (terra.Reference, error) {
+	return bet.ref, nil
 }
 
 func (bet BaseEjectionTimeAttributes) InternalWithRef(ref terra.Reference) BaseEjectionTimeAttributes {
 	return BaseEjectionTimeAttributes{ref: ref}
 }
 
-func (bet BaseEjectionTimeAttributes) InternalTokens() hclwrite.Tokens {
+func (bet BaseEjectionTimeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bet.ref.InternalTokens()
 }
 
 func (bet BaseEjectionTimeAttributes) Nanos() terra.NumberValue {
-	return terra.ReferenceNumber(bet.ref.Append("nanos"))
+	return terra.ReferenceAsNumber(bet.ref.Append("nanos"))
 }
 
 func (bet BaseEjectionTimeAttributes) Seconds() terra.NumberValue {
-	return terra.ReferenceNumber(bet.ref.Append("seconds"))
+	return terra.ReferenceAsNumber(bet.ref.Append("seconds"))
 }
 
 type IntervalAttributes struct {
 	ref terra.Reference
 }
 
-func (i IntervalAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IntervalAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IntervalAttributes) InternalWithRef(ref terra.Reference) IntervalAttributes {
 	return IntervalAttributes{ref: ref}
 }
 
-func (i IntervalAttributes) InternalTokens() hclwrite.Tokens {
+func (i IntervalAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IntervalAttributes) Nanos() terra.NumberValue {
-	return terra.ReferenceNumber(i.ref.Append("nanos"))
+	return terra.ReferenceAsNumber(i.ref.Append("nanos"))
 }
 
 func (i IntervalAttributes) Seconds() terra.NumberValue {
-	return terra.ReferenceNumber(i.ref.Append("seconds"))
+	return terra.ReferenceAsNumber(i.ref.Append("seconds"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type BackendState struct {

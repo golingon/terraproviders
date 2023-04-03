@@ -26,7 +26,7 @@ func (ct ClassificationTypeAttributes) InternalWithRef(ref terra.Reference) Clas
 	return ClassificationTypeAttributes{ref: ref}
 }
 
-func (ct ClassificationTypeAttributes) InternalTokens() hclwrite.Tokens {
+func (ct ClassificationTypeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ct.ref.InternalTokens()
 }
 

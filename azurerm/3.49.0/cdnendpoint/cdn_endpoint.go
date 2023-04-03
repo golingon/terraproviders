@@ -366,1020 +366,1020 @@ type DeliveryRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (dr DeliveryRuleAttributes) InternalRef() terra.Reference {
-	return dr.ref
+func (dr DeliveryRuleAttributes) InternalRef() (terra.Reference, error) {
+	return dr.ref, nil
 }
 
 func (dr DeliveryRuleAttributes) InternalWithRef(ref terra.Reference) DeliveryRuleAttributes {
 	return DeliveryRuleAttributes{ref: ref}
 }
 
-func (dr DeliveryRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (dr DeliveryRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dr.ref.InternalTokens()
 }
 
 func (dr DeliveryRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dr.ref.Append("name"))
+	return terra.ReferenceAsString(dr.ref.Append("name"))
 }
 
 func (dr DeliveryRuleAttributes) Order() terra.NumberValue {
-	return terra.ReferenceNumber(dr.ref.Append("order"))
+	return terra.ReferenceAsNumber(dr.ref.Append("order"))
 }
 
 func (dr DeliveryRuleAttributes) CacheExpirationAction() terra.ListValue[DeliveryRuleCacheExpirationActionAttributes] {
-	return terra.ReferenceList[DeliveryRuleCacheExpirationActionAttributes](dr.ref.Append("cache_expiration_action"))
+	return terra.ReferenceAsList[DeliveryRuleCacheExpirationActionAttributes](dr.ref.Append("cache_expiration_action"))
 }
 
 func (dr DeliveryRuleAttributes) CacheKeyQueryStringAction() terra.ListValue[DeliveryRuleCacheKeyQueryStringActionAttributes] {
-	return terra.ReferenceList[DeliveryRuleCacheKeyQueryStringActionAttributes](dr.ref.Append("cache_key_query_string_action"))
+	return terra.ReferenceAsList[DeliveryRuleCacheKeyQueryStringActionAttributes](dr.ref.Append("cache_key_query_string_action"))
 }
 
 func (dr DeliveryRuleAttributes) CookiesCondition() terra.ListValue[CookiesConditionAttributes] {
-	return terra.ReferenceList[CookiesConditionAttributes](dr.ref.Append("cookies_condition"))
+	return terra.ReferenceAsList[CookiesConditionAttributes](dr.ref.Append("cookies_condition"))
 }
 
 func (dr DeliveryRuleAttributes) DeviceCondition() terra.ListValue[DeviceConditionAttributes] {
-	return terra.ReferenceList[DeviceConditionAttributes](dr.ref.Append("device_condition"))
+	return terra.ReferenceAsList[DeviceConditionAttributes](dr.ref.Append("device_condition"))
 }
 
 func (dr DeliveryRuleAttributes) HttpVersionCondition() terra.ListValue[HttpVersionConditionAttributes] {
-	return terra.ReferenceList[HttpVersionConditionAttributes](dr.ref.Append("http_version_condition"))
+	return terra.ReferenceAsList[HttpVersionConditionAttributes](dr.ref.Append("http_version_condition"))
 }
 
 func (dr DeliveryRuleAttributes) ModifyRequestHeaderAction() terra.ListValue[DeliveryRuleModifyRequestHeaderActionAttributes] {
-	return terra.ReferenceList[DeliveryRuleModifyRequestHeaderActionAttributes](dr.ref.Append("modify_request_header_action"))
+	return terra.ReferenceAsList[DeliveryRuleModifyRequestHeaderActionAttributes](dr.ref.Append("modify_request_header_action"))
 }
 
 func (dr DeliveryRuleAttributes) ModifyResponseHeaderAction() terra.ListValue[DeliveryRuleModifyResponseHeaderActionAttributes] {
-	return terra.ReferenceList[DeliveryRuleModifyResponseHeaderActionAttributes](dr.ref.Append("modify_response_header_action"))
+	return terra.ReferenceAsList[DeliveryRuleModifyResponseHeaderActionAttributes](dr.ref.Append("modify_response_header_action"))
 }
 
 func (dr DeliveryRuleAttributes) PostArgCondition() terra.ListValue[PostArgConditionAttributes] {
-	return terra.ReferenceList[PostArgConditionAttributes](dr.ref.Append("post_arg_condition"))
+	return terra.ReferenceAsList[PostArgConditionAttributes](dr.ref.Append("post_arg_condition"))
 }
 
 func (dr DeliveryRuleAttributes) QueryStringCondition() terra.ListValue[QueryStringConditionAttributes] {
-	return terra.ReferenceList[QueryStringConditionAttributes](dr.ref.Append("query_string_condition"))
+	return terra.ReferenceAsList[QueryStringConditionAttributes](dr.ref.Append("query_string_condition"))
 }
 
 func (dr DeliveryRuleAttributes) RemoteAddressCondition() terra.ListValue[RemoteAddressConditionAttributes] {
-	return terra.ReferenceList[RemoteAddressConditionAttributes](dr.ref.Append("remote_address_condition"))
+	return terra.ReferenceAsList[RemoteAddressConditionAttributes](dr.ref.Append("remote_address_condition"))
 }
 
 func (dr DeliveryRuleAttributes) RequestBodyCondition() terra.ListValue[RequestBodyConditionAttributes] {
-	return terra.ReferenceList[RequestBodyConditionAttributes](dr.ref.Append("request_body_condition"))
+	return terra.ReferenceAsList[RequestBodyConditionAttributes](dr.ref.Append("request_body_condition"))
 }
 
 func (dr DeliveryRuleAttributes) RequestHeaderCondition() terra.ListValue[RequestHeaderConditionAttributes] {
-	return terra.ReferenceList[RequestHeaderConditionAttributes](dr.ref.Append("request_header_condition"))
+	return terra.ReferenceAsList[RequestHeaderConditionAttributes](dr.ref.Append("request_header_condition"))
 }
 
 func (dr DeliveryRuleAttributes) RequestMethodCondition() terra.ListValue[RequestMethodConditionAttributes] {
-	return terra.ReferenceList[RequestMethodConditionAttributes](dr.ref.Append("request_method_condition"))
+	return terra.ReferenceAsList[RequestMethodConditionAttributes](dr.ref.Append("request_method_condition"))
 }
 
 func (dr DeliveryRuleAttributes) RequestSchemeCondition() terra.ListValue[RequestSchemeConditionAttributes] {
-	return terra.ReferenceList[RequestSchemeConditionAttributes](dr.ref.Append("request_scheme_condition"))
+	return terra.ReferenceAsList[RequestSchemeConditionAttributes](dr.ref.Append("request_scheme_condition"))
 }
 
 func (dr DeliveryRuleAttributes) RequestUriCondition() terra.ListValue[RequestUriConditionAttributes] {
-	return terra.ReferenceList[RequestUriConditionAttributes](dr.ref.Append("request_uri_condition"))
+	return terra.ReferenceAsList[RequestUriConditionAttributes](dr.ref.Append("request_uri_condition"))
 }
 
 func (dr DeliveryRuleAttributes) UrlFileExtensionCondition() terra.ListValue[UrlFileExtensionConditionAttributes] {
-	return terra.ReferenceList[UrlFileExtensionConditionAttributes](dr.ref.Append("url_file_extension_condition"))
+	return terra.ReferenceAsList[UrlFileExtensionConditionAttributes](dr.ref.Append("url_file_extension_condition"))
 }
 
 func (dr DeliveryRuleAttributes) UrlFileNameCondition() terra.ListValue[UrlFileNameConditionAttributes] {
-	return terra.ReferenceList[UrlFileNameConditionAttributes](dr.ref.Append("url_file_name_condition"))
+	return terra.ReferenceAsList[UrlFileNameConditionAttributes](dr.ref.Append("url_file_name_condition"))
 }
 
 func (dr DeliveryRuleAttributes) UrlPathCondition() terra.ListValue[UrlPathConditionAttributes] {
-	return terra.ReferenceList[UrlPathConditionAttributes](dr.ref.Append("url_path_condition"))
+	return terra.ReferenceAsList[UrlPathConditionAttributes](dr.ref.Append("url_path_condition"))
 }
 
 func (dr DeliveryRuleAttributes) UrlRedirectAction() terra.ListValue[DeliveryRuleUrlRedirectActionAttributes] {
-	return terra.ReferenceList[DeliveryRuleUrlRedirectActionAttributes](dr.ref.Append("url_redirect_action"))
+	return terra.ReferenceAsList[DeliveryRuleUrlRedirectActionAttributes](dr.ref.Append("url_redirect_action"))
 }
 
 func (dr DeliveryRuleAttributes) UrlRewriteAction() terra.ListValue[DeliveryRuleUrlRewriteActionAttributes] {
-	return terra.ReferenceList[DeliveryRuleUrlRewriteActionAttributes](dr.ref.Append("url_rewrite_action"))
+	return terra.ReferenceAsList[DeliveryRuleUrlRewriteActionAttributes](dr.ref.Append("url_rewrite_action"))
 }
 
 type DeliveryRuleCacheExpirationActionAttributes struct {
 	ref terra.Reference
 }
 
-func (cea DeliveryRuleCacheExpirationActionAttributes) InternalRef() terra.Reference {
-	return cea.ref
+func (cea DeliveryRuleCacheExpirationActionAttributes) InternalRef() (terra.Reference, error) {
+	return cea.ref, nil
 }
 
 func (cea DeliveryRuleCacheExpirationActionAttributes) InternalWithRef(ref terra.Reference) DeliveryRuleCacheExpirationActionAttributes {
 	return DeliveryRuleCacheExpirationActionAttributes{ref: ref}
 }
 
-func (cea DeliveryRuleCacheExpirationActionAttributes) InternalTokens() hclwrite.Tokens {
+func (cea DeliveryRuleCacheExpirationActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cea.ref.InternalTokens()
 }
 
 func (cea DeliveryRuleCacheExpirationActionAttributes) Behavior() terra.StringValue {
-	return terra.ReferenceString(cea.ref.Append("behavior"))
+	return terra.ReferenceAsString(cea.ref.Append("behavior"))
 }
 
 func (cea DeliveryRuleCacheExpirationActionAttributes) Duration() terra.StringValue {
-	return terra.ReferenceString(cea.ref.Append("duration"))
+	return terra.ReferenceAsString(cea.ref.Append("duration"))
 }
 
 type DeliveryRuleCacheKeyQueryStringActionAttributes struct {
 	ref terra.Reference
 }
 
-func (ckqsa DeliveryRuleCacheKeyQueryStringActionAttributes) InternalRef() terra.Reference {
-	return ckqsa.ref
+func (ckqsa DeliveryRuleCacheKeyQueryStringActionAttributes) InternalRef() (terra.Reference, error) {
+	return ckqsa.ref, nil
 }
 
 func (ckqsa DeliveryRuleCacheKeyQueryStringActionAttributes) InternalWithRef(ref terra.Reference) DeliveryRuleCacheKeyQueryStringActionAttributes {
 	return DeliveryRuleCacheKeyQueryStringActionAttributes{ref: ref}
 }
 
-func (ckqsa DeliveryRuleCacheKeyQueryStringActionAttributes) InternalTokens() hclwrite.Tokens {
+func (ckqsa DeliveryRuleCacheKeyQueryStringActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ckqsa.ref.InternalTokens()
 }
 
 func (ckqsa DeliveryRuleCacheKeyQueryStringActionAttributes) Behavior() terra.StringValue {
-	return terra.ReferenceString(ckqsa.ref.Append("behavior"))
+	return terra.ReferenceAsString(ckqsa.ref.Append("behavior"))
 }
 
 func (ckqsa DeliveryRuleCacheKeyQueryStringActionAttributes) Parameters() terra.StringValue {
-	return terra.ReferenceString(ckqsa.ref.Append("parameters"))
+	return terra.ReferenceAsString(ckqsa.ref.Append("parameters"))
 }
 
 type CookiesConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (cc CookiesConditionAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc CookiesConditionAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc CookiesConditionAttributes) InternalWithRef(ref terra.Reference) CookiesConditionAttributes {
 	return CookiesConditionAttributes{ref: ref}
 }
 
-func (cc CookiesConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (cc CookiesConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
 func (cc CookiesConditionAttributes) MatchValues() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cc.ref.Append("match_values"))
+	return terra.ReferenceAsSet[terra.StringValue](cc.ref.Append("match_values"))
 }
 
 func (cc CookiesConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(cc.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(cc.ref.Append("negate_condition"))
 }
 
 func (cc CookiesConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("operator"))
+	return terra.ReferenceAsString(cc.ref.Append("operator"))
 }
 
 func (cc CookiesConditionAttributes) Selector() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("selector"))
+	return terra.ReferenceAsString(cc.ref.Append("selector"))
 }
 
 func (cc CookiesConditionAttributes) Transforms() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cc.ref.Append("transforms"))
+	return terra.ReferenceAsList[terra.StringValue](cc.ref.Append("transforms"))
 }
 
 type DeviceConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (dc DeviceConditionAttributes) InternalRef() terra.Reference {
-	return dc.ref
+func (dc DeviceConditionAttributes) InternalRef() (terra.Reference, error) {
+	return dc.ref, nil
 }
 
 func (dc DeviceConditionAttributes) InternalWithRef(ref terra.Reference) DeviceConditionAttributes {
 	return DeviceConditionAttributes{ref: ref}
 }
 
-func (dc DeviceConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (dc DeviceConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dc.ref.InternalTokens()
 }
 
 func (dc DeviceConditionAttributes) MatchValues() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dc.ref.Append("match_values"))
+	return terra.ReferenceAsSet[terra.StringValue](dc.ref.Append("match_values"))
 }
 
 func (dc DeviceConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(dc.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(dc.ref.Append("negate_condition"))
 }
 
 func (dc DeviceConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("operator"))
+	return terra.ReferenceAsString(dc.ref.Append("operator"))
 }
 
 type HttpVersionConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (hvc HttpVersionConditionAttributes) InternalRef() terra.Reference {
-	return hvc.ref
+func (hvc HttpVersionConditionAttributes) InternalRef() (terra.Reference, error) {
+	return hvc.ref, nil
 }
 
 func (hvc HttpVersionConditionAttributes) InternalWithRef(ref terra.Reference) HttpVersionConditionAttributes {
 	return HttpVersionConditionAttributes{ref: ref}
 }
 
-func (hvc HttpVersionConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (hvc HttpVersionConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hvc.ref.InternalTokens()
 }
 
 func (hvc HttpVersionConditionAttributes) MatchValues() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](hvc.ref.Append("match_values"))
+	return terra.ReferenceAsSet[terra.StringValue](hvc.ref.Append("match_values"))
 }
 
 func (hvc HttpVersionConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(hvc.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(hvc.ref.Append("negate_condition"))
 }
 
 func (hvc HttpVersionConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(hvc.ref.Append("operator"))
+	return terra.ReferenceAsString(hvc.ref.Append("operator"))
 }
 
 type DeliveryRuleModifyRequestHeaderActionAttributes struct {
 	ref terra.Reference
 }
 
-func (mrha DeliveryRuleModifyRequestHeaderActionAttributes) InternalRef() terra.Reference {
-	return mrha.ref
+func (mrha DeliveryRuleModifyRequestHeaderActionAttributes) InternalRef() (terra.Reference, error) {
+	return mrha.ref, nil
 }
 
 func (mrha DeliveryRuleModifyRequestHeaderActionAttributes) InternalWithRef(ref terra.Reference) DeliveryRuleModifyRequestHeaderActionAttributes {
 	return DeliveryRuleModifyRequestHeaderActionAttributes{ref: ref}
 }
 
-func (mrha DeliveryRuleModifyRequestHeaderActionAttributes) InternalTokens() hclwrite.Tokens {
+func (mrha DeliveryRuleModifyRequestHeaderActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mrha.ref.InternalTokens()
 }
 
 func (mrha DeliveryRuleModifyRequestHeaderActionAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(mrha.ref.Append("action"))
+	return terra.ReferenceAsString(mrha.ref.Append("action"))
 }
 
 func (mrha DeliveryRuleModifyRequestHeaderActionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mrha.ref.Append("name"))
+	return terra.ReferenceAsString(mrha.ref.Append("name"))
 }
 
 func (mrha DeliveryRuleModifyRequestHeaderActionAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(mrha.ref.Append("value"))
+	return terra.ReferenceAsString(mrha.ref.Append("value"))
 }
 
 type DeliveryRuleModifyResponseHeaderActionAttributes struct {
 	ref terra.Reference
 }
 
-func (mrha DeliveryRuleModifyResponseHeaderActionAttributes) InternalRef() terra.Reference {
-	return mrha.ref
+func (mrha DeliveryRuleModifyResponseHeaderActionAttributes) InternalRef() (terra.Reference, error) {
+	return mrha.ref, nil
 }
 
 func (mrha DeliveryRuleModifyResponseHeaderActionAttributes) InternalWithRef(ref terra.Reference) DeliveryRuleModifyResponseHeaderActionAttributes {
 	return DeliveryRuleModifyResponseHeaderActionAttributes{ref: ref}
 }
 
-func (mrha DeliveryRuleModifyResponseHeaderActionAttributes) InternalTokens() hclwrite.Tokens {
+func (mrha DeliveryRuleModifyResponseHeaderActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mrha.ref.InternalTokens()
 }
 
 func (mrha DeliveryRuleModifyResponseHeaderActionAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(mrha.ref.Append("action"))
+	return terra.ReferenceAsString(mrha.ref.Append("action"))
 }
 
 func (mrha DeliveryRuleModifyResponseHeaderActionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mrha.ref.Append("name"))
+	return terra.ReferenceAsString(mrha.ref.Append("name"))
 }
 
 func (mrha DeliveryRuleModifyResponseHeaderActionAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(mrha.ref.Append("value"))
+	return terra.ReferenceAsString(mrha.ref.Append("value"))
 }
 
 type PostArgConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (pac PostArgConditionAttributes) InternalRef() terra.Reference {
-	return pac.ref
+func (pac PostArgConditionAttributes) InternalRef() (terra.Reference, error) {
+	return pac.ref, nil
 }
 
 func (pac PostArgConditionAttributes) InternalWithRef(ref terra.Reference) PostArgConditionAttributes {
 	return PostArgConditionAttributes{ref: ref}
 }
 
-func (pac PostArgConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (pac PostArgConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pac.ref.InternalTokens()
 }
 
 func (pac PostArgConditionAttributes) MatchValues() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](pac.ref.Append("match_values"))
+	return terra.ReferenceAsSet[terra.StringValue](pac.ref.Append("match_values"))
 }
 
 func (pac PostArgConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(pac.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(pac.ref.Append("negate_condition"))
 }
 
 func (pac PostArgConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(pac.ref.Append("operator"))
+	return terra.ReferenceAsString(pac.ref.Append("operator"))
 }
 
 func (pac PostArgConditionAttributes) Selector() terra.StringValue {
-	return terra.ReferenceString(pac.ref.Append("selector"))
+	return terra.ReferenceAsString(pac.ref.Append("selector"))
 }
 
 func (pac PostArgConditionAttributes) Transforms() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](pac.ref.Append("transforms"))
+	return terra.ReferenceAsList[terra.StringValue](pac.ref.Append("transforms"))
 }
 
 type QueryStringConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (qsc QueryStringConditionAttributes) InternalRef() terra.Reference {
-	return qsc.ref
+func (qsc QueryStringConditionAttributes) InternalRef() (terra.Reference, error) {
+	return qsc.ref, nil
 }
 
 func (qsc QueryStringConditionAttributes) InternalWithRef(ref terra.Reference) QueryStringConditionAttributes {
 	return QueryStringConditionAttributes{ref: ref}
 }
 
-func (qsc QueryStringConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (qsc QueryStringConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return qsc.ref.InternalTokens()
 }
 
 func (qsc QueryStringConditionAttributes) MatchValues() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](qsc.ref.Append("match_values"))
+	return terra.ReferenceAsSet[terra.StringValue](qsc.ref.Append("match_values"))
 }
 
 func (qsc QueryStringConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(qsc.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(qsc.ref.Append("negate_condition"))
 }
 
 func (qsc QueryStringConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(qsc.ref.Append("operator"))
+	return terra.ReferenceAsString(qsc.ref.Append("operator"))
 }
 
 func (qsc QueryStringConditionAttributes) Transforms() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](qsc.ref.Append("transforms"))
+	return terra.ReferenceAsList[terra.StringValue](qsc.ref.Append("transforms"))
 }
 
 type RemoteAddressConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (rac RemoteAddressConditionAttributes) InternalRef() terra.Reference {
-	return rac.ref
+func (rac RemoteAddressConditionAttributes) InternalRef() (terra.Reference, error) {
+	return rac.ref, nil
 }
 
 func (rac RemoteAddressConditionAttributes) InternalWithRef(ref terra.Reference) RemoteAddressConditionAttributes {
 	return RemoteAddressConditionAttributes{ref: ref}
 }
 
-func (rac RemoteAddressConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (rac RemoteAddressConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rac.ref.InternalTokens()
 }
 
 func (rac RemoteAddressConditionAttributes) MatchValues() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rac.ref.Append("match_values"))
+	return terra.ReferenceAsSet[terra.StringValue](rac.ref.Append("match_values"))
 }
 
 func (rac RemoteAddressConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(rac.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(rac.ref.Append("negate_condition"))
 }
 
 func (rac RemoteAddressConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(rac.ref.Append("operator"))
+	return terra.ReferenceAsString(rac.ref.Append("operator"))
 }
 
 type RequestBodyConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (rbc RequestBodyConditionAttributes) InternalRef() terra.Reference {
-	return rbc.ref
+func (rbc RequestBodyConditionAttributes) InternalRef() (terra.Reference, error) {
+	return rbc.ref, nil
 }
 
 func (rbc RequestBodyConditionAttributes) InternalWithRef(ref terra.Reference) RequestBodyConditionAttributes {
 	return RequestBodyConditionAttributes{ref: ref}
 }
 
-func (rbc RequestBodyConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (rbc RequestBodyConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rbc.ref.InternalTokens()
 }
 
 func (rbc RequestBodyConditionAttributes) MatchValues() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rbc.ref.Append("match_values"))
+	return terra.ReferenceAsSet[terra.StringValue](rbc.ref.Append("match_values"))
 }
 
 func (rbc RequestBodyConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(rbc.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(rbc.ref.Append("negate_condition"))
 }
 
 func (rbc RequestBodyConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(rbc.ref.Append("operator"))
+	return terra.ReferenceAsString(rbc.ref.Append("operator"))
 }
 
 func (rbc RequestBodyConditionAttributes) Transforms() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rbc.ref.Append("transforms"))
+	return terra.ReferenceAsList[terra.StringValue](rbc.ref.Append("transforms"))
 }
 
 type RequestHeaderConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (rhc RequestHeaderConditionAttributes) InternalRef() terra.Reference {
-	return rhc.ref
+func (rhc RequestHeaderConditionAttributes) InternalRef() (terra.Reference, error) {
+	return rhc.ref, nil
 }
 
 func (rhc RequestHeaderConditionAttributes) InternalWithRef(ref terra.Reference) RequestHeaderConditionAttributes {
 	return RequestHeaderConditionAttributes{ref: ref}
 }
 
-func (rhc RequestHeaderConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (rhc RequestHeaderConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rhc.ref.InternalTokens()
 }
 
 func (rhc RequestHeaderConditionAttributes) MatchValues() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rhc.ref.Append("match_values"))
+	return terra.ReferenceAsSet[terra.StringValue](rhc.ref.Append("match_values"))
 }
 
 func (rhc RequestHeaderConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(rhc.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(rhc.ref.Append("negate_condition"))
 }
 
 func (rhc RequestHeaderConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(rhc.ref.Append("operator"))
+	return terra.ReferenceAsString(rhc.ref.Append("operator"))
 }
 
 func (rhc RequestHeaderConditionAttributes) Selector() terra.StringValue {
-	return terra.ReferenceString(rhc.ref.Append("selector"))
+	return terra.ReferenceAsString(rhc.ref.Append("selector"))
 }
 
 func (rhc RequestHeaderConditionAttributes) Transforms() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rhc.ref.Append("transforms"))
+	return terra.ReferenceAsList[terra.StringValue](rhc.ref.Append("transforms"))
 }
 
 type RequestMethodConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (rmc RequestMethodConditionAttributes) InternalRef() terra.Reference {
-	return rmc.ref
+func (rmc RequestMethodConditionAttributes) InternalRef() (terra.Reference, error) {
+	return rmc.ref, nil
 }
 
 func (rmc RequestMethodConditionAttributes) InternalWithRef(ref terra.Reference) RequestMethodConditionAttributes {
 	return RequestMethodConditionAttributes{ref: ref}
 }
 
-func (rmc RequestMethodConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (rmc RequestMethodConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rmc.ref.InternalTokens()
 }
 
 func (rmc RequestMethodConditionAttributes) MatchValues() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rmc.ref.Append("match_values"))
+	return terra.ReferenceAsSet[terra.StringValue](rmc.ref.Append("match_values"))
 }
 
 func (rmc RequestMethodConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(rmc.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(rmc.ref.Append("negate_condition"))
 }
 
 func (rmc RequestMethodConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(rmc.ref.Append("operator"))
+	return terra.ReferenceAsString(rmc.ref.Append("operator"))
 }
 
 type RequestSchemeConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (rsc RequestSchemeConditionAttributes) InternalRef() terra.Reference {
-	return rsc.ref
+func (rsc RequestSchemeConditionAttributes) InternalRef() (terra.Reference, error) {
+	return rsc.ref, nil
 }
 
 func (rsc RequestSchemeConditionAttributes) InternalWithRef(ref terra.Reference) RequestSchemeConditionAttributes {
 	return RequestSchemeConditionAttributes{ref: ref}
 }
 
-func (rsc RequestSchemeConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (rsc RequestSchemeConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rsc.ref.InternalTokens()
 }
 
 func (rsc RequestSchemeConditionAttributes) MatchValues() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rsc.ref.Append("match_values"))
+	return terra.ReferenceAsSet[terra.StringValue](rsc.ref.Append("match_values"))
 }
 
 func (rsc RequestSchemeConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(rsc.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(rsc.ref.Append("negate_condition"))
 }
 
 func (rsc RequestSchemeConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(rsc.ref.Append("operator"))
+	return terra.ReferenceAsString(rsc.ref.Append("operator"))
 }
 
 type RequestUriConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (ruc RequestUriConditionAttributes) InternalRef() terra.Reference {
-	return ruc.ref
+func (ruc RequestUriConditionAttributes) InternalRef() (terra.Reference, error) {
+	return ruc.ref, nil
 }
 
 func (ruc RequestUriConditionAttributes) InternalWithRef(ref terra.Reference) RequestUriConditionAttributes {
 	return RequestUriConditionAttributes{ref: ref}
 }
 
-func (ruc RequestUriConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (ruc RequestUriConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ruc.ref.InternalTokens()
 }
 
 func (ruc RequestUriConditionAttributes) MatchValues() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ruc.ref.Append("match_values"))
+	return terra.ReferenceAsSet[terra.StringValue](ruc.ref.Append("match_values"))
 }
 
 func (ruc RequestUriConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(ruc.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(ruc.ref.Append("negate_condition"))
 }
 
 func (ruc RequestUriConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(ruc.ref.Append("operator"))
+	return terra.ReferenceAsString(ruc.ref.Append("operator"))
 }
 
 func (ruc RequestUriConditionAttributes) Transforms() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ruc.ref.Append("transforms"))
+	return terra.ReferenceAsList[terra.StringValue](ruc.ref.Append("transforms"))
 }
 
 type UrlFileExtensionConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (ufec UrlFileExtensionConditionAttributes) InternalRef() terra.Reference {
-	return ufec.ref
+func (ufec UrlFileExtensionConditionAttributes) InternalRef() (terra.Reference, error) {
+	return ufec.ref, nil
 }
 
 func (ufec UrlFileExtensionConditionAttributes) InternalWithRef(ref terra.Reference) UrlFileExtensionConditionAttributes {
 	return UrlFileExtensionConditionAttributes{ref: ref}
 }
 
-func (ufec UrlFileExtensionConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (ufec UrlFileExtensionConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ufec.ref.InternalTokens()
 }
 
 func (ufec UrlFileExtensionConditionAttributes) MatchValues() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ufec.ref.Append("match_values"))
+	return terra.ReferenceAsSet[terra.StringValue](ufec.ref.Append("match_values"))
 }
 
 func (ufec UrlFileExtensionConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(ufec.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(ufec.ref.Append("negate_condition"))
 }
 
 func (ufec UrlFileExtensionConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(ufec.ref.Append("operator"))
+	return terra.ReferenceAsString(ufec.ref.Append("operator"))
 }
 
 func (ufec UrlFileExtensionConditionAttributes) Transforms() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ufec.ref.Append("transforms"))
+	return terra.ReferenceAsList[terra.StringValue](ufec.ref.Append("transforms"))
 }
 
 type UrlFileNameConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (ufnc UrlFileNameConditionAttributes) InternalRef() terra.Reference {
-	return ufnc.ref
+func (ufnc UrlFileNameConditionAttributes) InternalRef() (terra.Reference, error) {
+	return ufnc.ref, nil
 }
 
 func (ufnc UrlFileNameConditionAttributes) InternalWithRef(ref terra.Reference) UrlFileNameConditionAttributes {
 	return UrlFileNameConditionAttributes{ref: ref}
 }
 
-func (ufnc UrlFileNameConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (ufnc UrlFileNameConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ufnc.ref.InternalTokens()
 }
 
 func (ufnc UrlFileNameConditionAttributes) MatchValues() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ufnc.ref.Append("match_values"))
+	return terra.ReferenceAsSet[terra.StringValue](ufnc.ref.Append("match_values"))
 }
 
 func (ufnc UrlFileNameConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(ufnc.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(ufnc.ref.Append("negate_condition"))
 }
 
 func (ufnc UrlFileNameConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(ufnc.ref.Append("operator"))
+	return terra.ReferenceAsString(ufnc.ref.Append("operator"))
 }
 
 func (ufnc UrlFileNameConditionAttributes) Transforms() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ufnc.ref.Append("transforms"))
+	return terra.ReferenceAsList[terra.StringValue](ufnc.ref.Append("transforms"))
 }
 
 type UrlPathConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (upc UrlPathConditionAttributes) InternalRef() terra.Reference {
-	return upc.ref
+func (upc UrlPathConditionAttributes) InternalRef() (terra.Reference, error) {
+	return upc.ref, nil
 }
 
 func (upc UrlPathConditionAttributes) InternalWithRef(ref terra.Reference) UrlPathConditionAttributes {
 	return UrlPathConditionAttributes{ref: ref}
 }
 
-func (upc UrlPathConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (upc UrlPathConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return upc.ref.InternalTokens()
 }
 
 func (upc UrlPathConditionAttributes) MatchValues() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](upc.ref.Append("match_values"))
+	return terra.ReferenceAsSet[terra.StringValue](upc.ref.Append("match_values"))
 }
 
 func (upc UrlPathConditionAttributes) NegateCondition() terra.BoolValue {
-	return terra.ReferenceBool(upc.ref.Append("negate_condition"))
+	return terra.ReferenceAsBool(upc.ref.Append("negate_condition"))
 }
 
 func (upc UrlPathConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(upc.ref.Append("operator"))
+	return terra.ReferenceAsString(upc.ref.Append("operator"))
 }
 
 func (upc UrlPathConditionAttributes) Transforms() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](upc.ref.Append("transforms"))
+	return terra.ReferenceAsList[terra.StringValue](upc.ref.Append("transforms"))
 }
 
 type DeliveryRuleUrlRedirectActionAttributes struct {
 	ref terra.Reference
 }
 
-func (ura DeliveryRuleUrlRedirectActionAttributes) InternalRef() terra.Reference {
-	return ura.ref
+func (ura DeliveryRuleUrlRedirectActionAttributes) InternalRef() (terra.Reference, error) {
+	return ura.ref, nil
 }
 
 func (ura DeliveryRuleUrlRedirectActionAttributes) InternalWithRef(ref terra.Reference) DeliveryRuleUrlRedirectActionAttributes {
 	return DeliveryRuleUrlRedirectActionAttributes{ref: ref}
 }
 
-func (ura DeliveryRuleUrlRedirectActionAttributes) InternalTokens() hclwrite.Tokens {
+func (ura DeliveryRuleUrlRedirectActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ura.ref.InternalTokens()
 }
 
 func (ura DeliveryRuleUrlRedirectActionAttributes) Fragment() terra.StringValue {
-	return terra.ReferenceString(ura.ref.Append("fragment"))
+	return terra.ReferenceAsString(ura.ref.Append("fragment"))
 }
 
 func (ura DeliveryRuleUrlRedirectActionAttributes) Hostname() terra.StringValue {
-	return terra.ReferenceString(ura.ref.Append("hostname"))
+	return terra.ReferenceAsString(ura.ref.Append("hostname"))
 }
 
 func (ura DeliveryRuleUrlRedirectActionAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(ura.ref.Append("path"))
+	return terra.ReferenceAsString(ura.ref.Append("path"))
 }
 
 func (ura DeliveryRuleUrlRedirectActionAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(ura.ref.Append("protocol"))
+	return terra.ReferenceAsString(ura.ref.Append("protocol"))
 }
 
 func (ura DeliveryRuleUrlRedirectActionAttributes) QueryString() terra.StringValue {
-	return terra.ReferenceString(ura.ref.Append("query_string"))
+	return terra.ReferenceAsString(ura.ref.Append("query_string"))
 }
 
 func (ura DeliveryRuleUrlRedirectActionAttributes) RedirectType() terra.StringValue {
-	return terra.ReferenceString(ura.ref.Append("redirect_type"))
+	return terra.ReferenceAsString(ura.ref.Append("redirect_type"))
 }
 
 type DeliveryRuleUrlRewriteActionAttributes struct {
 	ref terra.Reference
 }
 
-func (ura DeliveryRuleUrlRewriteActionAttributes) InternalRef() terra.Reference {
-	return ura.ref
+func (ura DeliveryRuleUrlRewriteActionAttributes) InternalRef() (terra.Reference, error) {
+	return ura.ref, nil
 }
 
 func (ura DeliveryRuleUrlRewriteActionAttributes) InternalWithRef(ref terra.Reference) DeliveryRuleUrlRewriteActionAttributes {
 	return DeliveryRuleUrlRewriteActionAttributes{ref: ref}
 }
 
-func (ura DeliveryRuleUrlRewriteActionAttributes) InternalTokens() hclwrite.Tokens {
+func (ura DeliveryRuleUrlRewriteActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ura.ref.InternalTokens()
 }
 
 func (ura DeliveryRuleUrlRewriteActionAttributes) Destination() terra.StringValue {
-	return terra.ReferenceString(ura.ref.Append("destination"))
+	return terra.ReferenceAsString(ura.ref.Append("destination"))
 }
 
 func (ura DeliveryRuleUrlRewriteActionAttributes) PreserveUnmatchedPath() terra.BoolValue {
-	return terra.ReferenceBool(ura.ref.Append("preserve_unmatched_path"))
+	return terra.ReferenceAsBool(ura.ref.Append("preserve_unmatched_path"))
 }
 
 func (ura DeliveryRuleUrlRewriteActionAttributes) SourcePattern() terra.StringValue {
-	return terra.ReferenceString(ura.ref.Append("source_pattern"))
+	return terra.ReferenceAsString(ura.ref.Append("source_pattern"))
 }
 
 type GeoFilterAttributes struct {
 	ref terra.Reference
 }
 
-func (gf GeoFilterAttributes) InternalRef() terra.Reference {
-	return gf.ref
+func (gf GeoFilterAttributes) InternalRef() (terra.Reference, error) {
+	return gf.ref, nil
 }
 
 func (gf GeoFilterAttributes) InternalWithRef(ref terra.Reference) GeoFilterAttributes {
 	return GeoFilterAttributes{ref: ref}
 }
 
-func (gf GeoFilterAttributes) InternalTokens() hclwrite.Tokens {
+func (gf GeoFilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gf.ref.InternalTokens()
 }
 
 func (gf GeoFilterAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(gf.ref.Append("action"))
+	return terra.ReferenceAsString(gf.ref.Append("action"))
 }
 
 func (gf GeoFilterAttributes) CountryCodes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](gf.ref.Append("country_codes"))
+	return terra.ReferenceAsList[terra.StringValue](gf.ref.Append("country_codes"))
 }
 
 func (gf GeoFilterAttributes) RelativePath() terra.StringValue {
-	return terra.ReferenceString(gf.ref.Append("relative_path"))
+	return terra.ReferenceAsString(gf.ref.Append("relative_path"))
 }
 
 type GlobalDeliveryRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (gdr GlobalDeliveryRuleAttributes) InternalRef() terra.Reference {
-	return gdr.ref
+func (gdr GlobalDeliveryRuleAttributes) InternalRef() (terra.Reference, error) {
+	return gdr.ref, nil
 }
 
 func (gdr GlobalDeliveryRuleAttributes) InternalWithRef(ref terra.Reference) GlobalDeliveryRuleAttributes {
 	return GlobalDeliveryRuleAttributes{ref: ref}
 }
 
-func (gdr GlobalDeliveryRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (gdr GlobalDeliveryRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gdr.ref.InternalTokens()
 }
 
 func (gdr GlobalDeliveryRuleAttributes) CacheExpirationAction() terra.ListValue[GlobalDeliveryRuleCacheExpirationActionAttributes] {
-	return terra.ReferenceList[GlobalDeliveryRuleCacheExpirationActionAttributes](gdr.ref.Append("cache_expiration_action"))
+	return terra.ReferenceAsList[GlobalDeliveryRuleCacheExpirationActionAttributes](gdr.ref.Append("cache_expiration_action"))
 }
 
 func (gdr GlobalDeliveryRuleAttributes) CacheKeyQueryStringAction() terra.ListValue[GlobalDeliveryRuleCacheKeyQueryStringActionAttributes] {
-	return terra.ReferenceList[GlobalDeliveryRuleCacheKeyQueryStringActionAttributes](gdr.ref.Append("cache_key_query_string_action"))
+	return terra.ReferenceAsList[GlobalDeliveryRuleCacheKeyQueryStringActionAttributes](gdr.ref.Append("cache_key_query_string_action"))
 }
 
 func (gdr GlobalDeliveryRuleAttributes) ModifyRequestHeaderAction() terra.ListValue[GlobalDeliveryRuleModifyRequestHeaderActionAttributes] {
-	return terra.ReferenceList[GlobalDeliveryRuleModifyRequestHeaderActionAttributes](gdr.ref.Append("modify_request_header_action"))
+	return terra.ReferenceAsList[GlobalDeliveryRuleModifyRequestHeaderActionAttributes](gdr.ref.Append("modify_request_header_action"))
 }
 
 func (gdr GlobalDeliveryRuleAttributes) ModifyResponseHeaderAction() terra.ListValue[GlobalDeliveryRuleModifyResponseHeaderActionAttributes] {
-	return terra.ReferenceList[GlobalDeliveryRuleModifyResponseHeaderActionAttributes](gdr.ref.Append("modify_response_header_action"))
+	return terra.ReferenceAsList[GlobalDeliveryRuleModifyResponseHeaderActionAttributes](gdr.ref.Append("modify_response_header_action"))
 }
 
 func (gdr GlobalDeliveryRuleAttributes) UrlRedirectAction() terra.ListValue[GlobalDeliveryRuleUrlRedirectActionAttributes] {
-	return terra.ReferenceList[GlobalDeliveryRuleUrlRedirectActionAttributes](gdr.ref.Append("url_redirect_action"))
+	return terra.ReferenceAsList[GlobalDeliveryRuleUrlRedirectActionAttributes](gdr.ref.Append("url_redirect_action"))
 }
 
 func (gdr GlobalDeliveryRuleAttributes) UrlRewriteAction() terra.ListValue[GlobalDeliveryRuleUrlRewriteActionAttributes] {
-	return terra.ReferenceList[GlobalDeliveryRuleUrlRewriteActionAttributes](gdr.ref.Append("url_rewrite_action"))
+	return terra.ReferenceAsList[GlobalDeliveryRuleUrlRewriteActionAttributes](gdr.ref.Append("url_rewrite_action"))
 }
 
 type GlobalDeliveryRuleCacheExpirationActionAttributes struct {
 	ref terra.Reference
 }
 
-func (cea GlobalDeliveryRuleCacheExpirationActionAttributes) InternalRef() terra.Reference {
-	return cea.ref
+func (cea GlobalDeliveryRuleCacheExpirationActionAttributes) InternalRef() (terra.Reference, error) {
+	return cea.ref, nil
 }
 
 func (cea GlobalDeliveryRuleCacheExpirationActionAttributes) InternalWithRef(ref terra.Reference) GlobalDeliveryRuleCacheExpirationActionAttributes {
 	return GlobalDeliveryRuleCacheExpirationActionAttributes{ref: ref}
 }
 
-func (cea GlobalDeliveryRuleCacheExpirationActionAttributes) InternalTokens() hclwrite.Tokens {
+func (cea GlobalDeliveryRuleCacheExpirationActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cea.ref.InternalTokens()
 }
 
 func (cea GlobalDeliveryRuleCacheExpirationActionAttributes) Behavior() terra.StringValue {
-	return terra.ReferenceString(cea.ref.Append("behavior"))
+	return terra.ReferenceAsString(cea.ref.Append("behavior"))
 }
 
 func (cea GlobalDeliveryRuleCacheExpirationActionAttributes) Duration() terra.StringValue {
-	return terra.ReferenceString(cea.ref.Append("duration"))
+	return terra.ReferenceAsString(cea.ref.Append("duration"))
 }
 
 type GlobalDeliveryRuleCacheKeyQueryStringActionAttributes struct {
 	ref terra.Reference
 }
 
-func (ckqsa GlobalDeliveryRuleCacheKeyQueryStringActionAttributes) InternalRef() terra.Reference {
-	return ckqsa.ref
+func (ckqsa GlobalDeliveryRuleCacheKeyQueryStringActionAttributes) InternalRef() (terra.Reference, error) {
+	return ckqsa.ref, nil
 }
 
 func (ckqsa GlobalDeliveryRuleCacheKeyQueryStringActionAttributes) InternalWithRef(ref terra.Reference) GlobalDeliveryRuleCacheKeyQueryStringActionAttributes {
 	return GlobalDeliveryRuleCacheKeyQueryStringActionAttributes{ref: ref}
 }
 
-func (ckqsa GlobalDeliveryRuleCacheKeyQueryStringActionAttributes) InternalTokens() hclwrite.Tokens {
+func (ckqsa GlobalDeliveryRuleCacheKeyQueryStringActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ckqsa.ref.InternalTokens()
 }
 
 func (ckqsa GlobalDeliveryRuleCacheKeyQueryStringActionAttributes) Behavior() terra.StringValue {
-	return terra.ReferenceString(ckqsa.ref.Append("behavior"))
+	return terra.ReferenceAsString(ckqsa.ref.Append("behavior"))
 }
 
 func (ckqsa GlobalDeliveryRuleCacheKeyQueryStringActionAttributes) Parameters() terra.StringValue {
-	return terra.ReferenceString(ckqsa.ref.Append("parameters"))
+	return terra.ReferenceAsString(ckqsa.ref.Append("parameters"))
 }
 
 type GlobalDeliveryRuleModifyRequestHeaderActionAttributes struct {
 	ref terra.Reference
 }
 
-func (mrha GlobalDeliveryRuleModifyRequestHeaderActionAttributes) InternalRef() terra.Reference {
-	return mrha.ref
+func (mrha GlobalDeliveryRuleModifyRequestHeaderActionAttributes) InternalRef() (terra.Reference, error) {
+	return mrha.ref, nil
 }
 
 func (mrha GlobalDeliveryRuleModifyRequestHeaderActionAttributes) InternalWithRef(ref terra.Reference) GlobalDeliveryRuleModifyRequestHeaderActionAttributes {
 	return GlobalDeliveryRuleModifyRequestHeaderActionAttributes{ref: ref}
 }
 
-func (mrha GlobalDeliveryRuleModifyRequestHeaderActionAttributes) InternalTokens() hclwrite.Tokens {
+func (mrha GlobalDeliveryRuleModifyRequestHeaderActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mrha.ref.InternalTokens()
 }
 
 func (mrha GlobalDeliveryRuleModifyRequestHeaderActionAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(mrha.ref.Append("action"))
+	return terra.ReferenceAsString(mrha.ref.Append("action"))
 }
 
 func (mrha GlobalDeliveryRuleModifyRequestHeaderActionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mrha.ref.Append("name"))
+	return terra.ReferenceAsString(mrha.ref.Append("name"))
 }
 
 func (mrha GlobalDeliveryRuleModifyRequestHeaderActionAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(mrha.ref.Append("value"))
+	return terra.ReferenceAsString(mrha.ref.Append("value"))
 }
 
 type GlobalDeliveryRuleModifyResponseHeaderActionAttributes struct {
 	ref terra.Reference
 }
 
-func (mrha GlobalDeliveryRuleModifyResponseHeaderActionAttributes) InternalRef() terra.Reference {
-	return mrha.ref
+func (mrha GlobalDeliveryRuleModifyResponseHeaderActionAttributes) InternalRef() (terra.Reference, error) {
+	return mrha.ref, nil
 }
 
 func (mrha GlobalDeliveryRuleModifyResponseHeaderActionAttributes) InternalWithRef(ref terra.Reference) GlobalDeliveryRuleModifyResponseHeaderActionAttributes {
 	return GlobalDeliveryRuleModifyResponseHeaderActionAttributes{ref: ref}
 }
 
-func (mrha GlobalDeliveryRuleModifyResponseHeaderActionAttributes) InternalTokens() hclwrite.Tokens {
+func (mrha GlobalDeliveryRuleModifyResponseHeaderActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mrha.ref.InternalTokens()
 }
 
 func (mrha GlobalDeliveryRuleModifyResponseHeaderActionAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(mrha.ref.Append("action"))
+	return terra.ReferenceAsString(mrha.ref.Append("action"))
 }
 
 func (mrha GlobalDeliveryRuleModifyResponseHeaderActionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mrha.ref.Append("name"))
+	return terra.ReferenceAsString(mrha.ref.Append("name"))
 }
 
 func (mrha GlobalDeliveryRuleModifyResponseHeaderActionAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(mrha.ref.Append("value"))
+	return terra.ReferenceAsString(mrha.ref.Append("value"))
 }
 
 type GlobalDeliveryRuleUrlRedirectActionAttributes struct {
 	ref terra.Reference
 }
 
-func (ura GlobalDeliveryRuleUrlRedirectActionAttributes) InternalRef() terra.Reference {
-	return ura.ref
+func (ura GlobalDeliveryRuleUrlRedirectActionAttributes) InternalRef() (terra.Reference, error) {
+	return ura.ref, nil
 }
 
 func (ura GlobalDeliveryRuleUrlRedirectActionAttributes) InternalWithRef(ref terra.Reference) GlobalDeliveryRuleUrlRedirectActionAttributes {
 	return GlobalDeliveryRuleUrlRedirectActionAttributes{ref: ref}
 }
 
-func (ura GlobalDeliveryRuleUrlRedirectActionAttributes) InternalTokens() hclwrite.Tokens {
+func (ura GlobalDeliveryRuleUrlRedirectActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ura.ref.InternalTokens()
 }
 
 func (ura GlobalDeliveryRuleUrlRedirectActionAttributes) Fragment() terra.StringValue {
-	return terra.ReferenceString(ura.ref.Append("fragment"))
+	return terra.ReferenceAsString(ura.ref.Append("fragment"))
 }
 
 func (ura GlobalDeliveryRuleUrlRedirectActionAttributes) Hostname() terra.StringValue {
-	return terra.ReferenceString(ura.ref.Append("hostname"))
+	return terra.ReferenceAsString(ura.ref.Append("hostname"))
 }
 
 func (ura GlobalDeliveryRuleUrlRedirectActionAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(ura.ref.Append("path"))
+	return terra.ReferenceAsString(ura.ref.Append("path"))
 }
 
 func (ura GlobalDeliveryRuleUrlRedirectActionAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(ura.ref.Append("protocol"))
+	return terra.ReferenceAsString(ura.ref.Append("protocol"))
 }
 
 func (ura GlobalDeliveryRuleUrlRedirectActionAttributes) QueryString() terra.StringValue {
-	return terra.ReferenceString(ura.ref.Append("query_string"))
+	return terra.ReferenceAsString(ura.ref.Append("query_string"))
 }
 
 func (ura GlobalDeliveryRuleUrlRedirectActionAttributes) RedirectType() terra.StringValue {
-	return terra.ReferenceString(ura.ref.Append("redirect_type"))
+	return terra.ReferenceAsString(ura.ref.Append("redirect_type"))
 }
 
 type GlobalDeliveryRuleUrlRewriteActionAttributes struct {
 	ref terra.Reference
 }
 
-func (ura GlobalDeliveryRuleUrlRewriteActionAttributes) InternalRef() terra.Reference {
-	return ura.ref
+func (ura GlobalDeliveryRuleUrlRewriteActionAttributes) InternalRef() (terra.Reference, error) {
+	return ura.ref, nil
 }
 
 func (ura GlobalDeliveryRuleUrlRewriteActionAttributes) InternalWithRef(ref terra.Reference) GlobalDeliveryRuleUrlRewriteActionAttributes {
 	return GlobalDeliveryRuleUrlRewriteActionAttributes{ref: ref}
 }
 
-func (ura GlobalDeliveryRuleUrlRewriteActionAttributes) InternalTokens() hclwrite.Tokens {
+func (ura GlobalDeliveryRuleUrlRewriteActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ura.ref.InternalTokens()
 }
 
 func (ura GlobalDeliveryRuleUrlRewriteActionAttributes) Destination() terra.StringValue {
-	return terra.ReferenceString(ura.ref.Append("destination"))
+	return terra.ReferenceAsString(ura.ref.Append("destination"))
 }
 
 func (ura GlobalDeliveryRuleUrlRewriteActionAttributes) PreserveUnmatchedPath() terra.BoolValue {
-	return terra.ReferenceBool(ura.ref.Append("preserve_unmatched_path"))
+	return terra.ReferenceAsBool(ura.ref.Append("preserve_unmatched_path"))
 }
 
 func (ura GlobalDeliveryRuleUrlRewriteActionAttributes) SourcePattern() terra.StringValue {
-	return terra.ReferenceString(ura.ref.Append("source_pattern"))
+	return terra.ReferenceAsString(ura.ref.Append("source_pattern"))
 }
 
 type OriginAttributes struct {
 	ref terra.Reference
 }
 
-func (o OriginAttributes) InternalRef() terra.Reference {
-	return o.ref
+func (o OriginAttributes) InternalRef() (terra.Reference, error) {
+	return o.ref, nil
 }
 
 func (o OriginAttributes) InternalWithRef(ref terra.Reference) OriginAttributes {
 	return OriginAttributes{ref: ref}
 }
 
-func (o OriginAttributes) InternalTokens() hclwrite.Tokens {
+func (o OriginAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return o.ref.InternalTokens()
 }
 
 func (o OriginAttributes) HostName() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("host_name"))
+	return terra.ReferenceAsString(o.ref.Append("host_name"))
 }
 
 func (o OriginAttributes) HttpPort() terra.NumberValue {
-	return terra.ReferenceNumber(o.ref.Append("http_port"))
+	return terra.ReferenceAsNumber(o.ref.Append("http_port"))
 }
 
 func (o OriginAttributes) HttpsPort() terra.NumberValue {
-	return terra.ReferenceNumber(o.ref.Append("https_port"))
+	return terra.ReferenceAsNumber(o.ref.Append("https_port"))
 }
 
 func (o OriginAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("name"))
+	return terra.ReferenceAsString(o.ref.Append("name"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type DeliveryRuleState struct {

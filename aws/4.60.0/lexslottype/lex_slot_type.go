@@ -35,7 +35,7 @@ func (ev EnumerationValueAttributes) InternalWithRef(ref terra.Reference) Enumer
 	return EnumerationValueAttributes{ref: ref}
 }
 
-func (ev EnumerationValueAttributes) InternalTokens() hclwrite.Tokens {
+func (ev EnumerationValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ev.ref.InternalTokens()
 }
 
@@ -59,7 +59,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

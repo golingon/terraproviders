@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewFirewall creates a new instance of [Firewall].
 func NewFirewall(name string, args FirewallArgs) *Firewall {
 	return &Firewall{
 		Args: args,
@@ -19,28 +20,51 @@ func NewFirewall(name string, args FirewallArgs) *Firewall {
 
 var _ terra.Resource = (*Firewall)(nil)
 
+// Firewall represents the Terraform resource azurerm_firewall.
 type Firewall struct {
-	Name  string
-	Args  FirewallArgs
-	state *firewallState
+	Name      string
+	Args      FirewallArgs
+	state     *firewallState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Firewall].
 func (f *Firewall) Type() string {
 	return "azurerm_firewall"
 }
 
+// LocalName returns the local name for [Firewall].
 func (f *Firewall) LocalName() string {
 	return f.Name
 }
 
+// Configuration returns the configuration (args) for [Firewall].
 func (f *Firewall) Configuration() interface{} {
 	return f.Args
 }
 
+// DependOn is used for other resources to depend on [Firewall].
+func (f *Firewall) DependOn() terra.Reference {
+	return terra.ReferenceResource(f)
+}
+
+// Dependencies returns the list of resources [Firewall] depends_on.
+func (f *Firewall) Dependencies() terra.Dependencies {
+	return f.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Firewall].
+func (f *Firewall) LifecycleManagement() *terra.Lifecycle {
+	return f.Lifecycle
+}
+
+// Attributes returns the attributes for [Firewall].
 func (f *Firewall) Attributes() firewallAttributes {
 	return firewallAttributes{ref: terra.ReferenceResource(f)}
 }
 
+// ImportState imports the given attribute values into [Firewall]'s state.
 func (f *Firewall) ImportState(av io.Reader) error {
 	f.state = &firewallState{}
 	if err := json.NewDecoder(av).Decode(f.state); err != nil {
@@ -49,10 +73,12 @@ func (f *Firewall) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Firewall] has state.
 func (f *Firewall) State() (*firewallState, bool) {
 	return f.state, f.state != nil
 }
 
+// StateMust returns the state for [Firewall]. Panics if the state is nil.
 func (f *Firewall) StateMust() *firewallState {
 	if f.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", f.Type(), f.LocalName()))
@@ -60,10 +86,7 @@ func (f *Firewall) StateMust() *firewallState {
 	return f.state
 }
 
-func (f *Firewall) DependOn() terra.Reference {
-	return terra.ReferenceResource(f)
-}
-
+// FirewallArgs contains the configurations for azurerm_firewall.
 type FirewallArgs struct {
 	// DnsServers: list of string, optional
 	DnsServers terra.ListValue[terra.StringValue] `hcl:"dns_servers,attr"`
@@ -97,75 +120,85 @@ type FirewallArgs struct {
 	Timeouts *firewall.Timeouts `hcl:"timeouts,block"`
 	// VirtualHub: optional
 	VirtualHub *firewall.VirtualHub `hcl:"virtual_hub,block"`
-	// DependsOn contains resources that Firewall depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type firewallAttributes struct {
 	ref terra.Reference
 }
 
+// DnsServers returns a reference to field dns_servers of azurerm_firewall.
 func (f firewallAttributes) DnsServers() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](f.ref.Append("dns_servers"))
+	return terra.ReferenceAsList[terra.StringValue](f.ref.Append("dns_servers"))
 }
 
+// FirewallPolicyId returns a reference to field firewall_policy_id of azurerm_firewall.
 func (f firewallAttributes) FirewallPolicyId() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("firewall_policy_id"))
+	return terra.ReferenceAsString(f.ref.Append("firewall_policy_id"))
 }
 
+// Id returns a reference to field id of azurerm_firewall.
 func (f firewallAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("id"))
+	return terra.ReferenceAsString(f.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_firewall.
 func (f firewallAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("location"))
+	return terra.ReferenceAsString(f.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_firewall.
 func (f firewallAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("name"))
+	return terra.ReferenceAsString(f.ref.Append("name"))
 }
 
+// PrivateIpRanges returns a reference to field private_ip_ranges of azurerm_firewall.
 func (f firewallAttributes) PrivateIpRanges() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](f.ref.Append("private_ip_ranges"))
+	return terra.ReferenceAsSet[terra.StringValue](f.ref.Append("private_ip_ranges"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_firewall.
 func (f firewallAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(f.ref.Append("resource_group_name"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_firewall.
 func (f firewallAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("sku_name"))
+	return terra.ReferenceAsString(f.ref.Append("sku_name"))
 }
 
+// SkuTier returns a reference to field sku_tier of azurerm_firewall.
 func (f firewallAttributes) SkuTier() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("sku_tier"))
+	return terra.ReferenceAsString(f.ref.Append("sku_tier"))
 }
 
+// Tags returns a reference to field tags of azurerm_firewall.
 func (f firewallAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](f.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](f.ref.Append("tags"))
 }
 
+// ThreatIntelMode returns a reference to field threat_intel_mode of azurerm_firewall.
 func (f firewallAttributes) ThreatIntelMode() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("threat_intel_mode"))
+	return terra.ReferenceAsString(f.ref.Append("threat_intel_mode"))
 }
 
+// Zones returns a reference to field zones of azurerm_firewall.
 func (f firewallAttributes) Zones() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](f.ref.Append("zones"))
+	return terra.ReferenceAsSet[terra.StringValue](f.ref.Append("zones"))
 }
 
 func (f firewallAttributes) IpConfiguration() terra.ListValue[firewall.IpConfigurationAttributes] {
-	return terra.ReferenceList[firewall.IpConfigurationAttributes](f.ref.Append("ip_configuration"))
+	return terra.ReferenceAsList[firewall.IpConfigurationAttributes](f.ref.Append("ip_configuration"))
 }
 
 func (f firewallAttributes) ManagementIpConfiguration() terra.ListValue[firewall.ManagementIpConfigurationAttributes] {
-	return terra.ReferenceList[firewall.ManagementIpConfigurationAttributes](f.ref.Append("management_ip_configuration"))
+	return terra.ReferenceAsList[firewall.ManagementIpConfigurationAttributes](f.ref.Append("management_ip_configuration"))
 }
 
 func (f firewallAttributes) Timeouts() firewall.TimeoutsAttributes {
-	return terra.ReferenceSingle[firewall.TimeoutsAttributes](f.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[firewall.TimeoutsAttributes](f.ref.Append("timeouts"))
 }
 
 func (f firewallAttributes) VirtualHub() terra.ListValue[firewall.VirtualHubAttributes] {
-	return terra.ReferenceList[firewall.VirtualHubAttributes](f.ref.Append("virtual_hub"))
+	return terra.ReferenceAsList[firewall.VirtualHubAttributes](f.ref.Append("virtual_hub"))
 }
 
 type firewallState struct {

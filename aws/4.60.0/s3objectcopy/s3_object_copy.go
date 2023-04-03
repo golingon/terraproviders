@@ -32,7 +32,7 @@ func (g GrantAttributes) InternalWithRef(ref terra.Reference) GrantAttributes {
 	return GrantAttributes{ref: ref}
 }
 
-func (g GrantAttributes) InternalTokens() hclwrite.Tokens {
+func (g GrantAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return g.ref.InternalTokens()
 }
 

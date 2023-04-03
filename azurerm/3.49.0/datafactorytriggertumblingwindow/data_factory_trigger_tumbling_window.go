@@ -45,108 +45,108 @@ type PipelineAttributes struct {
 	ref terra.Reference
 }
 
-func (p PipelineAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p PipelineAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p PipelineAttributes) InternalWithRef(ref terra.Reference) PipelineAttributes {
 	return PipelineAttributes{ref: ref}
 }
 
-func (p PipelineAttributes) InternalTokens() hclwrite.Tokens {
+func (p PipelineAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
 func (p PipelineAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("name"))
+	return terra.ReferenceAsString(p.ref.Append("name"))
 }
 
 func (p PipelineAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](p.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](p.ref.Append("parameters"))
 }
 
 type RetryAttributes struct {
 	ref terra.Reference
 }
 
-func (r RetryAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RetryAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RetryAttributes) InternalWithRef(ref terra.Reference) RetryAttributes {
 	return RetryAttributes{ref: ref}
 }
 
-func (r RetryAttributes) InternalTokens() hclwrite.Tokens {
+func (r RetryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RetryAttributes) Count() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("count"))
+	return terra.ReferenceAsNumber(r.ref.Append("count"))
 }
 
 func (r RetryAttributes) Interval() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("interval"))
+	return terra.ReferenceAsNumber(r.ref.Append("interval"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type TriggerDependencyAttributes struct {
 	ref terra.Reference
 }
 
-func (td TriggerDependencyAttributes) InternalRef() terra.Reference {
-	return td.ref
+func (td TriggerDependencyAttributes) InternalRef() (terra.Reference, error) {
+	return td.ref, nil
 }
 
 func (td TriggerDependencyAttributes) InternalWithRef(ref terra.Reference) TriggerDependencyAttributes {
 	return TriggerDependencyAttributes{ref: ref}
 }
 
-func (td TriggerDependencyAttributes) InternalTokens() hclwrite.Tokens {
+func (td TriggerDependencyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return td.ref.InternalTokens()
 }
 
 func (td TriggerDependencyAttributes) Offset() terra.StringValue {
-	return terra.ReferenceString(td.ref.Append("offset"))
+	return terra.ReferenceAsString(td.ref.Append("offset"))
 }
 
 func (td TriggerDependencyAttributes) Size() terra.StringValue {
-	return terra.ReferenceString(td.ref.Append("size"))
+	return terra.ReferenceAsString(td.ref.Append("size"))
 }
 
 func (td TriggerDependencyAttributes) TriggerName() terra.StringValue {
-	return terra.ReferenceString(td.ref.Append("trigger_name"))
+	return terra.ReferenceAsString(td.ref.Append("trigger_name"))
 }
 
 type PipelineState struct {

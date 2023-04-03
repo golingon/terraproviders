@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewVirtualDesktopApplication creates a new instance of [VirtualDesktopApplication].
 func NewVirtualDesktopApplication(name string, args VirtualDesktopApplicationArgs) *VirtualDesktopApplication {
 	return &VirtualDesktopApplication{
 		Args: args,
@@ -19,28 +20,51 @@ func NewVirtualDesktopApplication(name string, args VirtualDesktopApplicationArg
 
 var _ terra.Resource = (*VirtualDesktopApplication)(nil)
 
+// VirtualDesktopApplication represents the Terraform resource azurerm_virtual_desktop_application.
 type VirtualDesktopApplication struct {
-	Name  string
-	Args  VirtualDesktopApplicationArgs
-	state *virtualDesktopApplicationState
+	Name      string
+	Args      VirtualDesktopApplicationArgs
+	state     *virtualDesktopApplicationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VirtualDesktopApplication].
 func (vda *VirtualDesktopApplication) Type() string {
 	return "azurerm_virtual_desktop_application"
 }
 
+// LocalName returns the local name for [VirtualDesktopApplication].
 func (vda *VirtualDesktopApplication) LocalName() string {
 	return vda.Name
 }
 
+// Configuration returns the configuration (args) for [VirtualDesktopApplication].
 func (vda *VirtualDesktopApplication) Configuration() interface{} {
 	return vda.Args
 }
 
+// DependOn is used for other resources to depend on [VirtualDesktopApplication].
+func (vda *VirtualDesktopApplication) DependOn() terra.Reference {
+	return terra.ReferenceResource(vda)
+}
+
+// Dependencies returns the list of resources [VirtualDesktopApplication] depends_on.
+func (vda *VirtualDesktopApplication) Dependencies() terra.Dependencies {
+	return vda.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VirtualDesktopApplication].
+func (vda *VirtualDesktopApplication) LifecycleManagement() *terra.Lifecycle {
+	return vda.Lifecycle
+}
+
+// Attributes returns the attributes for [VirtualDesktopApplication].
 func (vda *VirtualDesktopApplication) Attributes() virtualDesktopApplicationAttributes {
 	return virtualDesktopApplicationAttributes{ref: terra.ReferenceResource(vda)}
 }
 
+// ImportState imports the given attribute values into [VirtualDesktopApplication]'s state.
 func (vda *VirtualDesktopApplication) ImportState(av io.Reader) error {
 	vda.state = &virtualDesktopApplicationState{}
 	if err := json.NewDecoder(av).Decode(vda.state); err != nil {
@@ -49,10 +73,12 @@ func (vda *VirtualDesktopApplication) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [VirtualDesktopApplication] has state.
 func (vda *VirtualDesktopApplication) State() (*virtualDesktopApplicationState, bool) {
 	return vda.state, vda.state != nil
 }
 
+// StateMust returns the state for [VirtualDesktopApplication]. Panics if the state is nil.
 func (vda *VirtualDesktopApplication) StateMust() *virtualDesktopApplicationState {
 	if vda.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", vda.Type(), vda.LocalName()))
@@ -60,10 +86,7 @@ func (vda *VirtualDesktopApplication) StateMust() *virtualDesktopApplicationStat
 	return vda.state
 }
 
-func (vda *VirtualDesktopApplication) DependOn() terra.Reference {
-	return terra.ReferenceResource(vda)
-}
-
+// VirtualDesktopApplicationArgs contains the configurations for azurerm_virtual_desktop_application.
 type VirtualDesktopApplicationArgs struct {
 	// ApplicationGroupId: string, required
 	ApplicationGroupId terra.StringValue `hcl:"application_group_id,attr" validate:"required"`
@@ -89,59 +112,68 @@ type VirtualDesktopApplicationArgs struct {
 	ShowInPortal terra.BoolValue `hcl:"show_in_portal,attr"`
 	// Timeouts: optional
 	Timeouts *virtualdesktopapplication.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that VirtualDesktopApplication depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type virtualDesktopApplicationAttributes struct {
 	ref terra.Reference
 }
 
+// ApplicationGroupId returns a reference to field application_group_id of azurerm_virtual_desktop_application.
 func (vda virtualDesktopApplicationAttributes) ApplicationGroupId() terra.StringValue {
-	return terra.ReferenceString(vda.ref.Append("application_group_id"))
+	return terra.ReferenceAsString(vda.ref.Append("application_group_id"))
 }
 
+// CommandLineArgumentPolicy returns a reference to field command_line_argument_policy of azurerm_virtual_desktop_application.
 func (vda virtualDesktopApplicationAttributes) CommandLineArgumentPolicy() terra.StringValue {
-	return terra.ReferenceString(vda.ref.Append("command_line_argument_policy"))
+	return terra.ReferenceAsString(vda.ref.Append("command_line_argument_policy"))
 }
 
+// CommandLineArguments returns a reference to field command_line_arguments of azurerm_virtual_desktop_application.
 func (vda virtualDesktopApplicationAttributes) CommandLineArguments() terra.StringValue {
-	return terra.ReferenceString(vda.ref.Append("command_line_arguments"))
+	return terra.ReferenceAsString(vda.ref.Append("command_line_arguments"))
 }
 
+// Description returns a reference to field description of azurerm_virtual_desktop_application.
 func (vda virtualDesktopApplicationAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(vda.ref.Append("description"))
+	return terra.ReferenceAsString(vda.ref.Append("description"))
 }
 
+// FriendlyName returns a reference to field friendly_name of azurerm_virtual_desktop_application.
 func (vda virtualDesktopApplicationAttributes) FriendlyName() terra.StringValue {
-	return terra.ReferenceString(vda.ref.Append("friendly_name"))
+	return terra.ReferenceAsString(vda.ref.Append("friendly_name"))
 }
 
+// IconIndex returns a reference to field icon_index of azurerm_virtual_desktop_application.
 func (vda virtualDesktopApplicationAttributes) IconIndex() terra.NumberValue {
-	return terra.ReferenceNumber(vda.ref.Append("icon_index"))
+	return terra.ReferenceAsNumber(vda.ref.Append("icon_index"))
 }
 
+// IconPath returns a reference to field icon_path of azurerm_virtual_desktop_application.
 func (vda virtualDesktopApplicationAttributes) IconPath() terra.StringValue {
-	return terra.ReferenceString(vda.ref.Append("icon_path"))
+	return terra.ReferenceAsString(vda.ref.Append("icon_path"))
 }
 
+// Id returns a reference to field id of azurerm_virtual_desktop_application.
 func (vda virtualDesktopApplicationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vda.ref.Append("id"))
+	return terra.ReferenceAsString(vda.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_virtual_desktop_application.
 func (vda virtualDesktopApplicationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(vda.ref.Append("name"))
+	return terra.ReferenceAsString(vda.ref.Append("name"))
 }
 
+// Path returns a reference to field path of azurerm_virtual_desktop_application.
 func (vda virtualDesktopApplicationAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(vda.ref.Append("path"))
+	return terra.ReferenceAsString(vda.ref.Append("path"))
 }
 
+// ShowInPortal returns a reference to field show_in_portal of azurerm_virtual_desktop_application.
 func (vda virtualDesktopApplicationAttributes) ShowInPortal() terra.BoolValue {
-	return terra.ReferenceBool(vda.ref.Append("show_in_portal"))
+	return terra.ReferenceAsBool(vda.ref.Append("show_in_portal"))
 }
 
 func (vda virtualDesktopApplicationAttributes) Timeouts() virtualdesktopapplication.TimeoutsAttributes {
-	return terra.ReferenceSingle[virtualdesktopapplication.TimeoutsAttributes](vda.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[virtualdesktopapplication.TimeoutsAttributes](vda.ref.Append("timeouts"))
 }
 
 type virtualDesktopApplicationState struct {

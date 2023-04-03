@@ -24,7 +24,7 @@ func (rc RoutingConfigAttributes) InternalWithRef(ref terra.Reference) RoutingCo
 	return RoutingConfigAttributes{ref: ref}
 }
 
-func (rc RoutingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (rc RoutingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rc.ref.InternalTokens()
 }
 

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApiManagement creates a new instance of [ApiManagement].
 func NewApiManagement(name string, args ApiManagementArgs) *ApiManagement {
 	return &ApiManagement{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApiManagement(name string, args ApiManagementArgs) *ApiManagement {
 
 var _ terra.Resource = (*ApiManagement)(nil)
 
+// ApiManagement represents the Terraform resource azurerm_api_management.
 type ApiManagement struct {
-	Name  string
-	Args  ApiManagementArgs
-	state *apiManagementState
+	Name      string
+	Args      ApiManagementArgs
+	state     *apiManagementState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiManagement].
 func (am *ApiManagement) Type() string {
 	return "azurerm_api_management"
 }
 
+// LocalName returns the local name for [ApiManagement].
 func (am *ApiManagement) LocalName() string {
 	return am.Name
 }
 
+// Configuration returns the configuration (args) for [ApiManagement].
 func (am *ApiManagement) Configuration() interface{} {
 	return am.Args
 }
 
+// DependOn is used for other resources to depend on [ApiManagement].
+func (am *ApiManagement) DependOn() terra.Reference {
+	return terra.ReferenceResource(am)
+}
+
+// Dependencies returns the list of resources [ApiManagement] depends_on.
+func (am *ApiManagement) Dependencies() terra.Dependencies {
+	return am.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiManagement].
+func (am *ApiManagement) LifecycleManagement() *terra.Lifecycle {
+	return am.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiManagement].
 func (am *ApiManagement) Attributes() apiManagementAttributes {
 	return apiManagementAttributes{ref: terra.ReferenceResource(am)}
 }
 
+// ImportState imports the given attribute values into [ApiManagement]'s state.
 func (am *ApiManagement) ImportState(av io.Reader) error {
 	am.state = &apiManagementState{}
 	if err := json.NewDecoder(av).Decode(am.state); err != nil {
@@ -49,10 +73,12 @@ func (am *ApiManagement) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiManagement] has state.
 func (am *ApiManagement) State() (*apiManagementState, bool) {
 	return am.state, am.state != nil
 }
 
+// StateMust returns the state for [ApiManagement]. Panics if the state is nil.
 func (am *ApiManagement) StateMust() *apiManagementState {
 	if am.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", am.Type(), am.LocalName()))
@@ -60,10 +86,7 @@ func (am *ApiManagement) StateMust() *apiManagementState {
 	return am.state
 }
 
-func (am *ApiManagement) DependOn() terra.Reference {
-	return terra.ReferenceResource(am)
-}
-
+// ApiManagementArgs contains the configurations for azurerm_api_management.
 type ApiManagementArgs struct {
 	// ClientCertificateEnabled: bool, optional
 	ClientCertificateEnabled terra.BoolValue `hcl:"client_certificate_enabled,attr"`
@@ -123,159 +146,181 @@ type ApiManagementArgs struct {
 	Timeouts *apimanagement.Timeouts `hcl:"timeouts,block"`
 	// VirtualNetworkConfiguration: optional
 	VirtualNetworkConfiguration *apimanagement.VirtualNetworkConfiguration `hcl:"virtual_network_configuration,block"`
-	// DependsOn contains resources that ApiManagement depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiManagementAttributes struct {
 	ref terra.Reference
 }
 
+// ClientCertificateEnabled returns a reference to field client_certificate_enabled of azurerm_api_management.
 func (am apiManagementAttributes) ClientCertificateEnabled() terra.BoolValue {
-	return terra.ReferenceBool(am.ref.Append("client_certificate_enabled"))
+	return terra.ReferenceAsBool(am.ref.Append("client_certificate_enabled"))
 }
 
+// DeveloperPortalUrl returns a reference to field developer_portal_url of azurerm_api_management.
 func (am apiManagementAttributes) DeveloperPortalUrl() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("developer_portal_url"))
+	return terra.ReferenceAsString(am.ref.Append("developer_portal_url"))
 }
 
+// GatewayDisabled returns a reference to field gateway_disabled of azurerm_api_management.
 func (am apiManagementAttributes) GatewayDisabled() terra.BoolValue {
-	return terra.ReferenceBool(am.ref.Append("gateway_disabled"))
+	return terra.ReferenceAsBool(am.ref.Append("gateway_disabled"))
 }
 
+// GatewayRegionalUrl returns a reference to field gateway_regional_url of azurerm_api_management.
 func (am apiManagementAttributes) GatewayRegionalUrl() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("gateway_regional_url"))
+	return terra.ReferenceAsString(am.ref.Append("gateway_regional_url"))
 }
 
+// GatewayUrl returns a reference to field gateway_url of azurerm_api_management.
 func (am apiManagementAttributes) GatewayUrl() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("gateway_url"))
+	return terra.ReferenceAsString(am.ref.Append("gateway_url"))
 }
 
+// Id returns a reference to field id of azurerm_api_management.
 func (am apiManagementAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("id"))
+	return terra.ReferenceAsString(am.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_api_management.
 func (am apiManagementAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("location"))
+	return terra.ReferenceAsString(am.ref.Append("location"))
 }
 
+// ManagementApiUrl returns a reference to field management_api_url of azurerm_api_management.
 func (am apiManagementAttributes) ManagementApiUrl() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("management_api_url"))
+	return terra.ReferenceAsString(am.ref.Append("management_api_url"))
 }
 
+// MinApiVersion returns a reference to field min_api_version of azurerm_api_management.
 func (am apiManagementAttributes) MinApiVersion() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("min_api_version"))
+	return terra.ReferenceAsString(am.ref.Append("min_api_version"))
 }
 
+// Name returns a reference to field name of azurerm_api_management.
 func (am apiManagementAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("name"))
+	return terra.ReferenceAsString(am.ref.Append("name"))
 }
 
+// NotificationSenderEmail returns a reference to field notification_sender_email of azurerm_api_management.
 func (am apiManagementAttributes) NotificationSenderEmail() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("notification_sender_email"))
+	return terra.ReferenceAsString(am.ref.Append("notification_sender_email"))
 }
 
+// PortalUrl returns a reference to field portal_url of azurerm_api_management.
 func (am apiManagementAttributes) PortalUrl() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("portal_url"))
+	return terra.ReferenceAsString(am.ref.Append("portal_url"))
 }
 
+// PrivateIpAddresses returns a reference to field private_ip_addresses of azurerm_api_management.
 func (am apiManagementAttributes) PrivateIpAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](am.ref.Append("private_ip_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](am.ref.Append("private_ip_addresses"))
 }
 
+// PublicIpAddressId returns a reference to field public_ip_address_id of azurerm_api_management.
 func (am apiManagementAttributes) PublicIpAddressId() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("public_ip_address_id"))
+	return terra.ReferenceAsString(am.ref.Append("public_ip_address_id"))
 }
 
+// PublicIpAddresses returns a reference to field public_ip_addresses of azurerm_api_management.
 func (am apiManagementAttributes) PublicIpAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](am.ref.Append("public_ip_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](am.ref.Append("public_ip_addresses"))
 }
 
+// PublicNetworkAccessEnabled returns a reference to field public_network_access_enabled of azurerm_api_management.
 func (am apiManagementAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(am.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(am.ref.Append("public_network_access_enabled"))
 }
 
+// PublisherEmail returns a reference to field publisher_email of azurerm_api_management.
 func (am apiManagementAttributes) PublisherEmail() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("publisher_email"))
+	return terra.ReferenceAsString(am.ref.Append("publisher_email"))
 }
 
+// PublisherName returns a reference to field publisher_name of azurerm_api_management.
 func (am apiManagementAttributes) PublisherName() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("publisher_name"))
+	return terra.ReferenceAsString(am.ref.Append("publisher_name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_api_management.
 func (am apiManagementAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(am.ref.Append("resource_group_name"))
 }
 
+// ScmUrl returns a reference to field scm_url of azurerm_api_management.
 func (am apiManagementAttributes) ScmUrl() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("scm_url"))
+	return terra.ReferenceAsString(am.ref.Append("scm_url"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_api_management.
 func (am apiManagementAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("sku_name"))
+	return terra.ReferenceAsString(am.ref.Append("sku_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_api_management.
 func (am apiManagementAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](am.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](am.ref.Append("tags"))
 }
 
+// VirtualNetworkType returns a reference to field virtual_network_type of azurerm_api_management.
 func (am apiManagementAttributes) VirtualNetworkType() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("virtual_network_type"))
+	return terra.ReferenceAsString(am.ref.Append("virtual_network_type"))
 }
 
+// Zones returns a reference to field zones of azurerm_api_management.
 func (am apiManagementAttributes) Zones() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](am.ref.Append("zones"))
+	return terra.ReferenceAsSet[terra.StringValue](am.ref.Append("zones"))
 }
 
 func (am apiManagementAttributes) Policy() terra.ListValue[apimanagement.PolicyAttributes] {
-	return terra.ReferenceList[apimanagement.PolicyAttributes](am.ref.Append("policy"))
+	return terra.ReferenceAsList[apimanagement.PolicyAttributes](am.ref.Append("policy"))
 }
 
 func (am apiManagementAttributes) AdditionalLocation() terra.ListValue[apimanagement.AdditionalLocationAttributes] {
-	return terra.ReferenceList[apimanagement.AdditionalLocationAttributes](am.ref.Append("additional_location"))
+	return terra.ReferenceAsList[apimanagement.AdditionalLocationAttributes](am.ref.Append("additional_location"))
 }
 
 func (am apiManagementAttributes) Certificate() terra.ListValue[apimanagement.CertificateAttributes] {
-	return terra.ReferenceList[apimanagement.CertificateAttributes](am.ref.Append("certificate"))
+	return terra.ReferenceAsList[apimanagement.CertificateAttributes](am.ref.Append("certificate"))
 }
 
 func (am apiManagementAttributes) Delegation() terra.ListValue[apimanagement.DelegationAttributes] {
-	return terra.ReferenceList[apimanagement.DelegationAttributes](am.ref.Append("delegation"))
+	return terra.ReferenceAsList[apimanagement.DelegationAttributes](am.ref.Append("delegation"))
 }
 
 func (am apiManagementAttributes) HostnameConfiguration() terra.ListValue[apimanagement.HostnameConfigurationAttributes] {
-	return terra.ReferenceList[apimanagement.HostnameConfigurationAttributes](am.ref.Append("hostname_configuration"))
+	return terra.ReferenceAsList[apimanagement.HostnameConfigurationAttributes](am.ref.Append("hostname_configuration"))
 }
 
 func (am apiManagementAttributes) Identity() terra.ListValue[apimanagement.IdentityAttributes] {
-	return terra.ReferenceList[apimanagement.IdentityAttributes](am.ref.Append("identity"))
+	return terra.ReferenceAsList[apimanagement.IdentityAttributes](am.ref.Append("identity"))
 }
 
 func (am apiManagementAttributes) Protocols() terra.ListValue[apimanagement.ProtocolsAttributes] {
-	return terra.ReferenceList[apimanagement.ProtocolsAttributes](am.ref.Append("protocols"))
+	return terra.ReferenceAsList[apimanagement.ProtocolsAttributes](am.ref.Append("protocols"))
 }
 
 func (am apiManagementAttributes) Security() terra.ListValue[apimanagement.SecurityAttributes] {
-	return terra.ReferenceList[apimanagement.SecurityAttributes](am.ref.Append("security"))
+	return terra.ReferenceAsList[apimanagement.SecurityAttributes](am.ref.Append("security"))
 }
 
 func (am apiManagementAttributes) SignIn() terra.ListValue[apimanagement.SignInAttributes] {
-	return terra.ReferenceList[apimanagement.SignInAttributes](am.ref.Append("sign_in"))
+	return terra.ReferenceAsList[apimanagement.SignInAttributes](am.ref.Append("sign_in"))
 }
 
 func (am apiManagementAttributes) SignUp() terra.ListValue[apimanagement.SignUpAttributes] {
-	return terra.ReferenceList[apimanagement.SignUpAttributes](am.ref.Append("sign_up"))
+	return terra.ReferenceAsList[apimanagement.SignUpAttributes](am.ref.Append("sign_up"))
 }
 
 func (am apiManagementAttributes) TenantAccess() terra.ListValue[apimanagement.TenantAccessAttributes] {
-	return terra.ReferenceList[apimanagement.TenantAccessAttributes](am.ref.Append("tenant_access"))
+	return terra.ReferenceAsList[apimanagement.TenantAccessAttributes](am.ref.Append("tenant_access"))
 }
 
 func (am apiManagementAttributes) Timeouts() apimanagement.TimeoutsAttributes {
-	return terra.ReferenceSingle[apimanagement.TimeoutsAttributes](am.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[apimanagement.TimeoutsAttributes](am.ref.Append("timeouts"))
 }
 
 func (am apiManagementAttributes) VirtualNetworkConfiguration() terra.ListValue[apimanagement.VirtualNetworkConfigurationAttributes] {
-	return terra.ReferenceList[apimanagement.VirtualNetworkConfigurationAttributes](am.ref.Append("virtual_network_configuration"))
+	return terra.ReferenceAsList[apimanagement.VirtualNetworkConfigurationAttributes](am.ref.Append("virtual_network_configuration"))
 }
 
 type apiManagementState struct {

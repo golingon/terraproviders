@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataCatalogPolicyTag creates a new instance of [DataCatalogPolicyTag].
 func NewDataCatalogPolicyTag(name string, args DataCatalogPolicyTagArgs) *DataCatalogPolicyTag {
 	return &DataCatalogPolicyTag{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataCatalogPolicyTag(name string, args DataCatalogPolicyTagArgs) *DataCa
 
 var _ terra.Resource = (*DataCatalogPolicyTag)(nil)
 
+// DataCatalogPolicyTag represents the Terraform resource google_data_catalog_policy_tag.
 type DataCatalogPolicyTag struct {
-	Name  string
-	Args  DataCatalogPolicyTagArgs
-	state *dataCatalogPolicyTagState
+	Name      string
+	Args      DataCatalogPolicyTagArgs
+	state     *dataCatalogPolicyTagState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataCatalogPolicyTag].
 func (dcpt *DataCatalogPolicyTag) Type() string {
 	return "google_data_catalog_policy_tag"
 }
 
+// LocalName returns the local name for [DataCatalogPolicyTag].
 func (dcpt *DataCatalogPolicyTag) LocalName() string {
 	return dcpt.Name
 }
 
+// Configuration returns the configuration (args) for [DataCatalogPolicyTag].
 func (dcpt *DataCatalogPolicyTag) Configuration() interface{} {
 	return dcpt.Args
 }
 
+// DependOn is used for other resources to depend on [DataCatalogPolicyTag].
+func (dcpt *DataCatalogPolicyTag) DependOn() terra.Reference {
+	return terra.ReferenceResource(dcpt)
+}
+
+// Dependencies returns the list of resources [DataCatalogPolicyTag] depends_on.
+func (dcpt *DataCatalogPolicyTag) Dependencies() terra.Dependencies {
+	return dcpt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataCatalogPolicyTag].
+func (dcpt *DataCatalogPolicyTag) LifecycleManagement() *terra.Lifecycle {
+	return dcpt.Lifecycle
+}
+
+// Attributes returns the attributes for [DataCatalogPolicyTag].
 func (dcpt *DataCatalogPolicyTag) Attributes() dataCatalogPolicyTagAttributes {
 	return dataCatalogPolicyTagAttributes{ref: terra.ReferenceResource(dcpt)}
 }
 
+// ImportState imports the given attribute values into [DataCatalogPolicyTag]'s state.
 func (dcpt *DataCatalogPolicyTag) ImportState(av io.Reader) error {
 	dcpt.state = &dataCatalogPolicyTagState{}
 	if err := json.NewDecoder(av).Decode(dcpt.state); err != nil {
@@ -49,10 +73,12 @@ func (dcpt *DataCatalogPolicyTag) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataCatalogPolicyTag] has state.
 func (dcpt *DataCatalogPolicyTag) State() (*dataCatalogPolicyTagState, bool) {
 	return dcpt.state, dcpt.state != nil
 }
 
+// StateMust returns the state for [DataCatalogPolicyTag]. Panics if the state is nil.
 func (dcpt *DataCatalogPolicyTag) StateMust() *dataCatalogPolicyTagState {
 	if dcpt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dcpt.Type(), dcpt.LocalName()))
@@ -60,10 +86,7 @@ func (dcpt *DataCatalogPolicyTag) StateMust() *dataCatalogPolicyTagState {
 	return dcpt.state
 }
 
-func (dcpt *DataCatalogPolicyTag) DependOn() terra.Reference {
-	return terra.ReferenceResource(dcpt)
-}
-
+// DataCatalogPolicyTagArgs contains the configurations for google_data_catalog_policy_tag.
 type DataCatalogPolicyTagArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -77,43 +100,48 @@ type DataCatalogPolicyTagArgs struct {
 	Taxonomy terra.StringValue `hcl:"taxonomy,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *datacatalogpolicytag.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataCatalogPolicyTag depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataCatalogPolicyTagAttributes struct {
 	ref terra.Reference
 }
 
+// ChildPolicyTags returns a reference to field child_policy_tags of google_data_catalog_policy_tag.
 func (dcpt dataCatalogPolicyTagAttributes) ChildPolicyTags() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dcpt.ref.Append("child_policy_tags"))
+	return terra.ReferenceAsList[terra.StringValue](dcpt.ref.Append("child_policy_tags"))
 }
 
+// Description returns a reference to field description of google_data_catalog_policy_tag.
 func (dcpt dataCatalogPolicyTagAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dcpt.ref.Append("description"))
+	return terra.ReferenceAsString(dcpt.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of google_data_catalog_policy_tag.
 func (dcpt dataCatalogPolicyTagAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(dcpt.ref.Append("display_name"))
+	return terra.ReferenceAsString(dcpt.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of google_data_catalog_policy_tag.
 func (dcpt dataCatalogPolicyTagAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dcpt.ref.Append("id"))
+	return terra.ReferenceAsString(dcpt.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_data_catalog_policy_tag.
 func (dcpt dataCatalogPolicyTagAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dcpt.ref.Append("name"))
+	return terra.ReferenceAsString(dcpt.ref.Append("name"))
 }
 
+// ParentPolicyTag returns a reference to field parent_policy_tag of google_data_catalog_policy_tag.
 func (dcpt dataCatalogPolicyTagAttributes) ParentPolicyTag() terra.StringValue {
-	return terra.ReferenceString(dcpt.ref.Append("parent_policy_tag"))
+	return terra.ReferenceAsString(dcpt.ref.Append("parent_policy_tag"))
 }
 
+// Taxonomy returns a reference to field taxonomy of google_data_catalog_policy_tag.
 func (dcpt dataCatalogPolicyTagAttributes) Taxonomy() terra.StringValue {
-	return terra.ReferenceString(dcpt.ref.Append("taxonomy"))
+	return terra.ReferenceAsString(dcpt.ref.Append("taxonomy"))
 }
 
 func (dcpt dataCatalogPolicyTagAttributes) Timeouts() datacatalogpolicytag.TimeoutsAttributes {
-	return terra.ReferenceSingle[datacatalogpolicytag.TimeoutsAttributes](dcpt.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datacatalogpolicytag.TimeoutsAttributes](dcpt.ref.Append("timeouts"))
 }
 
 type dataCatalogPolicyTagState struct {

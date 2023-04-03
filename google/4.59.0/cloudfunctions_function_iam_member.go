@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCloudfunctionsFunctionIamMember creates a new instance of [CloudfunctionsFunctionIamMember].
 func NewCloudfunctionsFunctionIamMember(name string, args CloudfunctionsFunctionIamMemberArgs) *CloudfunctionsFunctionIamMember {
 	return &CloudfunctionsFunctionIamMember{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCloudfunctionsFunctionIamMember(name string, args CloudfunctionsFunction
 
 var _ terra.Resource = (*CloudfunctionsFunctionIamMember)(nil)
 
+// CloudfunctionsFunctionIamMember represents the Terraform resource google_cloudfunctions_function_iam_member.
 type CloudfunctionsFunctionIamMember struct {
-	Name  string
-	Args  CloudfunctionsFunctionIamMemberArgs
-	state *cloudfunctionsFunctionIamMemberState
+	Name      string
+	Args      CloudfunctionsFunctionIamMemberArgs
+	state     *cloudfunctionsFunctionIamMemberState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudfunctionsFunctionIamMember].
 func (cfim *CloudfunctionsFunctionIamMember) Type() string {
 	return "google_cloudfunctions_function_iam_member"
 }
 
+// LocalName returns the local name for [CloudfunctionsFunctionIamMember].
 func (cfim *CloudfunctionsFunctionIamMember) LocalName() string {
 	return cfim.Name
 }
 
+// Configuration returns the configuration (args) for [CloudfunctionsFunctionIamMember].
 func (cfim *CloudfunctionsFunctionIamMember) Configuration() interface{} {
 	return cfim.Args
 }
 
+// DependOn is used for other resources to depend on [CloudfunctionsFunctionIamMember].
+func (cfim *CloudfunctionsFunctionIamMember) DependOn() terra.Reference {
+	return terra.ReferenceResource(cfim)
+}
+
+// Dependencies returns the list of resources [CloudfunctionsFunctionIamMember] depends_on.
+func (cfim *CloudfunctionsFunctionIamMember) Dependencies() terra.Dependencies {
+	return cfim.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudfunctionsFunctionIamMember].
+func (cfim *CloudfunctionsFunctionIamMember) LifecycleManagement() *terra.Lifecycle {
+	return cfim.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudfunctionsFunctionIamMember].
 func (cfim *CloudfunctionsFunctionIamMember) Attributes() cloudfunctionsFunctionIamMemberAttributes {
 	return cloudfunctionsFunctionIamMemberAttributes{ref: terra.ReferenceResource(cfim)}
 }
 
+// ImportState imports the given attribute values into [CloudfunctionsFunctionIamMember]'s state.
 func (cfim *CloudfunctionsFunctionIamMember) ImportState(av io.Reader) error {
 	cfim.state = &cloudfunctionsFunctionIamMemberState{}
 	if err := json.NewDecoder(av).Decode(cfim.state); err != nil {
@@ -49,10 +73,12 @@ func (cfim *CloudfunctionsFunctionIamMember) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudfunctionsFunctionIamMember] has state.
 func (cfim *CloudfunctionsFunctionIamMember) State() (*cloudfunctionsFunctionIamMemberState, bool) {
 	return cfim.state, cfim.state != nil
 }
 
+// StateMust returns the state for [CloudfunctionsFunctionIamMember]. Panics if the state is nil.
 func (cfim *CloudfunctionsFunctionIamMember) StateMust() *cloudfunctionsFunctionIamMemberState {
 	if cfim.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cfim.Type(), cfim.LocalName()))
@@ -60,10 +86,7 @@ func (cfim *CloudfunctionsFunctionIamMember) StateMust() *cloudfunctionsFunction
 	return cfim.state
 }
 
-func (cfim *CloudfunctionsFunctionIamMember) DependOn() terra.Reference {
-	return terra.ReferenceResource(cfim)
-}
-
+// CloudfunctionsFunctionIamMemberArgs contains the configurations for google_cloudfunctions_function_iam_member.
 type CloudfunctionsFunctionIamMemberArgs struct {
 	// CloudFunction: string, required
 	CloudFunction terra.StringValue `hcl:"cloud_function,attr" validate:"required"`
@@ -79,43 +102,48 @@ type CloudfunctionsFunctionIamMemberArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *cloudfunctionsfunctioniammember.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that CloudfunctionsFunctionIamMember depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudfunctionsFunctionIamMemberAttributes struct {
 	ref terra.Reference
 }
 
+// CloudFunction returns a reference to field cloud_function of google_cloudfunctions_function_iam_member.
 func (cfim cloudfunctionsFunctionIamMemberAttributes) CloudFunction() terra.StringValue {
-	return terra.ReferenceString(cfim.ref.Append("cloud_function"))
+	return terra.ReferenceAsString(cfim.ref.Append("cloud_function"))
 }
 
+// Etag returns a reference to field etag of google_cloudfunctions_function_iam_member.
 func (cfim cloudfunctionsFunctionIamMemberAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(cfim.ref.Append("etag"))
+	return terra.ReferenceAsString(cfim.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_cloudfunctions_function_iam_member.
 func (cfim cloudfunctionsFunctionIamMemberAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cfim.ref.Append("id"))
+	return terra.ReferenceAsString(cfim.ref.Append("id"))
 }
 
+// Member returns a reference to field member of google_cloudfunctions_function_iam_member.
 func (cfim cloudfunctionsFunctionIamMemberAttributes) Member() terra.StringValue {
-	return terra.ReferenceString(cfim.ref.Append("member"))
+	return terra.ReferenceAsString(cfim.ref.Append("member"))
 }
 
+// Project returns a reference to field project of google_cloudfunctions_function_iam_member.
 func (cfim cloudfunctionsFunctionIamMemberAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cfim.ref.Append("project"))
+	return terra.ReferenceAsString(cfim.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_cloudfunctions_function_iam_member.
 func (cfim cloudfunctionsFunctionIamMemberAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(cfim.ref.Append("region"))
+	return terra.ReferenceAsString(cfim.ref.Append("region"))
 }
 
+// Role returns a reference to field role of google_cloudfunctions_function_iam_member.
 func (cfim cloudfunctionsFunctionIamMemberAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(cfim.ref.Append("role"))
+	return terra.ReferenceAsString(cfim.ref.Append("role"))
 }
 
 func (cfim cloudfunctionsFunctionIamMemberAttributes) Condition() terra.ListValue[cloudfunctionsfunctioniammember.ConditionAttributes] {
-	return terra.ReferenceList[cloudfunctionsfunctioniammember.ConditionAttributes](cfim.ref.Append("condition"))
+	return terra.ReferenceAsList[cloudfunctionsfunctioniammember.ConditionAttributes](cfim.ref.Append("condition"))
 }
 
 type cloudfunctionsFunctionIamMemberState struct {

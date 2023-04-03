@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCloudfunctionsFunctionIamPolicy creates a new instance of [CloudfunctionsFunctionIamPolicy].
 func NewCloudfunctionsFunctionIamPolicy(name string, args CloudfunctionsFunctionIamPolicyArgs) *CloudfunctionsFunctionIamPolicy {
 	return &CloudfunctionsFunctionIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCloudfunctionsFunctionIamPolicy(name string, args CloudfunctionsFunction
 
 var _ terra.Resource = (*CloudfunctionsFunctionIamPolicy)(nil)
 
+// CloudfunctionsFunctionIamPolicy represents the Terraform resource google_cloudfunctions_function_iam_policy.
 type CloudfunctionsFunctionIamPolicy struct {
-	Name  string
-	Args  CloudfunctionsFunctionIamPolicyArgs
-	state *cloudfunctionsFunctionIamPolicyState
+	Name      string
+	Args      CloudfunctionsFunctionIamPolicyArgs
+	state     *cloudfunctionsFunctionIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudfunctionsFunctionIamPolicy].
 func (cfip *CloudfunctionsFunctionIamPolicy) Type() string {
 	return "google_cloudfunctions_function_iam_policy"
 }
 
+// LocalName returns the local name for [CloudfunctionsFunctionIamPolicy].
 func (cfip *CloudfunctionsFunctionIamPolicy) LocalName() string {
 	return cfip.Name
 }
 
+// Configuration returns the configuration (args) for [CloudfunctionsFunctionIamPolicy].
 func (cfip *CloudfunctionsFunctionIamPolicy) Configuration() interface{} {
 	return cfip.Args
 }
 
+// DependOn is used for other resources to depend on [CloudfunctionsFunctionIamPolicy].
+func (cfip *CloudfunctionsFunctionIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(cfip)
+}
+
+// Dependencies returns the list of resources [CloudfunctionsFunctionIamPolicy] depends_on.
+func (cfip *CloudfunctionsFunctionIamPolicy) Dependencies() terra.Dependencies {
+	return cfip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudfunctionsFunctionIamPolicy].
+func (cfip *CloudfunctionsFunctionIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return cfip.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudfunctionsFunctionIamPolicy].
 func (cfip *CloudfunctionsFunctionIamPolicy) Attributes() cloudfunctionsFunctionIamPolicyAttributes {
 	return cloudfunctionsFunctionIamPolicyAttributes{ref: terra.ReferenceResource(cfip)}
 }
 
+// ImportState imports the given attribute values into [CloudfunctionsFunctionIamPolicy]'s state.
 func (cfip *CloudfunctionsFunctionIamPolicy) ImportState(av io.Reader) error {
 	cfip.state = &cloudfunctionsFunctionIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(cfip.state); err != nil {
@@ -48,10 +72,12 @@ func (cfip *CloudfunctionsFunctionIamPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudfunctionsFunctionIamPolicy] has state.
 func (cfip *CloudfunctionsFunctionIamPolicy) State() (*cloudfunctionsFunctionIamPolicyState, bool) {
 	return cfip.state, cfip.state != nil
 }
 
+// StateMust returns the state for [CloudfunctionsFunctionIamPolicy]. Panics if the state is nil.
 func (cfip *CloudfunctionsFunctionIamPolicy) StateMust() *cloudfunctionsFunctionIamPolicyState {
 	if cfip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cfip.Type(), cfip.LocalName()))
@@ -59,10 +85,7 @@ func (cfip *CloudfunctionsFunctionIamPolicy) StateMust() *cloudfunctionsFunction
 	return cfip.state
 }
 
-func (cfip *CloudfunctionsFunctionIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(cfip)
-}
-
+// CloudfunctionsFunctionIamPolicyArgs contains the configurations for google_cloudfunctions_function_iam_policy.
 type CloudfunctionsFunctionIamPolicyArgs struct {
 	// CloudFunction: string, required
 	CloudFunction terra.StringValue `hcl:"cloud_function,attr" validate:"required"`
@@ -74,35 +97,39 @@ type CloudfunctionsFunctionIamPolicyArgs struct {
 	Project terra.StringValue `hcl:"project,attr"`
 	// Region: string, optional
 	Region terra.StringValue `hcl:"region,attr"`
-	// DependsOn contains resources that CloudfunctionsFunctionIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudfunctionsFunctionIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// CloudFunction returns a reference to field cloud_function of google_cloudfunctions_function_iam_policy.
 func (cfip cloudfunctionsFunctionIamPolicyAttributes) CloudFunction() terra.StringValue {
-	return terra.ReferenceString(cfip.ref.Append("cloud_function"))
+	return terra.ReferenceAsString(cfip.ref.Append("cloud_function"))
 }
 
+// Etag returns a reference to field etag of google_cloudfunctions_function_iam_policy.
 func (cfip cloudfunctionsFunctionIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(cfip.ref.Append("etag"))
+	return terra.ReferenceAsString(cfip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_cloudfunctions_function_iam_policy.
 func (cfip cloudfunctionsFunctionIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cfip.ref.Append("id"))
+	return terra.ReferenceAsString(cfip.ref.Append("id"))
 }
 
+// PolicyData returns a reference to field policy_data of google_cloudfunctions_function_iam_policy.
 func (cfip cloudfunctionsFunctionIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(cfip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(cfip.ref.Append("policy_data"))
 }
 
+// Project returns a reference to field project of google_cloudfunctions_function_iam_policy.
 func (cfip cloudfunctionsFunctionIamPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cfip.ref.Append("project"))
+	return terra.ReferenceAsString(cfip.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_cloudfunctions_function_iam_policy.
 func (cfip cloudfunctionsFunctionIamPolicyAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(cfip.ref.Append("region"))
+	return terra.ReferenceAsString(cfip.ref.Append("region"))
 }
 
 type cloudfunctionsFunctionIamPolicyState struct {

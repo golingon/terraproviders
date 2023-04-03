@@ -114,328 +114,328 @@ type RequiredNetworkTrafficRulesAttributes struct {
 	ref terra.Reference
 }
 
-func (rntr RequiredNetworkTrafficRulesAttributes) InternalRef() terra.Reference {
-	return rntr.ref
+func (rntr RequiredNetworkTrafficRulesAttributes) InternalRef() (terra.Reference, error) {
+	return rntr.ref, nil
 }
 
 func (rntr RequiredNetworkTrafficRulesAttributes) InternalWithRef(ref terra.Reference) RequiredNetworkTrafficRulesAttributes {
 	return RequiredNetworkTrafficRulesAttributes{ref: ref}
 }
 
-func (rntr RequiredNetworkTrafficRulesAttributes) InternalTokens() hclwrite.Tokens {
+func (rntr RequiredNetworkTrafficRulesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rntr.ref.InternalTokens()
 }
 
 func (rntr RequiredNetworkTrafficRulesAttributes) Direction() terra.StringValue {
-	return terra.ReferenceString(rntr.ref.Append("direction"))
+	return terra.ReferenceAsString(rntr.ref.Append("direction"))
 }
 
 func (rntr RequiredNetworkTrafficRulesAttributes) Fqdns() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rntr.ref.Append("fqdns"))
+	return terra.ReferenceAsList[terra.StringValue](rntr.ref.Append("fqdns"))
 }
 
 func (rntr RequiredNetworkTrafficRulesAttributes) IpAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rntr.ref.Append("ip_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](rntr.ref.Append("ip_addresses"))
 }
 
 func (rntr RequiredNetworkTrafficRulesAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(rntr.ref.Append("port"))
+	return terra.ReferenceAsNumber(rntr.ref.Append("port"))
 }
 
 func (rntr RequiredNetworkTrafficRulesAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(rntr.ref.Append("protocol"))
+	return terra.ReferenceAsString(rntr.ref.Append("protocol"))
 }
 
 type ConfigServerGitSettingAttributes struct {
 	ref terra.Reference
 }
 
-func (csgs ConfigServerGitSettingAttributes) InternalRef() terra.Reference {
-	return csgs.ref
+func (csgs ConfigServerGitSettingAttributes) InternalRef() (terra.Reference, error) {
+	return csgs.ref, nil
 }
 
 func (csgs ConfigServerGitSettingAttributes) InternalWithRef(ref terra.Reference) ConfigServerGitSettingAttributes {
 	return ConfigServerGitSettingAttributes{ref: ref}
 }
 
-func (csgs ConfigServerGitSettingAttributes) InternalTokens() hclwrite.Tokens {
+func (csgs ConfigServerGitSettingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return csgs.ref.InternalTokens()
 }
 
 func (csgs ConfigServerGitSettingAttributes) Label() terra.StringValue {
-	return terra.ReferenceString(csgs.ref.Append("label"))
+	return terra.ReferenceAsString(csgs.ref.Append("label"))
 }
 
 func (csgs ConfigServerGitSettingAttributes) SearchPaths() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](csgs.ref.Append("search_paths"))
+	return terra.ReferenceAsList[terra.StringValue](csgs.ref.Append("search_paths"))
 }
 
 func (csgs ConfigServerGitSettingAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(csgs.ref.Append("uri"))
+	return terra.ReferenceAsString(csgs.ref.Append("uri"))
 }
 
 func (csgs ConfigServerGitSettingAttributes) HttpBasicAuth() terra.ListValue[ConfigServerGitSettingHttpBasicAuthAttributes] {
-	return terra.ReferenceList[ConfigServerGitSettingHttpBasicAuthAttributes](csgs.ref.Append("http_basic_auth"))
+	return terra.ReferenceAsList[ConfigServerGitSettingHttpBasicAuthAttributes](csgs.ref.Append("http_basic_auth"))
 }
 
 func (csgs ConfigServerGitSettingAttributes) Repository() terra.ListValue[RepositoryAttributes] {
-	return terra.ReferenceList[RepositoryAttributes](csgs.ref.Append("repository"))
+	return terra.ReferenceAsList[RepositoryAttributes](csgs.ref.Append("repository"))
 }
 
 func (csgs ConfigServerGitSettingAttributes) SshAuth() terra.ListValue[ConfigServerGitSettingSshAuthAttributes] {
-	return terra.ReferenceList[ConfigServerGitSettingSshAuthAttributes](csgs.ref.Append("ssh_auth"))
+	return terra.ReferenceAsList[ConfigServerGitSettingSshAuthAttributes](csgs.ref.Append("ssh_auth"))
 }
 
 type ConfigServerGitSettingHttpBasicAuthAttributes struct {
 	ref terra.Reference
 }
 
-func (hba ConfigServerGitSettingHttpBasicAuthAttributes) InternalRef() terra.Reference {
-	return hba.ref
+func (hba ConfigServerGitSettingHttpBasicAuthAttributes) InternalRef() (terra.Reference, error) {
+	return hba.ref, nil
 }
 
 func (hba ConfigServerGitSettingHttpBasicAuthAttributes) InternalWithRef(ref terra.Reference) ConfigServerGitSettingHttpBasicAuthAttributes {
 	return ConfigServerGitSettingHttpBasicAuthAttributes{ref: ref}
 }
 
-func (hba ConfigServerGitSettingHttpBasicAuthAttributes) InternalTokens() hclwrite.Tokens {
+func (hba ConfigServerGitSettingHttpBasicAuthAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hba.ref.InternalTokens()
 }
 
 func (hba ConfigServerGitSettingHttpBasicAuthAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(hba.ref.Append("password"))
+	return terra.ReferenceAsString(hba.ref.Append("password"))
 }
 
 func (hba ConfigServerGitSettingHttpBasicAuthAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(hba.ref.Append("username"))
+	return terra.ReferenceAsString(hba.ref.Append("username"))
 }
 
 type RepositoryAttributes struct {
 	ref terra.Reference
 }
 
-func (r RepositoryAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RepositoryAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RepositoryAttributes) InternalWithRef(ref terra.Reference) RepositoryAttributes {
 	return RepositoryAttributes{ref: ref}
 }
 
-func (r RepositoryAttributes) InternalTokens() hclwrite.Tokens {
+func (r RepositoryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RepositoryAttributes) Label() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("label"))
+	return terra.ReferenceAsString(r.ref.Append("label"))
 }
 
 func (r RepositoryAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("name"))
+	return terra.ReferenceAsString(r.ref.Append("name"))
 }
 
 func (r RepositoryAttributes) Pattern() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("pattern"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("pattern"))
 }
 
 func (r RepositoryAttributes) SearchPaths() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("search_paths"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("search_paths"))
 }
 
 func (r RepositoryAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("uri"))
+	return terra.ReferenceAsString(r.ref.Append("uri"))
 }
 
 func (r RepositoryAttributes) HttpBasicAuth() terra.ListValue[RepositoryHttpBasicAuthAttributes] {
-	return terra.ReferenceList[RepositoryHttpBasicAuthAttributes](r.ref.Append("http_basic_auth"))
+	return terra.ReferenceAsList[RepositoryHttpBasicAuthAttributes](r.ref.Append("http_basic_auth"))
 }
 
 func (r RepositoryAttributes) SshAuth() terra.ListValue[RepositorySshAuthAttributes] {
-	return terra.ReferenceList[RepositorySshAuthAttributes](r.ref.Append("ssh_auth"))
+	return terra.ReferenceAsList[RepositorySshAuthAttributes](r.ref.Append("ssh_auth"))
 }
 
 type RepositoryHttpBasicAuthAttributes struct {
 	ref terra.Reference
 }
 
-func (hba RepositoryHttpBasicAuthAttributes) InternalRef() terra.Reference {
-	return hba.ref
+func (hba RepositoryHttpBasicAuthAttributes) InternalRef() (terra.Reference, error) {
+	return hba.ref, nil
 }
 
 func (hba RepositoryHttpBasicAuthAttributes) InternalWithRef(ref terra.Reference) RepositoryHttpBasicAuthAttributes {
 	return RepositoryHttpBasicAuthAttributes{ref: ref}
 }
 
-func (hba RepositoryHttpBasicAuthAttributes) InternalTokens() hclwrite.Tokens {
+func (hba RepositoryHttpBasicAuthAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hba.ref.InternalTokens()
 }
 
 func (hba RepositoryHttpBasicAuthAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(hba.ref.Append("password"))
+	return terra.ReferenceAsString(hba.ref.Append("password"))
 }
 
 func (hba RepositoryHttpBasicAuthAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(hba.ref.Append("username"))
+	return terra.ReferenceAsString(hba.ref.Append("username"))
 }
 
 type RepositorySshAuthAttributes struct {
 	ref terra.Reference
 }
 
-func (sa RepositorySshAuthAttributes) InternalRef() terra.Reference {
-	return sa.ref
+func (sa RepositorySshAuthAttributes) InternalRef() (terra.Reference, error) {
+	return sa.ref, nil
 }
 
 func (sa RepositorySshAuthAttributes) InternalWithRef(ref terra.Reference) RepositorySshAuthAttributes {
 	return RepositorySshAuthAttributes{ref: ref}
 }
 
-func (sa RepositorySshAuthAttributes) InternalTokens() hclwrite.Tokens {
+func (sa RepositorySshAuthAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sa.ref.InternalTokens()
 }
 
 func (sa RepositorySshAuthAttributes) HostKey() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("host_key"))
+	return terra.ReferenceAsString(sa.ref.Append("host_key"))
 }
 
 func (sa RepositorySshAuthAttributes) HostKeyAlgorithm() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("host_key_algorithm"))
+	return terra.ReferenceAsString(sa.ref.Append("host_key_algorithm"))
 }
 
 func (sa RepositorySshAuthAttributes) PrivateKey() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("private_key"))
+	return terra.ReferenceAsString(sa.ref.Append("private_key"))
 }
 
 func (sa RepositorySshAuthAttributes) StrictHostKeyCheckingEnabled() terra.BoolValue {
-	return terra.ReferenceBool(sa.ref.Append("strict_host_key_checking_enabled"))
+	return terra.ReferenceAsBool(sa.ref.Append("strict_host_key_checking_enabled"))
 }
 
 type ConfigServerGitSettingSshAuthAttributes struct {
 	ref terra.Reference
 }
 
-func (sa ConfigServerGitSettingSshAuthAttributes) InternalRef() terra.Reference {
-	return sa.ref
+func (sa ConfigServerGitSettingSshAuthAttributes) InternalRef() (terra.Reference, error) {
+	return sa.ref, nil
 }
 
 func (sa ConfigServerGitSettingSshAuthAttributes) InternalWithRef(ref terra.Reference) ConfigServerGitSettingSshAuthAttributes {
 	return ConfigServerGitSettingSshAuthAttributes{ref: ref}
 }
 
-func (sa ConfigServerGitSettingSshAuthAttributes) InternalTokens() hclwrite.Tokens {
+func (sa ConfigServerGitSettingSshAuthAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sa.ref.InternalTokens()
 }
 
 func (sa ConfigServerGitSettingSshAuthAttributes) HostKey() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("host_key"))
+	return terra.ReferenceAsString(sa.ref.Append("host_key"))
 }
 
 func (sa ConfigServerGitSettingSshAuthAttributes) HostKeyAlgorithm() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("host_key_algorithm"))
+	return terra.ReferenceAsString(sa.ref.Append("host_key_algorithm"))
 }
 
 func (sa ConfigServerGitSettingSshAuthAttributes) PrivateKey() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("private_key"))
+	return terra.ReferenceAsString(sa.ref.Append("private_key"))
 }
 
 func (sa ConfigServerGitSettingSshAuthAttributes) StrictHostKeyCheckingEnabled() terra.BoolValue {
-	return terra.ReferenceBool(sa.ref.Append("strict_host_key_checking_enabled"))
+	return terra.ReferenceAsBool(sa.ref.Append("strict_host_key_checking_enabled"))
 }
 
 type NetworkAttributes struct {
 	ref terra.Reference
 }
 
-func (n NetworkAttributes) InternalRef() terra.Reference {
-	return n.ref
+func (n NetworkAttributes) InternalRef() (terra.Reference, error) {
+	return n.ref, nil
 }
 
 func (n NetworkAttributes) InternalWithRef(ref terra.Reference) NetworkAttributes {
 	return NetworkAttributes{ref: ref}
 }
 
-func (n NetworkAttributes) InternalTokens() hclwrite.Tokens {
+func (n NetworkAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return n.ref.InternalTokens()
 }
 
 func (n NetworkAttributes) AppNetworkResourceGroup() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("app_network_resource_group"))
+	return terra.ReferenceAsString(n.ref.Append("app_network_resource_group"))
 }
 
 func (n NetworkAttributes) AppSubnetId() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("app_subnet_id"))
+	return terra.ReferenceAsString(n.ref.Append("app_subnet_id"))
 }
 
 func (n NetworkAttributes) CidrRanges() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](n.ref.Append("cidr_ranges"))
+	return terra.ReferenceAsList[terra.StringValue](n.ref.Append("cidr_ranges"))
 }
 
 func (n NetworkAttributes) ReadTimeoutSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(n.ref.Append("read_timeout_seconds"))
+	return terra.ReferenceAsNumber(n.ref.Append("read_timeout_seconds"))
 }
 
 func (n NetworkAttributes) ServiceRuntimeNetworkResourceGroup() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("service_runtime_network_resource_group"))
+	return terra.ReferenceAsString(n.ref.Append("service_runtime_network_resource_group"))
 }
 
 func (n NetworkAttributes) ServiceRuntimeSubnetId() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("service_runtime_subnet_id"))
+	return terra.ReferenceAsString(n.ref.Append("service_runtime_subnet_id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type TraceAttributes struct {
 	ref terra.Reference
 }
 
-func (t TraceAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TraceAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TraceAttributes) InternalWithRef(ref terra.Reference) TraceAttributes {
 	return TraceAttributes{ref: ref}
 }
 
-func (t TraceAttributes) InternalTokens() hclwrite.Tokens {
+func (t TraceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TraceAttributes) ConnectionString() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("connection_string"))
+	return terra.ReferenceAsString(t.ref.Append("connection_string"))
 }
 
 func (t TraceAttributes) SampleRate() terra.NumberValue {
-	return terra.ReferenceNumber(t.ref.Append("sample_rate"))
+	return terra.ReferenceAsNumber(t.ref.Append("sample_rate"))
 }
 
 type RequiredNetworkTrafficRulesState struct {

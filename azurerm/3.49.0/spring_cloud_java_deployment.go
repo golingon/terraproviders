@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSpringCloudJavaDeployment creates a new instance of [SpringCloudJavaDeployment].
 func NewSpringCloudJavaDeployment(name string, args SpringCloudJavaDeploymentArgs) *SpringCloudJavaDeployment {
 	return &SpringCloudJavaDeployment{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSpringCloudJavaDeployment(name string, args SpringCloudJavaDeploymentArg
 
 var _ terra.Resource = (*SpringCloudJavaDeployment)(nil)
 
+// SpringCloudJavaDeployment represents the Terraform resource azurerm_spring_cloud_java_deployment.
 type SpringCloudJavaDeployment struct {
-	Name  string
-	Args  SpringCloudJavaDeploymentArgs
-	state *springCloudJavaDeploymentState
+	Name      string
+	Args      SpringCloudJavaDeploymentArgs
+	state     *springCloudJavaDeploymentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SpringCloudJavaDeployment].
 func (scjd *SpringCloudJavaDeployment) Type() string {
 	return "azurerm_spring_cloud_java_deployment"
 }
 
+// LocalName returns the local name for [SpringCloudJavaDeployment].
 func (scjd *SpringCloudJavaDeployment) LocalName() string {
 	return scjd.Name
 }
 
+// Configuration returns the configuration (args) for [SpringCloudJavaDeployment].
 func (scjd *SpringCloudJavaDeployment) Configuration() interface{} {
 	return scjd.Args
 }
 
+// DependOn is used for other resources to depend on [SpringCloudJavaDeployment].
+func (scjd *SpringCloudJavaDeployment) DependOn() terra.Reference {
+	return terra.ReferenceResource(scjd)
+}
+
+// Dependencies returns the list of resources [SpringCloudJavaDeployment] depends_on.
+func (scjd *SpringCloudJavaDeployment) Dependencies() terra.Dependencies {
+	return scjd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SpringCloudJavaDeployment].
+func (scjd *SpringCloudJavaDeployment) LifecycleManagement() *terra.Lifecycle {
+	return scjd.Lifecycle
+}
+
+// Attributes returns the attributes for [SpringCloudJavaDeployment].
 func (scjd *SpringCloudJavaDeployment) Attributes() springCloudJavaDeploymentAttributes {
 	return springCloudJavaDeploymentAttributes{ref: terra.ReferenceResource(scjd)}
 }
 
+// ImportState imports the given attribute values into [SpringCloudJavaDeployment]'s state.
 func (scjd *SpringCloudJavaDeployment) ImportState(av io.Reader) error {
 	scjd.state = &springCloudJavaDeploymentState{}
 	if err := json.NewDecoder(av).Decode(scjd.state); err != nil {
@@ -49,10 +73,12 @@ func (scjd *SpringCloudJavaDeployment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SpringCloudJavaDeployment] has state.
 func (scjd *SpringCloudJavaDeployment) State() (*springCloudJavaDeploymentState, bool) {
 	return scjd.state, scjd.state != nil
 }
 
+// StateMust returns the state for [SpringCloudJavaDeployment]. Panics if the state is nil.
 func (scjd *SpringCloudJavaDeployment) StateMust() *springCloudJavaDeploymentState {
 	if scjd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", scjd.Type(), scjd.LocalName()))
@@ -60,10 +86,7 @@ func (scjd *SpringCloudJavaDeployment) StateMust() *springCloudJavaDeploymentSta
 	return scjd.state
 }
 
-func (scjd *SpringCloudJavaDeployment) DependOn() terra.Reference {
-	return terra.ReferenceResource(scjd)
-}
-
+// SpringCloudJavaDeploymentArgs contains the configurations for azurerm_spring_cloud_java_deployment.
 type SpringCloudJavaDeploymentArgs struct {
 	// EnvironmentVariables: map of string, optional
 	EnvironmentVariables terra.MapValue[terra.StringValue] `hcl:"environment_variables,attr"`
@@ -83,47 +106,52 @@ type SpringCloudJavaDeploymentArgs struct {
 	Quota *springcloudjavadeployment.Quota `hcl:"quota,block"`
 	// Timeouts: optional
 	Timeouts *springcloudjavadeployment.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SpringCloudJavaDeployment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type springCloudJavaDeploymentAttributes struct {
 	ref terra.Reference
 }
 
+// EnvironmentVariables returns a reference to field environment_variables of azurerm_spring_cloud_java_deployment.
 func (scjd springCloudJavaDeploymentAttributes) EnvironmentVariables() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](scjd.ref.Append("environment_variables"))
+	return terra.ReferenceAsMap[terra.StringValue](scjd.ref.Append("environment_variables"))
 }
 
+// Id returns a reference to field id of azurerm_spring_cloud_java_deployment.
 func (scjd springCloudJavaDeploymentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(scjd.ref.Append("id"))
+	return terra.ReferenceAsString(scjd.ref.Append("id"))
 }
 
+// InstanceCount returns a reference to field instance_count of azurerm_spring_cloud_java_deployment.
 func (scjd springCloudJavaDeploymentAttributes) InstanceCount() terra.NumberValue {
-	return terra.ReferenceNumber(scjd.ref.Append("instance_count"))
+	return terra.ReferenceAsNumber(scjd.ref.Append("instance_count"))
 }
 
+// JvmOptions returns a reference to field jvm_options of azurerm_spring_cloud_java_deployment.
 func (scjd springCloudJavaDeploymentAttributes) JvmOptions() terra.StringValue {
-	return terra.ReferenceString(scjd.ref.Append("jvm_options"))
+	return terra.ReferenceAsString(scjd.ref.Append("jvm_options"))
 }
 
+// Name returns a reference to field name of azurerm_spring_cloud_java_deployment.
 func (scjd springCloudJavaDeploymentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(scjd.ref.Append("name"))
+	return terra.ReferenceAsString(scjd.ref.Append("name"))
 }
 
+// RuntimeVersion returns a reference to field runtime_version of azurerm_spring_cloud_java_deployment.
 func (scjd springCloudJavaDeploymentAttributes) RuntimeVersion() terra.StringValue {
-	return terra.ReferenceString(scjd.ref.Append("runtime_version"))
+	return terra.ReferenceAsString(scjd.ref.Append("runtime_version"))
 }
 
+// SpringCloudAppId returns a reference to field spring_cloud_app_id of azurerm_spring_cloud_java_deployment.
 func (scjd springCloudJavaDeploymentAttributes) SpringCloudAppId() terra.StringValue {
-	return terra.ReferenceString(scjd.ref.Append("spring_cloud_app_id"))
+	return terra.ReferenceAsString(scjd.ref.Append("spring_cloud_app_id"))
 }
 
 func (scjd springCloudJavaDeploymentAttributes) Quota() terra.ListValue[springcloudjavadeployment.QuotaAttributes] {
-	return terra.ReferenceList[springcloudjavadeployment.QuotaAttributes](scjd.ref.Append("quota"))
+	return terra.ReferenceAsList[springcloudjavadeployment.QuotaAttributes](scjd.ref.Append("quota"))
 }
 
 func (scjd springCloudJavaDeploymentAttributes) Timeouts() springcloudjavadeployment.TimeoutsAttributes {
-	return terra.ReferenceSingle[springcloudjavadeployment.TimeoutsAttributes](scjd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[springcloudjavadeployment.TimeoutsAttributes](scjd.ref.Append("timeouts"))
 }
 
 type springCloudJavaDeploymentState struct {

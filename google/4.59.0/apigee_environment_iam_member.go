@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApigeeEnvironmentIamMember creates a new instance of [ApigeeEnvironmentIamMember].
 func NewApigeeEnvironmentIamMember(name string, args ApigeeEnvironmentIamMemberArgs) *ApigeeEnvironmentIamMember {
 	return &ApigeeEnvironmentIamMember{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApigeeEnvironmentIamMember(name string, args ApigeeEnvironmentIamMemberA
 
 var _ terra.Resource = (*ApigeeEnvironmentIamMember)(nil)
 
+// ApigeeEnvironmentIamMember represents the Terraform resource google_apigee_environment_iam_member.
 type ApigeeEnvironmentIamMember struct {
-	Name  string
-	Args  ApigeeEnvironmentIamMemberArgs
-	state *apigeeEnvironmentIamMemberState
+	Name      string
+	Args      ApigeeEnvironmentIamMemberArgs
+	state     *apigeeEnvironmentIamMemberState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApigeeEnvironmentIamMember].
 func (aeim *ApigeeEnvironmentIamMember) Type() string {
 	return "google_apigee_environment_iam_member"
 }
 
+// LocalName returns the local name for [ApigeeEnvironmentIamMember].
 func (aeim *ApigeeEnvironmentIamMember) LocalName() string {
 	return aeim.Name
 }
 
+// Configuration returns the configuration (args) for [ApigeeEnvironmentIamMember].
 func (aeim *ApigeeEnvironmentIamMember) Configuration() interface{} {
 	return aeim.Args
 }
 
+// DependOn is used for other resources to depend on [ApigeeEnvironmentIamMember].
+func (aeim *ApigeeEnvironmentIamMember) DependOn() terra.Reference {
+	return terra.ReferenceResource(aeim)
+}
+
+// Dependencies returns the list of resources [ApigeeEnvironmentIamMember] depends_on.
+func (aeim *ApigeeEnvironmentIamMember) Dependencies() terra.Dependencies {
+	return aeim.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApigeeEnvironmentIamMember].
+func (aeim *ApigeeEnvironmentIamMember) LifecycleManagement() *terra.Lifecycle {
+	return aeim.Lifecycle
+}
+
+// Attributes returns the attributes for [ApigeeEnvironmentIamMember].
 func (aeim *ApigeeEnvironmentIamMember) Attributes() apigeeEnvironmentIamMemberAttributes {
 	return apigeeEnvironmentIamMemberAttributes{ref: terra.ReferenceResource(aeim)}
 }
 
+// ImportState imports the given attribute values into [ApigeeEnvironmentIamMember]'s state.
 func (aeim *ApigeeEnvironmentIamMember) ImportState(av io.Reader) error {
 	aeim.state = &apigeeEnvironmentIamMemberState{}
 	if err := json.NewDecoder(av).Decode(aeim.state); err != nil {
@@ -49,10 +73,12 @@ func (aeim *ApigeeEnvironmentIamMember) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApigeeEnvironmentIamMember] has state.
 func (aeim *ApigeeEnvironmentIamMember) State() (*apigeeEnvironmentIamMemberState, bool) {
 	return aeim.state, aeim.state != nil
 }
 
+// StateMust returns the state for [ApigeeEnvironmentIamMember]. Panics if the state is nil.
 func (aeim *ApigeeEnvironmentIamMember) StateMust() *apigeeEnvironmentIamMemberState {
 	if aeim.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", aeim.Type(), aeim.LocalName()))
@@ -60,10 +86,7 @@ func (aeim *ApigeeEnvironmentIamMember) StateMust() *apigeeEnvironmentIamMemberS
 	return aeim.state
 }
 
-func (aeim *ApigeeEnvironmentIamMember) DependOn() terra.Reference {
-	return terra.ReferenceResource(aeim)
-}
-
+// ApigeeEnvironmentIamMemberArgs contains the configurations for google_apigee_environment_iam_member.
 type ApigeeEnvironmentIamMemberArgs struct {
 	// EnvId: string, required
 	EnvId terra.StringValue `hcl:"env_id,attr" validate:"required"`
@@ -77,39 +100,43 @@ type ApigeeEnvironmentIamMemberArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *apigeeenvironmentiammember.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that ApigeeEnvironmentIamMember depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apigeeEnvironmentIamMemberAttributes struct {
 	ref terra.Reference
 }
 
+// EnvId returns a reference to field env_id of google_apigee_environment_iam_member.
 func (aeim apigeeEnvironmentIamMemberAttributes) EnvId() terra.StringValue {
-	return terra.ReferenceString(aeim.ref.Append("env_id"))
+	return terra.ReferenceAsString(aeim.ref.Append("env_id"))
 }
 
+// Etag returns a reference to field etag of google_apigee_environment_iam_member.
 func (aeim apigeeEnvironmentIamMemberAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(aeim.ref.Append("etag"))
+	return terra.ReferenceAsString(aeim.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_apigee_environment_iam_member.
 func (aeim apigeeEnvironmentIamMemberAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(aeim.ref.Append("id"))
+	return terra.ReferenceAsString(aeim.ref.Append("id"))
 }
 
+// Member returns a reference to field member of google_apigee_environment_iam_member.
 func (aeim apigeeEnvironmentIamMemberAttributes) Member() terra.StringValue {
-	return terra.ReferenceString(aeim.ref.Append("member"))
+	return terra.ReferenceAsString(aeim.ref.Append("member"))
 }
 
+// OrgId returns a reference to field org_id of google_apigee_environment_iam_member.
 func (aeim apigeeEnvironmentIamMemberAttributes) OrgId() terra.StringValue {
-	return terra.ReferenceString(aeim.ref.Append("org_id"))
+	return terra.ReferenceAsString(aeim.ref.Append("org_id"))
 }
 
+// Role returns a reference to field role of google_apigee_environment_iam_member.
 func (aeim apigeeEnvironmentIamMemberAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(aeim.ref.Append("role"))
+	return terra.ReferenceAsString(aeim.ref.Append("role"))
 }
 
 func (aeim apigeeEnvironmentIamMemberAttributes) Condition() terra.ListValue[apigeeenvironmentiammember.ConditionAttributes] {
-	return terra.ReferenceList[apigeeenvironmentiammember.ConditionAttributes](aeim.ref.Append("condition"))
+	return terra.ReferenceAsList[apigeeenvironmentiammember.ConditionAttributes](aeim.ref.Append("condition"))
 }
 
 type apigeeEnvironmentIamMemberState struct {

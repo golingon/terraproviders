@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataPrivateDnsMxRecord creates a new instance of [DataPrivateDnsMxRecord].
 func NewDataPrivateDnsMxRecord(name string, args DataPrivateDnsMxRecordArgs) *DataPrivateDnsMxRecord {
 	return &DataPrivateDnsMxRecord{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataPrivateDnsMxRecord(name string, args DataPrivateDnsMxRecordArgs) *Da
 
 var _ terra.DataResource = (*DataPrivateDnsMxRecord)(nil)
 
+// DataPrivateDnsMxRecord represents the Terraform data resource azurerm_private_dns_mx_record.
 type DataPrivateDnsMxRecord struct {
 	Name string
 	Args DataPrivateDnsMxRecordArgs
 }
 
+// DataSource returns the Terraform object type for [DataPrivateDnsMxRecord].
 func (pdmr *DataPrivateDnsMxRecord) DataSource() string {
 	return "azurerm_private_dns_mx_record"
 }
 
+// LocalName returns the local name for [DataPrivateDnsMxRecord].
 func (pdmr *DataPrivateDnsMxRecord) LocalName() string {
 	return pdmr.Name
 }
 
+// Configuration returns the configuration (args) for [DataPrivateDnsMxRecord].
 func (pdmr *DataPrivateDnsMxRecord) Configuration() interface{} {
 	return pdmr.Args
 }
 
+// Attributes returns the attributes for [DataPrivateDnsMxRecord].
 func (pdmr *DataPrivateDnsMxRecord) Attributes() dataPrivateDnsMxRecordAttributes {
 	return dataPrivateDnsMxRecordAttributes{ref: terra.ReferenceDataResource(pdmr)}
 }
 
+// DataPrivateDnsMxRecordArgs contains the configurations for azurerm_private_dns_mx_record.
 type DataPrivateDnsMxRecordArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -55,38 +62,45 @@ type dataPrivateDnsMxRecordAttributes struct {
 	ref terra.Reference
 }
 
+// Fqdn returns a reference to field fqdn of azurerm_private_dns_mx_record.
 func (pdmr dataPrivateDnsMxRecordAttributes) Fqdn() terra.StringValue {
-	return terra.ReferenceString(pdmr.ref.Append("fqdn"))
+	return terra.ReferenceAsString(pdmr.ref.Append("fqdn"))
 }
 
+// Id returns a reference to field id of azurerm_private_dns_mx_record.
 func (pdmr dataPrivateDnsMxRecordAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pdmr.ref.Append("id"))
+	return terra.ReferenceAsString(pdmr.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_private_dns_mx_record.
 func (pdmr dataPrivateDnsMxRecordAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pdmr.ref.Append("name"))
+	return terra.ReferenceAsString(pdmr.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_private_dns_mx_record.
 func (pdmr dataPrivateDnsMxRecordAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(pdmr.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(pdmr.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_private_dns_mx_record.
 func (pdmr dataPrivateDnsMxRecordAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](pdmr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](pdmr.ref.Append("tags"))
 }
 
+// Ttl returns a reference to field ttl of azurerm_private_dns_mx_record.
 func (pdmr dataPrivateDnsMxRecordAttributes) Ttl() terra.NumberValue {
-	return terra.ReferenceNumber(pdmr.ref.Append("ttl"))
+	return terra.ReferenceAsNumber(pdmr.ref.Append("ttl"))
 }
 
+// ZoneName returns a reference to field zone_name of azurerm_private_dns_mx_record.
 func (pdmr dataPrivateDnsMxRecordAttributes) ZoneName() terra.StringValue {
-	return terra.ReferenceString(pdmr.ref.Append("zone_name"))
+	return terra.ReferenceAsString(pdmr.ref.Append("zone_name"))
 }
 
 func (pdmr dataPrivateDnsMxRecordAttributes) Record() terra.SetValue[dataprivatednsmxrecord.RecordAttributes] {
-	return terra.ReferenceSet[dataprivatednsmxrecord.RecordAttributes](pdmr.ref.Append("record"))
+	return terra.ReferenceAsSet[dataprivatednsmxrecord.RecordAttributes](pdmr.ref.Append("record"))
 }
 
 func (pdmr dataPrivateDnsMxRecordAttributes) Timeouts() dataprivatednsmxrecord.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataprivatednsmxrecord.TimeoutsAttributes](pdmr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataprivatednsmxrecord.TimeoutsAttributes](pdmr.ref.Append("timeouts"))
 }

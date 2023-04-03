@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMssqlVirtualMachine creates a new instance of [MssqlVirtualMachine].
 func NewMssqlVirtualMachine(name string, args MssqlVirtualMachineArgs) *MssqlVirtualMachine {
 	return &MssqlVirtualMachine{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMssqlVirtualMachine(name string, args MssqlVirtualMachineArgs) *MssqlVir
 
 var _ terra.Resource = (*MssqlVirtualMachine)(nil)
 
+// MssqlVirtualMachine represents the Terraform resource azurerm_mssql_virtual_machine.
 type MssqlVirtualMachine struct {
-	Name  string
-	Args  MssqlVirtualMachineArgs
-	state *mssqlVirtualMachineState
+	Name      string
+	Args      MssqlVirtualMachineArgs
+	state     *mssqlVirtualMachineState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MssqlVirtualMachine].
 func (mvm *MssqlVirtualMachine) Type() string {
 	return "azurerm_mssql_virtual_machine"
 }
 
+// LocalName returns the local name for [MssqlVirtualMachine].
 func (mvm *MssqlVirtualMachine) LocalName() string {
 	return mvm.Name
 }
 
+// Configuration returns the configuration (args) for [MssqlVirtualMachine].
 func (mvm *MssqlVirtualMachine) Configuration() interface{} {
 	return mvm.Args
 }
 
+// DependOn is used for other resources to depend on [MssqlVirtualMachine].
+func (mvm *MssqlVirtualMachine) DependOn() terra.Reference {
+	return terra.ReferenceResource(mvm)
+}
+
+// Dependencies returns the list of resources [MssqlVirtualMachine] depends_on.
+func (mvm *MssqlVirtualMachine) Dependencies() terra.Dependencies {
+	return mvm.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MssqlVirtualMachine].
+func (mvm *MssqlVirtualMachine) LifecycleManagement() *terra.Lifecycle {
+	return mvm.Lifecycle
+}
+
+// Attributes returns the attributes for [MssqlVirtualMachine].
 func (mvm *MssqlVirtualMachine) Attributes() mssqlVirtualMachineAttributes {
 	return mssqlVirtualMachineAttributes{ref: terra.ReferenceResource(mvm)}
 }
 
+// ImportState imports the given attribute values into [MssqlVirtualMachine]'s state.
 func (mvm *MssqlVirtualMachine) ImportState(av io.Reader) error {
 	mvm.state = &mssqlVirtualMachineState{}
 	if err := json.NewDecoder(av).Decode(mvm.state); err != nil {
@@ -49,10 +73,12 @@ func (mvm *MssqlVirtualMachine) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MssqlVirtualMachine] has state.
 func (mvm *MssqlVirtualMachine) State() (*mssqlVirtualMachineState, bool) {
 	return mvm.state, mvm.state != nil
 }
 
+// StateMust returns the state for [MssqlVirtualMachine]. Panics if the state is nil.
 func (mvm *MssqlVirtualMachine) StateMust() *mssqlVirtualMachineState {
 	if mvm.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mvm.Type(), mvm.LocalName()))
@@ -60,10 +86,7 @@ func (mvm *MssqlVirtualMachine) StateMust() *mssqlVirtualMachineState {
 	return mvm.state
 }
 
-func (mvm *MssqlVirtualMachine) DependOn() terra.Reference {
-	return terra.ReferenceResource(mvm)
-}
-
+// MssqlVirtualMachineArgs contains the configurations for azurerm_mssql_virtual_machine.
 type MssqlVirtualMachineArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -97,75 +120,82 @@ type MssqlVirtualMachineArgs struct {
 	StorageConfiguration *mssqlvirtualmachine.StorageConfiguration `hcl:"storage_configuration,block"`
 	// Timeouts: optional
 	Timeouts *mssqlvirtualmachine.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MssqlVirtualMachine depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mssqlVirtualMachineAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_mssql_virtual_machine.
 func (mvm mssqlVirtualMachineAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mvm.ref.Append("id"))
+	return terra.ReferenceAsString(mvm.ref.Append("id"))
 }
 
+// RServicesEnabled returns a reference to field r_services_enabled of azurerm_mssql_virtual_machine.
 func (mvm mssqlVirtualMachineAttributes) RServicesEnabled() terra.BoolValue {
-	return terra.ReferenceBool(mvm.ref.Append("r_services_enabled"))
+	return terra.ReferenceAsBool(mvm.ref.Append("r_services_enabled"))
 }
 
+// SqlConnectivityPort returns a reference to field sql_connectivity_port of azurerm_mssql_virtual_machine.
 func (mvm mssqlVirtualMachineAttributes) SqlConnectivityPort() terra.NumberValue {
-	return terra.ReferenceNumber(mvm.ref.Append("sql_connectivity_port"))
+	return terra.ReferenceAsNumber(mvm.ref.Append("sql_connectivity_port"))
 }
 
+// SqlConnectivityType returns a reference to field sql_connectivity_type of azurerm_mssql_virtual_machine.
 func (mvm mssqlVirtualMachineAttributes) SqlConnectivityType() terra.StringValue {
-	return terra.ReferenceString(mvm.ref.Append("sql_connectivity_type"))
+	return terra.ReferenceAsString(mvm.ref.Append("sql_connectivity_type"))
 }
 
+// SqlConnectivityUpdatePassword returns a reference to field sql_connectivity_update_password of azurerm_mssql_virtual_machine.
 func (mvm mssqlVirtualMachineAttributes) SqlConnectivityUpdatePassword() terra.StringValue {
-	return terra.ReferenceString(mvm.ref.Append("sql_connectivity_update_password"))
+	return terra.ReferenceAsString(mvm.ref.Append("sql_connectivity_update_password"))
 }
 
+// SqlConnectivityUpdateUsername returns a reference to field sql_connectivity_update_username of azurerm_mssql_virtual_machine.
 func (mvm mssqlVirtualMachineAttributes) SqlConnectivityUpdateUsername() terra.StringValue {
-	return terra.ReferenceString(mvm.ref.Append("sql_connectivity_update_username"))
+	return terra.ReferenceAsString(mvm.ref.Append("sql_connectivity_update_username"))
 }
 
+// SqlLicenseType returns a reference to field sql_license_type of azurerm_mssql_virtual_machine.
 func (mvm mssqlVirtualMachineAttributes) SqlLicenseType() terra.StringValue {
-	return terra.ReferenceString(mvm.ref.Append("sql_license_type"))
+	return terra.ReferenceAsString(mvm.ref.Append("sql_license_type"))
 }
 
+// Tags returns a reference to field tags of azurerm_mssql_virtual_machine.
 func (mvm mssqlVirtualMachineAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mvm.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mvm.ref.Append("tags"))
 }
 
+// VirtualMachineId returns a reference to field virtual_machine_id of azurerm_mssql_virtual_machine.
 func (mvm mssqlVirtualMachineAttributes) VirtualMachineId() terra.StringValue {
-	return terra.ReferenceString(mvm.ref.Append("virtual_machine_id"))
+	return terra.ReferenceAsString(mvm.ref.Append("virtual_machine_id"))
 }
 
 func (mvm mssqlVirtualMachineAttributes) Assessment() terra.ListValue[mssqlvirtualmachine.AssessmentAttributes] {
-	return terra.ReferenceList[mssqlvirtualmachine.AssessmentAttributes](mvm.ref.Append("assessment"))
+	return terra.ReferenceAsList[mssqlvirtualmachine.AssessmentAttributes](mvm.ref.Append("assessment"))
 }
 
 func (mvm mssqlVirtualMachineAttributes) AutoBackup() terra.ListValue[mssqlvirtualmachine.AutoBackupAttributes] {
-	return terra.ReferenceList[mssqlvirtualmachine.AutoBackupAttributes](mvm.ref.Append("auto_backup"))
+	return terra.ReferenceAsList[mssqlvirtualmachine.AutoBackupAttributes](mvm.ref.Append("auto_backup"))
 }
 
 func (mvm mssqlVirtualMachineAttributes) AutoPatching() terra.ListValue[mssqlvirtualmachine.AutoPatchingAttributes] {
-	return terra.ReferenceList[mssqlvirtualmachine.AutoPatchingAttributes](mvm.ref.Append("auto_patching"))
+	return terra.ReferenceAsList[mssqlvirtualmachine.AutoPatchingAttributes](mvm.ref.Append("auto_patching"))
 }
 
 func (mvm mssqlVirtualMachineAttributes) KeyVaultCredential() terra.ListValue[mssqlvirtualmachine.KeyVaultCredentialAttributes] {
-	return terra.ReferenceList[mssqlvirtualmachine.KeyVaultCredentialAttributes](mvm.ref.Append("key_vault_credential"))
+	return terra.ReferenceAsList[mssqlvirtualmachine.KeyVaultCredentialAttributes](mvm.ref.Append("key_vault_credential"))
 }
 
 func (mvm mssqlVirtualMachineAttributes) SqlInstance() terra.ListValue[mssqlvirtualmachine.SqlInstanceAttributes] {
-	return terra.ReferenceList[mssqlvirtualmachine.SqlInstanceAttributes](mvm.ref.Append("sql_instance"))
+	return terra.ReferenceAsList[mssqlvirtualmachine.SqlInstanceAttributes](mvm.ref.Append("sql_instance"))
 }
 
 func (mvm mssqlVirtualMachineAttributes) StorageConfiguration() terra.ListValue[mssqlvirtualmachine.StorageConfigurationAttributes] {
-	return terra.ReferenceList[mssqlvirtualmachine.StorageConfigurationAttributes](mvm.ref.Append("storage_configuration"))
+	return terra.ReferenceAsList[mssqlvirtualmachine.StorageConfigurationAttributes](mvm.ref.Append("storage_configuration"))
 }
 
 func (mvm mssqlVirtualMachineAttributes) Timeouts() mssqlvirtualmachine.TimeoutsAttributes {
-	return terra.ReferenceSingle[mssqlvirtualmachine.TimeoutsAttributes](mvm.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[mssqlvirtualmachine.TimeoutsAttributes](mvm.ref.Append("timeouts"))
 }
 
 type mssqlVirtualMachineState struct {

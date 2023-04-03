@@ -54,7 +54,7 @@ func (asp AutoScalingPolicyAttributes) InternalWithRef(ref terra.Reference) Auto
 	return AutoScalingPolicyAttributes{ref: ref}
 }
 
-func (asp AutoScalingPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (asp AutoScalingPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return asp.ref.InternalTokens()
 }
 
@@ -78,7 +78,7 @@ func (ttc TargetTrackingConfigurationAttributes) InternalWithRef(ref terra.Refer
 	return TargetTrackingConfigurationAttributes{ref: ref}
 }
 
-func (ttc TargetTrackingConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ttc TargetTrackingConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ttc.ref.InternalTokens()
 }
 
@@ -98,7 +98,7 @@ func (id InstanceDefinitionAttributes) InternalWithRef(ref terra.Reference) Inst
 	return InstanceDefinitionAttributes{ref: ref}
 }
 
-func (id InstanceDefinitionAttributes) InternalTokens() hclwrite.Tokens {
+func (id InstanceDefinitionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return id.ref.InternalTokens()
 }
 
@@ -122,7 +122,7 @@ func (lt LaunchTemplateAttributes) InternalWithRef(ref terra.Reference) LaunchTe
 	return LaunchTemplateAttributes{ref: ref}
 }
 
-func (lt LaunchTemplateAttributes) InternalTokens() hclwrite.Tokens {
+func (lt LaunchTemplateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lt.ref.InternalTokens()
 }
 
@@ -150,7 +150,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

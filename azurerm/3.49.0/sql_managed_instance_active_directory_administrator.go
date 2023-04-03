@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSqlManagedInstanceActiveDirectoryAdministrator creates a new instance of [SqlManagedInstanceActiveDirectoryAdministrator].
 func NewSqlManagedInstanceActiveDirectoryAdministrator(name string, args SqlManagedInstanceActiveDirectoryAdministratorArgs) *SqlManagedInstanceActiveDirectoryAdministrator {
 	return &SqlManagedInstanceActiveDirectoryAdministrator{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSqlManagedInstanceActiveDirectoryAdministrator(name string, args SqlMana
 
 var _ terra.Resource = (*SqlManagedInstanceActiveDirectoryAdministrator)(nil)
 
+// SqlManagedInstanceActiveDirectoryAdministrator represents the Terraform resource azurerm_sql_managed_instance_active_directory_administrator.
 type SqlManagedInstanceActiveDirectoryAdministrator struct {
-	Name  string
-	Args  SqlManagedInstanceActiveDirectoryAdministratorArgs
-	state *sqlManagedInstanceActiveDirectoryAdministratorState
+	Name      string
+	Args      SqlManagedInstanceActiveDirectoryAdministratorArgs
+	state     *sqlManagedInstanceActiveDirectoryAdministratorState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SqlManagedInstanceActiveDirectoryAdministrator].
 func (smiada *SqlManagedInstanceActiveDirectoryAdministrator) Type() string {
 	return "azurerm_sql_managed_instance_active_directory_administrator"
 }
 
+// LocalName returns the local name for [SqlManagedInstanceActiveDirectoryAdministrator].
 func (smiada *SqlManagedInstanceActiveDirectoryAdministrator) LocalName() string {
 	return smiada.Name
 }
 
+// Configuration returns the configuration (args) for [SqlManagedInstanceActiveDirectoryAdministrator].
 func (smiada *SqlManagedInstanceActiveDirectoryAdministrator) Configuration() interface{} {
 	return smiada.Args
 }
 
+// DependOn is used for other resources to depend on [SqlManagedInstanceActiveDirectoryAdministrator].
+func (smiada *SqlManagedInstanceActiveDirectoryAdministrator) DependOn() terra.Reference {
+	return terra.ReferenceResource(smiada)
+}
+
+// Dependencies returns the list of resources [SqlManagedInstanceActiveDirectoryAdministrator] depends_on.
+func (smiada *SqlManagedInstanceActiveDirectoryAdministrator) Dependencies() terra.Dependencies {
+	return smiada.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SqlManagedInstanceActiveDirectoryAdministrator].
+func (smiada *SqlManagedInstanceActiveDirectoryAdministrator) LifecycleManagement() *terra.Lifecycle {
+	return smiada.Lifecycle
+}
+
+// Attributes returns the attributes for [SqlManagedInstanceActiveDirectoryAdministrator].
 func (smiada *SqlManagedInstanceActiveDirectoryAdministrator) Attributes() sqlManagedInstanceActiveDirectoryAdministratorAttributes {
 	return sqlManagedInstanceActiveDirectoryAdministratorAttributes{ref: terra.ReferenceResource(smiada)}
 }
 
+// ImportState imports the given attribute values into [SqlManagedInstanceActiveDirectoryAdministrator]'s state.
 func (smiada *SqlManagedInstanceActiveDirectoryAdministrator) ImportState(av io.Reader) error {
 	smiada.state = &sqlManagedInstanceActiveDirectoryAdministratorState{}
 	if err := json.NewDecoder(av).Decode(smiada.state); err != nil {
@@ -49,10 +73,12 @@ func (smiada *SqlManagedInstanceActiveDirectoryAdministrator) ImportState(av io.
 	return nil
 }
 
+// State returns the state and a bool indicating if [SqlManagedInstanceActiveDirectoryAdministrator] has state.
 func (smiada *SqlManagedInstanceActiveDirectoryAdministrator) State() (*sqlManagedInstanceActiveDirectoryAdministratorState, bool) {
 	return smiada.state, smiada.state != nil
 }
 
+// StateMust returns the state for [SqlManagedInstanceActiveDirectoryAdministrator]. Panics if the state is nil.
 func (smiada *SqlManagedInstanceActiveDirectoryAdministrator) StateMust() *sqlManagedInstanceActiveDirectoryAdministratorState {
 	if smiada.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", smiada.Type(), smiada.LocalName()))
@@ -60,10 +86,7 @@ func (smiada *SqlManagedInstanceActiveDirectoryAdministrator) StateMust() *sqlMa
 	return smiada.state
 }
 
-func (smiada *SqlManagedInstanceActiveDirectoryAdministrator) DependOn() terra.Reference {
-	return terra.ReferenceResource(smiada)
-}
-
+// SqlManagedInstanceActiveDirectoryAdministratorArgs contains the configurations for azurerm_sql_managed_instance_active_directory_administrator.
 type SqlManagedInstanceActiveDirectoryAdministratorArgs struct {
 	// AzureadAuthenticationOnly: bool, optional
 	AzureadAuthenticationOnly terra.BoolValue `hcl:"azuread_authentication_only,attr"`
@@ -81,43 +104,48 @@ type SqlManagedInstanceActiveDirectoryAdministratorArgs struct {
 	TenantId terra.StringValue `hcl:"tenant_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *sqlmanagedinstanceactivedirectoryadministrator.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SqlManagedInstanceActiveDirectoryAdministrator depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sqlManagedInstanceActiveDirectoryAdministratorAttributes struct {
 	ref terra.Reference
 }
 
+// AzureadAuthenticationOnly returns a reference to field azuread_authentication_only of azurerm_sql_managed_instance_active_directory_administrator.
 func (smiada sqlManagedInstanceActiveDirectoryAdministratorAttributes) AzureadAuthenticationOnly() terra.BoolValue {
-	return terra.ReferenceBool(smiada.ref.Append("azuread_authentication_only"))
+	return terra.ReferenceAsBool(smiada.ref.Append("azuread_authentication_only"))
 }
 
+// Id returns a reference to field id of azurerm_sql_managed_instance_active_directory_administrator.
 func (smiada sqlManagedInstanceActiveDirectoryAdministratorAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(smiada.ref.Append("id"))
+	return terra.ReferenceAsString(smiada.ref.Append("id"))
 }
 
+// Login returns a reference to field login of azurerm_sql_managed_instance_active_directory_administrator.
 func (smiada sqlManagedInstanceActiveDirectoryAdministratorAttributes) Login() terra.StringValue {
-	return terra.ReferenceString(smiada.ref.Append("login"))
+	return terra.ReferenceAsString(smiada.ref.Append("login"))
 }
 
+// ManagedInstanceName returns a reference to field managed_instance_name of azurerm_sql_managed_instance_active_directory_administrator.
 func (smiada sqlManagedInstanceActiveDirectoryAdministratorAttributes) ManagedInstanceName() terra.StringValue {
-	return terra.ReferenceString(smiada.ref.Append("managed_instance_name"))
+	return terra.ReferenceAsString(smiada.ref.Append("managed_instance_name"))
 }
 
+// ObjectId returns a reference to field object_id of azurerm_sql_managed_instance_active_directory_administrator.
 func (smiada sqlManagedInstanceActiveDirectoryAdministratorAttributes) ObjectId() terra.StringValue {
-	return terra.ReferenceString(smiada.ref.Append("object_id"))
+	return terra.ReferenceAsString(smiada.ref.Append("object_id"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_sql_managed_instance_active_directory_administrator.
 func (smiada sqlManagedInstanceActiveDirectoryAdministratorAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(smiada.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(smiada.ref.Append("resource_group_name"))
 }
 
+// TenantId returns a reference to field tenant_id of azurerm_sql_managed_instance_active_directory_administrator.
 func (smiada sqlManagedInstanceActiveDirectoryAdministratorAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(smiada.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(smiada.ref.Append("tenant_id"))
 }
 
 func (smiada sqlManagedInstanceActiveDirectoryAdministratorAttributes) Timeouts() sqlmanagedinstanceactivedirectoryadministrator.TimeoutsAttributes {
-	return terra.ReferenceSingle[sqlmanagedinstanceactivedirectoryadministrator.TimeoutsAttributes](smiada.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[sqlmanagedinstanceactivedirectoryadministrator.TimeoutsAttributes](smiada.ref.Append("timeouts"))
 }
 
 type sqlManagedInstanceActiveDirectoryAdministratorState struct {

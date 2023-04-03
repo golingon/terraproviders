@@ -68,164 +68,164 @@ type ApiMetadataAttributes struct {
 	ref terra.Reference
 }
 
-func (am ApiMetadataAttributes) InternalRef() terra.Reference {
-	return am.ref
+func (am ApiMetadataAttributes) InternalRef() (terra.Reference, error) {
+	return am.ref, nil
 }
 
 func (am ApiMetadataAttributes) InternalWithRef(ref terra.Reference) ApiMetadataAttributes {
 	return ApiMetadataAttributes{ref: ref}
 }
 
-func (am ApiMetadataAttributes) InternalTokens() hclwrite.Tokens {
+func (am ApiMetadataAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return am.ref.InternalTokens()
 }
 
 func (am ApiMetadataAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("description"))
+	return terra.ReferenceAsString(am.ref.Append("description"))
 }
 
 func (am ApiMetadataAttributes) DocumentationUrl() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("documentation_url"))
+	return terra.ReferenceAsString(am.ref.Append("documentation_url"))
 }
 
 func (am ApiMetadataAttributes) ServerUrl() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("server_url"))
+	return terra.ReferenceAsString(am.ref.Append("server_url"))
 }
 
 func (am ApiMetadataAttributes) Title() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("title"))
+	return terra.ReferenceAsString(am.ref.Append("title"))
 }
 
 func (am ApiMetadataAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("version"))
+	return terra.ReferenceAsString(am.ref.Append("version"))
 }
 
 type CorsAttributes struct {
 	ref terra.Reference
 }
 
-func (c CorsAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CorsAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CorsAttributes) InternalWithRef(ref terra.Reference) CorsAttributes {
 	return CorsAttributes{ref: ref}
 }
 
-func (c CorsAttributes) InternalTokens() hclwrite.Tokens {
+func (c CorsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c CorsAttributes) AllowedHeaders() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](c.ref.Append("allowed_headers"))
+	return terra.ReferenceAsSet[terra.StringValue](c.ref.Append("allowed_headers"))
 }
 
 func (c CorsAttributes) AllowedMethods() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](c.ref.Append("allowed_methods"))
+	return terra.ReferenceAsSet[terra.StringValue](c.ref.Append("allowed_methods"))
 }
 
 func (c CorsAttributes) AllowedOrigins() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](c.ref.Append("allowed_origins"))
+	return terra.ReferenceAsSet[terra.StringValue](c.ref.Append("allowed_origins"))
 }
 
 func (c CorsAttributes) CredentialsAllowed() terra.BoolValue {
-	return terra.ReferenceBool(c.ref.Append("credentials_allowed"))
+	return terra.ReferenceAsBool(c.ref.Append("credentials_allowed"))
 }
 
 func (c CorsAttributes) ExposedHeaders() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](c.ref.Append("exposed_headers"))
+	return terra.ReferenceAsSet[terra.StringValue](c.ref.Append("exposed_headers"))
 }
 
 func (c CorsAttributes) MaxAgeSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(c.ref.Append("max_age_seconds"))
+	return terra.ReferenceAsNumber(c.ref.Append("max_age_seconds"))
 }
 
 type QuotaAttributes struct {
 	ref terra.Reference
 }
 
-func (q QuotaAttributes) InternalRef() terra.Reference {
-	return q.ref
+func (q QuotaAttributes) InternalRef() (terra.Reference, error) {
+	return q.ref, nil
 }
 
 func (q QuotaAttributes) InternalWithRef(ref terra.Reference) QuotaAttributes {
 	return QuotaAttributes{ref: ref}
 }
 
-func (q QuotaAttributes) InternalTokens() hclwrite.Tokens {
+func (q QuotaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return q.ref.InternalTokens()
 }
 
 func (q QuotaAttributes) Cpu() terra.StringValue {
-	return terra.ReferenceString(q.ref.Append("cpu"))
+	return terra.ReferenceAsString(q.ref.Append("cpu"))
 }
 
 func (q QuotaAttributes) Memory() terra.StringValue {
-	return terra.ReferenceString(q.ref.Append("memory"))
+	return terra.ReferenceAsString(q.ref.Append("memory"))
 }
 
 type SsoAttributes struct {
 	ref terra.Reference
 }
 
-func (s SsoAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SsoAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SsoAttributes) InternalWithRef(ref terra.Reference) SsoAttributes {
 	return SsoAttributes{ref: ref}
 }
 
-func (s SsoAttributes) InternalTokens() hclwrite.Tokens {
+func (s SsoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SsoAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("client_id"))
+	return terra.ReferenceAsString(s.ref.Append("client_id"))
 }
 
 func (s SsoAttributes) ClientSecret() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("client_secret"))
+	return terra.ReferenceAsString(s.ref.Append("client_secret"))
 }
 
 func (s SsoAttributes) IssuerUri() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("issuer_uri"))
+	return terra.ReferenceAsString(s.ref.Append("issuer_uri"))
 }
 
 func (s SsoAttributes) Scope() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("scope"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("scope"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ApiMetadataState struct {

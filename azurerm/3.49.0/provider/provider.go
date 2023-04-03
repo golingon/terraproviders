@@ -126,360 +126,360 @@ type FeaturesAttributes struct {
 	ref terra.Reference
 }
 
-func (f FeaturesAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FeaturesAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FeaturesAttributes) InternalWithRef(ref terra.Reference) FeaturesAttributes {
 	return FeaturesAttributes{ref: ref}
 }
 
-func (f FeaturesAttributes) InternalTokens() hclwrite.Tokens {
+func (f FeaturesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
 func (f FeaturesAttributes) ApiManagement() terra.ListValue[ApiManagementAttributes] {
-	return terra.ReferenceList[ApiManagementAttributes](f.ref.Append("api_management"))
+	return terra.ReferenceAsList[ApiManagementAttributes](f.ref.Append("api_management"))
 }
 
 func (f FeaturesAttributes) AppConfiguration() terra.ListValue[AppConfigurationAttributes] {
-	return terra.ReferenceList[AppConfigurationAttributes](f.ref.Append("app_configuration"))
+	return terra.ReferenceAsList[AppConfigurationAttributes](f.ref.Append("app_configuration"))
 }
 
 func (f FeaturesAttributes) ApplicationInsights() terra.ListValue[ApplicationInsightsAttributes] {
-	return terra.ReferenceList[ApplicationInsightsAttributes](f.ref.Append("application_insights"))
+	return terra.ReferenceAsList[ApplicationInsightsAttributes](f.ref.Append("application_insights"))
 }
 
 func (f FeaturesAttributes) CognitiveAccount() terra.ListValue[CognitiveAccountAttributes] {
-	return terra.ReferenceList[CognitiveAccountAttributes](f.ref.Append("cognitive_account"))
+	return terra.ReferenceAsList[CognitiveAccountAttributes](f.ref.Append("cognitive_account"))
 }
 
 func (f FeaturesAttributes) KeyVault() terra.ListValue[KeyVaultAttributes] {
-	return terra.ReferenceList[KeyVaultAttributes](f.ref.Append("key_vault"))
+	return terra.ReferenceAsList[KeyVaultAttributes](f.ref.Append("key_vault"))
 }
 
 func (f FeaturesAttributes) LogAnalyticsWorkspace() terra.ListValue[LogAnalyticsWorkspaceAttributes] {
-	return terra.ReferenceList[LogAnalyticsWorkspaceAttributes](f.ref.Append("log_analytics_workspace"))
+	return terra.ReferenceAsList[LogAnalyticsWorkspaceAttributes](f.ref.Append("log_analytics_workspace"))
 }
 
 func (f FeaturesAttributes) ManagedDisk() terra.ListValue[ManagedDiskAttributes] {
-	return terra.ReferenceList[ManagedDiskAttributes](f.ref.Append("managed_disk"))
+	return terra.ReferenceAsList[ManagedDiskAttributes](f.ref.Append("managed_disk"))
 }
 
 func (f FeaturesAttributes) Network() terra.ListValue[NetworkAttributes] {
-	return terra.ReferenceList[NetworkAttributes](f.ref.Append("network"))
+	return terra.ReferenceAsList[NetworkAttributes](f.ref.Append("network"))
 }
 
 func (f FeaturesAttributes) ResourceGroup() terra.ListValue[ResourceGroupAttributes] {
-	return terra.ReferenceList[ResourceGroupAttributes](f.ref.Append("resource_group"))
+	return terra.ReferenceAsList[ResourceGroupAttributes](f.ref.Append("resource_group"))
 }
 
 func (f FeaturesAttributes) TemplateDeployment() terra.ListValue[TemplateDeploymentAttributes] {
-	return terra.ReferenceList[TemplateDeploymentAttributes](f.ref.Append("template_deployment"))
+	return terra.ReferenceAsList[TemplateDeploymentAttributes](f.ref.Append("template_deployment"))
 }
 
 func (f FeaturesAttributes) VirtualMachine() terra.ListValue[VirtualMachineAttributes] {
-	return terra.ReferenceList[VirtualMachineAttributes](f.ref.Append("virtual_machine"))
+	return terra.ReferenceAsList[VirtualMachineAttributes](f.ref.Append("virtual_machine"))
 }
 
 func (f FeaturesAttributes) VirtualMachineScaleSet() terra.ListValue[VirtualMachineScaleSetAttributes] {
-	return terra.ReferenceList[VirtualMachineScaleSetAttributes](f.ref.Append("virtual_machine_scale_set"))
+	return terra.ReferenceAsList[VirtualMachineScaleSetAttributes](f.ref.Append("virtual_machine_scale_set"))
 }
 
 type ApiManagementAttributes struct {
 	ref terra.Reference
 }
 
-func (am ApiManagementAttributes) InternalRef() terra.Reference {
-	return am.ref
+func (am ApiManagementAttributes) InternalRef() (terra.Reference, error) {
+	return am.ref, nil
 }
 
 func (am ApiManagementAttributes) InternalWithRef(ref terra.Reference) ApiManagementAttributes {
 	return ApiManagementAttributes{ref: ref}
 }
 
-func (am ApiManagementAttributes) InternalTokens() hclwrite.Tokens {
+func (am ApiManagementAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return am.ref.InternalTokens()
 }
 
 func (am ApiManagementAttributes) PurgeSoftDeleteOnDestroy() terra.BoolValue {
-	return terra.ReferenceBool(am.ref.Append("purge_soft_delete_on_destroy"))
+	return terra.ReferenceAsBool(am.ref.Append("purge_soft_delete_on_destroy"))
 }
 
 func (am ApiManagementAttributes) RecoverSoftDeleted() terra.BoolValue {
-	return terra.ReferenceBool(am.ref.Append("recover_soft_deleted"))
+	return terra.ReferenceAsBool(am.ref.Append("recover_soft_deleted"))
 }
 
 type AppConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ac AppConfigurationAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac AppConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac AppConfigurationAttributes) InternalWithRef(ref terra.Reference) AppConfigurationAttributes {
 	return AppConfigurationAttributes{ref: ref}
 }
 
-func (ac AppConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ac AppConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
 func (ac AppConfigurationAttributes) PurgeSoftDeleteOnDestroy() terra.BoolValue {
-	return terra.ReferenceBool(ac.ref.Append("purge_soft_delete_on_destroy"))
+	return terra.ReferenceAsBool(ac.ref.Append("purge_soft_delete_on_destroy"))
 }
 
 func (ac AppConfigurationAttributes) RecoverSoftDeleted() terra.BoolValue {
-	return terra.ReferenceBool(ac.ref.Append("recover_soft_deleted"))
+	return terra.ReferenceAsBool(ac.ref.Append("recover_soft_deleted"))
 }
 
 type ApplicationInsightsAttributes struct {
 	ref terra.Reference
 }
 
-func (ai ApplicationInsightsAttributes) InternalRef() terra.Reference {
-	return ai.ref
+func (ai ApplicationInsightsAttributes) InternalRef() (terra.Reference, error) {
+	return ai.ref, nil
 }
 
 func (ai ApplicationInsightsAttributes) InternalWithRef(ref terra.Reference) ApplicationInsightsAttributes {
 	return ApplicationInsightsAttributes{ref: ref}
 }
 
-func (ai ApplicationInsightsAttributes) InternalTokens() hclwrite.Tokens {
+func (ai ApplicationInsightsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ai.ref.InternalTokens()
 }
 
 func (ai ApplicationInsightsAttributes) DisableGeneratedRule() terra.BoolValue {
-	return terra.ReferenceBool(ai.ref.Append("disable_generated_rule"))
+	return terra.ReferenceAsBool(ai.ref.Append("disable_generated_rule"))
 }
 
 type CognitiveAccountAttributes struct {
 	ref terra.Reference
 }
 
-func (ca CognitiveAccountAttributes) InternalRef() terra.Reference {
-	return ca.ref
+func (ca CognitiveAccountAttributes) InternalRef() (terra.Reference, error) {
+	return ca.ref, nil
 }
 
 func (ca CognitiveAccountAttributes) InternalWithRef(ref terra.Reference) CognitiveAccountAttributes {
 	return CognitiveAccountAttributes{ref: ref}
 }
 
-func (ca CognitiveAccountAttributes) InternalTokens() hclwrite.Tokens {
+func (ca CognitiveAccountAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ca.ref.InternalTokens()
 }
 
 func (ca CognitiveAccountAttributes) PurgeSoftDeleteOnDestroy() terra.BoolValue {
-	return terra.ReferenceBool(ca.ref.Append("purge_soft_delete_on_destroy"))
+	return terra.ReferenceAsBool(ca.ref.Append("purge_soft_delete_on_destroy"))
 }
 
 type KeyVaultAttributes struct {
 	ref terra.Reference
 }
 
-func (kv KeyVaultAttributes) InternalRef() terra.Reference {
-	return kv.ref
+func (kv KeyVaultAttributes) InternalRef() (terra.Reference, error) {
+	return kv.ref, nil
 }
 
 func (kv KeyVaultAttributes) InternalWithRef(ref terra.Reference) KeyVaultAttributes {
 	return KeyVaultAttributes{ref: ref}
 }
 
-func (kv KeyVaultAttributes) InternalTokens() hclwrite.Tokens {
+func (kv KeyVaultAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kv.ref.InternalTokens()
 }
 
 func (kv KeyVaultAttributes) PurgeSoftDeleteOnDestroy() terra.BoolValue {
-	return terra.ReferenceBool(kv.ref.Append("purge_soft_delete_on_destroy"))
+	return terra.ReferenceAsBool(kv.ref.Append("purge_soft_delete_on_destroy"))
 }
 
 func (kv KeyVaultAttributes) PurgeSoftDeletedCertificatesOnDestroy() terra.BoolValue {
-	return terra.ReferenceBool(kv.ref.Append("purge_soft_deleted_certificates_on_destroy"))
+	return terra.ReferenceAsBool(kv.ref.Append("purge_soft_deleted_certificates_on_destroy"))
 }
 
 func (kv KeyVaultAttributes) PurgeSoftDeletedHardwareSecurityModulesOnDestroy() terra.BoolValue {
-	return terra.ReferenceBool(kv.ref.Append("purge_soft_deleted_hardware_security_modules_on_destroy"))
+	return terra.ReferenceAsBool(kv.ref.Append("purge_soft_deleted_hardware_security_modules_on_destroy"))
 }
 
 func (kv KeyVaultAttributes) PurgeSoftDeletedKeysOnDestroy() terra.BoolValue {
-	return terra.ReferenceBool(kv.ref.Append("purge_soft_deleted_keys_on_destroy"))
+	return terra.ReferenceAsBool(kv.ref.Append("purge_soft_deleted_keys_on_destroy"))
 }
 
 func (kv KeyVaultAttributes) PurgeSoftDeletedSecretsOnDestroy() terra.BoolValue {
-	return terra.ReferenceBool(kv.ref.Append("purge_soft_deleted_secrets_on_destroy"))
+	return terra.ReferenceAsBool(kv.ref.Append("purge_soft_deleted_secrets_on_destroy"))
 }
 
 func (kv KeyVaultAttributes) RecoverSoftDeletedCertificates() terra.BoolValue {
-	return terra.ReferenceBool(kv.ref.Append("recover_soft_deleted_certificates"))
+	return terra.ReferenceAsBool(kv.ref.Append("recover_soft_deleted_certificates"))
 }
 
 func (kv KeyVaultAttributes) RecoverSoftDeletedKeyVaults() terra.BoolValue {
-	return terra.ReferenceBool(kv.ref.Append("recover_soft_deleted_key_vaults"))
+	return terra.ReferenceAsBool(kv.ref.Append("recover_soft_deleted_key_vaults"))
 }
 
 func (kv KeyVaultAttributes) RecoverSoftDeletedKeys() terra.BoolValue {
-	return terra.ReferenceBool(kv.ref.Append("recover_soft_deleted_keys"))
+	return terra.ReferenceAsBool(kv.ref.Append("recover_soft_deleted_keys"))
 }
 
 func (kv KeyVaultAttributes) RecoverSoftDeletedSecrets() terra.BoolValue {
-	return terra.ReferenceBool(kv.ref.Append("recover_soft_deleted_secrets"))
+	return terra.ReferenceAsBool(kv.ref.Append("recover_soft_deleted_secrets"))
 }
 
 type LogAnalyticsWorkspaceAttributes struct {
 	ref terra.Reference
 }
 
-func (law LogAnalyticsWorkspaceAttributes) InternalRef() terra.Reference {
-	return law.ref
+func (law LogAnalyticsWorkspaceAttributes) InternalRef() (terra.Reference, error) {
+	return law.ref, nil
 }
 
 func (law LogAnalyticsWorkspaceAttributes) InternalWithRef(ref terra.Reference) LogAnalyticsWorkspaceAttributes {
 	return LogAnalyticsWorkspaceAttributes{ref: ref}
 }
 
-func (law LogAnalyticsWorkspaceAttributes) InternalTokens() hclwrite.Tokens {
+func (law LogAnalyticsWorkspaceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return law.ref.InternalTokens()
 }
 
 func (law LogAnalyticsWorkspaceAttributes) PermanentlyDeleteOnDestroy() terra.BoolValue {
-	return terra.ReferenceBool(law.ref.Append("permanently_delete_on_destroy"))
+	return terra.ReferenceAsBool(law.ref.Append("permanently_delete_on_destroy"))
 }
 
 type ManagedDiskAttributes struct {
 	ref terra.Reference
 }
 
-func (md ManagedDiskAttributes) InternalRef() terra.Reference {
-	return md.ref
+func (md ManagedDiskAttributes) InternalRef() (terra.Reference, error) {
+	return md.ref, nil
 }
 
 func (md ManagedDiskAttributes) InternalWithRef(ref terra.Reference) ManagedDiskAttributes {
 	return ManagedDiskAttributes{ref: ref}
 }
 
-func (md ManagedDiskAttributes) InternalTokens() hclwrite.Tokens {
+func (md ManagedDiskAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return md.ref.InternalTokens()
 }
 
 func (md ManagedDiskAttributes) ExpandWithoutDowntime() terra.BoolValue {
-	return terra.ReferenceBool(md.ref.Append("expand_without_downtime"))
+	return terra.ReferenceAsBool(md.ref.Append("expand_without_downtime"))
 }
 
 type NetworkAttributes struct {
 	ref terra.Reference
 }
 
-func (n NetworkAttributes) InternalRef() terra.Reference {
-	return n.ref
+func (n NetworkAttributes) InternalRef() (terra.Reference, error) {
+	return n.ref, nil
 }
 
 func (n NetworkAttributes) InternalWithRef(ref terra.Reference) NetworkAttributes {
 	return NetworkAttributes{ref: ref}
 }
 
-func (n NetworkAttributes) InternalTokens() hclwrite.Tokens {
+func (n NetworkAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return n.ref.InternalTokens()
 }
 
 func (n NetworkAttributes) RelaxedLocking() terra.BoolValue {
-	return terra.ReferenceBool(n.ref.Append("relaxed_locking"))
+	return terra.ReferenceAsBool(n.ref.Append("relaxed_locking"))
 }
 
 type ResourceGroupAttributes struct {
 	ref terra.Reference
 }
 
-func (rg ResourceGroupAttributes) InternalRef() terra.Reference {
-	return rg.ref
+func (rg ResourceGroupAttributes) InternalRef() (terra.Reference, error) {
+	return rg.ref, nil
 }
 
 func (rg ResourceGroupAttributes) InternalWithRef(ref terra.Reference) ResourceGroupAttributes {
 	return ResourceGroupAttributes{ref: ref}
 }
 
-func (rg ResourceGroupAttributes) InternalTokens() hclwrite.Tokens {
+func (rg ResourceGroupAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rg.ref.InternalTokens()
 }
 
 func (rg ResourceGroupAttributes) PreventDeletionIfContainsResources() terra.BoolValue {
-	return terra.ReferenceBool(rg.ref.Append("prevent_deletion_if_contains_resources"))
+	return terra.ReferenceAsBool(rg.ref.Append("prevent_deletion_if_contains_resources"))
 }
 
 type TemplateDeploymentAttributes struct {
 	ref terra.Reference
 }
 
-func (td TemplateDeploymentAttributes) InternalRef() terra.Reference {
-	return td.ref
+func (td TemplateDeploymentAttributes) InternalRef() (terra.Reference, error) {
+	return td.ref, nil
 }
 
 func (td TemplateDeploymentAttributes) InternalWithRef(ref terra.Reference) TemplateDeploymentAttributes {
 	return TemplateDeploymentAttributes{ref: ref}
 }
 
-func (td TemplateDeploymentAttributes) InternalTokens() hclwrite.Tokens {
+func (td TemplateDeploymentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return td.ref.InternalTokens()
 }
 
 func (td TemplateDeploymentAttributes) DeleteNestedItemsDuringDeletion() terra.BoolValue {
-	return terra.ReferenceBool(td.ref.Append("delete_nested_items_during_deletion"))
+	return terra.ReferenceAsBool(td.ref.Append("delete_nested_items_during_deletion"))
 }
 
 type VirtualMachineAttributes struct {
 	ref terra.Reference
 }
 
-func (vm VirtualMachineAttributes) InternalRef() terra.Reference {
-	return vm.ref
+func (vm VirtualMachineAttributes) InternalRef() (terra.Reference, error) {
+	return vm.ref, nil
 }
 
 func (vm VirtualMachineAttributes) InternalWithRef(ref terra.Reference) VirtualMachineAttributes {
 	return VirtualMachineAttributes{ref: ref}
 }
 
-func (vm VirtualMachineAttributes) InternalTokens() hclwrite.Tokens {
+func (vm VirtualMachineAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vm.ref.InternalTokens()
 }
 
 func (vm VirtualMachineAttributes) DeleteOsDiskOnDeletion() terra.BoolValue {
-	return terra.ReferenceBool(vm.ref.Append("delete_os_disk_on_deletion"))
+	return terra.ReferenceAsBool(vm.ref.Append("delete_os_disk_on_deletion"))
 }
 
 func (vm VirtualMachineAttributes) GracefulShutdown() terra.BoolValue {
-	return terra.ReferenceBool(vm.ref.Append("graceful_shutdown"))
+	return terra.ReferenceAsBool(vm.ref.Append("graceful_shutdown"))
 }
 
 func (vm VirtualMachineAttributes) SkipShutdownAndForceDelete() terra.BoolValue {
-	return terra.ReferenceBool(vm.ref.Append("skip_shutdown_and_force_delete"))
+	return terra.ReferenceAsBool(vm.ref.Append("skip_shutdown_and_force_delete"))
 }
 
 type VirtualMachineScaleSetAttributes struct {
 	ref terra.Reference
 }
 
-func (vmss VirtualMachineScaleSetAttributes) InternalRef() terra.Reference {
-	return vmss.ref
+func (vmss VirtualMachineScaleSetAttributes) InternalRef() (terra.Reference, error) {
+	return vmss.ref, nil
 }
 
 func (vmss VirtualMachineScaleSetAttributes) InternalWithRef(ref terra.Reference) VirtualMachineScaleSetAttributes {
 	return VirtualMachineScaleSetAttributes{ref: ref}
 }
 
-func (vmss VirtualMachineScaleSetAttributes) InternalTokens() hclwrite.Tokens {
+func (vmss VirtualMachineScaleSetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vmss.ref.InternalTokens()
 }
 
 func (vmss VirtualMachineScaleSetAttributes) ForceDelete() terra.BoolValue {
-	return terra.ReferenceBool(vmss.ref.Append("force_delete"))
+	return terra.ReferenceAsBool(vmss.ref.Append("force_delete"))
 }
 
 func (vmss VirtualMachineScaleSetAttributes) RollInstancesWhenRequired() terra.BoolValue {
-	return terra.ReferenceBool(vmss.ref.Append("roll_instances_when_required"))
+	return terra.ReferenceAsBool(vmss.ref.Append("roll_instances_when_required"))
 }
 
 func (vmss VirtualMachineScaleSetAttributes) ScaleToZeroBeforeDeletion() terra.BoolValue {
-	return terra.ReferenceBool(vmss.ref.Append("scale_to_zero_before_deletion"))
+	return terra.ReferenceAsBool(vmss.ref.Append("scale_to_zero_before_deletion"))
 }
 
 type FeaturesState struct {

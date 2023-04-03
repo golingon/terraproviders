@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewStorageBucket creates a new instance of [StorageBucket].
 func NewStorageBucket(name string, args StorageBucketArgs) *StorageBucket {
 	return &StorageBucket{
 		Args: args,
@@ -19,28 +20,51 @@ func NewStorageBucket(name string, args StorageBucketArgs) *StorageBucket {
 
 var _ terra.Resource = (*StorageBucket)(nil)
 
+// StorageBucket represents the Terraform resource google_storage_bucket.
 type StorageBucket struct {
-	Name  string
-	Args  StorageBucketArgs
-	state *storageBucketState
+	Name      string
+	Args      StorageBucketArgs
+	state     *storageBucketState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [StorageBucket].
 func (sb *StorageBucket) Type() string {
 	return "google_storage_bucket"
 }
 
+// LocalName returns the local name for [StorageBucket].
 func (sb *StorageBucket) LocalName() string {
 	return sb.Name
 }
 
+// Configuration returns the configuration (args) for [StorageBucket].
 func (sb *StorageBucket) Configuration() interface{} {
 	return sb.Args
 }
 
+// DependOn is used for other resources to depend on [StorageBucket].
+func (sb *StorageBucket) DependOn() terra.Reference {
+	return terra.ReferenceResource(sb)
+}
+
+// Dependencies returns the list of resources [StorageBucket] depends_on.
+func (sb *StorageBucket) Dependencies() terra.Dependencies {
+	return sb.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [StorageBucket].
+func (sb *StorageBucket) LifecycleManagement() *terra.Lifecycle {
+	return sb.Lifecycle
+}
+
+// Attributes returns the attributes for [StorageBucket].
 func (sb *StorageBucket) Attributes() storageBucketAttributes {
 	return storageBucketAttributes{ref: terra.ReferenceResource(sb)}
 }
 
+// ImportState imports the given attribute values into [StorageBucket]'s state.
 func (sb *StorageBucket) ImportState(av io.Reader) error {
 	sb.state = &storageBucketState{}
 	if err := json.NewDecoder(av).Decode(sb.state); err != nil {
@@ -49,10 +73,12 @@ func (sb *StorageBucket) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [StorageBucket] has state.
 func (sb *StorageBucket) State() (*storageBucketState, bool) {
 	return sb.state, sb.state != nil
 }
 
+// StateMust returns the state for [StorageBucket]. Panics if the state is nil.
 func (sb *StorageBucket) StateMust() *storageBucketState {
 	if sb.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sb.Type(), sb.LocalName()))
@@ -60,10 +86,7 @@ func (sb *StorageBucket) StateMust() *storageBucketState {
 	return sb.state
 }
 
-func (sb *StorageBucket) DependOn() terra.Reference {
-	return terra.ReferenceResource(sb)
-}
-
+// StorageBucketArgs contains the configurations for google_storage_bucket.
 type StorageBucketArgs struct {
 	// DefaultEventBasedHold: bool, optional
 	DefaultEventBasedHold terra.BoolValue `hcl:"default_event_based_hold,attr"`
@@ -107,103 +130,114 @@ type StorageBucketArgs struct {
 	Versioning *storagebucket.Versioning `hcl:"versioning,block"`
 	// Website: optional
 	Website *storagebucket.Website `hcl:"website,block"`
-	// DependsOn contains resources that StorageBucket depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type storageBucketAttributes struct {
 	ref terra.Reference
 }
 
+// DefaultEventBasedHold returns a reference to field default_event_based_hold of google_storage_bucket.
 func (sb storageBucketAttributes) DefaultEventBasedHold() terra.BoolValue {
-	return terra.ReferenceBool(sb.ref.Append("default_event_based_hold"))
+	return terra.ReferenceAsBool(sb.ref.Append("default_event_based_hold"))
 }
 
+// ForceDestroy returns a reference to field force_destroy of google_storage_bucket.
 func (sb storageBucketAttributes) ForceDestroy() terra.BoolValue {
-	return terra.ReferenceBool(sb.ref.Append("force_destroy"))
+	return terra.ReferenceAsBool(sb.ref.Append("force_destroy"))
 }
 
+// Id returns a reference to field id of google_storage_bucket.
 func (sb storageBucketAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("id"))
+	return terra.ReferenceAsString(sb.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_storage_bucket.
 func (sb storageBucketAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sb.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](sb.ref.Append("labels"))
 }
 
+// Location returns a reference to field location of google_storage_bucket.
 func (sb storageBucketAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("location"))
+	return terra.ReferenceAsString(sb.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_storage_bucket.
 func (sb storageBucketAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("name"))
+	return terra.ReferenceAsString(sb.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_storage_bucket.
 func (sb storageBucketAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("project"))
+	return terra.ReferenceAsString(sb.ref.Append("project"))
 }
 
+// PublicAccessPrevention returns a reference to field public_access_prevention of google_storage_bucket.
 func (sb storageBucketAttributes) PublicAccessPrevention() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("public_access_prevention"))
+	return terra.ReferenceAsString(sb.ref.Append("public_access_prevention"))
 }
 
+// RequesterPays returns a reference to field requester_pays of google_storage_bucket.
 func (sb storageBucketAttributes) RequesterPays() terra.BoolValue {
-	return terra.ReferenceBool(sb.ref.Append("requester_pays"))
+	return terra.ReferenceAsBool(sb.ref.Append("requester_pays"))
 }
 
+// SelfLink returns a reference to field self_link of google_storage_bucket.
 func (sb storageBucketAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("self_link"))
+	return terra.ReferenceAsString(sb.ref.Append("self_link"))
 }
 
+// StorageClass returns a reference to field storage_class of google_storage_bucket.
 func (sb storageBucketAttributes) StorageClass() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("storage_class"))
+	return terra.ReferenceAsString(sb.ref.Append("storage_class"))
 }
 
+// UniformBucketLevelAccess returns a reference to field uniform_bucket_level_access of google_storage_bucket.
 func (sb storageBucketAttributes) UniformBucketLevelAccess() terra.BoolValue {
-	return terra.ReferenceBool(sb.ref.Append("uniform_bucket_level_access"))
+	return terra.ReferenceAsBool(sb.ref.Append("uniform_bucket_level_access"))
 }
 
+// Url returns a reference to field url of google_storage_bucket.
 func (sb storageBucketAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("url"))
+	return terra.ReferenceAsString(sb.ref.Append("url"))
 }
 
 func (sb storageBucketAttributes) Autoclass() terra.ListValue[storagebucket.AutoclassAttributes] {
-	return terra.ReferenceList[storagebucket.AutoclassAttributes](sb.ref.Append("autoclass"))
+	return terra.ReferenceAsList[storagebucket.AutoclassAttributes](sb.ref.Append("autoclass"))
 }
 
 func (sb storageBucketAttributes) Cors() terra.ListValue[storagebucket.CorsAttributes] {
-	return terra.ReferenceList[storagebucket.CorsAttributes](sb.ref.Append("cors"))
+	return terra.ReferenceAsList[storagebucket.CorsAttributes](sb.ref.Append("cors"))
 }
 
 func (sb storageBucketAttributes) CustomPlacementConfig() terra.ListValue[storagebucket.CustomPlacementConfigAttributes] {
-	return terra.ReferenceList[storagebucket.CustomPlacementConfigAttributes](sb.ref.Append("custom_placement_config"))
+	return terra.ReferenceAsList[storagebucket.CustomPlacementConfigAttributes](sb.ref.Append("custom_placement_config"))
 }
 
 func (sb storageBucketAttributes) Encryption() terra.ListValue[storagebucket.EncryptionAttributes] {
-	return terra.ReferenceList[storagebucket.EncryptionAttributes](sb.ref.Append("encryption"))
+	return terra.ReferenceAsList[storagebucket.EncryptionAttributes](sb.ref.Append("encryption"))
 }
 
 func (sb storageBucketAttributes) LifecycleRule() terra.ListValue[storagebucket.LifecycleRuleAttributes] {
-	return terra.ReferenceList[storagebucket.LifecycleRuleAttributes](sb.ref.Append("lifecycle_rule"))
+	return terra.ReferenceAsList[storagebucket.LifecycleRuleAttributes](sb.ref.Append("lifecycle_rule"))
 }
 
 func (sb storageBucketAttributes) Logging() terra.ListValue[storagebucket.LoggingAttributes] {
-	return terra.ReferenceList[storagebucket.LoggingAttributes](sb.ref.Append("logging"))
+	return terra.ReferenceAsList[storagebucket.LoggingAttributes](sb.ref.Append("logging"))
 }
 
 func (sb storageBucketAttributes) RetentionPolicy() terra.ListValue[storagebucket.RetentionPolicyAttributes] {
-	return terra.ReferenceList[storagebucket.RetentionPolicyAttributes](sb.ref.Append("retention_policy"))
+	return terra.ReferenceAsList[storagebucket.RetentionPolicyAttributes](sb.ref.Append("retention_policy"))
 }
 
 func (sb storageBucketAttributes) Timeouts() storagebucket.TimeoutsAttributes {
-	return terra.ReferenceSingle[storagebucket.TimeoutsAttributes](sb.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[storagebucket.TimeoutsAttributes](sb.ref.Append("timeouts"))
 }
 
 func (sb storageBucketAttributes) Versioning() terra.ListValue[storagebucket.VersioningAttributes] {
-	return terra.ReferenceList[storagebucket.VersioningAttributes](sb.ref.Append("versioning"))
+	return terra.ReferenceAsList[storagebucket.VersioningAttributes](sb.ref.Append("versioning"))
 }
 
 func (sb storageBucketAttributes) Website() terra.ListValue[storagebucket.WebsiteAttributes] {
-	return terra.ReferenceList[storagebucket.WebsiteAttributes](sb.ref.Append("website"))
+	return terra.ReferenceAsList[storagebucket.WebsiteAttributes](sb.ref.Append("website"))
 }
 
 type storageBucketState struct {

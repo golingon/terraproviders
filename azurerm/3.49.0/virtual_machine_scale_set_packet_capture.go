@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewVirtualMachineScaleSetPacketCapture creates a new instance of [VirtualMachineScaleSetPacketCapture].
 func NewVirtualMachineScaleSetPacketCapture(name string, args VirtualMachineScaleSetPacketCaptureArgs) *VirtualMachineScaleSetPacketCapture {
 	return &VirtualMachineScaleSetPacketCapture{
 		Args: args,
@@ -19,28 +20,51 @@ func NewVirtualMachineScaleSetPacketCapture(name string, args VirtualMachineScal
 
 var _ terra.Resource = (*VirtualMachineScaleSetPacketCapture)(nil)
 
+// VirtualMachineScaleSetPacketCapture represents the Terraform resource azurerm_virtual_machine_scale_set_packet_capture.
 type VirtualMachineScaleSetPacketCapture struct {
-	Name  string
-	Args  VirtualMachineScaleSetPacketCaptureArgs
-	state *virtualMachineScaleSetPacketCaptureState
+	Name      string
+	Args      VirtualMachineScaleSetPacketCaptureArgs
+	state     *virtualMachineScaleSetPacketCaptureState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VirtualMachineScaleSetPacketCapture].
 func (vmsspc *VirtualMachineScaleSetPacketCapture) Type() string {
 	return "azurerm_virtual_machine_scale_set_packet_capture"
 }
 
+// LocalName returns the local name for [VirtualMachineScaleSetPacketCapture].
 func (vmsspc *VirtualMachineScaleSetPacketCapture) LocalName() string {
 	return vmsspc.Name
 }
 
+// Configuration returns the configuration (args) for [VirtualMachineScaleSetPacketCapture].
 func (vmsspc *VirtualMachineScaleSetPacketCapture) Configuration() interface{} {
 	return vmsspc.Args
 }
 
+// DependOn is used for other resources to depend on [VirtualMachineScaleSetPacketCapture].
+func (vmsspc *VirtualMachineScaleSetPacketCapture) DependOn() terra.Reference {
+	return terra.ReferenceResource(vmsspc)
+}
+
+// Dependencies returns the list of resources [VirtualMachineScaleSetPacketCapture] depends_on.
+func (vmsspc *VirtualMachineScaleSetPacketCapture) Dependencies() terra.Dependencies {
+	return vmsspc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VirtualMachineScaleSetPacketCapture].
+func (vmsspc *VirtualMachineScaleSetPacketCapture) LifecycleManagement() *terra.Lifecycle {
+	return vmsspc.Lifecycle
+}
+
+// Attributes returns the attributes for [VirtualMachineScaleSetPacketCapture].
 func (vmsspc *VirtualMachineScaleSetPacketCapture) Attributes() virtualMachineScaleSetPacketCaptureAttributes {
 	return virtualMachineScaleSetPacketCaptureAttributes{ref: terra.ReferenceResource(vmsspc)}
 }
 
+// ImportState imports the given attribute values into [VirtualMachineScaleSetPacketCapture]'s state.
 func (vmsspc *VirtualMachineScaleSetPacketCapture) ImportState(av io.Reader) error {
 	vmsspc.state = &virtualMachineScaleSetPacketCaptureState{}
 	if err := json.NewDecoder(av).Decode(vmsspc.state); err != nil {
@@ -49,10 +73,12 @@ func (vmsspc *VirtualMachineScaleSetPacketCapture) ImportState(av io.Reader) err
 	return nil
 }
 
+// State returns the state and a bool indicating if [VirtualMachineScaleSetPacketCapture] has state.
 func (vmsspc *VirtualMachineScaleSetPacketCapture) State() (*virtualMachineScaleSetPacketCaptureState, bool) {
 	return vmsspc.state, vmsspc.state != nil
 }
 
+// StateMust returns the state for [VirtualMachineScaleSetPacketCapture]. Panics if the state is nil.
 func (vmsspc *VirtualMachineScaleSetPacketCapture) StateMust() *virtualMachineScaleSetPacketCaptureState {
 	if vmsspc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", vmsspc.Type(), vmsspc.LocalName()))
@@ -60,10 +86,7 @@ func (vmsspc *VirtualMachineScaleSetPacketCapture) StateMust() *virtualMachineSc
 	return vmsspc.state
 }
 
-func (vmsspc *VirtualMachineScaleSetPacketCapture) DependOn() terra.Reference {
-	return terra.ReferenceResource(vmsspc)
-}
-
+// VirtualMachineScaleSetPacketCaptureArgs contains the configurations for azurerm_virtual_machine_scale_set_packet_capture.
 type VirtualMachineScaleSetPacketCaptureArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -87,55 +110,60 @@ type VirtualMachineScaleSetPacketCaptureArgs struct {
 	StorageLocation *virtualmachinescalesetpacketcapture.StorageLocation `hcl:"storage_location,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *virtualmachinescalesetpacketcapture.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that VirtualMachineScaleSetPacketCapture depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type virtualMachineScaleSetPacketCaptureAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_virtual_machine_scale_set_packet_capture.
 func (vmsspc virtualMachineScaleSetPacketCaptureAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vmsspc.ref.Append("id"))
+	return terra.ReferenceAsString(vmsspc.ref.Append("id"))
 }
 
+// MaximumBytesPerPacket returns a reference to field maximum_bytes_per_packet of azurerm_virtual_machine_scale_set_packet_capture.
 func (vmsspc virtualMachineScaleSetPacketCaptureAttributes) MaximumBytesPerPacket() terra.NumberValue {
-	return terra.ReferenceNumber(vmsspc.ref.Append("maximum_bytes_per_packet"))
+	return terra.ReferenceAsNumber(vmsspc.ref.Append("maximum_bytes_per_packet"))
 }
 
+// MaximumBytesPerSession returns a reference to field maximum_bytes_per_session of azurerm_virtual_machine_scale_set_packet_capture.
 func (vmsspc virtualMachineScaleSetPacketCaptureAttributes) MaximumBytesPerSession() terra.NumberValue {
-	return terra.ReferenceNumber(vmsspc.ref.Append("maximum_bytes_per_session"))
+	return terra.ReferenceAsNumber(vmsspc.ref.Append("maximum_bytes_per_session"))
 }
 
+// MaximumCaptureDurationInSeconds returns a reference to field maximum_capture_duration_in_seconds of azurerm_virtual_machine_scale_set_packet_capture.
 func (vmsspc virtualMachineScaleSetPacketCaptureAttributes) MaximumCaptureDurationInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(vmsspc.ref.Append("maximum_capture_duration_in_seconds"))
+	return terra.ReferenceAsNumber(vmsspc.ref.Append("maximum_capture_duration_in_seconds"))
 }
 
+// Name returns a reference to field name of azurerm_virtual_machine_scale_set_packet_capture.
 func (vmsspc virtualMachineScaleSetPacketCaptureAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(vmsspc.ref.Append("name"))
+	return terra.ReferenceAsString(vmsspc.ref.Append("name"))
 }
 
+// NetworkWatcherId returns a reference to field network_watcher_id of azurerm_virtual_machine_scale_set_packet_capture.
 func (vmsspc virtualMachineScaleSetPacketCaptureAttributes) NetworkWatcherId() terra.StringValue {
-	return terra.ReferenceString(vmsspc.ref.Append("network_watcher_id"))
+	return terra.ReferenceAsString(vmsspc.ref.Append("network_watcher_id"))
 }
 
+// VirtualMachineScaleSetId returns a reference to field virtual_machine_scale_set_id of azurerm_virtual_machine_scale_set_packet_capture.
 func (vmsspc virtualMachineScaleSetPacketCaptureAttributes) VirtualMachineScaleSetId() terra.StringValue {
-	return terra.ReferenceString(vmsspc.ref.Append("virtual_machine_scale_set_id"))
+	return terra.ReferenceAsString(vmsspc.ref.Append("virtual_machine_scale_set_id"))
 }
 
 func (vmsspc virtualMachineScaleSetPacketCaptureAttributes) Filter() terra.ListValue[virtualmachinescalesetpacketcapture.FilterAttributes] {
-	return terra.ReferenceList[virtualmachinescalesetpacketcapture.FilterAttributes](vmsspc.ref.Append("filter"))
+	return terra.ReferenceAsList[virtualmachinescalesetpacketcapture.FilterAttributes](vmsspc.ref.Append("filter"))
 }
 
 func (vmsspc virtualMachineScaleSetPacketCaptureAttributes) MachineScope() terra.ListValue[virtualmachinescalesetpacketcapture.MachineScopeAttributes] {
-	return terra.ReferenceList[virtualmachinescalesetpacketcapture.MachineScopeAttributes](vmsspc.ref.Append("machine_scope"))
+	return terra.ReferenceAsList[virtualmachinescalesetpacketcapture.MachineScopeAttributes](vmsspc.ref.Append("machine_scope"))
 }
 
 func (vmsspc virtualMachineScaleSetPacketCaptureAttributes) StorageLocation() terra.ListValue[virtualmachinescalesetpacketcapture.StorageLocationAttributes] {
-	return terra.ReferenceList[virtualmachinescalesetpacketcapture.StorageLocationAttributes](vmsspc.ref.Append("storage_location"))
+	return terra.ReferenceAsList[virtualmachinescalesetpacketcapture.StorageLocationAttributes](vmsspc.ref.Append("storage_location"))
 }
 
 func (vmsspc virtualMachineScaleSetPacketCaptureAttributes) Timeouts() virtualmachinescalesetpacketcapture.TimeoutsAttributes {
-	return terra.ReferenceSingle[virtualmachinescalesetpacketcapture.TimeoutsAttributes](vmsspc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[virtualmachinescalesetpacketcapture.TimeoutsAttributes](vmsspc.ref.Append("timeouts"))
 }
 
 type virtualMachineScaleSetPacketCaptureState struct {

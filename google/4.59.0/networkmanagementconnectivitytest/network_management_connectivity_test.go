@@ -48,104 +48,104 @@ type DestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (d DestinationAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DestinationAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DestinationAttributes) InternalWithRef(ref terra.Reference) DestinationAttributes {
 	return DestinationAttributes{ref: ref}
 }
 
-func (d DestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (d DestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d DestinationAttributes) Instance() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("instance"))
+	return terra.ReferenceAsString(d.ref.Append("instance"))
 }
 
 func (d DestinationAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("ip_address"))
+	return terra.ReferenceAsString(d.ref.Append("ip_address"))
 }
 
 func (d DestinationAttributes) Network() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("network"))
+	return terra.ReferenceAsString(d.ref.Append("network"))
 }
 
 func (d DestinationAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(d.ref.Append("port"))
+	return terra.ReferenceAsNumber(d.ref.Append("port"))
 }
 
 func (d DestinationAttributes) ProjectId() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("project_id"))
+	return terra.ReferenceAsString(d.ref.Append("project_id"))
 }
 
 type SourceAttributes struct {
 	ref terra.Reference
 }
 
-func (s SourceAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SourceAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SourceAttributes) InternalWithRef(ref terra.Reference) SourceAttributes {
 	return SourceAttributes{ref: ref}
 }
 
-func (s SourceAttributes) InternalTokens() hclwrite.Tokens {
+func (s SourceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SourceAttributes) Instance() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("instance"))
+	return terra.ReferenceAsString(s.ref.Append("instance"))
 }
 
 func (s SourceAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("ip_address"))
+	return terra.ReferenceAsString(s.ref.Append("ip_address"))
 }
 
 func (s SourceAttributes) Network() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("network"))
+	return terra.ReferenceAsString(s.ref.Append("network"))
 }
 
 func (s SourceAttributes) NetworkType() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("network_type"))
+	return terra.ReferenceAsString(s.ref.Append("network_type"))
 }
 
 func (s SourceAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("port"))
+	return terra.ReferenceAsNumber(s.ref.Append("port"))
 }
 
 func (s SourceAttributes) ProjectId() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("project_id"))
+	return terra.ReferenceAsString(s.ref.Append("project_id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type DestinationState struct {

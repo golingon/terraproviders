@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSqlDatabase creates a new instance of [SqlDatabase].
 func NewSqlDatabase(name string, args SqlDatabaseArgs) *SqlDatabase {
 	return &SqlDatabase{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSqlDatabase(name string, args SqlDatabaseArgs) *SqlDatabase {
 
 var _ terra.Resource = (*SqlDatabase)(nil)
 
+// SqlDatabase represents the Terraform resource azurerm_sql_database.
 type SqlDatabase struct {
-	Name  string
-	Args  SqlDatabaseArgs
-	state *sqlDatabaseState
+	Name      string
+	Args      SqlDatabaseArgs
+	state     *sqlDatabaseState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SqlDatabase].
 func (sd *SqlDatabase) Type() string {
 	return "azurerm_sql_database"
 }
 
+// LocalName returns the local name for [SqlDatabase].
 func (sd *SqlDatabase) LocalName() string {
 	return sd.Name
 }
 
+// Configuration returns the configuration (args) for [SqlDatabase].
 func (sd *SqlDatabase) Configuration() interface{} {
 	return sd.Args
 }
 
+// DependOn is used for other resources to depend on [SqlDatabase].
+func (sd *SqlDatabase) DependOn() terra.Reference {
+	return terra.ReferenceResource(sd)
+}
+
+// Dependencies returns the list of resources [SqlDatabase] depends_on.
+func (sd *SqlDatabase) Dependencies() terra.Dependencies {
+	return sd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SqlDatabase].
+func (sd *SqlDatabase) LifecycleManagement() *terra.Lifecycle {
+	return sd.Lifecycle
+}
+
+// Attributes returns the attributes for [SqlDatabase].
 func (sd *SqlDatabase) Attributes() sqlDatabaseAttributes {
 	return sqlDatabaseAttributes{ref: terra.ReferenceResource(sd)}
 }
 
+// ImportState imports the given attribute values into [SqlDatabase]'s state.
 func (sd *SqlDatabase) ImportState(av io.Reader) error {
 	sd.state = &sqlDatabaseState{}
 	if err := json.NewDecoder(av).Decode(sd.state); err != nil {
@@ -49,10 +73,12 @@ func (sd *SqlDatabase) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SqlDatabase] has state.
 func (sd *SqlDatabase) State() (*sqlDatabaseState, bool) {
 	return sd.state, sd.state != nil
 }
 
+// StateMust returns the state for [SqlDatabase]. Panics if the state is nil.
 func (sd *SqlDatabase) StateMust() *sqlDatabaseState {
 	if sd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sd.Type(), sd.LocalName()))
@@ -60,10 +86,7 @@ func (sd *SqlDatabase) StateMust() *sqlDatabaseState {
 	return sd.state
 }
 
-func (sd *SqlDatabase) DependOn() terra.Reference {
-	return terra.ReferenceResource(sd)
-}
-
+// SqlDatabaseArgs contains the configurations for azurerm_sql_database.
 type SqlDatabaseArgs struct {
 	// Collation: string, optional
 	Collation terra.StringValue `hcl:"collation,attr"`
@@ -109,111 +132,131 @@ type SqlDatabaseArgs struct {
 	ThreatDetectionPolicy *sqldatabase.ThreatDetectionPolicy `hcl:"threat_detection_policy,block"`
 	// Timeouts: optional
 	Timeouts *sqldatabase.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SqlDatabase depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sqlDatabaseAttributes struct {
 	ref terra.Reference
 }
 
+// Collation returns a reference to field collation of azurerm_sql_database.
 func (sd sqlDatabaseAttributes) Collation() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("collation"))
+	return terra.ReferenceAsString(sd.ref.Append("collation"))
 }
 
+// CreateMode returns a reference to field create_mode of azurerm_sql_database.
 func (sd sqlDatabaseAttributes) CreateMode() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("create_mode"))
+	return terra.ReferenceAsString(sd.ref.Append("create_mode"))
 }
 
+// CreationDate returns a reference to field creation_date of azurerm_sql_database.
 func (sd sqlDatabaseAttributes) CreationDate() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("creation_date"))
+	return terra.ReferenceAsString(sd.ref.Append("creation_date"))
 }
 
+// DefaultSecondaryLocation returns a reference to field default_secondary_location of azurerm_sql_database.
 func (sd sqlDatabaseAttributes) DefaultSecondaryLocation() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("default_secondary_location"))
+	return terra.ReferenceAsString(sd.ref.Append("default_secondary_location"))
 }
 
+// Edition returns a reference to field edition of azurerm_sql_database.
 func (sd sqlDatabaseAttributes) Edition() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("edition"))
+	return terra.ReferenceAsString(sd.ref.Append("edition"))
 }
 
+// ElasticPoolName returns a reference to field elastic_pool_name of azurerm_sql_database.
 func (sd sqlDatabaseAttributes) ElasticPoolName() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("elastic_pool_name"))
+	return terra.ReferenceAsString(sd.ref.Append("elastic_pool_name"))
 }
 
+// Encryption returns a reference to field encryption of azurerm_sql_database.
 func (sd sqlDatabaseAttributes) Encryption() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("encryption"))
+	return terra.ReferenceAsString(sd.ref.Append("encryption"))
 }
 
+// Id returns a reference to field id of azurerm_sql_database.
 func (sd sqlDatabaseAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("id"))
+	return terra.ReferenceAsString(sd.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_sql_database.
 func (sd sqlDatabaseAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("location"))
+	return terra.ReferenceAsString(sd.ref.Append("location"))
 }
 
+// MaxSizeBytes returns a reference to field max_size_bytes of azurerm_sql_database.
 func (sd sqlDatabaseAttributes) MaxSizeBytes() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("max_size_bytes"))
+	return terra.ReferenceAsString(sd.ref.Append("max_size_bytes"))
 }
 
+// MaxSizeGb returns a reference to field max_size_gb of azurerm_sql_database.
 func (sd sqlDatabaseAttributes) MaxSizeGb() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("max_size_gb"))
+	return terra.ReferenceAsString(sd.ref.Append("max_size_gb"))
 }
 
+// Name returns a reference to field name of azurerm_sql_database.
 func (sd sqlDatabaseAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("name"))
+	return terra.ReferenceAsString(sd.ref.Append("name"))
 }
 
+// ReadScale returns a reference to field read_scale of azurerm_sql_database.
 func (sd sqlDatabaseAttributes) ReadScale() terra.BoolValue {
-	return terra.ReferenceBool(sd.ref.Append("read_scale"))
+	return terra.ReferenceAsBool(sd.ref.Append("read_scale"))
 }
 
+// RequestedServiceObjectiveId returns a reference to field requested_service_objective_id of azurerm_sql_database.
 func (sd sqlDatabaseAttributes) RequestedServiceObjectiveId() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("requested_service_objective_id"))
+	return terra.ReferenceAsString(sd.ref.Append("requested_service_objective_id"))
 }
 
+// RequestedServiceObjectiveName returns a reference to field requested_service_objective_name of azurerm_sql_database.
 func (sd sqlDatabaseAttributes) RequestedServiceObjectiveName() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("requested_service_objective_name"))
+	return terra.ReferenceAsString(sd.ref.Append("requested_service_objective_name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_sql_database.
 func (sd sqlDatabaseAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(sd.ref.Append("resource_group_name"))
 }
 
+// RestorePointInTime returns a reference to field restore_point_in_time of azurerm_sql_database.
 func (sd sqlDatabaseAttributes) RestorePointInTime() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("restore_point_in_time"))
+	return terra.ReferenceAsString(sd.ref.Append("restore_point_in_time"))
 }
 
+// ServerName returns a reference to field server_name of azurerm_sql_database.
 func (sd sqlDatabaseAttributes) ServerName() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("server_name"))
+	return terra.ReferenceAsString(sd.ref.Append("server_name"))
 }
 
+// SourceDatabaseDeletionDate returns a reference to field source_database_deletion_date of azurerm_sql_database.
 func (sd sqlDatabaseAttributes) SourceDatabaseDeletionDate() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("source_database_deletion_date"))
+	return terra.ReferenceAsString(sd.ref.Append("source_database_deletion_date"))
 }
 
+// SourceDatabaseId returns a reference to field source_database_id of azurerm_sql_database.
 func (sd sqlDatabaseAttributes) SourceDatabaseId() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("source_database_id"))
+	return terra.ReferenceAsString(sd.ref.Append("source_database_id"))
 }
 
+// Tags returns a reference to field tags of azurerm_sql_database.
 func (sd sqlDatabaseAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sd.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sd.ref.Append("tags"))
 }
 
+// ZoneRedundant returns a reference to field zone_redundant of azurerm_sql_database.
 func (sd sqlDatabaseAttributes) ZoneRedundant() terra.BoolValue {
-	return terra.ReferenceBool(sd.ref.Append("zone_redundant"))
+	return terra.ReferenceAsBool(sd.ref.Append("zone_redundant"))
 }
 
 func (sd sqlDatabaseAttributes) Import() terra.ListValue[sqldatabase.ImportAttributes] {
-	return terra.ReferenceList[sqldatabase.ImportAttributes](sd.ref.Append("import"))
+	return terra.ReferenceAsList[sqldatabase.ImportAttributes](sd.ref.Append("import"))
 }
 
 func (sd sqlDatabaseAttributes) ThreatDetectionPolicy() terra.ListValue[sqldatabase.ThreatDetectionPolicyAttributes] {
-	return terra.ReferenceList[sqldatabase.ThreatDetectionPolicyAttributes](sd.ref.Append("threat_detection_policy"))
+	return terra.ReferenceAsList[sqldatabase.ThreatDetectionPolicyAttributes](sd.ref.Append("threat_detection_policy"))
 }
 
 func (sd sqlDatabaseAttributes) Timeouts() sqldatabase.TimeoutsAttributes {
-	return terra.ReferenceSingle[sqldatabase.TimeoutsAttributes](sd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[sqldatabase.TimeoutsAttributes](sd.ref.Append("timeouts"))
 }
 
 type sqlDatabaseState struct {

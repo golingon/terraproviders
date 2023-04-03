@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLogicAppIntegrationAccountAssembly creates a new instance of [LogicAppIntegrationAccountAssembly].
 func NewLogicAppIntegrationAccountAssembly(name string, args LogicAppIntegrationAccountAssemblyArgs) *LogicAppIntegrationAccountAssembly {
 	return &LogicAppIntegrationAccountAssembly{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLogicAppIntegrationAccountAssembly(name string, args LogicAppIntegration
 
 var _ terra.Resource = (*LogicAppIntegrationAccountAssembly)(nil)
 
+// LogicAppIntegrationAccountAssembly represents the Terraform resource azurerm_logic_app_integration_account_assembly.
 type LogicAppIntegrationAccountAssembly struct {
-	Name  string
-	Args  LogicAppIntegrationAccountAssemblyArgs
-	state *logicAppIntegrationAccountAssemblyState
+	Name      string
+	Args      LogicAppIntegrationAccountAssemblyArgs
+	state     *logicAppIntegrationAccountAssemblyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LogicAppIntegrationAccountAssembly].
 func (laiaa *LogicAppIntegrationAccountAssembly) Type() string {
 	return "azurerm_logic_app_integration_account_assembly"
 }
 
+// LocalName returns the local name for [LogicAppIntegrationAccountAssembly].
 func (laiaa *LogicAppIntegrationAccountAssembly) LocalName() string {
 	return laiaa.Name
 }
 
+// Configuration returns the configuration (args) for [LogicAppIntegrationAccountAssembly].
 func (laiaa *LogicAppIntegrationAccountAssembly) Configuration() interface{} {
 	return laiaa.Args
 }
 
+// DependOn is used for other resources to depend on [LogicAppIntegrationAccountAssembly].
+func (laiaa *LogicAppIntegrationAccountAssembly) DependOn() terra.Reference {
+	return terra.ReferenceResource(laiaa)
+}
+
+// Dependencies returns the list of resources [LogicAppIntegrationAccountAssembly] depends_on.
+func (laiaa *LogicAppIntegrationAccountAssembly) Dependencies() terra.Dependencies {
+	return laiaa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LogicAppIntegrationAccountAssembly].
+func (laiaa *LogicAppIntegrationAccountAssembly) LifecycleManagement() *terra.Lifecycle {
+	return laiaa.Lifecycle
+}
+
+// Attributes returns the attributes for [LogicAppIntegrationAccountAssembly].
 func (laiaa *LogicAppIntegrationAccountAssembly) Attributes() logicAppIntegrationAccountAssemblyAttributes {
 	return logicAppIntegrationAccountAssemblyAttributes{ref: terra.ReferenceResource(laiaa)}
 }
 
+// ImportState imports the given attribute values into [LogicAppIntegrationAccountAssembly]'s state.
 func (laiaa *LogicAppIntegrationAccountAssembly) ImportState(av io.Reader) error {
 	laiaa.state = &logicAppIntegrationAccountAssemblyState{}
 	if err := json.NewDecoder(av).Decode(laiaa.state); err != nil {
@@ -49,10 +73,12 @@ func (laiaa *LogicAppIntegrationAccountAssembly) ImportState(av io.Reader) error
 	return nil
 }
 
+// State returns the state and a bool indicating if [LogicAppIntegrationAccountAssembly] has state.
 func (laiaa *LogicAppIntegrationAccountAssembly) State() (*logicAppIntegrationAccountAssemblyState, bool) {
 	return laiaa.state, laiaa.state != nil
 }
 
+// StateMust returns the state for [LogicAppIntegrationAccountAssembly]. Panics if the state is nil.
 func (laiaa *LogicAppIntegrationAccountAssembly) StateMust() *logicAppIntegrationAccountAssemblyState {
 	if laiaa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", laiaa.Type(), laiaa.LocalName()))
@@ -60,10 +86,7 @@ func (laiaa *LogicAppIntegrationAccountAssembly) StateMust() *logicAppIntegratio
 	return laiaa.state
 }
 
-func (laiaa *LogicAppIntegrationAccountAssembly) DependOn() terra.Reference {
-	return terra.ReferenceResource(laiaa)
-}
-
+// LogicAppIntegrationAccountAssemblyArgs contains the configurations for azurerm_logic_app_integration_account_assembly.
 type LogicAppIntegrationAccountAssemblyArgs struct {
 	// AssemblyName: string, required
 	AssemblyName terra.StringValue `hcl:"assembly_name,attr" validate:"required"`
@@ -85,51 +108,58 @@ type LogicAppIntegrationAccountAssemblyArgs struct {
 	ResourceGroupName terra.StringValue `hcl:"resource_group_name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *logicappintegrationaccountassembly.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LogicAppIntegrationAccountAssembly depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type logicAppIntegrationAccountAssemblyAttributes struct {
 	ref terra.Reference
 }
 
+// AssemblyName returns a reference to field assembly_name of azurerm_logic_app_integration_account_assembly.
 func (laiaa logicAppIntegrationAccountAssemblyAttributes) AssemblyName() terra.StringValue {
-	return terra.ReferenceString(laiaa.ref.Append("assembly_name"))
+	return terra.ReferenceAsString(laiaa.ref.Append("assembly_name"))
 }
 
+// AssemblyVersion returns a reference to field assembly_version of azurerm_logic_app_integration_account_assembly.
 func (laiaa logicAppIntegrationAccountAssemblyAttributes) AssemblyVersion() terra.StringValue {
-	return terra.ReferenceString(laiaa.ref.Append("assembly_version"))
+	return terra.ReferenceAsString(laiaa.ref.Append("assembly_version"))
 }
 
+// Content returns a reference to field content of azurerm_logic_app_integration_account_assembly.
 func (laiaa logicAppIntegrationAccountAssemblyAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(laiaa.ref.Append("content"))
+	return terra.ReferenceAsString(laiaa.ref.Append("content"))
 }
 
+// ContentLinkUri returns a reference to field content_link_uri of azurerm_logic_app_integration_account_assembly.
 func (laiaa logicAppIntegrationAccountAssemblyAttributes) ContentLinkUri() terra.StringValue {
-	return terra.ReferenceString(laiaa.ref.Append("content_link_uri"))
+	return terra.ReferenceAsString(laiaa.ref.Append("content_link_uri"))
 }
 
+// Id returns a reference to field id of azurerm_logic_app_integration_account_assembly.
 func (laiaa logicAppIntegrationAccountAssemblyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(laiaa.ref.Append("id"))
+	return terra.ReferenceAsString(laiaa.ref.Append("id"))
 }
 
+// IntegrationAccountName returns a reference to field integration_account_name of azurerm_logic_app_integration_account_assembly.
 func (laiaa logicAppIntegrationAccountAssemblyAttributes) IntegrationAccountName() terra.StringValue {
-	return terra.ReferenceString(laiaa.ref.Append("integration_account_name"))
+	return terra.ReferenceAsString(laiaa.ref.Append("integration_account_name"))
 }
 
+// Metadata returns a reference to field metadata of azurerm_logic_app_integration_account_assembly.
 func (laiaa logicAppIntegrationAccountAssemblyAttributes) Metadata() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](laiaa.ref.Append("metadata"))
+	return terra.ReferenceAsMap[terra.StringValue](laiaa.ref.Append("metadata"))
 }
 
+// Name returns a reference to field name of azurerm_logic_app_integration_account_assembly.
 func (laiaa logicAppIntegrationAccountAssemblyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(laiaa.ref.Append("name"))
+	return terra.ReferenceAsString(laiaa.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_logic_app_integration_account_assembly.
 func (laiaa logicAppIntegrationAccountAssemblyAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(laiaa.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(laiaa.ref.Append("resource_group_name"))
 }
 
 func (laiaa logicAppIntegrationAccountAssemblyAttributes) Timeouts() logicappintegrationaccountassembly.TimeoutsAttributes {
-	return terra.ReferenceSingle[logicappintegrationaccountassembly.TimeoutsAttributes](laiaa.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[logicappintegrationaccountassembly.TimeoutsAttributes](laiaa.ref.Append("timeouts"))
 }
 
 type logicAppIntegrationAccountAssemblyState struct {

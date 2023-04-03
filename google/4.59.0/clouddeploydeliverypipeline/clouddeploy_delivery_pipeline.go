@@ -43,148 +43,148 @@ type ConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConditionAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConditionAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConditionAttributes) InternalWithRef(ref terra.Reference) ConditionAttributes {
 	return ConditionAttributes{ref: ref}
 }
 
-func (c ConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ConditionAttributes) PipelineReadyCondition() terra.ListValue[PipelineReadyConditionAttributes] {
-	return terra.ReferenceList[PipelineReadyConditionAttributes](c.ref.Append("pipeline_ready_condition"))
+	return terra.ReferenceAsList[PipelineReadyConditionAttributes](c.ref.Append("pipeline_ready_condition"))
 }
 
 func (c ConditionAttributes) TargetsPresentCondition() terra.ListValue[TargetsPresentConditionAttributes] {
-	return terra.ReferenceList[TargetsPresentConditionAttributes](c.ref.Append("targets_present_condition"))
+	return terra.ReferenceAsList[TargetsPresentConditionAttributes](c.ref.Append("targets_present_condition"))
 }
 
 type PipelineReadyConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (prc PipelineReadyConditionAttributes) InternalRef() terra.Reference {
-	return prc.ref
+func (prc PipelineReadyConditionAttributes) InternalRef() (terra.Reference, error) {
+	return prc.ref, nil
 }
 
 func (prc PipelineReadyConditionAttributes) InternalWithRef(ref terra.Reference) PipelineReadyConditionAttributes {
 	return PipelineReadyConditionAttributes{ref: ref}
 }
 
-func (prc PipelineReadyConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (prc PipelineReadyConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return prc.ref.InternalTokens()
 }
 
 func (prc PipelineReadyConditionAttributes) Status() terra.BoolValue {
-	return terra.ReferenceBool(prc.ref.Append("status"))
+	return terra.ReferenceAsBool(prc.ref.Append("status"))
 }
 
 func (prc PipelineReadyConditionAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(prc.ref.Append("update_time"))
+	return terra.ReferenceAsString(prc.ref.Append("update_time"))
 }
 
 type TargetsPresentConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (tpc TargetsPresentConditionAttributes) InternalRef() terra.Reference {
-	return tpc.ref
+func (tpc TargetsPresentConditionAttributes) InternalRef() (terra.Reference, error) {
+	return tpc.ref, nil
 }
 
 func (tpc TargetsPresentConditionAttributes) InternalWithRef(ref terra.Reference) TargetsPresentConditionAttributes {
 	return TargetsPresentConditionAttributes{ref: ref}
 }
 
-func (tpc TargetsPresentConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (tpc TargetsPresentConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tpc.ref.InternalTokens()
 }
 
 func (tpc TargetsPresentConditionAttributes) MissingTargets() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](tpc.ref.Append("missing_targets"))
+	return terra.ReferenceAsList[terra.StringValue](tpc.ref.Append("missing_targets"))
 }
 
 func (tpc TargetsPresentConditionAttributes) Status() terra.BoolValue {
-	return terra.ReferenceBool(tpc.ref.Append("status"))
+	return terra.ReferenceAsBool(tpc.ref.Append("status"))
 }
 
 func (tpc TargetsPresentConditionAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(tpc.ref.Append("update_time"))
+	return terra.ReferenceAsString(tpc.ref.Append("update_time"))
 }
 
 type SerialPipelineAttributes struct {
 	ref terra.Reference
 }
 
-func (sp SerialPipelineAttributes) InternalRef() terra.Reference {
-	return sp.ref
+func (sp SerialPipelineAttributes) InternalRef() (terra.Reference, error) {
+	return sp.ref, nil
 }
 
 func (sp SerialPipelineAttributes) InternalWithRef(ref terra.Reference) SerialPipelineAttributes {
 	return SerialPipelineAttributes{ref: ref}
 }
 
-func (sp SerialPipelineAttributes) InternalTokens() hclwrite.Tokens {
+func (sp SerialPipelineAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sp.ref.InternalTokens()
 }
 
 func (sp SerialPipelineAttributes) Stages() terra.ListValue[StagesAttributes] {
-	return terra.ReferenceList[StagesAttributes](sp.ref.Append("stages"))
+	return terra.ReferenceAsList[StagesAttributes](sp.ref.Append("stages"))
 }
 
 type StagesAttributes struct {
 	ref terra.Reference
 }
 
-func (s StagesAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s StagesAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s StagesAttributes) InternalWithRef(ref terra.Reference) StagesAttributes {
 	return StagesAttributes{ref: ref}
 }
 
-func (s StagesAttributes) InternalTokens() hclwrite.Tokens {
+func (s StagesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s StagesAttributes) Profiles() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](s.ref.Append("profiles"))
+	return terra.ReferenceAsList[terra.StringValue](s.ref.Append("profiles"))
 }
 
 func (s StagesAttributes) TargetId() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("target_id"))
+	return terra.ReferenceAsString(s.ref.Append("target_id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ConditionState struct {

@@ -66,7 +66,7 @@ func (da DefaultActionAttributes) InternalWithRef(ref terra.Reference) DefaultAc
 	return DefaultActionAttributes{ref: ref}
 }
 
-func (da DefaultActionAttributes) InternalTokens() hclwrite.Tokens {
+func (da DefaultActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return da.ref.InternalTokens()
 }
 
@@ -86,7 +86,7 @@ func (lc LoggingConfigurationAttributes) InternalWithRef(ref terra.Reference) Lo
 	return LoggingConfigurationAttributes{ref: ref}
 }
 
-func (lc LoggingConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (lc LoggingConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lc.ref.InternalTokens()
 }
 
@@ -110,7 +110,7 @@ func (rf RedactedFieldsAttributes) InternalWithRef(ref terra.Reference) Redacted
 	return RedactedFieldsAttributes{ref: ref}
 }
 
-func (rf RedactedFieldsAttributes) InternalTokens() hclwrite.Tokens {
+func (rf RedactedFieldsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rf.ref.InternalTokens()
 }
 
@@ -130,7 +130,7 @@ func (ftm FieldToMatchAttributes) InternalWithRef(ref terra.Reference) FieldToMa
 	return FieldToMatchAttributes{ref: ref}
 }
 
-func (ftm FieldToMatchAttributes) InternalTokens() hclwrite.Tokens {
+func (ftm FieldToMatchAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ftm.ref.InternalTokens()
 }
 
@@ -154,7 +154,7 @@ func (r RulesAttributes) InternalWithRef(ref terra.Reference) RulesAttributes {
 	return RulesAttributes{ref: ref}
 }
 
-func (r RulesAttributes) InternalTokens() hclwrite.Tokens {
+func (r RulesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -190,7 +190,7 @@ func (a ActionAttributes) InternalWithRef(ref terra.Reference) ActionAttributes 
 	return ActionAttributes{ref: ref}
 }
 
-func (a ActionAttributes) InternalTokens() hclwrite.Tokens {
+func (a ActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -210,7 +210,7 @@ func (oa OverrideActionAttributes) InternalWithRef(ref terra.Reference) Override
 	return OverrideActionAttributes{ref: ref}
 }
 
-func (oa OverrideActionAttributes) InternalTokens() hclwrite.Tokens {
+func (oa OverrideActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oa.ref.InternalTokens()
 }
 

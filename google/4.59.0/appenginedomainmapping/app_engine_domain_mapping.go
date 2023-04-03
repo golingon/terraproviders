@@ -29,84 +29,84 @@ type ResourceRecordsAttributes struct {
 	ref terra.Reference
 }
 
-func (rr ResourceRecordsAttributes) InternalRef() terra.Reference {
-	return rr.ref
+func (rr ResourceRecordsAttributes) InternalRef() (terra.Reference, error) {
+	return rr.ref, nil
 }
 
 func (rr ResourceRecordsAttributes) InternalWithRef(ref terra.Reference) ResourceRecordsAttributes {
 	return ResourceRecordsAttributes{ref: ref}
 }
 
-func (rr ResourceRecordsAttributes) InternalTokens() hclwrite.Tokens {
+func (rr ResourceRecordsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rr.ref.InternalTokens()
 }
 
 func (rr ResourceRecordsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("name"))
+	return terra.ReferenceAsString(rr.ref.Append("name"))
 }
 
 func (rr ResourceRecordsAttributes) Rrdata() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("rrdata"))
+	return terra.ReferenceAsString(rr.ref.Append("rrdata"))
 }
 
 func (rr ResourceRecordsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("type"))
+	return terra.ReferenceAsString(rr.ref.Append("type"))
 }
 
 type SslSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ss SslSettingsAttributes) InternalRef() terra.Reference {
-	return ss.ref
+func (ss SslSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ss.ref, nil
 }
 
 func (ss SslSettingsAttributes) InternalWithRef(ref terra.Reference) SslSettingsAttributes {
 	return SslSettingsAttributes{ref: ref}
 }
 
-func (ss SslSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ss SslSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ss.ref.InternalTokens()
 }
 
 func (ss SslSettingsAttributes) CertificateId() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("certificate_id"))
+	return terra.ReferenceAsString(ss.ref.Append("certificate_id"))
 }
 
 func (ss SslSettingsAttributes) PendingManagedCertificateId() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("pending_managed_certificate_id"))
+	return terra.ReferenceAsString(ss.ref.Append("pending_managed_certificate_id"))
 }
 
 func (ss SslSettingsAttributes) SslManagementType() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("ssl_management_type"))
+	return terra.ReferenceAsString(ss.ref.Append("ssl_management_type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ResourceRecordsState struct {

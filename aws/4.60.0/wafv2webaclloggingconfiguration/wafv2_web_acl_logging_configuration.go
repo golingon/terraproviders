@@ -89,7 +89,7 @@ func (lf LoggingFilterAttributes) InternalWithRef(ref terra.Reference) LoggingFi
 	return LoggingFilterAttributes{ref: ref}
 }
 
-func (lf LoggingFilterAttributes) InternalTokens() hclwrite.Tokens {
+func (lf LoggingFilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lf.ref.InternalTokens()
 }
 
@@ -113,7 +113,7 @@ func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes 
 	return FilterAttributes{ref: ref}
 }
 
-func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
+func (f FilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -141,7 +141,7 @@ func (c ConditionAttributes) InternalWithRef(ref terra.Reference) ConditionAttri
 	return ConditionAttributes{ref: ref}
 }
 
-func (c ConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -165,7 +165,7 @@ func (ac ActionConditionAttributes) InternalWithRef(ref terra.Reference) ActionC
 	return ActionConditionAttributes{ref: ref}
 }
 
-func (ac ActionConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (ac ActionConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
@@ -185,7 +185,7 @@ func (lnc LabelNameConditionAttributes) InternalWithRef(ref terra.Reference) Lab
 	return LabelNameConditionAttributes{ref: ref}
 }
 
-func (lnc LabelNameConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (lnc LabelNameConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lnc.ref.InternalTokens()
 }
 
@@ -205,7 +205,7 @@ func (rf RedactedFieldsAttributes) InternalWithRef(ref terra.Reference) Redacted
 	return RedactedFieldsAttributes{ref: ref}
 }
 
-func (rf RedactedFieldsAttributes) InternalTokens() hclwrite.Tokens {
+func (rf RedactedFieldsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rf.ref.InternalTokens()
 }
 
@@ -249,7 +249,7 @@ func (aqa AllQueryArgumentsAttributes) InternalWithRef(ref terra.Reference) AllQ
 	return AllQueryArgumentsAttributes{ref: ref}
 }
 
-func (aqa AllQueryArgumentsAttributes) InternalTokens() hclwrite.Tokens {
+func (aqa AllQueryArgumentsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aqa.ref.InternalTokens()
 }
 
@@ -265,7 +265,7 @@ func (b BodyAttributes) InternalWithRef(ref terra.Reference) BodyAttributes {
 	return BodyAttributes{ref: ref}
 }
 
-func (b BodyAttributes) InternalTokens() hclwrite.Tokens {
+func (b BodyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return b.ref.InternalTokens()
 }
 
@@ -281,7 +281,7 @@ func (m MethodAttributes) InternalWithRef(ref terra.Reference) MethodAttributes 
 	return MethodAttributes{ref: ref}
 }
 
-func (m MethodAttributes) InternalTokens() hclwrite.Tokens {
+func (m MethodAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -297,7 +297,7 @@ func (qs QueryStringAttributes) InternalWithRef(ref terra.Reference) QueryString
 	return QueryStringAttributes{ref: ref}
 }
 
-func (qs QueryStringAttributes) InternalTokens() hclwrite.Tokens {
+func (qs QueryStringAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return qs.ref.InternalTokens()
 }
 
@@ -313,7 +313,7 @@ func (sh SingleHeaderAttributes) InternalWithRef(ref terra.Reference) SingleHead
 	return SingleHeaderAttributes{ref: ref}
 }
 
-func (sh SingleHeaderAttributes) InternalTokens() hclwrite.Tokens {
+func (sh SingleHeaderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sh.ref.InternalTokens()
 }
 
@@ -333,7 +333,7 @@ func (sqa SingleQueryArgumentAttributes) InternalWithRef(ref terra.Reference) Si
 	return SingleQueryArgumentAttributes{ref: ref}
 }
 
-func (sqa SingleQueryArgumentAttributes) InternalTokens() hclwrite.Tokens {
+func (sqa SingleQueryArgumentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sqa.ref.InternalTokens()
 }
 
@@ -353,7 +353,7 @@ func (up UriPathAttributes) InternalWithRef(ref terra.Reference) UriPathAttribut
 	return UriPathAttributes{ref: ref}
 }
 
-func (up UriPathAttributes) InternalTokens() hclwrite.Tokens {
+func (up UriPathAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return up.ref.InternalTokens()
 }
 

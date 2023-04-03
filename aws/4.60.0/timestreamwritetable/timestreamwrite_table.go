@@ -49,7 +49,7 @@ func (mswp MagneticStoreWritePropertiesAttributes) InternalWithRef(ref terra.Ref
 	return MagneticStoreWritePropertiesAttributes{ref: ref}
 }
 
-func (mswp MagneticStoreWritePropertiesAttributes) InternalTokens() hclwrite.Tokens {
+func (mswp MagneticStoreWritePropertiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mswp.ref.InternalTokens()
 }
 
@@ -73,7 +73,7 @@ func (msrdl MagneticStoreRejectedDataLocationAttributes) InternalWithRef(ref ter
 	return MagneticStoreRejectedDataLocationAttributes{ref: ref}
 }
 
-func (msrdl MagneticStoreRejectedDataLocationAttributes) InternalTokens() hclwrite.Tokens {
+func (msrdl MagneticStoreRejectedDataLocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return msrdl.ref.InternalTokens()
 }
 
@@ -93,7 +93,7 @@ func (sc S3ConfigurationAttributes) InternalWithRef(ref terra.Reference) S3Confi
 	return S3ConfigurationAttributes{ref: ref}
 }
 
-func (sc S3ConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (sc S3ConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -125,7 +125,7 @@ func (rp RetentionPropertiesAttributes) InternalWithRef(ref terra.Reference) Ret
 	return RetentionPropertiesAttributes{ref: ref}
 }
 
-func (rp RetentionPropertiesAttributes) InternalTokens() hclwrite.Tokens {
+func (rp RetentionPropertiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rp.ref.InternalTokens()
 }
 

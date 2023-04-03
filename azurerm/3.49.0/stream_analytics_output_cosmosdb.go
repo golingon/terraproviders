@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewStreamAnalyticsOutputCosmosdb creates a new instance of [StreamAnalyticsOutputCosmosdb].
 func NewStreamAnalyticsOutputCosmosdb(name string, args StreamAnalyticsOutputCosmosdbArgs) *StreamAnalyticsOutputCosmosdb {
 	return &StreamAnalyticsOutputCosmosdb{
 		Args: args,
@@ -19,28 +20,51 @@ func NewStreamAnalyticsOutputCosmosdb(name string, args StreamAnalyticsOutputCos
 
 var _ terra.Resource = (*StreamAnalyticsOutputCosmosdb)(nil)
 
+// StreamAnalyticsOutputCosmosdb represents the Terraform resource azurerm_stream_analytics_output_cosmosdb.
 type StreamAnalyticsOutputCosmosdb struct {
-	Name  string
-	Args  StreamAnalyticsOutputCosmosdbArgs
-	state *streamAnalyticsOutputCosmosdbState
+	Name      string
+	Args      StreamAnalyticsOutputCosmosdbArgs
+	state     *streamAnalyticsOutputCosmosdbState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [StreamAnalyticsOutputCosmosdb].
 func (saoc *StreamAnalyticsOutputCosmosdb) Type() string {
 	return "azurerm_stream_analytics_output_cosmosdb"
 }
 
+// LocalName returns the local name for [StreamAnalyticsOutputCosmosdb].
 func (saoc *StreamAnalyticsOutputCosmosdb) LocalName() string {
 	return saoc.Name
 }
 
+// Configuration returns the configuration (args) for [StreamAnalyticsOutputCosmosdb].
 func (saoc *StreamAnalyticsOutputCosmosdb) Configuration() interface{} {
 	return saoc.Args
 }
 
+// DependOn is used for other resources to depend on [StreamAnalyticsOutputCosmosdb].
+func (saoc *StreamAnalyticsOutputCosmosdb) DependOn() terra.Reference {
+	return terra.ReferenceResource(saoc)
+}
+
+// Dependencies returns the list of resources [StreamAnalyticsOutputCosmosdb] depends_on.
+func (saoc *StreamAnalyticsOutputCosmosdb) Dependencies() terra.Dependencies {
+	return saoc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [StreamAnalyticsOutputCosmosdb].
+func (saoc *StreamAnalyticsOutputCosmosdb) LifecycleManagement() *terra.Lifecycle {
+	return saoc.Lifecycle
+}
+
+// Attributes returns the attributes for [StreamAnalyticsOutputCosmosdb].
 func (saoc *StreamAnalyticsOutputCosmosdb) Attributes() streamAnalyticsOutputCosmosdbAttributes {
 	return streamAnalyticsOutputCosmosdbAttributes{ref: terra.ReferenceResource(saoc)}
 }
 
+// ImportState imports the given attribute values into [StreamAnalyticsOutputCosmosdb]'s state.
 func (saoc *StreamAnalyticsOutputCosmosdb) ImportState(av io.Reader) error {
 	saoc.state = &streamAnalyticsOutputCosmosdbState{}
 	if err := json.NewDecoder(av).Decode(saoc.state); err != nil {
@@ -49,10 +73,12 @@ func (saoc *StreamAnalyticsOutputCosmosdb) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [StreamAnalyticsOutputCosmosdb] has state.
 func (saoc *StreamAnalyticsOutputCosmosdb) State() (*streamAnalyticsOutputCosmosdbState, bool) {
 	return saoc.state, saoc.state != nil
 }
 
+// StateMust returns the state for [StreamAnalyticsOutputCosmosdb]. Panics if the state is nil.
 func (saoc *StreamAnalyticsOutputCosmosdb) StateMust() *streamAnalyticsOutputCosmosdbState {
 	if saoc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", saoc.Type(), saoc.LocalName()))
@@ -60,10 +86,7 @@ func (saoc *StreamAnalyticsOutputCosmosdb) StateMust() *streamAnalyticsOutputCos
 	return saoc.state
 }
 
-func (saoc *StreamAnalyticsOutputCosmosdb) DependOn() terra.Reference {
-	return terra.ReferenceResource(saoc)
-}
-
+// StreamAnalyticsOutputCosmosdbArgs contains the configurations for azurerm_stream_analytics_output_cosmosdb.
 type StreamAnalyticsOutputCosmosdbArgs struct {
 	// ContainerName: string, required
 	ContainerName terra.StringValue `hcl:"container_name,attr" validate:"required"`
@@ -83,47 +106,53 @@ type StreamAnalyticsOutputCosmosdbArgs struct {
 	StreamAnalyticsJobId terra.StringValue `hcl:"stream_analytics_job_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *streamanalyticsoutputcosmosdb.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that StreamAnalyticsOutputCosmosdb depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type streamAnalyticsOutputCosmosdbAttributes struct {
 	ref terra.Reference
 }
 
+// ContainerName returns a reference to field container_name of azurerm_stream_analytics_output_cosmosdb.
 func (saoc streamAnalyticsOutputCosmosdbAttributes) ContainerName() terra.StringValue {
-	return terra.ReferenceString(saoc.ref.Append("container_name"))
+	return terra.ReferenceAsString(saoc.ref.Append("container_name"))
 }
 
+// CosmosdbAccountKey returns a reference to field cosmosdb_account_key of azurerm_stream_analytics_output_cosmosdb.
 func (saoc streamAnalyticsOutputCosmosdbAttributes) CosmosdbAccountKey() terra.StringValue {
-	return terra.ReferenceString(saoc.ref.Append("cosmosdb_account_key"))
+	return terra.ReferenceAsString(saoc.ref.Append("cosmosdb_account_key"))
 }
 
+// CosmosdbSqlDatabaseId returns a reference to field cosmosdb_sql_database_id of azurerm_stream_analytics_output_cosmosdb.
 func (saoc streamAnalyticsOutputCosmosdbAttributes) CosmosdbSqlDatabaseId() terra.StringValue {
-	return terra.ReferenceString(saoc.ref.Append("cosmosdb_sql_database_id"))
+	return terra.ReferenceAsString(saoc.ref.Append("cosmosdb_sql_database_id"))
 }
 
+// DocumentId returns a reference to field document_id of azurerm_stream_analytics_output_cosmosdb.
 func (saoc streamAnalyticsOutputCosmosdbAttributes) DocumentId() terra.StringValue {
-	return terra.ReferenceString(saoc.ref.Append("document_id"))
+	return terra.ReferenceAsString(saoc.ref.Append("document_id"))
 }
 
+// Id returns a reference to field id of azurerm_stream_analytics_output_cosmosdb.
 func (saoc streamAnalyticsOutputCosmosdbAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(saoc.ref.Append("id"))
+	return terra.ReferenceAsString(saoc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_stream_analytics_output_cosmosdb.
 func (saoc streamAnalyticsOutputCosmosdbAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(saoc.ref.Append("name"))
+	return terra.ReferenceAsString(saoc.ref.Append("name"))
 }
 
+// PartitionKey returns a reference to field partition_key of azurerm_stream_analytics_output_cosmosdb.
 func (saoc streamAnalyticsOutputCosmosdbAttributes) PartitionKey() terra.StringValue {
-	return terra.ReferenceString(saoc.ref.Append("partition_key"))
+	return terra.ReferenceAsString(saoc.ref.Append("partition_key"))
 }
 
+// StreamAnalyticsJobId returns a reference to field stream_analytics_job_id of azurerm_stream_analytics_output_cosmosdb.
 func (saoc streamAnalyticsOutputCosmosdbAttributes) StreamAnalyticsJobId() terra.StringValue {
-	return terra.ReferenceString(saoc.ref.Append("stream_analytics_job_id"))
+	return terra.ReferenceAsString(saoc.ref.Append("stream_analytics_job_id"))
 }
 
 func (saoc streamAnalyticsOutputCosmosdbAttributes) Timeouts() streamanalyticsoutputcosmosdb.TimeoutsAttributes {
-	return terra.ReferenceSingle[streamanalyticsoutputcosmosdb.TimeoutsAttributes](saoc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[streamanalyticsoutputcosmosdb.TimeoutsAttributes](saoc.ref.Append("timeouts"))
 }
 
 type streamAnalyticsOutputCosmosdbState struct {

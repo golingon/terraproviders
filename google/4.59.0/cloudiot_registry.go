@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCloudiotRegistry creates a new instance of [CloudiotRegistry].
 func NewCloudiotRegistry(name string, args CloudiotRegistryArgs) *CloudiotRegistry {
 	return &CloudiotRegistry{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCloudiotRegistry(name string, args CloudiotRegistryArgs) *CloudiotRegist
 
 var _ terra.Resource = (*CloudiotRegistry)(nil)
 
+// CloudiotRegistry represents the Terraform resource google_cloudiot_registry.
 type CloudiotRegistry struct {
-	Name  string
-	Args  CloudiotRegistryArgs
-	state *cloudiotRegistryState
+	Name      string
+	Args      CloudiotRegistryArgs
+	state     *cloudiotRegistryState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudiotRegistry].
 func (cr *CloudiotRegistry) Type() string {
 	return "google_cloudiot_registry"
 }
 
+// LocalName returns the local name for [CloudiotRegistry].
 func (cr *CloudiotRegistry) LocalName() string {
 	return cr.Name
 }
 
+// Configuration returns the configuration (args) for [CloudiotRegistry].
 func (cr *CloudiotRegistry) Configuration() interface{} {
 	return cr.Args
 }
 
+// DependOn is used for other resources to depend on [CloudiotRegistry].
+func (cr *CloudiotRegistry) DependOn() terra.Reference {
+	return terra.ReferenceResource(cr)
+}
+
+// Dependencies returns the list of resources [CloudiotRegistry] depends_on.
+func (cr *CloudiotRegistry) Dependencies() terra.Dependencies {
+	return cr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudiotRegistry].
+func (cr *CloudiotRegistry) LifecycleManagement() *terra.Lifecycle {
+	return cr.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudiotRegistry].
 func (cr *CloudiotRegistry) Attributes() cloudiotRegistryAttributes {
 	return cloudiotRegistryAttributes{ref: terra.ReferenceResource(cr)}
 }
 
+// ImportState imports the given attribute values into [CloudiotRegistry]'s state.
 func (cr *CloudiotRegistry) ImportState(av io.Reader) error {
 	cr.state = &cloudiotRegistryState{}
 	if err := json.NewDecoder(av).Decode(cr.state); err != nil {
@@ -49,10 +73,12 @@ func (cr *CloudiotRegistry) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudiotRegistry] has state.
 func (cr *CloudiotRegistry) State() (*cloudiotRegistryState, bool) {
 	return cr.state, cr.state != nil
 }
 
+// StateMust returns the state for [CloudiotRegistry]. Panics if the state is nil.
 func (cr *CloudiotRegistry) StateMust() *cloudiotRegistryState {
 	if cr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cr.Type(), cr.LocalName()))
@@ -60,10 +86,7 @@ func (cr *CloudiotRegistry) StateMust() *cloudiotRegistryState {
 	return cr.state
 }
 
-func (cr *CloudiotRegistry) DependOn() terra.Reference {
-	return terra.ReferenceResource(cr)
-}
-
+// CloudiotRegistryArgs contains the configurations for google_cloudiot_registry.
 type CloudiotRegistryArgs struct {
 	// HttpConfig: map of string, optional
 	HttpConfig terra.MapValue[terra.StringValue] `hcl:"http_config,attr"`
@@ -87,55 +110,61 @@ type CloudiotRegistryArgs struct {
 	EventNotificationConfigs []cloudiotregistry.EventNotificationConfigs `hcl:"event_notification_configs,block" validate:"min=0,max=10"`
 	// Timeouts: optional
 	Timeouts *cloudiotregistry.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that CloudiotRegistry depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudiotRegistryAttributes struct {
 	ref terra.Reference
 }
 
+// HttpConfig returns a reference to field http_config of google_cloudiot_registry.
 func (cr cloudiotRegistryAttributes) HttpConfig() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cr.ref.Append("http_config"))
+	return terra.ReferenceAsMap[terra.StringValue](cr.ref.Append("http_config"))
 }
 
+// Id returns a reference to field id of google_cloudiot_registry.
 func (cr cloudiotRegistryAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("id"))
+	return terra.ReferenceAsString(cr.ref.Append("id"))
 }
 
+// LogLevel returns a reference to field log_level of google_cloudiot_registry.
 func (cr cloudiotRegistryAttributes) LogLevel() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("log_level"))
+	return terra.ReferenceAsString(cr.ref.Append("log_level"))
 }
 
+// MqttConfig returns a reference to field mqtt_config of google_cloudiot_registry.
 func (cr cloudiotRegistryAttributes) MqttConfig() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cr.ref.Append("mqtt_config"))
+	return terra.ReferenceAsMap[terra.StringValue](cr.ref.Append("mqtt_config"))
 }
 
+// Name returns a reference to field name of google_cloudiot_registry.
 func (cr cloudiotRegistryAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("name"))
+	return terra.ReferenceAsString(cr.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_cloudiot_registry.
 func (cr cloudiotRegistryAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("project"))
+	return terra.ReferenceAsString(cr.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_cloudiot_registry.
 func (cr cloudiotRegistryAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("region"))
+	return terra.ReferenceAsString(cr.ref.Append("region"))
 }
 
+// StateNotificationConfig returns a reference to field state_notification_config of google_cloudiot_registry.
 func (cr cloudiotRegistryAttributes) StateNotificationConfig() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cr.ref.Append("state_notification_config"))
+	return terra.ReferenceAsMap[terra.StringValue](cr.ref.Append("state_notification_config"))
 }
 
 func (cr cloudiotRegistryAttributes) Credentials() terra.ListValue[cloudiotregistry.CredentialsAttributes] {
-	return terra.ReferenceList[cloudiotregistry.CredentialsAttributes](cr.ref.Append("credentials"))
+	return terra.ReferenceAsList[cloudiotregistry.CredentialsAttributes](cr.ref.Append("credentials"))
 }
 
 func (cr cloudiotRegistryAttributes) EventNotificationConfigs() terra.ListValue[cloudiotregistry.EventNotificationConfigsAttributes] {
-	return terra.ReferenceList[cloudiotregistry.EventNotificationConfigsAttributes](cr.ref.Append("event_notification_configs"))
+	return terra.ReferenceAsList[cloudiotregistry.EventNotificationConfigsAttributes](cr.ref.Append("event_notification_configs"))
 }
 
 func (cr cloudiotRegistryAttributes) Timeouts() cloudiotregistry.TimeoutsAttributes {
-	return terra.ReferenceSingle[cloudiotregistry.TimeoutsAttributes](cr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cloudiotregistry.TimeoutsAttributes](cr.ref.Append("timeouts"))
 }
 
 type cloudiotRegistryState struct {

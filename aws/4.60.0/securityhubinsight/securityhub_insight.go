@@ -923,7 +923,7 @@ func (f FiltersAttributes) InternalWithRef(ref terra.Reference) FiltersAttribute
 	return FiltersAttributes{ref: ref}
 }
 
-func (f FiltersAttributes) InternalTokens() hclwrite.Tokens {
+func (f FiltersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -1291,7 +1291,7 @@ func (aai AwsAccountIdAttributes) InternalWithRef(ref terra.Reference) AwsAccoun
 	return AwsAccountIdAttributes{ref: ref}
 }
 
-func (aai AwsAccountIdAttributes) InternalTokens() hclwrite.Tokens {
+func (aai AwsAccountIdAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aai.ref.InternalTokens()
 }
 
@@ -1315,7 +1315,7 @@ func (cn CompanyNameAttributes) InternalWithRef(ref terra.Reference) CompanyName
 	return CompanyNameAttributes{ref: ref}
 }
 
-func (cn CompanyNameAttributes) InternalTokens() hclwrite.Tokens {
+func (cn CompanyNameAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cn.ref.InternalTokens()
 }
 
@@ -1339,7 +1339,7 @@ func (cs ComplianceStatusAttributes) InternalWithRef(ref terra.Reference) Compli
 	return ComplianceStatusAttributes{ref: ref}
 }
 
-func (cs ComplianceStatusAttributes) InternalTokens() hclwrite.Tokens {
+func (cs ComplianceStatusAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cs.ref.InternalTokens()
 }
 
@@ -1363,7 +1363,7 @@ func (c ConfidenceAttributes) InternalWithRef(ref terra.Reference) ConfidenceAtt
 	return ConfidenceAttributes{ref: ref}
 }
 
-func (c ConfidenceAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConfidenceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -1391,7 +1391,7 @@ func (ca CreatedAtAttributes) InternalWithRef(ref terra.Reference) CreatedAtAttr
 	return CreatedAtAttributes{ref: ref}
 }
 
-func (ca CreatedAtAttributes) InternalTokens() hclwrite.Tokens {
+func (ca CreatedAtAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ca.ref.InternalTokens()
 }
 
@@ -1419,7 +1419,7 @@ func (dr CreatedAtDateRangeAttributes) InternalWithRef(ref terra.Reference) Crea
 	return CreatedAtDateRangeAttributes{ref: ref}
 }
 
-func (dr CreatedAtDateRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (dr CreatedAtDateRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dr.ref.InternalTokens()
 }
 
@@ -1443,7 +1443,7 @@ func (c CriticalityAttributes) InternalWithRef(ref terra.Reference) CriticalityA
 	return CriticalityAttributes{ref: ref}
 }
 
-func (c CriticalityAttributes) InternalTokens() hclwrite.Tokens {
+func (c CriticalityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -1471,7 +1471,7 @@ func (d DescriptionAttributes) InternalWithRef(ref terra.Reference) DescriptionA
 	return DescriptionAttributes{ref: ref}
 }
 
-func (d DescriptionAttributes) InternalTokens() hclwrite.Tokens {
+func (d DescriptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -1495,7 +1495,7 @@ func (fpfc FindingProviderFieldsConfidenceAttributes) InternalWithRef(ref terra.
 	return FindingProviderFieldsConfidenceAttributes{ref: ref}
 }
 
-func (fpfc FindingProviderFieldsConfidenceAttributes) InternalTokens() hclwrite.Tokens {
+func (fpfc FindingProviderFieldsConfidenceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fpfc.ref.InternalTokens()
 }
 
@@ -1523,7 +1523,7 @@ func (fpfc FindingProviderFieldsCriticalityAttributes) InternalWithRef(ref terra
 	return FindingProviderFieldsCriticalityAttributes{ref: ref}
 }
 
-func (fpfc FindingProviderFieldsCriticalityAttributes) InternalTokens() hclwrite.Tokens {
+func (fpfc FindingProviderFieldsCriticalityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fpfc.ref.InternalTokens()
 }
 
@@ -1551,7 +1551,7 @@ func (fpfrfi FindingProviderFieldsRelatedFindingsIdAttributes) InternalWithRef(r
 	return FindingProviderFieldsRelatedFindingsIdAttributes{ref: ref}
 }
 
-func (fpfrfi FindingProviderFieldsRelatedFindingsIdAttributes) InternalTokens() hclwrite.Tokens {
+func (fpfrfi FindingProviderFieldsRelatedFindingsIdAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fpfrfi.ref.InternalTokens()
 }
 
@@ -1575,7 +1575,7 @@ func (fpfrfpa FindingProviderFieldsRelatedFindingsProductArnAttributes) Internal
 	return FindingProviderFieldsRelatedFindingsProductArnAttributes{ref: ref}
 }
 
-func (fpfrfpa FindingProviderFieldsRelatedFindingsProductArnAttributes) InternalTokens() hclwrite.Tokens {
+func (fpfrfpa FindingProviderFieldsRelatedFindingsProductArnAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fpfrfpa.ref.InternalTokens()
 }
 
@@ -1599,7 +1599,7 @@ func (fpfsl FindingProviderFieldsSeverityLabelAttributes) InternalWithRef(ref te
 	return FindingProviderFieldsSeverityLabelAttributes{ref: ref}
 }
 
-func (fpfsl FindingProviderFieldsSeverityLabelAttributes) InternalTokens() hclwrite.Tokens {
+func (fpfsl FindingProviderFieldsSeverityLabelAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fpfsl.ref.InternalTokens()
 }
 
@@ -1623,7 +1623,7 @@ func (fpfso FindingProviderFieldsSeverityOriginalAttributes) InternalWithRef(ref
 	return FindingProviderFieldsSeverityOriginalAttributes{ref: ref}
 }
 
-func (fpfso FindingProviderFieldsSeverityOriginalAttributes) InternalTokens() hclwrite.Tokens {
+func (fpfso FindingProviderFieldsSeverityOriginalAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fpfso.ref.InternalTokens()
 }
 
@@ -1647,7 +1647,7 @@ func (fpft FindingProviderFieldsTypesAttributes) InternalWithRef(ref terra.Refer
 	return FindingProviderFieldsTypesAttributes{ref: ref}
 }
 
-func (fpft FindingProviderFieldsTypesAttributes) InternalTokens() hclwrite.Tokens {
+func (fpft FindingProviderFieldsTypesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fpft.ref.InternalTokens()
 }
 
@@ -1671,7 +1671,7 @@ func (foa FirstObservedAtAttributes) InternalWithRef(ref terra.Reference) FirstO
 	return FirstObservedAtAttributes{ref: ref}
 }
 
-func (foa FirstObservedAtAttributes) InternalTokens() hclwrite.Tokens {
+func (foa FirstObservedAtAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return foa.ref.InternalTokens()
 }
 
@@ -1699,7 +1699,7 @@ func (dr FirstObservedAtDateRangeAttributes) InternalWithRef(ref terra.Reference
 	return FirstObservedAtDateRangeAttributes{ref: ref}
 }
 
-func (dr FirstObservedAtDateRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (dr FirstObservedAtDateRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dr.ref.InternalTokens()
 }
 
@@ -1723,7 +1723,7 @@ func (gi GeneratorIdAttributes) InternalWithRef(ref terra.Reference) GeneratorId
 	return GeneratorIdAttributes{ref: ref}
 }
 
-func (gi GeneratorIdAttributes) InternalTokens() hclwrite.Tokens {
+func (gi GeneratorIdAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gi.ref.InternalTokens()
 }
 
@@ -1747,7 +1747,7 @@ func (i IdAttributes) InternalWithRef(ref terra.Reference) IdAttributes {
 	return IdAttributes{ref: ref}
 }
 
-func (i IdAttributes) InternalTokens() hclwrite.Tokens {
+func (i IdAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -1771,7 +1771,7 @@ func (k KeywordAttributes) InternalWithRef(ref terra.Reference) KeywordAttribute
 	return KeywordAttributes{ref: ref}
 }
 
-func (k KeywordAttributes) InternalTokens() hclwrite.Tokens {
+func (k KeywordAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return k.ref.InternalTokens()
 }
 
@@ -1791,7 +1791,7 @@ func (loa LastObservedAtAttributes) InternalWithRef(ref terra.Reference) LastObs
 	return LastObservedAtAttributes{ref: ref}
 }
 
-func (loa LastObservedAtAttributes) InternalTokens() hclwrite.Tokens {
+func (loa LastObservedAtAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return loa.ref.InternalTokens()
 }
 
@@ -1819,7 +1819,7 @@ func (dr LastObservedAtDateRangeAttributes) InternalWithRef(ref terra.Reference)
 	return LastObservedAtDateRangeAttributes{ref: ref}
 }
 
-func (dr LastObservedAtDateRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (dr LastObservedAtDateRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dr.ref.InternalTokens()
 }
 
@@ -1843,7 +1843,7 @@ func (mn MalwareNameAttributes) InternalWithRef(ref terra.Reference) MalwareName
 	return MalwareNameAttributes{ref: ref}
 }
 
-func (mn MalwareNameAttributes) InternalTokens() hclwrite.Tokens {
+func (mn MalwareNameAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mn.ref.InternalTokens()
 }
 
@@ -1867,7 +1867,7 @@ func (mp MalwarePathAttributes) InternalWithRef(ref terra.Reference) MalwarePath
 	return MalwarePathAttributes{ref: ref}
 }
 
-func (mp MalwarePathAttributes) InternalTokens() hclwrite.Tokens {
+func (mp MalwarePathAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mp.ref.InternalTokens()
 }
 
@@ -1891,7 +1891,7 @@ func (ms MalwareStateAttributes) InternalWithRef(ref terra.Reference) MalwareSta
 	return MalwareStateAttributes{ref: ref}
 }
 
-func (ms MalwareStateAttributes) InternalTokens() hclwrite.Tokens {
+func (ms MalwareStateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ms.ref.InternalTokens()
 }
 
@@ -1915,7 +1915,7 @@ func (mt MalwareTypeAttributes) InternalWithRef(ref terra.Reference) MalwareType
 	return MalwareTypeAttributes{ref: ref}
 }
 
-func (mt MalwareTypeAttributes) InternalTokens() hclwrite.Tokens {
+func (mt MalwareTypeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mt.ref.InternalTokens()
 }
 
@@ -1939,7 +1939,7 @@ func (ndd NetworkDestinationDomainAttributes) InternalWithRef(ref terra.Referenc
 	return NetworkDestinationDomainAttributes{ref: ref}
 }
 
-func (ndd NetworkDestinationDomainAttributes) InternalTokens() hclwrite.Tokens {
+func (ndd NetworkDestinationDomainAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ndd.ref.InternalTokens()
 }
 
@@ -1963,7 +1963,7 @@ func (ndi NetworkDestinationIpv4Attributes) InternalWithRef(ref terra.Reference)
 	return NetworkDestinationIpv4Attributes{ref: ref}
 }
 
-func (ndi NetworkDestinationIpv4Attributes) InternalTokens() hclwrite.Tokens {
+func (ndi NetworkDestinationIpv4Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ndi.ref.InternalTokens()
 }
 
@@ -1983,7 +1983,7 @@ func (ndi NetworkDestinationIpv6Attributes) InternalWithRef(ref terra.Reference)
 	return NetworkDestinationIpv6Attributes{ref: ref}
 }
 
-func (ndi NetworkDestinationIpv6Attributes) InternalTokens() hclwrite.Tokens {
+func (ndi NetworkDestinationIpv6Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ndi.ref.InternalTokens()
 }
 
@@ -2003,7 +2003,7 @@ func (ndp NetworkDestinationPortAttributes) InternalWithRef(ref terra.Reference)
 	return NetworkDestinationPortAttributes{ref: ref}
 }
 
-func (ndp NetworkDestinationPortAttributes) InternalTokens() hclwrite.Tokens {
+func (ndp NetworkDestinationPortAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ndp.ref.InternalTokens()
 }
 
@@ -2031,7 +2031,7 @@ func (nd NetworkDirectionAttributes) InternalWithRef(ref terra.Reference) Networ
 	return NetworkDirectionAttributes{ref: ref}
 }
 
-func (nd NetworkDirectionAttributes) InternalTokens() hclwrite.Tokens {
+func (nd NetworkDirectionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nd.ref.InternalTokens()
 }
 
@@ -2055,7 +2055,7 @@ func (np NetworkProtocolAttributes) InternalWithRef(ref terra.Reference) Network
 	return NetworkProtocolAttributes{ref: ref}
 }
 
-func (np NetworkProtocolAttributes) InternalTokens() hclwrite.Tokens {
+func (np NetworkProtocolAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return np.ref.InternalTokens()
 }
 
@@ -2079,7 +2079,7 @@ func (nsd NetworkSourceDomainAttributes) InternalWithRef(ref terra.Reference) Ne
 	return NetworkSourceDomainAttributes{ref: ref}
 }
 
-func (nsd NetworkSourceDomainAttributes) InternalTokens() hclwrite.Tokens {
+func (nsd NetworkSourceDomainAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nsd.ref.InternalTokens()
 }
 
@@ -2103,7 +2103,7 @@ func (nsi NetworkSourceIpv4Attributes) InternalWithRef(ref terra.Reference) Netw
 	return NetworkSourceIpv4Attributes{ref: ref}
 }
 
-func (nsi NetworkSourceIpv4Attributes) InternalTokens() hclwrite.Tokens {
+func (nsi NetworkSourceIpv4Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nsi.ref.InternalTokens()
 }
 
@@ -2123,7 +2123,7 @@ func (nsi NetworkSourceIpv6Attributes) InternalWithRef(ref terra.Reference) Netw
 	return NetworkSourceIpv6Attributes{ref: ref}
 }
 
-func (nsi NetworkSourceIpv6Attributes) InternalTokens() hclwrite.Tokens {
+func (nsi NetworkSourceIpv6Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nsi.ref.InternalTokens()
 }
 
@@ -2143,7 +2143,7 @@ func (nsm NetworkSourceMacAttributes) InternalWithRef(ref terra.Reference) Netwo
 	return NetworkSourceMacAttributes{ref: ref}
 }
 
-func (nsm NetworkSourceMacAttributes) InternalTokens() hclwrite.Tokens {
+func (nsm NetworkSourceMacAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nsm.ref.InternalTokens()
 }
 
@@ -2167,7 +2167,7 @@ func (nsp NetworkSourcePortAttributes) InternalWithRef(ref terra.Reference) Netw
 	return NetworkSourcePortAttributes{ref: ref}
 }
 
-func (nsp NetworkSourcePortAttributes) InternalTokens() hclwrite.Tokens {
+func (nsp NetworkSourcePortAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nsp.ref.InternalTokens()
 }
 
@@ -2195,7 +2195,7 @@ func (nt NoteTextAttributes) InternalWithRef(ref terra.Reference) NoteTextAttrib
 	return NoteTextAttributes{ref: ref}
 }
 
-func (nt NoteTextAttributes) InternalTokens() hclwrite.Tokens {
+func (nt NoteTextAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nt.ref.InternalTokens()
 }
 
@@ -2219,7 +2219,7 @@ func (nua NoteUpdatedAtAttributes) InternalWithRef(ref terra.Reference) NoteUpda
 	return NoteUpdatedAtAttributes{ref: ref}
 }
 
-func (nua NoteUpdatedAtAttributes) InternalTokens() hclwrite.Tokens {
+func (nua NoteUpdatedAtAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nua.ref.InternalTokens()
 }
 
@@ -2247,7 +2247,7 @@ func (dr NoteUpdatedAtDateRangeAttributes) InternalWithRef(ref terra.Reference) 
 	return NoteUpdatedAtDateRangeAttributes{ref: ref}
 }
 
-func (dr NoteUpdatedAtDateRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (dr NoteUpdatedAtDateRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dr.ref.InternalTokens()
 }
 
@@ -2271,7 +2271,7 @@ func (nub NoteUpdatedByAttributes) InternalWithRef(ref terra.Reference) NoteUpda
 	return NoteUpdatedByAttributes{ref: ref}
 }
 
-func (nub NoteUpdatedByAttributes) InternalTokens() hclwrite.Tokens {
+func (nub NoteUpdatedByAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nub.ref.InternalTokens()
 }
 
@@ -2295,7 +2295,7 @@ func (pla ProcessLaunchedAtAttributes) InternalWithRef(ref terra.Reference) Proc
 	return ProcessLaunchedAtAttributes{ref: ref}
 }
 
-func (pla ProcessLaunchedAtAttributes) InternalTokens() hclwrite.Tokens {
+func (pla ProcessLaunchedAtAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pla.ref.InternalTokens()
 }
 
@@ -2323,7 +2323,7 @@ func (dr ProcessLaunchedAtDateRangeAttributes) InternalWithRef(ref terra.Referen
 	return ProcessLaunchedAtDateRangeAttributes{ref: ref}
 }
 
-func (dr ProcessLaunchedAtDateRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (dr ProcessLaunchedAtDateRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dr.ref.InternalTokens()
 }
 
@@ -2347,7 +2347,7 @@ func (pn ProcessNameAttributes) InternalWithRef(ref terra.Reference) ProcessName
 	return ProcessNameAttributes{ref: ref}
 }
 
-func (pn ProcessNameAttributes) InternalTokens() hclwrite.Tokens {
+func (pn ProcessNameAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pn.ref.InternalTokens()
 }
 
@@ -2371,7 +2371,7 @@ func (ppp ProcessParentPidAttributes) InternalWithRef(ref terra.Reference) Proce
 	return ProcessParentPidAttributes{ref: ref}
 }
 
-func (ppp ProcessParentPidAttributes) InternalTokens() hclwrite.Tokens {
+func (ppp ProcessParentPidAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ppp.ref.InternalTokens()
 }
 
@@ -2399,7 +2399,7 @@ func (pp ProcessPathAttributes) InternalWithRef(ref terra.Reference) ProcessPath
 	return ProcessPathAttributes{ref: ref}
 }
 
-func (pp ProcessPathAttributes) InternalTokens() hclwrite.Tokens {
+func (pp ProcessPathAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pp.ref.InternalTokens()
 }
 
@@ -2423,7 +2423,7 @@ func (pp ProcessPidAttributes) InternalWithRef(ref terra.Reference) ProcessPidAt
 	return ProcessPidAttributes{ref: ref}
 }
 
-func (pp ProcessPidAttributes) InternalTokens() hclwrite.Tokens {
+func (pp ProcessPidAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pp.ref.InternalTokens()
 }
 
@@ -2451,7 +2451,7 @@ func (pta ProcessTerminatedAtAttributes) InternalWithRef(ref terra.Reference) Pr
 	return ProcessTerminatedAtAttributes{ref: ref}
 }
 
-func (pta ProcessTerminatedAtAttributes) InternalTokens() hclwrite.Tokens {
+func (pta ProcessTerminatedAtAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pta.ref.InternalTokens()
 }
 
@@ -2479,7 +2479,7 @@ func (dr ProcessTerminatedAtDateRangeAttributes) InternalWithRef(ref terra.Refer
 	return ProcessTerminatedAtDateRangeAttributes{ref: ref}
 }
 
-func (dr ProcessTerminatedAtDateRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (dr ProcessTerminatedAtDateRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dr.ref.InternalTokens()
 }
 
@@ -2503,7 +2503,7 @@ func (pa ProductArnAttributes) InternalWithRef(ref terra.Reference) ProductArnAt
 	return ProductArnAttributes{ref: ref}
 }
 
-func (pa ProductArnAttributes) InternalTokens() hclwrite.Tokens {
+func (pa ProductArnAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pa.ref.InternalTokens()
 }
 
@@ -2527,7 +2527,7 @@ func (pf ProductFieldsAttributes) InternalWithRef(ref terra.Reference) ProductFi
 	return ProductFieldsAttributes{ref: ref}
 }
 
-func (pf ProductFieldsAttributes) InternalTokens() hclwrite.Tokens {
+func (pf ProductFieldsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pf.ref.InternalTokens()
 }
 
@@ -2555,7 +2555,7 @@ func (pn ProductNameAttributes) InternalWithRef(ref terra.Reference) ProductName
 	return ProductNameAttributes{ref: ref}
 }
 
-func (pn ProductNameAttributes) InternalTokens() hclwrite.Tokens {
+func (pn ProductNameAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pn.ref.InternalTokens()
 }
 
@@ -2579,7 +2579,7 @@ func (rt RecommendationTextAttributes) InternalWithRef(ref terra.Reference) Reco
 	return RecommendationTextAttributes{ref: ref}
 }
 
-func (rt RecommendationTextAttributes) InternalTokens() hclwrite.Tokens {
+func (rt RecommendationTextAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rt.ref.InternalTokens()
 }
 
@@ -2603,7 +2603,7 @@ func (rs RecordStateAttributes) InternalWithRef(ref terra.Reference) RecordState
 	return RecordStateAttributes{ref: ref}
 }
 
-func (rs RecordStateAttributes) InternalTokens() hclwrite.Tokens {
+func (rs RecordStateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rs.ref.InternalTokens()
 }
 
@@ -2627,7 +2627,7 @@ func (rfi RelatedFindingsIdAttributes) InternalWithRef(ref terra.Reference) Rela
 	return RelatedFindingsIdAttributes{ref: ref}
 }
 
-func (rfi RelatedFindingsIdAttributes) InternalTokens() hclwrite.Tokens {
+func (rfi RelatedFindingsIdAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rfi.ref.InternalTokens()
 }
 
@@ -2651,7 +2651,7 @@ func (rfpa RelatedFindingsProductArnAttributes) InternalWithRef(ref terra.Refere
 	return RelatedFindingsProductArnAttributes{ref: ref}
 }
 
-func (rfpa RelatedFindingsProductArnAttributes) InternalTokens() hclwrite.Tokens {
+func (rfpa RelatedFindingsProductArnAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rfpa.ref.InternalTokens()
 }
 
@@ -2675,7 +2675,7 @@ func (raeiiipa ResourceAwsEc2InstanceIamInstanceProfileArnAttributes) InternalWi
 	return ResourceAwsEc2InstanceIamInstanceProfileArnAttributes{ref: ref}
 }
 
-func (raeiiipa ResourceAwsEc2InstanceIamInstanceProfileArnAttributes) InternalTokens() hclwrite.Tokens {
+func (raeiiipa ResourceAwsEc2InstanceIamInstanceProfileArnAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return raeiiipa.ref.InternalTokens()
 }
 
@@ -2699,7 +2699,7 @@ func (raeiii ResourceAwsEc2InstanceImageIdAttributes) InternalWithRef(ref terra.
 	return ResourceAwsEc2InstanceImageIdAttributes{ref: ref}
 }
 
-func (raeiii ResourceAwsEc2InstanceImageIdAttributes) InternalTokens() hclwrite.Tokens {
+func (raeiii ResourceAwsEc2InstanceImageIdAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return raeiii.ref.InternalTokens()
 }
 
@@ -2723,7 +2723,7 @@ func (raeiia ResourceAwsEc2InstanceIpv4AddressesAttributes) InternalWithRef(ref 
 	return ResourceAwsEc2InstanceIpv4AddressesAttributes{ref: ref}
 }
 
-func (raeiia ResourceAwsEc2InstanceIpv4AddressesAttributes) InternalTokens() hclwrite.Tokens {
+func (raeiia ResourceAwsEc2InstanceIpv4AddressesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return raeiia.ref.InternalTokens()
 }
 
@@ -2743,7 +2743,7 @@ func (raeiia ResourceAwsEc2InstanceIpv6AddressesAttributes) InternalWithRef(ref 
 	return ResourceAwsEc2InstanceIpv6AddressesAttributes{ref: ref}
 }
 
-func (raeiia ResourceAwsEc2InstanceIpv6AddressesAttributes) InternalTokens() hclwrite.Tokens {
+func (raeiia ResourceAwsEc2InstanceIpv6AddressesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return raeiia.ref.InternalTokens()
 }
 
@@ -2763,7 +2763,7 @@ func (raeikn ResourceAwsEc2InstanceKeyNameAttributes) InternalWithRef(ref terra.
 	return ResourceAwsEc2InstanceKeyNameAttributes{ref: ref}
 }
 
-func (raeikn ResourceAwsEc2InstanceKeyNameAttributes) InternalTokens() hclwrite.Tokens {
+func (raeikn ResourceAwsEc2InstanceKeyNameAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return raeikn.ref.InternalTokens()
 }
 
@@ -2787,7 +2787,7 @@ func (raeila ResourceAwsEc2InstanceLaunchedAtAttributes) InternalWithRef(ref ter
 	return ResourceAwsEc2InstanceLaunchedAtAttributes{ref: ref}
 }
 
-func (raeila ResourceAwsEc2InstanceLaunchedAtAttributes) InternalTokens() hclwrite.Tokens {
+func (raeila ResourceAwsEc2InstanceLaunchedAtAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return raeila.ref.InternalTokens()
 }
 
@@ -2815,7 +2815,7 @@ func (dr ResourceAwsEc2InstanceLaunchedAtDateRangeAttributes) InternalWithRef(re
 	return ResourceAwsEc2InstanceLaunchedAtDateRangeAttributes{ref: ref}
 }
 
-func (dr ResourceAwsEc2InstanceLaunchedAtDateRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (dr ResourceAwsEc2InstanceLaunchedAtDateRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dr.ref.InternalTokens()
 }
 
@@ -2839,7 +2839,7 @@ func (raeisi ResourceAwsEc2InstanceSubnetIdAttributes) InternalWithRef(ref terra
 	return ResourceAwsEc2InstanceSubnetIdAttributes{ref: ref}
 }
 
-func (raeisi ResourceAwsEc2InstanceSubnetIdAttributes) InternalTokens() hclwrite.Tokens {
+func (raeisi ResourceAwsEc2InstanceSubnetIdAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return raeisi.ref.InternalTokens()
 }
 
@@ -2863,7 +2863,7 @@ func (raeit ResourceAwsEc2InstanceTypeAttributes) InternalWithRef(ref terra.Refe
 	return ResourceAwsEc2InstanceTypeAttributes{ref: ref}
 }
 
-func (raeit ResourceAwsEc2InstanceTypeAttributes) InternalTokens() hclwrite.Tokens {
+func (raeit ResourceAwsEc2InstanceTypeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return raeit.ref.InternalTokens()
 }
 
@@ -2887,7 +2887,7 @@ func (raeivi ResourceAwsEc2InstanceVpcIdAttributes) InternalWithRef(ref terra.Re
 	return ResourceAwsEc2InstanceVpcIdAttributes{ref: ref}
 }
 
-func (raeivi ResourceAwsEc2InstanceVpcIdAttributes) InternalTokens() hclwrite.Tokens {
+func (raeivi ResourceAwsEc2InstanceVpcIdAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return raeivi.ref.InternalTokens()
 }
 
@@ -2911,7 +2911,7 @@ func (raiakca ResourceAwsIamAccessKeyCreatedAtAttributes) InternalWithRef(ref te
 	return ResourceAwsIamAccessKeyCreatedAtAttributes{ref: ref}
 }
 
-func (raiakca ResourceAwsIamAccessKeyCreatedAtAttributes) InternalTokens() hclwrite.Tokens {
+func (raiakca ResourceAwsIamAccessKeyCreatedAtAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return raiakca.ref.InternalTokens()
 }
 
@@ -2939,7 +2939,7 @@ func (dr ResourceAwsIamAccessKeyCreatedAtDateRangeAttributes) InternalWithRef(re
 	return ResourceAwsIamAccessKeyCreatedAtDateRangeAttributes{ref: ref}
 }
 
-func (dr ResourceAwsIamAccessKeyCreatedAtDateRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (dr ResourceAwsIamAccessKeyCreatedAtDateRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dr.ref.InternalTokens()
 }
 
@@ -2963,7 +2963,7 @@ func (raiaks ResourceAwsIamAccessKeyStatusAttributes) InternalWithRef(ref terra.
 	return ResourceAwsIamAccessKeyStatusAttributes{ref: ref}
 }
 
-func (raiaks ResourceAwsIamAccessKeyStatusAttributes) InternalTokens() hclwrite.Tokens {
+func (raiaks ResourceAwsIamAccessKeyStatusAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return raiaks.ref.InternalTokens()
 }
 
@@ -2987,7 +2987,7 @@ func (raiakun ResourceAwsIamAccessKeyUserNameAttributes) InternalWithRef(ref ter
 	return ResourceAwsIamAccessKeyUserNameAttributes{ref: ref}
 }
 
-func (raiakun ResourceAwsIamAccessKeyUserNameAttributes) InternalTokens() hclwrite.Tokens {
+func (raiakun ResourceAwsIamAccessKeyUserNameAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return raiakun.ref.InternalTokens()
 }
 
@@ -3011,7 +3011,7 @@ func (rasboi ResourceAwsS3BucketOwnerIdAttributes) InternalWithRef(ref terra.Ref
 	return ResourceAwsS3BucketOwnerIdAttributes{ref: ref}
 }
 
-func (rasboi ResourceAwsS3BucketOwnerIdAttributes) InternalTokens() hclwrite.Tokens {
+func (rasboi ResourceAwsS3BucketOwnerIdAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rasboi.ref.InternalTokens()
 }
 
@@ -3035,7 +3035,7 @@ func (rasbon ResourceAwsS3BucketOwnerNameAttributes) InternalWithRef(ref terra.R
 	return ResourceAwsS3BucketOwnerNameAttributes{ref: ref}
 }
 
-func (rasbon ResourceAwsS3BucketOwnerNameAttributes) InternalTokens() hclwrite.Tokens {
+func (rasbon ResourceAwsS3BucketOwnerNameAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rasbon.ref.InternalTokens()
 }
 
@@ -3059,7 +3059,7 @@ func (rcii ResourceContainerImageIdAttributes) InternalWithRef(ref terra.Referen
 	return ResourceContainerImageIdAttributes{ref: ref}
 }
 
-func (rcii ResourceContainerImageIdAttributes) InternalTokens() hclwrite.Tokens {
+func (rcii ResourceContainerImageIdAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rcii.ref.InternalTokens()
 }
 
@@ -3083,7 +3083,7 @@ func (rcin ResourceContainerImageNameAttributes) InternalWithRef(ref terra.Refer
 	return ResourceContainerImageNameAttributes{ref: ref}
 }
 
-func (rcin ResourceContainerImageNameAttributes) InternalTokens() hclwrite.Tokens {
+func (rcin ResourceContainerImageNameAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rcin.ref.InternalTokens()
 }
 
@@ -3107,7 +3107,7 @@ func (rcla ResourceContainerLaunchedAtAttributes) InternalWithRef(ref terra.Refe
 	return ResourceContainerLaunchedAtAttributes{ref: ref}
 }
 
-func (rcla ResourceContainerLaunchedAtAttributes) InternalTokens() hclwrite.Tokens {
+func (rcla ResourceContainerLaunchedAtAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rcla.ref.InternalTokens()
 }
 
@@ -3135,7 +3135,7 @@ func (dr ResourceContainerLaunchedAtDateRangeAttributes) InternalWithRef(ref ter
 	return ResourceContainerLaunchedAtDateRangeAttributes{ref: ref}
 }
 
-func (dr ResourceContainerLaunchedAtDateRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (dr ResourceContainerLaunchedAtDateRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dr.ref.InternalTokens()
 }
 
@@ -3159,7 +3159,7 @@ func (rcn ResourceContainerNameAttributes) InternalWithRef(ref terra.Reference) 
 	return ResourceContainerNameAttributes{ref: ref}
 }
 
-func (rcn ResourceContainerNameAttributes) InternalTokens() hclwrite.Tokens {
+func (rcn ResourceContainerNameAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rcn.ref.InternalTokens()
 }
 
@@ -3183,7 +3183,7 @@ func (rdo ResourceDetailsOtherAttributes) InternalWithRef(ref terra.Reference) R
 	return ResourceDetailsOtherAttributes{ref: ref}
 }
 
-func (rdo ResourceDetailsOtherAttributes) InternalTokens() hclwrite.Tokens {
+func (rdo ResourceDetailsOtherAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rdo.ref.InternalTokens()
 }
 
@@ -3211,7 +3211,7 @@ func (ri ResourceIdAttributes) InternalWithRef(ref terra.Reference) ResourceIdAt
 	return ResourceIdAttributes{ref: ref}
 }
 
-func (ri ResourceIdAttributes) InternalTokens() hclwrite.Tokens {
+func (ri ResourceIdAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ri.ref.InternalTokens()
 }
 
@@ -3235,7 +3235,7 @@ func (rp ResourcePartitionAttributes) InternalWithRef(ref terra.Reference) Resou
 	return ResourcePartitionAttributes{ref: ref}
 }
 
-func (rp ResourcePartitionAttributes) InternalTokens() hclwrite.Tokens {
+func (rp ResourcePartitionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rp.ref.InternalTokens()
 }
 
@@ -3259,7 +3259,7 @@ func (rr ResourceRegionAttributes) InternalWithRef(ref terra.Reference) Resource
 	return ResourceRegionAttributes{ref: ref}
 }
 
-func (rr ResourceRegionAttributes) InternalTokens() hclwrite.Tokens {
+func (rr ResourceRegionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rr.ref.InternalTokens()
 }
 
@@ -3283,7 +3283,7 @@ func (rt ResourceTagsAttributes) InternalWithRef(ref terra.Reference) ResourceTa
 	return ResourceTagsAttributes{ref: ref}
 }
 
-func (rt ResourceTagsAttributes) InternalTokens() hclwrite.Tokens {
+func (rt ResourceTagsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rt.ref.InternalTokens()
 }
 
@@ -3311,7 +3311,7 @@ func (rt ResourceTypeAttributes) InternalWithRef(ref terra.Reference) ResourceTy
 	return ResourceTypeAttributes{ref: ref}
 }
 
-func (rt ResourceTypeAttributes) InternalTokens() hclwrite.Tokens {
+func (rt ResourceTypeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rt.ref.InternalTokens()
 }
 
@@ -3335,7 +3335,7 @@ func (sl SeverityLabelAttributes) InternalWithRef(ref terra.Reference) SeverityL
 	return SeverityLabelAttributes{ref: ref}
 }
 
-func (sl SeverityLabelAttributes) InternalTokens() hclwrite.Tokens {
+func (sl SeverityLabelAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sl.ref.InternalTokens()
 }
 
@@ -3359,7 +3359,7 @@ func (su SourceUrlAttributes) InternalWithRef(ref terra.Reference) SourceUrlAttr
 	return SourceUrlAttributes{ref: ref}
 }
 
-func (su SourceUrlAttributes) InternalTokens() hclwrite.Tokens {
+func (su SourceUrlAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return su.ref.InternalTokens()
 }
 
@@ -3383,7 +3383,7 @@ func (tiic ThreatIntelIndicatorCategoryAttributes) InternalWithRef(ref terra.Ref
 	return ThreatIntelIndicatorCategoryAttributes{ref: ref}
 }
 
-func (tiic ThreatIntelIndicatorCategoryAttributes) InternalTokens() hclwrite.Tokens {
+func (tiic ThreatIntelIndicatorCategoryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tiic.ref.InternalTokens()
 }
 
@@ -3407,7 +3407,7 @@ func (tiiloa ThreatIntelIndicatorLastObservedAtAttributes) InternalWithRef(ref t
 	return ThreatIntelIndicatorLastObservedAtAttributes{ref: ref}
 }
 
-func (tiiloa ThreatIntelIndicatorLastObservedAtAttributes) InternalTokens() hclwrite.Tokens {
+func (tiiloa ThreatIntelIndicatorLastObservedAtAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tiiloa.ref.InternalTokens()
 }
 
@@ -3435,7 +3435,7 @@ func (dr ThreatIntelIndicatorLastObservedAtDateRangeAttributes) InternalWithRef(
 	return ThreatIntelIndicatorLastObservedAtDateRangeAttributes{ref: ref}
 }
 
-func (dr ThreatIntelIndicatorLastObservedAtDateRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (dr ThreatIntelIndicatorLastObservedAtDateRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dr.ref.InternalTokens()
 }
 
@@ -3459,7 +3459,7 @@ func (tiis ThreatIntelIndicatorSourceAttributes) InternalWithRef(ref terra.Refer
 	return ThreatIntelIndicatorSourceAttributes{ref: ref}
 }
 
-func (tiis ThreatIntelIndicatorSourceAttributes) InternalTokens() hclwrite.Tokens {
+func (tiis ThreatIntelIndicatorSourceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tiis.ref.InternalTokens()
 }
 
@@ -3483,7 +3483,7 @@ func (tiisu ThreatIntelIndicatorSourceUrlAttributes) InternalWithRef(ref terra.R
 	return ThreatIntelIndicatorSourceUrlAttributes{ref: ref}
 }
 
-func (tiisu ThreatIntelIndicatorSourceUrlAttributes) InternalTokens() hclwrite.Tokens {
+func (tiisu ThreatIntelIndicatorSourceUrlAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tiisu.ref.InternalTokens()
 }
 
@@ -3507,7 +3507,7 @@ func (tiit ThreatIntelIndicatorTypeAttributes) InternalWithRef(ref terra.Referen
 	return ThreatIntelIndicatorTypeAttributes{ref: ref}
 }
 
-func (tiit ThreatIntelIndicatorTypeAttributes) InternalTokens() hclwrite.Tokens {
+func (tiit ThreatIntelIndicatorTypeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tiit.ref.InternalTokens()
 }
 
@@ -3531,7 +3531,7 @@ func (tiiv ThreatIntelIndicatorValueAttributes) InternalWithRef(ref terra.Refere
 	return ThreatIntelIndicatorValueAttributes{ref: ref}
 }
 
-func (tiiv ThreatIntelIndicatorValueAttributes) InternalTokens() hclwrite.Tokens {
+func (tiiv ThreatIntelIndicatorValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tiiv.ref.InternalTokens()
 }
 
@@ -3555,7 +3555,7 @@ func (t TitleAttributes) InternalWithRef(ref terra.Reference) TitleAttributes {
 	return TitleAttributes{ref: ref}
 }
 
-func (t TitleAttributes) InternalTokens() hclwrite.Tokens {
+func (t TitleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -3579,7 +3579,7 @@ func (t TypeAttributes) InternalWithRef(ref terra.Reference) TypeAttributes {
 	return TypeAttributes{ref: ref}
 }
 
-func (t TypeAttributes) InternalTokens() hclwrite.Tokens {
+func (t TypeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -3603,7 +3603,7 @@ func (ua UpdatedAtAttributes) InternalWithRef(ref terra.Reference) UpdatedAtAttr
 	return UpdatedAtAttributes{ref: ref}
 }
 
-func (ua UpdatedAtAttributes) InternalTokens() hclwrite.Tokens {
+func (ua UpdatedAtAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ua.ref.InternalTokens()
 }
 
@@ -3631,7 +3631,7 @@ func (dr UpdatedAtDateRangeAttributes) InternalWithRef(ref terra.Reference) Upda
 	return UpdatedAtDateRangeAttributes{ref: ref}
 }
 
-func (dr UpdatedAtDateRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (dr UpdatedAtDateRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dr.ref.InternalTokens()
 }
 
@@ -3655,7 +3655,7 @@ func (udv UserDefinedValuesAttributes) InternalWithRef(ref terra.Reference) User
 	return UserDefinedValuesAttributes{ref: ref}
 }
 
-func (udv UserDefinedValuesAttributes) InternalTokens() hclwrite.Tokens {
+func (udv UserDefinedValuesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return udv.ref.InternalTokens()
 }
 
@@ -3683,7 +3683,7 @@ func (vs VerificationStateAttributes) InternalWithRef(ref terra.Reference) Verif
 	return VerificationStateAttributes{ref: ref}
 }
 
-func (vs VerificationStateAttributes) InternalTokens() hclwrite.Tokens {
+func (vs VerificationStateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vs.ref.InternalTokens()
 }
 
@@ -3707,7 +3707,7 @@ func (ws WorkflowStatusAttributes) InternalWithRef(ref terra.Reference) Workflow
 	return WorkflowStatusAttributes{ref: ref}
 }
 
-func (ws WorkflowStatusAttributes) InternalTokens() hclwrite.Tokens {
+func (ws WorkflowStatusAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ws.ref.InternalTokens()
 }
 

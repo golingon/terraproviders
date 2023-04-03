@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeTargetTcpProxy creates a new instance of [ComputeTargetTcpProxy].
 func NewComputeTargetTcpProxy(name string, args ComputeTargetTcpProxyArgs) *ComputeTargetTcpProxy {
 	return &ComputeTargetTcpProxy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeTargetTcpProxy(name string, args ComputeTargetTcpProxyArgs) *Comp
 
 var _ terra.Resource = (*ComputeTargetTcpProxy)(nil)
 
+// ComputeTargetTcpProxy represents the Terraform resource google_compute_target_tcp_proxy.
 type ComputeTargetTcpProxy struct {
-	Name  string
-	Args  ComputeTargetTcpProxyArgs
-	state *computeTargetTcpProxyState
+	Name      string
+	Args      ComputeTargetTcpProxyArgs
+	state     *computeTargetTcpProxyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeTargetTcpProxy].
 func (cttp *ComputeTargetTcpProxy) Type() string {
 	return "google_compute_target_tcp_proxy"
 }
 
+// LocalName returns the local name for [ComputeTargetTcpProxy].
 func (cttp *ComputeTargetTcpProxy) LocalName() string {
 	return cttp.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeTargetTcpProxy].
 func (cttp *ComputeTargetTcpProxy) Configuration() interface{} {
 	return cttp.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeTargetTcpProxy].
+func (cttp *ComputeTargetTcpProxy) DependOn() terra.Reference {
+	return terra.ReferenceResource(cttp)
+}
+
+// Dependencies returns the list of resources [ComputeTargetTcpProxy] depends_on.
+func (cttp *ComputeTargetTcpProxy) Dependencies() terra.Dependencies {
+	return cttp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeTargetTcpProxy].
+func (cttp *ComputeTargetTcpProxy) LifecycleManagement() *terra.Lifecycle {
+	return cttp.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeTargetTcpProxy].
 func (cttp *ComputeTargetTcpProxy) Attributes() computeTargetTcpProxyAttributes {
 	return computeTargetTcpProxyAttributes{ref: terra.ReferenceResource(cttp)}
 }
 
+// ImportState imports the given attribute values into [ComputeTargetTcpProxy]'s state.
 func (cttp *ComputeTargetTcpProxy) ImportState(av io.Reader) error {
 	cttp.state = &computeTargetTcpProxyState{}
 	if err := json.NewDecoder(av).Decode(cttp.state); err != nil {
@@ -49,10 +73,12 @@ func (cttp *ComputeTargetTcpProxy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeTargetTcpProxy] has state.
 func (cttp *ComputeTargetTcpProxy) State() (*computeTargetTcpProxyState, bool) {
 	return cttp.state, cttp.state != nil
 }
 
+// StateMust returns the state for [ComputeTargetTcpProxy]. Panics if the state is nil.
 func (cttp *ComputeTargetTcpProxy) StateMust() *computeTargetTcpProxyState {
 	if cttp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cttp.Type(), cttp.LocalName()))
@@ -60,10 +86,7 @@ func (cttp *ComputeTargetTcpProxy) StateMust() *computeTargetTcpProxyState {
 	return cttp.state
 }
 
-func (cttp *ComputeTargetTcpProxy) DependOn() terra.Reference {
-	return terra.ReferenceResource(cttp)
-}
-
+// ComputeTargetTcpProxyArgs contains the configurations for google_compute_target_tcp_proxy.
 type ComputeTargetTcpProxyArgs struct {
 	// BackendService: string, required
 	BackendService terra.StringValue `hcl:"backend_service,attr" validate:"required"`
@@ -81,55 +104,63 @@ type ComputeTargetTcpProxyArgs struct {
 	ProxyHeader terra.StringValue `hcl:"proxy_header,attr"`
 	// Timeouts: optional
 	Timeouts *computetargettcpproxy.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeTargetTcpProxy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeTargetTcpProxyAttributes struct {
 	ref terra.Reference
 }
 
+// BackendService returns a reference to field backend_service of google_compute_target_tcp_proxy.
 func (cttp computeTargetTcpProxyAttributes) BackendService() terra.StringValue {
-	return terra.ReferenceString(cttp.ref.Append("backend_service"))
+	return terra.ReferenceAsString(cttp.ref.Append("backend_service"))
 }
 
+// CreationTimestamp returns a reference to field creation_timestamp of google_compute_target_tcp_proxy.
 func (cttp computeTargetTcpProxyAttributes) CreationTimestamp() terra.StringValue {
-	return terra.ReferenceString(cttp.ref.Append("creation_timestamp"))
+	return terra.ReferenceAsString(cttp.ref.Append("creation_timestamp"))
 }
 
+// Description returns a reference to field description of google_compute_target_tcp_proxy.
 func (cttp computeTargetTcpProxyAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cttp.ref.Append("description"))
+	return terra.ReferenceAsString(cttp.ref.Append("description"))
 }
 
+// Id returns a reference to field id of google_compute_target_tcp_proxy.
 func (cttp computeTargetTcpProxyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cttp.ref.Append("id"))
+	return terra.ReferenceAsString(cttp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_compute_target_tcp_proxy.
 func (cttp computeTargetTcpProxyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cttp.ref.Append("name"))
+	return terra.ReferenceAsString(cttp.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_compute_target_tcp_proxy.
 func (cttp computeTargetTcpProxyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cttp.ref.Append("project"))
+	return terra.ReferenceAsString(cttp.ref.Append("project"))
 }
 
+// ProxyBind returns a reference to field proxy_bind of google_compute_target_tcp_proxy.
 func (cttp computeTargetTcpProxyAttributes) ProxyBind() terra.BoolValue {
-	return terra.ReferenceBool(cttp.ref.Append("proxy_bind"))
+	return terra.ReferenceAsBool(cttp.ref.Append("proxy_bind"))
 }
 
+// ProxyHeader returns a reference to field proxy_header of google_compute_target_tcp_proxy.
 func (cttp computeTargetTcpProxyAttributes) ProxyHeader() terra.StringValue {
-	return terra.ReferenceString(cttp.ref.Append("proxy_header"))
+	return terra.ReferenceAsString(cttp.ref.Append("proxy_header"))
 }
 
+// ProxyId returns a reference to field proxy_id of google_compute_target_tcp_proxy.
 func (cttp computeTargetTcpProxyAttributes) ProxyId() terra.NumberValue {
-	return terra.ReferenceNumber(cttp.ref.Append("proxy_id"))
+	return terra.ReferenceAsNumber(cttp.ref.Append("proxy_id"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_target_tcp_proxy.
 func (cttp computeTargetTcpProxyAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(cttp.ref.Append("self_link"))
+	return terra.ReferenceAsString(cttp.ref.Append("self_link"))
 }
 
 func (cttp computeTargetTcpProxyAttributes) Timeouts() computetargettcpproxy.TimeoutsAttributes {
-	return terra.ReferenceSingle[computetargettcpproxy.TimeoutsAttributes](cttp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computetargettcpproxy.TimeoutsAttributes](cttp.ref.Append("timeouts"))
 }
 
 type computeTargetTcpProxyState struct {

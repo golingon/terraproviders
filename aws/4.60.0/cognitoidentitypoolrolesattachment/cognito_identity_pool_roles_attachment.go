@@ -41,7 +41,7 @@ func (rm RoleMappingAttributes) InternalWithRef(ref terra.Reference) RoleMapping
 	return RoleMappingAttributes{ref: ref}
 }
 
-func (rm RoleMappingAttributes) InternalTokens() hclwrite.Tokens {
+func (rm RoleMappingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rm.ref.InternalTokens()
 }
 
@@ -73,7 +73,7 @@ func (mr MappingRuleAttributes) InternalWithRef(ref terra.Reference) MappingRule
 	return MappingRuleAttributes{ref: ref}
 }
 
-func (mr MappingRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (mr MappingRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mr.ref.InternalTokens()
 }
 

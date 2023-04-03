@@ -31,60 +31,60 @@ type SecurityAttributes struct {
 	ref terra.Reference
 }
 
-func (s SecurityAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SecurityAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SecurityAttributes) InternalWithRef(ref terra.Reference) SecurityAttributes {
 	return SecurityAttributes{ref: ref}
 }
 
-func (s SecurityAttributes) InternalTokens() hclwrite.Tokens {
+func (s SecurityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SecurityAttributes) RefreshToken() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("refresh_token"))
+	return terra.ReferenceAsString(s.ref.Append("refresh_token"))
 }
 
 func (s SecurityAttributes) Token() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("token"))
+	return terra.ReferenceAsString(s.ref.Append("token"))
 }
 
 func (s SecurityAttributes) TokenType() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("token_type"))
+	return terra.ReferenceAsString(s.ref.Append("token_type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type SecurityState struct {

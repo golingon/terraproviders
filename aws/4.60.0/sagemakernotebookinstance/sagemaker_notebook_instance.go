@@ -24,7 +24,7 @@ func (imsc InstanceMetadataServiceConfigurationAttributes) InternalWithRef(ref t
 	return InstanceMetadataServiceConfigurationAttributes{ref: ref}
 }
 
-func (imsc InstanceMetadataServiceConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (imsc InstanceMetadataServiceConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return imsc.ref.InternalTokens()
 }
 

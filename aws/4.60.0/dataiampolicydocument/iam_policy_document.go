@@ -63,7 +63,7 @@ func (s StatementAttributes) InternalWithRef(ref terra.Reference) StatementAttri
 	return StatementAttributes{ref: ref}
 }
 
-func (s StatementAttributes) InternalTokens() hclwrite.Tokens {
+func (s StatementAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -115,7 +115,7 @@ func (c ConditionAttributes) InternalWithRef(ref terra.Reference) ConditionAttri
 	return ConditionAttributes{ref: ref}
 }
 
-func (c ConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -143,7 +143,7 @@ func (np NotPrincipalsAttributes) InternalWithRef(ref terra.Reference) NotPrinci
 	return NotPrincipalsAttributes{ref: ref}
 }
 
-func (np NotPrincipalsAttributes) InternalTokens() hclwrite.Tokens {
+func (np NotPrincipalsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return np.ref.InternalTokens()
 }
 
@@ -167,7 +167,7 @@ func (p PrincipalsAttributes) InternalWithRef(ref terra.Reference) PrincipalsAtt
 	return PrincipalsAttributes{ref: ref}
 }
 
-func (p PrincipalsAttributes) InternalTokens() hclwrite.Tokens {
+func (p PrincipalsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 

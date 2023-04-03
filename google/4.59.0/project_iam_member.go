@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewProjectIamMember creates a new instance of [ProjectIamMember].
 func NewProjectIamMember(name string, args ProjectIamMemberArgs) *ProjectIamMember {
 	return &ProjectIamMember{
 		Args: args,
@@ -19,28 +20,51 @@ func NewProjectIamMember(name string, args ProjectIamMemberArgs) *ProjectIamMemb
 
 var _ terra.Resource = (*ProjectIamMember)(nil)
 
+// ProjectIamMember represents the Terraform resource google_project_iam_member.
 type ProjectIamMember struct {
-	Name  string
-	Args  ProjectIamMemberArgs
-	state *projectIamMemberState
+	Name      string
+	Args      ProjectIamMemberArgs
+	state     *projectIamMemberState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ProjectIamMember].
 func (pim *ProjectIamMember) Type() string {
 	return "google_project_iam_member"
 }
 
+// LocalName returns the local name for [ProjectIamMember].
 func (pim *ProjectIamMember) LocalName() string {
 	return pim.Name
 }
 
+// Configuration returns the configuration (args) for [ProjectIamMember].
 func (pim *ProjectIamMember) Configuration() interface{} {
 	return pim.Args
 }
 
+// DependOn is used for other resources to depend on [ProjectIamMember].
+func (pim *ProjectIamMember) DependOn() terra.Reference {
+	return terra.ReferenceResource(pim)
+}
+
+// Dependencies returns the list of resources [ProjectIamMember] depends_on.
+func (pim *ProjectIamMember) Dependencies() terra.Dependencies {
+	return pim.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ProjectIamMember].
+func (pim *ProjectIamMember) LifecycleManagement() *terra.Lifecycle {
+	return pim.Lifecycle
+}
+
+// Attributes returns the attributes for [ProjectIamMember].
 func (pim *ProjectIamMember) Attributes() projectIamMemberAttributes {
 	return projectIamMemberAttributes{ref: terra.ReferenceResource(pim)}
 }
 
+// ImportState imports the given attribute values into [ProjectIamMember]'s state.
 func (pim *ProjectIamMember) ImportState(av io.Reader) error {
 	pim.state = &projectIamMemberState{}
 	if err := json.NewDecoder(av).Decode(pim.state); err != nil {
@@ -49,10 +73,12 @@ func (pim *ProjectIamMember) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ProjectIamMember] has state.
 func (pim *ProjectIamMember) State() (*projectIamMemberState, bool) {
 	return pim.state, pim.state != nil
 }
 
+// StateMust returns the state for [ProjectIamMember]. Panics if the state is nil.
 func (pim *ProjectIamMember) StateMust() *projectIamMemberState {
 	if pim.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pim.Type(), pim.LocalName()))
@@ -60,10 +86,7 @@ func (pim *ProjectIamMember) StateMust() *projectIamMemberState {
 	return pim.state
 }
 
-func (pim *ProjectIamMember) DependOn() terra.Reference {
-	return terra.ReferenceResource(pim)
-}
-
+// ProjectIamMemberArgs contains the configurations for google_project_iam_member.
 type ProjectIamMemberArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -75,35 +98,38 @@ type ProjectIamMemberArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *projectiammember.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that ProjectIamMember depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type projectIamMemberAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_project_iam_member.
 func (pim projectIamMemberAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(pim.ref.Append("etag"))
+	return terra.ReferenceAsString(pim.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_project_iam_member.
 func (pim projectIamMemberAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pim.ref.Append("id"))
+	return terra.ReferenceAsString(pim.ref.Append("id"))
 }
 
+// Member returns a reference to field member of google_project_iam_member.
 func (pim projectIamMemberAttributes) Member() terra.StringValue {
-	return terra.ReferenceString(pim.ref.Append("member"))
+	return terra.ReferenceAsString(pim.ref.Append("member"))
 }
 
+// Project returns a reference to field project of google_project_iam_member.
 func (pim projectIamMemberAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(pim.ref.Append("project"))
+	return terra.ReferenceAsString(pim.ref.Append("project"))
 }
 
+// Role returns a reference to field role of google_project_iam_member.
 func (pim projectIamMemberAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(pim.ref.Append("role"))
+	return terra.ReferenceAsString(pim.ref.Append("role"))
 }
 
 func (pim projectIamMemberAttributes) Condition() terra.ListValue[projectiammember.ConditionAttributes] {
-	return terra.ReferenceList[projectiammember.ConditionAttributes](pim.ref.Append("condition"))
+	return terra.ReferenceAsList[projectiammember.ConditionAttributes](pim.ref.Append("condition"))
 }
 
 type projectIamMemberState struct {

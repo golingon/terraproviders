@@ -38,84 +38,84 @@ type RotationPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (rp RotationPolicyAttributes) InternalRef() terra.Reference {
-	return rp.ref
+func (rp RotationPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return rp.ref, nil
 }
 
 func (rp RotationPolicyAttributes) InternalWithRef(ref terra.Reference) RotationPolicyAttributes {
 	return RotationPolicyAttributes{ref: ref}
 }
 
-func (rp RotationPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (rp RotationPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rp.ref.InternalTokens()
 }
 
 func (rp RotationPolicyAttributes) ExpireAfter() terra.StringValue {
-	return terra.ReferenceString(rp.ref.Append("expire_after"))
+	return terra.ReferenceAsString(rp.ref.Append("expire_after"))
 }
 
 func (rp RotationPolicyAttributes) NotifyBeforeExpiry() terra.StringValue {
-	return terra.ReferenceString(rp.ref.Append("notify_before_expiry"))
+	return terra.ReferenceAsString(rp.ref.Append("notify_before_expiry"))
 }
 
 func (rp RotationPolicyAttributes) Automatic() terra.ListValue[AutomaticAttributes] {
-	return terra.ReferenceList[AutomaticAttributes](rp.ref.Append("automatic"))
+	return terra.ReferenceAsList[AutomaticAttributes](rp.ref.Append("automatic"))
 }
 
 type AutomaticAttributes struct {
 	ref terra.Reference
 }
 
-func (a AutomaticAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AutomaticAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AutomaticAttributes) InternalWithRef(ref terra.Reference) AutomaticAttributes {
 	return AutomaticAttributes{ref: ref}
 }
 
-func (a AutomaticAttributes) InternalTokens() hclwrite.Tokens {
+func (a AutomaticAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a AutomaticAttributes) TimeAfterCreation() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("time_after_creation"))
+	return terra.ReferenceAsString(a.ref.Append("time_after_creation"))
 }
 
 func (a AutomaticAttributes) TimeBeforeExpiry() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("time_before_expiry"))
+	return terra.ReferenceAsString(a.ref.Append("time_before_expiry"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type RotationPolicyState struct {

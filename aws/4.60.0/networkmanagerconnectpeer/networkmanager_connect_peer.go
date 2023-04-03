@@ -38,7 +38,7 @@ func (c ConfigurationAttributes) InternalWithRef(ref terra.Reference) Configurat
 	return ConfigurationAttributes{ref: ref}
 }
 
-func (c ConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -74,7 +74,7 @@ func (bc BgpConfigurationsAttributes) InternalWithRef(ref terra.Reference) BgpCo
 	return BgpConfigurationsAttributes{ref: ref}
 }
 
-func (bc BgpConfigurationsAttributes) InternalTokens() hclwrite.Tokens {
+func (bc BgpConfigurationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bc.ref.InternalTokens()
 }
 
@@ -106,7 +106,7 @@ func (bo BgpOptionsAttributes) InternalWithRef(ref terra.Reference) BgpOptionsAt
 	return BgpOptionsAttributes{ref: ref}
 }
 
-func (bo BgpOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (bo BgpOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bo.ref.InternalTokens()
 }
 
@@ -126,7 +126,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

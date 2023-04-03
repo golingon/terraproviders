@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFactoryLinkedServiceDataLakeStorageGen2 creates a new instance of [DataFactoryLinkedServiceDataLakeStorageGen2].
 func NewDataFactoryLinkedServiceDataLakeStorageGen2(name string, args DataFactoryLinkedServiceDataLakeStorageGen2Args) *DataFactoryLinkedServiceDataLakeStorageGen2 {
 	return &DataFactoryLinkedServiceDataLakeStorageGen2{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFactoryLinkedServiceDataLakeStorageGen2(name string, args DataFactor
 
 var _ terra.Resource = (*DataFactoryLinkedServiceDataLakeStorageGen2)(nil)
 
+// DataFactoryLinkedServiceDataLakeStorageGen2 represents the Terraform resource azurerm_data_factory_linked_service_data_lake_storage_gen2.
 type DataFactoryLinkedServiceDataLakeStorageGen2 struct {
-	Name  string
-	Args  DataFactoryLinkedServiceDataLakeStorageGen2Args
-	state *dataFactoryLinkedServiceDataLakeStorageGen2State
+	Name      string
+	Args      DataFactoryLinkedServiceDataLakeStorageGen2Args
+	state     *dataFactoryLinkedServiceDataLakeStorageGen2State
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFactoryLinkedServiceDataLakeStorageGen2].
 func (dflsdlsg *DataFactoryLinkedServiceDataLakeStorageGen2) Type() string {
 	return "azurerm_data_factory_linked_service_data_lake_storage_gen2"
 }
 
+// LocalName returns the local name for [DataFactoryLinkedServiceDataLakeStorageGen2].
 func (dflsdlsg *DataFactoryLinkedServiceDataLakeStorageGen2) LocalName() string {
 	return dflsdlsg.Name
 }
 
+// Configuration returns the configuration (args) for [DataFactoryLinkedServiceDataLakeStorageGen2].
 func (dflsdlsg *DataFactoryLinkedServiceDataLakeStorageGen2) Configuration() interface{} {
 	return dflsdlsg.Args
 }
 
+// DependOn is used for other resources to depend on [DataFactoryLinkedServiceDataLakeStorageGen2].
+func (dflsdlsg *DataFactoryLinkedServiceDataLakeStorageGen2) DependOn() terra.Reference {
+	return terra.ReferenceResource(dflsdlsg)
+}
+
+// Dependencies returns the list of resources [DataFactoryLinkedServiceDataLakeStorageGen2] depends_on.
+func (dflsdlsg *DataFactoryLinkedServiceDataLakeStorageGen2) Dependencies() terra.Dependencies {
+	return dflsdlsg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFactoryLinkedServiceDataLakeStorageGen2].
+func (dflsdlsg *DataFactoryLinkedServiceDataLakeStorageGen2) LifecycleManagement() *terra.Lifecycle {
+	return dflsdlsg.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFactoryLinkedServiceDataLakeStorageGen2].
 func (dflsdlsg *DataFactoryLinkedServiceDataLakeStorageGen2) Attributes() dataFactoryLinkedServiceDataLakeStorageGen2Attributes {
 	return dataFactoryLinkedServiceDataLakeStorageGen2Attributes{ref: terra.ReferenceResource(dflsdlsg)}
 }
 
+// ImportState imports the given attribute values into [DataFactoryLinkedServiceDataLakeStorageGen2]'s state.
 func (dflsdlsg *DataFactoryLinkedServiceDataLakeStorageGen2) ImportState(av io.Reader) error {
 	dflsdlsg.state = &dataFactoryLinkedServiceDataLakeStorageGen2State{}
 	if err := json.NewDecoder(av).Decode(dflsdlsg.state); err != nil {
@@ -49,10 +73,12 @@ func (dflsdlsg *DataFactoryLinkedServiceDataLakeStorageGen2) ImportState(av io.R
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFactoryLinkedServiceDataLakeStorageGen2] has state.
 func (dflsdlsg *DataFactoryLinkedServiceDataLakeStorageGen2) State() (*dataFactoryLinkedServiceDataLakeStorageGen2State, bool) {
 	return dflsdlsg.state, dflsdlsg.state != nil
 }
 
+// StateMust returns the state for [DataFactoryLinkedServiceDataLakeStorageGen2]. Panics if the state is nil.
 func (dflsdlsg *DataFactoryLinkedServiceDataLakeStorageGen2) StateMust() *dataFactoryLinkedServiceDataLakeStorageGen2State {
 	if dflsdlsg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dflsdlsg.Type(), dflsdlsg.LocalName()))
@@ -60,10 +86,7 @@ func (dflsdlsg *DataFactoryLinkedServiceDataLakeStorageGen2) StateMust() *dataFa
 	return dflsdlsg.state
 }
 
-func (dflsdlsg *DataFactoryLinkedServiceDataLakeStorageGen2) DependOn() terra.Reference {
-	return terra.ReferenceResource(dflsdlsg)
-}
-
+// DataFactoryLinkedServiceDataLakeStorageGen2Args contains the configurations for azurerm_data_factory_linked_service_data_lake_storage_gen2.
 type DataFactoryLinkedServiceDataLakeStorageGen2Args struct {
 	// AdditionalProperties: map of string, optional
 	AdditionalProperties terra.MapValue[terra.StringValue] `hcl:"additional_properties,attr"`
@@ -95,71 +118,83 @@ type DataFactoryLinkedServiceDataLakeStorageGen2Args struct {
 	UseManagedIdentity terra.BoolValue `hcl:"use_managed_identity,attr"`
 	// Timeouts: optional
 	Timeouts *datafactorylinkedservicedatalakestoragegen2.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataFactoryLinkedServiceDataLakeStorageGen2 depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFactoryLinkedServiceDataLakeStorageGen2Attributes struct {
 	ref terra.Reference
 }
 
+// AdditionalProperties returns a reference to field additional_properties of azurerm_data_factory_linked_service_data_lake_storage_gen2.
 func (dflsdlsg dataFactoryLinkedServiceDataLakeStorageGen2Attributes) AdditionalProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dflsdlsg.ref.Append("additional_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](dflsdlsg.ref.Append("additional_properties"))
 }
 
+// Annotations returns a reference to field annotations of azurerm_data_factory_linked_service_data_lake_storage_gen2.
 func (dflsdlsg dataFactoryLinkedServiceDataLakeStorageGen2Attributes) Annotations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dflsdlsg.ref.Append("annotations"))
+	return terra.ReferenceAsList[terra.StringValue](dflsdlsg.ref.Append("annotations"))
 }
 
+// DataFactoryId returns a reference to field data_factory_id of azurerm_data_factory_linked_service_data_lake_storage_gen2.
 func (dflsdlsg dataFactoryLinkedServiceDataLakeStorageGen2Attributes) DataFactoryId() terra.StringValue {
-	return terra.ReferenceString(dflsdlsg.ref.Append("data_factory_id"))
+	return terra.ReferenceAsString(dflsdlsg.ref.Append("data_factory_id"))
 }
 
+// Description returns a reference to field description of azurerm_data_factory_linked_service_data_lake_storage_gen2.
 func (dflsdlsg dataFactoryLinkedServiceDataLakeStorageGen2Attributes) Description() terra.StringValue {
-	return terra.ReferenceString(dflsdlsg.ref.Append("description"))
+	return terra.ReferenceAsString(dflsdlsg.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_data_factory_linked_service_data_lake_storage_gen2.
 func (dflsdlsg dataFactoryLinkedServiceDataLakeStorageGen2Attributes) Id() terra.StringValue {
-	return terra.ReferenceString(dflsdlsg.ref.Append("id"))
+	return terra.ReferenceAsString(dflsdlsg.ref.Append("id"))
 }
 
+// IntegrationRuntimeName returns a reference to field integration_runtime_name of azurerm_data_factory_linked_service_data_lake_storage_gen2.
 func (dflsdlsg dataFactoryLinkedServiceDataLakeStorageGen2Attributes) IntegrationRuntimeName() terra.StringValue {
-	return terra.ReferenceString(dflsdlsg.ref.Append("integration_runtime_name"))
+	return terra.ReferenceAsString(dflsdlsg.ref.Append("integration_runtime_name"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory_linked_service_data_lake_storage_gen2.
 func (dflsdlsg dataFactoryLinkedServiceDataLakeStorageGen2Attributes) Name() terra.StringValue {
-	return terra.ReferenceString(dflsdlsg.ref.Append("name"))
+	return terra.ReferenceAsString(dflsdlsg.ref.Append("name"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_data_factory_linked_service_data_lake_storage_gen2.
 func (dflsdlsg dataFactoryLinkedServiceDataLakeStorageGen2Attributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dflsdlsg.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](dflsdlsg.ref.Append("parameters"))
 }
 
+// ServicePrincipalId returns a reference to field service_principal_id of azurerm_data_factory_linked_service_data_lake_storage_gen2.
 func (dflsdlsg dataFactoryLinkedServiceDataLakeStorageGen2Attributes) ServicePrincipalId() terra.StringValue {
-	return terra.ReferenceString(dflsdlsg.ref.Append("service_principal_id"))
+	return terra.ReferenceAsString(dflsdlsg.ref.Append("service_principal_id"))
 }
 
+// ServicePrincipalKey returns a reference to field service_principal_key of azurerm_data_factory_linked_service_data_lake_storage_gen2.
 func (dflsdlsg dataFactoryLinkedServiceDataLakeStorageGen2Attributes) ServicePrincipalKey() terra.StringValue {
-	return terra.ReferenceString(dflsdlsg.ref.Append("service_principal_key"))
+	return terra.ReferenceAsString(dflsdlsg.ref.Append("service_principal_key"))
 }
 
+// StorageAccountKey returns a reference to field storage_account_key of azurerm_data_factory_linked_service_data_lake_storage_gen2.
 func (dflsdlsg dataFactoryLinkedServiceDataLakeStorageGen2Attributes) StorageAccountKey() terra.StringValue {
-	return terra.ReferenceString(dflsdlsg.ref.Append("storage_account_key"))
+	return terra.ReferenceAsString(dflsdlsg.ref.Append("storage_account_key"))
 }
 
+// Tenant returns a reference to field tenant of azurerm_data_factory_linked_service_data_lake_storage_gen2.
 func (dflsdlsg dataFactoryLinkedServiceDataLakeStorageGen2Attributes) Tenant() terra.StringValue {
-	return terra.ReferenceString(dflsdlsg.ref.Append("tenant"))
+	return terra.ReferenceAsString(dflsdlsg.ref.Append("tenant"))
 }
 
+// Url returns a reference to field url of azurerm_data_factory_linked_service_data_lake_storage_gen2.
 func (dflsdlsg dataFactoryLinkedServiceDataLakeStorageGen2Attributes) Url() terra.StringValue {
-	return terra.ReferenceString(dflsdlsg.ref.Append("url"))
+	return terra.ReferenceAsString(dflsdlsg.ref.Append("url"))
 }
 
+// UseManagedIdentity returns a reference to field use_managed_identity of azurerm_data_factory_linked_service_data_lake_storage_gen2.
 func (dflsdlsg dataFactoryLinkedServiceDataLakeStorageGen2Attributes) UseManagedIdentity() terra.BoolValue {
-	return terra.ReferenceBool(dflsdlsg.ref.Append("use_managed_identity"))
+	return terra.ReferenceAsBool(dflsdlsg.ref.Append("use_managed_identity"))
 }
 
 func (dflsdlsg dataFactoryLinkedServiceDataLakeStorageGen2Attributes) Timeouts() datafactorylinkedservicedatalakestoragegen2.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafactorylinkedservicedatalakestoragegen2.TimeoutsAttributes](dflsdlsg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafactorylinkedservicedatalakestoragegen2.TimeoutsAttributes](dflsdlsg.ref.Append("timeouts"))
 }
 
 type dataFactoryLinkedServiceDataLakeStorageGen2State struct {

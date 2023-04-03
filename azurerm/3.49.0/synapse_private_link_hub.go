@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSynapsePrivateLinkHub creates a new instance of [SynapsePrivateLinkHub].
 func NewSynapsePrivateLinkHub(name string, args SynapsePrivateLinkHubArgs) *SynapsePrivateLinkHub {
 	return &SynapsePrivateLinkHub{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSynapsePrivateLinkHub(name string, args SynapsePrivateLinkHubArgs) *Syna
 
 var _ terra.Resource = (*SynapsePrivateLinkHub)(nil)
 
+// SynapsePrivateLinkHub represents the Terraform resource azurerm_synapse_private_link_hub.
 type SynapsePrivateLinkHub struct {
-	Name  string
-	Args  SynapsePrivateLinkHubArgs
-	state *synapsePrivateLinkHubState
+	Name      string
+	Args      SynapsePrivateLinkHubArgs
+	state     *synapsePrivateLinkHubState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SynapsePrivateLinkHub].
 func (splh *SynapsePrivateLinkHub) Type() string {
 	return "azurerm_synapse_private_link_hub"
 }
 
+// LocalName returns the local name for [SynapsePrivateLinkHub].
 func (splh *SynapsePrivateLinkHub) LocalName() string {
 	return splh.Name
 }
 
+// Configuration returns the configuration (args) for [SynapsePrivateLinkHub].
 func (splh *SynapsePrivateLinkHub) Configuration() interface{} {
 	return splh.Args
 }
 
+// DependOn is used for other resources to depend on [SynapsePrivateLinkHub].
+func (splh *SynapsePrivateLinkHub) DependOn() terra.Reference {
+	return terra.ReferenceResource(splh)
+}
+
+// Dependencies returns the list of resources [SynapsePrivateLinkHub] depends_on.
+func (splh *SynapsePrivateLinkHub) Dependencies() terra.Dependencies {
+	return splh.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SynapsePrivateLinkHub].
+func (splh *SynapsePrivateLinkHub) LifecycleManagement() *terra.Lifecycle {
+	return splh.Lifecycle
+}
+
+// Attributes returns the attributes for [SynapsePrivateLinkHub].
 func (splh *SynapsePrivateLinkHub) Attributes() synapsePrivateLinkHubAttributes {
 	return synapsePrivateLinkHubAttributes{ref: terra.ReferenceResource(splh)}
 }
 
+// ImportState imports the given attribute values into [SynapsePrivateLinkHub]'s state.
 func (splh *SynapsePrivateLinkHub) ImportState(av io.Reader) error {
 	splh.state = &synapsePrivateLinkHubState{}
 	if err := json.NewDecoder(av).Decode(splh.state); err != nil {
@@ -49,10 +73,12 @@ func (splh *SynapsePrivateLinkHub) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SynapsePrivateLinkHub] has state.
 func (splh *SynapsePrivateLinkHub) State() (*synapsePrivateLinkHubState, bool) {
 	return splh.state, splh.state != nil
 }
 
+// StateMust returns the state for [SynapsePrivateLinkHub]. Panics if the state is nil.
 func (splh *SynapsePrivateLinkHub) StateMust() *synapsePrivateLinkHubState {
 	if splh.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", splh.Type(), splh.LocalName()))
@@ -60,10 +86,7 @@ func (splh *SynapsePrivateLinkHub) StateMust() *synapsePrivateLinkHubState {
 	return splh.state
 }
 
-func (splh *SynapsePrivateLinkHub) DependOn() terra.Reference {
-	return terra.ReferenceResource(splh)
-}
-
+// SynapsePrivateLinkHubArgs contains the configurations for azurerm_synapse_private_link_hub.
 type SynapsePrivateLinkHubArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,35 +100,38 @@ type SynapsePrivateLinkHubArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// Timeouts: optional
 	Timeouts *synapseprivatelinkhub.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SynapsePrivateLinkHub depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type synapsePrivateLinkHubAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_synapse_private_link_hub.
 func (splh synapsePrivateLinkHubAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(splh.ref.Append("id"))
+	return terra.ReferenceAsString(splh.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_synapse_private_link_hub.
 func (splh synapsePrivateLinkHubAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(splh.ref.Append("location"))
+	return terra.ReferenceAsString(splh.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_synapse_private_link_hub.
 func (splh synapsePrivateLinkHubAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(splh.ref.Append("name"))
+	return terra.ReferenceAsString(splh.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_synapse_private_link_hub.
 func (splh synapsePrivateLinkHubAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(splh.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(splh.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_synapse_private_link_hub.
 func (splh synapsePrivateLinkHubAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](splh.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](splh.ref.Append("tags"))
 }
 
 func (splh synapsePrivateLinkHubAttributes) Timeouts() synapseprivatelinkhub.TimeoutsAttributes {
-	return terra.ReferenceSingle[synapseprivatelinkhub.TimeoutsAttributes](splh.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[synapseprivatelinkhub.TimeoutsAttributes](splh.ref.Append("timeouts"))
 }
 
 type synapsePrivateLinkHubState struct {

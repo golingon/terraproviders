@@ -30,7 +30,7 @@ func (pdnc PrivateDnsNameConfigurationAttributes) InternalWithRef(ref terra.Refe
 	return PrivateDnsNameConfigurationAttributes{ref: ref}
 }
 
-func (pdnc PrivateDnsNameConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (pdnc PrivateDnsNameConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pdnc.ref.InternalTokens()
 }
 
@@ -62,7 +62,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

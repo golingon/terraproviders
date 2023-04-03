@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMaintenanceAssignmentVirtualMachineScaleSet creates a new instance of [MaintenanceAssignmentVirtualMachineScaleSet].
 func NewMaintenanceAssignmentVirtualMachineScaleSet(name string, args MaintenanceAssignmentVirtualMachineScaleSetArgs) *MaintenanceAssignmentVirtualMachineScaleSet {
 	return &MaintenanceAssignmentVirtualMachineScaleSet{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMaintenanceAssignmentVirtualMachineScaleSet(name string, args Maintenanc
 
 var _ terra.Resource = (*MaintenanceAssignmentVirtualMachineScaleSet)(nil)
 
+// MaintenanceAssignmentVirtualMachineScaleSet represents the Terraform resource azurerm_maintenance_assignment_virtual_machine_scale_set.
 type MaintenanceAssignmentVirtualMachineScaleSet struct {
-	Name  string
-	Args  MaintenanceAssignmentVirtualMachineScaleSetArgs
-	state *maintenanceAssignmentVirtualMachineScaleSetState
+	Name      string
+	Args      MaintenanceAssignmentVirtualMachineScaleSetArgs
+	state     *maintenanceAssignmentVirtualMachineScaleSetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MaintenanceAssignmentVirtualMachineScaleSet].
 func (mavmss *MaintenanceAssignmentVirtualMachineScaleSet) Type() string {
 	return "azurerm_maintenance_assignment_virtual_machine_scale_set"
 }
 
+// LocalName returns the local name for [MaintenanceAssignmentVirtualMachineScaleSet].
 func (mavmss *MaintenanceAssignmentVirtualMachineScaleSet) LocalName() string {
 	return mavmss.Name
 }
 
+// Configuration returns the configuration (args) for [MaintenanceAssignmentVirtualMachineScaleSet].
 func (mavmss *MaintenanceAssignmentVirtualMachineScaleSet) Configuration() interface{} {
 	return mavmss.Args
 }
 
+// DependOn is used for other resources to depend on [MaintenanceAssignmentVirtualMachineScaleSet].
+func (mavmss *MaintenanceAssignmentVirtualMachineScaleSet) DependOn() terra.Reference {
+	return terra.ReferenceResource(mavmss)
+}
+
+// Dependencies returns the list of resources [MaintenanceAssignmentVirtualMachineScaleSet] depends_on.
+func (mavmss *MaintenanceAssignmentVirtualMachineScaleSet) Dependencies() terra.Dependencies {
+	return mavmss.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MaintenanceAssignmentVirtualMachineScaleSet].
+func (mavmss *MaintenanceAssignmentVirtualMachineScaleSet) LifecycleManagement() *terra.Lifecycle {
+	return mavmss.Lifecycle
+}
+
+// Attributes returns the attributes for [MaintenanceAssignmentVirtualMachineScaleSet].
 func (mavmss *MaintenanceAssignmentVirtualMachineScaleSet) Attributes() maintenanceAssignmentVirtualMachineScaleSetAttributes {
 	return maintenanceAssignmentVirtualMachineScaleSetAttributes{ref: terra.ReferenceResource(mavmss)}
 }
 
+// ImportState imports the given attribute values into [MaintenanceAssignmentVirtualMachineScaleSet]'s state.
 func (mavmss *MaintenanceAssignmentVirtualMachineScaleSet) ImportState(av io.Reader) error {
 	mavmss.state = &maintenanceAssignmentVirtualMachineScaleSetState{}
 	if err := json.NewDecoder(av).Decode(mavmss.state); err != nil {
@@ -49,10 +73,12 @@ func (mavmss *MaintenanceAssignmentVirtualMachineScaleSet) ImportState(av io.Rea
 	return nil
 }
 
+// State returns the state and a bool indicating if [MaintenanceAssignmentVirtualMachineScaleSet] has state.
 func (mavmss *MaintenanceAssignmentVirtualMachineScaleSet) State() (*maintenanceAssignmentVirtualMachineScaleSetState, bool) {
 	return mavmss.state, mavmss.state != nil
 }
 
+// StateMust returns the state for [MaintenanceAssignmentVirtualMachineScaleSet]. Panics if the state is nil.
 func (mavmss *MaintenanceAssignmentVirtualMachineScaleSet) StateMust() *maintenanceAssignmentVirtualMachineScaleSetState {
 	if mavmss.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mavmss.Type(), mavmss.LocalName()))
@@ -60,10 +86,7 @@ func (mavmss *MaintenanceAssignmentVirtualMachineScaleSet) StateMust() *maintena
 	return mavmss.state
 }
 
-func (mavmss *MaintenanceAssignmentVirtualMachineScaleSet) DependOn() terra.Reference {
-	return terra.ReferenceResource(mavmss)
-}
-
+// MaintenanceAssignmentVirtualMachineScaleSetArgs contains the configurations for azurerm_maintenance_assignment_virtual_machine_scale_set.
 type MaintenanceAssignmentVirtualMachineScaleSetArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -75,31 +98,33 @@ type MaintenanceAssignmentVirtualMachineScaleSetArgs struct {
 	VirtualMachineScaleSetId terra.StringValue `hcl:"virtual_machine_scale_set_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *maintenanceassignmentvirtualmachinescaleset.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MaintenanceAssignmentVirtualMachineScaleSet depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type maintenanceAssignmentVirtualMachineScaleSetAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_maintenance_assignment_virtual_machine_scale_set.
 func (mavmss maintenanceAssignmentVirtualMachineScaleSetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mavmss.ref.Append("id"))
+	return terra.ReferenceAsString(mavmss.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_maintenance_assignment_virtual_machine_scale_set.
 func (mavmss maintenanceAssignmentVirtualMachineScaleSetAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(mavmss.ref.Append("location"))
+	return terra.ReferenceAsString(mavmss.ref.Append("location"))
 }
 
+// MaintenanceConfigurationId returns a reference to field maintenance_configuration_id of azurerm_maintenance_assignment_virtual_machine_scale_set.
 func (mavmss maintenanceAssignmentVirtualMachineScaleSetAttributes) MaintenanceConfigurationId() terra.StringValue {
-	return terra.ReferenceString(mavmss.ref.Append("maintenance_configuration_id"))
+	return terra.ReferenceAsString(mavmss.ref.Append("maintenance_configuration_id"))
 }
 
+// VirtualMachineScaleSetId returns a reference to field virtual_machine_scale_set_id of azurerm_maintenance_assignment_virtual_machine_scale_set.
 func (mavmss maintenanceAssignmentVirtualMachineScaleSetAttributes) VirtualMachineScaleSetId() terra.StringValue {
-	return terra.ReferenceString(mavmss.ref.Append("virtual_machine_scale_set_id"))
+	return terra.ReferenceAsString(mavmss.ref.Append("virtual_machine_scale_set_id"))
 }
 
 func (mavmss maintenanceAssignmentVirtualMachineScaleSetAttributes) Timeouts() maintenanceassignmentvirtualmachinescaleset.TimeoutsAttributes {
-	return terra.ReferenceSingle[maintenanceassignmentvirtualmachinescaleset.TimeoutsAttributes](mavmss.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[maintenanceassignmentvirtualmachinescaleset.TimeoutsAttributes](mavmss.ref.Append("timeouts"))
 }
 
 type maintenanceAssignmentVirtualMachineScaleSetState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewPostgresqlFlexibleServer creates a new instance of [PostgresqlFlexibleServer].
 func NewPostgresqlFlexibleServer(name string, args PostgresqlFlexibleServerArgs) *PostgresqlFlexibleServer {
 	return &PostgresqlFlexibleServer{
 		Args: args,
@@ -19,28 +20,51 @@ func NewPostgresqlFlexibleServer(name string, args PostgresqlFlexibleServerArgs)
 
 var _ terra.Resource = (*PostgresqlFlexibleServer)(nil)
 
+// PostgresqlFlexibleServer represents the Terraform resource azurerm_postgresql_flexible_server.
 type PostgresqlFlexibleServer struct {
-	Name  string
-	Args  PostgresqlFlexibleServerArgs
-	state *postgresqlFlexibleServerState
+	Name      string
+	Args      PostgresqlFlexibleServerArgs
+	state     *postgresqlFlexibleServerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PostgresqlFlexibleServer].
 func (pfs *PostgresqlFlexibleServer) Type() string {
 	return "azurerm_postgresql_flexible_server"
 }
 
+// LocalName returns the local name for [PostgresqlFlexibleServer].
 func (pfs *PostgresqlFlexibleServer) LocalName() string {
 	return pfs.Name
 }
 
+// Configuration returns the configuration (args) for [PostgresqlFlexibleServer].
 func (pfs *PostgresqlFlexibleServer) Configuration() interface{} {
 	return pfs.Args
 }
 
+// DependOn is used for other resources to depend on [PostgresqlFlexibleServer].
+func (pfs *PostgresqlFlexibleServer) DependOn() terra.Reference {
+	return terra.ReferenceResource(pfs)
+}
+
+// Dependencies returns the list of resources [PostgresqlFlexibleServer] depends_on.
+func (pfs *PostgresqlFlexibleServer) Dependencies() terra.Dependencies {
+	return pfs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PostgresqlFlexibleServer].
+func (pfs *PostgresqlFlexibleServer) LifecycleManagement() *terra.Lifecycle {
+	return pfs.Lifecycle
+}
+
+// Attributes returns the attributes for [PostgresqlFlexibleServer].
 func (pfs *PostgresqlFlexibleServer) Attributes() postgresqlFlexibleServerAttributes {
 	return postgresqlFlexibleServerAttributes{ref: terra.ReferenceResource(pfs)}
 }
 
+// ImportState imports the given attribute values into [PostgresqlFlexibleServer]'s state.
 func (pfs *PostgresqlFlexibleServer) ImportState(av io.Reader) error {
 	pfs.state = &postgresqlFlexibleServerState{}
 	if err := json.NewDecoder(av).Decode(pfs.state); err != nil {
@@ -49,10 +73,12 @@ func (pfs *PostgresqlFlexibleServer) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PostgresqlFlexibleServer] has state.
 func (pfs *PostgresqlFlexibleServer) State() (*postgresqlFlexibleServerState, bool) {
 	return pfs.state, pfs.state != nil
 }
 
+// StateMust returns the state for [PostgresqlFlexibleServer]. Panics if the state is nil.
 func (pfs *PostgresqlFlexibleServer) StateMust() *postgresqlFlexibleServerState {
 	if pfs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pfs.Type(), pfs.LocalName()))
@@ -60,10 +86,7 @@ func (pfs *PostgresqlFlexibleServer) StateMust() *postgresqlFlexibleServerState 
 	return pfs.state
 }
 
-func (pfs *PostgresqlFlexibleServer) DependOn() terra.Reference {
-	return terra.ReferenceResource(pfs)
-}
-
+// PostgresqlFlexibleServerArgs contains the configurations for azurerm_postgresql_flexible_server.
 type PostgresqlFlexibleServerArgs struct {
 	// AdministratorLogin: string, optional
 	AdministratorLogin terra.StringValue `hcl:"administrator_login,attr"`
@@ -115,119 +138,138 @@ type PostgresqlFlexibleServerArgs struct {
 	MaintenanceWindow *postgresqlflexibleserver.MaintenanceWindow `hcl:"maintenance_window,block"`
 	// Timeouts: optional
 	Timeouts *postgresqlflexibleserver.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that PostgresqlFlexibleServer depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type postgresqlFlexibleServerAttributes struct {
 	ref terra.Reference
 }
 
+// AdministratorLogin returns a reference to field administrator_login of azurerm_postgresql_flexible_server.
 func (pfs postgresqlFlexibleServerAttributes) AdministratorLogin() terra.StringValue {
-	return terra.ReferenceString(pfs.ref.Append("administrator_login"))
+	return terra.ReferenceAsString(pfs.ref.Append("administrator_login"))
 }
 
+// AdministratorPassword returns a reference to field administrator_password of azurerm_postgresql_flexible_server.
 func (pfs postgresqlFlexibleServerAttributes) AdministratorPassword() terra.StringValue {
-	return terra.ReferenceString(pfs.ref.Append("administrator_password"))
+	return terra.ReferenceAsString(pfs.ref.Append("administrator_password"))
 }
 
+// BackupRetentionDays returns a reference to field backup_retention_days of azurerm_postgresql_flexible_server.
 func (pfs postgresqlFlexibleServerAttributes) BackupRetentionDays() terra.NumberValue {
-	return terra.ReferenceNumber(pfs.ref.Append("backup_retention_days"))
+	return terra.ReferenceAsNumber(pfs.ref.Append("backup_retention_days"))
 }
 
+// CreateMode returns a reference to field create_mode of azurerm_postgresql_flexible_server.
 func (pfs postgresqlFlexibleServerAttributes) CreateMode() terra.StringValue {
-	return terra.ReferenceString(pfs.ref.Append("create_mode"))
+	return terra.ReferenceAsString(pfs.ref.Append("create_mode"))
 }
 
+// DelegatedSubnetId returns a reference to field delegated_subnet_id of azurerm_postgresql_flexible_server.
 func (pfs postgresqlFlexibleServerAttributes) DelegatedSubnetId() terra.StringValue {
-	return terra.ReferenceString(pfs.ref.Append("delegated_subnet_id"))
+	return terra.ReferenceAsString(pfs.ref.Append("delegated_subnet_id"))
 }
 
+// Fqdn returns a reference to field fqdn of azurerm_postgresql_flexible_server.
 func (pfs postgresqlFlexibleServerAttributes) Fqdn() terra.StringValue {
-	return terra.ReferenceString(pfs.ref.Append("fqdn"))
+	return terra.ReferenceAsString(pfs.ref.Append("fqdn"))
 }
 
+// GeoRedundantBackupEnabled returns a reference to field geo_redundant_backup_enabled of azurerm_postgresql_flexible_server.
 func (pfs postgresqlFlexibleServerAttributes) GeoRedundantBackupEnabled() terra.BoolValue {
-	return terra.ReferenceBool(pfs.ref.Append("geo_redundant_backup_enabled"))
+	return terra.ReferenceAsBool(pfs.ref.Append("geo_redundant_backup_enabled"))
 }
 
+// Id returns a reference to field id of azurerm_postgresql_flexible_server.
 func (pfs postgresqlFlexibleServerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pfs.ref.Append("id"))
+	return terra.ReferenceAsString(pfs.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_postgresql_flexible_server.
 func (pfs postgresqlFlexibleServerAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(pfs.ref.Append("location"))
+	return terra.ReferenceAsString(pfs.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_postgresql_flexible_server.
 func (pfs postgresqlFlexibleServerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pfs.ref.Append("name"))
+	return terra.ReferenceAsString(pfs.ref.Append("name"))
 }
 
+// PointInTimeRestoreTimeInUtc returns a reference to field point_in_time_restore_time_in_utc of azurerm_postgresql_flexible_server.
 func (pfs postgresqlFlexibleServerAttributes) PointInTimeRestoreTimeInUtc() terra.StringValue {
-	return terra.ReferenceString(pfs.ref.Append("point_in_time_restore_time_in_utc"))
+	return terra.ReferenceAsString(pfs.ref.Append("point_in_time_restore_time_in_utc"))
 }
 
+// PrivateDnsZoneId returns a reference to field private_dns_zone_id of azurerm_postgresql_flexible_server.
 func (pfs postgresqlFlexibleServerAttributes) PrivateDnsZoneId() terra.StringValue {
-	return terra.ReferenceString(pfs.ref.Append("private_dns_zone_id"))
+	return terra.ReferenceAsString(pfs.ref.Append("private_dns_zone_id"))
 }
 
+// PublicNetworkAccessEnabled returns a reference to field public_network_access_enabled of azurerm_postgresql_flexible_server.
 func (pfs postgresqlFlexibleServerAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(pfs.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(pfs.ref.Append("public_network_access_enabled"))
 }
 
+// ReplicationRole returns a reference to field replication_role of azurerm_postgresql_flexible_server.
 func (pfs postgresqlFlexibleServerAttributes) ReplicationRole() terra.StringValue {
-	return terra.ReferenceString(pfs.ref.Append("replication_role"))
+	return terra.ReferenceAsString(pfs.ref.Append("replication_role"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_postgresql_flexible_server.
 func (pfs postgresqlFlexibleServerAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(pfs.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(pfs.ref.Append("resource_group_name"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_postgresql_flexible_server.
 func (pfs postgresqlFlexibleServerAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(pfs.ref.Append("sku_name"))
+	return terra.ReferenceAsString(pfs.ref.Append("sku_name"))
 }
 
+// SourceServerId returns a reference to field source_server_id of azurerm_postgresql_flexible_server.
 func (pfs postgresqlFlexibleServerAttributes) SourceServerId() terra.StringValue {
-	return terra.ReferenceString(pfs.ref.Append("source_server_id"))
+	return terra.ReferenceAsString(pfs.ref.Append("source_server_id"))
 }
 
+// StorageMb returns a reference to field storage_mb of azurerm_postgresql_flexible_server.
 func (pfs postgresqlFlexibleServerAttributes) StorageMb() terra.NumberValue {
-	return terra.ReferenceNumber(pfs.ref.Append("storage_mb"))
+	return terra.ReferenceAsNumber(pfs.ref.Append("storage_mb"))
 }
 
+// Tags returns a reference to field tags of azurerm_postgresql_flexible_server.
 func (pfs postgresqlFlexibleServerAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](pfs.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](pfs.ref.Append("tags"))
 }
 
+// Version returns a reference to field version of azurerm_postgresql_flexible_server.
 func (pfs postgresqlFlexibleServerAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(pfs.ref.Append("version"))
+	return terra.ReferenceAsString(pfs.ref.Append("version"))
 }
 
+// Zone returns a reference to field zone of azurerm_postgresql_flexible_server.
 func (pfs postgresqlFlexibleServerAttributes) Zone() terra.StringValue {
-	return terra.ReferenceString(pfs.ref.Append("zone"))
+	return terra.ReferenceAsString(pfs.ref.Append("zone"))
 }
 
 func (pfs postgresqlFlexibleServerAttributes) Authentication() terra.ListValue[postgresqlflexibleserver.AuthenticationAttributes] {
-	return terra.ReferenceList[postgresqlflexibleserver.AuthenticationAttributes](pfs.ref.Append("authentication"))
+	return terra.ReferenceAsList[postgresqlflexibleserver.AuthenticationAttributes](pfs.ref.Append("authentication"))
 }
 
 func (pfs postgresqlFlexibleServerAttributes) CustomerManagedKey() terra.ListValue[postgresqlflexibleserver.CustomerManagedKeyAttributes] {
-	return terra.ReferenceList[postgresqlflexibleserver.CustomerManagedKeyAttributes](pfs.ref.Append("customer_managed_key"))
+	return terra.ReferenceAsList[postgresqlflexibleserver.CustomerManagedKeyAttributes](pfs.ref.Append("customer_managed_key"))
 }
 
 func (pfs postgresqlFlexibleServerAttributes) HighAvailability() terra.ListValue[postgresqlflexibleserver.HighAvailabilityAttributes] {
-	return terra.ReferenceList[postgresqlflexibleserver.HighAvailabilityAttributes](pfs.ref.Append("high_availability"))
+	return terra.ReferenceAsList[postgresqlflexibleserver.HighAvailabilityAttributes](pfs.ref.Append("high_availability"))
 }
 
 func (pfs postgresqlFlexibleServerAttributes) Identity() terra.ListValue[postgresqlflexibleserver.IdentityAttributes] {
-	return terra.ReferenceList[postgresqlflexibleserver.IdentityAttributes](pfs.ref.Append("identity"))
+	return terra.ReferenceAsList[postgresqlflexibleserver.IdentityAttributes](pfs.ref.Append("identity"))
 }
 
 func (pfs postgresqlFlexibleServerAttributes) MaintenanceWindow() terra.ListValue[postgresqlflexibleserver.MaintenanceWindowAttributes] {
-	return terra.ReferenceList[postgresqlflexibleserver.MaintenanceWindowAttributes](pfs.ref.Append("maintenance_window"))
+	return terra.ReferenceAsList[postgresqlflexibleserver.MaintenanceWindowAttributes](pfs.ref.Append("maintenance_window"))
 }
 
 func (pfs postgresqlFlexibleServerAttributes) Timeouts() postgresqlflexibleserver.TimeoutsAttributes {
-	return terra.ReferenceSingle[postgresqlflexibleserver.TimeoutsAttributes](pfs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[postgresqlflexibleserver.TimeoutsAttributes](pfs.ref.Append("timeouts"))
 }
 
 type postgresqlFlexibleServerState struct {

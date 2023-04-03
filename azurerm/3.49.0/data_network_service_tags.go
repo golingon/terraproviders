@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataNetworkServiceTags creates a new instance of [DataNetworkServiceTags].
 func NewDataNetworkServiceTags(name string, args DataNetworkServiceTagsArgs) *DataNetworkServiceTags {
 	return &DataNetworkServiceTags{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataNetworkServiceTags(name string, args DataNetworkServiceTagsArgs) *Da
 
 var _ terra.DataResource = (*DataNetworkServiceTags)(nil)
 
+// DataNetworkServiceTags represents the Terraform data resource azurerm_network_service_tags.
 type DataNetworkServiceTags struct {
 	Name string
 	Args DataNetworkServiceTagsArgs
 }
 
+// DataSource returns the Terraform object type for [DataNetworkServiceTags].
 func (nst *DataNetworkServiceTags) DataSource() string {
 	return "azurerm_network_service_tags"
 }
 
+// LocalName returns the local name for [DataNetworkServiceTags].
 func (nst *DataNetworkServiceTags) LocalName() string {
 	return nst.Name
 }
 
+// Configuration returns the configuration (args) for [DataNetworkServiceTags].
 func (nst *DataNetworkServiceTags) Configuration() interface{} {
 	return nst.Args
 }
 
+// Attributes returns the attributes for [DataNetworkServiceTags].
 func (nst *DataNetworkServiceTags) Attributes() dataNetworkServiceTagsAttributes {
 	return dataNetworkServiceTagsAttributes{ref: terra.ReferenceDataResource(nst)}
 }
 
+// DataNetworkServiceTagsArgs contains the configurations for azurerm_network_service_tags.
 type DataNetworkServiceTagsArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,34 +60,41 @@ type dataNetworkServiceTagsAttributes struct {
 	ref terra.Reference
 }
 
+// AddressPrefixes returns a reference to field address_prefixes of azurerm_network_service_tags.
 func (nst dataNetworkServiceTagsAttributes) AddressPrefixes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](nst.ref.Append("address_prefixes"))
+	return terra.ReferenceAsList[terra.StringValue](nst.ref.Append("address_prefixes"))
 }
 
+// Id returns a reference to field id of azurerm_network_service_tags.
 func (nst dataNetworkServiceTagsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(nst.ref.Append("id"))
+	return terra.ReferenceAsString(nst.ref.Append("id"))
 }
 
+// Ipv4Cidrs returns a reference to field ipv4_cidrs of azurerm_network_service_tags.
 func (nst dataNetworkServiceTagsAttributes) Ipv4Cidrs() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](nst.ref.Append("ipv4_cidrs"))
+	return terra.ReferenceAsList[terra.StringValue](nst.ref.Append("ipv4_cidrs"))
 }
 
+// Ipv6Cidrs returns a reference to field ipv6_cidrs of azurerm_network_service_tags.
 func (nst dataNetworkServiceTagsAttributes) Ipv6Cidrs() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](nst.ref.Append("ipv6_cidrs"))
+	return terra.ReferenceAsList[terra.StringValue](nst.ref.Append("ipv6_cidrs"))
 }
 
+// Location returns a reference to field location of azurerm_network_service_tags.
 func (nst dataNetworkServiceTagsAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(nst.ref.Append("location"))
+	return terra.ReferenceAsString(nst.ref.Append("location"))
 }
 
+// LocationFilter returns a reference to field location_filter of azurerm_network_service_tags.
 func (nst dataNetworkServiceTagsAttributes) LocationFilter() terra.StringValue {
-	return terra.ReferenceString(nst.ref.Append("location_filter"))
+	return terra.ReferenceAsString(nst.ref.Append("location_filter"))
 }
 
+// Service returns a reference to field service of azurerm_network_service_tags.
 func (nst dataNetworkServiceTagsAttributes) Service() terra.StringValue {
-	return terra.ReferenceString(nst.ref.Append("service"))
+	return terra.ReferenceAsString(nst.ref.Append("service"))
 }
 
 func (nst dataNetworkServiceTagsAttributes) Timeouts() datanetworkservicetags.TimeoutsAttributes {
-	return terra.ReferenceSingle[datanetworkservicetags.TimeoutsAttributes](nst.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datanetworkservicetags.TimeoutsAttributes](nst.ref.Append("timeouts"))
 }

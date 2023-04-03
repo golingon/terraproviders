@@ -59,7 +59,7 @@ func (a AliasAttributes) InternalWithRef(ref terra.Reference) AliasAttributes {
 	return AliasAttributes{ref: ref}
 }
 
-func (a AliasAttributes) InternalTokens() hclwrite.Tokens {
+func (a AliasAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -87,7 +87,7 @@ func (crp CidrRoutingPolicyAttributes) InternalWithRef(ref terra.Reference) Cidr
 	return CidrRoutingPolicyAttributes{ref: ref}
 }
 
-func (crp CidrRoutingPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (crp CidrRoutingPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return crp.ref.InternalTokens()
 }
 
@@ -111,7 +111,7 @@ func (frp FailoverRoutingPolicyAttributes) InternalWithRef(ref terra.Reference) 
 	return FailoverRoutingPolicyAttributes{ref: ref}
 }
 
-func (frp FailoverRoutingPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (frp FailoverRoutingPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return frp.ref.InternalTokens()
 }
 
@@ -131,7 +131,7 @@ func (grp GeolocationRoutingPolicyAttributes) InternalWithRef(ref terra.Referenc
 	return GeolocationRoutingPolicyAttributes{ref: ref}
 }
 
-func (grp GeolocationRoutingPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (grp GeolocationRoutingPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return grp.ref.InternalTokens()
 }
 
@@ -159,7 +159,7 @@ func (lrp LatencyRoutingPolicyAttributes) InternalWithRef(ref terra.Reference) L
 	return LatencyRoutingPolicyAttributes{ref: ref}
 }
 
-func (lrp LatencyRoutingPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (lrp LatencyRoutingPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lrp.ref.InternalTokens()
 }
 
@@ -179,7 +179,7 @@ func (wrp WeightedRoutingPolicyAttributes) InternalWithRef(ref terra.Reference) 
 	return WeightedRoutingPolicyAttributes{ref: ref}
 }
 
-func (wrp WeightedRoutingPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (wrp WeightedRoutingPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wrp.ref.InternalTokens()
 }
 

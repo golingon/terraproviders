@@ -82,7 +82,7 @@ func (e ExecutionAttributes) InternalWithRef(ref terra.Reference) ExecutionAttri
 	return ExecutionAttributes{ref: ref}
 }
 
-func (e ExecutionAttributes) InternalTokens() hclwrite.Tokens {
+func (e ExecutionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -106,7 +106,7 @@ func (g GroupsAttributes) InternalWithRef(ref terra.Reference) GroupsAttributes 
 	return GroupsAttributes{ref: ref}
 }
 
-func (g GroupsAttributes) InternalTokens() hclwrite.Tokens {
+func (g GroupsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return g.ref.InternalTokens()
 }
 
@@ -138,7 +138,7 @@ func (mm MetricMonitorsAttributes) InternalWithRef(ref terra.Reference) MetricMo
 	return MetricMonitorsAttributes{ref: ref}
 }
 
-func (mm MetricMonitorsAttributes) InternalTokens() hclwrite.Tokens {
+func (mm MetricMonitorsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mm.ref.InternalTokens()
 }
 
@@ -158,7 +158,7 @@ func (md MetricDefinitionAttributes) InternalWithRef(ref terra.Reference) Metric
 	return MetricDefinitionAttributes{ref: ref}
 }
 
-func (md MetricDefinitionAttributes) InternalTokens() hclwrite.Tokens {
+func (md MetricDefinitionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return md.ref.InternalTokens()
 }
 
@@ -194,7 +194,7 @@ func (ssc ScheduledSplitsConfigAttributes) InternalWithRef(ref terra.Reference) 
 	return ScheduledSplitsConfigAttributes{ref: ref}
 }
 
-func (ssc ScheduledSplitsConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ssc ScheduledSplitsConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ssc.ref.InternalTokens()
 }
 
@@ -214,7 +214,7 @@ func (s StepsAttributes) InternalWithRef(ref terra.Reference) StepsAttributes {
 	return StepsAttributes{ref: ref}
 }
 
-func (s StepsAttributes) InternalTokens() hclwrite.Tokens {
+func (s StepsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -242,7 +242,7 @@ func (so SegmentOverridesAttributes) InternalWithRef(ref terra.Reference) Segmen
 	return SegmentOverridesAttributes{ref: ref}
 }
 
-func (so SegmentOverridesAttributes) InternalTokens() hclwrite.Tokens {
+func (so SegmentOverridesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return so.ref.InternalTokens()
 }
 
@@ -270,7 +270,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

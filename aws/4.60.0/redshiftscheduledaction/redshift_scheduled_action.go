@@ -51,7 +51,7 @@ func (ta TargetActionAttributes) InternalWithRef(ref terra.Reference) TargetActi
 	return TargetActionAttributes{ref: ref}
 }
 
-func (ta TargetActionAttributes) InternalTokens() hclwrite.Tokens {
+func (ta TargetActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ta.ref.InternalTokens()
 }
 
@@ -79,7 +79,7 @@ func (pc PauseClusterAttributes) InternalWithRef(ref terra.Reference) PauseClust
 	return PauseClusterAttributes{ref: ref}
 }
 
-func (pc PauseClusterAttributes) InternalTokens() hclwrite.Tokens {
+func (pc PauseClusterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
@@ -99,7 +99,7 @@ func (rc ResizeClusterAttributes) InternalWithRef(ref terra.Reference) ResizeClu
 	return ResizeClusterAttributes{ref: ref}
 }
 
-func (rc ResizeClusterAttributes) InternalTokens() hclwrite.Tokens {
+func (rc ResizeClusterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rc.ref.InternalTokens()
 }
 
@@ -135,7 +135,7 @@ func (rc ResumeClusterAttributes) InternalWithRef(ref terra.Reference) ResumeClu
 	return ResumeClusterAttributes{ref: ref}
 }
 
-func (rc ResumeClusterAttributes) InternalTokens() hclwrite.Tokens {
+func (rc ResumeClusterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rc.ref.InternalTokens()
 }
 

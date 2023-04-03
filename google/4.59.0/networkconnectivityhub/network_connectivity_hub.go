@@ -22,48 +22,48 @@ type RoutingVpcsAttributes struct {
 	ref terra.Reference
 }
 
-func (rv RoutingVpcsAttributes) InternalRef() terra.Reference {
-	return rv.ref
+func (rv RoutingVpcsAttributes) InternalRef() (terra.Reference, error) {
+	return rv.ref, nil
 }
 
 func (rv RoutingVpcsAttributes) InternalWithRef(ref terra.Reference) RoutingVpcsAttributes {
 	return RoutingVpcsAttributes{ref: ref}
 }
 
-func (rv RoutingVpcsAttributes) InternalTokens() hclwrite.Tokens {
+func (rv RoutingVpcsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rv.ref.InternalTokens()
 }
 
 func (rv RoutingVpcsAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(rv.ref.Append("uri"))
+	return terra.ReferenceAsString(rv.ref.Append("uri"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type RoutingVpcsState struct {

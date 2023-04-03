@@ -59,7 +59,7 @@ func (s ScopeAttributes) InternalWithRef(ref terra.Reference) ScopeAttributes {
 	return ScopeAttributes{ref: ref}
 }
 
-func (s ScopeAttributes) InternalTokens() hclwrite.Tokens {
+func (s ScopeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -91,7 +91,7 @@ func (s SourceAttributes) InternalWithRef(ref terra.Reference) SourceAttributes 
 	return SourceAttributes{ref: ref}
 }
 
-func (s SourceAttributes) InternalTokens() hclwrite.Tokens {
+func (s SourceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -123,7 +123,7 @@ func (cpd CustomPolicyDetailsAttributes) InternalWithRef(ref terra.Reference) Cu
 	return CustomPolicyDetailsAttributes{ref: ref}
 }
 
-func (cpd CustomPolicyDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (cpd CustomPolicyDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cpd.ref.InternalTokens()
 }
 
@@ -151,7 +151,7 @@ func (sd SourceDetailAttributes) InternalWithRef(ref terra.Reference) SourceDeta
 	return SourceDetailAttributes{ref: ref}
 }
 
-func (sd SourceDetailAttributes) InternalTokens() hclwrite.Tokens {
+func (sd SourceDetailAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sd.ref.InternalTokens()
 }
 

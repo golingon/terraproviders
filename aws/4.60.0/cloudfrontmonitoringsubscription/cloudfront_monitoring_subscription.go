@@ -29,7 +29,7 @@ func (ms MonitoringSubscriptionAttributes) InternalWithRef(ref terra.Reference) 
 	return MonitoringSubscriptionAttributes{ref: ref}
 }
 
-func (ms MonitoringSubscriptionAttributes) InternalTokens() hclwrite.Tokens {
+func (ms MonitoringSubscriptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ms.ref.InternalTokens()
 }
 
@@ -49,7 +49,7 @@ func (rmsc RealtimeMetricsSubscriptionConfigAttributes) InternalWithRef(ref terr
 	return RealtimeMetricsSubscriptionConfigAttributes{ref: ref}
 }
 
-func (rmsc RealtimeMetricsSubscriptionConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (rmsc RealtimeMetricsSubscriptionConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rmsc.ref.InternalTokens()
 }
 

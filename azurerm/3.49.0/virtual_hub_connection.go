@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewVirtualHubConnection creates a new instance of [VirtualHubConnection].
 func NewVirtualHubConnection(name string, args VirtualHubConnectionArgs) *VirtualHubConnection {
 	return &VirtualHubConnection{
 		Args: args,
@@ -19,28 +20,51 @@ func NewVirtualHubConnection(name string, args VirtualHubConnectionArgs) *Virtua
 
 var _ terra.Resource = (*VirtualHubConnection)(nil)
 
+// VirtualHubConnection represents the Terraform resource azurerm_virtual_hub_connection.
 type VirtualHubConnection struct {
-	Name  string
-	Args  VirtualHubConnectionArgs
-	state *virtualHubConnectionState
+	Name      string
+	Args      VirtualHubConnectionArgs
+	state     *virtualHubConnectionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VirtualHubConnection].
 func (vhc *VirtualHubConnection) Type() string {
 	return "azurerm_virtual_hub_connection"
 }
 
+// LocalName returns the local name for [VirtualHubConnection].
 func (vhc *VirtualHubConnection) LocalName() string {
 	return vhc.Name
 }
 
+// Configuration returns the configuration (args) for [VirtualHubConnection].
 func (vhc *VirtualHubConnection) Configuration() interface{} {
 	return vhc.Args
 }
 
+// DependOn is used for other resources to depend on [VirtualHubConnection].
+func (vhc *VirtualHubConnection) DependOn() terra.Reference {
+	return terra.ReferenceResource(vhc)
+}
+
+// Dependencies returns the list of resources [VirtualHubConnection] depends_on.
+func (vhc *VirtualHubConnection) Dependencies() terra.Dependencies {
+	return vhc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VirtualHubConnection].
+func (vhc *VirtualHubConnection) LifecycleManagement() *terra.Lifecycle {
+	return vhc.Lifecycle
+}
+
+// Attributes returns the attributes for [VirtualHubConnection].
 func (vhc *VirtualHubConnection) Attributes() virtualHubConnectionAttributes {
 	return virtualHubConnectionAttributes{ref: terra.ReferenceResource(vhc)}
 }
 
+// ImportState imports the given attribute values into [VirtualHubConnection]'s state.
 func (vhc *VirtualHubConnection) ImportState(av io.Reader) error {
 	vhc.state = &virtualHubConnectionState{}
 	if err := json.NewDecoder(av).Decode(vhc.state); err != nil {
@@ -49,10 +73,12 @@ func (vhc *VirtualHubConnection) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [VirtualHubConnection] has state.
 func (vhc *VirtualHubConnection) State() (*virtualHubConnectionState, bool) {
 	return vhc.state, vhc.state != nil
 }
 
+// StateMust returns the state for [VirtualHubConnection]. Panics if the state is nil.
 func (vhc *VirtualHubConnection) StateMust() *virtualHubConnectionState {
 	if vhc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", vhc.Type(), vhc.LocalName()))
@@ -60,10 +86,7 @@ func (vhc *VirtualHubConnection) StateMust() *virtualHubConnectionState {
 	return vhc.state
 }
 
-func (vhc *VirtualHubConnection) DependOn() terra.Reference {
-	return terra.ReferenceResource(vhc)
-}
-
+// VirtualHubConnectionArgs contains the configurations for azurerm_virtual_hub_connection.
 type VirtualHubConnectionArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,39 +102,42 @@ type VirtualHubConnectionArgs struct {
 	Routing *virtualhubconnection.Routing `hcl:"routing,block"`
 	// Timeouts: optional
 	Timeouts *virtualhubconnection.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that VirtualHubConnection depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type virtualHubConnectionAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_virtual_hub_connection.
 func (vhc virtualHubConnectionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vhc.ref.Append("id"))
+	return terra.ReferenceAsString(vhc.ref.Append("id"))
 }
 
+// InternetSecurityEnabled returns a reference to field internet_security_enabled of azurerm_virtual_hub_connection.
 func (vhc virtualHubConnectionAttributes) InternetSecurityEnabled() terra.BoolValue {
-	return terra.ReferenceBool(vhc.ref.Append("internet_security_enabled"))
+	return terra.ReferenceAsBool(vhc.ref.Append("internet_security_enabled"))
 }
 
+// Name returns a reference to field name of azurerm_virtual_hub_connection.
 func (vhc virtualHubConnectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(vhc.ref.Append("name"))
+	return terra.ReferenceAsString(vhc.ref.Append("name"))
 }
 
+// RemoteVirtualNetworkId returns a reference to field remote_virtual_network_id of azurerm_virtual_hub_connection.
 func (vhc virtualHubConnectionAttributes) RemoteVirtualNetworkId() terra.StringValue {
-	return terra.ReferenceString(vhc.ref.Append("remote_virtual_network_id"))
+	return terra.ReferenceAsString(vhc.ref.Append("remote_virtual_network_id"))
 }
 
+// VirtualHubId returns a reference to field virtual_hub_id of azurerm_virtual_hub_connection.
 func (vhc virtualHubConnectionAttributes) VirtualHubId() terra.StringValue {
-	return terra.ReferenceString(vhc.ref.Append("virtual_hub_id"))
+	return terra.ReferenceAsString(vhc.ref.Append("virtual_hub_id"))
 }
 
 func (vhc virtualHubConnectionAttributes) Routing() terra.ListValue[virtualhubconnection.RoutingAttributes] {
-	return terra.ReferenceList[virtualhubconnection.RoutingAttributes](vhc.ref.Append("routing"))
+	return terra.ReferenceAsList[virtualhubconnection.RoutingAttributes](vhc.ref.Append("routing"))
 }
 
 func (vhc virtualHubConnectionAttributes) Timeouts() virtualhubconnection.TimeoutsAttributes {
-	return terra.ReferenceSingle[virtualhubconnection.TimeoutsAttributes](vhc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[virtualhubconnection.TimeoutsAttributes](vhc.ref.Append("timeouts"))
 }
 
 type virtualHubConnectionState struct {

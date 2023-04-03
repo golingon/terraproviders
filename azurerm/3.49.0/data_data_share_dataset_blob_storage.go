@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataDataShareDatasetBlobStorage creates a new instance of [DataDataShareDatasetBlobStorage].
 func NewDataDataShareDatasetBlobStorage(name string, args DataDataShareDatasetBlobStorageArgs) *DataDataShareDatasetBlobStorage {
 	return &DataDataShareDatasetBlobStorage{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataDataShareDatasetBlobStorage(name string, args DataDataShareDatasetBl
 
 var _ terra.DataResource = (*DataDataShareDatasetBlobStorage)(nil)
 
+// DataDataShareDatasetBlobStorage represents the Terraform data resource azurerm_data_share_dataset_blob_storage.
 type DataDataShareDatasetBlobStorage struct {
 	Name string
 	Args DataDataShareDatasetBlobStorageArgs
 }
 
+// DataSource returns the Terraform object type for [DataDataShareDatasetBlobStorage].
 func (dsdbs *DataDataShareDatasetBlobStorage) DataSource() string {
 	return "azurerm_data_share_dataset_blob_storage"
 }
 
+// LocalName returns the local name for [DataDataShareDatasetBlobStorage].
 func (dsdbs *DataDataShareDatasetBlobStorage) LocalName() string {
 	return dsdbs.Name
 }
 
+// Configuration returns the configuration (args) for [DataDataShareDatasetBlobStorage].
 func (dsdbs *DataDataShareDatasetBlobStorage) Configuration() interface{} {
 	return dsdbs.Args
 }
 
+// Attributes returns the attributes for [DataDataShareDatasetBlobStorage].
 func (dsdbs *DataDataShareDatasetBlobStorage) Attributes() dataDataShareDatasetBlobStorageAttributes {
 	return dataDataShareDatasetBlobStorageAttributes{ref: terra.ReferenceDataResource(dsdbs)}
 }
 
+// DataDataShareDatasetBlobStorageArgs contains the configurations for azurerm_data_share_dataset_blob_storage.
 type DataDataShareDatasetBlobStorageArgs struct {
 	// DataShareId: string, required
 	DataShareId terra.StringValue `hcl:"data_share_id,attr" validate:"required"`
@@ -53,38 +60,45 @@ type dataDataShareDatasetBlobStorageAttributes struct {
 	ref terra.Reference
 }
 
+// ContainerName returns a reference to field container_name of azurerm_data_share_dataset_blob_storage.
 func (dsdbs dataDataShareDatasetBlobStorageAttributes) ContainerName() terra.StringValue {
-	return terra.ReferenceString(dsdbs.ref.Append("container_name"))
+	return terra.ReferenceAsString(dsdbs.ref.Append("container_name"))
 }
 
+// DataShareId returns a reference to field data_share_id of azurerm_data_share_dataset_blob_storage.
 func (dsdbs dataDataShareDatasetBlobStorageAttributes) DataShareId() terra.StringValue {
-	return terra.ReferenceString(dsdbs.ref.Append("data_share_id"))
+	return terra.ReferenceAsString(dsdbs.ref.Append("data_share_id"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_data_share_dataset_blob_storage.
 func (dsdbs dataDataShareDatasetBlobStorageAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(dsdbs.ref.Append("display_name"))
+	return terra.ReferenceAsString(dsdbs.ref.Append("display_name"))
 }
 
+// FilePath returns a reference to field file_path of azurerm_data_share_dataset_blob_storage.
 func (dsdbs dataDataShareDatasetBlobStorageAttributes) FilePath() terra.StringValue {
-	return terra.ReferenceString(dsdbs.ref.Append("file_path"))
+	return terra.ReferenceAsString(dsdbs.ref.Append("file_path"))
 }
 
+// FolderPath returns a reference to field folder_path of azurerm_data_share_dataset_blob_storage.
 func (dsdbs dataDataShareDatasetBlobStorageAttributes) FolderPath() terra.StringValue {
-	return terra.ReferenceString(dsdbs.ref.Append("folder_path"))
+	return terra.ReferenceAsString(dsdbs.ref.Append("folder_path"))
 }
 
+// Id returns a reference to field id of azurerm_data_share_dataset_blob_storage.
 func (dsdbs dataDataShareDatasetBlobStorageAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dsdbs.ref.Append("id"))
+	return terra.ReferenceAsString(dsdbs.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_data_share_dataset_blob_storage.
 func (dsdbs dataDataShareDatasetBlobStorageAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dsdbs.ref.Append("name"))
+	return terra.ReferenceAsString(dsdbs.ref.Append("name"))
 }
 
 func (dsdbs dataDataShareDatasetBlobStorageAttributes) StorageAccount() terra.ListValue[datadatasharedatasetblobstorage.StorageAccountAttributes] {
-	return terra.ReferenceList[datadatasharedatasetblobstorage.StorageAccountAttributes](dsdbs.ref.Append("storage_account"))
+	return terra.ReferenceAsList[datadatasharedatasetblobstorage.StorageAccountAttributes](dsdbs.ref.Append("storage_account"))
 }
 
 func (dsdbs dataDataShareDatasetBlobStorageAttributes) Timeouts() datadatasharedatasetblobstorage.TimeoutsAttributes {
-	return terra.ReferenceSingle[datadatasharedatasetblobstorage.TimeoutsAttributes](dsdbs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datadatasharedatasetblobstorage.TimeoutsAttributes](dsdbs.ref.Append("timeouts"))
 }

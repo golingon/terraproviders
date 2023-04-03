@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataMonitorScheduledQueryRulesLog creates a new instance of [DataMonitorScheduledQueryRulesLog].
 func NewDataMonitorScheduledQueryRulesLog(name string, args DataMonitorScheduledQueryRulesLogArgs) *DataMonitorScheduledQueryRulesLog {
 	return &DataMonitorScheduledQueryRulesLog{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataMonitorScheduledQueryRulesLog(name string, args DataMonitorScheduled
 
 var _ terra.DataResource = (*DataMonitorScheduledQueryRulesLog)(nil)
 
+// DataMonitorScheduledQueryRulesLog represents the Terraform data resource azurerm_monitor_scheduled_query_rules_log.
 type DataMonitorScheduledQueryRulesLog struct {
 	Name string
 	Args DataMonitorScheduledQueryRulesLogArgs
 }
 
+// DataSource returns the Terraform object type for [DataMonitorScheduledQueryRulesLog].
 func (msqrl *DataMonitorScheduledQueryRulesLog) DataSource() string {
 	return "azurerm_monitor_scheduled_query_rules_log"
 }
 
+// LocalName returns the local name for [DataMonitorScheduledQueryRulesLog].
 func (msqrl *DataMonitorScheduledQueryRulesLog) LocalName() string {
 	return msqrl.Name
 }
 
+// Configuration returns the configuration (args) for [DataMonitorScheduledQueryRulesLog].
 func (msqrl *DataMonitorScheduledQueryRulesLog) Configuration() interface{} {
 	return msqrl.Args
 }
 
+// Attributes returns the attributes for [DataMonitorScheduledQueryRulesLog].
 func (msqrl *DataMonitorScheduledQueryRulesLog) Attributes() dataMonitorScheduledQueryRulesLogAttributes {
 	return dataMonitorScheduledQueryRulesLogAttributes{ref: terra.ReferenceDataResource(msqrl)}
 }
 
+// DataMonitorScheduledQueryRulesLogArgs contains the configurations for azurerm_monitor_scheduled_query_rules_log.
 type DataMonitorScheduledQueryRulesLogArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,46 +60,55 @@ type dataMonitorScheduledQueryRulesLogAttributes struct {
 	ref terra.Reference
 }
 
+// AuthorizedResourceIds returns a reference to field authorized_resource_ids of azurerm_monitor_scheduled_query_rules_log.
 func (msqrl dataMonitorScheduledQueryRulesLogAttributes) AuthorizedResourceIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](msqrl.ref.Append("authorized_resource_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](msqrl.ref.Append("authorized_resource_ids"))
 }
 
+// DataSourceId returns a reference to field data_source_id of azurerm_monitor_scheduled_query_rules_log.
 func (msqrl dataMonitorScheduledQueryRulesLogAttributes) DataSourceId() terra.StringValue {
-	return terra.ReferenceString(msqrl.ref.Append("data_source_id"))
+	return terra.ReferenceAsString(msqrl.ref.Append("data_source_id"))
 }
 
+// Description returns a reference to field description of azurerm_monitor_scheduled_query_rules_log.
 func (msqrl dataMonitorScheduledQueryRulesLogAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(msqrl.ref.Append("description"))
+	return terra.ReferenceAsString(msqrl.ref.Append("description"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_monitor_scheduled_query_rules_log.
 func (msqrl dataMonitorScheduledQueryRulesLogAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(msqrl.ref.Append("enabled"))
+	return terra.ReferenceAsBool(msqrl.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of azurerm_monitor_scheduled_query_rules_log.
 func (msqrl dataMonitorScheduledQueryRulesLogAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(msqrl.ref.Append("id"))
+	return terra.ReferenceAsString(msqrl.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_monitor_scheduled_query_rules_log.
 func (msqrl dataMonitorScheduledQueryRulesLogAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(msqrl.ref.Append("location"))
+	return terra.ReferenceAsString(msqrl.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_monitor_scheduled_query_rules_log.
 func (msqrl dataMonitorScheduledQueryRulesLogAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(msqrl.ref.Append("name"))
+	return terra.ReferenceAsString(msqrl.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_monitor_scheduled_query_rules_log.
 func (msqrl dataMonitorScheduledQueryRulesLogAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(msqrl.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(msqrl.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_monitor_scheduled_query_rules_log.
 func (msqrl dataMonitorScheduledQueryRulesLogAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](msqrl.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](msqrl.ref.Append("tags"))
 }
 
 func (msqrl dataMonitorScheduledQueryRulesLogAttributes) Criteria() terra.SetValue[datamonitorscheduledqueryruleslog.CriteriaAttributes] {
-	return terra.ReferenceSet[datamonitorscheduledqueryruleslog.CriteriaAttributes](msqrl.ref.Append("criteria"))
+	return terra.ReferenceAsSet[datamonitorscheduledqueryruleslog.CriteriaAttributes](msqrl.ref.Append("criteria"))
 }
 
 func (msqrl dataMonitorScheduledQueryRulesLogAttributes) Timeouts() datamonitorscheduledqueryruleslog.TimeoutsAttributes {
-	return terra.ReferenceSingle[datamonitorscheduledqueryruleslog.TimeoutsAttributes](msqrl.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datamonitorscheduledqueryruleslog.TimeoutsAttributes](msqrl.ref.Append("timeouts"))
 }

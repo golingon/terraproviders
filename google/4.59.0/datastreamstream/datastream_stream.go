@@ -418,391 +418,391 @@ type BackfillAllAttributes struct {
 	ref terra.Reference
 }
 
-func (ba BackfillAllAttributes) InternalRef() terra.Reference {
-	return ba.ref
+func (ba BackfillAllAttributes) InternalRef() (terra.Reference, error) {
+	return ba.ref, nil
 }
 
 func (ba BackfillAllAttributes) InternalWithRef(ref terra.Reference) BackfillAllAttributes {
 	return BackfillAllAttributes{ref: ref}
 }
 
-func (ba BackfillAllAttributes) InternalTokens() hclwrite.Tokens {
+func (ba BackfillAllAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ba.ref.InternalTokens()
 }
 
 func (ba BackfillAllAttributes) MysqlExcludedObjects() terra.ListValue[MysqlExcludedObjectsAttributes] {
-	return terra.ReferenceList[MysqlExcludedObjectsAttributes](ba.ref.Append("mysql_excluded_objects"))
+	return terra.ReferenceAsList[MysqlExcludedObjectsAttributes](ba.ref.Append("mysql_excluded_objects"))
 }
 
 func (ba BackfillAllAttributes) OracleExcludedObjects() terra.ListValue[OracleExcludedObjectsAttributes] {
-	return terra.ReferenceList[OracleExcludedObjectsAttributes](ba.ref.Append("oracle_excluded_objects"))
+	return terra.ReferenceAsList[OracleExcludedObjectsAttributes](ba.ref.Append("oracle_excluded_objects"))
 }
 
 func (ba BackfillAllAttributes) PostgresqlExcludedObjects() terra.ListValue[PostgresqlExcludedObjectsAttributes] {
-	return terra.ReferenceList[PostgresqlExcludedObjectsAttributes](ba.ref.Append("postgresql_excluded_objects"))
+	return terra.ReferenceAsList[PostgresqlExcludedObjectsAttributes](ba.ref.Append("postgresql_excluded_objects"))
 }
 
 type MysqlExcludedObjectsAttributes struct {
 	ref terra.Reference
 }
 
-func (meo MysqlExcludedObjectsAttributes) InternalRef() terra.Reference {
-	return meo.ref
+func (meo MysqlExcludedObjectsAttributes) InternalRef() (terra.Reference, error) {
+	return meo.ref, nil
 }
 
 func (meo MysqlExcludedObjectsAttributes) InternalWithRef(ref terra.Reference) MysqlExcludedObjectsAttributes {
 	return MysqlExcludedObjectsAttributes{ref: ref}
 }
 
-func (meo MysqlExcludedObjectsAttributes) InternalTokens() hclwrite.Tokens {
+func (meo MysqlExcludedObjectsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return meo.ref.InternalTokens()
 }
 
 func (meo MysqlExcludedObjectsAttributes) MysqlDatabases() terra.ListValue[MysqlExcludedObjectsMysqlDatabasesAttributes] {
-	return terra.ReferenceList[MysqlExcludedObjectsMysqlDatabasesAttributes](meo.ref.Append("mysql_databases"))
+	return terra.ReferenceAsList[MysqlExcludedObjectsMysqlDatabasesAttributes](meo.ref.Append("mysql_databases"))
 }
 
 type MysqlExcludedObjectsMysqlDatabasesAttributes struct {
 	ref terra.Reference
 }
 
-func (md MysqlExcludedObjectsMysqlDatabasesAttributes) InternalRef() terra.Reference {
-	return md.ref
+func (md MysqlExcludedObjectsMysqlDatabasesAttributes) InternalRef() (terra.Reference, error) {
+	return md.ref, nil
 }
 
 func (md MysqlExcludedObjectsMysqlDatabasesAttributes) InternalWithRef(ref terra.Reference) MysqlExcludedObjectsMysqlDatabasesAttributes {
 	return MysqlExcludedObjectsMysqlDatabasesAttributes{ref: ref}
 }
 
-func (md MysqlExcludedObjectsMysqlDatabasesAttributes) InternalTokens() hclwrite.Tokens {
+func (md MysqlExcludedObjectsMysqlDatabasesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return md.ref.InternalTokens()
 }
 
 func (md MysqlExcludedObjectsMysqlDatabasesAttributes) Database() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("database"))
+	return terra.ReferenceAsString(md.ref.Append("database"))
 }
 
 func (md MysqlExcludedObjectsMysqlDatabasesAttributes) MysqlTables() terra.ListValue[MysqlExcludedObjectsMysqlDatabasesMysqlTablesAttributes] {
-	return terra.ReferenceList[MysqlExcludedObjectsMysqlDatabasesMysqlTablesAttributes](md.ref.Append("mysql_tables"))
+	return terra.ReferenceAsList[MysqlExcludedObjectsMysqlDatabasesMysqlTablesAttributes](md.ref.Append("mysql_tables"))
 }
 
 type MysqlExcludedObjectsMysqlDatabasesMysqlTablesAttributes struct {
 	ref terra.Reference
 }
 
-func (mt MysqlExcludedObjectsMysqlDatabasesMysqlTablesAttributes) InternalRef() terra.Reference {
-	return mt.ref
+func (mt MysqlExcludedObjectsMysqlDatabasesMysqlTablesAttributes) InternalRef() (terra.Reference, error) {
+	return mt.ref, nil
 }
 
 func (mt MysqlExcludedObjectsMysqlDatabasesMysqlTablesAttributes) InternalWithRef(ref terra.Reference) MysqlExcludedObjectsMysqlDatabasesMysqlTablesAttributes {
 	return MysqlExcludedObjectsMysqlDatabasesMysqlTablesAttributes{ref: ref}
 }
 
-func (mt MysqlExcludedObjectsMysqlDatabasesMysqlTablesAttributes) InternalTokens() hclwrite.Tokens {
+func (mt MysqlExcludedObjectsMysqlDatabasesMysqlTablesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mt.ref.InternalTokens()
 }
 
 func (mt MysqlExcludedObjectsMysqlDatabasesMysqlTablesAttributes) Table() terra.StringValue {
-	return terra.ReferenceString(mt.ref.Append("table"))
+	return terra.ReferenceAsString(mt.ref.Append("table"))
 }
 
 func (mt MysqlExcludedObjectsMysqlDatabasesMysqlTablesAttributes) MysqlColumns() terra.ListValue[MysqlExcludedObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes] {
-	return terra.ReferenceList[MysqlExcludedObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes](mt.ref.Append("mysql_columns"))
+	return terra.ReferenceAsList[MysqlExcludedObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes](mt.ref.Append("mysql_columns"))
 }
 
 type MysqlExcludedObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes struct {
 	ref terra.Reference
 }
 
-func (mc MysqlExcludedObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) InternalRef() terra.Reference {
-	return mc.ref
+func (mc MysqlExcludedObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) InternalRef() (terra.Reference, error) {
+	return mc.ref, nil
 }
 
 func (mc MysqlExcludedObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) InternalWithRef(ref terra.Reference) MysqlExcludedObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes {
 	return MysqlExcludedObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes{ref: ref}
 }
 
-func (mc MysqlExcludedObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) InternalTokens() hclwrite.Tokens {
+func (mc MysqlExcludedObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mc.ref.InternalTokens()
 }
 
 func (mc MysqlExcludedObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) Collation() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("collation"))
+	return terra.ReferenceAsString(mc.ref.Append("collation"))
 }
 
 func (mc MysqlExcludedObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) Column() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("column"))
+	return terra.ReferenceAsString(mc.ref.Append("column"))
 }
 
 func (mc MysqlExcludedObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) DataType() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("data_type"))
+	return terra.ReferenceAsString(mc.ref.Append("data_type"))
 }
 
 func (mc MysqlExcludedObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) Length() terra.NumberValue {
-	return terra.ReferenceNumber(mc.ref.Append("length"))
+	return terra.ReferenceAsNumber(mc.ref.Append("length"))
 }
 
 func (mc MysqlExcludedObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) Nullable() terra.BoolValue {
-	return terra.ReferenceBool(mc.ref.Append("nullable"))
+	return terra.ReferenceAsBool(mc.ref.Append("nullable"))
 }
 
 func (mc MysqlExcludedObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) OrdinalPosition() terra.NumberValue {
-	return terra.ReferenceNumber(mc.ref.Append("ordinal_position"))
+	return terra.ReferenceAsNumber(mc.ref.Append("ordinal_position"))
 }
 
 func (mc MysqlExcludedObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) PrimaryKey() terra.BoolValue {
-	return terra.ReferenceBool(mc.ref.Append("primary_key"))
+	return terra.ReferenceAsBool(mc.ref.Append("primary_key"))
 }
 
 type OracleExcludedObjectsAttributes struct {
 	ref terra.Reference
 }
 
-func (oeo OracleExcludedObjectsAttributes) InternalRef() terra.Reference {
-	return oeo.ref
+func (oeo OracleExcludedObjectsAttributes) InternalRef() (terra.Reference, error) {
+	return oeo.ref, nil
 }
 
 func (oeo OracleExcludedObjectsAttributes) InternalWithRef(ref terra.Reference) OracleExcludedObjectsAttributes {
 	return OracleExcludedObjectsAttributes{ref: ref}
 }
 
-func (oeo OracleExcludedObjectsAttributes) InternalTokens() hclwrite.Tokens {
+func (oeo OracleExcludedObjectsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oeo.ref.InternalTokens()
 }
 
 func (oeo OracleExcludedObjectsAttributes) OracleSchemas() terra.ListValue[OracleExcludedObjectsOracleSchemasAttributes] {
-	return terra.ReferenceList[OracleExcludedObjectsOracleSchemasAttributes](oeo.ref.Append("oracle_schemas"))
+	return terra.ReferenceAsList[OracleExcludedObjectsOracleSchemasAttributes](oeo.ref.Append("oracle_schemas"))
 }
 
 type OracleExcludedObjectsOracleSchemasAttributes struct {
 	ref terra.Reference
 }
 
-func (os OracleExcludedObjectsOracleSchemasAttributes) InternalRef() terra.Reference {
-	return os.ref
+func (os OracleExcludedObjectsOracleSchemasAttributes) InternalRef() (terra.Reference, error) {
+	return os.ref, nil
 }
 
 func (os OracleExcludedObjectsOracleSchemasAttributes) InternalWithRef(ref terra.Reference) OracleExcludedObjectsOracleSchemasAttributes {
 	return OracleExcludedObjectsOracleSchemasAttributes{ref: ref}
 }
 
-func (os OracleExcludedObjectsOracleSchemasAttributes) InternalTokens() hclwrite.Tokens {
+func (os OracleExcludedObjectsOracleSchemasAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return os.ref.InternalTokens()
 }
 
 func (os OracleExcludedObjectsOracleSchemasAttributes) Schema() terra.StringValue {
-	return terra.ReferenceString(os.ref.Append("schema"))
+	return terra.ReferenceAsString(os.ref.Append("schema"))
 }
 
 func (os OracleExcludedObjectsOracleSchemasAttributes) OracleTables() terra.ListValue[OracleExcludedObjectsOracleSchemasOracleTablesAttributes] {
-	return terra.ReferenceList[OracleExcludedObjectsOracleSchemasOracleTablesAttributes](os.ref.Append("oracle_tables"))
+	return terra.ReferenceAsList[OracleExcludedObjectsOracleSchemasOracleTablesAttributes](os.ref.Append("oracle_tables"))
 }
 
 type OracleExcludedObjectsOracleSchemasOracleTablesAttributes struct {
 	ref terra.Reference
 }
 
-func (ot OracleExcludedObjectsOracleSchemasOracleTablesAttributes) InternalRef() terra.Reference {
-	return ot.ref
+func (ot OracleExcludedObjectsOracleSchemasOracleTablesAttributes) InternalRef() (terra.Reference, error) {
+	return ot.ref, nil
 }
 
 func (ot OracleExcludedObjectsOracleSchemasOracleTablesAttributes) InternalWithRef(ref terra.Reference) OracleExcludedObjectsOracleSchemasOracleTablesAttributes {
 	return OracleExcludedObjectsOracleSchemasOracleTablesAttributes{ref: ref}
 }
 
-func (ot OracleExcludedObjectsOracleSchemasOracleTablesAttributes) InternalTokens() hclwrite.Tokens {
+func (ot OracleExcludedObjectsOracleSchemasOracleTablesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ot.ref.InternalTokens()
 }
 
 func (ot OracleExcludedObjectsOracleSchemasOracleTablesAttributes) Table() terra.StringValue {
-	return terra.ReferenceString(ot.ref.Append("table"))
+	return terra.ReferenceAsString(ot.ref.Append("table"))
 }
 
 func (ot OracleExcludedObjectsOracleSchemasOracleTablesAttributes) OracleColumns() terra.ListValue[OracleExcludedObjectsOracleSchemasOracleTablesOracleColumnsAttributes] {
-	return terra.ReferenceList[OracleExcludedObjectsOracleSchemasOracleTablesOracleColumnsAttributes](ot.ref.Append("oracle_columns"))
+	return terra.ReferenceAsList[OracleExcludedObjectsOracleSchemasOracleTablesOracleColumnsAttributes](ot.ref.Append("oracle_columns"))
 }
 
 type OracleExcludedObjectsOracleSchemasOracleTablesOracleColumnsAttributes struct {
 	ref terra.Reference
 }
 
-func (oc OracleExcludedObjectsOracleSchemasOracleTablesOracleColumnsAttributes) InternalRef() terra.Reference {
-	return oc.ref
+func (oc OracleExcludedObjectsOracleSchemasOracleTablesOracleColumnsAttributes) InternalRef() (terra.Reference, error) {
+	return oc.ref, nil
 }
 
 func (oc OracleExcludedObjectsOracleSchemasOracleTablesOracleColumnsAttributes) InternalWithRef(ref terra.Reference) OracleExcludedObjectsOracleSchemasOracleTablesOracleColumnsAttributes {
 	return OracleExcludedObjectsOracleSchemasOracleTablesOracleColumnsAttributes{ref: ref}
 }
 
-func (oc OracleExcludedObjectsOracleSchemasOracleTablesOracleColumnsAttributes) InternalTokens() hclwrite.Tokens {
+func (oc OracleExcludedObjectsOracleSchemasOracleTablesOracleColumnsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oc.ref.InternalTokens()
 }
 
 func (oc OracleExcludedObjectsOracleSchemasOracleTablesOracleColumnsAttributes) Column() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("column"))
+	return terra.ReferenceAsString(oc.ref.Append("column"))
 }
 
 func (oc OracleExcludedObjectsOracleSchemasOracleTablesOracleColumnsAttributes) DataType() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("data_type"))
+	return terra.ReferenceAsString(oc.ref.Append("data_type"))
 }
 
 func (oc OracleExcludedObjectsOracleSchemasOracleTablesOracleColumnsAttributes) Encoding() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("encoding"))
+	return terra.ReferenceAsString(oc.ref.Append("encoding"))
 }
 
 func (oc OracleExcludedObjectsOracleSchemasOracleTablesOracleColumnsAttributes) Length() terra.NumberValue {
-	return terra.ReferenceNumber(oc.ref.Append("length"))
+	return terra.ReferenceAsNumber(oc.ref.Append("length"))
 }
 
 func (oc OracleExcludedObjectsOracleSchemasOracleTablesOracleColumnsAttributes) Nullable() terra.BoolValue {
-	return terra.ReferenceBool(oc.ref.Append("nullable"))
+	return terra.ReferenceAsBool(oc.ref.Append("nullable"))
 }
 
 func (oc OracleExcludedObjectsOracleSchemasOracleTablesOracleColumnsAttributes) OrdinalPosition() terra.NumberValue {
-	return terra.ReferenceNumber(oc.ref.Append("ordinal_position"))
+	return terra.ReferenceAsNumber(oc.ref.Append("ordinal_position"))
 }
 
 func (oc OracleExcludedObjectsOracleSchemasOracleTablesOracleColumnsAttributes) Precision() terra.NumberValue {
-	return terra.ReferenceNumber(oc.ref.Append("precision"))
+	return terra.ReferenceAsNumber(oc.ref.Append("precision"))
 }
 
 func (oc OracleExcludedObjectsOracleSchemasOracleTablesOracleColumnsAttributes) PrimaryKey() terra.BoolValue {
-	return terra.ReferenceBool(oc.ref.Append("primary_key"))
+	return terra.ReferenceAsBool(oc.ref.Append("primary_key"))
 }
 
 func (oc OracleExcludedObjectsOracleSchemasOracleTablesOracleColumnsAttributes) Scale() terra.NumberValue {
-	return terra.ReferenceNumber(oc.ref.Append("scale"))
+	return terra.ReferenceAsNumber(oc.ref.Append("scale"))
 }
 
 type PostgresqlExcludedObjectsAttributes struct {
 	ref terra.Reference
 }
 
-func (peo PostgresqlExcludedObjectsAttributes) InternalRef() terra.Reference {
-	return peo.ref
+func (peo PostgresqlExcludedObjectsAttributes) InternalRef() (terra.Reference, error) {
+	return peo.ref, nil
 }
 
 func (peo PostgresqlExcludedObjectsAttributes) InternalWithRef(ref terra.Reference) PostgresqlExcludedObjectsAttributes {
 	return PostgresqlExcludedObjectsAttributes{ref: ref}
 }
 
-func (peo PostgresqlExcludedObjectsAttributes) InternalTokens() hclwrite.Tokens {
+func (peo PostgresqlExcludedObjectsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return peo.ref.InternalTokens()
 }
 
 func (peo PostgresqlExcludedObjectsAttributes) PostgresqlSchemas() terra.ListValue[PostgresqlExcludedObjectsPostgresqlSchemasAttributes] {
-	return terra.ReferenceList[PostgresqlExcludedObjectsPostgresqlSchemasAttributes](peo.ref.Append("postgresql_schemas"))
+	return terra.ReferenceAsList[PostgresqlExcludedObjectsPostgresqlSchemasAttributes](peo.ref.Append("postgresql_schemas"))
 }
 
 type PostgresqlExcludedObjectsPostgresqlSchemasAttributes struct {
 	ref terra.Reference
 }
 
-func (ps PostgresqlExcludedObjectsPostgresqlSchemasAttributes) InternalRef() terra.Reference {
-	return ps.ref
+func (ps PostgresqlExcludedObjectsPostgresqlSchemasAttributes) InternalRef() (terra.Reference, error) {
+	return ps.ref, nil
 }
 
 func (ps PostgresqlExcludedObjectsPostgresqlSchemasAttributes) InternalWithRef(ref terra.Reference) PostgresqlExcludedObjectsPostgresqlSchemasAttributes {
 	return PostgresqlExcludedObjectsPostgresqlSchemasAttributes{ref: ref}
 }
 
-func (ps PostgresqlExcludedObjectsPostgresqlSchemasAttributes) InternalTokens() hclwrite.Tokens {
+func (ps PostgresqlExcludedObjectsPostgresqlSchemasAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ps.ref.InternalTokens()
 }
 
 func (ps PostgresqlExcludedObjectsPostgresqlSchemasAttributes) Schema() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("schema"))
+	return terra.ReferenceAsString(ps.ref.Append("schema"))
 }
 
 func (ps PostgresqlExcludedObjectsPostgresqlSchemasAttributes) PostgresqlTables() terra.ListValue[PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesAttributes] {
-	return terra.ReferenceList[PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesAttributes](ps.ref.Append("postgresql_tables"))
+	return terra.ReferenceAsList[PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesAttributes](ps.ref.Append("postgresql_tables"))
 }
 
 type PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesAttributes struct {
 	ref terra.Reference
 }
 
-func (pt PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesAttributes) InternalRef() terra.Reference {
-	return pt.ref
+func (pt PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesAttributes) InternalRef() (terra.Reference, error) {
+	return pt.ref, nil
 }
 
 func (pt PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesAttributes) InternalWithRef(ref terra.Reference) PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesAttributes {
 	return PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesAttributes{ref: ref}
 }
 
-func (pt PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesAttributes) InternalTokens() hclwrite.Tokens {
+func (pt PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pt.ref.InternalTokens()
 }
 
 func (pt PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesAttributes) Table() terra.StringValue {
-	return terra.ReferenceString(pt.ref.Append("table"))
+	return terra.ReferenceAsString(pt.ref.Append("table"))
 }
 
 func (pt PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesAttributes) PostgresqlColumns() terra.ListValue[PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes] {
-	return terra.ReferenceList[PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes](pt.ref.Append("postgresql_columns"))
+	return terra.ReferenceAsList[PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes](pt.ref.Append("postgresql_columns"))
 }
 
 type PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes struct {
 	ref terra.Reference
 }
 
-func (pc PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) InternalWithRef(ref terra.Reference) PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes {
 	return PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes{ref: ref}
 }
 
-func (pc PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) InternalTokens() hclwrite.Tokens {
+func (pc PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
 func (pc PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) Column() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("column"))
+	return terra.ReferenceAsString(pc.ref.Append("column"))
 }
 
 func (pc PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) DataType() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("data_type"))
+	return terra.ReferenceAsString(pc.ref.Append("data_type"))
 }
 
 func (pc PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) Length() terra.NumberValue {
-	return terra.ReferenceNumber(pc.ref.Append("length"))
+	return terra.ReferenceAsNumber(pc.ref.Append("length"))
 }
 
 func (pc PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) Nullable() terra.BoolValue {
-	return terra.ReferenceBool(pc.ref.Append("nullable"))
+	return terra.ReferenceAsBool(pc.ref.Append("nullable"))
 }
 
 func (pc PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) OrdinalPosition() terra.NumberValue {
-	return terra.ReferenceNumber(pc.ref.Append("ordinal_position"))
+	return terra.ReferenceAsNumber(pc.ref.Append("ordinal_position"))
 }
 
 func (pc PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) Precision() terra.NumberValue {
-	return terra.ReferenceNumber(pc.ref.Append("precision"))
+	return terra.ReferenceAsNumber(pc.ref.Append("precision"))
 }
 
 func (pc PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) PrimaryKey() terra.BoolValue {
-	return terra.ReferenceBool(pc.ref.Append("primary_key"))
+	return terra.ReferenceAsBool(pc.ref.Append("primary_key"))
 }
 
 func (pc PostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) Scale() terra.NumberValue {
-	return terra.ReferenceNumber(pc.ref.Append("scale"))
+	return terra.ReferenceAsNumber(pc.ref.Append("scale"))
 }
 
 type BackfillNoneAttributes struct {
 	ref terra.Reference
 }
 
-func (bn BackfillNoneAttributes) InternalRef() terra.Reference {
-	return bn.ref
+func (bn BackfillNoneAttributes) InternalRef() (terra.Reference, error) {
+	return bn.ref, nil
 }
 
 func (bn BackfillNoneAttributes) InternalWithRef(ref terra.Reference) BackfillNoneAttributes {
 	return BackfillNoneAttributes{ref: ref}
 }
 
-func (bn BackfillNoneAttributes) InternalTokens() hclwrite.Tokens {
+func (bn BackfillNoneAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bn.ref.InternalTokens()
 }
 
@@ -810,175 +810,175 @@ type DestinationConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (dc DestinationConfigAttributes) InternalRef() terra.Reference {
-	return dc.ref
+func (dc DestinationConfigAttributes) InternalRef() (terra.Reference, error) {
+	return dc.ref, nil
 }
 
 func (dc DestinationConfigAttributes) InternalWithRef(ref terra.Reference) DestinationConfigAttributes {
 	return DestinationConfigAttributes{ref: ref}
 }
 
-func (dc DestinationConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (dc DestinationConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dc.ref.InternalTokens()
 }
 
 func (dc DestinationConfigAttributes) DestinationConnectionProfile() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("destination_connection_profile"))
+	return terra.ReferenceAsString(dc.ref.Append("destination_connection_profile"))
 }
 
 func (dc DestinationConfigAttributes) BigqueryDestinationConfig() terra.ListValue[BigqueryDestinationConfigAttributes] {
-	return terra.ReferenceList[BigqueryDestinationConfigAttributes](dc.ref.Append("bigquery_destination_config"))
+	return terra.ReferenceAsList[BigqueryDestinationConfigAttributes](dc.ref.Append("bigquery_destination_config"))
 }
 
 func (dc DestinationConfigAttributes) GcsDestinationConfig() terra.ListValue[GcsDestinationConfigAttributes] {
-	return terra.ReferenceList[GcsDestinationConfigAttributes](dc.ref.Append("gcs_destination_config"))
+	return terra.ReferenceAsList[GcsDestinationConfigAttributes](dc.ref.Append("gcs_destination_config"))
 }
 
 type BigqueryDestinationConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (bdc BigqueryDestinationConfigAttributes) InternalRef() terra.Reference {
-	return bdc.ref
+func (bdc BigqueryDestinationConfigAttributes) InternalRef() (terra.Reference, error) {
+	return bdc.ref, nil
 }
 
 func (bdc BigqueryDestinationConfigAttributes) InternalWithRef(ref terra.Reference) BigqueryDestinationConfigAttributes {
 	return BigqueryDestinationConfigAttributes{ref: ref}
 }
 
-func (bdc BigqueryDestinationConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (bdc BigqueryDestinationConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bdc.ref.InternalTokens()
 }
 
 func (bdc BigqueryDestinationConfigAttributes) DataFreshness() terra.StringValue {
-	return terra.ReferenceString(bdc.ref.Append("data_freshness"))
+	return terra.ReferenceAsString(bdc.ref.Append("data_freshness"))
 }
 
 func (bdc BigqueryDestinationConfigAttributes) SingleTargetDataset() terra.ListValue[SingleTargetDatasetAttributes] {
-	return terra.ReferenceList[SingleTargetDatasetAttributes](bdc.ref.Append("single_target_dataset"))
+	return terra.ReferenceAsList[SingleTargetDatasetAttributes](bdc.ref.Append("single_target_dataset"))
 }
 
 func (bdc BigqueryDestinationConfigAttributes) SourceHierarchyDatasets() terra.ListValue[SourceHierarchyDatasetsAttributes] {
-	return terra.ReferenceList[SourceHierarchyDatasetsAttributes](bdc.ref.Append("source_hierarchy_datasets"))
+	return terra.ReferenceAsList[SourceHierarchyDatasetsAttributes](bdc.ref.Append("source_hierarchy_datasets"))
 }
 
 type SingleTargetDatasetAttributes struct {
 	ref terra.Reference
 }
 
-func (std SingleTargetDatasetAttributes) InternalRef() terra.Reference {
-	return std.ref
+func (std SingleTargetDatasetAttributes) InternalRef() (terra.Reference, error) {
+	return std.ref, nil
 }
 
 func (std SingleTargetDatasetAttributes) InternalWithRef(ref terra.Reference) SingleTargetDatasetAttributes {
 	return SingleTargetDatasetAttributes{ref: ref}
 }
 
-func (std SingleTargetDatasetAttributes) InternalTokens() hclwrite.Tokens {
+func (std SingleTargetDatasetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return std.ref.InternalTokens()
 }
 
 func (std SingleTargetDatasetAttributes) DatasetId() terra.StringValue {
-	return terra.ReferenceString(std.ref.Append("dataset_id"))
+	return terra.ReferenceAsString(std.ref.Append("dataset_id"))
 }
 
 type SourceHierarchyDatasetsAttributes struct {
 	ref terra.Reference
 }
 
-func (shd SourceHierarchyDatasetsAttributes) InternalRef() terra.Reference {
-	return shd.ref
+func (shd SourceHierarchyDatasetsAttributes) InternalRef() (terra.Reference, error) {
+	return shd.ref, nil
 }
 
 func (shd SourceHierarchyDatasetsAttributes) InternalWithRef(ref terra.Reference) SourceHierarchyDatasetsAttributes {
 	return SourceHierarchyDatasetsAttributes{ref: ref}
 }
 
-func (shd SourceHierarchyDatasetsAttributes) InternalTokens() hclwrite.Tokens {
+func (shd SourceHierarchyDatasetsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return shd.ref.InternalTokens()
 }
 
 func (shd SourceHierarchyDatasetsAttributes) DatasetTemplate() terra.ListValue[DatasetTemplateAttributes] {
-	return terra.ReferenceList[DatasetTemplateAttributes](shd.ref.Append("dataset_template"))
+	return terra.ReferenceAsList[DatasetTemplateAttributes](shd.ref.Append("dataset_template"))
 }
 
 type DatasetTemplateAttributes struct {
 	ref terra.Reference
 }
 
-func (dt DatasetTemplateAttributes) InternalRef() terra.Reference {
-	return dt.ref
+func (dt DatasetTemplateAttributes) InternalRef() (terra.Reference, error) {
+	return dt.ref, nil
 }
 
 func (dt DatasetTemplateAttributes) InternalWithRef(ref terra.Reference) DatasetTemplateAttributes {
 	return DatasetTemplateAttributes{ref: ref}
 }
 
-func (dt DatasetTemplateAttributes) InternalTokens() hclwrite.Tokens {
+func (dt DatasetTemplateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dt.ref.InternalTokens()
 }
 
 func (dt DatasetTemplateAttributes) DatasetIdPrefix() terra.StringValue {
-	return terra.ReferenceString(dt.ref.Append("dataset_id_prefix"))
+	return terra.ReferenceAsString(dt.ref.Append("dataset_id_prefix"))
 }
 
 func (dt DatasetTemplateAttributes) KmsKeyName() terra.StringValue {
-	return terra.ReferenceString(dt.ref.Append("kms_key_name"))
+	return terra.ReferenceAsString(dt.ref.Append("kms_key_name"))
 }
 
 func (dt DatasetTemplateAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(dt.ref.Append("location"))
+	return terra.ReferenceAsString(dt.ref.Append("location"))
 }
 
 type GcsDestinationConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (gdc GcsDestinationConfigAttributes) InternalRef() terra.Reference {
-	return gdc.ref
+func (gdc GcsDestinationConfigAttributes) InternalRef() (terra.Reference, error) {
+	return gdc.ref, nil
 }
 
 func (gdc GcsDestinationConfigAttributes) InternalWithRef(ref terra.Reference) GcsDestinationConfigAttributes {
 	return GcsDestinationConfigAttributes{ref: ref}
 }
 
-func (gdc GcsDestinationConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (gdc GcsDestinationConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gdc.ref.InternalTokens()
 }
 
 func (gdc GcsDestinationConfigAttributes) FileRotationInterval() terra.StringValue {
-	return terra.ReferenceString(gdc.ref.Append("file_rotation_interval"))
+	return terra.ReferenceAsString(gdc.ref.Append("file_rotation_interval"))
 }
 
 func (gdc GcsDestinationConfigAttributes) FileRotationMb() terra.NumberValue {
-	return terra.ReferenceNumber(gdc.ref.Append("file_rotation_mb"))
+	return terra.ReferenceAsNumber(gdc.ref.Append("file_rotation_mb"))
 }
 
 func (gdc GcsDestinationConfigAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(gdc.ref.Append("path"))
+	return terra.ReferenceAsString(gdc.ref.Append("path"))
 }
 
 func (gdc GcsDestinationConfigAttributes) AvroFileFormat() terra.ListValue[AvroFileFormatAttributes] {
-	return terra.ReferenceList[AvroFileFormatAttributes](gdc.ref.Append("avro_file_format"))
+	return terra.ReferenceAsList[AvroFileFormatAttributes](gdc.ref.Append("avro_file_format"))
 }
 
 func (gdc GcsDestinationConfigAttributes) JsonFileFormat() terra.ListValue[JsonFileFormatAttributes] {
-	return terra.ReferenceList[JsonFileFormatAttributes](gdc.ref.Append("json_file_format"))
+	return terra.ReferenceAsList[JsonFileFormatAttributes](gdc.ref.Append("json_file_format"))
 }
 
 type AvroFileFormatAttributes struct {
 	ref terra.Reference
 }
 
-func (aff AvroFileFormatAttributes) InternalRef() terra.Reference {
-	return aff.ref
+func (aff AvroFileFormatAttributes) InternalRef() (terra.Reference, error) {
+	return aff.ref, nil
 }
 
 func (aff AvroFileFormatAttributes) InternalWithRef(ref terra.Reference) AvroFileFormatAttributes {
 	return AvroFileFormatAttributes{ref: ref}
 }
 
-func (aff AvroFileFormatAttributes) InternalTokens() hclwrite.Tokens {
+func (aff AvroFileFormatAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aff.ref.InternalTokens()
 }
 
@@ -986,363 +986,363 @@ type JsonFileFormatAttributes struct {
 	ref terra.Reference
 }
 
-func (jff JsonFileFormatAttributes) InternalRef() terra.Reference {
-	return jff.ref
+func (jff JsonFileFormatAttributes) InternalRef() (terra.Reference, error) {
+	return jff.ref, nil
 }
 
 func (jff JsonFileFormatAttributes) InternalWithRef(ref terra.Reference) JsonFileFormatAttributes {
 	return JsonFileFormatAttributes{ref: ref}
 }
 
-func (jff JsonFileFormatAttributes) InternalTokens() hclwrite.Tokens {
+func (jff JsonFileFormatAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return jff.ref.InternalTokens()
 }
 
 func (jff JsonFileFormatAttributes) Compression() terra.StringValue {
-	return terra.ReferenceString(jff.ref.Append("compression"))
+	return terra.ReferenceAsString(jff.ref.Append("compression"))
 }
 
 func (jff JsonFileFormatAttributes) SchemaFileFormat() terra.StringValue {
-	return terra.ReferenceString(jff.ref.Append("schema_file_format"))
+	return terra.ReferenceAsString(jff.ref.Append("schema_file_format"))
 }
 
 type SourceConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (sc SourceConfigAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc SourceConfigAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc SourceConfigAttributes) InternalWithRef(ref terra.Reference) SourceConfigAttributes {
 	return SourceConfigAttributes{ref: ref}
 }
 
-func (sc SourceConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sc SourceConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
 func (sc SourceConfigAttributes) SourceConnectionProfile() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("source_connection_profile"))
+	return terra.ReferenceAsString(sc.ref.Append("source_connection_profile"))
 }
 
 func (sc SourceConfigAttributes) MysqlSourceConfig() terra.ListValue[MysqlSourceConfigAttributes] {
-	return terra.ReferenceList[MysqlSourceConfigAttributes](sc.ref.Append("mysql_source_config"))
+	return terra.ReferenceAsList[MysqlSourceConfigAttributes](sc.ref.Append("mysql_source_config"))
 }
 
 func (sc SourceConfigAttributes) OracleSourceConfig() terra.ListValue[OracleSourceConfigAttributes] {
-	return terra.ReferenceList[OracleSourceConfigAttributes](sc.ref.Append("oracle_source_config"))
+	return terra.ReferenceAsList[OracleSourceConfigAttributes](sc.ref.Append("oracle_source_config"))
 }
 
 func (sc SourceConfigAttributes) PostgresqlSourceConfig() terra.ListValue[PostgresqlSourceConfigAttributes] {
-	return terra.ReferenceList[PostgresqlSourceConfigAttributes](sc.ref.Append("postgresql_source_config"))
+	return terra.ReferenceAsList[PostgresqlSourceConfigAttributes](sc.ref.Append("postgresql_source_config"))
 }
 
 type MysqlSourceConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (msc MysqlSourceConfigAttributes) InternalRef() terra.Reference {
-	return msc.ref
+func (msc MysqlSourceConfigAttributes) InternalRef() (terra.Reference, error) {
+	return msc.ref, nil
 }
 
 func (msc MysqlSourceConfigAttributes) InternalWithRef(ref terra.Reference) MysqlSourceConfigAttributes {
 	return MysqlSourceConfigAttributes{ref: ref}
 }
 
-func (msc MysqlSourceConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (msc MysqlSourceConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return msc.ref.InternalTokens()
 }
 
 func (msc MysqlSourceConfigAttributes) MaxConcurrentCdcTasks() terra.NumberValue {
-	return terra.ReferenceNumber(msc.ref.Append("max_concurrent_cdc_tasks"))
+	return terra.ReferenceAsNumber(msc.ref.Append("max_concurrent_cdc_tasks"))
 }
 
 func (msc MysqlSourceConfigAttributes) ExcludeObjects() terra.ListValue[MysqlSourceConfigExcludeObjectsAttributes] {
-	return terra.ReferenceList[MysqlSourceConfigExcludeObjectsAttributes](msc.ref.Append("exclude_objects"))
+	return terra.ReferenceAsList[MysqlSourceConfigExcludeObjectsAttributes](msc.ref.Append("exclude_objects"))
 }
 
 func (msc MysqlSourceConfigAttributes) IncludeObjects() terra.ListValue[MysqlSourceConfigIncludeObjectsAttributes] {
-	return terra.ReferenceList[MysqlSourceConfigIncludeObjectsAttributes](msc.ref.Append("include_objects"))
+	return terra.ReferenceAsList[MysqlSourceConfigIncludeObjectsAttributes](msc.ref.Append("include_objects"))
 }
 
 type MysqlSourceConfigExcludeObjectsAttributes struct {
 	ref terra.Reference
 }
 
-func (eo MysqlSourceConfigExcludeObjectsAttributes) InternalRef() terra.Reference {
-	return eo.ref
+func (eo MysqlSourceConfigExcludeObjectsAttributes) InternalRef() (terra.Reference, error) {
+	return eo.ref, nil
 }
 
 func (eo MysqlSourceConfigExcludeObjectsAttributes) InternalWithRef(ref terra.Reference) MysqlSourceConfigExcludeObjectsAttributes {
 	return MysqlSourceConfigExcludeObjectsAttributes{ref: ref}
 }
 
-func (eo MysqlSourceConfigExcludeObjectsAttributes) InternalTokens() hclwrite.Tokens {
+func (eo MysqlSourceConfigExcludeObjectsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return eo.ref.InternalTokens()
 }
 
 func (eo MysqlSourceConfigExcludeObjectsAttributes) MysqlDatabases() terra.ListValue[ExcludeObjectsMysqlDatabasesAttributes] {
-	return terra.ReferenceList[ExcludeObjectsMysqlDatabasesAttributes](eo.ref.Append("mysql_databases"))
+	return terra.ReferenceAsList[ExcludeObjectsMysqlDatabasesAttributes](eo.ref.Append("mysql_databases"))
 }
 
 type ExcludeObjectsMysqlDatabasesAttributes struct {
 	ref terra.Reference
 }
 
-func (md ExcludeObjectsMysqlDatabasesAttributes) InternalRef() terra.Reference {
-	return md.ref
+func (md ExcludeObjectsMysqlDatabasesAttributes) InternalRef() (terra.Reference, error) {
+	return md.ref, nil
 }
 
 func (md ExcludeObjectsMysqlDatabasesAttributes) InternalWithRef(ref terra.Reference) ExcludeObjectsMysqlDatabasesAttributes {
 	return ExcludeObjectsMysqlDatabasesAttributes{ref: ref}
 }
 
-func (md ExcludeObjectsMysqlDatabasesAttributes) InternalTokens() hclwrite.Tokens {
+func (md ExcludeObjectsMysqlDatabasesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return md.ref.InternalTokens()
 }
 
 func (md ExcludeObjectsMysqlDatabasesAttributes) Database() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("database"))
+	return terra.ReferenceAsString(md.ref.Append("database"))
 }
 
 func (md ExcludeObjectsMysqlDatabasesAttributes) MysqlTables() terra.ListValue[ExcludeObjectsMysqlDatabasesMysqlTablesAttributes] {
-	return terra.ReferenceList[ExcludeObjectsMysqlDatabasesMysqlTablesAttributes](md.ref.Append("mysql_tables"))
+	return terra.ReferenceAsList[ExcludeObjectsMysqlDatabasesMysqlTablesAttributes](md.ref.Append("mysql_tables"))
 }
 
 type ExcludeObjectsMysqlDatabasesMysqlTablesAttributes struct {
 	ref terra.Reference
 }
 
-func (mt ExcludeObjectsMysqlDatabasesMysqlTablesAttributes) InternalRef() terra.Reference {
-	return mt.ref
+func (mt ExcludeObjectsMysqlDatabasesMysqlTablesAttributes) InternalRef() (terra.Reference, error) {
+	return mt.ref, nil
 }
 
 func (mt ExcludeObjectsMysqlDatabasesMysqlTablesAttributes) InternalWithRef(ref terra.Reference) ExcludeObjectsMysqlDatabasesMysqlTablesAttributes {
 	return ExcludeObjectsMysqlDatabasesMysqlTablesAttributes{ref: ref}
 }
 
-func (mt ExcludeObjectsMysqlDatabasesMysqlTablesAttributes) InternalTokens() hclwrite.Tokens {
+func (mt ExcludeObjectsMysqlDatabasesMysqlTablesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mt.ref.InternalTokens()
 }
 
 func (mt ExcludeObjectsMysqlDatabasesMysqlTablesAttributes) Table() terra.StringValue {
-	return terra.ReferenceString(mt.ref.Append("table"))
+	return terra.ReferenceAsString(mt.ref.Append("table"))
 }
 
 func (mt ExcludeObjectsMysqlDatabasesMysqlTablesAttributes) MysqlColumns() terra.ListValue[ExcludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes] {
-	return terra.ReferenceList[ExcludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes](mt.ref.Append("mysql_columns"))
+	return terra.ReferenceAsList[ExcludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes](mt.ref.Append("mysql_columns"))
 }
 
 type ExcludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes struct {
 	ref terra.Reference
 }
 
-func (mc ExcludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) InternalRef() terra.Reference {
-	return mc.ref
+func (mc ExcludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) InternalRef() (terra.Reference, error) {
+	return mc.ref, nil
 }
 
 func (mc ExcludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) InternalWithRef(ref terra.Reference) ExcludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes {
 	return ExcludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes{ref: ref}
 }
 
-func (mc ExcludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) InternalTokens() hclwrite.Tokens {
+func (mc ExcludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mc.ref.InternalTokens()
 }
 
 func (mc ExcludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) Collation() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("collation"))
+	return terra.ReferenceAsString(mc.ref.Append("collation"))
 }
 
 func (mc ExcludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) Column() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("column"))
+	return terra.ReferenceAsString(mc.ref.Append("column"))
 }
 
 func (mc ExcludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) DataType() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("data_type"))
+	return terra.ReferenceAsString(mc.ref.Append("data_type"))
 }
 
 func (mc ExcludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) Length() terra.NumberValue {
-	return terra.ReferenceNumber(mc.ref.Append("length"))
+	return terra.ReferenceAsNumber(mc.ref.Append("length"))
 }
 
 func (mc ExcludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) Nullable() terra.BoolValue {
-	return terra.ReferenceBool(mc.ref.Append("nullable"))
+	return terra.ReferenceAsBool(mc.ref.Append("nullable"))
 }
 
 func (mc ExcludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) OrdinalPosition() terra.NumberValue {
-	return terra.ReferenceNumber(mc.ref.Append("ordinal_position"))
+	return terra.ReferenceAsNumber(mc.ref.Append("ordinal_position"))
 }
 
 func (mc ExcludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) PrimaryKey() terra.BoolValue {
-	return terra.ReferenceBool(mc.ref.Append("primary_key"))
+	return terra.ReferenceAsBool(mc.ref.Append("primary_key"))
 }
 
 type MysqlSourceConfigIncludeObjectsAttributes struct {
 	ref terra.Reference
 }
 
-func (io MysqlSourceConfigIncludeObjectsAttributes) InternalRef() terra.Reference {
-	return io.ref
+func (io MysqlSourceConfigIncludeObjectsAttributes) InternalRef() (terra.Reference, error) {
+	return io.ref, nil
 }
 
 func (io MysqlSourceConfigIncludeObjectsAttributes) InternalWithRef(ref terra.Reference) MysqlSourceConfigIncludeObjectsAttributes {
 	return MysqlSourceConfigIncludeObjectsAttributes{ref: ref}
 }
 
-func (io MysqlSourceConfigIncludeObjectsAttributes) InternalTokens() hclwrite.Tokens {
+func (io MysqlSourceConfigIncludeObjectsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return io.ref.InternalTokens()
 }
 
 func (io MysqlSourceConfigIncludeObjectsAttributes) MysqlDatabases() terra.ListValue[IncludeObjectsMysqlDatabasesAttributes] {
-	return terra.ReferenceList[IncludeObjectsMysqlDatabasesAttributes](io.ref.Append("mysql_databases"))
+	return terra.ReferenceAsList[IncludeObjectsMysqlDatabasesAttributes](io.ref.Append("mysql_databases"))
 }
 
 type IncludeObjectsMysqlDatabasesAttributes struct {
 	ref terra.Reference
 }
 
-func (md IncludeObjectsMysqlDatabasesAttributes) InternalRef() terra.Reference {
-	return md.ref
+func (md IncludeObjectsMysqlDatabasesAttributes) InternalRef() (terra.Reference, error) {
+	return md.ref, nil
 }
 
 func (md IncludeObjectsMysqlDatabasesAttributes) InternalWithRef(ref terra.Reference) IncludeObjectsMysqlDatabasesAttributes {
 	return IncludeObjectsMysqlDatabasesAttributes{ref: ref}
 }
 
-func (md IncludeObjectsMysqlDatabasesAttributes) InternalTokens() hclwrite.Tokens {
+func (md IncludeObjectsMysqlDatabasesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return md.ref.InternalTokens()
 }
 
 func (md IncludeObjectsMysqlDatabasesAttributes) Database() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("database"))
+	return terra.ReferenceAsString(md.ref.Append("database"))
 }
 
 func (md IncludeObjectsMysqlDatabasesAttributes) MysqlTables() terra.ListValue[IncludeObjectsMysqlDatabasesMysqlTablesAttributes] {
-	return terra.ReferenceList[IncludeObjectsMysqlDatabasesMysqlTablesAttributes](md.ref.Append("mysql_tables"))
+	return terra.ReferenceAsList[IncludeObjectsMysqlDatabasesMysqlTablesAttributes](md.ref.Append("mysql_tables"))
 }
 
 type IncludeObjectsMysqlDatabasesMysqlTablesAttributes struct {
 	ref terra.Reference
 }
 
-func (mt IncludeObjectsMysqlDatabasesMysqlTablesAttributes) InternalRef() terra.Reference {
-	return mt.ref
+func (mt IncludeObjectsMysqlDatabasesMysqlTablesAttributes) InternalRef() (terra.Reference, error) {
+	return mt.ref, nil
 }
 
 func (mt IncludeObjectsMysqlDatabasesMysqlTablesAttributes) InternalWithRef(ref terra.Reference) IncludeObjectsMysqlDatabasesMysqlTablesAttributes {
 	return IncludeObjectsMysqlDatabasesMysqlTablesAttributes{ref: ref}
 }
 
-func (mt IncludeObjectsMysqlDatabasesMysqlTablesAttributes) InternalTokens() hclwrite.Tokens {
+func (mt IncludeObjectsMysqlDatabasesMysqlTablesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mt.ref.InternalTokens()
 }
 
 func (mt IncludeObjectsMysqlDatabasesMysqlTablesAttributes) Table() terra.StringValue {
-	return terra.ReferenceString(mt.ref.Append("table"))
+	return terra.ReferenceAsString(mt.ref.Append("table"))
 }
 
 func (mt IncludeObjectsMysqlDatabasesMysqlTablesAttributes) MysqlColumns() terra.ListValue[IncludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes] {
-	return terra.ReferenceList[IncludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes](mt.ref.Append("mysql_columns"))
+	return terra.ReferenceAsList[IncludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes](mt.ref.Append("mysql_columns"))
 }
 
 type IncludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes struct {
 	ref terra.Reference
 }
 
-func (mc IncludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) InternalRef() terra.Reference {
-	return mc.ref
+func (mc IncludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) InternalRef() (terra.Reference, error) {
+	return mc.ref, nil
 }
 
 func (mc IncludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) InternalWithRef(ref terra.Reference) IncludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes {
 	return IncludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes{ref: ref}
 }
 
-func (mc IncludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) InternalTokens() hclwrite.Tokens {
+func (mc IncludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mc.ref.InternalTokens()
 }
 
 func (mc IncludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) Collation() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("collation"))
+	return terra.ReferenceAsString(mc.ref.Append("collation"))
 }
 
 func (mc IncludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) Column() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("column"))
+	return terra.ReferenceAsString(mc.ref.Append("column"))
 }
 
 func (mc IncludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) DataType() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("data_type"))
+	return terra.ReferenceAsString(mc.ref.Append("data_type"))
 }
 
 func (mc IncludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) Length() terra.NumberValue {
-	return terra.ReferenceNumber(mc.ref.Append("length"))
+	return terra.ReferenceAsNumber(mc.ref.Append("length"))
 }
 
 func (mc IncludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) Nullable() terra.BoolValue {
-	return terra.ReferenceBool(mc.ref.Append("nullable"))
+	return terra.ReferenceAsBool(mc.ref.Append("nullable"))
 }
 
 func (mc IncludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) OrdinalPosition() terra.NumberValue {
-	return terra.ReferenceNumber(mc.ref.Append("ordinal_position"))
+	return terra.ReferenceAsNumber(mc.ref.Append("ordinal_position"))
 }
 
 func (mc IncludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsAttributes) PrimaryKey() terra.BoolValue {
-	return terra.ReferenceBool(mc.ref.Append("primary_key"))
+	return terra.ReferenceAsBool(mc.ref.Append("primary_key"))
 }
 
 type OracleSourceConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (osc OracleSourceConfigAttributes) InternalRef() terra.Reference {
-	return osc.ref
+func (osc OracleSourceConfigAttributes) InternalRef() (terra.Reference, error) {
+	return osc.ref, nil
 }
 
 func (osc OracleSourceConfigAttributes) InternalWithRef(ref terra.Reference) OracleSourceConfigAttributes {
 	return OracleSourceConfigAttributes{ref: ref}
 }
 
-func (osc OracleSourceConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (osc OracleSourceConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return osc.ref.InternalTokens()
 }
 
 func (osc OracleSourceConfigAttributes) MaxConcurrentBackfillTasks() terra.NumberValue {
-	return terra.ReferenceNumber(osc.ref.Append("max_concurrent_backfill_tasks"))
+	return terra.ReferenceAsNumber(osc.ref.Append("max_concurrent_backfill_tasks"))
 }
 
 func (osc OracleSourceConfigAttributes) MaxConcurrentCdcTasks() terra.NumberValue {
-	return terra.ReferenceNumber(osc.ref.Append("max_concurrent_cdc_tasks"))
+	return terra.ReferenceAsNumber(osc.ref.Append("max_concurrent_cdc_tasks"))
 }
 
 func (osc OracleSourceConfigAttributes) DropLargeObjects() terra.ListValue[DropLargeObjectsAttributes] {
-	return terra.ReferenceList[DropLargeObjectsAttributes](osc.ref.Append("drop_large_objects"))
+	return terra.ReferenceAsList[DropLargeObjectsAttributes](osc.ref.Append("drop_large_objects"))
 }
 
 func (osc OracleSourceConfigAttributes) ExcludeObjects() terra.ListValue[OracleSourceConfigExcludeObjectsAttributes] {
-	return terra.ReferenceList[OracleSourceConfigExcludeObjectsAttributes](osc.ref.Append("exclude_objects"))
+	return terra.ReferenceAsList[OracleSourceConfigExcludeObjectsAttributes](osc.ref.Append("exclude_objects"))
 }
 
 func (osc OracleSourceConfigAttributes) IncludeObjects() terra.ListValue[OracleSourceConfigIncludeObjectsAttributes] {
-	return terra.ReferenceList[OracleSourceConfigIncludeObjectsAttributes](osc.ref.Append("include_objects"))
+	return terra.ReferenceAsList[OracleSourceConfigIncludeObjectsAttributes](osc.ref.Append("include_objects"))
 }
 
 func (osc OracleSourceConfigAttributes) StreamLargeObjects() terra.ListValue[StreamLargeObjectsAttributes] {
-	return terra.ReferenceList[StreamLargeObjectsAttributes](osc.ref.Append("stream_large_objects"))
+	return terra.ReferenceAsList[StreamLargeObjectsAttributes](osc.ref.Append("stream_large_objects"))
 }
 
 type DropLargeObjectsAttributes struct {
 	ref terra.Reference
 }
 
-func (dlo DropLargeObjectsAttributes) InternalRef() terra.Reference {
-	return dlo.ref
+func (dlo DropLargeObjectsAttributes) InternalRef() (terra.Reference, error) {
+	return dlo.ref, nil
 }
 
 func (dlo DropLargeObjectsAttributes) InternalWithRef(ref terra.Reference) DropLargeObjectsAttributes {
 	return DropLargeObjectsAttributes{ref: ref}
 }
 
-func (dlo DropLargeObjectsAttributes) InternalTokens() hclwrite.Tokens {
+func (dlo DropLargeObjectsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dlo.ref.InternalTokens()
 }
 
@@ -1350,255 +1350,255 @@ type OracleSourceConfigExcludeObjectsAttributes struct {
 	ref terra.Reference
 }
 
-func (eo OracleSourceConfigExcludeObjectsAttributes) InternalRef() terra.Reference {
-	return eo.ref
+func (eo OracleSourceConfigExcludeObjectsAttributes) InternalRef() (terra.Reference, error) {
+	return eo.ref, nil
 }
 
 func (eo OracleSourceConfigExcludeObjectsAttributes) InternalWithRef(ref terra.Reference) OracleSourceConfigExcludeObjectsAttributes {
 	return OracleSourceConfigExcludeObjectsAttributes{ref: ref}
 }
 
-func (eo OracleSourceConfigExcludeObjectsAttributes) InternalTokens() hclwrite.Tokens {
+func (eo OracleSourceConfigExcludeObjectsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return eo.ref.InternalTokens()
 }
 
 func (eo OracleSourceConfigExcludeObjectsAttributes) OracleSchemas() terra.ListValue[ExcludeObjectsOracleSchemasAttributes] {
-	return terra.ReferenceList[ExcludeObjectsOracleSchemasAttributes](eo.ref.Append("oracle_schemas"))
+	return terra.ReferenceAsList[ExcludeObjectsOracleSchemasAttributes](eo.ref.Append("oracle_schemas"))
 }
 
 type ExcludeObjectsOracleSchemasAttributes struct {
 	ref terra.Reference
 }
 
-func (os ExcludeObjectsOracleSchemasAttributes) InternalRef() terra.Reference {
-	return os.ref
+func (os ExcludeObjectsOracleSchemasAttributes) InternalRef() (terra.Reference, error) {
+	return os.ref, nil
 }
 
 func (os ExcludeObjectsOracleSchemasAttributes) InternalWithRef(ref terra.Reference) ExcludeObjectsOracleSchemasAttributes {
 	return ExcludeObjectsOracleSchemasAttributes{ref: ref}
 }
 
-func (os ExcludeObjectsOracleSchemasAttributes) InternalTokens() hclwrite.Tokens {
+func (os ExcludeObjectsOracleSchemasAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return os.ref.InternalTokens()
 }
 
 func (os ExcludeObjectsOracleSchemasAttributes) Schema() terra.StringValue {
-	return terra.ReferenceString(os.ref.Append("schema"))
+	return terra.ReferenceAsString(os.ref.Append("schema"))
 }
 
 func (os ExcludeObjectsOracleSchemasAttributes) OracleTables() terra.ListValue[ExcludeObjectsOracleSchemasOracleTablesAttributes] {
-	return terra.ReferenceList[ExcludeObjectsOracleSchemasOracleTablesAttributes](os.ref.Append("oracle_tables"))
+	return terra.ReferenceAsList[ExcludeObjectsOracleSchemasOracleTablesAttributes](os.ref.Append("oracle_tables"))
 }
 
 type ExcludeObjectsOracleSchemasOracleTablesAttributes struct {
 	ref terra.Reference
 }
 
-func (ot ExcludeObjectsOracleSchemasOracleTablesAttributes) InternalRef() terra.Reference {
-	return ot.ref
+func (ot ExcludeObjectsOracleSchemasOracleTablesAttributes) InternalRef() (terra.Reference, error) {
+	return ot.ref, nil
 }
 
 func (ot ExcludeObjectsOracleSchemasOracleTablesAttributes) InternalWithRef(ref terra.Reference) ExcludeObjectsOracleSchemasOracleTablesAttributes {
 	return ExcludeObjectsOracleSchemasOracleTablesAttributes{ref: ref}
 }
 
-func (ot ExcludeObjectsOracleSchemasOracleTablesAttributes) InternalTokens() hclwrite.Tokens {
+func (ot ExcludeObjectsOracleSchemasOracleTablesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ot.ref.InternalTokens()
 }
 
 func (ot ExcludeObjectsOracleSchemasOracleTablesAttributes) Table() terra.StringValue {
-	return terra.ReferenceString(ot.ref.Append("table"))
+	return terra.ReferenceAsString(ot.ref.Append("table"))
 }
 
 func (ot ExcludeObjectsOracleSchemasOracleTablesAttributes) OracleColumns() terra.ListValue[ExcludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes] {
-	return terra.ReferenceList[ExcludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes](ot.ref.Append("oracle_columns"))
+	return terra.ReferenceAsList[ExcludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes](ot.ref.Append("oracle_columns"))
 }
 
 type ExcludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes struct {
 	ref terra.Reference
 }
 
-func (oc ExcludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) InternalRef() terra.Reference {
-	return oc.ref
+func (oc ExcludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) InternalRef() (terra.Reference, error) {
+	return oc.ref, nil
 }
 
 func (oc ExcludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) InternalWithRef(ref terra.Reference) ExcludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes {
 	return ExcludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes{ref: ref}
 }
 
-func (oc ExcludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) InternalTokens() hclwrite.Tokens {
+func (oc ExcludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oc.ref.InternalTokens()
 }
 
 func (oc ExcludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) Column() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("column"))
+	return terra.ReferenceAsString(oc.ref.Append("column"))
 }
 
 func (oc ExcludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) DataType() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("data_type"))
+	return terra.ReferenceAsString(oc.ref.Append("data_type"))
 }
 
 func (oc ExcludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) Encoding() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("encoding"))
+	return terra.ReferenceAsString(oc.ref.Append("encoding"))
 }
 
 func (oc ExcludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) Length() terra.NumberValue {
-	return terra.ReferenceNumber(oc.ref.Append("length"))
+	return terra.ReferenceAsNumber(oc.ref.Append("length"))
 }
 
 func (oc ExcludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) Nullable() terra.BoolValue {
-	return terra.ReferenceBool(oc.ref.Append("nullable"))
+	return terra.ReferenceAsBool(oc.ref.Append("nullable"))
 }
 
 func (oc ExcludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) OrdinalPosition() terra.NumberValue {
-	return terra.ReferenceNumber(oc.ref.Append("ordinal_position"))
+	return terra.ReferenceAsNumber(oc.ref.Append("ordinal_position"))
 }
 
 func (oc ExcludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) Precision() terra.NumberValue {
-	return terra.ReferenceNumber(oc.ref.Append("precision"))
+	return terra.ReferenceAsNumber(oc.ref.Append("precision"))
 }
 
 func (oc ExcludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) PrimaryKey() terra.BoolValue {
-	return terra.ReferenceBool(oc.ref.Append("primary_key"))
+	return terra.ReferenceAsBool(oc.ref.Append("primary_key"))
 }
 
 func (oc ExcludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) Scale() terra.NumberValue {
-	return terra.ReferenceNumber(oc.ref.Append("scale"))
+	return terra.ReferenceAsNumber(oc.ref.Append("scale"))
 }
 
 type OracleSourceConfigIncludeObjectsAttributes struct {
 	ref terra.Reference
 }
 
-func (io OracleSourceConfigIncludeObjectsAttributes) InternalRef() terra.Reference {
-	return io.ref
+func (io OracleSourceConfigIncludeObjectsAttributes) InternalRef() (terra.Reference, error) {
+	return io.ref, nil
 }
 
 func (io OracleSourceConfigIncludeObjectsAttributes) InternalWithRef(ref terra.Reference) OracleSourceConfigIncludeObjectsAttributes {
 	return OracleSourceConfigIncludeObjectsAttributes{ref: ref}
 }
 
-func (io OracleSourceConfigIncludeObjectsAttributes) InternalTokens() hclwrite.Tokens {
+func (io OracleSourceConfigIncludeObjectsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return io.ref.InternalTokens()
 }
 
 func (io OracleSourceConfigIncludeObjectsAttributes) OracleSchemas() terra.ListValue[IncludeObjectsOracleSchemasAttributes] {
-	return terra.ReferenceList[IncludeObjectsOracleSchemasAttributes](io.ref.Append("oracle_schemas"))
+	return terra.ReferenceAsList[IncludeObjectsOracleSchemasAttributes](io.ref.Append("oracle_schemas"))
 }
 
 type IncludeObjectsOracleSchemasAttributes struct {
 	ref terra.Reference
 }
 
-func (os IncludeObjectsOracleSchemasAttributes) InternalRef() terra.Reference {
-	return os.ref
+func (os IncludeObjectsOracleSchemasAttributes) InternalRef() (terra.Reference, error) {
+	return os.ref, nil
 }
 
 func (os IncludeObjectsOracleSchemasAttributes) InternalWithRef(ref terra.Reference) IncludeObjectsOracleSchemasAttributes {
 	return IncludeObjectsOracleSchemasAttributes{ref: ref}
 }
 
-func (os IncludeObjectsOracleSchemasAttributes) InternalTokens() hclwrite.Tokens {
+func (os IncludeObjectsOracleSchemasAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return os.ref.InternalTokens()
 }
 
 func (os IncludeObjectsOracleSchemasAttributes) Schema() terra.StringValue {
-	return terra.ReferenceString(os.ref.Append("schema"))
+	return terra.ReferenceAsString(os.ref.Append("schema"))
 }
 
 func (os IncludeObjectsOracleSchemasAttributes) OracleTables() terra.ListValue[IncludeObjectsOracleSchemasOracleTablesAttributes] {
-	return terra.ReferenceList[IncludeObjectsOracleSchemasOracleTablesAttributes](os.ref.Append("oracle_tables"))
+	return terra.ReferenceAsList[IncludeObjectsOracleSchemasOracleTablesAttributes](os.ref.Append("oracle_tables"))
 }
 
 type IncludeObjectsOracleSchemasOracleTablesAttributes struct {
 	ref terra.Reference
 }
 
-func (ot IncludeObjectsOracleSchemasOracleTablesAttributes) InternalRef() terra.Reference {
-	return ot.ref
+func (ot IncludeObjectsOracleSchemasOracleTablesAttributes) InternalRef() (terra.Reference, error) {
+	return ot.ref, nil
 }
 
 func (ot IncludeObjectsOracleSchemasOracleTablesAttributes) InternalWithRef(ref terra.Reference) IncludeObjectsOracleSchemasOracleTablesAttributes {
 	return IncludeObjectsOracleSchemasOracleTablesAttributes{ref: ref}
 }
 
-func (ot IncludeObjectsOracleSchemasOracleTablesAttributes) InternalTokens() hclwrite.Tokens {
+func (ot IncludeObjectsOracleSchemasOracleTablesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ot.ref.InternalTokens()
 }
 
 func (ot IncludeObjectsOracleSchemasOracleTablesAttributes) Table() terra.StringValue {
-	return terra.ReferenceString(ot.ref.Append("table"))
+	return terra.ReferenceAsString(ot.ref.Append("table"))
 }
 
 func (ot IncludeObjectsOracleSchemasOracleTablesAttributes) OracleColumns() terra.ListValue[IncludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes] {
-	return terra.ReferenceList[IncludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes](ot.ref.Append("oracle_columns"))
+	return terra.ReferenceAsList[IncludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes](ot.ref.Append("oracle_columns"))
 }
 
 type IncludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes struct {
 	ref terra.Reference
 }
 
-func (oc IncludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) InternalRef() terra.Reference {
-	return oc.ref
+func (oc IncludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) InternalRef() (terra.Reference, error) {
+	return oc.ref, nil
 }
 
 func (oc IncludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) InternalWithRef(ref terra.Reference) IncludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes {
 	return IncludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes{ref: ref}
 }
 
-func (oc IncludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) InternalTokens() hclwrite.Tokens {
+func (oc IncludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oc.ref.InternalTokens()
 }
 
 func (oc IncludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) Column() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("column"))
+	return terra.ReferenceAsString(oc.ref.Append("column"))
 }
 
 func (oc IncludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) DataType() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("data_type"))
+	return terra.ReferenceAsString(oc.ref.Append("data_type"))
 }
 
 func (oc IncludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) Encoding() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("encoding"))
+	return terra.ReferenceAsString(oc.ref.Append("encoding"))
 }
 
 func (oc IncludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) Length() terra.NumberValue {
-	return terra.ReferenceNumber(oc.ref.Append("length"))
+	return terra.ReferenceAsNumber(oc.ref.Append("length"))
 }
 
 func (oc IncludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) Nullable() terra.BoolValue {
-	return terra.ReferenceBool(oc.ref.Append("nullable"))
+	return terra.ReferenceAsBool(oc.ref.Append("nullable"))
 }
 
 func (oc IncludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) OrdinalPosition() terra.NumberValue {
-	return terra.ReferenceNumber(oc.ref.Append("ordinal_position"))
+	return terra.ReferenceAsNumber(oc.ref.Append("ordinal_position"))
 }
 
 func (oc IncludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) Precision() terra.NumberValue {
-	return terra.ReferenceNumber(oc.ref.Append("precision"))
+	return terra.ReferenceAsNumber(oc.ref.Append("precision"))
 }
 
 func (oc IncludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) PrimaryKey() terra.BoolValue {
-	return terra.ReferenceBool(oc.ref.Append("primary_key"))
+	return terra.ReferenceAsBool(oc.ref.Append("primary_key"))
 }
 
 func (oc IncludeObjectsOracleSchemasOracleTablesOracleColumnsAttributes) Scale() terra.NumberValue {
-	return terra.ReferenceNumber(oc.ref.Append("scale"))
+	return terra.ReferenceAsNumber(oc.ref.Append("scale"))
 }
 
 type StreamLargeObjectsAttributes struct {
 	ref terra.Reference
 }
 
-func (slo StreamLargeObjectsAttributes) InternalRef() terra.Reference {
-	return slo.ref
+func (slo StreamLargeObjectsAttributes) InternalRef() (terra.Reference, error) {
+	return slo.ref, nil
 }
 
 func (slo StreamLargeObjectsAttributes) InternalWithRef(ref terra.Reference) StreamLargeObjectsAttributes {
 	return StreamLargeObjectsAttributes{ref: ref}
 }
 
-func (slo StreamLargeObjectsAttributes) InternalTokens() hclwrite.Tokens {
+func (slo StreamLargeObjectsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return slo.ref.InternalTokens()
 }
 
@@ -1606,296 +1606,296 @@ type PostgresqlSourceConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (psc PostgresqlSourceConfigAttributes) InternalRef() terra.Reference {
-	return psc.ref
+func (psc PostgresqlSourceConfigAttributes) InternalRef() (terra.Reference, error) {
+	return psc.ref, nil
 }
 
 func (psc PostgresqlSourceConfigAttributes) InternalWithRef(ref terra.Reference) PostgresqlSourceConfigAttributes {
 	return PostgresqlSourceConfigAttributes{ref: ref}
 }
 
-func (psc PostgresqlSourceConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (psc PostgresqlSourceConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return psc.ref.InternalTokens()
 }
 
 func (psc PostgresqlSourceConfigAttributes) MaxConcurrentBackfillTasks() terra.NumberValue {
-	return terra.ReferenceNumber(psc.ref.Append("max_concurrent_backfill_tasks"))
+	return terra.ReferenceAsNumber(psc.ref.Append("max_concurrent_backfill_tasks"))
 }
 
 func (psc PostgresqlSourceConfigAttributes) Publication() terra.StringValue {
-	return terra.ReferenceString(psc.ref.Append("publication"))
+	return terra.ReferenceAsString(psc.ref.Append("publication"))
 }
 
 func (psc PostgresqlSourceConfigAttributes) ReplicationSlot() terra.StringValue {
-	return terra.ReferenceString(psc.ref.Append("replication_slot"))
+	return terra.ReferenceAsString(psc.ref.Append("replication_slot"))
 }
 
 func (psc PostgresqlSourceConfigAttributes) ExcludeObjects() terra.ListValue[PostgresqlSourceConfigExcludeObjectsAttributes] {
-	return terra.ReferenceList[PostgresqlSourceConfigExcludeObjectsAttributes](psc.ref.Append("exclude_objects"))
+	return terra.ReferenceAsList[PostgresqlSourceConfigExcludeObjectsAttributes](psc.ref.Append("exclude_objects"))
 }
 
 func (psc PostgresqlSourceConfigAttributes) IncludeObjects() terra.ListValue[PostgresqlSourceConfigIncludeObjectsAttributes] {
-	return terra.ReferenceList[PostgresqlSourceConfigIncludeObjectsAttributes](psc.ref.Append("include_objects"))
+	return terra.ReferenceAsList[PostgresqlSourceConfigIncludeObjectsAttributes](psc.ref.Append("include_objects"))
 }
 
 type PostgresqlSourceConfigExcludeObjectsAttributes struct {
 	ref terra.Reference
 }
 
-func (eo PostgresqlSourceConfigExcludeObjectsAttributes) InternalRef() terra.Reference {
-	return eo.ref
+func (eo PostgresqlSourceConfigExcludeObjectsAttributes) InternalRef() (terra.Reference, error) {
+	return eo.ref, nil
 }
 
 func (eo PostgresqlSourceConfigExcludeObjectsAttributes) InternalWithRef(ref terra.Reference) PostgresqlSourceConfigExcludeObjectsAttributes {
 	return PostgresqlSourceConfigExcludeObjectsAttributes{ref: ref}
 }
 
-func (eo PostgresqlSourceConfigExcludeObjectsAttributes) InternalTokens() hclwrite.Tokens {
+func (eo PostgresqlSourceConfigExcludeObjectsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return eo.ref.InternalTokens()
 }
 
 func (eo PostgresqlSourceConfigExcludeObjectsAttributes) PostgresqlSchemas() terra.ListValue[ExcludeObjectsPostgresqlSchemasAttributes] {
-	return terra.ReferenceList[ExcludeObjectsPostgresqlSchemasAttributes](eo.ref.Append("postgresql_schemas"))
+	return terra.ReferenceAsList[ExcludeObjectsPostgresqlSchemasAttributes](eo.ref.Append("postgresql_schemas"))
 }
 
 type ExcludeObjectsPostgresqlSchemasAttributes struct {
 	ref terra.Reference
 }
 
-func (ps ExcludeObjectsPostgresqlSchemasAttributes) InternalRef() terra.Reference {
-	return ps.ref
+func (ps ExcludeObjectsPostgresqlSchemasAttributes) InternalRef() (terra.Reference, error) {
+	return ps.ref, nil
 }
 
 func (ps ExcludeObjectsPostgresqlSchemasAttributes) InternalWithRef(ref terra.Reference) ExcludeObjectsPostgresqlSchemasAttributes {
 	return ExcludeObjectsPostgresqlSchemasAttributes{ref: ref}
 }
 
-func (ps ExcludeObjectsPostgresqlSchemasAttributes) InternalTokens() hclwrite.Tokens {
+func (ps ExcludeObjectsPostgresqlSchemasAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ps.ref.InternalTokens()
 }
 
 func (ps ExcludeObjectsPostgresqlSchemasAttributes) Schema() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("schema"))
+	return terra.ReferenceAsString(ps.ref.Append("schema"))
 }
 
 func (ps ExcludeObjectsPostgresqlSchemasAttributes) PostgresqlTables() terra.ListValue[ExcludeObjectsPostgresqlSchemasPostgresqlTablesAttributes] {
-	return terra.ReferenceList[ExcludeObjectsPostgresqlSchemasPostgresqlTablesAttributes](ps.ref.Append("postgresql_tables"))
+	return terra.ReferenceAsList[ExcludeObjectsPostgresqlSchemasPostgresqlTablesAttributes](ps.ref.Append("postgresql_tables"))
 }
 
 type ExcludeObjectsPostgresqlSchemasPostgresqlTablesAttributes struct {
 	ref terra.Reference
 }
 
-func (pt ExcludeObjectsPostgresqlSchemasPostgresqlTablesAttributes) InternalRef() terra.Reference {
-	return pt.ref
+func (pt ExcludeObjectsPostgresqlSchemasPostgresqlTablesAttributes) InternalRef() (terra.Reference, error) {
+	return pt.ref, nil
 }
 
 func (pt ExcludeObjectsPostgresqlSchemasPostgresqlTablesAttributes) InternalWithRef(ref terra.Reference) ExcludeObjectsPostgresqlSchemasPostgresqlTablesAttributes {
 	return ExcludeObjectsPostgresqlSchemasPostgresqlTablesAttributes{ref: ref}
 }
 
-func (pt ExcludeObjectsPostgresqlSchemasPostgresqlTablesAttributes) InternalTokens() hclwrite.Tokens {
+func (pt ExcludeObjectsPostgresqlSchemasPostgresqlTablesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pt.ref.InternalTokens()
 }
 
 func (pt ExcludeObjectsPostgresqlSchemasPostgresqlTablesAttributes) Table() terra.StringValue {
-	return terra.ReferenceString(pt.ref.Append("table"))
+	return terra.ReferenceAsString(pt.ref.Append("table"))
 }
 
 func (pt ExcludeObjectsPostgresqlSchemasPostgresqlTablesAttributes) PostgresqlColumns() terra.ListValue[ExcludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes] {
-	return terra.ReferenceList[ExcludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes](pt.ref.Append("postgresql_columns"))
+	return terra.ReferenceAsList[ExcludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes](pt.ref.Append("postgresql_columns"))
 }
 
 type ExcludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes struct {
 	ref terra.Reference
 }
 
-func (pc ExcludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc ExcludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc ExcludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) InternalWithRef(ref terra.Reference) ExcludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes {
 	return ExcludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes{ref: ref}
 }
 
-func (pc ExcludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) InternalTokens() hclwrite.Tokens {
+func (pc ExcludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
 func (pc ExcludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) Column() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("column"))
+	return terra.ReferenceAsString(pc.ref.Append("column"))
 }
 
 func (pc ExcludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) DataType() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("data_type"))
+	return terra.ReferenceAsString(pc.ref.Append("data_type"))
 }
 
 func (pc ExcludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) Length() terra.NumberValue {
-	return terra.ReferenceNumber(pc.ref.Append("length"))
+	return terra.ReferenceAsNumber(pc.ref.Append("length"))
 }
 
 func (pc ExcludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) Nullable() terra.BoolValue {
-	return terra.ReferenceBool(pc.ref.Append("nullable"))
+	return terra.ReferenceAsBool(pc.ref.Append("nullable"))
 }
 
 func (pc ExcludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) OrdinalPosition() terra.NumberValue {
-	return terra.ReferenceNumber(pc.ref.Append("ordinal_position"))
+	return terra.ReferenceAsNumber(pc.ref.Append("ordinal_position"))
 }
 
 func (pc ExcludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) Precision() terra.NumberValue {
-	return terra.ReferenceNumber(pc.ref.Append("precision"))
+	return terra.ReferenceAsNumber(pc.ref.Append("precision"))
 }
 
 func (pc ExcludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) PrimaryKey() terra.BoolValue {
-	return terra.ReferenceBool(pc.ref.Append("primary_key"))
+	return terra.ReferenceAsBool(pc.ref.Append("primary_key"))
 }
 
 func (pc ExcludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) Scale() terra.NumberValue {
-	return terra.ReferenceNumber(pc.ref.Append("scale"))
+	return terra.ReferenceAsNumber(pc.ref.Append("scale"))
 }
 
 type PostgresqlSourceConfigIncludeObjectsAttributes struct {
 	ref terra.Reference
 }
 
-func (io PostgresqlSourceConfigIncludeObjectsAttributes) InternalRef() terra.Reference {
-	return io.ref
+func (io PostgresqlSourceConfigIncludeObjectsAttributes) InternalRef() (terra.Reference, error) {
+	return io.ref, nil
 }
 
 func (io PostgresqlSourceConfigIncludeObjectsAttributes) InternalWithRef(ref terra.Reference) PostgresqlSourceConfigIncludeObjectsAttributes {
 	return PostgresqlSourceConfigIncludeObjectsAttributes{ref: ref}
 }
 
-func (io PostgresqlSourceConfigIncludeObjectsAttributes) InternalTokens() hclwrite.Tokens {
+func (io PostgresqlSourceConfigIncludeObjectsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return io.ref.InternalTokens()
 }
 
 func (io PostgresqlSourceConfigIncludeObjectsAttributes) PostgresqlSchemas() terra.ListValue[IncludeObjectsPostgresqlSchemasAttributes] {
-	return terra.ReferenceList[IncludeObjectsPostgresqlSchemasAttributes](io.ref.Append("postgresql_schemas"))
+	return terra.ReferenceAsList[IncludeObjectsPostgresqlSchemasAttributes](io.ref.Append("postgresql_schemas"))
 }
 
 type IncludeObjectsPostgresqlSchemasAttributes struct {
 	ref terra.Reference
 }
 
-func (ps IncludeObjectsPostgresqlSchemasAttributes) InternalRef() terra.Reference {
-	return ps.ref
+func (ps IncludeObjectsPostgresqlSchemasAttributes) InternalRef() (terra.Reference, error) {
+	return ps.ref, nil
 }
 
 func (ps IncludeObjectsPostgresqlSchemasAttributes) InternalWithRef(ref terra.Reference) IncludeObjectsPostgresqlSchemasAttributes {
 	return IncludeObjectsPostgresqlSchemasAttributes{ref: ref}
 }
 
-func (ps IncludeObjectsPostgresqlSchemasAttributes) InternalTokens() hclwrite.Tokens {
+func (ps IncludeObjectsPostgresqlSchemasAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ps.ref.InternalTokens()
 }
 
 func (ps IncludeObjectsPostgresqlSchemasAttributes) Schema() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("schema"))
+	return terra.ReferenceAsString(ps.ref.Append("schema"))
 }
 
 func (ps IncludeObjectsPostgresqlSchemasAttributes) PostgresqlTables() terra.ListValue[IncludeObjectsPostgresqlSchemasPostgresqlTablesAttributes] {
-	return terra.ReferenceList[IncludeObjectsPostgresqlSchemasPostgresqlTablesAttributes](ps.ref.Append("postgresql_tables"))
+	return terra.ReferenceAsList[IncludeObjectsPostgresqlSchemasPostgresqlTablesAttributes](ps.ref.Append("postgresql_tables"))
 }
 
 type IncludeObjectsPostgresqlSchemasPostgresqlTablesAttributes struct {
 	ref terra.Reference
 }
 
-func (pt IncludeObjectsPostgresqlSchemasPostgresqlTablesAttributes) InternalRef() terra.Reference {
-	return pt.ref
+func (pt IncludeObjectsPostgresqlSchemasPostgresqlTablesAttributes) InternalRef() (terra.Reference, error) {
+	return pt.ref, nil
 }
 
 func (pt IncludeObjectsPostgresqlSchemasPostgresqlTablesAttributes) InternalWithRef(ref terra.Reference) IncludeObjectsPostgresqlSchemasPostgresqlTablesAttributes {
 	return IncludeObjectsPostgresqlSchemasPostgresqlTablesAttributes{ref: ref}
 }
 
-func (pt IncludeObjectsPostgresqlSchemasPostgresqlTablesAttributes) InternalTokens() hclwrite.Tokens {
+func (pt IncludeObjectsPostgresqlSchemasPostgresqlTablesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pt.ref.InternalTokens()
 }
 
 func (pt IncludeObjectsPostgresqlSchemasPostgresqlTablesAttributes) Table() terra.StringValue {
-	return terra.ReferenceString(pt.ref.Append("table"))
+	return terra.ReferenceAsString(pt.ref.Append("table"))
 }
 
 func (pt IncludeObjectsPostgresqlSchemasPostgresqlTablesAttributes) PostgresqlColumns() terra.ListValue[IncludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes] {
-	return terra.ReferenceList[IncludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes](pt.ref.Append("postgresql_columns"))
+	return terra.ReferenceAsList[IncludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes](pt.ref.Append("postgresql_columns"))
 }
 
 type IncludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes struct {
 	ref terra.Reference
 }
 
-func (pc IncludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc IncludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc IncludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) InternalWithRef(ref terra.Reference) IncludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes {
 	return IncludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes{ref: ref}
 }
 
-func (pc IncludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) InternalTokens() hclwrite.Tokens {
+func (pc IncludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
 func (pc IncludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) Column() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("column"))
+	return terra.ReferenceAsString(pc.ref.Append("column"))
 }
 
 func (pc IncludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) DataType() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("data_type"))
+	return terra.ReferenceAsString(pc.ref.Append("data_type"))
 }
 
 func (pc IncludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) Length() terra.NumberValue {
-	return terra.ReferenceNumber(pc.ref.Append("length"))
+	return terra.ReferenceAsNumber(pc.ref.Append("length"))
 }
 
 func (pc IncludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) Nullable() terra.BoolValue {
-	return terra.ReferenceBool(pc.ref.Append("nullable"))
+	return terra.ReferenceAsBool(pc.ref.Append("nullable"))
 }
 
 func (pc IncludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) OrdinalPosition() terra.NumberValue {
-	return terra.ReferenceNumber(pc.ref.Append("ordinal_position"))
+	return terra.ReferenceAsNumber(pc.ref.Append("ordinal_position"))
 }
 
 func (pc IncludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) Precision() terra.NumberValue {
-	return terra.ReferenceNumber(pc.ref.Append("precision"))
+	return terra.ReferenceAsNumber(pc.ref.Append("precision"))
 }
 
 func (pc IncludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) PrimaryKey() terra.BoolValue {
-	return terra.ReferenceBool(pc.ref.Append("primary_key"))
+	return terra.ReferenceAsBool(pc.ref.Append("primary_key"))
 }
 
 func (pc IncludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsAttributes) Scale() terra.NumberValue {
-	return terra.ReferenceNumber(pc.ref.Append("scale"))
+	return terra.ReferenceAsNumber(pc.ref.Append("scale"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type BackfillAllState struct {

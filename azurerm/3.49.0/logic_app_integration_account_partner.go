@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLogicAppIntegrationAccountPartner creates a new instance of [LogicAppIntegrationAccountPartner].
 func NewLogicAppIntegrationAccountPartner(name string, args LogicAppIntegrationAccountPartnerArgs) *LogicAppIntegrationAccountPartner {
 	return &LogicAppIntegrationAccountPartner{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLogicAppIntegrationAccountPartner(name string, args LogicAppIntegrationA
 
 var _ terra.Resource = (*LogicAppIntegrationAccountPartner)(nil)
 
+// LogicAppIntegrationAccountPartner represents the Terraform resource azurerm_logic_app_integration_account_partner.
 type LogicAppIntegrationAccountPartner struct {
-	Name  string
-	Args  LogicAppIntegrationAccountPartnerArgs
-	state *logicAppIntegrationAccountPartnerState
+	Name      string
+	Args      LogicAppIntegrationAccountPartnerArgs
+	state     *logicAppIntegrationAccountPartnerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LogicAppIntegrationAccountPartner].
 func (laiap *LogicAppIntegrationAccountPartner) Type() string {
 	return "azurerm_logic_app_integration_account_partner"
 }
 
+// LocalName returns the local name for [LogicAppIntegrationAccountPartner].
 func (laiap *LogicAppIntegrationAccountPartner) LocalName() string {
 	return laiap.Name
 }
 
+// Configuration returns the configuration (args) for [LogicAppIntegrationAccountPartner].
 func (laiap *LogicAppIntegrationAccountPartner) Configuration() interface{} {
 	return laiap.Args
 }
 
+// DependOn is used for other resources to depend on [LogicAppIntegrationAccountPartner].
+func (laiap *LogicAppIntegrationAccountPartner) DependOn() terra.Reference {
+	return terra.ReferenceResource(laiap)
+}
+
+// Dependencies returns the list of resources [LogicAppIntegrationAccountPartner] depends_on.
+func (laiap *LogicAppIntegrationAccountPartner) Dependencies() terra.Dependencies {
+	return laiap.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LogicAppIntegrationAccountPartner].
+func (laiap *LogicAppIntegrationAccountPartner) LifecycleManagement() *terra.Lifecycle {
+	return laiap.Lifecycle
+}
+
+// Attributes returns the attributes for [LogicAppIntegrationAccountPartner].
 func (laiap *LogicAppIntegrationAccountPartner) Attributes() logicAppIntegrationAccountPartnerAttributes {
 	return logicAppIntegrationAccountPartnerAttributes{ref: terra.ReferenceResource(laiap)}
 }
 
+// ImportState imports the given attribute values into [LogicAppIntegrationAccountPartner]'s state.
 func (laiap *LogicAppIntegrationAccountPartner) ImportState(av io.Reader) error {
 	laiap.state = &logicAppIntegrationAccountPartnerState{}
 	if err := json.NewDecoder(av).Decode(laiap.state); err != nil {
@@ -49,10 +73,12 @@ func (laiap *LogicAppIntegrationAccountPartner) ImportState(av io.Reader) error 
 	return nil
 }
 
+// State returns the state and a bool indicating if [LogicAppIntegrationAccountPartner] has state.
 func (laiap *LogicAppIntegrationAccountPartner) State() (*logicAppIntegrationAccountPartnerState, bool) {
 	return laiap.state, laiap.state != nil
 }
 
+// StateMust returns the state for [LogicAppIntegrationAccountPartner]. Panics if the state is nil.
 func (laiap *LogicAppIntegrationAccountPartner) StateMust() *logicAppIntegrationAccountPartnerState {
 	if laiap.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", laiap.Type(), laiap.LocalName()))
@@ -60,10 +86,7 @@ func (laiap *LogicAppIntegrationAccountPartner) StateMust() *logicAppIntegration
 	return laiap.state
 }
 
-func (laiap *LogicAppIntegrationAccountPartner) DependOn() terra.Reference {
-	return terra.ReferenceResource(laiap)
-}
-
+// LogicAppIntegrationAccountPartnerArgs contains the configurations for azurerm_logic_app_integration_account_partner.
 type LogicAppIntegrationAccountPartnerArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,39 +102,42 @@ type LogicAppIntegrationAccountPartnerArgs struct {
 	BusinessIdentity []logicappintegrationaccountpartner.BusinessIdentity `hcl:"business_identity,block" validate:"min=1"`
 	// Timeouts: optional
 	Timeouts *logicappintegrationaccountpartner.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LogicAppIntegrationAccountPartner depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type logicAppIntegrationAccountPartnerAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_logic_app_integration_account_partner.
 func (laiap logicAppIntegrationAccountPartnerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(laiap.ref.Append("id"))
+	return terra.ReferenceAsString(laiap.ref.Append("id"))
 }
 
+// IntegrationAccountName returns a reference to field integration_account_name of azurerm_logic_app_integration_account_partner.
 func (laiap logicAppIntegrationAccountPartnerAttributes) IntegrationAccountName() terra.StringValue {
-	return terra.ReferenceString(laiap.ref.Append("integration_account_name"))
+	return terra.ReferenceAsString(laiap.ref.Append("integration_account_name"))
 }
 
+// Metadata returns a reference to field metadata of azurerm_logic_app_integration_account_partner.
 func (laiap logicAppIntegrationAccountPartnerAttributes) Metadata() terra.StringValue {
-	return terra.ReferenceString(laiap.ref.Append("metadata"))
+	return terra.ReferenceAsString(laiap.ref.Append("metadata"))
 }
 
+// Name returns a reference to field name of azurerm_logic_app_integration_account_partner.
 func (laiap logicAppIntegrationAccountPartnerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(laiap.ref.Append("name"))
+	return terra.ReferenceAsString(laiap.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_logic_app_integration_account_partner.
 func (laiap logicAppIntegrationAccountPartnerAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(laiap.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(laiap.ref.Append("resource_group_name"))
 }
 
 func (laiap logicAppIntegrationAccountPartnerAttributes) BusinessIdentity() terra.SetValue[logicappintegrationaccountpartner.BusinessIdentityAttributes] {
-	return terra.ReferenceSet[logicappintegrationaccountpartner.BusinessIdentityAttributes](laiap.ref.Append("business_identity"))
+	return terra.ReferenceAsSet[logicappintegrationaccountpartner.BusinessIdentityAttributes](laiap.ref.Append("business_identity"))
 }
 
 func (laiap logicAppIntegrationAccountPartnerAttributes) Timeouts() logicappintegrationaccountpartner.TimeoutsAttributes {
-	return terra.ReferenceSingle[logicappintegrationaccountpartner.TimeoutsAttributes](laiap.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[logicappintegrationaccountpartner.TimeoutsAttributes](laiap.ref.Append("timeouts"))
 }
 
 type logicAppIntegrationAccountPartnerState struct {

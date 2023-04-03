@@ -32,15 +32,15 @@ type SubjectAttributes struct {
 	ref terra.Reference
 }
 
-func (s SubjectAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SubjectAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SubjectAttributes) InternalWithRef(ref terra.Reference) SubjectAttributes {
 	return SubjectAttributes{ref: ref}
 }
 
-func (s SubjectAttributes) InternalTokens() hclwrite.Tokens {
+func (s SubjectAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 

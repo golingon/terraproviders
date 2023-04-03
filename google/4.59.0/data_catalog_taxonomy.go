@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataCatalogTaxonomy creates a new instance of [DataCatalogTaxonomy].
 func NewDataCatalogTaxonomy(name string, args DataCatalogTaxonomyArgs) *DataCatalogTaxonomy {
 	return &DataCatalogTaxonomy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataCatalogTaxonomy(name string, args DataCatalogTaxonomyArgs) *DataCata
 
 var _ terra.Resource = (*DataCatalogTaxonomy)(nil)
 
+// DataCatalogTaxonomy represents the Terraform resource google_data_catalog_taxonomy.
 type DataCatalogTaxonomy struct {
-	Name  string
-	Args  DataCatalogTaxonomyArgs
-	state *dataCatalogTaxonomyState
+	Name      string
+	Args      DataCatalogTaxonomyArgs
+	state     *dataCatalogTaxonomyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataCatalogTaxonomy].
 func (dct *DataCatalogTaxonomy) Type() string {
 	return "google_data_catalog_taxonomy"
 }
 
+// LocalName returns the local name for [DataCatalogTaxonomy].
 func (dct *DataCatalogTaxonomy) LocalName() string {
 	return dct.Name
 }
 
+// Configuration returns the configuration (args) for [DataCatalogTaxonomy].
 func (dct *DataCatalogTaxonomy) Configuration() interface{} {
 	return dct.Args
 }
 
+// DependOn is used for other resources to depend on [DataCatalogTaxonomy].
+func (dct *DataCatalogTaxonomy) DependOn() terra.Reference {
+	return terra.ReferenceResource(dct)
+}
+
+// Dependencies returns the list of resources [DataCatalogTaxonomy] depends_on.
+func (dct *DataCatalogTaxonomy) Dependencies() terra.Dependencies {
+	return dct.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataCatalogTaxonomy].
+func (dct *DataCatalogTaxonomy) LifecycleManagement() *terra.Lifecycle {
+	return dct.Lifecycle
+}
+
+// Attributes returns the attributes for [DataCatalogTaxonomy].
 func (dct *DataCatalogTaxonomy) Attributes() dataCatalogTaxonomyAttributes {
 	return dataCatalogTaxonomyAttributes{ref: terra.ReferenceResource(dct)}
 }
 
+// ImportState imports the given attribute values into [DataCatalogTaxonomy]'s state.
 func (dct *DataCatalogTaxonomy) ImportState(av io.Reader) error {
 	dct.state = &dataCatalogTaxonomyState{}
 	if err := json.NewDecoder(av).Decode(dct.state); err != nil {
@@ -49,10 +73,12 @@ func (dct *DataCatalogTaxonomy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataCatalogTaxonomy] has state.
 func (dct *DataCatalogTaxonomy) State() (*dataCatalogTaxonomyState, bool) {
 	return dct.state, dct.state != nil
 }
 
+// StateMust returns the state for [DataCatalogTaxonomy]. Panics if the state is nil.
 func (dct *DataCatalogTaxonomy) StateMust() *dataCatalogTaxonomyState {
 	if dct.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dct.Type(), dct.LocalName()))
@@ -60,10 +86,7 @@ func (dct *DataCatalogTaxonomy) StateMust() *dataCatalogTaxonomyState {
 	return dct.state
 }
 
-func (dct *DataCatalogTaxonomy) DependOn() terra.Reference {
-	return terra.ReferenceResource(dct)
-}
-
+// DataCatalogTaxonomyArgs contains the configurations for google_data_catalog_taxonomy.
 type DataCatalogTaxonomyArgs struct {
 	// ActivatedPolicyTypes: list of string, optional
 	ActivatedPolicyTypes terra.ListValue[terra.StringValue] `hcl:"activated_policy_types,attr"`
@@ -79,43 +102,48 @@ type DataCatalogTaxonomyArgs struct {
 	Region terra.StringValue `hcl:"region,attr"`
 	// Timeouts: optional
 	Timeouts *datacatalogtaxonomy.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataCatalogTaxonomy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataCatalogTaxonomyAttributes struct {
 	ref terra.Reference
 }
 
+// ActivatedPolicyTypes returns a reference to field activated_policy_types of google_data_catalog_taxonomy.
 func (dct dataCatalogTaxonomyAttributes) ActivatedPolicyTypes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dct.ref.Append("activated_policy_types"))
+	return terra.ReferenceAsList[terra.StringValue](dct.ref.Append("activated_policy_types"))
 }
 
+// Description returns a reference to field description of google_data_catalog_taxonomy.
 func (dct dataCatalogTaxonomyAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dct.ref.Append("description"))
+	return terra.ReferenceAsString(dct.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of google_data_catalog_taxonomy.
 func (dct dataCatalogTaxonomyAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(dct.ref.Append("display_name"))
+	return terra.ReferenceAsString(dct.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of google_data_catalog_taxonomy.
 func (dct dataCatalogTaxonomyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dct.ref.Append("id"))
+	return terra.ReferenceAsString(dct.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_data_catalog_taxonomy.
 func (dct dataCatalogTaxonomyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dct.ref.Append("name"))
+	return terra.ReferenceAsString(dct.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_data_catalog_taxonomy.
 func (dct dataCatalogTaxonomyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(dct.ref.Append("project"))
+	return terra.ReferenceAsString(dct.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_data_catalog_taxonomy.
 func (dct dataCatalogTaxonomyAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(dct.ref.Append("region"))
+	return terra.ReferenceAsString(dct.ref.Append("region"))
 }
 
 func (dct dataCatalogTaxonomyAttributes) Timeouts() datacatalogtaxonomy.TimeoutsAttributes {
-	return terra.ReferenceSingle[datacatalogtaxonomy.TimeoutsAttributes](dct.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datacatalogtaxonomy.TimeoutsAttributes](dct.ref.Append("timeouts"))
 }
 
 type dataCatalogTaxonomyState struct {

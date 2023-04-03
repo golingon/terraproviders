@@ -4,6 +4,7 @@ package google
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataContainerAwsVersions creates a new instance of [DataContainerAwsVersions].
 func NewDataContainerAwsVersions(name string, args DataContainerAwsVersionsArgs) *DataContainerAwsVersions {
 	return &DataContainerAwsVersions{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataContainerAwsVersions(name string, args DataContainerAwsVersionsArgs)
 
 var _ terra.DataResource = (*DataContainerAwsVersions)(nil)
 
+// DataContainerAwsVersions represents the Terraform data resource google_container_aws_versions.
 type DataContainerAwsVersions struct {
 	Name string
 	Args DataContainerAwsVersionsArgs
 }
 
+// DataSource returns the Terraform object type for [DataContainerAwsVersions].
 func (cav *DataContainerAwsVersions) DataSource() string {
 	return "google_container_aws_versions"
 }
 
+// LocalName returns the local name for [DataContainerAwsVersions].
 func (cav *DataContainerAwsVersions) LocalName() string {
 	return cav.Name
 }
 
+// Configuration returns the configuration (args) for [DataContainerAwsVersions].
 func (cav *DataContainerAwsVersions) Configuration() interface{} {
 	return cav.Args
 }
 
+// Attributes returns the attributes for [DataContainerAwsVersions].
 func (cav *DataContainerAwsVersions) Attributes() dataContainerAwsVersionsAttributes {
 	return dataContainerAwsVersionsAttributes{ref: terra.ReferenceDataResource(cav)}
 }
 
+// DataContainerAwsVersionsArgs contains the configurations for google_container_aws_versions.
 type DataContainerAwsVersionsArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -46,22 +53,27 @@ type dataContainerAwsVersionsAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of google_container_aws_versions.
 func (cav dataContainerAwsVersionsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cav.ref.Append("id"))
+	return terra.ReferenceAsString(cav.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_container_aws_versions.
 func (cav dataContainerAwsVersionsAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(cav.ref.Append("location"))
+	return terra.ReferenceAsString(cav.ref.Append("location"))
 }
 
+// Project returns a reference to field project of google_container_aws_versions.
 func (cav dataContainerAwsVersionsAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cav.ref.Append("project"))
+	return terra.ReferenceAsString(cav.ref.Append("project"))
 }
 
+// SupportedRegions returns a reference to field supported_regions of google_container_aws_versions.
 func (cav dataContainerAwsVersionsAttributes) SupportedRegions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cav.ref.Append("supported_regions"))
+	return terra.ReferenceAsList[terra.StringValue](cav.ref.Append("supported_regions"))
 }
 
+// ValidVersions returns a reference to field valid_versions of google_container_aws_versions.
 func (cav dataContainerAwsVersionsAttributes) ValidVersions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cav.ref.Append("valid_versions"))
+	return terra.ReferenceAsList[terra.StringValue](cav.ref.Append("valid_versions"))
 }

@@ -243,752 +243,752 @@ type ServicePerimetersAttributes struct {
 	ref terra.Reference
 }
 
-func (sp ServicePerimetersAttributes) InternalRef() terra.Reference {
-	return sp.ref
+func (sp ServicePerimetersAttributes) InternalRef() (terra.Reference, error) {
+	return sp.ref, nil
 }
 
 func (sp ServicePerimetersAttributes) InternalWithRef(ref terra.Reference) ServicePerimetersAttributes {
 	return ServicePerimetersAttributes{ref: ref}
 }
 
-func (sp ServicePerimetersAttributes) InternalTokens() hclwrite.Tokens {
+func (sp ServicePerimetersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sp.ref.InternalTokens()
 }
 
 func (sp ServicePerimetersAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("create_time"))
+	return terra.ReferenceAsString(sp.ref.Append("create_time"))
 }
 
 func (sp ServicePerimetersAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("description"))
+	return terra.ReferenceAsString(sp.ref.Append("description"))
 }
 
 func (sp ServicePerimetersAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("name"))
+	return terra.ReferenceAsString(sp.ref.Append("name"))
 }
 
 func (sp ServicePerimetersAttributes) PerimeterType() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("perimeter_type"))
+	return terra.ReferenceAsString(sp.ref.Append("perimeter_type"))
 }
 
 func (sp ServicePerimetersAttributes) Title() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("title"))
+	return terra.ReferenceAsString(sp.ref.Append("title"))
 }
 
 func (sp ServicePerimetersAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("update_time"))
+	return terra.ReferenceAsString(sp.ref.Append("update_time"))
 }
 
 func (sp ServicePerimetersAttributes) UseExplicitDryRunSpec() terra.BoolValue {
-	return terra.ReferenceBool(sp.ref.Append("use_explicit_dry_run_spec"))
+	return terra.ReferenceAsBool(sp.ref.Append("use_explicit_dry_run_spec"))
 }
 
 func (sp ServicePerimetersAttributes) Spec() terra.ListValue[SpecAttributes] {
-	return terra.ReferenceList[SpecAttributes](sp.ref.Append("spec"))
+	return terra.ReferenceAsList[SpecAttributes](sp.ref.Append("spec"))
 }
 
 func (sp ServicePerimetersAttributes) Status() terra.ListValue[StatusAttributes] {
-	return terra.ReferenceList[StatusAttributes](sp.ref.Append("status"))
+	return terra.ReferenceAsList[StatusAttributes](sp.ref.Append("status"))
 }
 
 type SpecAttributes struct {
 	ref terra.Reference
 }
 
-func (s SpecAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SpecAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SpecAttributes) InternalWithRef(ref terra.Reference) SpecAttributes {
 	return SpecAttributes{ref: ref}
 }
 
-func (s SpecAttributes) InternalTokens() hclwrite.Tokens {
+func (s SpecAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SpecAttributes) AccessLevels() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](s.ref.Append("access_levels"))
+	return terra.ReferenceAsList[terra.StringValue](s.ref.Append("access_levels"))
 }
 
 func (s SpecAttributes) Resources() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](s.ref.Append("resources"))
+	return terra.ReferenceAsList[terra.StringValue](s.ref.Append("resources"))
 }
 
 func (s SpecAttributes) RestrictedServices() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](s.ref.Append("restricted_services"))
+	return terra.ReferenceAsList[terra.StringValue](s.ref.Append("restricted_services"))
 }
 
 func (s SpecAttributes) EgressPolicies() terra.ListValue[SpecEgressPoliciesAttributes] {
-	return terra.ReferenceList[SpecEgressPoliciesAttributes](s.ref.Append("egress_policies"))
+	return terra.ReferenceAsList[SpecEgressPoliciesAttributes](s.ref.Append("egress_policies"))
 }
 
 func (s SpecAttributes) IngressPolicies() terra.ListValue[SpecIngressPoliciesAttributes] {
-	return terra.ReferenceList[SpecIngressPoliciesAttributes](s.ref.Append("ingress_policies"))
+	return terra.ReferenceAsList[SpecIngressPoliciesAttributes](s.ref.Append("ingress_policies"))
 }
 
 func (s SpecAttributes) VpcAccessibleServices() terra.ListValue[SpecVpcAccessibleServicesAttributes] {
-	return terra.ReferenceList[SpecVpcAccessibleServicesAttributes](s.ref.Append("vpc_accessible_services"))
+	return terra.ReferenceAsList[SpecVpcAccessibleServicesAttributes](s.ref.Append("vpc_accessible_services"))
 }
 
 type SpecEgressPoliciesAttributes struct {
 	ref terra.Reference
 }
 
-func (ep SpecEgressPoliciesAttributes) InternalRef() terra.Reference {
-	return ep.ref
+func (ep SpecEgressPoliciesAttributes) InternalRef() (terra.Reference, error) {
+	return ep.ref, nil
 }
 
 func (ep SpecEgressPoliciesAttributes) InternalWithRef(ref terra.Reference) SpecEgressPoliciesAttributes {
 	return SpecEgressPoliciesAttributes{ref: ref}
 }
 
-func (ep SpecEgressPoliciesAttributes) InternalTokens() hclwrite.Tokens {
+func (ep SpecEgressPoliciesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ep.ref.InternalTokens()
 }
 
 func (ep SpecEgressPoliciesAttributes) EgressFrom() terra.ListValue[SpecEgressPoliciesEgressFromAttributes] {
-	return terra.ReferenceList[SpecEgressPoliciesEgressFromAttributes](ep.ref.Append("egress_from"))
+	return terra.ReferenceAsList[SpecEgressPoliciesEgressFromAttributes](ep.ref.Append("egress_from"))
 }
 
 func (ep SpecEgressPoliciesAttributes) EgressTo() terra.ListValue[SpecEgressPoliciesEgressToAttributes] {
-	return terra.ReferenceList[SpecEgressPoliciesEgressToAttributes](ep.ref.Append("egress_to"))
+	return terra.ReferenceAsList[SpecEgressPoliciesEgressToAttributes](ep.ref.Append("egress_to"))
 }
 
 type SpecEgressPoliciesEgressFromAttributes struct {
 	ref terra.Reference
 }
 
-func (ef SpecEgressPoliciesEgressFromAttributes) InternalRef() terra.Reference {
-	return ef.ref
+func (ef SpecEgressPoliciesEgressFromAttributes) InternalRef() (terra.Reference, error) {
+	return ef.ref, nil
 }
 
 func (ef SpecEgressPoliciesEgressFromAttributes) InternalWithRef(ref terra.Reference) SpecEgressPoliciesEgressFromAttributes {
 	return SpecEgressPoliciesEgressFromAttributes{ref: ref}
 }
 
-func (ef SpecEgressPoliciesEgressFromAttributes) InternalTokens() hclwrite.Tokens {
+func (ef SpecEgressPoliciesEgressFromAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ef.ref.InternalTokens()
 }
 
 func (ef SpecEgressPoliciesEgressFromAttributes) Identities() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ef.ref.Append("identities"))
+	return terra.ReferenceAsList[terra.StringValue](ef.ref.Append("identities"))
 }
 
 func (ef SpecEgressPoliciesEgressFromAttributes) IdentityType() terra.StringValue {
-	return terra.ReferenceString(ef.ref.Append("identity_type"))
+	return terra.ReferenceAsString(ef.ref.Append("identity_type"))
 }
 
 type SpecEgressPoliciesEgressToAttributes struct {
 	ref terra.Reference
 }
 
-func (et SpecEgressPoliciesEgressToAttributes) InternalRef() terra.Reference {
-	return et.ref
+func (et SpecEgressPoliciesEgressToAttributes) InternalRef() (terra.Reference, error) {
+	return et.ref, nil
 }
 
 func (et SpecEgressPoliciesEgressToAttributes) InternalWithRef(ref terra.Reference) SpecEgressPoliciesEgressToAttributes {
 	return SpecEgressPoliciesEgressToAttributes{ref: ref}
 }
 
-func (et SpecEgressPoliciesEgressToAttributes) InternalTokens() hclwrite.Tokens {
+func (et SpecEgressPoliciesEgressToAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return et.ref.InternalTokens()
 }
 
 func (et SpecEgressPoliciesEgressToAttributes) ExternalResources() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](et.ref.Append("external_resources"))
+	return terra.ReferenceAsList[terra.StringValue](et.ref.Append("external_resources"))
 }
 
 func (et SpecEgressPoliciesEgressToAttributes) Resources() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](et.ref.Append("resources"))
+	return terra.ReferenceAsList[terra.StringValue](et.ref.Append("resources"))
 }
 
 func (et SpecEgressPoliciesEgressToAttributes) Operations() terra.ListValue[SpecEgressPoliciesEgressToOperationsAttributes] {
-	return terra.ReferenceList[SpecEgressPoliciesEgressToOperationsAttributes](et.ref.Append("operations"))
+	return terra.ReferenceAsList[SpecEgressPoliciesEgressToOperationsAttributes](et.ref.Append("operations"))
 }
 
 type SpecEgressPoliciesEgressToOperationsAttributes struct {
 	ref terra.Reference
 }
 
-func (o SpecEgressPoliciesEgressToOperationsAttributes) InternalRef() terra.Reference {
-	return o.ref
+func (o SpecEgressPoliciesEgressToOperationsAttributes) InternalRef() (terra.Reference, error) {
+	return o.ref, nil
 }
 
 func (o SpecEgressPoliciesEgressToOperationsAttributes) InternalWithRef(ref terra.Reference) SpecEgressPoliciesEgressToOperationsAttributes {
 	return SpecEgressPoliciesEgressToOperationsAttributes{ref: ref}
 }
 
-func (o SpecEgressPoliciesEgressToOperationsAttributes) InternalTokens() hclwrite.Tokens {
+func (o SpecEgressPoliciesEgressToOperationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return o.ref.InternalTokens()
 }
 
 func (o SpecEgressPoliciesEgressToOperationsAttributes) ServiceName() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("service_name"))
+	return terra.ReferenceAsString(o.ref.Append("service_name"))
 }
 
 func (o SpecEgressPoliciesEgressToOperationsAttributes) MethodSelectors() terra.ListValue[SpecEgressPoliciesEgressToOperationsMethodSelectorsAttributes] {
-	return terra.ReferenceList[SpecEgressPoliciesEgressToOperationsMethodSelectorsAttributes](o.ref.Append("method_selectors"))
+	return terra.ReferenceAsList[SpecEgressPoliciesEgressToOperationsMethodSelectorsAttributes](o.ref.Append("method_selectors"))
 }
 
 type SpecEgressPoliciesEgressToOperationsMethodSelectorsAttributes struct {
 	ref terra.Reference
 }
 
-func (ms SpecEgressPoliciesEgressToOperationsMethodSelectorsAttributes) InternalRef() terra.Reference {
-	return ms.ref
+func (ms SpecEgressPoliciesEgressToOperationsMethodSelectorsAttributes) InternalRef() (terra.Reference, error) {
+	return ms.ref, nil
 }
 
 func (ms SpecEgressPoliciesEgressToOperationsMethodSelectorsAttributes) InternalWithRef(ref terra.Reference) SpecEgressPoliciesEgressToOperationsMethodSelectorsAttributes {
 	return SpecEgressPoliciesEgressToOperationsMethodSelectorsAttributes{ref: ref}
 }
 
-func (ms SpecEgressPoliciesEgressToOperationsMethodSelectorsAttributes) InternalTokens() hclwrite.Tokens {
+func (ms SpecEgressPoliciesEgressToOperationsMethodSelectorsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ms.ref.InternalTokens()
 }
 
 func (ms SpecEgressPoliciesEgressToOperationsMethodSelectorsAttributes) Method() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("method"))
+	return terra.ReferenceAsString(ms.ref.Append("method"))
 }
 
 func (ms SpecEgressPoliciesEgressToOperationsMethodSelectorsAttributes) Permission() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("permission"))
+	return terra.ReferenceAsString(ms.ref.Append("permission"))
 }
 
 type SpecIngressPoliciesAttributes struct {
 	ref terra.Reference
 }
 
-func (ip SpecIngressPoliciesAttributes) InternalRef() terra.Reference {
-	return ip.ref
+func (ip SpecIngressPoliciesAttributes) InternalRef() (terra.Reference, error) {
+	return ip.ref, nil
 }
 
 func (ip SpecIngressPoliciesAttributes) InternalWithRef(ref terra.Reference) SpecIngressPoliciesAttributes {
 	return SpecIngressPoliciesAttributes{ref: ref}
 }
 
-func (ip SpecIngressPoliciesAttributes) InternalTokens() hclwrite.Tokens {
+func (ip SpecIngressPoliciesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ip.ref.InternalTokens()
 }
 
 func (ip SpecIngressPoliciesAttributes) IngressFrom() terra.ListValue[SpecIngressPoliciesIngressFromAttributes] {
-	return terra.ReferenceList[SpecIngressPoliciesIngressFromAttributes](ip.ref.Append("ingress_from"))
+	return terra.ReferenceAsList[SpecIngressPoliciesIngressFromAttributes](ip.ref.Append("ingress_from"))
 }
 
 func (ip SpecIngressPoliciesAttributes) IngressTo() terra.ListValue[SpecIngressPoliciesIngressToAttributes] {
-	return terra.ReferenceList[SpecIngressPoliciesIngressToAttributes](ip.ref.Append("ingress_to"))
+	return terra.ReferenceAsList[SpecIngressPoliciesIngressToAttributes](ip.ref.Append("ingress_to"))
 }
 
 type SpecIngressPoliciesIngressFromAttributes struct {
 	ref terra.Reference
 }
 
-func (_if SpecIngressPoliciesIngressFromAttributes) InternalRef() terra.Reference {
-	return _if.ref
+func (_if SpecIngressPoliciesIngressFromAttributes) InternalRef() (terra.Reference, error) {
+	return _if.ref, nil
 }
 
 func (_if SpecIngressPoliciesIngressFromAttributes) InternalWithRef(ref terra.Reference) SpecIngressPoliciesIngressFromAttributes {
 	return SpecIngressPoliciesIngressFromAttributes{ref: ref}
 }
 
-func (_if SpecIngressPoliciesIngressFromAttributes) InternalTokens() hclwrite.Tokens {
+func (_if SpecIngressPoliciesIngressFromAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return _if.ref.InternalTokens()
 }
 
 func (_if SpecIngressPoliciesIngressFromAttributes) Identities() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](_if.ref.Append("identities"))
+	return terra.ReferenceAsList[terra.StringValue](_if.ref.Append("identities"))
 }
 
 func (_if SpecIngressPoliciesIngressFromAttributes) IdentityType() terra.StringValue {
-	return terra.ReferenceString(_if.ref.Append("identity_type"))
+	return terra.ReferenceAsString(_if.ref.Append("identity_type"))
 }
 
 func (_if SpecIngressPoliciesIngressFromAttributes) Sources() terra.ListValue[SpecIngressPoliciesIngressFromSourcesAttributes] {
-	return terra.ReferenceList[SpecIngressPoliciesIngressFromSourcesAttributes](_if.ref.Append("sources"))
+	return terra.ReferenceAsList[SpecIngressPoliciesIngressFromSourcesAttributes](_if.ref.Append("sources"))
 }
 
 type SpecIngressPoliciesIngressFromSourcesAttributes struct {
 	ref terra.Reference
 }
 
-func (s SpecIngressPoliciesIngressFromSourcesAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SpecIngressPoliciesIngressFromSourcesAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SpecIngressPoliciesIngressFromSourcesAttributes) InternalWithRef(ref terra.Reference) SpecIngressPoliciesIngressFromSourcesAttributes {
 	return SpecIngressPoliciesIngressFromSourcesAttributes{ref: ref}
 }
 
-func (s SpecIngressPoliciesIngressFromSourcesAttributes) InternalTokens() hclwrite.Tokens {
+func (s SpecIngressPoliciesIngressFromSourcesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SpecIngressPoliciesIngressFromSourcesAttributes) AccessLevel() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("access_level"))
+	return terra.ReferenceAsString(s.ref.Append("access_level"))
 }
 
 func (s SpecIngressPoliciesIngressFromSourcesAttributes) Resource() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("resource"))
+	return terra.ReferenceAsString(s.ref.Append("resource"))
 }
 
 type SpecIngressPoliciesIngressToAttributes struct {
 	ref terra.Reference
 }
 
-func (it SpecIngressPoliciesIngressToAttributes) InternalRef() terra.Reference {
-	return it.ref
+func (it SpecIngressPoliciesIngressToAttributes) InternalRef() (terra.Reference, error) {
+	return it.ref, nil
 }
 
 func (it SpecIngressPoliciesIngressToAttributes) InternalWithRef(ref terra.Reference) SpecIngressPoliciesIngressToAttributes {
 	return SpecIngressPoliciesIngressToAttributes{ref: ref}
 }
 
-func (it SpecIngressPoliciesIngressToAttributes) InternalTokens() hclwrite.Tokens {
+func (it SpecIngressPoliciesIngressToAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return it.ref.InternalTokens()
 }
 
 func (it SpecIngressPoliciesIngressToAttributes) Resources() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](it.ref.Append("resources"))
+	return terra.ReferenceAsList[terra.StringValue](it.ref.Append("resources"))
 }
 
 func (it SpecIngressPoliciesIngressToAttributes) Operations() terra.ListValue[SpecIngressPoliciesIngressToOperationsAttributes] {
-	return terra.ReferenceList[SpecIngressPoliciesIngressToOperationsAttributes](it.ref.Append("operations"))
+	return terra.ReferenceAsList[SpecIngressPoliciesIngressToOperationsAttributes](it.ref.Append("operations"))
 }
 
 type SpecIngressPoliciesIngressToOperationsAttributes struct {
 	ref terra.Reference
 }
 
-func (o SpecIngressPoliciesIngressToOperationsAttributes) InternalRef() terra.Reference {
-	return o.ref
+func (o SpecIngressPoliciesIngressToOperationsAttributes) InternalRef() (terra.Reference, error) {
+	return o.ref, nil
 }
 
 func (o SpecIngressPoliciesIngressToOperationsAttributes) InternalWithRef(ref terra.Reference) SpecIngressPoliciesIngressToOperationsAttributes {
 	return SpecIngressPoliciesIngressToOperationsAttributes{ref: ref}
 }
 
-func (o SpecIngressPoliciesIngressToOperationsAttributes) InternalTokens() hclwrite.Tokens {
+func (o SpecIngressPoliciesIngressToOperationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return o.ref.InternalTokens()
 }
 
 func (o SpecIngressPoliciesIngressToOperationsAttributes) ServiceName() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("service_name"))
+	return terra.ReferenceAsString(o.ref.Append("service_name"))
 }
 
 func (o SpecIngressPoliciesIngressToOperationsAttributes) MethodSelectors() terra.ListValue[SpecIngressPoliciesIngressToOperationsMethodSelectorsAttributes] {
-	return terra.ReferenceList[SpecIngressPoliciesIngressToOperationsMethodSelectorsAttributes](o.ref.Append("method_selectors"))
+	return terra.ReferenceAsList[SpecIngressPoliciesIngressToOperationsMethodSelectorsAttributes](o.ref.Append("method_selectors"))
 }
 
 type SpecIngressPoliciesIngressToOperationsMethodSelectorsAttributes struct {
 	ref terra.Reference
 }
 
-func (ms SpecIngressPoliciesIngressToOperationsMethodSelectorsAttributes) InternalRef() terra.Reference {
-	return ms.ref
+func (ms SpecIngressPoliciesIngressToOperationsMethodSelectorsAttributes) InternalRef() (terra.Reference, error) {
+	return ms.ref, nil
 }
 
 func (ms SpecIngressPoliciesIngressToOperationsMethodSelectorsAttributes) InternalWithRef(ref terra.Reference) SpecIngressPoliciesIngressToOperationsMethodSelectorsAttributes {
 	return SpecIngressPoliciesIngressToOperationsMethodSelectorsAttributes{ref: ref}
 }
 
-func (ms SpecIngressPoliciesIngressToOperationsMethodSelectorsAttributes) InternalTokens() hclwrite.Tokens {
+func (ms SpecIngressPoliciesIngressToOperationsMethodSelectorsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ms.ref.InternalTokens()
 }
 
 func (ms SpecIngressPoliciesIngressToOperationsMethodSelectorsAttributes) Method() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("method"))
+	return terra.ReferenceAsString(ms.ref.Append("method"))
 }
 
 func (ms SpecIngressPoliciesIngressToOperationsMethodSelectorsAttributes) Permission() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("permission"))
+	return terra.ReferenceAsString(ms.ref.Append("permission"))
 }
 
 type SpecVpcAccessibleServicesAttributes struct {
 	ref terra.Reference
 }
 
-func (vas SpecVpcAccessibleServicesAttributes) InternalRef() terra.Reference {
-	return vas.ref
+func (vas SpecVpcAccessibleServicesAttributes) InternalRef() (terra.Reference, error) {
+	return vas.ref, nil
 }
 
 func (vas SpecVpcAccessibleServicesAttributes) InternalWithRef(ref terra.Reference) SpecVpcAccessibleServicesAttributes {
 	return SpecVpcAccessibleServicesAttributes{ref: ref}
 }
 
-func (vas SpecVpcAccessibleServicesAttributes) InternalTokens() hclwrite.Tokens {
+func (vas SpecVpcAccessibleServicesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vas.ref.InternalTokens()
 }
 
 func (vas SpecVpcAccessibleServicesAttributes) AllowedServices() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](vas.ref.Append("allowed_services"))
+	return terra.ReferenceAsList[terra.StringValue](vas.ref.Append("allowed_services"))
 }
 
 func (vas SpecVpcAccessibleServicesAttributes) EnableRestriction() terra.BoolValue {
-	return terra.ReferenceBool(vas.ref.Append("enable_restriction"))
+	return terra.ReferenceAsBool(vas.ref.Append("enable_restriction"))
 }
 
 type StatusAttributes struct {
 	ref terra.Reference
 }
 
-func (s StatusAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s StatusAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s StatusAttributes) InternalWithRef(ref terra.Reference) StatusAttributes {
 	return StatusAttributes{ref: ref}
 }
 
-func (s StatusAttributes) InternalTokens() hclwrite.Tokens {
+func (s StatusAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s StatusAttributes) AccessLevels() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](s.ref.Append("access_levels"))
+	return terra.ReferenceAsList[terra.StringValue](s.ref.Append("access_levels"))
 }
 
 func (s StatusAttributes) Resources() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](s.ref.Append("resources"))
+	return terra.ReferenceAsList[terra.StringValue](s.ref.Append("resources"))
 }
 
 func (s StatusAttributes) RestrictedServices() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("restricted_services"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("restricted_services"))
 }
 
 func (s StatusAttributes) EgressPolicies() terra.ListValue[StatusEgressPoliciesAttributes] {
-	return terra.ReferenceList[StatusEgressPoliciesAttributes](s.ref.Append("egress_policies"))
+	return terra.ReferenceAsList[StatusEgressPoliciesAttributes](s.ref.Append("egress_policies"))
 }
 
 func (s StatusAttributes) IngressPolicies() terra.ListValue[StatusIngressPoliciesAttributes] {
-	return terra.ReferenceList[StatusIngressPoliciesAttributes](s.ref.Append("ingress_policies"))
+	return terra.ReferenceAsList[StatusIngressPoliciesAttributes](s.ref.Append("ingress_policies"))
 }
 
 func (s StatusAttributes) VpcAccessibleServices() terra.ListValue[StatusVpcAccessibleServicesAttributes] {
-	return terra.ReferenceList[StatusVpcAccessibleServicesAttributes](s.ref.Append("vpc_accessible_services"))
+	return terra.ReferenceAsList[StatusVpcAccessibleServicesAttributes](s.ref.Append("vpc_accessible_services"))
 }
 
 type StatusEgressPoliciesAttributes struct {
 	ref terra.Reference
 }
 
-func (ep StatusEgressPoliciesAttributes) InternalRef() terra.Reference {
-	return ep.ref
+func (ep StatusEgressPoliciesAttributes) InternalRef() (terra.Reference, error) {
+	return ep.ref, nil
 }
 
 func (ep StatusEgressPoliciesAttributes) InternalWithRef(ref terra.Reference) StatusEgressPoliciesAttributes {
 	return StatusEgressPoliciesAttributes{ref: ref}
 }
 
-func (ep StatusEgressPoliciesAttributes) InternalTokens() hclwrite.Tokens {
+func (ep StatusEgressPoliciesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ep.ref.InternalTokens()
 }
 
 func (ep StatusEgressPoliciesAttributes) EgressFrom() terra.ListValue[StatusEgressPoliciesEgressFromAttributes] {
-	return terra.ReferenceList[StatusEgressPoliciesEgressFromAttributes](ep.ref.Append("egress_from"))
+	return terra.ReferenceAsList[StatusEgressPoliciesEgressFromAttributes](ep.ref.Append("egress_from"))
 }
 
 func (ep StatusEgressPoliciesAttributes) EgressTo() terra.ListValue[StatusEgressPoliciesEgressToAttributes] {
-	return terra.ReferenceList[StatusEgressPoliciesEgressToAttributes](ep.ref.Append("egress_to"))
+	return terra.ReferenceAsList[StatusEgressPoliciesEgressToAttributes](ep.ref.Append("egress_to"))
 }
 
 type StatusEgressPoliciesEgressFromAttributes struct {
 	ref terra.Reference
 }
 
-func (ef StatusEgressPoliciesEgressFromAttributes) InternalRef() terra.Reference {
-	return ef.ref
+func (ef StatusEgressPoliciesEgressFromAttributes) InternalRef() (terra.Reference, error) {
+	return ef.ref, nil
 }
 
 func (ef StatusEgressPoliciesEgressFromAttributes) InternalWithRef(ref terra.Reference) StatusEgressPoliciesEgressFromAttributes {
 	return StatusEgressPoliciesEgressFromAttributes{ref: ref}
 }
 
-func (ef StatusEgressPoliciesEgressFromAttributes) InternalTokens() hclwrite.Tokens {
+func (ef StatusEgressPoliciesEgressFromAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ef.ref.InternalTokens()
 }
 
 func (ef StatusEgressPoliciesEgressFromAttributes) Identities() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ef.ref.Append("identities"))
+	return terra.ReferenceAsList[terra.StringValue](ef.ref.Append("identities"))
 }
 
 func (ef StatusEgressPoliciesEgressFromAttributes) IdentityType() terra.StringValue {
-	return terra.ReferenceString(ef.ref.Append("identity_type"))
+	return terra.ReferenceAsString(ef.ref.Append("identity_type"))
 }
 
 type StatusEgressPoliciesEgressToAttributes struct {
 	ref terra.Reference
 }
 
-func (et StatusEgressPoliciesEgressToAttributes) InternalRef() terra.Reference {
-	return et.ref
+func (et StatusEgressPoliciesEgressToAttributes) InternalRef() (terra.Reference, error) {
+	return et.ref, nil
 }
 
 func (et StatusEgressPoliciesEgressToAttributes) InternalWithRef(ref terra.Reference) StatusEgressPoliciesEgressToAttributes {
 	return StatusEgressPoliciesEgressToAttributes{ref: ref}
 }
 
-func (et StatusEgressPoliciesEgressToAttributes) InternalTokens() hclwrite.Tokens {
+func (et StatusEgressPoliciesEgressToAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return et.ref.InternalTokens()
 }
 
 func (et StatusEgressPoliciesEgressToAttributes) ExternalResources() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](et.ref.Append("external_resources"))
+	return terra.ReferenceAsList[terra.StringValue](et.ref.Append("external_resources"))
 }
 
 func (et StatusEgressPoliciesEgressToAttributes) Resources() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](et.ref.Append("resources"))
+	return terra.ReferenceAsList[terra.StringValue](et.ref.Append("resources"))
 }
 
 func (et StatusEgressPoliciesEgressToAttributes) Operations() terra.ListValue[StatusEgressPoliciesEgressToOperationsAttributes] {
-	return terra.ReferenceList[StatusEgressPoliciesEgressToOperationsAttributes](et.ref.Append("operations"))
+	return terra.ReferenceAsList[StatusEgressPoliciesEgressToOperationsAttributes](et.ref.Append("operations"))
 }
 
 type StatusEgressPoliciesEgressToOperationsAttributes struct {
 	ref terra.Reference
 }
 
-func (o StatusEgressPoliciesEgressToOperationsAttributes) InternalRef() terra.Reference {
-	return o.ref
+func (o StatusEgressPoliciesEgressToOperationsAttributes) InternalRef() (terra.Reference, error) {
+	return o.ref, nil
 }
 
 func (o StatusEgressPoliciesEgressToOperationsAttributes) InternalWithRef(ref terra.Reference) StatusEgressPoliciesEgressToOperationsAttributes {
 	return StatusEgressPoliciesEgressToOperationsAttributes{ref: ref}
 }
 
-func (o StatusEgressPoliciesEgressToOperationsAttributes) InternalTokens() hclwrite.Tokens {
+func (o StatusEgressPoliciesEgressToOperationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return o.ref.InternalTokens()
 }
 
 func (o StatusEgressPoliciesEgressToOperationsAttributes) ServiceName() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("service_name"))
+	return terra.ReferenceAsString(o.ref.Append("service_name"))
 }
 
 func (o StatusEgressPoliciesEgressToOperationsAttributes) MethodSelectors() terra.ListValue[StatusEgressPoliciesEgressToOperationsMethodSelectorsAttributes] {
-	return terra.ReferenceList[StatusEgressPoliciesEgressToOperationsMethodSelectorsAttributes](o.ref.Append("method_selectors"))
+	return terra.ReferenceAsList[StatusEgressPoliciesEgressToOperationsMethodSelectorsAttributes](o.ref.Append("method_selectors"))
 }
 
 type StatusEgressPoliciesEgressToOperationsMethodSelectorsAttributes struct {
 	ref terra.Reference
 }
 
-func (ms StatusEgressPoliciesEgressToOperationsMethodSelectorsAttributes) InternalRef() terra.Reference {
-	return ms.ref
+func (ms StatusEgressPoliciesEgressToOperationsMethodSelectorsAttributes) InternalRef() (terra.Reference, error) {
+	return ms.ref, nil
 }
 
 func (ms StatusEgressPoliciesEgressToOperationsMethodSelectorsAttributes) InternalWithRef(ref terra.Reference) StatusEgressPoliciesEgressToOperationsMethodSelectorsAttributes {
 	return StatusEgressPoliciesEgressToOperationsMethodSelectorsAttributes{ref: ref}
 }
 
-func (ms StatusEgressPoliciesEgressToOperationsMethodSelectorsAttributes) InternalTokens() hclwrite.Tokens {
+func (ms StatusEgressPoliciesEgressToOperationsMethodSelectorsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ms.ref.InternalTokens()
 }
 
 func (ms StatusEgressPoliciesEgressToOperationsMethodSelectorsAttributes) Method() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("method"))
+	return terra.ReferenceAsString(ms.ref.Append("method"))
 }
 
 func (ms StatusEgressPoliciesEgressToOperationsMethodSelectorsAttributes) Permission() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("permission"))
+	return terra.ReferenceAsString(ms.ref.Append("permission"))
 }
 
 type StatusIngressPoliciesAttributes struct {
 	ref terra.Reference
 }
 
-func (ip StatusIngressPoliciesAttributes) InternalRef() terra.Reference {
-	return ip.ref
+func (ip StatusIngressPoliciesAttributes) InternalRef() (terra.Reference, error) {
+	return ip.ref, nil
 }
 
 func (ip StatusIngressPoliciesAttributes) InternalWithRef(ref terra.Reference) StatusIngressPoliciesAttributes {
 	return StatusIngressPoliciesAttributes{ref: ref}
 }
 
-func (ip StatusIngressPoliciesAttributes) InternalTokens() hclwrite.Tokens {
+func (ip StatusIngressPoliciesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ip.ref.InternalTokens()
 }
 
 func (ip StatusIngressPoliciesAttributes) IngressFrom() terra.ListValue[StatusIngressPoliciesIngressFromAttributes] {
-	return terra.ReferenceList[StatusIngressPoliciesIngressFromAttributes](ip.ref.Append("ingress_from"))
+	return terra.ReferenceAsList[StatusIngressPoliciesIngressFromAttributes](ip.ref.Append("ingress_from"))
 }
 
 func (ip StatusIngressPoliciesAttributes) IngressTo() terra.ListValue[StatusIngressPoliciesIngressToAttributes] {
-	return terra.ReferenceList[StatusIngressPoliciesIngressToAttributes](ip.ref.Append("ingress_to"))
+	return terra.ReferenceAsList[StatusIngressPoliciesIngressToAttributes](ip.ref.Append("ingress_to"))
 }
 
 type StatusIngressPoliciesIngressFromAttributes struct {
 	ref terra.Reference
 }
 
-func (_if StatusIngressPoliciesIngressFromAttributes) InternalRef() terra.Reference {
-	return _if.ref
+func (_if StatusIngressPoliciesIngressFromAttributes) InternalRef() (terra.Reference, error) {
+	return _if.ref, nil
 }
 
 func (_if StatusIngressPoliciesIngressFromAttributes) InternalWithRef(ref terra.Reference) StatusIngressPoliciesIngressFromAttributes {
 	return StatusIngressPoliciesIngressFromAttributes{ref: ref}
 }
 
-func (_if StatusIngressPoliciesIngressFromAttributes) InternalTokens() hclwrite.Tokens {
+func (_if StatusIngressPoliciesIngressFromAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return _if.ref.InternalTokens()
 }
 
 func (_if StatusIngressPoliciesIngressFromAttributes) Identities() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](_if.ref.Append("identities"))
+	return terra.ReferenceAsList[terra.StringValue](_if.ref.Append("identities"))
 }
 
 func (_if StatusIngressPoliciesIngressFromAttributes) IdentityType() terra.StringValue {
-	return terra.ReferenceString(_if.ref.Append("identity_type"))
+	return terra.ReferenceAsString(_if.ref.Append("identity_type"))
 }
 
 func (_if StatusIngressPoliciesIngressFromAttributes) Sources() terra.ListValue[StatusIngressPoliciesIngressFromSourcesAttributes] {
-	return terra.ReferenceList[StatusIngressPoliciesIngressFromSourcesAttributes](_if.ref.Append("sources"))
+	return terra.ReferenceAsList[StatusIngressPoliciesIngressFromSourcesAttributes](_if.ref.Append("sources"))
 }
 
 type StatusIngressPoliciesIngressFromSourcesAttributes struct {
 	ref terra.Reference
 }
 
-func (s StatusIngressPoliciesIngressFromSourcesAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s StatusIngressPoliciesIngressFromSourcesAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s StatusIngressPoliciesIngressFromSourcesAttributes) InternalWithRef(ref terra.Reference) StatusIngressPoliciesIngressFromSourcesAttributes {
 	return StatusIngressPoliciesIngressFromSourcesAttributes{ref: ref}
 }
 
-func (s StatusIngressPoliciesIngressFromSourcesAttributes) InternalTokens() hclwrite.Tokens {
+func (s StatusIngressPoliciesIngressFromSourcesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s StatusIngressPoliciesIngressFromSourcesAttributes) AccessLevel() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("access_level"))
+	return terra.ReferenceAsString(s.ref.Append("access_level"))
 }
 
 func (s StatusIngressPoliciesIngressFromSourcesAttributes) Resource() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("resource"))
+	return terra.ReferenceAsString(s.ref.Append("resource"))
 }
 
 type StatusIngressPoliciesIngressToAttributes struct {
 	ref terra.Reference
 }
 
-func (it StatusIngressPoliciesIngressToAttributes) InternalRef() terra.Reference {
-	return it.ref
+func (it StatusIngressPoliciesIngressToAttributes) InternalRef() (terra.Reference, error) {
+	return it.ref, nil
 }
 
 func (it StatusIngressPoliciesIngressToAttributes) InternalWithRef(ref terra.Reference) StatusIngressPoliciesIngressToAttributes {
 	return StatusIngressPoliciesIngressToAttributes{ref: ref}
 }
 
-func (it StatusIngressPoliciesIngressToAttributes) InternalTokens() hclwrite.Tokens {
+func (it StatusIngressPoliciesIngressToAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return it.ref.InternalTokens()
 }
 
 func (it StatusIngressPoliciesIngressToAttributes) Resources() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](it.ref.Append("resources"))
+	return terra.ReferenceAsList[terra.StringValue](it.ref.Append("resources"))
 }
 
 func (it StatusIngressPoliciesIngressToAttributes) Operations() terra.ListValue[StatusIngressPoliciesIngressToOperationsAttributes] {
-	return terra.ReferenceList[StatusIngressPoliciesIngressToOperationsAttributes](it.ref.Append("operations"))
+	return terra.ReferenceAsList[StatusIngressPoliciesIngressToOperationsAttributes](it.ref.Append("operations"))
 }
 
 type StatusIngressPoliciesIngressToOperationsAttributes struct {
 	ref terra.Reference
 }
 
-func (o StatusIngressPoliciesIngressToOperationsAttributes) InternalRef() terra.Reference {
-	return o.ref
+func (o StatusIngressPoliciesIngressToOperationsAttributes) InternalRef() (terra.Reference, error) {
+	return o.ref, nil
 }
 
 func (o StatusIngressPoliciesIngressToOperationsAttributes) InternalWithRef(ref terra.Reference) StatusIngressPoliciesIngressToOperationsAttributes {
 	return StatusIngressPoliciesIngressToOperationsAttributes{ref: ref}
 }
 
-func (o StatusIngressPoliciesIngressToOperationsAttributes) InternalTokens() hclwrite.Tokens {
+func (o StatusIngressPoliciesIngressToOperationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return o.ref.InternalTokens()
 }
 
 func (o StatusIngressPoliciesIngressToOperationsAttributes) ServiceName() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("service_name"))
+	return terra.ReferenceAsString(o.ref.Append("service_name"))
 }
 
 func (o StatusIngressPoliciesIngressToOperationsAttributes) MethodSelectors() terra.ListValue[StatusIngressPoliciesIngressToOperationsMethodSelectorsAttributes] {
-	return terra.ReferenceList[StatusIngressPoliciesIngressToOperationsMethodSelectorsAttributes](o.ref.Append("method_selectors"))
+	return terra.ReferenceAsList[StatusIngressPoliciesIngressToOperationsMethodSelectorsAttributes](o.ref.Append("method_selectors"))
 }
 
 type StatusIngressPoliciesIngressToOperationsMethodSelectorsAttributes struct {
 	ref terra.Reference
 }
 
-func (ms StatusIngressPoliciesIngressToOperationsMethodSelectorsAttributes) InternalRef() terra.Reference {
-	return ms.ref
+func (ms StatusIngressPoliciesIngressToOperationsMethodSelectorsAttributes) InternalRef() (terra.Reference, error) {
+	return ms.ref, nil
 }
 
 func (ms StatusIngressPoliciesIngressToOperationsMethodSelectorsAttributes) InternalWithRef(ref terra.Reference) StatusIngressPoliciesIngressToOperationsMethodSelectorsAttributes {
 	return StatusIngressPoliciesIngressToOperationsMethodSelectorsAttributes{ref: ref}
 }
 
-func (ms StatusIngressPoliciesIngressToOperationsMethodSelectorsAttributes) InternalTokens() hclwrite.Tokens {
+func (ms StatusIngressPoliciesIngressToOperationsMethodSelectorsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ms.ref.InternalTokens()
 }
 
 func (ms StatusIngressPoliciesIngressToOperationsMethodSelectorsAttributes) Method() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("method"))
+	return terra.ReferenceAsString(ms.ref.Append("method"))
 }
 
 func (ms StatusIngressPoliciesIngressToOperationsMethodSelectorsAttributes) Permission() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("permission"))
+	return terra.ReferenceAsString(ms.ref.Append("permission"))
 }
 
 type StatusVpcAccessibleServicesAttributes struct {
 	ref terra.Reference
 }
 
-func (vas StatusVpcAccessibleServicesAttributes) InternalRef() terra.Reference {
-	return vas.ref
+func (vas StatusVpcAccessibleServicesAttributes) InternalRef() (terra.Reference, error) {
+	return vas.ref, nil
 }
 
 func (vas StatusVpcAccessibleServicesAttributes) InternalWithRef(ref terra.Reference) StatusVpcAccessibleServicesAttributes {
 	return StatusVpcAccessibleServicesAttributes{ref: ref}
 }
 
-func (vas StatusVpcAccessibleServicesAttributes) InternalTokens() hclwrite.Tokens {
+func (vas StatusVpcAccessibleServicesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vas.ref.InternalTokens()
 }
 
 func (vas StatusVpcAccessibleServicesAttributes) AllowedServices() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vas.ref.Append("allowed_services"))
+	return terra.ReferenceAsSet[terra.StringValue](vas.ref.Append("allowed_services"))
 }
 
 func (vas StatusVpcAccessibleServicesAttributes) EnableRestriction() terra.BoolValue {
-	return terra.ReferenceBool(vas.ref.Append("enable_restriction"))
+	return terra.ReferenceAsBool(vas.ref.Append("enable_restriction"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ServicePerimetersState struct {

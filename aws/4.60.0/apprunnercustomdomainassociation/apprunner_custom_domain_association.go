@@ -21,7 +21,7 @@ func (cvr CertificateValidationRecordsAttributes) InternalWithRef(ref terra.Refe
 	return CertificateValidationRecordsAttributes{ref: ref}
 }
 
-func (cvr CertificateValidationRecordsAttributes) InternalTokens() hclwrite.Tokens {
+func (cvr CertificateValidationRecordsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cvr.ref.InternalTokens()
 }
 

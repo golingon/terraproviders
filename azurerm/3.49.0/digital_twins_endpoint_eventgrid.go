@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDigitalTwinsEndpointEventgrid creates a new instance of [DigitalTwinsEndpointEventgrid].
 func NewDigitalTwinsEndpointEventgrid(name string, args DigitalTwinsEndpointEventgridArgs) *DigitalTwinsEndpointEventgrid {
 	return &DigitalTwinsEndpointEventgrid{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDigitalTwinsEndpointEventgrid(name string, args DigitalTwinsEndpointEven
 
 var _ terra.Resource = (*DigitalTwinsEndpointEventgrid)(nil)
 
+// DigitalTwinsEndpointEventgrid represents the Terraform resource azurerm_digital_twins_endpoint_eventgrid.
 type DigitalTwinsEndpointEventgrid struct {
-	Name  string
-	Args  DigitalTwinsEndpointEventgridArgs
-	state *digitalTwinsEndpointEventgridState
+	Name      string
+	Args      DigitalTwinsEndpointEventgridArgs
+	state     *digitalTwinsEndpointEventgridState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DigitalTwinsEndpointEventgrid].
 func (dtee *DigitalTwinsEndpointEventgrid) Type() string {
 	return "azurerm_digital_twins_endpoint_eventgrid"
 }
 
+// LocalName returns the local name for [DigitalTwinsEndpointEventgrid].
 func (dtee *DigitalTwinsEndpointEventgrid) LocalName() string {
 	return dtee.Name
 }
 
+// Configuration returns the configuration (args) for [DigitalTwinsEndpointEventgrid].
 func (dtee *DigitalTwinsEndpointEventgrid) Configuration() interface{} {
 	return dtee.Args
 }
 
+// DependOn is used for other resources to depend on [DigitalTwinsEndpointEventgrid].
+func (dtee *DigitalTwinsEndpointEventgrid) DependOn() terra.Reference {
+	return terra.ReferenceResource(dtee)
+}
+
+// Dependencies returns the list of resources [DigitalTwinsEndpointEventgrid] depends_on.
+func (dtee *DigitalTwinsEndpointEventgrid) Dependencies() terra.Dependencies {
+	return dtee.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DigitalTwinsEndpointEventgrid].
+func (dtee *DigitalTwinsEndpointEventgrid) LifecycleManagement() *terra.Lifecycle {
+	return dtee.Lifecycle
+}
+
+// Attributes returns the attributes for [DigitalTwinsEndpointEventgrid].
 func (dtee *DigitalTwinsEndpointEventgrid) Attributes() digitalTwinsEndpointEventgridAttributes {
 	return digitalTwinsEndpointEventgridAttributes{ref: terra.ReferenceResource(dtee)}
 }
 
+// ImportState imports the given attribute values into [DigitalTwinsEndpointEventgrid]'s state.
 func (dtee *DigitalTwinsEndpointEventgrid) ImportState(av io.Reader) error {
 	dtee.state = &digitalTwinsEndpointEventgridState{}
 	if err := json.NewDecoder(av).Decode(dtee.state); err != nil {
@@ -49,10 +73,12 @@ func (dtee *DigitalTwinsEndpointEventgrid) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DigitalTwinsEndpointEventgrid] has state.
 func (dtee *DigitalTwinsEndpointEventgrid) State() (*digitalTwinsEndpointEventgridState, bool) {
 	return dtee.state, dtee.state != nil
 }
 
+// StateMust returns the state for [DigitalTwinsEndpointEventgrid]. Panics if the state is nil.
 func (dtee *DigitalTwinsEndpointEventgrid) StateMust() *digitalTwinsEndpointEventgridState {
 	if dtee.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dtee.Type(), dtee.LocalName()))
@@ -60,10 +86,7 @@ func (dtee *DigitalTwinsEndpointEventgrid) StateMust() *digitalTwinsEndpointEven
 	return dtee.state
 }
 
-func (dtee *DigitalTwinsEndpointEventgrid) DependOn() terra.Reference {
-	return terra.ReferenceResource(dtee)
-}
-
+// DigitalTwinsEndpointEventgridArgs contains the configurations for azurerm_digital_twins_endpoint_eventgrid.
 type DigitalTwinsEndpointEventgridArgs struct {
 	// DeadLetterStorageSecret: string, optional
 	DeadLetterStorageSecret terra.StringValue `hcl:"dead_letter_storage_secret,attr"`
@@ -81,43 +104,48 @@ type DigitalTwinsEndpointEventgridArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *digitaltwinsendpointeventgrid.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DigitalTwinsEndpointEventgrid depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type digitalTwinsEndpointEventgridAttributes struct {
 	ref terra.Reference
 }
 
+// DeadLetterStorageSecret returns a reference to field dead_letter_storage_secret of azurerm_digital_twins_endpoint_eventgrid.
 func (dtee digitalTwinsEndpointEventgridAttributes) DeadLetterStorageSecret() terra.StringValue {
-	return terra.ReferenceString(dtee.ref.Append("dead_letter_storage_secret"))
+	return terra.ReferenceAsString(dtee.ref.Append("dead_letter_storage_secret"))
 }
 
+// DigitalTwinsId returns a reference to field digital_twins_id of azurerm_digital_twins_endpoint_eventgrid.
 func (dtee digitalTwinsEndpointEventgridAttributes) DigitalTwinsId() terra.StringValue {
-	return terra.ReferenceString(dtee.ref.Append("digital_twins_id"))
+	return terra.ReferenceAsString(dtee.ref.Append("digital_twins_id"))
 }
 
+// EventgridTopicEndpoint returns a reference to field eventgrid_topic_endpoint of azurerm_digital_twins_endpoint_eventgrid.
 func (dtee digitalTwinsEndpointEventgridAttributes) EventgridTopicEndpoint() terra.StringValue {
-	return terra.ReferenceString(dtee.ref.Append("eventgrid_topic_endpoint"))
+	return terra.ReferenceAsString(dtee.ref.Append("eventgrid_topic_endpoint"))
 }
 
+// EventgridTopicPrimaryAccessKey returns a reference to field eventgrid_topic_primary_access_key of azurerm_digital_twins_endpoint_eventgrid.
 func (dtee digitalTwinsEndpointEventgridAttributes) EventgridTopicPrimaryAccessKey() terra.StringValue {
-	return terra.ReferenceString(dtee.ref.Append("eventgrid_topic_primary_access_key"))
+	return terra.ReferenceAsString(dtee.ref.Append("eventgrid_topic_primary_access_key"))
 }
 
+// EventgridTopicSecondaryAccessKey returns a reference to field eventgrid_topic_secondary_access_key of azurerm_digital_twins_endpoint_eventgrid.
 func (dtee digitalTwinsEndpointEventgridAttributes) EventgridTopicSecondaryAccessKey() terra.StringValue {
-	return terra.ReferenceString(dtee.ref.Append("eventgrid_topic_secondary_access_key"))
+	return terra.ReferenceAsString(dtee.ref.Append("eventgrid_topic_secondary_access_key"))
 }
 
+// Id returns a reference to field id of azurerm_digital_twins_endpoint_eventgrid.
 func (dtee digitalTwinsEndpointEventgridAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dtee.ref.Append("id"))
+	return terra.ReferenceAsString(dtee.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_digital_twins_endpoint_eventgrid.
 func (dtee digitalTwinsEndpointEventgridAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dtee.ref.Append("name"))
+	return terra.ReferenceAsString(dtee.ref.Append("name"))
 }
 
 func (dtee digitalTwinsEndpointEventgridAttributes) Timeouts() digitaltwinsendpointeventgrid.TimeoutsAttributes {
-	return terra.ReferenceSingle[digitaltwinsendpointeventgrid.TimeoutsAttributes](dtee.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[digitaltwinsendpointeventgrid.TimeoutsAttributes](dtee.ref.Append("timeouts"))
 }
 
 type digitalTwinsEndpointEventgridState struct {

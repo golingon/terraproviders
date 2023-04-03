@@ -37,72 +37,72 @@ type ClusterAttributes struct {
 	ref terra.Reference
 }
 
-func (c ClusterAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ClusterAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ClusterAttributes) InternalWithRef(ref terra.Reference) ClusterAttributes {
 	return ClusterAttributes{ref: ref}
 }
 
-func (c ClusterAttributes) InternalTokens() hclwrite.Tokens {
+func (c ClusterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ClusterAttributes) ClusterId() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("cluster_id"))
+	return terra.ReferenceAsString(c.ref.Append("cluster_id"))
 }
 
 func (c ClusterAttributes) KmsKeyName() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("kms_key_name"))
+	return terra.ReferenceAsString(c.ref.Append("kms_key_name"))
 }
 
 func (c ClusterAttributes) NumNodes() terra.NumberValue {
-	return terra.ReferenceNumber(c.ref.Append("num_nodes"))
+	return terra.ReferenceAsNumber(c.ref.Append("num_nodes"))
 }
 
 func (c ClusterAttributes) StorageType() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("storage_type"))
+	return terra.ReferenceAsString(c.ref.Append("storage_type"))
 }
 
 func (c ClusterAttributes) Zone() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("zone"))
+	return terra.ReferenceAsString(c.ref.Append("zone"))
 }
 
 func (c ClusterAttributes) AutoscalingConfig() terra.ListValue[AutoscalingConfigAttributes] {
-	return terra.ReferenceList[AutoscalingConfigAttributes](c.ref.Append("autoscaling_config"))
+	return terra.ReferenceAsList[AutoscalingConfigAttributes](c.ref.Append("autoscaling_config"))
 }
 
 type AutoscalingConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ac AutoscalingConfigAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac AutoscalingConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac AutoscalingConfigAttributes) InternalWithRef(ref terra.Reference) AutoscalingConfigAttributes {
 	return AutoscalingConfigAttributes{ref: ref}
 }
 
-func (ac AutoscalingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ac AutoscalingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
 func (ac AutoscalingConfigAttributes) CpuTarget() terra.NumberValue {
-	return terra.ReferenceNumber(ac.ref.Append("cpu_target"))
+	return terra.ReferenceAsNumber(ac.ref.Append("cpu_target"))
 }
 
 func (ac AutoscalingConfigAttributes) MaxNodes() terra.NumberValue {
-	return terra.ReferenceNumber(ac.ref.Append("max_nodes"))
+	return terra.ReferenceAsNumber(ac.ref.Append("max_nodes"))
 }
 
 func (ac AutoscalingConfigAttributes) MinNodes() terra.NumberValue {
-	return terra.ReferenceNumber(ac.ref.Append("min_nodes"))
+	return terra.ReferenceAsNumber(ac.ref.Append("min_nodes"))
 }
 
 func (ac AutoscalingConfigAttributes) StorageTarget() terra.NumberValue {
-	return terra.ReferenceNumber(ac.ref.Append("storage_target"))
+	return terra.ReferenceAsNumber(ac.ref.Append("storage_target"))
 }
 
 type ClusterState struct {

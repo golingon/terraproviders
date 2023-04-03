@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewDataCatalogEntryGroupIamPolicy creates a new instance of [DataCatalogEntryGroupIamPolicy].
 func NewDataCatalogEntryGroupIamPolicy(name string, args DataCatalogEntryGroupIamPolicyArgs) *DataCatalogEntryGroupIamPolicy {
 	return &DataCatalogEntryGroupIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewDataCatalogEntryGroupIamPolicy(name string, args DataCatalogEntryGroupIa
 
 var _ terra.Resource = (*DataCatalogEntryGroupIamPolicy)(nil)
 
+// DataCatalogEntryGroupIamPolicy represents the Terraform resource google_data_catalog_entry_group_iam_policy.
 type DataCatalogEntryGroupIamPolicy struct {
-	Name  string
-	Args  DataCatalogEntryGroupIamPolicyArgs
-	state *dataCatalogEntryGroupIamPolicyState
+	Name      string
+	Args      DataCatalogEntryGroupIamPolicyArgs
+	state     *dataCatalogEntryGroupIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataCatalogEntryGroupIamPolicy].
 func (dcegip *DataCatalogEntryGroupIamPolicy) Type() string {
 	return "google_data_catalog_entry_group_iam_policy"
 }
 
+// LocalName returns the local name for [DataCatalogEntryGroupIamPolicy].
 func (dcegip *DataCatalogEntryGroupIamPolicy) LocalName() string {
 	return dcegip.Name
 }
 
+// Configuration returns the configuration (args) for [DataCatalogEntryGroupIamPolicy].
 func (dcegip *DataCatalogEntryGroupIamPolicy) Configuration() interface{} {
 	return dcegip.Args
 }
 
+// DependOn is used for other resources to depend on [DataCatalogEntryGroupIamPolicy].
+func (dcegip *DataCatalogEntryGroupIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(dcegip)
+}
+
+// Dependencies returns the list of resources [DataCatalogEntryGroupIamPolicy] depends_on.
+func (dcegip *DataCatalogEntryGroupIamPolicy) Dependencies() terra.Dependencies {
+	return dcegip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataCatalogEntryGroupIamPolicy].
+func (dcegip *DataCatalogEntryGroupIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return dcegip.Lifecycle
+}
+
+// Attributes returns the attributes for [DataCatalogEntryGroupIamPolicy].
 func (dcegip *DataCatalogEntryGroupIamPolicy) Attributes() dataCatalogEntryGroupIamPolicyAttributes {
 	return dataCatalogEntryGroupIamPolicyAttributes{ref: terra.ReferenceResource(dcegip)}
 }
 
+// ImportState imports the given attribute values into [DataCatalogEntryGroupIamPolicy]'s state.
 func (dcegip *DataCatalogEntryGroupIamPolicy) ImportState(av io.Reader) error {
 	dcegip.state = &dataCatalogEntryGroupIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(dcegip.state); err != nil {
@@ -48,10 +72,12 @@ func (dcegip *DataCatalogEntryGroupIamPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataCatalogEntryGroupIamPolicy] has state.
 func (dcegip *DataCatalogEntryGroupIamPolicy) State() (*dataCatalogEntryGroupIamPolicyState, bool) {
 	return dcegip.state, dcegip.state != nil
 }
 
+// StateMust returns the state for [DataCatalogEntryGroupIamPolicy]. Panics if the state is nil.
 func (dcegip *DataCatalogEntryGroupIamPolicy) StateMust() *dataCatalogEntryGroupIamPolicyState {
 	if dcegip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dcegip.Type(), dcegip.LocalName()))
@@ -59,10 +85,7 @@ func (dcegip *DataCatalogEntryGroupIamPolicy) StateMust() *dataCatalogEntryGroup
 	return dcegip.state
 }
 
-func (dcegip *DataCatalogEntryGroupIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(dcegip)
-}
-
+// DataCatalogEntryGroupIamPolicyArgs contains the configurations for google_data_catalog_entry_group_iam_policy.
 type DataCatalogEntryGroupIamPolicyArgs struct {
 	// EntryGroup: string, required
 	EntryGroup terra.StringValue `hcl:"entry_group,attr" validate:"required"`
@@ -74,35 +97,39 @@ type DataCatalogEntryGroupIamPolicyArgs struct {
 	Project terra.StringValue `hcl:"project,attr"`
 	// Region: string, optional
 	Region terra.StringValue `hcl:"region,attr"`
-	// DependsOn contains resources that DataCatalogEntryGroupIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataCatalogEntryGroupIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// EntryGroup returns a reference to field entry_group of google_data_catalog_entry_group_iam_policy.
 func (dcegip dataCatalogEntryGroupIamPolicyAttributes) EntryGroup() terra.StringValue {
-	return terra.ReferenceString(dcegip.ref.Append("entry_group"))
+	return terra.ReferenceAsString(dcegip.ref.Append("entry_group"))
 }
 
+// Etag returns a reference to field etag of google_data_catalog_entry_group_iam_policy.
 func (dcegip dataCatalogEntryGroupIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(dcegip.ref.Append("etag"))
+	return terra.ReferenceAsString(dcegip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_data_catalog_entry_group_iam_policy.
 func (dcegip dataCatalogEntryGroupIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dcegip.ref.Append("id"))
+	return terra.ReferenceAsString(dcegip.ref.Append("id"))
 }
 
+// PolicyData returns a reference to field policy_data of google_data_catalog_entry_group_iam_policy.
 func (dcegip dataCatalogEntryGroupIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(dcegip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(dcegip.ref.Append("policy_data"))
 }
 
+// Project returns a reference to field project of google_data_catalog_entry_group_iam_policy.
 func (dcegip dataCatalogEntryGroupIamPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(dcegip.ref.Append("project"))
+	return terra.ReferenceAsString(dcegip.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_data_catalog_entry_group_iam_policy.
 func (dcegip dataCatalogEntryGroupIamPolicyAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(dcegip.ref.Append("region"))
+	return terra.ReferenceAsString(dcegip.ref.Append("region"))
 }
 
 type dataCatalogEntryGroupIamPolicyState struct {

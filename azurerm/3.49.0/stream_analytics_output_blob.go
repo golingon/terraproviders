@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewStreamAnalyticsOutputBlob creates a new instance of [StreamAnalyticsOutputBlob].
 func NewStreamAnalyticsOutputBlob(name string, args StreamAnalyticsOutputBlobArgs) *StreamAnalyticsOutputBlob {
 	return &StreamAnalyticsOutputBlob{
 		Args: args,
@@ -19,28 +20,51 @@ func NewStreamAnalyticsOutputBlob(name string, args StreamAnalyticsOutputBlobArg
 
 var _ terra.Resource = (*StreamAnalyticsOutputBlob)(nil)
 
+// StreamAnalyticsOutputBlob represents the Terraform resource azurerm_stream_analytics_output_blob.
 type StreamAnalyticsOutputBlob struct {
-	Name  string
-	Args  StreamAnalyticsOutputBlobArgs
-	state *streamAnalyticsOutputBlobState
+	Name      string
+	Args      StreamAnalyticsOutputBlobArgs
+	state     *streamAnalyticsOutputBlobState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [StreamAnalyticsOutputBlob].
 func (saob *StreamAnalyticsOutputBlob) Type() string {
 	return "azurerm_stream_analytics_output_blob"
 }
 
+// LocalName returns the local name for [StreamAnalyticsOutputBlob].
 func (saob *StreamAnalyticsOutputBlob) LocalName() string {
 	return saob.Name
 }
 
+// Configuration returns the configuration (args) for [StreamAnalyticsOutputBlob].
 func (saob *StreamAnalyticsOutputBlob) Configuration() interface{} {
 	return saob.Args
 }
 
+// DependOn is used for other resources to depend on [StreamAnalyticsOutputBlob].
+func (saob *StreamAnalyticsOutputBlob) DependOn() terra.Reference {
+	return terra.ReferenceResource(saob)
+}
+
+// Dependencies returns the list of resources [StreamAnalyticsOutputBlob] depends_on.
+func (saob *StreamAnalyticsOutputBlob) Dependencies() terra.Dependencies {
+	return saob.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [StreamAnalyticsOutputBlob].
+func (saob *StreamAnalyticsOutputBlob) LifecycleManagement() *terra.Lifecycle {
+	return saob.Lifecycle
+}
+
+// Attributes returns the attributes for [StreamAnalyticsOutputBlob].
 func (saob *StreamAnalyticsOutputBlob) Attributes() streamAnalyticsOutputBlobAttributes {
 	return streamAnalyticsOutputBlobAttributes{ref: terra.ReferenceResource(saob)}
 }
 
+// ImportState imports the given attribute values into [StreamAnalyticsOutputBlob]'s state.
 func (saob *StreamAnalyticsOutputBlob) ImportState(av io.Reader) error {
 	saob.state = &streamAnalyticsOutputBlobState{}
 	if err := json.NewDecoder(av).Decode(saob.state); err != nil {
@@ -49,10 +73,12 @@ func (saob *StreamAnalyticsOutputBlob) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [StreamAnalyticsOutputBlob] has state.
 func (saob *StreamAnalyticsOutputBlob) State() (*streamAnalyticsOutputBlobState, bool) {
 	return saob.state, saob.state != nil
 }
 
+// StateMust returns the state for [StreamAnalyticsOutputBlob]. Panics if the state is nil.
 func (saob *StreamAnalyticsOutputBlob) StateMust() *streamAnalyticsOutputBlobState {
 	if saob.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", saob.Type(), saob.LocalName()))
@@ -60,10 +86,7 @@ func (saob *StreamAnalyticsOutputBlob) StateMust() *streamAnalyticsOutputBlobSta
 	return saob.state
 }
 
-func (saob *StreamAnalyticsOutputBlob) DependOn() terra.Reference {
-	return terra.ReferenceResource(saob)
-}
-
+// StreamAnalyticsOutputBlobArgs contains the configurations for azurerm_stream_analytics_output_blob.
 type StreamAnalyticsOutputBlobArgs struct {
 	// AuthenticationMode: string, optional
 	AuthenticationMode terra.StringValue `hcl:"authentication_mode,attr"`
@@ -95,71 +118,82 @@ type StreamAnalyticsOutputBlobArgs struct {
 	Serialization *streamanalyticsoutputblob.Serialization `hcl:"serialization,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *streamanalyticsoutputblob.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that StreamAnalyticsOutputBlob depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type streamAnalyticsOutputBlobAttributes struct {
 	ref terra.Reference
 }
 
+// AuthenticationMode returns a reference to field authentication_mode of azurerm_stream_analytics_output_blob.
 func (saob streamAnalyticsOutputBlobAttributes) AuthenticationMode() terra.StringValue {
-	return terra.ReferenceString(saob.ref.Append("authentication_mode"))
+	return terra.ReferenceAsString(saob.ref.Append("authentication_mode"))
 }
 
+// BatchMaxWaitTime returns a reference to field batch_max_wait_time of azurerm_stream_analytics_output_blob.
 func (saob streamAnalyticsOutputBlobAttributes) BatchMaxWaitTime() terra.StringValue {
-	return terra.ReferenceString(saob.ref.Append("batch_max_wait_time"))
+	return terra.ReferenceAsString(saob.ref.Append("batch_max_wait_time"))
 }
 
+// BatchMinRows returns a reference to field batch_min_rows of azurerm_stream_analytics_output_blob.
 func (saob streamAnalyticsOutputBlobAttributes) BatchMinRows() terra.NumberValue {
-	return terra.ReferenceNumber(saob.ref.Append("batch_min_rows"))
+	return terra.ReferenceAsNumber(saob.ref.Append("batch_min_rows"))
 }
 
+// DateFormat returns a reference to field date_format of azurerm_stream_analytics_output_blob.
 func (saob streamAnalyticsOutputBlobAttributes) DateFormat() terra.StringValue {
-	return terra.ReferenceString(saob.ref.Append("date_format"))
+	return terra.ReferenceAsString(saob.ref.Append("date_format"))
 }
 
+// Id returns a reference to field id of azurerm_stream_analytics_output_blob.
 func (saob streamAnalyticsOutputBlobAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(saob.ref.Append("id"))
+	return terra.ReferenceAsString(saob.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_stream_analytics_output_blob.
 func (saob streamAnalyticsOutputBlobAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(saob.ref.Append("name"))
+	return terra.ReferenceAsString(saob.ref.Append("name"))
 }
 
+// PathPattern returns a reference to field path_pattern of azurerm_stream_analytics_output_blob.
 func (saob streamAnalyticsOutputBlobAttributes) PathPattern() terra.StringValue {
-	return terra.ReferenceString(saob.ref.Append("path_pattern"))
+	return terra.ReferenceAsString(saob.ref.Append("path_pattern"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_stream_analytics_output_blob.
 func (saob streamAnalyticsOutputBlobAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(saob.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(saob.ref.Append("resource_group_name"))
 }
 
+// StorageAccountKey returns a reference to field storage_account_key of azurerm_stream_analytics_output_blob.
 func (saob streamAnalyticsOutputBlobAttributes) StorageAccountKey() terra.StringValue {
-	return terra.ReferenceString(saob.ref.Append("storage_account_key"))
+	return terra.ReferenceAsString(saob.ref.Append("storage_account_key"))
 }
 
+// StorageAccountName returns a reference to field storage_account_name of azurerm_stream_analytics_output_blob.
 func (saob streamAnalyticsOutputBlobAttributes) StorageAccountName() terra.StringValue {
-	return terra.ReferenceString(saob.ref.Append("storage_account_name"))
+	return terra.ReferenceAsString(saob.ref.Append("storage_account_name"))
 }
 
+// StorageContainerName returns a reference to field storage_container_name of azurerm_stream_analytics_output_blob.
 func (saob streamAnalyticsOutputBlobAttributes) StorageContainerName() terra.StringValue {
-	return terra.ReferenceString(saob.ref.Append("storage_container_name"))
+	return terra.ReferenceAsString(saob.ref.Append("storage_container_name"))
 }
 
+// StreamAnalyticsJobName returns a reference to field stream_analytics_job_name of azurerm_stream_analytics_output_blob.
 func (saob streamAnalyticsOutputBlobAttributes) StreamAnalyticsJobName() terra.StringValue {
-	return terra.ReferenceString(saob.ref.Append("stream_analytics_job_name"))
+	return terra.ReferenceAsString(saob.ref.Append("stream_analytics_job_name"))
 }
 
+// TimeFormat returns a reference to field time_format of azurerm_stream_analytics_output_blob.
 func (saob streamAnalyticsOutputBlobAttributes) TimeFormat() terra.StringValue {
-	return terra.ReferenceString(saob.ref.Append("time_format"))
+	return terra.ReferenceAsString(saob.ref.Append("time_format"))
 }
 
 func (saob streamAnalyticsOutputBlobAttributes) Serialization() terra.ListValue[streamanalyticsoutputblob.SerializationAttributes] {
-	return terra.ReferenceList[streamanalyticsoutputblob.SerializationAttributes](saob.ref.Append("serialization"))
+	return terra.ReferenceAsList[streamanalyticsoutputblob.SerializationAttributes](saob.ref.Append("serialization"))
 }
 
 func (saob streamAnalyticsOutputBlobAttributes) Timeouts() streamanalyticsoutputblob.TimeoutsAttributes {
-	return terra.ReferenceSingle[streamanalyticsoutputblob.TimeoutsAttributes](saob.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[streamanalyticsoutputblob.TimeoutsAttributes](saob.ref.Append("timeouts"))
 }
 
 type streamAnalyticsOutputBlobState struct {

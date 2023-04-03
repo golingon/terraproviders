@@ -36,80 +36,80 @@ type ConfigFileAttributes struct {
 	ref terra.Reference
 }
 
-func (cf ConfigFileAttributes) InternalRef() terra.Reference {
-	return cf.ref
+func (cf ConfigFileAttributes) InternalRef() (terra.Reference, error) {
+	return cf.ref, nil
 }
 
 func (cf ConfigFileAttributes) InternalWithRef(ref terra.Reference) ConfigFileAttributes {
 	return ConfigFileAttributes{ref: ref}
 }
 
-func (cf ConfigFileAttributes) InternalTokens() hclwrite.Tokens {
+func (cf ConfigFileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cf.ref.InternalTokens()
 }
 
 func (cf ConfigFileAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("content"))
+	return terra.ReferenceAsString(cf.ref.Append("content"))
 }
 
 func (cf ConfigFileAttributes) VirtualPath() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("virtual_path"))
+	return terra.ReferenceAsString(cf.ref.Append("virtual_path"))
 }
 
 type ProtectedFileAttributes struct {
 	ref terra.Reference
 }
 
-func (pf ProtectedFileAttributes) InternalRef() terra.Reference {
-	return pf.ref
+func (pf ProtectedFileAttributes) InternalRef() (terra.Reference, error) {
+	return pf.ref, nil
 }
 
 func (pf ProtectedFileAttributes) InternalWithRef(ref terra.Reference) ProtectedFileAttributes {
 	return ProtectedFileAttributes{ref: ref}
 }
 
-func (pf ProtectedFileAttributes) InternalTokens() hclwrite.Tokens {
+func (pf ProtectedFileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pf.ref.InternalTokens()
 }
 
 func (pf ProtectedFileAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(pf.ref.Append("content"))
+	return terra.ReferenceAsString(pf.ref.Append("content"))
 }
 
 func (pf ProtectedFileAttributes) VirtualPath() terra.StringValue {
-	return terra.ReferenceString(pf.ref.Append("virtual_path"))
+	return terra.ReferenceAsString(pf.ref.Append("virtual_path"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ConfigFileState struct {

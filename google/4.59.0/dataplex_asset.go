@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataplexAsset creates a new instance of [DataplexAsset].
 func NewDataplexAsset(name string, args DataplexAssetArgs) *DataplexAsset {
 	return &DataplexAsset{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataplexAsset(name string, args DataplexAssetArgs) *DataplexAsset {
 
 var _ terra.Resource = (*DataplexAsset)(nil)
 
+// DataplexAsset represents the Terraform resource google_dataplex_asset.
 type DataplexAsset struct {
-	Name  string
-	Args  DataplexAssetArgs
-	state *dataplexAssetState
+	Name      string
+	Args      DataplexAssetArgs
+	state     *dataplexAssetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataplexAsset].
 func (da *DataplexAsset) Type() string {
 	return "google_dataplex_asset"
 }
 
+// LocalName returns the local name for [DataplexAsset].
 func (da *DataplexAsset) LocalName() string {
 	return da.Name
 }
 
+// Configuration returns the configuration (args) for [DataplexAsset].
 func (da *DataplexAsset) Configuration() interface{} {
 	return da.Args
 }
 
+// DependOn is used for other resources to depend on [DataplexAsset].
+func (da *DataplexAsset) DependOn() terra.Reference {
+	return terra.ReferenceResource(da)
+}
+
+// Dependencies returns the list of resources [DataplexAsset] depends_on.
+func (da *DataplexAsset) Dependencies() terra.Dependencies {
+	return da.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataplexAsset].
+func (da *DataplexAsset) LifecycleManagement() *terra.Lifecycle {
+	return da.Lifecycle
+}
+
+// Attributes returns the attributes for [DataplexAsset].
 func (da *DataplexAsset) Attributes() dataplexAssetAttributes {
 	return dataplexAssetAttributes{ref: terra.ReferenceResource(da)}
 }
 
+// ImportState imports the given attribute values into [DataplexAsset]'s state.
 func (da *DataplexAsset) ImportState(av io.Reader) error {
 	da.state = &dataplexAssetState{}
 	if err := json.NewDecoder(av).Decode(da.state); err != nil {
@@ -49,10 +73,12 @@ func (da *DataplexAsset) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataplexAsset] has state.
 func (da *DataplexAsset) State() (*dataplexAssetState, bool) {
 	return da.state, da.state != nil
 }
 
+// StateMust returns the state for [DataplexAsset]. Panics if the state is nil.
 func (da *DataplexAsset) StateMust() *dataplexAssetState {
 	if da.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", da.Type(), da.LocalName()))
@@ -60,10 +86,7 @@ func (da *DataplexAsset) StateMust() *dataplexAssetState {
 	return da.state
 }
 
-func (da *DataplexAsset) DependOn() terra.Reference {
-	return terra.ReferenceResource(da)
-}
-
+// DataplexAssetArgs contains the configurations for google_dataplex_asset.
 type DataplexAssetArgs struct {
 	// DataplexZone: string, required
 	DataplexZone terra.StringValue `hcl:"dataplex_zone,attr" validate:"required"`
@@ -95,87 +118,98 @@ type DataplexAssetArgs struct {
 	ResourceSpec *dataplexasset.ResourceSpec `hcl:"resource_spec,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *dataplexasset.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataplexAsset depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataplexAssetAttributes struct {
 	ref terra.Reference
 }
 
+// CreateTime returns a reference to field create_time of google_dataplex_asset.
 func (da dataplexAssetAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("create_time"))
+	return terra.ReferenceAsString(da.ref.Append("create_time"))
 }
 
+// DataplexZone returns a reference to field dataplex_zone of google_dataplex_asset.
 func (da dataplexAssetAttributes) DataplexZone() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("dataplex_zone"))
+	return terra.ReferenceAsString(da.ref.Append("dataplex_zone"))
 }
 
+// Description returns a reference to field description of google_dataplex_asset.
 func (da dataplexAssetAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("description"))
+	return terra.ReferenceAsString(da.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of google_dataplex_asset.
 func (da dataplexAssetAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("display_name"))
+	return terra.ReferenceAsString(da.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of google_dataplex_asset.
 func (da dataplexAssetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("id"))
+	return terra.ReferenceAsString(da.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_dataplex_asset.
 func (da dataplexAssetAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](da.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](da.ref.Append("labels"))
 }
 
+// Lake returns a reference to field lake of google_dataplex_asset.
 func (da dataplexAssetAttributes) Lake() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("lake"))
+	return terra.ReferenceAsString(da.ref.Append("lake"))
 }
 
+// Location returns a reference to field location of google_dataplex_asset.
 func (da dataplexAssetAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("location"))
+	return terra.ReferenceAsString(da.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_dataplex_asset.
 func (da dataplexAssetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("name"))
+	return terra.ReferenceAsString(da.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_dataplex_asset.
 func (da dataplexAssetAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("project"))
+	return terra.ReferenceAsString(da.ref.Append("project"))
 }
 
+// State returns a reference to field state of google_dataplex_asset.
 func (da dataplexAssetAttributes) State() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("state"))
+	return terra.ReferenceAsString(da.ref.Append("state"))
 }
 
+// Uid returns a reference to field uid of google_dataplex_asset.
 func (da dataplexAssetAttributes) Uid() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("uid"))
+	return terra.ReferenceAsString(da.ref.Append("uid"))
 }
 
+// UpdateTime returns a reference to field update_time of google_dataplex_asset.
 func (da dataplexAssetAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("update_time"))
+	return terra.ReferenceAsString(da.ref.Append("update_time"))
 }
 
 func (da dataplexAssetAttributes) DiscoveryStatus() terra.ListValue[dataplexasset.DiscoveryStatusAttributes] {
-	return terra.ReferenceList[dataplexasset.DiscoveryStatusAttributes](da.ref.Append("discovery_status"))
+	return terra.ReferenceAsList[dataplexasset.DiscoveryStatusAttributes](da.ref.Append("discovery_status"))
 }
 
 func (da dataplexAssetAttributes) ResourceStatus() terra.ListValue[dataplexasset.ResourceStatusAttributes] {
-	return terra.ReferenceList[dataplexasset.ResourceStatusAttributes](da.ref.Append("resource_status"))
+	return terra.ReferenceAsList[dataplexasset.ResourceStatusAttributes](da.ref.Append("resource_status"))
 }
 
 func (da dataplexAssetAttributes) SecurityStatus() terra.ListValue[dataplexasset.SecurityStatusAttributes] {
-	return terra.ReferenceList[dataplexasset.SecurityStatusAttributes](da.ref.Append("security_status"))
+	return terra.ReferenceAsList[dataplexasset.SecurityStatusAttributes](da.ref.Append("security_status"))
 }
 
 func (da dataplexAssetAttributes) DiscoverySpec() terra.ListValue[dataplexasset.DiscoverySpecAttributes] {
-	return terra.ReferenceList[dataplexasset.DiscoverySpecAttributes](da.ref.Append("discovery_spec"))
+	return terra.ReferenceAsList[dataplexasset.DiscoverySpecAttributes](da.ref.Append("discovery_spec"))
 }
 
 func (da dataplexAssetAttributes) ResourceSpec() terra.ListValue[dataplexasset.ResourceSpecAttributes] {
-	return terra.ReferenceList[dataplexasset.ResourceSpecAttributes](da.ref.Append("resource_spec"))
+	return terra.ReferenceAsList[dataplexasset.ResourceSpecAttributes](da.ref.Append("resource_spec"))
 }
 
 func (da dataplexAssetAttributes) Timeouts() dataplexasset.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataplexasset.TimeoutsAttributes](da.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataplexasset.TimeoutsAttributes](da.ref.Append("timeouts"))
 }
 
 type dataplexAssetState struct {

@@ -21,7 +21,7 @@ func (ni NetworkInterfacesAttributes) InternalWithRef(ref terra.Reference) Netwo
 	return NetworkInterfacesAttributes{ref: ref}
 }
 
-func (ni NetworkInterfacesAttributes) InternalTokens() hclwrite.Tokens {
+func (ni NetworkInterfacesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ni.ref.InternalTokens()
 }
 

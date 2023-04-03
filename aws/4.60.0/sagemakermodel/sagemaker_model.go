@@ -85,7 +85,7 @@ func (c ContainerAttributes) InternalWithRef(ref terra.Reference) ContainerAttri
 	return ContainerAttributes{ref: ref}
 }
 
-func (c ContainerAttributes) InternalTokens() hclwrite.Tokens {
+func (c ContainerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -125,7 +125,7 @@ func (ic ContainerImageConfigAttributes) InternalWithRef(ref terra.Reference) Co
 	return ContainerImageConfigAttributes{ref: ref}
 }
 
-func (ic ContainerImageConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ic ContainerImageConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ic.ref.InternalTokens()
 }
 
@@ -149,7 +149,7 @@ func (rac ContainerImageConfigRepositoryAuthConfigAttributes) InternalWithRef(re
 	return ContainerImageConfigRepositoryAuthConfigAttributes{ref: ref}
 }
 
-func (rac ContainerImageConfigRepositoryAuthConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (rac ContainerImageConfigRepositoryAuthConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rac.ref.InternalTokens()
 }
 
@@ -169,7 +169,7 @@ func (iec InferenceExecutionConfigAttributes) InternalWithRef(ref terra.Referenc
 	return InferenceExecutionConfigAttributes{ref: ref}
 }
 
-func (iec InferenceExecutionConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (iec InferenceExecutionConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return iec.ref.InternalTokens()
 }
 
@@ -189,7 +189,7 @@ func (pc PrimaryContainerAttributes) InternalWithRef(ref terra.Reference) Primar
 	return PrimaryContainerAttributes{ref: ref}
 }
 
-func (pc PrimaryContainerAttributes) InternalTokens() hclwrite.Tokens {
+func (pc PrimaryContainerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
@@ -229,7 +229,7 @@ func (ic PrimaryContainerImageConfigAttributes) InternalWithRef(ref terra.Refere
 	return PrimaryContainerImageConfigAttributes{ref: ref}
 }
 
-func (ic PrimaryContainerImageConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ic PrimaryContainerImageConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ic.ref.InternalTokens()
 }
 
@@ -253,7 +253,7 @@ func (rac PrimaryContainerImageConfigRepositoryAuthConfigAttributes) InternalWit
 	return PrimaryContainerImageConfigRepositoryAuthConfigAttributes{ref: ref}
 }
 
-func (rac PrimaryContainerImageConfigRepositoryAuthConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (rac PrimaryContainerImageConfigRepositoryAuthConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rac.ref.InternalTokens()
 }
 
@@ -273,7 +273,7 @@ func (vc VpcConfigAttributes) InternalWithRef(ref terra.Reference) VpcConfigAttr
 	return VpcConfigAttributes{ref: ref}
 }
 
-func (vc VpcConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (vc VpcConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vc.ref.InternalTokens()
 }
 

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataHealthcareFhirService creates a new instance of [DataHealthcareFhirService].
 func NewDataHealthcareFhirService(name string, args DataHealthcareFhirServiceArgs) *DataHealthcareFhirService {
 	return &DataHealthcareFhirService{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataHealthcareFhirService(name string, args DataHealthcareFhirServiceArg
 
 var _ terra.DataResource = (*DataHealthcareFhirService)(nil)
 
+// DataHealthcareFhirService represents the Terraform data resource azurerm_healthcare_fhir_service.
 type DataHealthcareFhirService struct {
 	Name string
 	Args DataHealthcareFhirServiceArgs
 }
 
+// DataSource returns the Terraform object type for [DataHealthcareFhirService].
 func (hfs *DataHealthcareFhirService) DataSource() string {
 	return "azurerm_healthcare_fhir_service"
 }
 
+// LocalName returns the local name for [DataHealthcareFhirService].
 func (hfs *DataHealthcareFhirService) LocalName() string {
 	return hfs.Name
 }
 
+// Configuration returns the configuration (args) for [DataHealthcareFhirService].
 func (hfs *DataHealthcareFhirService) Configuration() interface{} {
 	return hfs.Args
 }
 
+// Attributes returns the attributes for [DataHealthcareFhirService].
 func (hfs *DataHealthcareFhirService) Attributes() dataHealthcareFhirServiceAttributes {
 	return dataHealthcareFhirServiceAttributes{ref: terra.ReferenceDataResource(hfs)}
 }
 
+// DataHealthcareFhirServiceArgs contains the configurations for azurerm_healthcare_fhir_service.
 type DataHealthcareFhirServiceArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -59,54 +66,63 @@ type dataHealthcareFhirServiceAttributes struct {
 	ref terra.Reference
 }
 
+// AccessPolicyObjectIds returns a reference to field access_policy_object_ids of azurerm_healthcare_fhir_service.
 func (hfs dataHealthcareFhirServiceAttributes) AccessPolicyObjectIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](hfs.ref.Append("access_policy_object_ids"))
+	return terra.ReferenceAsList[terra.StringValue](hfs.ref.Append("access_policy_object_ids"))
 }
 
+// ConfigurationExportStorageAccountName returns a reference to field configuration_export_storage_account_name of azurerm_healthcare_fhir_service.
 func (hfs dataHealthcareFhirServiceAttributes) ConfigurationExportStorageAccountName() terra.StringValue {
-	return terra.ReferenceString(hfs.ref.Append("configuration_export_storage_account_name"))
+	return terra.ReferenceAsString(hfs.ref.Append("configuration_export_storage_account_name"))
 }
 
+// ContainerRegistryLoginServerUrl returns a reference to field container_registry_login_server_url of azurerm_healthcare_fhir_service.
 func (hfs dataHealthcareFhirServiceAttributes) ContainerRegistryLoginServerUrl() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](hfs.ref.Append("container_registry_login_server_url"))
+	return terra.ReferenceAsList[terra.StringValue](hfs.ref.Append("container_registry_login_server_url"))
 }
 
+// Id returns a reference to field id of azurerm_healthcare_fhir_service.
 func (hfs dataHealthcareFhirServiceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(hfs.ref.Append("id"))
+	return terra.ReferenceAsString(hfs.ref.Append("id"))
 }
 
+// Kind returns a reference to field kind of azurerm_healthcare_fhir_service.
 func (hfs dataHealthcareFhirServiceAttributes) Kind() terra.StringValue {
-	return terra.ReferenceString(hfs.ref.Append("kind"))
+	return terra.ReferenceAsString(hfs.ref.Append("kind"))
 }
 
+// Location returns a reference to field location of azurerm_healthcare_fhir_service.
 func (hfs dataHealthcareFhirServiceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(hfs.ref.Append("location"))
+	return terra.ReferenceAsString(hfs.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_healthcare_fhir_service.
 func (hfs dataHealthcareFhirServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(hfs.ref.Append("name"))
+	return terra.ReferenceAsString(hfs.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of azurerm_healthcare_fhir_service.
 func (hfs dataHealthcareFhirServiceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](hfs.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](hfs.ref.Append("tags"))
 }
 
+// WorkspaceId returns a reference to field workspace_id of azurerm_healthcare_fhir_service.
 func (hfs dataHealthcareFhirServiceAttributes) WorkspaceId() terra.StringValue {
-	return terra.ReferenceString(hfs.ref.Append("workspace_id"))
+	return terra.ReferenceAsString(hfs.ref.Append("workspace_id"))
 }
 
 func (hfs dataHealthcareFhirServiceAttributes) Authentication() terra.ListValue[datahealthcarefhirservice.AuthenticationAttributes] {
-	return terra.ReferenceList[datahealthcarefhirservice.AuthenticationAttributes](hfs.ref.Append("authentication"))
+	return terra.ReferenceAsList[datahealthcarefhirservice.AuthenticationAttributes](hfs.ref.Append("authentication"))
 }
 
 func (hfs dataHealthcareFhirServiceAttributes) Cors() terra.ListValue[datahealthcarefhirservice.CorsAttributes] {
-	return terra.ReferenceList[datahealthcarefhirservice.CorsAttributes](hfs.ref.Append("cors"))
+	return terra.ReferenceAsList[datahealthcarefhirservice.CorsAttributes](hfs.ref.Append("cors"))
 }
 
 func (hfs dataHealthcareFhirServiceAttributes) Identity() terra.ListValue[datahealthcarefhirservice.IdentityAttributes] {
-	return terra.ReferenceList[datahealthcarefhirservice.IdentityAttributes](hfs.ref.Append("identity"))
+	return terra.ReferenceAsList[datahealthcarefhirservice.IdentityAttributes](hfs.ref.Append("identity"))
 }
 
 func (hfs dataHealthcareFhirServiceAttributes) Timeouts() datahealthcarefhirservice.TimeoutsAttributes {
-	return terra.ReferenceSingle[datahealthcarefhirservice.TimeoutsAttributes](hfs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datahealthcarefhirservice.TimeoutsAttributes](hfs.ref.Append("timeouts"))
 }

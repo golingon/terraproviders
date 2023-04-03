@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCloudTasksQueue creates a new instance of [CloudTasksQueue].
 func NewCloudTasksQueue(name string, args CloudTasksQueueArgs) *CloudTasksQueue {
 	return &CloudTasksQueue{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCloudTasksQueue(name string, args CloudTasksQueueArgs) *CloudTasksQueue 
 
 var _ terra.Resource = (*CloudTasksQueue)(nil)
 
+// CloudTasksQueue represents the Terraform resource google_cloud_tasks_queue.
 type CloudTasksQueue struct {
-	Name  string
-	Args  CloudTasksQueueArgs
-	state *cloudTasksQueueState
+	Name      string
+	Args      CloudTasksQueueArgs
+	state     *cloudTasksQueueState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudTasksQueue].
 func (ctq *CloudTasksQueue) Type() string {
 	return "google_cloud_tasks_queue"
 }
 
+// LocalName returns the local name for [CloudTasksQueue].
 func (ctq *CloudTasksQueue) LocalName() string {
 	return ctq.Name
 }
 
+// Configuration returns the configuration (args) for [CloudTasksQueue].
 func (ctq *CloudTasksQueue) Configuration() interface{} {
 	return ctq.Args
 }
 
+// DependOn is used for other resources to depend on [CloudTasksQueue].
+func (ctq *CloudTasksQueue) DependOn() terra.Reference {
+	return terra.ReferenceResource(ctq)
+}
+
+// Dependencies returns the list of resources [CloudTasksQueue] depends_on.
+func (ctq *CloudTasksQueue) Dependencies() terra.Dependencies {
+	return ctq.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudTasksQueue].
+func (ctq *CloudTasksQueue) LifecycleManagement() *terra.Lifecycle {
+	return ctq.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudTasksQueue].
 func (ctq *CloudTasksQueue) Attributes() cloudTasksQueueAttributes {
 	return cloudTasksQueueAttributes{ref: terra.ReferenceResource(ctq)}
 }
 
+// ImportState imports the given attribute values into [CloudTasksQueue]'s state.
 func (ctq *CloudTasksQueue) ImportState(av io.Reader) error {
 	ctq.state = &cloudTasksQueueState{}
 	if err := json.NewDecoder(av).Decode(ctq.state); err != nil {
@@ -49,10 +73,12 @@ func (ctq *CloudTasksQueue) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudTasksQueue] has state.
 func (ctq *CloudTasksQueue) State() (*cloudTasksQueueState, bool) {
 	return ctq.state, ctq.state != nil
 }
 
+// StateMust returns the state for [CloudTasksQueue]. Panics if the state is nil.
 func (ctq *CloudTasksQueue) StateMust() *cloudTasksQueueState {
 	if ctq.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ctq.Type(), ctq.LocalName()))
@@ -60,10 +86,7 @@ func (ctq *CloudTasksQueue) StateMust() *cloudTasksQueueState {
 	return ctq.state
 }
 
-func (ctq *CloudTasksQueue) DependOn() terra.Reference {
-	return terra.ReferenceResource(ctq)
-}
-
+// CloudTasksQueueArgs contains the configurations for google_cloud_tasks_queue.
 type CloudTasksQueueArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -83,47 +106,49 @@ type CloudTasksQueueArgs struct {
 	StackdriverLoggingConfig *cloudtasksqueue.StackdriverLoggingConfig `hcl:"stackdriver_logging_config,block"`
 	// Timeouts: optional
 	Timeouts *cloudtasksqueue.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that CloudTasksQueue depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudTasksQueueAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of google_cloud_tasks_queue.
 func (ctq cloudTasksQueueAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ctq.ref.Append("id"))
+	return terra.ReferenceAsString(ctq.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_cloud_tasks_queue.
 func (ctq cloudTasksQueueAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ctq.ref.Append("location"))
+	return terra.ReferenceAsString(ctq.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_cloud_tasks_queue.
 func (ctq cloudTasksQueueAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ctq.ref.Append("name"))
+	return terra.ReferenceAsString(ctq.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_cloud_tasks_queue.
 func (ctq cloudTasksQueueAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ctq.ref.Append("project"))
+	return terra.ReferenceAsString(ctq.ref.Append("project"))
 }
 
 func (ctq cloudTasksQueueAttributes) AppEngineRoutingOverride() terra.ListValue[cloudtasksqueue.AppEngineRoutingOverrideAttributes] {
-	return terra.ReferenceList[cloudtasksqueue.AppEngineRoutingOverrideAttributes](ctq.ref.Append("app_engine_routing_override"))
+	return terra.ReferenceAsList[cloudtasksqueue.AppEngineRoutingOverrideAttributes](ctq.ref.Append("app_engine_routing_override"))
 }
 
 func (ctq cloudTasksQueueAttributes) RateLimits() terra.ListValue[cloudtasksqueue.RateLimitsAttributes] {
-	return terra.ReferenceList[cloudtasksqueue.RateLimitsAttributes](ctq.ref.Append("rate_limits"))
+	return terra.ReferenceAsList[cloudtasksqueue.RateLimitsAttributes](ctq.ref.Append("rate_limits"))
 }
 
 func (ctq cloudTasksQueueAttributes) RetryConfig() terra.ListValue[cloudtasksqueue.RetryConfigAttributes] {
-	return terra.ReferenceList[cloudtasksqueue.RetryConfigAttributes](ctq.ref.Append("retry_config"))
+	return terra.ReferenceAsList[cloudtasksqueue.RetryConfigAttributes](ctq.ref.Append("retry_config"))
 }
 
 func (ctq cloudTasksQueueAttributes) StackdriverLoggingConfig() terra.ListValue[cloudtasksqueue.StackdriverLoggingConfigAttributes] {
-	return terra.ReferenceList[cloudtasksqueue.StackdriverLoggingConfigAttributes](ctq.ref.Append("stackdriver_logging_config"))
+	return terra.ReferenceAsList[cloudtasksqueue.StackdriverLoggingConfigAttributes](ctq.ref.Append("stackdriver_logging_config"))
 }
 
 func (ctq cloudTasksQueueAttributes) Timeouts() cloudtasksqueue.TimeoutsAttributes {
-	return terra.ReferenceSingle[cloudtasksqueue.TimeoutsAttributes](ctq.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cloudtasksqueue.TimeoutsAttributes](ctq.ref.Append("timeouts"))
 }
 
 type cloudTasksQueueState struct {

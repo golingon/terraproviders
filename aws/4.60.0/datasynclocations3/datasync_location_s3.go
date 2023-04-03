@@ -24,7 +24,7 @@ func (sc S3ConfigAttributes) InternalWithRef(ref terra.Reference) S3ConfigAttrib
 	return S3ConfigAttributes{ref: ref}
 }
 
-func (sc S3ConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sc S3ConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 

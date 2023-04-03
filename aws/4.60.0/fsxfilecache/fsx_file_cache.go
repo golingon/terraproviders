@@ -68,7 +68,7 @@ func (dra DataRepositoryAssociationAttributes) InternalWithRef(ref terra.Referen
 	return DataRepositoryAssociationAttributes{ref: ref}
 }
 
-func (dra DataRepositoryAssociationAttributes) InternalTokens() hclwrite.Tokens {
+func (dra DataRepositoryAssociationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dra.ref.InternalTokens()
 }
 
@@ -128,7 +128,7 @@ func (n NfsAttributes) InternalWithRef(ref terra.Reference) NfsAttributes {
 	return NfsAttributes{ref: ref}
 }
 
-func (n NfsAttributes) InternalTokens() hclwrite.Tokens {
+func (n NfsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return n.ref.InternalTokens()
 }
 
@@ -152,7 +152,7 @@ func (lc LustreConfigurationAttributes) InternalWithRef(ref terra.Reference) Lus
 	return LustreConfigurationAttributes{ref: ref}
 }
 
-func (lc LustreConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (lc LustreConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lc.ref.InternalTokens()
 }
 
@@ -192,7 +192,7 @@ func (lc LogConfigurationAttributes) InternalWithRef(ref terra.Reference) LogCon
 	return LogConfigurationAttributes{ref: ref}
 }
 
-func (lc LogConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (lc LogConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lc.ref.InternalTokens()
 }
 
@@ -216,7 +216,7 @@ func (mc MetadataConfigurationAttributes) InternalWithRef(ref terra.Reference) M
 	return MetadataConfigurationAttributes{ref: ref}
 }
 
-func (mc MetadataConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (mc MetadataConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mc.ref.InternalTokens()
 }
 
@@ -236,7 +236,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

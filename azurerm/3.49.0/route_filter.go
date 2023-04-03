@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewRouteFilter creates a new instance of [RouteFilter].
 func NewRouteFilter(name string, args RouteFilterArgs) *RouteFilter {
 	return &RouteFilter{
 		Args: args,
@@ -19,28 +20,51 @@ func NewRouteFilter(name string, args RouteFilterArgs) *RouteFilter {
 
 var _ terra.Resource = (*RouteFilter)(nil)
 
+// RouteFilter represents the Terraform resource azurerm_route_filter.
 type RouteFilter struct {
-	Name  string
-	Args  RouteFilterArgs
-	state *routeFilterState
+	Name      string
+	Args      RouteFilterArgs
+	state     *routeFilterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RouteFilter].
 func (rf *RouteFilter) Type() string {
 	return "azurerm_route_filter"
 }
 
+// LocalName returns the local name for [RouteFilter].
 func (rf *RouteFilter) LocalName() string {
 	return rf.Name
 }
 
+// Configuration returns the configuration (args) for [RouteFilter].
 func (rf *RouteFilter) Configuration() interface{} {
 	return rf.Args
 }
 
+// DependOn is used for other resources to depend on [RouteFilter].
+func (rf *RouteFilter) DependOn() terra.Reference {
+	return terra.ReferenceResource(rf)
+}
+
+// Dependencies returns the list of resources [RouteFilter] depends_on.
+func (rf *RouteFilter) Dependencies() terra.Dependencies {
+	return rf.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RouteFilter].
+func (rf *RouteFilter) LifecycleManagement() *terra.Lifecycle {
+	return rf.Lifecycle
+}
+
+// Attributes returns the attributes for [RouteFilter].
 func (rf *RouteFilter) Attributes() routeFilterAttributes {
 	return routeFilterAttributes{ref: terra.ReferenceResource(rf)}
 }
 
+// ImportState imports the given attribute values into [RouteFilter]'s state.
 func (rf *RouteFilter) ImportState(av io.Reader) error {
 	rf.state = &routeFilterState{}
 	if err := json.NewDecoder(av).Decode(rf.state); err != nil {
@@ -49,10 +73,12 @@ func (rf *RouteFilter) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RouteFilter] has state.
 func (rf *RouteFilter) State() (*routeFilterState, bool) {
 	return rf.state, rf.state != nil
 }
 
+// StateMust returns the state for [RouteFilter]. Panics if the state is nil.
 func (rf *RouteFilter) StateMust() *routeFilterState {
 	if rf.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rf.Type(), rf.LocalName()))
@@ -60,10 +86,7 @@ func (rf *RouteFilter) StateMust() *routeFilterState {
 	return rf.state
 }
 
-func (rf *RouteFilter) DependOn() terra.Reference {
-	return terra.ReferenceResource(rf)
-}
-
+// RouteFilterArgs contains the configurations for azurerm_route_filter.
 type RouteFilterArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,39 +102,42 @@ type RouteFilterArgs struct {
 	Rule []routefilter.Rule `hcl:"rule,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *routefilter.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that RouteFilter depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type routeFilterAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_route_filter.
 func (rf routeFilterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rf.ref.Append("id"))
+	return terra.ReferenceAsString(rf.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_route_filter.
 func (rf routeFilterAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(rf.ref.Append("location"))
+	return terra.ReferenceAsString(rf.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_route_filter.
 func (rf routeFilterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rf.ref.Append("name"))
+	return terra.ReferenceAsString(rf.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_route_filter.
 func (rf routeFilterAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(rf.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(rf.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_route_filter.
 func (rf routeFilterAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rf.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](rf.ref.Append("tags"))
 }
 
 func (rf routeFilterAttributes) Rule() terra.ListValue[routefilter.RuleAttributes] {
-	return terra.ReferenceList[routefilter.RuleAttributes](rf.ref.Append("rule"))
+	return terra.ReferenceAsList[routefilter.RuleAttributes](rf.ref.Append("rule"))
 }
 
 func (rf routeFilterAttributes) Timeouts() routefilter.TimeoutsAttributes {
-	return terra.ReferenceSingle[routefilter.TimeoutsAttributes](rf.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[routefilter.TimeoutsAttributes](rf.ref.Append("timeouts"))
 }
 
 type routeFilterState struct {

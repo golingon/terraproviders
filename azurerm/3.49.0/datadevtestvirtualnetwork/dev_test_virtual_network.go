@@ -20,84 +20,84 @@ type AllowedSubnetsAttributes struct {
 	ref terra.Reference
 }
 
-func (as AllowedSubnetsAttributes) InternalRef() terra.Reference {
-	return as.ref
+func (as AllowedSubnetsAttributes) InternalRef() (terra.Reference, error) {
+	return as.ref, nil
 }
 
 func (as AllowedSubnetsAttributes) InternalWithRef(ref terra.Reference) AllowedSubnetsAttributes {
 	return AllowedSubnetsAttributes{ref: ref}
 }
 
-func (as AllowedSubnetsAttributes) InternalTokens() hclwrite.Tokens {
+func (as AllowedSubnetsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return as.ref.InternalTokens()
 }
 
 func (as AllowedSubnetsAttributes) AllowPublicIp() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("allow_public_ip"))
+	return terra.ReferenceAsString(as.ref.Append("allow_public_ip"))
 }
 
 func (as AllowedSubnetsAttributes) LabSubnetName() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("lab_subnet_name"))
+	return terra.ReferenceAsString(as.ref.Append("lab_subnet_name"))
 }
 
 func (as AllowedSubnetsAttributes) ResourceId() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("resource_id"))
+	return terra.ReferenceAsString(as.ref.Append("resource_id"))
 }
 
 type SubnetOverridesAttributes struct {
 	ref terra.Reference
 }
 
-func (so SubnetOverridesAttributes) InternalRef() terra.Reference {
-	return so.ref
+func (so SubnetOverridesAttributes) InternalRef() (terra.Reference, error) {
+	return so.ref, nil
 }
 
 func (so SubnetOverridesAttributes) InternalWithRef(ref terra.Reference) SubnetOverridesAttributes {
 	return SubnetOverridesAttributes{ref: ref}
 }
 
-func (so SubnetOverridesAttributes) InternalTokens() hclwrite.Tokens {
+func (so SubnetOverridesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return so.ref.InternalTokens()
 }
 
 func (so SubnetOverridesAttributes) LabSubnetName() terra.StringValue {
-	return terra.ReferenceString(so.ref.Append("lab_subnet_name"))
+	return terra.ReferenceAsString(so.ref.Append("lab_subnet_name"))
 }
 
 func (so SubnetOverridesAttributes) ResourceId() terra.StringValue {
-	return terra.ReferenceString(so.ref.Append("resource_id"))
+	return terra.ReferenceAsString(so.ref.Append("resource_id"))
 }
 
 func (so SubnetOverridesAttributes) UseInVmCreationPermission() terra.StringValue {
-	return terra.ReferenceString(so.ref.Append("use_in_vm_creation_permission"))
+	return terra.ReferenceAsString(so.ref.Append("use_in_vm_creation_permission"))
 }
 
 func (so SubnetOverridesAttributes) UsePublicIpAddressPermission() terra.StringValue {
-	return terra.ReferenceString(so.ref.Append("use_public_ip_address_permission"))
+	return terra.ReferenceAsString(so.ref.Append("use_public_ip_address_permission"))
 }
 
 func (so SubnetOverridesAttributes) VirtualNetworkPoolName() terra.StringValue {
-	return terra.ReferenceString(so.ref.Append("virtual_network_pool_name"))
+	return terra.ReferenceAsString(so.ref.Append("virtual_network_pool_name"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type AllowedSubnetsState struct {

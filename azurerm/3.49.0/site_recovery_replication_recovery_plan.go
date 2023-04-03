@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSiteRecoveryReplicationRecoveryPlan creates a new instance of [SiteRecoveryReplicationRecoveryPlan].
 func NewSiteRecoveryReplicationRecoveryPlan(name string, args SiteRecoveryReplicationRecoveryPlanArgs) *SiteRecoveryReplicationRecoveryPlan {
 	return &SiteRecoveryReplicationRecoveryPlan{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSiteRecoveryReplicationRecoveryPlan(name string, args SiteRecoveryReplic
 
 var _ terra.Resource = (*SiteRecoveryReplicationRecoveryPlan)(nil)
 
+// SiteRecoveryReplicationRecoveryPlan represents the Terraform resource azurerm_site_recovery_replication_recovery_plan.
 type SiteRecoveryReplicationRecoveryPlan struct {
-	Name  string
-	Args  SiteRecoveryReplicationRecoveryPlanArgs
-	state *siteRecoveryReplicationRecoveryPlanState
+	Name      string
+	Args      SiteRecoveryReplicationRecoveryPlanArgs
+	state     *siteRecoveryReplicationRecoveryPlanState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SiteRecoveryReplicationRecoveryPlan].
 func (srrrp *SiteRecoveryReplicationRecoveryPlan) Type() string {
 	return "azurerm_site_recovery_replication_recovery_plan"
 }
 
+// LocalName returns the local name for [SiteRecoveryReplicationRecoveryPlan].
 func (srrrp *SiteRecoveryReplicationRecoveryPlan) LocalName() string {
 	return srrrp.Name
 }
 
+// Configuration returns the configuration (args) for [SiteRecoveryReplicationRecoveryPlan].
 func (srrrp *SiteRecoveryReplicationRecoveryPlan) Configuration() interface{} {
 	return srrrp.Args
 }
 
+// DependOn is used for other resources to depend on [SiteRecoveryReplicationRecoveryPlan].
+func (srrrp *SiteRecoveryReplicationRecoveryPlan) DependOn() terra.Reference {
+	return terra.ReferenceResource(srrrp)
+}
+
+// Dependencies returns the list of resources [SiteRecoveryReplicationRecoveryPlan] depends_on.
+func (srrrp *SiteRecoveryReplicationRecoveryPlan) Dependencies() terra.Dependencies {
+	return srrrp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SiteRecoveryReplicationRecoveryPlan].
+func (srrrp *SiteRecoveryReplicationRecoveryPlan) LifecycleManagement() *terra.Lifecycle {
+	return srrrp.Lifecycle
+}
+
+// Attributes returns the attributes for [SiteRecoveryReplicationRecoveryPlan].
 func (srrrp *SiteRecoveryReplicationRecoveryPlan) Attributes() siteRecoveryReplicationRecoveryPlanAttributes {
 	return siteRecoveryReplicationRecoveryPlanAttributes{ref: terra.ReferenceResource(srrrp)}
 }
 
+// ImportState imports the given attribute values into [SiteRecoveryReplicationRecoveryPlan]'s state.
 func (srrrp *SiteRecoveryReplicationRecoveryPlan) ImportState(av io.Reader) error {
 	srrrp.state = &siteRecoveryReplicationRecoveryPlanState{}
 	if err := json.NewDecoder(av).Decode(srrrp.state); err != nil {
@@ -49,10 +73,12 @@ func (srrrp *SiteRecoveryReplicationRecoveryPlan) ImportState(av io.Reader) erro
 	return nil
 }
 
+// State returns the state and a bool indicating if [SiteRecoveryReplicationRecoveryPlan] has state.
 func (srrrp *SiteRecoveryReplicationRecoveryPlan) State() (*siteRecoveryReplicationRecoveryPlanState, bool) {
 	return srrrp.state, srrrp.state != nil
 }
 
+// StateMust returns the state for [SiteRecoveryReplicationRecoveryPlan]. Panics if the state is nil.
 func (srrrp *SiteRecoveryReplicationRecoveryPlan) StateMust() *siteRecoveryReplicationRecoveryPlanState {
 	if srrrp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", srrrp.Type(), srrrp.LocalName()))
@@ -60,10 +86,7 @@ func (srrrp *SiteRecoveryReplicationRecoveryPlan) StateMust() *siteRecoveryRepli
 	return srrrp.state
 }
 
-func (srrrp *SiteRecoveryReplicationRecoveryPlan) DependOn() terra.Reference {
-	return terra.ReferenceResource(srrrp)
-}
-
+// SiteRecoveryReplicationRecoveryPlanArgs contains the configurations for azurerm_site_recovery_replication_recovery_plan.
 type SiteRecoveryReplicationRecoveryPlanArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,39 +102,42 @@ type SiteRecoveryReplicationRecoveryPlanArgs struct {
 	RecoveryGroup []siterecoveryreplicationrecoveryplan.RecoveryGroup `hcl:"recovery_group,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *siterecoveryreplicationrecoveryplan.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SiteRecoveryReplicationRecoveryPlan depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type siteRecoveryReplicationRecoveryPlanAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_site_recovery_replication_recovery_plan.
 func (srrrp siteRecoveryReplicationRecoveryPlanAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(srrrp.ref.Append("id"))
+	return terra.ReferenceAsString(srrrp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_site_recovery_replication_recovery_plan.
 func (srrrp siteRecoveryReplicationRecoveryPlanAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(srrrp.ref.Append("name"))
+	return terra.ReferenceAsString(srrrp.ref.Append("name"))
 }
 
+// RecoveryVaultId returns a reference to field recovery_vault_id of azurerm_site_recovery_replication_recovery_plan.
 func (srrrp siteRecoveryReplicationRecoveryPlanAttributes) RecoveryVaultId() terra.StringValue {
-	return terra.ReferenceString(srrrp.ref.Append("recovery_vault_id"))
+	return terra.ReferenceAsString(srrrp.ref.Append("recovery_vault_id"))
 }
 
+// SourceRecoveryFabricId returns a reference to field source_recovery_fabric_id of azurerm_site_recovery_replication_recovery_plan.
 func (srrrp siteRecoveryReplicationRecoveryPlanAttributes) SourceRecoveryFabricId() terra.StringValue {
-	return terra.ReferenceString(srrrp.ref.Append("source_recovery_fabric_id"))
+	return terra.ReferenceAsString(srrrp.ref.Append("source_recovery_fabric_id"))
 }
 
+// TargetRecoveryFabricId returns a reference to field target_recovery_fabric_id of azurerm_site_recovery_replication_recovery_plan.
 func (srrrp siteRecoveryReplicationRecoveryPlanAttributes) TargetRecoveryFabricId() terra.StringValue {
-	return terra.ReferenceString(srrrp.ref.Append("target_recovery_fabric_id"))
+	return terra.ReferenceAsString(srrrp.ref.Append("target_recovery_fabric_id"))
 }
 
 func (srrrp siteRecoveryReplicationRecoveryPlanAttributes) RecoveryGroup() terra.SetValue[siterecoveryreplicationrecoveryplan.RecoveryGroupAttributes] {
-	return terra.ReferenceSet[siterecoveryreplicationrecoveryplan.RecoveryGroupAttributes](srrrp.ref.Append("recovery_group"))
+	return terra.ReferenceAsSet[siterecoveryreplicationrecoveryplan.RecoveryGroupAttributes](srrrp.ref.Append("recovery_group"))
 }
 
 func (srrrp siteRecoveryReplicationRecoveryPlanAttributes) Timeouts() siterecoveryreplicationrecoveryplan.TimeoutsAttributes {
-	return terra.ReferenceSingle[siterecoveryreplicationrecoveryplan.TimeoutsAttributes](srrrp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[siterecoveryreplicationrecoveryplan.TimeoutsAttributes](srrrp.ref.Append("timeouts"))
 }
 
 type siteRecoveryReplicationRecoveryPlanState struct {

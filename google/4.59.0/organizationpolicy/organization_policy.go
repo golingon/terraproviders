@@ -57,152 +57,152 @@ type BooleanPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (bp BooleanPolicyAttributes) InternalRef() terra.Reference {
-	return bp.ref
+func (bp BooleanPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return bp.ref, nil
 }
 
 func (bp BooleanPolicyAttributes) InternalWithRef(ref terra.Reference) BooleanPolicyAttributes {
 	return BooleanPolicyAttributes{ref: ref}
 }
 
-func (bp BooleanPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (bp BooleanPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bp.ref.InternalTokens()
 }
 
 func (bp BooleanPolicyAttributes) Enforced() terra.BoolValue {
-	return terra.ReferenceBool(bp.ref.Append("enforced"))
+	return terra.ReferenceAsBool(bp.ref.Append("enforced"))
 }
 
 type ListPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (lp ListPolicyAttributes) InternalRef() terra.Reference {
-	return lp.ref
+func (lp ListPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return lp.ref, nil
 }
 
 func (lp ListPolicyAttributes) InternalWithRef(ref terra.Reference) ListPolicyAttributes {
 	return ListPolicyAttributes{ref: ref}
 }
 
-func (lp ListPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (lp ListPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lp.ref.InternalTokens()
 }
 
 func (lp ListPolicyAttributes) InheritFromParent() terra.BoolValue {
-	return terra.ReferenceBool(lp.ref.Append("inherit_from_parent"))
+	return terra.ReferenceAsBool(lp.ref.Append("inherit_from_parent"))
 }
 
 func (lp ListPolicyAttributes) SuggestedValue() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("suggested_value"))
+	return terra.ReferenceAsString(lp.ref.Append("suggested_value"))
 }
 
 func (lp ListPolicyAttributes) Allow() terra.ListValue[AllowAttributes] {
-	return terra.ReferenceList[AllowAttributes](lp.ref.Append("allow"))
+	return terra.ReferenceAsList[AllowAttributes](lp.ref.Append("allow"))
 }
 
 func (lp ListPolicyAttributes) Deny() terra.ListValue[DenyAttributes] {
-	return terra.ReferenceList[DenyAttributes](lp.ref.Append("deny"))
+	return terra.ReferenceAsList[DenyAttributes](lp.ref.Append("deny"))
 }
 
 type AllowAttributes struct {
 	ref terra.Reference
 }
 
-func (a AllowAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AllowAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AllowAttributes) InternalWithRef(ref terra.Reference) AllowAttributes {
 	return AllowAttributes{ref: ref}
 }
 
-func (a AllowAttributes) InternalTokens() hclwrite.Tokens {
+func (a AllowAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a AllowAttributes) All() terra.BoolValue {
-	return terra.ReferenceBool(a.ref.Append("all"))
+	return terra.ReferenceAsBool(a.ref.Append("all"))
 }
 
 func (a AllowAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](a.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](a.ref.Append("values"))
 }
 
 type DenyAttributes struct {
 	ref terra.Reference
 }
 
-func (d DenyAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DenyAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DenyAttributes) InternalWithRef(ref terra.Reference) DenyAttributes {
 	return DenyAttributes{ref: ref}
 }
 
-func (d DenyAttributes) InternalTokens() hclwrite.Tokens {
+func (d DenyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d DenyAttributes) All() terra.BoolValue {
-	return terra.ReferenceBool(d.ref.Append("all"))
+	return terra.ReferenceAsBool(d.ref.Append("all"))
 }
 
 func (d DenyAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](d.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](d.ref.Append("values"))
 }
 
 type RestorePolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (rp RestorePolicyAttributes) InternalRef() terra.Reference {
-	return rp.ref
+func (rp RestorePolicyAttributes) InternalRef() (terra.Reference, error) {
+	return rp.ref, nil
 }
 
 func (rp RestorePolicyAttributes) InternalWithRef(ref terra.Reference) RestorePolicyAttributes {
 	return RestorePolicyAttributes{ref: ref}
 }
 
-func (rp RestorePolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (rp RestorePolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rp.ref.InternalTokens()
 }
 
 func (rp RestorePolicyAttributes) Default() terra.BoolValue {
-	return terra.ReferenceBool(rp.ref.Append("default"))
+	return terra.ReferenceAsBool(rp.ref.Append("default"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type BooleanPolicyState struct {

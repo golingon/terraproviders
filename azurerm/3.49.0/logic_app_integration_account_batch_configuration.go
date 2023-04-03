@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLogicAppIntegrationAccountBatchConfiguration creates a new instance of [LogicAppIntegrationAccountBatchConfiguration].
 func NewLogicAppIntegrationAccountBatchConfiguration(name string, args LogicAppIntegrationAccountBatchConfigurationArgs) *LogicAppIntegrationAccountBatchConfiguration {
 	return &LogicAppIntegrationAccountBatchConfiguration{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLogicAppIntegrationAccountBatchConfiguration(name string, args LogicAppI
 
 var _ terra.Resource = (*LogicAppIntegrationAccountBatchConfiguration)(nil)
 
+// LogicAppIntegrationAccountBatchConfiguration represents the Terraform resource azurerm_logic_app_integration_account_batch_configuration.
 type LogicAppIntegrationAccountBatchConfiguration struct {
-	Name  string
-	Args  LogicAppIntegrationAccountBatchConfigurationArgs
-	state *logicAppIntegrationAccountBatchConfigurationState
+	Name      string
+	Args      LogicAppIntegrationAccountBatchConfigurationArgs
+	state     *logicAppIntegrationAccountBatchConfigurationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LogicAppIntegrationAccountBatchConfiguration].
 func (laiabc *LogicAppIntegrationAccountBatchConfiguration) Type() string {
 	return "azurerm_logic_app_integration_account_batch_configuration"
 }
 
+// LocalName returns the local name for [LogicAppIntegrationAccountBatchConfiguration].
 func (laiabc *LogicAppIntegrationAccountBatchConfiguration) LocalName() string {
 	return laiabc.Name
 }
 
+// Configuration returns the configuration (args) for [LogicAppIntegrationAccountBatchConfiguration].
 func (laiabc *LogicAppIntegrationAccountBatchConfiguration) Configuration() interface{} {
 	return laiabc.Args
 }
 
+// DependOn is used for other resources to depend on [LogicAppIntegrationAccountBatchConfiguration].
+func (laiabc *LogicAppIntegrationAccountBatchConfiguration) DependOn() terra.Reference {
+	return terra.ReferenceResource(laiabc)
+}
+
+// Dependencies returns the list of resources [LogicAppIntegrationAccountBatchConfiguration] depends_on.
+func (laiabc *LogicAppIntegrationAccountBatchConfiguration) Dependencies() terra.Dependencies {
+	return laiabc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LogicAppIntegrationAccountBatchConfiguration].
+func (laiabc *LogicAppIntegrationAccountBatchConfiguration) LifecycleManagement() *terra.Lifecycle {
+	return laiabc.Lifecycle
+}
+
+// Attributes returns the attributes for [LogicAppIntegrationAccountBatchConfiguration].
 func (laiabc *LogicAppIntegrationAccountBatchConfiguration) Attributes() logicAppIntegrationAccountBatchConfigurationAttributes {
 	return logicAppIntegrationAccountBatchConfigurationAttributes{ref: terra.ReferenceResource(laiabc)}
 }
 
+// ImportState imports the given attribute values into [LogicAppIntegrationAccountBatchConfiguration]'s state.
 func (laiabc *LogicAppIntegrationAccountBatchConfiguration) ImportState(av io.Reader) error {
 	laiabc.state = &logicAppIntegrationAccountBatchConfigurationState{}
 	if err := json.NewDecoder(av).Decode(laiabc.state); err != nil {
@@ -49,10 +73,12 @@ func (laiabc *LogicAppIntegrationAccountBatchConfiguration) ImportState(av io.Re
 	return nil
 }
 
+// State returns the state and a bool indicating if [LogicAppIntegrationAccountBatchConfiguration] has state.
 func (laiabc *LogicAppIntegrationAccountBatchConfiguration) State() (*logicAppIntegrationAccountBatchConfigurationState, bool) {
 	return laiabc.state, laiabc.state != nil
 }
 
+// StateMust returns the state for [LogicAppIntegrationAccountBatchConfiguration]. Panics if the state is nil.
 func (laiabc *LogicAppIntegrationAccountBatchConfiguration) StateMust() *logicAppIntegrationAccountBatchConfigurationState {
 	if laiabc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", laiabc.Type(), laiabc.LocalName()))
@@ -60,10 +86,7 @@ func (laiabc *LogicAppIntegrationAccountBatchConfiguration) StateMust() *logicAp
 	return laiabc.state
 }
 
-func (laiabc *LogicAppIntegrationAccountBatchConfiguration) DependOn() terra.Reference {
-	return terra.ReferenceResource(laiabc)
-}
-
+// LogicAppIntegrationAccountBatchConfigurationArgs contains the configurations for azurerm_logic_app_integration_account_batch_configuration.
 type LogicAppIntegrationAccountBatchConfigurationArgs struct {
 	// BatchGroupName: string, required
 	BatchGroupName terra.StringValue `hcl:"batch_group_name,attr" validate:"required"`
@@ -81,43 +104,47 @@ type LogicAppIntegrationAccountBatchConfigurationArgs struct {
 	ReleaseCriteria *logicappintegrationaccountbatchconfiguration.ReleaseCriteria `hcl:"release_criteria,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *logicappintegrationaccountbatchconfiguration.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LogicAppIntegrationAccountBatchConfiguration depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type logicAppIntegrationAccountBatchConfigurationAttributes struct {
 	ref terra.Reference
 }
 
+// BatchGroupName returns a reference to field batch_group_name of azurerm_logic_app_integration_account_batch_configuration.
 func (laiabc logicAppIntegrationAccountBatchConfigurationAttributes) BatchGroupName() terra.StringValue {
-	return terra.ReferenceString(laiabc.ref.Append("batch_group_name"))
+	return terra.ReferenceAsString(laiabc.ref.Append("batch_group_name"))
 }
 
+// Id returns a reference to field id of azurerm_logic_app_integration_account_batch_configuration.
 func (laiabc logicAppIntegrationAccountBatchConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(laiabc.ref.Append("id"))
+	return terra.ReferenceAsString(laiabc.ref.Append("id"))
 }
 
+// IntegrationAccountName returns a reference to field integration_account_name of azurerm_logic_app_integration_account_batch_configuration.
 func (laiabc logicAppIntegrationAccountBatchConfigurationAttributes) IntegrationAccountName() terra.StringValue {
-	return terra.ReferenceString(laiabc.ref.Append("integration_account_name"))
+	return terra.ReferenceAsString(laiabc.ref.Append("integration_account_name"))
 }
 
+// Metadata returns a reference to field metadata of azurerm_logic_app_integration_account_batch_configuration.
 func (laiabc logicAppIntegrationAccountBatchConfigurationAttributes) Metadata() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](laiabc.ref.Append("metadata"))
+	return terra.ReferenceAsMap[terra.StringValue](laiabc.ref.Append("metadata"))
 }
 
+// Name returns a reference to field name of azurerm_logic_app_integration_account_batch_configuration.
 func (laiabc logicAppIntegrationAccountBatchConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(laiabc.ref.Append("name"))
+	return terra.ReferenceAsString(laiabc.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_logic_app_integration_account_batch_configuration.
 func (laiabc logicAppIntegrationAccountBatchConfigurationAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(laiabc.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(laiabc.ref.Append("resource_group_name"))
 }
 
 func (laiabc logicAppIntegrationAccountBatchConfigurationAttributes) ReleaseCriteria() terra.ListValue[logicappintegrationaccountbatchconfiguration.ReleaseCriteriaAttributes] {
-	return terra.ReferenceList[logicappintegrationaccountbatchconfiguration.ReleaseCriteriaAttributes](laiabc.ref.Append("release_criteria"))
+	return terra.ReferenceAsList[logicappintegrationaccountbatchconfiguration.ReleaseCriteriaAttributes](laiabc.ref.Append("release_criteria"))
 }
 
 func (laiabc logicAppIntegrationAccountBatchConfigurationAttributes) Timeouts() logicappintegrationaccountbatchconfiguration.TimeoutsAttributes {
-	return terra.ReferenceSingle[logicappintegrationaccountbatchconfiguration.TimeoutsAttributes](laiabc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[logicappintegrationaccountbatchconfiguration.TimeoutsAttributes](laiabc.ref.Append("timeouts"))
 }
 
 type logicAppIntegrationAccountBatchConfigurationState struct {

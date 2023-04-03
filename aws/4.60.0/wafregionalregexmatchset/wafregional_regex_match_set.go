@@ -35,7 +35,7 @@ func (rmt RegexMatchTupleAttributes) InternalWithRef(ref terra.Reference) RegexM
 	return RegexMatchTupleAttributes{ref: ref}
 }
 
-func (rmt RegexMatchTupleAttributes) InternalTokens() hclwrite.Tokens {
+func (rmt RegexMatchTupleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rmt.ref.InternalTokens()
 }
 
@@ -63,7 +63,7 @@ func (ftm FieldToMatchAttributes) InternalWithRef(ref terra.Reference) FieldToMa
 	return FieldToMatchAttributes{ref: ref}
 }
 
-func (ftm FieldToMatchAttributes) InternalTokens() hclwrite.Tokens {
+func (ftm FieldToMatchAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ftm.ref.InternalTokens()
 }
 

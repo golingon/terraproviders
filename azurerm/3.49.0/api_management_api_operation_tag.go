@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApiManagementApiOperationTag creates a new instance of [ApiManagementApiOperationTag].
 func NewApiManagementApiOperationTag(name string, args ApiManagementApiOperationTagArgs) *ApiManagementApiOperationTag {
 	return &ApiManagementApiOperationTag{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApiManagementApiOperationTag(name string, args ApiManagementApiOperation
 
 var _ terra.Resource = (*ApiManagementApiOperationTag)(nil)
 
+// ApiManagementApiOperationTag represents the Terraform resource azurerm_api_management_api_operation_tag.
 type ApiManagementApiOperationTag struct {
-	Name  string
-	Args  ApiManagementApiOperationTagArgs
-	state *apiManagementApiOperationTagState
+	Name      string
+	Args      ApiManagementApiOperationTagArgs
+	state     *apiManagementApiOperationTagState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiManagementApiOperationTag].
 func (amaot *ApiManagementApiOperationTag) Type() string {
 	return "azurerm_api_management_api_operation_tag"
 }
 
+// LocalName returns the local name for [ApiManagementApiOperationTag].
 func (amaot *ApiManagementApiOperationTag) LocalName() string {
 	return amaot.Name
 }
 
+// Configuration returns the configuration (args) for [ApiManagementApiOperationTag].
 func (amaot *ApiManagementApiOperationTag) Configuration() interface{} {
 	return amaot.Args
 }
 
+// DependOn is used for other resources to depend on [ApiManagementApiOperationTag].
+func (amaot *ApiManagementApiOperationTag) DependOn() terra.Reference {
+	return terra.ReferenceResource(amaot)
+}
+
+// Dependencies returns the list of resources [ApiManagementApiOperationTag] depends_on.
+func (amaot *ApiManagementApiOperationTag) Dependencies() terra.Dependencies {
+	return amaot.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiManagementApiOperationTag].
+func (amaot *ApiManagementApiOperationTag) LifecycleManagement() *terra.Lifecycle {
+	return amaot.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiManagementApiOperationTag].
 func (amaot *ApiManagementApiOperationTag) Attributes() apiManagementApiOperationTagAttributes {
 	return apiManagementApiOperationTagAttributes{ref: terra.ReferenceResource(amaot)}
 }
 
+// ImportState imports the given attribute values into [ApiManagementApiOperationTag]'s state.
 func (amaot *ApiManagementApiOperationTag) ImportState(av io.Reader) error {
 	amaot.state = &apiManagementApiOperationTagState{}
 	if err := json.NewDecoder(av).Decode(amaot.state); err != nil {
@@ -49,10 +73,12 @@ func (amaot *ApiManagementApiOperationTag) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiManagementApiOperationTag] has state.
 func (amaot *ApiManagementApiOperationTag) State() (*apiManagementApiOperationTagState, bool) {
 	return amaot.state, amaot.state != nil
 }
 
+// StateMust returns the state for [ApiManagementApiOperationTag]. Panics if the state is nil.
 func (amaot *ApiManagementApiOperationTag) StateMust() *apiManagementApiOperationTagState {
 	if amaot.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", amaot.Type(), amaot.LocalName()))
@@ -60,10 +86,7 @@ func (amaot *ApiManagementApiOperationTag) StateMust() *apiManagementApiOperatio
 	return amaot.state
 }
 
-func (amaot *ApiManagementApiOperationTag) DependOn() terra.Reference {
-	return terra.ReferenceResource(amaot)
-}
-
+// ApiManagementApiOperationTagArgs contains the configurations for azurerm_api_management_api_operation_tag.
 type ApiManagementApiOperationTagArgs struct {
 	// ApiOperationId: string, required
 	ApiOperationId terra.StringValue `hcl:"api_operation_id,attr" validate:"required"`
@@ -75,31 +98,33 @@ type ApiManagementApiOperationTagArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *apimanagementapioperationtag.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ApiManagementApiOperationTag depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiManagementApiOperationTagAttributes struct {
 	ref terra.Reference
 }
 
+// ApiOperationId returns a reference to field api_operation_id of azurerm_api_management_api_operation_tag.
 func (amaot apiManagementApiOperationTagAttributes) ApiOperationId() terra.StringValue {
-	return terra.ReferenceString(amaot.ref.Append("api_operation_id"))
+	return terra.ReferenceAsString(amaot.ref.Append("api_operation_id"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_api_management_api_operation_tag.
 func (amaot apiManagementApiOperationTagAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(amaot.ref.Append("display_name"))
+	return terra.ReferenceAsString(amaot.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of azurerm_api_management_api_operation_tag.
 func (amaot apiManagementApiOperationTagAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(amaot.ref.Append("id"))
+	return terra.ReferenceAsString(amaot.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_api_management_api_operation_tag.
 func (amaot apiManagementApiOperationTagAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(amaot.ref.Append("name"))
+	return terra.ReferenceAsString(amaot.ref.Append("name"))
 }
 
 func (amaot apiManagementApiOperationTagAttributes) Timeouts() apimanagementapioperationtag.TimeoutsAttributes {
-	return terra.ReferenceSingle[apimanagementapioperationtag.TimeoutsAttributes](amaot.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[apimanagementapioperationtag.TimeoutsAttributes](amaot.ref.Append("timeouts"))
 }
 
 type apiManagementApiOperationTagState struct {

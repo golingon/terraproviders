@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataActiveDirectoryDomainService creates a new instance of [DataActiveDirectoryDomainService].
 func NewDataActiveDirectoryDomainService(name string, args DataActiveDirectoryDomainServiceArgs) *DataActiveDirectoryDomainService {
 	return &DataActiveDirectoryDomainService{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataActiveDirectoryDomainService(name string, args DataActiveDirectoryDo
 
 var _ terra.DataResource = (*DataActiveDirectoryDomainService)(nil)
 
+// DataActiveDirectoryDomainService represents the Terraform data resource azurerm_active_directory_domain_service.
 type DataActiveDirectoryDomainService struct {
 	Name string
 	Args DataActiveDirectoryDomainServiceArgs
 }
 
+// DataSource returns the Terraform object type for [DataActiveDirectoryDomainService].
 func (adds *DataActiveDirectoryDomainService) DataSource() string {
 	return "azurerm_active_directory_domain_service"
 }
 
+// LocalName returns the local name for [DataActiveDirectoryDomainService].
 func (adds *DataActiveDirectoryDomainService) LocalName() string {
 	return adds.Name
 }
 
+// Configuration returns the configuration (args) for [DataActiveDirectoryDomainService].
 func (adds *DataActiveDirectoryDomainService) Configuration() interface{} {
 	return adds.Args
 }
 
+// Attributes returns the attributes for [DataActiveDirectoryDomainService].
 func (adds *DataActiveDirectoryDomainService) Attributes() dataActiveDirectoryDomainServiceAttributes {
 	return dataActiveDirectoryDomainServiceAttributes{ref: terra.ReferenceDataResource(adds)}
 }
 
+// DataActiveDirectoryDomainServiceArgs contains the configurations for azurerm_active_directory_domain_service.
 type DataActiveDirectoryDomainServiceArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -61,78 +68,92 @@ type dataActiveDirectoryDomainServiceAttributes struct {
 	ref terra.Reference
 }
 
+// DeploymentId returns a reference to field deployment_id of azurerm_active_directory_domain_service.
 func (adds dataActiveDirectoryDomainServiceAttributes) DeploymentId() terra.StringValue {
-	return terra.ReferenceString(adds.ref.Append("deployment_id"))
+	return terra.ReferenceAsString(adds.ref.Append("deployment_id"))
 }
 
+// DomainConfigurationType returns a reference to field domain_configuration_type of azurerm_active_directory_domain_service.
 func (adds dataActiveDirectoryDomainServiceAttributes) DomainConfigurationType() terra.StringValue {
-	return terra.ReferenceString(adds.ref.Append("domain_configuration_type"))
+	return terra.ReferenceAsString(adds.ref.Append("domain_configuration_type"))
 }
 
+// DomainName returns a reference to field domain_name of azurerm_active_directory_domain_service.
 func (adds dataActiveDirectoryDomainServiceAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(adds.ref.Append("domain_name"))
+	return terra.ReferenceAsString(adds.ref.Append("domain_name"))
 }
 
+// FilteredSyncEnabled returns a reference to field filtered_sync_enabled of azurerm_active_directory_domain_service.
 func (adds dataActiveDirectoryDomainServiceAttributes) FilteredSyncEnabled() terra.BoolValue {
-	return terra.ReferenceBool(adds.ref.Append("filtered_sync_enabled"))
+	return terra.ReferenceAsBool(adds.ref.Append("filtered_sync_enabled"))
 }
 
+// Id returns a reference to field id of azurerm_active_directory_domain_service.
 func (adds dataActiveDirectoryDomainServiceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(adds.ref.Append("id"))
+	return terra.ReferenceAsString(adds.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_active_directory_domain_service.
 func (adds dataActiveDirectoryDomainServiceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(adds.ref.Append("location"))
+	return terra.ReferenceAsString(adds.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_active_directory_domain_service.
 func (adds dataActiveDirectoryDomainServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(adds.ref.Append("name"))
+	return terra.ReferenceAsString(adds.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_active_directory_domain_service.
 func (adds dataActiveDirectoryDomainServiceAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(adds.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(adds.ref.Append("resource_group_name"))
 }
 
+// ResourceId returns a reference to field resource_id of azurerm_active_directory_domain_service.
 func (adds dataActiveDirectoryDomainServiceAttributes) ResourceId() terra.StringValue {
-	return terra.ReferenceString(adds.ref.Append("resource_id"))
+	return terra.ReferenceAsString(adds.ref.Append("resource_id"))
 }
 
+// Sku returns a reference to field sku of azurerm_active_directory_domain_service.
 func (adds dataActiveDirectoryDomainServiceAttributes) Sku() terra.StringValue {
-	return terra.ReferenceString(adds.ref.Append("sku"))
+	return terra.ReferenceAsString(adds.ref.Append("sku"))
 }
 
+// SyncOwner returns a reference to field sync_owner of azurerm_active_directory_domain_service.
 func (adds dataActiveDirectoryDomainServiceAttributes) SyncOwner() terra.StringValue {
-	return terra.ReferenceString(adds.ref.Append("sync_owner"))
+	return terra.ReferenceAsString(adds.ref.Append("sync_owner"))
 }
 
+// Tags returns a reference to field tags of azurerm_active_directory_domain_service.
 func (adds dataActiveDirectoryDomainServiceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](adds.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](adds.ref.Append("tags"))
 }
 
+// TenantId returns a reference to field tenant_id of azurerm_active_directory_domain_service.
 func (adds dataActiveDirectoryDomainServiceAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(adds.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(adds.ref.Append("tenant_id"))
 }
 
+// Version returns a reference to field version of azurerm_active_directory_domain_service.
 func (adds dataActiveDirectoryDomainServiceAttributes) Version() terra.NumberValue {
-	return terra.ReferenceNumber(adds.ref.Append("version"))
+	return terra.ReferenceAsNumber(adds.ref.Append("version"))
 }
 
 func (adds dataActiveDirectoryDomainServiceAttributes) Notifications() terra.ListValue[dataactivedirectorydomainservice.NotificationsAttributes] {
-	return terra.ReferenceList[dataactivedirectorydomainservice.NotificationsAttributes](adds.ref.Append("notifications"))
+	return terra.ReferenceAsList[dataactivedirectorydomainservice.NotificationsAttributes](adds.ref.Append("notifications"))
 }
 
 func (adds dataActiveDirectoryDomainServiceAttributes) ReplicaSets() terra.ListValue[dataactivedirectorydomainservice.ReplicaSetsAttributes] {
-	return terra.ReferenceList[dataactivedirectorydomainservice.ReplicaSetsAttributes](adds.ref.Append("replica_sets"))
+	return terra.ReferenceAsList[dataactivedirectorydomainservice.ReplicaSetsAttributes](adds.ref.Append("replica_sets"))
 }
 
 func (adds dataActiveDirectoryDomainServiceAttributes) SecureLdap() terra.ListValue[dataactivedirectorydomainservice.SecureLdapAttributes] {
-	return terra.ReferenceList[dataactivedirectorydomainservice.SecureLdapAttributes](adds.ref.Append("secure_ldap"))
+	return terra.ReferenceAsList[dataactivedirectorydomainservice.SecureLdapAttributes](adds.ref.Append("secure_ldap"))
 }
 
 func (adds dataActiveDirectoryDomainServiceAttributes) Security() terra.ListValue[dataactivedirectorydomainservice.SecurityAttributes] {
-	return terra.ReferenceList[dataactivedirectorydomainservice.SecurityAttributes](adds.ref.Append("security"))
+	return terra.ReferenceAsList[dataactivedirectorydomainservice.SecurityAttributes](adds.ref.Append("security"))
 }
 
 func (adds dataActiveDirectoryDomainServiceAttributes) Timeouts() dataactivedirectorydomainservice.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataactivedirectorydomainservice.TimeoutsAttributes](adds.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataactivedirectorydomainservice.TimeoutsAttributes](adds.ref.Append("timeouts"))
 }

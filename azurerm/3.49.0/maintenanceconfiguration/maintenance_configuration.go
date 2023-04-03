@@ -62,152 +62,152 @@ type InstallPatchesAttributes struct {
 	ref terra.Reference
 }
 
-func (ip InstallPatchesAttributes) InternalRef() terra.Reference {
-	return ip.ref
+func (ip InstallPatchesAttributes) InternalRef() (terra.Reference, error) {
+	return ip.ref, nil
 }
 
 func (ip InstallPatchesAttributes) InternalWithRef(ref terra.Reference) InstallPatchesAttributes {
 	return InstallPatchesAttributes{ref: ref}
 }
 
-func (ip InstallPatchesAttributes) InternalTokens() hclwrite.Tokens {
+func (ip InstallPatchesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ip.ref.InternalTokens()
 }
 
 func (ip InstallPatchesAttributes) Reboot() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("reboot"))
+	return terra.ReferenceAsString(ip.ref.Append("reboot"))
 }
 
 func (ip InstallPatchesAttributes) Linux() terra.ListValue[LinuxAttributes] {
-	return terra.ReferenceList[LinuxAttributes](ip.ref.Append("linux"))
+	return terra.ReferenceAsList[LinuxAttributes](ip.ref.Append("linux"))
 }
 
 func (ip InstallPatchesAttributes) Windows() terra.ListValue[WindowsAttributes] {
-	return terra.ReferenceList[WindowsAttributes](ip.ref.Append("windows"))
+	return terra.ReferenceAsList[WindowsAttributes](ip.ref.Append("windows"))
 }
 
 type LinuxAttributes struct {
 	ref terra.Reference
 }
 
-func (l LinuxAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l LinuxAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l LinuxAttributes) InternalWithRef(ref terra.Reference) LinuxAttributes {
 	return LinuxAttributes{ref: ref}
 }
 
-func (l LinuxAttributes) InternalTokens() hclwrite.Tokens {
+func (l LinuxAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 
 func (l LinuxAttributes) ClassificationsToInclude() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](l.ref.Append("classifications_to_include"))
+	return terra.ReferenceAsList[terra.StringValue](l.ref.Append("classifications_to_include"))
 }
 
 func (l LinuxAttributes) PackageNamesMaskToExclude() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](l.ref.Append("package_names_mask_to_exclude"))
+	return terra.ReferenceAsList[terra.StringValue](l.ref.Append("package_names_mask_to_exclude"))
 }
 
 func (l LinuxAttributes) PackageNamesMaskToInclude() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](l.ref.Append("package_names_mask_to_include"))
+	return terra.ReferenceAsList[terra.StringValue](l.ref.Append("package_names_mask_to_include"))
 }
 
 type WindowsAttributes struct {
 	ref terra.Reference
 }
 
-func (w WindowsAttributes) InternalRef() terra.Reference {
-	return w.ref
+func (w WindowsAttributes) InternalRef() (terra.Reference, error) {
+	return w.ref, nil
 }
 
 func (w WindowsAttributes) InternalWithRef(ref terra.Reference) WindowsAttributes {
 	return WindowsAttributes{ref: ref}
 }
 
-func (w WindowsAttributes) InternalTokens() hclwrite.Tokens {
+func (w WindowsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return w.ref.InternalTokens()
 }
 
 func (w WindowsAttributes) ClassificationsToInclude() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](w.ref.Append("classifications_to_include"))
+	return terra.ReferenceAsList[terra.StringValue](w.ref.Append("classifications_to_include"))
 }
 
 func (w WindowsAttributes) KbNumbersToExclude() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](w.ref.Append("kb_numbers_to_exclude"))
+	return terra.ReferenceAsList[terra.StringValue](w.ref.Append("kb_numbers_to_exclude"))
 }
 
 func (w WindowsAttributes) KbNumbersToInclude() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](w.ref.Append("kb_numbers_to_include"))
+	return terra.ReferenceAsList[terra.StringValue](w.ref.Append("kb_numbers_to_include"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type WindowAttributes struct {
 	ref terra.Reference
 }
 
-func (w WindowAttributes) InternalRef() terra.Reference {
-	return w.ref
+func (w WindowAttributes) InternalRef() (terra.Reference, error) {
+	return w.ref, nil
 }
 
 func (w WindowAttributes) InternalWithRef(ref terra.Reference) WindowAttributes {
 	return WindowAttributes{ref: ref}
 }
 
-func (w WindowAttributes) InternalTokens() hclwrite.Tokens {
+func (w WindowAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return w.ref.InternalTokens()
 }
 
 func (w WindowAttributes) Duration() terra.StringValue {
-	return terra.ReferenceString(w.ref.Append("duration"))
+	return terra.ReferenceAsString(w.ref.Append("duration"))
 }
 
 func (w WindowAttributes) ExpirationDateTime() terra.StringValue {
-	return terra.ReferenceString(w.ref.Append("expiration_date_time"))
+	return terra.ReferenceAsString(w.ref.Append("expiration_date_time"))
 }
 
 func (w WindowAttributes) RecurEvery() terra.StringValue {
-	return terra.ReferenceString(w.ref.Append("recur_every"))
+	return terra.ReferenceAsString(w.ref.Append("recur_every"))
 }
 
 func (w WindowAttributes) StartDateTime() terra.StringValue {
-	return terra.ReferenceString(w.ref.Append("start_date_time"))
+	return terra.ReferenceAsString(w.ref.Append("start_date_time"))
 }
 
 func (w WindowAttributes) TimeZone() terra.StringValue {
-	return terra.ReferenceString(w.ref.Append("time_zone"))
+	return terra.ReferenceAsString(w.ref.Append("time_zone"))
 }
 
 type InstallPatchesState struct {

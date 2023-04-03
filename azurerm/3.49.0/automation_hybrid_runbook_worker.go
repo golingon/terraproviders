@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAutomationHybridRunbookWorker creates a new instance of [AutomationHybridRunbookWorker].
 func NewAutomationHybridRunbookWorker(name string, args AutomationHybridRunbookWorkerArgs) *AutomationHybridRunbookWorker {
 	return &AutomationHybridRunbookWorker{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAutomationHybridRunbookWorker(name string, args AutomationHybridRunbookW
 
 var _ terra.Resource = (*AutomationHybridRunbookWorker)(nil)
 
+// AutomationHybridRunbookWorker represents the Terraform resource azurerm_automation_hybrid_runbook_worker.
 type AutomationHybridRunbookWorker struct {
-	Name  string
-	Args  AutomationHybridRunbookWorkerArgs
-	state *automationHybridRunbookWorkerState
+	Name      string
+	Args      AutomationHybridRunbookWorkerArgs
+	state     *automationHybridRunbookWorkerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AutomationHybridRunbookWorker].
 func (ahrw *AutomationHybridRunbookWorker) Type() string {
 	return "azurerm_automation_hybrid_runbook_worker"
 }
 
+// LocalName returns the local name for [AutomationHybridRunbookWorker].
 func (ahrw *AutomationHybridRunbookWorker) LocalName() string {
 	return ahrw.Name
 }
 
+// Configuration returns the configuration (args) for [AutomationHybridRunbookWorker].
 func (ahrw *AutomationHybridRunbookWorker) Configuration() interface{} {
 	return ahrw.Args
 }
 
+// DependOn is used for other resources to depend on [AutomationHybridRunbookWorker].
+func (ahrw *AutomationHybridRunbookWorker) DependOn() terra.Reference {
+	return terra.ReferenceResource(ahrw)
+}
+
+// Dependencies returns the list of resources [AutomationHybridRunbookWorker] depends_on.
+func (ahrw *AutomationHybridRunbookWorker) Dependencies() terra.Dependencies {
+	return ahrw.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AutomationHybridRunbookWorker].
+func (ahrw *AutomationHybridRunbookWorker) LifecycleManagement() *terra.Lifecycle {
+	return ahrw.Lifecycle
+}
+
+// Attributes returns the attributes for [AutomationHybridRunbookWorker].
 func (ahrw *AutomationHybridRunbookWorker) Attributes() automationHybridRunbookWorkerAttributes {
 	return automationHybridRunbookWorkerAttributes{ref: terra.ReferenceResource(ahrw)}
 }
 
+// ImportState imports the given attribute values into [AutomationHybridRunbookWorker]'s state.
 func (ahrw *AutomationHybridRunbookWorker) ImportState(av io.Reader) error {
 	ahrw.state = &automationHybridRunbookWorkerState{}
 	if err := json.NewDecoder(av).Decode(ahrw.state); err != nil {
@@ -49,10 +73,12 @@ func (ahrw *AutomationHybridRunbookWorker) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AutomationHybridRunbookWorker] has state.
 func (ahrw *AutomationHybridRunbookWorker) State() (*automationHybridRunbookWorkerState, bool) {
 	return ahrw.state, ahrw.state != nil
 }
 
+// StateMust returns the state for [AutomationHybridRunbookWorker]. Panics if the state is nil.
 func (ahrw *AutomationHybridRunbookWorker) StateMust() *automationHybridRunbookWorkerState {
 	if ahrw.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ahrw.Type(), ahrw.LocalName()))
@@ -60,10 +86,7 @@ func (ahrw *AutomationHybridRunbookWorker) StateMust() *automationHybridRunbookW
 	return ahrw.state
 }
 
-func (ahrw *AutomationHybridRunbookWorker) DependOn() terra.Reference {
-	return terra.ReferenceResource(ahrw)
-}
-
+// AutomationHybridRunbookWorkerArgs contains the configurations for azurerm_automation_hybrid_runbook_worker.
 type AutomationHybridRunbookWorkerArgs struct {
 	// AutomationAccountName: string, required
 	AutomationAccountName terra.StringValue `hcl:"automation_account_name,attr" validate:"required"`
@@ -79,59 +102,68 @@ type AutomationHybridRunbookWorkerArgs struct {
 	WorkerId terra.StringValue `hcl:"worker_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *automationhybridrunbookworker.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that AutomationHybridRunbookWorker depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type automationHybridRunbookWorkerAttributes struct {
 	ref terra.Reference
 }
 
+// AutomationAccountName returns a reference to field automation_account_name of azurerm_automation_hybrid_runbook_worker.
 func (ahrw automationHybridRunbookWorkerAttributes) AutomationAccountName() terra.StringValue {
-	return terra.ReferenceString(ahrw.ref.Append("automation_account_name"))
+	return terra.ReferenceAsString(ahrw.ref.Append("automation_account_name"))
 }
 
+// Id returns a reference to field id of azurerm_automation_hybrid_runbook_worker.
 func (ahrw automationHybridRunbookWorkerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ahrw.ref.Append("id"))
+	return terra.ReferenceAsString(ahrw.ref.Append("id"))
 }
 
+// Ip returns a reference to field ip of azurerm_automation_hybrid_runbook_worker.
 func (ahrw automationHybridRunbookWorkerAttributes) Ip() terra.StringValue {
-	return terra.ReferenceString(ahrw.ref.Append("ip"))
+	return terra.ReferenceAsString(ahrw.ref.Append("ip"))
 }
 
+// LastSeenDateTime returns a reference to field last_seen_date_time of azurerm_automation_hybrid_runbook_worker.
 func (ahrw automationHybridRunbookWorkerAttributes) LastSeenDateTime() terra.StringValue {
-	return terra.ReferenceString(ahrw.ref.Append("last_seen_date_time"))
+	return terra.ReferenceAsString(ahrw.ref.Append("last_seen_date_time"))
 }
 
+// RegistrationDateTime returns a reference to field registration_date_time of azurerm_automation_hybrid_runbook_worker.
 func (ahrw automationHybridRunbookWorkerAttributes) RegistrationDateTime() terra.StringValue {
-	return terra.ReferenceString(ahrw.ref.Append("registration_date_time"))
+	return terra.ReferenceAsString(ahrw.ref.Append("registration_date_time"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_automation_hybrid_runbook_worker.
 func (ahrw automationHybridRunbookWorkerAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ahrw.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ahrw.ref.Append("resource_group_name"))
 }
 
+// VmResourceId returns a reference to field vm_resource_id of azurerm_automation_hybrid_runbook_worker.
 func (ahrw automationHybridRunbookWorkerAttributes) VmResourceId() terra.StringValue {
-	return terra.ReferenceString(ahrw.ref.Append("vm_resource_id"))
+	return terra.ReferenceAsString(ahrw.ref.Append("vm_resource_id"))
 }
 
+// WorkerGroupName returns a reference to field worker_group_name of azurerm_automation_hybrid_runbook_worker.
 func (ahrw automationHybridRunbookWorkerAttributes) WorkerGroupName() terra.StringValue {
-	return terra.ReferenceString(ahrw.ref.Append("worker_group_name"))
+	return terra.ReferenceAsString(ahrw.ref.Append("worker_group_name"))
 }
 
+// WorkerId returns a reference to field worker_id of azurerm_automation_hybrid_runbook_worker.
 func (ahrw automationHybridRunbookWorkerAttributes) WorkerId() terra.StringValue {
-	return terra.ReferenceString(ahrw.ref.Append("worker_id"))
+	return terra.ReferenceAsString(ahrw.ref.Append("worker_id"))
 }
 
+// WorkerName returns a reference to field worker_name of azurerm_automation_hybrid_runbook_worker.
 func (ahrw automationHybridRunbookWorkerAttributes) WorkerName() terra.StringValue {
-	return terra.ReferenceString(ahrw.ref.Append("worker_name"))
+	return terra.ReferenceAsString(ahrw.ref.Append("worker_name"))
 }
 
+// WorkerType returns a reference to field worker_type of azurerm_automation_hybrid_runbook_worker.
 func (ahrw automationHybridRunbookWorkerAttributes) WorkerType() terra.StringValue {
-	return terra.ReferenceString(ahrw.ref.Append("worker_type"))
+	return terra.ReferenceAsString(ahrw.ref.Append("worker_type"))
 }
 
 func (ahrw automationHybridRunbookWorkerAttributes) Timeouts() automationhybridrunbookworker.TimeoutsAttributes {
-	return terra.ReferenceSingle[automationhybridrunbookworker.TimeoutsAttributes](ahrw.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[automationhybridrunbookworker.TimeoutsAttributes](ahrw.ref.Append("timeouts"))
 }
 
 type automationHybridRunbookWorkerState struct {

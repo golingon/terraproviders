@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLogicAppIntegrationAccountSchema creates a new instance of [LogicAppIntegrationAccountSchema].
 func NewLogicAppIntegrationAccountSchema(name string, args LogicAppIntegrationAccountSchemaArgs) *LogicAppIntegrationAccountSchema {
 	return &LogicAppIntegrationAccountSchema{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLogicAppIntegrationAccountSchema(name string, args LogicAppIntegrationAc
 
 var _ terra.Resource = (*LogicAppIntegrationAccountSchema)(nil)
 
+// LogicAppIntegrationAccountSchema represents the Terraform resource azurerm_logic_app_integration_account_schema.
 type LogicAppIntegrationAccountSchema struct {
-	Name  string
-	Args  LogicAppIntegrationAccountSchemaArgs
-	state *logicAppIntegrationAccountSchemaState
+	Name      string
+	Args      LogicAppIntegrationAccountSchemaArgs
+	state     *logicAppIntegrationAccountSchemaState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LogicAppIntegrationAccountSchema].
 func (laias *LogicAppIntegrationAccountSchema) Type() string {
 	return "azurerm_logic_app_integration_account_schema"
 }
 
+// LocalName returns the local name for [LogicAppIntegrationAccountSchema].
 func (laias *LogicAppIntegrationAccountSchema) LocalName() string {
 	return laias.Name
 }
 
+// Configuration returns the configuration (args) for [LogicAppIntegrationAccountSchema].
 func (laias *LogicAppIntegrationAccountSchema) Configuration() interface{} {
 	return laias.Args
 }
 
+// DependOn is used for other resources to depend on [LogicAppIntegrationAccountSchema].
+func (laias *LogicAppIntegrationAccountSchema) DependOn() terra.Reference {
+	return terra.ReferenceResource(laias)
+}
+
+// Dependencies returns the list of resources [LogicAppIntegrationAccountSchema] depends_on.
+func (laias *LogicAppIntegrationAccountSchema) Dependencies() terra.Dependencies {
+	return laias.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LogicAppIntegrationAccountSchema].
+func (laias *LogicAppIntegrationAccountSchema) LifecycleManagement() *terra.Lifecycle {
+	return laias.Lifecycle
+}
+
+// Attributes returns the attributes for [LogicAppIntegrationAccountSchema].
 func (laias *LogicAppIntegrationAccountSchema) Attributes() logicAppIntegrationAccountSchemaAttributes {
 	return logicAppIntegrationAccountSchemaAttributes{ref: terra.ReferenceResource(laias)}
 }
 
+// ImportState imports the given attribute values into [LogicAppIntegrationAccountSchema]'s state.
 func (laias *LogicAppIntegrationAccountSchema) ImportState(av io.Reader) error {
 	laias.state = &logicAppIntegrationAccountSchemaState{}
 	if err := json.NewDecoder(av).Decode(laias.state); err != nil {
@@ -49,10 +73,12 @@ func (laias *LogicAppIntegrationAccountSchema) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LogicAppIntegrationAccountSchema] has state.
 func (laias *LogicAppIntegrationAccountSchema) State() (*logicAppIntegrationAccountSchemaState, bool) {
 	return laias.state, laias.state != nil
 }
 
+// StateMust returns the state for [LogicAppIntegrationAccountSchema]. Panics if the state is nil.
 func (laias *LogicAppIntegrationAccountSchema) StateMust() *logicAppIntegrationAccountSchemaState {
 	if laias.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", laias.Type(), laias.LocalName()))
@@ -60,10 +86,7 @@ func (laias *LogicAppIntegrationAccountSchema) StateMust() *logicAppIntegrationA
 	return laias.state
 }
 
-func (laias *LogicAppIntegrationAccountSchema) DependOn() terra.Reference {
-	return terra.ReferenceResource(laias)
-}
-
+// LogicAppIntegrationAccountSchemaArgs contains the configurations for azurerm_logic_app_integration_account_schema.
 type LogicAppIntegrationAccountSchemaArgs struct {
 	// Content: string, required
 	Content terra.StringValue `hcl:"content,attr" validate:"required"`
@@ -81,43 +104,48 @@ type LogicAppIntegrationAccountSchemaArgs struct {
 	ResourceGroupName terra.StringValue `hcl:"resource_group_name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *logicappintegrationaccountschema.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LogicAppIntegrationAccountSchema depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type logicAppIntegrationAccountSchemaAttributes struct {
 	ref terra.Reference
 }
 
+// Content returns a reference to field content of azurerm_logic_app_integration_account_schema.
 func (laias logicAppIntegrationAccountSchemaAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(laias.ref.Append("content"))
+	return terra.ReferenceAsString(laias.ref.Append("content"))
 }
 
+// FileName returns a reference to field file_name of azurerm_logic_app_integration_account_schema.
 func (laias logicAppIntegrationAccountSchemaAttributes) FileName() terra.StringValue {
-	return terra.ReferenceString(laias.ref.Append("file_name"))
+	return terra.ReferenceAsString(laias.ref.Append("file_name"))
 }
 
+// Id returns a reference to field id of azurerm_logic_app_integration_account_schema.
 func (laias logicAppIntegrationAccountSchemaAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(laias.ref.Append("id"))
+	return terra.ReferenceAsString(laias.ref.Append("id"))
 }
 
+// IntegrationAccountName returns a reference to field integration_account_name of azurerm_logic_app_integration_account_schema.
 func (laias logicAppIntegrationAccountSchemaAttributes) IntegrationAccountName() terra.StringValue {
-	return terra.ReferenceString(laias.ref.Append("integration_account_name"))
+	return terra.ReferenceAsString(laias.ref.Append("integration_account_name"))
 }
 
+// Metadata returns a reference to field metadata of azurerm_logic_app_integration_account_schema.
 func (laias logicAppIntegrationAccountSchemaAttributes) Metadata() terra.StringValue {
-	return terra.ReferenceString(laias.ref.Append("metadata"))
+	return terra.ReferenceAsString(laias.ref.Append("metadata"))
 }
 
+// Name returns a reference to field name of azurerm_logic_app_integration_account_schema.
 func (laias logicAppIntegrationAccountSchemaAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(laias.ref.Append("name"))
+	return terra.ReferenceAsString(laias.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_logic_app_integration_account_schema.
 func (laias logicAppIntegrationAccountSchemaAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(laias.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(laias.ref.Append("resource_group_name"))
 }
 
 func (laias logicAppIntegrationAccountSchemaAttributes) Timeouts() logicappintegrationaccountschema.TimeoutsAttributes {
-	return terra.ReferenceSingle[logicappintegrationaccountschema.TimeoutsAttributes](laias.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[logicappintegrationaccountschema.TimeoutsAttributes](laias.ref.Append("timeouts"))
 }
 
 type logicAppIntegrationAccountSchemaState struct {

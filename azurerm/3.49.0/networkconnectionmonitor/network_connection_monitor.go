@@ -130,348 +130,348 @@ type EndpointAttributes struct {
 	ref terra.Reference
 }
 
-func (e EndpointAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EndpointAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EndpointAttributes) InternalWithRef(ref terra.Reference) EndpointAttributes {
 	return EndpointAttributes{ref: ref}
 }
 
-func (e EndpointAttributes) InternalTokens() hclwrite.Tokens {
+func (e EndpointAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
 func (e EndpointAttributes) Address() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("address"))
+	return terra.ReferenceAsString(e.ref.Append("address"))
 }
 
 func (e EndpointAttributes) CoverageLevel() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("coverage_level"))
+	return terra.ReferenceAsString(e.ref.Append("coverage_level"))
 }
 
 func (e EndpointAttributes) ExcludedIpAddresses() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](e.ref.Append("excluded_ip_addresses"))
+	return terra.ReferenceAsSet[terra.StringValue](e.ref.Append("excluded_ip_addresses"))
 }
 
 func (e EndpointAttributes) IncludedIpAddresses() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](e.ref.Append("included_ip_addresses"))
+	return terra.ReferenceAsSet[terra.StringValue](e.ref.Append("included_ip_addresses"))
 }
 
 func (e EndpointAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("name"))
+	return terra.ReferenceAsString(e.ref.Append("name"))
 }
 
 func (e EndpointAttributes) TargetResourceId() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("target_resource_id"))
+	return terra.ReferenceAsString(e.ref.Append("target_resource_id"))
 }
 
 func (e EndpointAttributes) TargetResourceType() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("target_resource_type"))
+	return terra.ReferenceAsString(e.ref.Append("target_resource_type"))
 }
 
 func (e EndpointAttributes) Filter() terra.ListValue[FilterAttributes] {
-	return terra.ReferenceList[FilterAttributes](e.ref.Append("filter"))
+	return terra.ReferenceAsList[FilterAttributes](e.ref.Append("filter"))
 }
 
 type FilterAttributes struct {
 	ref terra.Reference
 }
 
-func (f FilterAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FilterAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes {
 	return FilterAttributes{ref: ref}
 }
 
-func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
+func (f FilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
 func (f FilterAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("type"))
+	return terra.ReferenceAsString(f.ref.Append("type"))
 }
 
 func (f FilterAttributes) Item() terra.SetValue[ItemAttributes] {
-	return terra.ReferenceSet[ItemAttributes](f.ref.Append("item"))
+	return terra.ReferenceAsSet[ItemAttributes](f.ref.Append("item"))
 }
 
 type ItemAttributes struct {
 	ref terra.Reference
 }
 
-func (i ItemAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i ItemAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i ItemAttributes) InternalWithRef(ref terra.Reference) ItemAttributes {
 	return ItemAttributes{ref: ref}
 }
 
-func (i ItemAttributes) InternalTokens() hclwrite.Tokens {
+func (i ItemAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i ItemAttributes) Address() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("address"))
+	return terra.ReferenceAsString(i.ref.Append("address"))
 }
 
 func (i ItemAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("type"))
+	return terra.ReferenceAsString(i.ref.Append("type"))
 }
 
 type TestConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (tc TestConfigurationAttributes) InternalRef() terra.Reference {
-	return tc.ref
+func (tc TestConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return tc.ref, nil
 }
 
 func (tc TestConfigurationAttributes) InternalWithRef(ref terra.Reference) TestConfigurationAttributes {
 	return TestConfigurationAttributes{ref: ref}
 }
 
-func (tc TestConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (tc TestConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tc.ref.InternalTokens()
 }
 
 func (tc TestConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("name"))
+	return terra.ReferenceAsString(tc.ref.Append("name"))
 }
 
 func (tc TestConfigurationAttributes) PreferredIpVersion() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("preferred_ip_version"))
+	return terra.ReferenceAsString(tc.ref.Append("preferred_ip_version"))
 }
 
 func (tc TestConfigurationAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("protocol"))
+	return terra.ReferenceAsString(tc.ref.Append("protocol"))
 }
 
 func (tc TestConfigurationAttributes) TestFrequencyInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(tc.ref.Append("test_frequency_in_seconds"))
+	return terra.ReferenceAsNumber(tc.ref.Append("test_frequency_in_seconds"))
 }
 
 func (tc TestConfigurationAttributes) HttpConfiguration() terra.ListValue[HttpConfigurationAttributes] {
-	return terra.ReferenceList[HttpConfigurationAttributes](tc.ref.Append("http_configuration"))
+	return terra.ReferenceAsList[HttpConfigurationAttributes](tc.ref.Append("http_configuration"))
 }
 
 func (tc TestConfigurationAttributes) IcmpConfiguration() terra.ListValue[IcmpConfigurationAttributes] {
-	return terra.ReferenceList[IcmpConfigurationAttributes](tc.ref.Append("icmp_configuration"))
+	return terra.ReferenceAsList[IcmpConfigurationAttributes](tc.ref.Append("icmp_configuration"))
 }
 
 func (tc TestConfigurationAttributes) SuccessThreshold() terra.ListValue[SuccessThresholdAttributes] {
-	return terra.ReferenceList[SuccessThresholdAttributes](tc.ref.Append("success_threshold"))
+	return terra.ReferenceAsList[SuccessThresholdAttributes](tc.ref.Append("success_threshold"))
 }
 
 func (tc TestConfigurationAttributes) TcpConfiguration() terra.ListValue[TcpConfigurationAttributes] {
-	return terra.ReferenceList[TcpConfigurationAttributes](tc.ref.Append("tcp_configuration"))
+	return terra.ReferenceAsList[TcpConfigurationAttributes](tc.ref.Append("tcp_configuration"))
 }
 
 type HttpConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (hc HttpConfigurationAttributes) InternalRef() terra.Reference {
-	return hc.ref
+func (hc HttpConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return hc.ref, nil
 }
 
 func (hc HttpConfigurationAttributes) InternalWithRef(ref terra.Reference) HttpConfigurationAttributes {
 	return HttpConfigurationAttributes{ref: ref}
 }
 
-func (hc HttpConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (hc HttpConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hc.ref.InternalTokens()
 }
 
 func (hc HttpConfigurationAttributes) Method() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("method"))
+	return terra.ReferenceAsString(hc.ref.Append("method"))
 }
 
 func (hc HttpConfigurationAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("path"))
+	return terra.ReferenceAsString(hc.ref.Append("path"))
 }
 
 func (hc HttpConfigurationAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(hc.ref.Append("port"))
+	return terra.ReferenceAsNumber(hc.ref.Append("port"))
 }
 
 func (hc HttpConfigurationAttributes) PreferHttps() terra.BoolValue {
-	return terra.ReferenceBool(hc.ref.Append("prefer_https"))
+	return terra.ReferenceAsBool(hc.ref.Append("prefer_https"))
 }
 
 func (hc HttpConfigurationAttributes) ValidStatusCodeRanges() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](hc.ref.Append("valid_status_code_ranges"))
+	return terra.ReferenceAsSet[terra.StringValue](hc.ref.Append("valid_status_code_ranges"))
 }
 
 func (hc HttpConfigurationAttributes) RequestHeader() terra.SetValue[RequestHeaderAttributes] {
-	return terra.ReferenceSet[RequestHeaderAttributes](hc.ref.Append("request_header"))
+	return terra.ReferenceAsSet[RequestHeaderAttributes](hc.ref.Append("request_header"))
 }
 
 type RequestHeaderAttributes struct {
 	ref terra.Reference
 }
 
-func (rh RequestHeaderAttributes) InternalRef() terra.Reference {
-	return rh.ref
+func (rh RequestHeaderAttributes) InternalRef() (terra.Reference, error) {
+	return rh.ref, nil
 }
 
 func (rh RequestHeaderAttributes) InternalWithRef(ref terra.Reference) RequestHeaderAttributes {
 	return RequestHeaderAttributes{ref: ref}
 }
 
-func (rh RequestHeaderAttributes) InternalTokens() hclwrite.Tokens {
+func (rh RequestHeaderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rh.ref.InternalTokens()
 }
 
 func (rh RequestHeaderAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rh.ref.Append("name"))
+	return terra.ReferenceAsString(rh.ref.Append("name"))
 }
 
 func (rh RequestHeaderAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(rh.ref.Append("value"))
+	return terra.ReferenceAsString(rh.ref.Append("value"))
 }
 
 type IcmpConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ic IcmpConfigurationAttributes) InternalRef() terra.Reference {
-	return ic.ref
+func (ic IcmpConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ic.ref, nil
 }
 
 func (ic IcmpConfigurationAttributes) InternalWithRef(ref terra.Reference) IcmpConfigurationAttributes {
 	return IcmpConfigurationAttributes{ref: ref}
 }
 
-func (ic IcmpConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ic IcmpConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ic.ref.InternalTokens()
 }
 
 func (ic IcmpConfigurationAttributes) TraceRouteEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ic.ref.Append("trace_route_enabled"))
+	return terra.ReferenceAsBool(ic.ref.Append("trace_route_enabled"))
 }
 
 type SuccessThresholdAttributes struct {
 	ref terra.Reference
 }
 
-func (st SuccessThresholdAttributes) InternalRef() terra.Reference {
-	return st.ref
+func (st SuccessThresholdAttributes) InternalRef() (terra.Reference, error) {
+	return st.ref, nil
 }
 
 func (st SuccessThresholdAttributes) InternalWithRef(ref terra.Reference) SuccessThresholdAttributes {
 	return SuccessThresholdAttributes{ref: ref}
 }
 
-func (st SuccessThresholdAttributes) InternalTokens() hclwrite.Tokens {
+func (st SuccessThresholdAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return st.ref.InternalTokens()
 }
 
 func (st SuccessThresholdAttributes) ChecksFailedPercent() terra.NumberValue {
-	return terra.ReferenceNumber(st.ref.Append("checks_failed_percent"))
+	return terra.ReferenceAsNumber(st.ref.Append("checks_failed_percent"))
 }
 
 func (st SuccessThresholdAttributes) RoundTripTimeMs() terra.NumberValue {
-	return terra.ReferenceNumber(st.ref.Append("round_trip_time_ms"))
+	return terra.ReferenceAsNumber(st.ref.Append("round_trip_time_ms"))
 }
 
 type TcpConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (tc TcpConfigurationAttributes) InternalRef() terra.Reference {
-	return tc.ref
+func (tc TcpConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return tc.ref, nil
 }
 
 func (tc TcpConfigurationAttributes) InternalWithRef(ref terra.Reference) TcpConfigurationAttributes {
 	return TcpConfigurationAttributes{ref: ref}
 }
 
-func (tc TcpConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (tc TcpConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tc.ref.InternalTokens()
 }
 
 func (tc TcpConfigurationAttributes) DestinationPortBehavior() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("destination_port_behavior"))
+	return terra.ReferenceAsString(tc.ref.Append("destination_port_behavior"))
 }
 
 func (tc TcpConfigurationAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(tc.ref.Append("port"))
+	return terra.ReferenceAsNumber(tc.ref.Append("port"))
 }
 
 func (tc TcpConfigurationAttributes) TraceRouteEnabled() terra.BoolValue {
-	return terra.ReferenceBool(tc.ref.Append("trace_route_enabled"))
+	return terra.ReferenceAsBool(tc.ref.Append("trace_route_enabled"))
 }
 
 type TestGroupAttributes struct {
 	ref terra.Reference
 }
 
-func (tg TestGroupAttributes) InternalRef() terra.Reference {
-	return tg.ref
+func (tg TestGroupAttributes) InternalRef() (terra.Reference, error) {
+	return tg.ref, nil
 }
 
 func (tg TestGroupAttributes) InternalWithRef(ref terra.Reference) TestGroupAttributes {
 	return TestGroupAttributes{ref: ref}
 }
 
-func (tg TestGroupAttributes) InternalTokens() hclwrite.Tokens {
+func (tg TestGroupAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tg.ref.InternalTokens()
 }
 
 func (tg TestGroupAttributes) DestinationEndpoints() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](tg.ref.Append("destination_endpoints"))
+	return terra.ReferenceAsSet[terra.StringValue](tg.ref.Append("destination_endpoints"))
 }
 
 func (tg TestGroupAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(tg.ref.Append("enabled"))
+	return terra.ReferenceAsBool(tg.ref.Append("enabled"))
 }
 
 func (tg TestGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(tg.ref.Append("name"))
+	return terra.ReferenceAsString(tg.ref.Append("name"))
 }
 
 func (tg TestGroupAttributes) SourceEndpoints() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](tg.ref.Append("source_endpoints"))
+	return terra.ReferenceAsSet[terra.StringValue](tg.ref.Append("source_endpoints"))
 }
 
 func (tg TestGroupAttributes) TestConfigurationNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](tg.ref.Append("test_configuration_names"))
+	return terra.ReferenceAsSet[terra.StringValue](tg.ref.Append("test_configuration_names"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type EndpointState struct {

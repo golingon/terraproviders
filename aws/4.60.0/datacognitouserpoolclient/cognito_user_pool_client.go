@@ -23,7 +23,7 @@ func (ac AnalyticsConfigurationAttributes) InternalWithRef(ref terra.Reference) 
 	return AnalyticsConfigurationAttributes{ref: ref}
 }
 
-func (ac AnalyticsConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ac AnalyticsConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
@@ -59,7 +59,7 @@ func (tvu TokenValidityUnitsAttributes) InternalWithRef(ref terra.Reference) Tok
 	return TokenValidityUnitsAttributes{ref: ref}
 }
 
-func (tvu TokenValidityUnitsAttributes) InternalTokens() hclwrite.Tokens {
+func (tvu TokenValidityUnitsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tvu.ref.InternalTokens()
 }
 

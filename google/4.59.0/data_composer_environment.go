@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataComposerEnvironment creates a new instance of [DataComposerEnvironment].
 func NewDataComposerEnvironment(name string, args DataComposerEnvironmentArgs) *DataComposerEnvironment {
 	return &DataComposerEnvironment{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataComposerEnvironment(name string, args DataComposerEnvironmentArgs) *
 
 var _ terra.DataResource = (*DataComposerEnvironment)(nil)
 
+// DataComposerEnvironment represents the Terraform data resource google_composer_environment.
 type DataComposerEnvironment struct {
 	Name string
 	Args DataComposerEnvironmentArgs
 }
 
+// DataSource returns the Terraform object type for [DataComposerEnvironment].
 func (ce *DataComposerEnvironment) DataSource() string {
 	return "google_composer_environment"
 }
 
+// LocalName returns the local name for [DataComposerEnvironment].
 func (ce *DataComposerEnvironment) LocalName() string {
 	return ce.Name
 }
 
+// Configuration returns the configuration (args) for [DataComposerEnvironment].
 func (ce *DataComposerEnvironment) Configuration() interface{} {
 	return ce.Args
 }
 
+// Attributes returns the attributes for [DataComposerEnvironment].
 func (ce *DataComposerEnvironment) Attributes() dataComposerEnvironmentAttributes {
 	return dataComposerEnvironmentAttributes{ref: terra.ReferenceDataResource(ce)}
 }
 
+// DataComposerEnvironmentArgs contains the configurations for google_composer_environment.
 type DataComposerEnvironmentArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,26 +60,31 @@ type dataComposerEnvironmentAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of google_composer_environment.
 func (ce dataComposerEnvironmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ce.ref.Append("id"))
+	return terra.ReferenceAsString(ce.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_composer_environment.
 func (ce dataComposerEnvironmentAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ce.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](ce.ref.Append("labels"))
 }
 
+// Name returns a reference to field name of google_composer_environment.
 func (ce dataComposerEnvironmentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ce.ref.Append("name"))
+	return terra.ReferenceAsString(ce.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_composer_environment.
 func (ce dataComposerEnvironmentAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ce.ref.Append("project"))
+	return terra.ReferenceAsString(ce.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_composer_environment.
 func (ce dataComposerEnvironmentAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(ce.ref.Append("region"))
+	return terra.ReferenceAsString(ce.ref.Append("region"))
 }
 
 func (ce dataComposerEnvironmentAttributes) Config() terra.ListValue[datacomposerenvironment.ConfigAttributes] {
-	return terra.ReferenceList[datacomposerenvironment.ConfigAttributes](ce.ref.Append("config"))
+	return terra.ReferenceAsList[datacomposerenvironment.ConfigAttributes](ce.ref.Append("config"))
 }

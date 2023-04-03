@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCapacityReservationGroup creates a new instance of [CapacityReservationGroup].
 func NewCapacityReservationGroup(name string, args CapacityReservationGroupArgs) *CapacityReservationGroup {
 	return &CapacityReservationGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCapacityReservationGroup(name string, args CapacityReservationGroupArgs)
 
 var _ terra.Resource = (*CapacityReservationGroup)(nil)
 
+// CapacityReservationGroup represents the Terraform resource azurerm_capacity_reservation_group.
 type CapacityReservationGroup struct {
-	Name  string
-	Args  CapacityReservationGroupArgs
-	state *capacityReservationGroupState
+	Name      string
+	Args      CapacityReservationGroupArgs
+	state     *capacityReservationGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CapacityReservationGroup].
 func (crg *CapacityReservationGroup) Type() string {
 	return "azurerm_capacity_reservation_group"
 }
 
+// LocalName returns the local name for [CapacityReservationGroup].
 func (crg *CapacityReservationGroup) LocalName() string {
 	return crg.Name
 }
 
+// Configuration returns the configuration (args) for [CapacityReservationGroup].
 func (crg *CapacityReservationGroup) Configuration() interface{} {
 	return crg.Args
 }
 
+// DependOn is used for other resources to depend on [CapacityReservationGroup].
+func (crg *CapacityReservationGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(crg)
+}
+
+// Dependencies returns the list of resources [CapacityReservationGroup] depends_on.
+func (crg *CapacityReservationGroup) Dependencies() terra.Dependencies {
+	return crg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CapacityReservationGroup].
+func (crg *CapacityReservationGroup) LifecycleManagement() *terra.Lifecycle {
+	return crg.Lifecycle
+}
+
+// Attributes returns the attributes for [CapacityReservationGroup].
 func (crg *CapacityReservationGroup) Attributes() capacityReservationGroupAttributes {
 	return capacityReservationGroupAttributes{ref: terra.ReferenceResource(crg)}
 }
 
+// ImportState imports the given attribute values into [CapacityReservationGroup]'s state.
 func (crg *CapacityReservationGroup) ImportState(av io.Reader) error {
 	crg.state = &capacityReservationGroupState{}
 	if err := json.NewDecoder(av).Decode(crg.state); err != nil {
@@ -49,10 +73,12 @@ func (crg *CapacityReservationGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CapacityReservationGroup] has state.
 func (crg *CapacityReservationGroup) State() (*capacityReservationGroupState, bool) {
 	return crg.state, crg.state != nil
 }
 
+// StateMust returns the state for [CapacityReservationGroup]. Panics if the state is nil.
 func (crg *CapacityReservationGroup) StateMust() *capacityReservationGroupState {
 	if crg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", crg.Type(), crg.LocalName()))
@@ -60,10 +86,7 @@ func (crg *CapacityReservationGroup) StateMust() *capacityReservationGroupState 
 	return crg.state
 }
 
-func (crg *CapacityReservationGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(crg)
-}
-
+// CapacityReservationGroupArgs contains the configurations for azurerm_capacity_reservation_group.
 type CapacityReservationGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,39 +102,43 @@ type CapacityReservationGroupArgs struct {
 	Zones terra.SetValue[terra.StringValue] `hcl:"zones,attr"`
 	// Timeouts: optional
 	Timeouts *capacityreservationgroup.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that CapacityReservationGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type capacityReservationGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_capacity_reservation_group.
 func (crg capacityReservationGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(crg.ref.Append("id"))
+	return terra.ReferenceAsString(crg.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_capacity_reservation_group.
 func (crg capacityReservationGroupAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(crg.ref.Append("location"))
+	return terra.ReferenceAsString(crg.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_capacity_reservation_group.
 func (crg capacityReservationGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(crg.ref.Append("name"))
+	return terra.ReferenceAsString(crg.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_capacity_reservation_group.
 func (crg capacityReservationGroupAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(crg.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(crg.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_capacity_reservation_group.
 func (crg capacityReservationGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](crg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](crg.ref.Append("tags"))
 }
 
+// Zones returns a reference to field zones of azurerm_capacity_reservation_group.
 func (crg capacityReservationGroupAttributes) Zones() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](crg.ref.Append("zones"))
+	return terra.ReferenceAsSet[terra.StringValue](crg.ref.Append("zones"))
 }
 
 func (crg capacityReservationGroupAttributes) Timeouts() capacityreservationgroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[capacityreservationgroup.TimeoutsAttributes](crg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[capacityreservationgroup.TimeoutsAttributes](crg.ref.Append("timeouts"))
 }
 
 type capacityReservationGroupState struct {

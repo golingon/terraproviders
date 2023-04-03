@@ -58,7 +58,7 @@ func (po ParameterObjectAttributes) InternalWithRef(ref terra.Reference) Paramet
 	return ParameterObjectAttributes{ref: ref}
 }
 
-func (po ParameterObjectAttributes) InternalTokens() hclwrite.Tokens {
+func (po ParameterObjectAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return po.ref.InternalTokens()
 }
 
@@ -82,7 +82,7 @@ func (a AttributeAttributes) InternalWithRef(ref terra.Reference) AttributeAttri
 	return AttributeAttributes{ref: ref}
 }
 
-func (a AttributeAttributes) InternalTokens() hclwrite.Tokens {
+func (a AttributeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -106,7 +106,7 @@ func (pv ParameterValueAttributes) InternalWithRef(ref terra.Reference) Paramete
 	return ParameterValueAttributes{ref: ref}
 }
 
-func (pv ParameterValueAttributes) InternalTokens() hclwrite.Tokens {
+func (pv ParameterValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pv.ref.InternalTokens()
 }
 
@@ -130,7 +130,7 @@ func (po PipelineObjectAttributes) InternalWithRef(ref terra.Reference) Pipeline
 	return PipelineObjectAttributes{ref: ref}
 }
 
-func (po PipelineObjectAttributes) InternalTokens() hclwrite.Tokens {
+func (po PipelineObjectAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return po.ref.InternalTokens()
 }
 
@@ -158,7 +158,7 @@ func (f FieldAttributes) InternalWithRef(ref terra.Reference) FieldAttributes {
 	return FieldAttributes{ref: ref}
 }
 
-func (f FieldAttributes) InternalTokens() hclwrite.Tokens {
+func (f FieldAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 

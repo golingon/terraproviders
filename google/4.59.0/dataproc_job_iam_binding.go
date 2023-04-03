@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataprocJobIamBinding creates a new instance of [DataprocJobIamBinding].
 func NewDataprocJobIamBinding(name string, args DataprocJobIamBindingArgs) *DataprocJobIamBinding {
 	return &DataprocJobIamBinding{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataprocJobIamBinding(name string, args DataprocJobIamBindingArgs) *Data
 
 var _ terra.Resource = (*DataprocJobIamBinding)(nil)
 
+// DataprocJobIamBinding represents the Terraform resource google_dataproc_job_iam_binding.
 type DataprocJobIamBinding struct {
-	Name  string
-	Args  DataprocJobIamBindingArgs
-	state *dataprocJobIamBindingState
+	Name      string
+	Args      DataprocJobIamBindingArgs
+	state     *dataprocJobIamBindingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataprocJobIamBinding].
 func (djib *DataprocJobIamBinding) Type() string {
 	return "google_dataproc_job_iam_binding"
 }
 
+// LocalName returns the local name for [DataprocJobIamBinding].
 func (djib *DataprocJobIamBinding) LocalName() string {
 	return djib.Name
 }
 
+// Configuration returns the configuration (args) for [DataprocJobIamBinding].
 func (djib *DataprocJobIamBinding) Configuration() interface{} {
 	return djib.Args
 }
 
+// DependOn is used for other resources to depend on [DataprocJobIamBinding].
+func (djib *DataprocJobIamBinding) DependOn() terra.Reference {
+	return terra.ReferenceResource(djib)
+}
+
+// Dependencies returns the list of resources [DataprocJobIamBinding] depends_on.
+func (djib *DataprocJobIamBinding) Dependencies() terra.Dependencies {
+	return djib.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataprocJobIamBinding].
+func (djib *DataprocJobIamBinding) LifecycleManagement() *terra.Lifecycle {
+	return djib.Lifecycle
+}
+
+// Attributes returns the attributes for [DataprocJobIamBinding].
 func (djib *DataprocJobIamBinding) Attributes() dataprocJobIamBindingAttributes {
 	return dataprocJobIamBindingAttributes{ref: terra.ReferenceResource(djib)}
 }
 
+// ImportState imports the given attribute values into [DataprocJobIamBinding]'s state.
 func (djib *DataprocJobIamBinding) ImportState(av io.Reader) error {
 	djib.state = &dataprocJobIamBindingState{}
 	if err := json.NewDecoder(av).Decode(djib.state); err != nil {
@@ -49,10 +73,12 @@ func (djib *DataprocJobIamBinding) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataprocJobIamBinding] has state.
 func (djib *DataprocJobIamBinding) State() (*dataprocJobIamBindingState, bool) {
 	return djib.state, djib.state != nil
 }
 
+// StateMust returns the state for [DataprocJobIamBinding]. Panics if the state is nil.
 func (djib *DataprocJobIamBinding) StateMust() *dataprocJobIamBindingState {
 	if djib.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", djib.Type(), djib.LocalName()))
@@ -60,10 +86,7 @@ func (djib *DataprocJobIamBinding) StateMust() *dataprocJobIamBindingState {
 	return djib.state
 }
 
-func (djib *DataprocJobIamBinding) DependOn() terra.Reference {
-	return terra.ReferenceResource(djib)
-}
-
+// DataprocJobIamBindingArgs contains the configurations for google_dataproc_job_iam_binding.
 type DataprocJobIamBindingArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,43 +102,48 @@ type DataprocJobIamBindingArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *dataprocjobiambinding.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that DataprocJobIamBinding depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataprocJobIamBindingAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_dataproc_job_iam_binding.
 func (djib dataprocJobIamBindingAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(djib.ref.Append("etag"))
+	return terra.ReferenceAsString(djib.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_dataproc_job_iam_binding.
 func (djib dataprocJobIamBindingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(djib.ref.Append("id"))
+	return terra.ReferenceAsString(djib.ref.Append("id"))
 }
 
+// JobId returns a reference to field job_id of google_dataproc_job_iam_binding.
 func (djib dataprocJobIamBindingAttributes) JobId() terra.StringValue {
-	return terra.ReferenceString(djib.ref.Append("job_id"))
+	return terra.ReferenceAsString(djib.ref.Append("job_id"))
 }
 
+// Members returns a reference to field members of google_dataproc_job_iam_binding.
 func (djib dataprocJobIamBindingAttributes) Members() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](djib.ref.Append("members"))
+	return terra.ReferenceAsSet[terra.StringValue](djib.ref.Append("members"))
 }
 
+// Project returns a reference to field project of google_dataproc_job_iam_binding.
 func (djib dataprocJobIamBindingAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(djib.ref.Append("project"))
+	return terra.ReferenceAsString(djib.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_dataproc_job_iam_binding.
 func (djib dataprocJobIamBindingAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(djib.ref.Append("region"))
+	return terra.ReferenceAsString(djib.ref.Append("region"))
 }
 
+// Role returns a reference to field role of google_dataproc_job_iam_binding.
 func (djib dataprocJobIamBindingAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(djib.ref.Append("role"))
+	return terra.ReferenceAsString(djib.ref.Append("role"))
 }
 
 func (djib dataprocJobIamBindingAttributes) Condition() terra.ListValue[dataprocjobiambinding.ConditionAttributes] {
-	return terra.ReferenceList[dataprocjobiambinding.ConditionAttributes](djib.ref.Append("condition"))
+	return terra.ReferenceAsList[dataprocjobiambinding.ConditionAttributes](djib.ref.Append("condition"))
 }
 
 type dataprocJobIamBindingState struct {

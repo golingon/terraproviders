@@ -20,76 +20,76 @@ type IdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (i IdentityAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IdentityAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IdentityAttributes) InternalWithRef(ref terra.Reference) IdentityAttributes {
 	return IdentityAttributes{ref: ref}
 }
 
-func (i IdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (i IdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IdentityAttributes) IdentityIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](i.ref.Append("identity_ids"))
+	return terra.ReferenceAsList[terra.StringValue](i.ref.Append("identity_ids"))
 }
 
 func (i IdentityAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("principal_id"))
+	return terra.ReferenceAsString(i.ref.Append("principal_id"))
 }
 
 func (i IdentityAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(i.ref.Append("tenant_id"))
 }
 
 func (i IdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("type"))
+	return terra.ReferenceAsString(i.ref.Append("type"))
 }
 
 type NonComplianceMessageAttributes struct {
 	ref terra.Reference
 }
 
-func (ncm NonComplianceMessageAttributes) InternalRef() terra.Reference {
-	return ncm.ref
+func (ncm NonComplianceMessageAttributes) InternalRef() (terra.Reference, error) {
+	return ncm.ref, nil
 }
 
 func (ncm NonComplianceMessageAttributes) InternalWithRef(ref terra.Reference) NonComplianceMessageAttributes {
 	return NonComplianceMessageAttributes{ref: ref}
 }
 
-func (ncm NonComplianceMessageAttributes) InternalTokens() hclwrite.Tokens {
+func (ncm NonComplianceMessageAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ncm.ref.InternalTokens()
 }
 
 func (ncm NonComplianceMessageAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(ncm.ref.Append("content"))
+	return terra.ReferenceAsString(ncm.ref.Append("content"))
 }
 
 func (ncm NonComplianceMessageAttributes) PolicyDefinitionReferenceId() terra.StringValue {
-	return terra.ReferenceString(ncm.ref.Append("policy_definition_reference_id"))
+	return terra.ReferenceAsString(ncm.ref.Append("policy_definition_reference_id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type IdentityState struct {

@@ -40,7 +40,7 @@ func (l LocationAttributes) InternalWithRef(ref terra.Reference) LocationAttribu
 	return LocationAttributes{ref: ref}
 }
 
-func (l LocationAttributes) InternalTokens() hclwrite.Tokens {
+func (l LocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 
@@ -60,7 +60,7 @@ func (s S3Attributes) InternalWithRef(ref terra.Reference) S3Attributes {
 	return S3Attributes{ref: ref}
 }
 
-func (s S3Attributes) InternalTokens() hclwrite.Tokens {
+func (s S3Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -88,7 +88,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

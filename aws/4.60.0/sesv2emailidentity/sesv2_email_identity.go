@@ -28,7 +28,7 @@ func (dsa DkimSigningAttributesAttributes) InternalWithRef(ref terra.Reference) 
 	return DkimSigningAttributesAttributes{ref: ref}
 }
 
-func (dsa DkimSigningAttributesAttributes) InternalTokens() hclwrite.Tokens {
+func (dsa DkimSigningAttributesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dsa.ref.InternalTokens()
 }
 

@@ -52,132 +52,132 @@ type FleetConfigsAttributes struct {
 	ref terra.Reference
 }
 
-func (fc FleetConfigsAttributes) InternalRef() terra.Reference {
-	return fc.ref
+func (fc FleetConfigsAttributes) InternalRef() (terra.Reference, error) {
+	return fc.ref, nil
 }
 
 func (fc FleetConfigsAttributes) InternalWithRef(ref terra.Reference) FleetConfigsAttributes {
 	return FleetConfigsAttributes{ref: ref}
 }
 
-func (fc FleetConfigsAttributes) InternalTokens() hclwrite.Tokens {
+func (fc FleetConfigsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fc.ref.InternalTokens()
 }
 
 func (fc FleetConfigsAttributes) FleetSpec() terra.StringValue {
-	return terra.ReferenceString(fc.ref.Append("fleet_spec"))
+	return terra.ReferenceAsString(fc.ref.Append("fleet_spec"))
 }
 
 func (fc FleetConfigsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(fc.ref.Append("name"))
+	return terra.ReferenceAsString(fc.ref.Append("name"))
 }
 
 type ScalingConfigsAttributes struct {
 	ref terra.Reference
 }
 
-func (sc ScalingConfigsAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc ScalingConfigsAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc ScalingConfigsAttributes) InternalWithRef(ref terra.Reference) ScalingConfigsAttributes {
 	return ScalingConfigsAttributes{ref: ref}
 }
 
-func (sc ScalingConfigsAttributes) InternalTokens() hclwrite.Tokens {
+func (sc ScalingConfigsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
 func (sc ScalingConfigsAttributes) FleetAutoscalerSpec() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("fleet_autoscaler_spec"))
+	return terra.ReferenceAsString(sc.ref.Append("fleet_autoscaler_spec"))
 }
 
 func (sc ScalingConfigsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("name"))
+	return terra.ReferenceAsString(sc.ref.Append("name"))
 }
 
 func (sc ScalingConfigsAttributes) Schedules() terra.ListValue[SchedulesAttributes] {
-	return terra.ReferenceList[SchedulesAttributes](sc.ref.Append("schedules"))
+	return terra.ReferenceAsList[SchedulesAttributes](sc.ref.Append("schedules"))
 }
 
 func (sc ScalingConfigsAttributes) Selectors() terra.ListValue[SelectorsAttributes] {
-	return terra.ReferenceList[SelectorsAttributes](sc.ref.Append("selectors"))
+	return terra.ReferenceAsList[SelectorsAttributes](sc.ref.Append("selectors"))
 }
 
 type SchedulesAttributes struct {
 	ref terra.Reference
 }
 
-func (s SchedulesAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SchedulesAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SchedulesAttributes) InternalWithRef(ref terra.Reference) SchedulesAttributes {
 	return SchedulesAttributes{ref: ref}
 }
 
-func (s SchedulesAttributes) InternalTokens() hclwrite.Tokens {
+func (s SchedulesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SchedulesAttributes) CronJobDuration() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("cron_job_duration"))
+	return terra.ReferenceAsString(s.ref.Append("cron_job_duration"))
 }
 
 func (s SchedulesAttributes) CronSpec() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("cron_spec"))
+	return terra.ReferenceAsString(s.ref.Append("cron_spec"))
 }
 
 func (s SchedulesAttributes) EndTime() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("end_time"))
+	return terra.ReferenceAsString(s.ref.Append("end_time"))
 }
 
 func (s SchedulesAttributes) StartTime() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("start_time"))
+	return terra.ReferenceAsString(s.ref.Append("start_time"))
 }
 
 type SelectorsAttributes struct {
 	ref terra.Reference
 }
 
-func (s SelectorsAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SelectorsAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SelectorsAttributes) InternalWithRef(ref terra.Reference) SelectorsAttributes {
 	return SelectorsAttributes{ref: ref}
 }
 
-func (s SelectorsAttributes) InternalTokens() hclwrite.Tokens {
+func (s SelectorsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SelectorsAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](s.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](s.ref.Append("labels"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type FleetConfigsState struct {

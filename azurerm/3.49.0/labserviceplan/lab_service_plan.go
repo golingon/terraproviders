@@ -55,128 +55,128 @@ type DefaultAutoShutdownAttributes struct {
 	ref terra.Reference
 }
 
-func (das DefaultAutoShutdownAttributes) InternalRef() terra.Reference {
-	return das.ref
+func (das DefaultAutoShutdownAttributes) InternalRef() (terra.Reference, error) {
+	return das.ref, nil
 }
 
 func (das DefaultAutoShutdownAttributes) InternalWithRef(ref terra.Reference) DefaultAutoShutdownAttributes {
 	return DefaultAutoShutdownAttributes{ref: ref}
 }
 
-func (das DefaultAutoShutdownAttributes) InternalTokens() hclwrite.Tokens {
+func (das DefaultAutoShutdownAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return das.ref.InternalTokens()
 }
 
 func (das DefaultAutoShutdownAttributes) DisconnectDelay() terra.StringValue {
-	return terra.ReferenceString(das.ref.Append("disconnect_delay"))
+	return terra.ReferenceAsString(das.ref.Append("disconnect_delay"))
 }
 
 func (das DefaultAutoShutdownAttributes) IdleDelay() terra.StringValue {
-	return terra.ReferenceString(das.ref.Append("idle_delay"))
+	return terra.ReferenceAsString(das.ref.Append("idle_delay"))
 }
 
 func (das DefaultAutoShutdownAttributes) NoConnectDelay() terra.StringValue {
-	return terra.ReferenceString(das.ref.Append("no_connect_delay"))
+	return terra.ReferenceAsString(das.ref.Append("no_connect_delay"))
 }
 
 func (das DefaultAutoShutdownAttributes) ShutdownOnIdle() terra.StringValue {
-	return terra.ReferenceString(das.ref.Append("shutdown_on_idle"))
+	return terra.ReferenceAsString(das.ref.Append("shutdown_on_idle"))
 }
 
 type DefaultConnectionAttributes struct {
 	ref terra.Reference
 }
 
-func (dc DefaultConnectionAttributes) InternalRef() terra.Reference {
-	return dc.ref
+func (dc DefaultConnectionAttributes) InternalRef() (terra.Reference, error) {
+	return dc.ref, nil
 }
 
 func (dc DefaultConnectionAttributes) InternalWithRef(ref terra.Reference) DefaultConnectionAttributes {
 	return DefaultConnectionAttributes{ref: ref}
 }
 
-func (dc DefaultConnectionAttributes) InternalTokens() hclwrite.Tokens {
+func (dc DefaultConnectionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dc.ref.InternalTokens()
 }
 
 func (dc DefaultConnectionAttributes) ClientRdpAccess() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("client_rdp_access"))
+	return terra.ReferenceAsString(dc.ref.Append("client_rdp_access"))
 }
 
 func (dc DefaultConnectionAttributes) ClientSshAccess() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("client_ssh_access"))
+	return terra.ReferenceAsString(dc.ref.Append("client_ssh_access"))
 }
 
 func (dc DefaultConnectionAttributes) WebRdpAccess() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("web_rdp_access"))
+	return terra.ReferenceAsString(dc.ref.Append("web_rdp_access"))
 }
 
 func (dc DefaultConnectionAttributes) WebSshAccess() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("web_ssh_access"))
+	return terra.ReferenceAsString(dc.ref.Append("web_ssh_access"))
 }
 
 type SupportAttributes struct {
 	ref terra.Reference
 }
 
-func (s SupportAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SupportAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SupportAttributes) InternalWithRef(ref terra.Reference) SupportAttributes {
 	return SupportAttributes{ref: ref}
 }
 
-func (s SupportAttributes) InternalTokens() hclwrite.Tokens {
+func (s SupportAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SupportAttributes) Email() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("email"))
+	return terra.ReferenceAsString(s.ref.Append("email"))
 }
 
 func (s SupportAttributes) Instructions() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("instructions"))
+	return terra.ReferenceAsString(s.ref.Append("instructions"))
 }
 
 func (s SupportAttributes) Phone() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("phone"))
+	return terra.ReferenceAsString(s.ref.Append("phone"))
 }
 
 func (s SupportAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("url"))
+	return terra.ReferenceAsString(s.ref.Append("url"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type DefaultAutoShutdownState struct {

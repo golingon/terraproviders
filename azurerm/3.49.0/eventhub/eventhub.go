@@ -48,104 +48,104 @@ type CaptureDescriptionAttributes struct {
 	ref terra.Reference
 }
 
-func (cd CaptureDescriptionAttributes) InternalRef() terra.Reference {
-	return cd.ref
+func (cd CaptureDescriptionAttributes) InternalRef() (terra.Reference, error) {
+	return cd.ref, nil
 }
 
 func (cd CaptureDescriptionAttributes) InternalWithRef(ref terra.Reference) CaptureDescriptionAttributes {
 	return CaptureDescriptionAttributes{ref: ref}
 }
 
-func (cd CaptureDescriptionAttributes) InternalTokens() hclwrite.Tokens {
+func (cd CaptureDescriptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cd.ref.InternalTokens()
 }
 
 func (cd CaptureDescriptionAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(cd.ref.Append("enabled"))
+	return terra.ReferenceAsBool(cd.ref.Append("enabled"))
 }
 
 func (cd CaptureDescriptionAttributes) Encoding() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("encoding"))
+	return terra.ReferenceAsString(cd.ref.Append("encoding"))
 }
 
 func (cd CaptureDescriptionAttributes) IntervalInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(cd.ref.Append("interval_in_seconds"))
+	return terra.ReferenceAsNumber(cd.ref.Append("interval_in_seconds"))
 }
 
 func (cd CaptureDescriptionAttributes) SizeLimitInBytes() terra.NumberValue {
-	return terra.ReferenceNumber(cd.ref.Append("size_limit_in_bytes"))
+	return terra.ReferenceAsNumber(cd.ref.Append("size_limit_in_bytes"))
 }
 
 func (cd CaptureDescriptionAttributes) SkipEmptyArchives() terra.BoolValue {
-	return terra.ReferenceBool(cd.ref.Append("skip_empty_archives"))
+	return terra.ReferenceAsBool(cd.ref.Append("skip_empty_archives"))
 }
 
 func (cd CaptureDescriptionAttributes) Destination() terra.ListValue[DestinationAttributes] {
-	return terra.ReferenceList[DestinationAttributes](cd.ref.Append("destination"))
+	return terra.ReferenceAsList[DestinationAttributes](cd.ref.Append("destination"))
 }
 
 type DestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (d DestinationAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DestinationAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DestinationAttributes) InternalWithRef(ref terra.Reference) DestinationAttributes {
 	return DestinationAttributes{ref: ref}
 }
 
-func (d DestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (d DestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d DestinationAttributes) ArchiveNameFormat() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("archive_name_format"))
+	return terra.ReferenceAsString(d.ref.Append("archive_name_format"))
 }
 
 func (d DestinationAttributes) BlobContainerName() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("blob_container_name"))
+	return terra.ReferenceAsString(d.ref.Append("blob_container_name"))
 }
 
 func (d DestinationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("name"))
+	return terra.ReferenceAsString(d.ref.Append("name"))
 }
 
 func (d DestinationAttributes) StorageAccountId() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("storage_account_id"))
+	return terra.ReferenceAsString(d.ref.Append("storage_account_id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type CaptureDescriptionState struct {

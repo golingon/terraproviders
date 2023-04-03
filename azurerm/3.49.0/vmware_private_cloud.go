@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewVmwarePrivateCloud creates a new instance of [VmwarePrivateCloud].
 func NewVmwarePrivateCloud(name string, args VmwarePrivateCloudArgs) *VmwarePrivateCloud {
 	return &VmwarePrivateCloud{
 		Args: args,
@@ -19,28 +20,51 @@ func NewVmwarePrivateCloud(name string, args VmwarePrivateCloudArgs) *VmwarePriv
 
 var _ terra.Resource = (*VmwarePrivateCloud)(nil)
 
+// VmwarePrivateCloud represents the Terraform resource azurerm_vmware_private_cloud.
 type VmwarePrivateCloud struct {
-	Name  string
-	Args  VmwarePrivateCloudArgs
-	state *vmwarePrivateCloudState
+	Name      string
+	Args      VmwarePrivateCloudArgs
+	state     *vmwarePrivateCloudState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VmwarePrivateCloud].
 func (vpc *VmwarePrivateCloud) Type() string {
 	return "azurerm_vmware_private_cloud"
 }
 
+// LocalName returns the local name for [VmwarePrivateCloud].
 func (vpc *VmwarePrivateCloud) LocalName() string {
 	return vpc.Name
 }
 
+// Configuration returns the configuration (args) for [VmwarePrivateCloud].
 func (vpc *VmwarePrivateCloud) Configuration() interface{} {
 	return vpc.Args
 }
 
+// DependOn is used for other resources to depend on [VmwarePrivateCloud].
+func (vpc *VmwarePrivateCloud) DependOn() terra.Reference {
+	return terra.ReferenceResource(vpc)
+}
+
+// Dependencies returns the list of resources [VmwarePrivateCloud] depends_on.
+func (vpc *VmwarePrivateCloud) Dependencies() terra.Dependencies {
+	return vpc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VmwarePrivateCloud].
+func (vpc *VmwarePrivateCloud) LifecycleManagement() *terra.Lifecycle {
+	return vpc.Lifecycle
+}
+
+// Attributes returns the attributes for [VmwarePrivateCloud].
 func (vpc *VmwarePrivateCloud) Attributes() vmwarePrivateCloudAttributes {
 	return vmwarePrivateCloudAttributes{ref: terra.ReferenceResource(vpc)}
 }
 
+// ImportState imports the given attribute values into [VmwarePrivateCloud]'s state.
 func (vpc *VmwarePrivateCloud) ImportState(av io.Reader) error {
 	vpc.state = &vmwarePrivateCloudState{}
 	if err := json.NewDecoder(av).Decode(vpc.state); err != nil {
@@ -49,10 +73,12 @@ func (vpc *VmwarePrivateCloud) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [VmwarePrivateCloud] has state.
 func (vpc *VmwarePrivateCloud) State() (*vmwarePrivateCloudState, bool) {
 	return vpc.state, vpc.state != nil
 }
 
+// StateMust returns the state for [VmwarePrivateCloud]. Panics if the state is nil.
 func (vpc *VmwarePrivateCloud) StateMust() *vmwarePrivateCloudState {
 	if vpc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", vpc.Type(), vpc.LocalName()))
@@ -60,10 +86,7 @@ func (vpc *VmwarePrivateCloud) StateMust() *vmwarePrivateCloudState {
 	return vpc.state
 }
 
-func (vpc *VmwarePrivateCloud) DependOn() terra.Reference {
-	return terra.ReferenceResource(vpc)
-}
-
+// VmwarePrivateCloudArgs contains the configurations for azurerm_vmware_private_cloud.
 type VmwarePrivateCloudArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -91,95 +114,111 @@ type VmwarePrivateCloudArgs struct {
 	ManagementCluster *vmwareprivatecloud.ManagementCluster `hcl:"management_cluster,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *vmwareprivatecloud.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that VmwarePrivateCloud depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type vmwarePrivateCloudAttributes struct {
 	ref terra.Reference
 }
 
+// HcxCloudManagerEndpoint returns a reference to field hcx_cloud_manager_endpoint of azurerm_vmware_private_cloud.
 func (vpc vmwarePrivateCloudAttributes) HcxCloudManagerEndpoint() terra.StringValue {
-	return terra.ReferenceString(vpc.ref.Append("hcx_cloud_manager_endpoint"))
+	return terra.ReferenceAsString(vpc.ref.Append("hcx_cloud_manager_endpoint"))
 }
 
+// Id returns a reference to field id of azurerm_vmware_private_cloud.
 func (vpc vmwarePrivateCloudAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vpc.ref.Append("id"))
+	return terra.ReferenceAsString(vpc.ref.Append("id"))
 }
 
+// InternetConnectionEnabled returns a reference to field internet_connection_enabled of azurerm_vmware_private_cloud.
 func (vpc vmwarePrivateCloudAttributes) InternetConnectionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(vpc.ref.Append("internet_connection_enabled"))
+	return terra.ReferenceAsBool(vpc.ref.Append("internet_connection_enabled"))
 }
 
+// Location returns a reference to field location of azurerm_vmware_private_cloud.
 func (vpc vmwarePrivateCloudAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(vpc.ref.Append("location"))
+	return terra.ReferenceAsString(vpc.ref.Append("location"))
 }
 
+// ManagementSubnetCidr returns a reference to field management_subnet_cidr of azurerm_vmware_private_cloud.
 func (vpc vmwarePrivateCloudAttributes) ManagementSubnetCidr() terra.StringValue {
-	return terra.ReferenceString(vpc.ref.Append("management_subnet_cidr"))
+	return terra.ReferenceAsString(vpc.ref.Append("management_subnet_cidr"))
 }
 
+// Name returns a reference to field name of azurerm_vmware_private_cloud.
 func (vpc vmwarePrivateCloudAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(vpc.ref.Append("name"))
+	return terra.ReferenceAsString(vpc.ref.Append("name"))
 }
 
+// NetworkSubnetCidr returns a reference to field network_subnet_cidr of azurerm_vmware_private_cloud.
 func (vpc vmwarePrivateCloudAttributes) NetworkSubnetCidr() terra.StringValue {
-	return terra.ReferenceString(vpc.ref.Append("network_subnet_cidr"))
+	return terra.ReferenceAsString(vpc.ref.Append("network_subnet_cidr"))
 }
 
+// NsxtCertificateThumbprint returns a reference to field nsxt_certificate_thumbprint of azurerm_vmware_private_cloud.
 func (vpc vmwarePrivateCloudAttributes) NsxtCertificateThumbprint() terra.StringValue {
-	return terra.ReferenceString(vpc.ref.Append("nsxt_certificate_thumbprint"))
+	return terra.ReferenceAsString(vpc.ref.Append("nsxt_certificate_thumbprint"))
 }
 
+// NsxtManagerEndpoint returns a reference to field nsxt_manager_endpoint of azurerm_vmware_private_cloud.
 func (vpc vmwarePrivateCloudAttributes) NsxtManagerEndpoint() terra.StringValue {
-	return terra.ReferenceString(vpc.ref.Append("nsxt_manager_endpoint"))
+	return terra.ReferenceAsString(vpc.ref.Append("nsxt_manager_endpoint"))
 }
 
+// NsxtPassword returns a reference to field nsxt_password of azurerm_vmware_private_cloud.
 func (vpc vmwarePrivateCloudAttributes) NsxtPassword() terra.StringValue {
-	return terra.ReferenceString(vpc.ref.Append("nsxt_password"))
+	return terra.ReferenceAsString(vpc.ref.Append("nsxt_password"))
 }
 
+// ProvisioningSubnetCidr returns a reference to field provisioning_subnet_cidr of azurerm_vmware_private_cloud.
 func (vpc vmwarePrivateCloudAttributes) ProvisioningSubnetCidr() terra.StringValue {
-	return terra.ReferenceString(vpc.ref.Append("provisioning_subnet_cidr"))
+	return terra.ReferenceAsString(vpc.ref.Append("provisioning_subnet_cidr"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_vmware_private_cloud.
 func (vpc vmwarePrivateCloudAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(vpc.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(vpc.ref.Append("resource_group_name"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_vmware_private_cloud.
 func (vpc vmwarePrivateCloudAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(vpc.ref.Append("sku_name"))
+	return terra.ReferenceAsString(vpc.ref.Append("sku_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_vmware_private_cloud.
 func (vpc vmwarePrivateCloudAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](vpc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](vpc.ref.Append("tags"))
 }
 
+// VcenterCertificateThumbprint returns a reference to field vcenter_certificate_thumbprint of azurerm_vmware_private_cloud.
 func (vpc vmwarePrivateCloudAttributes) VcenterCertificateThumbprint() terra.StringValue {
-	return terra.ReferenceString(vpc.ref.Append("vcenter_certificate_thumbprint"))
+	return terra.ReferenceAsString(vpc.ref.Append("vcenter_certificate_thumbprint"))
 }
 
+// VcenterPassword returns a reference to field vcenter_password of azurerm_vmware_private_cloud.
 func (vpc vmwarePrivateCloudAttributes) VcenterPassword() terra.StringValue {
-	return terra.ReferenceString(vpc.ref.Append("vcenter_password"))
+	return terra.ReferenceAsString(vpc.ref.Append("vcenter_password"))
 }
 
+// VcsaEndpoint returns a reference to field vcsa_endpoint of azurerm_vmware_private_cloud.
 func (vpc vmwarePrivateCloudAttributes) VcsaEndpoint() terra.StringValue {
-	return terra.ReferenceString(vpc.ref.Append("vcsa_endpoint"))
+	return terra.ReferenceAsString(vpc.ref.Append("vcsa_endpoint"))
 }
 
+// VmotionSubnetCidr returns a reference to field vmotion_subnet_cidr of azurerm_vmware_private_cloud.
 func (vpc vmwarePrivateCloudAttributes) VmotionSubnetCidr() terra.StringValue {
-	return terra.ReferenceString(vpc.ref.Append("vmotion_subnet_cidr"))
+	return terra.ReferenceAsString(vpc.ref.Append("vmotion_subnet_cidr"))
 }
 
 func (vpc vmwarePrivateCloudAttributes) Circuit() terra.ListValue[vmwareprivatecloud.CircuitAttributes] {
-	return terra.ReferenceList[vmwareprivatecloud.CircuitAttributes](vpc.ref.Append("circuit"))
+	return terra.ReferenceAsList[vmwareprivatecloud.CircuitAttributes](vpc.ref.Append("circuit"))
 }
 
 func (vpc vmwarePrivateCloudAttributes) ManagementCluster() terra.ListValue[vmwareprivatecloud.ManagementClusterAttributes] {
-	return terra.ReferenceList[vmwareprivatecloud.ManagementClusterAttributes](vpc.ref.Append("management_cluster"))
+	return terra.ReferenceAsList[vmwareprivatecloud.ManagementClusterAttributes](vpc.ref.Append("management_cluster"))
 }
 
 func (vpc vmwarePrivateCloudAttributes) Timeouts() vmwareprivatecloud.TimeoutsAttributes {
-	return terra.ReferenceSingle[vmwareprivatecloud.TimeoutsAttributes](vpc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[vmwareprivatecloud.TimeoutsAttributes](vpc.ref.Append("timeouts"))
 }
 
 type vmwarePrivateCloudState struct {

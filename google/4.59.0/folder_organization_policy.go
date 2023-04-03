@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewFolderOrganizationPolicy creates a new instance of [FolderOrganizationPolicy].
 func NewFolderOrganizationPolicy(name string, args FolderOrganizationPolicyArgs) *FolderOrganizationPolicy {
 	return &FolderOrganizationPolicy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewFolderOrganizationPolicy(name string, args FolderOrganizationPolicyArgs)
 
 var _ terra.Resource = (*FolderOrganizationPolicy)(nil)
 
+// FolderOrganizationPolicy represents the Terraform resource google_folder_organization_policy.
 type FolderOrganizationPolicy struct {
-	Name  string
-	Args  FolderOrganizationPolicyArgs
-	state *folderOrganizationPolicyState
+	Name      string
+	Args      FolderOrganizationPolicyArgs
+	state     *folderOrganizationPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [FolderOrganizationPolicy].
 func (fop *FolderOrganizationPolicy) Type() string {
 	return "google_folder_organization_policy"
 }
 
+// LocalName returns the local name for [FolderOrganizationPolicy].
 func (fop *FolderOrganizationPolicy) LocalName() string {
 	return fop.Name
 }
 
+// Configuration returns the configuration (args) for [FolderOrganizationPolicy].
 func (fop *FolderOrganizationPolicy) Configuration() interface{} {
 	return fop.Args
 }
 
+// DependOn is used for other resources to depend on [FolderOrganizationPolicy].
+func (fop *FolderOrganizationPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(fop)
+}
+
+// Dependencies returns the list of resources [FolderOrganizationPolicy] depends_on.
+func (fop *FolderOrganizationPolicy) Dependencies() terra.Dependencies {
+	return fop.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [FolderOrganizationPolicy].
+func (fop *FolderOrganizationPolicy) LifecycleManagement() *terra.Lifecycle {
+	return fop.Lifecycle
+}
+
+// Attributes returns the attributes for [FolderOrganizationPolicy].
 func (fop *FolderOrganizationPolicy) Attributes() folderOrganizationPolicyAttributes {
 	return folderOrganizationPolicyAttributes{ref: terra.ReferenceResource(fop)}
 }
 
+// ImportState imports the given attribute values into [FolderOrganizationPolicy]'s state.
 func (fop *FolderOrganizationPolicy) ImportState(av io.Reader) error {
 	fop.state = &folderOrganizationPolicyState{}
 	if err := json.NewDecoder(av).Decode(fop.state); err != nil {
@@ -49,10 +73,12 @@ func (fop *FolderOrganizationPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [FolderOrganizationPolicy] has state.
 func (fop *FolderOrganizationPolicy) State() (*folderOrganizationPolicyState, bool) {
 	return fop.state, fop.state != nil
 }
 
+// StateMust returns the state for [FolderOrganizationPolicy]. Panics if the state is nil.
 func (fop *FolderOrganizationPolicy) StateMust() *folderOrganizationPolicyState {
 	if fop.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", fop.Type(), fop.LocalName()))
@@ -60,10 +86,7 @@ func (fop *FolderOrganizationPolicy) StateMust() *folderOrganizationPolicyState 
 	return fop.state
 }
 
-func (fop *FolderOrganizationPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(fop)
-}
-
+// FolderOrganizationPolicyArgs contains the configurations for google_folder_organization_policy.
 type FolderOrganizationPolicyArgs struct {
 	// Constraint: string, required
 	Constraint terra.StringValue `hcl:"constraint,attr" validate:"required"`
@@ -81,51 +104,55 @@ type FolderOrganizationPolicyArgs struct {
 	RestorePolicy *folderorganizationpolicy.RestorePolicy `hcl:"restore_policy,block"`
 	// Timeouts: optional
 	Timeouts *folderorganizationpolicy.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that FolderOrganizationPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type folderOrganizationPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Constraint returns a reference to field constraint of google_folder_organization_policy.
 func (fop folderOrganizationPolicyAttributes) Constraint() terra.StringValue {
-	return terra.ReferenceString(fop.ref.Append("constraint"))
+	return terra.ReferenceAsString(fop.ref.Append("constraint"))
 }
 
+// Etag returns a reference to field etag of google_folder_organization_policy.
 func (fop folderOrganizationPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(fop.ref.Append("etag"))
+	return terra.ReferenceAsString(fop.ref.Append("etag"))
 }
 
+// Folder returns a reference to field folder of google_folder_organization_policy.
 func (fop folderOrganizationPolicyAttributes) Folder() terra.StringValue {
-	return terra.ReferenceString(fop.ref.Append("folder"))
+	return terra.ReferenceAsString(fop.ref.Append("folder"))
 }
 
+// Id returns a reference to field id of google_folder_organization_policy.
 func (fop folderOrganizationPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(fop.ref.Append("id"))
+	return terra.ReferenceAsString(fop.ref.Append("id"))
 }
 
+// UpdateTime returns a reference to field update_time of google_folder_organization_policy.
 func (fop folderOrganizationPolicyAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(fop.ref.Append("update_time"))
+	return terra.ReferenceAsString(fop.ref.Append("update_time"))
 }
 
+// Version returns a reference to field version of google_folder_organization_policy.
 func (fop folderOrganizationPolicyAttributes) Version() terra.NumberValue {
-	return terra.ReferenceNumber(fop.ref.Append("version"))
+	return terra.ReferenceAsNumber(fop.ref.Append("version"))
 }
 
 func (fop folderOrganizationPolicyAttributes) BooleanPolicy() terra.ListValue[folderorganizationpolicy.BooleanPolicyAttributes] {
-	return terra.ReferenceList[folderorganizationpolicy.BooleanPolicyAttributes](fop.ref.Append("boolean_policy"))
+	return terra.ReferenceAsList[folderorganizationpolicy.BooleanPolicyAttributes](fop.ref.Append("boolean_policy"))
 }
 
 func (fop folderOrganizationPolicyAttributes) ListPolicy() terra.ListValue[folderorganizationpolicy.ListPolicyAttributes] {
-	return terra.ReferenceList[folderorganizationpolicy.ListPolicyAttributes](fop.ref.Append("list_policy"))
+	return terra.ReferenceAsList[folderorganizationpolicy.ListPolicyAttributes](fop.ref.Append("list_policy"))
 }
 
 func (fop folderOrganizationPolicyAttributes) RestorePolicy() terra.ListValue[folderorganizationpolicy.RestorePolicyAttributes] {
-	return terra.ReferenceList[folderorganizationpolicy.RestorePolicyAttributes](fop.ref.Append("restore_policy"))
+	return terra.ReferenceAsList[folderorganizationpolicy.RestorePolicyAttributes](fop.ref.Append("restore_policy"))
 }
 
 func (fop folderOrganizationPolicyAttributes) Timeouts() folderorganizationpolicy.TimeoutsAttributes {
-	return terra.ReferenceSingle[folderorganizationpolicy.TimeoutsAttributes](fop.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[folderorganizationpolicy.TimeoutsAttributes](fop.ref.Append("timeouts"))
 }
 
 type folderOrganizationPolicyState struct {

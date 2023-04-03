@@ -18,68 +18,68 @@ type ConfigsAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConfigsAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConfigsAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConfigsAttributes) InternalWithRef(ref terra.Reference) ConfigsAttributes {
 	return ConfigsAttributes{ref: ref}
 }
 
-func (c ConfigsAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConfigsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ConfigsAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("description"))
+	return terra.ReferenceAsString(c.ref.Append("description"))
 }
 
 func (c ConfigsAttributes) Duration() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("duration"))
+	return terra.ReferenceAsString(c.ref.Append("duration"))
 }
 
 func (c ConfigsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("id"))
+	return terra.ReferenceAsString(c.ref.Append("id"))
 }
 
 func (c ConfigsAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("location"))
+	return terra.ReferenceAsString(c.ref.Append("location"))
 }
 
 func (c ConfigsAttributes) MaintenanceScope() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("maintenance_scope"))
+	return terra.ReferenceAsString(c.ref.Append("maintenance_scope"))
 }
 
 func (c ConfigsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("name"))
+	return terra.ReferenceAsString(c.ref.Append("name"))
 }
 
 func (c ConfigsAttributes) RecurEvery() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("recur_every"))
+	return terra.ReferenceAsString(c.ref.Append("recur_every"))
 }
 
 func (c ConfigsAttributes) TimeZone() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("time_zone"))
+	return terra.ReferenceAsString(c.ref.Append("time_zone"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type ConfigsState struct {

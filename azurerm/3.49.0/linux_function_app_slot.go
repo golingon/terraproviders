@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLinuxFunctionAppSlot creates a new instance of [LinuxFunctionAppSlot].
 func NewLinuxFunctionAppSlot(name string, args LinuxFunctionAppSlotArgs) *LinuxFunctionAppSlot {
 	return &LinuxFunctionAppSlot{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLinuxFunctionAppSlot(name string, args LinuxFunctionAppSlotArgs) *LinuxF
 
 var _ terra.Resource = (*LinuxFunctionAppSlot)(nil)
 
+// LinuxFunctionAppSlot represents the Terraform resource azurerm_linux_function_app_slot.
 type LinuxFunctionAppSlot struct {
-	Name  string
-	Args  LinuxFunctionAppSlotArgs
-	state *linuxFunctionAppSlotState
+	Name      string
+	Args      LinuxFunctionAppSlotArgs
+	state     *linuxFunctionAppSlotState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LinuxFunctionAppSlot].
 func (lfas *LinuxFunctionAppSlot) Type() string {
 	return "azurerm_linux_function_app_slot"
 }
 
+// LocalName returns the local name for [LinuxFunctionAppSlot].
 func (lfas *LinuxFunctionAppSlot) LocalName() string {
 	return lfas.Name
 }
 
+// Configuration returns the configuration (args) for [LinuxFunctionAppSlot].
 func (lfas *LinuxFunctionAppSlot) Configuration() interface{} {
 	return lfas.Args
 }
 
+// DependOn is used for other resources to depend on [LinuxFunctionAppSlot].
+func (lfas *LinuxFunctionAppSlot) DependOn() terra.Reference {
+	return terra.ReferenceResource(lfas)
+}
+
+// Dependencies returns the list of resources [LinuxFunctionAppSlot] depends_on.
+func (lfas *LinuxFunctionAppSlot) Dependencies() terra.Dependencies {
+	return lfas.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LinuxFunctionAppSlot].
+func (lfas *LinuxFunctionAppSlot) LifecycleManagement() *terra.Lifecycle {
+	return lfas.Lifecycle
+}
+
+// Attributes returns the attributes for [LinuxFunctionAppSlot].
 func (lfas *LinuxFunctionAppSlot) Attributes() linuxFunctionAppSlotAttributes {
 	return linuxFunctionAppSlotAttributes{ref: terra.ReferenceResource(lfas)}
 }
 
+// ImportState imports the given attribute values into [LinuxFunctionAppSlot]'s state.
 func (lfas *LinuxFunctionAppSlot) ImportState(av io.Reader) error {
 	lfas.state = &linuxFunctionAppSlotState{}
 	if err := json.NewDecoder(av).Decode(lfas.state); err != nil {
@@ -49,10 +73,12 @@ func (lfas *LinuxFunctionAppSlot) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LinuxFunctionAppSlot] has state.
 func (lfas *LinuxFunctionAppSlot) State() (*linuxFunctionAppSlotState, bool) {
 	return lfas.state, lfas.state != nil
 }
 
+// StateMust returns the state for [LinuxFunctionAppSlot]. Panics if the state is nil.
 func (lfas *LinuxFunctionAppSlot) StateMust() *linuxFunctionAppSlotState {
 	if lfas.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lfas.Type(), lfas.LocalName()))
@@ -60,10 +86,7 @@ func (lfas *LinuxFunctionAppSlot) StateMust() *linuxFunctionAppSlotState {
 	return lfas.state
 }
 
-func (lfas *LinuxFunctionAppSlot) DependOn() terra.Reference {
-	return terra.ReferenceResource(lfas)
-}
-
+// LinuxFunctionAppSlotArgs contains the configurations for azurerm_linux_function_app_slot.
 type LinuxFunctionAppSlotArgs struct {
 	// AppSettings: map of string, optional
 	AppSettings terra.MapValue[terra.StringValue] `hcl:"app_settings,attr"`
@@ -125,159 +148,185 @@ type LinuxFunctionAppSlotArgs struct {
 	StorageAccount []linuxfunctionappslot.StorageAccount `hcl:"storage_account,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *linuxfunctionappslot.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LinuxFunctionAppSlot depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type linuxFunctionAppSlotAttributes struct {
 	ref terra.Reference
 }
 
+// AppSettings returns a reference to field app_settings of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) AppSettings() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lfas.ref.Append("app_settings"))
+	return terra.ReferenceAsMap[terra.StringValue](lfas.ref.Append("app_settings"))
 }
 
+// BuiltinLoggingEnabled returns a reference to field builtin_logging_enabled of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) BuiltinLoggingEnabled() terra.BoolValue {
-	return terra.ReferenceBool(lfas.ref.Append("builtin_logging_enabled"))
+	return terra.ReferenceAsBool(lfas.ref.Append("builtin_logging_enabled"))
 }
 
+// ClientCertificateEnabled returns a reference to field client_certificate_enabled of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) ClientCertificateEnabled() terra.BoolValue {
-	return terra.ReferenceBool(lfas.ref.Append("client_certificate_enabled"))
+	return terra.ReferenceAsBool(lfas.ref.Append("client_certificate_enabled"))
 }
 
+// ClientCertificateExclusionPaths returns a reference to field client_certificate_exclusion_paths of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) ClientCertificateExclusionPaths() terra.StringValue {
-	return terra.ReferenceString(lfas.ref.Append("client_certificate_exclusion_paths"))
+	return terra.ReferenceAsString(lfas.ref.Append("client_certificate_exclusion_paths"))
 }
 
+// ClientCertificateMode returns a reference to field client_certificate_mode of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) ClientCertificateMode() terra.StringValue {
-	return terra.ReferenceString(lfas.ref.Append("client_certificate_mode"))
+	return terra.ReferenceAsString(lfas.ref.Append("client_certificate_mode"))
 }
 
+// ContentShareForceDisabled returns a reference to field content_share_force_disabled of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) ContentShareForceDisabled() terra.BoolValue {
-	return terra.ReferenceBool(lfas.ref.Append("content_share_force_disabled"))
+	return terra.ReferenceAsBool(lfas.ref.Append("content_share_force_disabled"))
 }
 
+// CustomDomainVerificationId returns a reference to field custom_domain_verification_id of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) CustomDomainVerificationId() terra.StringValue {
-	return terra.ReferenceString(lfas.ref.Append("custom_domain_verification_id"))
+	return terra.ReferenceAsString(lfas.ref.Append("custom_domain_verification_id"))
 }
 
+// DailyMemoryTimeQuota returns a reference to field daily_memory_time_quota of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) DailyMemoryTimeQuota() terra.NumberValue {
-	return terra.ReferenceNumber(lfas.ref.Append("daily_memory_time_quota"))
+	return terra.ReferenceAsNumber(lfas.ref.Append("daily_memory_time_quota"))
 }
 
+// DefaultHostname returns a reference to field default_hostname of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) DefaultHostname() terra.StringValue {
-	return terra.ReferenceString(lfas.ref.Append("default_hostname"))
+	return terra.ReferenceAsString(lfas.ref.Append("default_hostname"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(lfas.ref.Append("enabled"))
+	return terra.ReferenceAsBool(lfas.ref.Append("enabled"))
 }
 
+// FunctionAppId returns a reference to field function_app_id of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) FunctionAppId() terra.StringValue {
-	return terra.ReferenceString(lfas.ref.Append("function_app_id"))
+	return terra.ReferenceAsString(lfas.ref.Append("function_app_id"))
 }
 
+// FunctionsExtensionVersion returns a reference to field functions_extension_version of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) FunctionsExtensionVersion() terra.StringValue {
-	return terra.ReferenceString(lfas.ref.Append("functions_extension_version"))
+	return terra.ReferenceAsString(lfas.ref.Append("functions_extension_version"))
 }
 
+// HttpsOnly returns a reference to field https_only of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) HttpsOnly() terra.BoolValue {
-	return terra.ReferenceBool(lfas.ref.Append("https_only"))
+	return terra.ReferenceAsBool(lfas.ref.Append("https_only"))
 }
 
+// Id returns a reference to field id of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lfas.ref.Append("id"))
+	return terra.ReferenceAsString(lfas.ref.Append("id"))
 }
 
+// KeyVaultReferenceIdentityId returns a reference to field key_vault_reference_identity_id of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) KeyVaultReferenceIdentityId() terra.StringValue {
-	return terra.ReferenceString(lfas.ref.Append("key_vault_reference_identity_id"))
+	return terra.ReferenceAsString(lfas.ref.Append("key_vault_reference_identity_id"))
 }
 
+// Kind returns a reference to field kind of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) Kind() terra.StringValue {
-	return terra.ReferenceString(lfas.ref.Append("kind"))
+	return terra.ReferenceAsString(lfas.ref.Append("kind"))
 }
 
+// Name returns a reference to field name of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lfas.ref.Append("name"))
+	return terra.ReferenceAsString(lfas.ref.Append("name"))
 }
 
+// OutboundIpAddressList returns a reference to field outbound_ip_address_list of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) OutboundIpAddressList() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lfas.ref.Append("outbound_ip_address_list"))
+	return terra.ReferenceAsList[terra.StringValue](lfas.ref.Append("outbound_ip_address_list"))
 }
 
+// OutboundIpAddresses returns a reference to field outbound_ip_addresses of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) OutboundIpAddresses() terra.StringValue {
-	return terra.ReferenceString(lfas.ref.Append("outbound_ip_addresses"))
+	return terra.ReferenceAsString(lfas.ref.Append("outbound_ip_addresses"))
 }
 
+// PossibleOutboundIpAddressList returns a reference to field possible_outbound_ip_address_list of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) PossibleOutboundIpAddressList() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lfas.ref.Append("possible_outbound_ip_address_list"))
+	return terra.ReferenceAsList[terra.StringValue](lfas.ref.Append("possible_outbound_ip_address_list"))
 }
 
+// PossibleOutboundIpAddresses returns a reference to field possible_outbound_ip_addresses of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) PossibleOutboundIpAddresses() terra.StringValue {
-	return terra.ReferenceString(lfas.ref.Append("possible_outbound_ip_addresses"))
+	return terra.ReferenceAsString(lfas.ref.Append("possible_outbound_ip_addresses"))
 }
 
+// ServicePlanId returns a reference to field service_plan_id of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) ServicePlanId() terra.StringValue {
-	return terra.ReferenceString(lfas.ref.Append("service_plan_id"))
+	return terra.ReferenceAsString(lfas.ref.Append("service_plan_id"))
 }
 
+// StorageAccountAccessKey returns a reference to field storage_account_access_key of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) StorageAccountAccessKey() terra.StringValue {
-	return terra.ReferenceString(lfas.ref.Append("storage_account_access_key"))
+	return terra.ReferenceAsString(lfas.ref.Append("storage_account_access_key"))
 }
 
+// StorageAccountName returns a reference to field storage_account_name of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) StorageAccountName() terra.StringValue {
-	return terra.ReferenceString(lfas.ref.Append("storage_account_name"))
+	return terra.ReferenceAsString(lfas.ref.Append("storage_account_name"))
 }
 
+// StorageKeyVaultSecretId returns a reference to field storage_key_vault_secret_id of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) StorageKeyVaultSecretId() terra.StringValue {
-	return terra.ReferenceString(lfas.ref.Append("storage_key_vault_secret_id"))
+	return terra.ReferenceAsString(lfas.ref.Append("storage_key_vault_secret_id"))
 }
 
+// StorageUsesManagedIdentity returns a reference to field storage_uses_managed_identity of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) StorageUsesManagedIdentity() terra.BoolValue {
-	return terra.ReferenceBool(lfas.ref.Append("storage_uses_managed_identity"))
+	return terra.ReferenceAsBool(lfas.ref.Append("storage_uses_managed_identity"))
 }
 
+// Tags returns a reference to field tags of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lfas.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](lfas.ref.Append("tags"))
 }
 
+// VirtualNetworkSubnetId returns a reference to field virtual_network_subnet_id of azurerm_linux_function_app_slot.
 func (lfas linuxFunctionAppSlotAttributes) VirtualNetworkSubnetId() terra.StringValue {
-	return terra.ReferenceString(lfas.ref.Append("virtual_network_subnet_id"))
+	return terra.ReferenceAsString(lfas.ref.Append("virtual_network_subnet_id"))
 }
 
 func (lfas linuxFunctionAppSlotAttributes) SiteCredential() terra.ListValue[linuxfunctionappslot.SiteCredentialAttributes] {
-	return terra.ReferenceList[linuxfunctionappslot.SiteCredentialAttributes](lfas.ref.Append("site_credential"))
+	return terra.ReferenceAsList[linuxfunctionappslot.SiteCredentialAttributes](lfas.ref.Append("site_credential"))
 }
 
 func (lfas linuxFunctionAppSlotAttributes) AuthSettings() terra.ListValue[linuxfunctionappslot.AuthSettingsAttributes] {
-	return terra.ReferenceList[linuxfunctionappslot.AuthSettingsAttributes](lfas.ref.Append("auth_settings"))
+	return terra.ReferenceAsList[linuxfunctionappslot.AuthSettingsAttributes](lfas.ref.Append("auth_settings"))
 }
 
 func (lfas linuxFunctionAppSlotAttributes) AuthSettingsV2() terra.ListValue[linuxfunctionappslot.AuthSettingsV2Attributes] {
-	return terra.ReferenceList[linuxfunctionappslot.AuthSettingsV2Attributes](lfas.ref.Append("auth_settings_v2"))
+	return terra.ReferenceAsList[linuxfunctionappslot.AuthSettingsV2Attributes](lfas.ref.Append("auth_settings_v2"))
 }
 
 func (lfas linuxFunctionAppSlotAttributes) Backup() terra.ListValue[linuxfunctionappslot.BackupAttributes] {
-	return terra.ReferenceList[linuxfunctionappslot.BackupAttributes](lfas.ref.Append("backup"))
+	return terra.ReferenceAsList[linuxfunctionappslot.BackupAttributes](lfas.ref.Append("backup"))
 }
 
 func (lfas linuxFunctionAppSlotAttributes) ConnectionString() terra.SetValue[linuxfunctionappslot.ConnectionStringAttributes] {
-	return terra.ReferenceSet[linuxfunctionappslot.ConnectionStringAttributes](lfas.ref.Append("connection_string"))
+	return terra.ReferenceAsSet[linuxfunctionappslot.ConnectionStringAttributes](lfas.ref.Append("connection_string"))
 }
 
 func (lfas linuxFunctionAppSlotAttributes) Identity() terra.ListValue[linuxfunctionappslot.IdentityAttributes] {
-	return terra.ReferenceList[linuxfunctionappslot.IdentityAttributes](lfas.ref.Append("identity"))
+	return terra.ReferenceAsList[linuxfunctionappslot.IdentityAttributes](lfas.ref.Append("identity"))
 }
 
 func (lfas linuxFunctionAppSlotAttributes) SiteConfig() terra.ListValue[linuxfunctionappslot.SiteConfigAttributes] {
-	return terra.ReferenceList[linuxfunctionappslot.SiteConfigAttributes](lfas.ref.Append("site_config"))
+	return terra.ReferenceAsList[linuxfunctionappslot.SiteConfigAttributes](lfas.ref.Append("site_config"))
 }
 
 func (lfas linuxFunctionAppSlotAttributes) StorageAccount() terra.SetValue[linuxfunctionappslot.StorageAccountAttributes] {
-	return terra.ReferenceSet[linuxfunctionappslot.StorageAccountAttributes](lfas.ref.Append("storage_account"))
+	return terra.ReferenceAsSet[linuxfunctionappslot.StorageAccountAttributes](lfas.ref.Append("storage_account"))
 }
 
 func (lfas linuxFunctionAppSlotAttributes) Timeouts() linuxfunctionappslot.TimeoutsAttributes {
-	return terra.ReferenceSingle[linuxfunctionappslot.TimeoutsAttributes](lfas.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[linuxfunctionappslot.TimeoutsAttributes](lfas.ref.Append("timeouts"))
 }
 
 type linuxFunctionAppSlotState struct {

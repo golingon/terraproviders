@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataSiteRecoveryProtectionContainer creates a new instance of [DataSiteRecoveryProtectionContainer].
 func NewDataSiteRecoveryProtectionContainer(name string, args DataSiteRecoveryProtectionContainerArgs) *DataSiteRecoveryProtectionContainer {
 	return &DataSiteRecoveryProtectionContainer{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataSiteRecoveryProtectionContainer(name string, args DataSiteRecoveryPr
 
 var _ terra.DataResource = (*DataSiteRecoveryProtectionContainer)(nil)
 
+// DataSiteRecoveryProtectionContainer represents the Terraform data resource azurerm_site_recovery_protection_container.
 type DataSiteRecoveryProtectionContainer struct {
 	Name string
 	Args DataSiteRecoveryProtectionContainerArgs
 }
 
+// DataSource returns the Terraform object type for [DataSiteRecoveryProtectionContainer].
 func (srpc *DataSiteRecoveryProtectionContainer) DataSource() string {
 	return "azurerm_site_recovery_protection_container"
 }
 
+// LocalName returns the local name for [DataSiteRecoveryProtectionContainer].
 func (srpc *DataSiteRecoveryProtectionContainer) LocalName() string {
 	return srpc.Name
 }
 
+// Configuration returns the configuration (args) for [DataSiteRecoveryProtectionContainer].
 func (srpc *DataSiteRecoveryProtectionContainer) Configuration() interface{} {
 	return srpc.Args
 }
 
+// Attributes returns the attributes for [DataSiteRecoveryProtectionContainer].
 func (srpc *DataSiteRecoveryProtectionContainer) Attributes() dataSiteRecoveryProtectionContainerAttributes {
 	return dataSiteRecoveryProtectionContainerAttributes{ref: terra.ReferenceDataResource(srpc)}
 }
 
+// DataSiteRecoveryProtectionContainerArgs contains the configurations for azurerm_site_recovery_protection_container.
 type DataSiteRecoveryProtectionContainerArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -55,26 +62,31 @@ type dataSiteRecoveryProtectionContainerAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_site_recovery_protection_container.
 func (srpc dataSiteRecoveryProtectionContainerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(srpc.ref.Append("id"))
+	return terra.ReferenceAsString(srpc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_site_recovery_protection_container.
 func (srpc dataSiteRecoveryProtectionContainerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(srpc.ref.Append("name"))
+	return terra.ReferenceAsString(srpc.ref.Append("name"))
 }
 
+// RecoveryFabricName returns a reference to field recovery_fabric_name of azurerm_site_recovery_protection_container.
 func (srpc dataSiteRecoveryProtectionContainerAttributes) RecoveryFabricName() terra.StringValue {
-	return terra.ReferenceString(srpc.ref.Append("recovery_fabric_name"))
+	return terra.ReferenceAsString(srpc.ref.Append("recovery_fabric_name"))
 }
 
+// RecoveryVaultName returns a reference to field recovery_vault_name of azurerm_site_recovery_protection_container.
 func (srpc dataSiteRecoveryProtectionContainerAttributes) RecoveryVaultName() terra.StringValue {
-	return terra.ReferenceString(srpc.ref.Append("recovery_vault_name"))
+	return terra.ReferenceAsString(srpc.ref.Append("recovery_vault_name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_site_recovery_protection_container.
 func (srpc dataSiteRecoveryProtectionContainerAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(srpc.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(srpc.ref.Append("resource_group_name"))
 }
 
 func (srpc dataSiteRecoveryProtectionContainerAttributes) Timeouts() datasiterecoveryprotectioncontainer.TimeoutsAttributes {
-	return terra.ReferenceSingle[datasiterecoveryprotectioncontainer.TimeoutsAttributes](srpc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datasiterecoveryprotectioncontainer.TimeoutsAttributes](srpc.ref.Append("timeouts"))
 }

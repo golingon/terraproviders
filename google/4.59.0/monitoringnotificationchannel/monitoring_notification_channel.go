@@ -29,56 +29,56 @@ type SensitiveLabelsAttributes struct {
 	ref terra.Reference
 }
 
-func (sl SensitiveLabelsAttributes) InternalRef() terra.Reference {
-	return sl.ref
+func (sl SensitiveLabelsAttributes) InternalRef() (terra.Reference, error) {
+	return sl.ref, nil
 }
 
 func (sl SensitiveLabelsAttributes) InternalWithRef(ref terra.Reference) SensitiveLabelsAttributes {
 	return SensitiveLabelsAttributes{ref: ref}
 }
 
-func (sl SensitiveLabelsAttributes) InternalTokens() hclwrite.Tokens {
+func (sl SensitiveLabelsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sl.ref.InternalTokens()
 }
 
 func (sl SensitiveLabelsAttributes) AuthToken() terra.StringValue {
-	return terra.ReferenceString(sl.ref.Append("auth_token"))
+	return terra.ReferenceAsString(sl.ref.Append("auth_token"))
 }
 
 func (sl SensitiveLabelsAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(sl.ref.Append("password"))
+	return terra.ReferenceAsString(sl.ref.Append("password"))
 }
 
 func (sl SensitiveLabelsAttributes) ServiceKey() terra.StringValue {
-	return terra.ReferenceString(sl.ref.Append("service_key"))
+	return terra.ReferenceAsString(sl.ref.Append("service_key"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type SensitiveLabelsState struct {

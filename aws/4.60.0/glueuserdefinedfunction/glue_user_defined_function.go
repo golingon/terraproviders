@@ -26,7 +26,7 @@ func (ru ResourceUrisAttributes) InternalWithRef(ref terra.Reference) ResourceUr
 	return ResourceUrisAttributes{ref: ref}
 }
 
-func (ru ResourceUrisAttributes) InternalTokens() hclwrite.Tokens {
+func (ru ResourceUrisAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ru.ref.InternalTokens()
 }
 

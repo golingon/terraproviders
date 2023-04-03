@@ -66,7 +66,7 @@ func (aes AdvancedEventSelectorAttributes) InternalWithRef(ref terra.Reference) 
 	return AdvancedEventSelectorAttributes{ref: ref}
 }
 
-func (aes AdvancedEventSelectorAttributes) InternalTokens() hclwrite.Tokens {
+func (aes AdvancedEventSelectorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aes.ref.InternalTokens()
 }
 
@@ -90,7 +90,7 @@ func (fs FieldSelectorAttributes) InternalWithRef(ref terra.Reference) FieldSele
 	return FieldSelectorAttributes{ref: ref}
 }
 
-func (fs FieldSelectorAttributes) InternalTokens() hclwrite.Tokens {
+func (fs FieldSelectorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fs.ref.InternalTokens()
 }
 
@@ -134,7 +134,7 @@ func (es EventSelectorAttributes) InternalWithRef(ref terra.Reference) EventSele
 	return EventSelectorAttributes{ref: ref}
 }
 
-func (es EventSelectorAttributes) InternalTokens() hclwrite.Tokens {
+func (es EventSelectorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return es.ref.InternalTokens()
 }
 
@@ -166,7 +166,7 @@ func (dr DataResourceAttributes) InternalWithRef(ref terra.Reference) DataResour
 	return DataResourceAttributes{ref: ref}
 }
 
-func (dr DataResourceAttributes) InternalTokens() hclwrite.Tokens {
+func (dr DataResourceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dr.ref.InternalTokens()
 }
 
@@ -190,7 +190,7 @@ func (is InsightSelectorAttributes) InternalWithRef(ref terra.Reference) Insight
 	return InsightSelectorAttributes{ref: ref}
 }
 
-func (is InsightSelectorAttributes) InternalTokens() hclwrite.Tokens {
+func (is InsightSelectorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return is.ref.InternalTokens()
 }
 

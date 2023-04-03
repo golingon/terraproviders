@@ -4,6 +4,7 @@ package google
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataComputeImage creates a new instance of [DataComputeImage].
 func NewDataComputeImage(name string, args DataComputeImageArgs) *DataComputeImage {
 	return &DataComputeImage{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataComputeImage(name string, args DataComputeImageArgs) *DataComputeIma
 
 var _ terra.DataResource = (*DataComputeImage)(nil)
 
+// DataComputeImage represents the Terraform data resource google_compute_image.
 type DataComputeImage struct {
 	Name string
 	Args DataComputeImageArgs
 }
 
+// DataSource returns the Terraform object type for [DataComputeImage].
 func (ci *DataComputeImage) DataSource() string {
 	return "google_compute_image"
 }
 
+// LocalName returns the local name for [DataComputeImage].
 func (ci *DataComputeImage) LocalName() string {
 	return ci.Name
 }
 
+// Configuration returns the configuration (args) for [DataComputeImage].
 func (ci *DataComputeImage) Configuration() interface{} {
 	return ci.Args
 }
 
+// Attributes returns the attributes for [DataComputeImage].
 func (ci *DataComputeImage) Attributes() dataComputeImageAttributes {
 	return dataComputeImageAttributes{ref: terra.ReferenceDataResource(ci)}
 }
 
+// DataComputeImageArgs contains the configurations for google_compute_image.
 type DataComputeImageArgs struct {
 	// Family: string, optional
 	Family terra.StringValue `hcl:"family,attr"`
@@ -50,82 +57,102 @@ type dataComputeImageAttributes struct {
 	ref terra.Reference
 }
 
+// ArchiveSizeBytes returns a reference to field archive_size_bytes of google_compute_image.
 func (ci dataComputeImageAttributes) ArchiveSizeBytes() terra.NumberValue {
-	return terra.ReferenceNumber(ci.ref.Append("archive_size_bytes"))
+	return terra.ReferenceAsNumber(ci.ref.Append("archive_size_bytes"))
 }
 
+// CreationTimestamp returns a reference to field creation_timestamp of google_compute_image.
 func (ci dataComputeImageAttributes) CreationTimestamp() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("creation_timestamp"))
+	return terra.ReferenceAsString(ci.ref.Append("creation_timestamp"))
 }
 
+// Description returns a reference to field description of google_compute_image.
 func (ci dataComputeImageAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("description"))
+	return terra.ReferenceAsString(ci.ref.Append("description"))
 }
 
+// DiskSizeGb returns a reference to field disk_size_gb of google_compute_image.
 func (ci dataComputeImageAttributes) DiskSizeGb() terra.NumberValue {
-	return terra.ReferenceNumber(ci.ref.Append("disk_size_gb"))
+	return terra.ReferenceAsNumber(ci.ref.Append("disk_size_gb"))
 }
 
+// Family returns a reference to field family of google_compute_image.
 func (ci dataComputeImageAttributes) Family() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("family"))
+	return terra.ReferenceAsString(ci.ref.Append("family"))
 }
 
+// Filter returns a reference to field filter of google_compute_image.
 func (ci dataComputeImageAttributes) Filter() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("filter"))
+	return terra.ReferenceAsString(ci.ref.Append("filter"))
 }
 
+// Id returns a reference to field id of google_compute_image.
 func (ci dataComputeImageAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("id"))
+	return terra.ReferenceAsString(ci.ref.Append("id"))
 }
 
+// ImageEncryptionKeySha256 returns a reference to field image_encryption_key_sha256 of google_compute_image.
 func (ci dataComputeImageAttributes) ImageEncryptionKeySha256() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("image_encryption_key_sha256"))
+	return terra.ReferenceAsString(ci.ref.Append("image_encryption_key_sha256"))
 }
 
+// ImageId returns a reference to field image_id of google_compute_image.
 func (ci dataComputeImageAttributes) ImageId() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("image_id"))
+	return terra.ReferenceAsString(ci.ref.Append("image_id"))
 }
 
+// LabelFingerprint returns a reference to field label_fingerprint of google_compute_image.
 func (ci dataComputeImageAttributes) LabelFingerprint() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("label_fingerprint"))
+	return terra.ReferenceAsString(ci.ref.Append("label_fingerprint"))
 }
 
+// Labels returns a reference to field labels of google_compute_image.
 func (ci dataComputeImageAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ci.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](ci.ref.Append("labels"))
 }
 
+// Licenses returns a reference to field licenses of google_compute_image.
 func (ci dataComputeImageAttributes) Licenses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ci.ref.Append("licenses"))
+	return terra.ReferenceAsList[terra.StringValue](ci.ref.Append("licenses"))
 }
 
+// Name returns a reference to field name of google_compute_image.
 func (ci dataComputeImageAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("name"))
+	return terra.ReferenceAsString(ci.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_compute_image.
 func (ci dataComputeImageAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("project"))
+	return terra.ReferenceAsString(ci.ref.Append("project"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_image.
 func (ci dataComputeImageAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("self_link"))
+	return terra.ReferenceAsString(ci.ref.Append("self_link"))
 }
 
+// SourceDisk returns a reference to field source_disk of google_compute_image.
 func (ci dataComputeImageAttributes) SourceDisk() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("source_disk"))
+	return terra.ReferenceAsString(ci.ref.Append("source_disk"))
 }
 
+// SourceDiskEncryptionKeySha256 returns a reference to field source_disk_encryption_key_sha256 of google_compute_image.
 func (ci dataComputeImageAttributes) SourceDiskEncryptionKeySha256() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("source_disk_encryption_key_sha256"))
+	return terra.ReferenceAsString(ci.ref.Append("source_disk_encryption_key_sha256"))
 }
 
+// SourceDiskId returns a reference to field source_disk_id of google_compute_image.
 func (ci dataComputeImageAttributes) SourceDiskId() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("source_disk_id"))
+	return terra.ReferenceAsString(ci.ref.Append("source_disk_id"))
 }
 
+// SourceImageId returns a reference to field source_image_id of google_compute_image.
 func (ci dataComputeImageAttributes) SourceImageId() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("source_image_id"))
+	return terra.ReferenceAsString(ci.ref.Append("source_image_id"))
 }
 
+// Status returns a reference to field status of google_compute_image.
 func (ci dataComputeImageAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("status"))
+	return terra.ReferenceAsString(ci.ref.Append("status"))
 }

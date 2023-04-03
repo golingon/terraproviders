@@ -26,7 +26,7 @@ func (n NotificationAttributes) InternalWithRef(ref terra.Reference) Notificatio
 	return NotificationAttributes{ref: ref}
 }
 
-func (n NotificationAttributes) InternalTokens() hclwrite.Tokens {
+func (n NotificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return n.ref.InternalTokens()
 }
 

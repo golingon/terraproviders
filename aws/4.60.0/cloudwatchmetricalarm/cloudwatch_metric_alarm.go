@@ -51,7 +51,7 @@ func (mq MetricQueryAttributes) InternalWithRef(ref terra.Reference) MetricQuery
 	return MetricQueryAttributes{ref: ref}
 }
 
-func (mq MetricQueryAttributes) InternalTokens() hclwrite.Tokens {
+func (mq MetricQueryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mq.ref.InternalTokens()
 }
 
@@ -95,7 +95,7 @@ func (m MetricAttributes) InternalWithRef(ref terra.Reference) MetricAttributes 
 	return MetricAttributes{ref: ref}
 }
 
-func (m MetricAttributes) InternalTokens() hclwrite.Tokens {
+func (m MetricAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 

@@ -56,148 +56,148 @@ type NetworkRulesetsAttributes struct {
 	ref terra.Reference
 }
 
-func (nr NetworkRulesetsAttributes) InternalRef() terra.Reference {
-	return nr.ref
+func (nr NetworkRulesetsAttributes) InternalRef() (terra.Reference, error) {
+	return nr.ref, nil
 }
 
 func (nr NetworkRulesetsAttributes) InternalWithRef(ref terra.Reference) NetworkRulesetsAttributes {
 	return NetworkRulesetsAttributes{ref: ref}
 }
 
-func (nr NetworkRulesetsAttributes) InternalTokens() hclwrite.Tokens {
+func (nr NetworkRulesetsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nr.ref.InternalTokens()
 }
 
 func (nr NetworkRulesetsAttributes) DefaultAction() terra.StringValue {
-	return terra.ReferenceString(nr.ref.Append("default_action"))
+	return terra.ReferenceAsString(nr.ref.Append("default_action"))
 }
 
 func (nr NetworkRulesetsAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(nr.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(nr.ref.Append("public_network_access_enabled"))
 }
 
 func (nr NetworkRulesetsAttributes) TrustedServiceAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(nr.ref.Append("trusted_service_access_enabled"))
+	return terra.ReferenceAsBool(nr.ref.Append("trusted_service_access_enabled"))
 }
 
 func (nr NetworkRulesetsAttributes) IpRule() terra.ListValue[IpRuleAttributes] {
-	return terra.ReferenceList[IpRuleAttributes](nr.ref.Append("ip_rule"))
+	return terra.ReferenceAsList[IpRuleAttributes](nr.ref.Append("ip_rule"))
 }
 
 func (nr NetworkRulesetsAttributes) VirtualNetworkRule() terra.SetValue[VirtualNetworkRuleAttributes] {
-	return terra.ReferenceSet[VirtualNetworkRuleAttributes](nr.ref.Append("virtual_network_rule"))
+	return terra.ReferenceAsSet[VirtualNetworkRuleAttributes](nr.ref.Append("virtual_network_rule"))
 }
 
 type IpRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (ir IpRuleAttributes) InternalRef() terra.Reference {
-	return ir.ref
+func (ir IpRuleAttributes) InternalRef() (terra.Reference, error) {
+	return ir.ref, nil
 }
 
 func (ir IpRuleAttributes) InternalWithRef(ref terra.Reference) IpRuleAttributes {
 	return IpRuleAttributes{ref: ref}
 }
 
-func (ir IpRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (ir IpRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ir.ref.InternalTokens()
 }
 
 func (ir IpRuleAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(ir.ref.Append("action"))
+	return terra.ReferenceAsString(ir.ref.Append("action"))
 }
 
 func (ir IpRuleAttributes) IpMask() terra.StringValue {
-	return terra.ReferenceString(ir.ref.Append("ip_mask"))
+	return terra.ReferenceAsString(ir.ref.Append("ip_mask"))
 }
 
 type VirtualNetworkRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (vnr VirtualNetworkRuleAttributes) InternalRef() terra.Reference {
-	return vnr.ref
+func (vnr VirtualNetworkRuleAttributes) InternalRef() (terra.Reference, error) {
+	return vnr.ref, nil
 }
 
 func (vnr VirtualNetworkRuleAttributes) InternalWithRef(ref terra.Reference) VirtualNetworkRuleAttributes {
 	return VirtualNetworkRuleAttributes{ref: ref}
 }
 
-func (vnr VirtualNetworkRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (vnr VirtualNetworkRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vnr.ref.InternalTokens()
 }
 
 func (vnr VirtualNetworkRuleAttributes) IgnoreMissingVirtualNetworkServiceEndpoint() terra.BoolValue {
-	return terra.ReferenceBool(vnr.ref.Append("ignore_missing_virtual_network_service_endpoint"))
+	return terra.ReferenceAsBool(vnr.ref.Append("ignore_missing_virtual_network_service_endpoint"))
 }
 
 func (vnr VirtualNetworkRuleAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(vnr.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(vnr.ref.Append("subnet_id"))
 }
 
 type IdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (i IdentityAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IdentityAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IdentityAttributes) InternalWithRef(ref terra.Reference) IdentityAttributes {
 	return IdentityAttributes{ref: ref}
 }
 
-func (i IdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (i IdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IdentityAttributes) IdentityIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i.ref.Append("identity_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](i.ref.Append("identity_ids"))
 }
 
 func (i IdentityAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("principal_id"))
+	return terra.ReferenceAsString(i.ref.Append("principal_id"))
 }
 
 func (i IdentityAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(i.ref.Append("tenant_id"))
 }
 
 func (i IdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("type"))
+	return terra.ReferenceAsString(i.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type NetworkRulesetsState struct {

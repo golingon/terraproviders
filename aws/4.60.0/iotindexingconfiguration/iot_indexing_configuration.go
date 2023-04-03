@@ -71,7 +71,7 @@ func (tgic ThingGroupIndexingConfigurationAttributes) InternalWithRef(ref terra.
 	return ThingGroupIndexingConfigurationAttributes{ref: ref}
 }
 
-func (tgic ThingGroupIndexingConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (tgic ThingGroupIndexingConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tgic.ref.InternalTokens()
 }
 
@@ -99,7 +99,7 @@ func (cf ThingGroupIndexingConfigurationCustomFieldAttributes) InternalWithRef(r
 	return ThingGroupIndexingConfigurationCustomFieldAttributes{ref: ref}
 }
 
-func (cf ThingGroupIndexingConfigurationCustomFieldAttributes) InternalTokens() hclwrite.Tokens {
+func (cf ThingGroupIndexingConfigurationCustomFieldAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cf.ref.InternalTokens()
 }
 
@@ -123,7 +123,7 @@ func (mf ThingGroupIndexingConfigurationManagedFieldAttributes) InternalWithRef(
 	return ThingGroupIndexingConfigurationManagedFieldAttributes{ref: ref}
 }
 
-func (mf ThingGroupIndexingConfigurationManagedFieldAttributes) InternalTokens() hclwrite.Tokens {
+func (mf ThingGroupIndexingConfigurationManagedFieldAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mf.ref.InternalTokens()
 }
 
@@ -147,7 +147,7 @@ func (tic ThingIndexingConfigurationAttributes) InternalWithRef(ref terra.Refere
 	return ThingIndexingConfigurationAttributes{ref: ref}
 }
 
-func (tic ThingIndexingConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (tic ThingIndexingConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tic.ref.InternalTokens()
 }
 
@@ -187,7 +187,7 @@ func (cf ThingIndexingConfigurationCustomFieldAttributes) InternalWithRef(ref te
 	return ThingIndexingConfigurationCustomFieldAttributes{ref: ref}
 }
 
-func (cf ThingIndexingConfigurationCustomFieldAttributes) InternalTokens() hclwrite.Tokens {
+func (cf ThingIndexingConfigurationCustomFieldAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cf.ref.InternalTokens()
 }
 
@@ -211,7 +211,7 @@ func (mf ThingIndexingConfigurationManagedFieldAttributes) InternalWithRef(ref t
 	return ThingIndexingConfigurationManagedFieldAttributes{ref: ref}
 }
 
-func (mf ThingIndexingConfigurationManagedFieldAttributes) InternalTokens() hclwrite.Tokens {
+func (mf ThingIndexingConfigurationManagedFieldAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mf.ref.InternalTokens()
 }
 

@@ -13,24 +13,24 @@ type ServiceDirectoryRegistrationsAttributes struct {
 	ref terra.Reference
 }
 
-func (sdr ServiceDirectoryRegistrationsAttributes) InternalRef() terra.Reference {
-	return sdr.ref
+func (sdr ServiceDirectoryRegistrationsAttributes) InternalRef() (terra.Reference, error) {
+	return sdr.ref, nil
 }
 
 func (sdr ServiceDirectoryRegistrationsAttributes) InternalWithRef(ref terra.Reference) ServiceDirectoryRegistrationsAttributes {
 	return ServiceDirectoryRegistrationsAttributes{ref: ref}
 }
 
-func (sdr ServiceDirectoryRegistrationsAttributes) InternalTokens() hclwrite.Tokens {
+func (sdr ServiceDirectoryRegistrationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sdr.ref.InternalTokens()
 }
 
 func (sdr ServiceDirectoryRegistrationsAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(sdr.ref.Append("namespace"))
+	return terra.ReferenceAsString(sdr.ref.Append("namespace"))
 }
 
 func (sdr ServiceDirectoryRegistrationsAttributes) Service() terra.StringValue {
-	return terra.ReferenceString(sdr.ref.Append("service"))
+	return terra.ReferenceAsString(sdr.ref.Append("service"))
 }
 
 type ServiceDirectoryRegistrationsState struct {

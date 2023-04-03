@@ -31,60 +31,60 @@ type DefinitionAttributes struct {
 	ref terra.Reference
 }
 
-func (d DefinitionAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DefinitionAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DefinitionAttributes) InternalWithRef(ref terra.Reference) DefinitionAttributes {
 	return DefinitionAttributes{ref: ref}
 }
 
-func (d DefinitionAttributes) InternalTokens() hclwrite.Tokens {
+func (d DefinitionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d DefinitionAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("description"))
+	return terra.ReferenceAsString(d.ref.Append("description"))
 }
 
 func (d DefinitionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("name"))
+	return terra.ReferenceAsString(d.ref.Append("name"))
 }
 
 func (d DefinitionAttributes) ServiceResources() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](d.ref.Append("service_resources"))
+	return terra.ReferenceAsSet[terra.StringValue](d.ref.Append("service_resources"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type DefinitionState struct {

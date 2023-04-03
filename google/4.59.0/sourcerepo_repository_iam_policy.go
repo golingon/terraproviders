@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSourcerepoRepositoryIamPolicy creates a new instance of [SourcerepoRepositoryIamPolicy].
 func NewSourcerepoRepositoryIamPolicy(name string, args SourcerepoRepositoryIamPolicyArgs) *SourcerepoRepositoryIamPolicy {
 	return &SourcerepoRepositoryIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSourcerepoRepositoryIamPolicy(name string, args SourcerepoRepositoryIamP
 
 var _ terra.Resource = (*SourcerepoRepositoryIamPolicy)(nil)
 
+// SourcerepoRepositoryIamPolicy represents the Terraform resource google_sourcerepo_repository_iam_policy.
 type SourcerepoRepositoryIamPolicy struct {
-	Name  string
-	Args  SourcerepoRepositoryIamPolicyArgs
-	state *sourcerepoRepositoryIamPolicyState
+	Name      string
+	Args      SourcerepoRepositoryIamPolicyArgs
+	state     *sourcerepoRepositoryIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SourcerepoRepositoryIamPolicy].
 func (srip *SourcerepoRepositoryIamPolicy) Type() string {
 	return "google_sourcerepo_repository_iam_policy"
 }
 
+// LocalName returns the local name for [SourcerepoRepositoryIamPolicy].
 func (srip *SourcerepoRepositoryIamPolicy) LocalName() string {
 	return srip.Name
 }
 
+// Configuration returns the configuration (args) for [SourcerepoRepositoryIamPolicy].
 func (srip *SourcerepoRepositoryIamPolicy) Configuration() interface{} {
 	return srip.Args
 }
 
+// DependOn is used for other resources to depend on [SourcerepoRepositoryIamPolicy].
+func (srip *SourcerepoRepositoryIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(srip)
+}
+
+// Dependencies returns the list of resources [SourcerepoRepositoryIamPolicy] depends_on.
+func (srip *SourcerepoRepositoryIamPolicy) Dependencies() terra.Dependencies {
+	return srip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SourcerepoRepositoryIamPolicy].
+func (srip *SourcerepoRepositoryIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return srip.Lifecycle
+}
+
+// Attributes returns the attributes for [SourcerepoRepositoryIamPolicy].
 func (srip *SourcerepoRepositoryIamPolicy) Attributes() sourcerepoRepositoryIamPolicyAttributes {
 	return sourcerepoRepositoryIamPolicyAttributes{ref: terra.ReferenceResource(srip)}
 }
 
+// ImportState imports the given attribute values into [SourcerepoRepositoryIamPolicy]'s state.
 func (srip *SourcerepoRepositoryIamPolicy) ImportState(av io.Reader) error {
 	srip.state = &sourcerepoRepositoryIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(srip.state); err != nil {
@@ -48,10 +72,12 @@ func (srip *SourcerepoRepositoryIamPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SourcerepoRepositoryIamPolicy] has state.
 func (srip *SourcerepoRepositoryIamPolicy) State() (*sourcerepoRepositoryIamPolicyState, bool) {
 	return srip.state, srip.state != nil
 }
 
+// StateMust returns the state for [SourcerepoRepositoryIamPolicy]. Panics if the state is nil.
 func (srip *SourcerepoRepositoryIamPolicy) StateMust() *sourcerepoRepositoryIamPolicyState {
 	if srip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", srip.Type(), srip.LocalName()))
@@ -59,10 +85,7 @@ func (srip *SourcerepoRepositoryIamPolicy) StateMust() *sourcerepoRepositoryIamP
 	return srip.state
 }
 
-func (srip *SourcerepoRepositoryIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(srip)
-}
-
+// SourcerepoRepositoryIamPolicyArgs contains the configurations for google_sourcerepo_repository_iam_policy.
 type SourcerepoRepositoryIamPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -72,31 +95,34 @@ type SourcerepoRepositoryIamPolicyArgs struct {
 	Project terra.StringValue `hcl:"project,attr"`
 	// Repository: string, required
 	Repository terra.StringValue `hcl:"repository,attr" validate:"required"`
-	// DependsOn contains resources that SourcerepoRepositoryIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sourcerepoRepositoryIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_sourcerepo_repository_iam_policy.
 func (srip sourcerepoRepositoryIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(srip.ref.Append("etag"))
+	return terra.ReferenceAsString(srip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_sourcerepo_repository_iam_policy.
 func (srip sourcerepoRepositoryIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(srip.ref.Append("id"))
+	return terra.ReferenceAsString(srip.ref.Append("id"))
 }
 
+// PolicyData returns a reference to field policy_data of google_sourcerepo_repository_iam_policy.
 func (srip sourcerepoRepositoryIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(srip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(srip.ref.Append("policy_data"))
 }
 
+// Project returns a reference to field project of google_sourcerepo_repository_iam_policy.
 func (srip sourcerepoRepositoryIamPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(srip.ref.Append("project"))
+	return terra.ReferenceAsString(srip.ref.Append("project"))
 }
 
+// Repository returns a reference to field repository of google_sourcerepo_repository_iam_policy.
 func (srip sourcerepoRepositoryIamPolicyAttributes) Repository() terra.StringValue {
-	return terra.ReferenceString(srip.ref.Append("repository"))
+	return terra.ReferenceAsString(srip.ref.Append("repository"))
 }
 
 type sourcerepoRepositoryIamPolicyState struct {

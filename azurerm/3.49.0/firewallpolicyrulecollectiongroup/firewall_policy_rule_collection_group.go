@@ -127,312 +127,312 @@ type ApplicationRuleCollectionAttributes struct {
 	ref terra.Reference
 }
 
-func (arc ApplicationRuleCollectionAttributes) InternalRef() terra.Reference {
-	return arc.ref
+func (arc ApplicationRuleCollectionAttributes) InternalRef() (terra.Reference, error) {
+	return arc.ref, nil
 }
 
 func (arc ApplicationRuleCollectionAttributes) InternalWithRef(ref terra.Reference) ApplicationRuleCollectionAttributes {
 	return ApplicationRuleCollectionAttributes{ref: ref}
 }
 
-func (arc ApplicationRuleCollectionAttributes) InternalTokens() hclwrite.Tokens {
+func (arc ApplicationRuleCollectionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return arc.ref.InternalTokens()
 }
 
 func (arc ApplicationRuleCollectionAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(arc.ref.Append("action"))
+	return terra.ReferenceAsString(arc.ref.Append("action"))
 }
 
 func (arc ApplicationRuleCollectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(arc.ref.Append("name"))
+	return terra.ReferenceAsString(arc.ref.Append("name"))
 }
 
 func (arc ApplicationRuleCollectionAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(arc.ref.Append("priority"))
+	return terra.ReferenceAsNumber(arc.ref.Append("priority"))
 }
 
 func (arc ApplicationRuleCollectionAttributes) Rule() terra.ListValue[ApplicationRuleCollectionRuleAttributes] {
-	return terra.ReferenceList[ApplicationRuleCollectionRuleAttributes](arc.ref.Append("rule"))
+	return terra.ReferenceAsList[ApplicationRuleCollectionRuleAttributes](arc.ref.Append("rule"))
 }
 
 type ApplicationRuleCollectionRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (r ApplicationRuleCollectionRuleAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r ApplicationRuleCollectionRuleAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r ApplicationRuleCollectionRuleAttributes) InternalWithRef(ref terra.Reference) ApplicationRuleCollectionRuleAttributes {
 	return ApplicationRuleCollectionRuleAttributes{ref: ref}
 }
 
-func (r ApplicationRuleCollectionRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (r ApplicationRuleCollectionRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r ApplicationRuleCollectionRuleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("description"))
+	return terra.ReferenceAsString(r.ref.Append("description"))
 }
 
 func (r ApplicationRuleCollectionRuleAttributes) DestinationAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("destination_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("destination_addresses"))
 }
 
 func (r ApplicationRuleCollectionRuleAttributes) DestinationFqdnTags() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("destination_fqdn_tags"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("destination_fqdn_tags"))
 }
 
 func (r ApplicationRuleCollectionRuleAttributes) DestinationFqdns() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("destination_fqdns"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("destination_fqdns"))
 }
 
 func (r ApplicationRuleCollectionRuleAttributes) DestinationUrls() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("destination_urls"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("destination_urls"))
 }
 
 func (r ApplicationRuleCollectionRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("name"))
+	return terra.ReferenceAsString(r.ref.Append("name"))
 }
 
 func (r ApplicationRuleCollectionRuleAttributes) SourceAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("source_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("source_addresses"))
 }
 
 func (r ApplicationRuleCollectionRuleAttributes) SourceIpGroups() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("source_ip_groups"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("source_ip_groups"))
 }
 
 func (r ApplicationRuleCollectionRuleAttributes) TerminateTls() terra.BoolValue {
-	return terra.ReferenceBool(r.ref.Append("terminate_tls"))
+	return terra.ReferenceAsBool(r.ref.Append("terminate_tls"))
 }
 
 func (r ApplicationRuleCollectionRuleAttributes) WebCategories() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("web_categories"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("web_categories"))
 }
 
 func (r ApplicationRuleCollectionRuleAttributes) Protocols() terra.ListValue[ProtocolsAttributes] {
-	return terra.ReferenceList[ProtocolsAttributes](r.ref.Append("protocols"))
+	return terra.ReferenceAsList[ProtocolsAttributes](r.ref.Append("protocols"))
 }
 
 type ProtocolsAttributes struct {
 	ref terra.Reference
 }
 
-func (p ProtocolsAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p ProtocolsAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p ProtocolsAttributes) InternalWithRef(ref terra.Reference) ProtocolsAttributes {
 	return ProtocolsAttributes{ref: ref}
 }
 
-func (p ProtocolsAttributes) InternalTokens() hclwrite.Tokens {
+func (p ProtocolsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
 func (p ProtocolsAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(p.ref.Append("port"))
+	return terra.ReferenceAsNumber(p.ref.Append("port"))
 }
 
 func (p ProtocolsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("type"))
+	return terra.ReferenceAsString(p.ref.Append("type"))
 }
 
 type NatRuleCollectionAttributes struct {
 	ref terra.Reference
 }
 
-func (nrc NatRuleCollectionAttributes) InternalRef() terra.Reference {
-	return nrc.ref
+func (nrc NatRuleCollectionAttributes) InternalRef() (terra.Reference, error) {
+	return nrc.ref, nil
 }
 
 func (nrc NatRuleCollectionAttributes) InternalWithRef(ref terra.Reference) NatRuleCollectionAttributes {
 	return NatRuleCollectionAttributes{ref: ref}
 }
 
-func (nrc NatRuleCollectionAttributes) InternalTokens() hclwrite.Tokens {
+func (nrc NatRuleCollectionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nrc.ref.InternalTokens()
 }
 
 func (nrc NatRuleCollectionAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(nrc.ref.Append("action"))
+	return terra.ReferenceAsString(nrc.ref.Append("action"))
 }
 
 func (nrc NatRuleCollectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(nrc.ref.Append("name"))
+	return terra.ReferenceAsString(nrc.ref.Append("name"))
 }
 
 func (nrc NatRuleCollectionAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(nrc.ref.Append("priority"))
+	return terra.ReferenceAsNumber(nrc.ref.Append("priority"))
 }
 
 func (nrc NatRuleCollectionAttributes) Rule() terra.ListValue[NatRuleCollectionRuleAttributes] {
-	return terra.ReferenceList[NatRuleCollectionRuleAttributes](nrc.ref.Append("rule"))
+	return terra.ReferenceAsList[NatRuleCollectionRuleAttributes](nrc.ref.Append("rule"))
 }
 
 type NatRuleCollectionRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (r NatRuleCollectionRuleAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r NatRuleCollectionRuleAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r NatRuleCollectionRuleAttributes) InternalWithRef(ref terra.Reference) NatRuleCollectionRuleAttributes {
 	return NatRuleCollectionRuleAttributes{ref: ref}
 }
 
-func (r NatRuleCollectionRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (r NatRuleCollectionRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r NatRuleCollectionRuleAttributes) DestinationAddress() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("destination_address"))
+	return terra.ReferenceAsString(r.ref.Append("destination_address"))
 }
 
 func (r NatRuleCollectionRuleAttributes) DestinationPorts() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("destination_ports"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("destination_ports"))
 }
 
 func (r NatRuleCollectionRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("name"))
+	return terra.ReferenceAsString(r.ref.Append("name"))
 }
 
 func (r NatRuleCollectionRuleAttributes) Protocols() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("protocols"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("protocols"))
 }
 
 func (r NatRuleCollectionRuleAttributes) SourceAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("source_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("source_addresses"))
 }
 
 func (r NatRuleCollectionRuleAttributes) SourceIpGroups() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("source_ip_groups"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("source_ip_groups"))
 }
 
 func (r NatRuleCollectionRuleAttributes) TranslatedAddress() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("translated_address"))
+	return terra.ReferenceAsString(r.ref.Append("translated_address"))
 }
 
 func (r NatRuleCollectionRuleAttributes) TranslatedFqdn() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("translated_fqdn"))
+	return terra.ReferenceAsString(r.ref.Append("translated_fqdn"))
 }
 
 func (r NatRuleCollectionRuleAttributes) TranslatedPort() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("translated_port"))
+	return terra.ReferenceAsNumber(r.ref.Append("translated_port"))
 }
 
 type NetworkRuleCollectionAttributes struct {
 	ref terra.Reference
 }
 
-func (nrc NetworkRuleCollectionAttributes) InternalRef() terra.Reference {
-	return nrc.ref
+func (nrc NetworkRuleCollectionAttributes) InternalRef() (terra.Reference, error) {
+	return nrc.ref, nil
 }
 
 func (nrc NetworkRuleCollectionAttributes) InternalWithRef(ref terra.Reference) NetworkRuleCollectionAttributes {
 	return NetworkRuleCollectionAttributes{ref: ref}
 }
 
-func (nrc NetworkRuleCollectionAttributes) InternalTokens() hclwrite.Tokens {
+func (nrc NetworkRuleCollectionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nrc.ref.InternalTokens()
 }
 
 func (nrc NetworkRuleCollectionAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(nrc.ref.Append("action"))
+	return terra.ReferenceAsString(nrc.ref.Append("action"))
 }
 
 func (nrc NetworkRuleCollectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(nrc.ref.Append("name"))
+	return terra.ReferenceAsString(nrc.ref.Append("name"))
 }
 
 func (nrc NetworkRuleCollectionAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(nrc.ref.Append("priority"))
+	return terra.ReferenceAsNumber(nrc.ref.Append("priority"))
 }
 
 func (nrc NetworkRuleCollectionAttributes) Rule() terra.ListValue[NetworkRuleCollectionRuleAttributes] {
-	return terra.ReferenceList[NetworkRuleCollectionRuleAttributes](nrc.ref.Append("rule"))
+	return terra.ReferenceAsList[NetworkRuleCollectionRuleAttributes](nrc.ref.Append("rule"))
 }
 
 type NetworkRuleCollectionRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (r NetworkRuleCollectionRuleAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r NetworkRuleCollectionRuleAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r NetworkRuleCollectionRuleAttributes) InternalWithRef(ref terra.Reference) NetworkRuleCollectionRuleAttributes {
 	return NetworkRuleCollectionRuleAttributes{ref: ref}
 }
 
-func (r NetworkRuleCollectionRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (r NetworkRuleCollectionRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r NetworkRuleCollectionRuleAttributes) DestinationAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("destination_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("destination_addresses"))
 }
 
 func (r NetworkRuleCollectionRuleAttributes) DestinationFqdns() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("destination_fqdns"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("destination_fqdns"))
 }
 
 func (r NetworkRuleCollectionRuleAttributes) DestinationIpGroups() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("destination_ip_groups"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("destination_ip_groups"))
 }
 
 func (r NetworkRuleCollectionRuleAttributes) DestinationPorts() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("destination_ports"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("destination_ports"))
 }
 
 func (r NetworkRuleCollectionRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("name"))
+	return terra.ReferenceAsString(r.ref.Append("name"))
 }
 
 func (r NetworkRuleCollectionRuleAttributes) Protocols() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("protocols"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("protocols"))
 }
 
 func (r NetworkRuleCollectionRuleAttributes) SourceAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("source_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("source_addresses"))
 }
 
 func (r NetworkRuleCollectionRuleAttributes) SourceIpGroups() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("source_ip_groups"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("source_ip_groups"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ApplicationRuleCollectionState struct {

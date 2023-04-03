@@ -4,6 +4,7 @@ package google
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataCloudRunLocations creates a new instance of [DataCloudRunLocations].
 func NewDataCloudRunLocations(name string, args DataCloudRunLocationsArgs) *DataCloudRunLocations {
 	return &DataCloudRunLocations{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataCloudRunLocations(name string, args DataCloudRunLocationsArgs) *Data
 
 var _ terra.DataResource = (*DataCloudRunLocations)(nil)
 
+// DataCloudRunLocations represents the Terraform data resource google_cloud_run_locations.
 type DataCloudRunLocations struct {
 	Name string
 	Args DataCloudRunLocationsArgs
 }
 
+// DataSource returns the Terraform object type for [DataCloudRunLocations].
 func (crl *DataCloudRunLocations) DataSource() string {
 	return "google_cloud_run_locations"
 }
 
+// LocalName returns the local name for [DataCloudRunLocations].
 func (crl *DataCloudRunLocations) LocalName() string {
 	return crl.Name
 }
 
+// Configuration returns the configuration (args) for [DataCloudRunLocations].
 func (crl *DataCloudRunLocations) Configuration() interface{} {
 	return crl.Args
 }
 
+// Attributes returns the attributes for [DataCloudRunLocations].
 func (crl *DataCloudRunLocations) Attributes() dataCloudRunLocationsAttributes {
 	return dataCloudRunLocationsAttributes{ref: terra.ReferenceDataResource(crl)}
 }
 
+// DataCloudRunLocationsArgs contains the configurations for google_cloud_run_locations.
 type DataCloudRunLocationsArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,14 +51,17 @@ type dataCloudRunLocationsAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of google_cloud_run_locations.
 func (crl dataCloudRunLocationsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(crl.ref.Append("id"))
+	return terra.ReferenceAsString(crl.ref.Append("id"))
 }
 
+// Locations returns a reference to field locations of google_cloud_run_locations.
 func (crl dataCloudRunLocationsAttributes) Locations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](crl.ref.Append("locations"))
+	return terra.ReferenceAsList[terra.StringValue](crl.ref.Append("locations"))
 }
 
+// Project returns a reference to field project of google_cloud_run_locations.
 func (crl dataCloudRunLocationsAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(crl.ref.Append("project"))
+	return terra.ReferenceAsString(crl.ref.Append("project"))
 }

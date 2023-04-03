@@ -45,7 +45,7 @@ func (s S3Attributes) InternalWithRef(ref terra.Reference) S3Attributes {
 	return S3Attributes{ref: ref}
 }
 
-func (s S3Attributes) InternalTokens() hclwrite.Tokens {
+func (s S3Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -69,7 +69,7 @@ func (aep AutoExportPolicyAttributes) InternalWithRef(ref terra.Reference) AutoE
 	return AutoExportPolicyAttributes{ref: ref}
 }
 
-func (aep AutoExportPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (aep AutoExportPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aep.ref.InternalTokens()
 }
 
@@ -89,7 +89,7 @@ func (aip AutoImportPolicyAttributes) InternalWithRef(ref terra.Reference) AutoI
 	return AutoImportPolicyAttributes{ref: ref}
 }
 
-func (aip AutoImportPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (aip AutoImportPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aip.ref.InternalTokens()
 }
 
@@ -109,7 +109,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCdnFrontdoorRoute creates a new instance of [CdnFrontdoorRoute].
 func NewCdnFrontdoorRoute(name string, args CdnFrontdoorRouteArgs) *CdnFrontdoorRoute {
 	return &CdnFrontdoorRoute{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCdnFrontdoorRoute(name string, args CdnFrontdoorRouteArgs) *CdnFrontdoor
 
 var _ terra.Resource = (*CdnFrontdoorRoute)(nil)
 
+// CdnFrontdoorRoute represents the Terraform resource azurerm_cdn_frontdoor_route.
 type CdnFrontdoorRoute struct {
-	Name  string
-	Args  CdnFrontdoorRouteArgs
-	state *cdnFrontdoorRouteState
+	Name      string
+	Args      CdnFrontdoorRouteArgs
+	state     *cdnFrontdoorRouteState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CdnFrontdoorRoute].
 func (cfr *CdnFrontdoorRoute) Type() string {
 	return "azurerm_cdn_frontdoor_route"
 }
 
+// LocalName returns the local name for [CdnFrontdoorRoute].
 func (cfr *CdnFrontdoorRoute) LocalName() string {
 	return cfr.Name
 }
 
+// Configuration returns the configuration (args) for [CdnFrontdoorRoute].
 func (cfr *CdnFrontdoorRoute) Configuration() interface{} {
 	return cfr.Args
 }
 
+// DependOn is used for other resources to depend on [CdnFrontdoorRoute].
+func (cfr *CdnFrontdoorRoute) DependOn() terra.Reference {
+	return terra.ReferenceResource(cfr)
+}
+
+// Dependencies returns the list of resources [CdnFrontdoorRoute] depends_on.
+func (cfr *CdnFrontdoorRoute) Dependencies() terra.Dependencies {
+	return cfr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CdnFrontdoorRoute].
+func (cfr *CdnFrontdoorRoute) LifecycleManagement() *terra.Lifecycle {
+	return cfr.Lifecycle
+}
+
+// Attributes returns the attributes for [CdnFrontdoorRoute].
 func (cfr *CdnFrontdoorRoute) Attributes() cdnFrontdoorRouteAttributes {
 	return cdnFrontdoorRouteAttributes{ref: terra.ReferenceResource(cfr)}
 }
 
+// ImportState imports the given attribute values into [CdnFrontdoorRoute]'s state.
 func (cfr *CdnFrontdoorRoute) ImportState(av io.Reader) error {
 	cfr.state = &cdnFrontdoorRouteState{}
 	if err := json.NewDecoder(av).Decode(cfr.state); err != nil {
@@ -49,10 +73,12 @@ func (cfr *CdnFrontdoorRoute) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CdnFrontdoorRoute] has state.
 func (cfr *CdnFrontdoorRoute) State() (*cdnFrontdoorRouteState, bool) {
 	return cfr.state, cfr.state != nil
 }
 
+// StateMust returns the state for [CdnFrontdoorRoute]. Panics if the state is nil.
 func (cfr *CdnFrontdoorRoute) StateMust() *cdnFrontdoorRouteState {
 	if cfr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cfr.Type(), cfr.LocalName()))
@@ -60,10 +86,7 @@ func (cfr *CdnFrontdoorRoute) StateMust() *cdnFrontdoorRouteState {
 	return cfr.state
 }
 
-func (cfr *CdnFrontdoorRoute) DependOn() terra.Reference {
-	return terra.ReferenceResource(cfr)
-}
-
+// CdnFrontdoorRouteArgs contains the configurations for azurerm_cdn_frontdoor_route.
 type CdnFrontdoorRouteArgs struct {
 	// CdnFrontdoorCustomDomainIds: set of string, optional
 	CdnFrontdoorCustomDomainIds terra.SetValue[terra.StringValue] `hcl:"cdn_frontdoor_custom_domain_ids,attr"`
@@ -97,75 +120,87 @@ type CdnFrontdoorRouteArgs struct {
 	Cache *cdnfrontdoorroute.Cache `hcl:"cache,block"`
 	// Timeouts: optional
 	Timeouts *cdnfrontdoorroute.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that CdnFrontdoorRoute depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cdnFrontdoorRouteAttributes struct {
 	ref terra.Reference
 }
 
+// CdnFrontdoorCustomDomainIds returns a reference to field cdn_frontdoor_custom_domain_ids of azurerm_cdn_frontdoor_route.
 func (cfr cdnFrontdoorRouteAttributes) CdnFrontdoorCustomDomainIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cfr.ref.Append("cdn_frontdoor_custom_domain_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](cfr.ref.Append("cdn_frontdoor_custom_domain_ids"))
 }
 
+// CdnFrontdoorEndpointId returns a reference to field cdn_frontdoor_endpoint_id of azurerm_cdn_frontdoor_route.
 func (cfr cdnFrontdoorRouteAttributes) CdnFrontdoorEndpointId() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("cdn_frontdoor_endpoint_id"))
+	return terra.ReferenceAsString(cfr.ref.Append("cdn_frontdoor_endpoint_id"))
 }
 
+// CdnFrontdoorOriginGroupId returns a reference to field cdn_frontdoor_origin_group_id of azurerm_cdn_frontdoor_route.
 func (cfr cdnFrontdoorRouteAttributes) CdnFrontdoorOriginGroupId() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("cdn_frontdoor_origin_group_id"))
+	return terra.ReferenceAsString(cfr.ref.Append("cdn_frontdoor_origin_group_id"))
 }
 
+// CdnFrontdoorOriginIds returns a reference to field cdn_frontdoor_origin_ids of azurerm_cdn_frontdoor_route.
 func (cfr cdnFrontdoorRouteAttributes) CdnFrontdoorOriginIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cfr.ref.Append("cdn_frontdoor_origin_ids"))
+	return terra.ReferenceAsList[terra.StringValue](cfr.ref.Append("cdn_frontdoor_origin_ids"))
 }
 
+// CdnFrontdoorOriginPath returns a reference to field cdn_frontdoor_origin_path of azurerm_cdn_frontdoor_route.
 func (cfr cdnFrontdoorRouteAttributes) CdnFrontdoorOriginPath() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("cdn_frontdoor_origin_path"))
+	return terra.ReferenceAsString(cfr.ref.Append("cdn_frontdoor_origin_path"))
 }
 
+// CdnFrontdoorRuleSetIds returns a reference to field cdn_frontdoor_rule_set_ids of azurerm_cdn_frontdoor_route.
 func (cfr cdnFrontdoorRouteAttributes) CdnFrontdoorRuleSetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cfr.ref.Append("cdn_frontdoor_rule_set_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](cfr.ref.Append("cdn_frontdoor_rule_set_ids"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_cdn_frontdoor_route.
 func (cfr cdnFrontdoorRouteAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(cfr.ref.Append("enabled"))
+	return terra.ReferenceAsBool(cfr.ref.Append("enabled"))
 }
 
+// ForwardingProtocol returns a reference to field forwarding_protocol of azurerm_cdn_frontdoor_route.
 func (cfr cdnFrontdoorRouteAttributes) ForwardingProtocol() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("forwarding_protocol"))
+	return terra.ReferenceAsString(cfr.ref.Append("forwarding_protocol"))
 }
 
+// HttpsRedirectEnabled returns a reference to field https_redirect_enabled of azurerm_cdn_frontdoor_route.
 func (cfr cdnFrontdoorRouteAttributes) HttpsRedirectEnabled() terra.BoolValue {
-	return terra.ReferenceBool(cfr.ref.Append("https_redirect_enabled"))
+	return terra.ReferenceAsBool(cfr.ref.Append("https_redirect_enabled"))
 }
 
+// Id returns a reference to field id of azurerm_cdn_frontdoor_route.
 func (cfr cdnFrontdoorRouteAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("id"))
+	return terra.ReferenceAsString(cfr.ref.Append("id"))
 }
 
+// LinkToDefaultDomain returns a reference to field link_to_default_domain of azurerm_cdn_frontdoor_route.
 func (cfr cdnFrontdoorRouteAttributes) LinkToDefaultDomain() terra.BoolValue {
-	return terra.ReferenceBool(cfr.ref.Append("link_to_default_domain"))
+	return terra.ReferenceAsBool(cfr.ref.Append("link_to_default_domain"))
 }
 
+// Name returns a reference to field name of azurerm_cdn_frontdoor_route.
 func (cfr cdnFrontdoorRouteAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("name"))
+	return terra.ReferenceAsString(cfr.ref.Append("name"))
 }
 
+// PatternsToMatch returns a reference to field patterns_to_match of azurerm_cdn_frontdoor_route.
 func (cfr cdnFrontdoorRouteAttributes) PatternsToMatch() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cfr.ref.Append("patterns_to_match"))
+	return terra.ReferenceAsList[terra.StringValue](cfr.ref.Append("patterns_to_match"))
 }
 
+// SupportedProtocols returns a reference to field supported_protocols of azurerm_cdn_frontdoor_route.
 func (cfr cdnFrontdoorRouteAttributes) SupportedProtocols() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cfr.ref.Append("supported_protocols"))
+	return terra.ReferenceAsSet[terra.StringValue](cfr.ref.Append("supported_protocols"))
 }
 
 func (cfr cdnFrontdoorRouteAttributes) Cache() terra.ListValue[cdnfrontdoorroute.CacheAttributes] {
-	return terra.ReferenceList[cdnfrontdoorroute.CacheAttributes](cfr.ref.Append("cache"))
+	return terra.ReferenceAsList[cdnfrontdoorroute.CacheAttributes](cfr.ref.Append("cache"))
 }
 
 func (cfr cdnFrontdoorRouteAttributes) Timeouts() cdnfrontdoorroute.TimeoutsAttributes {
-	return terra.ReferenceSingle[cdnfrontdoorroute.TimeoutsAttributes](cfr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cdnfrontdoorroute.TimeoutsAttributes](cfr.ref.Append("timeouts"))
 }
 
 type cdnFrontdoorRouteState struct {

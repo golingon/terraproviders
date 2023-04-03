@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataKeyVaultAccessPolicy creates a new instance of [DataKeyVaultAccessPolicy].
 func NewDataKeyVaultAccessPolicy(name string, args DataKeyVaultAccessPolicyArgs) *DataKeyVaultAccessPolicy {
 	return &DataKeyVaultAccessPolicy{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataKeyVaultAccessPolicy(name string, args DataKeyVaultAccessPolicyArgs)
 
 var _ terra.DataResource = (*DataKeyVaultAccessPolicy)(nil)
 
+// DataKeyVaultAccessPolicy represents the Terraform data resource azurerm_key_vault_access_policy.
 type DataKeyVaultAccessPolicy struct {
 	Name string
 	Args DataKeyVaultAccessPolicyArgs
 }
 
+// DataSource returns the Terraform object type for [DataKeyVaultAccessPolicy].
 func (kvap *DataKeyVaultAccessPolicy) DataSource() string {
 	return "azurerm_key_vault_access_policy"
 }
 
+// LocalName returns the local name for [DataKeyVaultAccessPolicy].
 func (kvap *DataKeyVaultAccessPolicy) LocalName() string {
 	return kvap.Name
 }
 
+// Configuration returns the configuration (args) for [DataKeyVaultAccessPolicy].
 func (kvap *DataKeyVaultAccessPolicy) Configuration() interface{} {
 	return kvap.Args
 }
 
+// Attributes returns the attributes for [DataKeyVaultAccessPolicy].
 func (kvap *DataKeyVaultAccessPolicy) Attributes() dataKeyVaultAccessPolicyAttributes {
 	return dataKeyVaultAccessPolicyAttributes{ref: terra.ReferenceDataResource(kvap)}
 }
 
+// DataKeyVaultAccessPolicyArgs contains the configurations for azurerm_key_vault_access_policy.
 type DataKeyVaultAccessPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -49,26 +56,31 @@ type dataKeyVaultAccessPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// CertificatePermissions returns a reference to field certificate_permissions of azurerm_key_vault_access_policy.
 func (kvap dataKeyVaultAccessPolicyAttributes) CertificatePermissions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](kvap.ref.Append("certificate_permissions"))
+	return terra.ReferenceAsList[terra.StringValue](kvap.ref.Append("certificate_permissions"))
 }
 
+// Id returns a reference to field id of azurerm_key_vault_access_policy.
 func (kvap dataKeyVaultAccessPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kvap.ref.Append("id"))
+	return terra.ReferenceAsString(kvap.ref.Append("id"))
 }
 
+// KeyPermissions returns a reference to field key_permissions of azurerm_key_vault_access_policy.
 func (kvap dataKeyVaultAccessPolicyAttributes) KeyPermissions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](kvap.ref.Append("key_permissions"))
+	return terra.ReferenceAsList[terra.StringValue](kvap.ref.Append("key_permissions"))
 }
 
+// Name returns a reference to field name of azurerm_key_vault_access_policy.
 func (kvap dataKeyVaultAccessPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(kvap.ref.Append("name"))
+	return terra.ReferenceAsString(kvap.ref.Append("name"))
 }
 
+// SecretPermissions returns a reference to field secret_permissions of azurerm_key_vault_access_policy.
 func (kvap dataKeyVaultAccessPolicyAttributes) SecretPermissions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](kvap.ref.Append("secret_permissions"))
+	return terra.ReferenceAsList[terra.StringValue](kvap.ref.Append("secret_permissions"))
 }
 
 func (kvap dataKeyVaultAccessPolicyAttributes) Timeouts() datakeyvaultaccesspolicy.TimeoutsAttributes {
-	return terra.ReferenceSingle[datakeyvaultaccesspolicy.TimeoutsAttributes](kvap.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datakeyvaultaccesspolicy.TimeoutsAttributes](kvap.ref.Append("timeouts"))
 }

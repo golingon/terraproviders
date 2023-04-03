@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataConsumptionBudgetSubscription creates a new instance of [DataConsumptionBudgetSubscription].
 func NewDataConsumptionBudgetSubscription(name string, args DataConsumptionBudgetSubscriptionArgs) *DataConsumptionBudgetSubscription {
 	return &DataConsumptionBudgetSubscription{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataConsumptionBudgetSubscription(name string, args DataConsumptionBudge
 
 var _ terra.DataResource = (*DataConsumptionBudgetSubscription)(nil)
 
+// DataConsumptionBudgetSubscription represents the Terraform data resource azurerm_consumption_budget_subscription.
 type DataConsumptionBudgetSubscription struct {
 	Name string
 	Args DataConsumptionBudgetSubscriptionArgs
 }
 
+// DataSource returns the Terraform object type for [DataConsumptionBudgetSubscription].
 func (cbs *DataConsumptionBudgetSubscription) DataSource() string {
 	return "azurerm_consumption_budget_subscription"
 }
 
+// LocalName returns the local name for [DataConsumptionBudgetSubscription].
 func (cbs *DataConsumptionBudgetSubscription) LocalName() string {
 	return cbs.Name
 }
 
+// Configuration returns the configuration (args) for [DataConsumptionBudgetSubscription].
 func (cbs *DataConsumptionBudgetSubscription) Configuration() interface{} {
 	return cbs.Args
 }
 
+// Attributes returns the attributes for [DataConsumptionBudgetSubscription].
 func (cbs *DataConsumptionBudgetSubscription) Attributes() dataConsumptionBudgetSubscriptionAttributes {
 	return dataConsumptionBudgetSubscriptionAttributes{ref: terra.ReferenceDataResource(cbs)}
 }
 
+// DataConsumptionBudgetSubscriptionArgs contains the configurations for azurerm_consumption_budget_subscription.
 type DataConsumptionBudgetSubscriptionArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -57,38 +64,43 @@ type dataConsumptionBudgetSubscriptionAttributes struct {
 	ref terra.Reference
 }
 
+// Amount returns a reference to field amount of azurerm_consumption_budget_subscription.
 func (cbs dataConsumptionBudgetSubscriptionAttributes) Amount() terra.NumberValue {
-	return terra.ReferenceNumber(cbs.ref.Append("amount"))
+	return terra.ReferenceAsNumber(cbs.ref.Append("amount"))
 }
 
+// Id returns a reference to field id of azurerm_consumption_budget_subscription.
 func (cbs dataConsumptionBudgetSubscriptionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cbs.ref.Append("id"))
+	return terra.ReferenceAsString(cbs.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_consumption_budget_subscription.
 func (cbs dataConsumptionBudgetSubscriptionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cbs.ref.Append("name"))
+	return terra.ReferenceAsString(cbs.ref.Append("name"))
 }
 
+// SubscriptionId returns a reference to field subscription_id of azurerm_consumption_budget_subscription.
 func (cbs dataConsumptionBudgetSubscriptionAttributes) SubscriptionId() terra.StringValue {
-	return terra.ReferenceString(cbs.ref.Append("subscription_id"))
+	return terra.ReferenceAsString(cbs.ref.Append("subscription_id"))
 }
 
+// TimeGrain returns a reference to field time_grain of azurerm_consumption_budget_subscription.
 func (cbs dataConsumptionBudgetSubscriptionAttributes) TimeGrain() terra.StringValue {
-	return terra.ReferenceString(cbs.ref.Append("time_grain"))
+	return terra.ReferenceAsString(cbs.ref.Append("time_grain"))
 }
 
 func (cbs dataConsumptionBudgetSubscriptionAttributes) Filter() terra.ListValue[dataconsumptionbudgetsubscription.FilterAttributes] {
-	return terra.ReferenceList[dataconsumptionbudgetsubscription.FilterAttributes](cbs.ref.Append("filter"))
+	return terra.ReferenceAsList[dataconsumptionbudgetsubscription.FilterAttributes](cbs.ref.Append("filter"))
 }
 
 func (cbs dataConsumptionBudgetSubscriptionAttributes) Notification() terra.ListValue[dataconsumptionbudgetsubscription.NotificationAttributes] {
-	return terra.ReferenceList[dataconsumptionbudgetsubscription.NotificationAttributes](cbs.ref.Append("notification"))
+	return terra.ReferenceAsList[dataconsumptionbudgetsubscription.NotificationAttributes](cbs.ref.Append("notification"))
 }
 
 func (cbs dataConsumptionBudgetSubscriptionAttributes) TimePeriod() terra.ListValue[dataconsumptionbudgetsubscription.TimePeriodAttributes] {
-	return terra.ReferenceList[dataconsumptionbudgetsubscription.TimePeriodAttributes](cbs.ref.Append("time_period"))
+	return terra.ReferenceAsList[dataconsumptionbudgetsubscription.TimePeriodAttributes](cbs.ref.Append("time_period"))
 }
 
 func (cbs dataConsumptionBudgetSubscriptionAttributes) Timeouts() dataconsumptionbudgetsubscription.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataconsumptionbudgetsubscription.TimeoutsAttributes](cbs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataconsumptionbudgetsubscription.TimeoutsAttributes](cbs.ref.Append("timeouts"))
 }

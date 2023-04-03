@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDiskPoolIscsiTargetLun creates a new instance of [DiskPoolIscsiTargetLun].
 func NewDiskPoolIscsiTargetLun(name string, args DiskPoolIscsiTargetLunArgs) *DiskPoolIscsiTargetLun {
 	return &DiskPoolIscsiTargetLun{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDiskPoolIscsiTargetLun(name string, args DiskPoolIscsiTargetLunArgs) *Di
 
 var _ terra.Resource = (*DiskPoolIscsiTargetLun)(nil)
 
+// DiskPoolIscsiTargetLun represents the Terraform resource azurerm_disk_pool_iscsi_target_lun.
 type DiskPoolIscsiTargetLun struct {
-	Name  string
-	Args  DiskPoolIscsiTargetLunArgs
-	state *diskPoolIscsiTargetLunState
+	Name      string
+	Args      DiskPoolIscsiTargetLunArgs
+	state     *diskPoolIscsiTargetLunState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DiskPoolIscsiTargetLun].
 func (dpitl *DiskPoolIscsiTargetLun) Type() string {
 	return "azurerm_disk_pool_iscsi_target_lun"
 }
 
+// LocalName returns the local name for [DiskPoolIscsiTargetLun].
 func (dpitl *DiskPoolIscsiTargetLun) LocalName() string {
 	return dpitl.Name
 }
 
+// Configuration returns the configuration (args) for [DiskPoolIscsiTargetLun].
 func (dpitl *DiskPoolIscsiTargetLun) Configuration() interface{} {
 	return dpitl.Args
 }
 
+// DependOn is used for other resources to depend on [DiskPoolIscsiTargetLun].
+func (dpitl *DiskPoolIscsiTargetLun) DependOn() terra.Reference {
+	return terra.ReferenceResource(dpitl)
+}
+
+// Dependencies returns the list of resources [DiskPoolIscsiTargetLun] depends_on.
+func (dpitl *DiskPoolIscsiTargetLun) Dependencies() terra.Dependencies {
+	return dpitl.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DiskPoolIscsiTargetLun].
+func (dpitl *DiskPoolIscsiTargetLun) LifecycleManagement() *terra.Lifecycle {
+	return dpitl.Lifecycle
+}
+
+// Attributes returns the attributes for [DiskPoolIscsiTargetLun].
 func (dpitl *DiskPoolIscsiTargetLun) Attributes() diskPoolIscsiTargetLunAttributes {
 	return diskPoolIscsiTargetLunAttributes{ref: terra.ReferenceResource(dpitl)}
 }
 
+// ImportState imports the given attribute values into [DiskPoolIscsiTargetLun]'s state.
 func (dpitl *DiskPoolIscsiTargetLun) ImportState(av io.Reader) error {
 	dpitl.state = &diskPoolIscsiTargetLunState{}
 	if err := json.NewDecoder(av).Decode(dpitl.state); err != nil {
@@ -49,10 +73,12 @@ func (dpitl *DiskPoolIscsiTargetLun) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DiskPoolIscsiTargetLun] has state.
 func (dpitl *DiskPoolIscsiTargetLun) State() (*diskPoolIscsiTargetLunState, bool) {
 	return dpitl.state, dpitl.state != nil
 }
 
+// StateMust returns the state for [DiskPoolIscsiTargetLun]. Panics if the state is nil.
 func (dpitl *DiskPoolIscsiTargetLun) StateMust() *diskPoolIscsiTargetLunState {
 	if dpitl.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dpitl.Type(), dpitl.LocalName()))
@@ -60,10 +86,7 @@ func (dpitl *DiskPoolIscsiTargetLun) StateMust() *diskPoolIscsiTargetLunState {
 	return dpitl.state
 }
 
-func (dpitl *DiskPoolIscsiTargetLun) DependOn() terra.Reference {
-	return terra.ReferenceResource(dpitl)
-}
-
+// DiskPoolIscsiTargetLunArgs contains the configurations for azurerm_disk_pool_iscsi_target_lun.
 type DiskPoolIscsiTargetLunArgs struct {
 	// DiskPoolManagedDiskAttachmentId: string, required
 	DiskPoolManagedDiskAttachmentId terra.StringValue `hcl:"disk_pool_managed_disk_attachment_id,attr" validate:"required"`
@@ -75,35 +98,38 @@ type DiskPoolIscsiTargetLunArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *diskpooliscsitargetlun.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DiskPoolIscsiTargetLun depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type diskPoolIscsiTargetLunAttributes struct {
 	ref terra.Reference
 }
 
+// DiskPoolManagedDiskAttachmentId returns a reference to field disk_pool_managed_disk_attachment_id of azurerm_disk_pool_iscsi_target_lun.
 func (dpitl diskPoolIscsiTargetLunAttributes) DiskPoolManagedDiskAttachmentId() terra.StringValue {
-	return terra.ReferenceString(dpitl.ref.Append("disk_pool_managed_disk_attachment_id"))
+	return terra.ReferenceAsString(dpitl.ref.Append("disk_pool_managed_disk_attachment_id"))
 }
 
+// Id returns a reference to field id of azurerm_disk_pool_iscsi_target_lun.
 func (dpitl diskPoolIscsiTargetLunAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dpitl.ref.Append("id"))
+	return terra.ReferenceAsString(dpitl.ref.Append("id"))
 }
 
+// IscsiTargetId returns a reference to field iscsi_target_id of azurerm_disk_pool_iscsi_target_lun.
 func (dpitl diskPoolIscsiTargetLunAttributes) IscsiTargetId() terra.StringValue {
-	return terra.ReferenceString(dpitl.ref.Append("iscsi_target_id"))
+	return terra.ReferenceAsString(dpitl.ref.Append("iscsi_target_id"))
 }
 
+// Lun returns a reference to field lun of azurerm_disk_pool_iscsi_target_lun.
 func (dpitl diskPoolIscsiTargetLunAttributes) Lun() terra.NumberValue {
-	return terra.ReferenceNumber(dpitl.ref.Append("lun"))
+	return terra.ReferenceAsNumber(dpitl.ref.Append("lun"))
 }
 
+// Name returns a reference to field name of azurerm_disk_pool_iscsi_target_lun.
 func (dpitl diskPoolIscsiTargetLunAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dpitl.ref.Append("name"))
+	return terra.ReferenceAsString(dpitl.ref.Append("name"))
 }
 
 func (dpitl diskPoolIscsiTargetLunAttributes) Timeouts() diskpooliscsitargetlun.TimeoutsAttributes {
-	return terra.ReferenceSingle[diskpooliscsitargetlun.TimeoutsAttributes](dpitl.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[diskpooliscsitargetlun.TimeoutsAttributes](dpitl.ref.Append("timeouts"))
 }
 
 type diskPoolIscsiTargetLunState struct {

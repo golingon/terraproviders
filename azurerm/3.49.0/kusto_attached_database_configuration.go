@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewKustoAttachedDatabaseConfiguration creates a new instance of [KustoAttachedDatabaseConfiguration].
 func NewKustoAttachedDatabaseConfiguration(name string, args KustoAttachedDatabaseConfigurationArgs) *KustoAttachedDatabaseConfiguration {
 	return &KustoAttachedDatabaseConfiguration{
 		Args: args,
@@ -19,28 +20,51 @@ func NewKustoAttachedDatabaseConfiguration(name string, args KustoAttachedDataba
 
 var _ terra.Resource = (*KustoAttachedDatabaseConfiguration)(nil)
 
+// KustoAttachedDatabaseConfiguration represents the Terraform resource azurerm_kusto_attached_database_configuration.
 type KustoAttachedDatabaseConfiguration struct {
-	Name  string
-	Args  KustoAttachedDatabaseConfigurationArgs
-	state *kustoAttachedDatabaseConfigurationState
+	Name      string
+	Args      KustoAttachedDatabaseConfigurationArgs
+	state     *kustoAttachedDatabaseConfigurationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [KustoAttachedDatabaseConfiguration].
 func (kadc *KustoAttachedDatabaseConfiguration) Type() string {
 	return "azurerm_kusto_attached_database_configuration"
 }
 
+// LocalName returns the local name for [KustoAttachedDatabaseConfiguration].
 func (kadc *KustoAttachedDatabaseConfiguration) LocalName() string {
 	return kadc.Name
 }
 
+// Configuration returns the configuration (args) for [KustoAttachedDatabaseConfiguration].
 func (kadc *KustoAttachedDatabaseConfiguration) Configuration() interface{} {
 	return kadc.Args
 }
 
+// DependOn is used for other resources to depend on [KustoAttachedDatabaseConfiguration].
+func (kadc *KustoAttachedDatabaseConfiguration) DependOn() terra.Reference {
+	return terra.ReferenceResource(kadc)
+}
+
+// Dependencies returns the list of resources [KustoAttachedDatabaseConfiguration] depends_on.
+func (kadc *KustoAttachedDatabaseConfiguration) Dependencies() terra.Dependencies {
+	return kadc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [KustoAttachedDatabaseConfiguration].
+func (kadc *KustoAttachedDatabaseConfiguration) LifecycleManagement() *terra.Lifecycle {
+	return kadc.Lifecycle
+}
+
+// Attributes returns the attributes for [KustoAttachedDatabaseConfiguration].
 func (kadc *KustoAttachedDatabaseConfiguration) Attributes() kustoAttachedDatabaseConfigurationAttributes {
 	return kustoAttachedDatabaseConfigurationAttributes{ref: terra.ReferenceResource(kadc)}
 }
 
+// ImportState imports the given attribute values into [KustoAttachedDatabaseConfiguration]'s state.
 func (kadc *KustoAttachedDatabaseConfiguration) ImportState(av io.Reader) error {
 	kadc.state = &kustoAttachedDatabaseConfigurationState{}
 	if err := json.NewDecoder(av).Decode(kadc.state); err != nil {
@@ -49,10 +73,12 @@ func (kadc *KustoAttachedDatabaseConfiguration) ImportState(av io.Reader) error 
 	return nil
 }
 
+// State returns the state and a bool indicating if [KustoAttachedDatabaseConfiguration] has state.
 func (kadc *KustoAttachedDatabaseConfiguration) State() (*kustoAttachedDatabaseConfigurationState, bool) {
 	return kadc.state, kadc.state != nil
 }
 
+// StateMust returns the state for [KustoAttachedDatabaseConfiguration]. Panics if the state is nil.
 func (kadc *KustoAttachedDatabaseConfiguration) StateMust() *kustoAttachedDatabaseConfigurationState {
 	if kadc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", kadc.Type(), kadc.LocalName()))
@@ -60,10 +86,7 @@ func (kadc *KustoAttachedDatabaseConfiguration) StateMust() *kustoAttachedDataba
 	return kadc.state
 }
 
-func (kadc *KustoAttachedDatabaseConfiguration) DependOn() terra.Reference {
-	return terra.ReferenceResource(kadc)
-}
-
+// KustoAttachedDatabaseConfigurationArgs contains the configurations for azurerm_kusto_attached_database_configuration.
 type KustoAttachedDatabaseConfigurationArgs struct {
 	// ClusterName: string, required
 	ClusterName terra.StringValue `hcl:"cluster_name,attr" validate:"required"`
@@ -85,55 +108,62 @@ type KustoAttachedDatabaseConfigurationArgs struct {
 	Sharing *kustoattacheddatabaseconfiguration.Sharing `hcl:"sharing,block"`
 	// Timeouts: optional
 	Timeouts *kustoattacheddatabaseconfiguration.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that KustoAttachedDatabaseConfiguration depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type kustoAttachedDatabaseConfigurationAttributes struct {
 	ref terra.Reference
 }
 
+// AttachedDatabaseNames returns a reference to field attached_database_names of azurerm_kusto_attached_database_configuration.
 func (kadc kustoAttachedDatabaseConfigurationAttributes) AttachedDatabaseNames() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](kadc.ref.Append("attached_database_names"))
+	return terra.ReferenceAsList[terra.StringValue](kadc.ref.Append("attached_database_names"))
 }
 
+// ClusterName returns a reference to field cluster_name of azurerm_kusto_attached_database_configuration.
 func (kadc kustoAttachedDatabaseConfigurationAttributes) ClusterName() terra.StringValue {
-	return terra.ReferenceString(kadc.ref.Append("cluster_name"))
+	return terra.ReferenceAsString(kadc.ref.Append("cluster_name"))
 }
 
+// ClusterResourceId returns a reference to field cluster_resource_id of azurerm_kusto_attached_database_configuration.
 func (kadc kustoAttachedDatabaseConfigurationAttributes) ClusterResourceId() terra.StringValue {
-	return terra.ReferenceString(kadc.ref.Append("cluster_resource_id"))
+	return terra.ReferenceAsString(kadc.ref.Append("cluster_resource_id"))
 }
 
+// DatabaseName returns a reference to field database_name of azurerm_kusto_attached_database_configuration.
 func (kadc kustoAttachedDatabaseConfigurationAttributes) DatabaseName() terra.StringValue {
-	return terra.ReferenceString(kadc.ref.Append("database_name"))
+	return terra.ReferenceAsString(kadc.ref.Append("database_name"))
 }
 
+// DefaultPrincipalModificationKind returns a reference to field default_principal_modification_kind of azurerm_kusto_attached_database_configuration.
 func (kadc kustoAttachedDatabaseConfigurationAttributes) DefaultPrincipalModificationKind() terra.StringValue {
-	return terra.ReferenceString(kadc.ref.Append("default_principal_modification_kind"))
+	return terra.ReferenceAsString(kadc.ref.Append("default_principal_modification_kind"))
 }
 
+// Id returns a reference to field id of azurerm_kusto_attached_database_configuration.
 func (kadc kustoAttachedDatabaseConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kadc.ref.Append("id"))
+	return terra.ReferenceAsString(kadc.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_kusto_attached_database_configuration.
 func (kadc kustoAttachedDatabaseConfigurationAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(kadc.ref.Append("location"))
+	return terra.ReferenceAsString(kadc.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_kusto_attached_database_configuration.
 func (kadc kustoAttachedDatabaseConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(kadc.ref.Append("name"))
+	return terra.ReferenceAsString(kadc.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_kusto_attached_database_configuration.
 func (kadc kustoAttachedDatabaseConfigurationAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(kadc.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(kadc.ref.Append("resource_group_name"))
 }
 
 func (kadc kustoAttachedDatabaseConfigurationAttributes) Sharing() terra.ListValue[kustoattacheddatabaseconfiguration.SharingAttributes] {
-	return terra.ReferenceList[kustoattacheddatabaseconfiguration.SharingAttributes](kadc.ref.Append("sharing"))
+	return terra.ReferenceAsList[kustoattacheddatabaseconfiguration.SharingAttributes](kadc.ref.Append("sharing"))
 }
 
 func (kadc kustoAttachedDatabaseConfigurationAttributes) Timeouts() kustoattacheddatabaseconfiguration.TimeoutsAttributes {
-	return terra.ReferenceSingle[kustoattacheddatabaseconfiguration.TimeoutsAttributes](kadc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[kustoattacheddatabaseconfiguration.TimeoutsAttributes](kadc.ref.Append("timeouts"))
 }
 
 type kustoAttachedDatabaseConfigurationState struct {

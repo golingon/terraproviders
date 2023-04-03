@@ -183,544 +183,544 @@ type CommonEncryptionCbcsAttributes struct {
 	ref terra.Reference
 }
 
-func (cec CommonEncryptionCbcsAttributes) InternalRef() terra.Reference {
-	return cec.ref
+func (cec CommonEncryptionCbcsAttributes) InternalRef() (terra.Reference, error) {
+	return cec.ref, nil
 }
 
 func (cec CommonEncryptionCbcsAttributes) InternalWithRef(ref terra.Reference) CommonEncryptionCbcsAttributes {
 	return CommonEncryptionCbcsAttributes{ref: ref}
 }
 
-func (cec CommonEncryptionCbcsAttributes) InternalTokens() hclwrite.Tokens {
+func (cec CommonEncryptionCbcsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cec.ref.InternalTokens()
 }
 
 func (cec CommonEncryptionCbcsAttributes) ClearKeyEncryption() terra.ListValue[CommonEncryptionCbcsClearKeyEncryptionAttributes] {
-	return terra.ReferenceList[CommonEncryptionCbcsClearKeyEncryptionAttributes](cec.ref.Append("clear_key_encryption"))
+	return terra.ReferenceAsList[CommonEncryptionCbcsClearKeyEncryptionAttributes](cec.ref.Append("clear_key_encryption"))
 }
 
 func (cec CommonEncryptionCbcsAttributes) DefaultContentKey() terra.ListValue[CommonEncryptionCbcsDefaultContentKeyAttributes] {
-	return terra.ReferenceList[CommonEncryptionCbcsDefaultContentKeyAttributes](cec.ref.Append("default_content_key"))
+	return terra.ReferenceAsList[CommonEncryptionCbcsDefaultContentKeyAttributes](cec.ref.Append("default_content_key"))
 }
 
 func (cec CommonEncryptionCbcsAttributes) DrmFairplay() terra.ListValue[DrmFairplayAttributes] {
-	return terra.ReferenceList[DrmFairplayAttributes](cec.ref.Append("drm_fairplay"))
+	return terra.ReferenceAsList[DrmFairplayAttributes](cec.ref.Append("drm_fairplay"))
 }
 
 func (cec CommonEncryptionCbcsAttributes) EnabledProtocols() terra.ListValue[CommonEncryptionCbcsEnabledProtocolsAttributes] {
-	return terra.ReferenceList[CommonEncryptionCbcsEnabledProtocolsAttributes](cec.ref.Append("enabled_protocols"))
+	return terra.ReferenceAsList[CommonEncryptionCbcsEnabledProtocolsAttributes](cec.ref.Append("enabled_protocols"))
 }
 
 type CommonEncryptionCbcsClearKeyEncryptionAttributes struct {
 	ref terra.Reference
 }
 
-func (cke CommonEncryptionCbcsClearKeyEncryptionAttributes) InternalRef() terra.Reference {
-	return cke.ref
+func (cke CommonEncryptionCbcsClearKeyEncryptionAttributes) InternalRef() (terra.Reference, error) {
+	return cke.ref, nil
 }
 
 func (cke CommonEncryptionCbcsClearKeyEncryptionAttributes) InternalWithRef(ref terra.Reference) CommonEncryptionCbcsClearKeyEncryptionAttributes {
 	return CommonEncryptionCbcsClearKeyEncryptionAttributes{ref: ref}
 }
 
-func (cke CommonEncryptionCbcsClearKeyEncryptionAttributes) InternalTokens() hclwrite.Tokens {
+func (cke CommonEncryptionCbcsClearKeyEncryptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cke.ref.InternalTokens()
 }
 
 func (cke CommonEncryptionCbcsClearKeyEncryptionAttributes) CustomKeysAcquisitionUrlTemplate() terra.StringValue {
-	return terra.ReferenceString(cke.ref.Append("custom_keys_acquisition_url_template"))
+	return terra.ReferenceAsString(cke.ref.Append("custom_keys_acquisition_url_template"))
 }
 
 type CommonEncryptionCbcsDefaultContentKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (dck CommonEncryptionCbcsDefaultContentKeyAttributes) InternalRef() terra.Reference {
-	return dck.ref
+func (dck CommonEncryptionCbcsDefaultContentKeyAttributes) InternalRef() (terra.Reference, error) {
+	return dck.ref, nil
 }
 
 func (dck CommonEncryptionCbcsDefaultContentKeyAttributes) InternalWithRef(ref terra.Reference) CommonEncryptionCbcsDefaultContentKeyAttributes {
 	return CommonEncryptionCbcsDefaultContentKeyAttributes{ref: ref}
 }
 
-func (dck CommonEncryptionCbcsDefaultContentKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (dck CommonEncryptionCbcsDefaultContentKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dck.ref.InternalTokens()
 }
 
 func (dck CommonEncryptionCbcsDefaultContentKeyAttributes) Label() terra.StringValue {
-	return terra.ReferenceString(dck.ref.Append("label"))
+	return terra.ReferenceAsString(dck.ref.Append("label"))
 }
 
 func (dck CommonEncryptionCbcsDefaultContentKeyAttributes) PolicyName() terra.StringValue {
-	return terra.ReferenceString(dck.ref.Append("policy_name"))
+	return terra.ReferenceAsString(dck.ref.Append("policy_name"))
 }
 
 type DrmFairplayAttributes struct {
 	ref terra.Reference
 }
 
-func (df DrmFairplayAttributes) InternalRef() terra.Reference {
-	return df.ref
+func (df DrmFairplayAttributes) InternalRef() (terra.Reference, error) {
+	return df.ref, nil
 }
 
 func (df DrmFairplayAttributes) InternalWithRef(ref terra.Reference) DrmFairplayAttributes {
 	return DrmFairplayAttributes{ref: ref}
 }
 
-func (df DrmFairplayAttributes) InternalTokens() hclwrite.Tokens {
+func (df DrmFairplayAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return df.ref.InternalTokens()
 }
 
 func (df DrmFairplayAttributes) AllowPersistentLicense() terra.BoolValue {
-	return terra.ReferenceBool(df.ref.Append("allow_persistent_license"))
+	return terra.ReferenceAsBool(df.ref.Append("allow_persistent_license"))
 }
 
 func (df DrmFairplayAttributes) CustomLicenseAcquisitionUrlTemplate() terra.StringValue {
-	return terra.ReferenceString(df.ref.Append("custom_license_acquisition_url_template"))
+	return terra.ReferenceAsString(df.ref.Append("custom_license_acquisition_url_template"))
 }
 
 type CommonEncryptionCbcsEnabledProtocolsAttributes struct {
 	ref terra.Reference
 }
 
-func (ep CommonEncryptionCbcsEnabledProtocolsAttributes) InternalRef() terra.Reference {
-	return ep.ref
+func (ep CommonEncryptionCbcsEnabledProtocolsAttributes) InternalRef() (terra.Reference, error) {
+	return ep.ref, nil
 }
 
 func (ep CommonEncryptionCbcsEnabledProtocolsAttributes) InternalWithRef(ref terra.Reference) CommonEncryptionCbcsEnabledProtocolsAttributes {
 	return CommonEncryptionCbcsEnabledProtocolsAttributes{ref: ref}
 }
 
-func (ep CommonEncryptionCbcsEnabledProtocolsAttributes) InternalTokens() hclwrite.Tokens {
+func (ep CommonEncryptionCbcsEnabledProtocolsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ep.ref.InternalTokens()
 }
 
 func (ep CommonEncryptionCbcsEnabledProtocolsAttributes) Dash() terra.BoolValue {
-	return terra.ReferenceBool(ep.ref.Append("dash"))
+	return terra.ReferenceAsBool(ep.ref.Append("dash"))
 }
 
 func (ep CommonEncryptionCbcsEnabledProtocolsAttributes) Download() terra.BoolValue {
-	return terra.ReferenceBool(ep.ref.Append("download"))
+	return terra.ReferenceAsBool(ep.ref.Append("download"))
 }
 
 func (ep CommonEncryptionCbcsEnabledProtocolsAttributes) Hls() terra.BoolValue {
-	return terra.ReferenceBool(ep.ref.Append("hls"))
+	return terra.ReferenceAsBool(ep.ref.Append("hls"))
 }
 
 func (ep CommonEncryptionCbcsEnabledProtocolsAttributes) SmoothStreaming() terra.BoolValue {
-	return terra.ReferenceBool(ep.ref.Append("smooth_streaming"))
+	return terra.ReferenceAsBool(ep.ref.Append("smooth_streaming"))
 }
 
 type CommonEncryptionCencAttributes struct {
 	ref terra.Reference
 }
 
-func (cec CommonEncryptionCencAttributes) InternalRef() terra.Reference {
-	return cec.ref
+func (cec CommonEncryptionCencAttributes) InternalRef() (terra.Reference, error) {
+	return cec.ref, nil
 }
 
 func (cec CommonEncryptionCencAttributes) InternalWithRef(ref terra.Reference) CommonEncryptionCencAttributes {
 	return CommonEncryptionCencAttributes{ref: ref}
 }
 
-func (cec CommonEncryptionCencAttributes) InternalTokens() hclwrite.Tokens {
+func (cec CommonEncryptionCencAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cec.ref.InternalTokens()
 }
 
 func (cec CommonEncryptionCencAttributes) DrmWidevineCustomLicenseAcquisitionUrlTemplate() terra.StringValue {
-	return terra.ReferenceString(cec.ref.Append("drm_widevine_custom_license_acquisition_url_template"))
+	return terra.ReferenceAsString(cec.ref.Append("drm_widevine_custom_license_acquisition_url_template"))
 }
 
 func (cec CommonEncryptionCencAttributes) ClearKeyEncryption() terra.ListValue[CommonEncryptionCencClearKeyEncryptionAttributes] {
-	return terra.ReferenceList[CommonEncryptionCencClearKeyEncryptionAttributes](cec.ref.Append("clear_key_encryption"))
+	return terra.ReferenceAsList[CommonEncryptionCencClearKeyEncryptionAttributes](cec.ref.Append("clear_key_encryption"))
 }
 
 func (cec CommonEncryptionCencAttributes) ClearTrack() terra.SetValue[ClearTrackAttributes] {
-	return terra.ReferenceSet[ClearTrackAttributes](cec.ref.Append("clear_track"))
+	return terra.ReferenceAsSet[ClearTrackAttributes](cec.ref.Append("clear_track"))
 }
 
 func (cec CommonEncryptionCencAttributes) ContentKeyToTrackMapping() terra.SetValue[ContentKeyToTrackMappingAttributes] {
-	return terra.ReferenceSet[ContentKeyToTrackMappingAttributes](cec.ref.Append("content_key_to_track_mapping"))
+	return terra.ReferenceAsSet[ContentKeyToTrackMappingAttributes](cec.ref.Append("content_key_to_track_mapping"))
 }
 
 func (cec CommonEncryptionCencAttributes) DefaultContentKey() terra.ListValue[CommonEncryptionCencDefaultContentKeyAttributes] {
-	return terra.ReferenceList[CommonEncryptionCencDefaultContentKeyAttributes](cec.ref.Append("default_content_key"))
+	return terra.ReferenceAsList[CommonEncryptionCencDefaultContentKeyAttributes](cec.ref.Append("default_content_key"))
 }
 
 func (cec CommonEncryptionCencAttributes) DrmPlayready() terra.ListValue[DrmPlayreadyAttributes] {
-	return terra.ReferenceList[DrmPlayreadyAttributes](cec.ref.Append("drm_playready"))
+	return terra.ReferenceAsList[DrmPlayreadyAttributes](cec.ref.Append("drm_playready"))
 }
 
 func (cec CommonEncryptionCencAttributes) EnabledProtocols() terra.ListValue[CommonEncryptionCencEnabledProtocolsAttributes] {
-	return terra.ReferenceList[CommonEncryptionCencEnabledProtocolsAttributes](cec.ref.Append("enabled_protocols"))
+	return terra.ReferenceAsList[CommonEncryptionCencEnabledProtocolsAttributes](cec.ref.Append("enabled_protocols"))
 }
 
 type CommonEncryptionCencClearKeyEncryptionAttributes struct {
 	ref terra.Reference
 }
 
-func (cke CommonEncryptionCencClearKeyEncryptionAttributes) InternalRef() terra.Reference {
-	return cke.ref
+func (cke CommonEncryptionCencClearKeyEncryptionAttributes) InternalRef() (terra.Reference, error) {
+	return cke.ref, nil
 }
 
 func (cke CommonEncryptionCencClearKeyEncryptionAttributes) InternalWithRef(ref terra.Reference) CommonEncryptionCencClearKeyEncryptionAttributes {
 	return CommonEncryptionCencClearKeyEncryptionAttributes{ref: ref}
 }
 
-func (cke CommonEncryptionCencClearKeyEncryptionAttributes) InternalTokens() hclwrite.Tokens {
+func (cke CommonEncryptionCencClearKeyEncryptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cke.ref.InternalTokens()
 }
 
 func (cke CommonEncryptionCencClearKeyEncryptionAttributes) CustomKeysAcquisitionUrlTemplate() terra.StringValue {
-	return terra.ReferenceString(cke.ref.Append("custom_keys_acquisition_url_template"))
+	return terra.ReferenceAsString(cke.ref.Append("custom_keys_acquisition_url_template"))
 }
 
 type ClearTrackAttributes struct {
 	ref terra.Reference
 }
 
-func (ct ClearTrackAttributes) InternalRef() terra.Reference {
-	return ct.ref
+func (ct ClearTrackAttributes) InternalRef() (terra.Reference, error) {
+	return ct.ref, nil
 }
 
 func (ct ClearTrackAttributes) InternalWithRef(ref terra.Reference) ClearTrackAttributes {
 	return ClearTrackAttributes{ref: ref}
 }
 
-func (ct ClearTrackAttributes) InternalTokens() hclwrite.Tokens {
+func (ct ClearTrackAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ct.ref.InternalTokens()
 }
 
 func (ct ClearTrackAttributes) Condition() terra.SetValue[ClearTrackConditionAttributes] {
-	return terra.ReferenceSet[ClearTrackConditionAttributes](ct.ref.Append("condition"))
+	return terra.ReferenceAsSet[ClearTrackConditionAttributes](ct.ref.Append("condition"))
 }
 
 type ClearTrackConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (c ClearTrackConditionAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ClearTrackConditionAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ClearTrackConditionAttributes) InternalWithRef(ref terra.Reference) ClearTrackConditionAttributes {
 	return ClearTrackConditionAttributes{ref: ref}
 }
 
-func (c ClearTrackConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (c ClearTrackConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ClearTrackConditionAttributes) Operation() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("operation"))
+	return terra.ReferenceAsString(c.ref.Append("operation"))
 }
 
 func (c ClearTrackConditionAttributes) Property() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("property"))
+	return terra.ReferenceAsString(c.ref.Append("property"))
 }
 
 func (c ClearTrackConditionAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("value"))
+	return terra.ReferenceAsString(c.ref.Append("value"))
 }
 
 type ContentKeyToTrackMappingAttributes struct {
 	ref terra.Reference
 }
 
-func (ckttm ContentKeyToTrackMappingAttributes) InternalRef() terra.Reference {
-	return ckttm.ref
+func (ckttm ContentKeyToTrackMappingAttributes) InternalRef() (terra.Reference, error) {
+	return ckttm.ref, nil
 }
 
 func (ckttm ContentKeyToTrackMappingAttributes) InternalWithRef(ref terra.Reference) ContentKeyToTrackMappingAttributes {
 	return ContentKeyToTrackMappingAttributes{ref: ref}
 }
 
-func (ckttm ContentKeyToTrackMappingAttributes) InternalTokens() hclwrite.Tokens {
+func (ckttm ContentKeyToTrackMappingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ckttm.ref.InternalTokens()
 }
 
 func (ckttm ContentKeyToTrackMappingAttributes) Label() terra.StringValue {
-	return terra.ReferenceString(ckttm.ref.Append("label"))
+	return terra.ReferenceAsString(ckttm.ref.Append("label"))
 }
 
 func (ckttm ContentKeyToTrackMappingAttributes) PolicyName() terra.StringValue {
-	return terra.ReferenceString(ckttm.ref.Append("policy_name"))
+	return terra.ReferenceAsString(ckttm.ref.Append("policy_name"))
 }
 
 func (ckttm ContentKeyToTrackMappingAttributes) Track() terra.SetValue[TrackAttributes] {
-	return terra.ReferenceSet[TrackAttributes](ckttm.ref.Append("track"))
+	return terra.ReferenceAsSet[TrackAttributes](ckttm.ref.Append("track"))
 }
 
 type TrackAttributes struct {
 	ref terra.Reference
 }
 
-func (t TrackAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TrackAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TrackAttributes) InternalWithRef(ref terra.Reference) TrackAttributes {
 	return TrackAttributes{ref: ref}
 }
 
-func (t TrackAttributes) InternalTokens() hclwrite.Tokens {
+func (t TrackAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TrackAttributes) Condition() terra.SetValue[TrackConditionAttributes] {
-	return terra.ReferenceSet[TrackConditionAttributes](t.ref.Append("condition"))
+	return terra.ReferenceAsSet[TrackConditionAttributes](t.ref.Append("condition"))
 }
 
 type TrackConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (c TrackConditionAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c TrackConditionAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c TrackConditionAttributes) InternalWithRef(ref terra.Reference) TrackConditionAttributes {
 	return TrackConditionAttributes{ref: ref}
 }
 
-func (c TrackConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (c TrackConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c TrackConditionAttributes) Operation() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("operation"))
+	return terra.ReferenceAsString(c.ref.Append("operation"))
 }
 
 func (c TrackConditionAttributes) Property() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("property"))
+	return terra.ReferenceAsString(c.ref.Append("property"))
 }
 
 func (c TrackConditionAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("value"))
+	return terra.ReferenceAsString(c.ref.Append("value"))
 }
 
 type CommonEncryptionCencDefaultContentKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (dck CommonEncryptionCencDefaultContentKeyAttributes) InternalRef() terra.Reference {
-	return dck.ref
+func (dck CommonEncryptionCencDefaultContentKeyAttributes) InternalRef() (terra.Reference, error) {
+	return dck.ref, nil
 }
 
 func (dck CommonEncryptionCencDefaultContentKeyAttributes) InternalWithRef(ref terra.Reference) CommonEncryptionCencDefaultContentKeyAttributes {
 	return CommonEncryptionCencDefaultContentKeyAttributes{ref: ref}
 }
 
-func (dck CommonEncryptionCencDefaultContentKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (dck CommonEncryptionCencDefaultContentKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dck.ref.InternalTokens()
 }
 
 func (dck CommonEncryptionCencDefaultContentKeyAttributes) Label() terra.StringValue {
-	return terra.ReferenceString(dck.ref.Append("label"))
+	return terra.ReferenceAsString(dck.ref.Append("label"))
 }
 
 func (dck CommonEncryptionCencDefaultContentKeyAttributes) PolicyName() terra.StringValue {
-	return terra.ReferenceString(dck.ref.Append("policy_name"))
+	return terra.ReferenceAsString(dck.ref.Append("policy_name"))
 }
 
 type DrmPlayreadyAttributes struct {
 	ref terra.Reference
 }
 
-func (dp DrmPlayreadyAttributes) InternalRef() terra.Reference {
-	return dp.ref
+func (dp DrmPlayreadyAttributes) InternalRef() (terra.Reference, error) {
+	return dp.ref, nil
 }
 
 func (dp DrmPlayreadyAttributes) InternalWithRef(ref terra.Reference) DrmPlayreadyAttributes {
 	return DrmPlayreadyAttributes{ref: ref}
 }
 
-func (dp DrmPlayreadyAttributes) InternalTokens() hclwrite.Tokens {
+func (dp DrmPlayreadyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dp.ref.InternalTokens()
 }
 
 func (dp DrmPlayreadyAttributes) CustomAttributes() terra.StringValue {
-	return terra.ReferenceString(dp.ref.Append("custom_attributes"))
+	return terra.ReferenceAsString(dp.ref.Append("custom_attributes"))
 }
 
 func (dp DrmPlayreadyAttributes) CustomLicenseAcquisitionUrlTemplate() terra.StringValue {
-	return terra.ReferenceString(dp.ref.Append("custom_license_acquisition_url_template"))
+	return terra.ReferenceAsString(dp.ref.Append("custom_license_acquisition_url_template"))
 }
 
 type CommonEncryptionCencEnabledProtocolsAttributes struct {
 	ref terra.Reference
 }
 
-func (ep CommonEncryptionCencEnabledProtocolsAttributes) InternalRef() terra.Reference {
-	return ep.ref
+func (ep CommonEncryptionCencEnabledProtocolsAttributes) InternalRef() (terra.Reference, error) {
+	return ep.ref, nil
 }
 
 func (ep CommonEncryptionCencEnabledProtocolsAttributes) InternalWithRef(ref terra.Reference) CommonEncryptionCencEnabledProtocolsAttributes {
 	return CommonEncryptionCencEnabledProtocolsAttributes{ref: ref}
 }
 
-func (ep CommonEncryptionCencEnabledProtocolsAttributes) InternalTokens() hclwrite.Tokens {
+func (ep CommonEncryptionCencEnabledProtocolsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ep.ref.InternalTokens()
 }
 
 func (ep CommonEncryptionCencEnabledProtocolsAttributes) Dash() terra.BoolValue {
-	return terra.ReferenceBool(ep.ref.Append("dash"))
+	return terra.ReferenceAsBool(ep.ref.Append("dash"))
 }
 
 func (ep CommonEncryptionCencEnabledProtocolsAttributes) Download() terra.BoolValue {
-	return terra.ReferenceBool(ep.ref.Append("download"))
+	return terra.ReferenceAsBool(ep.ref.Append("download"))
 }
 
 func (ep CommonEncryptionCencEnabledProtocolsAttributes) Hls() terra.BoolValue {
-	return terra.ReferenceBool(ep.ref.Append("hls"))
+	return terra.ReferenceAsBool(ep.ref.Append("hls"))
 }
 
 func (ep CommonEncryptionCencEnabledProtocolsAttributes) SmoothStreaming() terra.BoolValue {
-	return terra.ReferenceBool(ep.ref.Append("smooth_streaming"))
+	return terra.ReferenceAsBool(ep.ref.Append("smooth_streaming"))
 }
 
 type EnvelopeEncryptionAttributes struct {
 	ref terra.Reference
 }
 
-func (ee EnvelopeEncryptionAttributes) InternalRef() terra.Reference {
-	return ee.ref
+func (ee EnvelopeEncryptionAttributes) InternalRef() (terra.Reference, error) {
+	return ee.ref, nil
 }
 
 func (ee EnvelopeEncryptionAttributes) InternalWithRef(ref terra.Reference) EnvelopeEncryptionAttributes {
 	return EnvelopeEncryptionAttributes{ref: ref}
 }
 
-func (ee EnvelopeEncryptionAttributes) InternalTokens() hclwrite.Tokens {
+func (ee EnvelopeEncryptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ee.ref.InternalTokens()
 }
 
 func (ee EnvelopeEncryptionAttributes) CustomKeysAcquisitionUrlTemplate() terra.StringValue {
-	return terra.ReferenceString(ee.ref.Append("custom_keys_acquisition_url_template"))
+	return terra.ReferenceAsString(ee.ref.Append("custom_keys_acquisition_url_template"))
 }
 
 func (ee EnvelopeEncryptionAttributes) DefaultContentKey() terra.ListValue[EnvelopeEncryptionDefaultContentKeyAttributes] {
-	return terra.ReferenceList[EnvelopeEncryptionDefaultContentKeyAttributes](ee.ref.Append("default_content_key"))
+	return terra.ReferenceAsList[EnvelopeEncryptionDefaultContentKeyAttributes](ee.ref.Append("default_content_key"))
 }
 
 func (ee EnvelopeEncryptionAttributes) EnabledProtocols() terra.ListValue[EnvelopeEncryptionEnabledProtocolsAttributes] {
-	return terra.ReferenceList[EnvelopeEncryptionEnabledProtocolsAttributes](ee.ref.Append("enabled_protocols"))
+	return terra.ReferenceAsList[EnvelopeEncryptionEnabledProtocolsAttributes](ee.ref.Append("enabled_protocols"))
 }
 
 type EnvelopeEncryptionDefaultContentKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (dck EnvelopeEncryptionDefaultContentKeyAttributes) InternalRef() terra.Reference {
-	return dck.ref
+func (dck EnvelopeEncryptionDefaultContentKeyAttributes) InternalRef() (terra.Reference, error) {
+	return dck.ref, nil
 }
 
 func (dck EnvelopeEncryptionDefaultContentKeyAttributes) InternalWithRef(ref terra.Reference) EnvelopeEncryptionDefaultContentKeyAttributes {
 	return EnvelopeEncryptionDefaultContentKeyAttributes{ref: ref}
 }
 
-func (dck EnvelopeEncryptionDefaultContentKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (dck EnvelopeEncryptionDefaultContentKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dck.ref.InternalTokens()
 }
 
 func (dck EnvelopeEncryptionDefaultContentKeyAttributes) Label() terra.StringValue {
-	return terra.ReferenceString(dck.ref.Append("label"))
+	return terra.ReferenceAsString(dck.ref.Append("label"))
 }
 
 func (dck EnvelopeEncryptionDefaultContentKeyAttributes) PolicyName() terra.StringValue {
-	return terra.ReferenceString(dck.ref.Append("policy_name"))
+	return terra.ReferenceAsString(dck.ref.Append("policy_name"))
 }
 
 type EnvelopeEncryptionEnabledProtocolsAttributes struct {
 	ref terra.Reference
 }
 
-func (ep EnvelopeEncryptionEnabledProtocolsAttributes) InternalRef() terra.Reference {
-	return ep.ref
+func (ep EnvelopeEncryptionEnabledProtocolsAttributes) InternalRef() (terra.Reference, error) {
+	return ep.ref, nil
 }
 
 func (ep EnvelopeEncryptionEnabledProtocolsAttributes) InternalWithRef(ref terra.Reference) EnvelopeEncryptionEnabledProtocolsAttributes {
 	return EnvelopeEncryptionEnabledProtocolsAttributes{ref: ref}
 }
 
-func (ep EnvelopeEncryptionEnabledProtocolsAttributes) InternalTokens() hclwrite.Tokens {
+func (ep EnvelopeEncryptionEnabledProtocolsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ep.ref.InternalTokens()
 }
 
 func (ep EnvelopeEncryptionEnabledProtocolsAttributes) Dash() terra.BoolValue {
-	return terra.ReferenceBool(ep.ref.Append("dash"))
+	return terra.ReferenceAsBool(ep.ref.Append("dash"))
 }
 
 func (ep EnvelopeEncryptionEnabledProtocolsAttributes) Download() terra.BoolValue {
-	return terra.ReferenceBool(ep.ref.Append("download"))
+	return terra.ReferenceAsBool(ep.ref.Append("download"))
 }
 
 func (ep EnvelopeEncryptionEnabledProtocolsAttributes) Hls() terra.BoolValue {
-	return terra.ReferenceBool(ep.ref.Append("hls"))
+	return terra.ReferenceAsBool(ep.ref.Append("hls"))
 }
 
 func (ep EnvelopeEncryptionEnabledProtocolsAttributes) SmoothStreaming() terra.BoolValue {
-	return terra.ReferenceBool(ep.ref.Append("smooth_streaming"))
+	return terra.ReferenceAsBool(ep.ref.Append("smooth_streaming"))
 }
 
 type NoEncryptionEnabledProtocolsAttributes struct {
 	ref terra.Reference
 }
 
-func (neep NoEncryptionEnabledProtocolsAttributes) InternalRef() terra.Reference {
-	return neep.ref
+func (neep NoEncryptionEnabledProtocolsAttributes) InternalRef() (terra.Reference, error) {
+	return neep.ref, nil
 }
 
 func (neep NoEncryptionEnabledProtocolsAttributes) InternalWithRef(ref terra.Reference) NoEncryptionEnabledProtocolsAttributes {
 	return NoEncryptionEnabledProtocolsAttributes{ref: ref}
 }
 
-func (neep NoEncryptionEnabledProtocolsAttributes) InternalTokens() hclwrite.Tokens {
+func (neep NoEncryptionEnabledProtocolsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return neep.ref.InternalTokens()
 }
 
 func (neep NoEncryptionEnabledProtocolsAttributes) Dash() terra.BoolValue {
-	return terra.ReferenceBool(neep.ref.Append("dash"))
+	return terra.ReferenceAsBool(neep.ref.Append("dash"))
 }
 
 func (neep NoEncryptionEnabledProtocolsAttributes) Download() terra.BoolValue {
-	return terra.ReferenceBool(neep.ref.Append("download"))
+	return terra.ReferenceAsBool(neep.ref.Append("download"))
 }
 
 func (neep NoEncryptionEnabledProtocolsAttributes) Hls() terra.BoolValue {
-	return terra.ReferenceBool(neep.ref.Append("hls"))
+	return terra.ReferenceAsBool(neep.ref.Append("hls"))
 }
 
 func (neep NoEncryptionEnabledProtocolsAttributes) SmoothStreaming() terra.BoolValue {
-	return terra.ReferenceBool(neep.ref.Append("smooth_streaming"))
+	return terra.ReferenceAsBool(neep.ref.Append("smooth_streaming"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type CommonEncryptionCbcsState struct {

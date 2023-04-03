@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBotChannelSlack creates a new instance of [BotChannelSlack].
 func NewBotChannelSlack(name string, args BotChannelSlackArgs) *BotChannelSlack {
 	return &BotChannelSlack{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBotChannelSlack(name string, args BotChannelSlackArgs) *BotChannelSlack 
 
 var _ terra.Resource = (*BotChannelSlack)(nil)
 
+// BotChannelSlack represents the Terraform resource azurerm_bot_channel_slack.
 type BotChannelSlack struct {
-	Name  string
-	Args  BotChannelSlackArgs
-	state *botChannelSlackState
+	Name      string
+	Args      BotChannelSlackArgs
+	state     *botChannelSlackState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BotChannelSlack].
 func (bcs *BotChannelSlack) Type() string {
 	return "azurerm_bot_channel_slack"
 }
 
+// LocalName returns the local name for [BotChannelSlack].
 func (bcs *BotChannelSlack) LocalName() string {
 	return bcs.Name
 }
 
+// Configuration returns the configuration (args) for [BotChannelSlack].
 func (bcs *BotChannelSlack) Configuration() interface{} {
 	return bcs.Args
 }
 
+// DependOn is used for other resources to depend on [BotChannelSlack].
+func (bcs *BotChannelSlack) DependOn() terra.Reference {
+	return terra.ReferenceResource(bcs)
+}
+
+// Dependencies returns the list of resources [BotChannelSlack] depends_on.
+func (bcs *BotChannelSlack) Dependencies() terra.Dependencies {
+	return bcs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BotChannelSlack].
+func (bcs *BotChannelSlack) LifecycleManagement() *terra.Lifecycle {
+	return bcs.Lifecycle
+}
+
+// Attributes returns the attributes for [BotChannelSlack].
 func (bcs *BotChannelSlack) Attributes() botChannelSlackAttributes {
 	return botChannelSlackAttributes{ref: terra.ReferenceResource(bcs)}
 }
 
+// ImportState imports the given attribute values into [BotChannelSlack]'s state.
 func (bcs *BotChannelSlack) ImportState(av io.Reader) error {
 	bcs.state = &botChannelSlackState{}
 	if err := json.NewDecoder(av).Decode(bcs.state); err != nil {
@@ -49,10 +73,12 @@ func (bcs *BotChannelSlack) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BotChannelSlack] has state.
 func (bcs *BotChannelSlack) State() (*botChannelSlackState, bool) {
 	return bcs.state, bcs.state != nil
 }
 
+// StateMust returns the state for [BotChannelSlack]. Panics if the state is nil.
 func (bcs *BotChannelSlack) StateMust() *botChannelSlackState {
 	if bcs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bcs.Type(), bcs.LocalName()))
@@ -60,10 +86,7 @@ func (bcs *BotChannelSlack) StateMust() *botChannelSlackState {
 	return bcs.state
 }
 
-func (bcs *BotChannelSlack) DependOn() terra.Reference {
-	return terra.ReferenceResource(bcs)
-}
-
+// BotChannelSlackArgs contains the configurations for azurerm_bot_channel_slack.
 type BotChannelSlackArgs struct {
 	// BotName: string, required
 	BotName terra.StringValue `hcl:"bot_name,attr" validate:"required"`
@@ -85,51 +108,58 @@ type BotChannelSlackArgs struct {
 	VerificationToken terra.StringValue `hcl:"verification_token,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *botchannelslack.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that BotChannelSlack depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type botChannelSlackAttributes struct {
 	ref terra.Reference
 }
 
+// BotName returns a reference to field bot_name of azurerm_bot_channel_slack.
 func (bcs botChannelSlackAttributes) BotName() terra.StringValue {
-	return terra.ReferenceString(bcs.ref.Append("bot_name"))
+	return terra.ReferenceAsString(bcs.ref.Append("bot_name"))
 }
 
+// ClientId returns a reference to field client_id of azurerm_bot_channel_slack.
 func (bcs botChannelSlackAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(bcs.ref.Append("client_id"))
+	return terra.ReferenceAsString(bcs.ref.Append("client_id"))
 }
 
+// ClientSecret returns a reference to field client_secret of azurerm_bot_channel_slack.
 func (bcs botChannelSlackAttributes) ClientSecret() terra.StringValue {
-	return terra.ReferenceString(bcs.ref.Append("client_secret"))
+	return terra.ReferenceAsString(bcs.ref.Append("client_secret"))
 }
 
+// Id returns a reference to field id of azurerm_bot_channel_slack.
 func (bcs botChannelSlackAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bcs.ref.Append("id"))
+	return terra.ReferenceAsString(bcs.ref.Append("id"))
 }
 
+// LandingPageUrl returns a reference to field landing_page_url of azurerm_bot_channel_slack.
 func (bcs botChannelSlackAttributes) LandingPageUrl() terra.StringValue {
-	return terra.ReferenceString(bcs.ref.Append("landing_page_url"))
+	return terra.ReferenceAsString(bcs.ref.Append("landing_page_url"))
 }
 
+// Location returns a reference to field location of azurerm_bot_channel_slack.
 func (bcs botChannelSlackAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(bcs.ref.Append("location"))
+	return terra.ReferenceAsString(bcs.ref.Append("location"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_bot_channel_slack.
 func (bcs botChannelSlackAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(bcs.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(bcs.ref.Append("resource_group_name"))
 }
 
+// SigningSecret returns a reference to field signing_secret of azurerm_bot_channel_slack.
 func (bcs botChannelSlackAttributes) SigningSecret() terra.StringValue {
-	return terra.ReferenceString(bcs.ref.Append("signing_secret"))
+	return terra.ReferenceAsString(bcs.ref.Append("signing_secret"))
 }
 
+// VerificationToken returns a reference to field verification_token of azurerm_bot_channel_slack.
 func (bcs botChannelSlackAttributes) VerificationToken() terra.StringValue {
-	return terra.ReferenceString(bcs.ref.Append("verification_token"))
+	return terra.ReferenceAsString(bcs.ref.Append("verification_token"))
 }
 
 func (bcs botChannelSlackAttributes) Timeouts() botchannelslack.TimeoutsAttributes {
-	return terra.ReferenceSingle[botchannelslack.TimeoutsAttributes](bcs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[botchannelslack.TimeoutsAttributes](bcs.ref.Append("timeouts"))
 }
 
 type botChannelSlackState struct {

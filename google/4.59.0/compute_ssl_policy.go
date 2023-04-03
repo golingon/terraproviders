@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeSslPolicy creates a new instance of [ComputeSslPolicy].
 func NewComputeSslPolicy(name string, args ComputeSslPolicyArgs) *ComputeSslPolicy {
 	return &ComputeSslPolicy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeSslPolicy(name string, args ComputeSslPolicyArgs) *ComputeSslPoli
 
 var _ terra.Resource = (*ComputeSslPolicy)(nil)
 
+// ComputeSslPolicy represents the Terraform resource google_compute_ssl_policy.
 type ComputeSslPolicy struct {
-	Name  string
-	Args  ComputeSslPolicyArgs
-	state *computeSslPolicyState
+	Name      string
+	Args      ComputeSslPolicyArgs
+	state     *computeSslPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeSslPolicy].
 func (csp *ComputeSslPolicy) Type() string {
 	return "google_compute_ssl_policy"
 }
 
+// LocalName returns the local name for [ComputeSslPolicy].
 func (csp *ComputeSslPolicy) LocalName() string {
 	return csp.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeSslPolicy].
 func (csp *ComputeSslPolicy) Configuration() interface{} {
 	return csp.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeSslPolicy].
+func (csp *ComputeSslPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(csp)
+}
+
+// Dependencies returns the list of resources [ComputeSslPolicy] depends_on.
+func (csp *ComputeSslPolicy) Dependencies() terra.Dependencies {
+	return csp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeSslPolicy].
+func (csp *ComputeSslPolicy) LifecycleManagement() *terra.Lifecycle {
+	return csp.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeSslPolicy].
 func (csp *ComputeSslPolicy) Attributes() computeSslPolicyAttributes {
 	return computeSslPolicyAttributes{ref: terra.ReferenceResource(csp)}
 }
 
+// ImportState imports the given attribute values into [ComputeSslPolicy]'s state.
 func (csp *ComputeSslPolicy) ImportState(av io.Reader) error {
 	csp.state = &computeSslPolicyState{}
 	if err := json.NewDecoder(av).Decode(csp.state); err != nil {
@@ -49,10 +73,12 @@ func (csp *ComputeSslPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeSslPolicy] has state.
 func (csp *ComputeSslPolicy) State() (*computeSslPolicyState, bool) {
 	return csp.state, csp.state != nil
 }
 
+// StateMust returns the state for [ComputeSslPolicy]. Panics if the state is nil.
 func (csp *ComputeSslPolicy) StateMust() *computeSslPolicyState {
 	if csp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", csp.Type(), csp.LocalName()))
@@ -60,10 +86,7 @@ func (csp *ComputeSslPolicy) StateMust() *computeSslPolicyState {
 	return csp.state
 }
 
-func (csp *ComputeSslPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(csp)
-}
-
+// ComputeSslPolicyArgs contains the configurations for google_compute_ssl_policy.
 type ComputeSslPolicyArgs struct {
 	// CustomFeatures: set of string, optional
 	CustomFeatures terra.SetValue[terra.StringValue] `hcl:"custom_features,attr"`
@@ -81,59 +104,68 @@ type ComputeSslPolicyArgs struct {
 	Project terra.StringValue `hcl:"project,attr"`
 	// Timeouts: optional
 	Timeouts *computesslpolicy.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeSslPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeSslPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// CreationTimestamp returns a reference to field creation_timestamp of google_compute_ssl_policy.
 func (csp computeSslPolicyAttributes) CreationTimestamp() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("creation_timestamp"))
+	return terra.ReferenceAsString(csp.ref.Append("creation_timestamp"))
 }
 
+// CustomFeatures returns a reference to field custom_features of google_compute_ssl_policy.
 func (csp computeSslPolicyAttributes) CustomFeatures() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](csp.ref.Append("custom_features"))
+	return terra.ReferenceAsSet[terra.StringValue](csp.ref.Append("custom_features"))
 }
 
+// Description returns a reference to field description of google_compute_ssl_policy.
 func (csp computeSslPolicyAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("description"))
+	return terra.ReferenceAsString(csp.ref.Append("description"))
 }
 
+// EnabledFeatures returns a reference to field enabled_features of google_compute_ssl_policy.
 func (csp computeSslPolicyAttributes) EnabledFeatures() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](csp.ref.Append("enabled_features"))
+	return terra.ReferenceAsSet[terra.StringValue](csp.ref.Append("enabled_features"))
 }
 
+// Fingerprint returns a reference to field fingerprint of google_compute_ssl_policy.
 func (csp computeSslPolicyAttributes) Fingerprint() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("fingerprint"))
+	return terra.ReferenceAsString(csp.ref.Append("fingerprint"))
 }
 
+// Id returns a reference to field id of google_compute_ssl_policy.
 func (csp computeSslPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("id"))
+	return terra.ReferenceAsString(csp.ref.Append("id"))
 }
 
+// MinTlsVersion returns a reference to field min_tls_version of google_compute_ssl_policy.
 func (csp computeSslPolicyAttributes) MinTlsVersion() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("min_tls_version"))
+	return terra.ReferenceAsString(csp.ref.Append("min_tls_version"))
 }
 
+// Name returns a reference to field name of google_compute_ssl_policy.
 func (csp computeSslPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("name"))
+	return terra.ReferenceAsString(csp.ref.Append("name"))
 }
 
+// Profile returns a reference to field profile of google_compute_ssl_policy.
 func (csp computeSslPolicyAttributes) Profile() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("profile"))
+	return terra.ReferenceAsString(csp.ref.Append("profile"))
 }
 
+// Project returns a reference to field project of google_compute_ssl_policy.
 func (csp computeSslPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("project"))
+	return terra.ReferenceAsString(csp.ref.Append("project"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_ssl_policy.
 func (csp computeSslPolicyAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("self_link"))
+	return terra.ReferenceAsString(csp.ref.Append("self_link"))
 }
 
 func (csp computeSslPolicyAttributes) Timeouts() computesslpolicy.TimeoutsAttributes {
-	return terra.ReferenceSingle[computesslpolicy.TimeoutsAttributes](csp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computesslpolicy.TimeoutsAttributes](csp.ref.Append("timeouts"))
 }
 
 type computeSslPolicyState struct {

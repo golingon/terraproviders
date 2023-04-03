@@ -32,72 +32,72 @@ type CredentialsAttributes struct {
 	ref terra.Reference
 }
 
-func (c CredentialsAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CredentialsAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CredentialsAttributes) InternalWithRef(ref terra.Reference) CredentialsAttributes {
 	return CredentialsAttributes{ref: ref}
 }
 
-func (c CredentialsAttributes) InternalTokens() hclwrite.Tokens {
+func (c CredentialsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c CredentialsAttributes) PublicKeyCertificate() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](c.ref.Append("public_key_certificate"))
+	return terra.ReferenceAsMap[terra.StringValue](c.ref.Append("public_key_certificate"))
 }
 
 type EventNotificationConfigsAttributes struct {
 	ref terra.Reference
 }
 
-func (enc EventNotificationConfigsAttributes) InternalRef() terra.Reference {
-	return enc.ref
+func (enc EventNotificationConfigsAttributes) InternalRef() (terra.Reference, error) {
+	return enc.ref, nil
 }
 
 func (enc EventNotificationConfigsAttributes) InternalWithRef(ref terra.Reference) EventNotificationConfigsAttributes {
 	return EventNotificationConfigsAttributes{ref: ref}
 }
 
-func (enc EventNotificationConfigsAttributes) InternalTokens() hclwrite.Tokens {
+func (enc EventNotificationConfigsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return enc.ref.InternalTokens()
 }
 
 func (enc EventNotificationConfigsAttributes) PubsubTopicName() terra.StringValue {
-	return terra.ReferenceString(enc.ref.Append("pubsub_topic_name"))
+	return terra.ReferenceAsString(enc.ref.Append("pubsub_topic_name"))
 }
 
 func (enc EventNotificationConfigsAttributes) SubfolderMatches() terra.StringValue {
-	return terra.ReferenceString(enc.ref.Append("subfolder_matches"))
+	return terra.ReferenceAsString(enc.ref.Append("subfolder_matches"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type CredentialsState struct {

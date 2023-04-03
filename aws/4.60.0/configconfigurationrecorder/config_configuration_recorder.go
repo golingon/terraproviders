@@ -28,7 +28,7 @@ func (rg RecordingGroupAttributes) InternalWithRef(ref terra.Reference) Recordin
 	return RecordingGroupAttributes{ref: ref}
 }
 
-func (rg RecordingGroupAttributes) InternalTokens() hclwrite.Tokens {
+func (rg RecordingGroupAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rg.ref.InternalTokens()
 }
 

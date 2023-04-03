@@ -94,7 +94,7 @@ func (aha AddHeaderActionAttributes) InternalWithRef(ref terra.Reference) AddHea
 	return AddHeaderActionAttributes{ref: ref}
 }
 
-func (aha AddHeaderActionAttributes) InternalTokens() hclwrite.Tokens {
+func (aha AddHeaderActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aha.ref.InternalTokens()
 }
 
@@ -122,7 +122,7 @@ func (ba BounceActionAttributes) InternalWithRef(ref terra.Reference) BounceActi
 	return BounceActionAttributes{ref: ref}
 }
 
-func (ba BounceActionAttributes) InternalTokens() hclwrite.Tokens {
+func (ba BounceActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ba.ref.InternalTokens()
 }
 
@@ -162,7 +162,7 @@ func (la LambdaActionAttributes) InternalWithRef(ref terra.Reference) LambdaActi
 	return LambdaActionAttributes{ref: ref}
 }
 
-func (la LambdaActionAttributes) InternalTokens() hclwrite.Tokens {
+func (la LambdaActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return la.ref.InternalTokens()
 }
 
@@ -194,7 +194,7 @@ func (sa S3ActionAttributes) InternalWithRef(ref terra.Reference) S3ActionAttrib
 	return S3ActionAttributes{ref: ref}
 }
 
-func (sa S3ActionAttributes) InternalTokens() hclwrite.Tokens {
+func (sa S3ActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sa.ref.InternalTokens()
 }
 
@@ -230,7 +230,7 @@ func (sa SnsActionAttributes) InternalWithRef(ref terra.Reference) SnsActionAttr
 	return SnsActionAttributes{ref: ref}
 }
 
-func (sa SnsActionAttributes) InternalTokens() hclwrite.Tokens {
+func (sa SnsActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sa.ref.InternalTokens()
 }
 
@@ -258,7 +258,7 @@ func (sa StopActionAttributes) InternalWithRef(ref terra.Reference) StopActionAt
 	return StopActionAttributes{ref: ref}
 }
 
-func (sa StopActionAttributes) InternalTokens() hclwrite.Tokens {
+func (sa StopActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sa.ref.InternalTokens()
 }
 
@@ -286,7 +286,7 @@ func (wa WorkmailActionAttributes) InternalWithRef(ref terra.Reference) Workmail
 	return WorkmailActionAttributes{ref: ref}
 }
 
-func (wa WorkmailActionAttributes) InternalTokens() hclwrite.Tokens {
+func (wa WorkmailActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wa.ref.InternalTokens()
 }
 

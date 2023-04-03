@@ -33,7 +33,7 @@ func (r RuleAttributes) InternalWithRef(ref terra.Reference) RuleAttributes {
 	return RuleAttributes{ref: ref}
 }
 
-func (r RuleAttributes) InternalTokens() hclwrite.Tokens {
+func (r RuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -53,7 +53,7 @@ func (dr DefaultRetentionAttributes) InternalWithRef(ref terra.Reference) Defaul
 	return DefaultRetentionAttributes{ref: ref}
 }
 
-func (dr DefaultRetentionAttributes) InternalTokens() hclwrite.Tokens {
+func (dr DefaultRetentionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dr.ref.InternalTokens()
 }
 

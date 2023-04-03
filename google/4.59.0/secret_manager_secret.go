@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSecretManagerSecret creates a new instance of [SecretManagerSecret].
 func NewSecretManagerSecret(name string, args SecretManagerSecretArgs) *SecretManagerSecret {
 	return &SecretManagerSecret{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSecretManagerSecret(name string, args SecretManagerSecretArgs) *SecretMa
 
 var _ terra.Resource = (*SecretManagerSecret)(nil)
 
+// SecretManagerSecret represents the Terraform resource google_secret_manager_secret.
 type SecretManagerSecret struct {
-	Name  string
-	Args  SecretManagerSecretArgs
-	state *secretManagerSecretState
+	Name      string
+	Args      SecretManagerSecretArgs
+	state     *secretManagerSecretState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SecretManagerSecret].
 func (sms *SecretManagerSecret) Type() string {
 	return "google_secret_manager_secret"
 }
 
+// LocalName returns the local name for [SecretManagerSecret].
 func (sms *SecretManagerSecret) LocalName() string {
 	return sms.Name
 }
 
+// Configuration returns the configuration (args) for [SecretManagerSecret].
 func (sms *SecretManagerSecret) Configuration() interface{} {
 	return sms.Args
 }
 
+// DependOn is used for other resources to depend on [SecretManagerSecret].
+func (sms *SecretManagerSecret) DependOn() terra.Reference {
+	return terra.ReferenceResource(sms)
+}
+
+// Dependencies returns the list of resources [SecretManagerSecret] depends_on.
+func (sms *SecretManagerSecret) Dependencies() terra.Dependencies {
+	return sms.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SecretManagerSecret].
+func (sms *SecretManagerSecret) LifecycleManagement() *terra.Lifecycle {
+	return sms.Lifecycle
+}
+
+// Attributes returns the attributes for [SecretManagerSecret].
 func (sms *SecretManagerSecret) Attributes() secretManagerSecretAttributes {
 	return secretManagerSecretAttributes{ref: terra.ReferenceResource(sms)}
 }
 
+// ImportState imports the given attribute values into [SecretManagerSecret]'s state.
 func (sms *SecretManagerSecret) ImportState(av io.Reader) error {
 	sms.state = &secretManagerSecretState{}
 	if err := json.NewDecoder(av).Decode(sms.state); err != nil {
@@ -49,10 +73,12 @@ func (sms *SecretManagerSecret) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SecretManagerSecret] has state.
 func (sms *SecretManagerSecret) State() (*secretManagerSecretState, bool) {
 	return sms.state, sms.state != nil
 }
 
+// StateMust returns the state for [SecretManagerSecret]. Panics if the state is nil.
 func (sms *SecretManagerSecret) StateMust() *secretManagerSecretState {
 	if sms.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sms.Type(), sms.LocalName()))
@@ -60,10 +86,7 @@ func (sms *SecretManagerSecret) StateMust() *secretManagerSecretState {
 	return sms.state
 }
 
-func (sms *SecretManagerSecret) DependOn() terra.Reference {
-	return terra.ReferenceResource(sms)
-}
-
+// SecretManagerSecretArgs contains the configurations for google_secret_manager_secret.
 type SecretManagerSecretArgs struct {
 	// ExpireTime: string, optional
 	ExpireTime terra.StringValue `hcl:"expire_time,attr"`
@@ -85,59 +108,65 @@ type SecretManagerSecretArgs struct {
 	Timeouts *secretmanagersecret.Timeouts `hcl:"timeouts,block"`
 	// Topics: min=0
 	Topics []secretmanagersecret.Topics `hcl:"topics,block" validate:"min=0"`
-	// DependsOn contains resources that SecretManagerSecret depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type secretManagerSecretAttributes struct {
 	ref terra.Reference
 }
 
+// CreateTime returns a reference to field create_time of google_secret_manager_secret.
 func (sms secretManagerSecretAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(sms.ref.Append("create_time"))
+	return terra.ReferenceAsString(sms.ref.Append("create_time"))
 }
 
+// ExpireTime returns a reference to field expire_time of google_secret_manager_secret.
 func (sms secretManagerSecretAttributes) ExpireTime() terra.StringValue {
-	return terra.ReferenceString(sms.ref.Append("expire_time"))
+	return terra.ReferenceAsString(sms.ref.Append("expire_time"))
 }
 
+// Id returns a reference to field id of google_secret_manager_secret.
 func (sms secretManagerSecretAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sms.ref.Append("id"))
+	return terra.ReferenceAsString(sms.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_secret_manager_secret.
 func (sms secretManagerSecretAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sms.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](sms.ref.Append("labels"))
 }
 
+// Name returns a reference to field name of google_secret_manager_secret.
 func (sms secretManagerSecretAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sms.ref.Append("name"))
+	return terra.ReferenceAsString(sms.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_secret_manager_secret.
 func (sms secretManagerSecretAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(sms.ref.Append("project"))
+	return terra.ReferenceAsString(sms.ref.Append("project"))
 }
 
+// SecretId returns a reference to field secret_id of google_secret_manager_secret.
 func (sms secretManagerSecretAttributes) SecretId() terra.StringValue {
-	return terra.ReferenceString(sms.ref.Append("secret_id"))
+	return terra.ReferenceAsString(sms.ref.Append("secret_id"))
 }
 
+// Ttl returns a reference to field ttl of google_secret_manager_secret.
 func (sms secretManagerSecretAttributes) Ttl() terra.StringValue {
-	return terra.ReferenceString(sms.ref.Append("ttl"))
+	return terra.ReferenceAsString(sms.ref.Append("ttl"))
 }
 
 func (sms secretManagerSecretAttributes) Replication() terra.ListValue[secretmanagersecret.ReplicationAttributes] {
-	return terra.ReferenceList[secretmanagersecret.ReplicationAttributes](sms.ref.Append("replication"))
+	return terra.ReferenceAsList[secretmanagersecret.ReplicationAttributes](sms.ref.Append("replication"))
 }
 
 func (sms secretManagerSecretAttributes) Rotation() terra.ListValue[secretmanagersecret.RotationAttributes] {
-	return terra.ReferenceList[secretmanagersecret.RotationAttributes](sms.ref.Append("rotation"))
+	return terra.ReferenceAsList[secretmanagersecret.RotationAttributes](sms.ref.Append("rotation"))
 }
 
 func (sms secretManagerSecretAttributes) Timeouts() secretmanagersecret.TimeoutsAttributes {
-	return terra.ReferenceSingle[secretmanagersecret.TimeoutsAttributes](sms.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[secretmanagersecret.TimeoutsAttributes](sms.ref.Append("timeouts"))
 }
 
 func (sms secretManagerSecretAttributes) Topics() terra.ListValue[secretmanagersecret.TopicsAttributes] {
-	return terra.ReferenceList[secretmanagersecret.TopicsAttributes](sms.ref.Append("topics"))
+	return terra.ReferenceAsList[secretmanagersecret.TopicsAttributes](sms.ref.Append("topics"))
 }
 
 type secretManagerSecretState struct {

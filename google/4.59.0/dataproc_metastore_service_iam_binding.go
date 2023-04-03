@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataprocMetastoreServiceIamBinding creates a new instance of [DataprocMetastoreServiceIamBinding].
 func NewDataprocMetastoreServiceIamBinding(name string, args DataprocMetastoreServiceIamBindingArgs) *DataprocMetastoreServiceIamBinding {
 	return &DataprocMetastoreServiceIamBinding{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataprocMetastoreServiceIamBinding(name string, args DataprocMetastoreSe
 
 var _ terra.Resource = (*DataprocMetastoreServiceIamBinding)(nil)
 
+// DataprocMetastoreServiceIamBinding represents the Terraform resource google_dataproc_metastore_service_iam_binding.
 type DataprocMetastoreServiceIamBinding struct {
-	Name  string
-	Args  DataprocMetastoreServiceIamBindingArgs
-	state *dataprocMetastoreServiceIamBindingState
+	Name      string
+	Args      DataprocMetastoreServiceIamBindingArgs
+	state     *dataprocMetastoreServiceIamBindingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataprocMetastoreServiceIamBinding].
 func (dmsib *DataprocMetastoreServiceIamBinding) Type() string {
 	return "google_dataproc_metastore_service_iam_binding"
 }
 
+// LocalName returns the local name for [DataprocMetastoreServiceIamBinding].
 func (dmsib *DataprocMetastoreServiceIamBinding) LocalName() string {
 	return dmsib.Name
 }
 
+// Configuration returns the configuration (args) for [DataprocMetastoreServiceIamBinding].
 func (dmsib *DataprocMetastoreServiceIamBinding) Configuration() interface{} {
 	return dmsib.Args
 }
 
+// DependOn is used for other resources to depend on [DataprocMetastoreServiceIamBinding].
+func (dmsib *DataprocMetastoreServiceIamBinding) DependOn() terra.Reference {
+	return terra.ReferenceResource(dmsib)
+}
+
+// Dependencies returns the list of resources [DataprocMetastoreServiceIamBinding] depends_on.
+func (dmsib *DataprocMetastoreServiceIamBinding) Dependencies() terra.Dependencies {
+	return dmsib.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataprocMetastoreServiceIamBinding].
+func (dmsib *DataprocMetastoreServiceIamBinding) LifecycleManagement() *terra.Lifecycle {
+	return dmsib.Lifecycle
+}
+
+// Attributes returns the attributes for [DataprocMetastoreServiceIamBinding].
 func (dmsib *DataprocMetastoreServiceIamBinding) Attributes() dataprocMetastoreServiceIamBindingAttributes {
 	return dataprocMetastoreServiceIamBindingAttributes{ref: terra.ReferenceResource(dmsib)}
 }
 
+// ImportState imports the given attribute values into [DataprocMetastoreServiceIamBinding]'s state.
 func (dmsib *DataprocMetastoreServiceIamBinding) ImportState(av io.Reader) error {
 	dmsib.state = &dataprocMetastoreServiceIamBindingState{}
 	if err := json.NewDecoder(av).Decode(dmsib.state); err != nil {
@@ -49,10 +73,12 @@ func (dmsib *DataprocMetastoreServiceIamBinding) ImportState(av io.Reader) error
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataprocMetastoreServiceIamBinding] has state.
 func (dmsib *DataprocMetastoreServiceIamBinding) State() (*dataprocMetastoreServiceIamBindingState, bool) {
 	return dmsib.state, dmsib.state != nil
 }
 
+// StateMust returns the state for [DataprocMetastoreServiceIamBinding]. Panics if the state is nil.
 func (dmsib *DataprocMetastoreServiceIamBinding) StateMust() *dataprocMetastoreServiceIamBindingState {
 	if dmsib.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dmsib.Type(), dmsib.LocalName()))
@@ -60,10 +86,7 @@ func (dmsib *DataprocMetastoreServiceIamBinding) StateMust() *dataprocMetastoreS
 	return dmsib.state
 }
 
-func (dmsib *DataprocMetastoreServiceIamBinding) DependOn() terra.Reference {
-	return terra.ReferenceResource(dmsib)
-}
-
+// DataprocMetastoreServiceIamBindingArgs contains the configurations for google_dataproc_metastore_service_iam_binding.
 type DataprocMetastoreServiceIamBindingArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,43 +102,48 @@ type DataprocMetastoreServiceIamBindingArgs struct {
 	ServiceId terra.StringValue `hcl:"service_id,attr" validate:"required"`
 	// Condition: optional
 	Condition *dataprocmetastoreserviceiambinding.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that DataprocMetastoreServiceIamBinding depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataprocMetastoreServiceIamBindingAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_dataproc_metastore_service_iam_binding.
 func (dmsib dataprocMetastoreServiceIamBindingAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(dmsib.ref.Append("etag"))
+	return terra.ReferenceAsString(dmsib.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_dataproc_metastore_service_iam_binding.
 func (dmsib dataprocMetastoreServiceIamBindingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dmsib.ref.Append("id"))
+	return terra.ReferenceAsString(dmsib.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_dataproc_metastore_service_iam_binding.
 func (dmsib dataprocMetastoreServiceIamBindingAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(dmsib.ref.Append("location"))
+	return terra.ReferenceAsString(dmsib.ref.Append("location"))
 }
 
+// Members returns a reference to field members of google_dataproc_metastore_service_iam_binding.
 func (dmsib dataprocMetastoreServiceIamBindingAttributes) Members() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dmsib.ref.Append("members"))
+	return terra.ReferenceAsSet[terra.StringValue](dmsib.ref.Append("members"))
 }
 
+// Project returns a reference to field project of google_dataproc_metastore_service_iam_binding.
 func (dmsib dataprocMetastoreServiceIamBindingAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(dmsib.ref.Append("project"))
+	return terra.ReferenceAsString(dmsib.ref.Append("project"))
 }
 
+// Role returns a reference to field role of google_dataproc_metastore_service_iam_binding.
 func (dmsib dataprocMetastoreServiceIamBindingAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(dmsib.ref.Append("role"))
+	return terra.ReferenceAsString(dmsib.ref.Append("role"))
 }
 
+// ServiceId returns a reference to field service_id of google_dataproc_metastore_service_iam_binding.
 func (dmsib dataprocMetastoreServiceIamBindingAttributes) ServiceId() terra.StringValue {
-	return terra.ReferenceString(dmsib.ref.Append("service_id"))
+	return terra.ReferenceAsString(dmsib.ref.Append("service_id"))
 }
 
 func (dmsib dataprocMetastoreServiceIamBindingAttributes) Condition() terra.ListValue[dataprocmetastoreserviceiambinding.ConditionAttributes] {
-	return terra.ReferenceList[dataprocmetastoreserviceiambinding.ConditionAttributes](dmsib.ref.Append("condition"))
+	return terra.ReferenceAsList[dataprocmetastoreserviceiambinding.ConditionAttributes](dmsib.ref.Append("condition"))
 }
 
 type dataprocMetastoreServiceIamBindingState struct {

@@ -21,7 +21,7 @@ func (b BandwidthAttributes) InternalWithRef(ref terra.Reference) BandwidthAttri
 	return BandwidthAttributes{ref: ref}
 }
 
-func (b BandwidthAttributes) InternalTokens() hclwrite.Tokens {
+func (b BandwidthAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return b.ref.InternalTokens()
 }
 

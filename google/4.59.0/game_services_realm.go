@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewGameServicesRealm creates a new instance of [GameServicesRealm].
 func NewGameServicesRealm(name string, args GameServicesRealmArgs) *GameServicesRealm {
 	return &GameServicesRealm{
 		Args: args,
@@ -19,28 +20,51 @@ func NewGameServicesRealm(name string, args GameServicesRealmArgs) *GameServices
 
 var _ terra.Resource = (*GameServicesRealm)(nil)
 
+// GameServicesRealm represents the Terraform resource google_game_services_realm.
 type GameServicesRealm struct {
-	Name  string
-	Args  GameServicesRealmArgs
-	state *gameServicesRealmState
+	Name      string
+	Args      GameServicesRealmArgs
+	state     *gameServicesRealmState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GameServicesRealm].
 func (gsr *GameServicesRealm) Type() string {
 	return "google_game_services_realm"
 }
 
+// LocalName returns the local name for [GameServicesRealm].
 func (gsr *GameServicesRealm) LocalName() string {
 	return gsr.Name
 }
 
+// Configuration returns the configuration (args) for [GameServicesRealm].
 func (gsr *GameServicesRealm) Configuration() interface{} {
 	return gsr.Args
 }
 
+// DependOn is used for other resources to depend on [GameServicesRealm].
+func (gsr *GameServicesRealm) DependOn() terra.Reference {
+	return terra.ReferenceResource(gsr)
+}
+
+// Dependencies returns the list of resources [GameServicesRealm] depends_on.
+func (gsr *GameServicesRealm) Dependencies() terra.Dependencies {
+	return gsr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GameServicesRealm].
+func (gsr *GameServicesRealm) LifecycleManagement() *terra.Lifecycle {
+	return gsr.Lifecycle
+}
+
+// Attributes returns the attributes for [GameServicesRealm].
 func (gsr *GameServicesRealm) Attributes() gameServicesRealmAttributes {
 	return gameServicesRealmAttributes{ref: terra.ReferenceResource(gsr)}
 }
 
+// ImportState imports the given attribute values into [GameServicesRealm]'s state.
 func (gsr *GameServicesRealm) ImportState(av io.Reader) error {
 	gsr.state = &gameServicesRealmState{}
 	if err := json.NewDecoder(av).Decode(gsr.state); err != nil {
@@ -49,10 +73,12 @@ func (gsr *GameServicesRealm) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GameServicesRealm] has state.
 func (gsr *GameServicesRealm) State() (*gameServicesRealmState, bool) {
 	return gsr.state, gsr.state != nil
 }
 
+// StateMust returns the state for [GameServicesRealm]. Panics if the state is nil.
 func (gsr *GameServicesRealm) StateMust() *gameServicesRealmState {
 	if gsr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", gsr.Type(), gsr.LocalName()))
@@ -60,10 +86,7 @@ func (gsr *GameServicesRealm) StateMust() *gameServicesRealmState {
 	return gsr.state
 }
 
-func (gsr *GameServicesRealm) DependOn() terra.Reference {
-	return terra.ReferenceResource(gsr)
-}
-
+// GameServicesRealmArgs contains the configurations for google_game_services_realm.
 type GameServicesRealmArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -81,51 +104,58 @@ type GameServicesRealmArgs struct {
 	TimeZone terra.StringValue `hcl:"time_zone,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *gameservicesrealm.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that GameServicesRealm depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type gameServicesRealmAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of google_game_services_realm.
 func (gsr gameServicesRealmAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(gsr.ref.Append("description"))
+	return terra.ReferenceAsString(gsr.ref.Append("description"))
 }
 
+// Etag returns a reference to field etag of google_game_services_realm.
 func (gsr gameServicesRealmAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(gsr.ref.Append("etag"))
+	return terra.ReferenceAsString(gsr.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_game_services_realm.
 func (gsr gameServicesRealmAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(gsr.ref.Append("id"))
+	return terra.ReferenceAsString(gsr.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_game_services_realm.
 func (gsr gameServicesRealmAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gsr.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](gsr.ref.Append("labels"))
 }
 
+// Location returns a reference to field location of google_game_services_realm.
 func (gsr gameServicesRealmAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(gsr.ref.Append("location"))
+	return terra.ReferenceAsString(gsr.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_game_services_realm.
 func (gsr gameServicesRealmAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(gsr.ref.Append("name"))
+	return terra.ReferenceAsString(gsr.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_game_services_realm.
 func (gsr gameServicesRealmAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(gsr.ref.Append("project"))
+	return terra.ReferenceAsString(gsr.ref.Append("project"))
 }
 
+// RealmId returns a reference to field realm_id of google_game_services_realm.
 func (gsr gameServicesRealmAttributes) RealmId() terra.StringValue {
-	return terra.ReferenceString(gsr.ref.Append("realm_id"))
+	return terra.ReferenceAsString(gsr.ref.Append("realm_id"))
 }
 
+// TimeZone returns a reference to field time_zone of google_game_services_realm.
 func (gsr gameServicesRealmAttributes) TimeZone() terra.StringValue {
-	return terra.ReferenceString(gsr.ref.Append("time_zone"))
+	return terra.ReferenceAsString(gsr.ref.Append("time_zone"))
 }
 
 func (gsr gameServicesRealmAttributes) Timeouts() gameservicesrealm.TimeoutsAttributes {
-	return terra.ReferenceSingle[gameservicesrealm.TimeoutsAttributes](gsr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[gameservicesrealm.TimeoutsAttributes](gsr.ref.Append("timeouts"))
 }
 
 type gameServicesRealmState struct {

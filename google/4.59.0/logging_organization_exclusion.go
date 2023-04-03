@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewLoggingOrganizationExclusion creates a new instance of [LoggingOrganizationExclusion].
 func NewLoggingOrganizationExclusion(name string, args LoggingOrganizationExclusionArgs) *LoggingOrganizationExclusion {
 	return &LoggingOrganizationExclusion{
 		Args: args,
@@ -18,28 +19,51 @@ func NewLoggingOrganizationExclusion(name string, args LoggingOrganizationExclus
 
 var _ terra.Resource = (*LoggingOrganizationExclusion)(nil)
 
+// LoggingOrganizationExclusion represents the Terraform resource google_logging_organization_exclusion.
 type LoggingOrganizationExclusion struct {
-	Name  string
-	Args  LoggingOrganizationExclusionArgs
-	state *loggingOrganizationExclusionState
+	Name      string
+	Args      LoggingOrganizationExclusionArgs
+	state     *loggingOrganizationExclusionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LoggingOrganizationExclusion].
 func (loe *LoggingOrganizationExclusion) Type() string {
 	return "google_logging_organization_exclusion"
 }
 
+// LocalName returns the local name for [LoggingOrganizationExclusion].
 func (loe *LoggingOrganizationExclusion) LocalName() string {
 	return loe.Name
 }
 
+// Configuration returns the configuration (args) for [LoggingOrganizationExclusion].
 func (loe *LoggingOrganizationExclusion) Configuration() interface{} {
 	return loe.Args
 }
 
+// DependOn is used for other resources to depend on [LoggingOrganizationExclusion].
+func (loe *LoggingOrganizationExclusion) DependOn() terra.Reference {
+	return terra.ReferenceResource(loe)
+}
+
+// Dependencies returns the list of resources [LoggingOrganizationExclusion] depends_on.
+func (loe *LoggingOrganizationExclusion) Dependencies() terra.Dependencies {
+	return loe.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LoggingOrganizationExclusion].
+func (loe *LoggingOrganizationExclusion) LifecycleManagement() *terra.Lifecycle {
+	return loe.Lifecycle
+}
+
+// Attributes returns the attributes for [LoggingOrganizationExclusion].
 func (loe *LoggingOrganizationExclusion) Attributes() loggingOrganizationExclusionAttributes {
 	return loggingOrganizationExclusionAttributes{ref: terra.ReferenceResource(loe)}
 }
 
+// ImportState imports the given attribute values into [LoggingOrganizationExclusion]'s state.
 func (loe *LoggingOrganizationExclusion) ImportState(av io.Reader) error {
 	loe.state = &loggingOrganizationExclusionState{}
 	if err := json.NewDecoder(av).Decode(loe.state); err != nil {
@@ -48,10 +72,12 @@ func (loe *LoggingOrganizationExclusion) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LoggingOrganizationExclusion] has state.
 func (loe *LoggingOrganizationExclusion) State() (*loggingOrganizationExclusionState, bool) {
 	return loe.state, loe.state != nil
 }
 
+// StateMust returns the state for [LoggingOrganizationExclusion]. Panics if the state is nil.
 func (loe *LoggingOrganizationExclusion) StateMust() *loggingOrganizationExclusionState {
 	if loe.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", loe.Type(), loe.LocalName()))
@@ -59,10 +85,7 @@ func (loe *LoggingOrganizationExclusion) StateMust() *loggingOrganizationExclusi
 	return loe.state
 }
 
-func (loe *LoggingOrganizationExclusion) DependOn() terra.Reference {
-	return terra.ReferenceResource(loe)
-}
-
+// LoggingOrganizationExclusionArgs contains the configurations for google_logging_organization_exclusion.
 type LoggingOrganizationExclusionArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -76,35 +99,39 @@ type LoggingOrganizationExclusionArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// OrgId: string, required
 	OrgId terra.StringValue `hcl:"org_id,attr" validate:"required"`
-	// DependsOn contains resources that LoggingOrganizationExclusion depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type loggingOrganizationExclusionAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of google_logging_organization_exclusion.
 func (loe loggingOrganizationExclusionAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(loe.ref.Append("description"))
+	return terra.ReferenceAsString(loe.ref.Append("description"))
 }
 
+// Disabled returns a reference to field disabled of google_logging_organization_exclusion.
 func (loe loggingOrganizationExclusionAttributes) Disabled() terra.BoolValue {
-	return terra.ReferenceBool(loe.ref.Append("disabled"))
+	return terra.ReferenceAsBool(loe.ref.Append("disabled"))
 }
 
+// Filter returns a reference to field filter of google_logging_organization_exclusion.
 func (loe loggingOrganizationExclusionAttributes) Filter() terra.StringValue {
-	return terra.ReferenceString(loe.ref.Append("filter"))
+	return terra.ReferenceAsString(loe.ref.Append("filter"))
 }
 
+// Id returns a reference to field id of google_logging_organization_exclusion.
 func (loe loggingOrganizationExclusionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(loe.ref.Append("id"))
+	return terra.ReferenceAsString(loe.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_logging_organization_exclusion.
 func (loe loggingOrganizationExclusionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(loe.ref.Append("name"))
+	return terra.ReferenceAsString(loe.ref.Append("name"))
 }
 
+// OrgId returns a reference to field org_id of google_logging_organization_exclusion.
 func (loe loggingOrganizationExclusionAttributes) OrgId() terra.StringValue {
-	return terra.ReferenceString(loe.ref.Append("org_id"))
+	return terra.ReferenceAsString(loe.ref.Append("org_id"))
 }
 
 type loggingOrganizationExclusionState struct {

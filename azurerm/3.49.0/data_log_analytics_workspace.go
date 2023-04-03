@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataLogAnalyticsWorkspace creates a new instance of [DataLogAnalyticsWorkspace].
 func NewDataLogAnalyticsWorkspace(name string, args DataLogAnalyticsWorkspaceArgs) *DataLogAnalyticsWorkspace {
 	return &DataLogAnalyticsWorkspace{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataLogAnalyticsWorkspace(name string, args DataLogAnalyticsWorkspaceArg
 
 var _ terra.DataResource = (*DataLogAnalyticsWorkspace)(nil)
 
+// DataLogAnalyticsWorkspace represents the Terraform data resource azurerm_log_analytics_workspace.
 type DataLogAnalyticsWorkspace struct {
 	Name string
 	Args DataLogAnalyticsWorkspaceArgs
 }
 
+// DataSource returns the Terraform object type for [DataLogAnalyticsWorkspace].
 func (law *DataLogAnalyticsWorkspace) DataSource() string {
 	return "azurerm_log_analytics_workspace"
 }
 
+// LocalName returns the local name for [DataLogAnalyticsWorkspace].
 func (law *DataLogAnalyticsWorkspace) LocalName() string {
 	return law.Name
 }
 
+// Configuration returns the configuration (args) for [DataLogAnalyticsWorkspace].
 func (law *DataLogAnalyticsWorkspace) Configuration() interface{} {
 	return law.Args
 }
 
+// Attributes returns the attributes for [DataLogAnalyticsWorkspace].
 func (law *DataLogAnalyticsWorkspace) Attributes() dataLogAnalyticsWorkspaceAttributes {
 	return dataLogAnalyticsWorkspaceAttributes{ref: terra.ReferenceDataResource(law)}
 }
 
+// DataLogAnalyticsWorkspaceArgs contains the configurations for azurerm_log_analytics_workspace.
 type DataLogAnalyticsWorkspaceArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,50 +58,61 @@ type dataLogAnalyticsWorkspaceAttributes struct {
 	ref terra.Reference
 }
 
+// DailyQuotaGb returns a reference to field daily_quota_gb of azurerm_log_analytics_workspace.
 func (law dataLogAnalyticsWorkspaceAttributes) DailyQuotaGb() terra.NumberValue {
-	return terra.ReferenceNumber(law.ref.Append("daily_quota_gb"))
+	return terra.ReferenceAsNumber(law.ref.Append("daily_quota_gb"))
 }
 
+// Id returns a reference to field id of azurerm_log_analytics_workspace.
 func (law dataLogAnalyticsWorkspaceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(law.ref.Append("id"))
+	return terra.ReferenceAsString(law.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_log_analytics_workspace.
 func (law dataLogAnalyticsWorkspaceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(law.ref.Append("location"))
+	return terra.ReferenceAsString(law.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_log_analytics_workspace.
 func (law dataLogAnalyticsWorkspaceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(law.ref.Append("name"))
+	return terra.ReferenceAsString(law.ref.Append("name"))
 }
 
+// PrimarySharedKey returns a reference to field primary_shared_key of azurerm_log_analytics_workspace.
 func (law dataLogAnalyticsWorkspaceAttributes) PrimarySharedKey() terra.StringValue {
-	return terra.ReferenceString(law.ref.Append("primary_shared_key"))
+	return terra.ReferenceAsString(law.ref.Append("primary_shared_key"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_log_analytics_workspace.
 func (law dataLogAnalyticsWorkspaceAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(law.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(law.ref.Append("resource_group_name"))
 }
 
+// RetentionInDays returns a reference to field retention_in_days of azurerm_log_analytics_workspace.
 func (law dataLogAnalyticsWorkspaceAttributes) RetentionInDays() terra.NumberValue {
-	return terra.ReferenceNumber(law.ref.Append("retention_in_days"))
+	return terra.ReferenceAsNumber(law.ref.Append("retention_in_days"))
 }
 
+// SecondarySharedKey returns a reference to field secondary_shared_key of azurerm_log_analytics_workspace.
 func (law dataLogAnalyticsWorkspaceAttributes) SecondarySharedKey() terra.StringValue {
-	return terra.ReferenceString(law.ref.Append("secondary_shared_key"))
+	return terra.ReferenceAsString(law.ref.Append("secondary_shared_key"))
 }
 
+// Sku returns a reference to field sku of azurerm_log_analytics_workspace.
 func (law dataLogAnalyticsWorkspaceAttributes) Sku() terra.StringValue {
-	return terra.ReferenceString(law.ref.Append("sku"))
+	return terra.ReferenceAsString(law.ref.Append("sku"))
 }
 
+// Tags returns a reference to field tags of azurerm_log_analytics_workspace.
 func (law dataLogAnalyticsWorkspaceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](law.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](law.ref.Append("tags"))
 }
 
+// WorkspaceId returns a reference to field workspace_id of azurerm_log_analytics_workspace.
 func (law dataLogAnalyticsWorkspaceAttributes) WorkspaceId() terra.StringValue {
-	return terra.ReferenceString(law.ref.Append("workspace_id"))
+	return terra.ReferenceAsString(law.ref.Append("workspace_id"))
 }
 
 func (law dataLogAnalyticsWorkspaceAttributes) Timeouts() dataloganalyticsworkspace.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataloganalyticsworkspace.TimeoutsAttributes](law.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataloganalyticsworkspace.TimeoutsAttributes](law.ref.Append("timeouts"))
 }

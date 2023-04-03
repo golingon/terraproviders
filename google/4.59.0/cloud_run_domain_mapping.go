@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCloudRunDomainMapping creates a new instance of [CloudRunDomainMapping].
 func NewCloudRunDomainMapping(name string, args CloudRunDomainMappingArgs) *CloudRunDomainMapping {
 	return &CloudRunDomainMapping{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCloudRunDomainMapping(name string, args CloudRunDomainMappingArgs) *Clou
 
 var _ terra.Resource = (*CloudRunDomainMapping)(nil)
 
+// CloudRunDomainMapping represents the Terraform resource google_cloud_run_domain_mapping.
 type CloudRunDomainMapping struct {
-	Name  string
-	Args  CloudRunDomainMappingArgs
-	state *cloudRunDomainMappingState
+	Name      string
+	Args      CloudRunDomainMappingArgs
+	state     *cloudRunDomainMappingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudRunDomainMapping].
 func (crdm *CloudRunDomainMapping) Type() string {
 	return "google_cloud_run_domain_mapping"
 }
 
+// LocalName returns the local name for [CloudRunDomainMapping].
 func (crdm *CloudRunDomainMapping) LocalName() string {
 	return crdm.Name
 }
 
+// Configuration returns the configuration (args) for [CloudRunDomainMapping].
 func (crdm *CloudRunDomainMapping) Configuration() interface{} {
 	return crdm.Args
 }
 
+// DependOn is used for other resources to depend on [CloudRunDomainMapping].
+func (crdm *CloudRunDomainMapping) DependOn() terra.Reference {
+	return terra.ReferenceResource(crdm)
+}
+
+// Dependencies returns the list of resources [CloudRunDomainMapping] depends_on.
+func (crdm *CloudRunDomainMapping) Dependencies() terra.Dependencies {
+	return crdm.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudRunDomainMapping].
+func (crdm *CloudRunDomainMapping) LifecycleManagement() *terra.Lifecycle {
+	return crdm.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudRunDomainMapping].
 func (crdm *CloudRunDomainMapping) Attributes() cloudRunDomainMappingAttributes {
 	return cloudRunDomainMappingAttributes{ref: terra.ReferenceResource(crdm)}
 }
 
+// ImportState imports the given attribute values into [CloudRunDomainMapping]'s state.
 func (crdm *CloudRunDomainMapping) ImportState(av io.Reader) error {
 	crdm.state = &cloudRunDomainMappingState{}
 	if err := json.NewDecoder(av).Decode(crdm.state); err != nil {
@@ -49,10 +73,12 @@ func (crdm *CloudRunDomainMapping) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudRunDomainMapping] has state.
 func (crdm *CloudRunDomainMapping) State() (*cloudRunDomainMappingState, bool) {
 	return crdm.state, crdm.state != nil
 }
 
+// StateMust returns the state for [CloudRunDomainMapping]. Panics if the state is nil.
 func (crdm *CloudRunDomainMapping) StateMust() *cloudRunDomainMappingState {
 	if crdm.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", crdm.Type(), crdm.LocalName()))
@@ -60,10 +86,7 @@ func (crdm *CloudRunDomainMapping) StateMust() *cloudRunDomainMappingState {
 	return crdm.state
 }
 
-func (crdm *CloudRunDomainMapping) DependOn() terra.Reference {
-	return terra.ReferenceResource(crdm)
-}
-
+// CloudRunDomainMappingArgs contains the configurations for google_cloud_run_domain_mapping.
 type CloudRunDomainMappingArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -81,43 +104,45 @@ type CloudRunDomainMappingArgs struct {
 	Spec *cloudrundomainmapping.Spec `hcl:"spec,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *cloudrundomainmapping.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that CloudRunDomainMapping depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudRunDomainMappingAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of google_cloud_run_domain_mapping.
 func (crdm cloudRunDomainMappingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(crdm.ref.Append("id"))
+	return terra.ReferenceAsString(crdm.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_cloud_run_domain_mapping.
 func (crdm cloudRunDomainMappingAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(crdm.ref.Append("location"))
+	return terra.ReferenceAsString(crdm.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_cloud_run_domain_mapping.
 func (crdm cloudRunDomainMappingAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(crdm.ref.Append("name"))
+	return terra.ReferenceAsString(crdm.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_cloud_run_domain_mapping.
 func (crdm cloudRunDomainMappingAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(crdm.ref.Append("project"))
+	return terra.ReferenceAsString(crdm.ref.Append("project"))
 }
 
 func (crdm cloudRunDomainMappingAttributes) Status() terra.ListValue[cloudrundomainmapping.StatusAttributes] {
-	return terra.ReferenceList[cloudrundomainmapping.StatusAttributes](crdm.ref.Append("status"))
+	return terra.ReferenceAsList[cloudrundomainmapping.StatusAttributes](crdm.ref.Append("status"))
 }
 
 func (crdm cloudRunDomainMappingAttributes) Metadata() terra.ListValue[cloudrundomainmapping.MetadataAttributes] {
-	return terra.ReferenceList[cloudrundomainmapping.MetadataAttributes](crdm.ref.Append("metadata"))
+	return terra.ReferenceAsList[cloudrundomainmapping.MetadataAttributes](crdm.ref.Append("metadata"))
 }
 
 func (crdm cloudRunDomainMappingAttributes) Spec() terra.ListValue[cloudrundomainmapping.SpecAttributes] {
-	return terra.ReferenceList[cloudrundomainmapping.SpecAttributes](crdm.ref.Append("spec"))
+	return terra.ReferenceAsList[cloudrundomainmapping.SpecAttributes](crdm.ref.Append("spec"))
 }
 
 func (crdm cloudRunDomainMappingAttributes) Timeouts() cloudrundomainmapping.TimeoutsAttributes {
-	return terra.ReferenceSingle[cloudrundomainmapping.TimeoutsAttributes](crdm.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cloudrundomainmapping.TimeoutsAttributes](crdm.ref.Append("timeouts"))
 }
 
 type cloudRunDomainMappingState struct {

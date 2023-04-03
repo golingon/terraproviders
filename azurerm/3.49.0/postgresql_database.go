@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewPostgresqlDatabase creates a new instance of [PostgresqlDatabase].
 func NewPostgresqlDatabase(name string, args PostgresqlDatabaseArgs) *PostgresqlDatabase {
 	return &PostgresqlDatabase{
 		Args: args,
@@ -19,28 +20,51 @@ func NewPostgresqlDatabase(name string, args PostgresqlDatabaseArgs) *Postgresql
 
 var _ terra.Resource = (*PostgresqlDatabase)(nil)
 
+// PostgresqlDatabase represents the Terraform resource azurerm_postgresql_database.
 type PostgresqlDatabase struct {
-	Name  string
-	Args  PostgresqlDatabaseArgs
-	state *postgresqlDatabaseState
+	Name      string
+	Args      PostgresqlDatabaseArgs
+	state     *postgresqlDatabaseState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PostgresqlDatabase].
 func (pd *PostgresqlDatabase) Type() string {
 	return "azurerm_postgresql_database"
 }
 
+// LocalName returns the local name for [PostgresqlDatabase].
 func (pd *PostgresqlDatabase) LocalName() string {
 	return pd.Name
 }
 
+// Configuration returns the configuration (args) for [PostgresqlDatabase].
 func (pd *PostgresqlDatabase) Configuration() interface{} {
 	return pd.Args
 }
 
+// DependOn is used for other resources to depend on [PostgresqlDatabase].
+func (pd *PostgresqlDatabase) DependOn() terra.Reference {
+	return terra.ReferenceResource(pd)
+}
+
+// Dependencies returns the list of resources [PostgresqlDatabase] depends_on.
+func (pd *PostgresqlDatabase) Dependencies() terra.Dependencies {
+	return pd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PostgresqlDatabase].
+func (pd *PostgresqlDatabase) LifecycleManagement() *terra.Lifecycle {
+	return pd.Lifecycle
+}
+
+// Attributes returns the attributes for [PostgresqlDatabase].
 func (pd *PostgresqlDatabase) Attributes() postgresqlDatabaseAttributes {
 	return postgresqlDatabaseAttributes{ref: terra.ReferenceResource(pd)}
 }
 
+// ImportState imports the given attribute values into [PostgresqlDatabase]'s state.
 func (pd *PostgresqlDatabase) ImportState(av io.Reader) error {
 	pd.state = &postgresqlDatabaseState{}
 	if err := json.NewDecoder(av).Decode(pd.state); err != nil {
@@ -49,10 +73,12 @@ func (pd *PostgresqlDatabase) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PostgresqlDatabase] has state.
 func (pd *PostgresqlDatabase) State() (*postgresqlDatabaseState, bool) {
 	return pd.state, pd.state != nil
 }
 
+// StateMust returns the state for [PostgresqlDatabase]. Panics if the state is nil.
 func (pd *PostgresqlDatabase) StateMust() *postgresqlDatabaseState {
 	if pd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pd.Type(), pd.LocalName()))
@@ -60,10 +86,7 @@ func (pd *PostgresqlDatabase) StateMust() *postgresqlDatabaseState {
 	return pd.state
 }
 
-func (pd *PostgresqlDatabase) DependOn() terra.Reference {
-	return terra.ReferenceResource(pd)
-}
-
+// PostgresqlDatabaseArgs contains the configurations for azurerm_postgresql_database.
 type PostgresqlDatabaseArgs struct {
 	// Charset: string, required
 	Charset terra.StringValue `hcl:"charset,attr" validate:"required"`
@@ -79,39 +102,43 @@ type PostgresqlDatabaseArgs struct {
 	ServerName terra.StringValue `hcl:"server_name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *postgresqldatabase.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that PostgresqlDatabase depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type postgresqlDatabaseAttributes struct {
 	ref terra.Reference
 }
 
+// Charset returns a reference to field charset of azurerm_postgresql_database.
 func (pd postgresqlDatabaseAttributes) Charset() terra.StringValue {
-	return terra.ReferenceString(pd.ref.Append("charset"))
+	return terra.ReferenceAsString(pd.ref.Append("charset"))
 }
 
+// Collation returns a reference to field collation of azurerm_postgresql_database.
 func (pd postgresqlDatabaseAttributes) Collation() terra.StringValue {
-	return terra.ReferenceString(pd.ref.Append("collation"))
+	return terra.ReferenceAsString(pd.ref.Append("collation"))
 }
 
+// Id returns a reference to field id of azurerm_postgresql_database.
 func (pd postgresqlDatabaseAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pd.ref.Append("id"))
+	return terra.ReferenceAsString(pd.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_postgresql_database.
 func (pd postgresqlDatabaseAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pd.ref.Append("name"))
+	return terra.ReferenceAsString(pd.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_postgresql_database.
 func (pd postgresqlDatabaseAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(pd.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(pd.ref.Append("resource_group_name"))
 }
 
+// ServerName returns a reference to field server_name of azurerm_postgresql_database.
 func (pd postgresqlDatabaseAttributes) ServerName() terra.StringValue {
-	return terra.ReferenceString(pd.ref.Append("server_name"))
+	return terra.ReferenceAsString(pd.ref.Append("server_name"))
 }
 
 func (pd postgresqlDatabaseAttributes) Timeouts() postgresqldatabase.TimeoutsAttributes {
-	return terra.ReferenceSingle[postgresqldatabase.TimeoutsAttributes](pd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[postgresqldatabase.TimeoutsAttributes](pd.ref.Append("timeouts"))
 }
 
 type postgresqlDatabaseState struct {

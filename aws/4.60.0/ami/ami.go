@@ -56,7 +56,7 @@ func (ebd EbsBlockDeviceAttributes) InternalWithRef(ref terra.Reference) EbsBloc
 	return EbsBlockDeviceAttributes{ref: ref}
 }
 
-func (ebd EbsBlockDeviceAttributes) InternalTokens() hclwrite.Tokens {
+func (ebd EbsBlockDeviceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ebd.ref.InternalTokens()
 }
 
@@ -108,7 +108,7 @@ func (ebd EphemeralBlockDeviceAttributes) InternalWithRef(ref terra.Reference) E
 	return EphemeralBlockDeviceAttributes{ref: ref}
 }
 
-func (ebd EphemeralBlockDeviceAttributes) InternalTokens() hclwrite.Tokens {
+func (ebd EphemeralBlockDeviceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ebd.ref.InternalTokens()
 }
 
@@ -132,7 +132,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

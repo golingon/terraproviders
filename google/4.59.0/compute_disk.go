@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeDisk creates a new instance of [ComputeDisk].
 func NewComputeDisk(name string, args ComputeDiskArgs) *ComputeDisk {
 	return &ComputeDisk{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeDisk(name string, args ComputeDiskArgs) *ComputeDisk {
 
 var _ terra.Resource = (*ComputeDisk)(nil)
 
+// ComputeDisk represents the Terraform resource google_compute_disk.
 type ComputeDisk struct {
-	Name  string
-	Args  ComputeDiskArgs
-	state *computeDiskState
+	Name      string
+	Args      ComputeDiskArgs
+	state     *computeDiskState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeDisk].
 func (cd *ComputeDisk) Type() string {
 	return "google_compute_disk"
 }
 
+// LocalName returns the local name for [ComputeDisk].
 func (cd *ComputeDisk) LocalName() string {
 	return cd.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeDisk].
 func (cd *ComputeDisk) Configuration() interface{} {
 	return cd.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeDisk].
+func (cd *ComputeDisk) DependOn() terra.Reference {
+	return terra.ReferenceResource(cd)
+}
+
+// Dependencies returns the list of resources [ComputeDisk] depends_on.
+func (cd *ComputeDisk) Dependencies() terra.Dependencies {
+	return cd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeDisk].
+func (cd *ComputeDisk) LifecycleManagement() *terra.Lifecycle {
+	return cd.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeDisk].
 func (cd *ComputeDisk) Attributes() computeDiskAttributes {
 	return computeDiskAttributes{ref: terra.ReferenceResource(cd)}
 }
 
+// ImportState imports the given attribute values into [ComputeDisk]'s state.
 func (cd *ComputeDisk) ImportState(av io.Reader) error {
 	cd.state = &computeDiskState{}
 	if err := json.NewDecoder(av).Decode(cd.state); err != nil {
@@ -49,10 +73,12 @@ func (cd *ComputeDisk) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeDisk] has state.
 func (cd *ComputeDisk) State() (*computeDiskState, bool) {
 	return cd.state, cd.state != nil
 }
 
+// StateMust returns the state for [ComputeDisk]. Panics if the state is nil.
 func (cd *ComputeDisk) StateMust() *computeDiskState {
 	if cd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cd.Type(), cd.LocalName()))
@@ -60,10 +86,7 @@ func (cd *ComputeDisk) StateMust() *computeDiskState {
 	return cd.state
 }
 
-func (cd *ComputeDisk) DependOn() terra.Reference {
-	return terra.ReferenceResource(cd)
-}
-
+// ComputeDiskArgs contains the configurations for google_compute_disk.
 type ComputeDiskArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -99,115 +122,135 @@ type ComputeDiskArgs struct {
 	SourceSnapshotEncryptionKey *computedisk.SourceSnapshotEncryptionKey `hcl:"source_snapshot_encryption_key,block"`
 	// Timeouts: optional
 	Timeouts *computedisk.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeDisk depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeDiskAttributes struct {
 	ref terra.Reference
 }
 
+// CreationTimestamp returns a reference to field creation_timestamp of google_compute_disk.
 func (cd computeDiskAttributes) CreationTimestamp() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("creation_timestamp"))
+	return terra.ReferenceAsString(cd.ref.Append("creation_timestamp"))
 }
 
+// Description returns a reference to field description of google_compute_disk.
 func (cd computeDiskAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("description"))
+	return terra.ReferenceAsString(cd.ref.Append("description"))
 }
 
+// Id returns a reference to field id of google_compute_disk.
 func (cd computeDiskAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("id"))
+	return terra.ReferenceAsString(cd.ref.Append("id"))
 }
 
+// Image returns a reference to field image of google_compute_disk.
 func (cd computeDiskAttributes) Image() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("image"))
+	return terra.ReferenceAsString(cd.ref.Append("image"))
 }
 
+// LabelFingerprint returns a reference to field label_fingerprint of google_compute_disk.
 func (cd computeDiskAttributes) LabelFingerprint() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("label_fingerprint"))
+	return terra.ReferenceAsString(cd.ref.Append("label_fingerprint"))
 }
 
+// Labels returns a reference to field labels of google_compute_disk.
 func (cd computeDiskAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cd.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](cd.ref.Append("labels"))
 }
 
+// LastAttachTimestamp returns a reference to field last_attach_timestamp of google_compute_disk.
 func (cd computeDiskAttributes) LastAttachTimestamp() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("last_attach_timestamp"))
+	return terra.ReferenceAsString(cd.ref.Append("last_attach_timestamp"))
 }
 
+// LastDetachTimestamp returns a reference to field last_detach_timestamp of google_compute_disk.
 func (cd computeDiskAttributes) LastDetachTimestamp() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("last_detach_timestamp"))
+	return terra.ReferenceAsString(cd.ref.Append("last_detach_timestamp"))
 }
 
+// Name returns a reference to field name of google_compute_disk.
 func (cd computeDiskAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("name"))
+	return terra.ReferenceAsString(cd.ref.Append("name"))
 }
 
+// PhysicalBlockSizeBytes returns a reference to field physical_block_size_bytes of google_compute_disk.
 func (cd computeDiskAttributes) PhysicalBlockSizeBytes() terra.NumberValue {
-	return terra.ReferenceNumber(cd.ref.Append("physical_block_size_bytes"))
+	return terra.ReferenceAsNumber(cd.ref.Append("physical_block_size_bytes"))
 }
 
+// Project returns a reference to field project of google_compute_disk.
 func (cd computeDiskAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("project"))
+	return terra.ReferenceAsString(cd.ref.Append("project"))
 }
 
+// ProvisionedIops returns a reference to field provisioned_iops of google_compute_disk.
 func (cd computeDiskAttributes) ProvisionedIops() terra.NumberValue {
-	return terra.ReferenceNumber(cd.ref.Append("provisioned_iops"))
+	return terra.ReferenceAsNumber(cd.ref.Append("provisioned_iops"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_disk.
 func (cd computeDiskAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("self_link"))
+	return terra.ReferenceAsString(cd.ref.Append("self_link"))
 }
 
+// Size returns a reference to field size of google_compute_disk.
 func (cd computeDiskAttributes) Size() terra.NumberValue {
-	return terra.ReferenceNumber(cd.ref.Append("size"))
+	return terra.ReferenceAsNumber(cd.ref.Append("size"))
 }
 
+// Snapshot returns a reference to field snapshot of google_compute_disk.
 func (cd computeDiskAttributes) Snapshot() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("snapshot"))
+	return terra.ReferenceAsString(cd.ref.Append("snapshot"))
 }
 
+// SourceDisk returns a reference to field source_disk of google_compute_disk.
 func (cd computeDiskAttributes) SourceDisk() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("source_disk"))
+	return terra.ReferenceAsString(cd.ref.Append("source_disk"))
 }
 
+// SourceDiskId returns a reference to field source_disk_id of google_compute_disk.
 func (cd computeDiskAttributes) SourceDiskId() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("source_disk_id"))
+	return terra.ReferenceAsString(cd.ref.Append("source_disk_id"))
 }
 
+// SourceImageId returns a reference to field source_image_id of google_compute_disk.
 func (cd computeDiskAttributes) SourceImageId() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("source_image_id"))
+	return terra.ReferenceAsString(cd.ref.Append("source_image_id"))
 }
 
+// SourceSnapshotId returns a reference to field source_snapshot_id of google_compute_disk.
 func (cd computeDiskAttributes) SourceSnapshotId() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("source_snapshot_id"))
+	return terra.ReferenceAsString(cd.ref.Append("source_snapshot_id"))
 }
 
+// Type returns a reference to field type of google_compute_disk.
 func (cd computeDiskAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("type"))
+	return terra.ReferenceAsString(cd.ref.Append("type"))
 }
 
+// Users returns a reference to field users of google_compute_disk.
 func (cd computeDiskAttributes) Users() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cd.ref.Append("users"))
+	return terra.ReferenceAsList[terra.StringValue](cd.ref.Append("users"))
 }
 
+// Zone returns a reference to field zone of google_compute_disk.
 func (cd computeDiskAttributes) Zone() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("zone"))
+	return terra.ReferenceAsString(cd.ref.Append("zone"))
 }
 
 func (cd computeDiskAttributes) DiskEncryptionKey() terra.ListValue[computedisk.DiskEncryptionKeyAttributes] {
-	return terra.ReferenceList[computedisk.DiskEncryptionKeyAttributes](cd.ref.Append("disk_encryption_key"))
+	return terra.ReferenceAsList[computedisk.DiskEncryptionKeyAttributes](cd.ref.Append("disk_encryption_key"))
 }
 
 func (cd computeDiskAttributes) SourceImageEncryptionKey() terra.ListValue[computedisk.SourceImageEncryptionKeyAttributes] {
-	return terra.ReferenceList[computedisk.SourceImageEncryptionKeyAttributes](cd.ref.Append("source_image_encryption_key"))
+	return terra.ReferenceAsList[computedisk.SourceImageEncryptionKeyAttributes](cd.ref.Append("source_image_encryption_key"))
 }
 
 func (cd computeDiskAttributes) SourceSnapshotEncryptionKey() terra.ListValue[computedisk.SourceSnapshotEncryptionKeyAttributes] {
-	return terra.ReferenceList[computedisk.SourceSnapshotEncryptionKeyAttributes](cd.ref.Append("source_snapshot_encryption_key"))
+	return terra.ReferenceAsList[computedisk.SourceSnapshotEncryptionKeyAttributes](cd.ref.Append("source_snapshot_encryption_key"))
 }
 
 func (cd computeDiskAttributes) Timeouts() computedisk.TimeoutsAttributes {
-	return terra.ReferenceSingle[computedisk.TimeoutsAttributes](cd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computedisk.TimeoutsAttributes](cd.ref.Append("timeouts"))
 }
 
 type computeDiskState struct {

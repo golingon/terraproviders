@@ -64,7 +64,7 @@ func (ssp SelfServicePermissionsAttributes) InternalWithRef(ref terra.Reference)
 	return SelfServicePermissionsAttributes{ref: ref}
 }
 
-func (ssp SelfServicePermissionsAttributes) InternalTokens() hclwrite.Tokens {
+func (ssp SelfServicePermissionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ssp.ref.InternalTokens()
 }
 
@@ -100,7 +100,7 @@ func (wap WorkspaceAccessPropertiesAttributes) InternalWithRef(ref terra.Referen
 	return WorkspaceAccessPropertiesAttributes{ref: ref}
 }
 
-func (wap WorkspaceAccessPropertiesAttributes) InternalTokens() hclwrite.Tokens {
+func (wap WorkspaceAccessPropertiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wap.ref.InternalTokens()
 }
 
@@ -148,7 +148,7 @@ func (wcp WorkspaceCreationPropertiesAttributes) InternalWithRef(ref terra.Refer
 	return WorkspaceCreationPropertiesAttributes{ref: ref}
 }
 
-func (wcp WorkspaceCreationPropertiesAttributes) InternalTokens() hclwrite.Tokens {
+func (wcp WorkspaceCreationPropertiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wcp.ref.InternalTokens()
 }
 

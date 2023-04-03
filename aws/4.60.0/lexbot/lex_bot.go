@@ -69,7 +69,7 @@ func (as AbortStatementAttributes) InternalWithRef(ref terra.Reference) AbortSta
 	return AbortStatementAttributes{ref: ref}
 }
 
-func (as AbortStatementAttributes) InternalTokens() hclwrite.Tokens {
+func (as AbortStatementAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return as.ref.InternalTokens()
 }
 
@@ -93,7 +93,7 @@ func (m AbortStatementMessageAttributes) InternalWithRef(ref terra.Reference) Ab
 	return AbortStatementMessageAttributes{ref: ref}
 }
 
-func (m AbortStatementMessageAttributes) InternalTokens() hclwrite.Tokens {
+func (m AbortStatementMessageAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -121,7 +121,7 @@ func (cp ClarificationPromptAttributes) InternalWithRef(ref terra.Reference) Cla
 	return ClarificationPromptAttributes{ref: ref}
 }
 
-func (cp ClarificationPromptAttributes) InternalTokens() hclwrite.Tokens {
+func (cp ClarificationPromptAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cp.ref.InternalTokens()
 }
 
@@ -149,7 +149,7 @@ func (m ClarificationPromptMessageAttributes) InternalWithRef(ref terra.Referenc
 	return ClarificationPromptMessageAttributes{ref: ref}
 }
 
-func (m ClarificationPromptMessageAttributes) InternalTokens() hclwrite.Tokens {
+func (m ClarificationPromptMessageAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -177,7 +177,7 @@ func (i IntentAttributes) InternalWithRef(ref terra.Reference) IntentAttributes 
 	return IntentAttributes{ref: ref}
 }
 
-func (i IntentAttributes) InternalTokens() hclwrite.Tokens {
+func (i IntentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -201,7 +201,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

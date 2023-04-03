@@ -58,7 +58,7 @@ func (lf LambdaFunctionAttributes) InternalWithRef(ref terra.Reference) LambdaFu
 	return LambdaFunctionAttributes{ref: ref}
 }
 
-func (lf LambdaFunctionAttributes) InternalTokens() hclwrite.Tokens {
+func (lf LambdaFunctionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lf.ref.InternalTokens()
 }
 
@@ -94,7 +94,7 @@ func (q QueueAttributes) InternalWithRef(ref terra.Reference) QueueAttributes {
 	return QueueAttributes{ref: ref}
 }
 
-func (q QueueAttributes) InternalTokens() hclwrite.Tokens {
+func (q QueueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return q.ref.InternalTokens()
 }
 
@@ -130,7 +130,7 @@ func (t TopicAttributes) InternalWithRef(ref terra.Reference) TopicAttributes {
 	return TopicAttributes{ref: ref}
 }
 
-func (t TopicAttributes) InternalTokens() hclwrite.Tokens {
+func (t TopicAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

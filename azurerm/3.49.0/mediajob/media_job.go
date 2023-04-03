@@ -36,80 +36,80 @@ type InputAssetAttributes struct {
 	ref terra.Reference
 }
 
-func (ia InputAssetAttributes) InternalRef() terra.Reference {
-	return ia.ref
+func (ia InputAssetAttributes) InternalRef() (terra.Reference, error) {
+	return ia.ref, nil
 }
 
 func (ia InputAssetAttributes) InternalWithRef(ref terra.Reference) InputAssetAttributes {
 	return InputAssetAttributes{ref: ref}
 }
 
-func (ia InputAssetAttributes) InternalTokens() hclwrite.Tokens {
+func (ia InputAssetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ia.ref.InternalTokens()
 }
 
 func (ia InputAssetAttributes) Label() terra.StringValue {
-	return terra.ReferenceString(ia.ref.Append("label"))
+	return terra.ReferenceAsString(ia.ref.Append("label"))
 }
 
 func (ia InputAssetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ia.ref.Append("name"))
+	return terra.ReferenceAsString(ia.ref.Append("name"))
 }
 
 type OutputAssetAttributes struct {
 	ref terra.Reference
 }
 
-func (oa OutputAssetAttributes) InternalRef() terra.Reference {
-	return oa.ref
+func (oa OutputAssetAttributes) InternalRef() (terra.Reference, error) {
+	return oa.ref, nil
 }
 
 func (oa OutputAssetAttributes) InternalWithRef(ref terra.Reference) OutputAssetAttributes {
 	return OutputAssetAttributes{ref: ref}
 }
 
-func (oa OutputAssetAttributes) InternalTokens() hclwrite.Tokens {
+func (oa OutputAssetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oa.ref.InternalTokens()
 }
 
 func (oa OutputAssetAttributes) Label() terra.StringValue {
-	return terra.ReferenceString(oa.ref.Append("label"))
+	return terra.ReferenceAsString(oa.ref.Append("label"))
 }
 
 func (oa OutputAssetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(oa.ref.Append("name"))
+	return terra.ReferenceAsString(oa.ref.Append("name"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type InputAssetState struct {

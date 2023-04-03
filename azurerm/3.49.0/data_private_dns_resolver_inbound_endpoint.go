@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataPrivateDnsResolverInboundEndpoint creates a new instance of [DataPrivateDnsResolverInboundEndpoint].
 func NewDataPrivateDnsResolverInboundEndpoint(name string, args DataPrivateDnsResolverInboundEndpointArgs) *DataPrivateDnsResolverInboundEndpoint {
 	return &DataPrivateDnsResolverInboundEndpoint{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataPrivateDnsResolverInboundEndpoint(name string, args DataPrivateDnsRe
 
 var _ terra.DataResource = (*DataPrivateDnsResolverInboundEndpoint)(nil)
 
+// DataPrivateDnsResolverInboundEndpoint represents the Terraform data resource azurerm_private_dns_resolver_inbound_endpoint.
 type DataPrivateDnsResolverInboundEndpoint struct {
 	Name string
 	Args DataPrivateDnsResolverInboundEndpointArgs
 }
 
+// DataSource returns the Terraform object type for [DataPrivateDnsResolverInboundEndpoint].
 func (pdrie *DataPrivateDnsResolverInboundEndpoint) DataSource() string {
 	return "azurerm_private_dns_resolver_inbound_endpoint"
 }
 
+// LocalName returns the local name for [DataPrivateDnsResolverInboundEndpoint].
 func (pdrie *DataPrivateDnsResolverInboundEndpoint) LocalName() string {
 	return pdrie.Name
 }
 
+// Configuration returns the configuration (args) for [DataPrivateDnsResolverInboundEndpoint].
 func (pdrie *DataPrivateDnsResolverInboundEndpoint) Configuration() interface{} {
 	return pdrie.Args
 }
 
+// Attributes returns the attributes for [DataPrivateDnsResolverInboundEndpoint].
 func (pdrie *DataPrivateDnsResolverInboundEndpoint) Attributes() dataPrivateDnsResolverInboundEndpointAttributes {
 	return dataPrivateDnsResolverInboundEndpointAttributes{ref: terra.ReferenceDataResource(pdrie)}
 }
 
+// DataPrivateDnsResolverInboundEndpointArgs contains the configurations for azurerm_private_dns_resolver_inbound_endpoint.
 type DataPrivateDnsResolverInboundEndpointArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,30 +60,35 @@ type dataPrivateDnsResolverInboundEndpointAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_private_dns_resolver_inbound_endpoint.
 func (pdrie dataPrivateDnsResolverInboundEndpointAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pdrie.ref.Append("id"))
+	return terra.ReferenceAsString(pdrie.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_private_dns_resolver_inbound_endpoint.
 func (pdrie dataPrivateDnsResolverInboundEndpointAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(pdrie.ref.Append("location"))
+	return terra.ReferenceAsString(pdrie.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_private_dns_resolver_inbound_endpoint.
 func (pdrie dataPrivateDnsResolverInboundEndpointAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pdrie.ref.Append("name"))
+	return terra.ReferenceAsString(pdrie.ref.Append("name"))
 }
 
+// PrivateDnsResolverId returns a reference to field private_dns_resolver_id of azurerm_private_dns_resolver_inbound_endpoint.
 func (pdrie dataPrivateDnsResolverInboundEndpointAttributes) PrivateDnsResolverId() terra.StringValue {
-	return terra.ReferenceString(pdrie.ref.Append("private_dns_resolver_id"))
+	return terra.ReferenceAsString(pdrie.ref.Append("private_dns_resolver_id"))
 }
 
+// Tags returns a reference to field tags of azurerm_private_dns_resolver_inbound_endpoint.
 func (pdrie dataPrivateDnsResolverInboundEndpointAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](pdrie.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](pdrie.ref.Append("tags"))
 }
 
 func (pdrie dataPrivateDnsResolverInboundEndpointAttributes) IpConfigurations() terra.ListValue[dataprivatednsresolverinboundendpoint.IpConfigurationsAttributes] {
-	return terra.ReferenceList[dataprivatednsresolverinboundendpoint.IpConfigurationsAttributes](pdrie.ref.Append("ip_configurations"))
+	return terra.ReferenceAsList[dataprivatednsresolverinboundendpoint.IpConfigurationsAttributes](pdrie.ref.Append("ip_configurations"))
 }
 
 func (pdrie dataPrivateDnsResolverInboundEndpointAttributes) Timeouts() dataprivatednsresolverinboundendpoint.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataprivatednsresolverinboundendpoint.TimeoutsAttributes](pdrie.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataprivatednsresolverinboundendpoint.TimeoutsAttributes](pdrie.ref.Append("timeouts"))
 }

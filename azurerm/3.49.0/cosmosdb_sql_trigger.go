@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCosmosdbSqlTrigger creates a new instance of [CosmosdbSqlTrigger].
 func NewCosmosdbSqlTrigger(name string, args CosmosdbSqlTriggerArgs) *CosmosdbSqlTrigger {
 	return &CosmosdbSqlTrigger{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCosmosdbSqlTrigger(name string, args CosmosdbSqlTriggerArgs) *CosmosdbSq
 
 var _ terra.Resource = (*CosmosdbSqlTrigger)(nil)
 
+// CosmosdbSqlTrigger represents the Terraform resource azurerm_cosmosdb_sql_trigger.
 type CosmosdbSqlTrigger struct {
-	Name  string
-	Args  CosmosdbSqlTriggerArgs
-	state *cosmosdbSqlTriggerState
+	Name      string
+	Args      CosmosdbSqlTriggerArgs
+	state     *cosmosdbSqlTriggerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CosmosdbSqlTrigger].
 func (cst *CosmosdbSqlTrigger) Type() string {
 	return "azurerm_cosmosdb_sql_trigger"
 }
 
+// LocalName returns the local name for [CosmosdbSqlTrigger].
 func (cst *CosmosdbSqlTrigger) LocalName() string {
 	return cst.Name
 }
 
+// Configuration returns the configuration (args) for [CosmosdbSqlTrigger].
 func (cst *CosmosdbSqlTrigger) Configuration() interface{} {
 	return cst.Args
 }
 
+// DependOn is used for other resources to depend on [CosmosdbSqlTrigger].
+func (cst *CosmosdbSqlTrigger) DependOn() terra.Reference {
+	return terra.ReferenceResource(cst)
+}
+
+// Dependencies returns the list of resources [CosmosdbSqlTrigger] depends_on.
+func (cst *CosmosdbSqlTrigger) Dependencies() terra.Dependencies {
+	return cst.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CosmosdbSqlTrigger].
+func (cst *CosmosdbSqlTrigger) LifecycleManagement() *terra.Lifecycle {
+	return cst.Lifecycle
+}
+
+// Attributes returns the attributes for [CosmosdbSqlTrigger].
 func (cst *CosmosdbSqlTrigger) Attributes() cosmosdbSqlTriggerAttributes {
 	return cosmosdbSqlTriggerAttributes{ref: terra.ReferenceResource(cst)}
 }
 
+// ImportState imports the given attribute values into [CosmosdbSqlTrigger]'s state.
 func (cst *CosmosdbSqlTrigger) ImportState(av io.Reader) error {
 	cst.state = &cosmosdbSqlTriggerState{}
 	if err := json.NewDecoder(av).Decode(cst.state); err != nil {
@@ -49,10 +73,12 @@ func (cst *CosmosdbSqlTrigger) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CosmosdbSqlTrigger] has state.
 func (cst *CosmosdbSqlTrigger) State() (*cosmosdbSqlTriggerState, bool) {
 	return cst.state, cst.state != nil
 }
 
+// StateMust returns the state for [CosmosdbSqlTrigger]. Panics if the state is nil.
 func (cst *CosmosdbSqlTrigger) StateMust() *cosmosdbSqlTriggerState {
 	if cst.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cst.Type(), cst.LocalName()))
@@ -60,10 +86,7 @@ func (cst *CosmosdbSqlTrigger) StateMust() *cosmosdbSqlTriggerState {
 	return cst.state
 }
 
-func (cst *CosmosdbSqlTrigger) DependOn() terra.Reference {
-	return terra.ReferenceResource(cst)
-}
-
+// CosmosdbSqlTriggerArgs contains the configurations for azurerm_cosmosdb_sql_trigger.
 type CosmosdbSqlTriggerArgs struct {
 	// Body: string, required
 	Body terra.StringValue `hcl:"body,attr" validate:"required"`
@@ -79,39 +102,43 @@ type CosmosdbSqlTriggerArgs struct {
 	Type terra.StringValue `hcl:"type,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *cosmosdbsqltrigger.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that CosmosdbSqlTrigger depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cosmosdbSqlTriggerAttributes struct {
 	ref terra.Reference
 }
 
+// Body returns a reference to field body of azurerm_cosmosdb_sql_trigger.
 func (cst cosmosdbSqlTriggerAttributes) Body() terra.StringValue {
-	return terra.ReferenceString(cst.ref.Append("body"))
+	return terra.ReferenceAsString(cst.ref.Append("body"))
 }
 
+// ContainerId returns a reference to field container_id of azurerm_cosmosdb_sql_trigger.
 func (cst cosmosdbSqlTriggerAttributes) ContainerId() terra.StringValue {
-	return terra.ReferenceString(cst.ref.Append("container_id"))
+	return terra.ReferenceAsString(cst.ref.Append("container_id"))
 }
 
+// Id returns a reference to field id of azurerm_cosmosdb_sql_trigger.
 func (cst cosmosdbSqlTriggerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cst.ref.Append("id"))
+	return terra.ReferenceAsString(cst.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_cosmosdb_sql_trigger.
 func (cst cosmosdbSqlTriggerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cst.ref.Append("name"))
+	return terra.ReferenceAsString(cst.ref.Append("name"))
 }
 
+// Operation returns a reference to field operation of azurerm_cosmosdb_sql_trigger.
 func (cst cosmosdbSqlTriggerAttributes) Operation() terra.StringValue {
-	return terra.ReferenceString(cst.ref.Append("operation"))
+	return terra.ReferenceAsString(cst.ref.Append("operation"))
 }
 
+// Type returns a reference to field type of azurerm_cosmosdb_sql_trigger.
 func (cst cosmosdbSqlTriggerAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(cst.ref.Append("type"))
+	return terra.ReferenceAsString(cst.ref.Append("type"))
 }
 
 func (cst cosmosdbSqlTriggerAttributes) Timeouts() cosmosdbsqltrigger.TimeoutsAttributes {
-	return terra.ReferenceSingle[cosmosdbsqltrigger.TimeoutsAttributes](cst.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cosmosdbsqltrigger.TimeoutsAttributes](cst.ref.Append("timeouts"))
 }
 
 type cosmosdbSqlTriggerState struct {

@@ -38,84 +38,84 @@ type RetentionRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (rr RetentionRuleAttributes) InternalRef() terra.Reference {
-	return rr.ref
+func (rr RetentionRuleAttributes) InternalRef() (terra.Reference, error) {
+	return rr.ref, nil
 }
 
 func (rr RetentionRuleAttributes) InternalWithRef(ref terra.Reference) RetentionRuleAttributes {
 	return RetentionRuleAttributes{ref: ref}
 }
 
-func (rr RetentionRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (rr RetentionRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rr.ref.InternalTokens()
 }
 
 func (rr RetentionRuleAttributes) Duration() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("duration"))
+	return terra.ReferenceAsString(rr.ref.Append("duration"))
 }
 
 func (rr RetentionRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("name"))
+	return terra.ReferenceAsString(rr.ref.Append("name"))
 }
 
 func (rr RetentionRuleAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(rr.ref.Append("priority"))
+	return terra.ReferenceAsNumber(rr.ref.Append("priority"))
 }
 
 func (rr RetentionRuleAttributes) Criteria() terra.ListValue[CriteriaAttributes] {
-	return terra.ReferenceList[CriteriaAttributes](rr.ref.Append("criteria"))
+	return terra.ReferenceAsList[CriteriaAttributes](rr.ref.Append("criteria"))
 }
 
 type CriteriaAttributes struct {
 	ref terra.Reference
 }
 
-func (c CriteriaAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CriteriaAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CriteriaAttributes) InternalWithRef(ref terra.Reference) CriteriaAttributes {
 	return CriteriaAttributes{ref: ref}
 }
 
-func (c CriteriaAttributes) InternalTokens() hclwrite.Tokens {
+func (c CriteriaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c CriteriaAttributes) AbsoluteCriteria() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("absolute_criteria"))
+	return terra.ReferenceAsString(c.ref.Append("absolute_criteria"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type RetentionRuleState struct {

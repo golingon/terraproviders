@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSqlManagedInstanceFailoverGroup creates a new instance of [SqlManagedInstanceFailoverGroup].
 func NewSqlManagedInstanceFailoverGroup(name string, args SqlManagedInstanceFailoverGroupArgs) *SqlManagedInstanceFailoverGroup {
 	return &SqlManagedInstanceFailoverGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSqlManagedInstanceFailoverGroup(name string, args SqlManagedInstanceFail
 
 var _ terra.Resource = (*SqlManagedInstanceFailoverGroup)(nil)
 
+// SqlManagedInstanceFailoverGroup represents the Terraform resource azurerm_sql_managed_instance_failover_group.
 type SqlManagedInstanceFailoverGroup struct {
-	Name  string
-	Args  SqlManagedInstanceFailoverGroupArgs
-	state *sqlManagedInstanceFailoverGroupState
+	Name      string
+	Args      SqlManagedInstanceFailoverGroupArgs
+	state     *sqlManagedInstanceFailoverGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SqlManagedInstanceFailoverGroup].
 func (smifg *SqlManagedInstanceFailoverGroup) Type() string {
 	return "azurerm_sql_managed_instance_failover_group"
 }
 
+// LocalName returns the local name for [SqlManagedInstanceFailoverGroup].
 func (smifg *SqlManagedInstanceFailoverGroup) LocalName() string {
 	return smifg.Name
 }
 
+// Configuration returns the configuration (args) for [SqlManagedInstanceFailoverGroup].
 func (smifg *SqlManagedInstanceFailoverGroup) Configuration() interface{} {
 	return smifg.Args
 }
 
+// DependOn is used for other resources to depend on [SqlManagedInstanceFailoverGroup].
+func (smifg *SqlManagedInstanceFailoverGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(smifg)
+}
+
+// Dependencies returns the list of resources [SqlManagedInstanceFailoverGroup] depends_on.
+func (smifg *SqlManagedInstanceFailoverGroup) Dependencies() terra.Dependencies {
+	return smifg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SqlManagedInstanceFailoverGroup].
+func (smifg *SqlManagedInstanceFailoverGroup) LifecycleManagement() *terra.Lifecycle {
+	return smifg.Lifecycle
+}
+
+// Attributes returns the attributes for [SqlManagedInstanceFailoverGroup].
 func (smifg *SqlManagedInstanceFailoverGroup) Attributes() sqlManagedInstanceFailoverGroupAttributes {
 	return sqlManagedInstanceFailoverGroupAttributes{ref: terra.ReferenceResource(smifg)}
 }
 
+// ImportState imports the given attribute values into [SqlManagedInstanceFailoverGroup]'s state.
 func (smifg *SqlManagedInstanceFailoverGroup) ImportState(av io.Reader) error {
 	smifg.state = &sqlManagedInstanceFailoverGroupState{}
 	if err := json.NewDecoder(av).Decode(smifg.state); err != nil {
@@ -49,10 +73,12 @@ func (smifg *SqlManagedInstanceFailoverGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SqlManagedInstanceFailoverGroup] has state.
 func (smifg *SqlManagedInstanceFailoverGroup) State() (*sqlManagedInstanceFailoverGroupState, bool) {
 	return smifg.state, smifg.state != nil
 }
 
+// StateMust returns the state for [SqlManagedInstanceFailoverGroup]. Panics if the state is nil.
 func (smifg *SqlManagedInstanceFailoverGroup) StateMust() *sqlManagedInstanceFailoverGroupState {
 	if smifg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", smifg.Type(), smifg.LocalName()))
@@ -60,10 +86,7 @@ func (smifg *SqlManagedInstanceFailoverGroup) StateMust() *sqlManagedInstanceFai
 	return smifg.state
 }
 
-func (smifg *SqlManagedInstanceFailoverGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(smifg)
-}
-
+// SqlManagedInstanceFailoverGroupArgs contains the configurations for azurerm_sql_managed_instance_failover_group.
 type SqlManagedInstanceFailoverGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -85,55 +108,61 @@ type SqlManagedInstanceFailoverGroupArgs struct {
 	ReadWriteEndpointFailoverPolicy *sqlmanagedinstancefailovergroup.ReadWriteEndpointFailoverPolicy `hcl:"read_write_endpoint_failover_policy,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *sqlmanagedinstancefailovergroup.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SqlManagedInstanceFailoverGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sqlManagedInstanceFailoverGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_sql_managed_instance_failover_group.
 func (smifg sqlManagedInstanceFailoverGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(smifg.ref.Append("id"))
+	return terra.ReferenceAsString(smifg.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_sql_managed_instance_failover_group.
 func (smifg sqlManagedInstanceFailoverGroupAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(smifg.ref.Append("location"))
+	return terra.ReferenceAsString(smifg.ref.Append("location"))
 }
 
+// ManagedInstanceName returns a reference to field managed_instance_name of azurerm_sql_managed_instance_failover_group.
 func (smifg sqlManagedInstanceFailoverGroupAttributes) ManagedInstanceName() terra.StringValue {
-	return terra.ReferenceString(smifg.ref.Append("managed_instance_name"))
+	return terra.ReferenceAsString(smifg.ref.Append("managed_instance_name"))
 }
 
+// Name returns a reference to field name of azurerm_sql_managed_instance_failover_group.
 func (smifg sqlManagedInstanceFailoverGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(smifg.ref.Append("name"))
+	return terra.ReferenceAsString(smifg.ref.Append("name"))
 }
 
+// PartnerManagedInstanceId returns a reference to field partner_managed_instance_id of azurerm_sql_managed_instance_failover_group.
 func (smifg sqlManagedInstanceFailoverGroupAttributes) PartnerManagedInstanceId() terra.StringValue {
-	return terra.ReferenceString(smifg.ref.Append("partner_managed_instance_id"))
+	return terra.ReferenceAsString(smifg.ref.Append("partner_managed_instance_id"))
 }
 
+// ReadonlyEndpointFailoverPolicyEnabled returns a reference to field readonly_endpoint_failover_policy_enabled of azurerm_sql_managed_instance_failover_group.
 func (smifg sqlManagedInstanceFailoverGroupAttributes) ReadonlyEndpointFailoverPolicyEnabled() terra.BoolValue {
-	return terra.ReferenceBool(smifg.ref.Append("readonly_endpoint_failover_policy_enabled"))
+	return terra.ReferenceAsBool(smifg.ref.Append("readonly_endpoint_failover_policy_enabled"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_sql_managed_instance_failover_group.
 func (smifg sqlManagedInstanceFailoverGroupAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(smifg.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(smifg.ref.Append("resource_group_name"))
 }
 
+// Role returns a reference to field role of azurerm_sql_managed_instance_failover_group.
 func (smifg sqlManagedInstanceFailoverGroupAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(smifg.ref.Append("role"))
+	return terra.ReferenceAsString(smifg.ref.Append("role"))
 }
 
 func (smifg sqlManagedInstanceFailoverGroupAttributes) PartnerRegion() terra.ListValue[sqlmanagedinstancefailovergroup.PartnerRegionAttributes] {
-	return terra.ReferenceList[sqlmanagedinstancefailovergroup.PartnerRegionAttributes](smifg.ref.Append("partner_region"))
+	return terra.ReferenceAsList[sqlmanagedinstancefailovergroup.PartnerRegionAttributes](smifg.ref.Append("partner_region"))
 }
 
 func (smifg sqlManagedInstanceFailoverGroupAttributes) ReadWriteEndpointFailoverPolicy() terra.ListValue[sqlmanagedinstancefailovergroup.ReadWriteEndpointFailoverPolicyAttributes] {
-	return terra.ReferenceList[sqlmanagedinstancefailovergroup.ReadWriteEndpointFailoverPolicyAttributes](smifg.ref.Append("read_write_endpoint_failover_policy"))
+	return terra.ReferenceAsList[sqlmanagedinstancefailovergroup.ReadWriteEndpointFailoverPolicyAttributes](smifg.ref.Append("read_write_endpoint_failover_policy"))
 }
 
 func (smifg sqlManagedInstanceFailoverGroupAttributes) Timeouts() sqlmanagedinstancefailovergroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[sqlmanagedinstancefailovergroup.TimeoutsAttributes](smifg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[sqlmanagedinstancefailovergroup.TimeoutsAttributes](smifg.ref.Append("timeouts"))
 }
 
 type sqlManagedInstanceFailoverGroupState struct {

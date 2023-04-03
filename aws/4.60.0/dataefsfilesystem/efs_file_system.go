@@ -21,7 +21,7 @@ func (lp LifecyclePolicyAttributes) InternalWithRef(ref terra.Reference) Lifecyc
 	return LifecyclePolicyAttributes{ref: ref}
 }
 
-func (lp LifecyclePolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (lp LifecyclePolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lp.ref.InternalTokens()
 }
 

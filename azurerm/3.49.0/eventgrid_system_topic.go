@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEventgridSystemTopic creates a new instance of [EventgridSystemTopic].
 func NewEventgridSystemTopic(name string, args EventgridSystemTopicArgs) *EventgridSystemTopic {
 	return &EventgridSystemTopic{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEventgridSystemTopic(name string, args EventgridSystemTopicArgs) *Eventg
 
 var _ terra.Resource = (*EventgridSystemTopic)(nil)
 
+// EventgridSystemTopic represents the Terraform resource azurerm_eventgrid_system_topic.
 type EventgridSystemTopic struct {
-	Name  string
-	Args  EventgridSystemTopicArgs
-	state *eventgridSystemTopicState
+	Name      string
+	Args      EventgridSystemTopicArgs
+	state     *eventgridSystemTopicState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EventgridSystemTopic].
 func (est *EventgridSystemTopic) Type() string {
 	return "azurerm_eventgrid_system_topic"
 }
 
+// LocalName returns the local name for [EventgridSystemTopic].
 func (est *EventgridSystemTopic) LocalName() string {
 	return est.Name
 }
 
+// Configuration returns the configuration (args) for [EventgridSystemTopic].
 func (est *EventgridSystemTopic) Configuration() interface{} {
 	return est.Args
 }
 
+// DependOn is used for other resources to depend on [EventgridSystemTopic].
+func (est *EventgridSystemTopic) DependOn() terra.Reference {
+	return terra.ReferenceResource(est)
+}
+
+// Dependencies returns the list of resources [EventgridSystemTopic] depends_on.
+func (est *EventgridSystemTopic) Dependencies() terra.Dependencies {
+	return est.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EventgridSystemTopic].
+func (est *EventgridSystemTopic) LifecycleManagement() *terra.Lifecycle {
+	return est.Lifecycle
+}
+
+// Attributes returns the attributes for [EventgridSystemTopic].
 func (est *EventgridSystemTopic) Attributes() eventgridSystemTopicAttributes {
 	return eventgridSystemTopicAttributes{ref: terra.ReferenceResource(est)}
 }
 
+// ImportState imports the given attribute values into [EventgridSystemTopic]'s state.
 func (est *EventgridSystemTopic) ImportState(av io.Reader) error {
 	est.state = &eventgridSystemTopicState{}
 	if err := json.NewDecoder(av).Decode(est.state); err != nil {
@@ -49,10 +73,12 @@ func (est *EventgridSystemTopic) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EventgridSystemTopic] has state.
 func (est *EventgridSystemTopic) State() (*eventgridSystemTopicState, bool) {
 	return est.state, est.state != nil
 }
 
+// StateMust returns the state for [EventgridSystemTopic]. Panics if the state is nil.
 func (est *EventgridSystemTopic) StateMust() *eventgridSystemTopicState {
 	if est.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", est.Type(), est.LocalName()))
@@ -60,10 +86,7 @@ func (est *EventgridSystemTopic) StateMust() *eventgridSystemTopicState {
 	return est.state
 }
 
-func (est *EventgridSystemTopic) DependOn() terra.Reference {
-	return terra.ReferenceResource(est)
-}
-
+// EventgridSystemTopicArgs contains the configurations for azurerm_eventgrid_system_topic.
 type EventgridSystemTopicArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -83,51 +106,57 @@ type EventgridSystemTopicArgs struct {
 	Identity *eventgridsystemtopic.Identity `hcl:"identity,block"`
 	// Timeouts: optional
 	Timeouts *eventgridsystemtopic.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that EventgridSystemTopic depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type eventgridSystemTopicAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_eventgrid_system_topic.
 func (est eventgridSystemTopicAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(est.ref.Append("id"))
+	return terra.ReferenceAsString(est.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_eventgrid_system_topic.
 func (est eventgridSystemTopicAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(est.ref.Append("location"))
+	return terra.ReferenceAsString(est.ref.Append("location"))
 }
 
+// MetricArmResourceId returns a reference to field metric_arm_resource_id of azurerm_eventgrid_system_topic.
 func (est eventgridSystemTopicAttributes) MetricArmResourceId() terra.StringValue {
-	return terra.ReferenceString(est.ref.Append("metric_arm_resource_id"))
+	return terra.ReferenceAsString(est.ref.Append("metric_arm_resource_id"))
 }
 
+// Name returns a reference to field name of azurerm_eventgrid_system_topic.
 func (est eventgridSystemTopicAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(est.ref.Append("name"))
+	return terra.ReferenceAsString(est.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_eventgrid_system_topic.
 func (est eventgridSystemTopicAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(est.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(est.ref.Append("resource_group_name"))
 }
 
+// SourceArmResourceId returns a reference to field source_arm_resource_id of azurerm_eventgrid_system_topic.
 func (est eventgridSystemTopicAttributes) SourceArmResourceId() terra.StringValue {
-	return terra.ReferenceString(est.ref.Append("source_arm_resource_id"))
+	return terra.ReferenceAsString(est.ref.Append("source_arm_resource_id"))
 }
 
+// Tags returns a reference to field tags of azurerm_eventgrid_system_topic.
 func (est eventgridSystemTopicAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](est.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](est.ref.Append("tags"))
 }
 
+// TopicType returns a reference to field topic_type of azurerm_eventgrid_system_topic.
 func (est eventgridSystemTopicAttributes) TopicType() terra.StringValue {
-	return terra.ReferenceString(est.ref.Append("topic_type"))
+	return terra.ReferenceAsString(est.ref.Append("topic_type"))
 }
 
 func (est eventgridSystemTopicAttributes) Identity() terra.ListValue[eventgridsystemtopic.IdentityAttributes] {
-	return terra.ReferenceList[eventgridsystemtopic.IdentityAttributes](est.ref.Append("identity"))
+	return terra.ReferenceAsList[eventgridsystemtopic.IdentityAttributes](est.ref.Append("identity"))
 }
 
 func (est eventgridSystemTopicAttributes) Timeouts() eventgridsystemtopic.TimeoutsAttributes {
-	return terra.ReferenceSingle[eventgridsystemtopic.TimeoutsAttributes](est.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[eventgridsystemtopic.TimeoutsAttributes](est.ref.Append("timeouts"))
 }
 
 type eventgridSystemTopicState struct {

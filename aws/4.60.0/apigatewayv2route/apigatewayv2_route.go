@@ -26,7 +26,7 @@ func (rp RequestParameterAttributes) InternalWithRef(ref terra.Reference) Reques
 	return RequestParameterAttributes{ref: ref}
 }
 
-func (rp RequestParameterAttributes) InternalTokens() hclwrite.Tokens {
+func (rp RequestParameterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rp.ref.InternalTokens()
 }
 

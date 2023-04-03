@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataDedicatedHostGroup creates a new instance of [DataDedicatedHostGroup].
 func NewDataDedicatedHostGroup(name string, args DataDedicatedHostGroupArgs) *DataDedicatedHostGroup {
 	return &DataDedicatedHostGroup{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataDedicatedHostGroup(name string, args DataDedicatedHostGroupArgs) *Da
 
 var _ terra.DataResource = (*DataDedicatedHostGroup)(nil)
 
+// DataDedicatedHostGroup represents the Terraform data resource azurerm_dedicated_host_group.
 type DataDedicatedHostGroup struct {
 	Name string
 	Args DataDedicatedHostGroupArgs
 }
 
+// DataSource returns the Terraform object type for [DataDedicatedHostGroup].
 func (dhg *DataDedicatedHostGroup) DataSource() string {
 	return "azurerm_dedicated_host_group"
 }
 
+// LocalName returns the local name for [DataDedicatedHostGroup].
 func (dhg *DataDedicatedHostGroup) LocalName() string {
 	return dhg.Name
 }
 
+// Configuration returns the configuration (args) for [DataDedicatedHostGroup].
 func (dhg *DataDedicatedHostGroup) Configuration() interface{} {
 	return dhg.Args
 }
 
+// Attributes returns the attributes for [DataDedicatedHostGroup].
 func (dhg *DataDedicatedHostGroup) Attributes() dataDedicatedHostGroupAttributes {
 	return dataDedicatedHostGroupAttributes{ref: terra.ReferenceDataResource(dhg)}
 }
 
+// DataDedicatedHostGroupArgs contains the configurations for azurerm_dedicated_host_group.
 type DataDedicatedHostGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,38 +58,46 @@ type dataDedicatedHostGroupAttributes struct {
 	ref terra.Reference
 }
 
+// AutomaticPlacementEnabled returns a reference to field automatic_placement_enabled of azurerm_dedicated_host_group.
 func (dhg dataDedicatedHostGroupAttributes) AutomaticPlacementEnabled() terra.BoolValue {
-	return terra.ReferenceBool(dhg.ref.Append("automatic_placement_enabled"))
+	return terra.ReferenceAsBool(dhg.ref.Append("automatic_placement_enabled"))
 }
 
+// Id returns a reference to field id of azurerm_dedicated_host_group.
 func (dhg dataDedicatedHostGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dhg.ref.Append("id"))
+	return terra.ReferenceAsString(dhg.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_dedicated_host_group.
 func (dhg dataDedicatedHostGroupAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(dhg.ref.Append("location"))
+	return terra.ReferenceAsString(dhg.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_dedicated_host_group.
 func (dhg dataDedicatedHostGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dhg.ref.Append("name"))
+	return terra.ReferenceAsString(dhg.ref.Append("name"))
 }
 
+// PlatformFaultDomainCount returns a reference to field platform_fault_domain_count of azurerm_dedicated_host_group.
 func (dhg dataDedicatedHostGroupAttributes) PlatformFaultDomainCount() terra.NumberValue {
-	return terra.ReferenceNumber(dhg.ref.Append("platform_fault_domain_count"))
+	return terra.ReferenceAsNumber(dhg.ref.Append("platform_fault_domain_count"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_dedicated_host_group.
 func (dhg dataDedicatedHostGroupAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(dhg.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(dhg.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_dedicated_host_group.
 func (dhg dataDedicatedHostGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dhg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dhg.ref.Append("tags"))
 }
 
+// Zones returns a reference to field zones of azurerm_dedicated_host_group.
 func (dhg dataDedicatedHostGroupAttributes) Zones() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dhg.ref.Append("zones"))
+	return terra.ReferenceAsList[terra.StringValue](dhg.ref.Append("zones"))
 }
 
 func (dhg dataDedicatedHostGroupAttributes) Timeouts() datadedicatedhostgroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[datadedicatedhostgroup.TimeoutsAttributes](dhg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datadedicatedhostgroup.TimeoutsAttributes](dhg.ref.Append("timeouts"))
 }

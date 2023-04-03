@@ -129,356 +129,356 @@ type CatalogInfoAttributes struct {
 	ref terra.Reference
 }
 
-func (ci CatalogInfoAttributes) InternalRef() terra.Reference {
-	return ci.ref
+func (ci CatalogInfoAttributes) InternalRef() (terra.Reference, error) {
+	return ci.ref, nil
 }
 
 func (ci CatalogInfoAttributes) InternalWithRef(ref terra.Reference) CatalogInfoAttributes {
 	return CatalogInfoAttributes{ref: ref}
 }
 
-func (ci CatalogInfoAttributes) InternalTokens() hclwrite.Tokens {
+func (ci CatalogInfoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ci.ref.InternalTokens()
 }
 
 func (ci CatalogInfoAttributes) AdministratorLogin() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("administrator_login"))
+	return terra.ReferenceAsString(ci.ref.Append("administrator_login"))
 }
 
 func (ci CatalogInfoAttributes) AdministratorPassword() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("administrator_password"))
+	return terra.ReferenceAsString(ci.ref.Append("administrator_password"))
 }
 
 func (ci CatalogInfoAttributes) DualStandbyPairName() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("dual_standby_pair_name"))
+	return terra.ReferenceAsString(ci.ref.Append("dual_standby_pair_name"))
 }
 
 func (ci CatalogInfoAttributes) ElasticPoolName() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("elastic_pool_name"))
+	return terra.ReferenceAsString(ci.ref.Append("elastic_pool_name"))
 }
 
 func (ci CatalogInfoAttributes) PricingTier() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("pricing_tier"))
+	return terra.ReferenceAsString(ci.ref.Append("pricing_tier"))
 }
 
 func (ci CatalogInfoAttributes) ServerEndpoint() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("server_endpoint"))
+	return terra.ReferenceAsString(ci.ref.Append("server_endpoint"))
 }
 
 type CustomSetupScriptAttributes struct {
 	ref terra.Reference
 }
 
-func (css CustomSetupScriptAttributes) InternalRef() terra.Reference {
-	return css.ref
+func (css CustomSetupScriptAttributes) InternalRef() (terra.Reference, error) {
+	return css.ref, nil
 }
 
 func (css CustomSetupScriptAttributes) InternalWithRef(ref terra.Reference) CustomSetupScriptAttributes {
 	return CustomSetupScriptAttributes{ref: ref}
 }
 
-func (css CustomSetupScriptAttributes) InternalTokens() hclwrite.Tokens {
+func (css CustomSetupScriptAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return css.ref.InternalTokens()
 }
 
 func (css CustomSetupScriptAttributes) BlobContainerUri() terra.StringValue {
-	return terra.ReferenceString(css.ref.Append("blob_container_uri"))
+	return terra.ReferenceAsString(css.ref.Append("blob_container_uri"))
 }
 
 func (css CustomSetupScriptAttributes) SasToken() terra.StringValue {
-	return terra.ReferenceString(css.ref.Append("sas_token"))
+	return terra.ReferenceAsString(css.ref.Append("sas_token"))
 }
 
 type ExpressCustomSetupAttributes struct {
 	ref terra.Reference
 }
 
-func (ecs ExpressCustomSetupAttributes) InternalRef() terra.Reference {
-	return ecs.ref
+func (ecs ExpressCustomSetupAttributes) InternalRef() (terra.Reference, error) {
+	return ecs.ref, nil
 }
 
 func (ecs ExpressCustomSetupAttributes) InternalWithRef(ref terra.Reference) ExpressCustomSetupAttributes {
 	return ExpressCustomSetupAttributes{ref: ref}
 }
 
-func (ecs ExpressCustomSetupAttributes) InternalTokens() hclwrite.Tokens {
+func (ecs ExpressCustomSetupAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ecs.ref.InternalTokens()
 }
 
 func (ecs ExpressCustomSetupAttributes) Environment() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ecs.ref.Append("environment"))
+	return terra.ReferenceAsMap[terra.StringValue](ecs.ref.Append("environment"))
 }
 
 func (ecs ExpressCustomSetupAttributes) PowershellVersion() terra.StringValue {
-	return terra.ReferenceString(ecs.ref.Append("powershell_version"))
+	return terra.ReferenceAsString(ecs.ref.Append("powershell_version"))
 }
 
 func (ecs ExpressCustomSetupAttributes) CommandKey() terra.ListValue[CommandKeyAttributes] {
-	return terra.ReferenceList[CommandKeyAttributes](ecs.ref.Append("command_key"))
+	return terra.ReferenceAsList[CommandKeyAttributes](ecs.ref.Append("command_key"))
 }
 
 func (ecs ExpressCustomSetupAttributes) Component() terra.ListValue[ComponentAttributes] {
-	return terra.ReferenceList[ComponentAttributes](ecs.ref.Append("component"))
+	return terra.ReferenceAsList[ComponentAttributes](ecs.ref.Append("component"))
 }
 
 type CommandKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (ck CommandKeyAttributes) InternalRef() terra.Reference {
-	return ck.ref
+func (ck CommandKeyAttributes) InternalRef() (terra.Reference, error) {
+	return ck.ref, nil
 }
 
 func (ck CommandKeyAttributes) InternalWithRef(ref terra.Reference) CommandKeyAttributes {
 	return CommandKeyAttributes{ref: ref}
 }
 
-func (ck CommandKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (ck CommandKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ck.ref.InternalTokens()
 }
 
 func (ck CommandKeyAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(ck.ref.Append("password"))
+	return terra.ReferenceAsString(ck.ref.Append("password"))
 }
 
 func (ck CommandKeyAttributes) TargetName() terra.StringValue {
-	return terra.ReferenceString(ck.ref.Append("target_name"))
+	return terra.ReferenceAsString(ck.ref.Append("target_name"))
 }
 
 func (ck CommandKeyAttributes) UserName() terra.StringValue {
-	return terra.ReferenceString(ck.ref.Append("user_name"))
+	return terra.ReferenceAsString(ck.ref.Append("user_name"))
 }
 
 func (ck CommandKeyAttributes) KeyVaultPassword() terra.ListValue[KeyVaultPasswordAttributes] {
-	return terra.ReferenceList[KeyVaultPasswordAttributes](ck.ref.Append("key_vault_password"))
+	return terra.ReferenceAsList[KeyVaultPasswordAttributes](ck.ref.Append("key_vault_password"))
 }
 
 type KeyVaultPasswordAttributes struct {
 	ref terra.Reference
 }
 
-func (kvp KeyVaultPasswordAttributes) InternalRef() terra.Reference {
-	return kvp.ref
+func (kvp KeyVaultPasswordAttributes) InternalRef() (terra.Reference, error) {
+	return kvp.ref, nil
 }
 
 func (kvp KeyVaultPasswordAttributes) InternalWithRef(ref terra.Reference) KeyVaultPasswordAttributes {
 	return KeyVaultPasswordAttributes{ref: ref}
 }
 
-func (kvp KeyVaultPasswordAttributes) InternalTokens() hclwrite.Tokens {
+func (kvp KeyVaultPasswordAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kvp.ref.InternalTokens()
 }
 
 func (kvp KeyVaultPasswordAttributes) LinkedServiceName() terra.StringValue {
-	return terra.ReferenceString(kvp.ref.Append("linked_service_name"))
+	return terra.ReferenceAsString(kvp.ref.Append("linked_service_name"))
 }
 
 func (kvp KeyVaultPasswordAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](kvp.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](kvp.ref.Append("parameters"))
 }
 
 func (kvp KeyVaultPasswordAttributes) SecretName() terra.StringValue {
-	return terra.ReferenceString(kvp.ref.Append("secret_name"))
+	return terra.ReferenceAsString(kvp.ref.Append("secret_name"))
 }
 
 func (kvp KeyVaultPasswordAttributes) SecretVersion() terra.StringValue {
-	return terra.ReferenceString(kvp.ref.Append("secret_version"))
+	return terra.ReferenceAsString(kvp.ref.Append("secret_version"))
 }
 
 type ComponentAttributes struct {
 	ref terra.Reference
 }
 
-func (c ComponentAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ComponentAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ComponentAttributes) InternalWithRef(ref terra.Reference) ComponentAttributes {
 	return ComponentAttributes{ref: ref}
 }
 
-func (c ComponentAttributes) InternalTokens() hclwrite.Tokens {
+func (c ComponentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ComponentAttributes) License() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("license"))
+	return terra.ReferenceAsString(c.ref.Append("license"))
 }
 
 func (c ComponentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("name"))
+	return terra.ReferenceAsString(c.ref.Append("name"))
 }
 
 func (c ComponentAttributes) KeyVaultLicense() terra.ListValue[KeyVaultLicenseAttributes] {
-	return terra.ReferenceList[KeyVaultLicenseAttributes](c.ref.Append("key_vault_license"))
+	return terra.ReferenceAsList[KeyVaultLicenseAttributes](c.ref.Append("key_vault_license"))
 }
 
 type KeyVaultLicenseAttributes struct {
 	ref terra.Reference
 }
 
-func (kvl KeyVaultLicenseAttributes) InternalRef() terra.Reference {
-	return kvl.ref
+func (kvl KeyVaultLicenseAttributes) InternalRef() (terra.Reference, error) {
+	return kvl.ref, nil
 }
 
 func (kvl KeyVaultLicenseAttributes) InternalWithRef(ref terra.Reference) KeyVaultLicenseAttributes {
 	return KeyVaultLicenseAttributes{ref: ref}
 }
 
-func (kvl KeyVaultLicenseAttributes) InternalTokens() hclwrite.Tokens {
+func (kvl KeyVaultLicenseAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kvl.ref.InternalTokens()
 }
 
 func (kvl KeyVaultLicenseAttributes) LinkedServiceName() terra.StringValue {
-	return terra.ReferenceString(kvl.ref.Append("linked_service_name"))
+	return terra.ReferenceAsString(kvl.ref.Append("linked_service_name"))
 }
 
 func (kvl KeyVaultLicenseAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](kvl.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](kvl.ref.Append("parameters"))
 }
 
 func (kvl KeyVaultLicenseAttributes) SecretName() terra.StringValue {
-	return terra.ReferenceString(kvl.ref.Append("secret_name"))
+	return terra.ReferenceAsString(kvl.ref.Append("secret_name"))
 }
 
 func (kvl KeyVaultLicenseAttributes) SecretVersion() terra.StringValue {
-	return terra.ReferenceString(kvl.ref.Append("secret_version"))
+	return terra.ReferenceAsString(kvl.ref.Append("secret_version"))
 }
 
 type ExpressVnetIntegrationAttributes struct {
 	ref terra.Reference
 }
 
-func (evi ExpressVnetIntegrationAttributes) InternalRef() terra.Reference {
-	return evi.ref
+func (evi ExpressVnetIntegrationAttributes) InternalRef() (terra.Reference, error) {
+	return evi.ref, nil
 }
 
 func (evi ExpressVnetIntegrationAttributes) InternalWithRef(ref terra.Reference) ExpressVnetIntegrationAttributes {
 	return ExpressVnetIntegrationAttributes{ref: ref}
 }
 
-func (evi ExpressVnetIntegrationAttributes) InternalTokens() hclwrite.Tokens {
+func (evi ExpressVnetIntegrationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return evi.ref.InternalTokens()
 }
 
 func (evi ExpressVnetIntegrationAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(evi.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(evi.ref.Append("subnet_id"))
 }
 
 type PackageStoreAttributes struct {
 	ref terra.Reference
 }
 
-func (ps PackageStoreAttributes) InternalRef() terra.Reference {
-	return ps.ref
+func (ps PackageStoreAttributes) InternalRef() (terra.Reference, error) {
+	return ps.ref, nil
 }
 
 func (ps PackageStoreAttributes) InternalWithRef(ref terra.Reference) PackageStoreAttributes {
 	return PackageStoreAttributes{ref: ref}
 }
 
-func (ps PackageStoreAttributes) InternalTokens() hclwrite.Tokens {
+func (ps PackageStoreAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ps.ref.InternalTokens()
 }
 
 func (ps PackageStoreAttributes) LinkedServiceName() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("linked_service_name"))
+	return terra.ReferenceAsString(ps.ref.Append("linked_service_name"))
 }
 
 func (ps PackageStoreAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("name"))
+	return terra.ReferenceAsString(ps.ref.Append("name"))
 }
 
 type ProxyAttributes struct {
 	ref terra.Reference
 }
 
-func (p ProxyAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p ProxyAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p ProxyAttributes) InternalWithRef(ref terra.Reference) ProxyAttributes {
 	return ProxyAttributes{ref: ref}
 }
 
-func (p ProxyAttributes) InternalTokens() hclwrite.Tokens {
+func (p ProxyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
 func (p ProxyAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("path"))
+	return terra.ReferenceAsString(p.ref.Append("path"))
 }
 
 func (p ProxyAttributes) SelfHostedIntegrationRuntimeName() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("self_hosted_integration_runtime_name"))
+	return terra.ReferenceAsString(p.ref.Append("self_hosted_integration_runtime_name"))
 }
 
 func (p ProxyAttributes) StagingStorageLinkedServiceName() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("staging_storage_linked_service_name"))
+	return terra.ReferenceAsString(p.ref.Append("staging_storage_linked_service_name"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type VnetIntegrationAttributes struct {
 	ref terra.Reference
 }
 
-func (vi VnetIntegrationAttributes) InternalRef() terra.Reference {
-	return vi.ref
+func (vi VnetIntegrationAttributes) InternalRef() (terra.Reference, error) {
+	return vi.ref, nil
 }
 
 func (vi VnetIntegrationAttributes) InternalWithRef(ref terra.Reference) VnetIntegrationAttributes {
 	return VnetIntegrationAttributes{ref: ref}
 }
 
-func (vi VnetIntegrationAttributes) InternalTokens() hclwrite.Tokens {
+func (vi VnetIntegrationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vi.ref.InternalTokens()
 }
 
 func (vi VnetIntegrationAttributes) PublicIps() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](vi.ref.Append("public_ips"))
+	return terra.ReferenceAsList[terra.StringValue](vi.ref.Append("public_ips"))
 }
 
 func (vi VnetIntegrationAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(vi.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(vi.ref.Append("subnet_id"))
 }
 
 func (vi VnetIntegrationAttributes) SubnetName() terra.StringValue {
-	return terra.ReferenceString(vi.ref.Append("subnet_name"))
+	return terra.ReferenceAsString(vi.ref.Append("subnet_name"))
 }
 
 func (vi VnetIntegrationAttributes) VnetId() terra.StringValue {
-	return terra.ReferenceString(vi.ref.Append("vnet_id"))
+	return terra.ReferenceAsString(vi.ref.Append("vnet_id"))
 }
 
 type CatalogInfoState struct {

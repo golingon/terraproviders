@@ -33,7 +33,7 @@ func (cac CidrAuthorizationContextAttributes) InternalWithRef(ref terra.Referenc
 	return CidrAuthorizationContextAttributes{ref: ref}
 }
 
-func (cac CidrAuthorizationContextAttributes) InternalTokens() hclwrite.Tokens {
+func (cac CidrAuthorizationContextAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cac.ref.InternalTokens()
 }
 
@@ -57,7 +57,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

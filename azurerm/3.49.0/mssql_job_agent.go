@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMssqlJobAgent creates a new instance of [MssqlJobAgent].
 func NewMssqlJobAgent(name string, args MssqlJobAgentArgs) *MssqlJobAgent {
 	return &MssqlJobAgent{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMssqlJobAgent(name string, args MssqlJobAgentArgs) *MssqlJobAgent {
 
 var _ terra.Resource = (*MssqlJobAgent)(nil)
 
+// MssqlJobAgent represents the Terraform resource azurerm_mssql_job_agent.
 type MssqlJobAgent struct {
-	Name  string
-	Args  MssqlJobAgentArgs
-	state *mssqlJobAgentState
+	Name      string
+	Args      MssqlJobAgentArgs
+	state     *mssqlJobAgentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MssqlJobAgent].
 func (mja *MssqlJobAgent) Type() string {
 	return "azurerm_mssql_job_agent"
 }
 
+// LocalName returns the local name for [MssqlJobAgent].
 func (mja *MssqlJobAgent) LocalName() string {
 	return mja.Name
 }
 
+// Configuration returns the configuration (args) for [MssqlJobAgent].
 func (mja *MssqlJobAgent) Configuration() interface{} {
 	return mja.Args
 }
 
+// DependOn is used for other resources to depend on [MssqlJobAgent].
+func (mja *MssqlJobAgent) DependOn() terra.Reference {
+	return terra.ReferenceResource(mja)
+}
+
+// Dependencies returns the list of resources [MssqlJobAgent] depends_on.
+func (mja *MssqlJobAgent) Dependencies() terra.Dependencies {
+	return mja.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MssqlJobAgent].
+func (mja *MssqlJobAgent) LifecycleManagement() *terra.Lifecycle {
+	return mja.Lifecycle
+}
+
+// Attributes returns the attributes for [MssqlJobAgent].
 func (mja *MssqlJobAgent) Attributes() mssqlJobAgentAttributes {
 	return mssqlJobAgentAttributes{ref: terra.ReferenceResource(mja)}
 }
 
+// ImportState imports the given attribute values into [MssqlJobAgent]'s state.
 func (mja *MssqlJobAgent) ImportState(av io.Reader) error {
 	mja.state = &mssqlJobAgentState{}
 	if err := json.NewDecoder(av).Decode(mja.state); err != nil {
@@ -49,10 +73,12 @@ func (mja *MssqlJobAgent) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MssqlJobAgent] has state.
 func (mja *MssqlJobAgent) State() (*mssqlJobAgentState, bool) {
 	return mja.state, mja.state != nil
 }
 
+// StateMust returns the state for [MssqlJobAgent]. Panics if the state is nil.
 func (mja *MssqlJobAgent) StateMust() *mssqlJobAgentState {
 	if mja.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mja.Type(), mja.LocalName()))
@@ -60,10 +86,7 @@ func (mja *MssqlJobAgent) StateMust() *mssqlJobAgentState {
 	return mja.state
 }
 
-func (mja *MssqlJobAgent) DependOn() terra.Reference {
-	return terra.ReferenceResource(mja)
-}
-
+// MssqlJobAgentArgs contains the configurations for azurerm_mssql_job_agent.
 type MssqlJobAgentArgs struct {
 	// DatabaseId: string, required
 	DatabaseId terra.StringValue `hcl:"database_id,attr" validate:"required"`
@@ -77,35 +100,38 @@ type MssqlJobAgentArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// Timeouts: optional
 	Timeouts *mssqljobagent.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MssqlJobAgent depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mssqlJobAgentAttributes struct {
 	ref terra.Reference
 }
 
+// DatabaseId returns a reference to field database_id of azurerm_mssql_job_agent.
 func (mja mssqlJobAgentAttributes) DatabaseId() terra.StringValue {
-	return terra.ReferenceString(mja.ref.Append("database_id"))
+	return terra.ReferenceAsString(mja.ref.Append("database_id"))
 }
 
+// Id returns a reference to field id of azurerm_mssql_job_agent.
 func (mja mssqlJobAgentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mja.ref.Append("id"))
+	return terra.ReferenceAsString(mja.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_mssql_job_agent.
 func (mja mssqlJobAgentAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(mja.ref.Append("location"))
+	return terra.ReferenceAsString(mja.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_mssql_job_agent.
 func (mja mssqlJobAgentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mja.ref.Append("name"))
+	return terra.ReferenceAsString(mja.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of azurerm_mssql_job_agent.
 func (mja mssqlJobAgentAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mja.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mja.ref.Append("tags"))
 }
 
 func (mja mssqlJobAgentAttributes) Timeouts() mssqljobagent.TimeoutsAttributes {
-	return terra.ReferenceSingle[mssqljobagent.TimeoutsAttributes](mja.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[mssqljobagent.TimeoutsAttributes](mja.ref.Append("timeouts"))
 }
 
 type mssqlJobAgentState struct {

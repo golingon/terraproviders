@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataSynapseWorkspace creates a new instance of [DataSynapseWorkspace].
 func NewDataSynapseWorkspace(name string, args DataSynapseWorkspaceArgs) *DataSynapseWorkspace {
 	return &DataSynapseWorkspace{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataSynapseWorkspace(name string, args DataSynapseWorkspaceArgs) *DataSy
 
 var _ terra.DataResource = (*DataSynapseWorkspace)(nil)
 
+// DataSynapseWorkspace represents the Terraform data resource azurerm_synapse_workspace.
 type DataSynapseWorkspace struct {
 	Name string
 	Args DataSynapseWorkspaceArgs
 }
 
+// DataSource returns the Terraform object type for [DataSynapseWorkspace].
 func (sw *DataSynapseWorkspace) DataSource() string {
 	return "azurerm_synapse_workspace"
 }
 
+// LocalName returns the local name for [DataSynapseWorkspace].
 func (sw *DataSynapseWorkspace) LocalName() string {
 	return sw.Name
 }
 
+// Configuration returns the configuration (args) for [DataSynapseWorkspace].
 func (sw *DataSynapseWorkspace) Configuration() interface{} {
 	return sw.Args
 }
 
+// Attributes returns the attributes for [DataSynapseWorkspace].
 func (sw *DataSynapseWorkspace) Attributes() dataSynapseWorkspaceAttributes {
 	return dataSynapseWorkspaceAttributes{ref: terra.ReferenceDataResource(sw)}
 }
 
+// DataSynapseWorkspaceArgs contains the configurations for azurerm_synapse_workspace.
 type DataSynapseWorkspaceArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,34 +60,40 @@ type dataSynapseWorkspaceAttributes struct {
 	ref terra.Reference
 }
 
+// ConnectivityEndpoints returns a reference to field connectivity_endpoints of azurerm_synapse_workspace.
 func (sw dataSynapseWorkspaceAttributes) ConnectivityEndpoints() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sw.ref.Append("connectivity_endpoints"))
+	return terra.ReferenceAsMap[terra.StringValue](sw.ref.Append("connectivity_endpoints"))
 }
 
+// Id returns a reference to field id of azurerm_synapse_workspace.
 func (sw dataSynapseWorkspaceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sw.ref.Append("id"))
+	return terra.ReferenceAsString(sw.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_synapse_workspace.
 func (sw dataSynapseWorkspaceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(sw.ref.Append("location"))
+	return terra.ReferenceAsString(sw.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_synapse_workspace.
 func (sw dataSynapseWorkspaceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sw.ref.Append("name"))
+	return terra.ReferenceAsString(sw.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_synapse_workspace.
 func (sw dataSynapseWorkspaceAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(sw.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(sw.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_synapse_workspace.
 func (sw dataSynapseWorkspaceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sw.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sw.ref.Append("tags"))
 }
 
 func (sw dataSynapseWorkspaceAttributes) Identity() terra.ListValue[datasynapseworkspace.IdentityAttributes] {
-	return terra.ReferenceList[datasynapseworkspace.IdentityAttributes](sw.ref.Append("identity"))
+	return terra.ReferenceAsList[datasynapseworkspace.IdentityAttributes](sw.ref.Append("identity"))
 }
 
 func (sw dataSynapseWorkspaceAttributes) Timeouts() datasynapseworkspace.TimeoutsAttributes {
-	return terra.ReferenceSingle[datasynapseworkspace.TimeoutsAttributes](sw.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datasynapseworkspace.TimeoutsAttributes](sw.ref.Append("timeouts"))
 }

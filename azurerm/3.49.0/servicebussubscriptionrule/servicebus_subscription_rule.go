@@ -43,84 +43,84 @@ type CorrelationFilterAttributes struct {
 	ref terra.Reference
 }
 
-func (cf CorrelationFilterAttributes) InternalRef() terra.Reference {
-	return cf.ref
+func (cf CorrelationFilterAttributes) InternalRef() (terra.Reference, error) {
+	return cf.ref, nil
 }
 
 func (cf CorrelationFilterAttributes) InternalWithRef(ref terra.Reference) CorrelationFilterAttributes {
 	return CorrelationFilterAttributes{ref: ref}
 }
 
-func (cf CorrelationFilterAttributes) InternalTokens() hclwrite.Tokens {
+func (cf CorrelationFilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cf.ref.InternalTokens()
 }
 
 func (cf CorrelationFilterAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("content_type"))
+	return terra.ReferenceAsString(cf.ref.Append("content_type"))
 }
 
 func (cf CorrelationFilterAttributes) CorrelationId() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("correlation_id"))
+	return terra.ReferenceAsString(cf.ref.Append("correlation_id"))
 }
 
 func (cf CorrelationFilterAttributes) Label() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("label"))
+	return terra.ReferenceAsString(cf.ref.Append("label"))
 }
 
 func (cf CorrelationFilterAttributes) MessageId() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("message_id"))
+	return terra.ReferenceAsString(cf.ref.Append("message_id"))
 }
 
 func (cf CorrelationFilterAttributes) Properties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cf.ref.Append("properties"))
+	return terra.ReferenceAsMap[terra.StringValue](cf.ref.Append("properties"))
 }
 
 func (cf CorrelationFilterAttributes) ReplyTo() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("reply_to"))
+	return terra.ReferenceAsString(cf.ref.Append("reply_to"))
 }
 
 func (cf CorrelationFilterAttributes) ReplyToSessionId() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("reply_to_session_id"))
+	return terra.ReferenceAsString(cf.ref.Append("reply_to_session_id"))
 }
 
 func (cf CorrelationFilterAttributes) SessionId() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("session_id"))
+	return terra.ReferenceAsString(cf.ref.Append("session_id"))
 }
 
 func (cf CorrelationFilterAttributes) To() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("to"))
+	return terra.ReferenceAsString(cf.ref.Append("to"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type CorrelationFilterState struct {

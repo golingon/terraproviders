@@ -45,7 +45,7 @@ func (rc ReplicationConfigurationAttributes) InternalWithRef(ref terra.Reference
 	return ReplicationConfigurationAttributes{ref: ref}
 }
 
-func (rc ReplicationConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (rc ReplicationConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rc.ref.InternalTokens()
 }
 
@@ -65,7 +65,7 @@ func (r RuleAttributes) InternalWithRef(ref terra.Reference) RuleAttributes {
 	return RuleAttributes{ref: ref}
 }
 
-func (r RuleAttributes) InternalTokens() hclwrite.Tokens {
+func (r RuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -89,7 +89,7 @@ func (d DestinationAttributes) InternalWithRef(ref terra.Reference) DestinationA
 	return DestinationAttributes{ref: ref}
 }
 
-func (d DestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (d DestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -113,7 +113,7 @@ func (rf RepositoryFilterAttributes) InternalWithRef(ref terra.Reference) Reposi
 	return RepositoryFilterAttributes{ref: ref}
 }
 
-func (rf RepositoryFilterAttributes) InternalTokens() hclwrite.Tokens {
+func (rf RepositoryFilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rf.ref.InternalTokens()
 }
 

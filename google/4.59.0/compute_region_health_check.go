@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeRegionHealthCheck creates a new instance of [ComputeRegionHealthCheck].
 func NewComputeRegionHealthCheck(name string, args ComputeRegionHealthCheckArgs) *ComputeRegionHealthCheck {
 	return &ComputeRegionHealthCheck{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeRegionHealthCheck(name string, args ComputeRegionHealthCheckArgs)
 
 var _ terra.Resource = (*ComputeRegionHealthCheck)(nil)
 
+// ComputeRegionHealthCheck represents the Terraform resource google_compute_region_health_check.
 type ComputeRegionHealthCheck struct {
-	Name  string
-	Args  ComputeRegionHealthCheckArgs
-	state *computeRegionHealthCheckState
+	Name      string
+	Args      ComputeRegionHealthCheckArgs
+	state     *computeRegionHealthCheckState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeRegionHealthCheck].
 func (crhc *ComputeRegionHealthCheck) Type() string {
 	return "google_compute_region_health_check"
 }
 
+// LocalName returns the local name for [ComputeRegionHealthCheck].
 func (crhc *ComputeRegionHealthCheck) LocalName() string {
 	return crhc.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeRegionHealthCheck].
 func (crhc *ComputeRegionHealthCheck) Configuration() interface{} {
 	return crhc.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeRegionHealthCheck].
+func (crhc *ComputeRegionHealthCheck) DependOn() terra.Reference {
+	return terra.ReferenceResource(crhc)
+}
+
+// Dependencies returns the list of resources [ComputeRegionHealthCheck] depends_on.
+func (crhc *ComputeRegionHealthCheck) Dependencies() terra.Dependencies {
+	return crhc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeRegionHealthCheck].
+func (crhc *ComputeRegionHealthCheck) LifecycleManagement() *terra.Lifecycle {
+	return crhc.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeRegionHealthCheck].
 func (crhc *ComputeRegionHealthCheck) Attributes() computeRegionHealthCheckAttributes {
 	return computeRegionHealthCheckAttributes{ref: terra.ReferenceResource(crhc)}
 }
 
+// ImportState imports the given attribute values into [ComputeRegionHealthCheck]'s state.
 func (crhc *ComputeRegionHealthCheck) ImportState(av io.Reader) error {
 	crhc.state = &computeRegionHealthCheckState{}
 	if err := json.NewDecoder(av).Decode(crhc.state); err != nil {
@@ -49,10 +73,12 @@ func (crhc *ComputeRegionHealthCheck) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeRegionHealthCheck] has state.
 func (crhc *ComputeRegionHealthCheck) State() (*computeRegionHealthCheckState, bool) {
 	return crhc.state, crhc.state != nil
 }
 
+// StateMust returns the state for [ComputeRegionHealthCheck]. Panics if the state is nil.
 func (crhc *ComputeRegionHealthCheck) StateMust() *computeRegionHealthCheckState {
 	if crhc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", crhc.Type(), crhc.LocalName()))
@@ -60,10 +86,7 @@ func (crhc *ComputeRegionHealthCheck) StateMust() *computeRegionHealthCheckState
 	return crhc.state
 }
 
-func (crhc *ComputeRegionHealthCheck) DependOn() terra.Reference {
-	return terra.ReferenceResource(crhc)
-}
-
+// ComputeRegionHealthCheckArgs contains the configurations for google_compute_region_health_check.
 type ComputeRegionHealthCheckArgs struct {
 	// CheckIntervalSec: number, optional
 	CheckIntervalSec terra.NumberValue `hcl:"check_interval_sec,attr"`
@@ -99,91 +122,101 @@ type ComputeRegionHealthCheckArgs struct {
 	TcpHealthCheck *computeregionhealthcheck.TcpHealthCheck `hcl:"tcp_health_check,block"`
 	// Timeouts: optional
 	Timeouts *computeregionhealthcheck.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeRegionHealthCheck depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeRegionHealthCheckAttributes struct {
 	ref terra.Reference
 }
 
+// CheckIntervalSec returns a reference to field check_interval_sec of google_compute_region_health_check.
 func (crhc computeRegionHealthCheckAttributes) CheckIntervalSec() terra.NumberValue {
-	return terra.ReferenceNumber(crhc.ref.Append("check_interval_sec"))
+	return terra.ReferenceAsNumber(crhc.ref.Append("check_interval_sec"))
 }
 
+// CreationTimestamp returns a reference to field creation_timestamp of google_compute_region_health_check.
 func (crhc computeRegionHealthCheckAttributes) CreationTimestamp() terra.StringValue {
-	return terra.ReferenceString(crhc.ref.Append("creation_timestamp"))
+	return terra.ReferenceAsString(crhc.ref.Append("creation_timestamp"))
 }
 
+// Description returns a reference to field description of google_compute_region_health_check.
 func (crhc computeRegionHealthCheckAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(crhc.ref.Append("description"))
+	return terra.ReferenceAsString(crhc.ref.Append("description"))
 }
 
+// HealthyThreshold returns a reference to field healthy_threshold of google_compute_region_health_check.
 func (crhc computeRegionHealthCheckAttributes) HealthyThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(crhc.ref.Append("healthy_threshold"))
+	return terra.ReferenceAsNumber(crhc.ref.Append("healthy_threshold"))
 }
 
+// Id returns a reference to field id of google_compute_region_health_check.
 func (crhc computeRegionHealthCheckAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(crhc.ref.Append("id"))
+	return terra.ReferenceAsString(crhc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_compute_region_health_check.
 func (crhc computeRegionHealthCheckAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(crhc.ref.Append("name"))
+	return terra.ReferenceAsString(crhc.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_compute_region_health_check.
 func (crhc computeRegionHealthCheckAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(crhc.ref.Append("project"))
+	return terra.ReferenceAsString(crhc.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_compute_region_health_check.
 func (crhc computeRegionHealthCheckAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(crhc.ref.Append("region"))
+	return terra.ReferenceAsString(crhc.ref.Append("region"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_region_health_check.
 func (crhc computeRegionHealthCheckAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(crhc.ref.Append("self_link"))
+	return terra.ReferenceAsString(crhc.ref.Append("self_link"))
 }
 
+// TimeoutSec returns a reference to field timeout_sec of google_compute_region_health_check.
 func (crhc computeRegionHealthCheckAttributes) TimeoutSec() terra.NumberValue {
-	return terra.ReferenceNumber(crhc.ref.Append("timeout_sec"))
+	return terra.ReferenceAsNumber(crhc.ref.Append("timeout_sec"))
 }
 
+// Type returns a reference to field type of google_compute_region_health_check.
 func (crhc computeRegionHealthCheckAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(crhc.ref.Append("type"))
+	return terra.ReferenceAsString(crhc.ref.Append("type"))
 }
 
+// UnhealthyThreshold returns a reference to field unhealthy_threshold of google_compute_region_health_check.
 func (crhc computeRegionHealthCheckAttributes) UnhealthyThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(crhc.ref.Append("unhealthy_threshold"))
+	return terra.ReferenceAsNumber(crhc.ref.Append("unhealthy_threshold"))
 }
 
 func (crhc computeRegionHealthCheckAttributes) GrpcHealthCheck() terra.ListValue[computeregionhealthcheck.GrpcHealthCheckAttributes] {
-	return terra.ReferenceList[computeregionhealthcheck.GrpcHealthCheckAttributes](crhc.ref.Append("grpc_health_check"))
+	return terra.ReferenceAsList[computeregionhealthcheck.GrpcHealthCheckAttributes](crhc.ref.Append("grpc_health_check"))
 }
 
 func (crhc computeRegionHealthCheckAttributes) Http2HealthCheck() terra.ListValue[computeregionhealthcheck.Http2HealthCheckAttributes] {
-	return terra.ReferenceList[computeregionhealthcheck.Http2HealthCheckAttributes](crhc.ref.Append("http2_health_check"))
+	return terra.ReferenceAsList[computeregionhealthcheck.Http2HealthCheckAttributes](crhc.ref.Append("http2_health_check"))
 }
 
 func (crhc computeRegionHealthCheckAttributes) HttpHealthCheck() terra.ListValue[computeregionhealthcheck.HttpHealthCheckAttributes] {
-	return terra.ReferenceList[computeregionhealthcheck.HttpHealthCheckAttributes](crhc.ref.Append("http_health_check"))
+	return terra.ReferenceAsList[computeregionhealthcheck.HttpHealthCheckAttributes](crhc.ref.Append("http_health_check"))
 }
 
 func (crhc computeRegionHealthCheckAttributes) HttpsHealthCheck() terra.ListValue[computeregionhealthcheck.HttpsHealthCheckAttributes] {
-	return terra.ReferenceList[computeregionhealthcheck.HttpsHealthCheckAttributes](crhc.ref.Append("https_health_check"))
+	return terra.ReferenceAsList[computeregionhealthcheck.HttpsHealthCheckAttributes](crhc.ref.Append("https_health_check"))
 }
 
 func (crhc computeRegionHealthCheckAttributes) LogConfig() terra.ListValue[computeregionhealthcheck.LogConfigAttributes] {
-	return terra.ReferenceList[computeregionhealthcheck.LogConfigAttributes](crhc.ref.Append("log_config"))
+	return terra.ReferenceAsList[computeregionhealthcheck.LogConfigAttributes](crhc.ref.Append("log_config"))
 }
 
 func (crhc computeRegionHealthCheckAttributes) SslHealthCheck() terra.ListValue[computeregionhealthcheck.SslHealthCheckAttributes] {
-	return terra.ReferenceList[computeregionhealthcheck.SslHealthCheckAttributes](crhc.ref.Append("ssl_health_check"))
+	return terra.ReferenceAsList[computeregionhealthcheck.SslHealthCheckAttributes](crhc.ref.Append("ssl_health_check"))
 }
 
 func (crhc computeRegionHealthCheckAttributes) TcpHealthCheck() terra.ListValue[computeregionhealthcheck.TcpHealthCheckAttributes] {
-	return terra.ReferenceList[computeregionhealthcheck.TcpHealthCheckAttributes](crhc.ref.Append("tcp_health_check"))
+	return terra.ReferenceAsList[computeregionhealthcheck.TcpHealthCheckAttributes](crhc.ref.Append("tcp_health_check"))
 }
 
 func (crhc computeRegionHealthCheckAttributes) Timeouts() computeregionhealthcheck.TimeoutsAttributes {
-	return terra.ReferenceSingle[computeregionhealthcheck.TimeoutsAttributes](crhc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computeregionhealthcheck.TimeoutsAttributes](crhc.ref.Append("timeouts"))
 }
 
 type computeRegionHealthCheckState struct {

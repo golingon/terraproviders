@@ -35,7 +35,7 @@ func (pr PortRangeAttributes) InternalWithRef(ref terra.Reference) PortRangeAttr
 	return PortRangeAttributes{ref: ref}
 }
 
-func (pr PortRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (pr PortRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pr.ref.InternalTokens()
 }
 
@@ -59,7 +59,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

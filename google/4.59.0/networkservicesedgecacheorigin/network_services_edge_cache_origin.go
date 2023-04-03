@@ -71,200 +71,200 @@ type AwsV4AuthenticationAttributes struct {
 	ref terra.Reference
 }
 
-func (ava AwsV4AuthenticationAttributes) InternalRef() terra.Reference {
-	return ava.ref
+func (ava AwsV4AuthenticationAttributes) InternalRef() (terra.Reference, error) {
+	return ava.ref, nil
 }
 
 func (ava AwsV4AuthenticationAttributes) InternalWithRef(ref terra.Reference) AwsV4AuthenticationAttributes {
 	return AwsV4AuthenticationAttributes{ref: ref}
 }
 
-func (ava AwsV4AuthenticationAttributes) InternalTokens() hclwrite.Tokens {
+func (ava AwsV4AuthenticationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ava.ref.InternalTokens()
 }
 
 func (ava AwsV4AuthenticationAttributes) AccessKeyId() terra.StringValue {
-	return terra.ReferenceString(ava.ref.Append("access_key_id"))
+	return terra.ReferenceAsString(ava.ref.Append("access_key_id"))
 }
 
 func (ava AwsV4AuthenticationAttributes) OriginRegion() terra.StringValue {
-	return terra.ReferenceString(ava.ref.Append("origin_region"))
+	return terra.ReferenceAsString(ava.ref.Append("origin_region"))
 }
 
 func (ava AwsV4AuthenticationAttributes) SecretAccessKeyVersion() terra.StringValue {
-	return terra.ReferenceString(ava.ref.Append("secret_access_key_version"))
+	return terra.ReferenceAsString(ava.ref.Append("secret_access_key_version"))
 }
 
 type OriginOverrideActionAttributes struct {
 	ref terra.Reference
 }
 
-func (ooa OriginOverrideActionAttributes) InternalRef() terra.Reference {
-	return ooa.ref
+func (ooa OriginOverrideActionAttributes) InternalRef() (terra.Reference, error) {
+	return ooa.ref, nil
 }
 
 func (ooa OriginOverrideActionAttributes) InternalWithRef(ref terra.Reference) OriginOverrideActionAttributes {
 	return OriginOverrideActionAttributes{ref: ref}
 }
 
-func (ooa OriginOverrideActionAttributes) InternalTokens() hclwrite.Tokens {
+func (ooa OriginOverrideActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ooa.ref.InternalTokens()
 }
 
 func (ooa OriginOverrideActionAttributes) HeaderAction() terra.ListValue[HeaderActionAttributes] {
-	return terra.ReferenceList[HeaderActionAttributes](ooa.ref.Append("header_action"))
+	return terra.ReferenceAsList[HeaderActionAttributes](ooa.ref.Append("header_action"))
 }
 
 func (ooa OriginOverrideActionAttributes) UrlRewrite() terra.ListValue[UrlRewriteAttributes] {
-	return terra.ReferenceList[UrlRewriteAttributes](ooa.ref.Append("url_rewrite"))
+	return terra.ReferenceAsList[UrlRewriteAttributes](ooa.ref.Append("url_rewrite"))
 }
 
 type HeaderActionAttributes struct {
 	ref terra.Reference
 }
 
-func (ha HeaderActionAttributes) InternalRef() terra.Reference {
-	return ha.ref
+func (ha HeaderActionAttributes) InternalRef() (terra.Reference, error) {
+	return ha.ref, nil
 }
 
 func (ha HeaderActionAttributes) InternalWithRef(ref terra.Reference) HeaderActionAttributes {
 	return HeaderActionAttributes{ref: ref}
 }
 
-func (ha HeaderActionAttributes) InternalTokens() hclwrite.Tokens {
+func (ha HeaderActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ha.ref.InternalTokens()
 }
 
 func (ha HeaderActionAttributes) RequestHeadersToAdd() terra.ListValue[RequestHeadersToAddAttributes] {
-	return terra.ReferenceList[RequestHeadersToAddAttributes](ha.ref.Append("request_headers_to_add"))
+	return terra.ReferenceAsList[RequestHeadersToAddAttributes](ha.ref.Append("request_headers_to_add"))
 }
 
 type RequestHeadersToAddAttributes struct {
 	ref terra.Reference
 }
 
-func (rhta RequestHeadersToAddAttributes) InternalRef() terra.Reference {
-	return rhta.ref
+func (rhta RequestHeadersToAddAttributes) InternalRef() (terra.Reference, error) {
+	return rhta.ref, nil
 }
 
 func (rhta RequestHeadersToAddAttributes) InternalWithRef(ref terra.Reference) RequestHeadersToAddAttributes {
 	return RequestHeadersToAddAttributes{ref: ref}
 }
 
-func (rhta RequestHeadersToAddAttributes) InternalTokens() hclwrite.Tokens {
+func (rhta RequestHeadersToAddAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rhta.ref.InternalTokens()
 }
 
 func (rhta RequestHeadersToAddAttributes) HeaderName() terra.StringValue {
-	return terra.ReferenceString(rhta.ref.Append("header_name"))
+	return terra.ReferenceAsString(rhta.ref.Append("header_name"))
 }
 
 func (rhta RequestHeadersToAddAttributes) HeaderValue() terra.StringValue {
-	return terra.ReferenceString(rhta.ref.Append("header_value"))
+	return terra.ReferenceAsString(rhta.ref.Append("header_value"))
 }
 
 func (rhta RequestHeadersToAddAttributes) Replace() terra.BoolValue {
-	return terra.ReferenceBool(rhta.ref.Append("replace"))
+	return terra.ReferenceAsBool(rhta.ref.Append("replace"))
 }
 
 type UrlRewriteAttributes struct {
 	ref terra.Reference
 }
 
-func (ur UrlRewriteAttributes) InternalRef() terra.Reference {
-	return ur.ref
+func (ur UrlRewriteAttributes) InternalRef() (terra.Reference, error) {
+	return ur.ref, nil
 }
 
 func (ur UrlRewriteAttributes) InternalWithRef(ref terra.Reference) UrlRewriteAttributes {
 	return UrlRewriteAttributes{ref: ref}
 }
 
-func (ur UrlRewriteAttributes) InternalTokens() hclwrite.Tokens {
+func (ur UrlRewriteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ur.ref.InternalTokens()
 }
 
 func (ur UrlRewriteAttributes) HostRewrite() terra.StringValue {
-	return terra.ReferenceString(ur.ref.Append("host_rewrite"))
+	return terra.ReferenceAsString(ur.ref.Append("host_rewrite"))
 }
 
 type OriginRedirectAttributes struct {
 	ref terra.Reference
 }
 
-func (or OriginRedirectAttributes) InternalRef() terra.Reference {
-	return or.ref
+func (or OriginRedirectAttributes) InternalRef() (terra.Reference, error) {
+	return or.ref, nil
 }
 
 func (or OriginRedirectAttributes) InternalWithRef(ref terra.Reference) OriginRedirectAttributes {
 	return OriginRedirectAttributes{ref: ref}
 }
 
-func (or OriginRedirectAttributes) InternalTokens() hclwrite.Tokens {
+func (or OriginRedirectAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return or.ref.InternalTokens()
 }
 
 func (or OriginRedirectAttributes) RedirectConditions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](or.ref.Append("redirect_conditions"))
+	return terra.ReferenceAsList[terra.StringValue](or.ref.Append("redirect_conditions"))
 }
 
 type TimeoutAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutAttributes) InternalWithRef(ref terra.Reference) TimeoutAttributes {
 	return TimeoutAttributes{ref: ref}
 }
 
-func (t TimeoutAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutAttributes) ConnectTimeout() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("connect_timeout"))
+	return terra.ReferenceAsString(t.ref.Append("connect_timeout"))
 }
 
 func (t TimeoutAttributes) MaxAttemptsTimeout() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("max_attempts_timeout"))
+	return terra.ReferenceAsString(t.ref.Append("max_attempts_timeout"))
 }
 
 func (t TimeoutAttributes) ReadTimeout() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read_timeout"))
+	return terra.ReferenceAsString(t.ref.Append("read_timeout"))
 }
 
 func (t TimeoutAttributes) ResponseTimeout() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("response_timeout"))
+	return terra.ReferenceAsString(t.ref.Append("response_timeout"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AwsV4AuthenticationState struct {

@@ -31,60 +31,60 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type TlsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TlsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TlsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TlsAttributes) InternalWithRef(ref terra.Reference) TlsAttributes {
 	return TlsAttributes{ref: ref}
 }
 
-func (t TlsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TlsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TlsAttributes) CdnFrontdoorSecretId() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("cdn_frontdoor_secret_id"))
+	return terra.ReferenceAsString(t.ref.Append("cdn_frontdoor_secret_id"))
 }
 
 func (t TlsAttributes) CertificateType() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("certificate_type"))
+	return terra.ReferenceAsString(t.ref.Append("certificate_type"))
 }
 
 func (t TlsAttributes) MinimumTlsVersion() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("minimum_tls_version"))
+	return terra.ReferenceAsString(t.ref.Append("minimum_tls_version"))
 }
 
 type TimeoutsState struct {

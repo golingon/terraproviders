@@ -59,7 +59,7 @@ func (d DestinationsAttributes) InternalWithRef(ref terra.Reference) Destination
 	return DestinationsAttributes{ref: ref}
 }
 
-func (d DestinationsAttributes) InternalTokens() hclwrite.Tokens {
+func (d DestinationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -79,7 +79,7 @@ func (id InputDevicesAttributes) InternalWithRef(ref terra.Reference) InputDevic
 	return InputDevicesAttributes{ref: ref}
 }
 
-func (id InputDevicesAttributes) InternalTokens() hclwrite.Tokens {
+func (id InputDevicesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return id.ref.InternalTokens()
 }
 
@@ -99,7 +99,7 @@ func (mcf MediaConnectFlowsAttributes) InternalWithRef(ref terra.Reference) Medi
 	return MediaConnectFlowsAttributes{ref: ref}
 }
 
-func (mcf MediaConnectFlowsAttributes) InternalTokens() hclwrite.Tokens {
+func (mcf MediaConnectFlowsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mcf.ref.InternalTokens()
 }
 
@@ -119,7 +119,7 @@ func (s SourcesAttributes) InternalWithRef(ref terra.Reference) SourcesAttribute
 	return SourcesAttributes{ref: ref}
 }
 
-func (s SourcesAttributes) InternalTokens() hclwrite.Tokens {
+func (s SourcesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -147,7 +147,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -175,7 +175,7 @@ func (v VpcAttributes) InternalWithRef(ref terra.Reference) VpcAttributes {
 	return VpcAttributes{ref: ref}
 }
 
-func (v VpcAttributes) InternalTokens() hclwrite.Tokens {
+func (v VpcAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 

@@ -26,7 +26,7 @@ func (e EndpointAttributes) InternalWithRef(ref terra.Reference) EndpointAttribu
 	return EndpointAttributes{ref: ref}
 }
 
-func (e EndpointAttributes) InternalTokens() hclwrite.Tokens {
+func (e EndpointAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -50,7 +50,7 @@ func (ksc KinesisStreamConfigAttributes) InternalWithRef(ref terra.Reference) Ki
 	return KinesisStreamConfigAttributes{ref: ref}
 }
 
-func (ksc KinesisStreamConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ksc KinesisStreamConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ksc.ref.InternalTokens()
 }
 

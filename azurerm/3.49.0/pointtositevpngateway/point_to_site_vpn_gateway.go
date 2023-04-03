@@ -56,140 +56,140 @@ type ConnectionConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (cc ConnectionConfigurationAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc ConnectionConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc ConnectionConfigurationAttributes) InternalWithRef(ref terra.Reference) ConnectionConfigurationAttributes {
 	return ConnectionConfigurationAttributes{ref: ref}
 }
 
-func (cc ConnectionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (cc ConnectionConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
 func (cc ConnectionConfigurationAttributes) InternetSecurityEnabled() terra.BoolValue {
-	return terra.ReferenceBool(cc.ref.Append("internet_security_enabled"))
+	return terra.ReferenceAsBool(cc.ref.Append("internet_security_enabled"))
 }
 
 func (cc ConnectionConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("name"))
+	return terra.ReferenceAsString(cc.ref.Append("name"))
 }
 
 func (cc ConnectionConfigurationAttributes) Route() terra.ListValue[RouteAttributes] {
-	return terra.ReferenceList[RouteAttributes](cc.ref.Append("route"))
+	return terra.ReferenceAsList[RouteAttributes](cc.ref.Append("route"))
 }
 
 func (cc ConnectionConfigurationAttributes) VpnClientAddressPool() terra.ListValue[VpnClientAddressPoolAttributes] {
-	return terra.ReferenceList[VpnClientAddressPoolAttributes](cc.ref.Append("vpn_client_address_pool"))
+	return terra.ReferenceAsList[VpnClientAddressPoolAttributes](cc.ref.Append("vpn_client_address_pool"))
 }
 
 type RouteAttributes struct {
 	ref terra.Reference
 }
 
-func (r RouteAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RouteAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RouteAttributes) InternalWithRef(ref terra.Reference) RouteAttributes {
 	return RouteAttributes{ref: ref}
 }
 
-func (r RouteAttributes) InternalTokens() hclwrite.Tokens {
+func (r RouteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RouteAttributes) AssociatedRouteTableId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("associated_route_table_id"))
+	return terra.ReferenceAsString(r.ref.Append("associated_route_table_id"))
 }
 
 func (r RouteAttributes) InboundRouteMapId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("inbound_route_map_id"))
+	return terra.ReferenceAsString(r.ref.Append("inbound_route_map_id"))
 }
 
 func (r RouteAttributes) OutboundRouteMapId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("outbound_route_map_id"))
+	return terra.ReferenceAsString(r.ref.Append("outbound_route_map_id"))
 }
 
 func (r RouteAttributes) PropagatedRouteTable() terra.ListValue[PropagatedRouteTableAttributes] {
-	return terra.ReferenceList[PropagatedRouteTableAttributes](r.ref.Append("propagated_route_table"))
+	return terra.ReferenceAsList[PropagatedRouteTableAttributes](r.ref.Append("propagated_route_table"))
 }
 
 type PropagatedRouteTableAttributes struct {
 	ref terra.Reference
 }
 
-func (prt PropagatedRouteTableAttributes) InternalRef() terra.Reference {
-	return prt.ref
+func (prt PropagatedRouteTableAttributes) InternalRef() (terra.Reference, error) {
+	return prt.ref, nil
 }
 
 func (prt PropagatedRouteTableAttributes) InternalWithRef(ref terra.Reference) PropagatedRouteTableAttributes {
 	return PropagatedRouteTableAttributes{ref: ref}
 }
 
-func (prt PropagatedRouteTableAttributes) InternalTokens() hclwrite.Tokens {
+func (prt PropagatedRouteTableAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return prt.ref.InternalTokens()
 }
 
 func (prt PropagatedRouteTableAttributes) Ids() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](prt.ref.Append("ids"))
+	return terra.ReferenceAsList[terra.StringValue](prt.ref.Append("ids"))
 }
 
 func (prt PropagatedRouteTableAttributes) Labels() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](prt.ref.Append("labels"))
+	return terra.ReferenceAsSet[terra.StringValue](prt.ref.Append("labels"))
 }
 
 type VpnClientAddressPoolAttributes struct {
 	ref terra.Reference
 }
 
-func (vcap VpnClientAddressPoolAttributes) InternalRef() terra.Reference {
-	return vcap.ref
+func (vcap VpnClientAddressPoolAttributes) InternalRef() (terra.Reference, error) {
+	return vcap.ref, nil
 }
 
 func (vcap VpnClientAddressPoolAttributes) InternalWithRef(ref terra.Reference) VpnClientAddressPoolAttributes {
 	return VpnClientAddressPoolAttributes{ref: ref}
 }
 
-func (vcap VpnClientAddressPoolAttributes) InternalTokens() hclwrite.Tokens {
+func (vcap VpnClientAddressPoolAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vcap.ref.InternalTokens()
 }
 
 func (vcap VpnClientAddressPoolAttributes) AddressPrefixes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vcap.ref.Append("address_prefixes"))
+	return terra.ReferenceAsSet[terra.StringValue](vcap.ref.Append("address_prefixes"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ConnectionConfigurationState struct {

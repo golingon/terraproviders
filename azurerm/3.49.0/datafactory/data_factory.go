@@ -66,168 +66,168 @@ type GithubConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (gc GithubConfigurationAttributes) InternalRef() terra.Reference {
-	return gc.ref
+func (gc GithubConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return gc.ref, nil
 }
 
 func (gc GithubConfigurationAttributes) InternalWithRef(ref terra.Reference) GithubConfigurationAttributes {
 	return GithubConfigurationAttributes{ref: ref}
 }
 
-func (gc GithubConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (gc GithubConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gc.ref.InternalTokens()
 }
 
 func (gc GithubConfigurationAttributes) AccountName() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("account_name"))
+	return terra.ReferenceAsString(gc.ref.Append("account_name"))
 }
 
 func (gc GithubConfigurationAttributes) BranchName() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("branch_name"))
+	return terra.ReferenceAsString(gc.ref.Append("branch_name"))
 }
 
 func (gc GithubConfigurationAttributes) GitUrl() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("git_url"))
+	return terra.ReferenceAsString(gc.ref.Append("git_url"))
 }
 
 func (gc GithubConfigurationAttributes) RepositoryName() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("repository_name"))
+	return terra.ReferenceAsString(gc.ref.Append("repository_name"))
 }
 
 func (gc GithubConfigurationAttributes) RootFolder() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("root_folder"))
+	return terra.ReferenceAsString(gc.ref.Append("root_folder"))
 }
 
 type GlobalParameterAttributes struct {
 	ref terra.Reference
 }
 
-func (gp GlobalParameterAttributes) InternalRef() terra.Reference {
-	return gp.ref
+func (gp GlobalParameterAttributes) InternalRef() (terra.Reference, error) {
+	return gp.ref, nil
 }
 
 func (gp GlobalParameterAttributes) InternalWithRef(ref terra.Reference) GlobalParameterAttributes {
 	return GlobalParameterAttributes{ref: ref}
 }
 
-func (gp GlobalParameterAttributes) InternalTokens() hclwrite.Tokens {
+func (gp GlobalParameterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gp.ref.InternalTokens()
 }
 
 func (gp GlobalParameterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(gp.ref.Append("name"))
+	return terra.ReferenceAsString(gp.ref.Append("name"))
 }
 
 func (gp GlobalParameterAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(gp.ref.Append("type"))
+	return terra.ReferenceAsString(gp.ref.Append("type"))
 }
 
 func (gp GlobalParameterAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(gp.ref.Append("value"))
+	return terra.ReferenceAsString(gp.ref.Append("value"))
 }
 
 type IdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (i IdentityAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IdentityAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IdentityAttributes) InternalWithRef(ref terra.Reference) IdentityAttributes {
 	return IdentityAttributes{ref: ref}
 }
 
-func (i IdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (i IdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IdentityAttributes) IdentityIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i.ref.Append("identity_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](i.ref.Append("identity_ids"))
 }
 
 func (i IdentityAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("principal_id"))
+	return terra.ReferenceAsString(i.ref.Append("principal_id"))
 }
 
 func (i IdentityAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(i.ref.Append("tenant_id"))
 }
 
 func (i IdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("type"))
+	return terra.ReferenceAsString(i.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type VstsConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (vc VstsConfigurationAttributes) InternalRef() terra.Reference {
-	return vc.ref
+func (vc VstsConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return vc.ref, nil
 }
 
 func (vc VstsConfigurationAttributes) InternalWithRef(ref terra.Reference) VstsConfigurationAttributes {
 	return VstsConfigurationAttributes{ref: ref}
 }
 
-func (vc VstsConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (vc VstsConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vc.ref.InternalTokens()
 }
 
 func (vc VstsConfigurationAttributes) AccountName() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("account_name"))
+	return terra.ReferenceAsString(vc.ref.Append("account_name"))
 }
 
 func (vc VstsConfigurationAttributes) BranchName() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("branch_name"))
+	return terra.ReferenceAsString(vc.ref.Append("branch_name"))
 }
 
 func (vc VstsConfigurationAttributes) ProjectName() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("project_name"))
+	return terra.ReferenceAsString(vc.ref.Append("project_name"))
 }
 
 func (vc VstsConfigurationAttributes) RepositoryName() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("repository_name"))
+	return terra.ReferenceAsString(vc.ref.Append("repository_name"))
 }
 
 func (vc VstsConfigurationAttributes) RootFolder() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("root_folder"))
+	return terra.ReferenceAsString(vc.ref.Append("root_folder"))
 }
 
 func (vc VstsConfigurationAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(vc.ref.Append("tenant_id"))
 }
 
 type GithubConfigurationState struct {

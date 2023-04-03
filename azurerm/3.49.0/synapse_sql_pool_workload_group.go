@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSynapseSqlPoolWorkloadGroup creates a new instance of [SynapseSqlPoolWorkloadGroup].
 func NewSynapseSqlPoolWorkloadGroup(name string, args SynapseSqlPoolWorkloadGroupArgs) *SynapseSqlPoolWorkloadGroup {
 	return &SynapseSqlPoolWorkloadGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSynapseSqlPoolWorkloadGroup(name string, args SynapseSqlPoolWorkloadGrou
 
 var _ terra.Resource = (*SynapseSqlPoolWorkloadGroup)(nil)
 
+// SynapseSqlPoolWorkloadGroup represents the Terraform resource azurerm_synapse_sql_pool_workload_group.
 type SynapseSqlPoolWorkloadGroup struct {
-	Name  string
-	Args  SynapseSqlPoolWorkloadGroupArgs
-	state *synapseSqlPoolWorkloadGroupState
+	Name      string
+	Args      SynapseSqlPoolWorkloadGroupArgs
+	state     *synapseSqlPoolWorkloadGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SynapseSqlPoolWorkloadGroup].
 func (sspwg *SynapseSqlPoolWorkloadGroup) Type() string {
 	return "azurerm_synapse_sql_pool_workload_group"
 }
 
+// LocalName returns the local name for [SynapseSqlPoolWorkloadGroup].
 func (sspwg *SynapseSqlPoolWorkloadGroup) LocalName() string {
 	return sspwg.Name
 }
 
+// Configuration returns the configuration (args) for [SynapseSqlPoolWorkloadGroup].
 func (sspwg *SynapseSqlPoolWorkloadGroup) Configuration() interface{} {
 	return sspwg.Args
 }
 
+// DependOn is used for other resources to depend on [SynapseSqlPoolWorkloadGroup].
+func (sspwg *SynapseSqlPoolWorkloadGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(sspwg)
+}
+
+// Dependencies returns the list of resources [SynapseSqlPoolWorkloadGroup] depends_on.
+func (sspwg *SynapseSqlPoolWorkloadGroup) Dependencies() terra.Dependencies {
+	return sspwg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SynapseSqlPoolWorkloadGroup].
+func (sspwg *SynapseSqlPoolWorkloadGroup) LifecycleManagement() *terra.Lifecycle {
+	return sspwg.Lifecycle
+}
+
+// Attributes returns the attributes for [SynapseSqlPoolWorkloadGroup].
 func (sspwg *SynapseSqlPoolWorkloadGroup) Attributes() synapseSqlPoolWorkloadGroupAttributes {
 	return synapseSqlPoolWorkloadGroupAttributes{ref: terra.ReferenceResource(sspwg)}
 }
 
+// ImportState imports the given attribute values into [SynapseSqlPoolWorkloadGroup]'s state.
 func (sspwg *SynapseSqlPoolWorkloadGroup) ImportState(av io.Reader) error {
 	sspwg.state = &synapseSqlPoolWorkloadGroupState{}
 	if err := json.NewDecoder(av).Decode(sspwg.state); err != nil {
@@ -49,10 +73,12 @@ func (sspwg *SynapseSqlPoolWorkloadGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SynapseSqlPoolWorkloadGroup] has state.
 func (sspwg *SynapseSqlPoolWorkloadGroup) State() (*synapseSqlPoolWorkloadGroupState, bool) {
 	return sspwg.state, sspwg.state != nil
 }
 
+// StateMust returns the state for [SynapseSqlPoolWorkloadGroup]. Panics if the state is nil.
 func (sspwg *SynapseSqlPoolWorkloadGroup) StateMust() *synapseSqlPoolWorkloadGroupState {
 	if sspwg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sspwg.Type(), sspwg.LocalName()))
@@ -60,10 +86,7 @@ func (sspwg *SynapseSqlPoolWorkloadGroup) StateMust() *synapseSqlPoolWorkloadGro
 	return sspwg.state
 }
 
-func (sspwg *SynapseSqlPoolWorkloadGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(sspwg)
-}
-
+// SynapseSqlPoolWorkloadGroupArgs contains the configurations for azurerm_synapse_sql_pool_workload_group.
 type SynapseSqlPoolWorkloadGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -85,51 +108,58 @@ type SynapseSqlPoolWorkloadGroupArgs struct {
 	SqlPoolId terra.StringValue `hcl:"sql_pool_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *synapsesqlpoolworkloadgroup.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SynapseSqlPoolWorkloadGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type synapseSqlPoolWorkloadGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_synapse_sql_pool_workload_group.
 func (sspwg synapseSqlPoolWorkloadGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sspwg.ref.Append("id"))
+	return terra.ReferenceAsString(sspwg.ref.Append("id"))
 }
 
+// Importance returns a reference to field importance of azurerm_synapse_sql_pool_workload_group.
 func (sspwg synapseSqlPoolWorkloadGroupAttributes) Importance() terra.StringValue {
-	return terra.ReferenceString(sspwg.ref.Append("importance"))
+	return terra.ReferenceAsString(sspwg.ref.Append("importance"))
 }
 
+// MaxResourcePercent returns a reference to field max_resource_percent of azurerm_synapse_sql_pool_workload_group.
 func (sspwg synapseSqlPoolWorkloadGroupAttributes) MaxResourcePercent() terra.NumberValue {
-	return terra.ReferenceNumber(sspwg.ref.Append("max_resource_percent"))
+	return terra.ReferenceAsNumber(sspwg.ref.Append("max_resource_percent"))
 }
 
+// MaxResourcePercentPerRequest returns a reference to field max_resource_percent_per_request of azurerm_synapse_sql_pool_workload_group.
 func (sspwg synapseSqlPoolWorkloadGroupAttributes) MaxResourcePercentPerRequest() terra.NumberValue {
-	return terra.ReferenceNumber(sspwg.ref.Append("max_resource_percent_per_request"))
+	return terra.ReferenceAsNumber(sspwg.ref.Append("max_resource_percent_per_request"))
 }
 
+// MinResourcePercent returns a reference to field min_resource_percent of azurerm_synapse_sql_pool_workload_group.
 func (sspwg synapseSqlPoolWorkloadGroupAttributes) MinResourcePercent() terra.NumberValue {
-	return terra.ReferenceNumber(sspwg.ref.Append("min_resource_percent"))
+	return terra.ReferenceAsNumber(sspwg.ref.Append("min_resource_percent"))
 }
 
+// MinResourcePercentPerRequest returns a reference to field min_resource_percent_per_request of azurerm_synapse_sql_pool_workload_group.
 func (sspwg synapseSqlPoolWorkloadGroupAttributes) MinResourcePercentPerRequest() terra.NumberValue {
-	return terra.ReferenceNumber(sspwg.ref.Append("min_resource_percent_per_request"))
+	return terra.ReferenceAsNumber(sspwg.ref.Append("min_resource_percent_per_request"))
 }
 
+// Name returns a reference to field name of azurerm_synapse_sql_pool_workload_group.
 func (sspwg synapseSqlPoolWorkloadGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sspwg.ref.Append("name"))
+	return terra.ReferenceAsString(sspwg.ref.Append("name"))
 }
 
+// QueryExecutionTimeoutInSeconds returns a reference to field query_execution_timeout_in_seconds of azurerm_synapse_sql_pool_workload_group.
 func (sspwg synapseSqlPoolWorkloadGroupAttributes) QueryExecutionTimeoutInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(sspwg.ref.Append("query_execution_timeout_in_seconds"))
+	return terra.ReferenceAsNumber(sspwg.ref.Append("query_execution_timeout_in_seconds"))
 }
 
+// SqlPoolId returns a reference to field sql_pool_id of azurerm_synapse_sql_pool_workload_group.
 func (sspwg synapseSqlPoolWorkloadGroupAttributes) SqlPoolId() terra.StringValue {
-	return terra.ReferenceString(sspwg.ref.Append("sql_pool_id"))
+	return terra.ReferenceAsString(sspwg.ref.Append("sql_pool_id"))
 }
 
 func (sspwg synapseSqlPoolWorkloadGroupAttributes) Timeouts() synapsesqlpoolworkloadgroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[synapsesqlpoolworkloadgroup.TimeoutsAttributes](sspwg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[synapsesqlpoolworkloadgroup.TimeoutsAttributes](sspwg.ref.Append("timeouts"))
 }
 
 type synapseSqlPoolWorkloadGroupState struct {

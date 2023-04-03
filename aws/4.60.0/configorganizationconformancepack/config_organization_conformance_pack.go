@@ -35,7 +35,7 @@ func (ip InputParameterAttributes) InternalWithRef(ref terra.Reference) InputPar
 	return InputParameterAttributes{ref: ref}
 }
 
-func (ip InputParameterAttributes) InternalTokens() hclwrite.Tokens {
+func (ip InputParameterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ip.ref.InternalTokens()
 }
 
@@ -59,7 +59,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

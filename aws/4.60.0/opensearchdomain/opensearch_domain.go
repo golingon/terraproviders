@@ -178,7 +178,7 @@ func (aso AdvancedSecurityOptionsAttributes) InternalWithRef(ref terra.Reference
 	return AdvancedSecurityOptionsAttributes{ref: ref}
 }
 
-func (aso AdvancedSecurityOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (aso AdvancedSecurityOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aso.ref.InternalTokens()
 }
 
@@ -210,7 +210,7 @@ func (muo MasterUserOptionsAttributes) InternalWithRef(ref terra.Reference) Mast
 	return MasterUserOptionsAttributes{ref: ref}
 }
 
-func (muo MasterUserOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (muo MasterUserOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return muo.ref.InternalTokens()
 }
 
@@ -238,7 +238,7 @@ func (ato AutoTuneOptionsAttributes) InternalWithRef(ref terra.Reference) AutoTu
 	return AutoTuneOptionsAttributes{ref: ref}
 }
 
-func (ato AutoTuneOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (ato AutoTuneOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ato.ref.InternalTokens()
 }
 
@@ -266,7 +266,7 @@ func (ms MaintenanceScheduleAttributes) InternalWithRef(ref terra.Reference) Mai
 	return MaintenanceScheduleAttributes{ref: ref}
 }
 
-func (ms MaintenanceScheduleAttributes) InternalTokens() hclwrite.Tokens {
+func (ms MaintenanceScheduleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ms.ref.InternalTokens()
 }
 
@@ -294,7 +294,7 @@ func (d DurationAttributes) InternalWithRef(ref terra.Reference) DurationAttribu
 	return DurationAttributes{ref: ref}
 }
 
-func (d DurationAttributes) InternalTokens() hclwrite.Tokens {
+func (d DurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -318,7 +318,7 @@ func (cc ClusterConfigAttributes) InternalWithRef(ref terra.Reference) ClusterCo
 	return ClusterConfigAttributes{ref: ref}
 }
 
-func (cc ClusterConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (cc ClusterConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -378,7 +378,7 @@ func (cso ColdStorageOptionsAttributes) InternalWithRef(ref terra.Reference) Col
 	return ColdStorageOptionsAttributes{ref: ref}
 }
 
-func (cso ColdStorageOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (cso ColdStorageOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cso.ref.InternalTokens()
 }
 
@@ -398,7 +398,7 @@ func (zac ZoneAwarenessConfigAttributes) InternalWithRef(ref terra.Reference) Zo
 	return ZoneAwarenessConfigAttributes{ref: ref}
 }
 
-func (zac ZoneAwarenessConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (zac ZoneAwarenessConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return zac.ref.InternalTokens()
 }
 
@@ -418,7 +418,7 @@ func (co CognitoOptionsAttributes) InternalWithRef(ref terra.Reference) CognitoO
 	return CognitoOptionsAttributes{ref: ref}
 }
 
-func (co CognitoOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (co CognitoOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return co.ref.InternalTokens()
 }
 
@@ -450,7 +450,7 @@ func (deo DomainEndpointOptionsAttributes) InternalWithRef(ref terra.Reference) 
 	return DomainEndpointOptionsAttributes{ref: ref}
 }
 
-func (deo DomainEndpointOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (deo DomainEndpointOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return deo.ref.InternalTokens()
 }
 
@@ -486,7 +486,7 @@ func (eo EbsOptionsAttributes) InternalWithRef(ref terra.Reference) EbsOptionsAt
 	return EbsOptionsAttributes{ref: ref}
 }
 
-func (eo EbsOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (eo EbsOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return eo.ref.InternalTokens()
 }
 
@@ -522,7 +522,7 @@ func (ear EncryptAtRestAttributes) InternalWithRef(ref terra.Reference) EncryptA
 	return EncryptAtRestAttributes{ref: ref}
 }
 
-func (ear EncryptAtRestAttributes) InternalTokens() hclwrite.Tokens {
+func (ear EncryptAtRestAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ear.ref.InternalTokens()
 }
 
@@ -546,7 +546,7 @@ func (lpo LogPublishingOptionsAttributes) InternalWithRef(ref terra.Reference) L
 	return LogPublishingOptionsAttributes{ref: ref}
 }
 
-func (lpo LogPublishingOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (lpo LogPublishingOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lpo.ref.InternalTokens()
 }
 
@@ -574,7 +574,7 @@ func (ntne NodeToNodeEncryptionAttributes) InternalWithRef(ref terra.Reference) 
 	return NodeToNodeEncryptionAttributes{ref: ref}
 }
 
-func (ntne NodeToNodeEncryptionAttributes) InternalTokens() hclwrite.Tokens {
+func (ntne NodeToNodeEncryptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ntne.ref.InternalTokens()
 }
 
@@ -594,7 +594,7 @@ func (so SnapshotOptionsAttributes) InternalWithRef(ref terra.Reference) Snapsho
 	return SnapshotOptionsAttributes{ref: ref}
 }
 
-func (so SnapshotOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (so SnapshotOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return so.ref.InternalTokens()
 }
 
@@ -614,7 +614,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -642,7 +642,7 @@ func (vo VpcOptionsAttributes) InternalWithRef(ref terra.Reference) VpcOptionsAt
 	return VpcOptionsAttributes{ref: ref}
 }
 
-func (vo VpcOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (vo VpcOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vo.ref.InternalTokens()
 }
 

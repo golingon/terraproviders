@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSiteRecoveryReplicatedVm creates a new instance of [SiteRecoveryReplicatedVm].
 func NewSiteRecoveryReplicatedVm(name string, args SiteRecoveryReplicatedVmArgs) *SiteRecoveryReplicatedVm {
 	return &SiteRecoveryReplicatedVm{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSiteRecoveryReplicatedVm(name string, args SiteRecoveryReplicatedVmArgs)
 
 var _ terra.Resource = (*SiteRecoveryReplicatedVm)(nil)
 
+// SiteRecoveryReplicatedVm represents the Terraform resource azurerm_site_recovery_replicated_vm.
 type SiteRecoveryReplicatedVm struct {
-	Name  string
-	Args  SiteRecoveryReplicatedVmArgs
-	state *siteRecoveryReplicatedVmState
+	Name      string
+	Args      SiteRecoveryReplicatedVmArgs
+	state     *siteRecoveryReplicatedVmState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SiteRecoveryReplicatedVm].
 func (srrv *SiteRecoveryReplicatedVm) Type() string {
 	return "azurerm_site_recovery_replicated_vm"
 }
 
+// LocalName returns the local name for [SiteRecoveryReplicatedVm].
 func (srrv *SiteRecoveryReplicatedVm) LocalName() string {
 	return srrv.Name
 }
 
+// Configuration returns the configuration (args) for [SiteRecoveryReplicatedVm].
 func (srrv *SiteRecoveryReplicatedVm) Configuration() interface{} {
 	return srrv.Args
 }
 
+// DependOn is used for other resources to depend on [SiteRecoveryReplicatedVm].
+func (srrv *SiteRecoveryReplicatedVm) DependOn() terra.Reference {
+	return terra.ReferenceResource(srrv)
+}
+
+// Dependencies returns the list of resources [SiteRecoveryReplicatedVm] depends_on.
+func (srrv *SiteRecoveryReplicatedVm) Dependencies() terra.Dependencies {
+	return srrv.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SiteRecoveryReplicatedVm].
+func (srrv *SiteRecoveryReplicatedVm) LifecycleManagement() *terra.Lifecycle {
+	return srrv.Lifecycle
+}
+
+// Attributes returns the attributes for [SiteRecoveryReplicatedVm].
 func (srrv *SiteRecoveryReplicatedVm) Attributes() siteRecoveryReplicatedVmAttributes {
 	return siteRecoveryReplicatedVmAttributes{ref: terra.ReferenceResource(srrv)}
 }
 
+// ImportState imports the given attribute values into [SiteRecoveryReplicatedVm]'s state.
 func (srrv *SiteRecoveryReplicatedVm) ImportState(av io.Reader) error {
 	srrv.state = &siteRecoveryReplicatedVmState{}
 	if err := json.NewDecoder(av).Decode(srrv.state); err != nil {
@@ -49,10 +73,12 @@ func (srrv *SiteRecoveryReplicatedVm) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SiteRecoveryReplicatedVm] has state.
 func (srrv *SiteRecoveryReplicatedVm) State() (*siteRecoveryReplicatedVmState, bool) {
 	return srrv.state, srrv.state != nil
 }
 
+// StateMust returns the state for [SiteRecoveryReplicatedVm]. Panics if the state is nil.
 func (srrv *SiteRecoveryReplicatedVm) StateMust() *siteRecoveryReplicatedVmState {
 	if srrv.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", srrv.Type(), srrv.LocalName()))
@@ -60,10 +86,7 @@ func (srrv *SiteRecoveryReplicatedVm) StateMust() *siteRecoveryReplicatedVmState
 	return srrv.state
 }
 
-func (srrv *SiteRecoveryReplicatedVm) DependOn() terra.Reference {
-	return terra.ReferenceResource(srrv)
-}
-
+// SiteRecoveryReplicatedVmArgs contains the configurations for azurerm_site_recovery_replicated_vm.
 type SiteRecoveryReplicatedVmArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -115,111 +138,130 @@ type SiteRecoveryReplicatedVmArgs struct {
 	UnmanagedDisk []siterecoveryreplicatedvm.UnmanagedDisk `hcl:"unmanaged_disk,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *siterecoveryreplicatedvm.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SiteRecoveryReplicatedVm depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type siteRecoveryReplicatedVmAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_site_recovery_replicated_vm.
 func (srrv siteRecoveryReplicatedVmAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(srrv.ref.Append("id"))
+	return terra.ReferenceAsString(srrv.ref.Append("id"))
 }
 
+// MultiVmGroupName returns a reference to field multi_vm_group_name of azurerm_site_recovery_replicated_vm.
 func (srrv siteRecoveryReplicatedVmAttributes) MultiVmGroupName() terra.StringValue {
-	return terra.ReferenceString(srrv.ref.Append("multi_vm_group_name"))
+	return terra.ReferenceAsString(srrv.ref.Append("multi_vm_group_name"))
 }
 
+// Name returns a reference to field name of azurerm_site_recovery_replicated_vm.
 func (srrv siteRecoveryReplicatedVmAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(srrv.ref.Append("name"))
+	return terra.ReferenceAsString(srrv.ref.Append("name"))
 }
 
+// RecoveryReplicationPolicyId returns a reference to field recovery_replication_policy_id of azurerm_site_recovery_replicated_vm.
 func (srrv siteRecoveryReplicatedVmAttributes) RecoveryReplicationPolicyId() terra.StringValue {
-	return terra.ReferenceString(srrv.ref.Append("recovery_replication_policy_id"))
+	return terra.ReferenceAsString(srrv.ref.Append("recovery_replication_policy_id"))
 }
 
+// RecoveryVaultName returns a reference to field recovery_vault_name of azurerm_site_recovery_replicated_vm.
 func (srrv siteRecoveryReplicatedVmAttributes) RecoveryVaultName() terra.StringValue {
-	return terra.ReferenceString(srrv.ref.Append("recovery_vault_name"))
+	return terra.ReferenceAsString(srrv.ref.Append("recovery_vault_name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_site_recovery_replicated_vm.
 func (srrv siteRecoveryReplicatedVmAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(srrv.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(srrv.ref.Append("resource_group_name"))
 }
 
+// SourceRecoveryFabricName returns a reference to field source_recovery_fabric_name of azurerm_site_recovery_replicated_vm.
 func (srrv siteRecoveryReplicatedVmAttributes) SourceRecoveryFabricName() terra.StringValue {
-	return terra.ReferenceString(srrv.ref.Append("source_recovery_fabric_name"))
+	return terra.ReferenceAsString(srrv.ref.Append("source_recovery_fabric_name"))
 }
 
+// SourceRecoveryProtectionContainerName returns a reference to field source_recovery_protection_container_name of azurerm_site_recovery_replicated_vm.
 func (srrv siteRecoveryReplicatedVmAttributes) SourceRecoveryProtectionContainerName() terra.StringValue {
-	return terra.ReferenceString(srrv.ref.Append("source_recovery_protection_container_name"))
+	return terra.ReferenceAsString(srrv.ref.Append("source_recovery_protection_container_name"))
 }
 
+// SourceVmId returns a reference to field source_vm_id of azurerm_site_recovery_replicated_vm.
 func (srrv siteRecoveryReplicatedVmAttributes) SourceVmId() terra.StringValue {
-	return terra.ReferenceString(srrv.ref.Append("source_vm_id"))
+	return terra.ReferenceAsString(srrv.ref.Append("source_vm_id"))
 }
 
+// TargetAvailabilitySetId returns a reference to field target_availability_set_id of azurerm_site_recovery_replicated_vm.
 func (srrv siteRecoveryReplicatedVmAttributes) TargetAvailabilitySetId() terra.StringValue {
-	return terra.ReferenceString(srrv.ref.Append("target_availability_set_id"))
+	return terra.ReferenceAsString(srrv.ref.Append("target_availability_set_id"))
 }
 
+// TargetBootDiagnosticStorageAccountId returns a reference to field target_boot_diagnostic_storage_account_id of azurerm_site_recovery_replicated_vm.
 func (srrv siteRecoveryReplicatedVmAttributes) TargetBootDiagnosticStorageAccountId() terra.StringValue {
-	return terra.ReferenceString(srrv.ref.Append("target_boot_diagnostic_storage_account_id"))
+	return terra.ReferenceAsString(srrv.ref.Append("target_boot_diagnostic_storage_account_id"))
 }
 
+// TargetCapacityReservationGroupId returns a reference to field target_capacity_reservation_group_id of azurerm_site_recovery_replicated_vm.
 func (srrv siteRecoveryReplicatedVmAttributes) TargetCapacityReservationGroupId() terra.StringValue {
-	return terra.ReferenceString(srrv.ref.Append("target_capacity_reservation_group_id"))
+	return terra.ReferenceAsString(srrv.ref.Append("target_capacity_reservation_group_id"))
 }
 
+// TargetEdgeZone returns a reference to field target_edge_zone of azurerm_site_recovery_replicated_vm.
 func (srrv siteRecoveryReplicatedVmAttributes) TargetEdgeZone() terra.StringValue {
-	return terra.ReferenceString(srrv.ref.Append("target_edge_zone"))
+	return terra.ReferenceAsString(srrv.ref.Append("target_edge_zone"))
 }
 
+// TargetNetworkId returns a reference to field target_network_id of azurerm_site_recovery_replicated_vm.
 func (srrv siteRecoveryReplicatedVmAttributes) TargetNetworkId() terra.StringValue {
-	return terra.ReferenceString(srrv.ref.Append("target_network_id"))
+	return terra.ReferenceAsString(srrv.ref.Append("target_network_id"))
 }
 
+// TargetProximityPlacementGroupId returns a reference to field target_proximity_placement_group_id of azurerm_site_recovery_replicated_vm.
 func (srrv siteRecoveryReplicatedVmAttributes) TargetProximityPlacementGroupId() terra.StringValue {
-	return terra.ReferenceString(srrv.ref.Append("target_proximity_placement_group_id"))
+	return terra.ReferenceAsString(srrv.ref.Append("target_proximity_placement_group_id"))
 }
 
+// TargetRecoveryFabricId returns a reference to field target_recovery_fabric_id of azurerm_site_recovery_replicated_vm.
 func (srrv siteRecoveryReplicatedVmAttributes) TargetRecoveryFabricId() terra.StringValue {
-	return terra.ReferenceString(srrv.ref.Append("target_recovery_fabric_id"))
+	return terra.ReferenceAsString(srrv.ref.Append("target_recovery_fabric_id"))
 }
 
+// TargetRecoveryProtectionContainerId returns a reference to field target_recovery_protection_container_id of azurerm_site_recovery_replicated_vm.
 func (srrv siteRecoveryReplicatedVmAttributes) TargetRecoveryProtectionContainerId() terra.StringValue {
-	return terra.ReferenceString(srrv.ref.Append("target_recovery_protection_container_id"))
+	return terra.ReferenceAsString(srrv.ref.Append("target_recovery_protection_container_id"))
 }
 
+// TargetResourceGroupId returns a reference to field target_resource_group_id of azurerm_site_recovery_replicated_vm.
 func (srrv siteRecoveryReplicatedVmAttributes) TargetResourceGroupId() terra.StringValue {
-	return terra.ReferenceString(srrv.ref.Append("target_resource_group_id"))
+	return terra.ReferenceAsString(srrv.ref.Append("target_resource_group_id"))
 }
 
+// TargetVirtualMachineScaleSetId returns a reference to field target_virtual_machine_scale_set_id of azurerm_site_recovery_replicated_vm.
 func (srrv siteRecoveryReplicatedVmAttributes) TargetVirtualMachineScaleSetId() terra.StringValue {
-	return terra.ReferenceString(srrv.ref.Append("target_virtual_machine_scale_set_id"))
+	return terra.ReferenceAsString(srrv.ref.Append("target_virtual_machine_scale_set_id"))
 }
 
+// TargetZone returns a reference to field target_zone of azurerm_site_recovery_replicated_vm.
 func (srrv siteRecoveryReplicatedVmAttributes) TargetZone() terra.StringValue {
-	return terra.ReferenceString(srrv.ref.Append("target_zone"))
+	return terra.ReferenceAsString(srrv.ref.Append("target_zone"))
 }
 
+// TestNetworkId returns a reference to field test_network_id of azurerm_site_recovery_replicated_vm.
 func (srrv siteRecoveryReplicatedVmAttributes) TestNetworkId() terra.StringValue {
-	return terra.ReferenceString(srrv.ref.Append("test_network_id"))
+	return terra.ReferenceAsString(srrv.ref.Append("test_network_id"))
 }
 
 func (srrv siteRecoveryReplicatedVmAttributes) ManagedDisk() terra.SetValue[siterecoveryreplicatedvm.ManagedDiskAttributes] {
-	return terra.ReferenceSet[siterecoveryreplicatedvm.ManagedDiskAttributes](srrv.ref.Append("managed_disk"))
+	return terra.ReferenceAsSet[siterecoveryreplicatedvm.ManagedDiskAttributes](srrv.ref.Append("managed_disk"))
 }
 
 func (srrv siteRecoveryReplicatedVmAttributes) NetworkInterface() terra.SetValue[siterecoveryreplicatedvm.NetworkInterfaceAttributes] {
-	return terra.ReferenceSet[siterecoveryreplicatedvm.NetworkInterfaceAttributes](srrv.ref.Append("network_interface"))
+	return terra.ReferenceAsSet[siterecoveryreplicatedvm.NetworkInterfaceAttributes](srrv.ref.Append("network_interface"))
 }
 
 func (srrv siteRecoveryReplicatedVmAttributes) UnmanagedDisk() terra.SetValue[siterecoveryreplicatedvm.UnmanagedDiskAttributes] {
-	return terra.ReferenceSet[siterecoveryreplicatedvm.UnmanagedDiskAttributes](srrv.ref.Append("unmanaged_disk"))
+	return terra.ReferenceAsSet[siterecoveryreplicatedvm.UnmanagedDiskAttributes](srrv.ref.Append("unmanaged_disk"))
 }
 
 func (srrv siteRecoveryReplicatedVmAttributes) Timeouts() siterecoveryreplicatedvm.TimeoutsAttributes {
-	return terra.ReferenceSingle[siterecoveryreplicatedvm.TimeoutsAttributes](srrv.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[siterecoveryreplicatedvm.TimeoutsAttributes](srrv.ref.Append("timeouts"))
 }
 
 type siteRecoveryReplicatedVmState struct {

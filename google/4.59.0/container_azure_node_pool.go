@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewContainerAzureNodePool creates a new instance of [ContainerAzureNodePool].
 func NewContainerAzureNodePool(name string, args ContainerAzureNodePoolArgs) *ContainerAzureNodePool {
 	return &ContainerAzureNodePool{
 		Args: args,
@@ -19,28 +20,51 @@ func NewContainerAzureNodePool(name string, args ContainerAzureNodePoolArgs) *Co
 
 var _ terra.Resource = (*ContainerAzureNodePool)(nil)
 
+// ContainerAzureNodePool represents the Terraform resource google_container_azure_node_pool.
 type ContainerAzureNodePool struct {
-	Name  string
-	Args  ContainerAzureNodePoolArgs
-	state *containerAzureNodePoolState
+	Name      string
+	Args      ContainerAzureNodePoolArgs
+	state     *containerAzureNodePoolState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ContainerAzureNodePool].
 func (canp *ContainerAzureNodePool) Type() string {
 	return "google_container_azure_node_pool"
 }
 
+// LocalName returns the local name for [ContainerAzureNodePool].
 func (canp *ContainerAzureNodePool) LocalName() string {
 	return canp.Name
 }
 
+// Configuration returns the configuration (args) for [ContainerAzureNodePool].
 func (canp *ContainerAzureNodePool) Configuration() interface{} {
 	return canp.Args
 }
 
+// DependOn is used for other resources to depend on [ContainerAzureNodePool].
+func (canp *ContainerAzureNodePool) DependOn() terra.Reference {
+	return terra.ReferenceResource(canp)
+}
+
+// Dependencies returns the list of resources [ContainerAzureNodePool] depends_on.
+func (canp *ContainerAzureNodePool) Dependencies() terra.Dependencies {
+	return canp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ContainerAzureNodePool].
+func (canp *ContainerAzureNodePool) LifecycleManagement() *terra.Lifecycle {
+	return canp.Lifecycle
+}
+
+// Attributes returns the attributes for [ContainerAzureNodePool].
 func (canp *ContainerAzureNodePool) Attributes() containerAzureNodePoolAttributes {
 	return containerAzureNodePoolAttributes{ref: terra.ReferenceResource(canp)}
 }
 
+// ImportState imports the given attribute values into [ContainerAzureNodePool]'s state.
 func (canp *ContainerAzureNodePool) ImportState(av io.Reader) error {
 	canp.state = &containerAzureNodePoolState{}
 	if err := json.NewDecoder(av).Decode(canp.state); err != nil {
@@ -49,10 +73,12 @@ func (canp *ContainerAzureNodePool) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ContainerAzureNodePool] has state.
 func (canp *ContainerAzureNodePool) State() (*containerAzureNodePoolState, bool) {
 	return canp.state, canp.state != nil
 }
 
+// StateMust returns the state for [ContainerAzureNodePool]. Panics if the state is nil.
 func (canp *ContainerAzureNodePool) StateMust() *containerAzureNodePoolState {
 	if canp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", canp.Type(), canp.LocalName()))
@@ -60,10 +86,7 @@ func (canp *ContainerAzureNodePool) StateMust() *containerAzureNodePoolState {
 	return canp.state
 }
 
-func (canp *ContainerAzureNodePool) DependOn() terra.Reference {
-	return terra.ReferenceResource(canp)
-}
-
+// ContainerAzureNodePoolArgs contains the configurations for google_container_azure_node_pool.
 type ContainerAzureNodePoolArgs struct {
 	// Annotations: map of string, optional
 	Annotations terra.MapValue[terra.StringValue] `hcl:"annotations,attr"`
@@ -91,87 +114,100 @@ type ContainerAzureNodePoolArgs struct {
 	MaxPodsConstraint *containerazurenodepool.MaxPodsConstraint `hcl:"max_pods_constraint,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *containerazurenodepool.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ContainerAzureNodePool depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type containerAzureNodePoolAttributes struct {
 	ref terra.Reference
 }
 
+// Annotations returns a reference to field annotations of google_container_azure_node_pool.
 func (canp containerAzureNodePoolAttributes) Annotations() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](canp.ref.Append("annotations"))
+	return terra.ReferenceAsMap[terra.StringValue](canp.ref.Append("annotations"))
 }
 
+// AzureAvailabilityZone returns a reference to field azure_availability_zone of google_container_azure_node_pool.
 func (canp containerAzureNodePoolAttributes) AzureAvailabilityZone() terra.StringValue {
-	return terra.ReferenceString(canp.ref.Append("azure_availability_zone"))
+	return terra.ReferenceAsString(canp.ref.Append("azure_availability_zone"))
 }
 
+// Cluster returns a reference to field cluster of google_container_azure_node_pool.
 func (canp containerAzureNodePoolAttributes) Cluster() terra.StringValue {
-	return terra.ReferenceString(canp.ref.Append("cluster"))
+	return terra.ReferenceAsString(canp.ref.Append("cluster"))
 }
 
+// CreateTime returns a reference to field create_time of google_container_azure_node_pool.
 func (canp containerAzureNodePoolAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(canp.ref.Append("create_time"))
+	return terra.ReferenceAsString(canp.ref.Append("create_time"))
 }
 
+// Etag returns a reference to field etag of google_container_azure_node_pool.
 func (canp containerAzureNodePoolAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(canp.ref.Append("etag"))
+	return terra.ReferenceAsString(canp.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_container_azure_node_pool.
 func (canp containerAzureNodePoolAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(canp.ref.Append("id"))
+	return terra.ReferenceAsString(canp.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_container_azure_node_pool.
 func (canp containerAzureNodePoolAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(canp.ref.Append("location"))
+	return terra.ReferenceAsString(canp.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_container_azure_node_pool.
 func (canp containerAzureNodePoolAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(canp.ref.Append("name"))
+	return terra.ReferenceAsString(canp.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_container_azure_node_pool.
 func (canp containerAzureNodePoolAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(canp.ref.Append("project"))
+	return terra.ReferenceAsString(canp.ref.Append("project"))
 }
 
+// Reconciling returns a reference to field reconciling of google_container_azure_node_pool.
 func (canp containerAzureNodePoolAttributes) Reconciling() terra.BoolValue {
-	return terra.ReferenceBool(canp.ref.Append("reconciling"))
+	return terra.ReferenceAsBool(canp.ref.Append("reconciling"))
 }
 
+// State returns a reference to field state of google_container_azure_node_pool.
 func (canp containerAzureNodePoolAttributes) State() terra.StringValue {
-	return terra.ReferenceString(canp.ref.Append("state"))
+	return terra.ReferenceAsString(canp.ref.Append("state"))
 }
 
+// SubnetId returns a reference to field subnet_id of google_container_azure_node_pool.
 func (canp containerAzureNodePoolAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(canp.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(canp.ref.Append("subnet_id"))
 }
 
+// Uid returns a reference to field uid of google_container_azure_node_pool.
 func (canp containerAzureNodePoolAttributes) Uid() terra.StringValue {
-	return terra.ReferenceString(canp.ref.Append("uid"))
+	return terra.ReferenceAsString(canp.ref.Append("uid"))
 }
 
+// UpdateTime returns a reference to field update_time of google_container_azure_node_pool.
 func (canp containerAzureNodePoolAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(canp.ref.Append("update_time"))
+	return terra.ReferenceAsString(canp.ref.Append("update_time"))
 }
 
+// Version returns a reference to field version of google_container_azure_node_pool.
 func (canp containerAzureNodePoolAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(canp.ref.Append("version"))
+	return terra.ReferenceAsString(canp.ref.Append("version"))
 }
 
 func (canp containerAzureNodePoolAttributes) Autoscaling() terra.ListValue[containerazurenodepool.AutoscalingAttributes] {
-	return terra.ReferenceList[containerazurenodepool.AutoscalingAttributes](canp.ref.Append("autoscaling"))
+	return terra.ReferenceAsList[containerazurenodepool.AutoscalingAttributes](canp.ref.Append("autoscaling"))
 }
 
 func (canp containerAzureNodePoolAttributes) Config() terra.ListValue[containerazurenodepool.ConfigAttributes] {
-	return terra.ReferenceList[containerazurenodepool.ConfigAttributes](canp.ref.Append("config"))
+	return terra.ReferenceAsList[containerazurenodepool.ConfigAttributes](canp.ref.Append("config"))
 }
 
 func (canp containerAzureNodePoolAttributes) MaxPodsConstraint() terra.ListValue[containerazurenodepool.MaxPodsConstraintAttributes] {
-	return terra.ReferenceList[containerazurenodepool.MaxPodsConstraintAttributes](canp.ref.Append("max_pods_constraint"))
+	return terra.ReferenceAsList[containerazurenodepool.MaxPodsConstraintAttributes](canp.ref.Append("max_pods_constraint"))
 }
 
 func (canp containerAzureNodePoolAttributes) Timeouts() containerazurenodepool.TimeoutsAttributes {
-	return terra.ReferenceSingle[containerazurenodepool.TimeoutsAttributes](canp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[containerazurenodepool.TimeoutsAttributes](canp.ref.Append("timeouts"))
 }
 
 type containerAzureNodePoolState struct {

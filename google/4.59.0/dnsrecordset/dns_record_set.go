@@ -148,404 +148,404 @@ type RoutingPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (rp RoutingPolicyAttributes) InternalRef() terra.Reference {
-	return rp.ref
+func (rp RoutingPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return rp.ref, nil
 }
 
 func (rp RoutingPolicyAttributes) InternalWithRef(ref terra.Reference) RoutingPolicyAttributes {
 	return RoutingPolicyAttributes{ref: ref}
 }
 
-func (rp RoutingPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (rp RoutingPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rp.ref.InternalTokens()
 }
 
 func (rp RoutingPolicyAttributes) EnableGeoFencing() terra.BoolValue {
-	return terra.ReferenceBool(rp.ref.Append("enable_geo_fencing"))
+	return terra.ReferenceAsBool(rp.ref.Append("enable_geo_fencing"))
 }
 
 func (rp RoutingPolicyAttributes) Geo() terra.ListValue[GeoAttributes] {
-	return terra.ReferenceList[GeoAttributes](rp.ref.Append("geo"))
+	return terra.ReferenceAsList[GeoAttributes](rp.ref.Append("geo"))
 }
 
 func (rp RoutingPolicyAttributes) PrimaryBackup() terra.ListValue[PrimaryBackupAttributes] {
-	return terra.ReferenceList[PrimaryBackupAttributes](rp.ref.Append("primary_backup"))
+	return terra.ReferenceAsList[PrimaryBackupAttributes](rp.ref.Append("primary_backup"))
 }
 
 func (rp RoutingPolicyAttributes) Wrr() terra.ListValue[WrrAttributes] {
-	return terra.ReferenceList[WrrAttributes](rp.ref.Append("wrr"))
+	return terra.ReferenceAsList[WrrAttributes](rp.ref.Append("wrr"))
 }
 
 type GeoAttributes struct {
 	ref terra.Reference
 }
 
-func (g GeoAttributes) InternalRef() terra.Reference {
-	return g.ref
+func (g GeoAttributes) InternalRef() (terra.Reference, error) {
+	return g.ref, nil
 }
 
 func (g GeoAttributes) InternalWithRef(ref terra.Reference) GeoAttributes {
 	return GeoAttributes{ref: ref}
 }
 
-func (g GeoAttributes) InternalTokens() hclwrite.Tokens {
+func (g GeoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return g.ref.InternalTokens()
 }
 
 func (g GeoAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("location"))
+	return terra.ReferenceAsString(g.ref.Append("location"))
 }
 
 func (g GeoAttributes) Rrdatas() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](g.ref.Append("rrdatas"))
+	return terra.ReferenceAsList[terra.StringValue](g.ref.Append("rrdatas"))
 }
 
 func (g GeoAttributes) HealthCheckedTargets() terra.ListValue[GeoHealthCheckedTargetsAttributes] {
-	return terra.ReferenceList[GeoHealthCheckedTargetsAttributes](g.ref.Append("health_checked_targets"))
+	return terra.ReferenceAsList[GeoHealthCheckedTargetsAttributes](g.ref.Append("health_checked_targets"))
 }
 
 type GeoHealthCheckedTargetsAttributes struct {
 	ref terra.Reference
 }
 
-func (hct GeoHealthCheckedTargetsAttributes) InternalRef() terra.Reference {
-	return hct.ref
+func (hct GeoHealthCheckedTargetsAttributes) InternalRef() (terra.Reference, error) {
+	return hct.ref, nil
 }
 
 func (hct GeoHealthCheckedTargetsAttributes) InternalWithRef(ref terra.Reference) GeoHealthCheckedTargetsAttributes {
 	return GeoHealthCheckedTargetsAttributes{ref: ref}
 }
 
-func (hct GeoHealthCheckedTargetsAttributes) InternalTokens() hclwrite.Tokens {
+func (hct GeoHealthCheckedTargetsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hct.ref.InternalTokens()
 }
 
 func (hct GeoHealthCheckedTargetsAttributes) InternalLoadBalancers() terra.ListValue[GeoHealthCheckedTargetsInternalLoadBalancersAttributes] {
-	return terra.ReferenceList[GeoHealthCheckedTargetsInternalLoadBalancersAttributes](hct.ref.Append("internal_load_balancers"))
+	return terra.ReferenceAsList[GeoHealthCheckedTargetsInternalLoadBalancersAttributes](hct.ref.Append("internal_load_balancers"))
 }
 
 type GeoHealthCheckedTargetsInternalLoadBalancersAttributes struct {
 	ref terra.Reference
 }
 
-func (ilb GeoHealthCheckedTargetsInternalLoadBalancersAttributes) InternalRef() terra.Reference {
-	return ilb.ref
+func (ilb GeoHealthCheckedTargetsInternalLoadBalancersAttributes) InternalRef() (terra.Reference, error) {
+	return ilb.ref, nil
 }
 
 func (ilb GeoHealthCheckedTargetsInternalLoadBalancersAttributes) InternalWithRef(ref terra.Reference) GeoHealthCheckedTargetsInternalLoadBalancersAttributes {
 	return GeoHealthCheckedTargetsInternalLoadBalancersAttributes{ref: ref}
 }
 
-func (ilb GeoHealthCheckedTargetsInternalLoadBalancersAttributes) InternalTokens() hclwrite.Tokens {
+func (ilb GeoHealthCheckedTargetsInternalLoadBalancersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ilb.ref.InternalTokens()
 }
 
 func (ilb GeoHealthCheckedTargetsInternalLoadBalancersAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("ip_address"))
+	return terra.ReferenceAsString(ilb.ref.Append("ip_address"))
 }
 
 func (ilb GeoHealthCheckedTargetsInternalLoadBalancersAttributes) IpProtocol() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("ip_protocol"))
+	return terra.ReferenceAsString(ilb.ref.Append("ip_protocol"))
 }
 
 func (ilb GeoHealthCheckedTargetsInternalLoadBalancersAttributes) LoadBalancerType() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("load_balancer_type"))
+	return terra.ReferenceAsString(ilb.ref.Append("load_balancer_type"))
 }
 
 func (ilb GeoHealthCheckedTargetsInternalLoadBalancersAttributes) NetworkUrl() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("network_url"))
+	return terra.ReferenceAsString(ilb.ref.Append("network_url"))
 }
 
 func (ilb GeoHealthCheckedTargetsInternalLoadBalancersAttributes) Port() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("port"))
+	return terra.ReferenceAsString(ilb.ref.Append("port"))
 }
 
 func (ilb GeoHealthCheckedTargetsInternalLoadBalancersAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("project"))
+	return terra.ReferenceAsString(ilb.ref.Append("project"))
 }
 
 func (ilb GeoHealthCheckedTargetsInternalLoadBalancersAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("region"))
+	return terra.ReferenceAsString(ilb.ref.Append("region"))
 }
 
 type PrimaryBackupAttributes struct {
 	ref terra.Reference
 }
 
-func (pb PrimaryBackupAttributes) InternalRef() terra.Reference {
-	return pb.ref
+func (pb PrimaryBackupAttributes) InternalRef() (terra.Reference, error) {
+	return pb.ref, nil
 }
 
 func (pb PrimaryBackupAttributes) InternalWithRef(ref terra.Reference) PrimaryBackupAttributes {
 	return PrimaryBackupAttributes{ref: ref}
 }
 
-func (pb PrimaryBackupAttributes) InternalTokens() hclwrite.Tokens {
+func (pb PrimaryBackupAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pb.ref.InternalTokens()
 }
 
 func (pb PrimaryBackupAttributes) EnableGeoFencingForBackups() terra.BoolValue {
-	return terra.ReferenceBool(pb.ref.Append("enable_geo_fencing_for_backups"))
+	return terra.ReferenceAsBool(pb.ref.Append("enable_geo_fencing_for_backups"))
 }
 
 func (pb PrimaryBackupAttributes) TrickleRatio() terra.NumberValue {
-	return terra.ReferenceNumber(pb.ref.Append("trickle_ratio"))
+	return terra.ReferenceAsNumber(pb.ref.Append("trickle_ratio"))
 }
 
 func (pb PrimaryBackupAttributes) BackupGeo() terra.ListValue[BackupGeoAttributes] {
-	return terra.ReferenceList[BackupGeoAttributes](pb.ref.Append("backup_geo"))
+	return terra.ReferenceAsList[BackupGeoAttributes](pb.ref.Append("backup_geo"))
 }
 
 func (pb PrimaryBackupAttributes) Primary() terra.ListValue[PrimaryAttributes] {
-	return terra.ReferenceList[PrimaryAttributes](pb.ref.Append("primary"))
+	return terra.ReferenceAsList[PrimaryAttributes](pb.ref.Append("primary"))
 }
 
 type BackupGeoAttributes struct {
 	ref terra.Reference
 }
 
-func (bg BackupGeoAttributes) InternalRef() terra.Reference {
-	return bg.ref
+func (bg BackupGeoAttributes) InternalRef() (terra.Reference, error) {
+	return bg.ref, nil
 }
 
 func (bg BackupGeoAttributes) InternalWithRef(ref terra.Reference) BackupGeoAttributes {
 	return BackupGeoAttributes{ref: ref}
 }
 
-func (bg BackupGeoAttributes) InternalTokens() hclwrite.Tokens {
+func (bg BackupGeoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bg.ref.InternalTokens()
 }
 
 func (bg BackupGeoAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(bg.ref.Append("location"))
+	return terra.ReferenceAsString(bg.ref.Append("location"))
 }
 
 func (bg BackupGeoAttributes) Rrdatas() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](bg.ref.Append("rrdatas"))
+	return terra.ReferenceAsList[terra.StringValue](bg.ref.Append("rrdatas"))
 }
 
 func (bg BackupGeoAttributes) HealthCheckedTargets() terra.ListValue[BackupGeoHealthCheckedTargetsAttributes] {
-	return terra.ReferenceList[BackupGeoHealthCheckedTargetsAttributes](bg.ref.Append("health_checked_targets"))
+	return terra.ReferenceAsList[BackupGeoHealthCheckedTargetsAttributes](bg.ref.Append("health_checked_targets"))
 }
 
 type BackupGeoHealthCheckedTargetsAttributes struct {
 	ref terra.Reference
 }
 
-func (hct BackupGeoHealthCheckedTargetsAttributes) InternalRef() terra.Reference {
-	return hct.ref
+func (hct BackupGeoHealthCheckedTargetsAttributes) InternalRef() (terra.Reference, error) {
+	return hct.ref, nil
 }
 
 func (hct BackupGeoHealthCheckedTargetsAttributes) InternalWithRef(ref terra.Reference) BackupGeoHealthCheckedTargetsAttributes {
 	return BackupGeoHealthCheckedTargetsAttributes{ref: ref}
 }
 
-func (hct BackupGeoHealthCheckedTargetsAttributes) InternalTokens() hclwrite.Tokens {
+func (hct BackupGeoHealthCheckedTargetsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hct.ref.InternalTokens()
 }
 
 func (hct BackupGeoHealthCheckedTargetsAttributes) InternalLoadBalancers() terra.ListValue[BackupGeoHealthCheckedTargetsInternalLoadBalancersAttributes] {
-	return terra.ReferenceList[BackupGeoHealthCheckedTargetsInternalLoadBalancersAttributes](hct.ref.Append("internal_load_balancers"))
+	return terra.ReferenceAsList[BackupGeoHealthCheckedTargetsInternalLoadBalancersAttributes](hct.ref.Append("internal_load_balancers"))
 }
 
 type BackupGeoHealthCheckedTargetsInternalLoadBalancersAttributes struct {
 	ref terra.Reference
 }
 
-func (ilb BackupGeoHealthCheckedTargetsInternalLoadBalancersAttributes) InternalRef() terra.Reference {
-	return ilb.ref
+func (ilb BackupGeoHealthCheckedTargetsInternalLoadBalancersAttributes) InternalRef() (terra.Reference, error) {
+	return ilb.ref, nil
 }
 
 func (ilb BackupGeoHealthCheckedTargetsInternalLoadBalancersAttributes) InternalWithRef(ref terra.Reference) BackupGeoHealthCheckedTargetsInternalLoadBalancersAttributes {
 	return BackupGeoHealthCheckedTargetsInternalLoadBalancersAttributes{ref: ref}
 }
 
-func (ilb BackupGeoHealthCheckedTargetsInternalLoadBalancersAttributes) InternalTokens() hclwrite.Tokens {
+func (ilb BackupGeoHealthCheckedTargetsInternalLoadBalancersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ilb.ref.InternalTokens()
 }
 
 func (ilb BackupGeoHealthCheckedTargetsInternalLoadBalancersAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("ip_address"))
+	return terra.ReferenceAsString(ilb.ref.Append("ip_address"))
 }
 
 func (ilb BackupGeoHealthCheckedTargetsInternalLoadBalancersAttributes) IpProtocol() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("ip_protocol"))
+	return terra.ReferenceAsString(ilb.ref.Append("ip_protocol"))
 }
 
 func (ilb BackupGeoHealthCheckedTargetsInternalLoadBalancersAttributes) LoadBalancerType() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("load_balancer_type"))
+	return terra.ReferenceAsString(ilb.ref.Append("load_balancer_type"))
 }
 
 func (ilb BackupGeoHealthCheckedTargetsInternalLoadBalancersAttributes) NetworkUrl() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("network_url"))
+	return terra.ReferenceAsString(ilb.ref.Append("network_url"))
 }
 
 func (ilb BackupGeoHealthCheckedTargetsInternalLoadBalancersAttributes) Port() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("port"))
+	return terra.ReferenceAsString(ilb.ref.Append("port"))
 }
 
 func (ilb BackupGeoHealthCheckedTargetsInternalLoadBalancersAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("project"))
+	return terra.ReferenceAsString(ilb.ref.Append("project"))
 }
 
 func (ilb BackupGeoHealthCheckedTargetsInternalLoadBalancersAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("region"))
+	return terra.ReferenceAsString(ilb.ref.Append("region"))
 }
 
 type PrimaryAttributes struct {
 	ref terra.Reference
 }
 
-func (p PrimaryAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p PrimaryAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p PrimaryAttributes) InternalWithRef(ref terra.Reference) PrimaryAttributes {
 	return PrimaryAttributes{ref: ref}
 }
 
-func (p PrimaryAttributes) InternalTokens() hclwrite.Tokens {
+func (p PrimaryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
 func (p PrimaryAttributes) InternalLoadBalancers() terra.ListValue[PrimaryInternalLoadBalancersAttributes] {
-	return terra.ReferenceList[PrimaryInternalLoadBalancersAttributes](p.ref.Append("internal_load_balancers"))
+	return terra.ReferenceAsList[PrimaryInternalLoadBalancersAttributes](p.ref.Append("internal_load_balancers"))
 }
 
 type PrimaryInternalLoadBalancersAttributes struct {
 	ref terra.Reference
 }
 
-func (ilb PrimaryInternalLoadBalancersAttributes) InternalRef() terra.Reference {
-	return ilb.ref
+func (ilb PrimaryInternalLoadBalancersAttributes) InternalRef() (terra.Reference, error) {
+	return ilb.ref, nil
 }
 
 func (ilb PrimaryInternalLoadBalancersAttributes) InternalWithRef(ref terra.Reference) PrimaryInternalLoadBalancersAttributes {
 	return PrimaryInternalLoadBalancersAttributes{ref: ref}
 }
 
-func (ilb PrimaryInternalLoadBalancersAttributes) InternalTokens() hclwrite.Tokens {
+func (ilb PrimaryInternalLoadBalancersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ilb.ref.InternalTokens()
 }
 
 func (ilb PrimaryInternalLoadBalancersAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("ip_address"))
+	return terra.ReferenceAsString(ilb.ref.Append("ip_address"))
 }
 
 func (ilb PrimaryInternalLoadBalancersAttributes) IpProtocol() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("ip_protocol"))
+	return terra.ReferenceAsString(ilb.ref.Append("ip_protocol"))
 }
 
 func (ilb PrimaryInternalLoadBalancersAttributes) LoadBalancerType() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("load_balancer_type"))
+	return terra.ReferenceAsString(ilb.ref.Append("load_balancer_type"))
 }
 
 func (ilb PrimaryInternalLoadBalancersAttributes) NetworkUrl() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("network_url"))
+	return terra.ReferenceAsString(ilb.ref.Append("network_url"))
 }
 
 func (ilb PrimaryInternalLoadBalancersAttributes) Port() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("port"))
+	return terra.ReferenceAsString(ilb.ref.Append("port"))
 }
 
 func (ilb PrimaryInternalLoadBalancersAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("project"))
+	return terra.ReferenceAsString(ilb.ref.Append("project"))
 }
 
 func (ilb PrimaryInternalLoadBalancersAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("region"))
+	return terra.ReferenceAsString(ilb.ref.Append("region"))
 }
 
 type WrrAttributes struct {
 	ref terra.Reference
 }
 
-func (w WrrAttributes) InternalRef() terra.Reference {
-	return w.ref
+func (w WrrAttributes) InternalRef() (terra.Reference, error) {
+	return w.ref, nil
 }
 
 func (w WrrAttributes) InternalWithRef(ref terra.Reference) WrrAttributes {
 	return WrrAttributes{ref: ref}
 }
 
-func (w WrrAttributes) InternalTokens() hclwrite.Tokens {
+func (w WrrAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return w.ref.InternalTokens()
 }
 
 func (w WrrAttributes) Rrdatas() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](w.ref.Append("rrdatas"))
+	return terra.ReferenceAsList[terra.StringValue](w.ref.Append("rrdatas"))
 }
 
 func (w WrrAttributes) Weight() terra.NumberValue {
-	return terra.ReferenceNumber(w.ref.Append("weight"))
+	return terra.ReferenceAsNumber(w.ref.Append("weight"))
 }
 
 func (w WrrAttributes) HealthCheckedTargets() terra.ListValue[WrrHealthCheckedTargetsAttributes] {
-	return terra.ReferenceList[WrrHealthCheckedTargetsAttributes](w.ref.Append("health_checked_targets"))
+	return terra.ReferenceAsList[WrrHealthCheckedTargetsAttributes](w.ref.Append("health_checked_targets"))
 }
 
 type WrrHealthCheckedTargetsAttributes struct {
 	ref terra.Reference
 }
 
-func (hct WrrHealthCheckedTargetsAttributes) InternalRef() terra.Reference {
-	return hct.ref
+func (hct WrrHealthCheckedTargetsAttributes) InternalRef() (terra.Reference, error) {
+	return hct.ref, nil
 }
 
 func (hct WrrHealthCheckedTargetsAttributes) InternalWithRef(ref terra.Reference) WrrHealthCheckedTargetsAttributes {
 	return WrrHealthCheckedTargetsAttributes{ref: ref}
 }
 
-func (hct WrrHealthCheckedTargetsAttributes) InternalTokens() hclwrite.Tokens {
+func (hct WrrHealthCheckedTargetsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hct.ref.InternalTokens()
 }
 
 func (hct WrrHealthCheckedTargetsAttributes) InternalLoadBalancers() terra.ListValue[WrrHealthCheckedTargetsInternalLoadBalancersAttributes] {
-	return terra.ReferenceList[WrrHealthCheckedTargetsInternalLoadBalancersAttributes](hct.ref.Append("internal_load_balancers"))
+	return terra.ReferenceAsList[WrrHealthCheckedTargetsInternalLoadBalancersAttributes](hct.ref.Append("internal_load_balancers"))
 }
 
 type WrrHealthCheckedTargetsInternalLoadBalancersAttributes struct {
 	ref terra.Reference
 }
 
-func (ilb WrrHealthCheckedTargetsInternalLoadBalancersAttributes) InternalRef() terra.Reference {
-	return ilb.ref
+func (ilb WrrHealthCheckedTargetsInternalLoadBalancersAttributes) InternalRef() (terra.Reference, error) {
+	return ilb.ref, nil
 }
 
 func (ilb WrrHealthCheckedTargetsInternalLoadBalancersAttributes) InternalWithRef(ref terra.Reference) WrrHealthCheckedTargetsInternalLoadBalancersAttributes {
 	return WrrHealthCheckedTargetsInternalLoadBalancersAttributes{ref: ref}
 }
 
-func (ilb WrrHealthCheckedTargetsInternalLoadBalancersAttributes) InternalTokens() hclwrite.Tokens {
+func (ilb WrrHealthCheckedTargetsInternalLoadBalancersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ilb.ref.InternalTokens()
 }
 
 func (ilb WrrHealthCheckedTargetsInternalLoadBalancersAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("ip_address"))
+	return terra.ReferenceAsString(ilb.ref.Append("ip_address"))
 }
 
 func (ilb WrrHealthCheckedTargetsInternalLoadBalancersAttributes) IpProtocol() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("ip_protocol"))
+	return terra.ReferenceAsString(ilb.ref.Append("ip_protocol"))
 }
 
 func (ilb WrrHealthCheckedTargetsInternalLoadBalancersAttributes) LoadBalancerType() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("load_balancer_type"))
+	return terra.ReferenceAsString(ilb.ref.Append("load_balancer_type"))
 }
 
 func (ilb WrrHealthCheckedTargetsInternalLoadBalancersAttributes) NetworkUrl() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("network_url"))
+	return terra.ReferenceAsString(ilb.ref.Append("network_url"))
 }
 
 func (ilb WrrHealthCheckedTargetsInternalLoadBalancersAttributes) Port() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("port"))
+	return terra.ReferenceAsString(ilb.ref.Append("port"))
 }
 
 func (ilb WrrHealthCheckedTargetsInternalLoadBalancersAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("project"))
+	return terra.ReferenceAsString(ilb.ref.Append("project"))
 }
 
 func (ilb WrrHealthCheckedTargetsInternalLoadBalancersAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(ilb.ref.Append("region"))
+	return terra.ReferenceAsString(ilb.ref.Append("region"))
 }
 
 type RoutingPolicyState struct {

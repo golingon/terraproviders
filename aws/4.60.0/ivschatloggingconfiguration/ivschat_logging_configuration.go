@@ -52,7 +52,7 @@ func (dc DestinationConfigurationAttributes) InternalWithRef(ref terra.Reference
 	return DestinationConfigurationAttributes{ref: ref}
 }
 
-func (dc DestinationConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (dc DestinationConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dc.ref.InternalTokens()
 }
 
@@ -80,7 +80,7 @@ func (cl CloudwatchLogsAttributes) InternalWithRef(ref terra.Reference) Cloudwat
 	return CloudwatchLogsAttributes{ref: ref}
 }
 
-func (cl CloudwatchLogsAttributes) InternalTokens() hclwrite.Tokens {
+func (cl CloudwatchLogsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cl.ref.InternalTokens()
 }
 
@@ -100,7 +100,7 @@ func (f FirehoseAttributes) InternalWithRef(ref terra.Reference) FirehoseAttribu
 	return FirehoseAttributes{ref: ref}
 }
 
-func (f FirehoseAttributes) InternalTokens() hclwrite.Tokens {
+func (f FirehoseAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -120,7 +120,7 @@ func (s S3Attributes) InternalWithRef(ref terra.Reference) S3Attributes {
 	return S3Attributes{ref: ref}
 }
 
-func (s S3Attributes) InternalTokens() hclwrite.Tokens {
+func (s S3Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -140,7 +140,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

@@ -91,7 +91,7 @@ func (idc InputDataConfigAttributes) InternalWithRef(ref terra.Reference) InputD
 	return InputDataConfigAttributes{ref: ref}
 }
 
-func (idc InputDataConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (idc InputDataConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return idc.ref.InternalTokens()
 }
 
@@ -131,7 +131,7 @@ func (a AnnotationsAttributes) InternalWithRef(ref terra.Reference) AnnotationsA
 	return AnnotationsAttributes{ref: ref}
 }
 
-func (a AnnotationsAttributes) InternalTokens() hclwrite.Tokens {
+func (a AnnotationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -155,7 +155,7 @@ func (am AugmentedManifestsAttributes) InternalWithRef(ref terra.Reference) Augm
 	return AugmentedManifestsAttributes{ref: ref}
 }
 
-func (am AugmentedManifestsAttributes) InternalTokens() hclwrite.Tokens {
+func (am AugmentedManifestsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return am.ref.InternalTokens()
 }
 
@@ -195,7 +195,7 @@ func (d DocumentsAttributes) InternalWithRef(ref terra.Reference) DocumentsAttri
 	return DocumentsAttributes{ref: ref}
 }
 
-func (d DocumentsAttributes) InternalTokens() hclwrite.Tokens {
+func (d DocumentsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -223,7 +223,7 @@ func (el EntityListAttributes) InternalWithRef(ref terra.Reference) EntityListAt
 	return EntityListAttributes{ref: ref}
 }
 
-func (el EntityListAttributes) InternalTokens() hclwrite.Tokens {
+func (el EntityListAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return el.ref.InternalTokens()
 }
 
@@ -243,7 +243,7 @@ func (et EntityTypesAttributes) InternalWithRef(ref terra.Reference) EntityTypes
 	return EntityTypesAttributes{ref: ref}
 }
 
-func (et EntityTypesAttributes) InternalTokens() hclwrite.Tokens {
+func (et EntityTypesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return et.ref.InternalTokens()
 }
 
@@ -263,7 +263,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -291,7 +291,7 @@ func (vc VpcConfigAttributes) InternalWithRef(ref terra.Reference) VpcConfigAttr
 	return VpcConfigAttributes{ref: ref}
 }
 
-func (vc VpcConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (vc VpcConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vc.ref.InternalTokens()
 }
 

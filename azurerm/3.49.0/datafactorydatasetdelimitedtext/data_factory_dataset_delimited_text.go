@@ -68,164 +68,164 @@ type AzureBlobFsLocationAttributes struct {
 	ref terra.Reference
 }
 
-func (abfl AzureBlobFsLocationAttributes) InternalRef() terra.Reference {
-	return abfl.ref
+func (abfl AzureBlobFsLocationAttributes) InternalRef() (terra.Reference, error) {
+	return abfl.ref, nil
 }
 
 func (abfl AzureBlobFsLocationAttributes) InternalWithRef(ref terra.Reference) AzureBlobFsLocationAttributes {
 	return AzureBlobFsLocationAttributes{ref: ref}
 }
 
-func (abfl AzureBlobFsLocationAttributes) InternalTokens() hclwrite.Tokens {
+func (abfl AzureBlobFsLocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return abfl.ref.InternalTokens()
 }
 
 func (abfl AzureBlobFsLocationAttributes) FileSystem() terra.StringValue {
-	return terra.ReferenceString(abfl.ref.Append("file_system"))
+	return terra.ReferenceAsString(abfl.ref.Append("file_system"))
 }
 
 func (abfl AzureBlobFsLocationAttributes) Filename() terra.StringValue {
-	return terra.ReferenceString(abfl.ref.Append("filename"))
+	return terra.ReferenceAsString(abfl.ref.Append("filename"))
 }
 
 func (abfl AzureBlobFsLocationAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(abfl.ref.Append("path"))
+	return terra.ReferenceAsString(abfl.ref.Append("path"))
 }
 
 type AzureBlobStorageLocationAttributes struct {
 	ref terra.Reference
 }
 
-func (absl AzureBlobStorageLocationAttributes) InternalRef() terra.Reference {
-	return absl.ref
+func (absl AzureBlobStorageLocationAttributes) InternalRef() (terra.Reference, error) {
+	return absl.ref, nil
 }
 
 func (absl AzureBlobStorageLocationAttributes) InternalWithRef(ref terra.Reference) AzureBlobStorageLocationAttributes {
 	return AzureBlobStorageLocationAttributes{ref: ref}
 }
 
-func (absl AzureBlobStorageLocationAttributes) InternalTokens() hclwrite.Tokens {
+func (absl AzureBlobStorageLocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return absl.ref.InternalTokens()
 }
 
 func (absl AzureBlobStorageLocationAttributes) Container() terra.StringValue {
-	return terra.ReferenceString(absl.ref.Append("container"))
+	return terra.ReferenceAsString(absl.ref.Append("container"))
 }
 
 func (absl AzureBlobStorageLocationAttributes) DynamicContainerEnabled() terra.BoolValue {
-	return terra.ReferenceBool(absl.ref.Append("dynamic_container_enabled"))
+	return terra.ReferenceAsBool(absl.ref.Append("dynamic_container_enabled"))
 }
 
 func (absl AzureBlobStorageLocationAttributes) DynamicFilenameEnabled() terra.BoolValue {
-	return terra.ReferenceBool(absl.ref.Append("dynamic_filename_enabled"))
+	return terra.ReferenceAsBool(absl.ref.Append("dynamic_filename_enabled"))
 }
 
 func (absl AzureBlobStorageLocationAttributes) DynamicPathEnabled() terra.BoolValue {
-	return terra.ReferenceBool(absl.ref.Append("dynamic_path_enabled"))
+	return terra.ReferenceAsBool(absl.ref.Append("dynamic_path_enabled"))
 }
 
 func (absl AzureBlobStorageLocationAttributes) Filename() terra.StringValue {
-	return terra.ReferenceString(absl.ref.Append("filename"))
+	return terra.ReferenceAsString(absl.ref.Append("filename"))
 }
 
 func (absl AzureBlobStorageLocationAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(absl.ref.Append("path"))
+	return terra.ReferenceAsString(absl.ref.Append("path"))
 }
 
 type HttpServerLocationAttributes struct {
 	ref terra.Reference
 }
 
-func (hsl HttpServerLocationAttributes) InternalRef() terra.Reference {
-	return hsl.ref
+func (hsl HttpServerLocationAttributes) InternalRef() (terra.Reference, error) {
+	return hsl.ref, nil
 }
 
 func (hsl HttpServerLocationAttributes) InternalWithRef(ref terra.Reference) HttpServerLocationAttributes {
 	return HttpServerLocationAttributes{ref: ref}
 }
 
-func (hsl HttpServerLocationAttributes) InternalTokens() hclwrite.Tokens {
+func (hsl HttpServerLocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hsl.ref.InternalTokens()
 }
 
 func (hsl HttpServerLocationAttributes) DynamicFilenameEnabled() terra.BoolValue {
-	return terra.ReferenceBool(hsl.ref.Append("dynamic_filename_enabled"))
+	return terra.ReferenceAsBool(hsl.ref.Append("dynamic_filename_enabled"))
 }
 
 func (hsl HttpServerLocationAttributes) DynamicPathEnabled() terra.BoolValue {
-	return terra.ReferenceBool(hsl.ref.Append("dynamic_path_enabled"))
+	return terra.ReferenceAsBool(hsl.ref.Append("dynamic_path_enabled"))
 }
 
 func (hsl HttpServerLocationAttributes) Filename() terra.StringValue {
-	return terra.ReferenceString(hsl.ref.Append("filename"))
+	return terra.ReferenceAsString(hsl.ref.Append("filename"))
 }
 
 func (hsl HttpServerLocationAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(hsl.ref.Append("path"))
+	return terra.ReferenceAsString(hsl.ref.Append("path"))
 }
 
 func (hsl HttpServerLocationAttributes) RelativeUrl() terra.StringValue {
-	return terra.ReferenceString(hsl.ref.Append("relative_url"))
+	return terra.ReferenceAsString(hsl.ref.Append("relative_url"))
 }
 
 type SchemaColumnAttributes struct {
 	ref terra.Reference
 }
 
-func (sc SchemaColumnAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc SchemaColumnAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc SchemaColumnAttributes) InternalWithRef(ref terra.Reference) SchemaColumnAttributes {
 	return SchemaColumnAttributes{ref: ref}
 }
 
-func (sc SchemaColumnAttributes) InternalTokens() hclwrite.Tokens {
+func (sc SchemaColumnAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
 func (sc SchemaColumnAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("description"))
+	return terra.ReferenceAsString(sc.ref.Append("description"))
 }
 
 func (sc SchemaColumnAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("name"))
+	return terra.ReferenceAsString(sc.ref.Append("name"))
 }
 
 func (sc SchemaColumnAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("type"))
+	return terra.ReferenceAsString(sc.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AzureBlobFsLocationState struct {

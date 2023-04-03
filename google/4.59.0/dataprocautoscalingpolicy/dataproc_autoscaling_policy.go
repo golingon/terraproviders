@@ -58,144 +58,144 @@ type BasicAlgorithmAttributes struct {
 	ref terra.Reference
 }
 
-func (ba BasicAlgorithmAttributes) InternalRef() terra.Reference {
-	return ba.ref
+func (ba BasicAlgorithmAttributes) InternalRef() (terra.Reference, error) {
+	return ba.ref, nil
 }
 
 func (ba BasicAlgorithmAttributes) InternalWithRef(ref terra.Reference) BasicAlgorithmAttributes {
 	return BasicAlgorithmAttributes{ref: ref}
 }
 
-func (ba BasicAlgorithmAttributes) InternalTokens() hclwrite.Tokens {
+func (ba BasicAlgorithmAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ba.ref.InternalTokens()
 }
 
 func (ba BasicAlgorithmAttributes) CooldownPeriod() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("cooldown_period"))
+	return terra.ReferenceAsString(ba.ref.Append("cooldown_period"))
 }
 
 func (ba BasicAlgorithmAttributes) YarnConfig() terra.ListValue[YarnConfigAttributes] {
-	return terra.ReferenceList[YarnConfigAttributes](ba.ref.Append("yarn_config"))
+	return terra.ReferenceAsList[YarnConfigAttributes](ba.ref.Append("yarn_config"))
 }
 
 type YarnConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (yc YarnConfigAttributes) InternalRef() terra.Reference {
-	return yc.ref
+func (yc YarnConfigAttributes) InternalRef() (terra.Reference, error) {
+	return yc.ref, nil
 }
 
 func (yc YarnConfigAttributes) InternalWithRef(ref terra.Reference) YarnConfigAttributes {
 	return YarnConfigAttributes{ref: ref}
 }
 
-func (yc YarnConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (yc YarnConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return yc.ref.InternalTokens()
 }
 
 func (yc YarnConfigAttributes) GracefulDecommissionTimeout() terra.StringValue {
-	return terra.ReferenceString(yc.ref.Append("graceful_decommission_timeout"))
+	return terra.ReferenceAsString(yc.ref.Append("graceful_decommission_timeout"))
 }
 
 func (yc YarnConfigAttributes) ScaleDownFactor() terra.NumberValue {
-	return terra.ReferenceNumber(yc.ref.Append("scale_down_factor"))
+	return terra.ReferenceAsNumber(yc.ref.Append("scale_down_factor"))
 }
 
 func (yc YarnConfigAttributes) ScaleDownMinWorkerFraction() terra.NumberValue {
-	return terra.ReferenceNumber(yc.ref.Append("scale_down_min_worker_fraction"))
+	return terra.ReferenceAsNumber(yc.ref.Append("scale_down_min_worker_fraction"))
 }
 
 func (yc YarnConfigAttributes) ScaleUpFactor() terra.NumberValue {
-	return terra.ReferenceNumber(yc.ref.Append("scale_up_factor"))
+	return terra.ReferenceAsNumber(yc.ref.Append("scale_up_factor"))
 }
 
 func (yc YarnConfigAttributes) ScaleUpMinWorkerFraction() terra.NumberValue {
-	return terra.ReferenceNumber(yc.ref.Append("scale_up_min_worker_fraction"))
+	return terra.ReferenceAsNumber(yc.ref.Append("scale_up_min_worker_fraction"))
 }
 
 type SecondaryWorkerConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (swc SecondaryWorkerConfigAttributes) InternalRef() terra.Reference {
-	return swc.ref
+func (swc SecondaryWorkerConfigAttributes) InternalRef() (terra.Reference, error) {
+	return swc.ref, nil
 }
 
 func (swc SecondaryWorkerConfigAttributes) InternalWithRef(ref terra.Reference) SecondaryWorkerConfigAttributes {
 	return SecondaryWorkerConfigAttributes{ref: ref}
 }
 
-func (swc SecondaryWorkerConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (swc SecondaryWorkerConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return swc.ref.InternalTokens()
 }
 
 func (swc SecondaryWorkerConfigAttributes) MaxInstances() terra.NumberValue {
-	return terra.ReferenceNumber(swc.ref.Append("max_instances"))
+	return terra.ReferenceAsNumber(swc.ref.Append("max_instances"))
 }
 
 func (swc SecondaryWorkerConfigAttributes) MinInstances() terra.NumberValue {
-	return terra.ReferenceNumber(swc.ref.Append("min_instances"))
+	return terra.ReferenceAsNumber(swc.ref.Append("min_instances"))
 }
 
 func (swc SecondaryWorkerConfigAttributes) Weight() terra.NumberValue {
-	return terra.ReferenceNumber(swc.ref.Append("weight"))
+	return terra.ReferenceAsNumber(swc.ref.Append("weight"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type WorkerConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (wc WorkerConfigAttributes) InternalRef() terra.Reference {
-	return wc.ref
+func (wc WorkerConfigAttributes) InternalRef() (terra.Reference, error) {
+	return wc.ref, nil
 }
 
 func (wc WorkerConfigAttributes) InternalWithRef(ref terra.Reference) WorkerConfigAttributes {
 	return WorkerConfigAttributes{ref: ref}
 }
 
-func (wc WorkerConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (wc WorkerConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wc.ref.InternalTokens()
 }
 
 func (wc WorkerConfigAttributes) MaxInstances() terra.NumberValue {
-	return terra.ReferenceNumber(wc.ref.Append("max_instances"))
+	return terra.ReferenceAsNumber(wc.ref.Append("max_instances"))
 }
 
 func (wc WorkerConfigAttributes) MinInstances() terra.NumberValue {
-	return terra.ReferenceNumber(wc.ref.Append("min_instances"))
+	return terra.ReferenceAsNumber(wc.ref.Append("min_instances"))
 }
 
 func (wc WorkerConfigAttributes) Weight() terra.NumberValue {
-	return terra.ReferenceNumber(wc.ref.Append("weight"))
+	return terra.ReferenceAsNumber(wc.ref.Append("weight"))
 }
 
 type BasicAlgorithmState struct {

@@ -31,7 +31,7 @@ func (cp ContainerProviderAttributes) InternalWithRef(ref terra.Reference) Conta
 	return ContainerProviderAttributes{ref: ref}
 }
 
-func (cp ContainerProviderAttributes) InternalTokens() hclwrite.Tokens {
+func (cp ContainerProviderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cp.ref.InternalTokens()
 }
 
@@ -59,7 +59,7 @@ func (i InfoAttributes) InternalWithRef(ref terra.Reference) InfoAttributes {
 	return InfoAttributes{ref: ref}
 }
 
-func (i InfoAttributes) InternalTokens() hclwrite.Tokens {
+func (i InfoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -79,7 +79,7 @@ func (ei EksInfoAttributes) InternalWithRef(ref terra.Reference) EksInfoAttribut
 	return EksInfoAttributes{ref: ref}
 }
 
-func (ei EksInfoAttributes) InternalTokens() hclwrite.Tokens {
+func (ei EksInfoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ei.ref.InternalTokens()
 }
 

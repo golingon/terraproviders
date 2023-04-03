@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewOrbitalContact creates a new instance of [OrbitalContact].
 func NewOrbitalContact(name string, args OrbitalContactArgs) *OrbitalContact {
 	return &OrbitalContact{
 		Args: args,
@@ -19,28 +20,51 @@ func NewOrbitalContact(name string, args OrbitalContactArgs) *OrbitalContact {
 
 var _ terra.Resource = (*OrbitalContact)(nil)
 
+// OrbitalContact represents the Terraform resource azurerm_orbital_contact.
 type OrbitalContact struct {
-	Name  string
-	Args  OrbitalContactArgs
-	state *orbitalContactState
+	Name      string
+	Args      OrbitalContactArgs
+	state     *orbitalContactState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [OrbitalContact].
 func (oc *OrbitalContact) Type() string {
 	return "azurerm_orbital_contact"
 }
 
+// LocalName returns the local name for [OrbitalContact].
 func (oc *OrbitalContact) LocalName() string {
 	return oc.Name
 }
 
+// Configuration returns the configuration (args) for [OrbitalContact].
 func (oc *OrbitalContact) Configuration() interface{} {
 	return oc.Args
 }
 
+// DependOn is used for other resources to depend on [OrbitalContact].
+func (oc *OrbitalContact) DependOn() terra.Reference {
+	return terra.ReferenceResource(oc)
+}
+
+// Dependencies returns the list of resources [OrbitalContact] depends_on.
+func (oc *OrbitalContact) Dependencies() terra.Dependencies {
+	return oc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [OrbitalContact].
+func (oc *OrbitalContact) LifecycleManagement() *terra.Lifecycle {
+	return oc.Lifecycle
+}
+
+// Attributes returns the attributes for [OrbitalContact].
 func (oc *OrbitalContact) Attributes() orbitalContactAttributes {
 	return orbitalContactAttributes{ref: terra.ReferenceResource(oc)}
 }
 
+// ImportState imports the given attribute values into [OrbitalContact]'s state.
 func (oc *OrbitalContact) ImportState(av io.Reader) error {
 	oc.state = &orbitalContactState{}
 	if err := json.NewDecoder(av).Decode(oc.state); err != nil {
@@ -49,10 +73,12 @@ func (oc *OrbitalContact) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [OrbitalContact] has state.
 func (oc *OrbitalContact) State() (*orbitalContactState, bool) {
 	return oc.state, oc.state != nil
 }
 
+// StateMust returns the state for [OrbitalContact]. Panics if the state is nil.
 func (oc *OrbitalContact) StateMust() *orbitalContactState {
 	if oc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", oc.Type(), oc.LocalName()))
@@ -60,10 +86,7 @@ func (oc *OrbitalContact) StateMust() *orbitalContactState {
 	return oc.state
 }
 
-func (oc *OrbitalContact) DependOn() terra.Reference {
-	return terra.ReferenceResource(oc)
-}
-
+// OrbitalContactArgs contains the configurations for azurerm_orbital_contact.
 type OrbitalContactArgs struct {
 	// ContactProfileId: string, required
 	ContactProfileId terra.StringValue `hcl:"contact_profile_id,attr" validate:"required"`
@@ -81,43 +104,48 @@ type OrbitalContactArgs struct {
 	SpacecraftId terra.StringValue `hcl:"spacecraft_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *orbitalcontact.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that OrbitalContact depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type orbitalContactAttributes struct {
 	ref terra.Reference
 }
 
+// ContactProfileId returns a reference to field contact_profile_id of azurerm_orbital_contact.
 func (oc orbitalContactAttributes) ContactProfileId() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("contact_profile_id"))
+	return terra.ReferenceAsString(oc.ref.Append("contact_profile_id"))
 }
 
+// GroundStationName returns a reference to field ground_station_name of azurerm_orbital_contact.
 func (oc orbitalContactAttributes) GroundStationName() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("ground_station_name"))
+	return terra.ReferenceAsString(oc.ref.Append("ground_station_name"))
 }
 
+// Id returns a reference to field id of azurerm_orbital_contact.
 func (oc orbitalContactAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("id"))
+	return terra.ReferenceAsString(oc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_orbital_contact.
 func (oc orbitalContactAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("name"))
+	return terra.ReferenceAsString(oc.ref.Append("name"))
 }
 
+// ReservationEndTime returns a reference to field reservation_end_time of azurerm_orbital_contact.
 func (oc orbitalContactAttributes) ReservationEndTime() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("reservation_end_time"))
+	return terra.ReferenceAsString(oc.ref.Append("reservation_end_time"))
 }
 
+// ReservationStartTime returns a reference to field reservation_start_time of azurerm_orbital_contact.
 func (oc orbitalContactAttributes) ReservationStartTime() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("reservation_start_time"))
+	return terra.ReferenceAsString(oc.ref.Append("reservation_start_time"))
 }
 
+// SpacecraftId returns a reference to field spacecraft_id of azurerm_orbital_contact.
 func (oc orbitalContactAttributes) SpacecraftId() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("spacecraft_id"))
+	return terra.ReferenceAsString(oc.ref.Append("spacecraft_id"))
 }
 
 func (oc orbitalContactAttributes) Timeouts() orbitalcontact.TimeoutsAttributes {
-	return terra.ReferenceSingle[orbitalcontact.TimeoutsAttributes](oc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[orbitalcontact.TimeoutsAttributes](oc.ref.Append("timeouts"))
 }
 
 type orbitalContactState struct {

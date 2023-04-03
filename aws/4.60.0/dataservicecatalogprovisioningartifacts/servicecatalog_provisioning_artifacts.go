@@ -26,7 +26,7 @@ func (pad ProvisioningArtifactDetailsAttributes) InternalWithRef(ref terra.Refer
 	return ProvisioningArtifactDetailsAttributes{ref: ref}
 }
 
-func (pad ProvisioningArtifactDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (pad ProvisioningArtifactDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pad.ref.InternalTokens()
 }
 
@@ -70,7 +70,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

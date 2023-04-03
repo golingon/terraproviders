@@ -18,44 +18,44 @@ type SharedPrivateLinkResourceTypesAttributes struct {
 	ref terra.Reference
 }
 
-func (splrt SharedPrivateLinkResourceTypesAttributes) InternalRef() terra.Reference {
-	return splrt.ref
+func (splrt SharedPrivateLinkResourceTypesAttributes) InternalRef() (terra.Reference, error) {
+	return splrt.ref, nil
 }
 
 func (splrt SharedPrivateLinkResourceTypesAttributes) InternalWithRef(ref terra.Reference) SharedPrivateLinkResourceTypesAttributes {
 	return SharedPrivateLinkResourceTypesAttributes{ref: ref}
 }
 
-func (splrt SharedPrivateLinkResourceTypesAttributes) InternalTokens() hclwrite.Tokens {
+func (splrt SharedPrivateLinkResourceTypesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return splrt.ref.InternalTokens()
 }
 
 func (splrt SharedPrivateLinkResourceTypesAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(splrt.ref.Append("description"))
+	return terra.ReferenceAsString(splrt.ref.Append("description"))
 }
 
 func (splrt SharedPrivateLinkResourceTypesAttributes) SubresourceName() terra.StringValue {
-	return terra.ReferenceString(splrt.ref.Append("subresource_name"))
+	return terra.ReferenceAsString(splrt.ref.Append("subresource_name"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type SharedPrivateLinkResourceTypesState struct {

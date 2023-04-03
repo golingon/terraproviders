@@ -33,7 +33,7 @@ func (rtml ResourceTagMappingListAttributes) InternalWithRef(ref terra.Reference
 	return ResourceTagMappingListAttributes{ref: ref}
 }
 
-func (rtml ResourceTagMappingListAttributes) InternalTokens() hclwrite.Tokens {
+func (rtml ResourceTagMappingListAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rtml.ref.InternalTokens()
 }
 
@@ -61,7 +61,7 @@ func (cd ComplianceDetailsAttributes) InternalWithRef(ref terra.Reference) Compl
 	return ComplianceDetailsAttributes{ref: ref}
 }
 
-func (cd ComplianceDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (cd ComplianceDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cd.ref.InternalTokens()
 }
 
@@ -89,7 +89,7 @@ func (tf TagFilterAttributes) InternalWithRef(ref terra.Reference) TagFilterAttr
 	return TagFilterAttributes{ref: ref}
 }
 
-func (tf TagFilterAttributes) InternalTokens() hclwrite.Tokens {
+func (tf TagFilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tf.ref.InternalTokens()
 }
 

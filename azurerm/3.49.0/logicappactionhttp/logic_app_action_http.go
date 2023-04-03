@@ -29,56 +29,56 @@ type RunAfterAttributes struct {
 	ref terra.Reference
 }
 
-func (ra RunAfterAttributes) InternalRef() terra.Reference {
-	return ra.ref
+func (ra RunAfterAttributes) InternalRef() (terra.Reference, error) {
+	return ra.ref, nil
 }
 
 func (ra RunAfterAttributes) InternalWithRef(ref terra.Reference) RunAfterAttributes {
 	return RunAfterAttributes{ref: ref}
 }
 
-func (ra RunAfterAttributes) InternalTokens() hclwrite.Tokens {
+func (ra RunAfterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ra.ref.InternalTokens()
 }
 
 func (ra RunAfterAttributes) ActionName() terra.StringValue {
-	return terra.ReferenceString(ra.ref.Append("action_name"))
+	return terra.ReferenceAsString(ra.ref.Append("action_name"))
 }
 
 func (ra RunAfterAttributes) ActionResult() terra.StringValue {
-	return terra.ReferenceString(ra.ref.Append("action_result"))
+	return terra.ReferenceAsString(ra.ref.Append("action_result"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type RunAfterState struct {

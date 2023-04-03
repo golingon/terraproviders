@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewContainerApp creates a new instance of [ContainerApp].
 func NewContainerApp(name string, args ContainerAppArgs) *ContainerApp {
 	return &ContainerApp{
 		Args: args,
@@ -19,28 +20,51 @@ func NewContainerApp(name string, args ContainerAppArgs) *ContainerApp {
 
 var _ terra.Resource = (*ContainerApp)(nil)
 
+// ContainerApp represents the Terraform resource azurerm_container_app.
 type ContainerApp struct {
-	Name  string
-	Args  ContainerAppArgs
-	state *containerAppState
+	Name      string
+	Args      ContainerAppArgs
+	state     *containerAppState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ContainerApp].
 func (ca *ContainerApp) Type() string {
 	return "azurerm_container_app"
 }
 
+// LocalName returns the local name for [ContainerApp].
 func (ca *ContainerApp) LocalName() string {
 	return ca.Name
 }
 
+// Configuration returns the configuration (args) for [ContainerApp].
 func (ca *ContainerApp) Configuration() interface{} {
 	return ca.Args
 }
 
+// DependOn is used for other resources to depend on [ContainerApp].
+func (ca *ContainerApp) DependOn() terra.Reference {
+	return terra.ReferenceResource(ca)
+}
+
+// Dependencies returns the list of resources [ContainerApp] depends_on.
+func (ca *ContainerApp) Dependencies() terra.Dependencies {
+	return ca.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ContainerApp].
+func (ca *ContainerApp) LifecycleManagement() *terra.Lifecycle {
+	return ca.Lifecycle
+}
+
+// Attributes returns the attributes for [ContainerApp].
 func (ca *ContainerApp) Attributes() containerAppAttributes {
 	return containerAppAttributes{ref: terra.ReferenceResource(ca)}
 }
 
+// ImportState imports the given attribute values into [ContainerApp]'s state.
 func (ca *ContainerApp) ImportState(av io.Reader) error {
 	ca.state = &containerAppState{}
 	if err := json.NewDecoder(av).Decode(ca.state); err != nil {
@@ -49,10 +73,12 @@ func (ca *ContainerApp) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ContainerApp] has state.
 func (ca *ContainerApp) State() (*containerAppState, bool) {
 	return ca.state, ca.state != nil
 }
 
+// StateMust returns the state for [ContainerApp]. Panics if the state is nil.
 func (ca *ContainerApp) StateMust() *containerAppState {
 	if ca.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ca.Type(), ca.LocalName()))
@@ -60,10 +86,7 @@ func (ca *ContainerApp) StateMust() *containerAppState {
 	return ca.state
 }
 
-func (ca *ContainerApp) DependOn() terra.Reference {
-	return terra.ReferenceResource(ca)
-}
-
+// ContainerAppArgs contains the configurations for azurerm_container_app.
 type ContainerAppArgs struct {
 	// ContainerAppEnvironmentId: string, required
 	ContainerAppEnvironmentId terra.StringValue `hcl:"container_app_environment_id,attr" validate:"required"`
@@ -91,83 +114,92 @@ type ContainerAppArgs struct {
 	Template *containerapp.Template `hcl:"template,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *containerapp.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ContainerApp depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type containerAppAttributes struct {
 	ref terra.Reference
 }
 
+// ContainerAppEnvironmentId returns a reference to field container_app_environment_id of azurerm_container_app.
 func (ca containerAppAttributes) ContainerAppEnvironmentId() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("container_app_environment_id"))
+	return terra.ReferenceAsString(ca.ref.Append("container_app_environment_id"))
 }
 
+// CustomDomainVerificationId returns a reference to field custom_domain_verification_id of azurerm_container_app.
 func (ca containerAppAttributes) CustomDomainVerificationId() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("custom_domain_verification_id"))
+	return terra.ReferenceAsString(ca.ref.Append("custom_domain_verification_id"))
 }
 
+// Id returns a reference to field id of azurerm_container_app.
 func (ca containerAppAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("id"))
+	return terra.ReferenceAsString(ca.ref.Append("id"))
 }
 
+// LatestRevisionFqdn returns a reference to field latest_revision_fqdn of azurerm_container_app.
 func (ca containerAppAttributes) LatestRevisionFqdn() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("latest_revision_fqdn"))
+	return terra.ReferenceAsString(ca.ref.Append("latest_revision_fqdn"))
 }
 
+// LatestRevisionName returns a reference to field latest_revision_name of azurerm_container_app.
 func (ca containerAppAttributes) LatestRevisionName() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("latest_revision_name"))
+	return terra.ReferenceAsString(ca.ref.Append("latest_revision_name"))
 }
 
+// Location returns a reference to field location of azurerm_container_app.
 func (ca containerAppAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("location"))
+	return terra.ReferenceAsString(ca.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_container_app.
 func (ca containerAppAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("name"))
+	return terra.ReferenceAsString(ca.ref.Append("name"))
 }
 
+// OutboundIpAddresses returns a reference to field outbound_ip_addresses of azurerm_container_app.
 func (ca containerAppAttributes) OutboundIpAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ca.ref.Append("outbound_ip_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](ca.ref.Append("outbound_ip_addresses"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_container_app.
 func (ca containerAppAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ca.ref.Append("resource_group_name"))
 }
 
+// RevisionMode returns a reference to field revision_mode of azurerm_container_app.
 func (ca containerAppAttributes) RevisionMode() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("revision_mode"))
+	return terra.ReferenceAsString(ca.ref.Append("revision_mode"))
 }
 
+// Tags returns a reference to field tags of azurerm_container_app.
 func (ca containerAppAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ca.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ca.ref.Append("tags"))
 }
 
 func (ca containerAppAttributes) Dapr() terra.ListValue[containerapp.DaprAttributes] {
-	return terra.ReferenceList[containerapp.DaprAttributes](ca.ref.Append("dapr"))
+	return terra.ReferenceAsList[containerapp.DaprAttributes](ca.ref.Append("dapr"))
 }
 
 func (ca containerAppAttributes) Identity() terra.ListValue[containerapp.IdentityAttributes] {
-	return terra.ReferenceList[containerapp.IdentityAttributes](ca.ref.Append("identity"))
+	return terra.ReferenceAsList[containerapp.IdentityAttributes](ca.ref.Append("identity"))
 }
 
 func (ca containerAppAttributes) Ingress() terra.ListValue[containerapp.IngressAttributes] {
-	return terra.ReferenceList[containerapp.IngressAttributes](ca.ref.Append("ingress"))
+	return terra.ReferenceAsList[containerapp.IngressAttributes](ca.ref.Append("ingress"))
 }
 
 func (ca containerAppAttributes) Registry() terra.ListValue[containerapp.RegistryAttributes] {
-	return terra.ReferenceList[containerapp.RegistryAttributes](ca.ref.Append("registry"))
+	return terra.ReferenceAsList[containerapp.RegistryAttributes](ca.ref.Append("registry"))
 }
 
 func (ca containerAppAttributes) Secret() terra.SetValue[containerapp.SecretAttributes] {
-	return terra.ReferenceSet[containerapp.SecretAttributes](ca.ref.Append("secret"))
+	return terra.ReferenceAsSet[containerapp.SecretAttributes](ca.ref.Append("secret"))
 }
 
 func (ca containerAppAttributes) Template() terra.ListValue[containerapp.TemplateAttributes] {
-	return terra.ReferenceList[containerapp.TemplateAttributes](ca.ref.Append("template"))
+	return terra.ReferenceAsList[containerapp.TemplateAttributes](ca.ref.Append("template"))
 }
 
 func (ca containerAppAttributes) Timeouts() containerapp.TimeoutsAttributes {
-	return terra.ReferenceSingle[containerapp.TimeoutsAttributes](ca.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[containerapp.TimeoutsAttributes](ca.ref.Append("timeouts"))
 }
 
 type containerAppState struct {

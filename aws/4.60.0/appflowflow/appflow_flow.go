@@ -542,7 +542,7 @@ func (dfc DestinationFlowConfigAttributes) InternalWithRef(ref terra.Reference) 
 	return DestinationFlowConfigAttributes{ref: ref}
 }
 
-func (dfc DestinationFlowConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (dfc DestinationFlowConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dfc.ref.InternalTokens()
 }
 
@@ -574,7 +574,7 @@ func (dcp DestinationConnectorPropertiesAttributes) InternalWithRef(ref terra.Re
 	return DestinationConnectorPropertiesAttributes{ref: ref}
 }
 
-func (dcp DestinationConnectorPropertiesAttributes) InternalTokens() hclwrite.Tokens {
+func (dcp DestinationConnectorPropertiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dcp.ref.InternalTokens()
 }
 
@@ -642,7 +642,7 @@ func (cc DestinationConnectorPropertiesCustomConnectorAttributes) InternalWithRe
 	return DestinationConnectorPropertiesCustomConnectorAttributes{ref: ref}
 }
 
-func (cc DestinationConnectorPropertiesCustomConnectorAttributes) InternalTokens() hclwrite.Tokens {
+func (cc DestinationConnectorPropertiesCustomConnectorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -678,7 +678,7 @@ func (ehc CustomConnectorErrorHandlingConfigAttributes) InternalWithRef(ref terr
 	return CustomConnectorErrorHandlingConfigAttributes{ref: ref}
 }
 
-func (ehc CustomConnectorErrorHandlingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ehc CustomConnectorErrorHandlingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ehc.ref.InternalTokens()
 }
 
@@ -706,7 +706,7 @@ func (cp CustomerProfilesAttributes) InternalWithRef(ref terra.Reference) Custom
 	return CustomerProfilesAttributes{ref: ref}
 }
 
-func (cp CustomerProfilesAttributes) InternalTokens() hclwrite.Tokens {
+func (cp CustomerProfilesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cp.ref.InternalTokens()
 }
 
@@ -730,7 +730,7 @@ func (eb EventBridgeAttributes) InternalWithRef(ref terra.Reference) EventBridge
 	return EventBridgeAttributes{ref: ref}
 }
 
-func (eb EventBridgeAttributes) InternalTokens() hclwrite.Tokens {
+func (eb EventBridgeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return eb.ref.InternalTokens()
 }
 
@@ -754,7 +754,7 @@ func (ehc EventBridgeErrorHandlingConfigAttributes) InternalWithRef(ref terra.Re
 	return EventBridgeErrorHandlingConfigAttributes{ref: ref}
 }
 
-func (ehc EventBridgeErrorHandlingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ehc EventBridgeErrorHandlingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ehc.ref.InternalTokens()
 }
 
@@ -782,7 +782,7 @@ func (h HoneycodeAttributes) InternalWithRef(ref terra.Reference) HoneycodeAttri
 	return HoneycodeAttributes{ref: ref}
 }
 
-func (h HoneycodeAttributes) InternalTokens() hclwrite.Tokens {
+func (h HoneycodeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 
@@ -806,7 +806,7 @@ func (ehc HoneycodeErrorHandlingConfigAttributes) InternalWithRef(ref terra.Refe
 	return HoneycodeErrorHandlingConfigAttributes{ref: ref}
 }
 
-func (ehc HoneycodeErrorHandlingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ehc HoneycodeErrorHandlingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ehc.ref.InternalTokens()
 }
 
@@ -834,7 +834,7 @@ func (lm LookoutMetricsAttributes) InternalWithRef(ref terra.Reference) LookoutM
 	return LookoutMetricsAttributes{ref: ref}
 }
 
-func (lm LookoutMetricsAttributes) InternalTokens() hclwrite.Tokens {
+func (lm LookoutMetricsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lm.ref.InternalTokens()
 }
 
@@ -850,7 +850,7 @@ func (m DestinationConnectorPropertiesMarketoAttributes) InternalWithRef(ref ter
 	return DestinationConnectorPropertiesMarketoAttributes{ref: ref}
 }
 
-func (m DestinationConnectorPropertiesMarketoAttributes) InternalTokens() hclwrite.Tokens {
+func (m DestinationConnectorPropertiesMarketoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -874,7 +874,7 @@ func (ehc MarketoErrorHandlingConfigAttributes) InternalWithRef(ref terra.Refere
 	return MarketoErrorHandlingConfigAttributes{ref: ref}
 }
 
-func (ehc MarketoErrorHandlingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ehc MarketoErrorHandlingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ehc.ref.InternalTokens()
 }
 
@@ -902,7 +902,7 @@ func (r RedshiftAttributes) InternalWithRef(ref terra.Reference) RedshiftAttribu
 	return RedshiftAttributes{ref: ref}
 }
 
-func (r RedshiftAttributes) InternalTokens() hclwrite.Tokens {
+func (r RedshiftAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -934,7 +934,7 @@ func (ehc RedshiftErrorHandlingConfigAttributes) InternalWithRef(ref terra.Refer
 	return RedshiftErrorHandlingConfigAttributes{ref: ref}
 }
 
-func (ehc RedshiftErrorHandlingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ehc RedshiftErrorHandlingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ehc.ref.InternalTokens()
 }
 
@@ -962,7 +962,7 @@ func (s DestinationConnectorPropertiesS3Attributes) InternalWithRef(ref terra.Re
 	return DestinationConnectorPropertiesS3Attributes{ref: ref}
 }
 
-func (s DestinationConnectorPropertiesS3Attributes) InternalTokens() hclwrite.Tokens {
+func (s DestinationConnectorPropertiesS3Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -990,7 +990,7 @@ func (sofc S3S3OutputFormatConfigAttributes) InternalWithRef(ref terra.Reference
 	return S3S3OutputFormatConfigAttributes{ref: ref}
 }
 
-func (sofc S3S3OutputFormatConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sofc S3S3OutputFormatConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sofc.ref.InternalTokens()
 }
 
@@ -1022,7 +1022,7 @@ func (ac S3S3OutputFormatConfigAggregationConfigAttributes) InternalWithRef(ref 
 	return S3S3OutputFormatConfigAggregationConfigAttributes{ref: ref}
 }
 
-func (ac S3S3OutputFormatConfigAggregationConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ac S3S3OutputFormatConfigAggregationConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
@@ -1042,7 +1042,7 @@ func (pc S3S3OutputFormatConfigPrefixConfigAttributes) InternalWithRef(ref terra
 	return S3S3OutputFormatConfigPrefixConfigAttributes{ref: ref}
 }
 
-func (pc S3S3OutputFormatConfigPrefixConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (pc S3S3OutputFormatConfigPrefixConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
@@ -1066,7 +1066,7 @@ func (s DestinationConnectorPropertiesSalesforceAttributes) InternalWithRef(ref 
 	return DestinationConnectorPropertiesSalesforceAttributes{ref: ref}
 }
 
-func (s DestinationConnectorPropertiesSalesforceAttributes) InternalTokens() hclwrite.Tokens {
+func (s DestinationConnectorPropertiesSalesforceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -1098,7 +1098,7 @@ func (ehc SalesforceErrorHandlingConfigAttributes) InternalWithRef(ref terra.Ref
 	return SalesforceErrorHandlingConfigAttributes{ref: ref}
 }
 
-func (ehc SalesforceErrorHandlingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ehc SalesforceErrorHandlingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ehc.ref.InternalTokens()
 }
 
@@ -1126,7 +1126,7 @@ func (sd DestinationConnectorPropertiesSapoDataAttributes) InternalWithRef(ref t
 	return DestinationConnectorPropertiesSapoDataAttributes{ref: ref}
 }
 
-func (sd DestinationConnectorPropertiesSapoDataAttributes) InternalTokens() hclwrite.Tokens {
+func (sd DestinationConnectorPropertiesSapoDataAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sd.ref.InternalTokens()
 }
 
@@ -1162,7 +1162,7 @@ func (ehc SapoDataErrorHandlingConfigAttributes) InternalWithRef(ref terra.Refer
 	return SapoDataErrorHandlingConfigAttributes{ref: ref}
 }
 
-func (ehc SapoDataErrorHandlingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ehc SapoDataErrorHandlingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ehc.ref.InternalTokens()
 }
 
@@ -1190,7 +1190,7 @@ func (srhc SuccessResponseHandlingConfigAttributes) InternalWithRef(ref terra.Re
 	return SuccessResponseHandlingConfigAttributes{ref: ref}
 }
 
-func (srhc SuccessResponseHandlingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (srhc SuccessResponseHandlingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return srhc.ref.InternalTokens()
 }
 
@@ -1214,7 +1214,7 @@ func (s SnowflakeAttributes) InternalWithRef(ref terra.Reference) SnowflakeAttri
 	return SnowflakeAttributes{ref: ref}
 }
 
-func (s SnowflakeAttributes) InternalTokens() hclwrite.Tokens {
+func (s SnowflakeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -1246,7 +1246,7 @@ func (ehc SnowflakeErrorHandlingConfigAttributes) InternalWithRef(ref terra.Refe
 	return SnowflakeErrorHandlingConfigAttributes{ref: ref}
 }
 
-func (ehc SnowflakeErrorHandlingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ehc SnowflakeErrorHandlingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ehc.ref.InternalTokens()
 }
 
@@ -1274,7 +1274,7 @@ func (u UpsolverAttributes) InternalWithRef(ref terra.Reference) UpsolverAttribu
 	return UpsolverAttributes{ref: ref}
 }
 
-func (u UpsolverAttributes) InternalTokens() hclwrite.Tokens {
+func (u UpsolverAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return u.ref.InternalTokens()
 }
 
@@ -1302,7 +1302,7 @@ func (sofc UpsolverS3OutputFormatConfigAttributes) InternalWithRef(ref terra.Ref
 	return UpsolverS3OutputFormatConfigAttributes{ref: ref}
 }
 
-func (sofc UpsolverS3OutputFormatConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sofc UpsolverS3OutputFormatConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sofc.ref.InternalTokens()
 }
 
@@ -1330,7 +1330,7 @@ func (ac UpsolverS3OutputFormatConfigAggregationConfigAttributes) InternalWithRe
 	return UpsolverS3OutputFormatConfigAggregationConfigAttributes{ref: ref}
 }
 
-func (ac UpsolverS3OutputFormatConfigAggregationConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ac UpsolverS3OutputFormatConfigAggregationConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
@@ -1350,7 +1350,7 @@ func (pc UpsolverS3OutputFormatConfigPrefixConfigAttributes) InternalWithRef(ref
 	return UpsolverS3OutputFormatConfigPrefixConfigAttributes{ref: ref}
 }
 
-func (pc UpsolverS3OutputFormatConfigPrefixConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (pc UpsolverS3OutputFormatConfigPrefixConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
@@ -1374,7 +1374,7 @@ func (z DestinationConnectorPropertiesZendeskAttributes) InternalWithRef(ref ter
 	return DestinationConnectorPropertiesZendeskAttributes{ref: ref}
 }
 
-func (z DestinationConnectorPropertiesZendeskAttributes) InternalTokens() hclwrite.Tokens {
+func (z DestinationConnectorPropertiesZendeskAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return z.ref.InternalTokens()
 }
 
@@ -1406,7 +1406,7 @@ func (ehc ZendeskErrorHandlingConfigAttributes) InternalWithRef(ref terra.Refere
 	return ZendeskErrorHandlingConfigAttributes{ref: ref}
 }
 
-func (ehc ZendeskErrorHandlingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ehc ZendeskErrorHandlingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ehc.ref.InternalTokens()
 }
 
@@ -1434,7 +1434,7 @@ func (sfc SourceFlowConfigAttributes) InternalWithRef(ref terra.Reference) Sourc
 	return SourceFlowConfigAttributes{ref: ref}
 }
 
-func (sfc SourceFlowConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sfc SourceFlowConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sfc.ref.InternalTokens()
 }
 
@@ -1470,7 +1470,7 @@ func (ipc IncrementalPullConfigAttributes) InternalWithRef(ref terra.Reference) 
 	return IncrementalPullConfigAttributes{ref: ref}
 }
 
-func (ipc IncrementalPullConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ipc IncrementalPullConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ipc.ref.InternalTokens()
 }
 
@@ -1490,7 +1490,7 @@ func (scp SourceConnectorPropertiesAttributes) InternalWithRef(ref terra.Referen
 	return SourceConnectorPropertiesAttributes{ref: ref}
 }
 
-func (scp SourceConnectorPropertiesAttributes) InternalTokens() hclwrite.Tokens {
+func (scp SourceConnectorPropertiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return scp.ref.InternalTokens()
 }
 
@@ -1570,7 +1570,7 @@ func (a AmplitudeAttributes) InternalWithRef(ref terra.Reference) AmplitudeAttri
 	return AmplitudeAttributes{ref: ref}
 }
 
-func (a AmplitudeAttributes) InternalTokens() hclwrite.Tokens {
+func (a AmplitudeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -1590,7 +1590,7 @@ func (cc SourceConnectorPropertiesCustomConnectorAttributes) InternalWithRef(ref
 	return SourceConnectorPropertiesCustomConnectorAttributes{ref: ref}
 }
 
-func (cc SourceConnectorPropertiesCustomConnectorAttributes) InternalTokens() hclwrite.Tokens {
+func (cc SourceConnectorPropertiesCustomConnectorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -1614,7 +1614,7 @@ func (d DatadogAttributes) InternalWithRef(ref terra.Reference) DatadogAttribute
 	return DatadogAttributes{ref: ref}
 }
 
-func (d DatadogAttributes) InternalTokens() hclwrite.Tokens {
+func (d DatadogAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -1634,7 +1634,7 @@ func (d DynatraceAttributes) InternalWithRef(ref terra.Reference) DynatraceAttri
 	return DynatraceAttributes{ref: ref}
 }
 
-func (d DynatraceAttributes) InternalTokens() hclwrite.Tokens {
+func (d DynatraceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -1654,7 +1654,7 @@ func (ga GoogleAnalyticsAttributes) InternalWithRef(ref terra.Reference) GoogleA
 	return GoogleAnalyticsAttributes{ref: ref}
 }
 
-func (ga GoogleAnalyticsAttributes) InternalTokens() hclwrite.Tokens {
+func (ga GoogleAnalyticsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ga.ref.InternalTokens()
 }
 
@@ -1674,7 +1674,7 @@ func (in InforNexusAttributes) InternalWithRef(ref terra.Reference) InforNexusAt
 	return InforNexusAttributes{ref: ref}
 }
 
-func (in InforNexusAttributes) InternalTokens() hclwrite.Tokens {
+func (in InforNexusAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return in.ref.InternalTokens()
 }
 
@@ -1694,7 +1694,7 @@ func (m SourceConnectorPropertiesMarketoAttributes) InternalWithRef(ref terra.Re
 	return SourceConnectorPropertiesMarketoAttributes{ref: ref}
 }
 
-func (m SourceConnectorPropertiesMarketoAttributes) InternalTokens() hclwrite.Tokens {
+func (m SourceConnectorPropertiesMarketoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -1714,7 +1714,7 @@ func (s SourceConnectorPropertiesS3Attributes) InternalWithRef(ref terra.Referen
 	return SourceConnectorPropertiesS3Attributes{ref: ref}
 }
 
-func (s SourceConnectorPropertiesS3Attributes) InternalTokens() hclwrite.Tokens {
+func (s SourceConnectorPropertiesS3Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -1742,7 +1742,7 @@ func (sifc S3InputFormatConfigAttributes) InternalWithRef(ref terra.Reference) S
 	return S3InputFormatConfigAttributes{ref: ref}
 }
 
-func (sifc S3InputFormatConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sifc S3InputFormatConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sifc.ref.InternalTokens()
 }
 
@@ -1762,7 +1762,7 @@ func (s SourceConnectorPropertiesSalesforceAttributes) InternalWithRef(ref terra
 	return SourceConnectorPropertiesSalesforceAttributes{ref: ref}
 }
 
-func (s SourceConnectorPropertiesSalesforceAttributes) InternalTokens() hclwrite.Tokens {
+func (s SourceConnectorPropertiesSalesforceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -1790,7 +1790,7 @@ func (sd SourceConnectorPropertiesSapoDataAttributes) InternalWithRef(ref terra.
 	return SourceConnectorPropertiesSapoDataAttributes{ref: ref}
 }
 
-func (sd SourceConnectorPropertiesSapoDataAttributes) InternalTokens() hclwrite.Tokens {
+func (sd SourceConnectorPropertiesSapoDataAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sd.ref.InternalTokens()
 }
 
@@ -1810,7 +1810,7 @@ func (sn ServiceNowAttributes) InternalWithRef(ref terra.Reference) ServiceNowAt
 	return ServiceNowAttributes{ref: ref}
 }
 
-func (sn ServiceNowAttributes) InternalTokens() hclwrite.Tokens {
+func (sn ServiceNowAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sn.ref.InternalTokens()
 }
 
@@ -1830,7 +1830,7 @@ func (s SingularAttributes) InternalWithRef(ref terra.Reference) SingularAttribu
 	return SingularAttributes{ref: ref}
 }
 
-func (s SingularAttributes) InternalTokens() hclwrite.Tokens {
+func (s SingularAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -1850,7 +1850,7 @@ func (s SlackAttributes) InternalWithRef(ref terra.Reference) SlackAttributes {
 	return SlackAttributes{ref: ref}
 }
 
-func (s SlackAttributes) InternalTokens() hclwrite.Tokens {
+func (s SlackAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -1870,7 +1870,7 @@ func (t TrendmicroAttributes) InternalWithRef(ref terra.Reference) TrendmicroAtt
 	return TrendmicroAttributes{ref: ref}
 }
 
-func (t TrendmicroAttributes) InternalTokens() hclwrite.Tokens {
+func (t TrendmicroAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -1890,7 +1890,7 @@ func (v VeevaAttributes) InternalWithRef(ref terra.Reference) VeevaAttributes {
 	return VeevaAttributes{ref: ref}
 }
 
-func (v VeevaAttributes) InternalTokens() hclwrite.Tokens {
+func (v VeevaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 
@@ -1926,7 +1926,7 @@ func (z SourceConnectorPropertiesZendeskAttributes) InternalWithRef(ref terra.Re
 	return SourceConnectorPropertiesZendeskAttributes{ref: ref}
 }
 
-func (z SourceConnectorPropertiesZendeskAttributes) InternalTokens() hclwrite.Tokens {
+func (z SourceConnectorPropertiesZendeskAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return z.ref.InternalTokens()
 }
 
@@ -1946,7 +1946,7 @@ func (t TaskAttributes) InternalWithRef(ref terra.Reference) TaskAttributes {
 	return TaskAttributes{ref: ref}
 }
 
-func (t TaskAttributes) InternalTokens() hclwrite.Tokens {
+func (t TaskAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -1982,7 +1982,7 @@ func (co ConnectorOperatorAttributes) InternalWithRef(ref terra.Reference) Conne
 	return ConnectorOperatorAttributes{ref: ref}
 }
 
-func (co ConnectorOperatorAttributes) InternalTokens() hclwrite.Tokens {
+func (co ConnectorOperatorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return co.ref.InternalTokens()
 }
 
@@ -2062,7 +2062,7 @@ func (tc TriggerConfigAttributes) InternalWithRef(ref terra.Reference) TriggerCo
 	return TriggerConfigAttributes{ref: ref}
 }
 
-func (tc TriggerConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (tc TriggerConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tc.ref.InternalTokens()
 }
 
@@ -2086,7 +2086,7 @@ func (tp TriggerPropertiesAttributes) InternalWithRef(ref terra.Reference) Trigg
 	return TriggerPropertiesAttributes{ref: ref}
 }
 
-func (tp TriggerPropertiesAttributes) InternalTokens() hclwrite.Tokens {
+func (tp TriggerPropertiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tp.ref.InternalTokens()
 }
 
@@ -2106,7 +2106,7 @@ func (s ScheduledAttributes) InternalWithRef(ref terra.Reference) ScheduledAttri
 	return ScheduledAttributes{ref: ref}
 }
 
-func (s ScheduledAttributes) InternalTokens() hclwrite.Tokens {
+func (s ScheduledAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 

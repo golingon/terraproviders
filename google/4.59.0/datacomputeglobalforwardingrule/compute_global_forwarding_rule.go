@@ -18,48 +18,48 @@ type MetadataFiltersAttributes struct {
 	ref terra.Reference
 }
 
-func (mf MetadataFiltersAttributes) InternalRef() terra.Reference {
-	return mf.ref
+func (mf MetadataFiltersAttributes) InternalRef() (terra.Reference, error) {
+	return mf.ref, nil
 }
 
 func (mf MetadataFiltersAttributes) InternalWithRef(ref terra.Reference) MetadataFiltersAttributes {
 	return MetadataFiltersAttributes{ref: ref}
 }
 
-func (mf MetadataFiltersAttributes) InternalTokens() hclwrite.Tokens {
+func (mf MetadataFiltersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mf.ref.InternalTokens()
 }
 
 func (mf MetadataFiltersAttributes) FilterMatchCriteria() terra.StringValue {
-	return terra.ReferenceString(mf.ref.Append("filter_match_criteria"))
+	return terra.ReferenceAsString(mf.ref.Append("filter_match_criteria"))
 }
 
 func (mf MetadataFiltersAttributes) FilterLabels() terra.ListValue[FilterLabelsAttributes] {
-	return terra.ReferenceList[FilterLabelsAttributes](mf.ref.Append("filter_labels"))
+	return terra.ReferenceAsList[FilterLabelsAttributes](mf.ref.Append("filter_labels"))
 }
 
 type FilterLabelsAttributes struct {
 	ref terra.Reference
 }
 
-func (fl FilterLabelsAttributes) InternalRef() terra.Reference {
-	return fl.ref
+func (fl FilterLabelsAttributes) InternalRef() (terra.Reference, error) {
+	return fl.ref, nil
 }
 
 func (fl FilterLabelsAttributes) InternalWithRef(ref terra.Reference) FilterLabelsAttributes {
 	return FilterLabelsAttributes{ref: ref}
 }
 
-func (fl FilterLabelsAttributes) InternalTokens() hclwrite.Tokens {
+func (fl FilterLabelsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fl.ref.InternalTokens()
 }
 
 func (fl FilterLabelsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(fl.ref.Append("name"))
+	return terra.ReferenceAsString(fl.ref.Append("name"))
 }
 
 func (fl FilterLabelsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(fl.ref.Append("value"))
+	return terra.ReferenceAsString(fl.ref.Append("value"))
 }
 
 type MetadataFiltersState struct {

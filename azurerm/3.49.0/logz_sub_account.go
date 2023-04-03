@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLogzSubAccount creates a new instance of [LogzSubAccount].
 func NewLogzSubAccount(name string, args LogzSubAccountArgs) *LogzSubAccount {
 	return &LogzSubAccount{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLogzSubAccount(name string, args LogzSubAccountArgs) *LogzSubAccount {
 
 var _ terra.Resource = (*LogzSubAccount)(nil)
 
+// LogzSubAccount represents the Terraform resource azurerm_logz_sub_account.
 type LogzSubAccount struct {
-	Name  string
-	Args  LogzSubAccountArgs
-	state *logzSubAccountState
+	Name      string
+	Args      LogzSubAccountArgs
+	state     *logzSubAccountState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LogzSubAccount].
 func (lsa *LogzSubAccount) Type() string {
 	return "azurerm_logz_sub_account"
 }
 
+// LocalName returns the local name for [LogzSubAccount].
 func (lsa *LogzSubAccount) LocalName() string {
 	return lsa.Name
 }
 
+// Configuration returns the configuration (args) for [LogzSubAccount].
 func (lsa *LogzSubAccount) Configuration() interface{} {
 	return lsa.Args
 }
 
+// DependOn is used for other resources to depend on [LogzSubAccount].
+func (lsa *LogzSubAccount) DependOn() terra.Reference {
+	return terra.ReferenceResource(lsa)
+}
+
+// Dependencies returns the list of resources [LogzSubAccount] depends_on.
+func (lsa *LogzSubAccount) Dependencies() terra.Dependencies {
+	return lsa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LogzSubAccount].
+func (lsa *LogzSubAccount) LifecycleManagement() *terra.Lifecycle {
+	return lsa.Lifecycle
+}
+
+// Attributes returns the attributes for [LogzSubAccount].
 func (lsa *LogzSubAccount) Attributes() logzSubAccountAttributes {
 	return logzSubAccountAttributes{ref: terra.ReferenceResource(lsa)}
 }
 
+// ImportState imports the given attribute values into [LogzSubAccount]'s state.
 func (lsa *LogzSubAccount) ImportState(av io.Reader) error {
 	lsa.state = &logzSubAccountState{}
 	if err := json.NewDecoder(av).Decode(lsa.state); err != nil {
@@ -49,10 +73,12 @@ func (lsa *LogzSubAccount) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LogzSubAccount] has state.
 func (lsa *LogzSubAccount) State() (*logzSubAccountState, bool) {
 	return lsa.state, lsa.state != nil
 }
 
+// StateMust returns the state for [LogzSubAccount]. Panics if the state is nil.
 func (lsa *LogzSubAccount) StateMust() *logzSubAccountState {
 	if lsa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lsa.Type(), lsa.LocalName()))
@@ -60,10 +86,7 @@ func (lsa *LogzSubAccount) StateMust() *logzSubAccountState {
 	return lsa.state
 }
 
-func (lsa *LogzSubAccount) DependOn() terra.Reference {
-	return terra.ReferenceResource(lsa)
-}
-
+// LogzSubAccountArgs contains the configurations for azurerm_logz_sub_account.
 type LogzSubAccountArgs struct {
 	// Enabled: bool, optional
 	Enabled terra.BoolValue `hcl:"enabled,attr"`
@@ -79,39 +102,42 @@ type LogzSubAccountArgs struct {
 	Timeouts *logzsubaccount.Timeouts `hcl:"timeouts,block"`
 	// User: required
 	User *logzsubaccount.User `hcl:"user,block" validate:"required"`
-	// DependsOn contains resources that LogzSubAccount depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type logzSubAccountAttributes struct {
 	ref terra.Reference
 }
 
+// Enabled returns a reference to field enabled of azurerm_logz_sub_account.
 func (lsa logzSubAccountAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(lsa.ref.Append("enabled"))
+	return terra.ReferenceAsBool(lsa.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of azurerm_logz_sub_account.
 func (lsa logzSubAccountAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lsa.ref.Append("id"))
+	return terra.ReferenceAsString(lsa.ref.Append("id"))
 }
 
+// LogzMonitorId returns a reference to field logz_monitor_id of azurerm_logz_sub_account.
 func (lsa logzSubAccountAttributes) LogzMonitorId() terra.StringValue {
-	return terra.ReferenceString(lsa.ref.Append("logz_monitor_id"))
+	return terra.ReferenceAsString(lsa.ref.Append("logz_monitor_id"))
 }
 
+// Name returns a reference to field name of azurerm_logz_sub_account.
 func (lsa logzSubAccountAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lsa.ref.Append("name"))
+	return terra.ReferenceAsString(lsa.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of azurerm_logz_sub_account.
 func (lsa logzSubAccountAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lsa.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](lsa.ref.Append("tags"))
 }
 
 func (lsa logzSubAccountAttributes) Timeouts() logzsubaccount.TimeoutsAttributes {
-	return terra.ReferenceSingle[logzsubaccount.TimeoutsAttributes](lsa.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[logzsubaccount.TimeoutsAttributes](lsa.ref.Append("timeouts"))
 }
 
 func (lsa logzSubAccountAttributes) User() terra.ListValue[logzsubaccount.UserAttributes] {
-	return terra.ReferenceList[logzsubaccount.UserAttributes](lsa.ref.Append("user"))
+	return terra.ReferenceAsList[logzsubaccount.UserAttributes](lsa.ref.Append("user"))
 }
 
 type logzSubAccountState struct {

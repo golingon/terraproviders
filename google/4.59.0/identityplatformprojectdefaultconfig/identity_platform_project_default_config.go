@@ -54,168 +54,168 @@ type SignInAttributes struct {
 	ref terra.Reference
 }
 
-func (si SignInAttributes) InternalRef() terra.Reference {
-	return si.ref
+func (si SignInAttributes) InternalRef() (terra.Reference, error) {
+	return si.ref, nil
 }
 
 func (si SignInAttributes) InternalWithRef(ref terra.Reference) SignInAttributes {
 	return SignInAttributes{ref: ref}
 }
 
-func (si SignInAttributes) InternalTokens() hclwrite.Tokens {
+func (si SignInAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return si.ref.InternalTokens()
 }
 
 func (si SignInAttributes) AllowDuplicateEmails() terra.BoolValue {
-	return terra.ReferenceBool(si.ref.Append("allow_duplicate_emails"))
+	return terra.ReferenceAsBool(si.ref.Append("allow_duplicate_emails"))
 }
 
 func (si SignInAttributes) HashConfig() terra.ListValue[HashConfigAttributes] {
-	return terra.ReferenceList[HashConfigAttributes](si.ref.Append("hash_config"))
+	return terra.ReferenceAsList[HashConfigAttributes](si.ref.Append("hash_config"))
 }
 
 func (si SignInAttributes) Anonymous() terra.ListValue[AnonymousAttributes] {
-	return terra.ReferenceList[AnonymousAttributes](si.ref.Append("anonymous"))
+	return terra.ReferenceAsList[AnonymousAttributes](si.ref.Append("anonymous"))
 }
 
 func (si SignInAttributes) Email() terra.ListValue[EmailAttributes] {
-	return terra.ReferenceList[EmailAttributes](si.ref.Append("email"))
+	return terra.ReferenceAsList[EmailAttributes](si.ref.Append("email"))
 }
 
 func (si SignInAttributes) PhoneNumber() terra.ListValue[PhoneNumberAttributes] {
-	return terra.ReferenceList[PhoneNumberAttributes](si.ref.Append("phone_number"))
+	return terra.ReferenceAsList[PhoneNumberAttributes](si.ref.Append("phone_number"))
 }
 
 type HashConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (hc HashConfigAttributes) InternalRef() terra.Reference {
-	return hc.ref
+func (hc HashConfigAttributes) InternalRef() (terra.Reference, error) {
+	return hc.ref, nil
 }
 
 func (hc HashConfigAttributes) InternalWithRef(ref terra.Reference) HashConfigAttributes {
 	return HashConfigAttributes{ref: ref}
 }
 
-func (hc HashConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (hc HashConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hc.ref.InternalTokens()
 }
 
 func (hc HashConfigAttributes) Algorithm() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("algorithm"))
+	return terra.ReferenceAsString(hc.ref.Append("algorithm"))
 }
 
 func (hc HashConfigAttributes) MemoryCost() terra.NumberValue {
-	return terra.ReferenceNumber(hc.ref.Append("memory_cost"))
+	return terra.ReferenceAsNumber(hc.ref.Append("memory_cost"))
 }
 
 func (hc HashConfigAttributes) Rounds() terra.NumberValue {
-	return terra.ReferenceNumber(hc.ref.Append("rounds"))
+	return terra.ReferenceAsNumber(hc.ref.Append("rounds"))
 }
 
 func (hc HashConfigAttributes) SaltSeparator() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("salt_separator"))
+	return terra.ReferenceAsString(hc.ref.Append("salt_separator"))
 }
 
 func (hc HashConfigAttributes) SignerKey() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("signer_key"))
+	return terra.ReferenceAsString(hc.ref.Append("signer_key"))
 }
 
 type AnonymousAttributes struct {
 	ref terra.Reference
 }
 
-func (a AnonymousAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AnonymousAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AnonymousAttributes) InternalWithRef(ref terra.Reference) AnonymousAttributes {
 	return AnonymousAttributes{ref: ref}
 }
 
-func (a AnonymousAttributes) InternalTokens() hclwrite.Tokens {
+func (a AnonymousAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a AnonymousAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(a.ref.Append("enabled"))
+	return terra.ReferenceAsBool(a.ref.Append("enabled"))
 }
 
 type EmailAttributes struct {
 	ref terra.Reference
 }
 
-func (e EmailAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EmailAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EmailAttributes) InternalWithRef(ref terra.Reference) EmailAttributes {
 	return EmailAttributes{ref: ref}
 }
 
-func (e EmailAttributes) InternalTokens() hclwrite.Tokens {
+func (e EmailAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
 func (e EmailAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(e.ref.Append("enabled"))
+	return terra.ReferenceAsBool(e.ref.Append("enabled"))
 }
 
 func (e EmailAttributes) PasswordRequired() terra.BoolValue {
-	return terra.ReferenceBool(e.ref.Append("password_required"))
+	return terra.ReferenceAsBool(e.ref.Append("password_required"))
 }
 
 type PhoneNumberAttributes struct {
 	ref terra.Reference
 }
 
-func (pn PhoneNumberAttributes) InternalRef() terra.Reference {
-	return pn.ref
+func (pn PhoneNumberAttributes) InternalRef() (terra.Reference, error) {
+	return pn.ref, nil
 }
 
 func (pn PhoneNumberAttributes) InternalWithRef(ref terra.Reference) PhoneNumberAttributes {
 	return PhoneNumberAttributes{ref: ref}
 }
 
-func (pn PhoneNumberAttributes) InternalTokens() hclwrite.Tokens {
+func (pn PhoneNumberAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pn.ref.InternalTokens()
 }
 
 func (pn PhoneNumberAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(pn.ref.Append("enabled"))
+	return terra.ReferenceAsBool(pn.ref.Append("enabled"))
 }
 
 func (pn PhoneNumberAttributes) TestPhoneNumbers() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](pn.ref.Append("test_phone_numbers"))
+	return terra.ReferenceAsMap[terra.StringValue](pn.ref.Append("test_phone_numbers"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type SignInState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLogicAppIntegrationAccountMap creates a new instance of [LogicAppIntegrationAccountMap].
 func NewLogicAppIntegrationAccountMap(name string, args LogicAppIntegrationAccountMapArgs) *LogicAppIntegrationAccountMap {
 	return &LogicAppIntegrationAccountMap{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLogicAppIntegrationAccountMap(name string, args LogicAppIntegrationAccou
 
 var _ terra.Resource = (*LogicAppIntegrationAccountMap)(nil)
 
+// LogicAppIntegrationAccountMap represents the Terraform resource azurerm_logic_app_integration_account_map.
 type LogicAppIntegrationAccountMap struct {
-	Name  string
-	Args  LogicAppIntegrationAccountMapArgs
-	state *logicAppIntegrationAccountMapState
+	Name      string
+	Args      LogicAppIntegrationAccountMapArgs
+	state     *logicAppIntegrationAccountMapState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LogicAppIntegrationAccountMap].
 func (laiam *LogicAppIntegrationAccountMap) Type() string {
 	return "azurerm_logic_app_integration_account_map"
 }
 
+// LocalName returns the local name for [LogicAppIntegrationAccountMap].
 func (laiam *LogicAppIntegrationAccountMap) LocalName() string {
 	return laiam.Name
 }
 
+// Configuration returns the configuration (args) for [LogicAppIntegrationAccountMap].
 func (laiam *LogicAppIntegrationAccountMap) Configuration() interface{} {
 	return laiam.Args
 }
 
+// DependOn is used for other resources to depend on [LogicAppIntegrationAccountMap].
+func (laiam *LogicAppIntegrationAccountMap) DependOn() terra.Reference {
+	return terra.ReferenceResource(laiam)
+}
+
+// Dependencies returns the list of resources [LogicAppIntegrationAccountMap] depends_on.
+func (laiam *LogicAppIntegrationAccountMap) Dependencies() terra.Dependencies {
+	return laiam.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LogicAppIntegrationAccountMap].
+func (laiam *LogicAppIntegrationAccountMap) LifecycleManagement() *terra.Lifecycle {
+	return laiam.Lifecycle
+}
+
+// Attributes returns the attributes for [LogicAppIntegrationAccountMap].
 func (laiam *LogicAppIntegrationAccountMap) Attributes() logicAppIntegrationAccountMapAttributes {
 	return logicAppIntegrationAccountMapAttributes{ref: terra.ReferenceResource(laiam)}
 }
 
+// ImportState imports the given attribute values into [LogicAppIntegrationAccountMap]'s state.
 func (laiam *LogicAppIntegrationAccountMap) ImportState(av io.Reader) error {
 	laiam.state = &logicAppIntegrationAccountMapState{}
 	if err := json.NewDecoder(av).Decode(laiam.state); err != nil {
@@ -49,10 +73,12 @@ func (laiam *LogicAppIntegrationAccountMap) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LogicAppIntegrationAccountMap] has state.
 func (laiam *LogicAppIntegrationAccountMap) State() (*logicAppIntegrationAccountMapState, bool) {
 	return laiam.state, laiam.state != nil
 }
 
+// StateMust returns the state for [LogicAppIntegrationAccountMap]. Panics if the state is nil.
 func (laiam *LogicAppIntegrationAccountMap) StateMust() *logicAppIntegrationAccountMapState {
 	if laiam.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", laiam.Type(), laiam.LocalName()))
@@ -60,10 +86,7 @@ func (laiam *LogicAppIntegrationAccountMap) StateMust() *logicAppIntegrationAcco
 	return laiam.state
 }
 
-func (laiam *LogicAppIntegrationAccountMap) DependOn() terra.Reference {
-	return terra.ReferenceResource(laiam)
-}
-
+// LogicAppIntegrationAccountMapArgs contains the configurations for azurerm_logic_app_integration_account_map.
 type LogicAppIntegrationAccountMapArgs struct {
 	// Content: string, required
 	Content terra.StringValue `hcl:"content,attr" validate:"required"`
@@ -81,43 +104,48 @@ type LogicAppIntegrationAccountMapArgs struct {
 	ResourceGroupName terra.StringValue `hcl:"resource_group_name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *logicappintegrationaccountmap.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LogicAppIntegrationAccountMap depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type logicAppIntegrationAccountMapAttributes struct {
 	ref terra.Reference
 }
 
+// Content returns a reference to field content of azurerm_logic_app_integration_account_map.
 func (laiam logicAppIntegrationAccountMapAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(laiam.ref.Append("content"))
+	return terra.ReferenceAsString(laiam.ref.Append("content"))
 }
 
+// Id returns a reference to field id of azurerm_logic_app_integration_account_map.
 func (laiam logicAppIntegrationAccountMapAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(laiam.ref.Append("id"))
+	return terra.ReferenceAsString(laiam.ref.Append("id"))
 }
 
+// IntegrationAccountName returns a reference to field integration_account_name of azurerm_logic_app_integration_account_map.
 func (laiam logicAppIntegrationAccountMapAttributes) IntegrationAccountName() terra.StringValue {
-	return terra.ReferenceString(laiam.ref.Append("integration_account_name"))
+	return terra.ReferenceAsString(laiam.ref.Append("integration_account_name"))
 }
 
+// MapType returns a reference to field map_type of azurerm_logic_app_integration_account_map.
 func (laiam logicAppIntegrationAccountMapAttributes) MapType() terra.StringValue {
-	return terra.ReferenceString(laiam.ref.Append("map_type"))
+	return terra.ReferenceAsString(laiam.ref.Append("map_type"))
 }
 
+// Metadata returns a reference to field metadata of azurerm_logic_app_integration_account_map.
 func (laiam logicAppIntegrationAccountMapAttributes) Metadata() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](laiam.ref.Append("metadata"))
+	return terra.ReferenceAsMap[terra.StringValue](laiam.ref.Append("metadata"))
 }
 
+// Name returns a reference to field name of azurerm_logic_app_integration_account_map.
 func (laiam logicAppIntegrationAccountMapAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(laiam.ref.Append("name"))
+	return terra.ReferenceAsString(laiam.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_logic_app_integration_account_map.
 func (laiam logicAppIntegrationAccountMapAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(laiam.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(laiam.ref.Append("resource_group_name"))
 }
 
 func (laiam logicAppIntegrationAccountMapAttributes) Timeouts() logicappintegrationaccountmap.TimeoutsAttributes {
-	return terra.ReferenceSingle[logicappintegrationaccountmap.TimeoutsAttributes](laiam.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[logicappintegrationaccountmap.TimeoutsAttributes](laiam.ref.Append("timeouts"))
 }
 
 type logicAppIntegrationAccountMapState struct {

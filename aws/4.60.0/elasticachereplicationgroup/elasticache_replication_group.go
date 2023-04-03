@@ -46,7 +46,7 @@ func (cm ClusterModeAttributes) InternalWithRef(ref terra.Reference) ClusterMode
 	return ClusterModeAttributes{ref: ref}
 }
 
-func (cm ClusterModeAttributes) InternalTokens() hclwrite.Tokens {
+func (cm ClusterModeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cm.ref.InternalTokens()
 }
 
@@ -70,7 +70,7 @@ func (ldc LogDeliveryConfigurationAttributes) InternalWithRef(ref terra.Referenc
 	return LogDeliveryConfigurationAttributes{ref: ref}
 }
 
-func (ldc LogDeliveryConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ldc LogDeliveryConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ldc.ref.InternalTokens()
 }
 
@@ -102,7 +102,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

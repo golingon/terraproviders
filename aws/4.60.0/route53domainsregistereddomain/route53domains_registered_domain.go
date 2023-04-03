@@ -126,7 +126,7 @@ func (ac AdminContactAttributes) InternalWithRef(ref terra.Reference) AdminConta
 	return AdminContactAttributes{ref: ref}
 }
 
-func (ac AdminContactAttributes) InternalTokens() hclwrite.Tokens {
+func (ac AdminContactAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
@@ -198,7 +198,7 @@ func (ns NameServerAttributes) InternalWithRef(ref terra.Reference) NameServerAt
 	return NameServerAttributes{ref: ref}
 }
 
-func (ns NameServerAttributes) InternalTokens() hclwrite.Tokens {
+func (ns NameServerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ns.ref.InternalTokens()
 }
 
@@ -222,7 +222,7 @@ func (rc RegistrantContactAttributes) InternalWithRef(ref terra.Reference) Regis
 	return RegistrantContactAttributes{ref: ref}
 }
 
-func (rc RegistrantContactAttributes) InternalTokens() hclwrite.Tokens {
+func (rc RegistrantContactAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rc.ref.InternalTokens()
 }
 
@@ -294,7 +294,7 @@ func (tc TechContactAttributes) InternalWithRef(ref terra.Reference) TechContact
 	return TechContactAttributes{ref: ref}
 }
 
-func (tc TechContactAttributes) InternalTokens() hclwrite.Tokens {
+func (tc TechContactAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tc.ref.InternalTokens()
 }
 
@@ -366,7 +366,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

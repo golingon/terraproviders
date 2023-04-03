@@ -35,7 +35,7 @@ func (n NodesAttributes) InternalWithRef(ref terra.Reference) NodesAttributes {
 	return NodesAttributes{ref: ref}
 }
 
-func (n NodesAttributes) InternalTokens() hclwrite.Tokens {
+func (n NodesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return n.ref.InternalTokens()
 }
 
@@ -67,7 +67,7 @@ func (sse ServerSideEncryptionAttributes) InternalWithRef(ref terra.Reference) S
 	return ServerSideEncryptionAttributes{ref: ref}
 }
 
-func (sse ServerSideEncryptionAttributes) InternalTokens() hclwrite.Tokens {
+func (sse ServerSideEncryptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sse.ref.InternalTokens()
 }
 
@@ -87,7 +87,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

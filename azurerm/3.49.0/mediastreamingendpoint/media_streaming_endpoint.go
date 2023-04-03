@@ -56,160 +56,160 @@ type SkuAttributes struct {
 	ref terra.Reference
 }
 
-func (s SkuAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SkuAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SkuAttributes) InternalWithRef(ref terra.Reference) SkuAttributes {
 	return SkuAttributes{ref: ref}
 }
 
-func (s SkuAttributes) InternalTokens() hclwrite.Tokens {
+func (s SkuAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SkuAttributes) Capacity() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("capacity"))
+	return terra.ReferenceAsNumber(s.ref.Append("capacity"))
 }
 
 func (s SkuAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 type AccessControlAttributes struct {
 	ref terra.Reference
 }
 
-func (ac AccessControlAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac AccessControlAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac AccessControlAttributes) InternalWithRef(ref terra.Reference) AccessControlAttributes {
 	return AccessControlAttributes{ref: ref}
 }
 
-func (ac AccessControlAttributes) InternalTokens() hclwrite.Tokens {
+func (ac AccessControlAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
 func (ac AccessControlAttributes) AkamaiSignatureHeaderAuthenticationKey() terra.ListValue[AkamaiSignatureHeaderAuthenticationKeyAttributes] {
-	return terra.ReferenceList[AkamaiSignatureHeaderAuthenticationKeyAttributes](ac.ref.Append("akamai_signature_header_authentication_key"))
+	return terra.ReferenceAsList[AkamaiSignatureHeaderAuthenticationKeyAttributes](ac.ref.Append("akamai_signature_header_authentication_key"))
 }
 
 func (ac AccessControlAttributes) IpAllow() terra.ListValue[IpAllowAttributes] {
-	return terra.ReferenceList[IpAllowAttributes](ac.ref.Append("ip_allow"))
+	return terra.ReferenceAsList[IpAllowAttributes](ac.ref.Append("ip_allow"))
 }
 
 type AkamaiSignatureHeaderAuthenticationKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (ashak AkamaiSignatureHeaderAuthenticationKeyAttributes) InternalRef() terra.Reference {
-	return ashak.ref
+func (ashak AkamaiSignatureHeaderAuthenticationKeyAttributes) InternalRef() (terra.Reference, error) {
+	return ashak.ref, nil
 }
 
 func (ashak AkamaiSignatureHeaderAuthenticationKeyAttributes) InternalWithRef(ref terra.Reference) AkamaiSignatureHeaderAuthenticationKeyAttributes {
 	return AkamaiSignatureHeaderAuthenticationKeyAttributes{ref: ref}
 }
 
-func (ashak AkamaiSignatureHeaderAuthenticationKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (ashak AkamaiSignatureHeaderAuthenticationKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ashak.ref.InternalTokens()
 }
 
 func (ashak AkamaiSignatureHeaderAuthenticationKeyAttributes) Base64Key() terra.StringValue {
-	return terra.ReferenceString(ashak.ref.Append("base64_key"))
+	return terra.ReferenceAsString(ashak.ref.Append("base64_key"))
 }
 
 func (ashak AkamaiSignatureHeaderAuthenticationKeyAttributes) Expiration() terra.StringValue {
-	return terra.ReferenceString(ashak.ref.Append("expiration"))
+	return terra.ReferenceAsString(ashak.ref.Append("expiration"))
 }
 
 func (ashak AkamaiSignatureHeaderAuthenticationKeyAttributes) Identifier() terra.StringValue {
-	return terra.ReferenceString(ashak.ref.Append("identifier"))
+	return terra.ReferenceAsString(ashak.ref.Append("identifier"))
 }
 
 type IpAllowAttributes struct {
 	ref terra.Reference
 }
 
-func (ia IpAllowAttributes) InternalRef() terra.Reference {
-	return ia.ref
+func (ia IpAllowAttributes) InternalRef() (terra.Reference, error) {
+	return ia.ref, nil
 }
 
 func (ia IpAllowAttributes) InternalWithRef(ref terra.Reference) IpAllowAttributes {
 	return IpAllowAttributes{ref: ref}
 }
 
-func (ia IpAllowAttributes) InternalTokens() hclwrite.Tokens {
+func (ia IpAllowAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ia.ref.InternalTokens()
 }
 
 func (ia IpAllowAttributes) Address() terra.StringValue {
-	return terra.ReferenceString(ia.ref.Append("address"))
+	return terra.ReferenceAsString(ia.ref.Append("address"))
 }
 
 func (ia IpAllowAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ia.ref.Append("name"))
+	return terra.ReferenceAsString(ia.ref.Append("name"))
 }
 
 func (ia IpAllowAttributes) SubnetPrefixLength() terra.NumberValue {
-	return terra.ReferenceNumber(ia.ref.Append("subnet_prefix_length"))
+	return terra.ReferenceAsNumber(ia.ref.Append("subnet_prefix_length"))
 }
 
 type CrossSiteAccessPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (csap CrossSiteAccessPolicyAttributes) InternalRef() terra.Reference {
-	return csap.ref
+func (csap CrossSiteAccessPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return csap.ref, nil
 }
 
 func (csap CrossSiteAccessPolicyAttributes) InternalWithRef(ref terra.Reference) CrossSiteAccessPolicyAttributes {
 	return CrossSiteAccessPolicyAttributes{ref: ref}
 }
 
-func (csap CrossSiteAccessPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (csap CrossSiteAccessPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return csap.ref.InternalTokens()
 }
 
 func (csap CrossSiteAccessPolicyAttributes) ClientAccessPolicy() terra.StringValue {
-	return terra.ReferenceString(csap.ref.Append("client_access_policy"))
+	return terra.ReferenceAsString(csap.ref.Append("client_access_policy"))
 }
 
 func (csap CrossSiteAccessPolicyAttributes) CrossDomainPolicy() terra.StringValue {
-	return terra.ReferenceString(csap.ref.Append("cross_domain_policy"))
+	return terra.ReferenceAsString(csap.ref.Append("cross_domain_policy"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type SkuState struct {

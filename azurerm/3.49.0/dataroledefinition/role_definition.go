@@ -18,52 +18,52 @@ type PermissionsAttributes struct {
 	ref terra.Reference
 }
 
-func (p PermissionsAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p PermissionsAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p PermissionsAttributes) InternalWithRef(ref terra.Reference) PermissionsAttributes {
 	return PermissionsAttributes{ref: ref}
 }
 
-func (p PermissionsAttributes) InternalTokens() hclwrite.Tokens {
+func (p PermissionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
 func (p PermissionsAttributes) Actions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](p.ref.Append("actions"))
+	return terra.ReferenceAsList[terra.StringValue](p.ref.Append("actions"))
 }
 
 func (p PermissionsAttributes) DataActions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](p.ref.Append("data_actions"))
+	return terra.ReferenceAsSet[terra.StringValue](p.ref.Append("data_actions"))
 }
 
 func (p PermissionsAttributes) NotActions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](p.ref.Append("not_actions"))
+	return terra.ReferenceAsList[terra.StringValue](p.ref.Append("not_actions"))
 }
 
 func (p PermissionsAttributes) NotDataActions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](p.ref.Append("not_data_actions"))
+	return terra.ReferenceAsSet[terra.StringValue](p.ref.Append("not_data_actions"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type PermissionsState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewPostgresqlFlexibleServerDatabase creates a new instance of [PostgresqlFlexibleServerDatabase].
 func NewPostgresqlFlexibleServerDatabase(name string, args PostgresqlFlexibleServerDatabaseArgs) *PostgresqlFlexibleServerDatabase {
 	return &PostgresqlFlexibleServerDatabase{
 		Args: args,
@@ -19,28 +20,51 @@ func NewPostgresqlFlexibleServerDatabase(name string, args PostgresqlFlexibleSer
 
 var _ terra.Resource = (*PostgresqlFlexibleServerDatabase)(nil)
 
+// PostgresqlFlexibleServerDatabase represents the Terraform resource azurerm_postgresql_flexible_server_database.
 type PostgresqlFlexibleServerDatabase struct {
-	Name  string
-	Args  PostgresqlFlexibleServerDatabaseArgs
-	state *postgresqlFlexibleServerDatabaseState
+	Name      string
+	Args      PostgresqlFlexibleServerDatabaseArgs
+	state     *postgresqlFlexibleServerDatabaseState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PostgresqlFlexibleServerDatabase].
 func (pfsd *PostgresqlFlexibleServerDatabase) Type() string {
 	return "azurerm_postgresql_flexible_server_database"
 }
 
+// LocalName returns the local name for [PostgresqlFlexibleServerDatabase].
 func (pfsd *PostgresqlFlexibleServerDatabase) LocalName() string {
 	return pfsd.Name
 }
 
+// Configuration returns the configuration (args) for [PostgresqlFlexibleServerDatabase].
 func (pfsd *PostgresqlFlexibleServerDatabase) Configuration() interface{} {
 	return pfsd.Args
 }
 
+// DependOn is used for other resources to depend on [PostgresqlFlexibleServerDatabase].
+func (pfsd *PostgresqlFlexibleServerDatabase) DependOn() terra.Reference {
+	return terra.ReferenceResource(pfsd)
+}
+
+// Dependencies returns the list of resources [PostgresqlFlexibleServerDatabase] depends_on.
+func (pfsd *PostgresqlFlexibleServerDatabase) Dependencies() terra.Dependencies {
+	return pfsd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PostgresqlFlexibleServerDatabase].
+func (pfsd *PostgresqlFlexibleServerDatabase) LifecycleManagement() *terra.Lifecycle {
+	return pfsd.Lifecycle
+}
+
+// Attributes returns the attributes for [PostgresqlFlexibleServerDatabase].
 func (pfsd *PostgresqlFlexibleServerDatabase) Attributes() postgresqlFlexibleServerDatabaseAttributes {
 	return postgresqlFlexibleServerDatabaseAttributes{ref: terra.ReferenceResource(pfsd)}
 }
 
+// ImportState imports the given attribute values into [PostgresqlFlexibleServerDatabase]'s state.
 func (pfsd *PostgresqlFlexibleServerDatabase) ImportState(av io.Reader) error {
 	pfsd.state = &postgresqlFlexibleServerDatabaseState{}
 	if err := json.NewDecoder(av).Decode(pfsd.state); err != nil {
@@ -49,10 +73,12 @@ func (pfsd *PostgresqlFlexibleServerDatabase) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PostgresqlFlexibleServerDatabase] has state.
 func (pfsd *PostgresqlFlexibleServerDatabase) State() (*postgresqlFlexibleServerDatabaseState, bool) {
 	return pfsd.state, pfsd.state != nil
 }
 
+// StateMust returns the state for [PostgresqlFlexibleServerDatabase]. Panics if the state is nil.
 func (pfsd *PostgresqlFlexibleServerDatabase) StateMust() *postgresqlFlexibleServerDatabaseState {
 	if pfsd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pfsd.Type(), pfsd.LocalName()))
@@ -60,10 +86,7 @@ func (pfsd *PostgresqlFlexibleServerDatabase) StateMust() *postgresqlFlexibleSer
 	return pfsd.state
 }
 
-func (pfsd *PostgresqlFlexibleServerDatabase) DependOn() terra.Reference {
-	return terra.ReferenceResource(pfsd)
-}
-
+// PostgresqlFlexibleServerDatabaseArgs contains the configurations for azurerm_postgresql_flexible_server_database.
 type PostgresqlFlexibleServerDatabaseArgs struct {
 	// Charset: string, optional
 	Charset terra.StringValue `hcl:"charset,attr"`
@@ -77,35 +100,38 @@ type PostgresqlFlexibleServerDatabaseArgs struct {
 	ServerId terra.StringValue `hcl:"server_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *postgresqlflexibleserverdatabase.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that PostgresqlFlexibleServerDatabase depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type postgresqlFlexibleServerDatabaseAttributes struct {
 	ref terra.Reference
 }
 
+// Charset returns a reference to field charset of azurerm_postgresql_flexible_server_database.
 func (pfsd postgresqlFlexibleServerDatabaseAttributes) Charset() terra.StringValue {
-	return terra.ReferenceString(pfsd.ref.Append("charset"))
+	return terra.ReferenceAsString(pfsd.ref.Append("charset"))
 }
 
+// Collation returns a reference to field collation of azurerm_postgresql_flexible_server_database.
 func (pfsd postgresqlFlexibleServerDatabaseAttributes) Collation() terra.StringValue {
-	return terra.ReferenceString(pfsd.ref.Append("collation"))
+	return terra.ReferenceAsString(pfsd.ref.Append("collation"))
 }
 
+// Id returns a reference to field id of azurerm_postgresql_flexible_server_database.
 func (pfsd postgresqlFlexibleServerDatabaseAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pfsd.ref.Append("id"))
+	return terra.ReferenceAsString(pfsd.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_postgresql_flexible_server_database.
 func (pfsd postgresqlFlexibleServerDatabaseAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pfsd.ref.Append("name"))
+	return terra.ReferenceAsString(pfsd.ref.Append("name"))
 }
 
+// ServerId returns a reference to field server_id of azurerm_postgresql_flexible_server_database.
 func (pfsd postgresqlFlexibleServerDatabaseAttributes) ServerId() terra.StringValue {
-	return terra.ReferenceString(pfsd.ref.Append("server_id"))
+	return terra.ReferenceAsString(pfsd.ref.Append("server_id"))
 }
 
 func (pfsd postgresqlFlexibleServerDatabaseAttributes) Timeouts() postgresqlflexibleserverdatabase.TimeoutsAttributes {
-	return terra.ReferenceSingle[postgresqlflexibleserverdatabase.TimeoutsAttributes](pfsd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[postgresqlflexibleserverdatabase.TimeoutsAttributes](pfsd.ref.Append("timeouts"))
 }
 
 type postgresqlFlexibleServerDatabaseState struct {

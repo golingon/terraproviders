@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLogAnalyticsDatasourceWindowsPerformanceCounter creates a new instance of [LogAnalyticsDatasourceWindowsPerformanceCounter].
 func NewLogAnalyticsDatasourceWindowsPerformanceCounter(name string, args LogAnalyticsDatasourceWindowsPerformanceCounterArgs) *LogAnalyticsDatasourceWindowsPerformanceCounter {
 	return &LogAnalyticsDatasourceWindowsPerformanceCounter{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLogAnalyticsDatasourceWindowsPerformanceCounter(name string, args LogAna
 
 var _ terra.Resource = (*LogAnalyticsDatasourceWindowsPerformanceCounter)(nil)
 
+// LogAnalyticsDatasourceWindowsPerformanceCounter represents the Terraform resource azurerm_log_analytics_datasource_windows_performance_counter.
 type LogAnalyticsDatasourceWindowsPerformanceCounter struct {
-	Name  string
-	Args  LogAnalyticsDatasourceWindowsPerformanceCounterArgs
-	state *logAnalyticsDatasourceWindowsPerformanceCounterState
+	Name      string
+	Args      LogAnalyticsDatasourceWindowsPerformanceCounterArgs
+	state     *logAnalyticsDatasourceWindowsPerformanceCounterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LogAnalyticsDatasourceWindowsPerformanceCounter].
 func (ladwpc *LogAnalyticsDatasourceWindowsPerformanceCounter) Type() string {
 	return "azurerm_log_analytics_datasource_windows_performance_counter"
 }
 
+// LocalName returns the local name for [LogAnalyticsDatasourceWindowsPerformanceCounter].
 func (ladwpc *LogAnalyticsDatasourceWindowsPerformanceCounter) LocalName() string {
 	return ladwpc.Name
 }
 
+// Configuration returns the configuration (args) for [LogAnalyticsDatasourceWindowsPerformanceCounter].
 func (ladwpc *LogAnalyticsDatasourceWindowsPerformanceCounter) Configuration() interface{} {
 	return ladwpc.Args
 }
 
+// DependOn is used for other resources to depend on [LogAnalyticsDatasourceWindowsPerformanceCounter].
+func (ladwpc *LogAnalyticsDatasourceWindowsPerformanceCounter) DependOn() terra.Reference {
+	return terra.ReferenceResource(ladwpc)
+}
+
+// Dependencies returns the list of resources [LogAnalyticsDatasourceWindowsPerformanceCounter] depends_on.
+func (ladwpc *LogAnalyticsDatasourceWindowsPerformanceCounter) Dependencies() terra.Dependencies {
+	return ladwpc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LogAnalyticsDatasourceWindowsPerformanceCounter].
+func (ladwpc *LogAnalyticsDatasourceWindowsPerformanceCounter) LifecycleManagement() *terra.Lifecycle {
+	return ladwpc.Lifecycle
+}
+
+// Attributes returns the attributes for [LogAnalyticsDatasourceWindowsPerformanceCounter].
 func (ladwpc *LogAnalyticsDatasourceWindowsPerformanceCounter) Attributes() logAnalyticsDatasourceWindowsPerformanceCounterAttributes {
 	return logAnalyticsDatasourceWindowsPerformanceCounterAttributes{ref: terra.ReferenceResource(ladwpc)}
 }
 
+// ImportState imports the given attribute values into [LogAnalyticsDatasourceWindowsPerformanceCounter]'s state.
 func (ladwpc *LogAnalyticsDatasourceWindowsPerformanceCounter) ImportState(av io.Reader) error {
 	ladwpc.state = &logAnalyticsDatasourceWindowsPerformanceCounterState{}
 	if err := json.NewDecoder(av).Decode(ladwpc.state); err != nil {
@@ -49,10 +73,12 @@ func (ladwpc *LogAnalyticsDatasourceWindowsPerformanceCounter) ImportState(av io
 	return nil
 }
 
+// State returns the state and a bool indicating if [LogAnalyticsDatasourceWindowsPerformanceCounter] has state.
 func (ladwpc *LogAnalyticsDatasourceWindowsPerformanceCounter) State() (*logAnalyticsDatasourceWindowsPerformanceCounterState, bool) {
 	return ladwpc.state, ladwpc.state != nil
 }
 
+// StateMust returns the state for [LogAnalyticsDatasourceWindowsPerformanceCounter]. Panics if the state is nil.
 func (ladwpc *LogAnalyticsDatasourceWindowsPerformanceCounter) StateMust() *logAnalyticsDatasourceWindowsPerformanceCounterState {
 	if ladwpc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ladwpc.Type(), ladwpc.LocalName()))
@@ -60,10 +86,7 @@ func (ladwpc *LogAnalyticsDatasourceWindowsPerformanceCounter) StateMust() *logA
 	return ladwpc.state
 }
 
-func (ladwpc *LogAnalyticsDatasourceWindowsPerformanceCounter) DependOn() terra.Reference {
-	return terra.ReferenceResource(ladwpc)
-}
-
+// LogAnalyticsDatasourceWindowsPerformanceCounterArgs contains the configurations for azurerm_log_analytics_datasource_windows_performance_counter.
 type LogAnalyticsDatasourceWindowsPerformanceCounterArgs struct {
 	// CounterName: string, required
 	CounterName terra.StringValue `hcl:"counter_name,attr" validate:"required"`
@@ -83,47 +106,53 @@ type LogAnalyticsDatasourceWindowsPerformanceCounterArgs struct {
 	WorkspaceName terra.StringValue `hcl:"workspace_name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *loganalyticsdatasourcewindowsperformancecounter.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LogAnalyticsDatasourceWindowsPerformanceCounter depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type logAnalyticsDatasourceWindowsPerformanceCounterAttributes struct {
 	ref terra.Reference
 }
 
+// CounterName returns a reference to field counter_name of azurerm_log_analytics_datasource_windows_performance_counter.
 func (ladwpc logAnalyticsDatasourceWindowsPerformanceCounterAttributes) CounterName() terra.StringValue {
-	return terra.ReferenceString(ladwpc.ref.Append("counter_name"))
+	return terra.ReferenceAsString(ladwpc.ref.Append("counter_name"))
 }
 
+// Id returns a reference to field id of azurerm_log_analytics_datasource_windows_performance_counter.
 func (ladwpc logAnalyticsDatasourceWindowsPerformanceCounterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ladwpc.ref.Append("id"))
+	return terra.ReferenceAsString(ladwpc.ref.Append("id"))
 }
 
+// InstanceName returns a reference to field instance_name of azurerm_log_analytics_datasource_windows_performance_counter.
 func (ladwpc logAnalyticsDatasourceWindowsPerformanceCounterAttributes) InstanceName() terra.StringValue {
-	return terra.ReferenceString(ladwpc.ref.Append("instance_name"))
+	return terra.ReferenceAsString(ladwpc.ref.Append("instance_name"))
 }
 
+// IntervalSeconds returns a reference to field interval_seconds of azurerm_log_analytics_datasource_windows_performance_counter.
 func (ladwpc logAnalyticsDatasourceWindowsPerformanceCounterAttributes) IntervalSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(ladwpc.ref.Append("interval_seconds"))
+	return terra.ReferenceAsNumber(ladwpc.ref.Append("interval_seconds"))
 }
 
+// Name returns a reference to field name of azurerm_log_analytics_datasource_windows_performance_counter.
 func (ladwpc logAnalyticsDatasourceWindowsPerformanceCounterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ladwpc.ref.Append("name"))
+	return terra.ReferenceAsString(ladwpc.ref.Append("name"))
 }
 
+// ObjectName returns a reference to field object_name of azurerm_log_analytics_datasource_windows_performance_counter.
 func (ladwpc logAnalyticsDatasourceWindowsPerformanceCounterAttributes) ObjectName() terra.StringValue {
-	return terra.ReferenceString(ladwpc.ref.Append("object_name"))
+	return terra.ReferenceAsString(ladwpc.ref.Append("object_name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_log_analytics_datasource_windows_performance_counter.
 func (ladwpc logAnalyticsDatasourceWindowsPerformanceCounterAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ladwpc.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ladwpc.ref.Append("resource_group_name"))
 }
 
+// WorkspaceName returns a reference to field workspace_name of azurerm_log_analytics_datasource_windows_performance_counter.
 func (ladwpc logAnalyticsDatasourceWindowsPerformanceCounterAttributes) WorkspaceName() terra.StringValue {
-	return terra.ReferenceString(ladwpc.ref.Append("workspace_name"))
+	return terra.ReferenceAsString(ladwpc.ref.Append("workspace_name"))
 }
 
 func (ladwpc logAnalyticsDatasourceWindowsPerformanceCounterAttributes) Timeouts() loganalyticsdatasourcewindowsperformancecounter.TimeoutsAttributes {
-	return terra.ReferenceSingle[loganalyticsdatasourcewindowsperformancecounter.TimeoutsAttributes](ladwpc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[loganalyticsdatasourcewindowsperformancecounter.TimeoutsAttributes](ladwpc.ref.Append("timeouts"))
 }
 
 type logAnalyticsDatasourceWindowsPerformanceCounterState struct {

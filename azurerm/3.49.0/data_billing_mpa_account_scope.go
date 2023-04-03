@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataBillingMpaAccountScope creates a new instance of [DataBillingMpaAccountScope].
 func NewDataBillingMpaAccountScope(name string, args DataBillingMpaAccountScopeArgs) *DataBillingMpaAccountScope {
 	return &DataBillingMpaAccountScope{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataBillingMpaAccountScope(name string, args DataBillingMpaAccountScopeA
 
 var _ terra.DataResource = (*DataBillingMpaAccountScope)(nil)
 
+// DataBillingMpaAccountScope represents the Terraform data resource azurerm_billing_mpa_account_scope.
 type DataBillingMpaAccountScope struct {
 	Name string
 	Args DataBillingMpaAccountScopeArgs
 }
 
+// DataSource returns the Terraform object type for [DataBillingMpaAccountScope].
 func (bmas *DataBillingMpaAccountScope) DataSource() string {
 	return "azurerm_billing_mpa_account_scope"
 }
 
+// LocalName returns the local name for [DataBillingMpaAccountScope].
 func (bmas *DataBillingMpaAccountScope) LocalName() string {
 	return bmas.Name
 }
 
+// Configuration returns the configuration (args) for [DataBillingMpaAccountScope].
 func (bmas *DataBillingMpaAccountScope) Configuration() interface{} {
 	return bmas.Args
 }
 
+// Attributes returns the attributes for [DataBillingMpaAccountScope].
 func (bmas *DataBillingMpaAccountScope) Attributes() dataBillingMpaAccountScopeAttributes {
 	return dataBillingMpaAccountScopeAttributes{ref: terra.ReferenceDataResource(bmas)}
 }
 
+// DataBillingMpaAccountScopeArgs contains the configurations for azurerm_billing_mpa_account_scope.
 type DataBillingMpaAccountScopeArgs struct {
 	// BillingAccountName: string, required
 	BillingAccountName terra.StringValue `hcl:"billing_account_name,attr" validate:"required"`
@@ -51,18 +58,21 @@ type dataBillingMpaAccountScopeAttributes struct {
 	ref terra.Reference
 }
 
+// BillingAccountName returns a reference to field billing_account_name of azurerm_billing_mpa_account_scope.
 func (bmas dataBillingMpaAccountScopeAttributes) BillingAccountName() terra.StringValue {
-	return terra.ReferenceString(bmas.ref.Append("billing_account_name"))
+	return terra.ReferenceAsString(bmas.ref.Append("billing_account_name"))
 }
 
+// CustomerName returns a reference to field customer_name of azurerm_billing_mpa_account_scope.
 func (bmas dataBillingMpaAccountScopeAttributes) CustomerName() terra.StringValue {
-	return terra.ReferenceString(bmas.ref.Append("customer_name"))
+	return terra.ReferenceAsString(bmas.ref.Append("customer_name"))
 }
 
+// Id returns a reference to field id of azurerm_billing_mpa_account_scope.
 func (bmas dataBillingMpaAccountScopeAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bmas.ref.Append("id"))
+	return terra.ReferenceAsString(bmas.ref.Append("id"))
 }
 
 func (bmas dataBillingMpaAccountScopeAttributes) Timeouts() databillingmpaaccountscope.TimeoutsAttributes {
-	return terra.ReferenceSingle[databillingmpaaccountscope.TimeoutsAttributes](bmas.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[databillingmpaaccountscope.TimeoutsAttributes](bmas.ref.Append("timeouts"))
 }

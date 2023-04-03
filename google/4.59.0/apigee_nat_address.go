@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApigeeNatAddress creates a new instance of [ApigeeNatAddress].
 func NewApigeeNatAddress(name string, args ApigeeNatAddressArgs) *ApigeeNatAddress {
 	return &ApigeeNatAddress{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApigeeNatAddress(name string, args ApigeeNatAddressArgs) *ApigeeNatAddre
 
 var _ terra.Resource = (*ApigeeNatAddress)(nil)
 
+// ApigeeNatAddress represents the Terraform resource google_apigee_nat_address.
 type ApigeeNatAddress struct {
-	Name  string
-	Args  ApigeeNatAddressArgs
-	state *apigeeNatAddressState
+	Name      string
+	Args      ApigeeNatAddressArgs
+	state     *apigeeNatAddressState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApigeeNatAddress].
 func (ana *ApigeeNatAddress) Type() string {
 	return "google_apigee_nat_address"
 }
 
+// LocalName returns the local name for [ApigeeNatAddress].
 func (ana *ApigeeNatAddress) LocalName() string {
 	return ana.Name
 }
 
+// Configuration returns the configuration (args) for [ApigeeNatAddress].
 func (ana *ApigeeNatAddress) Configuration() interface{} {
 	return ana.Args
 }
 
+// DependOn is used for other resources to depend on [ApigeeNatAddress].
+func (ana *ApigeeNatAddress) DependOn() terra.Reference {
+	return terra.ReferenceResource(ana)
+}
+
+// Dependencies returns the list of resources [ApigeeNatAddress] depends_on.
+func (ana *ApigeeNatAddress) Dependencies() terra.Dependencies {
+	return ana.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApigeeNatAddress].
+func (ana *ApigeeNatAddress) LifecycleManagement() *terra.Lifecycle {
+	return ana.Lifecycle
+}
+
+// Attributes returns the attributes for [ApigeeNatAddress].
 func (ana *ApigeeNatAddress) Attributes() apigeeNatAddressAttributes {
 	return apigeeNatAddressAttributes{ref: terra.ReferenceResource(ana)}
 }
 
+// ImportState imports the given attribute values into [ApigeeNatAddress]'s state.
 func (ana *ApigeeNatAddress) ImportState(av io.Reader) error {
 	ana.state = &apigeeNatAddressState{}
 	if err := json.NewDecoder(av).Decode(ana.state); err != nil {
@@ -49,10 +73,12 @@ func (ana *ApigeeNatAddress) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApigeeNatAddress] has state.
 func (ana *ApigeeNatAddress) State() (*apigeeNatAddressState, bool) {
 	return ana.state, ana.state != nil
 }
 
+// StateMust returns the state for [ApigeeNatAddress]. Panics if the state is nil.
 func (ana *ApigeeNatAddress) StateMust() *apigeeNatAddressState {
 	if ana.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ana.Type(), ana.LocalName()))
@@ -60,10 +86,7 @@ func (ana *ApigeeNatAddress) StateMust() *apigeeNatAddressState {
 	return ana.state
 }
 
-func (ana *ApigeeNatAddress) DependOn() terra.Reference {
-	return terra.ReferenceResource(ana)
-}
-
+// ApigeeNatAddressArgs contains the configurations for google_apigee_nat_address.
 type ApigeeNatAddressArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -73,35 +96,38 @@ type ApigeeNatAddressArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *apigeenataddress.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ApigeeNatAddress depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apigeeNatAddressAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of google_apigee_nat_address.
 func (ana apigeeNatAddressAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ana.ref.Append("id"))
+	return terra.ReferenceAsString(ana.ref.Append("id"))
 }
 
+// InstanceId returns a reference to field instance_id of google_apigee_nat_address.
 func (ana apigeeNatAddressAttributes) InstanceId() terra.StringValue {
-	return terra.ReferenceString(ana.ref.Append("instance_id"))
+	return terra.ReferenceAsString(ana.ref.Append("instance_id"))
 }
 
+// IpAddress returns a reference to field ip_address of google_apigee_nat_address.
 func (ana apigeeNatAddressAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(ana.ref.Append("ip_address"))
+	return terra.ReferenceAsString(ana.ref.Append("ip_address"))
 }
 
+// Name returns a reference to field name of google_apigee_nat_address.
 func (ana apigeeNatAddressAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ana.ref.Append("name"))
+	return terra.ReferenceAsString(ana.ref.Append("name"))
 }
 
+// State returns a reference to field state of google_apigee_nat_address.
 func (ana apigeeNatAddressAttributes) State() terra.StringValue {
-	return terra.ReferenceString(ana.ref.Append("state"))
+	return terra.ReferenceAsString(ana.ref.Append("state"))
 }
 
 func (ana apigeeNatAddressAttributes) Timeouts() apigeenataddress.TimeoutsAttributes {
-	return terra.ReferenceSingle[apigeenataddress.TimeoutsAttributes](ana.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[apigeenataddress.TimeoutsAttributes](ana.ref.Append("timeouts"))
 }
 
 type apigeeNatAddressState struct {

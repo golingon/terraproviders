@@ -23,72 +23,72 @@ type AclAttributes struct {
 	ref terra.Reference
 }
 
-func (a AclAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AclAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AclAttributes) InternalWithRef(ref terra.Reference) AclAttributes {
 	return AclAttributes{ref: ref}
 }
 
-func (a AclAttributes) InternalTokens() hclwrite.Tokens {
+func (a AclAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a AclAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("id"))
+	return terra.ReferenceAsString(a.ref.Append("id"))
 }
 
 func (a AclAttributes) AccessPolicy() terra.ListValue[AccessPolicyAttributes] {
-	return terra.ReferenceList[AccessPolicyAttributes](a.ref.Append("access_policy"))
+	return terra.ReferenceAsList[AccessPolicyAttributes](a.ref.Append("access_policy"))
 }
 
 type AccessPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (ap AccessPolicyAttributes) InternalRef() terra.Reference {
-	return ap.ref
+func (ap AccessPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return ap.ref, nil
 }
 
 func (ap AccessPolicyAttributes) InternalWithRef(ref terra.Reference) AccessPolicyAttributes {
 	return AccessPolicyAttributes{ref: ref}
 }
 
-func (ap AccessPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (ap AccessPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ap.ref.InternalTokens()
 }
 
 func (ap AccessPolicyAttributes) Expiry() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("expiry"))
+	return terra.ReferenceAsString(ap.ref.Append("expiry"))
 }
 
 func (ap AccessPolicyAttributes) Permissions() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("permissions"))
+	return terra.ReferenceAsString(ap.ref.Append("permissions"))
 }
 
 func (ap AccessPolicyAttributes) Start() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("start"))
+	return terra.ReferenceAsString(ap.ref.Append("start"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type AclState struct {

@@ -30,7 +30,7 @@ func (t TopicAttributes) InternalWithRef(ref terra.Reference) TopicAttributes {
 	return TopicAttributes{ref: ref}
 }
 
-func (t TopicAttributes) InternalTokens() hclwrite.Tokens {
+func (t TopicAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

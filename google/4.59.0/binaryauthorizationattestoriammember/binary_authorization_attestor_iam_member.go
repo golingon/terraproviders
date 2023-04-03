@@ -20,28 +20,28 @@ type ConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConditionAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConditionAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConditionAttributes) InternalWithRef(ref terra.Reference) ConditionAttributes {
 	return ConditionAttributes{ref: ref}
 }
 
-func (c ConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ConditionAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("description"))
+	return terra.ReferenceAsString(c.ref.Append("description"))
 }
 
 func (c ConditionAttributes) Expression() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("expression"))
+	return terra.ReferenceAsString(c.ref.Append("expression"))
 }
 
 func (c ConditionAttributes) Title() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("title"))
+	return terra.ReferenceAsString(c.ref.Append("title"))
 }
 
 type ConditionState struct {

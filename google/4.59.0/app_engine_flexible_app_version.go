@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAppEngineFlexibleAppVersion creates a new instance of [AppEngineFlexibleAppVersion].
 func NewAppEngineFlexibleAppVersion(name string, args AppEngineFlexibleAppVersionArgs) *AppEngineFlexibleAppVersion {
 	return &AppEngineFlexibleAppVersion{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAppEngineFlexibleAppVersion(name string, args AppEngineFlexibleAppVersio
 
 var _ terra.Resource = (*AppEngineFlexibleAppVersion)(nil)
 
+// AppEngineFlexibleAppVersion represents the Terraform resource google_app_engine_flexible_app_version.
 type AppEngineFlexibleAppVersion struct {
-	Name  string
-	Args  AppEngineFlexibleAppVersionArgs
-	state *appEngineFlexibleAppVersionState
+	Name      string
+	Args      AppEngineFlexibleAppVersionArgs
+	state     *appEngineFlexibleAppVersionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AppEngineFlexibleAppVersion].
 func (aefav *AppEngineFlexibleAppVersion) Type() string {
 	return "google_app_engine_flexible_app_version"
 }
 
+// LocalName returns the local name for [AppEngineFlexibleAppVersion].
 func (aefav *AppEngineFlexibleAppVersion) LocalName() string {
 	return aefav.Name
 }
 
+// Configuration returns the configuration (args) for [AppEngineFlexibleAppVersion].
 func (aefav *AppEngineFlexibleAppVersion) Configuration() interface{} {
 	return aefav.Args
 }
 
+// DependOn is used for other resources to depend on [AppEngineFlexibleAppVersion].
+func (aefav *AppEngineFlexibleAppVersion) DependOn() terra.Reference {
+	return terra.ReferenceResource(aefav)
+}
+
+// Dependencies returns the list of resources [AppEngineFlexibleAppVersion] depends_on.
+func (aefav *AppEngineFlexibleAppVersion) Dependencies() terra.Dependencies {
+	return aefav.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AppEngineFlexibleAppVersion].
+func (aefav *AppEngineFlexibleAppVersion) LifecycleManagement() *terra.Lifecycle {
+	return aefav.Lifecycle
+}
+
+// Attributes returns the attributes for [AppEngineFlexibleAppVersion].
 func (aefav *AppEngineFlexibleAppVersion) Attributes() appEngineFlexibleAppVersionAttributes {
 	return appEngineFlexibleAppVersionAttributes{ref: terra.ReferenceResource(aefav)}
 }
 
+// ImportState imports the given attribute values into [AppEngineFlexibleAppVersion]'s state.
 func (aefav *AppEngineFlexibleAppVersion) ImportState(av io.Reader) error {
 	aefav.state = &appEngineFlexibleAppVersionState{}
 	if err := json.NewDecoder(av).Decode(aefav.state); err != nil {
@@ -49,10 +73,12 @@ func (aefav *AppEngineFlexibleAppVersion) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AppEngineFlexibleAppVersion] has state.
 func (aefav *AppEngineFlexibleAppVersion) State() (*appEngineFlexibleAppVersionState, bool) {
 	return aefav.state, aefav.state != nil
 }
 
+// StateMust returns the state for [AppEngineFlexibleAppVersion]. Panics if the state is nil.
 func (aefav *AppEngineFlexibleAppVersion) StateMust() *appEngineFlexibleAppVersionState {
 	if aefav.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", aefav.Type(), aefav.LocalName()))
@@ -60,10 +86,7 @@ func (aefav *AppEngineFlexibleAppVersion) StateMust() *appEngineFlexibleAppVersi
 	return aefav.state
 }
 
-func (aefav *AppEngineFlexibleAppVersion) DependOn() terra.Reference {
-	return terra.ReferenceResource(aefav)
-}
-
+// AppEngineFlexibleAppVersionArgs contains the configurations for google_app_engine_flexible_app_version.
 type AppEngineFlexibleAppVersionArgs struct {
 	// BetaSettings: map of string, optional
 	BetaSettings terra.MapValue[terra.StringValue] `hcl:"beta_settings,attr"`
@@ -127,139 +150,156 @@ type AppEngineFlexibleAppVersionArgs struct {
 	Timeouts *appengineflexibleappversion.Timeouts `hcl:"timeouts,block"`
 	// VpcAccessConnector: optional
 	VpcAccessConnector *appengineflexibleappversion.VpcAccessConnector `hcl:"vpc_access_connector,block"`
-	// DependsOn contains resources that AppEngineFlexibleAppVersion depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type appEngineFlexibleAppVersionAttributes struct {
 	ref terra.Reference
 }
 
+// BetaSettings returns a reference to field beta_settings of google_app_engine_flexible_app_version.
 func (aefav appEngineFlexibleAppVersionAttributes) BetaSettings() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](aefav.ref.Append("beta_settings"))
+	return terra.ReferenceAsMap[terra.StringValue](aefav.ref.Append("beta_settings"))
 }
 
+// DefaultExpiration returns a reference to field default_expiration of google_app_engine_flexible_app_version.
 func (aefav appEngineFlexibleAppVersionAttributes) DefaultExpiration() terra.StringValue {
-	return terra.ReferenceString(aefav.ref.Append("default_expiration"))
+	return terra.ReferenceAsString(aefav.ref.Append("default_expiration"))
 }
 
+// DeleteServiceOnDestroy returns a reference to field delete_service_on_destroy of google_app_engine_flexible_app_version.
 func (aefav appEngineFlexibleAppVersionAttributes) DeleteServiceOnDestroy() terra.BoolValue {
-	return terra.ReferenceBool(aefav.ref.Append("delete_service_on_destroy"))
+	return terra.ReferenceAsBool(aefav.ref.Append("delete_service_on_destroy"))
 }
 
+// EnvVariables returns a reference to field env_variables of google_app_engine_flexible_app_version.
 func (aefav appEngineFlexibleAppVersionAttributes) EnvVariables() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](aefav.ref.Append("env_variables"))
+	return terra.ReferenceAsMap[terra.StringValue](aefav.ref.Append("env_variables"))
 }
 
+// Id returns a reference to field id of google_app_engine_flexible_app_version.
 func (aefav appEngineFlexibleAppVersionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(aefav.ref.Append("id"))
+	return terra.ReferenceAsString(aefav.ref.Append("id"))
 }
 
+// InboundServices returns a reference to field inbound_services of google_app_engine_flexible_app_version.
 func (aefav appEngineFlexibleAppVersionAttributes) InboundServices() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](aefav.ref.Append("inbound_services"))
+	return terra.ReferenceAsSet[terra.StringValue](aefav.ref.Append("inbound_services"))
 }
 
+// InstanceClass returns a reference to field instance_class of google_app_engine_flexible_app_version.
 func (aefav appEngineFlexibleAppVersionAttributes) InstanceClass() terra.StringValue {
-	return terra.ReferenceString(aefav.ref.Append("instance_class"))
+	return terra.ReferenceAsString(aefav.ref.Append("instance_class"))
 }
 
+// Name returns a reference to field name of google_app_engine_flexible_app_version.
 func (aefav appEngineFlexibleAppVersionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(aefav.ref.Append("name"))
+	return terra.ReferenceAsString(aefav.ref.Append("name"))
 }
 
+// NobuildFilesRegex returns a reference to field nobuild_files_regex of google_app_engine_flexible_app_version.
 func (aefav appEngineFlexibleAppVersionAttributes) NobuildFilesRegex() terra.StringValue {
-	return terra.ReferenceString(aefav.ref.Append("nobuild_files_regex"))
+	return terra.ReferenceAsString(aefav.ref.Append("nobuild_files_regex"))
 }
 
+// NoopOnDestroy returns a reference to field noop_on_destroy of google_app_engine_flexible_app_version.
 func (aefav appEngineFlexibleAppVersionAttributes) NoopOnDestroy() terra.BoolValue {
-	return terra.ReferenceBool(aefav.ref.Append("noop_on_destroy"))
+	return terra.ReferenceAsBool(aefav.ref.Append("noop_on_destroy"))
 }
 
+// Project returns a reference to field project of google_app_engine_flexible_app_version.
 func (aefav appEngineFlexibleAppVersionAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(aefav.ref.Append("project"))
+	return terra.ReferenceAsString(aefav.ref.Append("project"))
 }
 
+// Runtime returns a reference to field runtime of google_app_engine_flexible_app_version.
 func (aefav appEngineFlexibleAppVersionAttributes) Runtime() terra.StringValue {
-	return terra.ReferenceString(aefav.ref.Append("runtime"))
+	return terra.ReferenceAsString(aefav.ref.Append("runtime"))
 }
 
+// RuntimeApiVersion returns a reference to field runtime_api_version of google_app_engine_flexible_app_version.
 func (aefav appEngineFlexibleAppVersionAttributes) RuntimeApiVersion() terra.StringValue {
-	return terra.ReferenceString(aefav.ref.Append("runtime_api_version"))
+	return terra.ReferenceAsString(aefav.ref.Append("runtime_api_version"))
 }
 
+// RuntimeChannel returns a reference to field runtime_channel of google_app_engine_flexible_app_version.
 func (aefav appEngineFlexibleAppVersionAttributes) RuntimeChannel() terra.StringValue {
-	return terra.ReferenceString(aefav.ref.Append("runtime_channel"))
+	return terra.ReferenceAsString(aefav.ref.Append("runtime_channel"))
 }
 
+// RuntimeMainExecutablePath returns a reference to field runtime_main_executable_path of google_app_engine_flexible_app_version.
 func (aefav appEngineFlexibleAppVersionAttributes) RuntimeMainExecutablePath() terra.StringValue {
-	return terra.ReferenceString(aefav.ref.Append("runtime_main_executable_path"))
+	return terra.ReferenceAsString(aefav.ref.Append("runtime_main_executable_path"))
 }
 
+// Service returns a reference to field service of google_app_engine_flexible_app_version.
 func (aefav appEngineFlexibleAppVersionAttributes) Service() terra.StringValue {
-	return terra.ReferenceString(aefav.ref.Append("service"))
+	return terra.ReferenceAsString(aefav.ref.Append("service"))
 }
 
+// ServiceAccount returns a reference to field service_account of google_app_engine_flexible_app_version.
 func (aefav appEngineFlexibleAppVersionAttributes) ServiceAccount() terra.StringValue {
-	return terra.ReferenceString(aefav.ref.Append("service_account"))
+	return terra.ReferenceAsString(aefav.ref.Append("service_account"))
 }
 
+// ServingStatus returns a reference to field serving_status of google_app_engine_flexible_app_version.
 func (aefav appEngineFlexibleAppVersionAttributes) ServingStatus() terra.StringValue {
-	return terra.ReferenceString(aefav.ref.Append("serving_status"))
+	return terra.ReferenceAsString(aefav.ref.Append("serving_status"))
 }
 
+// VersionId returns a reference to field version_id of google_app_engine_flexible_app_version.
 func (aefav appEngineFlexibleAppVersionAttributes) VersionId() terra.StringValue {
-	return terra.ReferenceString(aefav.ref.Append("version_id"))
+	return terra.ReferenceAsString(aefav.ref.Append("version_id"))
 }
 
 func (aefav appEngineFlexibleAppVersionAttributes) ApiConfig() terra.ListValue[appengineflexibleappversion.ApiConfigAttributes] {
-	return terra.ReferenceList[appengineflexibleappversion.ApiConfigAttributes](aefav.ref.Append("api_config"))
+	return terra.ReferenceAsList[appengineflexibleappversion.ApiConfigAttributes](aefav.ref.Append("api_config"))
 }
 
 func (aefav appEngineFlexibleAppVersionAttributes) AutomaticScaling() terra.ListValue[appengineflexibleappversion.AutomaticScalingAttributes] {
-	return terra.ReferenceList[appengineflexibleappversion.AutomaticScalingAttributes](aefav.ref.Append("automatic_scaling"))
+	return terra.ReferenceAsList[appengineflexibleappversion.AutomaticScalingAttributes](aefav.ref.Append("automatic_scaling"))
 }
 
 func (aefav appEngineFlexibleAppVersionAttributes) Deployment() terra.ListValue[appengineflexibleappversion.DeploymentAttributes] {
-	return terra.ReferenceList[appengineflexibleappversion.DeploymentAttributes](aefav.ref.Append("deployment"))
+	return terra.ReferenceAsList[appengineflexibleappversion.DeploymentAttributes](aefav.ref.Append("deployment"))
 }
 
 func (aefav appEngineFlexibleAppVersionAttributes) EndpointsApiService() terra.ListValue[appengineflexibleappversion.EndpointsApiServiceAttributes] {
-	return terra.ReferenceList[appengineflexibleappversion.EndpointsApiServiceAttributes](aefav.ref.Append("endpoints_api_service"))
+	return terra.ReferenceAsList[appengineflexibleappversion.EndpointsApiServiceAttributes](aefav.ref.Append("endpoints_api_service"))
 }
 
 func (aefav appEngineFlexibleAppVersionAttributes) Entrypoint() terra.ListValue[appengineflexibleappversion.EntrypointAttributes] {
-	return terra.ReferenceList[appengineflexibleappversion.EntrypointAttributes](aefav.ref.Append("entrypoint"))
+	return terra.ReferenceAsList[appengineflexibleappversion.EntrypointAttributes](aefav.ref.Append("entrypoint"))
 }
 
 func (aefav appEngineFlexibleAppVersionAttributes) Handlers() terra.ListValue[appengineflexibleappversion.HandlersAttributes] {
-	return terra.ReferenceList[appengineflexibleappversion.HandlersAttributes](aefav.ref.Append("handlers"))
+	return terra.ReferenceAsList[appengineflexibleappversion.HandlersAttributes](aefav.ref.Append("handlers"))
 }
 
 func (aefav appEngineFlexibleAppVersionAttributes) LivenessCheck() terra.ListValue[appengineflexibleappversion.LivenessCheckAttributes] {
-	return terra.ReferenceList[appengineflexibleappversion.LivenessCheckAttributes](aefav.ref.Append("liveness_check"))
+	return terra.ReferenceAsList[appengineflexibleappversion.LivenessCheckAttributes](aefav.ref.Append("liveness_check"))
 }
 
 func (aefav appEngineFlexibleAppVersionAttributes) ManualScaling() terra.ListValue[appengineflexibleappversion.ManualScalingAttributes] {
-	return terra.ReferenceList[appengineflexibleappversion.ManualScalingAttributes](aefav.ref.Append("manual_scaling"))
+	return terra.ReferenceAsList[appengineflexibleappversion.ManualScalingAttributes](aefav.ref.Append("manual_scaling"))
 }
 
 func (aefav appEngineFlexibleAppVersionAttributes) Network() terra.ListValue[appengineflexibleappversion.NetworkAttributes] {
-	return terra.ReferenceList[appengineflexibleappversion.NetworkAttributes](aefav.ref.Append("network"))
+	return terra.ReferenceAsList[appengineflexibleappversion.NetworkAttributes](aefav.ref.Append("network"))
 }
 
 func (aefav appEngineFlexibleAppVersionAttributes) ReadinessCheck() terra.ListValue[appengineflexibleappversion.ReadinessCheckAttributes] {
-	return terra.ReferenceList[appengineflexibleappversion.ReadinessCheckAttributes](aefav.ref.Append("readiness_check"))
+	return terra.ReferenceAsList[appengineflexibleappversion.ReadinessCheckAttributes](aefav.ref.Append("readiness_check"))
 }
 
 func (aefav appEngineFlexibleAppVersionAttributes) Resources() terra.ListValue[appengineflexibleappversion.ResourcesAttributes] {
-	return terra.ReferenceList[appengineflexibleappversion.ResourcesAttributes](aefav.ref.Append("resources"))
+	return terra.ReferenceAsList[appengineflexibleappversion.ResourcesAttributes](aefav.ref.Append("resources"))
 }
 
 func (aefav appEngineFlexibleAppVersionAttributes) Timeouts() appengineflexibleappversion.TimeoutsAttributes {
-	return terra.ReferenceSingle[appengineflexibleappversion.TimeoutsAttributes](aefav.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[appengineflexibleappversion.TimeoutsAttributes](aefav.ref.Append("timeouts"))
 }
 
 func (aefav appEngineFlexibleAppVersionAttributes) VpcAccessConnector() terra.ListValue[appengineflexibleappversion.VpcAccessConnectorAttributes] {
-	return terra.ReferenceList[appengineflexibleappversion.VpcAccessConnectorAttributes](aefav.ref.Append("vpc_access_connector"))
+	return terra.ReferenceAsList[appengineflexibleappversion.VpcAccessConnectorAttributes](aefav.ref.Append("vpc_access_connector"))
 }
 
 type appEngineFlexibleAppVersionState struct {

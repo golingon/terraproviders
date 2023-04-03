@@ -33,64 +33,64 @@ type ContentKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (ck ContentKeyAttributes) InternalRef() terra.Reference {
-	return ck.ref
+func (ck ContentKeyAttributes) InternalRef() (terra.Reference, error) {
+	return ck.ref, nil
 }
 
 func (ck ContentKeyAttributes) InternalWithRef(ref terra.Reference) ContentKeyAttributes {
 	return ContentKeyAttributes{ref: ref}
 }
 
-func (ck ContentKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (ck ContentKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ck.ref.InternalTokens()
 }
 
 func (ck ContentKeyAttributes) ContentKeyId() terra.StringValue {
-	return terra.ReferenceString(ck.ref.Append("content_key_id"))
+	return terra.ReferenceAsString(ck.ref.Append("content_key_id"))
 }
 
 func (ck ContentKeyAttributes) LabelReferenceInStreamingPolicy() terra.StringValue {
-	return terra.ReferenceString(ck.ref.Append("label_reference_in_streaming_policy"))
+	return terra.ReferenceAsString(ck.ref.Append("label_reference_in_streaming_policy"))
 }
 
 func (ck ContentKeyAttributes) PolicyName() terra.StringValue {
-	return terra.ReferenceString(ck.ref.Append("policy_name"))
+	return terra.ReferenceAsString(ck.ref.Append("policy_name"))
 }
 
 func (ck ContentKeyAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ck.ref.Append("type"))
+	return terra.ReferenceAsString(ck.ref.Append("type"))
 }
 
 func (ck ContentKeyAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(ck.ref.Append("value"))
+	return terra.ReferenceAsString(ck.ref.Append("value"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type ContentKeyState struct {

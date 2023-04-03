@@ -35,88 +35,88 @@ type AuthorityAttributes struct {
 	ref terra.Reference
 }
 
-func (a AuthorityAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AuthorityAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AuthorityAttributes) InternalWithRef(ref terra.Reference) AuthorityAttributes {
 	return AuthorityAttributes{ref: ref}
 }
 
-func (a AuthorityAttributes) InternalTokens() hclwrite.Tokens {
+func (a AuthorityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a AuthorityAttributes) Issuer() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("issuer"))
+	return terra.ReferenceAsString(a.ref.Append("issuer"))
 }
 
 type EndpointAttributes struct {
 	ref terra.Reference
 }
 
-func (e EndpointAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EndpointAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EndpointAttributes) InternalWithRef(ref terra.Reference) EndpointAttributes {
 	return EndpointAttributes{ref: ref}
 }
 
-func (e EndpointAttributes) InternalTokens() hclwrite.Tokens {
+func (e EndpointAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
 func (e EndpointAttributes) GkeCluster() terra.ListValue[GkeClusterAttributes] {
-	return terra.ReferenceList[GkeClusterAttributes](e.ref.Append("gke_cluster"))
+	return terra.ReferenceAsList[GkeClusterAttributes](e.ref.Append("gke_cluster"))
 }
 
 type GkeClusterAttributes struct {
 	ref terra.Reference
 }
 
-func (gc GkeClusterAttributes) InternalRef() terra.Reference {
-	return gc.ref
+func (gc GkeClusterAttributes) InternalRef() (terra.Reference, error) {
+	return gc.ref, nil
 }
 
 func (gc GkeClusterAttributes) InternalWithRef(ref terra.Reference) GkeClusterAttributes {
 	return GkeClusterAttributes{ref: ref}
 }
 
-func (gc GkeClusterAttributes) InternalTokens() hclwrite.Tokens {
+func (gc GkeClusterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gc.ref.InternalTokens()
 }
 
 func (gc GkeClusterAttributes) ResourceLink() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("resource_link"))
+	return terra.ReferenceAsString(gc.ref.Append("resource_link"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AuthorityState struct {

@@ -72,7 +72,7 @@ func (rtpit RestoreToPointInTimeAttributes) InternalWithRef(ref terra.Reference)
 	return RestoreToPointInTimeAttributes{ref: ref}
 }
 
-func (rtpit RestoreToPointInTimeAttributes) InternalTokens() hclwrite.Tokens {
+func (rtpit RestoreToPointInTimeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rtpit.ref.InternalTokens()
 }
 
@@ -104,7 +104,7 @@ func (si S3ImportAttributes) InternalWithRef(ref terra.Reference) S3ImportAttrib
 	return S3ImportAttributes{ref: ref}
 }
 
-func (si S3ImportAttributes) InternalTokens() hclwrite.Tokens {
+func (si S3ImportAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return si.ref.InternalTokens()
 }
 
@@ -140,7 +140,7 @@ func (sc ScalingConfigurationAttributes) InternalWithRef(ref terra.Reference) Sc
 	return ScalingConfigurationAttributes{ref: ref}
 }
 
-func (sc ScalingConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (sc ScalingConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -176,7 +176,7 @@ func (ssc Serverlessv2ScalingConfigurationAttributes) InternalWithRef(ref terra.
 	return Serverlessv2ScalingConfigurationAttributes{ref: ref}
 }
 
-func (ssc Serverlessv2ScalingConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ssc Serverlessv2ScalingConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ssc.ref.InternalTokens()
 }
 
@@ -200,7 +200,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

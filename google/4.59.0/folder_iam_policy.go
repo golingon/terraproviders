@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewFolderIamPolicy creates a new instance of [FolderIamPolicy].
 func NewFolderIamPolicy(name string, args FolderIamPolicyArgs) *FolderIamPolicy {
 	return &FolderIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewFolderIamPolicy(name string, args FolderIamPolicyArgs) *FolderIamPolicy 
 
 var _ terra.Resource = (*FolderIamPolicy)(nil)
 
+// FolderIamPolicy represents the Terraform resource google_folder_iam_policy.
 type FolderIamPolicy struct {
-	Name  string
-	Args  FolderIamPolicyArgs
-	state *folderIamPolicyState
+	Name      string
+	Args      FolderIamPolicyArgs
+	state     *folderIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [FolderIamPolicy].
 func (fip *FolderIamPolicy) Type() string {
 	return "google_folder_iam_policy"
 }
 
+// LocalName returns the local name for [FolderIamPolicy].
 func (fip *FolderIamPolicy) LocalName() string {
 	return fip.Name
 }
 
+// Configuration returns the configuration (args) for [FolderIamPolicy].
 func (fip *FolderIamPolicy) Configuration() interface{} {
 	return fip.Args
 }
 
+// DependOn is used for other resources to depend on [FolderIamPolicy].
+func (fip *FolderIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(fip)
+}
+
+// Dependencies returns the list of resources [FolderIamPolicy] depends_on.
+func (fip *FolderIamPolicy) Dependencies() terra.Dependencies {
+	return fip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [FolderIamPolicy].
+func (fip *FolderIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return fip.Lifecycle
+}
+
+// Attributes returns the attributes for [FolderIamPolicy].
 func (fip *FolderIamPolicy) Attributes() folderIamPolicyAttributes {
 	return folderIamPolicyAttributes{ref: terra.ReferenceResource(fip)}
 }
 
+// ImportState imports the given attribute values into [FolderIamPolicy]'s state.
 func (fip *FolderIamPolicy) ImportState(av io.Reader) error {
 	fip.state = &folderIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(fip.state); err != nil {
@@ -48,10 +72,12 @@ func (fip *FolderIamPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [FolderIamPolicy] has state.
 func (fip *FolderIamPolicy) State() (*folderIamPolicyState, bool) {
 	return fip.state, fip.state != nil
 }
 
+// StateMust returns the state for [FolderIamPolicy]. Panics if the state is nil.
 func (fip *FolderIamPolicy) StateMust() *folderIamPolicyState {
 	if fip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", fip.Type(), fip.LocalName()))
@@ -59,10 +85,7 @@ func (fip *FolderIamPolicy) StateMust() *folderIamPolicyState {
 	return fip.state
 }
 
-func (fip *FolderIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(fip)
-}
-
+// FolderIamPolicyArgs contains the configurations for google_folder_iam_policy.
 type FolderIamPolicyArgs struct {
 	// Folder: string, required
 	Folder terra.StringValue `hcl:"folder,attr" validate:"required"`
@@ -70,27 +93,29 @@ type FolderIamPolicyArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// PolicyData: string, required
 	PolicyData terra.StringValue `hcl:"policy_data,attr" validate:"required"`
-	// DependsOn contains resources that FolderIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type folderIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_folder_iam_policy.
 func (fip folderIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(fip.ref.Append("etag"))
+	return terra.ReferenceAsString(fip.ref.Append("etag"))
 }
 
+// Folder returns a reference to field folder of google_folder_iam_policy.
 func (fip folderIamPolicyAttributes) Folder() terra.StringValue {
-	return terra.ReferenceString(fip.ref.Append("folder"))
+	return terra.ReferenceAsString(fip.ref.Append("folder"))
 }
 
+// Id returns a reference to field id of google_folder_iam_policy.
 func (fip folderIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(fip.ref.Append("id"))
+	return terra.ReferenceAsString(fip.ref.Append("id"))
 }
 
+// PolicyData returns a reference to field policy_data of google_folder_iam_policy.
 func (fip folderIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(fip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(fip.ref.Append("policy_data"))
 }
 
 type folderIamPolicyState struct {

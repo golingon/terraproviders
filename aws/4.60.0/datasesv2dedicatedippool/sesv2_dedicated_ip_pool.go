@@ -21,7 +21,7 @@ func (di DedicatedIpsAttributes) InternalWithRef(ref terra.Reference) DedicatedI
 	return DedicatedIpsAttributes{ref: ref}
 }
 
-func (di DedicatedIpsAttributes) InternalTokens() hclwrite.Tokens {
+func (di DedicatedIpsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return di.ref.InternalTokens()
 }
 

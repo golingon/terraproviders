@@ -64,136 +64,136 @@ type AdditionalWorkspaceAttributes struct {
 	ref terra.Reference
 }
 
-func (aw AdditionalWorkspaceAttributes) InternalRef() terra.Reference {
-	return aw.ref
+func (aw AdditionalWorkspaceAttributes) InternalRef() (terra.Reference, error) {
+	return aw.ref, nil
 }
 
 func (aw AdditionalWorkspaceAttributes) InternalWithRef(ref terra.Reference) AdditionalWorkspaceAttributes {
 	return AdditionalWorkspaceAttributes{ref: ref}
 }
 
-func (aw AdditionalWorkspaceAttributes) InternalTokens() hclwrite.Tokens {
+func (aw AdditionalWorkspaceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aw.ref.InternalTokens()
 }
 
 func (aw AdditionalWorkspaceAttributes) DataTypes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](aw.ref.Append("data_types"))
+	return terra.ReferenceAsSet[terra.StringValue](aw.ref.Append("data_types"))
 }
 
 func (aw AdditionalWorkspaceAttributes) WorkspaceId() terra.StringValue {
-	return terra.ReferenceString(aw.ref.Append("workspace_id"))
+	return terra.ReferenceAsString(aw.ref.Append("workspace_id"))
 }
 
 type RecommendationsEnabledAttributes struct {
 	ref terra.Reference
 }
 
-func (re RecommendationsEnabledAttributes) InternalRef() terra.Reference {
-	return re.ref
+func (re RecommendationsEnabledAttributes) InternalRef() (terra.Reference, error) {
+	return re.ref, nil
 }
 
 func (re RecommendationsEnabledAttributes) InternalWithRef(ref terra.Reference) RecommendationsEnabledAttributes {
 	return RecommendationsEnabledAttributes{ref: ref}
 }
 
-func (re RecommendationsEnabledAttributes) InternalTokens() hclwrite.Tokens {
+func (re RecommendationsEnabledAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return re.ref.InternalTokens()
 }
 
 func (re RecommendationsEnabledAttributes) AcrAuthentication() terra.BoolValue {
-	return terra.ReferenceBool(re.ref.Append("acr_authentication"))
+	return terra.ReferenceAsBool(re.ref.Append("acr_authentication"))
 }
 
 func (re RecommendationsEnabledAttributes) AgentSendUnutilizedMsg() terra.BoolValue {
-	return terra.ReferenceBool(re.ref.Append("agent_send_unutilized_msg"))
+	return terra.ReferenceAsBool(re.ref.Append("agent_send_unutilized_msg"))
 }
 
 func (re RecommendationsEnabledAttributes) Baseline() terra.BoolValue {
-	return terra.ReferenceBool(re.ref.Append("baseline"))
+	return terra.ReferenceAsBool(re.ref.Append("baseline"))
 }
 
 func (re RecommendationsEnabledAttributes) EdgeHubMemOptimize() terra.BoolValue {
-	return terra.ReferenceBool(re.ref.Append("edge_hub_mem_optimize"))
+	return terra.ReferenceAsBool(re.ref.Append("edge_hub_mem_optimize"))
 }
 
 func (re RecommendationsEnabledAttributes) EdgeLoggingOption() terra.BoolValue {
-	return terra.ReferenceBool(re.ref.Append("edge_logging_option"))
+	return terra.ReferenceAsBool(re.ref.Append("edge_logging_option"))
 }
 
 func (re RecommendationsEnabledAttributes) InconsistentModuleSettings() terra.BoolValue {
-	return terra.ReferenceBool(re.ref.Append("inconsistent_module_settings"))
+	return terra.ReferenceAsBool(re.ref.Append("inconsistent_module_settings"))
 }
 
 func (re RecommendationsEnabledAttributes) InstallAgent() terra.BoolValue {
-	return terra.ReferenceBool(re.ref.Append("install_agent"))
+	return terra.ReferenceAsBool(re.ref.Append("install_agent"))
 }
 
 func (re RecommendationsEnabledAttributes) IpFilterDenyAll() terra.BoolValue {
-	return terra.ReferenceBool(re.ref.Append("ip_filter_deny_all"))
+	return terra.ReferenceAsBool(re.ref.Append("ip_filter_deny_all"))
 }
 
 func (re RecommendationsEnabledAttributes) IpFilterPermissiveRule() terra.BoolValue {
-	return terra.ReferenceBool(re.ref.Append("ip_filter_permissive_rule"))
+	return terra.ReferenceAsBool(re.ref.Append("ip_filter_permissive_rule"))
 }
 
 func (re RecommendationsEnabledAttributes) OpenPorts() terra.BoolValue {
-	return terra.ReferenceBool(re.ref.Append("open_ports"))
+	return terra.ReferenceAsBool(re.ref.Append("open_ports"))
 }
 
 func (re RecommendationsEnabledAttributes) PermissiveFirewallPolicy() terra.BoolValue {
-	return terra.ReferenceBool(re.ref.Append("permissive_firewall_policy"))
+	return terra.ReferenceAsBool(re.ref.Append("permissive_firewall_policy"))
 }
 
 func (re RecommendationsEnabledAttributes) PermissiveInputFirewallRules() terra.BoolValue {
-	return terra.ReferenceBool(re.ref.Append("permissive_input_firewall_rules"))
+	return terra.ReferenceAsBool(re.ref.Append("permissive_input_firewall_rules"))
 }
 
 func (re RecommendationsEnabledAttributes) PermissiveOutputFirewallRules() terra.BoolValue {
-	return terra.ReferenceBool(re.ref.Append("permissive_output_firewall_rules"))
+	return terra.ReferenceAsBool(re.ref.Append("permissive_output_firewall_rules"))
 }
 
 func (re RecommendationsEnabledAttributes) PrivilegedDockerOptions() terra.BoolValue {
-	return terra.ReferenceBool(re.ref.Append("privileged_docker_options"))
+	return terra.ReferenceAsBool(re.ref.Append("privileged_docker_options"))
 }
 
 func (re RecommendationsEnabledAttributes) SharedCredentials() terra.BoolValue {
-	return terra.ReferenceBool(re.ref.Append("shared_credentials"))
+	return terra.ReferenceAsBool(re.ref.Append("shared_credentials"))
 }
 
 func (re RecommendationsEnabledAttributes) VulnerableTlsCipherSuite() terra.BoolValue {
-	return terra.ReferenceBool(re.ref.Append("vulnerable_tls_cipher_suite"))
+	return terra.ReferenceAsBool(re.ref.Append("vulnerable_tls_cipher_suite"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AdditionalWorkspaceState struct {

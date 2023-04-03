@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewStreamAnalyticsManagedPrivateEndpoint creates a new instance of [StreamAnalyticsManagedPrivateEndpoint].
 func NewStreamAnalyticsManagedPrivateEndpoint(name string, args StreamAnalyticsManagedPrivateEndpointArgs) *StreamAnalyticsManagedPrivateEndpoint {
 	return &StreamAnalyticsManagedPrivateEndpoint{
 		Args: args,
@@ -19,28 +20,51 @@ func NewStreamAnalyticsManagedPrivateEndpoint(name string, args StreamAnalyticsM
 
 var _ terra.Resource = (*StreamAnalyticsManagedPrivateEndpoint)(nil)
 
+// StreamAnalyticsManagedPrivateEndpoint represents the Terraform resource azurerm_stream_analytics_managed_private_endpoint.
 type StreamAnalyticsManagedPrivateEndpoint struct {
-	Name  string
-	Args  StreamAnalyticsManagedPrivateEndpointArgs
-	state *streamAnalyticsManagedPrivateEndpointState
+	Name      string
+	Args      StreamAnalyticsManagedPrivateEndpointArgs
+	state     *streamAnalyticsManagedPrivateEndpointState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [StreamAnalyticsManagedPrivateEndpoint].
 func (sampe *StreamAnalyticsManagedPrivateEndpoint) Type() string {
 	return "azurerm_stream_analytics_managed_private_endpoint"
 }
 
+// LocalName returns the local name for [StreamAnalyticsManagedPrivateEndpoint].
 func (sampe *StreamAnalyticsManagedPrivateEndpoint) LocalName() string {
 	return sampe.Name
 }
 
+// Configuration returns the configuration (args) for [StreamAnalyticsManagedPrivateEndpoint].
 func (sampe *StreamAnalyticsManagedPrivateEndpoint) Configuration() interface{} {
 	return sampe.Args
 }
 
+// DependOn is used for other resources to depend on [StreamAnalyticsManagedPrivateEndpoint].
+func (sampe *StreamAnalyticsManagedPrivateEndpoint) DependOn() terra.Reference {
+	return terra.ReferenceResource(sampe)
+}
+
+// Dependencies returns the list of resources [StreamAnalyticsManagedPrivateEndpoint] depends_on.
+func (sampe *StreamAnalyticsManagedPrivateEndpoint) Dependencies() terra.Dependencies {
+	return sampe.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [StreamAnalyticsManagedPrivateEndpoint].
+func (sampe *StreamAnalyticsManagedPrivateEndpoint) LifecycleManagement() *terra.Lifecycle {
+	return sampe.Lifecycle
+}
+
+// Attributes returns the attributes for [StreamAnalyticsManagedPrivateEndpoint].
 func (sampe *StreamAnalyticsManagedPrivateEndpoint) Attributes() streamAnalyticsManagedPrivateEndpointAttributes {
 	return streamAnalyticsManagedPrivateEndpointAttributes{ref: terra.ReferenceResource(sampe)}
 }
 
+// ImportState imports the given attribute values into [StreamAnalyticsManagedPrivateEndpoint]'s state.
 func (sampe *StreamAnalyticsManagedPrivateEndpoint) ImportState(av io.Reader) error {
 	sampe.state = &streamAnalyticsManagedPrivateEndpointState{}
 	if err := json.NewDecoder(av).Decode(sampe.state); err != nil {
@@ -49,10 +73,12 @@ func (sampe *StreamAnalyticsManagedPrivateEndpoint) ImportState(av io.Reader) er
 	return nil
 }
 
+// State returns the state and a bool indicating if [StreamAnalyticsManagedPrivateEndpoint] has state.
 func (sampe *StreamAnalyticsManagedPrivateEndpoint) State() (*streamAnalyticsManagedPrivateEndpointState, bool) {
 	return sampe.state, sampe.state != nil
 }
 
+// StateMust returns the state for [StreamAnalyticsManagedPrivateEndpoint]. Panics if the state is nil.
 func (sampe *StreamAnalyticsManagedPrivateEndpoint) StateMust() *streamAnalyticsManagedPrivateEndpointState {
 	if sampe.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sampe.Type(), sampe.LocalName()))
@@ -60,10 +86,7 @@ func (sampe *StreamAnalyticsManagedPrivateEndpoint) StateMust() *streamAnalytics
 	return sampe.state
 }
 
-func (sampe *StreamAnalyticsManagedPrivateEndpoint) DependOn() terra.Reference {
-	return terra.ReferenceResource(sampe)
-}
-
+// StreamAnalyticsManagedPrivateEndpointArgs contains the configurations for azurerm_stream_analytics_managed_private_endpoint.
 type StreamAnalyticsManagedPrivateEndpointArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,39 +102,43 @@ type StreamAnalyticsManagedPrivateEndpointArgs struct {
 	TargetResourceId terra.StringValue `hcl:"target_resource_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *streamanalyticsmanagedprivateendpoint.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that StreamAnalyticsManagedPrivateEndpoint depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type streamAnalyticsManagedPrivateEndpointAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_stream_analytics_managed_private_endpoint.
 func (sampe streamAnalyticsManagedPrivateEndpointAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sampe.ref.Append("id"))
+	return terra.ReferenceAsString(sampe.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_stream_analytics_managed_private_endpoint.
 func (sampe streamAnalyticsManagedPrivateEndpointAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sampe.ref.Append("name"))
+	return terra.ReferenceAsString(sampe.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_stream_analytics_managed_private_endpoint.
 func (sampe streamAnalyticsManagedPrivateEndpointAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(sampe.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(sampe.ref.Append("resource_group_name"))
 }
 
+// StreamAnalyticsClusterName returns a reference to field stream_analytics_cluster_name of azurerm_stream_analytics_managed_private_endpoint.
 func (sampe streamAnalyticsManagedPrivateEndpointAttributes) StreamAnalyticsClusterName() terra.StringValue {
-	return terra.ReferenceString(sampe.ref.Append("stream_analytics_cluster_name"))
+	return terra.ReferenceAsString(sampe.ref.Append("stream_analytics_cluster_name"))
 }
 
+// SubresourceName returns a reference to field subresource_name of azurerm_stream_analytics_managed_private_endpoint.
 func (sampe streamAnalyticsManagedPrivateEndpointAttributes) SubresourceName() terra.StringValue {
-	return terra.ReferenceString(sampe.ref.Append("subresource_name"))
+	return terra.ReferenceAsString(sampe.ref.Append("subresource_name"))
 }
 
+// TargetResourceId returns a reference to field target_resource_id of azurerm_stream_analytics_managed_private_endpoint.
 func (sampe streamAnalyticsManagedPrivateEndpointAttributes) TargetResourceId() terra.StringValue {
-	return terra.ReferenceString(sampe.ref.Append("target_resource_id"))
+	return terra.ReferenceAsString(sampe.ref.Append("target_resource_id"))
 }
 
 func (sampe streamAnalyticsManagedPrivateEndpointAttributes) Timeouts() streamanalyticsmanagedprivateendpoint.TimeoutsAttributes {
-	return terra.ReferenceSingle[streamanalyticsmanagedprivateendpoint.TimeoutsAttributes](sampe.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[streamanalyticsmanagedprivateendpoint.TimeoutsAttributes](sampe.ref.Append("timeouts"))
 }
 
 type streamAnalyticsManagedPrivateEndpointState struct {

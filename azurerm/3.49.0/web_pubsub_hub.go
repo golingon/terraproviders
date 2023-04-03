@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewWebPubsubHub creates a new instance of [WebPubsubHub].
 func NewWebPubsubHub(name string, args WebPubsubHubArgs) *WebPubsubHub {
 	return &WebPubsubHub{
 		Args: args,
@@ -19,28 +20,51 @@ func NewWebPubsubHub(name string, args WebPubsubHubArgs) *WebPubsubHub {
 
 var _ terra.Resource = (*WebPubsubHub)(nil)
 
+// WebPubsubHub represents the Terraform resource azurerm_web_pubsub_hub.
 type WebPubsubHub struct {
-	Name  string
-	Args  WebPubsubHubArgs
-	state *webPubsubHubState
+	Name      string
+	Args      WebPubsubHubArgs
+	state     *webPubsubHubState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [WebPubsubHub].
 func (wph *WebPubsubHub) Type() string {
 	return "azurerm_web_pubsub_hub"
 }
 
+// LocalName returns the local name for [WebPubsubHub].
 func (wph *WebPubsubHub) LocalName() string {
 	return wph.Name
 }
 
+// Configuration returns the configuration (args) for [WebPubsubHub].
 func (wph *WebPubsubHub) Configuration() interface{} {
 	return wph.Args
 }
 
+// DependOn is used for other resources to depend on [WebPubsubHub].
+func (wph *WebPubsubHub) DependOn() terra.Reference {
+	return terra.ReferenceResource(wph)
+}
+
+// Dependencies returns the list of resources [WebPubsubHub] depends_on.
+func (wph *WebPubsubHub) Dependencies() terra.Dependencies {
+	return wph.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [WebPubsubHub].
+func (wph *WebPubsubHub) LifecycleManagement() *terra.Lifecycle {
+	return wph.Lifecycle
+}
+
+// Attributes returns the attributes for [WebPubsubHub].
 func (wph *WebPubsubHub) Attributes() webPubsubHubAttributes {
 	return webPubsubHubAttributes{ref: terra.ReferenceResource(wph)}
 }
 
+// ImportState imports the given attribute values into [WebPubsubHub]'s state.
 func (wph *WebPubsubHub) ImportState(av io.Reader) error {
 	wph.state = &webPubsubHubState{}
 	if err := json.NewDecoder(av).Decode(wph.state); err != nil {
@@ -49,10 +73,12 @@ func (wph *WebPubsubHub) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [WebPubsubHub] has state.
 func (wph *WebPubsubHub) State() (*webPubsubHubState, bool) {
 	return wph.state, wph.state != nil
 }
 
+// StateMust returns the state for [WebPubsubHub]. Panics if the state is nil.
 func (wph *WebPubsubHub) StateMust() *webPubsubHubState {
 	if wph.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", wph.Type(), wph.LocalName()))
@@ -60,10 +86,7 @@ func (wph *WebPubsubHub) StateMust() *webPubsubHubState {
 	return wph.state
 }
 
-func (wph *WebPubsubHub) DependOn() terra.Reference {
-	return terra.ReferenceResource(wph)
-}
-
+// WebPubsubHubArgs contains the configurations for azurerm_web_pubsub_hub.
 type WebPubsubHubArgs struct {
 	// AnonymousConnectionsEnabled: bool, optional
 	AnonymousConnectionsEnabled terra.BoolValue `hcl:"anonymous_connections_enabled,attr"`
@@ -77,35 +100,37 @@ type WebPubsubHubArgs struct {
 	EventHandler []webpubsubhub.EventHandler `hcl:"event_handler,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *webpubsubhub.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that WebPubsubHub depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type webPubsubHubAttributes struct {
 	ref terra.Reference
 }
 
+// AnonymousConnectionsEnabled returns a reference to field anonymous_connections_enabled of azurerm_web_pubsub_hub.
 func (wph webPubsubHubAttributes) AnonymousConnectionsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(wph.ref.Append("anonymous_connections_enabled"))
+	return terra.ReferenceAsBool(wph.ref.Append("anonymous_connections_enabled"))
 }
 
+// Id returns a reference to field id of azurerm_web_pubsub_hub.
 func (wph webPubsubHubAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(wph.ref.Append("id"))
+	return terra.ReferenceAsString(wph.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_web_pubsub_hub.
 func (wph webPubsubHubAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(wph.ref.Append("name"))
+	return terra.ReferenceAsString(wph.ref.Append("name"))
 }
 
+// WebPubsubId returns a reference to field web_pubsub_id of azurerm_web_pubsub_hub.
 func (wph webPubsubHubAttributes) WebPubsubId() terra.StringValue {
-	return terra.ReferenceString(wph.ref.Append("web_pubsub_id"))
+	return terra.ReferenceAsString(wph.ref.Append("web_pubsub_id"))
 }
 
 func (wph webPubsubHubAttributes) EventHandler() terra.ListValue[webpubsubhub.EventHandlerAttributes] {
-	return terra.ReferenceList[webpubsubhub.EventHandlerAttributes](wph.ref.Append("event_handler"))
+	return terra.ReferenceAsList[webpubsubhub.EventHandlerAttributes](wph.ref.Append("event_handler"))
 }
 
 func (wph webPubsubHubAttributes) Timeouts() webpubsubhub.TimeoutsAttributes {
-	return terra.ReferenceSingle[webpubsubhub.TimeoutsAttributes](wph.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[webpubsubhub.TimeoutsAttributes](wph.ref.Append("timeouts"))
 }
 
 type webPubsubHubState struct {

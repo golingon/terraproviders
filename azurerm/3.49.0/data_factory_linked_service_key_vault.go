@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFactoryLinkedServiceKeyVault creates a new instance of [DataFactoryLinkedServiceKeyVault].
 func NewDataFactoryLinkedServiceKeyVault(name string, args DataFactoryLinkedServiceKeyVaultArgs) *DataFactoryLinkedServiceKeyVault {
 	return &DataFactoryLinkedServiceKeyVault{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFactoryLinkedServiceKeyVault(name string, args DataFactoryLinkedServ
 
 var _ terra.Resource = (*DataFactoryLinkedServiceKeyVault)(nil)
 
+// DataFactoryLinkedServiceKeyVault represents the Terraform resource azurerm_data_factory_linked_service_key_vault.
 type DataFactoryLinkedServiceKeyVault struct {
-	Name  string
-	Args  DataFactoryLinkedServiceKeyVaultArgs
-	state *dataFactoryLinkedServiceKeyVaultState
+	Name      string
+	Args      DataFactoryLinkedServiceKeyVaultArgs
+	state     *dataFactoryLinkedServiceKeyVaultState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFactoryLinkedServiceKeyVault].
 func (dflskv *DataFactoryLinkedServiceKeyVault) Type() string {
 	return "azurerm_data_factory_linked_service_key_vault"
 }
 
+// LocalName returns the local name for [DataFactoryLinkedServiceKeyVault].
 func (dflskv *DataFactoryLinkedServiceKeyVault) LocalName() string {
 	return dflskv.Name
 }
 
+// Configuration returns the configuration (args) for [DataFactoryLinkedServiceKeyVault].
 func (dflskv *DataFactoryLinkedServiceKeyVault) Configuration() interface{} {
 	return dflskv.Args
 }
 
+// DependOn is used for other resources to depend on [DataFactoryLinkedServiceKeyVault].
+func (dflskv *DataFactoryLinkedServiceKeyVault) DependOn() terra.Reference {
+	return terra.ReferenceResource(dflskv)
+}
+
+// Dependencies returns the list of resources [DataFactoryLinkedServiceKeyVault] depends_on.
+func (dflskv *DataFactoryLinkedServiceKeyVault) Dependencies() terra.Dependencies {
+	return dflskv.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFactoryLinkedServiceKeyVault].
+func (dflskv *DataFactoryLinkedServiceKeyVault) LifecycleManagement() *terra.Lifecycle {
+	return dflskv.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFactoryLinkedServiceKeyVault].
 func (dflskv *DataFactoryLinkedServiceKeyVault) Attributes() dataFactoryLinkedServiceKeyVaultAttributes {
 	return dataFactoryLinkedServiceKeyVaultAttributes{ref: terra.ReferenceResource(dflskv)}
 }
 
+// ImportState imports the given attribute values into [DataFactoryLinkedServiceKeyVault]'s state.
 func (dflskv *DataFactoryLinkedServiceKeyVault) ImportState(av io.Reader) error {
 	dflskv.state = &dataFactoryLinkedServiceKeyVaultState{}
 	if err := json.NewDecoder(av).Decode(dflskv.state); err != nil {
@@ -49,10 +73,12 @@ func (dflskv *DataFactoryLinkedServiceKeyVault) ImportState(av io.Reader) error 
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFactoryLinkedServiceKeyVault] has state.
 func (dflskv *DataFactoryLinkedServiceKeyVault) State() (*dataFactoryLinkedServiceKeyVaultState, bool) {
 	return dflskv.state, dflskv.state != nil
 }
 
+// StateMust returns the state for [DataFactoryLinkedServiceKeyVault]. Panics if the state is nil.
 func (dflskv *DataFactoryLinkedServiceKeyVault) StateMust() *dataFactoryLinkedServiceKeyVaultState {
 	if dflskv.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dflskv.Type(), dflskv.LocalName()))
@@ -60,10 +86,7 @@ func (dflskv *DataFactoryLinkedServiceKeyVault) StateMust() *dataFactoryLinkedSe
 	return dflskv.state
 }
 
-func (dflskv *DataFactoryLinkedServiceKeyVault) DependOn() terra.Reference {
-	return terra.ReferenceResource(dflskv)
-}
-
+// DataFactoryLinkedServiceKeyVaultArgs contains the configurations for azurerm_data_factory_linked_service_key_vault.
 type DataFactoryLinkedServiceKeyVaultArgs struct {
 	// AdditionalProperties: map of string, optional
 	AdditionalProperties terra.MapValue[terra.StringValue] `hcl:"additional_properties,attr"`
@@ -85,51 +108,58 @@ type DataFactoryLinkedServiceKeyVaultArgs struct {
 	Parameters terra.MapValue[terra.StringValue] `hcl:"parameters,attr"`
 	// Timeouts: optional
 	Timeouts *datafactorylinkedservicekeyvault.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataFactoryLinkedServiceKeyVault depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFactoryLinkedServiceKeyVaultAttributes struct {
 	ref terra.Reference
 }
 
+// AdditionalProperties returns a reference to field additional_properties of azurerm_data_factory_linked_service_key_vault.
 func (dflskv dataFactoryLinkedServiceKeyVaultAttributes) AdditionalProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dflskv.ref.Append("additional_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](dflskv.ref.Append("additional_properties"))
 }
 
+// Annotations returns a reference to field annotations of azurerm_data_factory_linked_service_key_vault.
 func (dflskv dataFactoryLinkedServiceKeyVaultAttributes) Annotations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dflskv.ref.Append("annotations"))
+	return terra.ReferenceAsList[terra.StringValue](dflskv.ref.Append("annotations"))
 }
 
+// DataFactoryId returns a reference to field data_factory_id of azurerm_data_factory_linked_service_key_vault.
 func (dflskv dataFactoryLinkedServiceKeyVaultAttributes) DataFactoryId() terra.StringValue {
-	return terra.ReferenceString(dflskv.ref.Append("data_factory_id"))
+	return terra.ReferenceAsString(dflskv.ref.Append("data_factory_id"))
 }
 
+// Description returns a reference to field description of azurerm_data_factory_linked_service_key_vault.
 func (dflskv dataFactoryLinkedServiceKeyVaultAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dflskv.ref.Append("description"))
+	return terra.ReferenceAsString(dflskv.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_data_factory_linked_service_key_vault.
 func (dflskv dataFactoryLinkedServiceKeyVaultAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dflskv.ref.Append("id"))
+	return terra.ReferenceAsString(dflskv.ref.Append("id"))
 }
 
+// IntegrationRuntimeName returns a reference to field integration_runtime_name of azurerm_data_factory_linked_service_key_vault.
 func (dflskv dataFactoryLinkedServiceKeyVaultAttributes) IntegrationRuntimeName() terra.StringValue {
-	return terra.ReferenceString(dflskv.ref.Append("integration_runtime_name"))
+	return terra.ReferenceAsString(dflskv.ref.Append("integration_runtime_name"))
 }
 
+// KeyVaultId returns a reference to field key_vault_id of azurerm_data_factory_linked_service_key_vault.
 func (dflskv dataFactoryLinkedServiceKeyVaultAttributes) KeyVaultId() terra.StringValue {
-	return terra.ReferenceString(dflskv.ref.Append("key_vault_id"))
+	return terra.ReferenceAsString(dflskv.ref.Append("key_vault_id"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory_linked_service_key_vault.
 func (dflskv dataFactoryLinkedServiceKeyVaultAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dflskv.ref.Append("name"))
+	return terra.ReferenceAsString(dflskv.ref.Append("name"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_data_factory_linked_service_key_vault.
 func (dflskv dataFactoryLinkedServiceKeyVaultAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dflskv.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](dflskv.ref.Append("parameters"))
 }
 
 func (dflskv dataFactoryLinkedServiceKeyVaultAttributes) Timeouts() datafactorylinkedservicekeyvault.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafactorylinkedservicekeyvault.TimeoutsAttributes](dflskv.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafactorylinkedservicekeyvault.TimeoutsAttributes](dflskv.ref.Append("timeouts"))
 }
 
 type dataFactoryLinkedServiceKeyVaultState struct {

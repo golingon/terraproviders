@@ -93,7 +93,7 @@ func (a ActionAttributes) InternalWithRef(ref terra.Reference) ActionAttributes 
 	return ActionAttributes{ref: ref}
 }
 
-func (a ActionAttributes) InternalTokens() hclwrite.Tokens {
+func (a ActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -133,7 +133,7 @@ func (p ParameterAttributes) InternalWithRef(ref terra.Reference) ParameterAttri
 	return ParameterAttributes{ref: ref}
 }
 
-func (p ParameterAttributes) InternalTokens() hclwrite.Tokens {
+func (p ParameterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -157,7 +157,7 @@ func (t ActionTargetAttributes) InternalWithRef(ref terra.Reference) ActionTarge
 	return ActionTargetAttributes{ref: ref}
 }
 
-func (t ActionTargetAttributes) InternalTokens() hclwrite.Tokens {
+func (t ActionTargetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -181,7 +181,7 @@ func (sc StopConditionAttributes) InternalWithRef(ref terra.Reference) StopCondi
 	return StopConditionAttributes{ref: ref}
 }
 
-func (sc StopConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (sc StopConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -205,7 +205,7 @@ func (t TargetAttributes) InternalWithRef(ref terra.Reference) TargetAttributes 
 	return TargetAttributes{ref: ref}
 }
 
-func (t TargetAttributes) InternalTokens() hclwrite.Tokens {
+func (t TargetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -245,7 +245,7 @@ func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes 
 	return FilterAttributes{ref: ref}
 }
 
-func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
+func (f FilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -269,7 +269,7 @@ func (rt ResourceTagAttributes) InternalWithRef(ref terra.Reference) ResourceTag
 	return ResourceTagAttributes{ref: ref}
 }
 
-func (rt ResourceTagAttributes) InternalTokens() hclwrite.Tokens {
+func (rt ResourceTagAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rt.ref.InternalTokens()
 }
 
@@ -293,7 +293,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

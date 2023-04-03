@@ -25,48 +25,48 @@ type BandwidthLimitAttributes struct {
 	ref terra.Reference
 }
 
-func (bl BandwidthLimitAttributes) InternalRef() terra.Reference {
-	return bl.ref
+func (bl BandwidthLimitAttributes) InternalRef() (terra.Reference, error) {
+	return bl.ref, nil
 }
 
 func (bl BandwidthLimitAttributes) InternalWithRef(ref terra.Reference) BandwidthLimitAttributes {
 	return BandwidthLimitAttributes{ref: ref}
 }
 
-func (bl BandwidthLimitAttributes) InternalTokens() hclwrite.Tokens {
+func (bl BandwidthLimitAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bl.ref.InternalTokens()
 }
 
 func (bl BandwidthLimitAttributes) LimitMbps() terra.StringValue {
-	return terra.ReferenceString(bl.ref.Append("limit_mbps"))
+	return terra.ReferenceAsString(bl.ref.Append("limit_mbps"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type BandwidthLimitState struct {

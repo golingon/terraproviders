@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCosmosdbSqlFunction creates a new instance of [CosmosdbSqlFunction].
 func NewCosmosdbSqlFunction(name string, args CosmosdbSqlFunctionArgs) *CosmosdbSqlFunction {
 	return &CosmosdbSqlFunction{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCosmosdbSqlFunction(name string, args CosmosdbSqlFunctionArgs) *Cosmosdb
 
 var _ terra.Resource = (*CosmosdbSqlFunction)(nil)
 
+// CosmosdbSqlFunction represents the Terraform resource azurerm_cosmosdb_sql_function.
 type CosmosdbSqlFunction struct {
-	Name  string
-	Args  CosmosdbSqlFunctionArgs
-	state *cosmosdbSqlFunctionState
+	Name      string
+	Args      CosmosdbSqlFunctionArgs
+	state     *cosmosdbSqlFunctionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CosmosdbSqlFunction].
 func (csf *CosmosdbSqlFunction) Type() string {
 	return "azurerm_cosmosdb_sql_function"
 }
 
+// LocalName returns the local name for [CosmosdbSqlFunction].
 func (csf *CosmosdbSqlFunction) LocalName() string {
 	return csf.Name
 }
 
+// Configuration returns the configuration (args) for [CosmosdbSqlFunction].
 func (csf *CosmosdbSqlFunction) Configuration() interface{} {
 	return csf.Args
 }
 
+// DependOn is used for other resources to depend on [CosmosdbSqlFunction].
+func (csf *CosmosdbSqlFunction) DependOn() terra.Reference {
+	return terra.ReferenceResource(csf)
+}
+
+// Dependencies returns the list of resources [CosmosdbSqlFunction] depends_on.
+func (csf *CosmosdbSqlFunction) Dependencies() terra.Dependencies {
+	return csf.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CosmosdbSqlFunction].
+func (csf *CosmosdbSqlFunction) LifecycleManagement() *terra.Lifecycle {
+	return csf.Lifecycle
+}
+
+// Attributes returns the attributes for [CosmosdbSqlFunction].
 func (csf *CosmosdbSqlFunction) Attributes() cosmosdbSqlFunctionAttributes {
 	return cosmosdbSqlFunctionAttributes{ref: terra.ReferenceResource(csf)}
 }
 
+// ImportState imports the given attribute values into [CosmosdbSqlFunction]'s state.
 func (csf *CosmosdbSqlFunction) ImportState(av io.Reader) error {
 	csf.state = &cosmosdbSqlFunctionState{}
 	if err := json.NewDecoder(av).Decode(csf.state); err != nil {
@@ -49,10 +73,12 @@ func (csf *CosmosdbSqlFunction) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CosmosdbSqlFunction] has state.
 func (csf *CosmosdbSqlFunction) State() (*cosmosdbSqlFunctionState, bool) {
 	return csf.state, csf.state != nil
 }
 
+// StateMust returns the state for [CosmosdbSqlFunction]. Panics if the state is nil.
 func (csf *CosmosdbSqlFunction) StateMust() *cosmosdbSqlFunctionState {
 	if csf.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", csf.Type(), csf.LocalName()))
@@ -60,10 +86,7 @@ func (csf *CosmosdbSqlFunction) StateMust() *cosmosdbSqlFunctionState {
 	return csf.state
 }
 
-func (csf *CosmosdbSqlFunction) DependOn() terra.Reference {
-	return terra.ReferenceResource(csf)
-}
-
+// CosmosdbSqlFunctionArgs contains the configurations for azurerm_cosmosdb_sql_function.
 type CosmosdbSqlFunctionArgs struct {
 	// Body: string, required
 	Body terra.StringValue `hcl:"body,attr" validate:"required"`
@@ -75,31 +98,33 @@ type CosmosdbSqlFunctionArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *cosmosdbsqlfunction.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that CosmosdbSqlFunction depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cosmosdbSqlFunctionAttributes struct {
 	ref terra.Reference
 }
 
+// Body returns a reference to field body of azurerm_cosmosdb_sql_function.
 func (csf cosmosdbSqlFunctionAttributes) Body() terra.StringValue {
-	return terra.ReferenceString(csf.ref.Append("body"))
+	return terra.ReferenceAsString(csf.ref.Append("body"))
 }
 
+// ContainerId returns a reference to field container_id of azurerm_cosmosdb_sql_function.
 func (csf cosmosdbSqlFunctionAttributes) ContainerId() terra.StringValue {
-	return terra.ReferenceString(csf.ref.Append("container_id"))
+	return terra.ReferenceAsString(csf.ref.Append("container_id"))
 }
 
+// Id returns a reference to field id of azurerm_cosmosdb_sql_function.
 func (csf cosmosdbSqlFunctionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(csf.ref.Append("id"))
+	return terra.ReferenceAsString(csf.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_cosmosdb_sql_function.
 func (csf cosmosdbSqlFunctionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(csf.ref.Append("name"))
+	return terra.ReferenceAsString(csf.ref.Append("name"))
 }
 
 func (csf cosmosdbSqlFunctionAttributes) Timeouts() cosmosdbsqlfunction.TimeoutsAttributes {
-	return terra.ReferenceSingle[cosmosdbsqlfunction.TimeoutsAttributes](csf.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cosmosdbsqlfunction.TimeoutsAttributes](csf.ref.Append("timeouts"))
 }
 
 type cosmosdbSqlFunctionState struct {

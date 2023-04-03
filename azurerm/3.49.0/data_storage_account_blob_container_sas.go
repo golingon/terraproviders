@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataStorageAccountBlobContainerSas creates a new instance of [DataStorageAccountBlobContainerSas].
 func NewDataStorageAccountBlobContainerSas(name string, args DataStorageAccountBlobContainerSasArgs) *DataStorageAccountBlobContainerSas {
 	return &DataStorageAccountBlobContainerSas{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataStorageAccountBlobContainerSas(name string, args DataStorageAccountB
 
 var _ terra.DataResource = (*DataStorageAccountBlobContainerSas)(nil)
 
+// DataStorageAccountBlobContainerSas represents the Terraform data resource azurerm_storage_account_blob_container_sas.
 type DataStorageAccountBlobContainerSas struct {
 	Name string
 	Args DataStorageAccountBlobContainerSasArgs
 }
 
+// DataSource returns the Terraform object type for [DataStorageAccountBlobContainerSas].
 func (sabcs *DataStorageAccountBlobContainerSas) DataSource() string {
 	return "azurerm_storage_account_blob_container_sas"
 }
 
+// LocalName returns the local name for [DataStorageAccountBlobContainerSas].
 func (sabcs *DataStorageAccountBlobContainerSas) LocalName() string {
 	return sabcs.Name
 }
 
+// Configuration returns the configuration (args) for [DataStorageAccountBlobContainerSas].
 func (sabcs *DataStorageAccountBlobContainerSas) Configuration() interface{} {
 	return sabcs.Args
 }
 
+// Attributes returns the attributes for [DataStorageAccountBlobContainerSas].
 func (sabcs *DataStorageAccountBlobContainerSas) Attributes() dataStorageAccountBlobContainerSasAttributes {
 	return dataStorageAccountBlobContainerSasAttributes{ref: terra.ReferenceDataResource(sabcs)}
 }
 
+// DataStorageAccountBlobContainerSasArgs contains the configurations for azurerm_storage_account_blob_container_sas.
 type DataStorageAccountBlobContainerSasArgs struct {
 	// CacheControl: string, optional
 	CacheControl terra.StringValue `hcl:"cache_control,attr"`
@@ -71,62 +78,75 @@ type dataStorageAccountBlobContainerSasAttributes struct {
 	ref terra.Reference
 }
 
+// CacheControl returns a reference to field cache_control of azurerm_storage_account_blob_container_sas.
 func (sabcs dataStorageAccountBlobContainerSasAttributes) CacheControl() terra.StringValue {
-	return terra.ReferenceString(sabcs.ref.Append("cache_control"))
+	return terra.ReferenceAsString(sabcs.ref.Append("cache_control"))
 }
 
+// ConnectionString returns a reference to field connection_string of azurerm_storage_account_blob_container_sas.
 func (sabcs dataStorageAccountBlobContainerSasAttributes) ConnectionString() terra.StringValue {
-	return terra.ReferenceString(sabcs.ref.Append("connection_string"))
+	return terra.ReferenceAsString(sabcs.ref.Append("connection_string"))
 }
 
+// ContainerName returns a reference to field container_name of azurerm_storage_account_blob_container_sas.
 func (sabcs dataStorageAccountBlobContainerSasAttributes) ContainerName() terra.StringValue {
-	return terra.ReferenceString(sabcs.ref.Append("container_name"))
+	return terra.ReferenceAsString(sabcs.ref.Append("container_name"))
 }
 
+// ContentDisposition returns a reference to field content_disposition of azurerm_storage_account_blob_container_sas.
 func (sabcs dataStorageAccountBlobContainerSasAttributes) ContentDisposition() terra.StringValue {
-	return terra.ReferenceString(sabcs.ref.Append("content_disposition"))
+	return terra.ReferenceAsString(sabcs.ref.Append("content_disposition"))
 }
 
+// ContentEncoding returns a reference to field content_encoding of azurerm_storage_account_blob_container_sas.
 func (sabcs dataStorageAccountBlobContainerSasAttributes) ContentEncoding() terra.StringValue {
-	return terra.ReferenceString(sabcs.ref.Append("content_encoding"))
+	return terra.ReferenceAsString(sabcs.ref.Append("content_encoding"))
 }
 
+// ContentLanguage returns a reference to field content_language of azurerm_storage_account_blob_container_sas.
 func (sabcs dataStorageAccountBlobContainerSasAttributes) ContentLanguage() terra.StringValue {
-	return terra.ReferenceString(sabcs.ref.Append("content_language"))
+	return terra.ReferenceAsString(sabcs.ref.Append("content_language"))
 }
 
+// ContentType returns a reference to field content_type of azurerm_storage_account_blob_container_sas.
 func (sabcs dataStorageAccountBlobContainerSasAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(sabcs.ref.Append("content_type"))
+	return terra.ReferenceAsString(sabcs.ref.Append("content_type"))
 }
 
+// Expiry returns a reference to field expiry of azurerm_storage_account_blob_container_sas.
 func (sabcs dataStorageAccountBlobContainerSasAttributes) Expiry() terra.StringValue {
-	return terra.ReferenceString(sabcs.ref.Append("expiry"))
+	return terra.ReferenceAsString(sabcs.ref.Append("expiry"))
 }
 
+// HttpsOnly returns a reference to field https_only of azurerm_storage_account_blob_container_sas.
 func (sabcs dataStorageAccountBlobContainerSasAttributes) HttpsOnly() terra.BoolValue {
-	return terra.ReferenceBool(sabcs.ref.Append("https_only"))
+	return terra.ReferenceAsBool(sabcs.ref.Append("https_only"))
 }
 
+// Id returns a reference to field id of azurerm_storage_account_blob_container_sas.
 func (sabcs dataStorageAccountBlobContainerSasAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sabcs.ref.Append("id"))
+	return terra.ReferenceAsString(sabcs.ref.Append("id"))
 }
 
+// IpAddress returns a reference to field ip_address of azurerm_storage_account_blob_container_sas.
 func (sabcs dataStorageAccountBlobContainerSasAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(sabcs.ref.Append("ip_address"))
+	return terra.ReferenceAsString(sabcs.ref.Append("ip_address"))
 }
 
+// Sas returns a reference to field sas of azurerm_storage_account_blob_container_sas.
 func (sabcs dataStorageAccountBlobContainerSasAttributes) Sas() terra.StringValue {
-	return terra.ReferenceString(sabcs.ref.Append("sas"))
+	return terra.ReferenceAsString(sabcs.ref.Append("sas"))
 }
 
+// Start returns a reference to field start of azurerm_storage_account_blob_container_sas.
 func (sabcs dataStorageAccountBlobContainerSasAttributes) Start() terra.StringValue {
-	return terra.ReferenceString(sabcs.ref.Append("start"))
+	return terra.ReferenceAsString(sabcs.ref.Append("start"))
 }
 
 func (sabcs dataStorageAccountBlobContainerSasAttributes) Permissions() terra.ListValue[datastorageaccountblobcontainersas.PermissionsAttributes] {
-	return terra.ReferenceList[datastorageaccountblobcontainersas.PermissionsAttributes](sabcs.ref.Append("permissions"))
+	return terra.ReferenceAsList[datastorageaccountblobcontainersas.PermissionsAttributes](sabcs.ref.Append("permissions"))
 }
 
 func (sabcs dataStorageAccountBlobContainerSasAttributes) Timeouts() datastorageaccountblobcontainersas.TimeoutsAttributes {
-	return terra.ReferenceSingle[datastorageaccountblobcontainersas.TimeoutsAttributes](sabcs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datastorageaccountblobcontainersas.TimeoutsAttributes](sabcs.ref.Append("timeouts"))
 }

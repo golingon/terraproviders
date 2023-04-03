@@ -156,7 +156,7 @@ func (us UserSettingsAttributes) InternalWithRef(ref terra.Reference) UserSettin
 	return UserSettingsAttributes{ref: ref}
 }
 
-func (us UserSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (us UserSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return us.ref.InternalTokens()
 }
 
@@ -204,7 +204,7 @@ func (cas CanvasAppSettingsAttributes) InternalWithRef(ref terra.Reference) Canv
 	return CanvasAppSettingsAttributes{ref: ref}
 }
 
-func (cas CanvasAppSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (cas CanvasAppSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cas.ref.InternalTokens()
 }
 
@@ -224,7 +224,7 @@ func (tsfs TimeSeriesForecastingSettingsAttributes) InternalWithRef(ref terra.Re
 	return TimeSeriesForecastingSettingsAttributes{ref: ref}
 }
 
-func (tsfs TimeSeriesForecastingSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (tsfs TimeSeriesForecastingSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tsfs.ref.InternalTokens()
 }
 
@@ -248,7 +248,7 @@ func (jsas JupyterServerAppSettingsAttributes) InternalWithRef(ref terra.Referen
 	return JupyterServerAppSettingsAttributes{ref: ref}
 }
 
-func (jsas JupyterServerAppSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (jsas JupyterServerAppSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return jsas.ref.InternalTokens()
 }
 
@@ -276,7 +276,7 @@ func (cr CodeRepositoryAttributes) InternalWithRef(ref terra.Reference) CodeRepo
 	return CodeRepositoryAttributes{ref: ref}
 }
 
-func (cr CodeRepositoryAttributes) InternalTokens() hclwrite.Tokens {
+func (cr CodeRepositoryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cr.ref.InternalTokens()
 }
 
@@ -296,7 +296,7 @@ func (drs JupyterServerAppSettingsDefaultResourceSpecAttributes) InternalWithRef
 	return JupyterServerAppSettingsDefaultResourceSpecAttributes{ref: ref}
 }
 
-func (drs JupyterServerAppSettingsDefaultResourceSpecAttributes) InternalTokens() hclwrite.Tokens {
+func (drs JupyterServerAppSettingsDefaultResourceSpecAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return drs.ref.InternalTokens()
 }
 
@@ -328,7 +328,7 @@ func (kgas KernelGatewayAppSettingsAttributes) InternalWithRef(ref terra.Referen
 	return KernelGatewayAppSettingsAttributes{ref: ref}
 }
 
-func (kgas KernelGatewayAppSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (kgas KernelGatewayAppSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kgas.ref.InternalTokens()
 }
 
@@ -356,7 +356,7 @@ func (ci KernelGatewayAppSettingsCustomImageAttributes) InternalWithRef(ref terr
 	return KernelGatewayAppSettingsCustomImageAttributes{ref: ref}
 }
 
-func (ci KernelGatewayAppSettingsCustomImageAttributes) InternalTokens() hclwrite.Tokens {
+func (ci KernelGatewayAppSettingsCustomImageAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ci.ref.InternalTokens()
 }
 
@@ -384,7 +384,7 @@ func (drs KernelGatewayAppSettingsDefaultResourceSpecAttributes) InternalWithRef
 	return KernelGatewayAppSettingsDefaultResourceSpecAttributes{ref: ref}
 }
 
-func (drs KernelGatewayAppSettingsDefaultResourceSpecAttributes) InternalTokens() hclwrite.Tokens {
+func (drs KernelGatewayAppSettingsDefaultResourceSpecAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return drs.ref.InternalTokens()
 }
 
@@ -416,7 +416,7 @@ func (rsas RSessionAppSettingsAttributes) InternalWithRef(ref terra.Reference) R
 	return RSessionAppSettingsAttributes{ref: ref}
 }
 
-func (rsas RSessionAppSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (rsas RSessionAppSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rsas.ref.InternalTokens()
 }
 
@@ -440,7 +440,7 @@ func (ci RSessionAppSettingsCustomImageAttributes) InternalWithRef(ref terra.Ref
 	return RSessionAppSettingsCustomImageAttributes{ref: ref}
 }
 
-func (ci RSessionAppSettingsCustomImageAttributes) InternalTokens() hclwrite.Tokens {
+func (ci RSessionAppSettingsCustomImageAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ci.ref.InternalTokens()
 }
 
@@ -468,7 +468,7 @@ func (drs RSessionAppSettingsDefaultResourceSpecAttributes) InternalWithRef(ref 
 	return RSessionAppSettingsDefaultResourceSpecAttributes{ref: ref}
 }
 
-func (drs RSessionAppSettingsDefaultResourceSpecAttributes) InternalTokens() hclwrite.Tokens {
+func (drs RSessionAppSettingsDefaultResourceSpecAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return drs.ref.InternalTokens()
 }
 
@@ -500,7 +500,7 @@ func (ss SharingSettingsAttributes) InternalWithRef(ref terra.Reference) Sharing
 	return SharingSettingsAttributes{ref: ref}
 }
 
-func (ss SharingSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ss SharingSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ss.ref.InternalTokens()
 }
 
@@ -528,7 +528,7 @@ func (tbas TensorBoardAppSettingsAttributes) InternalWithRef(ref terra.Reference
 	return TensorBoardAppSettingsAttributes{ref: ref}
 }
 
-func (tbas TensorBoardAppSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (tbas TensorBoardAppSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tbas.ref.InternalTokens()
 }
 
@@ -548,7 +548,7 @@ func (drs TensorBoardAppSettingsDefaultResourceSpecAttributes) InternalWithRef(r
 	return TensorBoardAppSettingsDefaultResourceSpecAttributes{ref: ref}
 }
 
-func (drs TensorBoardAppSettingsDefaultResourceSpecAttributes) InternalTokens() hclwrite.Tokens {
+func (drs TensorBoardAppSettingsDefaultResourceSpecAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return drs.ref.InternalTokens()
 }
 

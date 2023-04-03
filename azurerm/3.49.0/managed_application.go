@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewManagedApplication creates a new instance of [ManagedApplication].
 func NewManagedApplication(name string, args ManagedApplicationArgs) *ManagedApplication {
 	return &ManagedApplication{
 		Args: args,
@@ -19,28 +20,51 @@ func NewManagedApplication(name string, args ManagedApplicationArgs) *ManagedApp
 
 var _ terra.Resource = (*ManagedApplication)(nil)
 
+// ManagedApplication represents the Terraform resource azurerm_managed_application.
 type ManagedApplication struct {
-	Name  string
-	Args  ManagedApplicationArgs
-	state *managedApplicationState
+	Name      string
+	Args      ManagedApplicationArgs
+	state     *managedApplicationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ManagedApplication].
 func (ma *ManagedApplication) Type() string {
 	return "azurerm_managed_application"
 }
 
+// LocalName returns the local name for [ManagedApplication].
 func (ma *ManagedApplication) LocalName() string {
 	return ma.Name
 }
 
+// Configuration returns the configuration (args) for [ManagedApplication].
 func (ma *ManagedApplication) Configuration() interface{} {
 	return ma.Args
 }
 
+// DependOn is used for other resources to depend on [ManagedApplication].
+func (ma *ManagedApplication) DependOn() terra.Reference {
+	return terra.ReferenceResource(ma)
+}
+
+// Dependencies returns the list of resources [ManagedApplication] depends_on.
+func (ma *ManagedApplication) Dependencies() terra.Dependencies {
+	return ma.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ManagedApplication].
+func (ma *ManagedApplication) LifecycleManagement() *terra.Lifecycle {
+	return ma.Lifecycle
+}
+
+// Attributes returns the attributes for [ManagedApplication].
 func (ma *ManagedApplication) Attributes() managedApplicationAttributes {
 	return managedApplicationAttributes{ref: terra.ReferenceResource(ma)}
 }
 
+// ImportState imports the given attribute values into [ManagedApplication]'s state.
 func (ma *ManagedApplication) ImportState(av io.Reader) error {
 	ma.state = &managedApplicationState{}
 	if err := json.NewDecoder(av).Decode(ma.state); err != nil {
@@ -49,10 +73,12 @@ func (ma *ManagedApplication) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ManagedApplication] has state.
 func (ma *ManagedApplication) State() (*managedApplicationState, bool) {
 	return ma.state, ma.state != nil
 }
 
+// StateMust returns the state for [ManagedApplication]. Panics if the state is nil.
 func (ma *ManagedApplication) StateMust() *managedApplicationState {
 	if ma.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ma.Type(), ma.LocalName()))
@@ -60,10 +86,7 @@ func (ma *ManagedApplication) StateMust() *managedApplicationState {
 	return ma.state
 }
 
-func (ma *ManagedApplication) DependOn() terra.Reference {
-	return terra.ReferenceResource(ma)
-}
-
+// ManagedApplicationArgs contains the configurations for azurerm_managed_application.
 type ManagedApplicationArgs struct {
 	// ApplicationDefinitionId: string, optional
 	ApplicationDefinitionId terra.StringValue `hcl:"application_definition_id,attr"`
@@ -89,63 +112,72 @@ type ManagedApplicationArgs struct {
 	Plan *managedapplication.Plan `hcl:"plan,block"`
 	// Timeouts: optional
 	Timeouts *managedapplication.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ManagedApplication depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type managedApplicationAttributes struct {
 	ref terra.Reference
 }
 
+// ApplicationDefinitionId returns a reference to field application_definition_id of azurerm_managed_application.
 func (ma managedApplicationAttributes) ApplicationDefinitionId() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("application_definition_id"))
+	return terra.ReferenceAsString(ma.ref.Append("application_definition_id"))
 }
 
+// Id returns a reference to field id of azurerm_managed_application.
 func (ma managedApplicationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("id"))
+	return terra.ReferenceAsString(ma.ref.Append("id"))
 }
 
+// Kind returns a reference to field kind of azurerm_managed_application.
 func (ma managedApplicationAttributes) Kind() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("kind"))
+	return terra.ReferenceAsString(ma.ref.Append("kind"))
 }
 
+// Location returns a reference to field location of azurerm_managed_application.
 func (ma managedApplicationAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("location"))
+	return terra.ReferenceAsString(ma.ref.Append("location"))
 }
 
+// ManagedResourceGroupName returns a reference to field managed_resource_group_name of azurerm_managed_application.
 func (ma managedApplicationAttributes) ManagedResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("managed_resource_group_name"))
+	return terra.ReferenceAsString(ma.ref.Append("managed_resource_group_name"))
 }
 
+// Name returns a reference to field name of azurerm_managed_application.
 func (ma managedApplicationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("name"))
+	return terra.ReferenceAsString(ma.ref.Append("name"))
 }
 
+// Outputs returns a reference to field outputs of azurerm_managed_application.
 func (ma managedApplicationAttributes) Outputs() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ma.ref.Append("outputs"))
+	return terra.ReferenceAsMap[terra.StringValue](ma.ref.Append("outputs"))
 }
 
+// ParameterValues returns a reference to field parameter_values of azurerm_managed_application.
 func (ma managedApplicationAttributes) ParameterValues() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("parameter_values"))
+	return terra.ReferenceAsString(ma.ref.Append("parameter_values"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_managed_application.
 func (ma managedApplicationAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ma.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](ma.ref.Append("parameters"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_managed_application.
 func (ma managedApplicationAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ma.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_managed_application.
 func (ma managedApplicationAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ma.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ma.ref.Append("tags"))
 }
 
 func (ma managedApplicationAttributes) Plan() terra.ListValue[managedapplication.PlanAttributes] {
-	return terra.ReferenceList[managedapplication.PlanAttributes](ma.ref.Append("plan"))
+	return terra.ReferenceAsList[managedapplication.PlanAttributes](ma.ref.Append("plan"))
 }
 
 func (ma managedApplicationAttributes) Timeouts() managedapplication.TimeoutsAttributes {
-	return terra.ReferenceSingle[managedapplication.TimeoutsAttributes](ma.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[managedapplication.TimeoutsAttributes](ma.ref.Append("timeouts"))
 }
 
 type managedApplicationState struct {

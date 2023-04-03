@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataLossPreventionJobTrigger creates a new instance of [DataLossPreventionJobTrigger].
 func NewDataLossPreventionJobTrigger(name string, args DataLossPreventionJobTriggerArgs) *DataLossPreventionJobTrigger {
 	return &DataLossPreventionJobTrigger{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataLossPreventionJobTrigger(name string, args DataLossPreventionJobTrig
 
 var _ terra.Resource = (*DataLossPreventionJobTrigger)(nil)
 
+// DataLossPreventionJobTrigger represents the Terraform resource google_data_loss_prevention_job_trigger.
 type DataLossPreventionJobTrigger struct {
-	Name  string
-	Args  DataLossPreventionJobTriggerArgs
-	state *dataLossPreventionJobTriggerState
+	Name      string
+	Args      DataLossPreventionJobTriggerArgs
+	state     *dataLossPreventionJobTriggerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataLossPreventionJobTrigger].
 func (dlpjt *DataLossPreventionJobTrigger) Type() string {
 	return "google_data_loss_prevention_job_trigger"
 }
 
+// LocalName returns the local name for [DataLossPreventionJobTrigger].
 func (dlpjt *DataLossPreventionJobTrigger) LocalName() string {
 	return dlpjt.Name
 }
 
+// Configuration returns the configuration (args) for [DataLossPreventionJobTrigger].
 func (dlpjt *DataLossPreventionJobTrigger) Configuration() interface{} {
 	return dlpjt.Args
 }
 
+// DependOn is used for other resources to depend on [DataLossPreventionJobTrigger].
+func (dlpjt *DataLossPreventionJobTrigger) DependOn() terra.Reference {
+	return terra.ReferenceResource(dlpjt)
+}
+
+// Dependencies returns the list of resources [DataLossPreventionJobTrigger] depends_on.
+func (dlpjt *DataLossPreventionJobTrigger) Dependencies() terra.Dependencies {
+	return dlpjt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataLossPreventionJobTrigger].
+func (dlpjt *DataLossPreventionJobTrigger) LifecycleManagement() *terra.Lifecycle {
+	return dlpjt.Lifecycle
+}
+
+// Attributes returns the attributes for [DataLossPreventionJobTrigger].
 func (dlpjt *DataLossPreventionJobTrigger) Attributes() dataLossPreventionJobTriggerAttributes {
 	return dataLossPreventionJobTriggerAttributes{ref: terra.ReferenceResource(dlpjt)}
 }
 
+// ImportState imports the given attribute values into [DataLossPreventionJobTrigger]'s state.
 func (dlpjt *DataLossPreventionJobTrigger) ImportState(av io.Reader) error {
 	dlpjt.state = &dataLossPreventionJobTriggerState{}
 	if err := json.NewDecoder(av).Decode(dlpjt.state); err != nil {
@@ -49,10 +73,12 @@ func (dlpjt *DataLossPreventionJobTrigger) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataLossPreventionJobTrigger] has state.
 func (dlpjt *DataLossPreventionJobTrigger) State() (*dataLossPreventionJobTriggerState, bool) {
 	return dlpjt.state, dlpjt.state != nil
 }
 
+// StateMust returns the state for [DataLossPreventionJobTrigger]. Panics if the state is nil.
 func (dlpjt *DataLossPreventionJobTrigger) StateMust() *dataLossPreventionJobTriggerState {
 	if dlpjt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dlpjt.Type(), dlpjt.LocalName()))
@@ -60,10 +86,7 @@ func (dlpjt *DataLossPreventionJobTrigger) StateMust() *dataLossPreventionJobTri
 	return dlpjt.state
 }
 
-func (dlpjt *DataLossPreventionJobTrigger) DependOn() terra.Reference {
-	return terra.ReferenceResource(dlpjt)
-}
-
+// DataLossPreventionJobTriggerArgs contains the configurations for google_data_loss_prevention_job_trigger.
 type DataLossPreventionJobTriggerArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -81,51 +104,56 @@ type DataLossPreventionJobTriggerArgs struct {
 	Timeouts *datalosspreventionjobtrigger.Timeouts `hcl:"timeouts,block"`
 	// Triggers: min=1
 	Triggers []datalosspreventionjobtrigger.Triggers `hcl:"triggers,block" validate:"min=1"`
-	// DependsOn contains resources that DataLossPreventionJobTrigger depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataLossPreventionJobTriggerAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of google_data_loss_prevention_job_trigger.
 func (dlpjt dataLossPreventionJobTriggerAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dlpjt.ref.Append("description"))
+	return terra.ReferenceAsString(dlpjt.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of google_data_loss_prevention_job_trigger.
 func (dlpjt dataLossPreventionJobTriggerAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(dlpjt.ref.Append("display_name"))
+	return terra.ReferenceAsString(dlpjt.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of google_data_loss_prevention_job_trigger.
 func (dlpjt dataLossPreventionJobTriggerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dlpjt.ref.Append("id"))
+	return terra.ReferenceAsString(dlpjt.ref.Append("id"))
 }
 
+// LastRunTime returns a reference to field last_run_time of google_data_loss_prevention_job_trigger.
 func (dlpjt dataLossPreventionJobTriggerAttributes) LastRunTime() terra.StringValue {
-	return terra.ReferenceString(dlpjt.ref.Append("last_run_time"))
+	return terra.ReferenceAsString(dlpjt.ref.Append("last_run_time"))
 }
 
+// Name returns a reference to field name of google_data_loss_prevention_job_trigger.
 func (dlpjt dataLossPreventionJobTriggerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dlpjt.ref.Append("name"))
+	return terra.ReferenceAsString(dlpjt.ref.Append("name"))
 }
 
+// Parent returns a reference to field parent of google_data_loss_prevention_job_trigger.
 func (dlpjt dataLossPreventionJobTriggerAttributes) Parent() terra.StringValue {
-	return terra.ReferenceString(dlpjt.ref.Append("parent"))
+	return terra.ReferenceAsString(dlpjt.ref.Append("parent"))
 }
 
+// Status returns a reference to field status of google_data_loss_prevention_job_trigger.
 func (dlpjt dataLossPreventionJobTriggerAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(dlpjt.ref.Append("status"))
+	return terra.ReferenceAsString(dlpjt.ref.Append("status"))
 }
 
 func (dlpjt dataLossPreventionJobTriggerAttributes) InspectJob() terra.ListValue[datalosspreventionjobtrigger.InspectJobAttributes] {
-	return terra.ReferenceList[datalosspreventionjobtrigger.InspectJobAttributes](dlpjt.ref.Append("inspect_job"))
+	return terra.ReferenceAsList[datalosspreventionjobtrigger.InspectJobAttributes](dlpjt.ref.Append("inspect_job"))
 }
 
 func (dlpjt dataLossPreventionJobTriggerAttributes) Timeouts() datalosspreventionjobtrigger.TimeoutsAttributes {
-	return terra.ReferenceSingle[datalosspreventionjobtrigger.TimeoutsAttributes](dlpjt.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datalosspreventionjobtrigger.TimeoutsAttributes](dlpjt.ref.Append("timeouts"))
 }
 
 func (dlpjt dataLossPreventionJobTriggerAttributes) Triggers() terra.ListValue[datalosspreventionjobtrigger.TriggersAttributes] {
-	return terra.ReferenceList[datalosspreventionjobtrigger.TriggersAttributes](dlpjt.ref.Append("triggers"))
+	return terra.ReferenceAsList[datalosspreventionjobtrigger.TriggersAttributes](dlpjt.ref.Append("triggers"))
 }
 
 type dataLossPreventionJobTriggerState struct {

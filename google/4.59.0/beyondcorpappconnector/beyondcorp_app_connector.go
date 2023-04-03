@@ -30,68 +30,68 @@ type PrincipalInfoAttributes struct {
 	ref terra.Reference
 }
 
-func (pi PrincipalInfoAttributes) InternalRef() terra.Reference {
-	return pi.ref
+func (pi PrincipalInfoAttributes) InternalRef() (terra.Reference, error) {
+	return pi.ref, nil
 }
 
 func (pi PrincipalInfoAttributes) InternalWithRef(ref terra.Reference) PrincipalInfoAttributes {
 	return PrincipalInfoAttributes{ref: ref}
 }
 
-func (pi PrincipalInfoAttributes) InternalTokens() hclwrite.Tokens {
+func (pi PrincipalInfoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pi.ref.InternalTokens()
 }
 
 func (pi PrincipalInfoAttributes) ServiceAccount() terra.ListValue[ServiceAccountAttributes] {
-	return terra.ReferenceList[ServiceAccountAttributes](pi.ref.Append("service_account"))
+	return terra.ReferenceAsList[ServiceAccountAttributes](pi.ref.Append("service_account"))
 }
 
 type ServiceAccountAttributes struct {
 	ref terra.Reference
 }
 
-func (sa ServiceAccountAttributes) InternalRef() terra.Reference {
-	return sa.ref
+func (sa ServiceAccountAttributes) InternalRef() (terra.Reference, error) {
+	return sa.ref, nil
 }
 
 func (sa ServiceAccountAttributes) InternalWithRef(ref terra.Reference) ServiceAccountAttributes {
 	return ServiceAccountAttributes{ref: ref}
 }
 
-func (sa ServiceAccountAttributes) InternalTokens() hclwrite.Tokens {
+func (sa ServiceAccountAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sa.ref.InternalTokens()
 }
 
 func (sa ServiceAccountAttributes) Email() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("email"))
+	return terra.ReferenceAsString(sa.ref.Append("email"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type PrincipalInfoState struct {

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataMachineLearningWorkspace creates a new instance of [DataMachineLearningWorkspace].
 func NewDataMachineLearningWorkspace(name string, args DataMachineLearningWorkspaceArgs) *DataMachineLearningWorkspace {
 	return &DataMachineLearningWorkspace{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataMachineLearningWorkspace(name string, args DataMachineLearningWorksp
 
 var _ terra.DataResource = (*DataMachineLearningWorkspace)(nil)
 
+// DataMachineLearningWorkspace represents the Terraform data resource azurerm_machine_learning_workspace.
 type DataMachineLearningWorkspace struct {
 	Name string
 	Args DataMachineLearningWorkspaceArgs
 }
 
+// DataSource returns the Terraform object type for [DataMachineLearningWorkspace].
 func (mlw *DataMachineLearningWorkspace) DataSource() string {
 	return "azurerm_machine_learning_workspace"
 }
 
+// LocalName returns the local name for [DataMachineLearningWorkspace].
 func (mlw *DataMachineLearningWorkspace) LocalName() string {
 	return mlw.Name
 }
 
+// Configuration returns the configuration (args) for [DataMachineLearningWorkspace].
 func (mlw *DataMachineLearningWorkspace) Configuration() interface{} {
 	return mlw.Args
 }
 
+// Attributes returns the attributes for [DataMachineLearningWorkspace].
 func (mlw *DataMachineLearningWorkspace) Attributes() dataMachineLearningWorkspaceAttributes {
 	return dataMachineLearningWorkspaceAttributes{ref: terra.ReferenceDataResource(mlw)}
 }
 
+// DataMachineLearningWorkspaceArgs contains the configurations for azurerm_machine_learning_workspace.
 type DataMachineLearningWorkspaceArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,30 +60,35 @@ type dataMachineLearningWorkspaceAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_machine_learning_workspace.
 func (mlw dataMachineLearningWorkspaceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mlw.ref.Append("id"))
+	return terra.ReferenceAsString(mlw.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_machine_learning_workspace.
 func (mlw dataMachineLearningWorkspaceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(mlw.ref.Append("location"))
+	return terra.ReferenceAsString(mlw.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_machine_learning_workspace.
 func (mlw dataMachineLearningWorkspaceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mlw.ref.Append("name"))
+	return terra.ReferenceAsString(mlw.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_machine_learning_workspace.
 func (mlw dataMachineLearningWorkspaceAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(mlw.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(mlw.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_machine_learning_workspace.
 func (mlw dataMachineLearningWorkspaceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mlw.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mlw.ref.Append("tags"))
 }
 
 func (mlw dataMachineLearningWorkspaceAttributes) Identity() terra.ListValue[datamachinelearningworkspace.IdentityAttributes] {
-	return terra.ReferenceList[datamachinelearningworkspace.IdentityAttributes](mlw.ref.Append("identity"))
+	return terra.ReferenceAsList[datamachinelearningworkspace.IdentityAttributes](mlw.ref.Append("identity"))
 }
 
 func (mlw dataMachineLearningWorkspaceAttributes) Timeouts() datamachinelearningworkspace.TimeoutsAttributes {
-	return terra.ReferenceSingle[datamachinelearningworkspace.TimeoutsAttributes](mlw.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datamachinelearningworkspace.TimeoutsAttributes](mlw.ref.Append("timeouts"))
 }

@@ -65,7 +65,7 @@ func (ed EventDestinationAttributes) InternalWithRef(ref terra.Reference) EventD
 	return EventDestinationAttributes{ref: ref}
 }
 
-func (ed EventDestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (ed EventDestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ed.ref.InternalTokens()
 }
 
@@ -105,7 +105,7 @@ func (cwd CloudWatchDestinationAttributes) InternalWithRef(ref terra.Reference) 
 	return CloudWatchDestinationAttributes{ref: ref}
 }
 
-func (cwd CloudWatchDestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (cwd CloudWatchDestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cwd.ref.InternalTokens()
 }
 
@@ -125,7 +125,7 @@ func (dc DimensionConfigurationAttributes) InternalWithRef(ref terra.Reference) 
 	return DimensionConfigurationAttributes{ref: ref}
 }
 
-func (dc DimensionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (dc DimensionConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dc.ref.InternalTokens()
 }
 
@@ -153,7 +153,7 @@ func (kfd KinesisFirehoseDestinationAttributes) InternalWithRef(ref terra.Refere
 	return KinesisFirehoseDestinationAttributes{ref: ref}
 }
 
-func (kfd KinesisFirehoseDestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (kfd KinesisFirehoseDestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kfd.ref.InternalTokens()
 }
 
@@ -177,7 +177,7 @@ func (pd PinpointDestinationAttributes) InternalWithRef(ref terra.Reference) Pin
 	return PinpointDestinationAttributes{ref: ref}
 }
 
-func (pd PinpointDestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (pd PinpointDestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pd.ref.InternalTokens()
 }
 
@@ -197,7 +197,7 @@ func (sd SnsDestinationAttributes) InternalWithRef(ref terra.Reference) SnsDesti
 	return SnsDestinationAttributes{ref: ref}
 }
 
-func (sd SnsDestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (sd SnsDestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sd.ref.InternalTokens()
 }
 

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataplexLake creates a new instance of [DataplexLake].
 func NewDataplexLake(name string, args DataplexLakeArgs) *DataplexLake {
 	return &DataplexLake{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataplexLake(name string, args DataplexLakeArgs) *DataplexLake {
 
 var _ terra.Resource = (*DataplexLake)(nil)
 
+// DataplexLake represents the Terraform resource google_dataplex_lake.
 type DataplexLake struct {
-	Name  string
-	Args  DataplexLakeArgs
-	state *dataplexLakeState
+	Name      string
+	Args      DataplexLakeArgs
+	state     *dataplexLakeState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataplexLake].
 func (dl *DataplexLake) Type() string {
 	return "google_dataplex_lake"
 }
 
+// LocalName returns the local name for [DataplexLake].
 func (dl *DataplexLake) LocalName() string {
 	return dl.Name
 }
 
+// Configuration returns the configuration (args) for [DataplexLake].
 func (dl *DataplexLake) Configuration() interface{} {
 	return dl.Args
 }
 
+// DependOn is used for other resources to depend on [DataplexLake].
+func (dl *DataplexLake) DependOn() terra.Reference {
+	return terra.ReferenceResource(dl)
+}
+
+// Dependencies returns the list of resources [DataplexLake] depends_on.
+func (dl *DataplexLake) Dependencies() terra.Dependencies {
+	return dl.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataplexLake].
+func (dl *DataplexLake) LifecycleManagement() *terra.Lifecycle {
+	return dl.Lifecycle
+}
+
+// Attributes returns the attributes for [DataplexLake].
 func (dl *DataplexLake) Attributes() dataplexLakeAttributes {
 	return dataplexLakeAttributes{ref: terra.ReferenceResource(dl)}
 }
 
+// ImportState imports the given attribute values into [DataplexLake]'s state.
 func (dl *DataplexLake) ImportState(av io.Reader) error {
 	dl.state = &dataplexLakeState{}
 	if err := json.NewDecoder(av).Decode(dl.state); err != nil {
@@ -49,10 +73,12 @@ func (dl *DataplexLake) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataplexLake] has state.
 func (dl *DataplexLake) State() (*dataplexLakeState, bool) {
 	return dl.state, dl.state != nil
 }
 
+// StateMust returns the state for [DataplexLake]. Panics if the state is nil.
 func (dl *DataplexLake) StateMust() *dataplexLakeState {
 	if dl.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dl.Type(), dl.LocalName()))
@@ -60,10 +86,7 @@ func (dl *DataplexLake) StateMust() *dataplexLakeState {
 	return dl.state
 }
 
-func (dl *DataplexLake) DependOn() terra.Reference {
-	return terra.ReferenceResource(dl)
-}
-
+// DataplexLakeArgs contains the configurations for google_dataplex_lake.
 type DataplexLakeArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -87,75 +110,85 @@ type DataplexLakeArgs struct {
 	Metastore *dataplexlake.Metastore `hcl:"metastore,block"`
 	// Timeouts: optional
 	Timeouts *dataplexlake.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataplexLake depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataplexLakeAttributes struct {
 	ref terra.Reference
 }
 
+// CreateTime returns a reference to field create_time of google_dataplex_lake.
 func (dl dataplexLakeAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(dl.ref.Append("create_time"))
+	return terra.ReferenceAsString(dl.ref.Append("create_time"))
 }
 
+// Description returns a reference to field description of google_dataplex_lake.
 func (dl dataplexLakeAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dl.ref.Append("description"))
+	return terra.ReferenceAsString(dl.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of google_dataplex_lake.
 func (dl dataplexLakeAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(dl.ref.Append("display_name"))
+	return terra.ReferenceAsString(dl.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of google_dataplex_lake.
 func (dl dataplexLakeAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dl.ref.Append("id"))
+	return terra.ReferenceAsString(dl.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_dataplex_lake.
 func (dl dataplexLakeAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dl.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](dl.ref.Append("labels"))
 }
 
+// Location returns a reference to field location of google_dataplex_lake.
 func (dl dataplexLakeAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(dl.ref.Append("location"))
+	return terra.ReferenceAsString(dl.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_dataplex_lake.
 func (dl dataplexLakeAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dl.ref.Append("name"))
+	return terra.ReferenceAsString(dl.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_dataplex_lake.
 func (dl dataplexLakeAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(dl.ref.Append("project"))
+	return terra.ReferenceAsString(dl.ref.Append("project"))
 }
 
+// ServiceAccount returns a reference to field service_account of google_dataplex_lake.
 func (dl dataplexLakeAttributes) ServiceAccount() terra.StringValue {
-	return terra.ReferenceString(dl.ref.Append("service_account"))
+	return terra.ReferenceAsString(dl.ref.Append("service_account"))
 }
 
+// State returns a reference to field state of google_dataplex_lake.
 func (dl dataplexLakeAttributes) State() terra.StringValue {
-	return terra.ReferenceString(dl.ref.Append("state"))
+	return terra.ReferenceAsString(dl.ref.Append("state"))
 }
 
+// Uid returns a reference to field uid of google_dataplex_lake.
 func (dl dataplexLakeAttributes) Uid() terra.StringValue {
-	return terra.ReferenceString(dl.ref.Append("uid"))
+	return terra.ReferenceAsString(dl.ref.Append("uid"))
 }
 
+// UpdateTime returns a reference to field update_time of google_dataplex_lake.
 func (dl dataplexLakeAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(dl.ref.Append("update_time"))
+	return terra.ReferenceAsString(dl.ref.Append("update_time"))
 }
 
 func (dl dataplexLakeAttributes) AssetStatus() terra.ListValue[dataplexlake.AssetStatusAttributes] {
-	return terra.ReferenceList[dataplexlake.AssetStatusAttributes](dl.ref.Append("asset_status"))
+	return terra.ReferenceAsList[dataplexlake.AssetStatusAttributes](dl.ref.Append("asset_status"))
 }
 
 func (dl dataplexLakeAttributes) MetastoreStatus() terra.ListValue[dataplexlake.MetastoreStatusAttributes] {
-	return terra.ReferenceList[dataplexlake.MetastoreStatusAttributes](dl.ref.Append("metastore_status"))
+	return terra.ReferenceAsList[dataplexlake.MetastoreStatusAttributes](dl.ref.Append("metastore_status"))
 }
 
 func (dl dataplexLakeAttributes) Metastore() terra.ListValue[dataplexlake.MetastoreAttributes] {
-	return terra.ReferenceList[dataplexlake.MetastoreAttributes](dl.ref.Append("metastore"))
+	return terra.ReferenceAsList[dataplexlake.MetastoreAttributes](dl.ref.Append("metastore"))
 }
 
 func (dl dataplexLakeAttributes) Timeouts() dataplexlake.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataplexlake.TimeoutsAttributes](dl.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataplexlake.TimeoutsAttributes](dl.ref.Append("timeouts"))
 }
 
 type dataplexLakeState struct {

@@ -36,80 +36,80 @@ type BuildPackGroupAttributes struct {
 	ref terra.Reference
 }
 
-func (bpg BuildPackGroupAttributes) InternalRef() terra.Reference {
-	return bpg.ref
+func (bpg BuildPackGroupAttributes) InternalRef() (terra.Reference, error) {
+	return bpg.ref, nil
 }
 
 func (bpg BuildPackGroupAttributes) InternalWithRef(ref terra.Reference) BuildPackGroupAttributes {
 	return BuildPackGroupAttributes{ref: ref}
 }
 
-func (bpg BuildPackGroupAttributes) InternalTokens() hclwrite.Tokens {
+func (bpg BuildPackGroupAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bpg.ref.InternalTokens()
 }
 
 func (bpg BuildPackGroupAttributes) BuildPackIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](bpg.ref.Append("build_pack_ids"))
+	return terra.ReferenceAsList[terra.StringValue](bpg.ref.Append("build_pack_ids"))
 }
 
 func (bpg BuildPackGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(bpg.ref.Append("name"))
+	return terra.ReferenceAsString(bpg.ref.Append("name"))
 }
 
 type StackAttributes struct {
 	ref terra.Reference
 }
 
-func (s StackAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s StackAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s StackAttributes) InternalWithRef(ref terra.Reference) StackAttributes {
 	return StackAttributes{ref: ref}
 }
 
-func (s StackAttributes) InternalTokens() hclwrite.Tokens {
+func (s StackAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s StackAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("id"))
+	return terra.ReferenceAsString(s.ref.Append("id"))
 }
 
 func (s StackAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("version"))
+	return terra.ReferenceAsString(s.ref.Append("version"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type BuildPackGroupState struct {

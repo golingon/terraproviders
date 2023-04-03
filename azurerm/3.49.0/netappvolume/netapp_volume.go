@@ -53,124 +53,124 @@ type DataProtectionReplicationAttributes struct {
 	ref terra.Reference
 }
 
-func (dpr DataProtectionReplicationAttributes) InternalRef() terra.Reference {
-	return dpr.ref
+func (dpr DataProtectionReplicationAttributes) InternalRef() (terra.Reference, error) {
+	return dpr.ref, nil
 }
 
 func (dpr DataProtectionReplicationAttributes) InternalWithRef(ref terra.Reference) DataProtectionReplicationAttributes {
 	return DataProtectionReplicationAttributes{ref: ref}
 }
 
-func (dpr DataProtectionReplicationAttributes) InternalTokens() hclwrite.Tokens {
+func (dpr DataProtectionReplicationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dpr.ref.InternalTokens()
 }
 
 func (dpr DataProtectionReplicationAttributes) EndpointType() terra.StringValue {
-	return terra.ReferenceString(dpr.ref.Append("endpoint_type"))
+	return terra.ReferenceAsString(dpr.ref.Append("endpoint_type"))
 }
 
 func (dpr DataProtectionReplicationAttributes) RemoteVolumeLocation() terra.StringValue {
-	return terra.ReferenceString(dpr.ref.Append("remote_volume_location"))
+	return terra.ReferenceAsString(dpr.ref.Append("remote_volume_location"))
 }
 
 func (dpr DataProtectionReplicationAttributes) RemoteVolumeResourceId() terra.StringValue {
-	return terra.ReferenceString(dpr.ref.Append("remote_volume_resource_id"))
+	return terra.ReferenceAsString(dpr.ref.Append("remote_volume_resource_id"))
 }
 
 func (dpr DataProtectionReplicationAttributes) ReplicationFrequency() terra.StringValue {
-	return terra.ReferenceString(dpr.ref.Append("replication_frequency"))
+	return terra.ReferenceAsString(dpr.ref.Append("replication_frequency"))
 }
 
 type DataProtectionSnapshotPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (dpsp DataProtectionSnapshotPolicyAttributes) InternalRef() terra.Reference {
-	return dpsp.ref
+func (dpsp DataProtectionSnapshotPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return dpsp.ref, nil
 }
 
 func (dpsp DataProtectionSnapshotPolicyAttributes) InternalWithRef(ref terra.Reference) DataProtectionSnapshotPolicyAttributes {
 	return DataProtectionSnapshotPolicyAttributes{ref: ref}
 }
 
-func (dpsp DataProtectionSnapshotPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (dpsp DataProtectionSnapshotPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dpsp.ref.InternalTokens()
 }
 
 func (dpsp DataProtectionSnapshotPolicyAttributes) SnapshotPolicyId() terra.StringValue {
-	return terra.ReferenceString(dpsp.ref.Append("snapshot_policy_id"))
+	return terra.ReferenceAsString(dpsp.ref.Append("snapshot_policy_id"))
 }
 
 type ExportPolicyRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (epr ExportPolicyRuleAttributes) InternalRef() terra.Reference {
-	return epr.ref
+func (epr ExportPolicyRuleAttributes) InternalRef() (terra.Reference, error) {
+	return epr.ref, nil
 }
 
 func (epr ExportPolicyRuleAttributes) InternalWithRef(ref terra.Reference) ExportPolicyRuleAttributes {
 	return ExportPolicyRuleAttributes{ref: ref}
 }
 
-func (epr ExportPolicyRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (epr ExportPolicyRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return epr.ref.InternalTokens()
 }
 
 func (epr ExportPolicyRuleAttributes) AllowedClients() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](epr.ref.Append("allowed_clients"))
+	return terra.ReferenceAsSet[terra.StringValue](epr.ref.Append("allowed_clients"))
 }
 
 func (epr ExportPolicyRuleAttributes) ProtocolsEnabled() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](epr.ref.Append("protocols_enabled"))
+	return terra.ReferenceAsList[terra.StringValue](epr.ref.Append("protocols_enabled"))
 }
 
 func (epr ExportPolicyRuleAttributes) RootAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(epr.ref.Append("root_access_enabled"))
+	return terra.ReferenceAsBool(epr.ref.Append("root_access_enabled"))
 }
 
 func (epr ExportPolicyRuleAttributes) RuleIndex() terra.NumberValue {
-	return terra.ReferenceNumber(epr.ref.Append("rule_index"))
+	return terra.ReferenceAsNumber(epr.ref.Append("rule_index"))
 }
 
 func (epr ExportPolicyRuleAttributes) UnixReadOnly() terra.BoolValue {
-	return terra.ReferenceBool(epr.ref.Append("unix_read_only"))
+	return terra.ReferenceAsBool(epr.ref.Append("unix_read_only"))
 }
 
 func (epr ExportPolicyRuleAttributes) UnixReadWrite() terra.BoolValue {
-	return terra.ReferenceBool(epr.ref.Append("unix_read_write"))
+	return terra.ReferenceAsBool(epr.ref.Append("unix_read_write"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type DataProtectionReplicationState struct {

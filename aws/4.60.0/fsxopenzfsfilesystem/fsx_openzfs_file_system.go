@@ -71,7 +71,7 @@ func (dic DiskIopsConfigurationAttributes) InternalWithRef(ref terra.Reference) 
 	return DiskIopsConfigurationAttributes{ref: ref}
 }
 
-func (dic DiskIopsConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (dic DiskIopsConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dic.ref.InternalTokens()
 }
 
@@ -95,7 +95,7 @@ func (rvc RootVolumeConfigurationAttributes) InternalWithRef(ref terra.Reference
 	return RootVolumeConfigurationAttributes{ref: ref}
 }
 
-func (rvc RootVolumeConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (rvc RootVolumeConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rvc.ref.InternalTokens()
 }
 
@@ -135,7 +135,7 @@ func (ne NfsExportsAttributes) InternalWithRef(ref terra.Reference) NfsExportsAt
 	return NfsExportsAttributes{ref: ref}
 }
 
-func (ne NfsExportsAttributes) InternalTokens() hclwrite.Tokens {
+func (ne NfsExportsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ne.ref.InternalTokens()
 }
 
@@ -155,7 +155,7 @@ func (cc ClientConfigurationsAttributes) InternalWithRef(ref terra.Reference) Cl
 	return ClientConfigurationsAttributes{ref: ref}
 }
 
-func (cc ClientConfigurationsAttributes) InternalTokens() hclwrite.Tokens {
+func (cc ClientConfigurationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -179,7 +179,7 @@ func (uagq UserAndGroupQuotasAttributes) InternalWithRef(ref terra.Reference) Us
 	return UserAndGroupQuotasAttributes{ref: ref}
 }
 
-func (uagq UserAndGroupQuotasAttributes) InternalTokens() hclwrite.Tokens {
+func (uagq UserAndGroupQuotasAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return uagq.ref.InternalTokens()
 }
 
@@ -207,7 +207,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

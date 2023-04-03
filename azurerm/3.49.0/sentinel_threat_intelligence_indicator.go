@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSentinelThreatIntelligenceIndicator creates a new instance of [SentinelThreatIntelligenceIndicator].
 func NewSentinelThreatIntelligenceIndicator(name string, args SentinelThreatIntelligenceIndicatorArgs) *SentinelThreatIntelligenceIndicator {
 	return &SentinelThreatIntelligenceIndicator{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSentinelThreatIntelligenceIndicator(name string, args SentinelThreatInte
 
 var _ terra.Resource = (*SentinelThreatIntelligenceIndicator)(nil)
 
+// SentinelThreatIntelligenceIndicator represents the Terraform resource azurerm_sentinel_threat_intelligence_indicator.
 type SentinelThreatIntelligenceIndicator struct {
-	Name  string
-	Args  SentinelThreatIntelligenceIndicatorArgs
-	state *sentinelThreatIntelligenceIndicatorState
+	Name      string
+	Args      SentinelThreatIntelligenceIndicatorArgs
+	state     *sentinelThreatIntelligenceIndicatorState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SentinelThreatIntelligenceIndicator].
 func (stii *SentinelThreatIntelligenceIndicator) Type() string {
 	return "azurerm_sentinel_threat_intelligence_indicator"
 }
 
+// LocalName returns the local name for [SentinelThreatIntelligenceIndicator].
 func (stii *SentinelThreatIntelligenceIndicator) LocalName() string {
 	return stii.Name
 }
 
+// Configuration returns the configuration (args) for [SentinelThreatIntelligenceIndicator].
 func (stii *SentinelThreatIntelligenceIndicator) Configuration() interface{} {
 	return stii.Args
 }
 
+// DependOn is used for other resources to depend on [SentinelThreatIntelligenceIndicator].
+func (stii *SentinelThreatIntelligenceIndicator) DependOn() terra.Reference {
+	return terra.ReferenceResource(stii)
+}
+
+// Dependencies returns the list of resources [SentinelThreatIntelligenceIndicator] depends_on.
+func (stii *SentinelThreatIntelligenceIndicator) Dependencies() terra.Dependencies {
+	return stii.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SentinelThreatIntelligenceIndicator].
+func (stii *SentinelThreatIntelligenceIndicator) LifecycleManagement() *terra.Lifecycle {
+	return stii.Lifecycle
+}
+
+// Attributes returns the attributes for [SentinelThreatIntelligenceIndicator].
 func (stii *SentinelThreatIntelligenceIndicator) Attributes() sentinelThreatIntelligenceIndicatorAttributes {
 	return sentinelThreatIntelligenceIndicatorAttributes{ref: terra.ReferenceResource(stii)}
 }
 
+// ImportState imports the given attribute values into [SentinelThreatIntelligenceIndicator]'s state.
 func (stii *SentinelThreatIntelligenceIndicator) ImportState(av io.Reader) error {
 	stii.state = &sentinelThreatIntelligenceIndicatorState{}
 	if err := json.NewDecoder(av).Decode(stii.state); err != nil {
@@ -49,10 +73,12 @@ func (stii *SentinelThreatIntelligenceIndicator) ImportState(av io.Reader) error
 	return nil
 }
 
+// State returns the state and a bool indicating if [SentinelThreatIntelligenceIndicator] has state.
 func (stii *SentinelThreatIntelligenceIndicator) State() (*sentinelThreatIntelligenceIndicatorState, bool) {
 	return stii.state, stii.state != nil
 }
 
+// StateMust returns the state for [SentinelThreatIntelligenceIndicator]. Panics if the state is nil.
 func (stii *SentinelThreatIntelligenceIndicator) StateMust() *sentinelThreatIntelligenceIndicatorState {
 	if stii.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", stii.Type(), stii.LocalName()))
@@ -60,10 +86,7 @@ func (stii *SentinelThreatIntelligenceIndicator) StateMust() *sentinelThreatInte
 	return stii.state
 }
 
-func (stii *SentinelThreatIntelligenceIndicator) DependOn() terra.Reference {
-	return terra.ReferenceResource(stii)
-}
-
+// SentinelThreatIntelligenceIndicatorArgs contains the configurations for azurerm_sentinel_threat_intelligence_indicator.
 type SentinelThreatIntelligenceIndicatorArgs struct {
 	// Confidence: number, optional
 	Confidence terra.NumberValue `hcl:"confidence,attr"`
@@ -111,131 +134,154 @@ type SentinelThreatIntelligenceIndicatorArgs struct {
 	KillChainPhase []sentinelthreatintelligenceindicator.KillChainPhase `hcl:"kill_chain_phase,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *sentinelthreatintelligenceindicator.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SentinelThreatIntelligenceIndicator depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sentinelThreatIntelligenceIndicatorAttributes struct {
 	ref terra.Reference
 }
 
+// Confidence returns a reference to field confidence of azurerm_sentinel_threat_intelligence_indicator.
 func (stii sentinelThreatIntelligenceIndicatorAttributes) Confidence() terra.NumberValue {
-	return terra.ReferenceNumber(stii.ref.Append("confidence"))
+	return terra.ReferenceAsNumber(stii.ref.Append("confidence"))
 }
 
+// CreatedBy returns a reference to field created_by of azurerm_sentinel_threat_intelligence_indicator.
 func (stii sentinelThreatIntelligenceIndicatorAttributes) CreatedBy() terra.StringValue {
-	return terra.ReferenceString(stii.ref.Append("created_by"))
+	return terra.ReferenceAsString(stii.ref.Append("created_by"))
 }
 
+// CreatedOn returns a reference to field created_on of azurerm_sentinel_threat_intelligence_indicator.
 func (stii sentinelThreatIntelligenceIndicatorAttributes) CreatedOn() terra.StringValue {
-	return terra.ReferenceString(stii.ref.Append("created_on"))
+	return terra.ReferenceAsString(stii.ref.Append("created_on"))
 }
 
+// Defanged returns a reference to field defanged of azurerm_sentinel_threat_intelligence_indicator.
 func (stii sentinelThreatIntelligenceIndicatorAttributes) Defanged() terra.BoolValue {
-	return terra.ReferenceBool(stii.ref.Append("defanged"))
+	return terra.ReferenceAsBool(stii.ref.Append("defanged"))
 }
 
+// Description returns a reference to field description of azurerm_sentinel_threat_intelligence_indicator.
 func (stii sentinelThreatIntelligenceIndicatorAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(stii.ref.Append("description"))
+	return terra.ReferenceAsString(stii.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_sentinel_threat_intelligence_indicator.
 func (stii sentinelThreatIntelligenceIndicatorAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(stii.ref.Append("display_name"))
+	return terra.ReferenceAsString(stii.ref.Append("display_name"))
 }
 
+// Extension returns a reference to field extension of azurerm_sentinel_threat_intelligence_indicator.
 func (stii sentinelThreatIntelligenceIndicatorAttributes) Extension() terra.StringValue {
-	return terra.ReferenceString(stii.ref.Append("extension"))
+	return terra.ReferenceAsString(stii.ref.Append("extension"))
 }
 
+// ExternalId returns a reference to field external_id of azurerm_sentinel_threat_intelligence_indicator.
 func (stii sentinelThreatIntelligenceIndicatorAttributes) ExternalId() terra.StringValue {
-	return terra.ReferenceString(stii.ref.Append("external_id"))
+	return terra.ReferenceAsString(stii.ref.Append("external_id"))
 }
 
+// ExternalLastUpdatedTimeUtc returns a reference to field external_last_updated_time_utc of azurerm_sentinel_threat_intelligence_indicator.
 func (stii sentinelThreatIntelligenceIndicatorAttributes) ExternalLastUpdatedTimeUtc() terra.StringValue {
-	return terra.ReferenceString(stii.ref.Append("external_last_updated_time_utc"))
+	return terra.ReferenceAsString(stii.ref.Append("external_last_updated_time_utc"))
 }
 
+// Guid returns a reference to field guid of azurerm_sentinel_threat_intelligence_indicator.
 func (stii sentinelThreatIntelligenceIndicatorAttributes) Guid() terra.StringValue {
-	return terra.ReferenceString(stii.ref.Append("guid"))
+	return terra.ReferenceAsString(stii.ref.Append("guid"))
 }
 
+// Id returns a reference to field id of azurerm_sentinel_threat_intelligence_indicator.
 func (stii sentinelThreatIntelligenceIndicatorAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(stii.ref.Append("id"))
+	return terra.ReferenceAsString(stii.ref.Append("id"))
 }
 
+// IndicatorType returns a reference to field indicator_type of azurerm_sentinel_threat_intelligence_indicator.
 func (stii sentinelThreatIntelligenceIndicatorAttributes) IndicatorType() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](stii.ref.Append("indicator_type"))
+	return terra.ReferenceAsList[terra.StringValue](stii.ref.Append("indicator_type"))
 }
 
+// Language returns a reference to field language of azurerm_sentinel_threat_intelligence_indicator.
 func (stii sentinelThreatIntelligenceIndicatorAttributes) Language() terra.StringValue {
-	return terra.ReferenceString(stii.ref.Append("language"))
+	return terra.ReferenceAsString(stii.ref.Append("language"))
 }
 
+// LastUpdatedTimeUtc returns a reference to field last_updated_time_utc of azurerm_sentinel_threat_intelligence_indicator.
 func (stii sentinelThreatIntelligenceIndicatorAttributes) LastUpdatedTimeUtc() terra.StringValue {
-	return terra.ReferenceString(stii.ref.Append("last_updated_time_utc"))
+	return terra.ReferenceAsString(stii.ref.Append("last_updated_time_utc"))
 }
 
+// ObjectMarkingRefs returns a reference to field object_marking_refs of azurerm_sentinel_threat_intelligence_indicator.
 func (stii sentinelThreatIntelligenceIndicatorAttributes) ObjectMarkingRefs() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](stii.ref.Append("object_marking_refs"))
+	return terra.ReferenceAsList[terra.StringValue](stii.ref.Append("object_marking_refs"))
 }
 
+// Pattern returns a reference to field pattern of azurerm_sentinel_threat_intelligence_indicator.
 func (stii sentinelThreatIntelligenceIndicatorAttributes) Pattern() terra.StringValue {
-	return terra.ReferenceString(stii.ref.Append("pattern"))
+	return terra.ReferenceAsString(stii.ref.Append("pattern"))
 }
 
+// PatternType returns a reference to field pattern_type of azurerm_sentinel_threat_intelligence_indicator.
 func (stii sentinelThreatIntelligenceIndicatorAttributes) PatternType() terra.StringValue {
-	return terra.ReferenceString(stii.ref.Append("pattern_type"))
+	return terra.ReferenceAsString(stii.ref.Append("pattern_type"))
 }
 
+// PatternVersion returns a reference to field pattern_version of azurerm_sentinel_threat_intelligence_indicator.
 func (stii sentinelThreatIntelligenceIndicatorAttributes) PatternVersion() terra.StringValue {
-	return terra.ReferenceString(stii.ref.Append("pattern_version"))
+	return terra.ReferenceAsString(stii.ref.Append("pattern_version"))
 }
 
+// Revoked returns a reference to field revoked of azurerm_sentinel_threat_intelligence_indicator.
 func (stii sentinelThreatIntelligenceIndicatorAttributes) Revoked() terra.BoolValue {
-	return terra.ReferenceBool(stii.ref.Append("revoked"))
+	return terra.ReferenceAsBool(stii.ref.Append("revoked"))
 }
 
+// Source returns a reference to field source of azurerm_sentinel_threat_intelligence_indicator.
 func (stii sentinelThreatIntelligenceIndicatorAttributes) Source() terra.StringValue {
-	return terra.ReferenceString(stii.ref.Append("source"))
+	return terra.ReferenceAsString(stii.ref.Append("source"))
 }
 
+// Tags returns a reference to field tags of azurerm_sentinel_threat_intelligence_indicator.
 func (stii sentinelThreatIntelligenceIndicatorAttributes) Tags() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](stii.ref.Append("tags"))
+	return terra.ReferenceAsList[terra.StringValue](stii.ref.Append("tags"))
 }
 
+// ThreatTypes returns a reference to field threat_types of azurerm_sentinel_threat_intelligence_indicator.
 func (stii sentinelThreatIntelligenceIndicatorAttributes) ThreatTypes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](stii.ref.Append("threat_types"))
+	return terra.ReferenceAsList[terra.StringValue](stii.ref.Append("threat_types"))
 }
 
+// ValidateFromUtc returns a reference to field validate_from_utc of azurerm_sentinel_threat_intelligence_indicator.
 func (stii sentinelThreatIntelligenceIndicatorAttributes) ValidateFromUtc() terra.StringValue {
-	return terra.ReferenceString(stii.ref.Append("validate_from_utc"))
+	return terra.ReferenceAsString(stii.ref.Append("validate_from_utc"))
 }
 
+// ValidateUntilUtc returns a reference to field validate_until_utc of azurerm_sentinel_threat_intelligence_indicator.
 func (stii sentinelThreatIntelligenceIndicatorAttributes) ValidateUntilUtc() terra.StringValue {
-	return terra.ReferenceString(stii.ref.Append("validate_until_utc"))
+	return terra.ReferenceAsString(stii.ref.Append("validate_until_utc"))
 }
 
+// WorkspaceId returns a reference to field workspace_id of azurerm_sentinel_threat_intelligence_indicator.
 func (stii sentinelThreatIntelligenceIndicatorAttributes) WorkspaceId() terra.StringValue {
-	return terra.ReferenceString(stii.ref.Append("workspace_id"))
+	return terra.ReferenceAsString(stii.ref.Append("workspace_id"))
 }
 
 func (stii sentinelThreatIntelligenceIndicatorAttributes) ParsedPattern() terra.ListValue[sentinelthreatintelligenceindicator.ParsedPatternAttributes] {
-	return terra.ReferenceList[sentinelthreatintelligenceindicator.ParsedPatternAttributes](stii.ref.Append("parsed_pattern"))
+	return terra.ReferenceAsList[sentinelthreatintelligenceindicator.ParsedPatternAttributes](stii.ref.Append("parsed_pattern"))
 }
 
 func (stii sentinelThreatIntelligenceIndicatorAttributes) ExternalReference() terra.ListValue[sentinelthreatintelligenceindicator.ExternalReferenceAttributes] {
-	return terra.ReferenceList[sentinelthreatintelligenceindicator.ExternalReferenceAttributes](stii.ref.Append("external_reference"))
+	return terra.ReferenceAsList[sentinelthreatintelligenceindicator.ExternalReferenceAttributes](stii.ref.Append("external_reference"))
 }
 
 func (stii sentinelThreatIntelligenceIndicatorAttributes) GranularMarking() terra.ListValue[sentinelthreatintelligenceindicator.GranularMarkingAttributes] {
-	return terra.ReferenceList[sentinelthreatintelligenceindicator.GranularMarkingAttributes](stii.ref.Append("granular_marking"))
+	return terra.ReferenceAsList[sentinelthreatintelligenceindicator.GranularMarkingAttributes](stii.ref.Append("granular_marking"))
 }
 
 func (stii sentinelThreatIntelligenceIndicatorAttributes) KillChainPhase() terra.ListValue[sentinelthreatintelligenceindicator.KillChainPhaseAttributes] {
-	return terra.ReferenceList[sentinelthreatintelligenceindicator.KillChainPhaseAttributes](stii.ref.Append("kill_chain_phase"))
+	return terra.ReferenceAsList[sentinelthreatintelligenceindicator.KillChainPhaseAttributes](stii.ref.Append("kill_chain_phase"))
 }
 
 func (stii sentinelThreatIntelligenceIndicatorAttributes) Timeouts() sentinelthreatintelligenceindicator.TimeoutsAttributes {
-	return terra.ReferenceSingle[sentinelthreatintelligenceindicator.TimeoutsAttributes](stii.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[sentinelthreatintelligenceindicator.TimeoutsAttributes](stii.ref.Append("timeouts"))
 }
 
 type sentinelThreatIntelligenceIndicatorState struct {

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataComputeInstanceTemplate creates a new instance of [DataComputeInstanceTemplate].
 func NewDataComputeInstanceTemplate(name string, args DataComputeInstanceTemplateArgs) *DataComputeInstanceTemplate {
 	return &DataComputeInstanceTemplate{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataComputeInstanceTemplate(name string, args DataComputeInstanceTemplat
 
 var _ terra.DataResource = (*DataComputeInstanceTemplate)(nil)
 
+// DataComputeInstanceTemplate represents the Terraform data resource google_compute_instance_template.
 type DataComputeInstanceTemplate struct {
 	Name string
 	Args DataComputeInstanceTemplateArgs
 }
 
+// DataSource returns the Terraform object type for [DataComputeInstanceTemplate].
 func (cit *DataComputeInstanceTemplate) DataSource() string {
 	return "google_compute_instance_template"
 }
 
+// LocalName returns the local name for [DataComputeInstanceTemplate].
 func (cit *DataComputeInstanceTemplate) LocalName() string {
 	return cit.Name
 }
 
+// Configuration returns the configuration (args) for [DataComputeInstanceTemplate].
 func (cit *DataComputeInstanceTemplate) Configuration() interface{} {
 	return cit.Args
 }
 
+// Attributes returns the attributes for [DataComputeInstanceTemplate].
 func (cit *DataComputeInstanceTemplate) Attributes() dataComputeInstanceTemplateAttributes {
 	return dataComputeInstanceTemplateAttributes{ref: terra.ReferenceDataResource(cit)}
 }
 
+// DataComputeInstanceTemplateArgs contains the configurations for google_compute_instance_template.
 type DataComputeInstanceTemplateArgs struct {
 	// Filter: string, optional
 	Filter terra.StringValue `hcl:"filter,attr"`
@@ -71,118 +78,138 @@ type dataComputeInstanceTemplateAttributes struct {
 	ref terra.Reference
 }
 
+// CanIpForward returns a reference to field can_ip_forward of google_compute_instance_template.
 func (cit dataComputeInstanceTemplateAttributes) CanIpForward() terra.BoolValue {
-	return terra.ReferenceBool(cit.ref.Append("can_ip_forward"))
+	return terra.ReferenceAsBool(cit.ref.Append("can_ip_forward"))
 }
 
+// Description returns a reference to field description of google_compute_instance_template.
 func (cit dataComputeInstanceTemplateAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cit.ref.Append("description"))
+	return terra.ReferenceAsString(cit.ref.Append("description"))
 }
 
+// Filter returns a reference to field filter of google_compute_instance_template.
 func (cit dataComputeInstanceTemplateAttributes) Filter() terra.StringValue {
-	return terra.ReferenceString(cit.ref.Append("filter"))
+	return terra.ReferenceAsString(cit.ref.Append("filter"))
 }
 
+// Id returns a reference to field id of google_compute_instance_template.
 func (cit dataComputeInstanceTemplateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cit.ref.Append("id"))
+	return terra.ReferenceAsString(cit.ref.Append("id"))
 }
 
+// InstanceDescription returns a reference to field instance_description of google_compute_instance_template.
 func (cit dataComputeInstanceTemplateAttributes) InstanceDescription() terra.StringValue {
-	return terra.ReferenceString(cit.ref.Append("instance_description"))
+	return terra.ReferenceAsString(cit.ref.Append("instance_description"))
 }
 
+// Labels returns a reference to field labels of google_compute_instance_template.
 func (cit dataComputeInstanceTemplateAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cit.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](cit.ref.Append("labels"))
 }
 
+// MachineType returns a reference to field machine_type of google_compute_instance_template.
 func (cit dataComputeInstanceTemplateAttributes) MachineType() terra.StringValue {
-	return terra.ReferenceString(cit.ref.Append("machine_type"))
+	return terra.ReferenceAsString(cit.ref.Append("machine_type"))
 }
 
+// Metadata returns a reference to field metadata of google_compute_instance_template.
 func (cit dataComputeInstanceTemplateAttributes) Metadata() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cit.ref.Append("metadata"))
+	return terra.ReferenceAsMap[terra.StringValue](cit.ref.Append("metadata"))
 }
 
+// MetadataFingerprint returns a reference to field metadata_fingerprint of google_compute_instance_template.
 func (cit dataComputeInstanceTemplateAttributes) MetadataFingerprint() terra.StringValue {
-	return terra.ReferenceString(cit.ref.Append("metadata_fingerprint"))
+	return terra.ReferenceAsString(cit.ref.Append("metadata_fingerprint"))
 }
 
+// MetadataStartupScript returns a reference to field metadata_startup_script of google_compute_instance_template.
 func (cit dataComputeInstanceTemplateAttributes) MetadataStartupScript() terra.StringValue {
-	return terra.ReferenceString(cit.ref.Append("metadata_startup_script"))
+	return terra.ReferenceAsString(cit.ref.Append("metadata_startup_script"))
 }
 
+// MinCpuPlatform returns a reference to field min_cpu_platform of google_compute_instance_template.
 func (cit dataComputeInstanceTemplateAttributes) MinCpuPlatform() terra.StringValue {
-	return terra.ReferenceString(cit.ref.Append("min_cpu_platform"))
+	return terra.ReferenceAsString(cit.ref.Append("min_cpu_platform"))
 }
 
+// MostRecent returns a reference to field most_recent of google_compute_instance_template.
 func (cit dataComputeInstanceTemplateAttributes) MostRecent() terra.BoolValue {
-	return terra.ReferenceBool(cit.ref.Append("most_recent"))
+	return terra.ReferenceAsBool(cit.ref.Append("most_recent"))
 }
 
+// Name returns a reference to field name of google_compute_instance_template.
 func (cit dataComputeInstanceTemplateAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cit.ref.Append("name"))
+	return terra.ReferenceAsString(cit.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of google_compute_instance_template.
 func (cit dataComputeInstanceTemplateAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(cit.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(cit.ref.Append("name_prefix"))
 }
 
+// Project returns a reference to field project of google_compute_instance_template.
 func (cit dataComputeInstanceTemplateAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cit.ref.Append("project"))
+	return terra.ReferenceAsString(cit.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_compute_instance_template.
 func (cit dataComputeInstanceTemplateAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(cit.ref.Append("region"))
+	return terra.ReferenceAsString(cit.ref.Append("region"))
 }
 
+// ResourcePolicies returns a reference to field resource_policies of google_compute_instance_template.
 func (cit dataComputeInstanceTemplateAttributes) ResourcePolicies() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cit.ref.Append("resource_policies"))
+	return terra.ReferenceAsList[terra.StringValue](cit.ref.Append("resource_policies"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_instance_template.
 func (cit dataComputeInstanceTemplateAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(cit.ref.Append("self_link"))
+	return terra.ReferenceAsString(cit.ref.Append("self_link"))
 }
 
+// Tags returns a reference to field tags of google_compute_instance_template.
 func (cit dataComputeInstanceTemplateAttributes) Tags() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cit.ref.Append("tags"))
+	return terra.ReferenceAsSet[terra.StringValue](cit.ref.Append("tags"))
 }
 
+// TagsFingerprint returns a reference to field tags_fingerprint of google_compute_instance_template.
 func (cit dataComputeInstanceTemplateAttributes) TagsFingerprint() terra.StringValue {
-	return terra.ReferenceString(cit.ref.Append("tags_fingerprint"))
+	return terra.ReferenceAsString(cit.ref.Append("tags_fingerprint"))
 }
 
 func (cit dataComputeInstanceTemplateAttributes) AdvancedMachineFeatures() terra.ListValue[datacomputeinstancetemplate.AdvancedMachineFeaturesAttributes] {
-	return terra.ReferenceList[datacomputeinstancetemplate.AdvancedMachineFeaturesAttributes](cit.ref.Append("advanced_machine_features"))
+	return terra.ReferenceAsList[datacomputeinstancetemplate.AdvancedMachineFeaturesAttributes](cit.ref.Append("advanced_machine_features"))
 }
 
 func (cit dataComputeInstanceTemplateAttributes) ConfidentialInstanceConfig() terra.ListValue[datacomputeinstancetemplate.ConfidentialInstanceConfigAttributes] {
-	return terra.ReferenceList[datacomputeinstancetemplate.ConfidentialInstanceConfigAttributes](cit.ref.Append("confidential_instance_config"))
+	return terra.ReferenceAsList[datacomputeinstancetemplate.ConfidentialInstanceConfigAttributes](cit.ref.Append("confidential_instance_config"))
 }
 
 func (cit dataComputeInstanceTemplateAttributes) Disk() terra.ListValue[datacomputeinstancetemplate.DiskAttributes] {
-	return terra.ReferenceList[datacomputeinstancetemplate.DiskAttributes](cit.ref.Append("disk"))
+	return terra.ReferenceAsList[datacomputeinstancetemplate.DiskAttributes](cit.ref.Append("disk"))
 }
 
 func (cit dataComputeInstanceTemplateAttributes) GuestAccelerator() terra.ListValue[datacomputeinstancetemplate.GuestAcceleratorAttributes] {
-	return terra.ReferenceList[datacomputeinstancetemplate.GuestAcceleratorAttributes](cit.ref.Append("guest_accelerator"))
+	return terra.ReferenceAsList[datacomputeinstancetemplate.GuestAcceleratorAttributes](cit.ref.Append("guest_accelerator"))
 }
 
 func (cit dataComputeInstanceTemplateAttributes) NetworkInterface() terra.ListValue[datacomputeinstancetemplate.NetworkInterfaceAttributes] {
-	return terra.ReferenceList[datacomputeinstancetemplate.NetworkInterfaceAttributes](cit.ref.Append("network_interface"))
+	return terra.ReferenceAsList[datacomputeinstancetemplate.NetworkInterfaceAttributes](cit.ref.Append("network_interface"))
 }
 
 func (cit dataComputeInstanceTemplateAttributes) ReservationAffinity() terra.ListValue[datacomputeinstancetemplate.ReservationAffinityAttributes] {
-	return terra.ReferenceList[datacomputeinstancetemplate.ReservationAffinityAttributes](cit.ref.Append("reservation_affinity"))
+	return terra.ReferenceAsList[datacomputeinstancetemplate.ReservationAffinityAttributes](cit.ref.Append("reservation_affinity"))
 }
 
 func (cit dataComputeInstanceTemplateAttributes) Scheduling() terra.ListValue[datacomputeinstancetemplate.SchedulingAttributes] {
-	return terra.ReferenceList[datacomputeinstancetemplate.SchedulingAttributes](cit.ref.Append("scheduling"))
+	return terra.ReferenceAsList[datacomputeinstancetemplate.SchedulingAttributes](cit.ref.Append("scheduling"))
 }
 
 func (cit dataComputeInstanceTemplateAttributes) ServiceAccount() terra.ListValue[datacomputeinstancetemplate.ServiceAccountAttributes] {
-	return terra.ReferenceList[datacomputeinstancetemplate.ServiceAccountAttributes](cit.ref.Append("service_account"))
+	return terra.ReferenceAsList[datacomputeinstancetemplate.ServiceAccountAttributes](cit.ref.Append("service_account"))
 }
 
 func (cit dataComputeInstanceTemplateAttributes) ShieldedInstanceConfig() terra.ListValue[datacomputeinstancetemplate.ShieldedInstanceConfigAttributes] {
-	return terra.ReferenceList[datacomputeinstancetemplate.ShieldedInstanceConfigAttributes](cit.ref.Append("shielded_instance_config"))
+	return terra.ReferenceAsList[datacomputeinstancetemplate.ShieldedInstanceConfigAttributes](cit.ref.Append("shielded_instance_config"))
 }

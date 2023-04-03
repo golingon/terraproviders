@@ -21,7 +21,7 @@ func (da DelegatedAdministratorsAttributes) InternalWithRef(ref terra.Reference)
 	return DelegatedAdministratorsAttributes{ref: ref}
 }
 
-func (da DelegatedAdministratorsAttributes) InternalTokens() hclwrite.Tokens {
+func (da DelegatedAdministratorsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return da.ref.InternalTokens()
 }
 

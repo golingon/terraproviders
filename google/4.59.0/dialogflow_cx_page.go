@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDialogflowCxPage creates a new instance of [DialogflowCxPage].
 func NewDialogflowCxPage(name string, args DialogflowCxPageArgs) *DialogflowCxPage {
 	return &DialogflowCxPage{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDialogflowCxPage(name string, args DialogflowCxPageArgs) *DialogflowCxPa
 
 var _ terra.Resource = (*DialogflowCxPage)(nil)
 
+// DialogflowCxPage represents the Terraform resource google_dialogflow_cx_page.
 type DialogflowCxPage struct {
-	Name  string
-	Args  DialogflowCxPageArgs
-	state *dialogflowCxPageState
+	Name      string
+	Args      DialogflowCxPageArgs
+	state     *dialogflowCxPageState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DialogflowCxPage].
 func (dcp *DialogflowCxPage) Type() string {
 	return "google_dialogflow_cx_page"
 }
 
+// LocalName returns the local name for [DialogflowCxPage].
 func (dcp *DialogflowCxPage) LocalName() string {
 	return dcp.Name
 }
 
+// Configuration returns the configuration (args) for [DialogflowCxPage].
 func (dcp *DialogflowCxPage) Configuration() interface{} {
 	return dcp.Args
 }
 
+// DependOn is used for other resources to depend on [DialogflowCxPage].
+func (dcp *DialogflowCxPage) DependOn() terra.Reference {
+	return terra.ReferenceResource(dcp)
+}
+
+// Dependencies returns the list of resources [DialogflowCxPage] depends_on.
+func (dcp *DialogflowCxPage) Dependencies() terra.Dependencies {
+	return dcp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DialogflowCxPage].
+func (dcp *DialogflowCxPage) LifecycleManagement() *terra.Lifecycle {
+	return dcp.Lifecycle
+}
+
+// Attributes returns the attributes for [DialogflowCxPage].
 func (dcp *DialogflowCxPage) Attributes() dialogflowCxPageAttributes {
 	return dialogflowCxPageAttributes{ref: terra.ReferenceResource(dcp)}
 }
 
+// ImportState imports the given attribute values into [DialogflowCxPage]'s state.
 func (dcp *DialogflowCxPage) ImportState(av io.Reader) error {
 	dcp.state = &dialogflowCxPageState{}
 	if err := json.NewDecoder(av).Decode(dcp.state); err != nil {
@@ -49,10 +73,12 @@ func (dcp *DialogflowCxPage) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DialogflowCxPage] has state.
 func (dcp *DialogflowCxPage) State() (*dialogflowCxPageState, bool) {
 	return dcp.state, dcp.state != nil
 }
 
+// StateMust returns the state for [DialogflowCxPage]. Panics if the state is nil.
 func (dcp *DialogflowCxPage) StateMust() *dialogflowCxPageState {
 	if dcp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dcp.Type(), dcp.LocalName()))
@@ -60,10 +86,7 @@ func (dcp *DialogflowCxPage) StateMust() *dialogflowCxPageState {
 	return dcp.state
 }
 
-func (dcp *DialogflowCxPage) DependOn() terra.Reference {
-	return terra.ReferenceResource(dcp)
-}
-
+// DialogflowCxPageArgs contains the configurations for google_dialogflow_cx_page.
 type DialogflowCxPageArgs struct {
 	// DisplayName: string, required
 	DisplayName terra.StringValue `hcl:"display_name,attr" validate:"required"`
@@ -85,55 +108,59 @@ type DialogflowCxPageArgs struct {
 	Timeouts *dialogflowcxpage.Timeouts `hcl:"timeouts,block"`
 	// TransitionRoutes: min=0
 	TransitionRoutes []dialogflowcxpage.TransitionRoutes `hcl:"transition_routes,block" validate:"min=0"`
-	// DependsOn contains resources that DialogflowCxPage depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dialogflowCxPageAttributes struct {
 	ref terra.Reference
 }
 
+// DisplayName returns a reference to field display_name of google_dialogflow_cx_page.
 func (dcp dialogflowCxPageAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(dcp.ref.Append("display_name"))
+	return terra.ReferenceAsString(dcp.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of google_dialogflow_cx_page.
 func (dcp dialogflowCxPageAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dcp.ref.Append("id"))
+	return terra.ReferenceAsString(dcp.ref.Append("id"))
 }
 
+// LanguageCode returns a reference to field language_code of google_dialogflow_cx_page.
 func (dcp dialogflowCxPageAttributes) LanguageCode() terra.StringValue {
-	return terra.ReferenceString(dcp.ref.Append("language_code"))
+	return terra.ReferenceAsString(dcp.ref.Append("language_code"))
 }
 
+// Name returns a reference to field name of google_dialogflow_cx_page.
 func (dcp dialogflowCxPageAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dcp.ref.Append("name"))
+	return terra.ReferenceAsString(dcp.ref.Append("name"))
 }
 
+// Parent returns a reference to field parent of google_dialogflow_cx_page.
 func (dcp dialogflowCxPageAttributes) Parent() terra.StringValue {
-	return terra.ReferenceString(dcp.ref.Append("parent"))
+	return terra.ReferenceAsString(dcp.ref.Append("parent"))
 }
 
+// TransitionRouteGroups returns a reference to field transition_route_groups of google_dialogflow_cx_page.
 func (dcp dialogflowCxPageAttributes) TransitionRouteGroups() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dcp.ref.Append("transition_route_groups"))
+	return terra.ReferenceAsList[terra.StringValue](dcp.ref.Append("transition_route_groups"))
 }
 
 func (dcp dialogflowCxPageAttributes) EntryFulfillment() terra.ListValue[dialogflowcxpage.EntryFulfillmentAttributes] {
-	return terra.ReferenceList[dialogflowcxpage.EntryFulfillmentAttributes](dcp.ref.Append("entry_fulfillment"))
+	return terra.ReferenceAsList[dialogflowcxpage.EntryFulfillmentAttributes](dcp.ref.Append("entry_fulfillment"))
 }
 
 func (dcp dialogflowCxPageAttributes) EventHandlers() terra.ListValue[dialogflowcxpage.EventHandlersAttributes] {
-	return terra.ReferenceList[dialogflowcxpage.EventHandlersAttributes](dcp.ref.Append("event_handlers"))
+	return terra.ReferenceAsList[dialogflowcxpage.EventHandlersAttributes](dcp.ref.Append("event_handlers"))
 }
 
 func (dcp dialogflowCxPageAttributes) Form() terra.ListValue[dialogflowcxpage.FormAttributes] {
-	return terra.ReferenceList[dialogflowcxpage.FormAttributes](dcp.ref.Append("form"))
+	return terra.ReferenceAsList[dialogflowcxpage.FormAttributes](dcp.ref.Append("form"))
 }
 
 func (dcp dialogflowCxPageAttributes) Timeouts() dialogflowcxpage.TimeoutsAttributes {
-	return terra.ReferenceSingle[dialogflowcxpage.TimeoutsAttributes](dcp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dialogflowcxpage.TimeoutsAttributes](dcp.ref.Append("timeouts"))
 }
 
 func (dcp dialogflowCxPageAttributes) TransitionRoutes() terra.ListValue[dialogflowcxpage.TransitionRoutesAttributes] {
-	return terra.ReferenceList[dialogflowcxpage.TransitionRoutesAttributes](dcp.ref.Append("transition_routes"))
+	return terra.ReferenceAsList[dialogflowcxpage.TransitionRoutesAttributes](dcp.ref.Append("transition_routes"))
 }
 
 type dialogflowCxPageState struct {

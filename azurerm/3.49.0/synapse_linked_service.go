@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSynapseLinkedService creates a new instance of [SynapseLinkedService].
 func NewSynapseLinkedService(name string, args SynapseLinkedServiceArgs) *SynapseLinkedService {
 	return &SynapseLinkedService{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSynapseLinkedService(name string, args SynapseLinkedServiceArgs) *Synaps
 
 var _ terra.Resource = (*SynapseLinkedService)(nil)
 
+// SynapseLinkedService represents the Terraform resource azurerm_synapse_linked_service.
 type SynapseLinkedService struct {
-	Name  string
-	Args  SynapseLinkedServiceArgs
-	state *synapseLinkedServiceState
+	Name      string
+	Args      SynapseLinkedServiceArgs
+	state     *synapseLinkedServiceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SynapseLinkedService].
 func (sls *SynapseLinkedService) Type() string {
 	return "azurerm_synapse_linked_service"
 }
 
+// LocalName returns the local name for [SynapseLinkedService].
 func (sls *SynapseLinkedService) LocalName() string {
 	return sls.Name
 }
 
+// Configuration returns the configuration (args) for [SynapseLinkedService].
 func (sls *SynapseLinkedService) Configuration() interface{} {
 	return sls.Args
 }
 
+// DependOn is used for other resources to depend on [SynapseLinkedService].
+func (sls *SynapseLinkedService) DependOn() terra.Reference {
+	return terra.ReferenceResource(sls)
+}
+
+// Dependencies returns the list of resources [SynapseLinkedService] depends_on.
+func (sls *SynapseLinkedService) Dependencies() terra.Dependencies {
+	return sls.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SynapseLinkedService].
+func (sls *SynapseLinkedService) LifecycleManagement() *terra.Lifecycle {
+	return sls.Lifecycle
+}
+
+// Attributes returns the attributes for [SynapseLinkedService].
 func (sls *SynapseLinkedService) Attributes() synapseLinkedServiceAttributes {
 	return synapseLinkedServiceAttributes{ref: terra.ReferenceResource(sls)}
 }
 
+// ImportState imports the given attribute values into [SynapseLinkedService]'s state.
 func (sls *SynapseLinkedService) ImportState(av io.Reader) error {
 	sls.state = &synapseLinkedServiceState{}
 	if err := json.NewDecoder(av).Decode(sls.state); err != nil {
@@ -49,10 +73,12 @@ func (sls *SynapseLinkedService) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SynapseLinkedService] has state.
 func (sls *SynapseLinkedService) State() (*synapseLinkedServiceState, bool) {
 	return sls.state, sls.state != nil
 }
 
+// StateMust returns the state for [SynapseLinkedService]. Panics if the state is nil.
 func (sls *SynapseLinkedService) StateMust() *synapseLinkedServiceState {
 	if sls.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sls.Type(), sls.LocalName()))
@@ -60,10 +86,7 @@ func (sls *SynapseLinkedService) StateMust() *synapseLinkedServiceState {
 	return sls.state
 }
 
-func (sls *SynapseLinkedService) DependOn() terra.Reference {
-	return terra.ReferenceResource(sls)
-}
-
+// SynapseLinkedServiceArgs contains the configurations for azurerm_synapse_linked_service.
 type SynapseLinkedServiceArgs struct {
 	// AdditionalProperties: map of string, optional
 	AdditionalProperties terra.MapValue[terra.StringValue] `hcl:"additional_properties,attr"`
@@ -87,55 +110,62 @@ type SynapseLinkedServiceArgs struct {
 	IntegrationRuntime *synapselinkedservice.IntegrationRuntime `hcl:"integration_runtime,block"`
 	// Timeouts: optional
 	Timeouts *synapselinkedservice.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SynapseLinkedService depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type synapseLinkedServiceAttributes struct {
 	ref terra.Reference
 }
 
+// AdditionalProperties returns a reference to field additional_properties of azurerm_synapse_linked_service.
 func (sls synapseLinkedServiceAttributes) AdditionalProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sls.ref.Append("additional_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](sls.ref.Append("additional_properties"))
 }
 
+// Annotations returns a reference to field annotations of azurerm_synapse_linked_service.
 func (sls synapseLinkedServiceAttributes) Annotations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sls.ref.Append("annotations"))
+	return terra.ReferenceAsList[terra.StringValue](sls.ref.Append("annotations"))
 }
 
+// Description returns a reference to field description of azurerm_synapse_linked_service.
 func (sls synapseLinkedServiceAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(sls.ref.Append("description"))
+	return terra.ReferenceAsString(sls.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_synapse_linked_service.
 func (sls synapseLinkedServiceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sls.ref.Append("id"))
+	return terra.ReferenceAsString(sls.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_synapse_linked_service.
 func (sls synapseLinkedServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sls.ref.Append("name"))
+	return terra.ReferenceAsString(sls.ref.Append("name"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_synapse_linked_service.
 func (sls synapseLinkedServiceAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sls.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](sls.ref.Append("parameters"))
 }
 
+// SynapseWorkspaceId returns a reference to field synapse_workspace_id of azurerm_synapse_linked_service.
 func (sls synapseLinkedServiceAttributes) SynapseWorkspaceId() terra.StringValue {
-	return terra.ReferenceString(sls.ref.Append("synapse_workspace_id"))
+	return terra.ReferenceAsString(sls.ref.Append("synapse_workspace_id"))
 }
 
+// Type returns a reference to field type of azurerm_synapse_linked_service.
 func (sls synapseLinkedServiceAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(sls.ref.Append("type"))
+	return terra.ReferenceAsString(sls.ref.Append("type"))
 }
 
+// TypePropertiesJson returns a reference to field type_properties_json of azurerm_synapse_linked_service.
 func (sls synapseLinkedServiceAttributes) TypePropertiesJson() terra.StringValue {
-	return terra.ReferenceString(sls.ref.Append("type_properties_json"))
+	return terra.ReferenceAsString(sls.ref.Append("type_properties_json"))
 }
 
 func (sls synapseLinkedServiceAttributes) IntegrationRuntime() terra.ListValue[synapselinkedservice.IntegrationRuntimeAttributes] {
-	return terra.ReferenceList[synapselinkedservice.IntegrationRuntimeAttributes](sls.ref.Append("integration_runtime"))
+	return terra.ReferenceAsList[synapselinkedservice.IntegrationRuntimeAttributes](sls.ref.Append("integration_runtime"))
 }
 
 func (sls synapseLinkedServiceAttributes) Timeouts() synapselinkedservice.TimeoutsAttributes {
-	return terra.ReferenceSingle[synapselinkedservice.TimeoutsAttributes](sls.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[synapselinkedservice.TimeoutsAttributes](sls.ref.Append("timeouts"))
 }
 
 type synapseLinkedServiceState struct {

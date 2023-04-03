@@ -20,76 +20,76 @@ type NetworkInterfaceAttributes struct {
 	ref terra.Reference
 }
 
-func (ni NetworkInterfaceAttributes) InternalRef() terra.Reference {
-	return ni.ref
+func (ni NetworkInterfaceAttributes) InternalRef() (terra.Reference, error) {
+	return ni.ref, nil
 }
 
 func (ni NetworkInterfaceAttributes) InternalWithRef(ref terra.Reference) NetworkInterfaceAttributes {
 	return NetworkInterfaceAttributes{ref: ref}
 }
 
-func (ni NetworkInterfaceAttributes) InternalTokens() hclwrite.Tokens {
+func (ni NetworkInterfaceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ni.ref.InternalTokens()
 }
 
 func (ni NetworkInterfaceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("id"))
+	return terra.ReferenceAsString(ni.ref.Append("id"))
 }
 
 func (ni NetworkInterfaceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("name"))
+	return terra.ReferenceAsString(ni.ref.Append("name"))
 }
 
 type PrivateServiceConnectionAttributes struct {
 	ref terra.Reference
 }
 
-func (psc PrivateServiceConnectionAttributes) InternalRef() terra.Reference {
-	return psc.ref
+func (psc PrivateServiceConnectionAttributes) InternalRef() (terra.Reference, error) {
+	return psc.ref, nil
 }
 
 func (psc PrivateServiceConnectionAttributes) InternalWithRef(ref terra.Reference) PrivateServiceConnectionAttributes {
 	return PrivateServiceConnectionAttributes{ref: ref}
 }
 
-func (psc PrivateServiceConnectionAttributes) InternalTokens() hclwrite.Tokens {
+func (psc PrivateServiceConnectionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return psc.ref.InternalTokens()
 }
 
 func (psc PrivateServiceConnectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(psc.ref.Append("name"))
+	return terra.ReferenceAsString(psc.ref.Append("name"))
 }
 
 func (psc PrivateServiceConnectionAttributes) PrivateIpAddress() terra.StringValue {
-	return terra.ReferenceString(psc.ref.Append("private_ip_address"))
+	return terra.ReferenceAsString(psc.ref.Append("private_ip_address"))
 }
 
 func (psc PrivateServiceConnectionAttributes) RequestResponse() terra.StringValue {
-	return terra.ReferenceString(psc.ref.Append("request_response"))
+	return terra.ReferenceAsString(psc.ref.Append("request_response"))
 }
 
 func (psc PrivateServiceConnectionAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(psc.ref.Append("status"))
+	return terra.ReferenceAsString(psc.ref.Append("status"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type NetworkInterfaceState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewOrganizationIamCustomRole creates a new instance of [OrganizationIamCustomRole].
 func NewOrganizationIamCustomRole(name string, args OrganizationIamCustomRoleArgs) *OrganizationIamCustomRole {
 	return &OrganizationIamCustomRole{
 		Args: args,
@@ -18,28 +19,51 @@ func NewOrganizationIamCustomRole(name string, args OrganizationIamCustomRoleArg
 
 var _ terra.Resource = (*OrganizationIamCustomRole)(nil)
 
+// OrganizationIamCustomRole represents the Terraform resource google_organization_iam_custom_role.
 type OrganizationIamCustomRole struct {
-	Name  string
-	Args  OrganizationIamCustomRoleArgs
-	state *organizationIamCustomRoleState
+	Name      string
+	Args      OrganizationIamCustomRoleArgs
+	state     *organizationIamCustomRoleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [OrganizationIamCustomRole].
 func (oicr *OrganizationIamCustomRole) Type() string {
 	return "google_organization_iam_custom_role"
 }
 
+// LocalName returns the local name for [OrganizationIamCustomRole].
 func (oicr *OrganizationIamCustomRole) LocalName() string {
 	return oicr.Name
 }
 
+// Configuration returns the configuration (args) for [OrganizationIamCustomRole].
 func (oicr *OrganizationIamCustomRole) Configuration() interface{} {
 	return oicr.Args
 }
 
+// DependOn is used for other resources to depend on [OrganizationIamCustomRole].
+func (oicr *OrganizationIamCustomRole) DependOn() terra.Reference {
+	return terra.ReferenceResource(oicr)
+}
+
+// Dependencies returns the list of resources [OrganizationIamCustomRole] depends_on.
+func (oicr *OrganizationIamCustomRole) Dependencies() terra.Dependencies {
+	return oicr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [OrganizationIamCustomRole].
+func (oicr *OrganizationIamCustomRole) LifecycleManagement() *terra.Lifecycle {
+	return oicr.Lifecycle
+}
+
+// Attributes returns the attributes for [OrganizationIamCustomRole].
 func (oicr *OrganizationIamCustomRole) Attributes() organizationIamCustomRoleAttributes {
 	return organizationIamCustomRoleAttributes{ref: terra.ReferenceResource(oicr)}
 }
 
+// ImportState imports the given attribute values into [OrganizationIamCustomRole]'s state.
 func (oicr *OrganizationIamCustomRole) ImportState(av io.Reader) error {
 	oicr.state = &organizationIamCustomRoleState{}
 	if err := json.NewDecoder(av).Decode(oicr.state); err != nil {
@@ -48,10 +72,12 @@ func (oicr *OrganizationIamCustomRole) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [OrganizationIamCustomRole] has state.
 func (oicr *OrganizationIamCustomRole) State() (*organizationIamCustomRoleState, bool) {
 	return oicr.state, oicr.state != nil
 }
 
+// StateMust returns the state for [OrganizationIamCustomRole]. Panics if the state is nil.
 func (oicr *OrganizationIamCustomRole) StateMust() *organizationIamCustomRoleState {
 	if oicr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", oicr.Type(), oicr.LocalName()))
@@ -59,10 +85,7 @@ func (oicr *OrganizationIamCustomRole) StateMust() *organizationIamCustomRoleSta
 	return oicr.state
 }
 
-func (oicr *OrganizationIamCustomRole) DependOn() terra.Reference {
-	return terra.ReferenceResource(oicr)
-}
-
+// OrganizationIamCustomRoleArgs contains the configurations for google_organization_iam_custom_role.
 type OrganizationIamCustomRoleArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -78,47 +101,54 @@ type OrganizationIamCustomRoleArgs struct {
 	Stage terra.StringValue `hcl:"stage,attr"`
 	// Title: string, required
 	Title terra.StringValue `hcl:"title,attr" validate:"required"`
-	// DependsOn contains resources that OrganizationIamCustomRole depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type organizationIamCustomRoleAttributes struct {
 	ref terra.Reference
 }
 
+// Deleted returns a reference to field deleted of google_organization_iam_custom_role.
 func (oicr organizationIamCustomRoleAttributes) Deleted() terra.BoolValue {
-	return terra.ReferenceBool(oicr.ref.Append("deleted"))
+	return terra.ReferenceAsBool(oicr.ref.Append("deleted"))
 }
 
+// Description returns a reference to field description of google_organization_iam_custom_role.
 func (oicr organizationIamCustomRoleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(oicr.ref.Append("description"))
+	return terra.ReferenceAsString(oicr.ref.Append("description"))
 }
 
+// Id returns a reference to field id of google_organization_iam_custom_role.
 func (oicr organizationIamCustomRoleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(oicr.ref.Append("id"))
+	return terra.ReferenceAsString(oicr.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_organization_iam_custom_role.
 func (oicr organizationIamCustomRoleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(oicr.ref.Append("name"))
+	return terra.ReferenceAsString(oicr.ref.Append("name"))
 }
 
+// OrgId returns a reference to field org_id of google_organization_iam_custom_role.
 func (oicr organizationIamCustomRoleAttributes) OrgId() terra.StringValue {
-	return terra.ReferenceString(oicr.ref.Append("org_id"))
+	return terra.ReferenceAsString(oicr.ref.Append("org_id"))
 }
 
+// Permissions returns a reference to field permissions of google_organization_iam_custom_role.
 func (oicr organizationIamCustomRoleAttributes) Permissions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](oicr.ref.Append("permissions"))
+	return terra.ReferenceAsSet[terra.StringValue](oicr.ref.Append("permissions"))
 }
 
+// RoleId returns a reference to field role_id of google_organization_iam_custom_role.
 func (oicr organizationIamCustomRoleAttributes) RoleId() terra.StringValue {
-	return terra.ReferenceString(oicr.ref.Append("role_id"))
+	return terra.ReferenceAsString(oicr.ref.Append("role_id"))
 }
 
+// Stage returns a reference to field stage of google_organization_iam_custom_role.
 func (oicr organizationIamCustomRoleAttributes) Stage() terra.StringValue {
-	return terra.ReferenceString(oicr.ref.Append("stage"))
+	return terra.ReferenceAsString(oicr.ref.Append("stage"))
 }
 
+// Title returns a reference to field title of google_organization_iam_custom_role.
 func (oicr organizationIamCustomRoleAttributes) Title() terra.StringValue {
-	return terra.ReferenceString(oicr.ref.Append("title"))
+	return terra.ReferenceAsString(oicr.ref.Append("title"))
 }
 
 type organizationIamCustomRoleState struct {

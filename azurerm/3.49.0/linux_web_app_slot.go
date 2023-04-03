@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLinuxWebAppSlot creates a new instance of [LinuxWebAppSlot].
 func NewLinuxWebAppSlot(name string, args LinuxWebAppSlotArgs) *LinuxWebAppSlot {
 	return &LinuxWebAppSlot{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLinuxWebAppSlot(name string, args LinuxWebAppSlotArgs) *LinuxWebAppSlot 
 
 var _ terra.Resource = (*LinuxWebAppSlot)(nil)
 
+// LinuxWebAppSlot represents the Terraform resource azurerm_linux_web_app_slot.
 type LinuxWebAppSlot struct {
-	Name  string
-	Args  LinuxWebAppSlotArgs
-	state *linuxWebAppSlotState
+	Name      string
+	Args      LinuxWebAppSlotArgs
+	state     *linuxWebAppSlotState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LinuxWebAppSlot].
 func (lwas *LinuxWebAppSlot) Type() string {
 	return "azurerm_linux_web_app_slot"
 }
 
+// LocalName returns the local name for [LinuxWebAppSlot].
 func (lwas *LinuxWebAppSlot) LocalName() string {
 	return lwas.Name
 }
 
+// Configuration returns the configuration (args) for [LinuxWebAppSlot].
 func (lwas *LinuxWebAppSlot) Configuration() interface{} {
 	return lwas.Args
 }
 
+// DependOn is used for other resources to depend on [LinuxWebAppSlot].
+func (lwas *LinuxWebAppSlot) DependOn() terra.Reference {
+	return terra.ReferenceResource(lwas)
+}
+
+// Dependencies returns the list of resources [LinuxWebAppSlot] depends_on.
+func (lwas *LinuxWebAppSlot) Dependencies() terra.Dependencies {
+	return lwas.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LinuxWebAppSlot].
+func (lwas *LinuxWebAppSlot) LifecycleManagement() *terra.Lifecycle {
+	return lwas.Lifecycle
+}
+
+// Attributes returns the attributes for [LinuxWebAppSlot].
 func (lwas *LinuxWebAppSlot) Attributes() linuxWebAppSlotAttributes {
 	return linuxWebAppSlotAttributes{ref: terra.ReferenceResource(lwas)}
 }
 
+// ImportState imports the given attribute values into [LinuxWebAppSlot]'s state.
 func (lwas *LinuxWebAppSlot) ImportState(av io.Reader) error {
 	lwas.state = &linuxWebAppSlotState{}
 	if err := json.NewDecoder(av).Decode(lwas.state); err != nil {
@@ -49,10 +73,12 @@ func (lwas *LinuxWebAppSlot) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LinuxWebAppSlot] has state.
 func (lwas *LinuxWebAppSlot) State() (*linuxWebAppSlotState, bool) {
 	return lwas.state, lwas.state != nil
 }
 
+// StateMust returns the state for [LinuxWebAppSlot]. Panics if the state is nil.
 func (lwas *LinuxWebAppSlot) StateMust() *linuxWebAppSlotState {
 	if lwas.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lwas.Type(), lwas.LocalName()))
@@ -60,10 +86,7 @@ func (lwas *LinuxWebAppSlot) StateMust() *linuxWebAppSlotState {
 	return lwas.state
 }
 
-func (lwas *LinuxWebAppSlot) DependOn() terra.Reference {
-	return terra.ReferenceResource(lwas)
-}
-
+// LinuxWebAppSlotArgs contains the configurations for azurerm_linux_web_app_slot.
 type LinuxWebAppSlotArgs struct {
 	// AppServiceId: string, required
 	AppServiceId terra.StringValue `hcl:"app_service_id,attr" validate:"required"`
@@ -115,143 +138,164 @@ type LinuxWebAppSlotArgs struct {
 	StorageAccount []linuxwebappslot.StorageAccount `hcl:"storage_account,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *linuxwebappslot.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LinuxWebAppSlot depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type linuxWebAppSlotAttributes struct {
 	ref terra.Reference
 }
 
+// AppMetadata returns a reference to field app_metadata of azurerm_linux_web_app_slot.
 func (lwas linuxWebAppSlotAttributes) AppMetadata() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lwas.ref.Append("app_metadata"))
+	return terra.ReferenceAsMap[terra.StringValue](lwas.ref.Append("app_metadata"))
 }
 
+// AppServiceId returns a reference to field app_service_id of azurerm_linux_web_app_slot.
 func (lwas linuxWebAppSlotAttributes) AppServiceId() terra.StringValue {
-	return terra.ReferenceString(lwas.ref.Append("app_service_id"))
+	return terra.ReferenceAsString(lwas.ref.Append("app_service_id"))
 }
 
+// AppSettings returns a reference to field app_settings of azurerm_linux_web_app_slot.
 func (lwas linuxWebAppSlotAttributes) AppSettings() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lwas.ref.Append("app_settings"))
+	return terra.ReferenceAsMap[terra.StringValue](lwas.ref.Append("app_settings"))
 }
 
+// ClientAffinityEnabled returns a reference to field client_affinity_enabled of azurerm_linux_web_app_slot.
 func (lwas linuxWebAppSlotAttributes) ClientAffinityEnabled() terra.BoolValue {
-	return terra.ReferenceBool(lwas.ref.Append("client_affinity_enabled"))
+	return terra.ReferenceAsBool(lwas.ref.Append("client_affinity_enabled"))
 }
 
+// ClientCertificateEnabled returns a reference to field client_certificate_enabled of azurerm_linux_web_app_slot.
 func (lwas linuxWebAppSlotAttributes) ClientCertificateEnabled() terra.BoolValue {
-	return terra.ReferenceBool(lwas.ref.Append("client_certificate_enabled"))
+	return terra.ReferenceAsBool(lwas.ref.Append("client_certificate_enabled"))
 }
 
+// ClientCertificateExclusionPaths returns a reference to field client_certificate_exclusion_paths of azurerm_linux_web_app_slot.
 func (lwas linuxWebAppSlotAttributes) ClientCertificateExclusionPaths() terra.StringValue {
-	return terra.ReferenceString(lwas.ref.Append("client_certificate_exclusion_paths"))
+	return terra.ReferenceAsString(lwas.ref.Append("client_certificate_exclusion_paths"))
 }
 
+// ClientCertificateMode returns a reference to field client_certificate_mode of azurerm_linux_web_app_slot.
 func (lwas linuxWebAppSlotAttributes) ClientCertificateMode() terra.StringValue {
-	return terra.ReferenceString(lwas.ref.Append("client_certificate_mode"))
+	return terra.ReferenceAsString(lwas.ref.Append("client_certificate_mode"))
 }
 
+// CustomDomainVerificationId returns a reference to field custom_domain_verification_id of azurerm_linux_web_app_slot.
 func (lwas linuxWebAppSlotAttributes) CustomDomainVerificationId() terra.StringValue {
-	return terra.ReferenceString(lwas.ref.Append("custom_domain_verification_id"))
+	return terra.ReferenceAsString(lwas.ref.Append("custom_domain_verification_id"))
 }
 
+// DefaultHostname returns a reference to field default_hostname of azurerm_linux_web_app_slot.
 func (lwas linuxWebAppSlotAttributes) DefaultHostname() terra.StringValue {
-	return terra.ReferenceString(lwas.ref.Append("default_hostname"))
+	return terra.ReferenceAsString(lwas.ref.Append("default_hostname"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_linux_web_app_slot.
 func (lwas linuxWebAppSlotAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(lwas.ref.Append("enabled"))
+	return terra.ReferenceAsBool(lwas.ref.Append("enabled"))
 }
 
+// HttpsOnly returns a reference to field https_only of azurerm_linux_web_app_slot.
 func (lwas linuxWebAppSlotAttributes) HttpsOnly() terra.BoolValue {
-	return terra.ReferenceBool(lwas.ref.Append("https_only"))
+	return terra.ReferenceAsBool(lwas.ref.Append("https_only"))
 }
 
+// Id returns a reference to field id of azurerm_linux_web_app_slot.
 func (lwas linuxWebAppSlotAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lwas.ref.Append("id"))
+	return terra.ReferenceAsString(lwas.ref.Append("id"))
 }
 
+// KeyVaultReferenceIdentityId returns a reference to field key_vault_reference_identity_id of azurerm_linux_web_app_slot.
 func (lwas linuxWebAppSlotAttributes) KeyVaultReferenceIdentityId() terra.StringValue {
-	return terra.ReferenceString(lwas.ref.Append("key_vault_reference_identity_id"))
+	return terra.ReferenceAsString(lwas.ref.Append("key_vault_reference_identity_id"))
 }
 
+// Kind returns a reference to field kind of azurerm_linux_web_app_slot.
 func (lwas linuxWebAppSlotAttributes) Kind() terra.StringValue {
-	return terra.ReferenceString(lwas.ref.Append("kind"))
+	return terra.ReferenceAsString(lwas.ref.Append("kind"))
 }
 
+// Name returns a reference to field name of azurerm_linux_web_app_slot.
 func (lwas linuxWebAppSlotAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lwas.ref.Append("name"))
+	return terra.ReferenceAsString(lwas.ref.Append("name"))
 }
 
+// OutboundIpAddressList returns a reference to field outbound_ip_address_list of azurerm_linux_web_app_slot.
 func (lwas linuxWebAppSlotAttributes) OutboundIpAddressList() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lwas.ref.Append("outbound_ip_address_list"))
+	return terra.ReferenceAsList[terra.StringValue](lwas.ref.Append("outbound_ip_address_list"))
 }
 
+// OutboundIpAddresses returns a reference to field outbound_ip_addresses of azurerm_linux_web_app_slot.
 func (lwas linuxWebAppSlotAttributes) OutboundIpAddresses() terra.StringValue {
-	return terra.ReferenceString(lwas.ref.Append("outbound_ip_addresses"))
+	return terra.ReferenceAsString(lwas.ref.Append("outbound_ip_addresses"))
 }
 
+// PossibleOutboundIpAddressList returns a reference to field possible_outbound_ip_address_list of azurerm_linux_web_app_slot.
 func (lwas linuxWebAppSlotAttributes) PossibleOutboundIpAddressList() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lwas.ref.Append("possible_outbound_ip_address_list"))
+	return terra.ReferenceAsList[terra.StringValue](lwas.ref.Append("possible_outbound_ip_address_list"))
 }
 
+// PossibleOutboundIpAddresses returns a reference to field possible_outbound_ip_addresses of azurerm_linux_web_app_slot.
 func (lwas linuxWebAppSlotAttributes) PossibleOutboundIpAddresses() terra.StringValue {
-	return terra.ReferenceString(lwas.ref.Append("possible_outbound_ip_addresses"))
+	return terra.ReferenceAsString(lwas.ref.Append("possible_outbound_ip_addresses"))
 }
 
+// ServicePlanId returns a reference to field service_plan_id of azurerm_linux_web_app_slot.
 func (lwas linuxWebAppSlotAttributes) ServicePlanId() terra.StringValue {
-	return terra.ReferenceString(lwas.ref.Append("service_plan_id"))
+	return terra.ReferenceAsString(lwas.ref.Append("service_plan_id"))
 }
 
+// Tags returns a reference to field tags of azurerm_linux_web_app_slot.
 func (lwas linuxWebAppSlotAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lwas.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](lwas.ref.Append("tags"))
 }
 
+// VirtualNetworkSubnetId returns a reference to field virtual_network_subnet_id of azurerm_linux_web_app_slot.
 func (lwas linuxWebAppSlotAttributes) VirtualNetworkSubnetId() terra.StringValue {
-	return terra.ReferenceString(lwas.ref.Append("virtual_network_subnet_id"))
+	return terra.ReferenceAsString(lwas.ref.Append("virtual_network_subnet_id"))
 }
 
+// ZipDeployFile returns a reference to field zip_deploy_file of azurerm_linux_web_app_slot.
 func (lwas linuxWebAppSlotAttributes) ZipDeployFile() terra.StringValue {
-	return terra.ReferenceString(lwas.ref.Append("zip_deploy_file"))
+	return terra.ReferenceAsString(lwas.ref.Append("zip_deploy_file"))
 }
 
 func (lwas linuxWebAppSlotAttributes) SiteCredential() terra.ListValue[linuxwebappslot.SiteCredentialAttributes] {
-	return terra.ReferenceList[linuxwebappslot.SiteCredentialAttributes](lwas.ref.Append("site_credential"))
+	return terra.ReferenceAsList[linuxwebappslot.SiteCredentialAttributes](lwas.ref.Append("site_credential"))
 }
 
 func (lwas linuxWebAppSlotAttributes) AuthSettings() terra.ListValue[linuxwebappslot.AuthSettingsAttributes] {
-	return terra.ReferenceList[linuxwebappslot.AuthSettingsAttributes](lwas.ref.Append("auth_settings"))
+	return terra.ReferenceAsList[linuxwebappslot.AuthSettingsAttributes](lwas.ref.Append("auth_settings"))
 }
 
 func (lwas linuxWebAppSlotAttributes) AuthSettingsV2() terra.ListValue[linuxwebappslot.AuthSettingsV2Attributes] {
-	return terra.ReferenceList[linuxwebappslot.AuthSettingsV2Attributes](lwas.ref.Append("auth_settings_v2"))
+	return terra.ReferenceAsList[linuxwebappslot.AuthSettingsV2Attributes](lwas.ref.Append("auth_settings_v2"))
 }
 
 func (lwas linuxWebAppSlotAttributes) Backup() terra.ListValue[linuxwebappslot.BackupAttributes] {
-	return terra.ReferenceList[linuxwebappslot.BackupAttributes](lwas.ref.Append("backup"))
+	return terra.ReferenceAsList[linuxwebappslot.BackupAttributes](lwas.ref.Append("backup"))
 }
 
 func (lwas linuxWebAppSlotAttributes) ConnectionString() terra.SetValue[linuxwebappslot.ConnectionStringAttributes] {
-	return terra.ReferenceSet[linuxwebappslot.ConnectionStringAttributes](lwas.ref.Append("connection_string"))
+	return terra.ReferenceAsSet[linuxwebappslot.ConnectionStringAttributes](lwas.ref.Append("connection_string"))
 }
 
 func (lwas linuxWebAppSlotAttributes) Identity() terra.ListValue[linuxwebappslot.IdentityAttributes] {
-	return terra.ReferenceList[linuxwebappslot.IdentityAttributes](lwas.ref.Append("identity"))
+	return terra.ReferenceAsList[linuxwebappslot.IdentityAttributes](lwas.ref.Append("identity"))
 }
 
 func (lwas linuxWebAppSlotAttributes) Logs() terra.ListValue[linuxwebappslot.LogsAttributes] {
-	return terra.ReferenceList[linuxwebappslot.LogsAttributes](lwas.ref.Append("logs"))
+	return terra.ReferenceAsList[linuxwebappslot.LogsAttributes](lwas.ref.Append("logs"))
 }
 
 func (lwas linuxWebAppSlotAttributes) SiteConfig() terra.ListValue[linuxwebappslot.SiteConfigAttributes] {
-	return terra.ReferenceList[linuxwebappslot.SiteConfigAttributes](lwas.ref.Append("site_config"))
+	return terra.ReferenceAsList[linuxwebappslot.SiteConfigAttributes](lwas.ref.Append("site_config"))
 }
 
 func (lwas linuxWebAppSlotAttributes) StorageAccount() terra.SetValue[linuxwebappslot.StorageAccountAttributes] {
-	return terra.ReferenceSet[linuxwebappslot.StorageAccountAttributes](lwas.ref.Append("storage_account"))
+	return terra.ReferenceAsSet[linuxwebappslot.StorageAccountAttributes](lwas.ref.Append("storage_account"))
 }
 
 func (lwas linuxWebAppSlotAttributes) Timeouts() linuxwebappslot.TimeoutsAttributes {
-	return terra.ReferenceSingle[linuxwebappslot.TimeoutsAttributes](lwas.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[linuxwebappslot.TimeoutsAttributes](lwas.ref.Append("timeouts"))
 }
 
 type linuxWebAppSlotState struct {

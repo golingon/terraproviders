@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewComputeImageIamPolicy creates a new instance of [ComputeImageIamPolicy].
 func NewComputeImageIamPolicy(name string, args ComputeImageIamPolicyArgs) *ComputeImageIamPolicy {
 	return &ComputeImageIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewComputeImageIamPolicy(name string, args ComputeImageIamPolicyArgs) *Comp
 
 var _ terra.Resource = (*ComputeImageIamPolicy)(nil)
 
+// ComputeImageIamPolicy represents the Terraform resource google_compute_image_iam_policy.
 type ComputeImageIamPolicy struct {
-	Name  string
-	Args  ComputeImageIamPolicyArgs
-	state *computeImageIamPolicyState
+	Name      string
+	Args      ComputeImageIamPolicyArgs
+	state     *computeImageIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeImageIamPolicy].
 func (ciip *ComputeImageIamPolicy) Type() string {
 	return "google_compute_image_iam_policy"
 }
 
+// LocalName returns the local name for [ComputeImageIamPolicy].
 func (ciip *ComputeImageIamPolicy) LocalName() string {
 	return ciip.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeImageIamPolicy].
 func (ciip *ComputeImageIamPolicy) Configuration() interface{} {
 	return ciip.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeImageIamPolicy].
+func (ciip *ComputeImageIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(ciip)
+}
+
+// Dependencies returns the list of resources [ComputeImageIamPolicy] depends_on.
+func (ciip *ComputeImageIamPolicy) Dependencies() terra.Dependencies {
+	return ciip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeImageIamPolicy].
+func (ciip *ComputeImageIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return ciip.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeImageIamPolicy].
 func (ciip *ComputeImageIamPolicy) Attributes() computeImageIamPolicyAttributes {
 	return computeImageIamPolicyAttributes{ref: terra.ReferenceResource(ciip)}
 }
 
+// ImportState imports the given attribute values into [ComputeImageIamPolicy]'s state.
 func (ciip *ComputeImageIamPolicy) ImportState(av io.Reader) error {
 	ciip.state = &computeImageIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(ciip.state); err != nil {
@@ -48,10 +72,12 @@ func (ciip *ComputeImageIamPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeImageIamPolicy] has state.
 func (ciip *ComputeImageIamPolicy) State() (*computeImageIamPolicyState, bool) {
 	return ciip.state, ciip.state != nil
 }
 
+// StateMust returns the state for [ComputeImageIamPolicy]. Panics if the state is nil.
 func (ciip *ComputeImageIamPolicy) StateMust() *computeImageIamPolicyState {
 	if ciip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ciip.Type(), ciip.LocalName()))
@@ -59,10 +85,7 @@ func (ciip *ComputeImageIamPolicy) StateMust() *computeImageIamPolicyState {
 	return ciip.state
 }
 
-func (ciip *ComputeImageIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(ciip)
-}
-
+// ComputeImageIamPolicyArgs contains the configurations for google_compute_image_iam_policy.
 type ComputeImageIamPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -72,31 +95,34 @@ type ComputeImageIamPolicyArgs struct {
 	PolicyData terra.StringValue `hcl:"policy_data,attr" validate:"required"`
 	// Project: string, optional
 	Project terra.StringValue `hcl:"project,attr"`
-	// DependsOn contains resources that ComputeImageIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeImageIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_compute_image_iam_policy.
 func (ciip computeImageIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(ciip.ref.Append("etag"))
+	return terra.ReferenceAsString(ciip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_compute_image_iam_policy.
 func (ciip computeImageIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ciip.ref.Append("id"))
+	return terra.ReferenceAsString(ciip.ref.Append("id"))
 }
 
+// Image returns a reference to field image of google_compute_image_iam_policy.
 func (ciip computeImageIamPolicyAttributes) Image() terra.StringValue {
-	return terra.ReferenceString(ciip.ref.Append("image"))
+	return terra.ReferenceAsString(ciip.ref.Append("image"))
 }
 
+// PolicyData returns a reference to field policy_data of google_compute_image_iam_policy.
 func (ciip computeImageIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(ciip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(ciip.ref.Append("policy_data"))
 }
 
+// Project returns a reference to field project of google_compute_image_iam_policy.
 func (ciip computeImageIamPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ciip.ref.Append("project"))
+	return terra.ReferenceAsString(ciip.ref.Append("project"))
 }
 
 type computeImageIamPolicyState struct {

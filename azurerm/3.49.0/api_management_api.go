@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApiManagementApi creates a new instance of [ApiManagementApi].
 func NewApiManagementApi(name string, args ApiManagementApiArgs) *ApiManagementApi {
 	return &ApiManagementApi{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApiManagementApi(name string, args ApiManagementApiArgs) *ApiManagementA
 
 var _ terra.Resource = (*ApiManagementApi)(nil)
 
+// ApiManagementApi represents the Terraform resource azurerm_api_management_api.
 type ApiManagementApi struct {
-	Name  string
-	Args  ApiManagementApiArgs
-	state *apiManagementApiState
+	Name      string
+	Args      ApiManagementApiArgs
+	state     *apiManagementApiState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiManagementApi].
 func (ama *ApiManagementApi) Type() string {
 	return "azurerm_api_management_api"
 }
 
+// LocalName returns the local name for [ApiManagementApi].
 func (ama *ApiManagementApi) LocalName() string {
 	return ama.Name
 }
 
+// Configuration returns the configuration (args) for [ApiManagementApi].
 func (ama *ApiManagementApi) Configuration() interface{} {
 	return ama.Args
 }
 
+// DependOn is used for other resources to depend on [ApiManagementApi].
+func (ama *ApiManagementApi) DependOn() terra.Reference {
+	return terra.ReferenceResource(ama)
+}
+
+// Dependencies returns the list of resources [ApiManagementApi] depends_on.
+func (ama *ApiManagementApi) Dependencies() terra.Dependencies {
+	return ama.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiManagementApi].
+func (ama *ApiManagementApi) LifecycleManagement() *terra.Lifecycle {
+	return ama.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiManagementApi].
 func (ama *ApiManagementApi) Attributes() apiManagementApiAttributes {
 	return apiManagementApiAttributes{ref: terra.ReferenceResource(ama)}
 }
 
+// ImportState imports the given attribute values into [ApiManagementApi]'s state.
 func (ama *ApiManagementApi) ImportState(av io.Reader) error {
 	ama.state = &apiManagementApiState{}
 	if err := json.NewDecoder(av).Decode(ama.state); err != nil {
@@ -49,10 +73,12 @@ func (ama *ApiManagementApi) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiManagementApi] has state.
 func (ama *ApiManagementApi) State() (*apiManagementApiState, bool) {
 	return ama.state, ama.state != nil
 }
 
+// StateMust returns the state for [ApiManagementApi]. Panics if the state is nil.
 func (ama *ApiManagementApi) StateMust() *apiManagementApiState {
 	if ama.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ama.Type(), ama.LocalName()))
@@ -60,10 +86,7 @@ func (ama *ApiManagementApi) StateMust() *apiManagementApiState {
 	return ama.state
 }
 
-func (ama *ApiManagementApi) DependOn() terra.Reference {
-	return terra.ReferenceResource(ama)
-}
-
+// ApiManagementApiArgs contains the configurations for azurerm_api_management_api.
 type ApiManagementApiArgs struct {
 	// ApiManagementName: string, required
 	ApiManagementName terra.StringValue `hcl:"api_management_name,attr" validate:"required"`
@@ -117,123 +140,142 @@ type ApiManagementApiArgs struct {
 	SubscriptionKeyParameterNames *apimanagementapi.SubscriptionKeyParameterNames `hcl:"subscription_key_parameter_names,block"`
 	// Timeouts: optional
 	Timeouts *apimanagementapi.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ApiManagementApi depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiManagementApiAttributes struct {
 	ref terra.Reference
 }
 
+// ApiManagementName returns a reference to field api_management_name of azurerm_api_management_api.
 func (ama apiManagementApiAttributes) ApiManagementName() terra.StringValue {
-	return terra.ReferenceString(ama.ref.Append("api_management_name"))
+	return terra.ReferenceAsString(ama.ref.Append("api_management_name"))
 }
 
+// ApiType returns a reference to field api_type of azurerm_api_management_api.
 func (ama apiManagementApiAttributes) ApiType() terra.StringValue {
-	return terra.ReferenceString(ama.ref.Append("api_type"))
+	return terra.ReferenceAsString(ama.ref.Append("api_type"))
 }
 
+// Description returns a reference to field description of azurerm_api_management_api.
 func (ama apiManagementApiAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ama.ref.Append("description"))
+	return terra.ReferenceAsString(ama.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_api_management_api.
 func (ama apiManagementApiAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(ama.ref.Append("display_name"))
+	return terra.ReferenceAsString(ama.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of azurerm_api_management_api.
 func (ama apiManagementApiAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ama.ref.Append("id"))
+	return terra.ReferenceAsString(ama.ref.Append("id"))
 }
 
+// IsCurrent returns a reference to field is_current of azurerm_api_management_api.
 func (ama apiManagementApiAttributes) IsCurrent() terra.BoolValue {
-	return terra.ReferenceBool(ama.ref.Append("is_current"))
+	return terra.ReferenceAsBool(ama.ref.Append("is_current"))
 }
 
+// IsOnline returns a reference to field is_online of azurerm_api_management_api.
 func (ama apiManagementApiAttributes) IsOnline() terra.BoolValue {
-	return terra.ReferenceBool(ama.ref.Append("is_online"))
+	return terra.ReferenceAsBool(ama.ref.Append("is_online"))
 }
 
+// Name returns a reference to field name of azurerm_api_management_api.
 func (ama apiManagementApiAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ama.ref.Append("name"))
+	return terra.ReferenceAsString(ama.ref.Append("name"))
 }
 
+// Path returns a reference to field path of azurerm_api_management_api.
 func (ama apiManagementApiAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(ama.ref.Append("path"))
+	return terra.ReferenceAsString(ama.ref.Append("path"))
 }
 
+// Protocols returns a reference to field protocols of azurerm_api_management_api.
 func (ama apiManagementApiAttributes) Protocols() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ama.ref.Append("protocols"))
+	return terra.ReferenceAsSet[terra.StringValue](ama.ref.Append("protocols"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_api_management_api.
 func (ama apiManagementApiAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ama.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ama.ref.Append("resource_group_name"))
 }
 
+// Revision returns a reference to field revision of azurerm_api_management_api.
 func (ama apiManagementApiAttributes) Revision() terra.StringValue {
-	return terra.ReferenceString(ama.ref.Append("revision"))
+	return terra.ReferenceAsString(ama.ref.Append("revision"))
 }
 
+// RevisionDescription returns a reference to field revision_description of azurerm_api_management_api.
 func (ama apiManagementApiAttributes) RevisionDescription() terra.StringValue {
-	return terra.ReferenceString(ama.ref.Append("revision_description"))
+	return terra.ReferenceAsString(ama.ref.Append("revision_description"))
 }
 
+// ServiceUrl returns a reference to field service_url of azurerm_api_management_api.
 func (ama apiManagementApiAttributes) ServiceUrl() terra.StringValue {
-	return terra.ReferenceString(ama.ref.Append("service_url"))
+	return terra.ReferenceAsString(ama.ref.Append("service_url"))
 }
 
+// SoapPassThrough returns a reference to field soap_pass_through of azurerm_api_management_api.
 func (ama apiManagementApiAttributes) SoapPassThrough() terra.BoolValue {
-	return terra.ReferenceBool(ama.ref.Append("soap_pass_through"))
+	return terra.ReferenceAsBool(ama.ref.Append("soap_pass_through"))
 }
 
+// SourceApiId returns a reference to field source_api_id of azurerm_api_management_api.
 func (ama apiManagementApiAttributes) SourceApiId() terra.StringValue {
-	return terra.ReferenceString(ama.ref.Append("source_api_id"))
+	return terra.ReferenceAsString(ama.ref.Append("source_api_id"))
 }
 
+// SubscriptionRequired returns a reference to field subscription_required of azurerm_api_management_api.
 func (ama apiManagementApiAttributes) SubscriptionRequired() terra.BoolValue {
-	return terra.ReferenceBool(ama.ref.Append("subscription_required"))
+	return terra.ReferenceAsBool(ama.ref.Append("subscription_required"))
 }
 
+// TermsOfServiceUrl returns a reference to field terms_of_service_url of azurerm_api_management_api.
 func (ama apiManagementApiAttributes) TermsOfServiceUrl() terra.StringValue {
-	return terra.ReferenceString(ama.ref.Append("terms_of_service_url"))
+	return terra.ReferenceAsString(ama.ref.Append("terms_of_service_url"))
 }
 
+// Version returns a reference to field version of azurerm_api_management_api.
 func (ama apiManagementApiAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(ama.ref.Append("version"))
+	return terra.ReferenceAsString(ama.ref.Append("version"))
 }
 
+// VersionDescription returns a reference to field version_description of azurerm_api_management_api.
 func (ama apiManagementApiAttributes) VersionDescription() terra.StringValue {
-	return terra.ReferenceString(ama.ref.Append("version_description"))
+	return terra.ReferenceAsString(ama.ref.Append("version_description"))
 }
 
+// VersionSetId returns a reference to field version_set_id of azurerm_api_management_api.
 func (ama apiManagementApiAttributes) VersionSetId() terra.StringValue {
-	return terra.ReferenceString(ama.ref.Append("version_set_id"))
+	return terra.ReferenceAsString(ama.ref.Append("version_set_id"))
 }
 
 func (ama apiManagementApiAttributes) Contact() terra.ListValue[apimanagementapi.ContactAttributes] {
-	return terra.ReferenceList[apimanagementapi.ContactAttributes](ama.ref.Append("contact"))
+	return terra.ReferenceAsList[apimanagementapi.ContactAttributes](ama.ref.Append("contact"))
 }
 
 func (ama apiManagementApiAttributes) Import() terra.ListValue[apimanagementapi.ImportAttributes] {
-	return terra.ReferenceList[apimanagementapi.ImportAttributes](ama.ref.Append("import"))
+	return terra.ReferenceAsList[apimanagementapi.ImportAttributes](ama.ref.Append("import"))
 }
 
 func (ama apiManagementApiAttributes) License() terra.ListValue[apimanagementapi.LicenseAttributes] {
-	return terra.ReferenceList[apimanagementapi.LicenseAttributes](ama.ref.Append("license"))
+	return terra.ReferenceAsList[apimanagementapi.LicenseAttributes](ama.ref.Append("license"))
 }
 
 func (ama apiManagementApiAttributes) Oauth2Authorization() terra.ListValue[apimanagementapi.Oauth2AuthorizationAttributes] {
-	return terra.ReferenceList[apimanagementapi.Oauth2AuthorizationAttributes](ama.ref.Append("oauth2_authorization"))
+	return terra.ReferenceAsList[apimanagementapi.Oauth2AuthorizationAttributes](ama.ref.Append("oauth2_authorization"))
 }
 
 func (ama apiManagementApiAttributes) OpenidAuthentication() terra.ListValue[apimanagementapi.OpenidAuthenticationAttributes] {
-	return terra.ReferenceList[apimanagementapi.OpenidAuthenticationAttributes](ama.ref.Append("openid_authentication"))
+	return terra.ReferenceAsList[apimanagementapi.OpenidAuthenticationAttributes](ama.ref.Append("openid_authentication"))
 }
 
 func (ama apiManagementApiAttributes) SubscriptionKeyParameterNames() terra.ListValue[apimanagementapi.SubscriptionKeyParameterNamesAttributes] {
-	return terra.ReferenceList[apimanagementapi.SubscriptionKeyParameterNamesAttributes](ama.ref.Append("subscription_key_parameter_names"))
+	return terra.ReferenceAsList[apimanagementapi.SubscriptionKeyParameterNamesAttributes](ama.ref.Append("subscription_key_parameter_names"))
 }
 
 func (ama apiManagementApiAttributes) Timeouts() apimanagementapi.TimeoutsAttributes {
-	return terra.ReferenceSingle[apimanagementapi.TimeoutsAttributes](ama.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[apimanagementapi.TimeoutsAttributes](ama.ref.Append("timeouts"))
 }
 
 type apiManagementApiState struct {

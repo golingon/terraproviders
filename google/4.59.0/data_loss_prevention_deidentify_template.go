@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataLossPreventionDeidentifyTemplate creates a new instance of [DataLossPreventionDeidentifyTemplate].
 func NewDataLossPreventionDeidentifyTemplate(name string, args DataLossPreventionDeidentifyTemplateArgs) *DataLossPreventionDeidentifyTemplate {
 	return &DataLossPreventionDeidentifyTemplate{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataLossPreventionDeidentifyTemplate(name string, args DataLossPreventio
 
 var _ terra.Resource = (*DataLossPreventionDeidentifyTemplate)(nil)
 
+// DataLossPreventionDeidentifyTemplate represents the Terraform resource google_data_loss_prevention_deidentify_template.
 type DataLossPreventionDeidentifyTemplate struct {
-	Name  string
-	Args  DataLossPreventionDeidentifyTemplateArgs
-	state *dataLossPreventionDeidentifyTemplateState
+	Name      string
+	Args      DataLossPreventionDeidentifyTemplateArgs
+	state     *dataLossPreventionDeidentifyTemplateState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataLossPreventionDeidentifyTemplate].
 func (dlpdt *DataLossPreventionDeidentifyTemplate) Type() string {
 	return "google_data_loss_prevention_deidentify_template"
 }
 
+// LocalName returns the local name for [DataLossPreventionDeidentifyTemplate].
 func (dlpdt *DataLossPreventionDeidentifyTemplate) LocalName() string {
 	return dlpdt.Name
 }
 
+// Configuration returns the configuration (args) for [DataLossPreventionDeidentifyTemplate].
 func (dlpdt *DataLossPreventionDeidentifyTemplate) Configuration() interface{} {
 	return dlpdt.Args
 }
 
+// DependOn is used for other resources to depend on [DataLossPreventionDeidentifyTemplate].
+func (dlpdt *DataLossPreventionDeidentifyTemplate) DependOn() terra.Reference {
+	return terra.ReferenceResource(dlpdt)
+}
+
+// Dependencies returns the list of resources [DataLossPreventionDeidentifyTemplate] depends_on.
+func (dlpdt *DataLossPreventionDeidentifyTemplate) Dependencies() terra.Dependencies {
+	return dlpdt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataLossPreventionDeidentifyTemplate].
+func (dlpdt *DataLossPreventionDeidentifyTemplate) LifecycleManagement() *terra.Lifecycle {
+	return dlpdt.Lifecycle
+}
+
+// Attributes returns the attributes for [DataLossPreventionDeidentifyTemplate].
 func (dlpdt *DataLossPreventionDeidentifyTemplate) Attributes() dataLossPreventionDeidentifyTemplateAttributes {
 	return dataLossPreventionDeidentifyTemplateAttributes{ref: terra.ReferenceResource(dlpdt)}
 }
 
+// ImportState imports the given attribute values into [DataLossPreventionDeidentifyTemplate]'s state.
 func (dlpdt *DataLossPreventionDeidentifyTemplate) ImportState(av io.Reader) error {
 	dlpdt.state = &dataLossPreventionDeidentifyTemplateState{}
 	if err := json.NewDecoder(av).Decode(dlpdt.state); err != nil {
@@ -49,10 +73,12 @@ func (dlpdt *DataLossPreventionDeidentifyTemplate) ImportState(av io.Reader) err
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataLossPreventionDeidentifyTemplate] has state.
 func (dlpdt *DataLossPreventionDeidentifyTemplate) State() (*dataLossPreventionDeidentifyTemplateState, bool) {
 	return dlpdt.state, dlpdt.state != nil
 }
 
+// StateMust returns the state for [DataLossPreventionDeidentifyTemplate]. Panics if the state is nil.
 func (dlpdt *DataLossPreventionDeidentifyTemplate) StateMust() *dataLossPreventionDeidentifyTemplateState {
 	if dlpdt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dlpdt.Type(), dlpdt.LocalName()))
@@ -60,10 +86,7 @@ func (dlpdt *DataLossPreventionDeidentifyTemplate) StateMust() *dataLossPreventi
 	return dlpdt.state
 }
 
-func (dlpdt *DataLossPreventionDeidentifyTemplate) DependOn() terra.Reference {
-	return terra.ReferenceResource(dlpdt)
-}
-
+// DataLossPreventionDeidentifyTemplateArgs contains the configurations for google_data_loss_prevention_deidentify_template.
 type DataLossPreventionDeidentifyTemplateArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -77,39 +100,42 @@ type DataLossPreventionDeidentifyTemplateArgs struct {
 	DeidentifyConfig *datalosspreventiondeidentifytemplate.DeidentifyConfig `hcl:"deidentify_config,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *datalosspreventiondeidentifytemplate.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataLossPreventionDeidentifyTemplate depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataLossPreventionDeidentifyTemplateAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of google_data_loss_prevention_deidentify_template.
 func (dlpdt dataLossPreventionDeidentifyTemplateAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dlpdt.ref.Append("description"))
+	return terra.ReferenceAsString(dlpdt.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of google_data_loss_prevention_deidentify_template.
 func (dlpdt dataLossPreventionDeidentifyTemplateAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(dlpdt.ref.Append("display_name"))
+	return terra.ReferenceAsString(dlpdt.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of google_data_loss_prevention_deidentify_template.
 func (dlpdt dataLossPreventionDeidentifyTemplateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dlpdt.ref.Append("id"))
+	return terra.ReferenceAsString(dlpdt.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_data_loss_prevention_deidentify_template.
 func (dlpdt dataLossPreventionDeidentifyTemplateAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dlpdt.ref.Append("name"))
+	return terra.ReferenceAsString(dlpdt.ref.Append("name"))
 }
 
+// Parent returns a reference to field parent of google_data_loss_prevention_deidentify_template.
 func (dlpdt dataLossPreventionDeidentifyTemplateAttributes) Parent() terra.StringValue {
-	return terra.ReferenceString(dlpdt.ref.Append("parent"))
+	return terra.ReferenceAsString(dlpdt.ref.Append("parent"))
 }
 
 func (dlpdt dataLossPreventionDeidentifyTemplateAttributes) DeidentifyConfig() terra.ListValue[datalosspreventiondeidentifytemplate.DeidentifyConfigAttributes] {
-	return terra.ReferenceList[datalosspreventiondeidentifytemplate.DeidentifyConfigAttributes](dlpdt.ref.Append("deidentify_config"))
+	return terra.ReferenceAsList[datalosspreventiondeidentifytemplate.DeidentifyConfigAttributes](dlpdt.ref.Append("deidentify_config"))
 }
 
 func (dlpdt dataLossPreventionDeidentifyTemplateAttributes) Timeouts() datalosspreventiondeidentifytemplate.TimeoutsAttributes {
-	return terra.ReferenceSingle[datalosspreventiondeidentifytemplate.TimeoutsAttributes](dlpdt.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datalosspreventiondeidentifytemplate.TimeoutsAttributes](dlpdt.ref.Append("timeouts"))
 }
 
 type dataLossPreventionDeidentifyTemplateState struct {

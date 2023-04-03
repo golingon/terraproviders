@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewPrivatecaCaPoolIamBinding creates a new instance of [PrivatecaCaPoolIamBinding].
 func NewPrivatecaCaPoolIamBinding(name string, args PrivatecaCaPoolIamBindingArgs) *PrivatecaCaPoolIamBinding {
 	return &PrivatecaCaPoolIamBinding{
 		Args: args,
@@ -19,28 +20,51 @@ func NewPrivatecaCaPoolIamBinding(name string, args PrivatecaCaPoolIamBindingArg
 
 var _ terra.Resource = (*PrivatecaCaPoolIamBinding)(nil)
 
+// PrivatecaCaPoolIamBinding represents the Terraform resource google_privateca_ca_pool_iam_binding.
 type PrivatecaCaPoolIamBinding struct {
-	Name  string
-	Args  PrivatecaCaPoolIamBindingArgs
-	state *privatecaCaPoolIamBindingState
+	Name      string
+	Args      PrivatecaCaPoolIamBindingArgs
+	state     *privatecaCaPoolIamBindingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PrivatecaCaPoolIamBinding].
 func (pcpib *PrivatecaCaPoolIamBinding) Type() string {
 	return "google_privateca_ca_pool_iam_binding"
 }
 
+// LocalName returns the local name for [PrivatecaCaPoolIamBinding].
 func (pcpib *PrivatecaCaPoolIamBinding) LocalName() string {
 	return pcpib.Name
 }
 
+// Configuration returns the configuration (args) for [PrivatecaCaPoolIamBinding].
 func (pcpib *PrivatecaCaPoolIamBinding) Configuration() interface{} {
 	return pcpib.Args
 }
 
+// DependOn is used for other resources to depend on [PrivatecaCaPoolIamBinding].
+func (pcpib *PrivatecaCaPoolIamBinding) DependOn() terra.Reference {
+	return terra.ReferenceResource(pcpib)
+}
+
+// Dependencies returns the list of resources [PrivatecaCaPoolIamBinding] depends_on.
+func (pcpib *PrivatecaCaPoolIamBinding) Dependencies() terra.Dependencies {
+	return pcpib.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PrivatecaCaPoolIamBinding].
+func (pcpib *PrivatecaCaPoolIamBinding) LifecycleManagement() *terra.Lifecycle {
+	return pcpib.Lifecycle
+}
+
+// Attributes returns the attributes for [PrivatecaCaPoolIamBinding].
 func (pcpib *PrivatecaCaPoolIamBinding) Attributes() privatecaCaPoolIamBindingAttributes {
 	return privatecaCaPoolIamBindingAttributes{ref: terra.ReferenceResource(pcpib)}
 }
 
+// ImportState imports the given attribute values into [PrivatecaCaPoolIamBinding]'s state.
 func (pcpib *PrivatecaCaPoolIamBinding) ImportState(av io.Reader) error {
 	pcpib.state = &privatecaCaPoolIamBindingState{}
 	if err := json.NewDecoder(av).Decode(pcpib.state); err != nil {
@@ -49,10 +73,12 @@ func (pcpib *PrivatecaCaPoolIamBinding) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PrivatecaCaPoolIamBinding] has state.
 func (pcpib *PrivatecaCaPoolIamBinding) State() (*privatecaCaPoolIamBindingState, bool) {
 	return pcpib.state, pcpib.state != nil
 }
 
+// StateMust returns the state for [PrivatecaCaPoolIamBinding]. Panics if the state is nil.
 func (pcpib *PrivatecaCaPoolIamBinding) StateMust() *privatecaCaPoolIamBindingState {
 	if pcpib.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pcpib.Type(), pcpib.LocalName()))
@@ -60,10 +86,7 @@ func (pcpib *PrivatecaCaPoolIamBinding) StateMust() *privatecaCaPoolIamBindingSt
 	return pcpib.state
 }
 
-func (pcpib *PrivatecaCaPoolIamBinding) DependOn() terra.Reference {
-	return terra.ReferenceResource(pcpib)
-}
-
+// PrivatecaCaPoolIamBindingArgs contains the configurations for google_privateca_ca_pool_iam_binding.
 type PrivatecaCaPoolIamBindingArgs struct {
 	// CaPool: string, required
 	CaPool terra.StringValue `hcl:"ca_pool,attr" validate:"required"`
@@ -79,43 +102,48 @@ type PrivatecaCaPoolIamBindingArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *privatecacapooliambinding.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that PrivatecaCaPoolIamBinding depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type privatecaCaPoolIamBindingAttributes struct {
 	ref terra.Reference
 }
 
+// CaPool returns a reference to field ca_pool of google_privateca_ca_pool_iam_binding.
 func (pcpib privatecaCaPoolIamBindingAttributes) CaPool() terra.StringValue {
-	return terra.ReferenceString(pcpib.ref.Append("ca_pool"))
+	return terra.ReferenceAsString(pcpib.ref.Append("ca_pool"))
 }
 
+// Etag returns a reference to field etag of google_privateca_ca_pool_iam_binding.
 func (pcpib privatecaCaPoolIamBindingAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(pcpib.ref.Append("etag"))
+	return terra.ReferenceAsString(pcpib.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_privateca_ca_pool_iam_binding.
 func (pcpib privatecaCaPoolIamBindingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pcpib.ref.Append("id"))
+	return terra.ReferenceAsString(pcpib.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_privateca_ca_pool_iam_binding.
 func (pcpib privatecaCaPoolIamBindingAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(pcpib.ref.Append("location"))
+	return terra.ReferenceAsString(pcpib.ref.Append("location"))
 }
 
+// Members returns a reference to field members of google_privateca_ca_pool_iam_binding.
 func (pcpib privatecaCaPoolIamBindingAttributes) Members() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](pcpib.ref.Append("members"))
+	return terra.ReferenceAsSet[terra.StringValue](pcpib.ref.Append("members"))
 }
 
+// Project returns a reference to field project of google_privateca_ca_pool_iam_binding.
 func (pcpib privatecaCaPoolIamBindingAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(pcpib.ref.Append("project"))
+	return terra.ReferenceAsString(pcpib.ref.Append("project"))
 }
 
+// Role returns a reference to field role of google_privateca_ca_pool_iam_binding.
 func (pcpib privatecaCaPoolIamBindingAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(pcpib.ref.Append("role"))
+	return terra.ReferenceAsString(pcpib.ref.Append("role"))
 }
 
 func (pcpib privatecaCaPoolIamBindingAttributes) Condition() terra.ListValue[privatecacapooliambinding.ConditionAttributes] {
-	return terra.ReferenceList[privatecacapooliambinding.ConditionAttributes](pcpib.ref.Append("condition"))
+	return terra.ReferenceAsList[privatecacapooliambinding.ConditionAttributes](pcpib.ref.Append("condition"))
 }
 
 type privatecaCaPoolIamBindingState struct {

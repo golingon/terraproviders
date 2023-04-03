@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewStorageShareFile creates a new instance of [StorageShareFile].
 func NewStorageShareFile(name string, args StorageShareFileArgs) *StorageShareFile {
 	return &StorageShareFile{
 		Args: args,
@@ -19,28 +20,51 @@ func NewStorageShareFile(name string, args StorageShareFileArgs) *StorageShareFi
 
 var _ terra.Resource = (*StorageShareFile)(nil)
 
+// StorageShareFile represents the Terraform resource azurerm_storage_share_file.
 type StorageShareFile struct {
-	Name  string
-	Args  StorageShareFileArgs
-	state *storageShareFileState
+	Name      string
+	Args      StorageShareFileArgs
+	state     *storageShareFileState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [StorageShareFile].
 func (ssf *StorageShareFile) Type() string {
 	return "azurerm_storage_share_file"
 }
 
+// LocalName returns the local name for [StorageShareFile].
 func (ssf *StorageShareFile) LocalName() string {
 	return ssf.Name
 }
 
+// Configuration returns the configuration (args) for [StorageShareFile].
 func (ssf *StorageShareFile) Configuration() interface{} {
 	return ssf.Args
 }
 
+// DependOn is used for other resources to depend on [StorageShareFile].
+func (ssf *StorageShareFile) DependOn() terra.Reference {
+	return terra.ReferenceResource(ssf)
+}
+
+// Dependencies returns the list of resources [StorageShareFile] depends_on.
+func (ssf *StorageShareFile) Dependencies() terra.Dependencies {
+	return ssf.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [StorageShareFile].
+func (ssf *StorageShareFile) LifecycleManagement() *terra.Lifecycle {
+	return ssf.Lifecycle
+}
+
+// Attributes returns the attributes for [StorageShareFile].
 func (ssf *StorageShareFile) Attributes() storageShareFileAttributes {
 	return storageShareFileAttributes{ref: terra.ReferenceResource(ssf)}
 }
 
+// ImportState imports the given attribute values into [StorageShareFile]'s state.
 func (ssf *StorageShareFile) ImportState(av io.Reader) error {
 	ssf.state = &storageShareFileState{}
 	if err := json.NewDecoder(av).Decode(ssf.state); err != nil {
@@ -49,10 +73,12 @@ func (ssf *StorageShareFile) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [StorageShareFile] has state.
 func (ssf *StorageShareFile) State() (*storageShareFileState, bool) {
 	return ssf.state, ssf.state != nil
 }
 
+// StateMust returns the state for [StorageShareFile]. Panics if the state is nil.
 func (ssf *StorageShareFile) StateMust() *storageShareFileState {
 	if ssf.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ssf.Type(), ssf.LocalName()))
@@ -60,10 +86,7 @@ func (ssf *StorageShareFile) StateMust() *storageShareFileState {
 	return ssf.state
 }
 
-func (ssf *StorageShareFile) DependOn() terra.Reference {
-	return terra.ReferenceResource(ssf)
-}
-
+// StorageShareFileArgs contains the configurations for azurerm_storage_share_file.
 type StorageShareFileArgs struct {
 	// ContentDisposition: string, optional
 	ContentDisposition terra.StringValue `hcl:"content_disposition,attr"`
@@ -87,59 +110,68 @@ type StorageShareFileArgs struct {
 	StorageShareId terra.StringValue `hcl:"storage_share_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *storagesharefile.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that StorageShareFile depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type storageShareFileAttributes struct {
 	ref terra.Reference
 }
 
+// ContentDisposition returns a reference to field content_disposition of azurerm_storage_share_file.
 func (ssf storageShareFileAttributes) ContentDisposition() terra.StringValue {
-	return terra.ReferenceString(ssf.ref.Append("content_disposition"))
+	return terra.ReferenceAsString(ssf.ref.Append("content_disposition"))
 }
 
+// ContentEncoding returns a reference to field content_encoding of azurerm_storage_share_file.
 func (ssf storageShareFileAttributes) ContentEncoding() terra.StringValue {
-	return terra.ReferenceString(ssf.ref.Append("content_encoding"))
+	return terra.ReferenceAsString(ssf.ref.Append("content_encoding"))
 }
 
+// ContentLength returns a reference to field content_length of azurerm_storage_share_file.
 func (ssf storageShareFileAttributes) ContentLength() terra.NumberValue {
-	return terra.ReferenceNumber(ssf.ref.Append("content_length"))
+	return terra.ReferenceAsNumber(ssf.ref.Append("content_length"))
 }
 
+// ContentMd5 returns a reference to field content_md5 of azurerm_storage_share_file.
 func (ssf storageShareFileAttributes) ContentMd5() terra.StringValue {
-	return terra.ReferenceString(ssf.ref.Append("content_md5"))
+	return terra.ReferenceAsString(ssf.ref.Append("content_md5"))
 }
 
+// ContentType returns a reference to field content_type of azurerm_storage_share_file.
 func (ssf storageShareFileAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(ssf.ref.Append("content_type"))
+	return terra.ReferenceAsString(ssf.ref.Append("content_type"))
 }
 
+// Id returns a reference to field id of azurerm_storage_share_file.
 func (ssf storageShareFileAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ssf.ref.Append("id"))
+	return terra.ReferenceAsString(ssf.ref.Append("id"))
 }
 
+// Metadata returns a reference to field metadata of azurerm_storage_share_file.
 func (ssf storageShareFileAttributes) Metadata() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ssf.ref.Append("metadata"))
+	return terra.ReferenceAsMap[terra.StringValue](ssf.ref.Append("metadata"))
 }
 
+// Name returns a reference to field name of azurerm_storage_share_file.
 func (ssf storageShareFileAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ssf.ref.Append("name"))
+	return terra.ReferenceAsString(ssf.ref.Append("name"))
 }
 
+// Path returns a reference to field path of azurerm_storage_share_file.
 func (ssf storageShareFileAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(ssf.ref.Append("path"))
+	return terra.ReferenceAsString(ssf.ref.Append("path"))
 }
 
+// Source returns a reference to field source of azurerm_storage_share_file.
 func (ssf storageShareFileAttributes) Source() terra.StringValue {
-	return terra.ReferenceString(ssf.ref.Append("source"))
+	return terra.ReferenceAsString(ssf.ref.Append("source"))
 }
 
+// StorageShareId returns a reference to field storage_share_id of azurerm_storage_share_file.
 func (ssf storageShareFileAttributes) StorageShareId() terra.StringValue {
-	return terra.ReferenceString(ssf.ref.Append("storage_share_id"))
+	return terra.ReferenceAsString(ssf.ref.Append("storage_share_id"))
 }
 
 func (ssf storageShareFileAttributes) Timeouts() storagesharefile.TimeoutsAttributes {
-	return terra.ReferenceSingle[storagesharefile.TimeoutsAttributes](ssf.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[storagesharefile.TimeoutsAttributes](ssf.ref.Append("timeouts"))
 }
 
 type storageShareFileState struct {

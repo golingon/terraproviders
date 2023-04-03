@@ -30,68 +30,68 @@ type MachineConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (mc MachineConfigAttributes) InternalRef() terra.Reference {
-	return mc.ref
+func (mc MachineConfigAttributes) InternalRef() (terra.Reference, error) {
+	return mc.ref, nil
 }
 
 func (mc MachineConfigAttributes) InternalWithRef(ref terra.Reference) MachineConfigAttributes {
 	return MachineConfigAttributes{ref: ref}
 }
 
-func (mc MachineConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (mc MachineConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mc.ref.InternalTokens()
 }
 
 func (mc MachineConfigAttributes) CpuCount() terra.NumberValue {
-	return terra.ReferenceNumber(mc.ref.Append("cpu_count"))
+	return terra.ReferenceAsNumber(mc.ref.Append("cpu_count"))
 }
 
 type ReadPoolConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (rpc ReadPoolConfigAttributes) InternalRef() terra.Reference {
-	return rpc.ref
+func (rpc ReadPoolConfigAttributes) InternalRef() (terra.Reference, error) {
+	return rpc.ref, nil
 }
 
 func (rpc ReadPoolConfigAttributes) InternalWithRef(ref terra.Reference) ReadPoolConfigAttributes {
 	return ReadPoolConfigAttributes{ref: ref}
 }
 
-func (rpc ReadPoolConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (rpc ReadPoolConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rpc.ref.InternalTokens()
 }
 
 func (rpc ReadPoolConfigAttributes) NodeCount() terra.NumberValue {
-	return terra.ReferenceNumber(rpc.ref.Append("node_count"))
+	return terra.ReferenceAsNumber(rpc.ref.Append("node_count"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type MachineConfigState struct {

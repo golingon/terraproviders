@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeGlobalAddress creates a new instance of [ComputeGlobalAddress].
 func NewComputeGlobalAddress(name string, args ComputeGlobalAddressArgs) *ComputeGlobalAddress {
 	return &ComputeGlobalAddress{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeGlobalAddress(name string, args ComputeGlobalAddressArgs) *Comput
 
 var _ terra.Resource = (*ComputeGlobalAddress)(nil)
 
+// ComputeGlobalAddress represents the Terraform resource google_compute_global_address.
 type ComputeGlobalAddress struct {
-	Name  string
-	Args  ComputeGlobalAddressArgs
-	state *computeGlobalAddressState
+	Name      string
+	Args      ComputeGlobalAddressArgs
+	state     *computeGlobalAddressState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeGlobalAddress].
 func (cga *ComputeGlobalAddress) Type() string {
 	return "google_compute_global_address"
 }
 
+// LocalName returns the local name for [ComputeGlobalAddress].
 func (cga *ComputeGlobalAddress) LocalName() string {
 	return cga.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeGlobalAddress].
 func (cga *ComputeGlobalAddress) Configuration() interface{} {
 	return cga.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeGlobalAddress].
+func (cga *ComputeGlobalAddress) DependOn() terra.Reference {
+	return terra.ReferenceResource(cga)
+}
+
+// Dependencies returns the list of resources [ComputeGlobalAddress] depends_on.
+func (cga *ComputeGlobalAddress) Dependencies() terra.Dependencies {
+	return cga.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeGlobalAddress].
+func (cga *ComputeGlobalAddress) LifecycleManagement() *terra.Lifecycle {
+	return cga.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeGlobalAddress].
 func (cga *ComputeGlobalAddress) Attributes() computeGlobalAddressAttributes {
 	return computeGlobalAddressAttributes{ref: terra.ReferenceResource(cga)}
 }
 
+// ImportState imports the given attribute values into [ComputeGlobalAddress]'s state.
 func (cga *ComputeGlobalAddress) ImportState(av io.Reader) error {
 	cga.state = &computeGlobalAddressState{}
 	if err := json.NewDecoder(av).Decode(cga.state); err != nil {
@@ -49,10 +73,12 @@ func (cga *ComputeGlobalAddress) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeGlobalAddress] has state.
 func (cga *ComputeGlobalAddress) State() (*computeGlobalAddressState, bool) {
 	return cga.state, cga.state != nil
 }
 
+// StateMust returns the state for [ComputeGlobalAddress]. Panics if the state is nil.
 func (cga *ComputeGlobalAddress) StateMust() *computeGlobalAddressState {
 	if cga.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cga.Type(), cga.LocalName()))
@@ -60,10 +86,7 @@ func (cga *ComputeGlobalAddress) StateMust() *computeGlobalAddressState {
 	return cga.state
 }
 
-func (cga *ComputeGlobalAddress) DependOn() terra.Reference {
-	return terra.ReferenceResource(cga)
-}
-
+// ComputeGlobalAddressArgs contains the configurations for google_compute_global_address.
 type ComputeGlobalAddressArgs struct {
 	// Address: string, optional
 	Address terra.StringValue `hcl:"address,attr"`
@@ -87,63 +110,73 @@ type ComputeGlobalAddressArgs struct {
 	Purpose terra.StringValue `hcl:"purpose,attr"`
 	// Timeouts: optional
 	Timeouts *computeglobaladdress.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeGlobalAddress depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeGlobalAddressAttributes struct {
 	ref terra.Reference
 }
 
+// Address returns a reference to field address of google_compute_global_address.
 func (cga computeGlobalAddressAttributes) Address() terra.StringValue {
-	return terra.ReferenceString(cga.ref.Append("address"))
+	return terra.ReferenceAsString(cga.ref.Append("address"))
 }
 
+// AddressType returns a reference to field address_type of google_compute_global_address.
 func (cga computeGlobalAddressAttributes) AddressType() terra.StringValue {
-	return terra.ReferenceString(cga.ref.Append("address_type"))
+	return terra.ReferenceAsString(cga.ref.Append("address_type"))
 }
 
+// CreationTimestamp returns a reference to field creation_timestamp of google_compute_global_address.
 func (cga computeGlobalAddressAttributes) CreationTimestamp() terra.StringValue {
-	return terra.ReferenceString(cga.ref.Append("creation_timestamp"))
+	return terra.ReferenceAsString(cga.ref.Append("creation_timestamp"))
 }
 
+// Description returns a reference to field description of google_compute_global_address.
 func (cga computeGlobalAddressAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cga.ref.Append("description"))
+	return terra.ReferenceAsString(cga.ref.Append("description"))
 }
 
+// Id returns a reference to field id of google_compute_global_address.
 func (cga computeGlobalAddressAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cga.ref.Append("id"))
+	return terra.ReferenceAsString(cga.ref.Append("id"))
 }
 
+// IpVersion returns a reference to field ip_version of google_compute_global_address.
 func (cga computeGlobalAddressAttributes) IpVersion() terra.StringValue {
-	return terra.ReferenceString(cga.ref.Append("ip_version"))
+	return terra.ReferenceAsString(cga.ref.Append("ip_version"))
 }
 
+// Name returns a reference to field name of google_compute_global_address.
 func (cga computeGlobalAddressAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cga.ref.Append("name"))
+	return terra.ReferenceAsString(cga.ref.Append("name"))
 }
 
+// Network returns a reference to field network of google_compute_global_address.
 func (cga computeGlobalAddressAttributes) Network() terra.StringValue {
-	return terra.ReferenceString(cga.ref.Append("network"))
+	return terra.ReferenceAsString(cga.ref.Append("network"))
 }
 
+// PrefixLength returns a reference to field prefix_length of google_compute_global_address.
 func (cga computeGlobalAddressAttributes) PrefixLength() terra.NumberValue {
-	return terra.ReferenceNumber(cga.ref.Append("prefix_length"))
+	return terra.ReferenceAsNumber(cga.ref.Append("prefix_length"))
 }
 
+// Project returns a reference to field project of google_compute_global_address.
 func (cga computeGlobalAddressAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cga.ref.Append("project"))
+	return terra.ReferenceAsString(cga.ref.Append("project"))
 }
 
+// Purpose returns a reference to field purpose of google_compute_global_address.
 func (cga computeGlobalAddressAttributes) Purpose() terra.StringValue {
-	return terra.ReferenceString(cga.ref.Append("purpose"))
+	return terra.ReferenceAsString(cga.ref.Append("purpose"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_global_address.
 func (cga computeGlobalAddressAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(cga.ref.Append("self_link"))
+	return terra.ReferenceAsString(cga.ref.Append("self_link"))
 }
 
 func (cga computeGlobalAddressAttributes) Timeouts() computeglobaladdress.TimeoutsAttributes {
-	return terra.ReferenceSingle[computeglobaladdress.TimeoutsAttributes](cga.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computeglobaladdress.TimeoutsAttributes](cga.ref.Append("timeouts"))
 }
 
 type computeGlobalAddressState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBotChannelFacebook creates a new instance of [BotChannelFacebook].
 func NewBotChannelFacebook(name string, args BotChannelFacebookArgs) *BotChannelFacebook {
 	return &BotChannelFacebook{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBotChannelFacebook(name string, args BotChannelFacebookArgs) *BotChannel
 
 var _ terra.Resource = (*BotChannelFacebook)(nil)
 
+// BotChannelFacebook represents the Terraform resource azurerm_bot_channel_facebook.
 type BotChannelFacebook struct {
-	Name  string
-	Args  BotChannelFacebookArgs
-	state *botChannelFacebookState
+	Name      string
+	Args      BotChannelFacebookArgs
+	state     *botChannelFacebookState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BotChannelFacebook].
 func (bcf *BotChannelFacebook) Type() string {
 	return "azurerm_bot_channel_facebook"
 }
 
+// LocalName returns the local name for [BotChannelFacebook].
 func (bcf *BotChannelFacebook) LocalName() string {
 	return bcf.Name
 }
 
+// Configuration returns the configuration (args) for [BotChannelFacebook].
 func (bcf *BotChannelFacebook) Configuration() interface{} {
 	return bcf.Args
 }
 
+// DependOn is used for other resources to depend on [BotChannelFacebook].
+func (bcf *BotChannelFacebook) DependOn() terra.Reference {
+	return terra.ReferenceResource(bcf)
+}
+
+// Dependencies returns the list of resources [BotChannelFacebook] depends_on.
+func (bcf *BotChannelFacebook) Dependencies() terra.Dependencies {
+	return bcf.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BotChannelFacebook].
+func (bcf *BotChannelFacebook) LifecycleManagement() *terra.Lifecycle {
+	return bcf.Lifecycle
+}
+
+// Attributes returns the attributes for [BotChannelFacebook].
 func (bcf *BotChannelFacebook) Attributes() botChannelFacebookAttributes {
 	return botChannelFacebookAttributes{ref: terra.ReferenceResource(bcf)}
 }
 
+// ImportState imports the given attribute values into [BotChannelFacebook]'s state.
 func (bcf *BotChannelFacebook) ImportState(av io.Reader) error {
 	bcf.state = &botChannelFacebookState{}
 	if err := json.NewDecoder(av).Decode(bcf.state); err != nil {
@@ -49,10 +73,12 @@ func (bcf *BotChannelFacebook) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BotChannelFacebook] has state.
 func (bcf *BotChannelFacebook) State() (*botChannelFacebookState, bool) {
 	return bcf.state, bcf.state != nil
 }
 
+// StateMust returns the state for [BotChannelFacebook]. Panics if the state is nil.
 func (bcf *BotChannelFacebook) StateMust() *botChannelFacebookState {
 	if bcf.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bcf.Type(), bcf.LocalName()))
@@ -60,10 +86,7 @@ func (bcf *BotChannelFacebook) StateMust() *botChannelFacebookState {
 	return bcf.state
 }
 
-func (bcf *BotChannelFacebook) DependOn() terra.Reference {
-	return terra.ReferenceResource(bcf)
-}
-
+// BotChannelFacebookArgs contains the configurations for azurerm_bot_channel_facebook.
 type BotChannelFacebookArgs struct {
 	// BotName: string, required
 	BotName terra.StringValue `hcl:"bot_name,attr" validate:"required"`
@@ -81,43 +104,47 @@ type BotChannelFacebookArgs struct {
 	Page []botchannelfacebook.Page `hcl:"page,block" validate:"min=1"`
 	// Timeouts: optional
 	Timeouts *botchannelfacebook.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that BotChannelFacebook depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type botChannelFacebookAttributes struct {
 	ref terra.Reference
 }
 
+// BotName returns a reference to field bot_name of azurerm_bot_channel_facebook.
 func (bcf botChannelFacebookAttributes) BotName() terra.StringValue {
-	return terra.ReferenceString(bcf.ref.Append("bot_name"))
+	return terra.ReferenceAsString(bcf.ref.Append("bot_name"))
 }
 
+// FacebookApplicationId returns a reference to field facebook_application_id of azurerm_bot_channel_facebook.
 func (bcf botChannelFacebookAttributes) FacebookApplicationId() terra.StringValue {
-	return terra.ReferenceString(bcf.ref.Append("facebook_application_id"))
+	return terra.ReferenceAsString(bcf.ref.Append("facebook_application_id"))
 }
 
+// FacebookApplicationSecret returns a reference to field facebook_application_secret of azurerm_bot_channel_facebook.
 func (bcf botChannelFacebookAttributes) FacebookApplicationSecret() terra.StringValue {
-	return terra.ReferenceString(bcf.ref.Append("facebook_application_secret"))
+	return terra.ReferenceAsString(bcf.ref.Append("facebook_application_secret"))
 }
 
+// Id returns a reference to field id of azurerm_bot_channel_facebook.
 func (bcf botChannelFacebookAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bcf.ref.Append("id"))
+	return terra.ReferenceAsString(bcf.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_bot_channel_facebook.
 func (bcf botChannelFacebookAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(bcf.ref.Append("location"))
+	return terra.ReferenceAsString(bcf.ref.Append("location"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_bot_channel_facebook.
 func (bcf botChannelFacebookAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(bcf.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(bcf.ref.Append("resource_group_name"))
 }
 
 func (bcf botChannelFacebookAttributes) Page() terra.SetValue[botchannelfacebook.PageAttributes] {
-	return terra.ReferenceSet[botchannelfacebook.PageAttributes](bcf.ref.Append("page"))
+	return terra.ReferenceAsSet[botchannelfacebook.PageAttributes](bcf.ref.Append("page"))
 }
 
 func (bcf botChannelFacebookAttributes) Timeouts() botchannelfacebook.TimeoutsAttributes {
-	return terra.ReferenceSingle[botchannelfacebook.TimeoutsAttributes](bcf.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[botchannelfacebook.TimeoutsAttributes](bcf.ref.Append("timeouts"))
 }
 
 type botChannelFacebookState struct {

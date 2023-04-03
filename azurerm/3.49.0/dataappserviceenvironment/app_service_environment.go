@@ -18,44 +18,44 @@ type ClusterSettingAttributes struct {
 	ref terra.Reference
 }
 
-func (cs ClusterSettingAttributes) InternalRef() terra.Reference {
-	return cs.ref
+func (cs ClusterSettingAttributes) InternalRef() (terra.Reference, error) {
+	return cs.ref, nil
 }
 
 func (cs ClusterSettingAttributes) InternalWithRef(ref terra.Reference) ClusterSettingAttributes {
 	return ClusterSettingAttributes{ref: ref}
 }
 
-func (cs ClusterSettingAttributes) InternalTokens() hclwrite.Tokens {
+func (cs ClusterSettingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cs.ref.InternalTokens()
 }
 
 func (cs ClusterSettingAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("name"))
+	return terra.ReferenceAsString(cs.ref.Append("name"))
 }
 
 func (cs ClusterSettingAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("value"))
+	return terra.ReferenceAsString(cs.ref.Append("value"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type ClusterSettingState struct {

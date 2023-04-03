@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDatabricksWorkspace creates a new instance of [DatabricksWorkspace].
 func NewDatabricksWorkspace(name string, args DatabricksWorkspaceArgs) *DatabricksWorkspace {
 	return &DatabricksWorkspace{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDatabricksWorkspace(name string, args DatabricksWorkspaceArgs) *Databric
 
 var _ terra.Resource = (*DatabricksWorkspace)(nil)
 
+// DatabricksWorkspace represents the Terraform resource azurerm_databricks_workspace.
 type DatabricksWorkspace struct {
-	Name  string
-	Args  DatabricksWorkspaceArgs
-	state *databricksWorkspaceState
+	Name      string
+	Args      DatabricksWorkspaceArgs
+	state     *databricksWorkspaceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DatabricksWorkspace].
 func (dw *DatabricksWorkspace) Type() string {
 	return "azurerm_databricks_workspace"
 }
 
+// LocalName returns the local name for [DatabricksWorkspace].
 func (dw *DatabricksWorkspace) LocalName() string {
 	return dw.Name
 }
 
+// Configuration returns the configuration (args) for [DatabricksWorkspace].
 func (dw *DatabricksWorkspace) Configuration() interface{} {
 	return dw.Args
 }
 
+// DependOn is used for other resources to depend on [DatabricksWorkspace].
+func (dw *DatabricksWorkspace) DependOn() terra.Reference {
+	return terra.ReferenceResource(dw)
+}
+
+// Dependencies returns the list of resources [DatabricksWorkspace] depends_on.
+func (dw *DatabricksWorkspace) Dependencies() terra.Dependencies {
+	return dw.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DatabricksWorkspace].
+func (dw *DatabricksWorkspace) LifecycleManagement() *terra.Lifecycle {
+	return dw.Lifecycle
+}
+
+// Attributes returns the attributes for [DatabricksWorkspace].
 func (dw *DatabricksWorkspace) Attributes() databricksWorkspaceAttributes {
 	return databricksWorkspaceAttributes{ref: terra.ReferenceResource(dw)}
 }
 
+// ImportState imports the given attribute values into [DatabricksWorkspace]'s state.
 func (dw *DatabricksWorkspace) ImportState(av io.Reader) error {
 	dw.state = &databricksWorkspaceState{}
 	if err := json.NewDecoder(av).Decode(dw.state); err != nil {
@@ -49,10 +73,12 @@ func (dw *DatabricksWorkspace) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DatabricksWorkspace] has state.
 func (dw *DatabricksWorkspace) State() (*databricksWorkspaceState, bool) {
 	return dw.state, dw.state != nil
 }
 
+// StateMust returns the state for [DatabricksWorkspace]. Panics if the state is nil.
 func (dw *DatabricksWorkspace) StateMust() *databricksWorkspaceState {
 	if dw.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dw.Type(), dw.LocalName()))
@@ -60,10 +86,7 @@ func (dw *DatabricksWorkspace) StateMust() *databricksWorkspaceState {
 	return dw.state
 }
 
-func (dw *DatabricksWorkspace) DependOn() terra.Reference {
-	return terra.ReferenceResource(dw)
-}
-
+// DatabricksWorkspaceArgs contains the configurations for azurerm_databricks_workspace.
 type DatabricksWorkspaceArgs struct {
 	// CustomerManagedKeyEnabled: bool, optional
 	CustomerManagedKeyEnabled terra.BoolValue `hcl:"customer_managed_key_enabled,attr"`
@@ -103,103 +126,120 @@ type DatabricksWorkspaceArgs struct {
 	CustomParameters *databricksworkspace.CustomParameters `hcl:"custom_parameters,block"`
 	// Timeouts: optional
 	Timeouts *databricksworkspace.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DatabricksWorkspace depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type databricksWorkspaceAttributes struct {
 	ref terra.Reference
 }
 
+// CustomerManagedKeyEnabled returns a reference to field customer_managed_key_enabled of azurerm_databricks_workspace.
 func (dw databricksWorkspaceAttributes) CustomerManagedKeyEnabled() terra.BoolValue {
-	return terra.ReferenceBool(dw.ref.Append("customer_managed_key_enabled"))
+	return terra.ReferenceAsBool(dw.ref.Append("customer_managed_key_enabled"))
 }
 
+// DiskEncryptionSetId returns a reference to field disk_encryption_set_id of azurerm_databricks_workspace.
 func (dw databricksWorkspaceAttributes) DiskEncryptionSetId() terra.StringValue {
-	return terra.ReferenceString(dw.ref.Append("disk_encryption_set_id"))
+	return terra.ReferenceAsString(dw.ref.Append("disk_encryption_set_id"))
 }
 
+// Id returns a reference to field id of azurerm_databricks_workspace.
 func (dw databricksWorkspaceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dw.ref.Append("id"))
+	return terra.ReferenceAsString(dw.ref.Append("id"))
 }
 
+// InfrastructureEncryptionEnabled returns a reference to field infrastructure_encryption_enabled of azurerm_databricks_workspace.
 func (dw databricksWorkspaceAttributes) InfrastructureEncryptionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(dw.ref.Append("infrastructure_encryption_enabled"))
+	return terra.ReferenceAsBool(dw.ref.Append("infrastructure_encryption_enabled"))
 }
 
+// LoadBalancerBackendAddressPoolId returns a reference to field load_balancer_backend_address_pool_id of azurerm_databricks_workspace.
 func (dw databricksWorkspaceAttributes) LoadBalancerBackendAddressPoolId() terra.StringValue {
-	return terra.ReferenceString(dw.ref.Append("load_balancer_backend_address_pool_id"))
+	return terra.ReferenceAsString(dw.ref.Append("load_balancer_backend_address_pool_id"))
 }
 
+// Location returns a reference to field location of azurerm_databricks_workspace.
 func (dw databricksWorkspaceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(dw.ref.Append("location"))
+	return terra.ReferenceAsString(dw.ref.Append("location"))
 }
 
+// ManagedDiskCmkKeyVaultKeyId returns a reference to field managed_disk_cmk_key_vault_key_id of azurerm_databricks_workspace.
 func (dw databricksWorkspaceAttributes) ManagedDiskCmkKeyVaultKeyId() terra.StringValue {
-	return terra.ReferenceString(dw.ref.Append("managed_disk_cmk_key_vault_key_id"))
+	return terra.ReferenceAsString(dw.ref.Append("managed_disk_cmk_key_vault_key_id"))
 }
 
+// ManagedDiskCmkRotationToLatestVersionEnabled returns a reference to field managed_disk_cmk_rotation_to_latest_version_enabled of azurerm_databricks_workspace.
 func (dw databricksWorkspaceAttributes) ManagedDiskCmkRotationToLatestVersionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(dw.ref.Append("managed_disk_cmk_rotation_to_latest_version_enabled"))
+	return terra.ReferenceAsBool(dw.ref.Append("managed_disk_cmk_rotation_to_latest_version_enabled"))
 }
 
+// ManagedResourceGroupId returns a reference to field managed_resource_group_id of azurerm_databricks_workspace.
 func (dw databricksWorkspaceAttributes) ManagedResourceGroupId() terra.StringValue {
-	return terra.ReferenceString(dw.ref.Append("managed_resource_group_id"))
+	return terra.ReferenceAsString(dw.ref.Append("managed_resource_group_id"))
 }
 
+// ManagedResourceGroupName returns a reference to field managed_resource_group_name of azurerm_databricks_workspace.
 func (dw databricksWorkspaceAttributes) ManagedResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(dw.ref.Append("managed_resource_group_name"))
+	return terra.ReferenceAsString(dw.ref.Append("managed_resource_group_name"))
 }
 
+// ManagedServicesCmkKeyVaultKeyId returns a reference to field managed_services_cmk_key_vault_key_id of azurerm_databricks_workspace.
 func (dw databricksWorkspaceAttributes) ManagedServicesCmkKeyVaultKeyId() terra.StringValue {
-	return terra.ReferenceString(dw.ref.Append("managed_services_cmk_key_vault_key_id"))
+	return terra.ReferenceAsString(dw.ref.Append("managed_services_cmk_key_vault_key_id"))
 }
 
+// Name returns a reference to field name of azurerm_databricks_workspace.
 func (dw databricksWorkspaceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dw.ref.Append("name"))
+	return terra.ReferenceAsString(dw.ref.Append("name"))
 }
 
+// NetworkSecurityGroupRulesRequired returns a reference to field network_security_group_rules_required of azurerm_databricks_workspace.
 func (dw databricksWorkspaceAttributes) NetworkSecurityGroupRulesRequired() terra.StringValue {
-	return terra.ReferenceString(dw.ref.Append("network_security_group_rules_required"))
+	return terra.ReferenceAsString(dw.ref.Append("network_security_group_rules_required"))
 }
 
+// PublicNetworkAccessEnabled returns a reference to field public_network_access_enabled of azurerm_databricks_workspace.
 func (dw databricksWorkspaceAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(dw.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(dw.ref.Append("public_network_access_enabled"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_databricks_workspace.
 func (dw databricksWorkspaceAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(dw.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(dw.ref.Append("resource_group_name"))
 }
 
+// Sku returns a reference to field sku of azurerm_databricks_workspace.
 func (dw databricksWorkspaceAttributes) Sku() terra.StringValue {
-	return terra.ReferenceString(dw.ref.Append("sku"))
+	return terra.ReferenceAsString(dw.ref.Append("sku"))
 }
 
+// Tags returns a reference to field tags of azurerm_databricks_workspace.
 func (dw databricksWorkspaceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dw.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dw.ref.Append("tags"))
 }
 
+// WorkspaceId returns a reference to field workspace_id of azurerm_databricks_workspace.
 func (dw databricksWorkspaceAttributes) WorkspaceId() terra.StringValue {
-	return terra.ReferenceString(dw.ref.Append("workspace_id"))
+	return terra.ReferenceAsString(dw.ref.Append("workspace_id"))
 }
 
+// WorkspaceUrl returns a reference to field workspace_url of azurerm_databricks_workspace.
 func (dw databricksWorkspaceAttributes) WorkspaceUrl() terra.StringValue {
-	return terra.ReferenceString(dw.ref.Append("workspace_url"))
+	return terra.ReferenceAsString(dw.ref.Append("workspace_url"))
 }
 
 func (dw databricksWorkspaceAttributes) ManagedDiskIdentity() terra.ListValue[databricksworkspace.ManagedDiskIdentityAttributes] {
-	return terra.ReferenceList[databricksworkspace.ManagedDiskIdentityAttributes](dw.ref.Append("managed_disk_identity"))
+	return terra.ReferenceAsList[databricksworkspace.ManagedDiskIdentityAttributes](dw.ref.Append("managed_disk_identity"))
 }
 
 func (dw databricksWorkspaceAttributes) StorageAccountIdentity() terra.ListValue[databricksworkspace.StorageAccountIdentityAttributes] {
-	return terra.ReferenceList[databricksworkspace.StorageAccountIdentityAttributes](dw.ref.Append("storage_account_identity"))
+	return terra.ReferenceAsList[databricksworkspace.StorageAccountIdentityAttributes](dw.ref.Append("storage_account_identity"))
 }
 
 func (dw databricksWorkspaceAttributes) CustomParameters() terra.ListValue[databricksworkspace.CustomParametersAttributes] {
-	return terra.ReferenceList[databricksworkspace.CustomParametersAttributes](dw.ref.Append("custom_parameters"))
+	return terra.ReferenceAsList[databricksworkspace.CustomParametersAttributes](dw.ref.Append("custom_parameters"))
 }
 
 func (dw databricksWorkspaceAttributes) Timeouts() databricksworkspace.TimeoutsAttributes {
-	return terra.ReferenceSingle[databricksworkspace.TimeoutsAttributes](dw.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[databricksworkspace.TimeoutsAttributes](dw.ref.Append("timeouts"))
 }
 
 type databricksWorkspaceState struct {

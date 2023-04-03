@@ -25,48 +25,48 @@ type TelemetryAttributes struct {
 	ref terra.Reference
 }
 
-func (t TelemetryAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TelemetryAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TelemetryAttributes) InternalWithRef(ref terra.Reference) TelemetryAttributes {
 	return TelemetryAttributes{ref: ref}
 }
 
-func (t TelemetryAttributes) InternalTokens() hclwrite.Tokens {
+func (t TelemetryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TelemetryAttributes) ResourceName() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("resource_name"))
+	return terra.ReferenceAsString(t.ref.Append("resource_name"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type TelemetryState struct {

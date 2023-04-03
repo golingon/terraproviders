@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFactoryTriggerBlobEvent creates a new instance of [DataFactoryTriggerBlobEvent].
 func NewDataFactoryTriggerBlobEvent(name string, args DataFactoryTriggerBlobEventArgs) *DataFactoryTriggerBlobEvent {
 	return &DataFactoryTriggerBlobEvent{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFactoryTriggerBlobEvent(name string, args DataFactoryTriggerBlobEven
 
 var _ terra.Resource = (*DataFactoryTriggerBlobEvent)(nil)
 
+// DataFactoryTriggerBlobEvent represents the Terraform resource azurerm_data_factory_trigger_blob_event.
 type DataFactoryTriggerBlobEvent struct {
-	Name  string
-	Args  DataFactoryTriggerBlobEventArgs
-	state *dataFactoryTriggerBlobEventState
+	Name      string
+	Args      DataFactoryTriggerBlobEventArgs
+	state     *dataFactoryTriggerBlobEventState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFactoryTriggerBlobEvent].
 func (dftbe *DataFactoryTriggerBlobEvent) Type() string {
 	return "azurerm_data_factory_trigger_blob_event"
 }
 
+// LocalName returns the local name for [DataFactoryTriggerBlobEvent].
 func (dftbe *DataFactoryTriggerBlobEvent) LocalName() string {
 	return dftbe.Name
 }
 
+// Configuration returns the configuration (args) for [DataFactoryTriggerBlobEvent].
 func (dftbe *DataFactoryTriggerBlobEvent) Configuration() interface{} {
 	return dftbe.Args
 }
 
+// DependOn is used for other resources to depend on [DataFactoryTriggerBlobEvent].
+func (dftbe *DataFactoryTriggerBlobEvent) DependOn() terra.Reference {
+	return terra.ReferenceResource(dftbe)
+}
+
+// Dependencies returns the list of resources [DataFactoryTriggerBlobEvent] depends_on.
+func (dftbe *DataFactoryTriggerBlobEvent) Dependencies() terra.Dependencies {
+	return dftbe.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFactoryTriggerBlobEvent].
+func (dftbe *DataFactoryTriggerBlobEvent) LifecycleManagement() *terra.Lifecycle {
+	return dftbe.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFactoryTriggerBlobEvent].
 func (dftbe *DataFactoryTriggerBlobEvent) Attributes() dataFactoryTriggerBlobEventAttributes {
 	return dataFactoryTriggerBlobEventAttributes{ref: terra.ReferenceResource(dftbe)}
 }
 
+// ImportState imports the given attribute values into [DataFactoryTriggerBlobEvent]'s state.
 func (dftbe *DataFactoryTriggerBlobEvent) ImportState(av io.Reader) error {
 	dftbe.state = &dataFactoryTriggerBlobEventState{}
 	if err := json.NewDecoder(av).Decode(dftbe.state); err != nil {
@@ -49,10 +73,12 @@ func (dftbe *DataFactoryTriggerBlobEvent) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFactoryTriggerBlobEvent] has state.
 func (dftbe *DataFactoryTriggerBlobEvent) State() (*dataFactoryTriggerBlobEventState, bool) {
 	return dftbe.state, dftbe.state != nil
 }
 
+// StateMust returns the state for [DataFactoryTriggerBlobEvent]. Panics if the state is nil.
 func (dftbe *DataFactoryTriggerBlobEvent) StateMust() *dataFactoryTriggerBlobEventState {
 	if dftbe.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dftbe.Type(), dftbe.LocalName()))
@@ -60,10 +86,7 @@ func (dftbe *DataFactoryTriggerBlobEvent) StateMust() *dataFactoryTriggerBlobEve
 	return dftbe.state
 }
 
-func (dftbe *DataFactoryTriggerBlobEvent) DependOn() terra.Reference {
-	return terra.ReferenceResource(dftbe)
-}
-
+// DataFactoryTriggerBlobEventArgs contains the configurations for azurerm_data_factory_trigger_blob_event.
 type DataFactoryTriggerBlobEventArgs struct {
 	// Activated: bool, optional
 	Activated terra.BoolValue `hcl:"activated,attr"`
@@ -93,67 +116,77 @@ type DataFactoryTriggerBlobEventArgs struct {
 	Pipeline []datafactorytriggerblobevent.Pipeline `hcl:"pipeline,block" validate:"min=1"`
 	// Timeouts: optional
 	Timeouts *datafactorytriggerblobevent.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataFactoryTriggerBlobEvent depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFactoryTriggerBlobEventAttributes struct {
 	ref terra.Reference
 }
 
+// Activated returns a reference to field activated of azurerm_data_factory_trigger_blob_event.
 func (dftbe dataFactoryTriggerBlobEventAttributes) Activated() terra.BoolValue {
-	return terra.ReferenceBool(dftbe.ref.Append("activated"))
+	return terra.ReferenceAsBool(dftbe.ref.Append("activated"))
 }
 
+// AdditionalProperties returns a reference to field additional_properties of azurerm_data_factory_trigger_blob_event.
 func (dftbe dataFactoryTriggerBlobEventAttributes) AdditionalProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dftbe.ref.Append("additional_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](dftbe.ref.Append("additional_properties"))
 }
 
+// Annotations returns a reference to field annotations of azurerm_data_factory_trigger_blob_event.
 func (dftbe dataFactoryTriggerBlobEventAttributes) Annotations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dftbe.ref.Append("annotations"))
+	return terra.ReferenceAsList[terra.StringValue](dftbe.ref.Append("annotations"))
 }
 
+// BlobPathBeginsWith returns a reference to field blob_path_begins_with of azurerm_data_factory_trigger_blob_event.
 func (dftbe dataFactoryTriggerBlobEventAttributes) BlobPathBeginsWith() terra.StringValue {
-	return terra.ReferenceString(dftbe.ref.Append("blob_path_begins_with"))
+	return terra.ReferenceAsString(dftbe.ref.Append("blob_path_begins_with"))
 }
 
+// BlobPathEndsWith returns a reference to field blob_path_ends_with of azurerm_data_factory_trigger_blob_event.
 func (dftbe dataFactoryTriggerBlobEventAttributes) BlobPathEndsWith() terra.StringValue {
-	return terra.ReferenceString(dftbe.ref.Append("blob_path_ends_with"))
+	return terra.ReferenceAsString(dftbe.ref.Append("blob_path_ends_with"))
 }
 
+// DataFactoryId returns a reference to field data_factory_id of azurerm_data_factory_trigger_blob_event.
 func (dftbe dataFactoryTriggerBlobEventAttributes) DataFactoryId() terra.StringValue {
-	return terra.ReferenceString(dftbe.ref.Append("data_factory_id"))
+	return terra.ReferenceAsString(dftbe.ref.Append("data_factory_id"))
 }
 
+// Description returns a reference to field description of azurerm_data_factory_trigger_blob_event.
 func (dftbe dataFactoryTriggerBlobEventAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dftbe.ref.Append("description"))
+	return terra.ReferenceAsString(dftbe.ref.Append("description"))
 }
 
+// Events returns a reference to field events of azurerm_data_factory_trigger_blob_event.
 func (dftbe dataFactoryTriggerBlobEventAttributes) Events() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dftbe.ref.Append("events"))
+	return terra.ReferenceAsSet[terra.StringValue](dftbe.ref.Append("events"))
 }
 
+// Id returns a reference to field id of azurerm_data_factory_trigger_blob_event.
 func (dftbe dataFactoryTriggerBlobEventAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dftbe.ref.Append("id"))
+	return terra.ReferenceAsString(dftbe.ref.Append("id"))
 }
 
+// IgnoreEmptyBlobs returns a reference to field ignore_empty_blobs of azurerm_data_factory_trigger_blob_event.
 func (dftbe dataFactoryTriggerBlobEventAttributes) IgnoreEmptyBlobs() terra.BoolValue {
-	return terra.ReferenceBool(dftbe.ref.Append("ignore_empty_blobs"))
+	return terra.ReferenceAsBool(dftbe.ref.Append("ignore_empty_blobs"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory_trigger_blob_event.
 func (dftbe dataFactoryTriggerBlobEventAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dftbe.ref.Append("name"))
+	return terra.ReferenceAsString(dftbe.ref.Append("name"))
 }
 
+// StorageAccountId returns a reference to field storage_account_id of azurerm_data_factory_trigger_blob_event.
 func (dftbe dataFactoryTriggerBlobEventAttributes) StorageAccountId() terra.StringValue {
-	return terra.ReferenceString(dftbe.ref.Append("storage_account_id"))
+	return terra.ReferenceAsString(dftbe.ref.Append("storage_account_id"))
 }
 
 func (dftbe dataFactoryTriggerBlobEventAttributes) Pipeline() terra.SetValue[datafactorytriggerblobevent.PipelineAttributes] {
-	return terra.ReferenceSet[datafactorytriggerblobevent.PipelineAttributes](dftbe.ref.Append("pipeline"))
+	return terra.ReferenceAsSet[datafactorytriggerblobevent.PipelineAttributes](dftbe.ref.Append("pipeline"))
 }
 
 func (dftbe dataFactoryTriggerBlobEventAttributes) Timeouts() datafactorytriggerblobevent.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafactorytriggerblobevent.TimeoutsAttributes](dftbe.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafactorytriggerblobevent.TimeoutsAttributes](dftbe.ref.Append("timeouts"))
 }
 
 type dataFactoryTriggerBlobEventState struct {

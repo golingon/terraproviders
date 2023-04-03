@@ -35,7 +35,7 @@ func (ti TargetIpAttributes) InternalWithRef(ref terra.Reference) TargetIpAttrib
 	return TargetIpAttributes{ref: ref}
 }
 
-func (ti TargetIpAttributes) InternalTokens() hclwrite.Tokens {
+func (ti TargetIpAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ti.ref.InternalTokens()
 }
 
@@ -59,7 +59,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

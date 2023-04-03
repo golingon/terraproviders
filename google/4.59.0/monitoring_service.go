@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMonitoringService creates a new instance of [MonitoringService].
 func NewMonitoringService(name string, args MonitoringServiceArgs) *MonitoringService {
 	return &MonitoringService{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMonitoringService(name string, args MonitoringServiceArgs) *MonitoringSe
 
 var _ terra.Resource = (*MonitoringService)(nil)
 
+// MonitoringService represents the Terraform resource google_monitoring_service.
 type MonitoringService struct {
-	Name  string
-	Args  MonitoringServiceArgs
-	state *monitoringServiceState
+	Name      string
+	Args      MonitoringServiceArgs
+	state     *monitoringServiceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MonitoringService].
 func (ms *MonitoringService) Type() string {
 	return "google_monitoring_service"
 }
 
+// LocalName returns the local name for [MonitoringService].
 func (ms *MonitoringService) LocalName() string {
 	return ms.Name
 }
 
+// Configuration returns the configuration (args) for [MonitoringService].
 func (ms *MonitoringService) Configuration() interface{} {
 	return ms.Args
 }
 
+// DependOn is used for other resources to depend on [MonitoringService].
+func (ms *MonitoringService) DependOn() terra.Reference {
+	return terra.ReferenceResource(ms)
+}
+
+// Dependencies returns the list of resources [MonitoringService] depends_on.
+func (ms *MonitoringService) Dependencies() terra.Dependencies {
+	return ms.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MonitoringService].
+func (ms *MonitoringService) LifecycleManagement() *terra.Lifecycle {
+	return ms.Lifecycle
+}
+
+// Attributes returns the attributes for [MonitoringService].
 func (ms *MonitoringService) Attributes() monitoringServiceAttributes {
 	return monitoringServiceAttributes{ref: terra.ReferenceResource(ms)}
 }
 
+// ImportState imports the given attribute values into [MonitoringService]'s state.
 func (ms *MonitoringService) ImportState(av io.Reader) error {
 	ms.state = &monitoringServiceState{}
 	if err := json.NewDecoder(av).Decode(ms.state); err != nil {
@@ -49,10 +73,12 @@ func (ms *MonitoringService) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MonitoringService] has state.
 func (ms *MonitoringService) State() (*monitoringServiceState, bool) {
 	return ms.state, ms.state != nil
 }
 
+// StateMust returns the state for [MonitoringService]. Panics if the state is nil.
 func (ms *MonitoringService) StateMust() *monitoringServiceState {
 	if ms.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ms.Type(), ms.LocalName()))
@@ -60,10 +86,7 @@ func (ms *MonitoringService) StateMust() *monitoringServiceState {
 	return ms.state
 }
 
-func (ms *MonitoringService) DependOn() terra.Reference {
-	return terra.ReferenceResource(ms)
-}
-
+// MonitoringServiceArgs contains the configurations for google_monitoring_service.
 type MonitoringServiceArgs struct {
 	// DisplayName: string, optional
 	DisplayName terra.StringValue `hcl:"display_name,attr"`
@@ -81,47 +104,51 @@ type MonitoringServiceArgs struct {
 	BasicService *monitoringservice.BasicService `hcl:"basic_service,block"`
 	// Timeouts: optional
 	Timeouts *monitoringservice.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MonitoringService depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type monitoringServiceAttributes struct {
 	ref terra.Reference
 }
 
+// DisplayName returns a reference to field display_name of google_monitoring_service.
 func (ms monitoringServiceAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("display_name"))
+	return terra.ReferenceAsString(ms.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of google_monitoring_service.
 func (ms monitoringServiceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("id"))
+	return terra.ReferenceAsString(ms.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_monitoring_service.
 func (ms monitoringServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("name"))
+	return terra.ReferenceAsString(ms.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_monitoring_service.
 func (ms monitoringServiceAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("project"))
+	return terra.ReferenceAsString(ms.ref.Append("project"))
 }
 
+// ServiceId returns a reference to field service_id of google_monitoring_service.
 func (ms monitoringServiceAttributes) ServiceId() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("service_id"))
+	return terra.ReferenceAsString(ms.ref.Append("service_id"))
 }
 
+// UserLabels returns a reference to field user_labels of google_monitoring_service.
 func (ms monitoringServiceAttributes) UserLabels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ms.ref.Append("user_labels"))
+	return terra.ReferenceAsMap[terra.StringValue](ms.ref.Append("user_labels"))
 }
 
 func (ms monitoringServiceAttributes) Telemetry() terra.ListValue[monitoringservice.TelemetryAttributes] {
-	return terra.ReferenceList[monitoringservice.TelemetryAttributes](ms.ref.Append("telemetry"))
+	return terra.ReferenceAsList[monitoringservice.TelemetryAttributes](ms.ref.Append("telemetry"))
 }
 
 func (ms monitoringServiceAttributes) BasicService() terra.ListValue[monitoringservice.BasicServiceAttributes] {
-	return terra.ReferenceList[monitoringservice.BasicServiceAttributes](ms.ref.Append("basic_service"))
+	return terra.ReferenceAsList[monitoringservice.BasicServiceAttributes](ms.ref.Append("basic_service"))
 }
 
 func (ms monitoringServiceAttributes) Timeouts() monitoringservice.TimeoutsAttributes {
-	return terra.ReferenceSingle[monitoringservice.TimeoutsAttributes](ms.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[monitoringservice.TimeoutsAttributes](ms.ref.Append("timeouts"))
 }
 
 type monitoringServiceState struct {

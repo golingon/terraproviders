@@ -28,7 +28,7 @@ func (al AccessLogsAttributes) InternalWithRef(ref terra.Reference) AccessLogsAt
 	return AccessLogsAttributes{ref: ref}
 }
 
-func (al AccessLogsAttributes) InternalTokens() hclwrite.Tokens {
+func (al AccessLogsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return al.ref.InternalTokens()
 }
 
@@ -56,7 +56,7 @@ func (sm SubnetMappingAttributes) InternalWithRef(ref terra.Reference) SubnetMap
 	return SubnetMappingAttributes{ref: ref}
 }
 
-func (sm SubnetMappingAttributes) InternalTokens() hclwrite.Tokens {
+func (sm SubnetMappingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sm.ref.InternalTokens()
 }
 
@@ -92,7 +92,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

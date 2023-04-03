@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataAppServicePlan creates a new instance of [DataAppServicePlan].
 func NewDataAppServicePlan(name string, args DataAppServicePlanArgs) *DataAppServicePlan {
 	return &DataAppServicePlan{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataAppServicePlan(name string, args DataAppServicePlanArgs) *DataAppSer
 
 var _ terra.DataResource = (*DataAppServicePlan)(nil)
 
+// DataAppServicePlan represents the Terraform data resource azurerm_app_service_plan.
 type DataAppServicePlan struct {
 	Name string
 	Args DataAppServicePlanArgs
 }
 
+// DataSource returns the Terraform object type for [DataAppServicePlan].
 func (asp *DataAppServicePlan) DataSource() string {
 	return "azurerm_app_service_plan"
 }
 
+// LocalName returns the local name for [DataAppServicePlan].
 func (asp *DataAppServicePlan) LocalName() string {
 	return asp.Name
 }
 
+// Configuration returns the configuration (args) for [DataAppServicePlan].
 func (asp *DataAppServicePlan) Configuration() interface{} {
 	return asp.Args
 }
 
+// Attributes returns the attributes for [DataAppServicePlan].
 func (asp *DataAppServicePlan) Attributes() dataAppServicePlanAttributes {
 	return dataAppServicePlanAttributes{ref: terra.ReferenceDataResource(asp)}
 }
 
+// DataAppServicePlanArgs contains the configurations for azurerm_app_service_plan.
 type DataAppServicePlanArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,62 +60,75 @@ type dataAppServicePlanAttributes struct {
 	ref terra.Reference
 }
 
+// AppServiceEnvironmentId returns a reference to field app_service_environment_id of azurerm_app_service_plan.
 func (asp dataAppServicePlanAttributes) AppServiceEnvironmentId() terra.StringValue {
-	return terra.ReferenceString(asp.ref.Append("app_service_environment_id"))
+	return terra.ReferenceAsString(asp.ref.Append("app_service_environment_id"))
 }
 
+// Id returns a reference to field id of azurerm_app_service_plan.
 func (asp dataAppServicePlanAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(asp.ref.Append("id"))
+	return terra.ReferenceAsString(asp.ref.Append("id"))
 }
 
+// IsXenon returns a reference to field is_xenon of azurerm_app_service_plan.
 func (asp dataAppServicePlanAttributes) IsXenon() terra.BoolValue {
-	return terra.ReferenceBool(asp.ref.Append("is_xenon"))
+	return terra.ReferenceAsBool(asp.ref.Append("is_xenon"))
 }
 
+// Kind returns a reference to field kind of azurerm_app_service_plan.
 func (asp dataAppServicePlanAttributes) Kind() terra.StringValue {
-	return terra.ReferenceString(asp.ref.Append("kind"))
+	return terra.ReferenceAsString(asp.ref.Append("kind"))
 }
 
+// Location returns a reference to field location of azurerm_app_service_plan.
 func (asp dataAppServicePlanAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(asp.ref.Append("location"))
+	return terra.ReferenceAsString(asp.ref.Append("location"))
 }
 
+// MaximumElasticWorkerCount returns a reference to field maximum_elastic_worker_count of azurerm_app_service_plan.
 func (asp dataAppServicePlanAttributes) MaximumElasticWorkerCount() terra.NumberValue {
-	return terra.ReferenceNumber(asp.ref.Append("maximum_elastic_worker_count"))
+	return terra.ReferenceAsNumber(asp.ref.Append("maximum_elastic_worker_count"))
 }
 
+// MaximumNumberOfWorkers returns a reference to field maximum_number_of_workers of azurerm_app_service_plan.
 func (asp dataAppServicePlanAttributes) MaximumNumberOfWorkers() terra.NumberValue {
-	return terra.ReferenceNumber(asp.ref.Append("maximum_number_of_workers"))
+	return terra.ReferenceAsNumber(asp.ref.Append("maximum_number_of_workers"))
 }
 
+// Name returns a reference to field name of azurerm_app_service_plan.
 func (asp dataAppServicePlanAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(asp.ref.Append("name"))
+	return terra.ReferenceAsString(asp.ref.Append("name"))
 }
 
+// PerSiteScaling returns a reference to field per_site_scaling of azurerm_app_service_plan.
 func (asp dataAppServicePlanAttributes) PerSiteScaling() terra.BoolValue {
-	return terra.ReferenceBool(asp.ref.Append("per_site_scaling"))
+	return terra.ReferenceAsBool(asp.ref.Append("per_site_scaling"))
 }
 
+// Reserved returns a reference to field reserved of azurerm_app_service_plan.
 func (asp dataAppServicePlanAttributes) Reserved() terra.BoolValue {
-	return terra.ReferenceBool(asp.ref.Append("reserved"))
+	return terra.ReferenceAsBool(asp.ref.Append("reserved"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_app_service_plan.
 func (asp dataAppServicePlanAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(asp.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(asp.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_app_service_plan.
 func (asp dataAppServicePlanAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](asp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](asp.ref.Append("tags"))
 }
 
+// ZoneRedundant returns a reference to field zone_redundant of azurerm_app_service_plan.
 func (asp dataAppServicePlanAttributes) ZoneRedundant() terra.BoolValue {
-	return terra.ReferenceBool(asp.ref.Append("zone_redundant"))
+	return terra.ReferenceAsBool(asp.ref.Append("zone_redundant"))
 }
 
 func (asp dataAppServicePlanAttributes) Sku() terra.ListValue[dataappserviceplan.SkuAttributes] {
-	return terra.ReferenceList[dataappserviceplan.SkuAttributes](asp.ref.Append("sku"))
+	return terra.ReferenceAsList[dataappserviceplan.SkuAttributes](asp.ref.Append("sku"))
 }
 
 func (asp dataAppServicePlanAttributes) Timeouts() dataappserviceplan.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataappserviceplan.TimeoutsAttributes](asp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataappserviceplan.TimeoutsAttributes](asp.ref.Append("timeouts"))
 }

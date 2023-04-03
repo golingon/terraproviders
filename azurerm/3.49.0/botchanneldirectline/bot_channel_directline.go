@@ -37,84 +37,84 @@ type SiteAttributes struct {
 	ref terra.Reference
 }
 
-func (s SiteAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SiteAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SiteAttributes) InternalWithRef(ref terra.Reference) SiteAttributes {
 	return SiteAttributes{ref: ref}
 }
 
-func (s SiteAttributes) InternalTokens() hclwrite.Tokens {
+func (s SiteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SiteAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("enabled"))
+	return terra.ReferenceAsBool(s.ref.Append("enabled"))
 }
 
 func (s SiteAttributes) EnhancedAuthenticationEnabled() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("enhanced_authentication_enabled"))
+	return terra.ReferenceAsBool(s.ref.Append("enhanced_authentication_enabled"))
 }
 
 func (s SiteAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("id"))
+	return terra.ReferenceAsString(s.ref.Append("id"))
 }
 
 func (s SiteAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("key"))
+	return terra.ReferenceAsString(s.ref.Append("key"))
 }
 
 func (s SiteAttributes) Key2() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("key2"))
+	return terra.ReferenceAsString(s.ref.Append("key2"))
 }
 
 func (s SiteAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 func (s SiteAttributes) TrustedOrigins() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("trusted_origins"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("trusted_origins"))
 }
 
 func (s SiteAttributes) V1Allowed() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("v1_allowed"))
+	return terra.ReferenceAsBool(s.ref.Append("v1_allowed"))
 }
 
 func (s SiteAttributes) V3Allowed() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("v3_allowed"))
+	return terra.ReferenceAsBool(s.ref.Append("v3_allowed"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type SiteState struct {

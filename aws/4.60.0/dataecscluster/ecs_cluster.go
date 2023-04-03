@@ -23,7 +23,7 @@ func (scd ServiceConnectDefaultsAttributes) InternalWithRef(ref terra.Reference)
 	return ServiceConnectDefaultsAttributes{ref: ref}
 }
 
-func (scd ServiceConnectDefaultsAttributes) InternalTokens() hclwrite.Tokens {
+func (scd ServiceConnectDefaultsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return scd.ref.InternalTokens()
 }
 
@@ -43,7 +43,7 @@ func (s SettingAttributes) InternalWithRef(ref terra.Reference) SettingAttribute
 	return SettingAttributes{ref: ref}
 }
 
-func (s SettingAttributes) InternalTokens() hclwrite.Tokens {
+func (s SettingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 

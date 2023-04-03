@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewStreamAnalyticsStreamInputEventhub creates a new instance of [StreamAnalyticsStreamInputEventhub].
 func NewStreamAnalyticsStreamInputEventhub(name string, args StreamAnalyticsStreamInputEventhubArgs) *StreamAnalyticsStreamInputEventhub {
 	return &StreamAnalyticsStreamInputEventhub{
 		Args: args,
@@ -19,28 +20,51 @@ func NewStreamAnalyticsStreamInputEventhub(name string, args StreamAnalyticsStre
 
 var _ terra.Resource = (*StreamAnalyticsStreamInputEventhub)(nil)
 
+// StreamAnalyticsStreamInputEventhub represents the Terraform resource azurerm_stream_analytics_stream_input_eventhub.
 type StreamAnalyticsStreamInputEventhub struct {
-	Name  string
-	Args  StreamAnalyticsStreamInputEventhubArgs
-	state *streamAnalyticsStreamInputEventhubState
+	Name      string
+	Args      StreamAnalyticsStreamInputEventhubArgs
+	state     *streamAnalyticsStreamInputEventhubState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [StreamAnalyticsStreamInputEventhub].
 func (sasie *StreamAnalyticsStreamInputEventhub) Type() string {
 	return "azurerm_stream_analytics_stream_input_eventhub"
 }
 
+// LocalName returns the local name for [StreamAnalyticsStreamInputEventhub].
 func (sasie *StreamAnalyticsStreamInputEventhub) LocalName() string {
 	return sasie.Name
 }
 
+// Configuration returns the configuration (args) for [StreamAnalyticsStreamInputEventhub].
 func (sasie *StreamAnalyticsStreamInputEventhub) Configuration() interface{} {
 	return sasie.Args
 }
 
+// DependOn is used for other resources to depend on [StreamAnalyticsStreamInputEventhub].
+func (sasie *StreamAnalyticsStreamInputEventhub) DependOn() terra.Reference {
+	return terra.ReferenceResource(sasie)
+}
+
+// Dependencies returns the list of resources [StreamAnalyticsStreamInputEventhub] depends_on.
+func (sasie *StreamAnalyticsStreamInputEventhub) Dependencies() terra.Dependencies {
+	return sasie.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [StreamAnalyticsStreamInputEventhub].
+func (sasie *StreamAnalyticsStreamInputEventhub) LifecycleManagement() *terra.Lifecycle {
+	return sasie.Lifecycle
+}
+
+// Attributes returns the attributes for [StreamAnalyticsStreamInputEventhub].
 func (sasie *StreamAnalyticsStreamInputEventhub) Attributes() streamAnalyticsStreamInputEventhubAttributes {
 	return streamAnalyticsStreamInputEventhubAttributes{ref: terra.ReferenceResource(sasie)}
 }
 
+// ImportState imports the given attribute values into [StreamAnalyticsStreamInputEventhub]'s state.
 func (sasie *StreamAnalyticsStreamInputEventhub) ImportState(av io.Reader) error {
 	sasie.state = &streamAnalyticsStreamInputEventhubState{}
 	if err := json.NewDecoder(av).Decode(sasie.state); err != nil {
@@ -49,10 +73,12 @@ func (sasie *StreamAnalyticsStreamInputEventhub) ImportState(av io.Reader) error
 	return nil
 }
 
+// State returns the state and a bool indicating if [StreamAnalyticsStreamInputEventhub] has state.
 func (sasie *StreamAnalyticsStreamInputEventhub) State() (*streamAnalyticsStreamInputEventhubState, bool) {
 	return sasie.state, sasie.state != nil
 }
 
+// StateMust returns the state for [StreamAnalyticsStreamInputEventhub]. Panics if the state is nil.
 func (sasie *StreamAnalyticsStreamInputEventhub) StateMust() *streamAnalyticsStreamInputEventhubState {
 	if sasie.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sasie.Type(), sasie.LocalName()))
@@ -60,10 +86,7 @@ func (sasie *StreamAnalyticsStreamInputEventhub) StateMust() *streamAnalyticsStr
 	return sasie.state
 }
 
-func (sasie *StreamAnalyticsStreamInputEventhub) DependOn() terra.Reference {
-	return terra.ReferenceResource(sasie)
-}
-
+// StreamAnalyticsStreamInputEventhubArgs contains the configurations for azurerm_stream_analytics_stream_input_eventhub.
 type StreamAnalyticsStreamInputEventhubArgs struct {
 	// AuthenticationMode: string, optional
 	AuthenticationMode terra.StringValue `hcl:"authentication_mode,attr"`
@@ -91,63 +114,72 @@ type StreamAnalyticsStreamInputEventhubArgs struct {
 	Serialization *streamanalyticsstreaminputeventhub.Serialization `hcl:"serialization,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *streamanalyticsstreaminputeventhub.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that StreamAnalyticsStreamInputEventhub depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type streamAnalyticsStreamInputEventhubAttributes struct {
 	ref terra.Reference
 }
 
+// AuthenticationMode returns a reference to field authentication_mode of azurerm_stream_analytics_stream_input_eventhub.
 func (sasie streamAnalyticsStreamInputEventhubAttributes) AuthenticationMode() terra.StringValue {
-	return terra.ReferenceString(sasie.ref.Append("authentication_mode"))
+	return terra.ReferenceAsString(sasie.ref.Append("authentication_mode"))
 }
 
+// EventhubConsumerGroupName returns a reference to field eventhub_consumer_group_name of azurerm_stream_analytics_stream_input_eventhub.
 func (sasie streamAnalyticsStreamInputEventhubAttributes) EventhubConsumerGroupName() terra.StringValue {
-	return terra.ReferenceString(sasie.ref.Append("eventhub_consumer_group_name"))
+	return terra.ReferenceAsString(sasie.ref.Append("eventhub_consumer_group_name"))
 }
 
+// EventhubName returns a reference to field eventhub_name of azurerm_stream_analytics_stream_input_eventhub.
 func (sasie streamAnalyticsStreamInputEventhubAttributes) EventhubName() terra.StringValue {
-	return terra.ReferenceString(sasie.ref.Append("eventhub_name"))
+	return terra.ReferenceAsString(sasie.ref.Append("eventhub_name"))
 }
 
+// Id returns a reference to field id of azurerm_stream_analytics_stream_input_eventhub.
 func (sasie streamAnalyticsStreamInputEventhubAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sasie.ref.Append("id"))
+	return terra.ReferenceAsString(sasie.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_stream_analytics_stream_input_eventhub.
 func (sasie streamAnalyticsStreamInputEventhubAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sasie.ref.Append("name"))
+	return terra.ReferenceAsString(sasie.ref.Append("name"))
 }
 
+// PartitionKey returns a reference to field partition_key of azurerm_stream_analytics_stream_input_eventhub.
 func (sasie streamAnalyticsStreamInputEventhubAttributes) PartitionKey() terra.StringValue {
-	return terra.ReferenceString(sasie.ref.Append("partition_key"))
+	return terra.ReferenceAsString(sasie.ref.Append("partition_key"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_stream_analytics_stream_input_eventhub.
 func (sasie streamAnalyticsStreamInputEventhubAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(sasie.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(sasie.ref.Append("resource_group_name"))
 }
 
+// ServicebusNamespace returns a reference to field servicebus_namespace of azurerm_stream_analytics_stream_input_eventhub.
 func (sasie streamAnalyticsStreamInputEventhubAttributes) ServicebusNamespace() terra.StringValue {
-	return terra.ReferenceString(sasie.ref.Append("servicebus_namespace"))
+	return terra.ReferenceAsString(sasie.ref.Append("servicebus_namespace"))
 }
 
+// SharedAccessPolicyKey returns a reference to field shared_access_policy_key of azurerm_stream_analytics_stream_input_eventhub.
 func (sasie streamAnalyticsStreamInputEventhubAttributes) SharedAccessPolicyKey() terra.StringValue {
-	return terra.ReferenceString(sasie.ref.Append("shared_access_policy_key"))
+	return terra.ReferenceAsString(sasie.ref.Append("shared_access_policy_key"))
 }
 
+// SharedAccessPolicyName returns a reference to field shared_access_policy_name of azurerm_stream_analytics_stream_input_eventhub.
 func (sasie streamAnalyticsStreamInputEventhubAttributes) SharedAccessPolicyName() terra.StringValue {
-	return terra.ReferenceString(sasie.ref.Append("shared_access_policy_name"))
+	return terra.ReferenceAsString(sasie.ref.Append("shared_access_policy_name"))
 }
 
+// StreamAnalyticsJobName returns a reference to field stream_analytics_job_name of azurerm_stream_analytics_stream_input_eventhub.
 func (sasie streamAnalyticsStreamInputEventhubAttributes) StreamAnalyticsJobName() terra.StringValue {
-	return terra.ReferenceString(sasie.ref.Append("stream_analytics_job_name"))
+	return terra.ReferenceAsString(sasie.ref.Append("stream_analytics_job_name"))
 }
 
 func (sasie streamAnalyticsStreamInputEventhubAttributes) Serialization() terra.ListValue[streamanalyticsstreaminputeventhub.SerializationAttributes] {
-	return terra.ReferenceList[streamanalyticsstreaminputeventhub.SerializationAttributes](sasie.ref.Append("serialization"))
+	return terra.ReferenceAsList[streamanalyticsstreaminputeventhub.SerializationAttributes](sasie.ref.Append("serialization"))
 }
 
 func (sasie streamAnalyticsStreamInputEventhubAttributes) Timeouts() streamanalyticsstreaminputeventhub.TimeoutsAttributes {
-	return terra.ReferenceSingle[streamanalyticsstreaminputeventhub.TimeoutsAttributes](sasie.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[streamanalyticsstreaminputeventhub.TimeoutsAttributes](sasie.ref.Append("timeouts"))
 }
 
 type streamAnalyticsStreamInputEventhubState struct {

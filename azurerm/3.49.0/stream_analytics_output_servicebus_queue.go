@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewStreamAnalyticsOutputServicebusQueue creates a new instance of [StreamAnalyticsOutputServicebusQueue].
 func NewStreamAnalyticsOutputServicebusQueue(name string, args StreamAnalyticsOutputServicebusQueueArgs) *StreamAnalyticsOutputServicebusQueue {
 	return &StreamAnalyticsOutputServicebusQueue{
 		Args: args,
@@ -19,28 +20,51 @@ func NewStreamAnalyticsOutputServicebusQueue(name string, args StreamAnalyticsOu
 
 var _ terra.Resource = (*StreamAnalyticsOutputServicebusQueue)(nil)
 
+// StreamAnalyticsOutputServicebusQueue represents the Terraform resource azurerm_stream_analytics_output_servicebus_queue.
 type StreamAnalyticsOutputServicebusQueue struct {
-	Name  string
-	Args  StreamAnalyticsOutputServicebusQueueArgs
-	state *streamAnalyticsOutputServicebusQueueState
+	Name      string
+	Args      StreamAnalyticsOutputServicebusQueueArgs
+	state     *streamAnalyticsOutputServicebusQueueState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [StreamAnalyticsOutputServicebusQueue].
 func (saosq *StreamAnalyticsOutputServicebusQueue) Type() string {
 	return "azurerm_stream_analytics_output_servicebus_queue"
 }
 
+// LocalName returns the local name for [StreamAnalyticsOutputServicebusQueue].
 func (saosq *StreamAnalyticsOutputServicebusQueue) LocalName() string {
 	return saosq.Name
 }
 
+// Configuration returns the configuration (args) for [StreamAnalyticsOutputServicebusQueue].
 func (saosq *StreamAnalyticsOutputServicebusQueue) Configuration() interface{} {
 	return saosq.Args
 }
 
+// DependOn is used for other resources to depend on [StreamAnalyticsOutputServicebusQueue].
+func (saosq *StreamAnalyticsOutputServicebusQueue) DependOn() terra.Reference {
+	return terra.ReferenceResource(saosq)
+}
+
+// Dependencies returns the list of resources [StreamAnalyticsOutputServicebusQueue] depends_on.
+func (saosq *StreamAnalyticsOutputServicebusQueue) Dependencies() terra.Dependencies {
+	return saosq.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [StreamAnalyticsOutputServicebusQueue].
+func (saosq *StreamAnalyticsOutputServicebusQueue) LifecycleManagement() *terra.Lifecycle {
+	return saosq.Lifecycle
+}
+
+// Attributes returns the attributes for [StreamAnalyticsOutputServicebusQueue].
 func (saosq *StreamAnalyticsOutputServicebusQueue) Attributes() streamAnalyticsOutputServicebusQueueAttributes {
 	return streamAnalyticsOutputServicebusQueueAttributes{ref: terra.ReferenceResource(saosq)}
 }
 
+// ImportState imports the given attribute values into [StreamAnalyticsOutputServicebusQueue]'s state.
 func (saosq *StreamAnalyticsOutputServicebusQueue) ImportState(av io.Reader) error {
 	saosq.state = &streamAnalyticsOutputServicebusQueueState{}
 	if err := json.NewDecoder(av).Decode(saosq.state); err != nil {
@@ -49,10 +73,12 @@ func (saosq *StreamAnalyticsOutputServicebusQueue) ImportState(av io.Reader) err
 	return nil
 }
 
+// State returns the state and a bool indicating if [StreamAnalyticsOutputServicebusQueue] has state.
 func (saosq *StreamAnalyticsOutputServicebusQueue) State() (*streamAnalyticsOutputServicebusQueueState, bool) {
 	return saosq.state, saosq.state != nil
 }
 
+// StateMust returns the state for [StreamAnalyticsOutputServicebusQueue]. Panics if the state is nil.
 func (saosq *StreamAnalyticsOutputServicebusQueue) StateMust() *streamAnalyticsOutputServicebusQueueState {
 	if saosq.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", saosq.Type(), saosq.LocalName()))
@@ -60,10 +86,7 @@ func (saosq *StreamAnalyticsOutputServicebusQueue) StateMust() *streamAnalyticsO
 	return saosq.state
 }
 
-func (saosq *StreamAnalyticsOutputServicebusQueue) DependOn() terra.Reference {
-	return terra.ReferenceResource(saosq)
-}
-
+// StreamAnalyticsOutputServicebusQueueArgs contains the configurations for azurerm_stream_analytics_output_servicebus_queue.
 type StreamAnalyticsOutputServicebusQueueArgs struct {
 	// AuthenticationMode: string, optional
 	AuthenticationMode terra.StringValue `hcl:"authentication_mode,attr"`
@@ -91,63 +114,72 @@ type StreamAnalyticsOutputServicebusQueueArgs struct {
 	Serialization *streamanalyticsoutputservicebusqueue.Serialization `hcl:"serialization,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *streamanalyticsoutputservicebusqueue.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that StreamAnalyticsOutputServicebusQueue depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type streamAnalyticsOutputServicebusQueueAttributes struct {
 	ref terra.Reference
 }
 
+// AuthenticationMode returns a reference to field authentication_mode of azurerm_stream_analytics_output_servicebus_queue.
 func (saosq streamAnalyticsOutputServicebusQueueAttributes) AuthenticationMode() terra.StringValue {
-	return terra.ReferenceString(saosq.ref.Append("authentication_mode"))
+	return terra.ReferenceAsString(saosq.ref.Append("authentication_mode"))
 }
 
+// Id returns a reference to field id of azurerm_stream_analytics_output_servicebus_queue.
 func (saosq streamAnalyticsOutputServicebusQueueAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(saosq.ref.Append("id"))
+	return terra.ReferenceAsString(saosq.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_stream_analytics_output_servicebus_queue.
 func (saosq streamAnalyticsOutputServicebusQueueAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(saosq.ref.Append("name"))
+	return terra.ReferenceAsString(saosq.ref.Append("name"))
 }
 
+// PropertyColumns returns a reference to field property_columns of azurerm_stream_analytics_output_servicebus_queue.
 func (saosq streamAnalyticsOutputServicebusQueueAttributes) PropertyColumns() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](saosq.ref.Append("property_columns"))
+	return terra.ReferenceAsList[terra.StringValue](saosq.ref.Append("property_columns"))
 }
 
+// QueueName returns a reference to field queue_name of azurerm_stream_analytics_output_servicebus_queue.
 func (saosq streamAnalyticsOutputServicebusQueueAttributes) QueueName() terra.StringValue {
-	return terra.ReferenceString(saosq.ref.Append("queue_name"))
+	return terra.ReferenceAsString(saosq.ref.Append("queue_name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_stream_analytics_output_servicebus_queue.
 func (saosq streamAnalyticsOutputServicebusQueueAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(saosq.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(saosq.ref.Append("resource_group_name"))
 }
 
+// ServicebusNamespace returns a reference to field servicebus_namespace of azurerm_stream_analytics_output_servicebus_queue.
 func (saosq streamAnalyticsOutputServicebusQueueAttributes) ServicebusNamespace() terra.StringValue {
-	return terra.ReferenceString(saosq.ref.Append("servicebus_namespace"))
+	return terra.ReferenceAsString(saosq.ref.Append("servicebus_namespace"))
 }
 
+// SharedAccessPolicyKey returns a reference to field shared_access_policy_key of azurerm_stream_analytics_output_servicebus_queue.
 func (saosq streamAnalyticsOutputServicebusQueueAttributes) SharedAccessPolicyKey() terra.StringValue {
-	return terra.ReferenceString(saosq.ref.Append("shared_access_policy_key"))
+	return terra.ReferenceAsString(saosq.ref.Append("shared_access_policy_key"))
 }
 
+// SharedAccessPolicyName returns a reference to field shared_access_policy_name of azurerm_stream_analytics_output_servicebus_queue.
 func (saosq streamAnalyticsOutputServicebusQueueAttributes) SharedAccessPolicyName() terra.StringValue {
-	return terra.ReferenceString(saosq.ref.Append("shared_access_policy_name"))
+	return terra.ReferenceAsString(saosq.ref.Append("shared_access_policy_name"))
 }
 
+// StreamAnalyticsJobName returns a reference to field stream_analytics_job_name of azurerm_stream_analytics_output_servicebus_queue.
 func (saosq streamAnalyticsOutputServicebusQueueAttributes) StreamAnalyticsJobName() terra.StringValue {
-	return terra.ReferenceString(saosq.ref.Append("stream_analytics_job_name"))
+	return terra.ReferenceAsString(saosq.ref.Append("stream_analytics_job_name"))
 }
 
+// SystemPropertyColumns returns a reference to field system_property_columns of azurerm_stream_analytics_output_servicebus_queue.
 func (saosq streamAnalyticsOutputServicebusQueueAttributes) SystemPropertyColumns() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](saosq.ref.Append("system_property_columns"))
+	return terra.ReferenceAsMap[terra.StringValue](saosq.ref.Append("system_property_columns"))
 }
 
 func (saosq streamAnalyticsOutputServicebusQueueAttributes) Serialization() terra.ListValue[streamanalyticsoutputservicebusqueue.SerializationAttributes] {
-	return terra.ReferenceList[streamanalyticsoutputservicebusqueue.SerializationAttributes](saosq.ref.Append("serialization"))
+	return terra.ReferenceAsList[streamanalyticsoutputservicebusqueue.SerializationAttributes](saosq.ref.Append("serialization"))
 }
 
 func (saosq streamAnalyticsOutputServicebusQueueAttributes) Timeouts() streamanalyticsoutputservicebusqueue.TimeoutsAttributes {
-	return terra.ReferenceSingle[streamanalyticsoutputservicebusqueue.TimeoutsAttributes](saosq.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[streamanalyticsoutputservicebusqueue.TimeoutsAttributes](saosq.ref.Append("timeouts"))
 }
 
 type streamAnalyticsOutputServicebusQueueState struct {

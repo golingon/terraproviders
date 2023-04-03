@@ -47,128 +47,128 @@ type IdpConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ic IdpConfigAttributes) InternalRef() terra.Reference {
-	return ic.ref
+func (ic IdpConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ic.ref, nil
 }
 
 func (ic IdpConfigAttributes) InternalWithRef(ref terra.Reference) IdpConfigAttributes {
 	return IdpConfigAttributes{ref: ref}
 }
 
-func (ic IdpConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ic IdpConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ic.ref.InternalTokens()
 }
 
 func (ic IdpConfigAttributes) IdpEntityId() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("idp_entity_id"))
+	return terra.ReferenceAsString(ic.ref.Append("idp_entity_id"))
 }
 
 func (ic IdpConfigAttributes) SignRequest() terra.BoolValue {
-	return terra.ReferenceBool(ic.ref.Append("sign_request"))
+	return terra.ReferenceAsBool(ic.ref.Append("sign_request"))
 }
 
 func (ic IdpConfigAttributes) SsoUrl() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("sso_url"))
+	return terra.ReferenceAsString(ic.ref.Append("sso_url"))
 }
 
 func (ic IdpConfigAttributes) IdpCertificates() terra.ListValue[IdpCertificatesAttributes] {
-	return terra.ReferenceList[IdpCertificatesAttributes](ic.ref.Append("idp_certificates"))
+	return terra.ReferenceAsList[IdpCertificatesAttributes](ic.ref.Append("idp_certificates"))
 }
 
 type IdpCertificatesAttributes struct {
 	ref terra.Reference
 }
 
-func (ic IdpCertificatesAttributes) InternalRef() terra.Reference {
-	return ic.ref
+func (ic IdpCertificatesAttributes) InternalRef() (terra.Reference, error) {
+	return ic.ref, nil
 }
 
 func (ic IdpCertificatesAttributes) InternalWithRef(ref terra.Reference) IdpCertificatesAttributes {
 	return IdpCertificatesAttributes{ref: ref}
 }
 
-func (ic IdpCertificatesAttributes) InternalTokens() hclwrite.Tokens {
+func (ic IdpCertificatesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ic.ref.InternalTokens()
 }
 
 func (ic IdpCertificatesAttributes) X509Certificate() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("x509_certificate"))
+	return terra.ReferenceAsString(ic.ref.Append("x509_certificate"))
 }
 
 type SpConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (sc SpConfigAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc SpConfigAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc SpConfigAttributes) InternalWithRef(ref terra.Reference) SpConfigAttributes {
 	return SpConfigAttributes{ref: ref}
 }
 
-func (sc SpConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sc SpConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
 func (sc SpConfigAttributes) CallbackUri() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("callback_uri"))
+	return terra.ReferenceAsString(sc.ref.Append("callback_uri"))
 }
 
 func (sc SpConfigAttributes) SpEntityId() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("sp_entity_id"))
+	return terra.ReferenceAsString(sc.ref.Append("sp_entity_id"))
 }
 
 func (sc SpConfigAttributes) SpCertificates() terra.ListValue[SpCertificatesAttributes] {
-	return terra.ReferenceList[SpCertificatesAttributes](sc.ref.Append("sp_certificates"))
+	return terra.ReferenceAsList[SpCertificatesAttributes](sc.ref.Append("sp_certificates"))
 }
 
 type SpCertificatesAttributes struct {
 	ref terra.Reference
 }
 
-func (sc SpCertificatesAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc SpCertificatesAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc SpCertificatesAttributes) InternalWithRef(ref terra.Reference) SpCertificatesAttributes {
 	return SpCertificatesAttributes{ref: ref}
 }
 
-func (sc SpCertificatesAttributes) InternalTokens() hclwrite.Tokens {
+func (sc SpCertificatesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
 func (sc SpCertificatesAttributes) X509Certificate() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("x509_certificate"))
+	return terra.ReferenceAsString(sc.ref.Append("x509_certificate"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type IdpConfigState struct {

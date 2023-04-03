@@ -20,48 +20,48 @@ type AllocatedConnectionsAttributes struct {
 	ref terra.Reference
 }
 
-func (ac AllocatedConnectionsAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac AllocatedConnectionsAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac AllocatedConnectionsAttributes) InternalWithRef(ref terra.Reference) AllocatedConnectionsAttributes {
 	return AllocatedConnectionsAttributes{ref: ref}
 }
 
-func (ac AllocatedConnectionsAttributes) InternalTokens() hclwrite.Tokens {
+func (ac AllocatedConnectionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
 func (ac AllocatedConnectionsAttributes) IngressPort() terra.NumberValue {
-	return terra.ReferenceNumber(ac.ref.Append("ingress_port"))
+	return terra.ReferenceAsNumber(ac.ref.Append("ingress_port"))
 }
 
 func (ac AllocatedConnectionsAttributes) PscUri() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("psc_uri"))
+	return terra.ReferenceAsString(ac.ref.Append("psc_uri"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type AllocatedConnectionsState struct {

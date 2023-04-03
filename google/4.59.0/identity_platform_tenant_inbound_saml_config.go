@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewIdentityPlatformTenantInboundSamlConfig creates a new instance of [IdentityPlatformTenantInboundSamlConfig].
 func NewIdentityPlatformTenantInboundSamlConfig(name string, args IdentityPlatformTenantInboundSamlConfigArgs) *IdentityPlatformTenantInboundSamlConfig {
 	return &IdentityPlatformTenantInboundSamlConfig{
 		Args: args,
@@ -19,28 +20,51 @@ func NewIdentityPlatformTenantInboundSamlConfig(name string, args IdentityPlatfo
 
 var _ terra.Resource = (*IdentityPlatformTenantInboundSamlConfig)(nil)
 
+// IdentityPlatformTenantInboundSamlConfig represents the Terraform resource google_identity_platform_tenant_inbound_saml_config.
 type IdentityPlatformTenantInboundSamlConfig struct {
-	Name  string
-	Args  IdentityPlatformTenantInboundSamlConfigArgs
-	state *identityPlatformTenantInboundSamlConfigState
+	Name      string
+	Args      IdentityPlatformTenantInboundSamlConfigArgs
+	state     *identityPlatformTenantInboundSamlConfigState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IdentityPlatformTenantInboundSamlConfig].
 func (iptisc *IdentityPlatformTenantInboundSamlConfig) Type() string {
 	return "google_identity_platform_tenant_inbound_saml_config"
 }
 
+// LocalName returns the local name for [IdentityPlatformTenantInboundSamlConfig].
 func (iptisc *IdentityPlatformTenantInboundSamlConfig) LocalName() string {
 	return iptisc.Name
 }
 
+// Configuration returns the configuration (args) for [IdentityPlatformTenantInboundSamlConfig].
 func (iptisc *IdentityPlatformTenantInboundSamlConfig) Configuration() interface{} {
 	return iptisc.Args
 }
 
+// DependOn is used for other resources to depend on [IdentityPlatformTenantInboundSamlConfig].
+func (iptisc *IdentityPlatformTenantInboundSamlConfig) DependOn() terra.Reference {
+	return terra.ReferenceResource(iptisc)
+}
+
+// Dependencies returns the list of resources [IdentityPlatformTenantInboundSamlConfig] depends_on.
+func (iptisc *IdentityPlatformTenantInboundSamlConfig) Dependencies() terra.Dependencies {
+	return iptisc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IdentityPlatformTenantInboundSamlConfig].
+func (iptisc *IdentityPlatformTenantInboundSamlConfig) LifecycleManagement() *terra.Lifecycle {
+	return iptisc.Lifecycle
+}
+
+// Attributes returns the attributes for [IdentityPlatformTenantInboundSamlConfig].
 func (iptisc *IdentityPlatformTenantInboundSamlConfig) Attributes() identityPlatformTenantInboundSamlConfigAttributes {
 	return identityPlatformTenantInboundSamlConfigAttributes{ref: terra.ReferenceResource(iptisc)}
 }
 
+// ImportState imports the given attribute values into [IdentityPlatformTenantInboundSamlConfig]'s state.
 func (iptisc *IdentityPlatformTenantInboundSamlConfig) ImportState(av io.Reader) error {
 	iptisc.state = &identityPlatformTenantInboundSamlConfigState{}
 	if err := json.NewDecoder(av).Decode(iptisc.state); err != nil {
@@ -49,10 +73,12 @@ func (iptisc *IdentityPlatformTenantInboundSamlConfig) ImportState(av io.Reader)
 	return nil
 }
 
+// State returns the state and a bool indicating if [IdentityPlatformTenantInboundSamlConfig] has state.
 func (iptisc *IdentityPlatformTenantInboundSamlConfig) State() (*identityPlatformTenantInboundSamlConfigState, bool) {
 	return iptisc.state, iptisc.state != nil
 }
 
+// StateMust returns the state for [IdentityPlatformTenantInboundSamlConfig]. Panics if the state is nil.
 func (iptisc *IdentityPlatformTenantInboundSamlConfig) StateMust() *identityPlatformTenantInboundSamlConfigState {
 	if iptisc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", iptisc.Type(), iptisc.LocalName()))
@@ -60,10 +86,7 @@ func (iptisc *IdentityPlatformTenantInboundSamlConfig) StateMust() *identityPlat
 	return iptisc.state
 }
 
-func (iptisc *IdentityPlatformTenantInboundSamlConfig) DependOn() terra.Reference {
-	return terra.ReferenceResource(iptisc)
-}
-
+// IdentityPlatformTenantInboundSamlConfigArgs contains the configurations for google_identity_platform_tenant_inbound_saml_config.
 type IdentityPlatformTenantInboundSamlConfigArgs struct {
 	// DisplayName: string, required
 	DisplayName terra.StringValue `hcl:"display_name,attr" validate:"required"`
@@ -83,47 +106,51 @@ type IdentityPlatformTenantInboundSamlConfigArgs struct {
 	SpConfig *identityplatformtenantinboundsamlconfig.SpConfig `hcl:"sp_config,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *identityplatformtenantinboundsamlconfig.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that IdentityPlatformTenantInboundSamlConfig depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type identityPlatformTenantInboundSamlConfigAttributes struct {
 	ref terra.Reference
 }
 
+// DisplayName returns a reference to field display_name of google_identity_platform_tenant_inbound_saml_config.
 func (iptisc identityPlatformTenantInboundSamlConfigAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(iptisc.ref.Append("display_name"))
+	return terra.ReferenceAsString(iptisc.ref.Append("display_name"))
 }
 
+// Enabled returns a reference to field enabled of google_identity_platform_tenant_inbound_saml_config.
 func (iptisc identityPlatformTenantInboundSamlConfigAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(iptisc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(iptisc.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of google_identity_platform_tenant_inbound_saml_config.
 func (iptisc identityPlatformTenantInboundSamlConfigAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(iptisc.ref.Append("id"))
+	return terra.ReferenceAsString(iptisc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_identity_platform_tenant_inbound_saml_config.
 func (iptisc identityPlatformTenantInboundSamlConfigAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(iptisc.ref.Append("name"))
+	return terra.ReferenceAsString(iptisc.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_identity_platform_tenant_inbound_saml_config.
 func (iptisc identityPlatformTenantInboundSamlConfigAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(iptisc.ref.Append("project"))
+	return terra.ReferenceAsString(iptisc.ref.Append("project"))
 }
 
+// Tenant returns a reference to field tenant of google_identity_platform_tenant_inbound_saml_config.
 func (iptisc identityPlatformTenantInboundSamlConfigAttributes) Tenant() terra.StringValue {
-	return terra.ReferenceString(iptisc.ref.Append("tenant"))
+	return terra.ReferenceAsString(iptisc.ref.Append("tenant"))
 }
 
 func (iptisc identityPlatformTenantInboundSamlConfigAttributes) IdpConfig() terra.ListValue[identityplatformtenantinboundsamlconfig.IdpConfigAttributes] {
-	return terra.ReferenceList[identityplatformtenantinboundsamlconfig.IdpConfigAttributes](iptisc.ref.Append("idp_config"))
+	return terra.ReferenceAsList[identityplatformtenantinboundsamlconfig.IdpConfigAttributes](iptisc.ref.Append("idp_config"))
 }
 
 func (iptisc identityPlatformTenantInboundSamlConfigAttributes) SpConfig() terra.ListValue[identityplatformtenantinboundsamlconfig.SpConfigAttributes] {
-	return terra.ReferenceList[identityplatformtenantinboundsamlconfig.SpConfigAttributes](iptisc.ref.Append("sp_config"))
+	return terra.ReferenceAsList[identityplatformtenantinboundsamlconfig.SpConfigAttributes](iptisc.ref.Append("sp_config"))
 }
 
 func (iptisc identityPlatformTenantInboundSamlConfigAttributes) Timeouts() identityplatformtenantinboundsamlconfig.TimeoutsAttributes {
-	return terra.ReferenceSingle[identityplatformtenantinboundsamlconfig.TimeoutsAttributes](iptisc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[identityplatformtenantinboundsamlconfig.TimeoutsAttributes](iptisc.ref.Append("timeouts"))
 }
 
 type identityPlatformTenantInboundSamlConfigState struct {

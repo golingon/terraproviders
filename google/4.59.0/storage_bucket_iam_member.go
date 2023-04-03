@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewStorageBucketIamMember creates a new instance of [StorageBucketIamMember].
 func NewStorageBucketIamMember(name string, args StorageBucketIamMemberArgs) *StorageBucketIamMember {
 	return &StorageBucketIamMember{
 		Args: args,
@@ -19,28 +20,51 @@ func NewStorageBucketIamMember(name string, args StorageBucketIamMemberArgs) *St
 
 var _ terra.Resource = (*StorageBucketIamMember)(nil)
 
+// StorageBucketIamMember represents the Terraform resource google_storage_bucket_iam_member.
 type StorageBucketIamMember struct {
-	Name  string
-	Args  StorageBucketIamMemberArgs
-	state *storageBucketIamMemberState
+	Name      string
+	Args      StorageBucketIamMemberArgs
+	state     *storageBucketIamMemberState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [StorageBucketIamMember].
 func (sbim *StorageBucketIamMember) Type() string {
 	return "google_storage_bucket_iam_member"
 }
 
+// LocalName returns the local name for [StorageBucketIamMember].
 func (sbim *StorageBucketIamMember) LocalName() string {
 	return sbim.Name
 }
 
+// Configuration returns the configuration (args) for [StorageBucketIamMember].
 func (sbim *StorageBucketIamMember) Configuration() interface{} {
 	return sbim.Args
 }
 
+// DependOn is used for other resources to depend on [StorageBucketIamMember].
+func (sbim *StorageBucketIamMember) DependOn() terra.Reference {
+	return terra.ReferenceResource(sbim)
+}
+
+// Dependencies returns the list of resources [StorageBucketIamMember] depends_on.
+func (sbim *StorageBucketIamMember) Dependencies() terra.Dependencies {
+	return sbim.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [StorageBucketIamMember].
+func (sbim *StorageBucketIamMember) LifecycleManagement() *terra.Lifecycle {
+	return sbim.Lifecycle
+}
+
+// Attributes returns the attributes for [StorageBucketIamMember].
 func (sbim *StorageBucketIamMember) Attributes() storageBucketIamMemberAttributes {
 	return storageBucketIamMemberAttributes{ref: terra.ReferenceResource(sbim)}
 }
 
+// ImportState imports the given attribute values into [StorageBucketIamMember]'s state.
 func (sbim *StorageBucketIamMember) ImportState(av io.Reader) error {
 	sbim.state = &storageBucketIamMemberState{}
 	if err := json.NewDecoder(av).Decode(sbim.state); err != nil {
@@ -49,10 +73,12 @@ func (sbim *StorageBucketIamMember) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [StorageBucketIamMember] has state.
 func (sbim *StorageBucketIamMember) State() (*storageBucketIamMemberState, bool) {
 	return sbim.state, sbim.state != nil
 }
 
+// StateMust returns the state for [StorageBucketIamMember]. Panics if the state is nil.
 func (sbim *StorageBucketIamMember) StateMust() *storageBucketIamMemberState {
 	if sbim.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sbim.Type(), sbim.LocalName()))
@@ -60,10 +86,7 @@ func (sbim *StorageBucketIamMember) StateMust() *storageBucketIamMemberState {
 	return sbim.state
 }
 
-func (sbim *StorageBucketIamMember) DependOn() terra.Reference {
-	return terra.ReferenceResource(sbim)
-}
-
+// StorageBucketIamMemberArgs contains the configurations for google_storage_bucket_iam_member.
 type StorageBucketIamMemberArgs struct {
 	// Bucket: string, required
 	Bucket terra.StringValue `hcl:"bucket,attr" validate:"required"`
@@ -75,35 +98,38 @@ type StorageBucketIamMemberArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *storagebucketiammember.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that StorageBucketIamMember depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type storageBucketIamMemberAttributes struct {
 	ref terra.Reference
 }
 
+// Bucket returns a reference to field bucket of google_storage_bucket_iam_member.
 func (sbim storageBucketIamMemberAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(sbim.ref.Append("bucket"))
+	return terra.ReferenceAsString(sbim.ref.Append("bucket"))
 }
 
+// Etag returns a reference to field etag of google_storage_bucket_iam_member.
 func (sbim storageBucketIamMemberAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(sbim.ref.Append("etag"))
+	return terra.ReferenceAsString(sbim.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_storage_bucket_iam_member.
 func (sbim storageBucketIamMemberAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sbim.ref.Append("id"))
+	return terra.ReferenceAsString(sbim.ref.Append("id"))
 }
 
+// Member returns a reference to field member of google_storage_bucket_iam_member.
 func (sbim storageBucketIamMemberAttributes) Member() terra.StringValue {
-	return terra.ReferenceString(sbim.ref.Append("member"))
+	return terra.ReferenceAsString(sbim.ref.Append("member"))
 }
 
+// Role returns a reference to field role of google_storage_bucket_iam_member.
 func (sbim storageBucketIamMemberAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(sbim.ref.Append("role"))
+	return terra.ReferenceAsString(sbim.ref.Append("role"))
 }
 
 func (sbim storageBucketIamMemberAttributes) Condition() terra.ListValue[storagebucketiammember.ConditionAttributes] {
-	return terra.ReferenceList[storagebucketiammember.ConditionAttributes](sbim.ref.Append("condition"))
+	return terra.ReferenceAsList[storagebucketiammember.ConditionAttributes](sbim.ref.Append("condition"))
 }
 
 type storageBucketIamMemberState struct {

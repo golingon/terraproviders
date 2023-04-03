@@ -31,7 +31,7 @@ func (cs ControlSetsAttributes) InternalWithRef(ref terra.Reference) ControlSets
 	return ControlSetsAttributes{ref: ref}
 }
 
-func (cs ControlSetsAttributes) InternalTokens() hclwrite.Tokens {
+func (cs ControlSetsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cs.ref.InternalTokens()
 }
 
@@ -59,7 +59,7 @@ func (c ControlsAttributes) InternalWithRef(ref terra.Reference) ControlsAttribu
 	return ControlsAttributes{ref: ref}
 }
 
-func (c ControlsAttributes) InternalTokens() hclwrite.Tokens {
+func (c ControlsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 

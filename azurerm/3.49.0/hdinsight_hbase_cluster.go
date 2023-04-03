@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewHdinsightHbaseCluster creates a new instance of [HdinsightHbaseCluster].
 func NewHdinsightHbaseCluster(name string, args HdinsightHbaseClusterArgs) *HdinsightHbaseCluster {
 	return &HdinsightHbaseCluster{
 		Args: args,
@@ -19,28 +20,51 @@ func NewHdinsightHbaseCluster(name string, args HdinsightHbaseClusterArgs) *Hdin
 
 var _ terra.Resource = (*HdinsightHbaseCluster)(nil)
 
+// HdinsightHbaseCluster represents the Terraform resource azurerm_hdinsight_hbase_cluster.
 type HdinsightHbaseCluster struct {
-	Name  string
-	Args  HdinsightHbaseClusterArgs
-	state *hdinsightHbaseClusterState
+	Name      string
+	Args      HdinsightHbaseClusterArgs
+	state     *hdinsightHbaseClusterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [HdinsightHbaseCluster].
 func (hhc *HdinsightHbaseCluster) Type() string {
 	return "azurerm_hdinsight_hbase_cluster"
 }
 
+// LocalName returns the local name for [HdinsightHbaseCluster].
 func (hhc *HdinsightHbaseCluster) LocalName() string {
 	return hhc.Name
 }
 
+// Configuration returns the configuration (args) for [HdinsightHbaseCluster].
 func (hhc *HdinsightHbaseCluster) Configuration() interface{} {
 	return hhc.Args
 }
 
+// DependOn is used for other resources to depend on [HdinsightHbaseCluster].
+func (hhc *HdinsightHbaseCluster) DependOn() terra.Reference {
+	return terra.ReferenceResource(hhc)
+}
+
+// Dependencies returns the list of resources [HdinsightHbaseCluster] depends_on.
+func (hhc *HdinsightHbaseCluster) Dependencies() terra.Dependencies {
+	return hhc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [HdinsightHbaseCluster].
+func (hhc *HdinsightHbaseCluster) LifecycleManagement() *terra.Lifecycle {
+	return hhc.Lifecycle
+}
+
+// Attributes returns the attributes for [HdinsightHbaseCluster].
 func (hhc *HdinsightHbaseCluster) Attributes() hdinsightHbaseClusterAttributes {
 	return hdinsightHbaseClusterAttributes{ref: terra.ReferenceResource(hhc)}
 }
 
+// ImportState imports the given attribute values into [HdinsightHbaseCluster]'s state.
 func (hhc *HdinsightHbaseCluster) ImportState(av io.Reader) error {
 	hhc.state = &hdinsightHbaseClusterState{}
 	if err := json.NewDecoder(av).Decode(hhc.state); err != nil {
@@ -49,10 +73,12 @@ func (hhc *HdinsightHbaseCluster) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [HdinsightHbaseCluster] has state.
 func (hhc *HdinsightHbaseCluster) State() (*hdinsightHbaseClusterState, bool) {
 	return hhc.state, hhc.state != nil
 }
 
+// StateMust returns the state for [HdinsightHbaseCluster]. Panics if the state is nil.
 func (hhc *HdinsightHbaseCluster) StateMust() *hdinsightHbaseClusterState {
 	if hhc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", hhc.Type(), hhc.LocalName()))
@@ -60,10 +86,7 @@ func (hhc *HdinsightHbaseCluster) StateMust() *hdinsightHbaseClusterState {
 	return hhc.state
 }
 
-func (hhc *HdinsightHbaseCluster) DependOn() terra.Reference {
-	return terra.ReferenceResource(hhc)
-}
-
+// HdinsightHbaseClusterArgs contains the configurations for azurerm_hdinsight_hbase_cluster.
 type HdinsightHbaseClusterArgs struct {
 	// ClusterVersion: string, required
 	ClusterVersion terra.StringValue `hcl:"cluster_version,attr" validate:"required"`
@@ -107,103 +130,111 @@ type HdinsightHbaseClusterArgs struct {
 	StorageAccountGen2 *hdinsighthbasecluster.StorageAccountGen2 `hcl:"storage_account_gen2,block"`
 	// Timeouts: optional
 	Timeouts *hdinsighthbasecluster.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that HdinsightHbaseCluster depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type hdinsightHbaseClusterAttributes struct {
 	ref terra.Reference
 }
 
+// ClusterVersion returns a reference to field cluster_version of azurerm_hdinsight_hbase_cluster.
 func (hhc hdinsightHbaseClusterAttributes) ClusterVersion() terra.StringValue {
-	return terra.ReferenceString(hhc.ref.Append("cluster_version"))
+	return terra.ReferenceAsString(hhc.ref.Append("cluster_version"))
 }
 
+// HttpsEndpoint returns a reference to field https_endpoint of azurerm_hdinsight_hbase_cluster.
 func (hhc hdinsightHbaseClusterAttributes) HttpsEndpoint() terra.StringValue {
-	return terra.ReferenceString(hhc.ref.Append("https_endpoint"))
+	return terra.ReferenceAsString(hhc.ref.Append("https_endpoint"))
 }
 
+// Id returns a reference to field id of azurerm_hdinsight_hbase_cluster.
 func (hhc hdinsightHbaseClusterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(hhc.ref.Append("id"))
+	return terra.ReferenceAsString(hhc.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_hdinsight_hbase_cluster.
 func (hhc hdinsightHbaseClusterAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(hhc.ref.Append("location"))
+	return terra.ReferenceAsString(hhc.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_hdinsight_hbase_cluster.
 func (hhc hdinsightHbaseClusterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(hhc.ref.Append("name"))
+	return terra.ReferenceAsString(hhc.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_hdinsight_hbase_cluster.
 func (hhc hdinsightHbaseClusterAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(hhc.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(hhc.ref.Append("resource_group_name"))
 }
 
+// SshEndpoint returns a reference to field ssh_endpoint of azurerm_hdinsight_hbase_cluster.
 func (hhc hdinsightHbaseClusterAttributes) SshEndpoint() terra.StringValue {
-	return terra.ReferenceString(hhc.ref.Append("ssh_endpoint"))
+	return terra.ReferenceAsString(hhc.ref.Append("ssh_endpoint"))
 }
 
+// Tags returns a reference to field tags of azurerm_hdinsight_hbase_cluster.
 func (hhc hdinsightHbaseClusterAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](hhc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](hhc.ref.Append("tags"))
 }
 
+// Tier returns a reference to field tier of azurerm_hdinsight_hbase_cluster.
 func (hhc hdinsightHbaseClusterAttributes) Tier() terra.StringValue {
-	return terra.ReferenceString(hhc.ref.Append("tier"))
+	return terra.ReferenceAsString(hhc.ref.Append("tier"))
 }
 
+// TlsMinVersion returns a reference to field tls_min_version of azurerm_hdinsight_hbase_cluster.
 func (hhc hdinsightHbaseClusterAttributes) TlsMinVersion() terra.StringValue {
-	return terra.ReferenceString(hhc.ref.Append("tls_min_version"))
+	return terra.ReferenceAsString(hhc.ref.Append("tls_min_version"))
 }
 
 func (hhc hdinsightHbaseClusterAttributes) ComponentVersion() terra.ListValue[hdinsighthbasecluster.ComponentVersionAttributes] {
-	return terra.ReferenceList[hdinsighthbasecluster.ComponentVersionAttributes](hhc.ref.Append("component_version"))
+	return terra.ReferenceAsList[hdinsighthbasecluster.ComponentVersionAttributes](hhc.ref.Append("component_version"))
 }
 
 func (hhc hdinsightHbaseClusterAttributes) ComputeIsolation() terra.ListValue[hdinsighthbasecluster.ComputeIsolationAttributes] {
-	return terra.ReferenceList[hdinsighthbasecluster.ComputeIsolationAttributes](hhc.ref.Append("compute_isolation"))
+	return terra.ReferenceAsList[hdinsighthbasecluster.ComputeIsolationAttributes](hhc.ref.Append("compute_isolation"))
 }
 
 func (hhc hdinsightHbaseClusterAttributes) DiskEncryption() terra.ListValue[hdinsighthbasecluster.DiskEncryptionAttributes] {
-	return terra.ReferenceList[hdinsighthbasecluster.DiskEncryptionAttributes](hhc.ref.Append("disk_encryption"))
+	return terra.ReferenceAsList[hdinsighthbasecluster.DiskEncryptionAttributes](hhc.ref.Append("disk_encryption"))
 }
 
 func (hhc hdinsightHbaseClusterAttributes) Extension() terra.ListValue[hdinsighthbasecluster.ExtensionAttributes] {
-	return terra.ReferenceList[hdinsighthbasecluster.ExtensionAttributes](hhc.ref.Append("extension"))
+	return terra.ReferenceAsList[hdinsighthbasecluster.ExtensionAttributes](hhc.ref.Append("extension"))
 }
 
 func (hhc hdinsightHbaseClusterAttributes) Gateway() terra.ListValue[hdinsighthbasecluster.GatewayAttributes] {
-	return terra.ReferenceList[hdinsighthbasecluster.GatewayAttributes](hhc.ref.Append("gateway"))
+	return terra.ReferenceAsList[hdinsighthbasecluster.GatewayAttributes](hhc.ref.Append("gateway"))
 }
 
 func (hhc hdinsightHbaseClusterAttributes) Metastores() terra.ListValue[hdinsighthbasecluster.MetastoresAttributes] {
-	return terra.ReferenceList[hdinsighthbasecluster.MetastoresAttributes](hhc.ref.Append("metastores"))
+	return terra.ReferenceAsList[hdinsighthbasecluster.MetastoresAttributes](hhc.ref.Append("metastores"))
 }
 
 func (hhc hdinsightHbaseClusterAttributes) Monitor() terra.ListValue[hdinsighthbasecluster.MonitorAttributes] {
-	return terra.ReferenceList[hdinsighthbasecluster.MonitorAttributes](hhc.ref.Append("monitor"))
+	return terra.ReferenceAsList[hdinsighthbasecluster.MonitorAttributes](hhc.ref.Append("monitor"))
 }
 
 func (hhc hdinsightHbaseClusterAttributes) Network() terra.ListValue[hdinsighthbasecluster.NetworkAttributes] {
-	return terra.ReferenceList[hdinsighthbasecluster.NetworkAttributes](hhc.ref.Append("network"))
+	return terra.ReferenceAsList[hdinsighthbasecluster.NetworkAttributes](hhc.ref.Append("network"))
 }
 
 func (hhc hdinsightHbaseClusterAttributes) Roles() terra.ListValue[hdinsighthbasecluster.RolesAttributes] {
-	return terra.ReferenceList[hdinsighthbasecluster.RolesAttributes](hhc.ref.Append("roles"))
+	return terra.ReferenceAsList[hdinsighthbasecluster.RolesAttributes](hhc.ref.Append("roles"))
 }
 
 func (hhc hdinsightHbaseClusterAttributes) SecurityProfile() terra.ListValue[hdinsighthbasecluster.SecurityProfileAttributes] {
-	return terra.ReferenceList[hdinsighthbasecluster.SecurityProfileAttributes](hhc.ref.Append("security_profile"))
+	return terra.ReferenceAsList[hdinsighthbasecluster.SecurityProfileAttributes](hhc.ref.Append("security_profile"))
 }
 
 func (hhc hdinsightHbaseClusterAttributes) StorageAccount() terra.ListValue[hdinsighthbasecluster.StorageAccountAttributes] {
-	return terra.ReferenceList[hdinsighthbasecluster.StorageAccountAttributes](hhc.ref.Append("storage_account"))
+	return terra.ReferenceAsList[hdinsighthbasecluster.StorageAccountAttributes](hhc.ref.Append("storage_account"))
 }
 
 func (hhc hdinsightHbaseClusterAttributes) StorageAccountGen2() terra.ListValue[hdinsighthbasecluster.StorageAccountGen2Attributes] {
-	return terra.ReferenceList[hdinsighthbasecluster.StorageAccountGen2Attributes](hhc.ref.Append("storage_account_gen2"))
+	return terra.ReferenceAsList[hdinsighthbasecluster.StorageAccountGen2Attributes](hhc.ref.Append("storage_account_gen2"))
 }
 
 func (hhc hdinsightHbaseClusterAttributes) Timeouts() hdinsighthbasecluster.TimeoutsAttributes {
-	return terra.ReferenceSingle[hdinsighthbasecluster.TimeoutsAttributes](hhc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[hdinsighthbasecluster.TimeoutsAttributes](hhc.ref.Append("timeouts"))
 }
 
 type hdinsightHbaseClusterState struct {

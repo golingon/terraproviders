@@ -34,7 +34,7 @@ func (pi PortInfoAttributes) InternalWithRef(ref terra.Reference) PortInfoAttrib
 	return PortInfoAttributes{ref: ref}
 }
 
-func (pi PortInfoAttributes) InternalTokens() hclwrite.Tokens {
+func (pi PortInfoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pi.ref.InternalTokens()
 }
 

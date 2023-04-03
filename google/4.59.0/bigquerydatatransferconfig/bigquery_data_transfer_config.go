@@ -39,96 +39,96 @@ type EmailPreferencesAttributes struct {
 	ref terra.Reference
 }
 
-func (ep EmailPreferencesAttributes) InternalRef() terra.Reference {
-	return ep.ref
+func (ep EmailPreferencesAttributes) InternalRef() (terra.Reference, error) {
+	return ep.ref, nil
 }
 
 func (ep EmailPreferencesAttributes) InternalWithRef(ref terra.Reference) EmailPreferencesAttributes {
 	return EmailPreferencesAttributes{ref: ref}
 }
 
-func (ep EmailPreferencesAttributes) InternalTokens() hclwrite.Tokens {
+func (ep EmailPreferencesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ep.ref.InternalTokens()
 }
 
 func (ep EmailPreferencesAttributes) EnableFailureEmail() terra.BoolValue {
-	return terra.ReferenceBool(ep.ref.Append("enable_failure_email"))
+	return terra.ReferenceAsBool(ep.ref.Append("enable_failure_email"))
 }
 
 type ScheduleOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (so ScheduleOptionsAttributes) InternalRef() terra.Reference {
-	return so.ref
+func (so ScheduleOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return so.ref, nil
 }
 
 func (so ScheduleOptionsAttributes) InternalWithRef(ref terra.Reference) ScheduleOptionsAttributes {
 	return ScheduleOptionsAttributes{ref: ref}
 }
 
-func (so ScheduleOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (so ScheduleOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return so.ref.InternalTokens()
 }
 
 func (so ScheduleOptionsAttributes) DisableAutoScheduling() terra.BoolValue {
-	return terra.ReferenceBool(so.ref.Append("disable_auto_scheduling"))
+	return terra.ReferenceAsBool(so.ref.Append("disable_auto_scheduling"))
 }
 
 func (so ScheduleOptionsAttributes) EndTime() terra.StringValue {
-	return terra.ReferenceString(so.ref.Append("end_time"))
+	return terra.ReferenceAsString(so.ref.Append("end_time"))
 }
 
 func (so ScheduleOptionsAttributes) StartTime() terra.StringValue {
-	return terra.ReferenceString(so.ref.Append("start_time"))
+	return terra.ReferenceAsString(so.ref.Append("start_time"))
 }
 
 type SensitiveParamsAttributes struct {
 	ref terra.Reference
 }
 
-func (sp SensitiveParamsAttributes) InternalRef() terra.Reference {
-	return sp.ref
+func (sp SensitiveParamsAttributes) InternalRef() (terra.Reference, error) {
+	return sp.ref, nil
 }
 
 func (sp SensitiveParamsAttributes) InternalWithRef(ref terra.Reference) SensitiveParamsAttributes {
 	return SensitiveParamsAttributes{ref: ref}
 }
 
-func (sp SensitiveParamsAttributes) InternalTokens() hclwrite.Tokens {
+func (sp SensitiveParamsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sp.ref.InternalTokens()
 }
 
 func (sp SensitiveParamsAttributes) SecretAccessKey() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("secret_access_key"))
+	return terra.ReferenceAsString(sp.ref.Append("secret_access_key"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type EmailPreferencesState struct {

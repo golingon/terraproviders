@@ -50,7 +50,7 @@ func (pra PrivateRegistryAccessAttributes) InternalWithRef(ref terra.Reference) 
 	return PrivateRegistryAccessAttributes{ref: ref}
 }
 
-func (pra PrivateRegistryAccessAttributes) InternalTokens() hclwrite.Tokens {
+func (pra PrivateRegistryAccessAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pra.ref.InternalTokens()
 }
 
@@ -70,7 +70,7 @@ func (eipr EcrImagePullerRoleAttributes) InternalWithRef(ref terra.Reference) Ec
 	return EcrImagePullerRoleAttributes{ref: ref}
 }
 
-func (eipr EcrImagePullerRoleAttributes) InternalTokens() hclwrite.Tokens {
+func (eipr EcrImagePullerRoleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return eipr.ref.InternalTokens()
 }
 
@@ -94,7 +94,7 @@ func (pdn PublicDomainNamesAttributes) InternalWithRef(ref terra.Reference) Publ
 	return PublicDomainNamesAttributes{ref: ref}
 }
 
-func (pdn PublicDomainNamesAttributes) InternalTokens() hclwrite.Tokens {
+func (pdn PublicDomainNamesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pdn.ref.InternalTokens()
 }
 
@@ -114,7 +114,7 @@ func (c CertificateAttributes) InternalWithRef(ref terra.Reference) CertificateA
 	return CertificateAttributes{ref: ref}
 }
 
-func (c CertificateAttributes) InternalTokens() hclwrite.Tokens {
+func (c CertificateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -138,7 +138,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

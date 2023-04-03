@@ -37,7 +37,7 @@ func (scpd ServiceCatalogProvisioningDetailsAttributes) InternalWithRef(ref terr
 	return ServiceCatalogProvisioningDetailsAttributes{ref: ref}
 }
 
-func (scpd ServiceCatalogProvisioningDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (scpd ServiceCatalogProvisioningDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return scpd.ref.InternalTokens()
 }
 
@@ -69,7 +69,7 @@ func (pp ProvisioningParameterAttributes) InternalWithRef(ref terra.Reference) P
 	return ProvisioningParameterAttributes{ref: ref}
 }
 
-func (pp ProvisioningParameterAttributes) InternalTokens() hclwrite.Tokens {
+func (pp ProvisioningParameterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pp.ref.InternalTokens()
 }
 

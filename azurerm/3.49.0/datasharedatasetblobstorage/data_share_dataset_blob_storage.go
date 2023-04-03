@@ -29,56 +29,56 @@ type StorageAccountAttributes struct {
 	ref terra.Reference
 }
 
-func (sa StorageAccountAttributes) InternalRef() terra.Reference {
-	return sa.ref
+func (sa StorageAccountAttributes) InternalRef() (terra.Reference, error) {
+	return sa.ref, nil
 }
 
 func (sa StorageAccountAttributes) InternalWithRef(ref terra.Reference) StorageAccountAttributes {
 	return StorageAccountAttributes{ref: ref}
 }
 
-func (sa StorageAccountAttributes) InternalTokens() hclwrite.Tokens {
+func (sa StorageAccountAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sa.ref.InternalTokens()
 }
 
 func (sa StorageAccountAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("name"))
+	return terra.ReferenceAsString(sa.ref.Append("name"))
 }
 
 func (sa StorageAccountAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(sa.ref.Append("resource_group_name"))
 }
 
 func (sa StorageAccountAttributes) SubscriptionId() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("subscription_id"))
+	return terra.ReferenceAsString(sa.ref.Append("subscription_id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type StorageAccountState struct {

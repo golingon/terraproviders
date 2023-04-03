@@ -27,52 +27,52 @@ type SingleClusterRoutingAttributes struct {
 	ref terra.Reference
 }
 
-func (scr SingleClusterRoutingAttributes) InternalRef() terra.Reference {
-	return scr.ref
+func (scr SingleClusterRoutingAttributes) InternalRef() (terra.Reference, error) {
+	return scr.ref, nil
 }
 
 func (scr SingleClusterRoutingAttributes) InternalWithRef(ref terra.Reference) SingleClusterRoutingAttributes {
 	return SingleClusterRoutingAttributes{ref: ref}
 }
 
-func (scr SingleClusterRoutingAttributes) InternalTokens() hclwrite.Tokens {
+func (scr SingleClusterRoutingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return scr.ref.InternalTokens()
 }
 
 func (scr SingleClusterRoutingAttributes) AllowTransactionalWrites() terra.BoolValue {
-	return terra.ReferenceBool(scr.ref.Append("allow_transactional_writes"))
+	return terra.ReferenceAsBool(scr.ref.Append("allow_transactional_writes"))
 }
 
 func (scr SingleClusterRoutingAttributes) ClusterId() terra.StringValue {
-	return terra.ReferenceString(scr.ref.Append("cluster_id"))
+	return terra.ReferenceAsString(scr.ref.Append("cluster_id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type SingleClusterRoutingState struct {

@@ -26,7 +26,7 @@ func (vc VersioningConfigurationAttributes) InternalWithRef(ref terra.Reference)
 	return VersioningConfigurationAttributes{ref: ref}
 }
 
-func (vc VersioningConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (vc VersioningConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vc.ref.InternalTokens()
 }
 

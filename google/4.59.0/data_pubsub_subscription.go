@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataPubsubSubscription creates a new instance of [DataPubsubSubscription].
 func NewDataPubsubSubscription(name string, args DataPubsubSubscriptionArgs) *DataPubsubSubscription {
 	return &DataPubsubSubscription{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataPubsubSubscription(name string, args DataPubsubSubscriptionArgs) *Da
 
 var _ terra.DataResource = (*DataPubsubSubscription)(nil)
 
+// DataPubsubSubscription represents the Terraform data resource google_pubsub_subscription.
 type DataPubsubSubscription struct {
 	Name string
 	Args DataPubsubSubscriptionArgs
 }
 
+// DataSource returns the Terraform object type for [DataPubsubSubscription].
 func (ps *DataPubsubSubscription) DataSource() string {
 	return "google_pubsub_subscription"
 }
 
+// LocalName returns the local name for [DataPubsubSubscription].
 func (ps *DataPubsubSubscription) LocalName() string {
 	return ps.Name
 }
 
+// Configuration returns the configuration (args) for [DataPubsubSubscription].
 func (ps *DataPubsubSubscription) Configuration() interface{} {
 	return ps.Args
 }
 
+// Attributes returns the attributes for [DataPubsubSubscription].
 func (ps *DataPubsubSubscription) Attributes() dataPubsubSubscriptionAttributes {
 	return dataPubsubSubscriptionAttributes{ref: terra.ReferenceDataResource(ps)}
 }
 
+// DataPubsubSubscriptionArgs contains the configurations for google_pubsub_subscription.
 type DataPubsubSubscriptionArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -59,66 +66,77 @@ type dataPubsubSubscriptionAttributes struct {
 	ref terra.Reference
 }
 
+// AckDeadlineSeconds returns a reference to field ack_deadline_seconds of google_pubsub_subscription.
 func (ps dataPubsubSubscriptionAttributes) AckDeadlineSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(ps.ref.Append("ack_deadline_seconds"))
+	return terra.ReferenceAsNumber(ps.ref.Append("ack_deadline_seconds"))
 }
 
+// EnableExactlyOnceDelivery returns a reference to field enable_exactly_once_delivery of google_pubsub_subscription.
 func (ps dataPubsubSubscriptionAttributes) EnableExactlyOnceDelivery() terra.BoolValue {
-	return terra.ReferenceBool(ps.ref.Append("enable_exactly_once_delivery"))
+	return terra.ReferenceAsBool(ps.ref.Append("enable_exactly_once_delivery"))
 }
 
+// EnableMessageOrdering returns a reference to field enable_message_ordering of google_pubsub_subscription.
 func (ps dataPubsubSubscriptionAttributes) EnableMessageOrdering() terra.BoolValue {
-	return terra.ReferenceBool(ps.ref.Append("enable_message_ordering"))
+	return terra.ReferenceAsBool(ps.ref.Append("enable_message_ordering"))
 }
 
+// Filter returns a reference to field filter of google_pubsub_subscription.
 func (ps dataPubsubSubscriptionAttributes) Filter() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("filter"))
+	return terra.ReferenceAsString(ps.ref.Append("filter"))
 }
 
+// Id returns a reference to field id of google_pubsub_subscription.
 func (ps dataPubsubSubscriptionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("id"))
+	return terra.ReferenceAsString(ps.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_pubsub_subscription.
 func (ps dataPubsubSubscriptionAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ps.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](ps.ref.Append("labels"))
 }
 
+// MessageRetentionDuration returns a reference to field message_retention_duration of google_pubsub_subscription.
 func (ps dataPubsubSubscriptionAttributes) MessageRetentionDuration() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("message_retention_duration"))
+	return terra.ReferenceAsString(ps.ref.Append("message_retention_duration"))
 }
 
+// Name returns a reference to field name of google_pubsub_subscription.
 func (ps dataPubsubSubscriptionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("name"))
+	return terra.ReferenceAsString(ps.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_pubsub_subscription.
 func (ps dataPubsubSubscriptionAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("project"))
+	return terra.ReferenceAsString(ps.ref.Append("project"))
 }
 
+// RetainAckedMessages returns a reference to field retain_acked_messages of google_pubsub_subscription.
 func (ps dataPubsubSubscriptionAttributes) RetainAckedMessages() terra.BoolValue {
-	return terra.ReferenceBool(ps.ref.Append("retain_acked_messages"))
+	return terra.ReferenceAsBool(ps.ref.Append("retain_acked_messages"))
 }
 
+// Topic returns a reference to field topic of google_pubsub_subscription.
 func (ps dataPubsubSubscriptionAttributes) Topic() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("topic"))
+	return terra.ReferenceAsString(ps.ref.Append("topic"))
 }
 
 func (ps dataPubsubSubscriptionAttributes) BigqueryConfig() terra.ListValue[datapubsubsubscription.BigqueryConfigAttributes] {
-	return terra.ReferenceList[datapubsubsubscription.BigqueryConfigAttributes](ps.ref.Append("bigquery_config"))
+	return terra.ReferenceAsList[datapubsubsubscription.BigqueryConfigAttributes](ps.ref.Append("bigquery_config"))
 }
 
 func (ps dataPubsubSubscriptionAttributes) DeadLetterPolicy() terra.ListValue[datapubsubsubscription.DeadLetterPolicyAttributes] {
-	return terra.ReferenceList[datapubsubsubscription.DeadLetterPolicyAttributes](ps.ref.Append("dead_letter_policy"))
+	return terra.ReferenceAsList[datapubsubsubscription.DeadLetterPolicyAttributes](ps.ref.Append("dead_letter_policy"))
 }
 
 func (ps dataPubsubSubscriptionAttributes) ExpirationPolicy() terra.ListValue[datapubsubsubscription.ExpirationPolicyAttributes] {
-	return terra.ReferenceList[datapubsubsubscription.ExpirationPolicyAttributes](ps.ref.Append("expiration_policy"))
+	return terra.ReferenceAsList[datapubsubsubscription.ExpirationPolicyAttributes](ps.ref.Append("expiration_policy"))
 }
 
 func (ps dataPubsubSubscriptionAttributes) PushConfig() terra.ListValue[datapubsubsubscription.PushConfigAttributes] {
-	return terra.ReferenceList[datapubsubsubscription.PushConfigAttributes](ps.ref.Append("push_config"))
+	return terra.ReferenceAsList[datapubsubsubscription.PushConfigAttributes](ps.ref.Append("push_config"))
 }
 
 func (ps dataPubsubSubscriptionAttributes) RetryPolicy() terra.ListValue[datapubsubsubscription.RetryPolicyAttributes] {
-	return terra.ReferenceList[datapubsubsubscription.RetryPolicyAttributes](ps.ref.Append("retry_policy"))
+	return terra.ReferenceAsList[datapubsubsubscription.RetryPolicyAttributes](ps.ref.Append("retry_policy"))
 }

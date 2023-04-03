@@ -31,60 +31,60 @@ type BgpSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (bs BgpSettingsAttributes) InternalRef() terra.Reference {
-	return bs.ref
+func (bs BgpSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return bs.ref, nil
 }
 
 func (bs BgpSettingsAttributes) InternalWithRef(ref terra.Reference) BgpSettingsAttributes {
 	return BgpSettingsAttributes{ref: ref}
 }
 
-func (bs BgpSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (bs BgpSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bs.ref.InternalTokens()
 }
 
 func (bs BgpSettingsAttributes) Asn() terra.NumberValue {
-	return terra.ReferenceNumber(bs.ref.Append("asn"))
+	return terra.ReferenceAsNumber(bs.ref.Append("asn"))
 }
 
 func (bs BgpSettingsAttributes) BgpPeeringAddress() terra.StringValue {
-	return terra.ReferenceString(bs.ref.Append("bgp_peering_address"))
+	return terra.ReferenceAsString(bs.ref.Append("bgp_peering_address"))
 }
 
 func (bs BgpSettingsAttributes) PeerWeight() terra.NumberValue {
-	return terra.ReferenceNumber(bs.ref.Append("peer_weight"))
+	return terra.ReferenceAsNumber(bs.ref.Append("peer_weight"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type BgpSettingsState struct {

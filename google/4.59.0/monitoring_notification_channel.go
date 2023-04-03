@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMonitoringNotificationChannel creates a new instance of [MonitoringNotificationChannel].
 func NewMonitoringNotificationChannel(name string, args MonitoringNotificationChannelArgs) *MonitoringNotificationChannel {
 	return &MonitoringNotificationChannel{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMonitoringNotificationChannel(name string, args MonitoringNotificationCh
 
 var _ terra.Resource = (*MonitoringNotificationChannel)(nil)
 
+// MonitoringNotificationChannel represents the Terraform resource google_monitoring_notification_channel.
 type MonitoringNotificationChannel struct {
-	Name  string
-	Args  MonitoringNotificationChannelArgs
-	state *monitoringNotificationChannelState
+	Name      string
+	Args      MonitoringNotificationChannelArgs
+	state     *monitoringNotificationChannelState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MonitoringNotificationChannel].
 func (mnc *MonitoringNotificationChannel) Type() string {
 	return "google_monitoring_notification_channel"
 }
 
+// LocalName returns the local name for [MonitoringNotificationChannel].
 func (mnc *MonitoringNotificationChannel) LocalName() string {
 	return mnc.Name
 }
 
+// Configuration returns the configuration (args) for [MonitoringNotificationChannel].
 func (mnc *MonitoringNotificationChannel) Configuration() interface{} {
 	return mnc.Args
 }
 
+// DependOn is used for other resources to depend on [MonitoringNotificationChannel].
+func (mnc *MonitoringNotificationChannel) DependOn() terra.Reference {
+	return terra.ReferenceResource(mnc)
+}
+
+// Dependencies returns the list of resources [MonitoringNotificationChannel] depends_on.
+func (mnc *MonitoringNotificationChannel) Dependencies() terra.Dependencies {
+	return mnc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MonitoringNotificationChannel].
+func (mnc *MonitoringNotificationChannel) LifecycleManagement() *terra.Lifecycle {
+	return mnc.Lifecycle
+}
+
+// Attributes returns the attributes for [MonitoringNotificationChannel].
 func (mnc *MonitoringNotificationChannel) Attributes() monitoringNotificationChannelAttributes {
 	return monitoringNotificationChannelAttributes{ref: terra.ReferenceResource(mnc)}
 }
 
+// ImportState imports the given attribute values into [MonitoringNotificationChannel]'s state.
 func (mnc *MonitoringNotificationChannel) ImportState(av io.Reader) error {
 	mnc.state = &monitoringNotificationChannelState{}
 	if err := json.NewDecoder(av).Decode(mnc.state); err != nil {
@@ -49,10 +73,12 @@ func (mnc *MonitoringNotificationChannel) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MonitoringNotificationChannel] has state.
 func (mnc *MonitoringNotificationChannel) State() (*monitoringNotificationChannelState, bool) {
 	return mnc.state, mnc.state != nil
 }
 
+// StateMust returns the state for [MonitoringNotificationChannel]. Panics if the state is nil.
 func (mnc *MonitoringNotificationChannel) StateMust() *monitoringNotificationChannelState {
 	if mnc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mnc.Type(), mnc.LocalName()))
@@ -60,10 +86,7 @@ func (mnc *MonitoringNotificationChannel) StateMust() *monitoringNotificationCha
 	return mnc.state
 }
 
-func (mnc *MonitoringNotificationChannel) DependOn() terra.Reference {
-	return terra.ReferenceResource(mnc)
-}
-
+// MonitoringNotificationChannelArgs contains the configurations for google_monitoring_notification_channel.
 type MonitoringNotificationChannelArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -87,63 +110,72 @@ type MonitoringNotificationChannelArgs struct {
 	SensitiveLabels *monitoringnotificationchannel.SensitiveLabels `hcl:"sensitive_labels,block"`
 	// Timeouts: optional
 	Timeouts *monitoringnotificationchannel.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MonitoringNotificationChannel depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type monitoringNotificationChannelAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of google_monitoring_notification_channel.
 func (mnc monitoringNotificationChannelAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(mnc.ref.Append("description"))
+	return terra.ReferenceAsString(mnc.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of google_monitoring_notification_channel.
 func (mnc monitoringNotificationChannelAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(mnc.ref.Append("display_name"))
+	return terra.ReferenceAsString(mnc.ref.Append("display_name"))
 }
 
+// Enabled returns a reference to field enabled of google_monitoring_notification_channel.
 func (mnc monitoringNotificationChannelAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(mnc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(mnc.ref.Append("enabled"))
 }
 
+// ForceDelete returns a reference to field force_delete of google_monitoring_notification_channel.
 func (mnc monitoringNotificationChannelAttributes) ForceDelete() terra.BoolValue {
-	return terra.ReferenceBool(mnc.ref.Append("force_delete"))
+	return terra.ReferenceAsBool(mnc.ref.Append("force_delete"))
 }
 
+// Id returns a reference to field id of google_monitoring_notification_channel.
 func (mnc monitoringNotificationChannelAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mnc.ref.Append("id"))
+	return terra.ReferenceAsString(mnc.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_monitoring_notification_channel.
 func (mnc monitoringNotificationChannelAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mnc.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](mnc.ref.Append("labels"))
 }
 
+// Name returns a reference to field name of google_monitoring_notification_channel.
 func (mnc monitoringNotificationChannelAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mnc.ref.Append("name"))
+	return terra.ReferenceAsString(mnc.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_monitoring_notification_channel.
 func (mnc monitoringNotificationChannelAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(mnc.ref.Append("project"))
+	return terra.ReferenceAsString(mnc.ref.Append("project"))
 }
 
+// Type returns a reference to field type of google_monitoring_notification_channel.
 func (mnc monitoringNotificationChannelAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(mnc.ref.Append("type"))
+	return terra.ReferenceAsString(mnc.ref.Append("type"))
 }
 
+// UserLabels returns a reference to field user_labels of google_monitoring_notification_channel.
 func (mnc monitoringNotificationChannelAttributes) UserLabels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mnc.ref.Append("user_labels"))
+	return terra.ReferenceAsMap[terra.StringValue](mnc.ref.Append("user_labels"))
 }
 
+// VerificationStatus returns a reference to field verification_status of google_monitoring_notification_channel.
 func (mnc monitoringNotificationChannelAttributes) VerificationStatus() terra.StringValue {
-	return terra.ReferenceString(mnc.ref.Append("verification_status"))
+	return terra.ReferenceAsString(mnc.ref.Append("verification_status"))
 }
 
 func (mnc monitoringNotificationChannelAttributes) SensitiveLabels() terra.ListValue[monitoringnotificationchannel.SensitiveLabelsAttributes] {
-	return terra.ReferenceList[monitoringnotificationchannel.SensitiveLabelsAttributes](mnc.ref.Append("sensitive_labels"))
+	return terra.ReferenceAsList[monitoringnotificationchannel.SensitiveLabelsAttributes](mnc.ref.Append("sensitive_labels"))
 }
 
 func (mnc monitoringNotificationChannelAttributes) Timeouts() monitoringnotificationchannel.TimeoutsAttributes {
-	return terra.ReferenceSingle[monitoringnotificationchannel.TimeoutsAttributes](mnc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[monitoringnotificationchannel.TimeoutsAttributes](mnc.ref.Append("timeouts"))
 }
 
 type monitoringNotificationChannelState struct {

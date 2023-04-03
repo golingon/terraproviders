@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/hashicorp/hcl/v2 v2.16.2
-	github.com/volvo-cars/lingon v0.0.0-20230330140351-f2ff592a6ea9
+	github.com/volvo-cars/lingon v0.0.0-20230403102705-7175af3ca1ad
 )
 
 require (

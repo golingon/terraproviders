@@ -31,60 +31,60 @@ type ActionGroupAttributes struct {
 	ref terra.Reference
 }
 
-func (ag ActionGroupAttributes) InternalRef() terra.Reference {
-	return ag.ref
+func (ag ActionGroupAttributes) InternalRef() (terra.Reference, error) {
+	return ag.ref, nil
 }
 
 func (ag ActionGroupAttributes) InternalWithRef(ref terra.Reference) ActionGroupAttributes {
 	return ActionGroupAttributes{ref: ref}
 }
 
-func (ag ActionGroupAttributes) InternalTokens() hclwrite.Tokens {
+func (ag ActionGroupAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ag.ref.InternalTokens()
 }
 
 func (ag ActionGroupAttributes) EmailSubject() terra.StringValue {
-	return terra.ReferenceString(ag.ref.Append("email_subject"))
+	return terra.ReferenceAsString(ag.ref.Append("email_subject"))
 }
 
 func (ag ActionGroupAttributes) Ids() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ag.ref.Append("ids"))
+	return terra.ReferenceAsSet[terra.StringValue](ag.ref.Append("ids"))
 }
 
 func (ag ActionGroupAttributes) WebhookPayload() terra.StringValue {
-	return terra.ReferenceString(ag.ref.Append("webhook_payload"))
+	return terra.ReferenceAsString(ag.ref.Append("webhook_payload"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ActionGroupState struct {

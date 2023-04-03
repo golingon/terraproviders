@@ -103,284 +103,284 @@ type DataFlowAttributes struct {
 	ref terra.Reference
 }
 
-func (df DataFlowAttributes) InternalRef() terra.Reference {
-	return df.ref
+func (df DataFlowAttributes) InternalRef() (terra.Reference, error) {
+	return df.ref, nil
 }
 
 func (df DataFlowAttributes) InternalWithRef(ref terra.Reference) DataFlowAttributes {
 	return DataFlowAttributes{ref: ref}
 }
 
-func (df DataFlowAttributes) InternalTokens() hclwrite.Tokens {
+func (df DataFlowAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return df.ref.InternalTokens()
 }
 
 func (df DataFlowAttributes) Destinations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](df.ref.Append("destinations"))
+	return terra.ReferenceAsList[terra.StringValue](df.ref.Append("destinations"))
 }
 
 func (df DataFlowAttributes) Streams() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](df.ref.Append("streams"))
+	return terra.ReferenceAsList[terra.StringValue](df.ref.Append("streams"))
 }
 
 type DataSourcesAttributes struct {
 	ref terra.Reference
 }
 
-func (ds DataSourcesAttributes) InternalRef() terra.Reference {
-	return ds.ref
+func (ds DataSourcesAttributes) InternalRef() (terra.Reference, error) {
+	return ds.ref, nil
 }
 
 func (ds DataSourcesAttributes) InternalWithRef(ref terra.Reference) DataSourcesAttributes {
 	return DataSourcesAttributes{ref: ref}
 }
 
-func (ds DataSourcesAttributes) InternalTokens() hclwrite.Tokens {
+func (ds DataSourcesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ds.ref.InternalTokens()
 }
 
 func (ds DataSourcesAttributes) Extension() terra.ListValue[ExtensionAttributes] {
-	return terra.ReferenceList[ExtensionAttributes](ds.ref.Append("extension"))
+	return terra.ReferenceAsList[ExtensionAttributes](ds.ref.Append("extension"))
 }
 
 func (ds DataSourcesAttributes) PerformanceCounter() terra.ListValue[PerformanceCounterAttributes] {
-	return terra.ReferenceList[PerformanceCounterAttributes](ds.ref.Append("performance_counter"))
+	return terra.ReferenceAsList[PerformanceCounterAttributes](ds.ref.Append("performance_counter"))
 }
 
 func (ds DataSourcesAttributes) Syslog() terra.ListValue[SyslogAttributes] {
-	return terra.ReferenceList[SyslogAttributes](ds.ref.Append("syslog"))
+	return terra.ReferenceAsList[SyslogAttributes](ds.ref.Append("syslog"))
 }
 
 func (ds DataSourcesAttributes) WindowsEventLog() terra.ListValue[WindowsEventLogAttributes] {
-	return terra.ReferenceList[WindowsEventLogAttributes](ds.ref.Append("windows_event_log"))
+	return terra.ReferenceAsList[WindowsEventLogAttributes](ds.ref.Append("windows_event_log"))
 }
 
 type ExtensionAttributes struct {
 	ref terra.Reference
 }
 
-func (e ExtensionAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e ExtensionAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e ExtensionAttributes) InternalWithRef(ref terra.Reference) ExtensionAttributes {
 	return ExtensionAttributes{ref: ref}
 }
 
-func (e ExtensionAttributes) InternalTokens() hclwrite.Tokens {
+func (e ExtensionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
 func (e ExtensionAttributes) ExtensionJson() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("extension_json"))
+	return terra.ReferenceAsString(e.ref.Append("extension_json"))
 }
 
 func (e ExtensionAttributes) ExtensionName() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("extension_name"))
+	return terra.ReferenceAsString(e.ref.Append("extension_name"))
 }
 
 func (e ExtensionAttributes) InputDataSources() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](e.ref.Append("input_data_sources"))
+	return terra.ReferenceAsList[terra.StringValue](e.ref.Append("input_data_sources"))
 }
 
 func (e ExtensionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("name"))
+	return terra.ReferenceAsString(e.ref.Append("name"))
 }
 
 func (e ExtensionAttributes) Streams() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](e.ref.Append("streams"))
+	return terra.ReferenceAsList[terra.StringValue](e.ref.Append("streams"))
 }
 
 type PerformanceCounterAttributes struct {
 	ref terra.Reference
 }
 
-func (pc PerformanceCounterAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc PerformanceCounterAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc PerformanceCounterAttributes) InternalWithRef(ref terra.Reference) PerformanceCounterAttributes {
 	return PerformanceCounterAttributes{ref: ref}
 }
 
-func (pc PerformanceCounterAttributes) InternalTokens() hclwrite.Tokens {
+func (pc PerformanceCounterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
 func (pc PerformanceCounterAttributes) CounterSpecifiers() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](pc.ref.Append("counter_specifiers"))
+	return terra.ReferenceAsList[terra.StringValue](pc.ref.Append("counter_specifiers"))
 }
 
 func (pc PerformanceCounterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("name"))
+	return terra.ReferenceAsString(pc.ref.Append("name"))
 }
 
 func (pc PerformanceCounterAttributes) SamplingFrequencyInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(pc.ref.Append("sampling_frequency_in_seconds"))
+	return terra.ReferenceAsNumber(pc.ref.Append("sampling_frequency_in_seconds"))
 }
 
 func (pc PerformanceCounterAttributes) Streams() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](pc.ref.Append("streams"))
+	return terra.ReferenceAsList[terra.StringValue](pc.ref.Append("streams"))
 }
 
 type SyslogAttributes struct {
 	ref terra.Reference
 }
 
-func (s SyslogAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SyslogAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SyslogAttributes) InternalWithRef(ref terra.Reference) SyslogAttributes {
 	return SyslogAttributes{ref: ref}
 }
 
-func (s SyslogAttributes) InternalTokens() hclwrite.Tokens {
+func (s SyslogAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SyslogAttributes) FacilityNames() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](s.ref.Append("facility_names"))
+	return terra.ReferenceAsList[terra.StringValue](s.ref.Append("facility_names"))
 }
 
 func (s SyslogAttributes) LogLevels() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](s.ref.Append("log_levels"))
+	return terra.ReferenceAsList[terra.StringValue](s.ref.Append("log_levels"))
 }
 
 func (s SyslogAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 func (s SyslogAttributes) Streams() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](s.ref.Append("streams"))
+	return terra.ReferenceAsList[terra.StringValue](s.ref.Append("streams"))
 }
 
 type WindowsEventLogAttributes struct {
 	ref terra.Reference
 }
 
-func (wel WindowsEventLogAttributes) InternalRef() terra.Reference {
-	return wel.ref
+func (wel WindowsEventLogAttributes) InternalRef() (terra.Reference, error) {
+	return wel.ref, nil
 }
 
 func (wel WindowsEventLogAttributes) InternalWithRef(ref terra.Reference) WindowsEventLogAttributes {
 	return WindowsEventLogAttributes{ref: ref}
 }
 
-func (wel WindowsEventLogAttributes) InternalTokens() hclwrite.Tokens {
+func (wel WindowsEventLogAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wel.ref.InternalTokens()
 }
 
 func (wel WindowsEventLogAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(wel.ref.Append("name"))
+	return terra.ReferenceAsString(wel.ref.Append("name"))
 }
 
 func (wel WindowsEventLogAttributes) Streams() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](wel.ref.Append("streams"))
+	return terra.ReferenceAsList[terra.StringValue](wel.ref.Append("streams"))
 }
 
 func (wel WindowsEventLogAttributes) XPathQueries() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](wel.ref.Append("x_path_queries"))
+	return terra.ReferenceAsList[terra.StringValue](wel.ref.Append("x_path_queries"))
 }
 
 type DestinationsAttributes struct {
 	ref terra.Reference
 }
 
-func (d DestinationsAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DestinationsAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DestinationsAttributes) InternalWithRef(ref terra.Reference) DestinationsAttributes {
 	return DestinationsAttributes{ref: ref}
 }
 
-func (d DestinationsAttributes) InternalTokens() hclwrite.Tokens {
+func (d DestinationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d DestinationsAttributes) AzureMonitorMetrics() terra.ListValue[AzureMonitorMetricsAttributes] {
-	return terra.ReferenceList[AzureMonitorMetricsAttributes](d.ref.Append("azure_monitor_metrics"))
+	return terra.ReferenceAsList[AzureMonitorMetricsAttributes](d.ref.Append("azure_monitor_metrics"))
 }
 
 func (d DestinationsAttributes) LogAnalytics() terra.ListValue[LogAnalyticsAttributes] {
-	return terra.ReferenceList[LogAnalyticsAttributes](d.ref.Append("log_analytics"))
+	return terra.ReferenceAsList[LogAnalyticsAttributes](d.ref.Append("log_analytics"))
 }
 
 type AzureMonitorMetricsAttributes struct {
 	ref terra.Reference
 }
 
-func (amm AzureMonitorMetricsAttributes) InternalRef() terra.Reference {
-	return amm.ref
+func (amm AzureMonitorMetricsAttributes) InternalRef() (terra.Reference, error) {
+	return amm.ref, nil
 }
 
 func (amm AzureMonitorMetricsAttributes) InternalWithRef(ref terra.Reference) AzureMonitorMetricsAttributes {
 	return AzureMonitorMetricsAttributes{ref: ref}
 }
 
-func (amm AzureMonitorMetricsAttributes) InternalTokens() hclwrite.Tokens {
+func (amm AzureMonitorMetricsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return amm.ref.InternalTokens()
 }
 
 func (amm AzureMonitorMetricsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(amm.ref.Append("name"))
+	return terra.ReferenceAsString(amm.ref.Append("name"))
 }
 
 type LogAnalyticsAttributes struct {
 	ref terra.Reference
 }
 
-func (la LogAnalyticsAttributes) InternalRef() terra.Reference {
-	return la.ref
+func (la LogAnalyticsAttributes) InternalRef() (terra.Reference, error) {
+	return la.ref, nil
 }
 
 func (la LogAnalyticsAttributes) InternalWithRef(ref terra.Reference) LogAnalyticsAttributes {
 	return LogAnalyticsAttributes{ref: ref}
 }
 
-func (la LogAnalyticsAttributes) InternalTokens() hclwrite.Tokens {
+func (la LogAnalyticsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return la.ref.InternalTokens()
 }
 
 func (la LogAnalyticsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(la.ref.Append("name"))
+	return terra.ReferenceAsString(la.ref.Append("name"))
 }
 
 func (la LogAnalyticsAttributes) WorkspaceResourceId() terra.StringValue {
-	return terra.ReferenceString(la.ref.Append("workspace_resource_id"))
+	return terra.ReferenceAsString(la.ref.Append("workspace_resource_id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type DataFlowState struct {

@@ -4,6 +4,7 @@ package google
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataComputeGlobalAddress creates a new instance of [DataComputeGlobalAddress].
 func NewDataComputeGlobalAddress(name string, args DataComputeGlobalAddressArgs) *DataComputeGlobalAddress {
 	return &DataComputeGlobalAddress{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataComputeGlobalAddress(name string, args DataComputeGlobalAddressArgs)
 
 var _ terra.DataResource = (*DataComputeGlobalAddress)(nil)
 
+// DataComputeGlobalAddress represents the Terraform data resource google_compute_global_address.
 type DataComputeGlobalAddress struct {
 	Name string
 	Args DataComputeGlobalAddressArgs
 }
 
+// DataSource returns the Terraform object type for [DataComputeGlobalAddress].
 func (cga *DataComputeGlobalAddress) DataSource() string {
 	return "google_compute_global_address"
 }
 
+// LocalName returns the local name for [DataComputeGlobalAddress].
 func (cga *DataComputeGlobalAddress) LocalName() string {
 	return cga.Name
 }
 
+// Configuration returns the configuration (args) for [DataComputeGlobalAddress].
 func (cga *DataComputeGlobalAddress) Configuration() interface{} {
 	return cga.Args
 }
 
+// Attributes returns the attributes for [DataComputeGlobalAddress].
 func (cga *DataComputeGlobalAddress) Attributes() dataComputeGlobalAddressAttributes {
 	return dataComputeGlobalAddressAttributes{ref: terra.ReferenceDataResource(cga)}
 }
 
+// DataComputeGlobalAddressArgs contains the configurations for google_compute_global_address.
 type DataComputeGlobalAddressArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -46,26 +53,32 @@ type dataComputeGlobalAddressAttributes struct {
 	ref terra.Reference
 }
 
+// Address returns a reference to field address of google_compute_global_address.
 func (cga dataComputeGlobalAddressAttributes) Address() terra.StringValue {
-	return terra.ReferenceString(cga.ref.Append("address"))
+	return terra.ReferenceAsString(cga.ref.Append("address"))
 }
 
+// Id returns a reference to field id of google_compute_global_address.
 func (cga dataComputeGlobalAddressAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cga.ref.Append("id"))
+	return terra.ReferenceAsString(cga.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_compute_global_address.
 func (cga dataComputeGlobalAddressAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cga.ref.Append("name"))
+	return terra.ReferenceAsString(cga.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_compute_global_address.
 func (cga dataComputeGlobalAddressAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cga.ref.Append("project"))
+	return terra.ReferenceAsString(cga.ref.Append("project"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_global_address.
 func (cga dataComputeGlobalAddressAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(cga.ref.Append("self_link"))
+	return terra.ReferenceAsString(cga.ref.Append("self_link"))
 }
 
+// Status returns a reference to field status of google_compute_global_address.
 func (cga dataComputeGlobalAddressAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(cga.ref.Append("status"))
+	return terra.ReferenceAsString(cga.ref.Append("status"))
 }

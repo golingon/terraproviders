@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataImages creates a new instance of [DataImages].
 func NewDataImages(name string, args DataImagesArgs) *DataImages {
 	return &DataImages{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataImages(name string, args DataImagesArgs) *DataImages {
 
 var _ terra.DataResource = (*DataImages)(nil)
 
+// DataImages represents the Terraform data resource azurerm_images.
 type DataImages struct {
 	Name string
 	Args DataImagesArgs
 }
 
+// DataSource returns the Terraform object type for [DataImages].
 func (i *DataImages) DataSource() string {
 	return "azurerm_images"
 }
 
+// LocalName returns the local name for [DataImages].
 func (i *DataImages) LocalName() string {
 	return i.Name
 }
 
+// Configuration returns the configuration (args) for [DataImages].
 func (i *DataImages) Configuration() interface{} {
 	return i.Args
 }
 
+// Attributes returns the attributes for [DataImages].
 func (i *DataImages) Attributes() dataImagesAttributes {
 	return dataImagesAttributes{ref: terra.ReferenceDataResource(i)}
 }
 
+// DataImagesArgs contains the configurations for azurerm_images.
 type DataImagesArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,22 +60,25 @@ type dataImagesAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_images.
 func (i dataImagesAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("id"))
+	return terra.ReferenceAsString(i.ref.Append("id"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_images.
 func (i dataImagesAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(i.ref.Append("resource_group_name"))
 }
 
+// TagsFilter returns a reference to field tags_filter of azurerm_images.
 func (i dataImagesAttributes) TagsFilter() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](i.ref.Append("tags_filter"))
+	return terra.ReferenceAsMap[terra.StringValue](i.ref.Append("tags_filter"))
 }
 
 func (i dataImagesAttributes) Images() terra.ListValue[dataimages.ImagesAttributes] {
-	return terra.ReferenceList[dataimages.ImagesAttributes](i.ref.Append("images"))
+	return terra.ReferenceAsList[dataimages.ImagesAttributes](i.ref.Append("images"))
 }
 
 func (i dataImagesAttributes) Timeouts() dataimages.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataimages.TimeoutsAttributes](i.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataimages.TimeoutsAttributes](i.ref.Append("timeouts"))
 }

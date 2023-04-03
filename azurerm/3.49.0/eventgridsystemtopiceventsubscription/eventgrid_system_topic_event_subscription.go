@@ -273,828 +273,828 @@ type AdvancedFilterAttributes struct {
 	ref terra.Reference
 }
 
-func (af AdvancedFilterAttributes) InternalRef() terra.Reference {
-	return af.ref
+func (af AdvancedFilterAttributes) InternalRef() (terra.Reference, error) {
+	return af.ref, nil
 }
 
 func (af AdvancedFilterAttributes) InternalWithRef(ref terra.Reference) AdvancedFilterAttributes {
 	return AdvancedFilterAttributes{ref: ref}
 }
 
-func (af AdvancedFilterAttributes) InternalTokens() hclwrite.Tokens {
+func (af AdvancedFilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return af.ref.InternalTokens()
 }
 
 func (af AdvancedFilterAttributes) BoolEquals() terra.ListValue[BoolEqualsAttributes] {
-	return terra.ReferenceList[BoolEqualsAttributes](af.ref.Append("bool_equals"))
+	return terra.ReferenceAsList[BoolEqualsAttributes](af.ref.Append("bool_equals"))
 }
 
 func (af AdvancedFilterAttributes) IsNotNull() terra.ListValue[IsNotNullAttributes] {
-	return terra.ReferenceList[IsNotNullAttributes](af.ref.Append("is_not_null"))
+	return terra.ReferenceAsList[IsNotNullAttributes](af.ref.Append("is_not_null"))
 }
 
 func (af AdvancedFilterAttributes) IsNullOrUndefined() terra.ListValue[IsNullOrUndefinedAttributes] {
-	return terra.ReferenceList[IsNullOrUndefinedAttributes](af.ref.Append("is_null_or_undefined"))
+	return terra.ReferenceAsList[IsNullOrUndefinedAttributes](af.ref.Append("is_null_or_undefined"))
 }
 
 func (af AdvancedFilterAttributes) NumberGreaterThan() terra.ListValue[NumberGreaterThanAttributes] {
-	return terra.ReferenceList[NumberGreaterThanAttributes](af.ref.Append("number_greater_than"))
+	return terra.ReferenceAsList[NumberGreaterThanAttributes](af.ref.Append("number_greater_than"))
 }
 
 func (af AdvancedFilterAttributes) NumberGreaterThanOrEquals() terra.ListValue[NumberGreaterThanOrEqualsAttributes] {
-	return terra.ReferenceList[NumberGreaterThanOrEqualsAttributes](af.ref.Append("number_greater_than_or_equals"))
+	return terra.ReferenceAsList[NumberGreaterThanOrEqualsAttributes](af.ref.Append("number_greater_than_or_equals"))
 }
 
 func (af AdvancedFilterAttributes) NumberIn() terra.ListValue[NumberInAttributes] {
-	return terra.ReferenceList[NumberInAttributes](af.ref.Append("number_in"))
+	return terra.ReferenceAsList[NumberInAttributes](af.ref.Append("number_in"))
 }
 
 func (af AdvancedFilterAttributes) NumberInRange() terra.ListValue[NumberInRangeAttributes] {
-	return terra.ReferenceList[NumberInRangeAttributes](af.ref.Append("number_in_range"))
+	return terra.ReferenceAsList[NumberInRangeAttributes](af.ref.Append("number_in_range"))
 }
 
 func (af AdvancedFilterAttributes) NumberLessThan() terra.ListValue[NumberLessThanAttributes] {
-	return terra.ReferenceList[NumberLessThanAttributes](af.ref.Append("number_less_than"))
+	return terra.ReferenceAsList[NumberLessThanAttributes](af.ref.Append("number_less_than"))
 }
 
 func (af AdvancedFilterAttributes) NumberLessThanOrEquals() terra.ListValue[NumberLessThanOrEqualsAttributes] {
-	return terra.ReferenceList[NumberLessThanOrEqualsAttributes](af.ref.Append("number_less_than_or_equals"))
+	return terra.ReferenceAsList[NumberLessThanOrEqualsAttributes](af.ref.Append("number_less_than_or_equals"))
 }
 
 func (af AdvancedFilterAttributes) NumberNotIn() terra.ListValue[NumberNotInAttributes] {
-	return terra.ReferenceList[NumberNotInAttributes](af.ref.Append("number_not_in"))
+	return terra.ReferenceAsList[NumberNotInAttributes](af.ref.Append("number_not_in"))
 }
 
 func (af AdvancedFilterAttributes) NumberNotInRange() terra.ListValue[NumberNotInRangeAttributes] {
-	return terra.ReferenceList[NumberNotInRangeAttributes](af.ref.Append("number_not_in_range"))
+	return terra.ReferenceAsList[NumberNotInRangeAttributes](af.ref.Append("number_not_in_range"))
 }
 
 func (af AdvancedFilterAttributes) StringBeginsWith() terra.ListValue[StringBeginsWithAttributes] {
-	return terra.ReferenceList[StringBeginsWithAttributes](af.ref.Append("string_begins_with"))
+	return terra.ReferenceAsList[StringBeginsWithAttributes](af.ref.Append("string_begins_with"))
 }
 
 func (af AdvancedFilterAttributes) StringContains() terra.ListValue[StringContainsAttributes] {
-	return terra.ReferenceList[StringContainsAttributes](af.ref.Append("string_contains"))
+	return terra.ReferenceAsList[StringContainsAttributes](af.ref.Append("string_contains"))
 }
 
 func (af AdvancedFilterAttributes) StringEndsWith() terra.ListValue[StringEndsWithAttributes] {
-	return terra.ReferenceList[StringEndsWithAttributes](af.ref.Append("string_ends_with"))
+	return terra.ReferenceAsList[StringEndsWithAttributes](af.ref.Append("string_ends_with"))
 }
 
 func (af AdvancedFilterAttributes) StringIn() terra.ListValue[StringInAttributes] {
-	return terra.ReferenceList[StringInAttributes](af.ref.Append("string_in"))
+	return terra.ReferenceAsList[StringInAttributes](af.ref.Append("string_in"))
 }
 
 func (af AdvancedFilterAttributes) StringNotBeginsWith() terra.ListValue[StringNotBeginsWithAttributes] {
-	return terra.ReferenceList[StringNotBeginsWithAttributes](af.ref.Append("string_not_begins_with"))
+	return terra.ReferenceAsList[StringNotBeginsWithAttributes](af.ref.Append("string_not_begins_with"))
 }
 
 func (af AdvancedFilterAttributes) StringNotContains() terra.ListValue[StringNotContainsAttributes] {
-	return terra.ReferenceList[StringNotContainsAttributes](af.ref.Append("string_not_contains"))
+	return terra.ReferenceAsList[StringNotContainsAttributes](af.ref.Append("string_not_contains"))
 }
 
 func (af AdvancedFilterAttributes) StringNotEndsWith() terra.ListValue[StringNotEndsWithAttributes] {
-	return terra.ReferenceList[StringNotEndsWithAttributes](af.ref.Append("string_not_ends_with"))
+	return terra.ReferenceAsList[StringNotEndsWithAttributes](af.ref.Append("string_not_ends_with"))
 }
 
 func (af AdvancedFilterAttributes) StringNotIn() terra.ListValue[StringNotInAttributes] {
-	return terra.ReferenceList[StringNotInAttributes](af.ref.Append("string_not_in"))
+	return terra.ReferenceAsList[StringNotInAttributes](af.ref.Append("string_not_in"))
 }
 
 type BoolEqualsAttributes struct {
 	ref terra.Reference
 }
 
-func (be BoolEqualsAttributes) InternalRef() terra.Reference {
-	return be.ref
+func (be BoolEqualsAttributes) InternalRef() (terra.Reference, error) {
+	return be.ref, nil
 }
 
 func (be BoolEqualsAttributes) InternalWithRef(ref terra.Reference) BoolEqualsAttributes {
 	return BoolEqualsAttributes{ref: ref}
 }
 
-func (be BoolEqualsAttributes) InternalTokens() hclwrite.Tokens {
+func (be BoolEqualsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return be.ref.InternalTokens()
 }
 
 func (be BoolEqualsAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(be.ref.Append("key"))
+	return terra.ReferenceAsString(be.ref.Append("key"))
 }
 
 func (be BoolEqualsAttributes) Value() terra.BoolValue {
-	return terra.ReferenceBool(be.ref.Append("value"))
+	return terra.ReferenceAsBool(be.ref.Append("value"))
 }
 
 type IsNotNullAttributes struct {
 	ref terra.Reference
 }
 
-func (inn IsNotNullAttributes) InternalRef() terra.Reference {
-	return inn.ref
+func (inn IsNotNullAttributes) InternalRef() (terra.Reference, error) {
+	return inn.ref, nil
 }
 
 func (inn IsNotNullAttributes) InternalWithRef(ref terra.Reference) IsNotNullAttributes {
 	return IsNotNullAttributes{ref: ref}
 }
 
-func (inn IsNotNullAttributes) InternalTokens() hclwrite.Tokens {
+func (inn IsNotNullAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return inn.ref.InternalTokens()
 }
 
 func (inn IsNotNullAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(inn.ref.Append("key"))
+	return terra.ReferenceAsString(inn.ref.Append("key"))
 }
 
 type IsNullOrUndefinedAttributes struct {
 	ref terra.Reference
 }
 
-func (inou IsNullOrUndefinedAttributes) InternalRef() terra.Reference {
-	return inou.ref
+func (inou IsNullOrUndefinedAttributes) InternalRef() (terra.Reference, error) {
+	return inou.ref, nil
 }
 
 func (inou IsNullOrUndefinedAttributes) InternalWithRef(ref terra.Reference) IsNullOrUndefinedAttributes {
 	return IsNullOrUndefinedAttributes{ref: ref}
 }
 
-func (inou IsNullOrUndefinedAttributes) InternalTokens() hclwrite.Tokens {
+func (inou IsNullOrUndefinedAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return inou.ref.InternalTokens()
 }
 
 func (inou IsNullOrUndefinedAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(inou.ref.Append("key"))
+	return terra.ReferenceAsString(inou.ref.Append("key"))
 }
 
 type NumberGreaterThanAttributes struct {
 	ref terra.Reference
 }
 
-func (ngt NumberGreaterThanAttributes) InternalRef() terra.Reference {
-	return ngt.ref
+func (ngt NumberGreaterThanAttributes) InternalRef() (terra.Reference, error) {
+	return ngt.ref, nil
 }
 
 func (ngt NumberGreaterThanAttributes) InternalWithRef(ref terra.Reference) NumberGreaterThanAttributes {
 	return NumberGreaterThanAttributes{ref: ref}
 }
 
-func (ngt NumberGreaterThanAttributes) InternalTokens() hclwrite.Tokens {
+func (ngt NumberGreaterThanAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ngt.ref.InternalTokens()
 }
 
 func (ngt NumberGreaterThanAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(ngt.ref.Append("key"))
+	return terra.ReferenceAsString(ngt.ref.Append("key"))
 }
 
 func (ngt NumberGreaterThanAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(ngt.ref.Append("value"))
+	return terra.ReferenceAsNumber(ngt.ref.Append("value"))
 }
 
 type NumberGreaterThanOrEqualsAttributes struct {
 	ref terra.Reference
 }
 
-func (ngtoe NumberGreaterThanOrEqualsAttributes) InternalRef() terra.Reference {
-	return ngtoe.ref
+func (ngtoe NumberGreaterThanOrEqualsAttributes) InternalRef() (terra.Reference, error) {
+	return ngtoe.ref, nil
 }
 
 func (ngtoe NumberGreaterThanOrEqualsAttributes) InternalWithRef(ref terra.Reference) NumberGreaterThanOrEqualsAttributes {
 	return NumberGreaterThanOrEqualsAttributes{ref: ref}
 }
 
-func (ngtoe NumberGreaterThanOrEqualsAttributes) InternalTokens() hclwrite.Tokens {
+func (ngtoe NumberGreaterThanOrEqualsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ngtoe.ref.InternalTokens()
 }
 
 func (ngtoe NumberGreaterThanOrEqualsAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(ngtoe.ref.Append("key"))
+	return terra.ReferenceAsString(ngtoe.ref.Append("key"))
 }
 
 func (ngtoe NumberGreaterThanOrEqualsAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(ngtoe.ref.Append("value"))
+	return terra.ReferenceAsNumber(ngtoe.ref.Append("value"))
 }
 
 type NumberInAttributes struct {
 	ref terra.Reference
 }
 
-func (ni NumberInAttributes) InternalRef() terra.Reference {
-	return ni.ref
+func (ni NumberInAttributes) InternalRef() (terra.Reference, error) {
+	return ni.ref, nil
 }
 
 func (ni NumberInAttributes) InternalWithRef(ref terra.Reference) NumberInAttributes {
 	return NumberInAttributes{ref: ref}
 }
 
-func (ni NumberInAttributes) InternalTokens() hclwrite.Tokens {
+func (ni NumberInAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ni.ref.InternalTokens()
 }
 
 func (ni NumberInAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("key"))
+	return terra.ReferenceAsString(ni.ref.Append("key"))
 }
 
 func (ni NumberInAttributes) Values() terra.ListValue[terra.NumberValue] {
-	return terra.ReferenceList[terra.NumberValue](ni.ref.Append("values"))
+	return terra.ReferenceAsList[terra.NumberValue](ni.ref.Append("values"))
 }
 
 type NumberInRangeAttributes struct {
 	ref terra.Reference
 }
 
-func (nir NumberInRangeAttributes) InternalRef() terra.Reference {
-	return nir.ref
+func (nir NumberInRangeAttributes) InternalRef() (terra.Reference, error) {
+	return nir.ref, nil
 }
 
 func (nir NumberInRangeAttributes) InternalWithRef(ref terra.Reference) NumberInRangeAttributes {
 	return NumberInRangeAttributes{ref: ref}
 }
 
-func (nir NumberInRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (nir NumberInRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nir.ref.InternalTokens()
 }
 
 func (nir NumberInRangeAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(nir.ref.Append("key"))
+	return terra.ReferenceAsString(nir.ref.Append("key"))
 }
 
 func (nir NumberInRangeAttributes) Values() terra.ListValue[terra.ListValue[terra.NumberValue]] {
-	return terra.ReferenceList[terra.ListValue[terra.NumberValue]](nir.ref.Append("values"))
+	return terra.ReferenceAsList[terra.ListValue[terra.NumberValue]](nir.ref.Append("values"))
 }
 
 type NumberLessThanAttributes struct {
 	ref terra.Reference
 }
 
-func (nlt NumberLessThanAttributes) InternalRef() terra.Reference {
-	return nlt.ref
+func (nlt NumberLessThanAttributes) InternalRef() (terra.Reference, error) {
+	return nlt.ref, nil
 }
 
 func (nlt NumberLessThanAttributes) InternalWithRef(ref terra.Reference) NumberLessThanAttributes {
 	return NumberLessThanAttributes{ref: ref}
 }
 
-func (nlt NumberLessThanAttributes) InternalTokens() hclwrite.Tokens {
+func (nlt NumberLessThanAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nlt.ref.InternalTokens()
 }
 
 func (nlt NumberLessThanAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(nlt.ref.Append("key"))
+	return terra.ReferenceAsString(nlt.ref.Append("key"))
 }
 
 func (nlt NumberLessThanAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(nlt.ref.Append("value"))
+	return terra.ReferenceAsNumber(nlt.ref.Append("value"))
 }
 
 type NumberLessThanOrEqualsAttributes struct {
 	ref terra.Reference
 }
 
-func (nltoe NumberLessThanOrEqualsAttributes) InternalRef() terra.Reference {
-	return nltoe.ref
+func (nltoe NumberLessThanOrEqualsAttributes) InternalRef() (terra.Reference, error) {
+	return nltoe.ref, nil
 }
 
 func (nltoe NumberLessThanOrEqualsAttributes) InternalWithRef(ref terra.Reference) NumberLessThanOrEqualsAttributes {
 	return NumberLessThanOrEqualsAttributes{ref: ref}
 }
 
-func (nltoe NumberLessThanOrEqualsAttributes) InternalTokens() hclwrite.Tokens {
+func (nltoe NumberLessThanOrEqualsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nltoe.ref.InternalTokens()
 }
 
 func (nltoe NumberLessThanOrEqualsAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(nltoe.ref.Append("key"))
+	return terra.ReferenceAsString(nltoe.ref.Append("key"))
 }
 
 func (nltoe NumberLessThanOrEqualsAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(nltoe.ref.Append("value"))
+	return terra.ReferenceAsNumber(nltoe.ref.Append("value"))
 }
 
 type NumberNotInAttributes struct {
 	ref terra.Reference
 }
 
-func (nni NumberNotInAttributes) InternalRef() terra.Reference {
-	return nni.ref
+func (nni NumberNotInAttributes) InternalRef() (terra.Reference, error) {
+	return nni.ref, nil
 }
 
 func (nni NumberNotInAttributes) InternalWithRef(ref terra.Reference) NumberNotInAttributes {
 	return NumberNotInAttributes{ref: ref}
 }
 
-func (nni NumberNotInAttributes) InternalTokens() hclwrite.Tokens {
+func (nni NumberNotInAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nni.ref.InternalTokens()
 }
 
 func (nni NumberNotInAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(nni.ref.Append("key"))
+	return terra.ReferenceAsString(nni.ref.Append("key"))
 }
 
 func (nni NumberNotInAttributes) Values() terra.ListValue[terra.NumberValue] {
-	return terra.ReferenceList[terra.NumberValue](nni.ref.Append("values"))
+	return terra.ReferenceAsList[terra.NumberValue](nni.ref.Append("values"))
 }
 
 type NumberNotInRangeAttributes struct {
 	ref terra.Reference
 }
 
-func (nnir NumberNotInRangeAttributes) InternalRef() terra.Reference {
-	return nnir.ref
+func (nnir NumberNotInRangeAttributes) InternalRef() (terra.Reference, error) {
+	return nnir.ref, nil
 }
 
 func (nnir NumberNotInRangeAttributes) InternalWithRef(ref terra.Reference) NumberNotInRangeAttributes {
 	return NumberNotInRangeAttributes{ref: ref}
 }
 
-func (nnir NumberNotInRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (nnir NumberNotInRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nnir.ref.InternalTokens()
 }
 
 func (nnir NumberNotInRangeAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(nnir.ref.Append("key"))
+	return terra.ReferenceAsString(nnir.ref.Append("key"))
 }
 
 func (nnir NumberNotInRangeAttributes) Values() terra.ListValue[terra.ListValue[terra.NumberValue]] {
-	return terra.ReferenceList[terra.ListValue[terra.NumberValue]](nnir.ref.Append("values"))
+	return terra.ReferenceAsList[terra.ListValue[terra.NumberValue]](nnir.ref.Append("values"))
 }
 
 type StringBeginsWithAttributes struct {
 	ref terra.Reference
 }
 
-func (sbw StringBeginsWithAttributes) InternalRef() terra.Reference {
-	return sbw.ref
+func (sbw StringBeginsWithAttributes) InternalRef() (terra.Reference, error) {
+	return sbw.ref, nil
 }
 
 func (sbw StringBeginsWithAttributes) InternalWithRef(ref terra.Reference) StringBeginsWithAttributes {
 	return StringBeginsWithAttributes{ref: ref}
 }
 
-func (sbw StringBeginsWithAttributes) InternalTokens() hclwrite.Tokens {
+func (sbw StringBeginsWithAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sbw.ref.InternalTokens()
 }
 
 func (sbw StringBeginsWithAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(sbw.ref.Append("key"))
+	return terra.ReferenceAsString(sbw.ref.Append("key"))
 }
 
 func (sbw StringBeginsWithAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sbw.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](sbw.ref.Append("values"))
 }
 
 type StringContainsAttributes struct {
 	ref terra.Reference
 }
 
-func (sc StringContainsAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc StringContainsAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc StringContainsAttributes) InternalWithRef(ref terra.Reference) StringContainsAttributes {
 	return StringContainsAttributes{ref: ref}
 }
 
-func (sc StringContainsAttributes) InternalTokens() hclwrite.Tokens {
+func (sc StringContainsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
 func (sc StringContainsAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("key"))
+	return terra.ReferenceAsString(sc.ref.Append("key"))
 }
 
 func (sc StringContainsAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sc.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](sc.ref.Append("values"))
 }
 
 type StringEndsWithAttributes struct {
 	ref terra.Reference
 }
 
-func (sew StringEndsWithAttributes) InternalRef() terra.Reference {
-	return sew.ref
+func (sew StringEndsWithAttributes) InternalRef() (terra.Reference, error) {
+	return sew.ref, nil
 }
 
 func (sew StringEndsWithAttributes) InternalWithRef(ref terra.Reference) StringEndsWithAttributes {
 	return StringEndsWithAttributes{ref: ref}
 }
 
-func (sew StringEndsWithAttributes) InternalTokens() hclwrite.Tokens {
+func (sew StringEndsWithAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sew.ref.InternalTokens()
 }
 
 func (sew StringEndsWithAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(sew.ref.Append("key"))
+	return terra.ReferenceAsString(sew.ref.Append("key"))
 }
 
 func (sew StringEndsWithAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sew.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](sew.ref.Append("values"))
 }
 
 type StringInAttributes struct {
 	ref terra.Reference
 }
 
-func (si StringInAttributes) InternalRef() terra.Reference {
-	return si.ref
+func (si StringInAttributes) InternalRef() (terra.Reference, error) {
+	return si.ref, nil
 }
 
 func (si StringInAttributes) InternalWithRef(ref terra.Reference) StringInAttributes {
 	return StringInAttributes{ref: ref}
 }
 
-func (si StringInAttributes) InternalTokens() hclwrite.Tokens {
+func (si StringInAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return si.ref.InternalTokens()
 }
 
 func (si StringInAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("key"))
+	return terra.ReferenceAsString(si.ref.Append("key"))
 }
 
 func (si StringInAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](si.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](si.ref.Append("values"))
 }
 
 type StringNotBeginsWithAttributes struct {
 	ref terra.Reference
 }
 
-func (snbw StringNotBeginsWithAttributes) InternalRef() terra.Reference {
-	return snbw.ref
+func (snbw StringNotBeginsWithAttributes) InternalRef() (terra.Reference, error) {
+	return snbw.ref, nil
 }
 
 func (snbw StringNotBeginsWithAttributes) InternalWithRef(ref terra.Reference) StringNotBeginsWithAttributes {
 	return StringNotBeginsWithAttributes{ref: ref}
 }
 
-func (snbw StringNotBeginsWithAttributes) InternalTokens() hclwrite.Tokens {
+func (snbw StringNotBeginsWithAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return snbw.ref.InternalTokens()
 }
 
 func (snbw StringNotBeginsWithAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(snbw.ref.Append("key"))
+	return terra.ReferenceAsString(snbw.ref.Append("key"))
 }
 
 func (snbw StringNotBeginsWithAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](snbw.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](snbw.ref.Append("values"))
 }
 
 type StringNotContainsAttributes struct {
 	ref terra.Reference
 }
 
-func (snc StringNotContainsAttributes) InternalRef() terra.Reference {
-	return snc.ref
+func (snc StringNotContainsAttributes) InternalRef() (terra.Reference, error) {
+	return snc.ref, nil
 }
 
 func (snc StringNotContainsAttributes) InternalWithRef(ref terra.Reference) StringNotContainsAttributes {
 	return StringNotContainsAttributes{ref: ref}
 }
 
-func (snc StringNotContainsAttributes) InternalTokens() hclwrite.Tokens {
+func (snc StringNotContainsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return snc.ref.InternalTokens()
 }
 
 func (snc StringNotContainsAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(snc.ref.Append("key"))
+	return terra.ReferenceAsString(snc.ref.Append("key"))
 }
 
 func (snc StringNotContainsAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](snc.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](snc.ref.Append("values"))
 }
 
 type StringNotEndsWithAttributes struct {
 	ref terra.Reference
 }
 
-func (snew StringNotEndsWithAttributes) InternalRef() terra.Reference {
-	return snew.ref
+func (snew StringNotEndsWithAttributes) InternalRef() (terra.Reference, error) {
+	return snew.ref, nil
 }
 
 func (snew StringNotEndsWithAttributes) InternalWithRef(ref terra.Reference) StringNotEndsWithAttributes {
 	return StringNotEndsWithAttributes{ref: ref}
 }
 
-func (snew StringNotEndsWithAttributes) InternalTokens() hclwrite.Tokens {
+func (snew StringNotEndsWithAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return snew.ref.InternalTokens()
 }
 
 func (snew StringNotEndsWithAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(snew.ref.Append("key"))
+	return terra.ReferenceAsString(snew.ref.Append("key"))
 }
 
 func (snew StringNotEndsWithAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](snew.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](snew.ref.Append("values"))
 }
 
 type StringNotInAttributes struct {
 	ref terra.Reference
 }
 
-func (sni StringNotInAttributes) InternalRef() terra.Reference {
-	return sni.ref
+func (sni StringNotInAttributes) InternalRef() (terra.Reference, error) {
+	return sni.ref, nil
 }
 
 func (sni StringNotInAttributes) InternalWithRef(ref terra.Reference) StringNotInAttributes {
 	return StringNotInAttributes{ref: ref}
 }
 
-func (sni StringNotInAttributes) InternalTokens() hclwrite.Tokens {
+func (sni StringNotInAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sni.ref.InternalTokens()
 }
 
 func (sni StringNotInAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(sni.ref.Append("key"))
+	return terra.ReferenceAsString(sni.ref.Append("key"))
 }
 
 func (sni StringNotInAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sni.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](sni.ref.Append("values"))
 }
 
 type AzureFunctionEndpointAttributes struct {
 	ref terra.Reference
 }
 
-func (afe AzureFunctionEndpointAttributes) InternalRef() terra.Reference {
-	return afe.ref
+func (afe AzureFunctionEndpointAttributes) InternalRef() (terra.Reference, error) {
+	return afe.ref, nil
 }
 
 func (afe AzureFunctionEndpointAttributes) InternalWithRef(ref terra.Reference) AzureFunctionEndpointAttributes {
 	return AzureFunctionEndpointAttributes{ref: ref}
 }
 
-func (afe AzureFunctionEndpointAttributes) InternalTokens() hclwrite.Tokens {
+func (afe AzureFunctionEndpointAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return afe.ref.InternalTokens()
 }
 
 func (afe AzureFunctionEndpointAttributes) FunctionId() terra.StringValue {
-	return terra.ReferenceString(afe.ref.Append("function_id"))
+	return terra.ReferenceAsString(afe.ref.Append("function_id"))
 }
 
 func (afe AzureFunctionEndpointAttributes) MaxEventsPerBatch() terra.NumberValue {
-	return terra.ReferenceNumber(afe.ref.Append("max_events_per_batch"))
+	return terra.ReferenceAsNumber(afe.ref.Append("max_events_per_batch"))
 }
 
 func (afe AzureFunctionEndpointAttributes) PreferredBatchSizeInKilobytes() terra.NumberValue {
-	return terra.ReferenceNumber(afe.ref.Append("preferred_batch_size_in_kilobytes"))
+	return terra.ReferenceAsNumber(afe.ref.Append("preferred_batch_size_in_kilobytes"))
 }
 
 type DeadLetterIdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (dli DeadLetterIdentityAttributes) InternalRef() terra.Reference {
-	return dli.ref
+func (dli DeadLetterIdentityAttributes) InternalRef() (terra.Reference, error) {
+	return dli.ref, nil
 }
 
 func (dli DeadLetterIdentityAttributes) InternalWithRef(ref terra.Reference) DeadLetterIdentityAttributes {
 	return DeadLetterIdentityAttributes{ref: ref}
 }
 
-func (dli DeadLetterIdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (dli DeadLetterIdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dli.ref.InternalTokens()
 }
 
 func (dli DeadLetterIdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(dli.ref.Append("type"))
+	return terra.ReferenceAsString(dli.ref.Append("type"))
 }
 
 func (dli DeadLetterIdentityAttributes) UserAssignedIdentity() terra.StringValue {
-	return terra.ReferenceString(dli.ref.Append("user_assigned_identity"))
+	return terra.ReferenceAsString(dli.ref.Append("user_assigned_identity"))
 }
 
 type DeliveryIdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (di DeliveryIdentityAttributes) InternalRef() terra.Reference {
-	return di.ref
+func (di DeliveryIdentityAttributes) InternalRef() (terra.Reference, error) {
+	return di.ref, nil
 }
 
 func (di DeliveryIdentityAttributes) InternalWithRef(ref terra.Reference) DeliveryIdentityAttributes {
 	return DeliveryIdentityAttributes{ref: ref}
 }
 
-func (di DeliveryIdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (di DeliveryIdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return di.ref.InternalTokens()
 }
 
 func (di DeliveryIdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("type"))
+	return terra.ReferenceAsString(di.ref.Append("type"))
 }
 
 func (di DeliveryIdentityAttributes) UserAssignedIdentity() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("user_assigned_identity"))
+	return terra.ReferenceAsString(di.ref.Append("user_assigned_identity"))
 }
 
 type DeliveryPropertyAttributes struct {
 	ref terra.Reference
 }
 
-func (dp DeliveryPropertyAttributes) InternalRef() terra.Reference {
-	return dp.ref
+func (dp DeliveryPropertyAttributes) InternalRef() (terra.Reference, error) {
+	return dp.ref, nil
 }
 
 func (dp DeliveryPropertyAttributes) InternalWithRef(ref terra.Reference) DeliveryPropertyAttributes {
 	return DeliveryPropertyAttributes{ref: ref}
 }
 
-func (dp DeliveryPropertyAttributes) InternalTokens() hclwrite.Tokens {
+func (dp DeliveryPropertyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dp.ref.InternalTokens()
 }
 
 func (dp DeliveryPropertyAttributes) HeaderName() terra.StringValue {
-	return terra.ReferenceString(dp.ref.Append("header_name"))
+	return terra.ReferenceAsString(dp.ref.Append("header_name"))
 }
 
 func (dp DeliveryPropertyAttributes) Secret() terra.BoolValue {
-	return terra.ReferenceBool(dp.ref.Append("secret"))
+	return terra.ReferenceAsBool(dp.ref.Append("secret"))
 }
 
 func (dp DeliveryPropertyAttributes) SourceField() terra.StringValue {
-	return terra.ReferenceString(dp.ref.Append("source_field"))
+	return terra.ReferenceAsString(dp.ref.Append("source_field"))
 }
 
 func (dp DeliveryPropertyAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(dp.ref.Append("type"))
+	return terra.ReferenceAsString(dp.ref.Append("type"))
 }
 
 func (dp DeliveryPropertyAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(dp.ref.Append("value"))
+	return terra.ReferenceAsString(dp.ref.Append("value"))
 }
 
 type RetryPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (rp RetryPolicyAttributes) InternalRef() terra.Reference {
-	return rp.ref
+func (rp RetryPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return rp.ref, nil
 }
 
 func (rp RetryPolicyAttributes) InternalWithRef(ref terra.Reference) RetryPolicyAttributes {
 	return RetryPolicyAttributes{ref: ref}
 }
 
-func (rp RetryPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (rp RetryPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rp.ref.InternalTokens()
 }
 
 func (rp RetryPolicyAttributes) EventTimeToLive() terra.NumberValue {
-	return terra.ReferenceNumber(rp.ref.Append("event_time_to_live"))
+	return terra.ReferenceAsNumber(rp.ref.Append("event_time_to_live"))
 }
 
 func (rp RetryPolicyAttributes) MaxDeliveryAttempts() terra.NumberValue {
-	return terra.ReferenceNumber(rp.ref.Append("max_delivery_attempts"))
+	return terra.ReferenceAsNumber(rp.ref.Append("max_delivery_attempts"))
 }
 
 type StorageBlobDeadLetterDestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (sbdld StorageBlobDeadLetterDestinationAttributes) InternalRef() terra.Reference {
-	return sbdld.ref
+func (sbdld StorageBlobDeadLetterDestinationAttributes) InternalRef() (terra.Reference, error) {
+	return sbdld.ref, nil
 }
 
 func (sbdld StorageBlobDeadLetterDestinationAttributes) InternalWithRef(ref terra.Reference) StorageBlobDeadLetterDestinationAttributes {
 	return StorageBlobDeadLetterDestinationAttributes{ref: ref}
 }
 
-func (sbdld StorageBlobDeadLetterDestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (sbdld StorageBlobDeadLetterDestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sbdld.ref.InternalTokens()
 }
 
 func (sbdld StorageBlobDeadLetterDestinationAttributes) StorageAccountId() terra.StringValue {
-	return terra.ReferenceString(sbdld.ref.Append("storage_account_id"))
+	return terra.ReferenceAsString(sbdld.ref.Append("storage_account_id"))
 }
 
 func (sbdld StorageBlobDeadLetterDestinationAttributes) StorageBlobContainerName() terra.StringValue {
-	return terra.ReferenceString(sbdld.ref.Append("storage_blob_container_name"))
+	return terra.ReferenceAsString(sbdld.ref.Append("storage_blob_container_name"))
 }
 
 type StorageQueueEndpointAttributes struct {
 	ref terra.Reference
 }
 
-func (sqe StorageQueueEndpointAttributes) InternalRef() terra.Reference {
-	return sqe.ref
+func (sqe StorageQueueEndpointAttributes) InternalRef() (terra.Reference, error) {
+	return sqe.ref, nil
 }
 
 func (sqe StorageQueueEndpointAttributes) InternalWithRef(ref terra.Reference) StorageQueueEndpointAttributes {
 	return StorageQueueEndpointAttributes{ref: ref}
 }
 
-func (sqe StorageQueueEndpointAttributes) InternalTokens() hclwrite.Tokens {
+func (sqe StorageQueueEndpointAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sqe.ref.InternalTokens()
 }
 
 func (sqe StorageQueueEndpointAttributes) QueueMessageTimeToLiveInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(sqe.ref.Append("queue_message_time_to_live_in_seconds"))
+	return terra.ReferenceAsNumber(sqe.ref.Append("queue_message_time_to_live_in_seconds"))
 }
 
 func (sqe StorageQueueEndpointAttributes) QueueName() terra.StringValue {
-	return terra.ReferenceString(sqe.ref.Append("queue_name"))
+	return terra.ReferenceAsString(sqe.ref.Append("queue_name"))
 }
 
 func (sqe StorageQueueEndpointAttributes) StorageAccountId() terra.StringValue {
-	return terra.ReferenceString(sqe.ref.Append("storage_account_id"))
+	return terra.ReferenceAsString(sqe.ref.Append("storage_account_id"))
 }
 
 type SubjectFilterAttributes struct {
 	ref terra.Reference
 }
 
-func (sf SubjectFilterAttributes) InternalRef() terra.Reference {
-	return sf.ref
+func (sf SubjectFilterAttributes) InternalRef() (terra.Reference, error) {
+	return sf.ref, nil
 }
 
 func (sf SubjectFilterAttributes) InternalWithRef(ref terra.Reference) SubjectFilterAttributes {
 	return SubjectFilterAttributes{ref: ref}
 }
 
-func (sf SubjectFilterAttributes) InternalTokens() hclwrite.Tokens {
+func (sf SubjectFilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sf.ref.InternalTokens()
 }
 
 func (sf SubjectFilterAttributes) CaseSensitive() terra.BoolValue {
-	return terra.ReferenceBool(sf.ref.Append("case_sensitive"))
+	return terra.ReferenceAsBool(sf.ref.Append("case_sensitive"))
 }
 
 func (sf SubjectFilterAttributes) SubjectBeginsWith() terra.StringValue {
-	return terra.ReferenceString(sf.ref.Append("subject_begins_with"))
+	return terra.ReferenceAsString(sf.ref.Append("subject_begins_with"))
 }
 
 func (sf SubjectFilterAttributes) SubjectEndsWith() terra.StringValue {
-	return terra.ReferenceString(sf.ref.Append("subject_ends_with"))
+	return terra.ReferenceAsString(sf.ref.Append("subject_ends_with"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type WebhookEndpointAttributes struct {
 	ref terra.Reference
 }
 
-func (we WebhookEndpointAttributes) InternalRef() terra.Reference {
-	return we.ref
+func (we WebhookEndpointAttributes) InternalRef() (terra.Reference, error) {
+	return we.ref, nil
 }
 
 func (we WebhookEndpointAttributes) InternalWithRef(ref terra.Reference) WebhookEndpointAttributes {
 	return WebhookEndpointAttributes{ref: ref}
 }
 
-func (we WebhookEndpointAttributes) InternalTokens() hclwrite.Tokens {
+func (we WebhookEndpointAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return we.ref.InternalTokens()
 }
 
 func (we WebhookEndpointAttributes) ActiveDirectoryAppIdOrUri() terra.StringValue {
-	return terra.ReferenceString(we.ref.Append("active_directory_app_id_or_uri"))
+	return terra.ReferenceAsString(we.ref.Append("active_directory_app_id_or_uri"))
 }
 
 func (we WebhookEndpointAttributes) ActiveDirectoryTenantId() terra.StringValue {
-	return terra.ReferenceString(we.ref.Append("active_directory_tenant_id"))
+	return terra.ReferenceAsString(we.ref.Append("active_directory_tenant_id"))
 }
 
 func (we WebhookEndpointAttributes) BaseUrl() terra.StringValue {
-	return terra.ReferenceString(we.ref.Append("base_url"))
+	return terra.ReferenceAsString(we.ref.Append("base_url"))
 }
 
 func (we WebhookEndpointAttributes) MaxEventsPerBatch() terra.NumberValue {
-	return terra.ReferenceNumber(we.ref.Append("max_events_per_batch"))
+	return terra.ReferenceAsNumber(we.ref.Append("max_events_per_batch"))
 }
 
 func (we WebhookEndpointAttributes) PreferredBatchSizeInKilobytes() terra.NumberValue {
-	return terra.ReferenceNumber(we.ref.Append("preferred_batch_size_in_kilobytes"))
+	return terra.ReferenceAsNumber(we.ref.Append("preferred_batch_size_in_kilobytes"))
 }
 
 func (we WebhookEndpointAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(we.ref.Append("url"))
+	return terra.ReferenceAsString(we.ref.Append("url"))
 }
 
 type AdvancedFilterState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCosmosdbGremlinGraph creates a new instance of [CosmosdbGremlinGraph].
 func NewCosmosdbGremlinGraph(name string, args CosmosdbGremlinGraphArgs) *CosmosdbGremlinGraph {
 	return &CosmosdbGremlinGraph{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCosmosdbGremlinGraph(name string, args CosmosdbGremlinGraphArgs) *Cosmos
 
 var _ terra.Resource = (*CosmosdbGremlinGraph)(nil)
 
+// CosmosdbGremlinGraph represents the Terraform resource azurerm_cosmosdb_gremlin_graph.
 type CosmosdbGremlinGraph struct {
-	Name  string
-	Args  CosmosdbGremlinGraphArgs
-	state *cosmosdbGremlinGraphState
+	Name      string
+	Args      CosmosdbGremlinGraphArgs
+	state     *cosmosdbGremlinGraphState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CosmosdbGremlinGraph].
 func (cgg *CosmosdbGremlinGraph) Type() string {
 	return "azurerm_cosmosdb_gremlin_graph"
 }
 
+// LocalName returns the local name for [CosmosdbGremlinGraph].
 func (cgg *CosmosdbGremlinGraph) LocalName() string {
 	return cgg.Name
 }
 
+// Configuration returns the configuration (args) for [CosmosdbGremlinGraph].
 func (cgg *CosmosdbGremlinGraph) Configuration() interface{} {
 	return cgg.Args
 }
 
+// DependOn is used for other resources to depend on [CosmosdbGremlinGraph].
+func (cgg *CosmosdbGremlinGraph) DependOn() terra.Reference {
+	return terra.ReferenceResource(cgg)
+}
+
+// Dependencies returns the list of resources [CosmosdbGremlinGraph] depends_on.
+func (cgg *CosmosdbGremlinGraph) Dependencies() terra.Dependencies {
+	return cgg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CosmosdbGremlinGraph].
+func (cgg *CosmosdbGremlinGraph) LifecycleManagement() *terra.Lifecycle {
+	return cgg.Lifecycle
+}
+
+// Attributes returns the attributes for [CosmosdbGremlinGraph].
 func (cgg *CosmosdbGremlinGraph) Attributes() cosmosdbGremlinGraphAttributes {
 	return cosmosdbGremlinGraphAttributes{ref: terra.ReferenceResource(cgg)}
 }
 
+// ImportState imports the given attribute values into [CosmosdbGremlinGraph]'s state.
 func (cgg *CosmosdbGremlinGraph) ImportState(av io.Reader) error {
 	cgg.state = &cosmosdbGremlinGraphState{}
 	if err := json.NewDecoder(av).Decode(cgg.state); err != nil {
@@ -49,10 +73,12 @@ func (cgg *CosmosdbGremlinGraph) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CosmosdbGremlinGraph] has state.
 func (cgg *CosmosdbGremlinGraph) State() (*cosmosdbGremlinGraphState, bool) {
 	return cgg.state, cgg.state != nil
 }
 
+// StateMust returns the state for [CosmosdbGremlinGraph]. Panics if the state is nil.
 func (cgg *CosmosdbGremlinGraph) StateMust() *cosmosdbGremlinGraphState {
 	if cgg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cgg.Type(), cgg.LocalName()))
@@ -60,10 +86,7 @@ func (cgg *CosmosdbGremlinGraph) StateMust() *cosmosdbGremlinGraphState {
 	return cgg.state
 }
 
-func (cgg *CosmosdbGremlinGraph) DependOn() terra.Reference {
-	return terra.ReferenceResource(cgg)
-}
-
+// CosmosdbGremlinGraphArgs contains the configurations for azurerm_cosmosdb_gremlin_graph.
 type CosmosdbGremlinGraphArgs struct {
 	// AccountName: string, required
 	AccountName terra.StringValue `hcl:"account_name,attr" validate:"required"`
@@ -93,67 +116,74 @@ type CosmosdbGremlinGraphArgs struct {
 	Timeouts *cosmosdbgremlingraph.Timeouts `hcl:"timeouts,block"`
 	// UniqueKey: min=0
 	UniqueKey []cosmosdbgremlingraph.UniqueKey `hcl:"unique_key,block" validate:"min=0"`
-	// DependsOn contains resources that CosmosdbGremlinGraph depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cosmosdbGremlinGraphAttributes struct {
 	ref terra.Reference
 }
 
+// AccountName returns a reference to field account_name of azurerm_cosmosdb_gremlin_graph.
 func (cgg cosmosdbGremlinGraphAttributes) AccountName() terra.StringValue {
-	return terra.ReferenceString(cgg.ref.Append("account_name"))
+	return terra.ReferenceAsString(cgg.ref.Append("account_name"))
 }
 
+// DatabaseName returns a reference to field database_name of azurerm_cosmosdb_gremlin_graph.
 func (cgg cosmosdbGremlinGraphAttributes) DatabaseName() terra.StringValue {
-	return terra.ReferenceString(cgg.ref.Append("database_name"))
+	return terra.ReferenceAsString(cgg.ref.Append("database_name"))
 }
 
+// DefaultTtl returns a reference to field default_ttl of azurerm_cosmosdb_gremlin_graph.
 func (cgg cosmosdbGremlinGraphAttributes) DefaultTtl() terra.NumberValue {
-	return terra.ReferenceNumber(cgg.ref.Append("default_ttl"))
+	return terra.ReferenceAsNumber(cgg.ref.Append("default_ttl"))
 }
 
+// Id returns a reference to field id of azurerm_cosmosdb_gremlin_graph.
 func (cgg cosmosdbGremlinGraphAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cgg.ref.Append("id"))
+	return terra.ReferenceAsString(cgg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_cosmosdb_gremlin_graph.
 func (cgg cosmosdbGremlinGraphAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cgg.ref.Append("name"))
+	return terra.ReferenceAsString(cgg.ref.Append("name"))
 }
 
+// PartitionKeyPath returns a reference to field partition_key_path of azurerm_cosmosdb_gremlin_graph.
 func (cgg cosmosdbGremlinGraphAttributes) PartitionKeyPath() terra.StringValue {
-	return terra.ReferenceString(cgg.ref.Append("partition_key_path"))
+	return terra.ReferenceAsString(cgg.ref.Append("partition_key_path"))
 }
 
+// PartitionKeyVersion returns a reference to field partition_key_version of azurerm_cosmosdb_gremlin_graph.
 func (cgg cosmosdbGremlinGraphAttributes) PartitionKeyVersion() terra.NumberValue {
-	return terra.ReferenceNumber(cgg.ref.Append("partition_key_version"))
+	return terra.ReferenceAsNumber(cgg.ref.Append("partition_key_version"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_cosmosdb_gremlin_graph.
 func (cgg cosmosdbGremlinGraphAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(cgg.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(cgg.ref.Append("resource_group_name"))
 }
 
+// Throughput returns a reference to field throughput of azurerm_cosmosdb_gremlin_graph.
 func (cgg cosmosdbGremlinGraphAttributes) Throughput() terra.NumberValue {
-	return terra.ReferenceNumber(cgg.ref.Append("throughput"))
+	return terra.ReferenceAsNumber(cgg.ref.Append("throughput"))
 }
 
 func (cgg cosmosdbGremlinGraphAttributes) AutoscaleSettings() terra.ListValue[cosmosdbgremlingraph.AutoscaleSettingsAttributes] {
-	return terra.ReferenceList[cosmosdbgremlingraph.AutoscaleSettingsAttributes](cgg.ref.Append("autoscale_settings"))
+	return terra.ReferenceAsList[cosmosdbgremlingraph.AutoscaleSettingsAttributes](cgg.ref.Append("autoscale_settings"))
 }
 
 func (cgg cosmosdbGremlinGraphAttributes) ConflictResolutionPolicy() terra.ListValue[cosmosdbgremlingraph.ConflictResolutionPolicyAttributes] {
-	return terra.ReferenceList[cosmosdbgremlingraph.ConflictResolutionPolicyAttributes](cgg.ref.Append("conflict_resolution_policy"))
+	return terra.ReferenceAsList[cosmosdbgremlingraph.ConflictResolutionPolicyAttributes](cgg.ref.Append("conflict_resolution_policy"))
 }
 
 func (cgg cosmosdbGremlinGraphAttributes) IndexPolicy() terra.ListValue[cosmosdbgremlingraph.IndexPolicyAttributes] {
-	return terra.ReferenceList[cosmosdbgremlingraph.IndexPolicyAttributes](cgg.ref.Append("index_policy"))
+	return terra.ReferenceAsList[cosmosdbgremlingraph.IndexPolicyAttributes](cgg.ref.Append("index_policy"))
 }
 
 func (cgg cosmosdbGremlinGraphAttributes) Timeouts() cosmosdbgremlingraph.TimeoutsAttributes {
-	return terra.ReferenceSingle[cosmosdbgremlingraph.TimeoutsAttributes](cgg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cosmosdbgremlingraph.TimeoutsAttributes](cgg.ref.Append("timeouts"))
 }
 
 func (cgg cosmosdbGremlinGraphAttributes) UniqueKey() terra.SetValue[cosmosdbgremlingraph.UniqueKeyAttributes] {
-	return terra.ReferenceSet[cosmosdbgremlingraph.UniqueKeyAttributes](cgg.ref.Append("unique_key"))
+	return terra.ReferenceAsSet[cosmosdbgremlingraph.UniqueKeyAttributes](cgg.ref.Append("unique_key"))
 }
 
 type cosmosdbGremlinGraphState struct {

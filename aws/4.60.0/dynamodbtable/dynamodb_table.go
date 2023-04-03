@@ -93,7 +93,7 @@ func (a AttributeAttributes) InternalWithRef(ref terra.Reference) AttributeAttri
 	return AttributeAttributes{ref: ref}
 }
 
-func (a AttributeAttributes) InternalTokens() hclwrite.Tokens {
+func (a AttributeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -117,7 +117,7 @@ func (gsi GlobalSecondaryIndexAttributes) InternalWithRef(ref terra.Reference) G
 	return GlobalSecondaryIndexAttributes{ref: ref}
 }
 
-func (gsi GlobalSecondaryIndexAttributes) InternalTokens() hclwrite.Tokens {
+func (gsi GlobalSecondaryIndexAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gsi.ref.InternalTokens()
 }
 
@@ -161,7 +161,7 @@ func (lsi LocalSecondaryIndexAttributes) InternalWithRef(ref terra.Reference) Lo
 	return LocalSecondaryIndexAttributes{ref: ref}
 }
 
-func (lsi LocalSecondaryIndexAttributes) InternalTokens() hclwrite.Tokens {
+func (lsi LocalSecondaryIndexAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lsi.ref.InternalTokens()
 }
 
@@ -193,7 +193,7 @@ func (pitr PointInTimeRecoveryAttributes) InternalWithRef(ref terra.Reference) P
 	return PointInTimeRecoveryAttributes{ref: ref}
 }
 
-func (pitr PointInTimeRecoveryAttributes) InternalTokens() hclwrite.Tokens {
+func (pitr PointInTimeRecoveryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pitr.ref.InternalTokens()
 }
 
@@ -213,7 +213,7 @@ func (r ReplicaAttributes) InternalWithRef(ref terra.Reference) ReplicaAttribute
 	return ReplicaAttributes{ref: ref}
 }
 
-func (r ReplicaAttributes) InternalTokens() hclwrite.Tokens {
+func (r ReplicaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -257,7 +257,7 @@ func (sse ServerSideEncryptionAttributes) InternalWithRef(ref terra.Reference) S
 	return ServerSideEncryptionAttributes{ref: ref}
 }
 
-func (sse ServerSideEncryptionAttributes) InternalTokens() hclwrite.Tokens {
+func (sse ServerSideEncryptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sse.ref.InternalTokens()
 }
 
@@ -281,7 +281,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -309,7 +309,7 @@ func (t TtlAttributes) InternalWithRef(ref terra.Reference) TtlAttributes {
 	return TtlAttributes{ref: ref}
 }
 
-func (t TtlAttributes) InternalTokens() hclwrite.Tokens {
+func (t TtlAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

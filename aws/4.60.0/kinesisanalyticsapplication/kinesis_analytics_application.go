@@ -220,7 +220,7 @@ func (clo CloudwatchLoggingOptionsAttributes) InternalWithRef(ref terra.Referenc
 	return CloudwatchLoggingOptionsAttributes{ref: ref}
 }
 
-func (clo CloudwatchLoggingOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (clo CloudwatchLoggingOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return clo.ref.InternalTokens()
 }
 
@@ -248,7 +248,7 @@ func (i InputsAttributes) InternalWithRef(ref terra.Reference) InputsAttributes 
 	return InputsAttributes{ref: ref}
 }
 
-func (i InputsAttributes) InternalTokens() hclwrite.Tokens {
+func (i InputsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -300,7 +300,7 @@ func (kf InputsKinesisFirehoseAttributes) InternalWithRef(ref terra.Reference) I
 	return InputsKinesisFirehoseAttributes{ref: ref}
 }
 
-func (kf InputsKinesisFirehoseAttributes) InternalTokens() hclwrite.Tokens {
+func (kf InputsKinesisFirehoseAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kf.ref.InternalTokens()
 }
 
@@ -324,7 +324,7 @@ func (ks InputsKinesisStreamAttributes) InternalWithRef(ref terra.Reference) Inp
 	return InputsKinesisStreamAttributes{ref: ref}
 }
 
-func (ks InputsKinesisStreamAttributes) InternalTokens() hclwrite.Tokens {
+func (ks InputsKinesisStreamAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ks.ref.InternalTokens()
 }
 
@@ -348,7 +348,7 @@ func (p ParallelismAttributes) InternalWithRef(ref terra.Reference) ParallelismA
 	return ParallelismAttributes{ref: ref}
 }
 
-func (p ParallelismAttributes) InternalTokens() hclwrite.Tokens {
+func (p ParallelismAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -368,7 +368,7 @@ func (pc ProcessingConfigurationAttributes) InternalWithRef(ref terra.Reference)
 	return ProcessingConfigurationAttributes{ref: ref}
 }
 
-func (pc ProcessingConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (pc ProcessingConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
@@ -388,7 +388,7 @@ func (l ProcessingConfigurationLambdaAttributes) InternalWithRef(ref terra.Refer
 	return ProcessingConfigurationLambdaAttributes{ref: ref}
 }
 
-func (l ProcessingConfigurationLambdaAttributes) InternalTokens() hclwrite.Tokens {
+func (l ProcessingConfigurationLambdaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 
@@ -412,7 +412,7 @@ func (s InputsSchemaAttributes) InternalWithRef(ref terra.Reference) InputsSchem
 	return InputsSchemaAttributes{ref: ref}
 }
 
-func (s InputsSchemaAttributes) InternalTokens() hclwrite.Tokens {
+func (s InputsSchemaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -440,7 +440,7 @@ func (rc InputsSchemaRecordColumnsAttributes) InternalWithRef(ref terra.Referenc
 	return InputsSchemaRecordColumnsAttributes{ref: ref}
 }
 
-func (rc InputsSchemaRecordColumnsAttributes) InternalTokens() hclwrite.Tokens {
+func (rc InputsSchemaRecordColumnsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rc.ref.InternalTokens()
 }
 
@@ -468,7 +468,7 @@ func (rf InputsSchemaRecordFormatAttributes) InternalWithRef(ref terra.Reference
 	return InputsSchemaRecordFormatAttributes{ref: ref}
 }
 
-func (rf InputsSchemaRecordFormatAttributes) InternalTokens() hclwrite.Tokens {
+func (rf InputsSchemaRecordFormatAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rf.ref.InternalTokens()
 }
 
@@ -492,7 +492,7 @@ func (mp InputsSchemaRecordFormatMappingParametersAttributes) InternalWithRef(re
 	return InputsSchemaRecordFormatMappingParametersAttributes{ref: ref}
 }
 
-func (mp InputsSchemaRecordFormatMappingParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (mp InputsSchemaRecordFormatMappingParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mp.ref.InternalTokens()
 }
 
@@ -516,7 +516,7 @@ func (c InputsSchemaRecordFormatMappingParametersCsvAttributes) InternalWithRef(
 	return InputsSchemaRecordFormatMappingParametersCsvAttributes{ref: ref}
 }
 
-func (c InputsSchemaRecordFormatMappingParametersCsvAttributes) InternalTokens() hclwrite.Tokens {
+func (c InputsSchemaRecordFormatMappingParametersCsvAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -540,7 +540,7 @@ func (j InputsSchemaRecordFormatMappingParametersJsonAttributes) InternalWithRef
 	return InputsSchemaRecordFormatMappingParametersJsonAttributes{ref: ref}
 }
 
-func (j InputsSchemaRecordFormatMappingParametersJsonAttributes) InternalTokens() hclwrite.Tokens {
+func (j InputsSchemaRecordFormatMappingParametersJsonAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return j.ref.InternalTokens()
 }
 
@@ -560,7 +560,7 @@ func (spc StartingPositionConfigurationAttributes) InternalWithRef(ref terra.Ref
 	return StartingPositionConfigurationAttributes{ref: ref}
 }
 
-func (spc StartingPositionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (spc StartingPositionConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return spc.ref.InternalTokens()
 }
 
@@ -580,7 +580,7 @@ func (o OutputsAttributes) InternalWithRef(ref terra.Reference) OutputsAttribute
 	return OutputsAttributes{ref: ref}
 }
 
-func (o OutputsAttributes) InternalTokens() hclwrite.Tokens {
+func (o OutputsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return o.ref.InternalTokens()
 }
 
@@ -620,7 +620,7 @@ func (kf OutputsKinesisFirehoseAttributes) InternalWithRef(ref terra.Reference) 
 	return OutputsKinesisFirehoseAttributes{ref: ref}
 }
 
-func (kf OutputsKinesisFirehoseAttributes) InternalTokens() hclwrite.Tokens {
+func (kf OutputsKinesisFirehoseAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kf.ref.InternalTokens()
 }
 
@@ -644,7 +644,7 @@ func (ks OutputsKinesisStreamAttributes) InternalWithRef(ref terra.Reference) Ou
 	return OutputsKinesisStreamAttributes{ref: ref}
 }
 
-func (ks OutputsKinesisStreamAttributes) InternalTokens() hclwrite.Tokens {
+func (ks OutputsKinesisStreamAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ks.ref.InternalTokens()
 }
 
@@ -668,7 +668,7 @@ func (l OutputsLambdaAttributes) InternalWithRef(ref terra.Reference) OutputsLam
 	return OutputsLambdaAttributes{ref: ref}
 }
 
-func (l OutputsLambdaAttributes) InternalTokens() hclwrite.Tokens {
+func (l OutputsLambdaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 
@@ -692,7 +692,7 @@ func (s OutputsSchemaAttributes) InternalWithRef(ref terra.Reference) OutputsSch
 	return OutputsSchemaAttributes{ref: ref}
 }
 
-func (s OutputsSchemaAttributes) InternalTokens() hclwrite.Tokens {
+func (s OutputsSchemaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -712,7 +712,7 @@ func (rds ReferenceDataSourcesAttributes) InternalWithRef(ref terra.Reference) R
 	return ReferenceDataSourcesAttributes{ref: ref}
 }
 
-func (rds ReferenceDataSourcesAttributes) InternalTokens() hclwrite.Tokens {
+func (rds ReferenceDataSourcesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rds.ref.InternalTokens()
 }
 
@@ -744,7 +744,7 @@ func (s S3Attributes) InternalWithRef(ref terra.Reference) S3Attributes {
 	return S3Attributes{ref: ref}
 }
 
-func (s S3Attributes) InternalTokens() hclwrite.Tokens {
+func (s S3Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -772,7 +772,7 @@ func (s ReferenceDataSourcesSchemaAttributes) InternalWithRef(ref terra.Referenc
 	return ReferenceDataSourcesSchemaAttributes{ref: ref}
 }
 
-func (s ReferenceDataSourcesSchemaAttributes) InternalTokens() hclwrite.Tokens {
+func (s ReferenceDataSourcesSchemaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -800,7 +800,7 @@ func (rc ReferenceDataSourcesSchemaRecordColumnsAttributes) InternalWithRef(ref 
 	return ReferenceDataSourcesSchemaRecordColumnsAttributes{ref: ref}
 }
 
-func (rc ReferenceDataSourcesSchemaRecordColumnsAttributes) InternalTokens() hclwrite.Tokens {
+func (rc ReferenceDataSourcesSchemaRecordColumnsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rc.ref.InternalTokens()
 }
 
@@ -828,7 +828,7 @@ func (rf ReferenceDataSourcesSchemaRecordFormatAttributes) InternalWithRef(ref t
 	return ReferenceDataSourcesSchemaRecordFormatAttributes{ref: ref}
 }
 
-func (rf ReferenceDataSourcesSchemaRecordFormatAttributes) InternalTokens() hclwrite.Tokens {
+func (rf ReferenceDataSourcesSchemaRecordFormatAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rf.ref.InternalTokens()
 }
 
@@ -852,7 +852,7 @@ func (mp ReferenceDataSourcesSchemaRecordFormatMappingParametersAttributes) Inte
 	return ReferenceDataSourcesSchemaRecordFormatMappingParametersAttributes{ref: ref}
 }
 
-func (mp ReferenceDataSourcesSchemaRecordFormatMappingParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (mp ReferenceDataSourcesSchemaRecordFormatMappingParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mp.ref.InternalTokens()
 }
 
@@ -876,7 +876,7 @@ func (c ReferenceDataSourcesSchemaRecordFormatMappingParametersCsvAttributes) In
 	return ReferenceDataSourcesSchemaRecordFormatMappingParametersCsvAttributes{ref: ref}
 }
 
-func (c ReferenceDataSourcesSchemaRecordFormatMappingParametersCsvAttributes) InternalTokens() hclwrite.Tokens {
+func (c ReferenceDataSourcesSchemaRecordFormatMappingParametersCsvAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -900,7 +900,7 @@ func (j ReferenceDataSourcesSchemaRecordFormatMappingParametersJsonAttributes) I
 	return ReferenceDataSourcesSchemaRecordFormatMappingParametersJsonAttributes{ref: ref}
 }
 
-func (j ReferenceDataSourcesSchemaRecordFormatMappingParametersJsonAttributes) InternalTokens() hclwrite.Tokens {
+func (j ReferenceDataSourcesSchemaRecordFormatMappingParametersJsonAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return j.ref.InternalTokens()
 }
 

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewPostgresqlVirtualNetworkRule creates a new instance of [PostgresqlVirtualNetworkRule].
 func NewPostgresqlVirtualNetworkRule(name string, args PostgresqlVirtualNetworkRuleArgs) *PostgresqlVirtualNetworkRule {
 	return &PostgresqlVirtualNetworkRule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewPostgresqlVirtualNetworkRule(name string, args PostgresqlVirtualNetworkR
 
 var _ terra.Resource = (*PostgresqlVirtualNetworkRule)(nil)
 
+// PostgresqlVirtualNetworkRule represents the Terraform resource azurerm_postgresql_virtual_network_rule.
 type PostgresqlVirtualNetworkRule struct {
-	Name  string
-	Args  PostgresqlVirtualNetworkRuleArgs
-	state *postgresqlVirtualNetworkRuleState
+	Name      string
+	Args      PostgresqlVirtualNetworkRuleArgs
+	state     *postgresqlVirtualNetworkRuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PostgresqlVirtualNetworkRule].
 func (pvnr *PostgresqlVirtualNetworkRule) Type() string {
 	return "azurerm_postgresql_virtual_network_rule"
 }
 
+// LocalName returns the local name for [PostgresqlVirtualNetworkRule].
 func (pvnr *PostgresqlVirtualNetworkRule) LocalName() string {
 	return pvnr.Name
 }
 
+// Configuration returns the configuration (args) for [PostgresqlVirtualNetworkRule].
 func (pvnr *PostgresqlVirtualNetworkRule) Configuration() interface{} {
 	return pvnr.Args
 }
 
+// DependOn is used for other resources to depend on [PostgresqlVirtualNetworkRule].
+func (pvnr *PostgresqlVirtualNetworkRule) DependOn() terra.Reference {
+	return terra.ReferenceResource(pvnr)
+}
+
+// Dependencies returns the list of resources [PostgresqlVirtualNetworkRule] depends_on.
+func (pvnr *PostgresqlVirtualNetworkRule) Dependencies() terra.Dependencies {
+	return pvnr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PostgresqlVirtualNetworkRule].
+func (pvnr *PostgresqlVirtualNetworkRule) LifecycleManagement() *terra.Lifecycle {
+	return pvnr.Lifecycle
+}
+
+// Attributes returns the attributes for [PostgresqlVirtualNetworkRule].
 func (pvnr *PostgresqlVirtualNetworkRule) Attributes() postgresqlVirtualNetworkRuleAttributes {
 	return postgresqlVirtualNetworkRuleAttributes{ref: terra.ReferenceResource(pvnr)}
 }
 
+// ImportState imports the given attribute values into [PostgresqlVirtualNetworkRule]'s state.
 func (pvnr *PostgresqlVirtualNetworkRule) ImportState(av io.Reader) error {
 	pvnr.state = &postgresqlVirtualNetworkRuleState{}
 	if err := json.NewDecoder(av).Decode(pvnr.state); err != nil {
@@ -49,10 +73,12 @@ func (pvnr *PostgresqlVirtualNetworkRule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PostgresqlVirtualNetworkRule] has state.
 func (pvnr *PostgresqlVirtualNetworkRule) State() (*postgresqlVirtualNetworkRuleState, bool) {
 	return pvnr.state, pvnr.state != nil
 }
 
+// StateMust returns the state for [PostgresqlVirtualNetworkRule]. Panics if the state is nil.
 func (pvnr *PostgresqlVirtualNetworkRule) StateMust() *postgresqlVirtualNetworkRuleState {
 	if pvnr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pvnr.Type(), pvnr.LocalName()))
@@ -60,10 +86,7 @@ func (pvnr *PostgresqlVirtualNetworkRule) StateMust() *postgresqlVirtualNetworkR
 	return pvnr.state
 }
 
-func (pvnr *PostgresqlVirtualNetworkRule) DependOn() terra.Reference {
-	return terra.ReferenceResource(pvnr)
-}
-
+// PostgresqlVirtualNetworkRuleArgs contains the configurations for azurerm_postgresql_virtual_network_rule.
 type PostgresqlVirtualNetworkRuleArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,39 +102,43 @@ type PostgresqlVirtualNetworkRuleArgs struct {
 	SubnetId terra.StringValue `hcl:"subnet_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *postgresqlvirtualnetworkrule.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that PostgresqlVirtualNetworkRule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type postgresqlVirtualNetworkRuleAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_postgresql_virtual_network_rule.
 func (pvnr postgresqlVirtualNetworkRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pvnr.ref.Append("id"))
+	return terra.ReferenceAsString(pvnr.ref.Append("id"))
 }
 
+// IgnoreMissingVnetServiceEndpoint returns a reference to field ignore_missing_vnet_service_endpoint of azurerm_postgresql_virtual_network_rule.
 func (pvnr postgresqlVirtualNetworkRuleAttributes) IgnoreMissingVnetServiceEndpoint() terra.BoolValue {
-	return terra.ReferenceBool(pvnr.ref.Append("ignore_missing_vnet_service_endpoint"))
+	return terra.ReferenceAsBool(pvnr.ref.Append("ignore_missing_vnet_service_endpoint"))
 }
 
+// Name returns a reference to field name of azurerm_postgresql_virtual_network_rule.
 func (pvnr postgresqlVirtualNetworkRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pvnr.ref.Append("name"))
+	return terra.ReferenceAsString(pvnr.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_postgresql_virtual_network_rule.
 func (pvnr postgresqlVirtualNetworkRuleAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(pvnr.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(pvnr.ref.Append("resource_group_name"))
 }
 
+// ServerName returns a reference to field server_name of azurerm_postgresql_virtual_network_rule.
 func (pvnr postgresqlVirtualNetworkRuleAttributes) ServerName() terra.StringValue {
-	return terra.ReferenceString(pvnr.ref.Append("server_name"))
+	return terra.ReferenceAsString(pvnr.ref.Append("server_name"))
 }
 
+// SubnetId returns a reference to field subnet_id of azurerm_postgresql_virtual_network_rule.
 func (pvnr postgresqlVirtualNetworkRuleAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(pvnr.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(pvnr.ref.Append("subnet_id"))
 }
 
 func (pvnr postgresqlVirtualNetworkRuleAttributes) Timeouts() postgresqlvirtualnetworkrule.TimeoutsAttributes {
-	return terra.ReferenceSingle[postgresqlvirtualnetworkrule.TimeoutsAttributes](pvnr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[postgresqlvirtualnetworkrule.TimeoutsAttributes](pvnr.ref.Append("timeouts"))
 }
 
 type postgresqlVirtualNetworkRuleState struct {

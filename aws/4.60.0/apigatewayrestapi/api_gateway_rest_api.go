@@ -26,7 +26,7 @@ func (ec EndpointConfigurationAttributes) InternalWithRef(ref terra.Reference) E
 	return EndpointConfigurationAttributes{ref: ref}
 }
 
-func (ec EndpointConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ec EndpointConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 

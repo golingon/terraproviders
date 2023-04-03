@@ -83,7 +83,7 @@ func (srd S3RepositoryDetailsAttributes) InternalWithRef(ref terra.Reference) S3
 	return S3RepositoryDetailsAttributes{ref: ref}
 }
 
-func (srd S3RepositoryDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (srd S3RepositoryDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return srd.ref.InternalTokens()
 }
 
@@ -107,7 +107,7 @@ func (ca CodeArtifactsAttributes) InternalWithRef(ref terra.Reference) CodeArtif
 	return CodeArtifactsAttributes{ref: ref}
 }
 
-func (ca CodeArtifactsAttributes) InternalTokens() hclwrite.Tokens {
+func (ca CodeArtifactsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ca.ref.InternalTokens()
 }
 
@@ -131,7 +131,7 @@ func (kkd KmsKeyDetailsAttributes) InternalWithRef(ref terra.Reference) KmsKeyDe
 	return KmsKeyDetailsAttributes{ref: ref}
 }
 
-func (kkd KmsKeyDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (kkd KmsKeyDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kkd.ref.InternalTokens()
 }
 
@@ -155,7 +155,7 @@ func (r RepositoryAttributes) InternalWithRef(ref terra.Reference) RepositoryAtt
 	return RepositoryAttributes{ref: ref}
 }
 
-func (r RepositoryAttributes) InternalTokens() hclwrite.Tokens {
+func (r RepositoryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -187,7 +187,7 @@ func (b BitbucketAttributes) InternalWithRef(ref terra.Reference) BitbucketAttri
 	return BitbucketAttributes{ref: ref}
 }
 
-func (b BitbucketAttributes) InternalTokens() hclwrite.Tokens {
+func (b BitbucketAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return b.ref.InternalTokens()
 }
 
@@ -215,7 +215,7 @@ func (c CodecommitAttributes) InternalWithRef(ref terra.Reference) CodecommitAtt
 	return CodecommitAttributes{ref: ref}
 }
 
-func (c CodecommitAttributes) InternalTokens() hclwrite.Tokens {
+func (c CodecommitAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -235,7 +235,7 @@ func (ges GithubEnterpriseServerAttributes) InternalWithRef(ref terra.Reference)
 	return GithubEnterpriseServerAttributes{ref: ref}
 }
 
-func (ges GithubEnterpriseServerAttributes) InternalTokens() hclwrite.Tokens {
+func (ges GithubEnterpriseServerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ges.ref.InternalTokens()
 }
 
@@ -263,7 +263,7 @@ func (sb S3BucketAttributes) InternalWithRef(ref terra.Reference) S3BucketAttrib
 	return S3BucketAttributes{ref: ref}
 }
 
-func (sb S3BucketAttributes) InternalTokens() hclwrite.Tokens {
+func (sb S3BucketAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sb.ref.InternalTokens()
 }
 
@@ -287,7 +287,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

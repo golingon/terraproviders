@@ -55,7 +55,7 @@ func (pb ProductionBranchAttributes) InternalWithRef(ref terra.Reference) Produc
 	return ProductionBranchAttributes{ref: ref}
 }
 
-func (pb ProductionBranchAttributes) InternalTokens() hclwrite.Tokens {
+func (pb ProductionBranchAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pb.ref.InternalTokens()
 }
 
@@ -87,7 +87,7 @@ func (abcc AutoBranchCreationConfigAttributes) InternalWithRef(ref terra.Referen
 	return AutoBranchCreationConfigAttributes{ref: ref}
 }
 
-func (abcc AutoBranchCreationConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (abcc AutoBranchCreationConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return abcc.ref.InternalTokens()
 }
 
@@ -143,7 +143,7 @@ func (cr CustomRuleAttributes) InternalWithRef(ref terra.Reference) CustomRuleAt
 	return CustomRuleAttributes{ref: ref}
 }
 
-func (cr CustomRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (cr CustomRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cr.ref.InternalTokens()
 }
 

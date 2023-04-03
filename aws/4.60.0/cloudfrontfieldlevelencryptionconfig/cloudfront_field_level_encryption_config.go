@@ -59,7 +59,7 @@ func (ctpc ContentTypeProfileConfigAttributes) InternalWithRef(ref terra.Referen
 	return ContentTypeProfileConfigAttributes{ref: ref}
 }
 
-func (ctpc ContentTypeProfileConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ctpc ContentTypeProfileConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ctpc.ref.InternalTokens()
 }
 
@@ -83,7 +83,7 @@ func (ctp ContentTypeProfilesAttributes) InternalWithRef(ref terra.Reference) Co
 	return ContentTypeProfilesAttributes{ref: ref}
 }
 
-func (ctp ContentTypeProfilesAttributes) InternalTokens() hclwrite.Tokens {
+func (ctp ContentTypeProfilesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ctp.ref.InternalTokens()
 }
 
@@ -103,7 +103,7 @@ func (i ContentTypeProfilesItemsAttributes) InternalWithRef(ref terra.Reference)
 	return ContentTypeProfilesItemsAttributes{ref: ref}
 }
 
-func (i ContentTypeProfilesItemsAttributes) InternalTokens() hclwrite.Tokens {
+func (i ContentTypeProfilesItemsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -131,7 +131,7 @@ func (qapc QueryArgProfileConfigAttributes) InternalWithRef(ref terra.Reference)
 	return QueryArgProfileConfigAttributes{ref: ref}
 }
 
-func (qapc QueryArgProfileConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (qapc QueryArgProfileConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return qapc.ref.InternalTokens()
 }
 
@@ -155,7 +155,7 @@ func (qap QueryArgProfilesAttributes) InternalWithRef(ref terra.Reference) Query
 	return QueryArgProfilesAttributes{ref: ref}
 }
 
-func (qap QueryArgProfilesAttributes) InternalTokens() hclwrite.Tokens {
+func (qap QueryArgProfilesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return qap.ref.InternalTokens()
 }
 
@@ -175,7 +175,7 @@ func (i QueryArgProfilesItemsAttributes) InternalWithRef(ref terra.Reference) Qu
 	return QueryArgProfilesItemsAttributes{ref: ref}
 }
 
-func (i QueryArgProfilesItemsAttributes) InternalTokens() hclwrite.Tokens {
+func (i QueryArgProfilesItemsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 

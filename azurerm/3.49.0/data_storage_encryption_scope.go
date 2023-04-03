@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataStorageEncryptionScope creates a new instance of [DataStorageEncryptionScope].
 func NewDataStorageEncryptionScope(name string, args DataStorageEncryptionScopeArgs) *DataStorageEncryptionScope {
 	return &DataStorageEncryptionScope{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataStorageEncryptionScope(name string, args DataStorageEncryptionScopeA
 
 var _ terra.DataResource = (*DataStorageEncryptionScope)(nil)
 
+// DataStorageEncryptionScope represents the Terraform data resource azurerm_storage_encryption_scope.
 type DataStorageEncryptionScope struct {
 	Name string
 	Args DataStorageEncryptionScopeArgs
 }
 
+// DataSource returns the Terraform object type for [DataStorageEncryptionScope].
 func (ses *DataStorageEncryptionScope) DataSource() string {
 	return "azurerm_storage_encryption_scope"
 }
 
+// LocalName returns the local name for [DataStorageEncryptionScope].
 func (ses *DataStorageEncryptionScope) LocalName() string {
 	return ses.Name
 }
 
+// Configuration returns the configuration (args) for [DataStorageEncryptionScope].
 func (ses *DataStorageEncryptionScope) Configuration() interface{} {
 	return ses.Args
 }
 
+// Attributes returns the attributes for [DataStorageEncryptionScope].
 func (ses *DataStorageEncryptionScope) Attributes() dataStorageEncryptionScopeAttributes {
 	return dataStorageEncryptionScopeAttributes{ref: terra.ReferenceDataResource(ses)}
 }
 
+// DataStorageEncryptionScopeArgs contains the configurations for azurerm_storage_encryption_scope.
 type DataStorageEncryptionScopeArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,26 +58,31 @@ type dataStorageEncryptionScopeAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_storage_encryption_scope.
 func (ses dataStorageEncryptionScopeAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ses.ref.Append("id"))
+	return terra.ReferenceAsString(ses.ref.Append("id"))
 }
 
+// KeyVaultKeyId returns a reference to field key_vault_key_id of azurerm_storage_encryption_scope.
 func (ses dataStorageEncryptionScopeAttributes) KeyVaultKeyId() terra.StringValue {
-	return terra.ReferenceString(ses.ref.Append("key_vault_key_id"))
+	return terra.ReferenceAsString(ses.ref.Append("key_vault_key_id"))
 }
 
+// Name returns a reference to field name of azurerm_storage_encryption_scope.
 func (ses dataStorageEncryptionScopeAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ses.ref.Append("name"))
+	return terra.ReferenceAsString(ses.ref.Append("name"))
 }
 
+// Source returns a reference to field source of azurerm_storage_encryption_scope.
 func (ses dataStorageEncryptionScopeAttributes) Source() terra.StringValue {
-	return terra.ReferenceString(ses.ref.Append("source"))
+	return terra.ReferenceAsString(ses.ref.Append("source"))
 }
 
+// StorageAccountId returns a reference to field storage_account_id of azurerm_storage_encryption_scope.
 func (ses dataStorageEncryptionScopeAttributes) StorageAccountId() terra.StringValue {
-	return terra.ReferenceString(ses.ref.Append("storage_account_id"))
+	return terra.ReferenceAsString(ses.ref.Append("storage_account_id"))
 }
 
 func (ses dataStorageEncryptionScopeAttributes) Timeouts() datastorageencryptionscope.TimeoutsAttributes {
-	return terra.ReferenceSingle[datastorageencryptionscope.TimeoutsAttributes](ses.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datastorageencryptionscope.TimeoutsAttributes](ses.ref.Append("timeouts"))
 }

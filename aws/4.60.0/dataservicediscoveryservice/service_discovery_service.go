@@ -30,7 +30,7 @@ func (dc DnsConfigAttributes) InternalWithRef(ref terra.Reference) DnsConfigAttr
 	return DnsConfigAttributes{ref: ref}
 }
 
-func (dc DnsConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (dc DnsConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dc.ref.InternalTokens()
 }
 
@@ -58,7 +58,7 @@ func (dr DnsRecordsAttributes) InternalWithRef(ref terra.Reference) DnsRecordsAt
 	return DnsRecordsAttributes{ref: ref}
 }
 
-func (dr DnsRecordsAttributes) InternalTokens() hclwrite.Tokens {
+func (dr DnsRecordsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dr.ref.InternalTokens()
 }
 
@@ -82,7 +82,7 @@ func (hcc HealthCheckConfigAttributes) InternalWithRef(ref terra.Reference) Heal
 	return HealthCheckConfigAttributes{ref: ref}
 }
 
-func (hcc HealthCheckConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (hcc HealthCheckConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hcc.ref.InternalTokens()
 }
 
@@ -110,7 +110,7 @@ func (hccc HealthCheckCustomConfigAttributes) InternalWithRef(ref terra.Referenc
 	return HealthCheckCustomConfigAttributes{ref: ref}
 }
 
-func (hccc HealthCheckCustomConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (hccc HealthCheckCustomConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hccc.ref.InternalTokens()
 }
 

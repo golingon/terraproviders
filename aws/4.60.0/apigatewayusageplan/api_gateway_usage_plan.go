@@ -53,7 +53,7 @@ func (as ApiStagesAttributes) InternalWithRef(ref terra.Reference) ApiStagesAttr
 	return ApiStagesAttributes{ref: ref}
 }
 
-func (as ApiStagesAttributes) InternalTokens() hclwrite.Tokens {
+func (as ApiStagesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return as.ref.InternalTokens()
 }
 
@@ -81,7 +81,7 @@ func (t ThrottleAttributes) InternalWithRef(ref terra.Reference) ThrottleAttribu
 	return ThrottleAttributes{ref: ref}
 }
 
-func (t ThrottleAttributes) InternalTokens() hclwrite.Tokens {
+func (t ThrottleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -109,7 +109,7 @@ func (qs QuotaSettingsAttributes) InternalWithRef(ref terra.Reference) QuotaSett
 	return QuotaSettingsAttributes{ref: ref}
 }
 
-func (qs QuotaSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (qs QuotaSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return qs.ref.InternalTokens()
 }
 
@@ -137,7 +137,7 @@ func (ts ThrottleSettingsAttributes) InternalWithRef(ref terra.Reference) Thrott
 	return ThrottleSettingsAttributes{ref: ref}
 }
 
-func (ts ThrottleSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ts ThrottleSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ts.ref.InternalTokens()
 }
 

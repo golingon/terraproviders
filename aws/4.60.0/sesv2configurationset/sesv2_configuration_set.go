@@ -63,7 +63,7 @@ func (do DeliveryOptionsAttributes) InternalWithRef(ref terra.Reference) Deliver
 	return DeliveryOptionsAttributes{ref: ref}
 }
 
-func (do DeliveryOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (do DeliveryOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return do.ref.InternalTokens()
 }
 
@@ -87,7 +87,7 @@ func (ro ReputationOptionsAttributes) InternalWithRef(ref terra.Reference) Reput
 	return ReputationOptionsAttributes{ref: ref}
 }
 
-func (ro ReputationOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (ro ReputationOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ro.ref.InternalTokens()
 }
 
@@ -111,7 +111,7 @@ func (so SendingOptionsAttributes) InternalWithRef(ref terra.Reference) SendingO
 	return SendingOptionsAttributes{ref: ref}
 }
 
-func (so SendingOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (so SendingOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return so.ref.InternalTokens()
 }
 
@@ -131,7 +131,7 @@ func (so SuppressionOptionsAttributes) InternalWithRef(ref terra.Reference) Supp
 	return SuppressionOptionsAttributes{ref: ref}
 }
 
-func (so SuppressionOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (so SuppressionOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return so.ref.InternalTokens()
 }
 
@@ -151,7 +151,7 @@ func (to TrackingOptionsAttributes) InternalWithRef(ref terra.Reference) Trackin
 	return TrackingOptionsAttributes{ref: ref}
 }
 
-func (to TrackingOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (to TrackingOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return to.ref.InternalTokens()
 }
 
@@ -171,7 +171,7 @@ func (vo VdmOptionsAttributes) InternalWithRef(ref terra.Reference) VdmOptionsAt
 	return VdmOptionsAttributes{ref: ref}
 }
 
-func (vo VdmOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (vo VdmOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vo.ref.InternalTokens()
 }
 
@@ -195,7 +195,7 @@ func (do DashboardOptionsAttributes) InternalWithRef(ref terra.Reference) Dashbo
 	return DashboardOptionsAttributes{ref: ref}
 }
 
-func (do DashboardOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (do DashboardOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return do.ref.InternalTokens()
 }
 
@@ -215,7 +215,7 @@ func (_go GuardianOptionsAttributes) InternalWithRef(ref terra.Reference) Guardi
 	return GuardianOptionsAttributes{ref: ref}
 }
 
-func (_go GuardianOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (_go GuardianOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return _go.ref.InternalTokens()
 }
 

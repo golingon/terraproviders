@@ -36,80 +36,80 @@ type MatchAttributes struct {
 	ref terra.Reference
 }
 
-func (m MatchAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MatchAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MatchAttributes) InternalWithRef(ref terra.Reference) MatchAttributes {
 	return MatchAttributes{ref: ref}
 }
 
-func (m MatchAttributes) InternalTokens() hclwrite.Tokens {
+func (m MatchAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
 func (m MatchAttributes) DestIpRanges() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](m.ref.Append("dest_ip_ranges"))
+	return terra.ReferenceAsList[terra.StringValue](m.ref.Append("dest_ip_ranges"))
 }
 
 func (m MatchAttributes) SrcIpRanges() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](m.ref.Append("src_ip_ranges"))
+	return terra.ReferenceAsList[terra.StringValue](m.ref.Append("src_ip_ranges"))
 }
 
 func (m MatchAttributes) Layer4Configs() terra.ListValue[Layer4ConfigsAttributes] {
-	return terra.ReferenceList[Layer4ConfigsAttributes](m.ref.Append("layer4_configs"))
+	return terra.ReferenceAsList[Layer4ConfigsAttributes](m.ref.Append("layer4_configs"))
 }
 
 type Layer4ConfigsAttributes struct {
 	ref terra.Reference
 }
 
-func (lc Layer4ConfigsAttributes) InternalRef() terra.Reference {
-	return lc.ref
+func (lc Layer4ConfigsAttributes) InternalRef() (terra.Reference, error) {
+	return lc.ref, nil
 }
 
 func (lc Layer4ConfigsAttributes) InternalWithRef(ref terra.Reference) Layer4ConfigsAttributes {
 	return Layer4ConfigsAttributes{ref: ref}
 }
 
-func (lc Layer4ConfigsAttributes) InternalTokens() hclwrite.Tokens {
+func (lc Layer4ConfigsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lc.ref.InternalTokens()
 }
 
 func (lc Layer4ConfigsAttributes) IpProtocol() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("ip_protocol"))
+	return terra.ReferenceAsString(lc.ref.Append("ip_protocol"))
 }
 
 func (lc Layer4ConfigsAttributes) Ports() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lc.ref.Append("ports"))
+	return terra.ReferenceAsList[terra.StringValue](lc.ref.Append("ports"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type MatchState struct {

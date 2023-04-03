@@ -58,7 +58,7 @@ func (cu CapacityUnitsAttributes) InternalWithRef(ref terra.Reference) CapacityU
 	return CapacityUnitsAttributes{ref: ref}
 }
 
-func (cu CapacityUnitsAttributes) InternalTokens() hclwrite.Tokens {
+func (cu CapacityUnitsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cu.ref.InternalTokens()
 }
 
@@ -82,7 +82,7 @@ func (dmcu DocumentMetadataConfigurationUpdatesAttributes) InternalWithRef(ref t
 	return DocumentMetadataConfigurationUpdatesAttributes{ref: ref}
 }
 
-func (dmcu DocumentMetadataConfigurationUpdatesAttributes) InternalTokens() hclwrite.Tokens {
+func (dmcu DocumentMetadataConfigurationUpdatesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dmcu.ref.InternalTokens()
 }
 
@@ -114,7 +114,7 @@ func (r RelevanceAttributes) InternalWithRef(ref terra.Reference) RelevanceAttri
 	return RelevanceAttributes{ref: ref}
 }
 
-func (r RelevanceAttributes) InternalTokens() hclwrite.Tokens {
+func (r RelevanceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -150,7 +150,7 @@ func (s SearchAttributes) InternalWithRef(ref terra.Reference) SearchAttributes 
 	return SearchAttributes{ref: ref}
 }
 
-func (s SearchAttributes) InternalTokens() hclwrite.Tokens {
+func (s SearchAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -182,7 +182,7 @@ func (is IndexStatisticsAttributes) InternalWithRef(ref terra.Reference) IndexSt
 	return IndexStatisticsAttributes{ref: ref}
 }
 
-func (is IndexStatisticsAttributes) InternalTokens() hclwrite.Tokens {
+func (is IndexStatisticsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return is.ref.InternalTokens()
 }
 
@@ -206,7 +206,7 @@ func (fs FaqStatisticsAttributes) InternalWithRef(ref terra.Reference) FaqStatis
 	return FaqStatisticsAttributes{ref: ref}
 }
 
-func (fs FaqStatisticsAttributes) InternalTokens() hclwrite.Tokens {
+func (fs FaqStatisticsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fs.ref.InternalTokens()
 }
 
@@ -226,7 +226,7 @@ func (tds TextDocumentStatisticsAttributes) InternalWithRef(ref terra.Reference)
 	return TextDocumentStatisticsAttributes{ref: ref}
 }
 
-func (tds TextDocumentStatisticsAttributes) InternalTokens() hclwrite.Tokens {
+func (tds TextDocumentStatisticsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tds.ref.InternalTokens()
 }
 
@@ -250,7 +250,7 @@ func (ssec ServerSideEncryptionConfigurationAttributes) InternalWithRef(ref terr
 	return ServerSideEncryptionConfigurationAttributes{ref: ref}
 }
 
-func (ssec ServerSideEncryptionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ssec ServerSideEncryptionConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ssec.ref.InternalTokens()
 }
 
@@ -270,7 +270,7 @@ func (ugrc UserGroupResolutionConfigurationAttributes) InternalWithRef(ref terra
 	return UserGroupResolutionConfigurationAttributes{ref: ref}
 }
 
-func (ugrc UserGroupResolutionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ugrc UserGroupResolutionConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ugrc.ref.InternalTokens()
 }
 
@@ -290,7 +290,7 @@ func (utc UserTokenConfigurationsAttributes) InternalWithRef(ref terra.Reference
 	return UserTokenConfigurationsAttributes{ref: ref}
 }
 
-func (utc UserTokenConfigurationsAttributes) InternalTokens() hclwrite.Tokens {
+func (utc UserTokenConfigurationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return utc.ref.InternalTokens()
 }
 
@@ -314,7 +314,7 @@ func (jttc JsonTokenTypeConfigurationAttributes) InternalWithRef(ref terra.Refer
 	return JsonTokenTypeConfigurationAttributes{ref: ref}
 }
 
-func (jttc JsonTokenTypeConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (jttc JsonTokenTypeConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return jttc.ref.InternalTokens()
 }
 
@@ -338,7 +338,7 @@ func (jttc JwtTokenTypeConfigurationAttributes) InternalWithRef(ref terra.Refere
 	return JwtTokenTypeConfigurationAttributes{ref: ref}
 }
 
-func (jttc JwtTokenTypeConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (jttc JwtTokenTypeConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return jttc.ref.InternalTokens()
 }
 

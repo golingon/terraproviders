@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMonitorMetricAlert creates a new instance of [MonitorMetricAlert].
 func NewMonitorMetricAlert(name string, args MonitorMetricAlertArgs) *MonitorMetricAlert {
 	return &MonitorMetricAlert{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMonitorMetricAlert(name string, args MonitorMetricAlertArgs) *MonitorMet
 
 var _ terra.Resource = (*MonitorMetricAlert)(nil)
 
+// MonitorMetricAlert represents the Terraform resource azurerm_monitor_metric_alert.
 type MonitorMetricAlert struct {
-	Name  string
-	Args  MonitorMetricAlertArgs
-	state *monitorMetricAlertState
+	Name      string
+	Args      MonitorMetricAlertArgs
+	state     *monitorMetricAlertState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MonitorMetricAlert].
 func (mma *MonitorMetricAlert) Type() string {
 	return "azurerm_monitor_metric_alert"
 }
 
+// LocalName returns the local name for [MonitorMetricAlert].
 func (mma *MonitorMetricAlert) LocalName() string {
 	return mma.Name
 }
 
+// Configuration returns the configuration (args) for [MonitorMetricAlert].
 func (mma *MonitorMetricAlert) Configuration() interface{} {
 	return mma.Args
 }
 
+// DependOn is used for other resources to depend on [MonitorMetricAlert].
+func (mma *MonitorMetricAlert) DependOn() terra.Reference {
+	return terra.ReferenceResource(mma)
+}
+
+// Dependencies returns the list of resources [MonitorMetricAlert] depends_on.
+func (mma *MonitorMetricAlert) Dependencies() terra.Dependencies {
+	return mma.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MonitorMetricAlert].
+func (mma *MonitorMetricAlert) LifecycleManagement() *terra.Lifecycle {
+	return mma.Lifecycle
+}
+
+// Attributes returns the attributes for [MonitorMetricAlert].
 func (mma *MonitorMetricAlert) Attributes() monitorMetricAlertAttributes {
 	return monitorMetricAlertAttributes{ref: terra.ReferenceResource(mma)}
 }
 
+// ImportState imports the given attribute values into [MonitorMetricAlert]'s state.
 func (mma *MonitorMetricAlert) ImportState(av io.Reader) error {
 	mma.state = &monitorMetricAlertState{}
 	if err := json.NewDecoder(av).Decode(mma.state); err != nil {
@@ -49,10 +73,12 @@ func (mma *MonitorMetricAlert) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MonitorMetricAlert] has state.
 func (mma *MonitorMetricAlert) State() (*monitorMetricAlertState, bool) {
 	return mma.state, mma.state != nil
 }
 
+// StateMust returns the state for [MonitorMetricAlert]. Panics if the state is nil.
 func (mma *MonitorMetricAlert) StateMust() *monitorMetricAlertState {
 	if mma.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mma.Type(), mma.LocalName()))
@@ -60,10 +86,7 @@ func (mma *MonitorMetricAlert) StateMust() *monitorMetricAlertState {
 	return mma.state
 }
 
-func (mma *MonitorMetricAlert) DependOn() terra.Reference {
-	return terra.ReferenceResource(mma)
-}
-
+// MonitorMetricAlertArgs contains the configurations for azurerm_monitor_metric_alert.
 type MonitorMetricAlertArgs struct {
 	// AutoMitigate: bool, optional
 	AutoMitigate terra.BoolValue `hcl:"auto_mitigate,attr"`
@@ -101,83 +124,94 @@ type MonitorMetricAlertArgs struct {
 	DynamicCriteria *monitormetricalert.DynamicCriteria `hcl:"dynamic_criteria,block"`
 	// Timeouts: optional
 	Timeouts *monitormetricalert.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MonitorMetricAlert depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type monitorMetricAlertAttributes struct {
 	ref terra.Reference
 }
 
+// AutoMitigate returns a reference to field auto_mitigate of azurerm_monitor_metric_alert.
 func (mma monitorMetricAlertAttributes) AutoMitigate() terra.BoolValue {
-	return terra.ReferenceBool(mma.ref.Append("auto_mitigate"))
+	return terra.ReferenceAsBool(mma.ref.Append("auto_mitigate"))
 }
 
+// Description returns a reference to field description of azurerm_monitor_metric_alert.
 func (mma monitorMetricAlertAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(mma.ref.Append("description"))
+	return terra.ReferenceAsString(mma.ref.Append("description"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_monitor_metric_alert.
 func (mma monitorMetricAlertAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(mma.ref.Append("enabled"))
+	return terra.ReferenceAsBool(mma.ref.Append("enabled"))
 }
 
+// Frequency returns a reference to field frequency of azurerm_monitor_metric_alert.
 func (mma monitorMetricAlertAttributes) Frequency() terra.StringValue {
-	return terra.ReferenceString(mma.ref.Append("frequency"))
+	return terra.ReferenceAsString(mma.ref.Append("frequency"))
 }
 
+// Id returns a reference to field id of azurerm_monitor_metric_alert.
 func (mma monitorMetricAlertAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mma.ref.Append("id"))
+	return terra.ReferenceAsString(mma.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_monitor_metric_alert.
 func (mma monitorMetricAlertAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mma.ref.Append("name"))
+	return terra.ReferenceAsString(mma.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_monitor_metric_alert.
 func (mma monitorMetricAlertAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(mma.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(mma.ref.Append("resource_group_name"))
 }
 
+// Scopes returns a reference to field scopes of azurerm_monitor_metric_alert.
 func (mma monitorMetricAlertAttributes) Scopes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](mma.ref.Append("scopes"))
+	return terra.ReferenceAsSet[terra.StringValue](mma.ref.Append("scopes"))
 }
 
+// Severity returns a reference to field severity of azurerm_monitor_metric_alert.
 func (mma monitorMetricAlertAttributes) Severity() terra.NumberValue {
-	return terra.ReferenceNumber(mma.ref.Append("severity"))
+	return terra.ReferenceAsNumber(mma.ref.Append("severity"))
 }
 
+// Tags returns a reference to field tags of azurerm_monitor_metric_alert.
 func (mma monitorMetricAlertAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mma.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mma.ref.Append("tags"))
 }
 
+// TargetResourceLocation returns a reference to field target_resource_location of azurerm_monitor_metric_alert.
 func (mma monitorMetricAlertAttributes) TargetResourceLocation() terra.StringValue {
-	return terra.ReferenceString(mma.ref.Append("target_resource_location"))
+	return terra.ReferenceAsString(mma.ref.Append("target_resource_location"))
 }
 
+// TargetResourceType returns a reference to field target_resource_type of azurerm_monitor_metric_alert.
 func (mma monitorMetricAlertAttributes) TargetResourceType() terra.StringValue {
-	return terra.ReferenceString(mma.ref.Append("target_resource_type"))
+	return terra.ReferenceAsString(mma.ref.Append("target_resource_type"))
 }
 
+// WindowSize returns a reference to field window_size of azurerm_monitor_metric_alert.
 func (mma monitorMetricAlertAttributes) WindowSize() terra.StringValue {
-	return terra.ReferenceString(mma.ref.Append("window_size"))
+	return terra.ReferenceAsString(mma.ref.Append("window_size"))
 }
 
 func (mma monitorMetricAlertAttributes) Action() terra.SetValue[monitormetricalert.ActionAttributes] {
-	return terra.ReferenceSet[monitormetricalert.ActionAttributes](mma.ref.Append("action"))
+	return terra.ReferenceAsSet[monitormetricalert.ActionAttributes](mma.ref.Append("action"))
 }
 
 func (mma monitorMetricAlertAttributes) ApplicationInsightsWebTestLocationAvailabilityCriteria() terra.ListValue[monitormetricalert.ApplicationInsightsWebTestLocationAvailabilityCriteriaAttributes] {
-	return terra.ReferenceList[monitormetricalert.ApplicationInsightsWebTestLocationAvailabilityCriteriaAttributes](mma.ref.Append("application_insights_web_test_location_availability_criteria"))
+	return terra.ReferenceAsList[monitormetricalert.ApplicationInsightsWebTestLocationAvailabilityCriteriaAttributes](mma.ref.Append("application_insights_web_test_location_availability_criteria"))
 }
 
 func (mma monitorMetricAlertAttributes) Criteria() terra.ListValue[monitormetricalert.CriteriaAttributes] {
-	return terra.ReferenceList[monitormetricalert.CriteriaAttributes](mma.ref.Append("criteria"))
+	return terra.ReferenceAsList[monitormetricalert.CriteriaAttributes](mma.ref.Append("criteria"))
 }
 
 func (mma monitorMetricAlertAttributes) DynamicCriteria() terra.ListValue[monitormetricalert.DynamicCriteriaAttributes] {
-	return terra.ReferenceList[monitormetricalert.DynamicCriteriaAttributes](mma.ref.Append("dynamic_criteria"))
+	return terra.ReferenceAsList[monitormetricalert.DynamicCriteriaAttributes](mma.ref.Append("dynamic_criteria"))
 }
 
 func (mma monitorMetricAlertAttributes) Timeouts() monitormetricalert.TimeoutsAttributes {
-	return terra.ReferenceSingle[monitormetricalert.TimeoutsAttributes](mma.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[monitormetricalert.TimeoutsAttributes](mma.ref.Append("timeouts"))
 }
 
 type monitorMetricAlertState struct {

@@ -59,7 +59,7 @@ func (cc CsvClassifierAttributes) InternalWithRef(ref terra.Reference) CsvClassi
 	return CsvClassifierAttributes{ref: ref}
 }
 
-func (cc CsvClassifierAttributes) InternalTokens() hclwrite.Tokens {
+func (cc CsvClassifierAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -107,7 +107,7 @@ func (gc GrokClassifierAttributes) InternalWithRef(ref terra.Reference) GrokClas
 	return GrokClassifierAttributes{ref: ref}
 }
 
-func (gc GrokClassifierAttributes) InternalTokens() hclwrite.Tokens {
+func (gc GrokClassifierAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gc.ref.InternalTokens()
 }
 
@@ -135,7 +135,7 @@ func (jc JsonClassifierAttributes) InternalWithRef(ref terra.Reference) JsonClas
 	return JsonClassifierAttributes{ref: ref}
 }
 
-func (jc JsonClassifierAttributes) InternalTokens() hclwrite.Tokens {
+func (jc JsonClassifierAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return jc.ref.InternalTokens()
 }
 
@@ -155,7 +155,7 @@ func (xc XmlClassifierAttributes) InternalWithRef(ref terra.Reference) XmlClassi
 	return XmlClassifierAttributes{ref: ref}
 }
 
-func (xc XmlClassifierAttributes) InternalTokens() hclwrite.Tokens {
+func (xc XmlClassifierAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return xc.ref.InternalTokens()
 }
 

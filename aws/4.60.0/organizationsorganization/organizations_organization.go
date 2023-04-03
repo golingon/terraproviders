@@ -30,7 +30,7 @@ func (a AccountsAttributes) InternalWithRef(ref terra.Reference) AccountsAttribu
 	return AccountsAttributes{ref: ref}
 }
 
-func (a AccountsAttributes) InternalTokens() hclwrite.Tokens {
+func (a AccountsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -66,7 +66,7 @@ func (nma NonMasterAccountsAttributes) InternalWithRef(ref terra.Reference) NonM
 	return NonMasterAccountsAttributes{ref: ref}
 }
 
-func (nma NonMasterAccountsAttributes) InternalTokens() hclwrite.Tokens {
+func (nma NonMasterAccountsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nma.ref.InternalTokens()
 }
 
@@ -102,7 +102,7 @@ func (r RootsAttributes) InternalWithRef(ref terra.Reference) RootsAttributes {
 	return RootsAttributes{ref: ref}
 }
 
-func (r RootsAttributes) InternalTokens() hclwrite.Tokens {
+func (r RootsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -134,7 +134,7 @@ func (pt PolicyTypesAttributes) InternalWithRef(ref terra.Reference) PolicyTypes
 	return PolicyTypesAttributes{ref: ref}
 }
 
-func (pt PolicyTypesAttributes) InternalTokens() hclwrite.Tokens {
+func (pt PolicyTypesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pt.ref.InternalTokens()
 }
 

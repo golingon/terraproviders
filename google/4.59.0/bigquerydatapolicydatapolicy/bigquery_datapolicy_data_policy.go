@@ -25,48 +25,48 @@ type DataMaskingPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (dmp DataMaskingPolicyAttributes) InternalRef() terra.Reference {
-	return dmp.ref
+func (dmp DataMaskingPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return dmp.ref, nil
 }
 
 func (dmp DataMaskingPolicyAttributes) InternalWithRef(ref terra.Reference) DataMaskingPolicyAttributes {
 	return DataMaskingPolicyAttributes{ref: ref}
 }
 
-func (dmp DataMaskingPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (dmp DataMaskingPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dmp.ref.InternalTokens()
 }
 
 func (dmp DataMaskingPolicyAttributes) PredefinedExpression() terra.StringValue {
-	return terra.ReferenceString(dmp.ref.Append("predefined_expression"))
+	return terra.ReferenceAsString(dmp.ref.Append("predefined_expression"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type DataMaskingPolicyState struct {

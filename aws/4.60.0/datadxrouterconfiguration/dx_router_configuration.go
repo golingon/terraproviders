@@ -21,7 +21,7 @@ func (r RouterAttributes) InternalWithRef(ref terra.Reference) RouterAttributes 
 	return RouterAttributes{ref: ref}
 }
 
-func (r RouterAttributes) InternalTokens() hclwrite.Tokens {
+func (r RouterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 

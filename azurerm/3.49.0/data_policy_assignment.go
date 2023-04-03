@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataPolicyAssignment creates a new instance of [DataPolicyAssignment].
 func NewDataPolicyAssignment(name string, args DataPolicyAssignmentArgs) *DataPolicyAssignment {
 	return &DataPolicyAssignment{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataPolicyAssignment(name string, args DataPolicyAssignmentArgs) *DataPo
 
 var _ terra.DataResource = (*DataPolicyAssignment)(nil)
 
+// DataPolicyAssignment represents the Terraform data resource azurerm_policy_assignment.
 type DataPolicyAssignment struct {
 	Name string
 	Args DataPolicyAssignmentArgs
 }
 
+// DataSource returns the Terraform object type for [DataPolicyAssignment].
 func (pa *DataPolicyAssignment) DataSource() string {
 	return "azurerm_policy_assignment"
 }
 
+// LocalName returns the local name for [DataPolicyAssignment].
 func (pa *DataPolicyAssignment) LocalName() string {
 	return pa.Name
 }
 
+// Configuration returns the configuration (args) for [DataPolicyAssignment].
 func (pa *DataPolicyAssignment) Configuration() interface{} {
 	return pa.Args
 }
 
+// Attributes returns the attributes for [DataPolicyAssignment].
 func (pa *DataPolicyAssignment) Attributes() dataPolicyAssignmentAttributes {
 	return dataPolicyAssignmentAttributes{ref: terra.ReferenceDataResource(pa)}
 }
 
+// DataPolicyAssignmentArgs contains the configurations for azurerm_policy_assignment.
 type DataPolicyAssignmentArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -55,58 +62,69 @@ type dataPolicyAssignmentAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of azurerm_policy_assignment.
 func (pa dataPolicyAssignmentAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("description"))
+	return terra.ReferenceAsString(pa.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_policy_assignment.
 func (pa dataPolicyAssignmentAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("display_name"))
+	return terra.ReferenceAsString(pa.ref.Append("display_name"))
 }
 
+// Enforce returns a reference to field enforce of azurerm_policy_assignment.
 func (pa dataPolicyAssignmentAttributes) Enforce() terra.BoolValue {
-	return terra.ReferenceBool(pa.ref.Append("enforce"))
+	return terra.ReferenceAsBool(pa.ref.Append("enforce"))
 }
 
+// Id returns a reference to field id of azurerm_policy_assignment.
 func (pa dataPolicyAssignmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("id"))
+	return terra.ReferenceAsString(pa.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_policy_assignment.
 func (pa dataPolicyAssignmentAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("location"))
+	return terra.ReferenceAsString(pa.ref.Append("location"))
 }
 
+// Metadata returns a reference to field metadata of azurerm_policy_assignment.
 func (pa dataPolicyAssignmentAttributes) Metadata() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("metadata"))
+	return terra.ReferenceAsString(pa.ref.Append("metadata"))
 }
 
+// Name returns a reference to field name of azurerm_policy_assignment.
 func (pa dataPolicyAssignmentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("name"))
+	return terra.ReferenceAsString(pa.ref.Append("name"))
 }
 
+// NotScopes returns a reference to field not_scopes of azurerm_policy_assignment.
 func (pa dataPolicyAssignmentAttributes) NotScopes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](pa.ref.Append("not_scopes"))
+	return terra.ReferenceAsList[terra.StringValue](pa.ref.Append("not_scopes"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_policy_assignment.
 func (pa dataPolicyAssignmentAttributes) Parameters() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("parameters"))
+	return terra.ReferenceAsString(pa.ref.Append("parameters"))
 }
 
+// PolicyDefinitionId returns a reference to field policy_definition_id of azurerm_policy_assignment.
 func (pa dataPolicyAssignmentAttributes) PolicyDefinitionId() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("policy_definition_id"))
+	return terra.ReferenceAsString(pa.ref.Append("policy_definition_id"))
 }
 
+// ScopeId returns a reference to field scope_id of azurerm_policy_assignment.
 func (pa dataPolicyAssignmentAttributes) ScopeId() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("scope_id"))
+	return terra.ReferenceAsString(pa.ref.Append("scope_id"))
 }
 
 func (pa dataPolicyAssignmentAttributes) Identity() terra.ListValue[datapolicyassignment.IdentityAttributes] {
-	return terra.ReferenceList[datapolicyassignment.IdentityAttributes](pa.ref.Append("identity"))
+	return terra.ReferenceAsList[datapolicyassignment.IdentityAttributes](pa.ref.Append("identity"))
 }
 
 func (pa dataPolicyAssignmentAttributes) NonComplianceMessage() terra.ListValue[datapolicyassignment.NonComplianceMessageAttributes] {
-	return terra.ReferenceList[datapolicyassignment.NonComplianceMessageAttributes](pa.ref.Append("non_compliance_message"))
+	return terra.ReferenceAsList[datapolicyassignment.NonComplianceMessageAttributes](pa.ref.Append("non_compliance_message"))
 }
 
 func (pa dataPolicyAssignmentAttributes) Timeouts() datapolicyassignment.TimeoutsAttributes {
-	return terra.ReferenceSingle[datapolicyassignment.TimeoutsAttributes](pa.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datapolicyassignment.TimeoutsAttributes](pa.ref.Append("timeouts"))
 }

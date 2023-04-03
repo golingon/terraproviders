@@ -63,144 +63,144 @@ type InstancePoolAttributes struct {
 	ref terra.Reference
 }
 
-func (ip InstancePoolAttributes) InternalRef() terra.Reference {
-	return ip.ref
+func (ip InstancePoolAttributes) InternalRef() (terra.Reference, error) {
+	return ip.ref, nil
 }
 
 func (ip InstancePoolAttributes) InternalWithRef(ref terra.Reference) InstancePoolAttributes {
 	return InstancePoolAttributes{ref: ref}
 }
 
-func (ip InstancePoolAttributes) InternalTokens() hclwrite.Tokens {
+func (ip InstancePoolAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ip.ref.InternalTokens()
 }
 
 func (ip InstancePoolAttributes) ClusterVersion() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("cluster_version"))
+	return terra.ReferenceAsString(ip.ref.Append("cluster_version"))
 }
 
 func (ip InstancePoolAttributes) InstancePoolId() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("instance_pool_id"))
+	return terra.ReferenceAsString(ip.ref.Append("instance_pool_id"))
 }
 
 func (ip InstancePoolAttributes) MaxNumberOfWorkers() terra.NumberValue {
-	return terra.ReferenceNumber(ip.ref.Append("max_number_of_workers"))
+	return terra.ReferenceAsNumber(ip.ref.Append("max_number_of_workers"))
 }
 
 func (ip InstancePoolAttributes) MinNumberOfWorkers() terra.NumberValue {
-	return terra.ReferenceNumber(ip.ref.Append("min_number_of_workers"))
+	return terra.ReferenceAsNumber(ip.ref.Append("min_number_of_workers"))
 }
 
 type KeyVaultPasswordAttributes struct {
 	ref terra.Reference
 }
 
-func (kvp KeyVaultPasswordAttributes) InternalRef() terra.Reference {
-	return kvp.ref
+func (kvp KeyVaultPasswordAttributes) InternalRef() (terra.Reference, error) {
+	return kvp.ref, nil
 }
 
 func (kvp KeyVaultPasswordAttributes) InternalWithRef(ref terra.Reference) KeyVaultPasswordAttributes {
 	return KeyVaultPasswordAttributes{ref: ref}
 }
 
-func (kvp KeyVaultPasswordAttributes) InternalTokens() hclwrite.Tokens {
+func (kvp KeyVaultPasswordAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kvp.ref.InternalTokens()
 }
 
 func (kvp KeyVaultPasswordAttributes) LinkedServiceName() terra.StringValue {
-	return terra.ReferenceString(kvp.ref.Append("linked_service_name"))
+	return terra.ReferenceAsString(kvp.ref.Append("linked_service_name"))
 }
 
 func (kvp KeyVaultPasswordAttributes) SecretName() terra.StringValue {
-	return terra.ReferenceString(kvp.ref.Append("secret_name"))
+	return terra.ReferenceAsString(kvp.ref.Append("secret_name"))
 }
 
 type NewClusterConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ncc NewClusterConfigAttributes) InternalRef() terra.Reference {
-	return ncc.ref
+func (ncc NewClusterConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ncc.ref, nil
 }
 
 func (ncc NewClusterConfigAttributes) InternalWithRef(ref terra.Reference) NewClusterConfigAttributes {
 	return NewClusterConfigAttributes{ref: ref}
 }
 
-func (ncc NewClusterConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ncc NewClusterConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ncc.ref.InternalTokens()
 }
 
 func (ncc NewClusterConfigAttributes) ClusterVersion() terra.StringValue {
-	return terra.ReferenceString(ncc.ref.Append("cluster_version"))
+	return terra.ReferenceAsString(ncc.ref.Append("cluster_version"))
 }
 
 func (ncc NewClusterConfigAttributes) CustomTags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ncc.ref.Append("custom_tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ncc.ref.Append("custom_tags"))
 }
 
 func (ncc NewClusterConfigAttributes) DriverNodeType() terra.StringValue {
-	return terra.ReferenceString(ncc.ref.Append("driver_node_type"))
+	return terra.ReferenceAsString(ncc.ref.Append("driver_node_type"))
 }
 
 func (ncc NewClusterConfigAttributes) InitScripts() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ncc.ref.Append("init_scripts"))
+	return terra.ReferenceAsList[terra.StringValue](ncc.ref.Append("init_scripts"))
 }
 
 func (ncc NewClusterConfigAttributes) LogDestination() terra.StringValue {
-	return terra.ReferenceString(ncc.ref.Append("log_destination"))
+	return terra.ReferenceAsString(ncc.ref.Append("log_destination"))
 }
 
 func (ncc NewClusterConfigAttributes) MaxNumberOfWorkers() terra.NumberValue {
-	return terra.ReferenceNumber(ncc.ref.Append("max_number_of_workers"))
+	return terra.ReferenceAsNumber(ncc.ref.Append("max_number_of_workers"))
 }
 
 func (ncc NewClusterConfigAttributes) MinNumberOfWorkers() terra.NumberValue {
-	return terra.ReferenceNumber(ncc.ref.Append("min_number_of_workers"))
+	return terra.ReferenceAsNumber(ncc.ref.Append("min_number_of_workers"))
 }
 
 func (ncc NewClusterConfigAttributes) NodeType() terra.StringValue {
-	return terra.ReferenceString(ncc.ref.Append("node_type"))
+	return terra.ReferenceAsString(ncc.ref.Append("node_type"))
 }
 
 func (ncc NewClusterConfigAttributes) SparkConfig() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ncc.ref.Append("spark_config"))
+	return terra.ReferenceAsMap[terra.StringValue](ncc.ref.Append("spark_config"))
 }
 
 func (ncc NewClusterConfigAttributes) SparkEnvironmentVariables() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ncc.ref.Append("spark_environment_variables"))
+	return terra.ReferenceAsMap[terra.StringValue](ncc.ref.Append("spark_environment_variables"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type InstancePoolState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSecurityCenterWorkspace creates a new instance of [SecurityCenterWorkspace].
 func NewSecurityCenterWorkspace(name string, args SecurityCenterWorkspaceArgs) *SecurityCenterWorkspace {
 	return &SecurityCenterWorkspace{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSecurityCenterWorkspace(name string, args SecurityCenterWorkspaceArgs) *
 
 var _ terra.Resource = (*SecurityCenterWorkspace)(nil)
 
+// SecurityCenterWorkspace represents the Terraform resource azurerm_security_center_workspace.
 type SecurityCenterWorkspace struct {
-	Name  string
-	Args  SecurityCenterWorkspaceArgs
-	state *securityCenterWorkspaceState
+	Name      string
+	Args      SecurityCenterWorkspaceArgs
+	state     *securityCenterWorkspaceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SecurityCenterWorkspace].
 func (scw *SecurityCenterWorkspace) Type() string {
 	return "azurerm_security_center_workspace"
 }
 
+// LocalName returns the local name for [SecurityCenterWorkspace].
 func (scw *SecurityCenterWorkspace) LocalName() string {
 	return scw.Name
 }
 
+// Configuration returns the configuration (args) for [SecurityCenterWorkspace].
 func (scw *SecurityCenterWorkspace) Configuration() interface{} {
 	return scw.Args
 }
 
+// DependOn is used for other resources to depend on [SecurityCenterWorkspace].
+func (scw *SecurityCenterWorkspace) DependOn() terra.Reference {
+	return terra.ReferenceResource(scw)
+}
+
+// Dependencies returns the list of resources [SecurityCenterWorkspace] depends_on.
+func (scw *SecurityCenterWorkspace) Dependencies() terra.Dependencies {
+	return scw.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SecurityCenterWorkspace].
+func (scw *SecurityCenterWorkspace) LifecycleManagement() *terra.Lifecycle {
+	return scw.Lifecycle
+}
+
+// Attributes returns the attributes for [SecurityCenterWorkspace].
 func (scw *SecurityCenterWorkspace) Attributes() securityCenterWorkspaceAttributes {
 	return securityCenterWorkspaceAttributes{ref: terra.ReferenceResource(scw)}
 }
 
+// ImportState imports the given attribute values into [SecurityCenterWorkspace]'s state.
 func (scw *SecurityCenterWorkspace) ImportState(av io.Reader) error {
 	scw.state = &securityCenterWorkspaceState{}
 	if err := json.NewDecoder(av).Decode(scw.state); err != nil {
@@ -49,10 +73,12 @@ func (scw *SecurityCenterWorkspace) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SecurityCenterWorkspace] has state.
 func (scw *SecurityCenterWorkspace) State() (*securityCenterWorkspaceState, bool) {
 	return scw.state, scw.state != nil
 }
 
+// StateMust returns the state for [SecurityCenterWorkspace]. Panics if the state is nil.
 func (scw *SecurityCenterWorkspace) StateMust() *securityCenterWorkspaceState {
 	if scw.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", scw.Type(), scw.LocalName()))
@@ -60,10 +86,7 @@ func (scw *SecurityCenterWorkspace) StateMust() *securityCenterWorkspaceState {
 	return scw.state
 }
 
-func (scw *SecurityCenterWorkspace) DependOn() terra.Reference {
-	return terra.ReferenceResource(scw)
-}
-
+// SecurityCenterWorkspaceArgs contains the configurations for azurerm_security_center_workspace.
 type SecurityCenterWorkspaceArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -73,27 +96,28 @@ type SecurityCenterWorkspaceArgs struct {
 	WorkspaceId terra.StringValue `hcl:"workspace_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *securitycenterworkspace.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SecurityCenterWorkspace depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type securityCenterWorkspaceAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_security_center_workspace.
 func (scw securityCenterWorkspaceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(scw.ref.Append("id"))
+	return terra.ReferenceAsString(scw.ref.Append("id"))
 }
 
+// Scope returns a reference to field scope of azurerm_security_center_workspace.
 func (scw securityCenterWorkspaceAttributes) Scope() terra.StringValue {
-	return terra.ReferenceString(scw.ref.Append("scope"))
+	return terra.ReferenceAsString(scw.ref.Append("scope"))
 }
 
+// WorkspaceId returns a reference to field workspace_id of azurerm_security_center_workspace.
 func (scw securityCenterWorkspaceAttributes) WorkspaceId() terra.StringValue {
-	return terra.ReferenceString(scw.ref.Append("workspace_id"))
+	return terra.ReferenceAsString(scw.ref.Append("workspace_id"))
 }
 
 func (scw securityCenterWorkspaceAttributes) Timeouts() securitycenterworkspace.TimeoutsAttributes {
-	return terra.ReferenceSingle[securitycenterworkspace.TimeoutsAttributes](scw.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[securitycenterworkspace.TimeoutsAttributes](scw.ref.Append("timeouts"))
 }
 
 type securityCenterWorkspaceState struct {

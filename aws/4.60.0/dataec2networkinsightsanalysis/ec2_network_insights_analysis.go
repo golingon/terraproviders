@@ -361,7 +361,7 @@ func (aph AlternatePathHintsAttributes) InternalWithRef(ref terra.Reference) Alt
 	return AlternatePathHintsAttributes{ref: ref}
 }
 
-func (aph AlternatePathHintsAttributes) InternalTokens() hclwrite.Tokens {
+func (aph AlternatePathHintsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aph.ref.InternalTokens()
 }
 
@@ -385,7 +385,7 @@ func (e ExplanationsAttributes) InternalWithRef(ref terra.Reference) Explanation
 	return ExplanationsAttributes{ref: ref}
 }
 
-func (e ExplanationsAttributes) InternalTokens() hclwrite.Tokens {
+func (e ExplanationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -593,7 +593,7 @@ func (a AclAttributes) InternalWithRef(ref terra.Reference) AclAttributes {
 	return AclAttributes{ref: ref}
 }
 
-func (a AclAttributes) InternalTokens() hclwrite.Tokens {
+func (a AclAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -621,7 +621,7 @@ func (ar ExplanationsAclRuleAttributes) InternalWithRef(ref terra.Reference) Exp
 	return ExplanationsAclRuleAttributes{ref: ref}
 }
 
-func (ar ExplanationsAclRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (ar ExplanationsAclRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ar.ref.InternalTokens()
 }
 
@@ -661,7 +661,7 @@ func (pr ExplanationsAclRulePortRangeAttributes) InternalWithRef(ref terra.Refer
 	return ExplanationsAclRulePortRangeAttributes{ref: ref}
 }
 
-func (pr ExplanationsAclRulePortRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (pr ExplanationsAclRulePortRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pr.ref.InternalTokens()
 }
 
@@ -685,7 +685,7 @@ func (at ExplanationsAttachedToAttributes) InternalWithRef(ref terra.Reference) 
 	return ExplanationsAttachedToAttributes{ref: ref}
 }
 
-func (at ExplanationsAttachedToAttributes) InternalTokens() hclwrite.Tokens {
+func (at ExplanationsAttachedToAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return at.ref.InternalTokens()
 }
 
@@ -713,7 +713,7 @@ func (clbl ClassicLoadBalancerListenerAttributes) InternalWithRef(ref terra.Refe
 	return ClassicLoadBalancerListenerAttributes{ref: ref}
 }
 
-func (clbl ClassicLoadBalancerListenerAttributes) InternalTokens() hclwrite.Tokens {
+func (clbl ClassicLoadBalancerListenerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return clbl.ref.InternalTokens()
 }
 
@@ -737,7 +737,7 @@ func (c ExplanationsComponentAttributes) InternalWithRef(ref terra.Reference) Ex
 	return ExplanationsComponentAttributes{ref: ref}
 }
 
-func (c ExplanationsComponentAttributes) InternalTokens() hclwrite.Tokens {
+func (c ExplanationsComponentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -765,7 +765,7 @@ func (cg CustomerGatewayAttributes) InternalWithRef(ref terra.Reference) Custome
 	return CustomerGatewayAttributes{ref: ref}
 }
 
-func (cg CustomerGatewayAttributes) InternalTokens() hclwrite.Tokens {
+func (cg CustomerGatewayAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cg.ref.InternalTokens()
 }
 
@@ -793,7 +793,7 @@ func (d DestinationAttributes) InternalWithRef(ref terra.Reference) DestinationA
 	return DestinationAttributes{ref: ref}
 }
 
-func (d DestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (d DestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -821,7 +821,7 @@ func (dv ExplanationsDestinationVpcAttributes) InternalWithRef(ref terra.Referen
 	return ExplanationsDestinationVpcAttributes{ref: ref}
 }
 
-func (dv ExplanationsDestinationVpcAttributes) InternalTokens() hclwrite.Tokens {
+func (dv ExplanationsDestinationVpcAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dv.ref.InternalTokens()
 }
 
@@ -849,7 +849,7 @@ func (elbl ElasticLoadBalancerListenerAttributes) InternalWithRef(ref terra.Refe
 	return ElasticLoadBalancerListenerAttributes{ref: ref}
 }
 
-func (elbl ElasticLoadBalancerListenerAttributes) InternalTokens() hclwrite.Tokens {
+func (elbl ElasticLoadBalancerListenerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return elbl.ref.InternalTokens()
 }
 
@@ -877,7 +877,7 @@ func (irt IngressRouteTableAttributes) InternalWithRef(ref terra.Reference) Ingr
 	return IngressRouteTableAttributes{ref: ref}
 }
 
-func (irt IngressRouteTableAttributes) InternalTokens() hclwrite.Tokens {
+func (irt IngressRouteTableAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return irt.ref.InternalTokens()
 }
 
@@ -905,7 +905,7 @@ func (ig InternetGatewayAttributes) InternalWithRef(ref terra.Reference) Interne
 	return InternetGatewayAttributes{ref: ref}
 }
 
-func (ig InternetGatewayAttributes) InternalTokens() hclwrite.Tokens {
+func (ig InternetGatewayAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ig.ref.InternalTokens()
 }
 
@@ -933,7 +933,7 @@ func (lbtg LoadBalancerTargetGroupAttributes) InternalWithRef(ref terra.Referenc
 	return LoadBalancerTargetGroupAttributes{ref: ref}
 }
 
-func (lbtg LoadBalancerTargetGroupAttributes) InternalTokens() hclwrite.Tokens {
+func (lbtg LoadBalancerTargetGroupAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lbtg.ref.InternalTokens()
 }
 
@@ -961,7 +961,7 @@ func (lbtg LoadBalancerTargetGroupsAttributes) InternalWithRef(ref terra.Referen
 	return LoadBalancerTargetGroupsAttributes{ref: ref}
 }
 
-func (lbtg LoadBalancerTargetGroupsAttributes) InternalTokens() hclwrite.Tokens {
+func (lbtg LoadBalancerTargetGroupsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lbtg.ref.InternalTokens()
 }
 
@@ -989,7 +989,7 @@ func (ng NatGatewayAttributes) InternalWithRef(ref terra.Reference) NatGatewayAt
 	return NatGatewayAttributes{ref: ref}
 }
 
-func (ng NatGatewayAttributes) InternalTokens() hclwrite.Tokens {
+func (ng NatGatewayAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ng.ref.InternalTokens()
 }
 
@@ -1017,7 +1017,7 @@ func (ni NetworkInterfaceAttributes) InternalWithRef(ref terra.Reference) Networ
 	return NetworkInterfaceAttributes{ref: ref}
 }
 
-func (ni NetworkInterfaceAttributes) InternalTokens() hclwrite.Tokens {
+func (ni NetworkInterfaceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ni.ref.InternalTokens()
 }
 
@@ -1045,7 +1045,7 @@ func (pr PortRangesAttributes) InternalWithRef(ref terra.Reference) PortRangesAt
 	return PortRangesAttributes{ref: ref}
 }
 
-func (pr PortRangesAttributes) InternalTokens() hclwrite.Tokens {
+func (pr PortRangesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pr.ref.InternalTokens()
 }
 
@@ -1069,7 +1069,7 @@ func (pl PrefixListAttributes) InternalWithRef(ref terra.Reference) PrefixListAt
 	return PrefixListAttributes{ref: ref}
 }
 
-func (pl PrefixListAttributes) InternalTokens() hclwrite.Tokens {
+func (pl PrefixListAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pl.ref.InternalTokens()
 }
 
@@ -1097,7 +1097,7 @@ func (rt RouteTableAttributes) InternalWithRef(ref terra.Reference) RouteTableAt
 	return RouteTableAttributes{ref: ref}
 }
 
-func (rt RouteTableAttributes) InternalTokens() hclwrite.Tokens {
+func (rt RouteTableAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rt.ref.InternalTokens()
 }
 
@@ -1125,7 +1125,7 @@ func (rtr ExplanationsRouteTableRouteAttributes) InternalWithRef(ref terra.Refer
 	return ExplanationsRouteTableRouteAttributes{ref: ref}
 }
 
-func (rtr ExplanationsRouteTableRouteAttributes) InternalTokens() hclwrite.Tokens {
+func (rtr ExplanationsRouteTableRouteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rtr.ref.InternalTokens()
 }
 
@@ -1181,7 +1181,7 @@ func (sg SecurityGroupAttributes) InternalWithRef(ref terra.Reference) SecurityG
 	return SecurityGroupAttributes{ref: ref}
 }
 
-func (sg SecurityGroupAttributes) InternalTokens() hclwrite.Tokens {
+func (sg SecurityGroupAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sg.ref.InternalTokens()
 }
 
@@ -1209,7 +1209,7 @@ func (sgr ExplanationsSecurityGroupRuleAttributes) InternalWithRef(ref terra.Ref
 	return ExplanationsSecurityGroupRuleAttributes{ref: ref}
 }
 
-func (sgr ExplanationsSecurityGroupRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (sgr ExplanationsSecurityGroupRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sgr.ref.InternalTokens()
 }
 
@@ -1249,7 +1249,7 @@ func (pr ExplanationsSecurityGroupRulePortRangeAttributes) InternalWithRef(ref t
 	return ExplanationsSecurityGroupRulePortRangeAttributes{ref: ref}
 }
 
-func (pr ExplanationsSecurityGroupRulePortRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (pr ExplanationsSecurityGroupRulePortRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pr.ref.InternalTokens()
 }
 
@@ -1273,7 +1273,7 @@ func (sg SecurityGroupsAttributes) InternalWithRef(ref terra.Reference) Security
 	return SecurityGroupsAttributes{ref: ref}
 }
 
-func (sg SecurityGroupsAttributes) InternalTokens() hclwrite.Tokens {
+func (sg SecurityGroupsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sg.ref.InternalTokens()
 }
 
@@ -1301,7 +1301,7 @@ func (sv ExplanationsSourceVpcAttributes) InternalWithRef(ref terra.Reference) E
 	return ExplanationsSourceVpcAttributes{ref: ref}
 }
 
-func (sv ExplanationsSourceVpcAttributes) InternalTokens() hclwrite.Tokens {
+func (sv ExplanationsSourceVpcAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sv.ref.InternalTokens()
 }
 
@@ -1329,7 +1329,7 @@ func (s ExplanationsSubnetAttributes) InternalWithRef(ref terra.Reference) Expla
 	return ExplanationsSubnetAttributes{ref: ref}
 }
 
-func (s ExplanationsSubnetAttributes) InternalTokens() hclwrite.Tokens {
+func (s ExplanationsSubnetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -1357,7 +1357,7 @@ func (srt SubnetRouteTableAttributes) InternalWithRef(ref terra.Reference) Subne
 	return SubnetRouteTableAttributes{ref: ref}
 }
 
-func (srt SubnetRouteTableAttributes) InternalTokens() hclwrite.Tokens {
+func (srt SubnetRouteTableAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return srt.ref.InternalTokens()
 }
 
@@ -1385,7 +1385,7 @@ func (tg ExplanationsTransitGatewayAttributes) InternalWithRef(ref terra.Referen
 	return ExplanationsTransitGatewayAttributes{ref: ref}
 }
 
-func (tg ExplanationsTransitGatewayAttributes) InternalTokens() hclwrite.Tokens {
+func (tg ExplanationsTransitGatewayAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tg.ref.InternalTokens()
 }
 
@@ -1413,7 +1413,7 @@ func (tga TransitGatewayAttachmentAttributes) InternalWithRef(ref terra.Referenc
 	return TransitGatewayAttachmentAttributes{ref: ref}
 }
 
-func (tga TransitGatewayAttachmentAttributes) InternalTokens() hclwrite.Tokens {
+func (tga TransitGatewayAttachmentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tga.ref.InternalTokens()
 }
 
@@ -1441,7 +1441,7 @@ func (tgrt TransitGatewayRouteTableAttributes) InternalWithRef(ref terra.Referen
 	return TransitGatewayRouteTableAttributes{ref: ref}
 }
 
-func (tgrt TransitGatewayRouteTableAttributes) InternalTokens() hclwrite.Tokens {
+func (tgrt TransitGatewayRouteTableAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tgrt.ref.InternalTokens()
 }
 
@@ -1469,7 +1469,7 @@ func (tgrtr ExplanationsTransitGatewayRouteTableRouteAttributes) InternalWithRef
 	return ExplanationsTransitGatewayRouteTableRouteAttributes{ref: ref}
 }
 
-func (tgrtr ExplanationsTransitGatewayRouteTableRouteAttributes) InternalTokens() hclwrite.Tokens {
+func (tgrtr ExplanationsTransitGatewayRouteTableRouteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tgrtr.ref.InternalTokens()
 }
 
@@ -1513,7 +1513,7 @@ func (v ExplanationsVpcAttributes) InternalWithRef(ref terra.Reference) Explanat
 	return ExplanationsVpcAttributes{ref: ref}
 }
 
-func (v ExplanationsVpcAttributes) InternalTokens() hclwrite.Tokens {
+func (v ExplanationsVpcAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 
@@ -1541,7 +1541,7 @@ func (ve VpcEndpointAttributes) InternalWithRef(ref terra.Reference) VpcEndpoint
 	return VpcEndpointAttributes{ref: ref}
 }
 
-func (ve VpcEndpointAttributes) InternalTokens() hclwrite.Tokens {
+func (ve VpcEndpointAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ve.ref.InternalTokens()
 }
 
@@ -1569,7 +1569,7 @@ func (vpc VpcPeeringConnectionAttributes) InternalWithRef(ref terra.Reference) V
 	return VpcPeeringConnectionAttributes{ref: ref}
 }
 
-func (vpc VpcPeeringConnectionAttributes) InternalTokens() hclwrite.Tokens {
+func (vpc VpcPeeringConnectionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vpc.ref.InternalTokens()
 }
 
@@ -1597,7 +1597,7 @@ func (vc VpnConnectionAttributes) InternalWithRef(ref terra.Reference) VpnConnec
 	return VpnConnectionAttributes{ref: ref}
 }
 
-func (vc VpnConnectionAttributes) InternalTokens() hclwrite.Tokens {
+func (vc VpnConnectionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vc.ref.InternalTokens()
 }
 
@@ -1625,7 +1625,7 @@ func (vg VpnGatewayAttributes) InternalWithRef(ref terra.Reference) VpnGatewayAt
 	return VpnGatewayAttributes{ref: ref}
 }
 
-func (vg VpnGatewayAttributes) InternalTokens() hclwrite.Tokens {
+func (vg VpnGatewayAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vg.ref.InternalTokens()
 }
 
@@ -1653,7 +1653,7 @@ func (fpc ForwardPathComponentsAttributes) InternalWithRef(ref terra.Reference) 
 	return ForwardPathComponentsAttributes{ref: ref}
 }
 
-func (fpc ForwardPathComponentsAttributes) InternalTokens() hclwrite.Tokens {
+func (fpc ForwardPathComponentsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fpc.ref.InternalTokens()
 }
 
@@ -1729,7 +1729,7 @@ func (ar ForwardPathComponentsAclRuleAttributes) InternalWithRef(ref terra.Refer
 	return ForwardPathComponentsAclRuleAttributes{ref: ref}
 }
 
-func (ar ForwardPathComponentsAclRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (ar ForwardPathComponentsAclRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ar.ref.InternalTokens()
 }
 
@@ -1769,7 +1769,7 @@ func (pr ForwardPathComponentsAclRulePortRangeAttributes) InternalWithRef(ref te
 	return ForwardPathComponentsAclRulePortRangeAttributes{ref: ref}
 }
 
-func (pr ForwardPathComponentsAclRulePortRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (pr ForwardPathComponentsAclRulePortRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pr.ref.InternalTokens()
 }
 
@@ -1793,7 +1793,7 @@ func (ad ForwardPathComponentsAdditionalDetailsAttributes) InternalWithRef(ref t
 	return ForwardPathComponentsAdditionalDetailsAttributes{ref: ref}
 }
 
-func (ad ForwardPathComponentsAdditionalDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (ad ForwardPathComponentsAdditionalDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ad.ref.InternalTokens()
 }
 
@@ -1817,7 +1817,7 @@ func (c ForwardPathComponentsAdditionalDetailsComponentAttributes) InternalWithR
 	return ForwardPathComponentsAdditionalDetailsComponentAttributes{ref: ref}
 }
 
-func (c ForwardPathComponentsAdditionalDetailsComponentAttributes) InternalTokens() hclwrite.Tokens {
+func (c ForwardPathComponentsAdditionalDetailsComponentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -1845,7 +1845,7 @@ func (at ForwardPathComponentsAttachedToAttributes) InternalWithRef(ref terra.Re
 	return ForwardPathComponentsAttachedToAttributes{ref: ref}
 }
 
-func (at ForwardPathComponentsAttachedToAttributes) InternalTokens() hclwrite.Tokens {
+func (at ForwardPathComponentsAttachedToAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return at.ref.InternalTokens()
 }
 
@@ -1873,7 +1873,7 @@ func (c ForwardPathComponentsComponentAttributes) InternalWithRef(ref terra.Refe
 	return ForwardPathComponentsComponentAttributes{ref: ref}
 }
 
-func (c ForwardPathComponentsComponentAttributes) InternalTokens() hclwrite.Tokens {
+func (c ForwardPathComponentsComponentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -1901,7 +1901,7 @@ func (dv ForwardPathComponentsDestinationVpcAttributes) InternalWithRef(ref terr
 	return ForwardPathComponentsDestinationVpcAttributes{ref: ref}
 }
 
-func (dv ForwardPathComponentsDestinationVpcAttributes) InternalTokens() hclwrite.Tokens {
+func (dv ForwardPathComponentsDestinationVpcAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dv.ref.InternalTokens()
 }
 
@@ -1929,7 +1929,7 @@ func (ih ForwardPathComponentsInboundHeaderAttributes) InternalWithRef(ref terra
 	return ForwardPathComponentsInboundHeaderAttributes{ref: ref}
 }
 
-func (ih ForwardPathComponentsInboundHeaderAttributes) InternalTokens() hclwrite.Tokens {
+func (ih ForwardPathComponentsInboundHeaderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ih.ref.InternalTokens()
 }
 
@@ -1965,7 +1965,7 @@ func (dpr ForwardPathComponentsInboundHeaderDestinationPortRangesAttributes) Int
 	return ForwardPathComponentsInboundHeaderDestinationPortRangesAttributes{ref: ref}
 }
 
-func (dpr ForwardPathComponentsInboundHeaderDestinationPortRangesAttributes) InternalTokens() hclwrite.Tokens {
+func (dpr ForwardPathComponentsInboundHeaderDestinationPortRangesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dpr.ref.InternalTokens()
 }
 
@@ -1989,7 +1989,7 @@ func (spr ForwardPathComponentsInboundHeaderSourcePortRangesAttributes) Internal
 	return ForwardPathComponentsInboundHeaderSourcePortRangesAttributes{ref: ref}
 }
 
-func (spr ForwardPathComponentsInboundHeaderSourcePortRangesAttributes) InternalTokens() hclwrite.Tokens {
+func (spr ForwardPathComponentsInboundHeaderSourcePortRangesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return spr.ref.InternalTokens()
 }
 
@@ -2013,7 +2013,7 @@ func (oh ForwardPathComponentsOutboundHeaderAttributes) InternalWithRef(ref terr
 	return ForwardPathComponentsOutboundHeaderAttributes{ref: ref}
 }
 
-func (oh ForwardPathComponentsOutboundHeaderAttributes) InternalTokens() hclwrite.Tokens {
+func (oh ForwardPathComponentsOutboundHeaderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oh.ref.InternalTokens()
 }
 
@@ -2049,7 +2049,7 @@ func (dpr ForwardPathComponentsOutboundHeaderDestinationPortRangesAttributes) In
 	return ForwardPathComponentsOutboundHeaderDestinationPortRangesAttributes{ref: ref}
 }
 
-func (dpr ForwardPathComponentsOutboundHeaderDestinationPortRangesAttributes) InternalTokens() hclwrite.Tokens {
+func (dpr ForwardPathComponentsOutboundHeaderDestinationPortRangesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dpr.ref.InternalTokens()
 }
 
@@ -2073,7 +2073,7 @@ func (spr ForwardPathComponentsOutboundHeaderSourcePortRangesAttributes) Interna
 	return ForwardPathComponentsOutboundHeaderSourcePortRangesAttributes{ref: ref}
 }
 
-func (spr ForwardPathComponentsOutboundHeaderSourcePortRangesAttributes) InternalTokens() hclwrite.Tokens {
+func (spr ForwardPathComponentsOutboundHeaderSourcePortRangesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return spr.ref.InternalTokens()
 }
 
@@ -2097,7 +2097,7 @@ func (rtr ForwardPathComponentsRouteTableRouteAttributes) InternalWithRef(ref te
 	return ForwardPathComponentsRouteTableRouteAttributes{ref: ref}
 }
 
-func (rtr ForwardPathComponentsRouteTableRouteAttributes) InternalTokens() hclwrite.Tokens {
+func (rtr ForwardPathComponentsRouteTableRouteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rtr.ref.InternalTokens()
 }
 
@@ -2153,7 +2153,7 @@ func (sgr ForwardPathComponentsSecurityGroupRuleAttributes) InternalWithRef(ref 
 	return ForwardPathComponentsSecurityGroupRuleAttributes{ref: ref}
 }
 
-func (sgr ForwardPathComponentsSecurityGroupRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (sgr ForwardPathComponentsSecurityGroupRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sgr.ref.InternalTokens()
 }
 
@@ -2193,7 +2193,7 @@ func (pr ForwardPathComponentsSecurityGroupRulePortRangeAttributes) InternalWith
 	return ForwardPathComponentsSecurityGroupRulePortRangeAttributes{ref: ref}
 }
 
-func (pr ForwardPathComponentsSecurityGroupRulePortRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (pr ForwardPathComponentsSecurityGroupRulePortRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pr.ref.InternalTokens()
 }
 
@@ -2217,7 +2217,7 @@ func (sv ForwardPathComponentsSourceVpcAttributes) InternalWithRef(ref terra.Ref
 	return ForwardPathComponentsSourceVpcAttributes{ref: ref}
 }
 
-func (sv ForwardPathComponentsSourceVpcAttributes) InternalTokens() hclwrite.Tokens {
+func (sv ForwardPathComponentsSourceVpcAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sv.ref.InternalTokens()
 }
 
@@ -2245,7 +2245,7 @@ func (s ForwardPathComponentsSubnetAttributes) InternalWithRef(ref terra.Referen
 	return ForwardPathComponentsSubnetAttributes{ref: ref}
 }
 
-func (s ForwardPathComponentsSubnetAttributes) InternalTokens() hclwrite.Tokens {
+func (s ForwardPathComponentsSubnetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -2273,7 +2273,7 @@ func (tg ForwardPathComponentsTransitGatewayAttributes) InternalWithRef(ref terr
 	return ForwardPathComponentsTransitGatewayAttributes{ref: ref}
 }
 
-func (tg ForwardPathComponentsTransitGatewayAttributes) InternalTokens() hclwrite.Tokens {
+func (tg ForwardPathComponentsTransitGatewayAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tg.ref.InternalTokens()
 }
 
@@ -2301,7 +2301,7 @@ func (tgrtr ForwardPathComponentsTransitGatewayRouteTableRouteAttributes) Intern
 	return ForwardPathComponentsTransitGatewayRouteTableRouteAttributes{ref: ref}
 }
 
-func (tgrtr ForwardPathComponentsTransitGatewayRouteTableRouteAttributes) InternalTokens() hclwrite.Tokens {
+func (tgrtr ForwardPathComponentsTransitGatewayRouteTableRouteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tgrtr.ref.InternalTokens()
 }
 
@@ -2345,7 +2345,7 @@ func (v ForwardPathComponentsVpcAttributes) InternalWithRef(ref terra.Reference)
 	return ForwardPathComponentsVpcAttributes{ref: ref}
 }
 
-func (v ForwardPathComponentsVpcAttributes) InternalTokens() hclwrite.Tokens {
+func (v ForwardPathComponentsVpcAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 
@@ -2373,7 +2373,7 @@ func (rpc ReturnPathComponentsAttributes) InternalWithRef(ref terra.Reference) R
 	return ReturnPathComponentsAttributes{ref: ref}
 }
 
-func (rpc ReturnPathComponentsAttributes) InternalTokens() hclwrite.Tokens {
+func (rpc ReturnPathComponentsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rpc.ref.InternalTokens()
 }
 
@@ -2449,7 +2449,7 @@ func (ar ReturnPathComponentsAclRuleAttributes) InternalWithRef(ref terra.Refere
 	return ReturnPathComponentsAclRuleAttributes{ref: ref}
 }
 
-func (ar ReturnPathComponentsAclRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (ar ReturnPathComponentsAclRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ar.ref.InternalTokens()
 }
 
@@ -2489,7 +2489,7 @@ func (pr ReturnPathComponentsAclRulePortRangeAttributes) InternalWithRef(ref ter
 	return ReturnPathComponentsAclRulePortRangeAttributes{ref: ref}
 }
 
-func (pr ReturnPathComponentsAclRulePortRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (pr ReturnPathComponentsAclRulePortRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pr.ref.InternalTokens()
 }
 
@@ -2513,7 +2513,7 @@ func (ad ReturnPathComponentsAdditionalDetailsAttributes) InternalWithRef(ref te
 	return ReturnPathComponentsAdditionalDetailsAttributes{ref: ref}
 }
 
-func (ad ReturnPathComponentsAdditionalDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (ad ReturnPathComponentsAdditionalDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ad.ref.InternalTokens()
 }
 
@@ -2537,7 +2537,7 @@ func (c ReturnPathComponentsAdditionalDetailsComponentAttributes) InternalWithRe
 	return ReturnPathComponentsAdditionalDetailsComponentAttributes{ref: ref}
 }
 
-func (c ReturnPathComponentsAdditionalDetailsComponentAttributes) InternalTokens() hclwrite.Tokens {
+func (c ReturnPathComponentsAdditionalDetailsComponentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -2565,7 +2565,7 @@ func (at ReturnPathComponentsAttachedToAttributes) InternalWithRef(ref terra.Ref
 	return ReturnPathComponentsAttachedToAttributes{ref: ref}
 }
 
-func (at ReturnPathComponentsAttachedToAttributes) InternalTokens() hclwrite.Tokens {
+func (at ReturnPathComponentsAttachedToAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return at.ref.InternalTokens()
 }
 
@@ -2593,7 +2593,7 @@ func (c ReturnPathComponentsComponentAttributes) InternalWithRef(ref terra.Refer
 	return ReturnPathComponentsComponentAttributes{ref: ref}
 }
 
-func (c ReturnPathComponentsComponentAttributes) InternalTokens() hclwrite.Tokens {
+func (c ReturnPathComponentsComponentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -2621,7 +2621,7 @@ func (dv ReturnPathComponentsDestinationVpcAttributes) InternalWithRef(ref terra
 	return ReturnPathComponentsDestinationVpcAttributes{ref: ref}
 }
 
-func (dv ReturnPathComponentsDestinationVpcAttributes) InternalTokens() hclwrite.Tokens {
+func (dv ReturnPathComponentsDestinationVpcAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dv.ref.InternalTokens()
 }
 
@@ -2649,7 +2649,7 @@ func (ih ReturnPathComponentsInboundHeaderAttributes) InternalWithRef(ref terra.
 	return ReturnPathComponentsInboundHeaderAttributes{ref: ref}
 }
 
-func (ih ReturnPathComponentsInboundHeaderAttributes) InternalTokens() hclwrite.Tokens {
+func (ih ReturnPathComponentsInboundHeaderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ih.ref.InternalTokens()
 }
 
@@ -2685,7 +2685,7 @@ func (dpr ReturnPathComponentsInboundHeaderDestinationPortRangesAttributes) Inte
 	return ReturnPathComponentsInboundHeaderDestinationPortRangesAttributes{ref: ref}
 }
 
-func (dpr ReturnPathComponentsInboundHeaderDestinationPortRangesAttributes) InternalTokens() hclwrite.Tokens {
+func (dpr ReturnPathComponentsInboundHeaderDestinationPortRangesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dpr.ref.InternalTokens()
 }
 
@@ -2709,7 +2709,7 @@ func (spr ReturnPathComponentsInboundHeaderSourcePortRangesAttributes) InternalW
 	return ReturnPathComponentsInboundHeaderSourcePortRangesAttributes{ref: ref}
 }
 
-func (spr ReturnPathComponentsInboundHeaderSourcePortRangesAttributes) InternalTokens() hclwrite.Tokens {
+func (spr ReturnPathComponentsInboundHeaderSourcePortRangesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return spr.ref.InternalTokens()
 }
 
@@ -2733,7 +2733,7 @@ func (oh ReturnPathComponentsOutboundHeaderAttributes) InternalWithRef(ref terra
 	return ReturnPathComponentsOutboundHeaderAttributes{ref: ref}
 }
 
-func (oh ReturnPathComponentsOutboundHeaderAttributes) InternalTokens() hclwrite.Tokens {
+func (oh ReturnPathComponentsOutboundHeaderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oh.ref.InternalTokens()
 }
 
@@ -2769,7 +2769,7 @@ func (dpr ReturnPathComponentsOutboundHeaderDestinationPortRangesAttributes) Int
 	return ReturnPathComponentsOutboundHeaderDestinationPortRangesAttributes{ref: ref}
 }
 
-func (dpr ReturnPathComponentsOutboundHeaderDestinationPortRangesAttributes) InternalTokens() hclwrite.Tokens {
+func (dpr ReturnPathComponentsOutboundHeaderDestinationPortRangesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dpr.ref.InternalTokens()
 }
 
@@ -2793,7 +2793,7 @@ func (spr ReturnPathComponentsOutboundHeaderSourcePortRangesAttributes) Internal
 	return ReturnPathComponentsOutboundHeaderSourcePortRangesAttributes{ref: ref}
 }
 
-func (spr ReturnPathComponentsOutboundHeaderSourcePortRangesAttributes) InternalTokens() hclwrite.Tokens {
+func (spr ReturnPathComponentsOutboundHeaderSourcePortRangesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return spr.ref.InternalTokens()
 }
 
@@ -2817,7 +2817,7 @@ func (rtr ReturnPathComponentsRouteTableRouteAttributes) InternalWithRef(ref ter
 	return ReturnPathComponentsRouteTableRouteAttributes{ref: ref}
 }
 
-func (rtr ReturnPathComponentsRouteTableRouteAttributes) InternalTokens() hclwrite.Tokens {
+func (rtr ReturnPathComponentsRouteTableRouteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rtr.ref.InternalTokens()
 }
 
@@ -2873,7 +2873,7 @@ func (sgr ReturnPathComponentsSecurityGroupRuleAttributes) InternalWithRef(ref t
 	return ReturnPathComponentsSecurityGroupRuleAttributes{ref: ref}
 }
 
-func (sgr ReturnPathComponentsSecurityGroupRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (sgr ReturnPathComponentsSecurityGroupRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sgr.ref.InternalTokens()
 }
 
@@ -2913,7 +2913,7 @@ func (pr ReturnPathComponentsSecurityGroupRulePortRangeAttributes) InternalWithR
 	return ReturnPathComponentsSecurityGroupRulePortRangeAttributes{ref: ref}
 }
 
-func (pr ReturnPathComponentsSecurityGroupRulePortRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (pr ReturnPathComponentsSecurityGroupRulePortRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pr.ref.InternalTokens()
 }
 
@@ -2937,7 +2937,7 @@ func (sv ReturnPathComponentsSourceVpcAttributes) InternalWithRef(ref terra.Refe
 	return ReturnPathComponentsSourceVpcAttributes{ref: ref}
 }
 
-func (sv ReturnPathComponentsSourceVpcAttributes) InternalTokens() hclwrite.Tokens {
+func (sv ReturnPathComponentsSourceVpcAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sv.ref.InternalTokens()
 }
 
@@ -2965,7 +2965,7 @@ func (s ReturnPathComponentsSubnetAttributes) InternalWithRef(ref terra.Referenc
 	return ReturnPathComponentsSubnetAttributes{ref: ref}
 }
 
-func (s ReturnPathComponentsSubnetAttributes) InternalTokens() hclwrite.Tokens {
+func (s ReturnPathComponentsSubnetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -2993,7 +2993,7 @@ func (tg ReturnPathComponentsTransitGatewayAttributes) InternalWithRef(ref terra
 	return ReturnPathComponentsTransitGatewayAttributes{ref: ref}
 }
 
-func (tg ReturnPathComponentsTransitGatewayAttributes) InternalTokens() hclwrite.Tokens {
+func (tg ReturnPathComponentsTransitGatewayAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tg.ref.InternalTokens()
 }
 
@@ -3021,7 +3021,7 @@ func (tgrtr ReturnPathComponentsTransitGatewayRouteTableRouteAttributes) Interna
 	return ReturnPathComponentsTransitGatewayRouteTableRouteAttributes{ref: ref}
 }
 
-func (tgrtr ReturnPathComponentsTransitGatewayRouteTableRouteAttributes) InternalTokens() hclwrite.Tokens {
+func (tgrtr ReturnPathComponentsTransitGatewayRouteTableRouteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tgrtr.ref.InternalTokens()
 }
 
@@ -3065,7 +3065,7 @@ func (v ReturnPathComponentsVpcAttributes) InternalWithRef(ref terra.Reference) 
 	return ReturnPathComponentsVpcAttributes{ref: ref}
 }
 
-func (v ReturnPathComponentsVpcAttributes) InternalTokens() hclwrite.Tokens {
+func (v ReturnPathComponentsVpcAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 
@@ -3093,7 +3093,7 @@ func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes 
 	return FilterAttributes{ref: ref}
 }
 
-func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
+func (f FilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 

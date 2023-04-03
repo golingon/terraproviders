@@ -13,24 +13,24 @@ type SecondaryIpRangeAttributes struct {
 	ref terra.Reference
 }
 
-func (sir SecondaryIpRangeAttributes) InternalRef() terra.Reference {
-	return sir.ref
+func (sir SecondaryIpRangeAttributes) InternalRef() (terra.Reference, error) {
+	return sir.ref, nil
 }
 
 func (sir SecondaryIpRangeAttributes) InternalWithRef(ref terra.Reference) SecondaryIpRangeAttributes {
 	return SecondaryIpRangeAttributes{ref: ref}
 }
 
-func (sir SecondaryIpRangeAttributes) InternalTokens() hclwrite.Tokens {
+func (sir SecondaryIpRangeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sir.ref.InternalTokens()
 }
 
 func (sir SecondaryIpRangeAttributes) IpCidrRange() terra.StringValue {
-	return terra.ReferenceString(sir.ref.Append("ip_cidr_range"))
+	return terra.ReferenceAsString(sir.ref.Append("ip_cidr_range"))
 }
 
 func (sir SecondaryIpRangeAttributes) RangeName() terra.StringValue {
-	return terra.ReferenceString(sir.ref.Append("range_name"))
+	return terra.ReferenceAsString(sir.ref.Append("range_name"))
 }
 
 type SecondaryIpRangeState struct {

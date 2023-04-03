@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMssqlElasticpool creates a new instance of [MssqlElasticpool].
 func NewMssqlElasticpool(name string, args MssqlElasticpoolArgs) *MssqlElasticpool {
 	return &MssqlElasticpool{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMssqlElasticpool(name string, args MssqlElasticpoolArgs) *MssqlElasticpo
 
 var _ terra.Resource = (*MssqlElasticpool)(nil)
 
+// MssqlElasticpool represents the Terraform resource azurerm_mssql_elasticpool.
 type MssqlElasticpool struct {
-	Name  string
-	Args  MssqlElasticpoolArgs
-	state *mssqlElasticpoolState
+	Name      string
+	Args      MssqlElasticpoolArgs
+	state     *mssqlElasticpoolState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MssqlElasticpool].
 func (me *MssqlElasticpool) Type() string {
 	return "azurerm_mssql_elasticpool"
 }
 
+// LocalName returns the local name for [MssqlElasticpool].
 func (me *MssqlElasticpool) LocalName() string {
 	return me.Name
 }
 
+// Configuration returns the configuration (args) for [MssqlElasticpool].
 func (me *MssqlElasticpool) Configuration() interface{} {
 	return me.Args
 }
 
+// DependOn is used for other resources to depend on [MssqlElasticpool].
+func (me *MssqlElasticpool) DependOn() terra.Reference {
+	return terra.ReferenceResource(me)
+}
+
+// Dependencies returns the list of resources [MssqlElasticpool] depends_on.
+func (me *MssqlElasticpool) Dependencies() terra.Dependencies {
+	return me.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MssqlElasticpool].
+func (me *MssqlElasticpool) LifecycleManagement() *terra.Lifecycle {
+	return me.Lifecycle
+}
+
+// Attributes returns the attributes for [MssqlElasticpool].
 func (me *MssqlElasticpool) Attributes() mssqlElasticpoolAttributes {
 	return mssqlElasticpoolAttributes{ref: terra.ReferenceResource(me)}
 }
 
+// ImportState imports the given attribute values into [MssqlElasticpool]'s state.
 func (me *MssqlElasticpool) ImportState(av io.Reader) error {
 	me.state = &mssqlElasticpoolState{}
 	if err := json.NewDecoder(av).Decode(me.state); err != nil {
@@ -49,10 +73,12 @@ func (me *MssqlElasticpool) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MssqlElasticpool] has state.
 func (me *MssqlElasticpool) State() (*mssqlElasticpoolState, bool) {
 	return me.state, me.state != nil
 }
 
+// StateMust returns the state for [MssqlElasticpool]. Panics if the state is nil.
 func (me *MssqlElasticpool) StateMust() *mssqlElasticpoolState {
 	if me.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", me.Type(), me.LocalName()))
@@ -60,10 +86,7 @@ func (me *MssqlElasticpool) StateMust() *mssqlElasticpoolState {
 	return me.state
 }
 
-func (me *MssqlElasticpool) DependOn() terra.Reference {
-	return terra.ReferenceResource(me)
-}
-
+// MssqlElasticpoolArgs contains the configurations for azurerm_mssql_elasticpool.
 type MssqlElasticpoolArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -93,67 +116,76 @@ type MssqlElasticpoolArgs struct {
 	Sku *mssqlelasticpool.Sku `hcl:"sku,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *mssqlelasticpool.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MssqlElasticpool depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mssqlElasticpoolAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_mssql_elasticpool.
 func (me mssqlElasticpoolAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("id"))
+	return terra.ReferenceAsString(me.ref.Append("id"))
 }
 
+// LicenseType returns a reference to field license_type of azurerm_mssql_elasticpool.
 func (me mssqlElasticpoolAttributes) LicenseType() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("license_type"))
+	return terra.ReferenceAsString(me.ref.Append("license_type"))
 }
 
+// Location returns a reference to field location of azurerm_mssql_elasticpool.
 func (me mssqlElasticpoolAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("location"))
+	return terra.ReferenceAsString(me.ref.Append("location"))
 }
 
+// MaintenanceConfigurationName returns a reference to field maintenance_configuration_name of azurerm_mssql_elasticpool.
 func (me mssqlElasticpoolAttributes) MaintenanceConfigurationName() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("maintenance_configuration_name"))
+	return terra.ReferenceAsString(me.ref.Append("maintenance_configuration_name"))
 }
 
+// MaxSizeBytes returns a reference to field max_size_bytes of azurerm_mssql_elasticpool.
 func (me mssqlElasticpoolAttributes) MaxSizeBytes() terra.NumberValue {
-	return terra.ReferenceNumber(me.ref.Append("max_size_bytes"))
+	return terra.ReferenceAsNumber(me.ref.Append("max_size_bytes"))
 }
 
+// MaxSizeGb returns a reference to field max_size_gb of azurerm_mssql_elasticpool.
 func (me mssqlElasticpoolAttributes) MaxSizeGb() terra.NumberValue {
-	return terra.ReferenceNumber(me.ref.Append("max_size_gb"))
+	return terra.ReferenceAsNumber(me.ref.Append("max_size_gb"))
 }
 
+// Name returns a reference to field name of azurerm_mssql_elasticpool.
 func (me mssqlElasticpoolAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("name"))
+	return terra.ReferenceAsString(me.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_mssql_elasticpool.
 func (me mssqlElasticpoolAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(me.ref.Append("resource_group_name"))
 }
 
+// ServerName returns a reference to field server_name of azurerm_mssql_elasticpool.
 func (me mssqlElasticpoolAttributes) ServerName() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("server_name"))
+	return terra.ReferenceAsString(me.ref.Append("server_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_mssql_elasticpool.
 func (me mssqlElasticpoolAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](me.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](me.ref.Append("tags"))
 }
 
+// ZoneRedundant returns a reference to field zone_redundant of azurerm_mssql_elasticpool.
 func (me mssqlElasticpoolAttributes) ZoneRedundant() terra.BoolValue {
-	return terra.ReferenceBool(me.ref.Append("zone_redundant"))
+	return terra.ReferenceAsBool(me.ref.Append("zone_redundant"))
 }
 
 func (me mssqlElasticpoolAttributes) PerDatabaseSettings() terra.ListValue[mssqlelasticpool.PerDatabaseSettingsAttributes] {
-	return terra.ReferenceList[mssqlelasticpool.PerDatabaseSettingsAttributes](me.ref.Append("per_database_settings"))
+	return terra.ReferenceAsList[mssqlelasticpool.PerDatabaseSettingsAttributes](me.ref.Append("per_database_settings"))
 }
 
 func (me mssqlElasticpoolAttributes) Sku() terra.ListValue[mssqlelasticpool.SkuAttributes] {
-	return terra.ReferenceList[mssqlelasticpool.SkuAttributes](me.ref.Append("sku"))
+	return terra.ReferenceAsList[mssqlelasticpool.SkuAttributes](me.ref.Append("sku"))
 }
 
 func (me mssqlElasticpoolAttributes) Timeouts() mssqlelasticpool.TimeoutsAttributes {
-	return terra.ReferenceSingle[mssqlelasticpool.TimeoutsAttributes](me.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[mssqlelasticpool.TimeoutsAttributes](me.ref.Append("timeouts"))
 }
 
 type mssqlElasticpoolState struct {

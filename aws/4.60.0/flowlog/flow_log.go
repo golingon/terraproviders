@@ -28,7 +28,7 @@ func (do DestinationOptionsAttributes) InternalWithRef(ref terra.Reference) Dest
 	return DestinationOptionsAttributes{ref: ref}
 }
 
-func (do DestinationOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (do DestinationOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return do.ref.InternalTokens()
 }
 

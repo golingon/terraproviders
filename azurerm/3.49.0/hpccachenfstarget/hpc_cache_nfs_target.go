@@ -33,64 +33,64 @@ type NamespaceJunctionAttributes struct {
 	ref terra.Reference
 }
 
-func (nj NamespaceJunctionAttributes) InternalRef() terra.Reference {
-	return nj.ref
+func (nj NamespaceJunctionAttributes) InternalRef() (terra.Reference, error) {
+	return nj.ref, nil
 }
 
 func (nj NamespaceJunctionAttributes) InternalWithRef(ref terra.Reference) NamespaceJunctionAttributes {
 	return NamespaceJunctionAttributes{ref: ref}
 }
 
-func (nj NamespaceJunctionAttributes) InternalTokens() hclwrite.Tokens {
+func (nj NamespaceJunctionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nj.ref.InternalTokens()
 }
 
 func (nj NamespaceJunctionAttributes) AccessPolicyName() terra.StringValue {
-	return terra.ReferenceString(nj.ref.Append("access_policy_name"))
+	return terra.ReferenceAsString(nj.ref.Append("access_policy_name"))
 }
 
 func (nj NamespaceJunctionAttributes) NamespacePath() terra.StringValue {
-	return terra.ReferenceString(nj.ref.Append("namespace_path"))
+	return terra.ReferenceAsString(nj.ref.Append("namespace_path"))
 }
 
 func (nj NamespaceJunctionAttributes) NfsExport() terra.StringValue {
-	return terra.ReferenceString(nj.ref.Append("nfs_export"))
+	return terra.ReferenceAsString(nj.ref.Append("nfs_export"))
 }
 
 func (nj NamespaceJunctionAttributes) TargetPath() terra.StringValue {
-	return terra.ReferenceString(nj.ref.Append("target_path"))
+	return terra.ReferenceAsString(nj.ref.Append("target_path"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type NamespaceJunctionState struct {

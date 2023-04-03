@@ -28,7 +28,7 @@ func (dcps DefaultCapacityProviderStrategyAttributes) InternalWithRef(ref terra.
 	return DefaultCapacityProviderStrategyAttributes{ref: ref}
 }
 
-func (dcps DefaultCapacityProviderStrategyAttributes) InternalTokens() hclwrite.Tokens {
+func (dcps DefaultCapacityProviderStrategyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dcps.ref.InternalTokens()
 }
 

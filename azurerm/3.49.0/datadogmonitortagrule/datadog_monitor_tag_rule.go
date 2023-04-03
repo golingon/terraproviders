@@ -56,140 +56,140 @@ type LogAttributes struct {
 	ref terra.Reference
 }
 
-func (l LogAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l LogAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l LogAttributes) InternalWithRef(ref terra.Reference) LogAttributes {
 	return LogAttributes{ref: ref}
 }
 
-func (l LogAttributes) InternalTokens() hclwrite.Tokens {
+func (l LogAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 
 func (l LogAttributes) AadLogEnabled() terra.BoolValue {
-	return terra.ReferenceBool(l.ref.Append("aad_log_enabled"))
+	return terra.ReferenceAsBool(l.ref.Append("aad_log_enabled"))
 }
 
 func (l LogAttributes) ResourceLogEnabled() terra.BoolValue {
-	return terra.ReferenceBool(l.ref.Append("resource_log_enabled"))
+	return terra.ReferenceAsBool(l.ref.Append("resource_log_enabled"))
 }
 
 func (l LogAttributes) SubscriptionLogEnabled() terra.BoolValue {
-	return terra.ReferenceBool(l.ref.Append("subscription_log_enabled"))
+	return terra.ReferenceAsBool(l.ref.Append("subscription_log_enabled"))
 }
 
 func (l LogAttributes) Filter() terra.ListValue[LogFilterAttributes] {
-	return terra.ReferenceList[LogFilterAttributes](l.ref.Append("filter"))
+	return terra.ReferenceAsList[LogFilterAttributes](l.ref.Append("filter"))
 }
 
 type LogFilterAttributes struct {
 	ref terra.Reference
 }
 
-func (f LogFilterAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f LogFilterAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f LogFilterAttributes) InternalWithRef(ref terra.Reference) LogFilterAttributes {
 	return LogFilterAttributes{ref: ref}
 }
 
-func (f LogFilterAttributes) InternalTokens() hclwrite.Tokens {
+func (f LogFilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
 func (f LogFilterAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("action"))
+	return terra.ReferenceAsString(f.ref.Append("action"))
 }
 
 func (f LogFilterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("name"))
+	return terra.ReferenceAsString(f.ref.Append("name"))
 }
 
 func (f LogFilterAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("value"))
+	return terra.ReferenceAsString(f.ref.Append("value"))
 }
 
 type MetricAttributes struct {
 	ref terra.Reference
 }
 
-func (m MetricAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MetricAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MetricAttributes) InternalWithRef(ref terra.Reference) MetricAttributes {
 	return MetricAttributes{ref: ref}
 }
 
-func (m MetricAttributes) InternalTokens() hclwrite.Tokens {
+func (m MetricAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
 func (m MetricAttributes) Filter() terra.ListValue[MetricFilterAttributes] {
-	return terra.ReferenceList[MetricFilterAttributes](m.ref.Append("filter"))
+	return terra.ReferenceAsList[MetricFilterAttributes](m.ref.Append("filter"))
 }
 
 type MetricFilterAttributes struct {
 	ref terra.Reference
 }
 
-func (f MetricFilterAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f MetricFilterAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f MetricFilterAttributes) InternalWithRef(ref terra.Reference) MetricFilterAttributes {
 	return MetricFilterAttributes{ref: ref}
 }
 
-func (f MetricFilterAttributes) InternalTokens() hclwrite.Tokens {
+func (f MetricFilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
 func (f MetricFilterAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("action"))
+	return terra.ReferenceAsString(f.ref.Append("action"))
 }
 
 func (f MetricFilterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("name"))
+	return terra.ReferenceAsString(f.ref.Append("name"))
 }
 
 func (f MetricFilterAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("value"))
+	return terra.ReferenceAsString(f.ref.Append("value"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type LogState struct {

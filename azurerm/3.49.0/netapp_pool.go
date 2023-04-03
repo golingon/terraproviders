@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNetappPool creates a new instance of [NetappPool].
 func NewNetappPool(name string, args NetappPoolArgs) *NetappPool {
 	return &NetappPool{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNetappPool(name string, args NetappPoolArgs) *NetappPool {
 
 var _ terra.Resource = (*NetappPool)(nil)
 
+// NetappPool represents the Terraform resource azurerm_netapp_pool.
 type NetappPool struct {
-	Name  string
-	Args  NetappPoolArgs
-	state *netappPoolState
+	Name      string
+	Args      NetappPoolArgs
+	state     *netappPoolState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NetappPool].
 func (np *NetappPool) Type() string {
 	return "azurerm_netapp_pool"
 }
 
+// LocalName returns the local name for [NetappPool].
 func (np *NetappPool) LocalName() string {
 	return np.Name
 }
 
+// Configuration returns the configuration (args) for [NetappPool].
 func (np *NetappPool) Configuration() interface{} {
 	return np.Args
 }
 
+// DependOn is used for other resources to depend on [NetappPool].
+func (np *NetappPool) DependOn() terra.Reference {
+	return terra.ReferenceResource(np)
+}
+
+// Dependencies returns the list of resources [NetappPool] depends_on.
+func (np *NetappPool) Dependencies() terra.Dependencies {
+	return np.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NetappPool].
+func (np *NetappPool) LifecycleManagement() *terra.Lifecycle {
+	return np.Lifecycle
+}
+
+// Attributes returns the attributes for [NetappPool].
 func (np *NetappPool) Attributes() netappPoolAttributes {
 	return netappPoolAttributes{ref: terra.ReferenceResource(np)}
 }
 
+// ImportState imports the given attribute values into [NetappPool]'s state.
 func (np *NetappPool) ImportState(av io.Reader) error {
 	np.state = &netappPoolState{}
 	if err := json.NewDecoder(av).Decode(np.state); err != nil {
@@ -49,10 +73,12 @@ func (np *NetappPool) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NetappPool] has state.
 func (np *NetappPool) State() (*netappPoolState, bool) {
 	return np.state, np.state != nil
 }
 
+// StateMust returns the state for [NetappPool]. Panics if the state is nil.
 func (np *NetappPool) StateMust() *netappPoolState {
 	if np.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", np.Type(), np.LocalName()))
@@ -60,10 +86,7 @@ func (np *NetappPool) StateMust() *netappPoolState {
 	return np.state
 }
 
-func (np *NetappPool) DependOn() terra.Reference {
-	return terra.ReferenceResource(np)
-}
-
+// NetappPoolArgs contains the configurations for azurerm_netapp_pool.
 type NetappPoolArgs struct {
 	// AccountName: string, required
 	AccountName terra.StringValue `hcl:"account_name,attr" validate:"required"`
@@ -85,51 +108,58 @@ type NetappPoolArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// Timeouts: optional
 	Timeouts *netapppool.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that NetappPool depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type netappPoolAttributes struct {
 	ref terra.Reference
 }
 
+// AccountName returns a reference to field account_name of azurerm_netapp_pool.
 func (np netappPoolAttributes) AccountName() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("account_name"))
+	return terra.ReferenceAsString(np.ref.Append("account_name"))
 }
 
+// Id returns a reference to field id of azurerm_netapp_pool.
 func (np netappPoolAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("id"))
+	return terra.ReferenceAsString(np.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_netapp_pool.
 func (np netappPoolAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("location"))
+	return terra.ReferenceAsString(np.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_netapp_pool.
 func (np netappPoolAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("name"))
+	return terra.ReferenceAsString(np.ref.Append("name"))
 }
 
+// QosType returns a reference to field qos_type of azurerm_netapp_pool.
 func (np netappPoolAttributes) QosType() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("qos_type"))
+	return terra.ReferenceAsString(np.ref.Append("qos_type"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_netapp_pool.
 func (np netappPoolAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(np.ref.Append("resource_group_name"))
 }
 
+// ServiceLevel returns a reference to field service_level of azurerm_netapp_pool.
 func (np netappPoolAttributes) ServiceLevel() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("service_level"))
+	return terra.ReferenceAsString(np.ref.Append("service_level"))
 }
 
+// SizeInTb returns a reference to field size_in_tb of azurerm_netapp_pool.
 func (np netappPoolAttributes) SizeInTb() terra.NumberValue {
-	return terra.ReferenceNumber(np.ref.Append("size_in_tb"))
+	return terra.ReferenceAsNumber(np.ref.Append("size_in_tb"))
 }
 
+// Tags returns a reference to field tags of azurerm_netapp_pool.
 func (np netappPoolAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](np.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](np.ref.Append("tags"))
 }
 
 func (np netappPoolAttributes) Timeouts() netapppool.TimeoutsAttributes {
-	return terra.ReferenceSingle[netapppool.TimeoutsAttributes](np.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[netapppool.TimeoutsAttributes](np.ref.Append("timeouts"))
 }
 
 type netappPoolState struct {

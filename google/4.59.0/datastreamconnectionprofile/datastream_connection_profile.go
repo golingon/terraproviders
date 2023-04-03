@@ -97,15 +97,15 @@ type BigqueryProfileAttributes struct {
 	ref terra.Reference
 }
 
-func (bp BigqueryProfileAttributes) InternalRef() terra.Reference {
-	return bp.ref
+func (bp BigqueryProfileAttributes) InternalRef() (terra.Reference, error) {
+	return bp.ref, nil
 }
 
 func (bp BigqueryProfileAttributes) InternalWithRef(ref terra.Reference) BigqueryProfileAttributes {
 	return BigqueryProfileAttributes{ref: ref}
 }
 
-func (bp BigqueryProfileAttributes) InternalTokens() hclwrite.Tokens {
+func (bp BigqueryProfileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bp.ref.InternalTokens()
 }
 
@@ -113,260 +113,260 @@ type ForwardSshConnectivityAttributes struct {
 	ref terra.Reference
 }
 
-func (fsc ForwardSshConnectivityAttributes) InternalRef() terra.Reference {
-	return fsc.ref
+func (fsc ForwardSshConnectivityAttributes) InternalRef() (terra.Reference, error) {
+	return fsc.ref, nil
 }
 
 func (fsc ForwardSshConnectivityAttributes) InternalWithRef(ref terra.Reference) ForwardSshConnectivityAttributes {
 	return ForwardSshConnectivityAttributes{ref: ref}
 }
 
-func (fsc ForwardSshConnectivityAttributes) InternalTokens() hclwrite.Tokens {
+func (fsc ForwardSshConnectivityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fsc.ref.InternalTokens()
 }
 
 func (fsc ForwardSshConnectivityAttributes) Hostname() terra.StringValue {
-	return terra.ReferenceString(fsc.ref.Append("hostname"))
+	return terra.ReferenceAsString(fsc.ref.Append("hostname"))
 }
 
 func (fsc ForwardSshConnectivityAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(fsc.ref.Append("password"))
+	return terra.ReferenceAsString(fsc.ref.Append("password"))
 }
 
 func (fsc ForwardSshConnectivityAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(fsc.ref.Append("port"))
+	return terra.ReferenceAsNumber(fsc.ref.Append("port"))
 }
 
 func (fsc ForwardSshConnectivityAttributes) PrivateKey() terra.StringValue {
-	return terra.ReferenceString(fsc.ref.Append("private_key"))
+	return terra.ReferenceAsString(fsc.ref.Append("private_key"))
 }
 
 func (fsc ForwardSshConnectivityAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(fsc.ref.Append("username"))
+	return terra.ReferenceAsString(fsc.ref.Append("username"))
 }
 
 type GcsProfileAttributes struct {
 	ref terra.Reference
 }
 
-func (gp GcsProfileAttributes) InternalRef() terra.Reference {
-	return gp.ref
+func (gp GcsProfileAttributes) InternalRef() (terra.Reference, error) {
+	return gp.ref, nil
 }
 
 func (gp GcsProfileAttributes) InternalWithRef(ref terra.Reference) GcsProfileAttributes {
 	return GcsProfileAttributes{ref: ref}
 }
 
-func (gp GcsProfileAttributes) InternalTokens() hclwrite.Tokens {
+func (gp GcsProfileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gp.ref.InternalTokens()
 }
 
 func (gp GcsProfileAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(gp.ref.Append("bucket"))
+	return terra.ReferenceAsString(gp.ref.Append("bucket"))
 }
 
 func (gp GcsProfileAttributes) RootPath() terra.StringValue {
-	return terra.ReferenceString(gp.ref.Append("root_path"))
+	return terra.ReferenceAsString(gp.ref.Append("root_path"))
 }
 
 type MysqlProfileAttributes struct {
 	ref terra.Reference
 }
 
-func (mp MysqlProfileAttributes) InternalRef() terra.Reference {
-	return mp.ref
+func (mp MysqlProfileAttributes) InternalRef() (terra.Reference, error) {
+	return mp.ref, nil
 }
 
 func (mp MysqlProfileAttributes) InternalWithRef(ref terra.Reference) MysqlProfileAttributes {
 	return MysqlProfileAttributes{ref: ref}
 }
 
-func (mp MysqlProfileAttributes) InternalTokens() hclwrite.Tokens {
+func (mp MysqlProfileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mp.ref.InternalTokens()
 }
 
 func (mp MysqlProfileAttributes) Hostname() terra.StringValue {
-	return terra.ReferenceString(mp.ref.Append("hostname"))
+	return terra.ReferenceAsString(mp.ref.Append("hostname"))
 }
 
 func (mp MysqlProfileAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(mp.ref.Append("password"))
+	return terra.ReferenceAsString(mp.ref.Append("password"))
 }
 
 func (mp MysqlProfileAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(mp.ref.Append("port"))
+	return terra.ReferenceAsNumber(mp.ref.Append("port"))
 }
 
 func (mp MysqlProfileAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(mp.ref.Append("username"))
+	return terra.ReferenceAsString(mp.ref.Append("username"))
 }
 
 func (mp MysqlProfileAttributes) SslConfig() terra.ListValue[SslConfigAttributes] {
-	return terra.ReferenceList[SslConfigAttributes](mp.ref.Append("ssl_config"))
+	return terra.ReferenceAsList[SslConfigAttributes](mp.ref.Append("ssl_config"))
 }
 
 type SslConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (sc SslConfigAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc SslConfigAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc SslConfigAttributes) InternalWithRef(ref terra.Reference) SslConfigAttributes {
 	return SslConfigAttributes{ref: ref}
 }
 
-func (sc SslConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sc SslConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
 func (sc SslConfigAttributes) CaCertificate() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("ca_certificate"))
+	return terra.ReferenceAsString(sc.ref.Append("ca_certificate"))
 }
 
 func (sc SslConfigAttributes) CaCertificateSet() terra.BoolValue {
-	return terra.ReferenceBool(sc.ref.Append("ca_certificate_set"))
+	return terra.ReferenceAsBool(sc.ref.Append("ca_certificate_set"))
 }
 
 func (sc SslConfigAttributes) ClientCertificate() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("client_certificate"))
+	return terra.ReferenceAsString(sc.ref.Append("client_certificate"))
 }
 
 func (sc SslConfigAttributes) ClientCertificateSet() terra.BoolValue {
-	return terra.ReferenceBool(sc.ref.Append("client_certificate_set"))
+	return terra.ReferenceAsBool(sc.ref.Append("client_certificate_set"))
 }
 
 func (sc SslConfigAttributes) ClientKey() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("client_key"))
+	return terra.ReferenceAsString(sc.ref.Append("client_key"))
 }
 
 func (sc SslConfigAttributes) ClientKeySet() terra.BoolValue {
-	return terra.ReferenceBool(sc.ref.Append("client_key_set"))
+	return terra.ReferenceAsBool(sc.ref.Append("client_key_set"))
 }
 
 type OracleProfileAttributes struct {
 	ref terra.Reference
 }
 
-func (op OracleProfileAttributes) InternalRef() terra.Reference {
-	return op.ref
+func (op OracleProfileAttributes) InternalRef() (terra.Reference, error) {
+	return op.ref, nil
 }
 
 func (op OracleProfileAttributes) InternalWithRef(ref terra.Reference) OracleProfileAttributes {
 	return OracleProfileAttributes{ref: ref}
 }
 
-func (op OracleProfileAttributes) InternalTokens() hclwrite.Tokens {
+func (op OracleProfileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return op.ref.InternalTokens()
 }
 
 func (op OracleProfileAttributes) ConnectionAttributes() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](op.ref.Append("connection_attributes"))
+	return terra.ReferenceAsMap[terra.StringValue](op.ref.Append("connection_attributes"))
 }
 
 func (op OracleProfileAttributes) DatabaseService() terra.StringValue {
-	return terra.ReferenceString(op.ref.Append("database_service"))
+	return terra.ReferenceAsString(op.ref.Append("database_service"))
 }
 
 func (op OracleProfileAttributes) Hostname() terra.StringValue {
-	return terra.ReferenceString(op.ref.Append("hostname"))
+	return terra.ReferenceAsString(op.ref.Append("hostname"))
 }
 
 func (op OracleProfileAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(op.ref.Append("password"))
+	return terra.ReferenceAsString(op.ref.Append("password"))
 }
 
 func (op OracleProfileAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(op.ref.Append("port"))
+	return terra.ReferenceAsNumber(op.ref.Append("port"))
 }
 
 func (op OracleProfileAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(op.ref.Append("username"))
+	return terra.ReferenceAsString(op.ref.Append("username"))
 }
 
 type PostgresqlProfileAttributes struct {
 	ref terra.Reference
 }
 
-func (pp PostgresqlProfileAttributes) InternalRef() terra.Reference {
-	return pp.ref
+func (pp PostgresqlProfileAttributes) InternalRef() (terra.Reference, error) {
+	return pp.ref, nil
 }
 
 func (pp PostgresqlProfileAttributes) InternalWithRef(ref terra.Reference) PostgresqlProfileAttributes {
 	return PostgresqlProfileAttributes{ref: ref}
 }
 
-func (pp PostgresqlProfileAttributes) InternalTokens() hclwrite.Tokens {
+func (pp PostgresqlProfileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pp.ref.InternalTokens()
 }
 
 func (pp PostgresqlProfileAttributes) Database() terra.StringValue {
-	return terra.ReferenceString(pp.ref.Append("database"))
+	return terra.ReferenceAsString(pp.ref.Append("database"))
 }
 
 func (pp PostgresqlProfileAttributes) Hostname() terra.StringValue {
-	return terra.ReferenceString(pp.ref.Append("hostname"))
+	return terra.ReferenceAsString(pp.ref.Append("hostname"))
 }
 
 func (pp PostgresqlProfileAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(pp.ref.Append("password"))
+	return terra.ReferenceAsString(pp.ref.Append("password"))
 }
 
 func (pp PostgresqlProfileAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(pp.ref.Append("port"))
+	return terra.ReferenceAsNumber(pp.ref.Append("port"))
 }
 
 func (pp PostgresqlProfileAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(pp.ref.Append("username"))
+	return terra.ReferenceAsString(pp.ref.Append("username"))
 }
 
 type PrivateConnectivityAttributes struct {
 	ref terra.Reference
 }
 
-func (pc PrivateConnectivityAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc PrivateConnectivityAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc PrivateConnectivityAttributes) InternalWithRef(ref terra.Reference) PrivateConnectivityAttributes {
 	return PrivateConnectivityAttributes{ref: ref}
 }
 
-func (pc PrivateConnectivityAttributes) InternalTokens() hclwrite.Tokens {
+func (pc PrivateConnectivityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
 func (pc PrivateConnectivityAttributes) PrivateConnection() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("private_connection"))
+	return terra.ReferenceAsString(pc.ref.Append("private_connection"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type BigqueryProfileState struct{}

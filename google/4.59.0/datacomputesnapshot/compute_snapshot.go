@@ -15,56 +15,56 @@ type SnapshotEncryptionKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (sek SnapshotEncryptionKeyAttributes) InternalRef() terra.Reference {
-	return sek.ref
+func (sek SnapshotEncryptionKeyAttributes) InternalRef() (terra.Reference, error) {
+	return sek.ref, nil
 }
 
 func (sek SnapshotEncryptionKeyAttributes) InternalWithRef(ref terra.Reference) SnapshotEncryptionKeyAttributes {
 	return SnapshotEncryptionKeyAttributes{ref: ref}
 }
 
-func (sek SnapshotEncryptionKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (sek SnapshotEncryptionKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sek.ref.InternalTokens()
 }
 
 func (sek SnapshotEncryptionKeyAttributes) KmsKeySelfLink() terra.StringValue {
-	return terra.ReferenceString(sek.ref.Append("kms_key_self_link"))
+	return terra.ReferenceAsString(sek.ref.Append("kms_key_self_link"))
 }
 
 func (sek SnapshotEncryptionKeyAttributes) KmsKeyServiceAccount() terra.StringValue {
-	return terra.ReferenceString(sek.ref.Append("kms_key_service_account"))
+	return terra.ReferenceAsString(sek.ref.Append("kms_key_service_account"))
 }
 
 func (sek SnapshotEncryptionKeyAttributes) RawKey() terra.StringValue {
-	return terra.ReferenceString(sek.ref.Append("raw_key"))
+	return terra.ReferenceAsString(sek.ref.Append("raw_key"))
 }
 
 func (sek SnapshotEncryptionKeyAttributes) Sha256() terra.StringValue {
-	return terra.ReferenceString(sek.ref.Append("sha256"))
+	return terra.ReferenceAsString(sek.ref.Append("sha256"))
 }
 
 type SourceDiskEncryptionKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (sdek SourceDiskEncryptionKeyAttributes) InternalRef() terra.Reference {
-	return sdek.ref
+func (sdek SourceDiskEncryptionKeyAttributes) InternalRef() (terra.Reference, error) {
+	return sdek.ref, nil
 }
 
 func (sdek SourceDiskEncryptionKeyAttributes) InternalWithRef(ref terra.Reference) SourceDiskEncryptionKeyAttributes {
 	return SourceDiskEncryptionKeyAttributes{ref: ref}
 }
 
-func (sdek SourceDiskEncryptionKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (sdek SourceDiskEncryptionKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sdek.ref.InternalTokens()
 }
 
 func (sdek SourceDiskEncryptionKeyAttributes) KmsKeyServiceAccount() terra.StringValue {
-	return terra.ReferenceString(sdek.ref.Append("kms_key_service_account"))
+	return terra.ReferenceAsString(sdek.ref.Append("kms_key_service_account"))
 }
 
 func (sdek SourceDiskEncryptionKeyAttributes) RawKey() terra.StringValue {
-	return terra.ReferenceString(sdek.ref.Append("raw_key"))
+	return terra.ReferenceAsString(sdek.ref.Append("raw_key"))
 }
 
 type SnapshotEncryptionKeyState struct {

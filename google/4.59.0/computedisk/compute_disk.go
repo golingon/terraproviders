@@ -49,128 +49,128 @@ type DiskEncryptionKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (dek DiskEncryptionKeyAttributes) InternalRef() terra.Reference {
-	return dek.ref
+func (dek DiskEncryptionKeyAttributes) InternalRef() (terra.Reference, error) {
+	return dek.ref, nil
 }
 
 func (dek DiskEncryptionKeyAttributes) InternalWithRef(ref terra.Reference) DiskEncryptionKeyAttributes {
 	return DiskEncryptionKeyAttributes{ref: ref}
 }
 
-func (dek DiskEncryptionKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (dek DiskEncryptionKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dek.ref.InternalTokens()
 }
 
 func (dek DiskEncryptionKeyAttributes) KmsKeySelfLink() terra.StringValue {
-	return terra.ReferenceString(dek.ref.Append("kms_key_self_link"))
+	return terra.ReferenceAsString(dek.ref.Append("kms_key_self_link"))
 }
 
 func (dek DiskEncryptionKeyAttributes) KmsKeyServiceAccount() terra.StringValue {
-	return terra.ReferenceString(dek.ref.Append("kms_key_service_account"))
+	return terra.ReferenceAsString(dek.ref.Append("kms_key_service_account"))
 }
 
 func (dek DiskEncryptionKeyAttributes) RawKey() terra.StringValue {
-	return terra.ReferenceString(dek.ref.Append("raw_key"))
+	return terra.ReferenceAsString(dek.ref.Append("raw_key"))
 }
 
 func (dek DiskEncryptionKeyAttributes) RsaEncryptedKey() terra.StringValue {
-	return terra.ReferenceString(dek.ref.Append("rsa_encrypted_key"))
+	return terra.ReferenceAsString(dek.ref.Append("rsa_encrypted_key"))
 }
 
 func (dek DiskEncryptionKeyAttributes) Sha256() terra.StringValue {
-	return terra.ReferenceString(dek.ref.Append("sha256"))
+	return terra.ReferenceAsString(dek.ref.Append("sha256"))
 }
 
 type SourceImageEncryptionKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (siek SourceImageEncryptionKeyAttributes) InternalRef() terra.Reference {
-	return siek.ref
+func (siek SourceImageEncryptionKeyAttributes) InternalRef() (terra.Reference, error) {
+	return siek.ref, nil
 }
 
 func (siek SourceImageEncryptionKeyAttributes) InternalWithRef(ref terra.Reference) SourceImageEncryptionKeyAttributes {
 	return SourceImageEncryptionKeyAttributes{ref: ref}
 }
 
-func (siek SourceImageEncryptionKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (siek SourceImageEncryptionKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return siek.ref.InternalTokens()
 }
 
 func (siek SourceImageEncryptionKeyAttributes) KmsKeySelfLink() terra.StringValue {
-	return terra.ReferenceString(siek.ref.Append("kms_key_self_link"))
+	return terra.ReferenceAsString(siek.ref.Append("kms_key_self_link"))
 }
 
 func (siek SourceImageEncryptionKeyAttributes) KmsKeyServiceAccount() terra.StringValue {
-	return terra.ReferenceString(siek.ref.Append("kms_key_service_account"))
+	return terra.ReferenceAsString(siek.ref.Append("kms_key_service_account"))
 }
 
 func (siek SourceImageEncryptionKeyAttributes) RawKey() terra.StringValue {
-	return terra.ReferenceString(siek.ref.Append("raw_key"))
+	return terra.ReferenceAsString(siek.ref.Append("raw_key"))
 }
 
 func (siek SourceImageEncryptionKeyAttributes) Sha256() terra.StringValue {
-	return terra.ReferenceString(siek.ref.Append("sha256"))
+	return terra.ReferenceAsString(siek.ref.Append("sha256"))
 }
 
 type SourceSnapshotEncryptionKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (ssek SourceSnapshotEncryptionKeyAttributes) InternalRef() terra.Reference {
-	return ssek.ref
+func (ssek SourceSnapshotEncryptionKeyAttributes) InternalRef() (terra.Reference, error) {
+	return ssek.ref, nil
 }
 
 func (ssek SourceSnapshotEncryptionKeyAttributes) InternalWithRef(ref terra.Reference) SourceSnapshotEncryptionKeyAttributes {
 	return SourceSnapshotEncryptionKeyAttributes{ref: ref}
 }
 
-func (ssek SourceSnapshotEncryptionKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (ssek SourceSnapshotEncryptionKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ssek.ref.InternalTokens()
 }
 
 func (ssek SourceSnapshotEncryptionKeyAttributes) KmsKeySelfLink() terra.StringValue {
-	return terra.ReferenceString(ssek.ref.Append("kms_key_self_link"))
+	return terra.ReferenceAsString(ssek.ref.Append("kms_key_self_link"))
 }
 
 func (ssek SourceSnapshotEncryptionKeyAttributes) KmsKeyServiceAccount() terra.StringValue {
-	return terra.ReferenceString(ssek.ref.Append("kms_key_service_account"))
+	return terra.ReferenceAsString(ssek.ref.Append("kms_key_service_account"))
 }
 
 func (ssek SourceSnapshotEncryptionKeyAttributes) RawKey() terra.StringValue {
-	return terra.ReferenceString(ssek.ref.Append("raw_key"))
+	return terra.ReferenceAsString(ssek.ref.Append("raw_key"))
 }
 
 func (ssek SourceSnapshotEncryptionKeyAttributes) Sha256() terra.StringValue {
-	return terra.ReferenceString(ssek.ref.Append("sha256"))
+	return terra.ReferenceAsString(ssek.ref.Append("sha256"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type DiskEncryptionKeyState struct {

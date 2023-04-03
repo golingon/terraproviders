@@ -62,160 +62,160 @@ type CustomPersistentDiskAttributes struct {
 	ref terra.Reference
 }
 
-func (cpd CustomPersistentDiskAttributes) InternalRef() terra.Reference {
-	return cpd.ref
+func (cpd CustomPersistentDiskAttributes) InternalRef() (terra.Reference, error) {
+	return cpd.ref, nil
 }
 
 func (cpd CustomPersistentDiskAttributes) InternalWithRef(ref terra.Reference) CustomPersistentDiskAttributes {
 	return CustomPersistentDiskAttributes{ref: ref}
 }
 
-func (cpd CustomPersistentDiskAttributes) InternalTokens() hclwrite.Tokens {
+func (cpd CustomPersistentDiskAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cpd.ref.InternalTokens()
 }
 
 func (cpd CustomPersistentDiskAttributes) MountOptions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cpd.ref.Append("mount_options"))
+	return terra.ReferenceAsSet[terra.StringValue](cpd.ref.Append("mount_options"))
 }
 
 func (cpd CustomPersistentDiskAttributes) MountPath() terra.StringValue {
-	return terra.ReferenceString(cpd.ref.Append("mount_path"))
+	return terra.ReferenceAsString(cpd.ref.Append("mount_path"))
 }
 
 func (cpd CustomPersistentDiskAttributes) ReadOnlyEnabled() terra.BoolValue {
-	return terra.ReferenceBool(cpd.ref.Append("read_only_enabled"))
+	return terra.ReferenceAsBool(cpd.ref.Append("read_only_enabled"))
 }
 
 func (cpd CustomPersistentDiskAttributes) ShareName() terra.StringValue {
-	return terra.ReferenceString(cpd.ref.Append("share_name"))
+	return terra.ReferenceAsString(cpd.ref.Append("share_name"))
 }
 
 func (cpd CustomPersistentDiskAttributes) StorageName() terra.StringValue {
-	return terra.ReferenceString(cpd.ref.Append("storage_name"))
+	return terra.ReferenceAsString(cpd.ref.Append("storage_name"))
 }
 
 type IdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (i IdentityAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IdentityAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IdentityAttributes) InternalWithRef(ref terra.Reference) IdentityAttributes {
 	return IdentityAttributes{ref: ref}
 }
 
-func (i IdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (i IdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IdentityAttributes) IdentityIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i.ref.Append("identity_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](i.ref.Append("identity_ids"))
 }
 
 func (i IdentityAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("principal_id"))
+	return terra.ReferenceAsString(i.ref.Append("principal_id"))
 }
 
 func (i IdentityAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(i.ref.Append("tenant_id"))
 }
 
 func (i IdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("type"))
+	return terra.ReferenceAsString(i.ref.Append("type"))
 }
 
 type IngressSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (is IngressSettingsAttributes) InternalRef() terra.Reference {
-	return is.ref
+func (is IngressSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return is.ref, nil
 }
 
 func (is IngressSettingsAttributes) InternalWithRef(ref terra.Reference) IngressSettingsAttributes {
 	return IngressSettingsAttributes{ref: ref}
 }
 
-func (is IngressSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (is IngressSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return is.ref.InternalTokens()
 }
 
 func (is IngressSettingsAttributes) BackendProtocol() terra.StringValue {
-	return terra.ReferenceString(is.ref.Append("backend_protocol"))
+	return terra.ReferenceAsString(is.ref.Append("backend_protocol"))
 }
 
 func (is IngressSettingsAttributes) ReadTimeoutInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(is.ref.Append("read_timeout_in_seconds"))
+	return terra.ReferenceAsNumber(is.ref.Append("read_timeout_in_seconds"))
 }
 
 func (is IngressSettingsAttributes) SendTimeoutInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(is.ref.Append("send_timeout_in_seconds"))
+	return terra.ReferenceAsNumber(is.ref.Append("send_timeout_in_seconds"))
 }
 
 func (is IngressSettingsAttributes) SessionAffinity() terra.StringValue {
-	return terra.ReferenceString(is.ref.Append("session_affinity"))
+	return terra.ReferenceAsString(is.ref.Append("session_affinity"))
 }
 
 func (is IngressSettingsAttributes) SessionCookieMaxAge() terra.NumberValue {
-	return terra.ReferenceNumber(is.ref.Append("session_cookie_max_age"))
+	return terra.ReferenceAsNumber(is.ref.Append("session_cookie_max_age"))
 }
 
 type PersistentDiskAttributes struct {
 	ref terra.Reference
 }
 
-func (pd PersistentDiskAttributes) InternalRef() terra.Reference {
-	return pd.ref
+func (pd PersistentDiskAttributes) InternalRef() (terra.Reference, error) {
+	return pd.ref, nil
 }
 
 func (pd PersistentDiskAttributes) InternalWithRef(ref terra.Reference) PersistentDiskAttributes {
 	return PersistentDiskAttributes{ref: ref}
 }
 
-func (pd PersistentDiskAttributes) InternalTokens() hclwrite.Tokens {
+func (pd PersistentDiskAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pd.ref.InternalTokens()
 }
 
 func (pd PersistentDiskAttributes) MountPath() terra.StringValue {
-	return terra.ReferenceString(pd.ref.Append("mount_path"))
+	return terra.ReferenceAsString(pd.ref.Append("mount_path"))
 }
 
 func (pd PersistentDiskAttributes) SizeInGb() terra.NumberValue {
-	return terra.ReferenceNumber(pd.ref.Append("size_in_gb"))
+	return terra.ReferenceAsNumber(pd.ref.Append("size_in_gb"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type CustomPersistentDiskState struct {

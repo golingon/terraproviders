@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLabServicePlan creates a new instance of [LabServicePlan].
 func NewLabServicePlan(name string, args LabServicePlanArgs) *LabServicePlan {
 	return &LabServicePlan{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLabServicePlan(name string, args LabServicePlanArgs) *LabServicePlan {
 
 var _ terra.Resource = (*LabServicePlan)(nil)
 
+// LabServicePlan represents the Terraform resource azurerm_lab_service_plan.
 type LabServicePlan struct {
-	Name  string
-	Args  LabServicePlanArgs
-	state *labServicePlanState
+	Name      string
+	Args      LabServicePlanArgs
+	state     *labServicePlanState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LabServicePlan].
 func (lsp *LabServicePlan) Type() string {
 	return "azurerm_lab_service_plan"
 }
 
+// LocalName returns the local name for [LabServicePlan].
 func (lsp *LabServicePlan) LocalName() string {
 	return lsp.Name
 }
 
+// Configuration returns the configuration (args) for [LabServicePlan].
 func (lsp *LabServicePlan) Configuration() interface{} {
 	return lsp.Args
 }
 
+// DependOn is used for other resources to depend on [LabServicePlan].
+func (lsp *LabServicePlan) DependOn() terra.Reference {
+	return terra.ReferenceResource(lsp)
+}
+
+// Dependencies returns the list of resources [LabServicePlan] depends_on.
+func (lsp *LabServicePlan) Dependencies() terra.Dependencies {
+	return lsp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LabServicePlan].
+func (lsp *LabServicePlan) LifecycleManagement() *terra.Lifecycle {
+	return lsp.Lifecycle
+}
+
+// Attributes returns the attributes for [LabServicePlan].
 func (lsp *LabServicePlan) Attributes() labServicePlanAttributes {
 	return labServicePlanAttributes{ref: terra.ReferenceResource(lsp)}
 }
 
+// ImportState imports the given attribute values into [LabServicePlan]'s state.
 func (lsp *LabServicePlan) ImportState(av io.Reader) error {
 	lsp.state = &labServicePlanState{}
 	if err := json.NewDecoder(av).Decode(lsp.state); err != nil {
@@ -49,10 +73,12 @@ func (lsp *LabServicePlan) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LabServicePlan] has state.
 func (lsp *LabServicePlan) State() (*labServicePlanState, bool) {
 	return lsp.state, lsp.state != nil
 }
 
+// StateMust returns the state for [LabServicePlan]. Panics if the state is nil.
 func (lsp *LabServicePlan) StateMust() *labServicePlanState {
 	if lsp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lsp.Type(), lsp.LocalName()))
@@ -60,10 +86,7 @@ func (lsp *LabServicePlan) StateMust() *labServicePlanState {
 	return lsp.state
 }
 
-func (lsp *LabServicePlan) DependOn() terra.Reference {
-	return terra.ReferenceResource(lsp)
-}
-
+// LabServicePlanArgs contains the configurations for azurerm_lab_service_plan.
 type LabServicePlanArgs struct {
 	// AllowedRegions: list of string, required
 	AllowedRegions terra.ListValue[terra.StringValue] `hcl:"allowed_regions,attr" validate:"required"`
@@ -89,59 +112,65 @@ type LabServicePlanArgs struct {
 	Support *labserviceplan.Support `hcl:"support,block"`
 	// Timeouts: optional
 	Timeouts *labserviceplan.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LabServicePlan depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type labServicePlanAttributes struct {
 	ref terra.Reference
 }
 
+// AllowedRegions returns a reference to field allowed_regions of azurerm_lab_service_plan.
 func (lsp labServicePlanAttributes) AllowedRegions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lsp.ref.Append("allowed_regions"))
+	return terra.ReferenceAsList[terra.StringValue](lsp.ref.Append("allowed_regions"))
 }
 
+// DefaultNetworkSubnetId returns a reference to field default_network_subnet_id of azurerm_lab_service_plan.
 func (lsp labServicePlanAttributes) DefaultNetworkSubnetId() terra.StringValue {
-	return terra.ReferenceString(lsp.ref.Append("default_network_subnet_id"))
+	return terra.ReferenceAsString(lsp.ref.Append("default_network_subnet_id"))
 }
 
+// Id returns a reference to field id of azurerm_lab_service_plan.
 func (lsp labServicePlanAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lsp.ref.Append("id"))
+	return terra.ReferenceAsString(lsp.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_lab_service_plan.
 func (lsp labServicePlanAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(lsp.ref.Append("location"))
+	return terra.ReferenceAsString(lsp.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_lab_service_plan.
 func (lsp labServicePlanAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lsp.ref.Append("name"))
+	return terra.ReferenceAsString(lsp.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_lab_service_plan.
 func (lsp labServicePlanAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(lsp.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(lsp.ref.Append("resource_group_name"))
 }
 
+// SharedGalleryId returns a reference to field shared_gallery_id of azurerm_lab_service_plan.
 func (lsp labServicePlanAttributes) SharedGalleryId() terra.StringValue {
-	return terra.ReferenceString(lsp.ref.Append("shared_gallery_id"))
+	return terra.ReferenceAsString(lsp.ref.Append("shared_gallery_id"))
 }
 
+// Tags returns a reference to field tags of azurerm_lab_service_plan.
 func (lsp labServicePlanAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lsp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](lsp.ref.Append("tags"))
 }
 
 func (lsp labServicePlanAttributes) DefaultAutoShutdown() terra.ListValue[labserviceplan.DefaultAutoShutdownAttributes] {
-	return terra.ReferenceList[labserviceplan.DefaultAutoShutdownAttributes](lsp.ref.Append("default_auto_shutdown"))
+	return terra.ReferenceAsList[labserviceplan.DefaultAutoShutdownAttributes](lsp.ref.Append("default_auto_shutdown"))
 }
 
 func (lsp labServicePlanAttributes) DefaultConnection() terra.ListValue[labserviceplan.DefaultConnectionAttributes] {
-	return terra.ReferenceList[labserviceplan.DefaultConnectionAttributes](lsp.ref.Append("default_connection"))
+	return terra.ReferenceAsList[labserviceplan.DefaultConnectionAttributes](lsp.ref.Append("default_connection"))
 }
 
 func (lsp labServicePlanAttributes) Support() terra.ListValue[labserviceplan.SupportAttributes] {
-	return terra.ReferenceList[labserviceplan.SupportAttributes](lsp.ref.Append("support"))
+	return terra.ReferenceAsList[labserviceplan.SupportAttributes](lsp.ref.Append("support"))
 }
 
 func (lsp labServicePlanAttributes) Timeouts() labserviceplan.TimeoutsAttributes {
-	return terra.ReferenceSingle[labserviceplan.TimeoutsAttributes](lsp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[labserviceplan.TimeoutsAttributes](lsp.ref.Append("timeouts"))
 }
 
 type labServicePlanState struct {

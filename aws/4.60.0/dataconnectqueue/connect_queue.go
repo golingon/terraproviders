@@ -21,7 +21,7 @@ func (occ OutboundCallerConfigAttributes) InternalWithRef(ref terra.Reference) O
 	return OutboundCallerConfigAttributes{ref: ref}
 }
 
-func (occ OutboundCallerConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (occ OutboundCallerConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return occ.ref.InternalTokens()
 }
 

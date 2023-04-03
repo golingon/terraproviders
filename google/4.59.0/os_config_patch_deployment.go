@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewOsConfigPatchDeployment creates a new instance of [OsConfigPatchDeployment].
 func NewOsConfigPatchDeployment(name string, args OsConfigPatchDeploymentArgs) *OsConfigPatchDeployment {
 	return &OsConfigPatchDeployment{
 		Args: args,
@@ -19,28 +20,51 @@ func NewOsConfigPatchDeployment(name string, args OsConfigPatchDeploymentArgs) *
 
 var _ terra.Resource = (*OsConfigPatchDeployment)(nil)
 
+// OsConfigPatchDeployment represents the Terraform resource google_os_config_patch_deployment.
 type OsConfigPatchDeployment struct {
-	Name  string
-	Args  OsConfigPatchDeploymentArgs
-	state *osConfigPatchDeploymentState
+	Name      string
+	Args      OsConfigPatchDeploymentArgs
+	state     *osConfigPatchDeploymentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [OsConfigPatchDeployment].
 func (ocpd *OsConfigPatchDeployment) Type() string {
 	return "google_os_config_patch_deployment"
 }
 
+// LocalName returns the local name for [OsConfigPatchDeployment].
 func (ocpd *OsConfigPatchDeployment) LocalName() string {
 	return ocpd.Name
 }
 
+// Configuration returns the configuration (args) for [OsConfigPatchDeployment].
 func (ocpd *OsConfigPatchDeployment) Configuration() interface{} {
 	return ocpd.Args
 }
 
+// DependOn is used for other resources to depend on [OsConfigPatchDeployment].
+func (ocpd *OsConfigPatchDeployment) DependOn() terra.Reference {
+	return terra.ReferenceResource(ocpd)
+}
+
+// Dependencies returns the list of resources [OsConfigPatchDeployment] depends_on.
+func (ocpd *OsConfigPatchDeployment) Dependencies() terra.Dependencies {
+	return ocpd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [OsConfigPatchDeployment].
+func (ocpd *OsConfigPatchDeployment) LifecycleManagement() *terra.Lifecycle {
+	return ocpd.Lifecycle
+}
+
+// Attributes returns the attributes for [OsConfigPatchDeployment].
 func (ocpd *OsConfigPatchDeployment) Attributes() osConfigPatchDeploymentAttributes {
 	return osConfigPatchDeploymentAttributes{ref: terra.ReferenceResource(ocpd)}
 }
 
+// ImportState imports the given attribute values into [OsConfigPatchDeployment]'s state.
 func (ocpd *OsConfigPatchDeployment) ImportState(av io.Reader) error {
 	ocpd.state = &osConfigPatchDeploymentState{}
 	if err := json.NewDecoder(av).Decode(ocpd.state); err != nil {
@@ -49,10 +73,12 @@ func (ocpd *OsConfigPatchDeployment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [OsConfigPatchDeployment] has state.
 func (ocpd *OsConfigPatchDeployment) State() (*osConfigPatchDeploymentState, bool) {
 	return ocpd.state, ocpd.state != nil
 }
 
+// StateMust returns the state for [OsConfigPatchDeployment]. Panics if the state is nil.
 func (ocpd *OsConfigPatchDeployment) StateMust() *osConfigPatchDeploymentState {
 	if ocpd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ocpd.Type(), ocpd.LocalName()))
@@ -60,10 +86,7 @@ func (ocpd *OsConfigPatchDeployment) StateMust() *osConfigPatchDeploymentState {
 	return ocpd.state
 }
 
-func (ocpd *OsConfigPatchDeployment) DependOn() terra.Reference {
-	return terra.ReferenceResource(ocpd)
-}
-
+// OsConfigPatchDeploymentArgs contains the configurations for google_os_config_patch_deployment.
 type OsConfigPatchDeploymentArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -87,71 +110,78 @@ type OsConfigPatchDeploymentArgs struct {
 	Rollout *osconfigpatchdeployment.Rollout `hcl:"rollout,block"`
 	// Timeouts: optional
 	Timeouts *osconfigpatchdeployment.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that OsConfigPatchDeployment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type osConfigPatchDeploymentAttributes struct {
 	ref terra.Reference
 }
 
+// CreateTime returns a reference to field create_time of google_os_config_patch_deployment.
 func (ocpd osConfigPatchDeploymentAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(ocpd.ref.Append("create_time"))
+	return terra.ReferenceAsString(ocpd.ref.Append("create_time"))
 }
 
+// Description returns a reference to field description of google_os_config_patch_deployment.
 func (ocpd osConfigPatchDeploymentAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ocpd.ref.Append("description"))
+	return terra.ReferenceAsString(ocpd.ref.Append("description"))
 }
 
+// Duration returns a reference to field duration of google_os_config_patch_deployment.
 func (ocpd osConfigPatchDeploymentAttributes) Duration() terra.StringValue {
-	return terra.ReferenceString(ocpd.ref.Append("duration"))
+	return terra.ReferenceAsString(ocpd.ref.Append("duration"))
 }
 
+// Id returns a reference to field id of google_os_config_patch_deployment.
 func (ocpd osConfigPatchDeploymentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ocpd.ref.Append("id"))
+	return terra.ReferenceAsString(ocpd.ref.Append("id"))
 }
 
+// LastExecuteTime returns a reference to field last_execute_time of google_os_config_patch_deployment.
 func (ocpd osConfigPatchDeploymentAttributes) LastExecuteTime() terra.StringValue {
-	return terra.ReferenceString(ocpd.ref.Append("last_execute_time"))
+	return terra.ReferenceAsString(ocpd.ref.Append("last_execute_time"))
 }
 
+// Name returns a reference to field name of google_os_config_patch_deployment.
 func (ocpd osConfigPatchDeploymentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ocpd.ref.Append("name"))
+	return terra.ReferenceAsString(ocpd.ref.Append("name"))
 }
 
+// PatchDeploymentId returns a reference to field patch_deployment_id of google_os_config_patch_deployment.
 func (ocpd osConfigPatchDeploymentAttributes) PatchDeploymentId() terra.StringValue {
-	return terra.ReferenceString(ocpd.ref.Append("patch_deployment_id"))
+	return terra.ReferenceAsString(ocpd.ref.Append("patch_deployment_id"))
 }
 
+// Project returns a reference to field project of google_os_config_patch_deployment.
 func (ocpd osConfigPatchDeploymentAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ocpd.ref.Append("project"))
+	return terra.ReferenceAsString(ocpd.ref.Append("project"))
 }
 
+// UpdateTime returns a reference to field update_time of google_os_config_patch_deployment.
 func (ocpd osConfigPatchDeploymentAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(ocpd.ref.Append("update_time"))
+	return terra.ReferenceAsString(ocpd.ref.Append("update_time"))
 }
 
 func (ocpd osConfigPatchDeploymentAttributes) InstanceFilter() terra.ListValue[osconfigpatchdeployment.InstanceFilterAttributes] {
-	return terra.ReferenceList[osconfigpatchdeployment.InstanceFilterAttributes](ocpd.ref.Append("instance_filter"))
+	return terra.ReferenceAsList[osconfigpatchdeployment.InstanceFilterAttributes](ocpd.ref.Append("instance_filter"))
 }
 
 func (ocpd osConfigPatchDeploymentAttributes) OneTimeSchedule() terra.ListValue[osconfigpatchdeployment.OneTimeScheduleAttributes] {
-	return terra.ReferenceList[osconfigpatchdeployment.OneTimeScheduleAttributes](ocpd.ref.Append("one_time_schedule"))
+	return terra.ReferenceAsList[osconfigpatchdeployment.OneTimeScheduleAttributes](ocpd.ref.Append("one_time_schedule"))
 }
 
 func (ocpd osConfigPatchDeploymentAttributes) PatchConfig() terra.ListValue[osconfigpatchdeployment.PatchConfigAttributes] {
-	return terra.ReferenceList[osconfigpatchdeployment.PatchConfigAttributes](ocpd.ref.Append("patch_config"))
+	return terra.ReferenceAsList[osconfigpatchdeployment.PatchConfigAttributes](ocpd.ref.Append("patch_config"))
 }
 
 func (ocpd osConfigPatchDeploymentAttributes) RecurringSchedule() terra.ListValue[osconfigpatchdeployment.RecurringScheduleAttributes] {
-	return terra.ReferenceList[osconfigpatchdeployment.RecurringScheduleAttributes](ocpd.ref.Append("recurring_schedule"))
+	return terra.ReferenceAsList[osconfigpatchdeployment.RecurringScheduleAttributes](ocpd.ref.Append("recurring_schedule"))
 }
 
 func (ocpd osConfigPatchDeploymentAttributes) Rollout() terra.ListValue[osconfigpatchdeployment.RolloutAttributes] {
-	return terra.ReferenceList[osconfigpatchdeployment.RolloutAttributes](ocpd.ref.Append("rollout"))
+	return terra.ReferenceAsList[osconfigpatchdeployment.RolloutAttributes](ocpd.ref.Append("rollout"))
 }
 
 func (ocpd osConfigPatchDeploymentAttributes) Timeouts() osconfigpatchdeployment.TimeoutsAttributes {
-	return terra.ReferenceSingle[osconfigpatchdeployment.TimeoutsAttributes](ocpd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[osconfigpatchdeployment.TimeoutsAttributes](ocpd.ref.Append("timeouts"))
 }
 
 type osConfigPatchDeploymentState struct {

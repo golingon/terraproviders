@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewBigqueryDatasetIamPolicy creates a new instance of [BigqueryDatasetIamPolicy].
 func NewBigqueryDatasetIamPolicy(name string, args BigqueryDatasetIamPolicyArgs) *BigqueryDatasetIamPolicy {
 	return &BigqueryDatasetIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewBigqueryDatasetIamPolicy(name string, args BigqueryDatasetIamPolicyArgs)
 
 var _ terra.Resource = (*BigqueryDatasetIamPolicy)(nil)
 
+// BigqueryDatasetIamPolicy represents the Terraform resource google_bigquery_dataset_iam_policy.
 type BigqueryDatasetIamPolicy struct {
-	Name  string
-	Args  BigqueryDatasetIamPolicyArgs
-	state *bigqueryDatasetIamPolicyState
+	Name      string
+	Args      BigqueryDatasetIamPolicyArgs
+	state     *bigqueryDatasetIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BigqueryDatasetIamPolicy].
 func (bdip *BigqueryDatasetIamPolicy) Type() string {
 	return "google_bigquery_dataset_iam_policy"
 }
 
+// LocalName returns the local name for [BigqueryDatasetIamPolicy].
 func (bdip *BigqueryDatasetIamPolicy) LocalName() string {
 	return bdip.Name
 }
 
+// Configuration returns the configuration (args) for [BigqueryDatasetIamPolicy].
 func (bdip *BigqueryDatasetIamPolicy) Configuration() interface{} {
 	return bdip.Args
 }
 
+// DependOn is used for other resources to depend on [BigqueryDatasetIamPolicy].
+func (bdip *BigqueryDatasetIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(bdip)
+}
+
+// Dependencies returns the list of resources [BigqueryDatasetIamPolicy] depends_on.
+func (bdip *BigqueryDatasetIamPolicy) Dependencies() terra.Dependencies {
+	return bdip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BigqueryDatasetIamPolicy].
+func (bdip *BigqueryDatasetIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return bdip.Lifecycle
+}
+
+// Attributes returns the attributes for [BigqueryDatasetIamPolicy].
 func (bdip *BigqueryDatasetIamPolicy) Attributes() bigqueryDatasetIamPolicyAttributes {
 	return bigqueryDatasetIamPolicyAttributes{ref: terra.ReferenceResource(bdip)}
 }
 
+// ImportState imports the given attribute values into [BigqueryDatasetIamPolicy]'s state.
 func (bdip *BigqueryDatasetIamPolicy) ImportState(av io.Reader) error {
 	bdip.state = &bigqueryDatasetIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(bdip.state); err != nil {
@@ -48,10 +72,12 @@ func (bdip *BigqueryDatasetIamPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BigqueryDatasetIamPolicy] has state.
 func (bdip *BigqueryDatasetIamPolicy) State() (*bigqueryDatasetIamPolicyState, bool) {
 	return bdip.state, bdip.state != nil
 }
 
+// StateMust returns the state for [BigqueryDatasetIamPolicy]. Panics if the state is nil.
 func (bdip *BigqueryDatasetIamPolicy) StateMust() *bigqueryDatasetIamPolicyState {
 	if bdip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bdip.Type(), bdip.LocalName()))
@@ -59,10 +85,7 @@ func (bdip *BigqueryDatasetIamPolicy) StateMust() *bigqueryDatasetIamPolicyState
 	return bdip.state
 }
 
-func (bdip *BigqueryDatasetIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(bdip)
-}
-
+// BigqueryDatasetIamPolicyArgs contains the configurations for google_bigquery_dataset_iam_policy.
 type BigqueryDatasetIamPolicyArgs struct {
 	// DatasetId: string, required
 	DatasetId terra.StringValue `hcl:"dataset_id,attr" validate:"required"`
@@ -72,31 +95,34 @@ type BigqueryDatasetIamPolicyArgs struct {
 	PolicyData terra.StringValue `hcl:"policy_data,attr" validate:"required"`
 	// Project: string, optional
 	Project terra.StringValue `hcl:"project,attr"`
-	// DependsOn contains resources that BigqueryDatasetIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type bigqueryDatasetIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// DatasetId returns a reference to field dataset_id of google_bigquery_dataset_iam_policy.
 func (bdip bigqueryDatasetIamPolicyAttributes) DatasetId() terra.StringValue {
-	return terra.ReferenceString(bdip.ref.Append("dataset_id"))
+	return terra.ReferenceAsString(bdip.ref.Append("dataset_id"))
 }
 
+// Etag returns a reference to field etag of google_bigquery_dataset_iam_policy.
 func (bdip bigqueryDatasetIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(bdip.ref.Append("etag"))
+	return terra.ReferenceAsString(bdip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_bigquery_dataset_iam_policy.
 func (bdip bigqueryDatasetIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bdip.ref.Append("id"))
+	return terra.ReferenceAsString(bdip.ref.Append("id"))
 }
 
+// PolicyData returns a reference to field policy_data of google_bigquery_dataset_iam_policy.
 func (bdip bigqueryDatasetIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(bdip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(bdip.ref.Append("policy_data"))
 }
 
+// Project returns a reference to field project of google_bigquery_dataset_iam_policy.
 func (bdip bigqueryDatasetIamPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(bdip.ref.Append("project"))
+	return terra.ReferenceAsString(bdip.ref.Append("project"))
 }
 
 type bigqueryDatasetIamPolicyState struct {

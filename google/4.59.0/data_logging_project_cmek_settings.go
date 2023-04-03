@@ -4,6 +4,7 @@ package google
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataLoggingProjectCmekSettings creates a new instance of [DataLoggingProjectCmekSettings].
 func NewDataLoggingProjectCmekSettings(name string, args DataLoggingProjectCmekSettingsArgs) *DataLoggingProjectCmekSettings {
 	return &DataLoggingProjectCmekSettings{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataLoggingProjectCmekSettings(name string, args DataLoggingProjectCmekS
 
 var _ terra.DataResource = (*DataLoggingProjectCmekSettings)(nil)
 
+// DataLoggingProjectCmekSettings represents the Terraform data resource google_logging_project_cmek_settings.
 type DataLoggingProjectCmekSettings struct {
 	Name string
 	Args DataLoggingProjectCmekSettingsArgs
 }
 
+// DataSource returns the Terraform object type for [DataLoggingProjectCmekSettings].
 func (lpcs *DataLoggingProjectCmekSettings) DataSource() string {
 	return "google_logging_project_cmek_settings"
 }
 
+// LocalName returns the local name for [DataLoggingProjectCmekSettings].
 func (lpcs *DataLoggingProjectCmekSettings) LocalName() string {
 	return lpcs.Name
 }
 
+// Configuration returns the configuration (args) for [DataLoggingProjectCmekSettings].
 func (lpcs *DataLoggingProjectCmekSettings) Configuration() interface{} {
 	return lpcs.Args
 }
 
+// Attributes returns the attributes for [DataLoggingProjectCmekSettings].
 func (lpcs *DataLoggingProjectCmekSettings) Attributes() dataLoggingProjectCmekSettingsAttributes {
 	return dataLoggingProjectCmekSettingsAttributes{ref: terra.ReferenceDataResource(lpcs)}
 }
 
+// DataLoggingProjectCmekSettingsArgs contains the configurations for google_logging_project_cmek_settings.
 type DataLoggingProjectCmekSettingsArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -46,26 +53,32 @@ type dataLoggingProjectCmekSettingsAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of google_logging_project_cmek_settings.
 func (lpcs dataLoggingProjectCmekSettingsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lpcs.ref.Append("id"))
+	return terra.ReferenceAsString(lpcs.ref.Append("id"))
 }
 
+// KmsKeyName returns a reference to field kms_key_name of google_logging_project_cmek_settings.
 func (lpcs dataLoggingProjectCmekSettingsAttributes) KmsKeyName() terra.StringValue {
-	return terra.ReferenceString(lpcs.ref.Append("kms_key_name"))
+	return terra.ReferenceAsString(lpcs.ref.Append("kms_key_name"))
 }
 
+// KmsKeyVersionName returns a reference to field kms_key_version_name of google_logging_project_cmek_settings.
 func (lpcs dataLoggingProjectCmekSettingsAttributes) KmsKeyVersionName() terra.StringValue {
-	return terra.ReferenceString(lpcs.ref.Append("kms_key_version_name"))
+	return terra.ReferenceAsString(lpcs.ref.Append("kms_key_version_name"))
 }
 
+// Name returns a reference to field name of google_logging_project_cmek_settings.
 func (lpcs dataLoggingProjectCmekSettingsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lpcs.ref.Append("name"))
+	return terra.ReferenceAsString(lpcs.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_logging_project_cmek_settings.
 func (lpcs dataLoggingProjectCmekSettingsAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(lpcs.ref.Append("project"))
+	return terra.ReferenceAsString(lpcs.ref.Append("project"))
 }
 
+// ServiceAccountId returns a reference to field service_account_id of google_logging_project_cmek_settings.
 func (lpcs dataLoggingProjectCmekSettingsAttributes) ServiceAccountId() terra.StringValue {
-	return terra.ReferenceString(lpcs.ref.Append("service_account_id"))
+	return terra.ReferenceAsString(lpcs.ref.Append("service_account_id"))
 }

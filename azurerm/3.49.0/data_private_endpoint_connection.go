@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataPrivateEndpointConnection creates a new instance of [DataPrivateEndpointConnection].
 func NewDataPrivateEndpointConnection(name string, args DataPrivateEndpointConnectionArgs) *DataPrivateEndpointConnection {
 	return &DataPrivateEndpointConnection{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataPrivateEndpointConnection(name string, args DataPrivateEndpointConne
 
 var _ terra.DataResource = (*DataPrivateEndpointConnection)(nil)
 
+// DataPrivateEndpointConnection represents the Terraform data resource azurerm_private_endpoint_connection.
 type DataPrivateEndpointConnection struct {
 	Name string
 	Args DataPrivateEndpointConnectionArgs
 }
 
+// DataSource returns the Terraform object type for [DataPrivateEndpointConnection].
 func (pec *DataPrivateEndpointConnection) DataSource() string {
 	return "azurerm_private_endpoint_connection"
 }
 
+// LocalName returns the local name for [DataPrivateEndpointConnection].
 func (pec *DataPrivateEndpointConnection) LocalName() string {
 	return pec.Name
 }
 
+// Configuration returns the configuration (args) for [DataPrivateEndpointConnection].
 func (pec *DataPrivateEndpointConnection) Configuration() interface{} {
 	return pec.Args
 }
 
+// Attributes returns the attributes for [DataPrivateEndpointConnection].
 func (pec *DataPrivateEndpointConnection) Attributes() dataPrivateEndpointConnectionAttributes {
 	return dataPrivateEndpointConnectionAttributes{ref: terra.ReferenceDataResource(pec)}
 }
 
+// DataPrivateEndpointConnectionArgs contains the configurations for azurerm_private_endpoint_connection.
 type DataPrivateEndpointConnectionArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -55,30 +62,34 @@ type dataPrivateEndpointConnectionAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_private_endpoint_connection.
 func (pec dataPrivateEndpointConnectionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pec.ref.Append("id"))
+	return terra.ReferenceAsString(pec.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_private_endpoint_connection.
 func (pec dataPrivateEndpointConnectionAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(pec.ref.Append("location"))
+	return terra.ReferenceAsString(pec.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_private_endpoint_connection.
 func (pec dataPrivateEndpointConnectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pec.ref.Append("name"))
+	return terra.ReferenceAsString(pec.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_private_endpoint_connection.
 func (pec dataPrivateEndpointConnectionAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(pec.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(pec.ref.Append("resource_group_name"))
 }
 
 func (pec dataPrivateEndpointConnectionAttributes) NetworkInterface() terra.ListValue[dataprivateendpointconnection.NetworkInterfaceAttributes] {
-	return terra.ReferenceList[dataprivateendpointconnection.NetworkInterfaceAttributes](pec.ref.Append("network_interface"))
+	return terra.ReferenceAsList[dataprivateendpointconnection.NetworkInterfaceAttributes](pec.ref.Append("network_interface"))
 }
 
 func (pec dataPrivateEndpointConnectionAttributes) PrivateServiceConnection() terra.ListValue[dataprivateendpointconnection.PrivateServiceConnectionAttributes] {
-	return terra.ReferenceList[dataprivateendpointconnection.PrivateServiceConnectionAttributes](pec.ref.Append("private_service_connection"))
+	return terra.ReferenceAsList[dataprivateendpointconnection.PrivateServiceConnectionAttributes](pec.ref.Append("private_service_connection"))
 }
 
 func (pec dataPrivateEndpointConnectionAttributes) Timeouts() dataprivateendpointconnection.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataprivateendpointconnection.TimeoutsAttributes](pec.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataprivateendpointconnection.TimeoutsAttributes](pec.ref.Append("timeouts"))
 }

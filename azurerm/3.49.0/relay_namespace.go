@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewRelayNamespace creates a new instance of [RelayNamespace].
 func NewRelayNamespace(name string, args RelayNamespaceArgs) *RelayNamespace {
 	return &RelayNamespace{
 		Args: args,
@@ -19,28 +20,51 @@ func NewRelayNamespace(name string, args RelayNamespaceArgs) *RelayNamespace {
 
 var _ terra.Resource = (*RelayNamespace)(nil)
 
+// RelayNamespace represents the Terraform resource azurerm_relay_namespace.
 type RelayNamespace struct {
-	Name  string
-	Args  RelayNamespaceArgs
-	state *relayNamespaceState
+	Name      string
+	Args      RelayNamespaceArgs
+	state     *relayNamespaceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RelayNamespace].
 func (rn *RelayNamespace) Type() string {
 	return "azurerm_relay_namespace"
 }
 
+// LocalName returns the local name for [RelayNamespace].
 func (rn *RelayNamespace) LocalName() string {
 	return rn.Name
 }
 
+// Configuration returns the configuration (args) for [RelayNamespace].
 func (rn *RelayNamespace) Configuration() interface{} {
 	return rn.Args
 }
 
+// DependOn is used for other resources to depend on [RelayNamespace].
+func (rn *RelayNamespace) DependOn() terra.Reference {
+	return terra.ReferenceResource(rn)
+}
+
+// Dependencies returns the list of resources [RelayNamespace] depends_on.
+func (rn *RelayNamespace) Dependencies() terra.Dependencies {
+	return rn.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RelayNamespace].
+func (rn *RelayNamespace) LifecycleManagement() *terra.Lifecycle {
+	return rn.Lifecycle
+}
+
+// Attributes returns the attributes for [RelayNamespace].
 func (rn *RelayNamespace) Attributes() relayNamespaceAttributes {
 	return relayNamespaceAttributes{ref: terra.ReferenceResource(rn)}
 }
 
+// ImportState imports the given attribute values into [RelayNamespace]'s state.
 func (rn *RelayNamespace) ImportState(av io.Reader) error {
 	rn.state = &relayNamespaceState{}
 	if err := json.NewDecoder(av).Decode(rn.state); err != nil {
@@ -49,10 +73,12 @@ func (rn *RelayNamespace) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RelayNamespace] has state.
 func (rn *RelayNamespace) State() (*relayNamespaceState, bool) {
 	return rn.state, rn.state != nil
 }
 
+// StateMust returns the state for [RelayNamespace]. Panics if the state is nil.
 func (rn *RelayNamespace) StateMust() *relayNamespaceState {
 	if rn.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rn.Type(), rn.LocalName()))
@@ -60,10 +86,7 @@ func (rn *RelayNamespace) StateMust() *relayNamespaceState {
 	return rn.state
 }
 
-func (rn *RelayNamespace) DependOn() terra.Reference {
-	return terra.ReferenceResource(rn)
-}
-
+// RelayNamespaceArgs contains the configurations for azurerm_relay_namespace.
 type RelayNamespaceArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,59 +102,68 @@ type RelayNamespaceArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// Timeouts: optional
 	Timeouts *relaynamespace.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that RelayNamespace depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type relayNamespaceAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_relay_namespace.
 func (rn relayNamespaceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rn.ref.Append("id"))
+	return terra.ReferenceAsString(rn.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_relay_namespace.
 func (rn relayNamespaceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(rn.ref.Append("location"))
+	return terra.ReferenceAsString(rn.ref.Append("location"))
 }
 
+// MetricId returns a reference to field metric_id of azurerm_relay_namespace.
 func (rn relayNamespaceAttributes) MetricId() terra.StringValue {
-	return terra.ReferenceString(rn.ref.Append("metric_id"))
+	return terra.ReferenceAsString(rn.ref.Append("metric_id"))
 }
 
+// Name returns a reference to field name of azurerm_relay_namespace.
 func (rn relayNamespaceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rn.ref.Append("name"))
+	return terra.ReferenceAsString(rn.ref.Append("name"))
 }
 
+// PrimaryConnectionString returns a reference to field primary_connection_string of azurerm_relay_namespace.
 func (rn relayNamespaceAttributes) PrimaryConnectionString() terra.StringValue {
-	return terra.ReferenceString(rn.ref.Append("primary_connection_string"))
+	return terra.ReferenceAsString(rn.ref.Append("primary_connection_string"))
 }
 
+// PrimaryKey returns a reference to field primary_key of azurerm_relay_namespace.
 func (rn relayNamespaceAttributes) PrimaryKey() terra.StringValue {
-	return terra.ReferenceString(rn.ref.Append("primary_key"))
+	return terra.ReferenceAsString(rn.ref.Append("primary_key"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_relay_namespace.
 func (rn relayNamespaceAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(rn.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(rn.ref.Append("resource_group_name"))
 }
 
+// SecondaryConnectionString returns a reference to field secondary_connection_string of azurerm_relay_namespace.
 func (rn relayNamespaceAttributes) SecondaryConnectionString() terra.StringValue {
-	return terra.ReferenceString(rn.ref.Append("secondary_connection_string"))
+	return terra.ReferenceAsString(rn.ref.Append("secondary_connection_string"))
 }
 
+// SecondaryKey returns a reference to field secondary_key of azurerm_relay_namespace.
 func (rn relayNamespaceAttributes) SecondaryKey() terra.StringValue {
-	return terra.ReferenceString(rn.ref.Append("secondary_key"))
+	return terra.ReferenceAsString(rn.ref.Append("secondary_key"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_relay_namespace.
 func (rn relayNamespaceAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(rn.ref.Append("sku_name"))
+	return terra.ReferenceAsString(rn.ref.Append("sku_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_relay_namespace.
 func (rn relayNamespaceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rn.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](rn.ref.Append("tags"))
 }
 
 func (rn relayNamespaceAttributes) Timeouts() relaynamespace.TimeoutsAttributes {
-	return terra.ReferenceSingle[relaynamespace.TimeoutsAttributes](rn.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[relaynamespace.TimeoutsAttributes](rn.ref.Append("timeouts"))
 }
 
 type relayNamespaceState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewKmsKeyRingIamMember creates a new instance of [KmsKeyRingIamMember].
 func NewKmsKeyRingIamMember(name string, args KmsKeyRingIamMemberArgs) *KmsKeyRingIamMember {
 	return &KmsKeyRingIamMember{
 		Args: args,
@@ -19,28 +20,51 @@ func NewKmsKeyRingIamMember(name string, args KmsKeyRingIamMemberArgs) *KmsKeyRi
 
 var _ terra.Resource = (*KmsKeyRingIamMember)(nil)
 
+// KmsKeyRingIamMember represents the Terraform resource google_kms_key_ring_iam_member.
 type KmsKeyRingIamMember struct {
-	Name  string
-	Args  KmsKeyRingIamMemberArgs
-	state *kmsKeyRingIamMemberState
+	Name      string
+	Args      KmsKeyRingIamMemberArgs
+	state     *kmsKeyRingIamMemberState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [KmsKeyRingIamMember].
 func (kkrim *KmsKeyRingIamMember) Type() string {
 	return "google_kms_key_ring_iam_member"
 }
 
+// LocalName returns the local name for [KmsKeyRingIamMember].
 func (kkrim *KmsKeyRingIamMember) LocalName() string {
 	return kkrim.Name
 }
 
+// Configuration returns the configuration (args) for [KmsKeyRingIamMember].
 func (kkrim *KmsKeyRingIamMember) Configuration() interface{} {
 	return kkrim.Args
 }
 
+// DependOn is used for other resources to depend on [KmsKeyRingIamMember].
+func (kkrim *KmsKeyRingIamMember) DependOn() terra.Reference {
+	return terra.ReferenceResource(kkrim)
+}
+
+// Dependencies returns the list of resources [KmsKeyRingIamMember] depends_on.
+func (kkrim *KmsKeyRingIamMember) Dependencies() terra.Dependencies {
+	return kkrim.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [KmsKeyRingIamMember].
+func (kkrim *KmsKeyRingIamMember) LifecycleManagement() *terra.Lifecycle {
+	return kkrim.Lifecycle
+}
+
+// Attributes returns the attributes for [KmsKeyRingIamMember].
 func (kkrim *KmsKeyRingIamMember) Attributes() kmsKeyRingIamMemberAttributes {
 	return kmsKeyRingIamMemberAttributes{ref: terra.ReferenceResource(kkrim)}
 }
 
+// ImportState imports the given attribute values into [KmsKeyRingIamMember]'s state.
 func (kkrim *KmsKeyRingIamMember) ImportState(av io.Reader) error {
 	kkrim.state = &kmsKeyRingIamMemberState{}
 	if err := json.NewDecoder(av).Decode(kkrim.state); err != nil {
@@ -49,10 +73,12 @@ func (kkrim *KmsKeyRingIamMember) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [KmsKeyRingIamMember] has state.
 func (kkrim *KmsKeyRingIamMember) State() (*kmsKeyRingIamMemberState, bool) {
 	return kkrim.state, kkrim.state != nil
 }
 
+// StateMust returns the state for [KmsKeyRingIamMember]. Panics if the state is nil.
 func (kkrim *KmsKeyRingIamMember) StateMust() *kmsKeyRingIamMemberState {
 	if kkrim.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", kkrim.Type(), kkrim.LocalName()))
@@ -60,10 +86,7 @@ func (kkrim *KmsKeyRingIamMember) StateMust() *kmsKeyRingIamMemberState {
 	return kkrim.state
 }
 
-func (kkrim *KmsKeyRingIamMember) DependOn() terra.Reference {
-	return terra.ReferenceResource(kkrim)
-}
-
+// KmsKeyRingIamMemberArgs contains the configurations for google_kms_key_ring_iam_member.
 type KmsKeyRingIamMemberArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -75,35 +98,38 @@ type KmsKeyRingIamMemberArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *kmskeyringiammember.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that KmsKeyRingIamMember depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type kmsKeyRingIamMemberAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_kms_key_ring_iam_member.
 func (kkrim kmsKeyRingIamMemberAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(kkrim.ref.Append("etag"))
+	return terra.ReferenceAsString(kkrim.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_kms_key_ring_iam_member.
 func (kkrim kmsKeyRingIamMemberAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kkrim.ref.Append("id"))
+	return terra.ReferenceAsString(kkrim.ref.Append("id"))
 }
 
+// KeyRingId returns a reference to field key_ring_id of google_kms_key_ring_iam_member.
 func (kkrim kmsKeyRingIamMemberAttributes) KeyRingId() terra.StringValue {
-	return terra.ReferenceString(kkrim.ref.Append("key_ring_id"))
+	return terra.ReferenceAsString(kkrim.ref.Append("key_ring_id"))
 }
 
+// Member returns a reference to field member of google_kms_key_ring_iam_member.
 func (kkrim kmsKeyRingIamMemberAttributes) Member() terra.StringValue {
-	return terra.ReferenceString(kkrim.ref.Append("member"))
+	return terra.ReferenceAsString(kkrim.ref.Append("member"))
 }
 
+// Role returns a reference to field role of google_kms_key_ring_iam_member.
 func (kkrim kmsKeyRingIamMemberAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(kkrim.ref.Append("role"))
+	return terra.ReferenceAsString(kkrim.ref.Append("role"))
 }
 
 func (kkrim kmsKeyRingIamMemberAttributes) Condition() terra.ListValue[kmskeyringiammember.ConditionAttributes] {
-	return terra.ReferenceList[kmskeyringiammember.ConditionAttributes](kkrim.ref.Append("condition"))
+	return terra.ReferenceAsList[kmskeyringiammember.ConditionAttributes](kkrim.ref.Append("condition"))
 }
 
 type kmsKeyRingIamMemberState struct {

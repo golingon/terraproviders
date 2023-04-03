@@ -29,56 +29,56 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type TokenBodyParameterAttributes struct {
 	ref terra.Reference
 }
 
-func (tbp TokenBodyParameterAttributes) InternalRef() terra.Reference {
-	return tbp.ref
+func (tbp TokenBodyParameterAttributes) InternalRef() (terra.Reference, error) {
+	return tbp.ref, nil
 }
 
 func (tbp TokenBodyParameterAttributes) InternalWithRef(ref terra.Reference) TokenBodyParameterAttributes {
 	return TokenBodyParameterAttributes{ref: ref}
 }
 
-func (tbp TokenBodyParameterAttributes) InternalTokens() hclwrite.Tokens {
+func (tbp TokenBodyParameterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tbp.ref.InternalTokens()
 }
 
 func (tbp TokenBodyParameterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(tbp.ref.Append("name"))
+	return terra.ReferenceAsString(tbp.ref.Append("name"))
 }
 
 func (tbp TokenBodyParameterAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(tbp.ref.Append("value"))
+	return terra.ReferenceAsString(tbp.ref.Append("value"))
 }
 
 type TimeoutsState struct {

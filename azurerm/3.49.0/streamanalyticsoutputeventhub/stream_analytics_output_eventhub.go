@@ -33,64 +33,64 @@ type SerializationAttributes struct {
 	ref terra.Reference
 }
 
-func (s SerializationAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SerializationAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SerializationAttributes) InternalWithRef(ref terra.Reference) SerializationAttributes {
 	return SerializationAttributes{ref: ref}
 }
 
-func (s SerializationAttributes) InternalTokens() hclwrite.Tokens {
+func (s SerializationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SerializationAttributes) Encoding() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("encoding"))
+	return terra.ReferenceAsString(s.ref.Append("encoding"))
 }
 
 func (s SerializationAttributes) FieldDelimiter() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("field_delimiter"))
+	return terra.ReferenceAsString(s.ref.Append("field_delimiter"))
 }
 
 func (s SerializationAttributes) Format() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("format"))
+	return terra.ReferenceAsString(s.ref.Append("format"))
 }
 
 func (s SerializationAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("type"))
+	return terra.ReferenceAsString(s.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type SerializationState struct {

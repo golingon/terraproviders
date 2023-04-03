@@ -29,7 +29,7 @@ func (ec ExternalConnectionsAttributes) InternalWithRef(ref terra.Reference) Ext
 	return ExternalConnectionsAttributes{ref: ref}
 }
 
-func (ec ExternalConnectionsAttributes) InternalTokens() hclwrite.Tokens {
+func (ec ExternalConnectionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 
@@ -57,7 +57,7 @@ func (u UpstreamAttributes) InternalWithRef(ref terra.Reference) UpstreamAttribu
 	return UpstreamAttributes{ref: ref}
 }
 
-func (u UpstreamAttributes) InternalTokens() hclwrite.Tokens {
+func (u UpstreamAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return u.ref.InternalTokens()
 }
 

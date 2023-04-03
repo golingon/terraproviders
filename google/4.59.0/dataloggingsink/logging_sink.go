@@ -15,52 +15,52 @@ type BigqueryOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (bo BigqueryOptionsAttributes) InternalRef() terra.Reference {
-	return bo.ref
+func (bo BigqueryOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return bo.ref, nil
 }
 
 func (bo BigqueryOptionsAttributes) InternalWithRef(ref terra.Reference) BigqueryOptionsAttributes {
 	return BigqueryOptionsAttributes{ref: ref}
 }
 
-func (bo BigqueryOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (bo BigqueryOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bo.ref.InternalTokens()
 }
 
 func (bo BigqueryOptionsAttributes) UsePartitionedTables() terra.BoolValue {
-	return terra.ReferenceBool(bo.ref.Append("use_partitioned_tables"))
+	return terra.ReferenceAsBool(bo.ref.Append("use_partitioned_tables"))
 }
 
 type ExclusionsAttributes struct {
 	ref terra.Reference
 }
 
-func (e ExclusionsAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e ExclusionsAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e ExclusionsAttributes) InternalWithRef(ref terra.Reference) ExclusionsAttributes {
 	return ExclusionsAttributes{ref: ref}
 }
 
-func (e ExclusionsAttributes) InternalTokens() hclwrite.Tokens {
+func (e ExclusionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
 func (e ExclusionsAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("description"))
+	return terra.ReferenceAsString(e.ref.Append("description"))
 }
 
 func (e ExclusionsAttributes) Disabled() terra.BoolValue {
-	return terra.ReferenceBool(e.ref.Append("disabled"))
+	return terra.ReferenceAsBool(e.ref.Append("disabled"))
 }
 
 func (e ExclusionsAttributes) Filter() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("filter"))
+	return terra.ReferenceAsString(e.ref.Append("filter"))
 }
 
 func (e ExclusionsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("name"))
+	return terra.ReferenceAsString(e.ref.Append("name"))
 }
 
 type BigqueryOptionsState struct {

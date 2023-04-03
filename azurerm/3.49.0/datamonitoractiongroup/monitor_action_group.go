@@ -43,408 +43,408 @@ type ArmRoleReceiverAttributes struct {
 	ref terra.Reference
 }
 
-func (arr ArmRoleReceiverAttributes) InternalRef() terra.Reference {
-	return arr.ref
+func (arr ArmRoleReceiverAttributes) InternalRef() (terra.Reference, error) {
+	return arr.ref, nil
 }
 
 func (arr ArmRoleReceiverAttributes) InternalWithRef(ref terra.Reference) ArmRoleReceiverAttributes {
 	return ArmRoleReceiverAttributes{ref: ref}
 }
 
-func (arr ArmRoleReceiverAttributes) InternalTokens() hclwrite.Tokens {
+func (arr ArmRoleReceiverAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return arr.ref.InternalTokens()
 }
 
 func (arr ArmRoleReceiverAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(arr.ref.Append("name"))
+	return terra.ReferenceAsString(arr.ref.Append("name"))
 }
 
 func (arr ArmRoleReceiverAttributes) RoleId() terra.StringValue {
-	return terra.ReferenceString(arr.ref.Append("role_id"))
+	return terra.ReferenceAsString(arr.ref.Append("role_id"))
 }
 
 func (arr ArmRoleReceiverAttributes) UseCommonAlertSchema() terra.BoolValue {
-	return terra.ReferenceBool(arr.ref.Append("use_common_alert_schema"))
+	return terra.ReferenceAsBool(arr.ref.Append("use_common_alert_schema"))
 }
 
 type AutomationRunbookReceiverAttributes struct {
 	ref terra.Reference
 }
 
-func (arr AutomationRunbookReceiverAttributes) InternalRef() terra.Reference {
-	return arr.ref
+func (arr AutomationRunbookReceiverAttributes) InternalRef() (terra.Reference, error) {
+	return arr.ref, nil
 }
 
 func (arr AutomationRunbookReceiverAttributes) InternalWithRef(ref terra.Reference) AutomationRunbookReceiverAttributes {
 	return AutomationRunbookReceiverAttributes{ref: ref}
 }
 
-func (arr AutomationRunbookReceiverAttributes) InternalTokens() hclwrite.Tokens {
+func (arr AutomationRunbookReceiverAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return arr.ref.InternalTokens()
 }
 
 func (arr AutomationRunbookReceiverAttributes) AutomationAccountId() terra.StringValue {
-	return terra.ReferenceString(arr.ref.Append("automation_account_id"))
+	return terra.ReferenceAsString(arr.ref.Append("automation_account_id"))
 }
 
 func (arr AutomationRunbookReceiverAttributes) IsGlobalRunbook() terra.BoolValue {
-	return terra.ReferenceBool(arr.ref.Append("is_global_runbook"))
+	return terra.ReferenceAsBool(arr.ref.Append("is_global_runbook"))
 }
 
 func (arr AutomationRunbookReceiverAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(arr.ref.Append("name"))
+	return terra.ReferenceAsString(arr.ref.Append("name"))
 }
 
 func (arr AutomationRunbookReceiverAttributes) RunbookName() terra.StringValue {
-	return terra.ReferenceString(arr.ref.Append("runbook_name"))
+	return terra.ReferenceAsString(arr.ref.Append("runbook_name"))
 }
 
 func (arr AutomationRunbookReceiverAttributes) ServiceUri() terra.StringValue {
-	return terra.ReferenceString(arr.ref.Append("service_uri"))
+	return terra.ReferenceAsString(arr.ref.Append("service_uri"))
 }
 
 func (arr AutomationRunbookReceiverAttributes) UseCommonAlertSchema() terra.BoolValue {
-	return terra.ReferenceBool(arr.ref.Append("use_common_alert_schema"))
+	return terra.ReferenceAsBool(arr.ref.Append("use_common_alert_schema"))
 }
 
 func (arr AutomationRunbookReceiverAttributes) WebhookResourceId() terra.StringValue {
-	return terra.ReferenceString(arr.ref.Append("webhook_resource_id"))
+	return terra.ReferenceAsString(arr.ref.Append("webhook_resource_id"))
 }
 
 type AzureAppPushReceiverAttributes struct {
 	ref terra.Reference
 }
 
-func (aapr AzureAppPushReceiverAttributes) InternalRef() terra.Reference {
-	return aapr.ref
+func (aapr AzureAppPushReceiverAttributes) InternalRef() (terra.Reference, error) {
+	return aapr.ref, nil
 }
 
 func (aapr AzureAppPushReceiverAttributes) InternalWithRef(ref terra.Reference) AzureAppPushReceiverAttributes {
 	return AzureAppPushReceiverAttributes{ref: ref}
 }
 
-func (aapr AzureAppPushReceiverAttributes) InternalTokens() hclwrite.Tokens {
+func (aapr AzureAppPushReceiverAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aapr.ref.InternalTokens()
 }
 
 func (aapr AzureAppPushReceiverAttributes) EmailAddress() terra.StringValue {
-	return terra.ReferenceString(aapr.ref.Append("email_address"))
+	return terra.ReferenceAsString(aapr.ref.Append("email_address"))
 }
 
 func (aapr AzureAppPushReceiverAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(aapr.ref.Append("name"))
+	return terra.ReferenceAsString(aapr.ref.Append("name"))
 }
 
 type AzureFunctionReceiverAttributes struct {
 	ref terra.Reference
 }
 
-func (afr AzureFunctionReceiverAttributes) InternalRef() terra.Reference {
-	return afr.ref
+func (afr AzureFunctionReceiverAttributes) InternalRef() (terra.Reference, error) {
+	return afr.ref, nil
 }
 
 func (afr AzureFunctionReceiverAttributes) InternalWithRef(ref terra.Reference) AzureFunctionReceiverAttributes {
 	return AzureFunctionReceiverAttributes{ref: ref}
 }
 
-func (afr AzureFunctionReceiverAttributes) InternalTokens() hclwrite.Tokens {
+func (afr AzureFunctionReceiverAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return afr.ref.InternalTokens()
 }
 
 func (afr AzureFunctionReceiverAttributes) FunctionAppResourceId() terra.StringValue {
-	return terra.ReferenceString(afr.ref.Append("function_app_resource_id"))
+	return terra.ReferenceAsString(afr.ref.Append("function_app_resource_id"))
 }
 
 func (afr AzureFunctionReceiverAttributes) FunctionName() terra.StringValue {
-	return terra.ReferenceString(afr.ref.Append("function_name"))
+	return terra.ReferenceAsString(afr.ref.Append("function_name"))
 }
 
 func (afr AzureFunctionReceiverAttributes) HttpTriggerUrl() terra.StringValue {
-	return terra.ReferenceString(afr.ref.Append("http_trigger_url"))
+	return terra.ReferenceAsString(afr.ref.Append("http_trigger_url"))
 }
 
 func (afr AzureFunctionReceiverAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(afr.ref.Append("name"))
+	return terra.ReferenceAsString(afr.ref.Append("name"))
 }
 
 func (afr AzureFunctionReceiverAttributes) UseCommonAlertSchema() terra.BoolValue {
-	return terra.ReferenceBool(afr.ref.Append("use_common_alert_schema"))
+	return terra.ReferenceAsBool(afr.ref.Append("use_common_alert_schema"))
 }
 
 type EmailReceiverAttributes struct {
 	ref terra.Reference
 }
 
-func (er EmailReceiverAttributes) InternalRef() terra.Reference {
-	return er.ref
+func (er EmailReceiverAttributes) InternalRef() (terra.Reference, error) {
+	return er.ref, nil
 }
 
 func (er EmailReceiverAttributes) InternalWithRef(ref terra.Reference) EmailReceiverAttributes {
 	return EmailReceiverAttributes{ref: ref}
 }
 
-func (er EmailReceiverAttributes) InternalTokens() hclwrite.Tokens {
+func (er EmailReceiverAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return er.ref.InternalTokens()
 }
 
 func (er EmailReceiverAttributes) EmailAddress() terra.StringValue {
-	return terra.ReferenceString(er.ref.Append("email_address"))
+	return terra.ReferenceAsString(er.ref.Append("email_address"))
 }
 
 func (er EmailReceiverAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(er.ref.Append("name"))
+	return terra.ReferenceAsString(er.ref.Append("name"))
 }
 
 func (er EmailReceiverAttributes) UseCommonAlertSchema() terra.BoolValue {
-	return terra.ReferenceBool(er.ref.Append("use_common_alert_schema"))
+	return terra.ReferenceAsBool(er.ref.Append("use_common_alert_schema"))
 }
 
 type EventHubReceiverAttributes struct {
 	ref terra.Reference
 }
 
-func (ehr EventHubReceiverAttributes) InternalRef() terra.Reference {
-	return ehr.ref
+func (ehr EventHubReceiverAttributes) InternalRef() (terra.Reference, error) {
+	return ehr.ref, nil
 }
 
 func (ehr EventHubReceiverAttributes) InternalWithRef(ref terra.Reference) EventHubReceiverAttributes {
 	return EventHubReceiverAttributes{ref: ref}
 }
 
-func (ehr EventHubReceiverAttributes) InternalTokens() hclwrite.Tokens {
+func (ehr EventHubReceiverAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ehr.ref.InternalTokens()
 }
 
 func (ehr EventHubReceiverAttributes) EventHubId() terra.StringValue {
-	return terra.ReferenceString(ehr.ref.Append("event_hub_id"))
+	return terra.ReferenceAsString(ehr.ref.Append("event_hub_id"))
 }
 
 func (ehr EventHubReceiverAttributes) EventHubName() terra.StringValue {
-	return terra.ReferenceString(ehr.ref.Append("event_hub_name"))
+	return terra.ReferenceAsString(ehr.ref.Append("event_hub_name"))
 }
 
 func (ehr EventHubReceiverAttributes) EventHubNamespace() terra.StringValue {
-	return terra.ReferenceString(ehr.ref.Append("event_hub_namespace"))
+	return terra.ReferenceAsString(ehr.ref.Append("event_hub_namespace"))
 }
 
 func (ehr EventHubReceiverAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ehr.ref.Append("name"))
+	return terra.ReferenceAsString(ehr.ref.Append("name"))
 }
 
 func (ehr EventHubReceiverAttributes) SubscriptionId() terra.StringValue {
-	return terra.ReferenceString(ehr.ref.Append("subscription_id"))
+	return terra.ReferenceAsString(ehr.ref.Append("subscription_id"))
 }
 
 func (ehr EventHubReceiverAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(ehr.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(ehr.ref.Append("tenant_id"))
 }
 
 func (ehr EventHubReceiverAttributes) UseCommonAlertSchema() terra.BoolValue {
-	return terra.ReferenceBool(ehr.ref.Append("use_common_alert_schema"))
+	return terra.ReferenceAsBool(ehr.ref.Append("use_common_alert_schema"))
 }
 
 type ItsmReceiverAttributes struct {
 	ref terra.Reference
 }
 
-func (ir ItsmReceiverAttributes) InternalRef() terra.Reference {
-	return ir.ref
+func (ir ItsmReceiverAttributes) InternalRef() (terra.Reference, error) {
+	return ir.ref, nil
 }
 
 func (ir ItsmReceiverAttributes) InternalWithRef(ref terra.Reference) ItsmReceiverAttributes {
 	return ItsmReceiverAttributes{ref: ref}
 }
 
-func (ir ItsmReceiverAttributes) InternalTokens() hclwrite.Tokens {
+func (ir ItsmReceiverAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ir.ref.InternalTokens()
 }
 
 func (ir ItsmReceiverAttributes) ConnectionId() terra.StringValue {
-	return terra.ReferenceString(ir.ref.Append("connection_id"))
+	return terra.ReferenceAsString(ir.ref.Append("connection_id"))
 }
 
 func (ir ItsmReceiverAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ir.ref.Append("name"))
+	return terra.ReferenceAsString(ir.ref.Append("name"))
 }
 
 func (ir ItsmReceiverAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(ir.ref.Append("region"))
+	return terra.ReferenceAsString(ir.ref.Append("region"))
 }
 
 func (ir ItsmReceiverAttributes) TicketConfiguration() terra.StringValue {
-	return terra.ReferenceString(ir.ref.Append("ticket_configuration"))
+	return terra.ReferenceAsString(ir.ref.Append("ticket_configuration"))
 }
 
 func (ir ItsmReceiverAttributes) WorkspaceId() terra.StringValue {
-	return terra.ReferenceString(ir.ref.Append("workspace_id"))
+	return terra.ReferenceAsString(ir.ref.Append("workspace_id"))
 }
 
 type LogicAppReceiverAttributes struct {
 	ref terra.Reference
 }
 
-func (lar LogicAppReceiverAttributes) InternalRef() terra.Reference {
-	return lar.ref
+func (lar LogicAppReceiverAttributes) InternalRef() (terra.Reference, error) {
+	return lar.ref, nil
 }
 
 func (lar LogicAppReceiverAttributes) InternalWithRef(ref terra.Reference) LogicAppReceiverAttributes {
 	return LogicAppReceiverAttributes{ref: ref}
 }
 
-func (lar LogicAppReceiverAttributes) InternalTokens() hclwrite.Tokens {
+func (lar LogicAppReceiverAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lar.ref.InternalTokens()
 }
 
 func (lar LogicAppReceiverAttributes) CallbackUrl() terra.StringValue {
-	return terra.ReferenceString(lar.ref.Append("callback_url"))
+	return terra.ReferenceAsString(lar.ref.Append("callback_url"))
 }
 
 func (lar LogicAppReceiverAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lar.ref.Append("name"))
+	return terra.ReferenceAsString(lar.ref.Append("name"))
 }
 
 func (lar LogicAppReceiverAttributes) ResourceId() terra.StringValue {
-	return terra.ReferenceString(lar.ref.Append("resource_id"))
+	return terra.ReferenceAsString(lar.ref.Append("resource_id"))
 }
 
 func (lar LogicAppReceiverAttributes) UseCommonAlertSchema() terra.BoolValue {
-	return terra.ReferenceBool(lar.ref.Append("use_common_alert_schema"))
+	return terra.ReferenceAsBool(lar.ref.Append("use_common_alert_schema"))
 }
 
 type SmsReceiverAttributes struct {
 	ref terra.Reference
 }
 
-func (sr SmsReceiverAttributes) InternalRef() terra.Reference {
-	return sr.ref
+func (sr SmsReceiverAttributes) InternalRef() (terra.Reference, error) {
+	return sr.ref, nil
 }
 
 func (sr SmsReceiverAttributes) InternalWithRef(ref terra.Reference) SmsReceiverAttributes {
 	return SmsReceiverAttributes{ref: ref}
 }
 
-func (sr SmsReceiverAttributes) InternalTokens() hclwrite.Tokens {
+func (sr SmsReceiverAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sr.ref.InternalTokens()
 }
 
 func (sr SmsReceiverAttributes) CountryCode() terra.StringValue {
-	return terra.ReferenceString(sr.ref.Append("country_code"))
+	return terra.ReferenceAsString(sr.ref.Append("country_code"))
 }
 
 func (sr SmsReceiverAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sr.ref.Append("name"))
+	return terra.ReferenceAsString(sr.ref.Append("name"))
 }
 
 func (sr SmsReceiverAttributes) PhoneNumber() terra.StringValue {
-	return terra.ReferenceString(sr.ref.Append("phone_number"))
+	return terra.ReferenceAsString(sr.ref.Append("phone_number"))
 }
 
 type VoiceReceiverAttributes struct {
 	ref terra.Reference
 }
 
-func (vr VoiceReceiverAttributes) InternalRef() terra.Reference {
-	return vr.ref
+func (vr VoiceReceiverAttributes) InternalRef() (terra.Reference, error) {
+	return vr.ref, nil
 }
 
 func (vr VoiceReceiverAttributes) InternalWithRef(ref terra.Reference) VoiceReceiverAttributes {
 	return VoiceReceiverAttributes{ref: ref}
 }
 
-func (vr VoiceReceiverAttributes) InternalTokens() hclwrite.Tokens {
+func (vr VoiceReceiverAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vr.ref.InternalTokens()
 }
 
 func (vr VoiceReceiverAttributes) CountryCode() terra.StringValue {
-	return terra.ReferenceString(vr.ref.Append("country_code"))
+	return terra.ReferenceAsString(vr.ref.Append("country_code"))
 }
 
 func (vr VoiceReceiverAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(vr.ref.Append("name"))
+	return terra.ReferenceAsString(vr.ref.Append("name"))
 }
 
 func (vr VoiceReceiverAttributes) PhoneNumber() terra.StringValue {
-	return terra.ReferenceString(vr.ref.Append("phone_number"))
+	return terra.ReferenceAsString(vr.ref.Append("phone_number"))
 }
 
 type WebhookReceiverAttributes struct {
 	ref terra.Reference
 }
 
-func (wr WebhookReceiverAttributes) InternalRef() terra.Reference {
-	return wr.ref
+func (wr WebhookReceiverAttributes) InternalRef() (terra.Reference, error) {
+	return wr.ref, nil
 }
 
 func (wr WebhookReceiverAttributes) InternalWithRef(ref terra.Reference) WebhookReceiverAttributes {
 	return WebhookReceiverAttributes{ref: ref}
 }
 
-func (wr WebhookReceiverAttributes) InternalTokens() hclwrite.Tokens {
+func (wr WebhookReceiverAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wr.ref.InternalTokens()
 }
 
 func (wr WebhookReceiverAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(wr.ref.Append("name"))
+	return terra.ReferenceAsString(wr.ref.Append("name"))
 }
 
 func (wr WebhookReceiverAttributes) ServiceUri() terra.StringValue {
-	return terra.ReferenceString(wr.ref.Append("service_uri"))
+	return terra.ReferenceAsString(wr.ref.Append("service_uri"))
 }
 
 func (wr WebhookReceiverAttributes) UseCommonAlertSchema() terra.BoolValue {
-	return terra.ReferenceBool(wr.ref.Append("use_common_alert_schema"))
+	return terra.ReferenceAsBool(wr.ref.Append("use_common_alert_schema"))
 }
 
 func (wr WebhookReceiverAttributes) AadAuth() terra.ListValue[AadAuthAttributes] {
-	return terra.ReferenceList[AadAuthAttributes](wr.ref.Append("aad_auth"))
+	return terra.ReferenceAsList[AadAuthAttributes](wr.ref.Append("aad_auth"))
 }
 
 type AadAuthAttributes struct {
 	ref terra.Reference
 }
 
-func (aa AadAuthAttributes) InternalRef() terra.Reference {
-	return aa.ref
+func (aa AadAuthAttributes) InternalRef() (terra.Reference, error) {
+	return aa.ref, nil
 }
 
 func (aa AadAuthAttributes) InternalWithRef(ref terra.Reference) AadAuthAttributes {
 	return AadAuthAttributes{ref: ref}
 }
 
-func (aa AadAuthAttributes) InternalTokens() hclwrite.Tokens {
+func (aa AadAuthAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aa.ref.InternalTokens()
 }
 
 func (aa AadAuthAttributes) IdentifierUri() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("identifier_uri"))
+	return terra.ReferenceAsString(aa.ref.Append("identifier_uri"))
 }
 
 func (aa AadAuthAttributes) ObjectId() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("object_id"))
+	return terra.ReferenceAsString(aa.ref.Append("object_id"))
 }
 
 func (aa AadAuthAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(aa.ref.Append("tenant_id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type ArmRoleReceiverState struct {

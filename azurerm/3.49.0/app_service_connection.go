@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAppServiceConnection creates a new instance of [AppServiceConnection].
 func NewAppServiceConnection(name string, args AppServiceConnectionArgs) *AppServiceConnection {
 	return &AppServiceConnection{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAppServiceConnection(name string, args AppServiceConnectionArgs) *AppSer
 
 var _ terra.Resource = (*AppServiceConnection)(nil)
 
+// AppServiceConnection represents the Terraform resource azurerm_app_service_connection.
 type AppServiceConnection struct {
-	Name  string
-	Args  AppServiceConnectionArgs
-	state *appServiceConnectionState
+	Name      string
+	Args      AppServiceConnectionArgs
+	state     *appServiceConnectionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AppServiceConnection].
 func (asc *AppServiceConnection) Type() string {
 	return "azurerm_app_service_connection"
 }
 
+// LocalName returns the local name for [AppServiceConnection].
 func (asc *AppServiceConnection) LocalName() string {
 	return asc.Name
 }
 
+// Configuration returns the configuration (args) for [AppServiceConnection].
 func (asc *AppServiceConnection) Configuration() interface{} {
 	return asc.Args
 }
 
+// DependOn is used for other resources to depend on [AppServiceConnection].
+func (asc *AppServiceConnection) DependOn() terra.Reference {
+	return terra.ReferenceResource(asc)
+}
+
+// Dependencies returns the list of resources [AppServiceConnection] depends_on.
+func (asc *AppServiceConnection) Dependencies() terra.Dependencies {
+	return asc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AppServiceConnection].
+func (asc *AppServiceConnection) LifecycleManagement() *terra.Lifecycle {
+	return asc.Lifecycle
+}
+
+// Attributes returns the attributes for [AppServiceConnection].
 func (asc *AppServiceConnection) Attributes() appServiceConnectionAttributes {
 	return appServiceConnectionAttributes{ref: terra.ReferenceResource(asc)}
 }
 
+// ImportState imports the given attribute values into [AppServiceConnection]'s state.
 func (asc *AppServiceConnection) ImportState(av io.Reader) error {
 	asc.state = &appServiceConnectionState{}
 	if err := json.NewDecoder(av).Decode(asc.state); err != nil {
@@ -49,10 +73,12 @@ func (asc *AppServiceConnection) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AppServiceConnection] has state.
 func (asc *AppServiceConnection) State() (*appServiceConnectionState, bool) {
 	return asc.state, asc.state != nil
 }
 
+// StateMust returns the state for [AppServiceConnection]. Panics if the state is nil.
 func (asc *AppServiceConnection) StateMust() *appServiceConnectionState {
 	if asc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", asc.Type(), asc.LocalName()))
@@ -60,10 +86,7 @@ func (asc *AppServiceConnection) StateMust() *appServiceConnectionState {
 	return asc.state
 }
 
-func (asc *AppServiceConnection) DependOn() terra.Reference {
-	return terra.ReferenceResource(asc)
-}
-
+// AppServiceConnectionArgs contains the configurations for azurerm_app_service_connection.
 type AppServiceConnectionArgs struct {
 	// AppServiceId: string, required
 	AppServiceId terra.StringValue `hcl:"app_service_id,attr" validate:"required"`
@@ -83,47 +106,51 @@ type AppServiceConnectionArgs struct {
 	SecretStore *appserviceconnection.SecretStore `hcl:"secret_store,block"`
 	// Timeouts: optional
 	Timeouts *appserviceconnection.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that AppServiceConnection depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type appServiceConnectionAttributes struct {
 	ref terra.Reference
 }
 
+// AppServiceId returns a reference to field app_service_id of azurerm_app_service_connection.
 func (asc appServiceConnectionAttributes) AppServiceId() terra.StringValue {
-	return terra.ReferenceString(asc.ref.Append("app_service_id"))
+	return terra.ReferenceAsString(asc.ref.Append("app_service_id"))
 }
 
+// ClientType returns a reference to field client_type of azurerm_app_service_connection.
 func (asc appServiceConnectionAttributes) ClientType() terra.StringValue {
-	return terra.ReferenceString(asc.ref.Append("client_type"))
+	return terra.ReferenceAsString(asc.ref.Append("client_type"))
 }
 
+// Id returns a reference to field id of azurerm_app_service_connection.
 func (asc appServiceConnectionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(asc.ref.Append("id"))
+	return terra.ReferenceAsString(asc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_app_service_connection.
 func (asc appServiceConnectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(asc.ref.Append("name"))
+	return terra.ReferenceAsString(asc.ref.Append("name"))
 }
 
+// TargetResourceId returns a reference to field target_resource_id of azurerm_app_service_connection.
 func (asc appServiceConnectionAttributes) TargetResourceId() terra.StringValue {
-	return terra.ReferenceString(asc.ref.Append("target_resource_id"))
+	return terra.ReferenceAsString(asc.ref.Append("target_resource_id"))
 }
 
+// VnetSolution returns a reference to field vnet_solution of azurerm_app_service_connection.
 func (asc appServiceConnectionAttributes) VnetSolution() terra.StringValue {
-	return terra.ReferenceString(asc.ref.Append("vnet_solution"))
+	return terra.ReferenceAsString(asc.ref.Append("vnet_solution"))
 }
 
 func (asc appServiceConnectionAttributes) Authentication() terra.ListValue[appserviceconnection.AuthenticationAttributes] {
-	return terra.ReferenceList[appserviceconnection.AuthenticationAttributes](asc.ref.Append("authentication"))
+	return terra.ReferenceAsList[appserviceconnection.AuthenticationAttributes](asc.ref.Append("authentication"))
 }
 
 func (asc appServiceConnectionAttributes) SecretStore() terra.ListValue[appserviceconnection.SecretStoreAttributes] {
-	return terra.ReferenceList[appserviceconnection.SecretStoreAttributes](asc.ref.Append("secret_store"))
+	return terra.ReferenceAsList[appserviceconnection.SecretStoreAttributes](asc.ref.Append("secret_store"))
 }
 
 func (asc appServiceConnectionAttributes) Timeouts() appserviceconnection.TimeoutsAttributes {
-	return terra.ReferenceSingle[appserviceconnection.TimeoutsAttributes](asc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[appserviceconnection.TimeoutsAttributes](asc.ref.Append("timeouts"))
 }
 
 type appServiceConnectionState struct {

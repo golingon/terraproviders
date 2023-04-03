@@ -46,7 +46,7 @@ func (ch CampaignHookAttributes) InternalWithRef(ref terra.Reference) CampaignHo
 	return CampaignHookAttributes{ref: ref}
 }
 
-func (ch CampaignHookAttributes) InternalTokens() hclwrite.Tokens {
+func (ch CampaignHookAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ch.ref.InternalTokens()
 }
 
@@ -74,7 +74,7 @@ func (l LimitsAttributes) InternalWithRef(ref terra.Reference) LimitsAttributes 
 	return LimitsAttributes{ref: ref}
 }
 
-func (l LimitsAttributes) InternalTokens() hclwrite.Tokens {
+func (l LimitsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 
@@ -106,7 +106,7 @@ func (qt QuietTimeAttributes) InternalWithRef(ref terra.Reference) QuietTimeAttr
 	return QuietTimeAttributes{ref: ref}
 }
 
-func (qt QuietTimeAttributes) InternalTokens() hclwrite.Tokens {
+func (qt QuietTimeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return qt.ref.InternalTokens()
 }
 

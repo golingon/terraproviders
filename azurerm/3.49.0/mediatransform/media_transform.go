@@ -63,164 +63,164 @@ type OutputAttributes struct {
 	ref terra.Reference
 }
 
-func (o OutputAttributes) InternalRef() terra.Reference {
-	return o.ref
+func (o OutputAttributes) InternalRef() (terra.Reference, error) {
+	return o.ref, nil
 }
 
 func (o OutputAttributes) InternalWithRef(ref terra.Reference) OutputAttributes {
 	return OutputAttributes{ref: ref}
 }
 
-func (o OutputAttributes) InternalTokens() hclwrite.Tokens {
+func (o OutputAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return o.ref.InternalTokens()
 }
 
 func (o OutputAttributes) OnErrorAction() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("on_error_action"))
+	return terra.ReferenceAsString(o.ref.Append("on_error_action"))
 }
 
 func (o OutputAttributes) RelativePriority() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("relative_priority"))
+	return terra.ReferenceAsString(o.ref.Append("relative_priority"))
 }
 
 func (o OutputAttributes) AudioAnalyzerPreset() terra.ListValue[AudioAnalyzerPresetAttributes] {
-	return terra.ReferenceList[AudioAnalyzerPresetAttributes](o.ref.Append("audio_analyzer_preset"))
+	return terra.ReferenceAsList[AudioAnalyzerPresetAttributes](o.ref.Append("audio_analyzer_preset"))
 }
 
 func (o OutputAttributes) BuiltinPreset() terra.ListValue[BuiltinPresetAttributes] {
-	return terra.ReferenceList[BuiltinPresetAttributes](o.ref.Append("builtin_preset"))
+	return terra.ReferenceAsList[BuiltinPresetAttributes](o.ref.Append("builtin_preset"))
 }
 
 func (o OutputAttributes) FaceDetectorPreset() terra.ListValue[FaceDetectorPresetAttributes] {
-	return terra.ReferenceList[FaceDetectorPresetAttributes](o.ref.Append("face_detector_preset"))
+	return terra.ReferenceAsList[FaceDetectorPresetAttributes](o.ref.Append("face_detector_preset"))
 }
 
 func (o OutputAttributes) VideoAnalyzerPreset() terra.ListValue[VideoAnalyzerPresetAttributes] {
-	return terra.ReferenceList[VideoAnalyzerPresetAttributes](o.ref.Append("video_analyzer_preset"))
+	return terra.ReferenceAsList[VideoAnalyzerPresetAttributes](o.ref.Append("video_analyzer_preset"))
 }
 
 type AudioAnalyzerPresetAttributes struct {
 	ref terra.Reference
 }
 
-func (aap AudioAnalyzerPresetAttributes) InternalRef() terra.Reference {
-	return aap.ref
+func (aap AudioAnalyzerPresetAttributes) InternalRef() (terra.Reference, error) {
+	return aap.ref, nil
 }
 
 func (aap AudioAnalyzerPresetAttributes) InternalWithRef(ref terra.Reference) AudioAnalyzerPresetAttributes {
 	return AudioAnalyzerPresetAttributes{ref: ref}
 }
 
-func (aap AudioAnalyzerPresetAttributes) InternalTokens() hclwrite.Tokens {
+func (aap AudioAnalyzerPresetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aap.ref.InternalTokens()
 }
 
 func (aap AudioAnalyzerPresetAttributes) AudioAnalysisMode() terra.StringValue {
-	return terra.ReferenceString(aap.ref.Append("audio_analysis_mode"))
+	return terra.ReferenceAsString(aap.ref.Append("audio_analysis_mode"))
 }
 
 func (aap AudioAnalyzerPresetAttributes) AudioLanguage() terra.StringValue {
-	return terra.ReferenceString(aap.ref.Append("audio_language"))
+	return terra.ReferenceAsString(aap.ref.Append("audio_language"))
 }
 
 type BuiltinPresetAttributes struct {
 	ref terra.Reference
 }
 
-func (bp BuiltinPresetAttributes) InternalRef() terra.Reference {
-	return bp.ref
+func (bp BuiltinPresetAttributes) InternalRef() (terra.Reference, error) {
+	return bp.ref, nil
 }
 
 func (bp BuiltinPresetAttributes) InternalWithRef(ref terra.Reference) BuiltinPresetAttributes {
 	return BuiltinPresetAttributes{ref: ref}
 }
 
-func (bp BuiltinPresetAttributes) InternalTokens() hclwrite.Tokens {
+func (bp BuiltinPresetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bp.ref.InternalTokens()
 }
 
 func (bp BuiltinPresetAttributes) PresetName() terra.StringValue {
-	return terra.ReferenceString(bp.ref.Append("preset_name"))
+	return terra.ReferenceAsString(bp.ref.Append("preset_name"))
 }
 
 type FaceDetectorPresetAttributes struct {
 	ref terra.Reference
 }
 
-func (fdp FaceDetectorPresetAttributes) InternalRef() terra.Reference {
-	return fdp.ref
+func (fdp FaceDetectorPresetAttributes) InternalRef() (terra.Reference, error) {
+	return fdp.ref, nil
 }
 
 func (fdp FaceDetectorPresetAttributes) InternalWithRef(ref terra.Reference) FaceDetectorPresetAttributes {
 	return FaceDetectorPresetAttributes{ref: ref}
 }
 
-func (fdp FaceDetectorPresetAttributes) InternalTokens() hclwrite.Tokens {
+func (fdp FaceDetectorPresetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fdp.ref.InternalTokens()
 }
 
 func (fdp FaceDetectorPresetAttributes) AnalysisResolution() terra.StringValue {
-	return terra.ReferenceString(fdp.ref.Append("analysis_resolution"))
+	return terra.ReferenceAsString(fdp.ref.Append("analysis_resolution"))
 }
 
 type VideoAnalyzerPresetAttributes struct {
 	ref terra.Reference
 }
 
-func (vap VideoAnalyzerPresetAttributes) InternalRef() terra.Reference {
-	return vap.ref
+func (vap VideoAnalyzerPresetAttributes) InternalRef() (terra.Reference, error) {
+	return vap.ref, nil
 }
 
 func (vap VideoAnalyzerPresetAttributes) InternalWithRef(ref terra.Reference) VideoAnalyzerPresetAttributes {
 	return VideoAnalyzerPresetAttributes{ref: ref}
 }
 
-func (vap VideoAnalyzerPresetAttributes) InternalTokens() hclwrite.Tokens {
+func (vap VideoAnalyzerPresetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vap.ref.InternalTokens()
 }
 
 func (vap VideoAnalyzerPresetAttributes) AudioAnalysisMode() terra.StringValue {
-	return terra.ReferenceString(vap.ref.Append("audio_analysis_mode"))
+	return terra.ReferenceAsString(vap.ref.Append("audio_analysis_mode"))
 }
 
 func (vap VideoAnalyzerPresetAttributes) AudioLanguage() terra.StringValue {
-	return terra.ReferenceString(vap.ref.Append("audio_language"))
+	return terra.ReferenceAsString(vap.ref.Append("audio_language"))
 }
 
 func (vap VideoAnalyzerPresetAttributes) InsightsType() terra.StringValue {
-	return terra.ReferenceString(vap.ref.Append("insights_type"))
+	return terra.ReferenceAsString(vap.ref.Append("insights_type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type OutputState struct {

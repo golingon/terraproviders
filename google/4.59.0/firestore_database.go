@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewFirestoreDatabase creates a new instance of [FirestoreDatabase].
 func NewFirestoreDatabase(name string, args FirestoreDatabaseArgs) *FirestoreDatabase {
 	return &FirestoreDatabase{
 		Args: args,
@@ -19,28 +20,51 @@ func NewFirestoreDatabase(name string, args FirestoreDatabaseArgs) *FirestoreDat
 
 var _ terra.Resource = (*FirestoreDatabase)(nil)
 
+// FirestoreDatabase represents the Terraform resource google_firestore_database.
 type FirestoreDatabase struct {
-	Name  string
-	Args  FirestoreDatabaseArgs
-	state *firestoreDatabaseState
+	Name      string
+	Args      FirestoreDatabaseArgs
+	state     *firestoreDatabaseState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [FirestoreDatabase].
 func (fd *FirestoreDatabase) Type() string {
 	return "google_firestore_database"
 }
 
+// LocalName returns the local name for [FirestoreDatabase].
 func (fd *FirestoreDatabase) LocalName() string {
 	return fd.Name
 }
 
+// Configuration returns the configuration (args) for [FirestoreDatabase].
 func (fd *FirestoreDatabase) Configuration() interface{} {
 	return fd.Args
 }
 
+// DependOn is used for other resources to depend on [FirestoreDatabase].
+func (fd *FirestoreDatabase) DependOn() terra.Reference {
+	return terra.ReferenceResource(fd)
+}
+
+// Dependencies returns the list of resources [FirestoreDatabase] depends_on.
+func (fd *FirestoreDatabase) Dependencies() terra.Dependencies {
+	return fd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [FirestoreDatabase].
+func (fd *FirestoreDatabase) LifecycleManagement() *terra.Lifecycle {
+	return fd.Lifecycle
+}
+
+// Attributes returns the attributes for [FirestoreDatabase].
 func (fd *FirestoreDatabase) Attributes() firestoreDatabaseAttributes {
 	return firestoreDatabaseAttributes{ref: terra.ReferenceResource(fd)}
 }
 
+// ImportState imports the given attribute values into [FirestoreDatabase]'s state.
 func (fd *FirestoreDatabase) ImportState(av io.Reader) error {
 	fd.state = &firestoreDatabaseState{}
 	if err := json.NewDecoder(av).Decode(fd.state); err != nil {
@@ -49,10 +73,12 @@ func (fd *FirestoreDatabase) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [FirestoreDatabase] has state.
 func (fd *FirestoreDatabase) State() (*firestoreDatabaseState, bool) {
 	return fd.state, fd.state != nil
 }
 
+// StateMust returns the state for [FirestoreDatabase]. Panics if the state is nil.
 func (fd *FirestoreDatabase) StateMust() *firestoreDatabaseState {
 	if fd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", fd.Type(), fd.LocalName()))
@@ -60,10 +86,7 @@ func (fd *FirestoreDatabase) StateMust() *firestoreDatabaseState {
 	return fd.state
 }
 
-func (fd *FirestoreDatabase) DependOn() terra.Reference {
-	return terra.ReferenceResource(fd)
-}
-
+// FirestoreDatabaseArgs contains the configurations for google_firestore_database.
 type FirestoreDatabaseArgs struct {
 	// AppEngineIntegrationMode: string, optional
 	AppEngineIntegrationMode terra.StringValue `hcl:"app_engine_integration_mode,attr"`
@@ -81,55 +104,63 @@ type FirestoreDatabaseArgs struct {
 	Type terra.StringValue `hcl:"type,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *firestoredatabase.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that FirestoreDatabase depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type firestoreDatabaseAttributes struct {
 	ref terra.Reference
 }
 
+// AppEngineIntegrationMode returns a reference to field app_engine_integration_mode of google_firestore_database.
 func (fd firestoreDatabaseAttributes) AppEngineIntegrationMode() terra.StringValue {
-	return terra.ReferenceString(fd.ref.Append("app_engine_integration_mode"))
+	return terra.ReferenceAsString(fd.ref.Append("app_engine_integration_mode"))
 }
 
+// ConcurrencyMode returns a reference to field concurrency_mode of google_firestore_database.
 func (fd firestoreDatabaseAttributes) ConcurrencyMode() terra.StringValue {
-	return terra.ReferenceString(fd.ref.Append("concurrency_mode"))
+	return terra.ReferenceAsString(fd.ref.Append("concurrency_mode"))
 }
 
+// CreateTime returns a reference to field create_time of google_firestore_database.
 func (fd firestoreDatabaseAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(fd.ref.Append("create_time"))
+	return terra.ReferenceAsString(fd.ref.Append("create_time"))
 }
 
+// Etag returns a reference to field etag of google_firestore_database.
 func (fd firestoreDatabaseAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(fd.ref.Append("etag"))
+	return terra.ReferenceAsString(fd.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_firestore_database.
 func (fd firestoreDatabaseAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(fd.ref.Append("id"))
+	return terra.ReferenceAsString(fd.ref.Append("id"))
 }
 
+// KeyPrefix returns a reference to field key_prefix of google_firestore_database.
 func (fd firestoreDatabaseAttributes) KeyPrefix() terra.StringValue {
-	return terra.ReferenceString(fd.ref.Append("key_prefix"))
+	return terra.ReferenceAsString(fd.ref.Append("key_prefix"))
 }
 
+// LocationId returns a reference to field location_id of google_firestore_database.
 func (fd firestoreDatabaseAttributes) LocationId() terra.StringValue {
-	return terra.ReferenceString(fd.ref.Append("location_id"))
+	return terra.ReferenceAsString(fd.ref.Append("location_id"))
 }
 
+// Name returns a reference to field name of google_firestore_database.
 func (fd firestoreDatabaseAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(fd.ref.Append("name"))
+	return terra.ReferenceAsString(fd.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_firestore_database.
 func (fd firestoreDatabaseAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(fd.ref.Append("project"))
+	return terra.ReferenceAsString(fd.ref.Append("project"))
 }
 
+// Type returns a reference to field type of google_firestore_database.
 func (fd firestoreDatabaseAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(fd.ref.Append("type"))
+	return terra.ReferenceAsString(fd.ref.Append("type"))
 }
 
 func (fd firestoreDatabaseAttributes) Timeouts() firestoredatabase.TimeoutsAttributes {
-	return terra.ReferenceSingle[firestoredatabase.TimeoutsAttributes](fd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[firestoredatabase.TimeoutsAttributes](fd.ref.Append("timeouts"))
 }
 
 type firestoreDatabaseState struct {

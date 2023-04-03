@@ -31,7 +31,7 @@ func (rp ResponseParametersAttributes) InternalWithRef(ref terra.Reference) Resp
 	return ResponseParametersAttributes{ref: ref}
 }
 
-func (rp ResponseParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (rp ResponseParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rp.ref.InternalTokens()
 }
 
@@ -55,7 +55,7 @@ func (tc TlsConfigAttributes) InternalWithRef(ref terra.Reference) TlsConfigAttr
 	return TlsConfigAttributes{ref: ref}
 }
 
-func (tc TlsConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (tc TlsConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tc.ref.InternalTokens()
 }
 

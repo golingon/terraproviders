@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewFunctionApp creates a new instance of [FunctionApp].
 func NewFunctionApp(name string, args FunctionAppArgs) *FunctionApp {
 	return &FunctionApp{
 		Args: args,
@@ -19,28 +20,51 @@ func NewFunctionApp(name string, args FunctionAppArgs) *FunctionApp {
 
 var _ terra.Resource = (*FunctionApp)(nil)
 
+// FunctionApp represents the Terraform resource azurerm_function_app.
 type FunctionApp struct {
-	Name  string
-	Args  FunctionAppArgs
-	state *functionAppState
+	Name      string
+	Args      FunctionAppArgs
+	state     *functionAppState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [FunctionApp].
 func (fa *FunctionApp) Type() string {
 	return "azurerm_function_app"
 }
 
+// LocalName returns the local name for [FunctionApp].
 func (fa *FunctionApp) LocalName() string {
 	return fa.Name
 }
 
+// Configuration returns the configuration (args) for [FunctionApp].
 func (fa *FunctionApp) Configuration() interface{} {
 	return fa.Args
 }
 
+// DependOn is used for other resources to depend on [FunctionApp].
+func (fa *FunctionApp) DependOn() terra.Reference {
+	return terra.ReferenceResource(fa)
+}
+
+// Dependencies returns the list of resources [FunctionApp] depends_on.
+func (fa *FunctionApp) Dependencies() terra.Dependencies {
+	return fa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [FunctionApp].
+func (fa *FunctionApp) LifecycleManagement() *terra.Lifecycle {
+	return fa.Lifecycle
+}
+
+// Attributes returns the attributes for [FunctionApp].
 func (fa *FunctionApp) Attributes() functionAppAttributes {
 	return functionAppAttributes{ref: terra.ReferenceResource(fa)}
 }
 
+// ImportState imports the given attribute values into [FunctionApp]'s state.
 func (fa *FunctionApp) ImportState(av io.Reader) error {
 	fa.state = &functionAppState{}
 	if err := json.NewDecoder(av).Decode(fa.state); err != nil {
@@ -49,10 +73,12 @@ func (fa *FunctionApp) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [FunctionApp] has state.
 func (fa *FunctionApp) State() (*functionAppState, bool) {
 	return fa.state, fa.state != nil
 }
 
+// StateMust returns the state for [FunctionApp]. Panics if the state is nil.
 func (fa *FunctionApp) StateMust() *functionAppState {
 	if fa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", fa.Type(), fa.LocalName()))
@@ -60,10 +86,7 @@ func (fa *FunctionApp) StateMust() *functionAppState {
 	return fa.state
 }
 
-func (fa *FunctionApp) DependOn() terra.Reference {
-	return terra.ReferenceResource(fa)
-}
-
+// FunctionAppArgs contains the configurations for azurerm_function_app.
 type FunctionAppArgs struct {
 	// AppServicePlanId: string, required
 	AppServicePlanId terra.StringValue `hcl:"app_service_plan_id,attr" validate:"required"`
@@ -113,127 +136,147 @@ type FunctionAppArgs struct {
 	SourceControl *functionapp.SourceControl `hcl:"source_control,block"`
 	// Timeouts: optional
 	Timeouts *functionapp.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that FunctionApp depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type functionAppAttributes struct {
 	ref terra.Reference
 }
 
+// AppServicePlanId returns a reference to field app_service_plan_id of azurerm_function_app.
 func (fa functionAppAttributes) AppServicePlanId() terra.StringValue {
-	return terra.ReferenceString(fa.ref.Append("app_service_plan_id"))
+	return terra.ReferenceAsString(fa.ref.Append("app_service_plan_id"))
 }
 
+// AppSettings returns a reference to field app_settings of azurerm_function_app.
 func (fa functionAppAttributes) AppSettings() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](fa.ref.Append("app_settings"))
+	return terra.ReferenceAsMap[terra.StringValue](fa.ref.Append("app_settings"))
 }
 
+// ClientCertMode returns a reference to field client_cert_mode of azurerm_function_app.
 func (fa functionAppAttributes) ClientCertMode() terra.StringValue {
-	return terra.ReferenceString(fa.ref.Append("client_cert_mode"))
+	return terra.ReferenceAsString(fa.ref.Append("client_cert_mode"))
 }
 
+// CustomDomainVerificationId returns a reference to field custom_domain_verification_id of azurerm_function_app.
 func (fa functionAppAttributes) CustomDomainVerificationId() terra.StringValue {
-	return terra.ReferenceString(fa.ref.Append("custom_domain_verification_id"))
+	return terra.ReferenceAsString(fa.ref.Append("custom_domain_verification_id"))
 }
 
+// DailyMemoryTimeQuota returns a reference to field daily_memory_time_quota of azurerm_function_app.
 func (fa functionAppAttributes) DailyMemoryTimeQuota() terra.NumberValue {
-	return terra.ReferenceNumber(fa.ref.Append("daily_memory_time_quota"))
+	return terra.ReferenceAsNumber(fa.ref.Append("daily_memory_time_quota"))
 }
 
+// DefaultHostname returns a reference to field default_hostname of azurerm_function_app.
 func (fa functionAppAttributes) DefaultHostname() terra.StringValue {
-	return terra.ReferenceString(fa.ref.Append("default_hostname"))
+	return terra.ReferenceAsString(fa.ref.Append("default_hostname"))
 }
 
+// EnableBuiltinLogging returns a reference to field enable_builtin_logging of azurerm_function_app.
 func (fa functionAppAttributes) EnableBuiltinLogging() terra.BoolValue {
-	return terra.ReferenceBool(fa.ref.Append("enable_builtin_logging"))
+	return terra.ReferenceAsBool(fa.ref.Append("enable_builtin_logging"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_function_app.
 func (fa functionAppAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(fa.ref.Append("enabled"))
+	return terra.ReferenceAsBool(fa.ref.Append("enabled"))
 }
 
+// HttpsOnly returns a reference to field https_only of azurerm_function_app.
 func (fa functionAppAttributes) HttpsOnly() terra.BoolValue {
-	return terra.ReferenceBool(fa.ref.Append("https_only"))
+	return terra.ReferenceAsBool(fa.ref.Append("https_only"))
 }
 
+// Id returns a reference to field id of azurerm_function_app.
 func (fa functionAppAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(fa.ref.Append("id"))
+	return terra.ReferenceAsString(fa.ref.Append("id"))
 }
 
+// KeyVaultReferenceIdentityId returns a reference to field key_vault_reference_identity_id of azurerm_function_app.
 func (fa functionAppAttributes) KeyVaultReferenceIdentityId() terra.StringValue {
-	return terra.ReferenceString(fa.ref.Append("key_vault_reference_identity_id"))
+	return terra.ReferenceAsString(fa.ref.Append("key_vault_reference_identity_id"))
 }
 
+// Kind returns a reference to field kind of azurerm_function_app.
 func (fa functionAppAttributes) Kind() terra.StringValue {
-	return terra.ReferenceString(fa.ref.Append("kind"))
+	return terra.ReferenceAsString(fa.ref.Append("kind"))
 }
 
+// Location returns a reference to field location of azurerm_function_app.
 func (fa functionAppAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(fa.ref.Append("location"))
+	return terra.ReferenceAsString(fa.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_function_app.
 func (fa functionAppAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(fa.ref.Append("name"))
+	return terra.ReferenceAsString(fa.ref.Append("name"))
 }
 
+// OsType returns a reference to field os_type of azurerm_function_app.
 func (fa functionAppAttributes) OsType() terra.StringValue {
-	return terra.ReferenceString(fa.ref.Append("os_type"))
+	return terra.ReferenceAsString(fa.ref.Append("os_type"))
 }
 
+// OutboundIpAddresses returns a reference to field outbound_ip_addresses of azurerm_function_app.
 func (fa functionAppAttributes) OutboundIpAddresses() terra.StringValue {
-	return terra.ReferenceString(fa.ref.Append("outbound_ip_addresses"))
+	return terra.ReferenceAsString(fa.ref.Append("outbound_ip_addresses"))
 }
 
+// PossibleOutboundIpAddresses returns a reference to field possible_outbound_ip_addresses of azurerm_function_app.
 func (fa functionAppAttributes) PossibleOutboundIpAddresses() terra.StringValue {
-	return terra.ReferenceString(fa.ref.Append("possible_outbound_ip_addresses"))
+	return terra.ReferenceAsString(fa.ref.Append("possible_outbound_ip_addresses"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_function_app.
 func (fa functionAppAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(fa.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(fa.ref.Append("resource_group_name"))
 }
 
+// StorageAccountAccessKey returns a reference to field storage_account_access_key of azurerm_function_app.
 func (fa functionAppAttributes) StorageAccountAccessKey() terra.StringValue {
-	return terra.ReferenceString(fa.ref.Append("storage_account_access_key"))
+	return terra.ReferenceAsString(fa.ref.Append("storage_account_access_key"))
 }
 
+// StorageAccountName returns a reference to field storage_account_name of azurerm_function_app.
 func (fa functionAppAttributes) StorageAccountName() terra.StringValue {
-	return terra.ReferenceString(fa.ref.Append("storage_account_name"))
+	return terra.ReferenceAsString(fa.ref.Append("storage_account_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_function_app.
 func (fa functionAppAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](fa.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](fa.ref.Append("tags"))
 }
 
+// Version returns a reference to field version of azurerm_function_app.
 func (fa functionAppAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(fa.ref.Append("version"))
+	return terra.ReferenceAsString(fa.ref.Append("version"))
 }
 
 func (fa functionAppAttributes) SiteCredential() terra.ListValue[functionapp.SiteCredentialAttributes] {
-	return terra.ReferenceList[functionapp.SiteCredentialAttributes](fa.ref.Append("site_credential"))
+	return terra.ReferenceAsList[functionapp.SiteCredentialAttributes](fa.ref.Append("site_credential"))
 }
 
 func (fa functionAppAttributes) AuthSettings() terra.ListValue[functionapp.AuthSettingsAttributes] {
-	return terra.ReferenceList[functionapp.AuthSettingsAttributes](fa.ref.Append("auth_settings"))
+	return terra.ReferenceAsList[functionapp.AuthSettingsAttributes](fa.ref.Append("auth_settings"))
 }
 
 func (fa functionAppAttributes) ConnectionString() terra.SetValue[functionapp.ConnectionStringAttributes] {
-	return terra.ReferenceSet[functionapp.ConnectionStringAttributes](fa.ref.Append("connection_string"))
+	return terra.ReferenceAsSet[functionapp.ConnectionStringAttributes](fa.ref.Append("connection_string"))
 }
 
 func (fa functionAppAttributes) Identity() terra.ListValue[functionapp.IdentityAttributes] {
-	return terra.ReferenceList[functionapp.IdentityAttributes](fa.ref.Append("identity"))
+	return terra.ReferenceAsList[functionapp.IdentityAttributes](fa.ref.Append("identity"))
 }
 
 func (fa functionAppAttributes) SiteConfig() terra.ListValue[functionapp.SiteConfigAttributes] {
-	return terra.ReferenceList[functionapp.SiteConfigAttributes](fa.ref.Append("site_config"))
+	return terra.ReferenceAsList[functionapp.SiteConfigAttributes](fa.ref.Append("site_config"))
 }
 
 func (fa functionAppAttributes) SourceControl() terra.ListValue[functionapp.SourceControlAttributes] {
-	return terra.ReferenceList[functionapp.SourceControlAttributes](fa.ref.Append("source_control"))
+	return terra.ReferenceAsList[functionapp.SourceControlAttributes](fa.ref.Append("source_control"))
 }
 
 func (fa functionAppAttributes) Timeouts() functionapp.TimeoutsAttributes {
-	return terra.ReferenceSingle[functionapp.TimeoutsAttributes](fa.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[functionapp.TimeoutsAttributes](fa.ref.Append("timeouts"))
 }
 
 type functionAppState struct {

@@ -210,668 +210,668 @@ type InspectConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ic InspectConfigAttributes) InternalRef() terra.Reference {
-	return ic.ref
+func (ic InspectConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ic.ref, nil
 }
 
 func (ic InspectConfigAttributes) InternalWithRef(ref terra.Reference) InspectConfigAttributes {
 	return InspectConfigAttributes{ref: ref}
 }
 
-func (ic InspectConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ic InspectConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ic.ref.InternalTokens()
 }
 
 func (ic InspectConfigAttributes) ContentOptions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ic.ref.Append("content_options"))
+	return terra.ReferenceAsList[terra.StringValue](ic.ref.Append("content_options"))
 }
 
 func (ic InspectConfigAttributes) ExcludeInfoTypes() terra.BoolValue {
-	return terra.ReferenceBool(ic.ref.Append("exclude_info_types"))
+	return terra.ReferenceAsBool(ic.ref.Append("exclude_info_types"))
 }
 
 func (ic InspectConfigAttributes) IncludeQuote() terra.BoolValue {
-	return terra.ReferenceBool(ic.ref.Append("include_quote"))
+	return terra.ReferenceAsBool(ic.ref.Append("include_quote"))
 }
 
 func (ic InspectConfigAttributes) MinLikelihood() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("min_likelihood"))
+	return terra.ReferenceAsString(ic.ref.Append("min_likelihood"))
 }
 
 func (ic InspectConfigAttributes) CustomInfoTypes() terra.ListValue[CustomInfoTypesAttributes] {
-	return terra.ReferenceList[CustomInfoTypesAttributes](ic.ref.Append("custom_info_types"))
+	return terra.ReferenceAsList[CustomInfoTypesAttributes](ic.ref.Append("custom_info_types"))
 }
 
 func (ic InspectConfigAttributes) InfoTypes() terra.ListValue[InspectConfigInfoTypesAttributes] {
-	return terra.ReferenceList[InspectConfigInfoTypesAttributes](ic.ref.Append("info_types"))
+	return terra.ReferenceAsList[InspectConfigInfoTypesAttributes](ic.ref.Append("info_types"))
 }
 
 func (ic InspectConfigAttributes) Limits() terra.ListValue[LimitsAttributes] {
-	return terra.ReferenceList[LimitsAttributes](ic.ref.Append("limits"))
+	return terra.ReferenceAsList[LimitsAttributes](ic.ref.Append("limits"))
 }
 
 func (ic InspectConfigAttributes) RuleSet() terra.ListValue[RuleSetAttributes] {
-	return terra.ReferenceList[RuleSetAttributes](ic.ref.Append("rule_set"))
+	return terra.ReferenceAsList[RuleSetAttributes](ic.ref.Append("rule_set"))
 }
 
 type CustomInfoTypesAttributes struct {
 	ref terra.Reference
 }
 
-func (cit CustomInfoTypesAttributes) InternalRef() terra.Reference {
-	return cit.ref
+func (cit CustomInfoTypesAttributes) InternalRef() (terra.Reference, error) {
+	return cit.ref, nil
 }
 
 func (cit CustomInfoTypesAttributes) InternalWithRef(ref terra.Reference) CustomInfoTypesAttributes {
 	return CustomInfoTypesAttributes{ref: ref}
 }
 
-func (cit CustomInfoTypesAttributes) InternalTokens() hclwrite.Tokens {
+func (cit CustomInfoTypesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cit.ref.InternalTokens()
 }
 
 func (cit CustomInfoTypesAttributes) ExclusionType() terra.StringValue {
-	return terra.ReferenceString(cit.ref.Append("exclusion_type"))
+	return terra.ReferenceAsString(cit.ref.Append("exclusion_type"))
 }
 
 func (cit CustomInfoTypesAttributes) Likelihood() terra.StringValue {
-	return terra.ReferenceString(cit.ref.Append("likelihood"))
+	return terra.ReferenceAsString(cit.ref.Append("likelihood"))
 }
 
 func (cit CustomInfoTypesAttributes) Dictionary() terra.ListValue[CustomInfoTypesDictionaryAttributes] {
-	return terra.ReferenceList[CustomInfoTypesDictionaryAttributes](cit.ref.Append("dictionary"))
+	return terra.ReferenceAsList[CustomInfoTypesDictionaryAttributes](cit.ref.Append("dictionary"))
 }
 
 func (cit CustomInfoTypesAttributes) InfoType() terra.ListValue[CustomInfoTypesInfoTypeAttributes] {
-	return terra.ReferenceList[CustomInfoTypesInfoTypeAttributes](cit.ref.Append("info_type"))
+	return terra.ReferenceAsList[CustomInfoTypesInfoTypeAttributes](cit.ref.Append("info_type"))
 }
 
 func (cit CustomInfoTypesAttributes) Regex() terra.ListValue[CustomInfoTypesRegexAttributes] {
-	return terra.ReferenceList[CustomInfoTypesRegexAttributes](cit.ref.Append("regex"))
+	return terra.ReferenceAsList[CustomInfoTypesRegexAttributes](cit.ref.Append("regex"))
 }
 
 func (cit CustomInfoTypesAttributes) StoredType() terra.ListValue[StoredTypeAttributes] {
-	return terra.ReferenceList[StoredTypeAttributes](cit.ref.Append("stored_type"))
+	return terra.ReferenceAsList[StoredTypeAttributes](cit.ref.Append("stored_type"))
 }
 
 type CustomInfoTypesDictionaryAttributes struct {
 	ref terra.Reference
 }
 
-func (d CustomInfoTypesDictionaryAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d CustomInfoTypesDictionaryAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d CustomInfoTypesDictionaryAttributes) InternalWithRef(ref terra.Reference) CustomInfoTypesDictionaryAttributes {
 	return CustomInfoTypesDictionaryAttributes{ref: ref}
 }
 
-func (d CustomInfoTypesDictionaryAttributes) InternalTokens() hclwrite.Tokens {
+func (d CustomInfoTypesDictionaryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d CustomInfoTypesDictionaryAttributes) CloudStoragePath() terra.ListValue[CustomInfoTypesDictionaryCloudStoragePathAttributes] {
-	return terra.ReferenceList[CustomInfoTypesDictionaryCloudStoragePathAttributes](d.ref.Append("cloud_storage_path"))
+	return terra.ReferenceAsList[CustomInfoTypesDictionaryCloudStoragePathAttributes](d.ref.Append("cloud_storage_path"))
 }
 
 func (d CustomInfoTypesDictionaryAttributes) WordList() terra.ListValue[CustomInfoTypesDictionaryWordListAttributes] {
-	return terra.ReferenceList[CustomInfoTypesDictionaryWordListAttributes](d.ref.Append("word_list"))
+	return terra.ReferenceAsList[CustomInfoTypesDictionaryWordListAttributes](d.ref.Append("word_list"))
 }
 
 type CustomInfoTypesDictionaryCloudStoragePathAttributes struct {
 	ref terra.Reference
 }
 
-func (csp CustomInfoTypesDictionaryCloudStoragePathAttributes) InternalRef() terra.Reference {
-	return csp.ref
+func (csp CustomInfoTypesDictionaryCloudStoragePathAttributes) InternalRef() (terra.Reference, error) {
+	return csp.ref, nil
 }
 
 func (csp CustomInfoTypesDictionaryCloudStoragePathAttributes) InternalWithRef(ref terra.Reference) CustomInfoTypesDictionaryCloudStoragePathAttributes {
 	return CustomInfoTypesDictionaryCloudStoragePathAttributes{ref: ref}
 }
 
-func (csp CustomInfoTypesDictionaryCloudStoragePathAttributes) InternalTokens() hclwrite.Tokens {
+func (csp CustomInfoTypesDictionaryCloudStoragePathAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return csp.ref.InternalTokens()
 }
 
 func (csp CustomInfoTypesDictionaryCloudStoragePathAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("path"))
+	return terra.ReferenceAsString(csp.ref.Append("path"))
 }
 
 type CustomInfoTypesDictionaryWordListAttributes struct {
 	ref terra.Reference
 }
 
-func (wl CustomInfoTypesDictionaryWordListAttributes) InternalRef() terra.Reference {
-	return wl.ref
+func (wl CustomInfoTypesDictionaryWordListAttributes) InternalRef() (terra.Reference, error) {
+	return wl.ref, nil
 }
 
 func (wl CustomInfoTypesDictionaryWordListAttributes) InternalWithRef(ref terra.Reference) CustomInfoTypesDictionaryWordListAttributes {
 	return CustomInfoTypesDictionaryWordListAttributes{ref: ref}
 }
 
-func (wl CustomInfoTypesDictionaryWordListAttributes) InternalTokens() hclwrite.Tokens {
+func (wl CustomInfoTypesDictionaryWordListAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wl.ref.InternalTokens()
 }
 
 func (wl CustomInfoTypesDictionaryWordListAttributes) Words() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](wl.ref.Append("words"))
+	return terra.ReferenceAsList[terra.StringValue](wl.ref.Append("words"))
 }
 
 type CustomInfoTypesInfoTypeAttributes struct {
 	ref terra.Reference
 }
 
-func (it CustomInfoTypesInfoTypeAttributes) InternalRef() terra.Reference {
-	return it.ref
+func (it CustomInfoTypesInfoTypeAttributes) InternalRef() (terra.Reference, error) {
+	return it.ref, nil
 }
 
 func (it CustomInfoTypesInfoTypeAttributes) InternalWithRef(ref terra.Reference) CustomInfoTypesInfoTypeAttributes {
 	return CustomInfoTypesInfoTypeAttributes{ref: ref}
 }
 
-func (it CustomInfoTypesInfoTypeAttributes) InternalTokens() hclwrite.Tokens {
+func (it CustomInfoTypesInfoTypeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return it.ref.InternalTokens()
 }
 
 func (it CustomInfoTypesInfoTypeAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(it.ref.Append("name"))
+	return terra.ReferenceAsString(it.ref.Append("name"))
 }
 
 type CustomInfoTypesRegexAttributes struct {
 	ref terra.Reference
 }
 
-func (r CustomInfoTypesRegexAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r CustomInfoTypesRegexAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r CustomInfoTypesRegexAttributes) InternalWithRef(ref terra.Reference) CustomInfoTypesRegexAttributes {
 	return CustomInfoTypesRegexAttributes{ref: ref}
 }
 
-func (r CustomInfoTypesRegexAttributes) InternalTokens() hclwrite.Tokens {
+func (r CustomInfoTypesRegexAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r CustomInfoTypesRegexAttributes) GroupIndexes() terra.ListValue[terra.NumberValue] {
-	return terra.ReferenceList[terra.NumberValue](r.ref.Append("group_indexes"))
+	return terra.ReferenceAsList[terra.NumberValue](r.ref.Append("group_indexes"))
 }
 
 func (r CustomInfoTypesRegexAttributes) Pattern() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("pattern"))
+	return terra.ReferenceAsString(r.ref.Append("pattern"))
 }
 
 type StoredTypeAttributes struct {
 	ref terra.Reference
 }
 
-func (st StoredTypeAttributes) InternalRef() terra.Reference {
-	return st.ref
+func (st StoredTypeAttributes) InternalRef() (terra.Reference, error) {
+	return st.ref, nil
 }
 
 func (st StoredTypeAttributes) InternalWithRef(ref terra.Reference) StoredTypeAttributes {
 	return StoredTypeAttributes{ref: ref}
 }
 
-func (st StoredTypeAttributes) InternalTokens() hclwrite.Tokens {
+func (st StoredTypeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return st.ref.InternalTokens()
 }
 
 func (st StoredTypeAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("name"))
+	return terra.ReferenceAsString(st.ref.Append("name"))
 }
 
 type InspectConfigInfoTypesAttributes struct {
 	ref terra.Reference
 }
 
-func (it InspectConfigInfoTypesAttributes) InternalRef() terra.Reference {
-	return it.ref
+func (it InspectConfigInfoTypesAttributes) InternalRef() (terra.Reference, error) {
+	return it.ref, nil
 }
 
 func (it InspectConfigInfoTypesAttributes) InternalWithRef(ref terra.Reference) InspectConfigInfoTypesAttributes {
 	return InspectConfigInfoTypesAttributes{ref: ref}
 }
 
-func (it InspectConfigInfoTypesAttributes) InternalTokens() hclwrite.Tokens {
+func (it InspectConfigInfoTypesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return it.ref.InternalTokens()
 }
 
 func (it InspectConfigInfoTypesAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(it.ref.Append("name"))
+	return terra.ReferenceAsString(it.ref.Append("name"))
 }
 
 func (it InspectConfigInfoTypesAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(it.ref.Append("version"))
+	return terra.ReferenceAsString(it.ref.Append("version"))
 }
 
 type LimitsAttributes struct {
 	ref terra.Reference
 }
 
-func (l LimitsAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l LimitsAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l LimitsAttributes) InternalWithRef(ref terra.Reference) LimitsAttributes {
 	return LimitsAttributes{ref: ref}
 }
 
-func (l LimitsAttributes) InternalTokens() hclwrite.Tokens {
+func (l LimitsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 
 func (l LimitsAttributes) MaxFindingsPerItem() terra.NumberValue {
-	return terra.ReferenceNumber(l.ref.Append("max_findings_per_item"))
+	return terra.ReferenceAsNumber(l.ref.Append("max_findings_per_item"))
 }
 
 func (l LimitsAttributes) MaxFindingsPerRequest() terra.NumberValue {
-	return terra.ReferenceNumber(l.ref.Append("max_findings_per_request"))
+	return terra.ReferenceAsNumber(l.ref.Append("max_findings_per_request"))
 }
 
 func (l LimitsAttributes) MaxFindingsPerInfoType() terra.ListValue[MaxFindingsPerInfoTypeAttributes] {
-	return terra.ReferenceList[MaxFindingsPerInfoTypeAttributes](l.ref.Append("max_findings_per_info_type"))
+	return terra.ReferenceAsList[MaxFindingsPerInfoTypeAttributes](l.ref.Append("max_findings_per_info_type"))
 }
 
 type MaxFindingsPerInfoTypeAttributes struct {
 	ref terra.Reference
 }
 
-func (mfpit MaxFindingsPerInfoTypeAttributes) InternalRef() terra.Reference {
-	return mfpit.ref
+func (mfpit MaxFindingsPerInfoTypeAttributes) InternalRef() (terra.Reference, error) {
+	return mfpit.ref, nil
 }
 
 func (mfpit MaxFindingsPerInfoTypeAttributes) InternalWithRef(ref terra.Reference) MaxFindingsPerInfoTypeAttributes {
 	return MaxFindingsPerInfoTypeAttributes{ref: ref}
 }
 
-func (mfpit MaxFindingsPerInfoTypeAttributes) InternalTokens() hclwrite.Tokens {
+func (mfpit MaxFindingsPerInfoTypeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mfpit.ref.InternalTokens()
 }
 
 func (mfpit MaxFindingsPerInfoTypeAttributes) MaxFindings() terra.NumberValue {
-	return terra.ReferenceNumber(mfpit.ref.Append("max_findings"))
+	return terra.ReferenceAsNumber(mfpit.ref.Append("max_findings"))
 }
 
 func (mfpit MaxFindingsPerInfoTypeAttributes) InfoType() terra.ListValue[MaxFindingsPerInfoTypeInfoTypeAttributes] {
-	return terra.ReferenceList[MaxFindingsPerInfoTypeInfoTypeAttributes](mfpit.ref.Append("info_type"))
+	return terra.ReferenceAsList[MaxFindingsPerInfoTypeInfoTypeAttributes](mfpit.ref.Append("info_type"))
 }
 
 type MaxFindingsPerInfoTypeInfoTypeAttributes struct {
 	ref terra.Reference
 }
 
-func (it MaxFindingsPerInfoTypeInfoTypeAttributes) InternalRef() terra.Reference {
-	return it.ref
+func (it MaxFindingsPerInfoTypeInfoTypeAttributes) InternalRef() (terra.Reference, error) {
+	return it.ref, nil
 }
 
 func (it MaxFindingsPerInfoTypeInfoTypeAttributes) InternalWithRef(ref terra.Reference) MaxFindingsPerInfoTypeInfoTypeAttributes {
 	return MaxFindingsPerInfoTypeInfoTypeAttributes{ref: ref}
 }
 
-func (it MaxFindingsPerInfoTypeInfoTypeAttributes) InternalTokens() hclwrite.Tokens {
+func (it MaxFindingsPerInfoTypeInfoTypeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return it.ref.InternalTokens()
 }
 
 func (it MaxFindingsPerInfoTypeInfoTypeAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(it.ref.Append("name"))
+	return terra.ReferenceAsString(it.ref.Append("name"))
 }
 
 type RuleSetAttributes struct {
 	ref terra.Reference
 }
 
-func (rs RuleSetAttributes) InternalRef() terra.Reference {
-	return rs.ref
+func (rs RuleSetAttributes) InternalRef() (terra.Reference, error) {
+	return rs.ref, nil
 }
 
 func (rs RuleSetAttributes) InternalWithRef(ref terra.Reference) RuleSetAttributes {
 	return RuleSetAttributes{ref: ref}
 }
 
-func (rs RuleSetAttributes) InternalTokens() hclwrite.Tokens {
+func (rs RuleSetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rs.ref.InternalTokens()
 }
 
 func (rs RuleSetAttributes) InfoTypes() terra.ListValue[RuleSetInfoTypesAttributes] {
-	return terra.ReferenceList[RuleSetInfoTypesAttributes](rs.ref.Append("info_types"))
+	return terra.ReferenceAsList[RuleSetInfoTypesAttributes](rs.ref.Append("info_types"))
 }
 
 func (rs RuleSetAttributes) Rules() terra.ListValue[RulesAttributes] {
-	return terra.ReferenceList[RulesAttributes](rs.ref.Append("rules"))
+	return terra.ReferenceAsList[RulesAttributes](rs.ref.Append("rules"))
 }
 
 type RuleSetInfoTypesAttributes struct {
 	ref terra.Reference
 }
 
-func (it RuleSetInfoTypesAttributes) InternalRef() terra.Reference {
-	return it.ref
+func (it RuleSetInfoTypesAttributes) InternalRef() (terra.Reference, error) {
+	return it.ref, nil
 }
 
 func (it RuleSetInfoTypesAttributes) InternalWithRef(ref terra.Reference) RuleSetInfoTypesAttributes {
 	return RuleSetInfoTypesAttributes{ref: ref}
 }
 
-func (it RuleSetInfoTypesAttributes) InternalTokens() hclwrite.Tokens {
+func (it RuleSetInfoTypesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return it.ref.InternalTokens()
 }
 
 func (it RuleSetInfoTypesAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(it.ref.Append("name"))
+	return terra.ReferenceAsString(it.ref.Append("name"))
 }
 
 type RulesAttributes struct {
 	ref terra.Reference
 }
 
-func (r RulesAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RulesAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RulesAttributes) InternalWithRef(ref terra.Reference) RulesAttributes {
 	return RulesAttributes{ref: ref}
 }
 
-func (r RulesAttributes) InternalTokens() hclwrite.Tokens {
+func (r RulesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RulesAttributes) ExclusionRule() terra.ListValue[ExclusionRuleAttributes] {
-	return terra.ReferenceList[ExclusionRuleAttributes](r.ref.Append("exclusion_rule"))
+	return terra.ReferenceAsList[ExclusionRuleAttributes](r.ref.Append("exclusion_rule"))
 }
 
 func (r RulesAttributes) HotwordRule() terra.ListValue[HotwordRuleAttributes] {
-	return terra.ReferenceList[HotwordRuleAttributes](r.ref.Append("hotword_rule"))
+	return terra.ReferenceAsList[HotwordRuleAttributes](r.ref.Append("hotword_rule"))
 }
 
 type ExclusionRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (er ExclusionRuleAttributes) InternalRef() terra.Reference {
-	return er.ref
+func (er ExclusionRuleAttributes) InternalRef() (terra.Reference, error) {
+	return er.ref, nil
 }
 
 func (er ExclusionRuleAttributes) InternalWithRef(ref terra.Reference) ExclusionRuleAttributes {
 	return ExclusionRuleAttributes{ref: ref}
 }
 
-func (er ExclusionRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (er ExclusionRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return er.ref.InternalTokens()
 }
 
 func (er ExclusionRuleAttributes) MatchingType() terra.StringValue {
-	return terra.ReferenceString(er.ref.Append("matching_type"))
+	return terra.ReferenceAsString(er.ref.Append("matching_type"))
 }
 
 func (er ExclusionRuleAttributes) Dictionary() terra.ListValue[ExclusionRuleDictionaryAttributes] {
-	return terra.ReferenceList[ExclusionRuleDictionaryAttributes](er.ref.Append("dictionary"))
+	return terra.ReferenceAsList[ExclusionRuleDictionaryAttributes](er.ref.Append("dictionary"))
 }
 
 func (er ExclusionRuleAttributes) ExcludeInfoTypes() terra.ListValue[ExcludeInfoTypesAttributes] {
-	return terra.ReferenceList[ExcludeInfoTypesAttributes](er.ref.Append("exclude_info_types"))
+	return terra.ReferenceAsList[ExcludeInfoTypesAttributes](er.ref.Append("exclude_info_types"))
 }
 
 func (er ExclusionRuleAttributes) Regex() terra.ListValue[ExclusionRuleRegexAttributes] {
-	return terra.ReferenceList[ExclusionRuleRegexAttributes](er.ref.Append("regex"))
+	return terra.ReferenceAsList[ExclusionRuleRegexAttributes](er.ref.Append("regex"))
 }
 
 type ExclusionRuleDictionaryAttributes struct {
 	ref terra.Reference
 }
 
-func (d ExclusionRuleDictionaryAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d ExclusionRuleDictionaryAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d ExclusionRuleDictionaryAttributes) InternalWithRef(ref terra.Reference) ExclusionRuleDictionaryAttributes {
 	return ExclusionRuleDictionaryAttributes{ref: ref}
 }
 
-func (d ExclusionRuleDictionaryAttributes) InternalTokens() hclwrite.Tokens {
+func (d ExclusionRuleDictionaryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d ExclusionRuleDictionaryAttributes) CloudStoragePath() terra.ListValue[ExclusionRuleDictionaryCloudStoragePathAttributes] {
-	return terra.ReferenceList[ExclusionRuleDictionaryCloudStoragePathAttributes](d.ref.Append("cloud_storage_path"))
+	return terra.ReferenceAsList[ExclusionRuleDictionaryCloudStoragePathAttributes](d.ref.Append("cloud_storage_path"))
 }
 
 func (d ExclusionRuleDictionaryAttributes) WordList() terra.ListValue[ExclusionRuleDictionaryWordListAttributes] {
-	return terra.ReferenceList[ExclusionRuleDictionaryWordListAttributes](d.ref.Append("word_list"))
+	return terra.ReferenceAsList[ExclusionRuleDictionaryWordListAttributes](d.ref.Append("word_list"))
 }
 
 type ExclusionRuleDictionaryCloudStoragePathAttributes struct {
 	ref terra.Reference
 }
 
-func (csp ExclusionRuleDictionaryCloudStoragePathAttributes) InternalRef() terra.Reference {
-	return csp.ref
+func (csp ExclusionRuleDictionaryCloudStoragePathAttributes) InternalRef() (terra.Reference, error) {
+	return csp.ref, nil
 }
 
 func (csp ExclusionRuleDictionaryCloudStoragePathAttributes) InternalWithRef(ref terra.Reference) ExclusionRuleDictionaryCloudStoragePathAttributes {
 	return ExclusionRuleDictionaryCloudStoragePathAttributes{ref: ref}
 }
 
-func (csp ExclusionRuleDictionaryCloudStoragePathAttributes) InternalTokens() hclwrite.Tokens {
+func (csp ExclusionRuleDictionaryCloudStoragePathAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return csp.ref.InternalTokens()
 }
 
 func (csp ExclusionRuleDictionaryCloudStoragePathAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("path"))
+	return terra.ReferenceAsString(csp.ref.Append("path"))
 }
 
 type ExclusionRuleDictionaryWordListAttributes struct {
 	ref terra.Reference
 }
 
-func (wl ExclusionRuleDictionaryWordListAttributes) InternalRef() terra.Reference {
-	return wl.ref
+func (wl ExclusionRuleDictionaryWordListAttributes) InternalRef() (terra.Reference, error) {
+	return wl.ref, nil
 }
 
 func (wl ExclusionRuleDictionaryWordListAttributes) InternalWithRef(ref terra.Reference) ExclusionRuleDictionaryWordListAttributes {
 	return ExclusionRuleDictionaryWordListAttributes{ref: ref}
 }
 
-func (wl ExclusionRuleDictionaryWordListAttributes) InternalTokens() hclwrite.Tokens {
+func (wl ExclusionRuleDictionaryWordListAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wl.ref.InternalTokens()
 }
 
 func (wl ExclusionRuleDictionaryWordListAttributes) Words() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](wl.ref.Append("words"))
+	return terra.ReferenceAsList[terra.StringValue](wl.ref.Append("words"))
 }
 
 type ExcludeInfoTypesAttributes struct {
 	ref terra.Reference
 }
 
-func (eit ExcludeInfoTypesAttributes) InternalRef() terra.Reference {
-	return eit.ref
+func (eit ExcludeInfoTypesAttributes) InternalRef() (terra.Reference, error) {
+	return eit.ref, nil
 }
 
 func (eit ExcludeInfoTypesAttributes) InternalWithRef(ref terra.Reference) ExcludeInfoTypesAttributes {
 	return ExcludeInfoTypesAttributes{ref: ref}
 }
 
-func (eit ExcludeInfoTypesAttributes) InternalTokens() hclwrite.Tokens {
+func (eit ExcludeInfoTypesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return eit.ref.InternalTokens()
 }
 
 func (eit ExcludeInfoTypesAttributes) InfoTypes() terra.ListValue[ExcludeInfoTypesInfoTypesAttributes] {
-	return terra.ReferenceList[ExcludeInfoTypesInfoTypesAttributes](eit.ref.Append("info_types"))
+	return terra.ReferenceAsList[ExcludeInfoTypesInfoTypesAttributes](eit.ref.Append("info_types"))
 }
 
 type ExcludeInfoTypesInfoTypesAttributes struct {
 	ref terra.Reference
 }
 
-func (it ExcludeInfoTypesInfoTypesAttributes) InternalRef() terra.Reference {
-	return it.ref
+func (it ExcludeInfoTypesInfoTypesAttributes) InternalRef() (terra.Reference, error) {
+	return it.ref, nil
 }
 
 func (it ExcludeInfoTypesInfoTypesAttributes) InternalWithRef(ref terra.Reference) ExcludeInfoTypesInfoTypesAttributes {
 	return ExcludeInfoTypesInfoTypesAttributes{ref: ref}
 }
 
-func (it ExcludeInfoTypesInfoTypesAttributes) InternalTokens() hclwrite.Tokens {
+func (it ExcludeInfoTypesInfoTypesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return it.ref.InternalTokens()
 }
 
 func (it ExcludeInfoTypesInfoTypesAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(it.ref.Append("name"))
+	return terra.ReferenceAsString(it.ref.Append("name"))
 }
 
 type ExclusionRuleRegexAttributes struct {
 	ref terra.Reference
 }
 
-func (r ExclusionRuleRegexAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r ExclusionRuleRegexAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r ExclusionRuleRegexAttributes) InternalWithRef(ref terra.Reference) ExclusionRuleRegexAttributes {
 	return ExclusionRuleRegexAttributes{ref: ref}
 }
 
-func (r ExclusionRuleRegexAttributes) InternalTokens() hclwrite.Tokens {
+func (r ExclusionRuleRegexAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r ExclusionRuleRegexAttributes) GroupIndexes() terra.ListValue[terra.NumberValue] {
-	return terra.ReferenceList[terra.NumberValue](r.ref.Append("group_indexes"))
+	return terra.ReferenceAsList[terra.NumberValue](r.ref.Append("group_indexes"))
 }
 
 func (r ExclusionRuleRegexAttributes) Pattern() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("pattern"))
+	return terra.ReferenceAsString(r.ref.Append("pattern"))
 }
 
 type HotwordRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (hr HotwordRuleAttributes) InternalRef() terra.Reference {
-	return hr.ref
+func (hr HotwordRuleAttributes) InternalRef() (terra.Reference, error) {
+	return hr.ref, nil
 }
 
 func (hr HotwordRuleAttributes) InternalWithRef(ref terra.Reference) HotwordRuleAttributes {
 	return HotwordRuleAttributes{ref: ref}
 }
 
-func (hr HotwordRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (hr HotwordRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hr.ref.InternalTokens()
 }
 
 func (hr HotwordRuleAttributes) HotwordRegex() terra.ListValue[HotwordRegexAttributes] {
-	return terra.ReferenceList[HotwordRegexAttributes](hr.ref.Append("hotword_regex"))
+	return terra.ReferenceAsList[HotwordRegexAttributes](hr.ref.Append("hotword_regex"))
 }
 
 func (hr HotwordRuleAttributes) LikelihoodAdjustment() terra.ListValue[LikelihoodAdjustmentAttributes] {
-	return terra.ReferenceList[LikelihoodAdjustmentAttributes](hr.ref.Append("likelihood_adjustment"))
+	return terra.ReferenceAsList[LikelihoodAdjustmentAttributes](hr.ref.Append("likelihood_adjustment"))
 }
 
 func (hr HotwordRuleAttributes) Proximity() terra.ListValue[ProximityAttributes] {
-	return terra.ReferenceList[ProximityAttributes](hr.ref.Append("proximity"))
+	return terra.ReferenceAsList[ProximityAttributes](hr.ref.Append("proximity"))
 }
 
 type HotwordRegexAttributes struct {
 	ref terra.Reference
 }
 
-func (hr HotwordRegexAttributes) InternalRef() terra.Reference {
-	return hr.ref
+func (hr HotwordRegexAttributes) InternalRef() (terra.Reference, error) {
+	return hr.ref, nil
 }
 
 func (hr HotwordRegexAttributes) InternalWithRef(ref terra.Reference) HotwordRegexAttributes {
 	return HotwordRegexAttributes{ref: ref}
 }
 
-func (hr HotwordRegexAttributes) InternalTokens() hclwrite.Tokens {
+func (hr HotwordRegexAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hr.ref.InternalTokens()
 }
 
 func (hr HotwordRegexAttributes) GroupIndexes() terra.ListValue[terra.NumberValue] {
-	return terra.ReferenceList[terra.NumberValue](hr.ref.Append("group_indexes"))
+	return terra.ReferenceAsList[terra.NumberValue](hr.ref.Append("group_indexes"))
 }
 
 func (hr HotwordRegexAttributes) Pattern() terra.StringValue {
-	return terra.ReferenceString(hr.ref.Append("pattern"))
+	return terra.ReferenceAsString(hr.ref.Append("pattern"))
 }
 
 type LikelihoodAdjustmentAttributes struct {
 	ref terra.Reference
 }
 
-func (la LikelihoodAdjustmentAttributes) InternalRef() terra.Reference {
-	return la.ref
+func (la LikelihoodAdjustmentAttributes) InternalRef() (terra.Reference, error) {
+	return la.ref, nil
 }
 
 func (la LikelihoodAdjustmentAttributes) InternalWithRef(ref terra.Reference) LikelihoodAdjustmentAttributes {
 	return LikelihoodAdjustmentAttributes{ref: ref}
 }
 
-func (la LikelihoodAdjustmentAttributes) InternalTokens() hclwrite.Tokens {
+func (la LikelihoodAdjustmentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return la.ref.InternalTokens()
 }
 
 func (la LikelihoodAdjustmentAttributes) FixedLikelihood() terra.StringValue {
-	return terra.ReferenceString(la.ref.Append("fixed_likelihood"))
+	return terra.ReferenceAsString(la.ref.Append("fixed_likelihood"))
 }
 
 func (la LikelihoodAdjustmentAttributes) RelativeLikelihood() terra.NumberValue {
-	return terra.ReferenceNumber(la.ref.Append("relative_likelihood"))
+	return terra.ReferenceAsNumber(la.ref.Append("relative_likelihood"))
 }
 
 type ProximityAttributes struct {
 	ref terra.Reference
 }
 
-func (p ProximityAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p ProximityAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p ProximityAttributes) InternalWithRef(ref terra.Reference) ProximityAttributes {
 	return ProximityAttributes{ref: ref}
 }
 
-func (p ProximityAttributes) InternalTokens() hclwrite.Tokens {
+func (p ProximityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
 func (p ProximityAttributes) WindowAfter() terra.NumberValue {
-	return terra.ReferenceNumber(p.ref.Append("window_after"))
+	return terra.ReferenceAsNumber(p.ref.Append("window_after"))
 }
 
 func (p ProximityAttributes) WindowBefore() terra.NumberValue {
-	return terra.ReferenceNumber(p.ref.Append("window_before"))
+	return terra.ReferenceAsNumber(p.ref.Append("window_before"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type InspectConfigState struct {

@@ -66,252 +66,252 @@ type CustomDnsConfigsAttributes struct {
 	ref terra.Reference
 }
 
-func (cdc CustomDnsConfigsAttributes) InternalRef() terra.Reference {
-	return cdc.ref
+func (cdc CustomDnsConfigsAttributes) InternalRef() (terra.Reference, error) {
+	return cdc.ref, nil
 }
 
 func (cdc CustomDnsConfigsAttributes) InternalWithRef(ref terra.Reference) CustomDnsConfigsAttributes {
 	return CustomDnsConfigsAttributes{ref: ref}
 }
 
-func (cdc CustomDnsConfigsAttributes) InternalTokens() hclwrite.Tokens {
+func (cdc CustomDnsConfigsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cdc.ref.InternalTokens()
 }
 
 func (cdc CustomDnsConfigsAttributes) Fqdn() terra.StringValue {
-	return terra.ReferenceString(cdc.ref.Append("fqdn"))
+	return terra.ReferenceAsString(cdc.ref.Append("fqdn"))
 }
 
 func (cdc CustomDnsConfigsAttributes) IpAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cdc.ref.Append("ip_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](cdc.ref.Append("ip_addresses"))
 }
 
 type NetworkInterfaceAttributes struct {
 	ref terra.Reference
 }
 
-func (ni NetworkInterfaceAttributes) InternalRef() terra.Reference {
-	return ni.ref
+func (ni NetworkInterfaceAttributes) InternalRef() (terra.Reference, error) {
+	return ni.ref, nil
 }
 
 func (ni NetworkInterfaceAttributes) InternalWithRef(ref terra.Reference) NetworkInterfaceAttributes {
 	return NetworkInterfaceAttributes{ref: ref}
 }
 
-func (ni NetworkInterfaceAttributes) InternalTokens() hclwrite.Tokens {
+func (ni NetworkInterfaceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ni.ref.InternalTokens()
 }
 
 func (ni NetworkInterfaceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("id"))
+	return terra.ReferenceAsString(ni.ref.Append("id"))
 }
 
 func (ni NetworkInterfaceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("name"))
+	return terra.ReferenceAsString(ni.ref.Append("name"))
 }
 
 type PrivateDnsZoneConfigsAttributes struct {
 	ref terra.Reference
 }
 
-func (pdzc PrivateDnsZoneConfigsAttributes) InternalRef() terra.Reference {
-	return pdzc.ref
+func (pdzc PrivateDnsZoneConfigsAttributes) InternalRef() (terra.Reference, error) {
+	return pdzc.ref, nil
 }
 
 func (pdzc PrivateDnsZoneConfigsAttributes) InternalWithRef(ref terra.Reference) PrivateDnsZoneConfigsAttributes {
 	return PrivateDnsZoneConfigsAttributes{ref: ref}
 }
 
-func (pdzc PrivateDnsZoneConfigsAttributes) InternalTokens() hclwrite.Tokens {
+func (pdzc PrivateDnsZoneConfigsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pdzc.ref.InternalTokens()
 }
 
 func (pdzc PrivateDnsZoneConfigsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pdzc.ref.Append("id"))
+	return terra.ReferenceAsString(pdzc.ref.Append("id"))
 }
 
 func (pdzc PrivateDnsZoneConfigsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pdzc.ref.Append("name"))
+	return terra.ReferenceAsString(pdzc.ref.Append("name"))
 }
 
 func (pdzc PrivateDnsZoneConfigsAttributes) PrivateDnsZoneId() terra.StringValue {
-	return terra.ReferenceString(pdzc.ref.Append("private_dns_zone_id"))
+	return terra.ReferenceAsString(pdzc.ref.Append("private_dns_zone_id"))
 }
 
 func (pdzc PrivateDnsZoneConfigsAttributes) RecordSets() terra.ListValue[RecordSetsAttributes] {
-	return terra.ReferenceList[RecordSetsAttributes](pdzc.ref.Append("record_sets"))
+	return terra.ReferenceAsList[RecordSetsAttributes](pdzc.ref.Append("record_sets"))
 }
 
 type RecordSetsAttributes struct {
 	ref terra.Reference
 }
 
-func (rs RecordSetsAttributes) InternalRef() terra.Reference {
-	return rs.ref
+func (rs RecordSetsAttributes) InternalRef() (terra.Reference, error) {
+	return rs.ref, nil
 }
 
 func (rs RecordSetsAttributes) InternalWithRef(ref terra.Reference) RecordSetsAttributes {
 	return RecordSetsAttributes{ref: ref}
 }
 
-func (rs RecordSetsAttributes) InternalTokens() hclwrite.Tokens {
+func (rs RecordSetsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rs.ref.InternalTokens()
 }
 
 func (rs RecordSetsAttributes) Fqdn() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("fqdn"))
+	return terra.ReferenceAsString(rs.ref.Append("fqdn"))
 }
 
 func (rs RecordSetsAttributes) IpAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rs.ref.Append("ip_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](rs.ref.Append("ip_addresses"))
 }
 
 func (rs RecordSetsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("name"))
+	return terra.ReferenceAsString(rs.ref.Append("name"))
 }
 
 func (rs RecordSetsAttributes) Ttl() terra.NumberValue {
-	return terra.ReferenceNumber(rs.ref.Append("ttl"))
+	return terra.ReferenceAsNumber(rs.ref.Append("ttl"))
 }
 
 func (rs RecordSetsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("type"))
+	return terra.ReferenceAsString(rs.ref.Append("type"))
 }
 
 type IpConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ic IpConfigurationAttributes) InternalRef() terra.Reference {
-	return ic.ref
+func (ic IpConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ic.ref, nil
 }
 
 func (ic IpConfigurationAttributes) InternalWithRef(ref terra.Reference) IpConfigurationAttributes {
 	return IpConfigurationAttributes{ref: ref}
 }
 
-func (ic IpConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ic IpConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ic.ref.InternalTokens()
 }
 
 func (ic IpConfigurationAttributes) MemberName() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("member_name"))
+	return terra.ReferenceAsString(ic.ref.Append("member_name"))
 }
 
 func (ic IpConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("name"))
+	return terra.ReferenceAsString(ic.ref.Append("name"))
 }
 
 func (ic IpConfigurationAttributes) PrivateIpAddress() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("private_ip_address"))
+	return terra.ReferenceAsString(ic.ref.Append("private_ip_address"))
 }
 
 func (ic IpConfigurationAttributes) SubresourceName() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("subresource_name"))
+	return terra.ReferenceAsString(ic.ref.Append("subresource_name"))
 }
 
 type PrivateDnsZoneGroupAttributes struct {
 	ref terra.Reference
 }
 
-func (pdzg PrivateDnsZoneGroupAttributes) InternalRef() terra.Reference {
-	return pdzg.ref
+func (pdzg PrivateDnsZoneGroupAttributes) InternalRef() (terra.Reference, error) {
+	return pdzg.ref, nil
 }
 
 func (pdzg PrivateDnsZoneGroupAttributes) InternalWithRef(ref terra.Reference) PrivateDnsZoneGroupAttributes {
 	return PrivateDnsZoneGroupAttributes{ref: ref}
 }
 
-func (pdzg PrivateDnsZoneGroupAttributes) InternalTokens() hclwrite.Tokens {
+func (pdzg PrivateDnsZoneGroupAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pdzg.ref.InternalTokens()
 }
 
 func (pdzg PrivateDnsZoneGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pdzg.ref.Append("id"))
+	return terra.ReferenceAsString(pdzg.ref.Append("id"))
 }
 
 func (pdzg PrivateDnsZoneGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pdzg.ref.Append("name"))
+	return terra.ReferenceAsString(pdzg.ref.Append("name"))
 }
 
 func (pdzg PrivateDnsZoneGroupAttributes) PrivateDnsZoneIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](pdzg.ref.Append("private_dns_zone_ids"))
+	return terra.ReferenceAsList[terra.StringValue](pdzg.ref.Append("private_dns_zone_ids"))
 }
 
 type PrivateServiceConnectionAttributes struct {
 	ref terra.Reference
 }
 
-func (psc PrivateServiceConnectionAttributes) InternalRef() terra.Reference {
-	return psc.ref
+func (psc PrivateServiceConnectionAttributes) InternalRef() (terra.Reference, error) {
+	return psc.ref, nil
 }
 
 func (psc PrivateServiceConnectionAttributes) InternalWithRef(ref terra.Reference) PrivateServiceConnectionAttributes {
 	return PrivateServiceConnectionAttributes{ref: ref}
 }
 
-func (psc PrivateServiceConnectionAttributes) InternalTokens() hclwrite.Tokens {
+func (psc PrivateServiceConnectionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return psc.ref.InternalTokens()
 }
 
 func (psc PrivateServiceConnectionAttributes) IsManualConnection() terra.BoolValue {
-	return terra.ReferenceBool(psc.ref.Append("is_manual_connection"))
+	return terra.ReferenceAsBool(psc.ref.Append("is_manual_connection"))
 }
 
 func (psc PrivateServiceConnectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(psc.ref.Append("name"))
+	return terra.ReferenceAsString(psc.ref.Append("name"))
 }
 
 func (psc PrivateServiceConnectionAttributes) PrivateConnectionResourceAlias() terra.StringValue {
-	return terra.ReferenceString(psc.ref.Append("private_connection_resource_alias"))
+	return terra.ReferenceAsString(psc.ref.Append("private_connection_resource_alias"))
 }
 
 func (psc PrivateServiceConnectionAttributes) PrivateConnectionResourceId() terra.StringValue {
-	return terra.ReferenceString(psc.ref.Append("private_connection_resource_id"))
+	return terra.ReferenceAsString(psc.ref.Append("private_connection_resource_id"))
 }
 
 func (psc PrivateServiceConnectionAttributes) PrivateIpAddress() terra.StringValue {
-	return terra.ReferenceString(psc.ref.Append("private_ip_address"))
+	return terra.ReferenceAsString(psc.ref.Append("private_ip_address"))
 }
 
 func (psc PrivateServiceConnectionAttributes) RequestMessage() terra.StringValue {
-	return terra.ReferenceString(psc.ref.Append("request_message"))
+	return terra.ReferenceAsString(psc.ref.Append("request_message"))
 }
 
 func (psc PrivateServiceConnectionAttributes) SubresourceNames() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](psc.ref.Append("subresource_names"))
+	return terra.ReferenceAsList[terra.StringValue](psc.ref.Append("subresource_names"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type CustomDnsConfigsState struct {

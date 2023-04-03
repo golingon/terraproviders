@@ -48,7 +48,7 @@ func (ca ClientAuthenticationAttributes) InternalWithRef(ref terra.Reference) Cl
 	return ClientAuthenticationAttributes{ref: ref}
 }
 
-func (ca ClientAuthenticationAttributes) InternalTokens() hclwrite.Tokens {
+func (ca ClientAuthenticationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ca.ref.InternalTokens()
 }
 
@@ -68,7 +68,7 @@ func (s SaslAttributes) InternalWithRef(ref terra.Reference) SaslAttributes {
 	return SaslAttributes{ref: ref}
 }
 
-func (s SaslAttributes) InternalTokens() hclwrite.Tokens {
+func (s SaslAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -88,7 +88,7 @@ func (i IamAttributes) InternalWithRef(ref terra.Reference) IamAttributes {
 	return IamAttributes{ref: ref}
 }
 
-func (i IamAttributes) InternalTokens() hclwrite.Tokens {
+func (i IamAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -108,7 +108,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -132,7 +132,7 @@ func (vc VpcConfigAttributes) InternalWithRef(ref terra.Reference) VpcConfigAttr
 	return VpcConfigAttributes{ref: ref}
 }
 
-func (vc VpcConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (vc VpcConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vc.ref.InternalTokens()
 }
 

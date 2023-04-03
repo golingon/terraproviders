@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataPublicMaintenanceConfigurations creates a new instance of [DataPublicMaintenanceConfigurations].
 func NewDataPublicMaintenanceConfigurations(name string, args DataPublicMaintenanceConfigurationsArgs) *DataPublicMaintenanceConfigurations {
 	return &DataPublicMaintenanceConfigurations{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataPublicMaintenanceConfigurations(name string, args DataPublicMaintena
 
 var _ terra.DataResource = (*DataPublicMaintenanceConfigurations)(nil)
 
+// DataPublicMaintenanceConfigurations represents the Terraform data resource azurerm_public_maintenance_configurations.
 type DataPublicMaintenanceConfigurations struct {
 	Name string
 	Args DataPublicMaintenanceConfigurationsArgs
 }
 
+// DataSource returns the Terraform object type for [DataPublicMaintenanceConfigurations].
 func (pmc *DataPublicMaintenanceConfigurations) DataSource() string {
 	return "azurerm_public_maintenance_configurations"
 }
 
+// LocalName returns the local name for [DataPublicMaintenanceConfigurations].
 func (pmc *DataPublicMaintenanceConfigurations) LocalName() string {
 	return pmc.Name
 }
 
+// Configuration returns the configuration (args) for [DataPublicMaintenanceConfigurations].
 func (pmc *DataPublicMaintenanceConfigurations) Configuration() interface{} {
 	return pmc.Args
 }
 
+// Attributes returns the attributes for [DataPublicMaintenanceConfigurations].
 func (pmc *DataPublicMaintenanceConfigurations) Attributes() dataPublicMaintenanceConfigurationsAttributes {
 	return dataPublicMaintenanceConfigurationsAttributes{ref: terra.ReferenceDataResource(pmc)}
 }
 
+// DataPublicMaintenanceConfigurationsArgs contains the configurations for azurerm_public_maintenance_configurations.
 type DataPublicMaintenanceConfigurationsArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -55,26 +62,30 @@ type dataPublicMaintenanceConfigurationsAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_public_maintenance_configurations.
 func (pmc dataPublicMaintenanceConfigurationsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pmc.ref.Append("id"))
+	return terra.ReferenceAsString(pmc.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_public_maintenance_configurations.
 func (pmc dataPublicMaintenanceConfigurationsAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(pmc.ref.Append("location"))
+	return terra.ReferenceAsString(pmc.ref.Append("location"))
 }
 
+// RecurEvery returns a reference to field recur_every of azurerm_public_maintenance_configurations.
 func (pmc dataPublicMaintenanceConfigurationsAttributes) RecurEvery() terra.StringValue {
-	return terra.ReferenceString(pmc.ref.Append("recur_every"))
+	return terra.ReferenceAsString(pmc.ref.Append("recur_every"))
 }
 
+// Scope returns a reference to field scope of azurerm_public_maintenance_configurations.
 func (pmc dataPublicMaintenanceConfigurationsAttributes) Scope() terra.StringValue {
-	return terra.ReferenceString(pmc.ref.Append("scope"))
+	return terra.ReferenceAsString(pmc.ref.Append("scope"))
 }
 
 func (pmc dataPublicMaintenanceConfigurationsAttributes) Configs() terra.ListValue[datapublicmaintenanceconfigurations.ConfigsAttributes] {
-	return terra.ReferenceList[datapublicmaintenanceconfigurations.ConfigsAttributes](pmc.ref.Append("configs"))
+	return terra.ReferenceAsList[datapublicmaintenanceconfigurations.ConfigsAttributes](pmc.ref.Append("configs"))
 }
 
 func (pmc dataPublicMaintenanceConfigurationsAttributes) Timeouts() datapublicmaintenanceconfigurations.TimeoutsAttributes {
-	return terra.ReferenceSingle[datapublicmaintenanceconfigurations.TimeoutsAttributes](pmc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datapublicmaintenanceconfigurations.TimeoutsAttributes](pmc.ref.Append("timeouts"))
 }

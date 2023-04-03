@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewKubernetesFleetManager creates a new instance of [KubernetesFleetManager].
 func NewKubernetesFleetManager(name string, args KubernetesFleetManagerArgs) *KubernetesFleetManager {
 	return &KubernetesFleetManager{
 		Args: args,
@@ -19,28 +20,51 @@ func NewKubernetesFleetManager(name string, args KubernetesFleetManagerArgs) *Ku
 
 var _ terra.Resource = (*KubernetesFleetManager)(nil)
 
+// KubernetesFleetManager represents the Terraform resource azurerm_kubernetes_fleet_manager.
 type KubernetesFleetManager struct {
-	Name  string
-	Args  KubernetesFleetManagerArgs
-	state *kubernetesFleetManagerState
+	Name      string
+	Args      KubernetesFleetManagerArgs
+	state     *kubernetesFleetManagerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [KubernetesFleetManager].
 func (kfm *KubernetesFleetManager) Type() string {
 	return "azurerm_kubernetes_fleet_manager"
 }
 
+// LocalName returns the local name for [KubernetesFleetManager].
 func (kfm *KubernetesFleetManager) LocalName() string {
 	return kfm.Name
 }
 
+// Configuration returns the configuration (args) for [KubernetesFleetManager].
 func (kfm *KubernetesFleetManager) Configuration() interface{} {
 	return kfm.Args
 }
 
+// DependOn is used for other resources to depend on [KubernetesFleetManager].
+func (kfm *KubernetesFleetManager) DependOn() terra.Reference {
+	return terra.ReferenceResource(kfm)
+}
+
+// Dependencies returns the list of resources [KubernetesFleetManager] depends_on.
+func (kfm *KubernetesFleetManager) Dependencies() terra.Dependencies {
+	return kfm.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [KubernetesFleetManager].
+func (kfm *KubernetesFleetManager) LifecycleManagement() *terra.Lifecycle {
+	return kfm.Lifecycle
+}
+
+// Attributes returns the attributes for [KubernetesFleetManager].
 func (kfm *KubernetesFleetManager) Attributes() kubernetesFleetManagerAttributes {
 	return kubernetesFleetManagerAttributes{ref: terra.ReferenceResource(kfm)}
 }
 
+// ImportState imports the given attribute values into [KubernetesFleetManager]'s state.
 func (kfm *KubernetesFleetManager) ImportState(av io.Reader) error {
 	kfm.state = &kubernetesFleetManagerState{}
 	if err := json.NewDecoder(av).Decode(kfm.state); err != nil {
@@ -49,10 +73,12 @@ func (kfm *KubernetesFleetManager) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [KubernetesFleetManager] has state.
 func (kfm *KubernetesFleetManager) State() (*kubernetesFleetManagerState, bool) {
 	return kfm.state, kfm.state != nil
 }
 
+// StateMust returns the state for [KubernetesFleetManager]. Panics if the state is nil.
 func (kfm *KubernetesFleetManager) StateMust() *kubernetesFleetManagerState {
 	if kfm.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", kfm.Type(), kfm.LocalName()))
@@ -60,10 +86,7 @@ func (kfm *KubernetesFleetManager) StateMust() *kubernetesFleetManagerState {
 	return kfm.state
 }
 
-func (kfm *KubernetesFleetManager) DependOn() terra.Reference {
-	return terra.ReferenceResource(kfm)
-}
-
+// KubernetesFleetManagerArgs contains the configurations for azurerm_kubernetes_fleet_manager.
 type KubernetesFleetManagerArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,39 +102,42 @@ type KubernetesFleetManagerArgs struct {
 	HubProfile *kubernetesfleetmanager.HubProfile `hcl:"hub_profile,block"`
 	// Timeouts: optional
 	Timeouts *kubernetesfleetmanager.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that KubernetesFleetManager depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type kubernetesFleetManagerAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_kubernetes_fleet_manager.
 func (kfm kubernetesFleetManagerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kfm.ref.Append("id"))
+	return terra.ReferenceAsString(kfm.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_kubernetes_fleet_manager.
 func (kfm kubernetesFleetManagerAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(kfm.ref.Append("location"))
+	return terra.ReferenceAsString(kfm.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_kubernetes_fleet_manager.
 func (kfm kubernetesFleetManagerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(kfm.ref.Append("name"))
+	return terra.ReferenceAsString(kfm.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_kubernetes_fleet_manager.
 func (kfm kubernetesFleetManagerAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(kfm.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(kfm.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_kubernetes_fleet_manager.
 func (kfm kubernetesFleetManagerAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](kfm.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](kfm.ref.Append("tags"))
 }
 
 func (kfm kubernetesFleetManagerAttributes) HubProfile() terra.ListValue[kubernetesfleetmanager.HubProfileAttributes] {
-	return terra.ReferenceList[kubernetesfleetmanager.HubProfileAttributes](kfm.ref.Append("hub_profile"))
+	return terra.ReferenceAsList[kubernetesfleetmanager.HubProfileAttributes](kfm.ref.Append("hub_profile"))
 }
 
 func (kfm kubernetesFleetManagerAttributes) Timeouts() kubernetesfleetmanager.TimeoutsAttributes {
-	return terra.ReferenceSingle[kubernetesfleetmanager.TimeoutsAttributes](kfm.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[kubernetesfleetmanager.TimeoutsAttributes](kfm.ref.Append("timeouts"))
 }
 
 type kubernetesFleetManagerState struct {

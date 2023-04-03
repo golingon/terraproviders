@@ -37,7 +37,7 @@ func (is IpSetsAttributes) InternalWithRef(ref terra.Reference) IpSetsAttributes
 	return IpSetsAttributes{ref: ref}
 }
 
-func (is IpSetsAttributes) InternalTokens() hclwrite.Tokens {
+func (is IpSetsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return is.ref.InternalTokens()
 }
 
@@ -61,7 +61,7 @@ func (a AttributesAttributes) InternalWithRef(ref terra.Reference) AttributesAtt
 	return AttributesAttributes{ref: ref}
 }
 
-func (a AttributesAttributes) InternalTokens() hclwrite.Tokens {
+func (a AttributesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -89,7 +89,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

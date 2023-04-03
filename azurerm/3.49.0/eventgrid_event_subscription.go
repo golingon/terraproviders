@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEventgridEventSubscription creates a new instance of [EventgridEventSubscription].
 func NewEventgridEventSubscription(name string, args EventgridEventSubscriptionArgs) *EventgridEventSubscription {
 	return &EventgridEventSubscription{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEventgridEventSubscription(name string, args EventgridEventSubscriptionA
 
 var _ terra.Resource = (*EventgridEventSubscription)(nil)
 
+// EventgridEventSubscription represents the Terraform resource azurerm_eventgrid_event_subscription.
 type EventgridEventSubscription struct {
-	Name  string
-	Args  EventgridEventSubscriptionArgs
-	state *eventgridEventSubscriptionState
+	Name      string
+	Args      EventgridEventSubscriptionArgs
+	state     *eventgridEventSubscriptionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EventgridEventSubscription].
 func (ees *EventgridEventSubscription) Type() string {
 	return "azurerm_eventgrid_event_subscription"
 }
 
+// LocalName returns the local name for [EventgridEventSubscription].
 func (ees *EventgridEventSubscription) LocalName() string {
 	return ees.Name
 }
 
+// Configuration returns the configuration (args) for [EventgridEventSubscription].
 func (ees *EventgridEventSubscription) Configuration() interface{} {
 	return ees.Args
 }
 
+// DependOn is used for other resources to depend on [EventgridEventSubscription].
+func (ees *EventgridEventSubscription) DependOn() terra.Reference {
+	return terra.ReferenceResource(ees)
+}
+
+// Dependencies returns the list of resources [EventgridEventSubscription] depends_on.
+func (ees *EventgridEventSubscription) Dependencies() terra.Dependencies {
+	return ees.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EventgridEventSubscription].
+func (ees *EventgridEventSubscription) LifecycleManagement() *terra.Lifecycle {
+	return ees.Lifecycle
+}
+
+// Attributes returns the attributes for [EventgridEventSubscription].
 func (ees *EventgridEventSubscription) Attributes() eventgridEventSubscriptionAttributes {
 	return eventgridEventSubscriptionAttributes{ref: terra.ReferenceResource(ees)}
 }
 
+// ImportState imports the given attribute values into [EventgridEventSubscription]'s state.
 func (ees *EventgridEventSubscription) ImportState(av io.Reader) error {
 	ees.state = &eventgridEventSubscriptionState{}
 	if err := json.NewDecoder(av).Decode(ees.state); err != nil {
@@ -49,10 +73,12 @@ func (ees *EventgridEventSubscription) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EventgridEventSubscription] has state.
 func (ees *EventgridEventSubscription) State() (*eventgridEventSubscriptionState, bool) {
 	return ees.state, ees.state != nil
 }
 
+// StateMust returns the state for [EventgridEventSubscription]. Panics if the state is nil.
 func (ees *EventgridEventSubscription) StateMust() *eventgridEventSubscriptionState {
 	if ees.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ees.Type(), ees.LocalName()))
@@ -60,10 +86,7 @@ func (ees *EventgridEventSubscription) StateMust() *eventgridEventSubscriptionSt
 	return ees.state
 }
 
-func (ees *EventgridEventSubscription) DependOn() terra.Reference {
-	return terra.ReferenceResource(ees)
-}
-
+// EventgridEventSubscriptionArgs contains the configurations for azurerm_eventgrid_event_subscription.
 type EventgridEventSubscriptionArgs struct {
 	// AdvancedFilteringOnArraysEnabled: bool, optional
 	AdvancedFilteringOnArraysEnabled terra.BoolValue `hcl:"advanced_filtering_on_arrays_enabled,attr"`
@@ -111,103 +134,113 @@ type EventgridEventSubscriptionArgs struct {
 	Timeouts *eventgrideventsubscription.Timeouts `hcl:"timeouts,block"`
 	// WebhookEndpoint: optional
 	WebhookEndpoint *eventgrideventsubscription.WebhookEndpoint `hcl:"webhook_endpoint,block"`
-	// DependsOn contains resources that EventgridEventSubscription depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type eventgridEventSubscriptionAttributes struct {
 	ref terra.Reference
 }
 
+// AdvancedFilteringOnArraysEnabled returns a reference to field advanced_filtering_on_arrays_enabled of azurerm_eventgrid_event_subscription.
 func (ees eventgridEventSubscriptionAttributes) AdvancedFilteringOnArraysEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ees.ref.Append("advanced_filtering_on_arrays_enabled"))
+	return terra.ReferenceAsBool(ees.ref.Append("advanced_filtering_on_arrays_enabled"))
 }
 
+// EventDeliverySchema returns a reference to field event_delivery_schema of azurerm_eventgrid_event_subscription.
 func (ees eventgridEventSubscriptionAttributes) EventDeliverySchema() terra.StringValue {
-	return terra.ReferenceString(ees.ref.Append("event_delivery_schema"))
+	return terra.ReferenceAsString(ees.ref.Append("event_delivery_schema"))
 }
 
+// EventhubEndpointId returns a reference to field eventhub_endpoint_id of azurerm_eventgrid_event_subscription.
 func (ees eventgridEventSubscriptionAttributes) EventhubEndpointId() terra.StringValue {
-	return terra.ReferenceString(ees.ref.Append("eventhub_endpoint_id"))
+	return terra.ReferenceAsString(ees.ref.Append("eventhub_endpoint_id"))
 }
 
+// ExpirationTimeUtc returns a reference to field expiration_time_utc of azurerm_eventgrid_event_subscription.
 func (ees eventgridEventSubscriptionAttributes) ExpirationTimeUtc() terra.StringValue {
-	return terra.ReferenceString(ees.ref.Append("expiration_time_utc"))
+	return terra.ReferenceAsString(ees.ref.Append("expiration_time_utc"))
 }
 
+// HybridConnectionEndpointId returns a reference to field hybrid_connection_endpoint_id of azurerm_eventgrid_event_subscription.
 func (ees eventgridEventSubscriptionAttributes) HybridConnectionEndpointId() terra.StringValue {
-	return terra.ReferenceString(ees.ref.Append("hybrid_connection_endpoint_id"))
+	return terra.ReferenceAsString(ees.ref.Append("hybrid_connection_endpoint_id"))
 }
 
+// Id returns a reference to field id of azurerm_eventgrid_event_subscription.
 func (ees eventgridEventSubscriptionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ees.ref.Append("id"))
+	return terra.ReferenceAsString(ees.ref.Append("id"))
 }
 
+// IncludedEventTypes returns a reference to field included_event_types of azurerm_eventgrid_event_subscription.
 func (ees eventgridEventSubscriptionAttributes) IncludedEventTypes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ees.ref.Append("included_event_types"))
+	return terra.ReferenceAsList[terra.StringValue](ees.ref.Append("included_event_types"))
 }
 
+// Labels returns a reference to field labels of azurerm_eventgrid_event_subscription.
 func (ees eventgridEventSubscriptionAttributes) Labels() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ees.ref.Append("labels"))
+	return terra.ReferenceAsList[terra.StringValue](ees.ref.Append("labels"))
 }
 
+// Name returns a reference to field name of azurerm_eventgrid_event_subscription.
 func (ees eventgridEventSubscriptionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ees.ref.Append("name"))
+	return terra.ReferenceAsString(ees.ref.Append("name"))
 }
 
+// Scope returns a reference to field scope of azurerm_eventgrid_event_subscription.
 func (ees eventgridEventSubscriptionAttributes) Scope() terra.StringValue {
-	return terra.ReferenceString(ees.ref.Append("scope"))
+	return terra.ReferenceAsString(ees.ref.Append("scope"))
 }
 
+// ServiceBusQueueEndpointId returns a reference to field service_bus_queue_endpoint_id of azurerm_eventgrid_event_subscription.
 func (ees eventgridEventSubscriptionAttributes) ServiceBusQueueEndpointId() terra.StringValue {
-	return terra.ReferenceString(ees.ref.Append("service_bus_queue_endpoint_id"))
+	return terra.ReferenceAsString(ees.ref.Append("service_bus_queue_endpoint_id"))
 }
 
+// ServiceBusTopicEndpointId returns a reference to field service_bus_topic_endpoint_id of azurerm_eventgrid_event_subscription.
 func (ees eventgridEventSubscriptionAttributes) ServiceBusTopicEndpointId() terra.StringValue {
-	return terra.ReferenceString(ees.ref.Append("service_bus_topic_endpoint_id"))
+	return terra.ReferenceAsString(ees.ref.Append("service_bus_topic_endpoint_id"))
 }
 
 func (ees eventgridEventSubscriptionAttributes) AdvancedFilter() terra.ListValue[eventgrideventsubscription.AdvancedFilterAttributes] {
-	return terra.ReferenceList[eventgrideventsubscription.AdvancedFilterAttributes](ees.ref.Append("advanced_filter"))
+	return terra.ReferenceAsList[eventgrideventsubscription.AdvancedFilterAttributes](ees.ref.Append("advanced_filter"))
 }
 
 func (ees eventgridEventSubscriptionAttributes) AzureFunctionEndpoint() terra.ListValue[eventgrideventsubscription.AzureFunctionEndpointAttributes] {
-	return terra.ReferenceList[eventgrideventsubscription.AzureFunctionEndpointAttributes](ees.ref.Append("azure_function_endpoint"))
+	return terra.ReferenceAsList[eventgrideventsubscription.AzureFunctionEndpointAttributes](ees.ref.Append("azure_function_endpoint"))
 }
 
 func (ees eventgridEventSubscriptionAttributes) DeadLetterIdentity() terra.ListValue[eventgrideventsubscription.DeadLetterIdentityAttributes] {
-	return terra.ReferenceList[eventgrideventsubscription.DeadLetterIdentityAttributes](ees.ref.Append("dead_letter_identity"))
+	return terra.ReferenceAsList[eventgrideventsubscription.DeadLetterIdentityAttributes](ees.ref.Append("dead_letter_identity"))
 }
 
 func (ees eventgridEventSubscriptionAttributes) DeliveryIdentity() terra.ListValue[eventgrideventsubscription.DeliveryIdentityAttributes] {
-	return terra.ReferenceList[eventgrideventsubscription.DeliveryIdentityAttributes](ees.ref.Append("delivery_identity"))
+	return terra.ReferenceAsList[eventgrideventsubscription.DeliveryIdentityAttributes](ees.ref.Append("delivery_identity"))
 }
 
 func (ees eventgridEventSubscriptionAttributes) DeliveryProperty() terra.ListValue[eventgrideventsubscription.DeliveryPropertyAttributes] {
-	return terra.ReferenceList[eventgrideventsubscription.DeliveryPropertyAttributes](ees.ref.Append("delivery_property"))
+	return terra.ReferenceAsList[eventgrideventsubscription.DeliveryPropertyAttributes](ees.ref.Append("delivery_property"))
 }
 
 func (ees eventgridEventSubscriptionAttributes) RetryPolicy() terra.ListValue[eventgrideventsubscription.RetryPolicyAttributes] {
-	return terra.ReferenceList[eventgrideventsubscription.RetryPolicyAttributes](ees.ref.Append("retry_policy"))
+	return terra.ReferenceAsList[eventgrideventsubscription.RetryPolicyAttributes](ees.ref.Append("retry_policy"))
 }
 
 func (ees eventgridEventSubscriptionAttributes) StorageBlobDeadLetterDestination() terra.ListValue[eventgrideventsubscription.StorageBlobDeadLetterDestinationAttributes] {
-	return terra.ReferenceList[eventgrideventsubscription.StorageBlobDeadLetterDestinationAttributes](ees.ref.Append("storage_blob_dead_letter_destination"))
+	return terra.ReferenceAsList[eventgrideventsubscription.StorageBlobDeadLetterDestinationAttributes](ees.ref.Append("storage_blob_dead_letter_destination"))
 }
 
 func (ees eventgridEventSubscriptionAttributes) StorageQueueEndpoint() terra.ListValue[eventgrideventsubscription.StorageQueueEndpointAttributes] {
-	return terra.ReferenceList[eventgrideventsubscription.StorageQueueEndpointAttributes](ees.ref.Append("storage_queue_endpoint"))
+	return terra.ReferenceAsList[eventgrideventsubscription.StorageQueueEndpointAttributes](ees.ref.Append("storage_queue_endpoint"))
 }
 
 func (ees eventgridEventSubscriptionAttributes) SubjectFilter() terra.ListValue[eventgrideventsubscription.SubjectFilterAttributes] {
-	return terra.ReferenceList[eventgrideventsubscription.SubjectFilterAttributes](ees.ref.Append("subject_filter"))
+	return terra.ReferenceAsList[eventgrideventsubscription.SubjectFilterAttributes](ees.ref.Append("subject_filter"))
 }
 
 func (ees eventgridEventSubscriptionAttributes) Timeouts() eventgrideventsubscription.TimeoutsAttributes {
-	return terra.ReferenceSingle[eventgrideventsubscription.TimeoutsAttributes](ees.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[eventgrideventsubscription.TimeoutsAttributes](ees.ref.Append("timeouts"))
 }
 
 func (ees eventgridEventSubscriptionAttributes) WebhookEndpoint() terra.ListValue[eventgrideventsubscription.WebhookEndpointAttributes] {
-	return terra.ReferenceList[eventgrideventsubscription.WebhookEndpointAttributes](ees.ref.Append("webhook_endpoint"))
+	return terra.ReferenceAsList[eventgrideventsubscription.WebhookEndpointAttributes](ees.ref.Append("webhook_endpoint"))
 }
 
 type eventgridEventSubscriptionState struct {

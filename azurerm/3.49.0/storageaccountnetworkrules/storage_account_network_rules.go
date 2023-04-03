@@ -29,56 +29,56 @@ type PrivateLinkAccessAttributes struct {
 	ref terra.Reference
 }
 
-func (pla PrivateLinkAccessAttributes) InternalRef() terra.Reference {
-	return pla.ref
+func (pla PrivateLinkAccessAttributes) InternalRef() (terra.Reference, error) {
+	return pla.ref, nil
 }
 
 func (pla PrivateLinkAccessAttributes) InternalWithRef(ref terra.Reference) PrivateLinkAccessAttributes {
 	return PrivateLinkAccessAttributes{ref: ref}
 }
 
-func (pla PrivateLinkAccessAttributes) InternalTokens() hclwrite.Tokens {
+func (pla PrivateLinkAccessAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pla.ref.InternalTokens()
 }
 
 func (pla PrivateLinkAccessAttributes) EndpointResourceId() terra.StringValue {
-	return terra.ReferenceString(pla.ref.Append("endpoint_resource_id"))
+	return terra.ReferenceAsString(pla.ref.Append("endpoint_resource_id"))
 }
 
 func (pla PrivateLinkAccessAttributes) EndpointTenantId() terra.StringValue {
-	return terra.ReferenceString(pla.ref.Append("endpoint_tenant_id"))
+	return terra.ReferenceAsString(pla.ref.Append("endpoint_tenant_id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type PrivateLinkAccessState struct {

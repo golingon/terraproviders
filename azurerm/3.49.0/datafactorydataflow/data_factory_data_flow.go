@@ -166,480 +166,480 @@ type SinkAttributes struct {
 	ref terra.Reference
 }
 
-func (s SinkAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SinkAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SinkAttributes) InternalWithRef(ref terra.Reference) SinkAttributes {
 	return SinkAttributes{ref: ref}
 }
 
-func (s SinkAttributes) InternalTokens() hclwrite.Tokens {
+func (s SinkAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SinkAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("description"))
+	return terra.ReferenceAsString(s.ref.Append("description"))
 }
 
 func (s SinkAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 func (s SinkAttributes) Dataset() terra.ListValue[SinkDatasetAttributes] {
-	return terra.ReferenceList[SinkDatasetAttributes](s.ref.Append("dataset"))
+	return terra.ReferenceAsList[SinkDatasetAttributes](s.ref.Append("dataset"))
 }
 
 func (s SinkAttributes) Flowlet() terra.ListValue[SinkFlowletAttributes] {
-	return terra.ReferenceList[SinkFlowletAttributes](s.ref.Append("flowlet"))
+	return terra.ReferenceAsList[SinkFlowletAttributes](s.ref.Append("flowlet"))
 }
 
 func (s SinkAttributes) LinkedService() terra.ListValue[SinkLinkedServiceAttributes] {
-	return terra.ReferenceList[SinkLinkedServiceAttributes](s.ref.Append("linked_service"))
+	return terra.ReferenceAsList[SinkLinkedServiceAttributes](s.ref.Append("linked_service"))
 }
 
 func (s SinkAttributes) RejectedLinkedService() terra.ListValue[SinkRejectedLinkedServiceAttributes] {
-	return terra.ReferenceList[SinkRejectedLinkedServiceAttributes](s.ref.Append("rejected_linked_service"))
+	return terra.ReferenceAsList[SinkRejectedLinkedServiceAttributes](s.ref.Append("rejected_linked_service"))
 }
 
 func (s SinkAttributes) SchemaLinkedService() terra.ListValue[SinkSchemaLinkedServiceAttributes] {
-	return terra.ReferenceList[SinkSchemaLinkedServiceAttributes](s.ref.Append("schema_linked_service"))
+	return terra.ReferenceAsList[SinkSchemaLinkedServiceAttributes](s.ref.Append("schema_linked_service"))
 }
 
 type SinkDatasetAttributes struct {
 	ref terra.Reference
 }
 
-func (d SinkDatasetAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d SinkDatasetAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d SinkDatasetAttributes) InternalWithRef(ref terra.Reference) SinkDatasetAttributes {
 	return SinkDatasetAttributes{ref: ref}
 }
 
-func (d SinkDatasetAttributes) InternalTokens() hclwrite.Tokens {
+func (d SinkDatasetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d SinkDatasetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("name"))
+	return terra.ReferenceAsString(d.ref.Append("name"))
 }
 
 func (d SinkDatasetAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](d.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](d.ref.Append("parameters"))
 }
 
 type SinkFlowletAttributes struct {
 	ref terra.Reference
 }
 
-func (f SinkFlowletAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f SinkFlowletAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f SinkFlowletAttributes) InternalWithRef(ref terra.Reference) SinkFlowletAttributes {
 	return SinkFlowletAttributes{ref: ref}
 }
 
-func (f SinkFlowletAttributes) InternalTokens() hclwrite.Tokens {
+func (f SinkFlowletAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
 func (f SinkFlowletAttributes) DatasetParameters() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("dataset_parameters"))
+	return terra.ReferenceAsString(f.ref.Append("dataset_parameters"))
 }
 
 func (f SinkFlowletAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("name"))
+	return terra.ReferenceAsString(f.ref.Append("name"))
 }
 
 func (f SinkFlowletAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](f.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](f.ref.Append("parameters"))
 }
 
 type SinkLinkedServiceAttributes struct {
 	ref terra.Reference
 }
 
-func (ls SinkLinkedServiceAttributes) InternalRef() terra.Reference {
-	return ls.ref
+func (ls SinkLinkedServiceAttributes) InternalRef() (terra.Reference, error) {
+	return ls.ref, nil
 }
 
 func (ls SinkLinkedServiceAttributes) InternalWithRef(ref terra.Reference) SinkLinkedServiceAttributes {
 	return SinkLinkedServiceAttributes{ref: ref}
 }
 
-func (ls SinkLinkedServiceAttributes) InternalTokens() hclwrite.Tokens {
+func (ls SinkLinkedServiceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ls.ref.InternalTokens()
 }
 
 func (ls SinkLinkedServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ls.ref.Append("name"))
+	return terra.ReferenceAsString(ls.ref.Append("name"))
 }
 
 func (ls SinkLinkedServiceAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ls.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](ls.ref.Append("parameters"))
 }
 
 type SinkRejectedLinkedServiceAttributes struct {
 	ref terra.Reference
 }
 
-func (rls SinkRejectedLinkedServiceAttributes) InternalRef() terra.Reference {
-	return rls.ref
+func (rls SinkRejectedLinkedServiceAttributes) InternalRef() (terra.Reference, error) {
+	return rls.ref, nil
 }
 
 func (rls SinkRejectedLinkedServiceAttributes) InternalWithRef(ref terra.Reference) SinkRejectedLinkedServiceAttributes {
 	return SinkRejectedLinkedServiceAttributes{ref: ref}
 }
 
-func (rls SinkRejectedLinkedServiceAttributes) InternalTokens() hclwrite.Tokens {
+func (rls SinkRejectedLinkedServiceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rls.ref.InternalTokens()
 }
 
 func (rls SinkRejectedLinkedServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rls.ref.Append("name"))
+	return terra.ReferenceAsString(rls.ref.Append("name"))
 }
 
 func (rls SinkRejectedLinkedServiceAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rls.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](rls.ref.Append("parameters"))
 }
 
 type SinkSchemaLinkedServiceAttributes struct {
 	ref terra.Reference
 }
 
-func (sls SinkSchemaLinkedServiceAttributes) InternalRef() terra.Reference {
-	return sls.ref
+func (sls SinkSchemaLinkedServiceAttributes) InternalRef() (terra.Reference, error) {
+	return sls.ref, nil
 }
 
 func (sls SinkSchemaLinkedServiceAttributes) InternalWithRef(ref terra.Reference) SinkSchemaLinkedServiceAttributes {
 	return SinkSchemaLinkedServiceAttributes{ref: ref}
 }
 
-func (sls SinkSchemaLinkedServiceAttributes) InternalTokens() hclwrite.Tokens {
+func (sls SinkSchemaLinkedServiceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sls.ref.InternalTokens()
 }
 
 func (sls SinkSchemaLinkedServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sls.ref.Append("name"))
+	return terra.ReferenceAsString(sls.ref.Append("name"))
 }
 
 func (sls SinkSchemaLinkedServiceAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sls.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](sls.ref.Append("parameters"))
 }
 
 type SourceAttributes struct {
 	ref terra.Reference
 }
 
-func (s SourceAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SourceAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SourceAttributes) InternalWithRef(ref terra.Reference) SourceAttributes {
 	return SourceAttributes{ref: ref}
 }
 
-func (s SourceAttributes) InternalTokens() hclwrite.Tokens {
+func (s SourceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SourceAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("description"))
+	return terra.ReferenceAsString(s.ref.Append("description"))
 }
 
 func (s SourceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 func (s SourceAttributes) Dataset() terra.ListValue[SourceDatasetAttributes] {
-	return terra.ReferenceList[SourceDatasetAttributes](s.ref.Append("dataset"))
+	return terra.ReferenceAsList[SourceDatasetAttributes](s.ref.Append("dataset"))
 }
 
 func (s SourceAttributes) Flowlet() terra.ListValue[SourceFlowletAttributes] {
-	return terra.ReferenceList[SourceFlowletAttributes](s.ref.Append("flowlet"))
+	return terra.ReferenceAsList[SourceFlowletAttributes](s.ref.Append("flowlet"))
 }
 
 func (s SourceAttributes) LinkedService() terra.ListValue[SourceLinkedServiceAttributes] {
-	return terra.ReferenceList[SourceLinkedServiceAttributes](s.ref.Append("linked_service"))
+	return terra.ReferenceAsList[SourceLinkedServiceAttributes](s.ref.Append("linked_service"))
 }
 
 func (s SourceAttributes) RejectedLinkedService() terra.ListValue[SourceRejectedLinkedServiceAttributes] {
-	return terra.ReferenceList[SourceRejectedLinkedServiceAttributes](s.ref.Append("rejected_linked_service"))
+	return terra.ReferenceAsList[SourceRejectedLinkedServiceAttributes](s.ref.Append("rejected_linked_service"))
 }
 
 func (s SourceAttributes) SchemaLinkedService() terra.ListValue[SourceSchemaLinkedServiceAttributes] {
-	return terra.ReferenceList[SourceSchemaLinkedServiceAttributes](s.ref.Append("schema_linked_service"))
+	return terra.ReferenceAsList[SourceSchemaLinkedServiceAttributes](s.ref.Append("schema_linked_service"))
 }
 
 type SourceDatasetAttributes struct {
 	ref terra.Reference
 }
 
-func (d SourceDatasetAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d SourceDatasetAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d SourceDatasetAttributes) InternalWithRef(ref terra.Reference) SourceDatasetAttributes {
 	return SourceDatasetAttributes{ref: ref}
 }
 
-func (d SourceDatasetAttributes) InternalTokens() hclwrite.Tokens {
+func (d SourceDatasetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d SourceDatasetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("name"))
+	return terra.ReferenceAsString(d.ref.Append("name"))
 }
 
 func (d SourceDatasetAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](d.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](d.ref.Append("parameters"))
 }
 
 type SourceFlowletAttributes struct {
 	ref terra.Reference
 }
 
-func (f SourceFlowletAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f SourceFlowletAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f SourceFlowletAttributes) InternalWithRef(ref terra.Reference) SourceFlowletAttributes {
 	return SourceFlowletAttributes{ref: ref}
 }
 
-func (f SourceFlowletAttributes) InternalTokens() hclwrite.Tokens {
+func (f SourceFlowletAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
 func (f SourceFlowletAttributes) DatasetParameters() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("dataset_parameters"))
+	return terra.ReferenceAsString(f.ref.Append("dataset_parameters"))
 }
 
 func (f SourceFlowletAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("name"))
+	return terra.ReferenceAsString(f.ref.Append("name"))
 }
 
 func (f SourceFlowletAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](f.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](f.ref.Append("parameters"))
 }
 
 type SourceLinkedServiceAttributes struct {
 	ref terra.Reference
 }
 
-func (ls SourceLinkedServiceAttributes) InternalRef() terra.Reference {
-	return ls.ref
+func (ls SourceLinkedServiceAttributes) InternalRef() (terra.Reference, error) {
+	return ls.ref, nil
 }
 
 func (ls SourceLinkedServiceAttributes) InternalWithRef(ref terra.Reference) SourceLinkedServiceAttributes {
 	return SourceLinkedServiceAttributes{ref: ref}
 }
 
-func (ls SourceLinkedServiceAttributes) InternalTokens() hclwrite.Tokens {
+func (ls SourceLinkedServiceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ls.ref.InternalTokens()
 }
 
 func (ls SourceLinkedServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ls.ref.Append("name"))
+	return terra.ReferenceAsString(ls.ref.Append("name"))
 }
 
 func (ls SourceLinkedServiceAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ls.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](ls.ref.Append("parameters"))
 }
 
 type SourceRejectedLinkedServiceAttributes struct {
 	ref terra.Reference
 }
 
-func (rls SourceRejectedLinkedServiceAttributes) InternalRef() terra.Reference {
-	return rls.ref
+func (rls SourceRejectedLinkedServiceAttributes) InternalRef() (terra.Reference, error) {
+	return rls.ref, nil
 }
 
 func (rls SourceRejectedLinkedServiceAttributes) InternalWithRef(ref terra.Reference) SourceRejectedLinkedServiceAttributes {
 	return SourceRejectedLinkedServiceAttributes{ref: ref}
 }
 
-func (rls SourceRejectedLinkedServiceAttributes) InternalTokens() hclwrite.Tokens {
+func (rls SourceRejectedLinkedServiceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rls.ref.InternalTokens()
 }
 
 func (rls SourceRejectedLinkedServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rls.ref.Append("name"))
+	return terra.ReferenceAsString(rls.ref.Append("name"))
 }
 
 func (rls SourceRejectedLinkedServiceAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rls.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](rls.ref.Append("parameters"))
 }
 
 type SourceSchemaLinkedServiceAttributes struct {
 	ref terra.Reference
 }
 
-func (sls SourceSchemaLinkedServiceAttributes) InternalRef() terra.Reference {
-	return sls.ref
+func (sls SourceSchemaLinkedServiceAttributes) InternalRef() (terra.Reference, error) {
+	return sls.ref, nil
 }
 
 func (sls SourceSchemaLinkedServiceAttributes) InternalWithRef(ref terra.Reference) SourceSchemaLinkedServiceAttributes {
 	return SourceSchemaLinkedServiceAttributes{ref: ref}
 }
 
-func (sls SourceSchemaLinkedServiceAttributes) InternalTokens() hclwrite.Tokens {
+func (sls SourceSchemaLinkedServiceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sls.ref.InternalTokens()
 }
 
 func (sls SourceSchemaLinkedServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sls.ref.Append("name"))
+	return terra.ReferenceAsString(sls.ref.Append("name"))
 }
 
 func (sls SourceSchemaLinkedServiceAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sls.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](sls.ref.Append("parameters"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type TransformationAttributes struct {
 	ref terra.Reference
 }
 
-func (t TransformationAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TransformationAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TransformationAttributes) InternalWithRef(ref terra.Reference) TransformationAttributes {
 	return TransformationAttributes{ref: ref}
 }
 
-func (t TransformationAttributes) InternalTokens() hclwrite.Tokens {
+func (t TransformationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TransformationAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("description"))
+	return terra.ReferenceAsString(t.ref.Append("description"))
 }
 
 func (t TransformationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("name"))
+	return terra.ReferenceAsString(t.ref.Append("name"))
 }
 
 func (t TransformationAttributes) Dataset() terra.ListValue[TransformationDatasetAttributes] {
-	return terra.ReferenceList[TransformationDatasetAttributes](t.ref.Append("dataset"))
+	return terra.ReferenceAsList[TransformationDatasetAttributes](t.ref.Append("dataset"))
 }
 
 func (t TransformationAttributes) Flowlet() terra.ListValue[TransformationFlowletAttributes] {
-	return terra.ReferenceList[TransformationFlowletAttributes](t.ref.Append("flowlet"))
+	return terra.ReferenceAsList[TransformationFlowletAttributes](t.ref.Append("flowlet"))
 }
 
 func (t TransformationAttributes) LinkedService() terra.ListValue[TransformationLinkedServiceAttributes] {
-	return terra.ReferenceList[TransformationLinkedServiceAttributes](t.ref.Append("linked_service"))
+	return terra.ReferenceAsList[TransformationLinkedServiceAttributes](t.ref.Append("linked_service"))
 }
 
 type TransformationDatasetAttributes struct {
 	ref terra.Reference
 }
 
-func (d TransformationDatasetAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d TransformationDatasetAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d TransformationDatasetAttributes) InternalWithRef(ref terra.Reference) TransformationDatasetAttributes {
 	return TransformationDatasetAttributes{ref: ref}
 }
 
-func (d TransformationDatasetAttributes) InternalTokens() hclwrite.Tokens {
+func (d TransformationDatasetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d TransformationDatasetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("name"))
+	return terra.ReferenceAsString(d.ref.Append("name"))
 }
 
 func (d TransformationDatasetAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](d.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](d.ref.Append("parameters"))
 }
 
 type TransformationFlowletAttributes struct {
 	ref terra.Reference
 }
 
-func (f TransformationFlowletAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f TransformationFlowletAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f TransformationFlowletAttributes) InternalWithRef(ref terra.Reference) TransformationFlowletAttributes {
 	return TransformationFlowletAttributes{ref: ref}
 }
 
-func (f TransformationFlowletAttributes) InternalTokens() hclwrite.Tokens {
+func (f TransformationFlowletAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
 func (f TransformationFlowletAttributes) DatasetParameters() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("dataset_parameters"))
+	return terra.ReferenceAsString(f.ref.Append("dataset_parameters"))
 }
 
 func (f TransformationFlowletAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("name"))
+	return terra.ReferenceAsString(f.ref.Append("name"))
 }
 
 func (f TransformationFlowletAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](f.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](f.ref.Append("parameters"))
 }
 
 type TransformationLinkedServiceAttributes struct {
 	ref terra.Reference
 }
 
-func (ls TransformationLinkedServiceAttributes) InternalRef() terra.Reference {
-	return ls.ref
+func (ls TransformationLinkedServiceAttributes) InternalRef() (terra.Reference, error) {
+	return ls.ref, nil
 }
 
 func (ls TransformationLinkedServiceAttributes) InternalWithRef(ref terra.Reference) TransformationLinkedServiceAttributes {
 	return TransformationLinkedServiceAttributes{ref: ref}
 }
 
-func (ls TransformationLinkedServiceAttributes) InternalTokens() hclwrite.Tokens {
+func (ls TransformationLinkedServiceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ls.ref.InternalTokens()
 }
 
 func (ls TransformationLinkedServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ls.ref.Append("name"))
+	return terra.ReferenceAsString(ls.ref.Append("name"))
 }
 
 func (ls TransformationLinkedServiceAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ls.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](ls.ref.Append("parameters"))
 }
 
 type SinkState struct {

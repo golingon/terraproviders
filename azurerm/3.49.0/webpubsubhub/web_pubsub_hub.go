@@ -38,84 +38,84 @@ type EventHandlerAttributes struct {
 	ref terra.Reference
 }
 
-func (eh EventHandlerAttributes) InternalRef() terra.Reference {
-	return eh.ref
+func (eh EventHandlerAttributes) InternalRef() (terra.Reference, error) {
+	return eh.ref, nil
 }
 
 func (eh EventHandlerAttributes) InternalWithRef(ref terra.Reference) EventHandlerAttributes {
 	return EventHandlerAttributes{ref: ref}
 }
 
-func (eh EventHandlerAttributes) InternalTokens() hclwrite.Tokens {
+func (eh EventHandlerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return eh.ref.InternalTokens()
 }
 
 func (eh EventHandlerAttributes) SystemEvents() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](eh.ref.Append("system_events"))
+	return terra.ReferenceAsSet[terra.StringValue](eh.ref.Append("system_events"))
 }
 
 func (eh EventHandlerAttributes) UrlTemplate() terra.StringValue {
-	return terra.ReferenceString(eh.ref.Append("url_template"))
+	return terra.ReferenceAsString(eh.ref.Append("url_template"))
 }
 
 func (eh EventHandlerAttributes) UserEventPattern() terra.StringValue {
-	return terra.ReferenceString(eh.ref.Append("user_event_pattern"))
+	return terra.ReferenceAsString(eh.ref.Append("user_event_pattern"))
 }
 
 func (eh EventHandlerAttributes) Auth() terra.ListValue[AuthAttributes] {
-	return terra.ReferenceList[AuthAttributes](eh.ref.Append("auth"))
+	return terra.ReferenceAsList[AuthAttributes](eh.ref.Append("auth"))
 }
 
 type AuthAttributes struct {
 	ref terra.Reference
 }
 
-func (a AuthAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AuthAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AuthAttributes) InternalWithRef(ref terra.Reference) AuthAttributes {
 	return AuthAttributes{ref: ref}
 }
 
-func (a AuthAttributes) InternalTokens() hclwrite.Tokens {
+func (a AuthAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a AuthAttributes) ManagedIdentityId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("managed_identity_id"))
+	return terra.ReferenceAsString(a.ref.Append("managed_identity_id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type EventHandlerState struct {

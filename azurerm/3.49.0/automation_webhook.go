@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAutomationWebhook creates a new instance of [AutomationWebhook].
 func NewAutomationWebhook(name string, args AutomationWebhookArgs) *AutomationWebhook {
 	return &AutomationWebhook{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAutomationWebhook(name string, args AutomationWebhookArgs) *AutomationWe
 
 var _ terra.Resource = (*AutomationWebhook)(nil)
 
+// AutomationWebhook represents the Terraform resource azurerm_automation_webhook.
 type AutomationWebhook struct {
-	Name  string
-	Args  AutomationWebhookArgs
-	state *automationWebhookState
+	Name      string
+	Args      AutomationWebhookArgs
+	state     *automationWebhookState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AutomationWebhook].
 func (aw *AutomationWebhook) Type() string {
 	return "azurerm_automation_webhook"
 }
 
+// LocalName returns the local name for [AutomationWebhook].
 func (aw *AutomationWebhook) LocalName() string {
 	return aw.Name
 }
 
+// Configuration returns the configuration (args) for [AutomationWebhook].
 func (aw *AutomationWebhook) Configuration() interface{} {
 	return aw.Args
 }
 
+// DependOn is used for other resources to depend on [AutomationWebhook].
+func (aw *AutomationWebhook) DependOn() terra.Reference {
+	return terra.ReferenceResource(aw)
+}
+
+// Dependencies returns the list of resources [AutomationWebhook] depends_on.
+func (aw *AutomationWebhook) Dependencies() terra.Dependencies {
+	return aw.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AutomationWebhook].
+func (aw *AutomationWebhook) LifecycleManagement() *terra.Lifecycle {
+	return aw.Lifecycle
+}
+
+// Attributes returns the attributes for [AutomationWebhook].
 func (aw *AutomationWebhook) Attributes() automationWebhookAttributes {
 	return automationWebhookAttributes{ref: terra.ReferenceResource(aw)}
 }
 
+// ImportState imports the given attribute values into [AutomationWebhook]'s state.
 func (aw *AutomationWebhook) ImportState(av io.Reader) error {
 	aw.state = &automationWebhookState{}
 	if err := json.NewDecoder(av).Decode(aw.state); err != nil {
@@ -49,10 +73,12 @@ func (aw *AutomationWebhook) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AutomationWebhook] has state.
 func (aw *AutomationWebhook) State() (*automationWebhookState, bool) {
 	return aw.state, aw.state != nil
 }
 
+// StateMust returns the state for [AutomationWebhook]. Panics if the state is nil.
 func (aw *AutomationWebhook) StateMust() *automationWebhookState {
 	if aw.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", aw.Type(), aw.LocalName()))
@@ -60,10 +86,7 @@ func (aw *AutomationWebhook) StateMust() *automationWebhookState {
 	return aw.state
 }
 
-func (aw *AutomationWebhook) DependOn() terra.Reference {
-	return terra.ReferenceResource(aw)
-}
-
+// AutomationWebhookArgs contains the configurations for azurerm_automation_webhook.
 type AutomationWebhookArgs struct {
 	// AutomationAccountName: string, required
 	AutomationAccountName terra.StringValue `hcl:"automation_account_name,attr" validate:"required"`
@@ -87,55 +110,63 @@ type AutomationWebhookArgs struct {
 	Uri terra.StringValue `hcl:"uri,attr"`
 	// Timeouts: optional
 	Timeouts *automationwebhook.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that AutomationWebhook depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type automationWebhookAttributes struct {
 	ref terra.Reference
 }
 
+// AutomationAccountName returns a reference to field automation_account_name of azurerm_automation_webhook.
 func (aw automationWebhookAttributes) AutomationAccountName() terra.StringValue {
-	return terra.ReferenceString(aw.ref.Append("automation_account_name"))
+	return terra.ReferenceAsString(aw.ref.Append("automation_account_name"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_automation_webhook.
 func (aw automationWebhookAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(aw.ref.Append("enabled"))
+	return terra.ReferenceAsBool(aw.ref.Append("enabled"))
 }
 
+// ExpiryTime returns a reference to field expiry_time of azurerm_automation_webhook.
 func (aw automationWebhookAttributes) ExpiryTime() terra.StringValue {
-	return terra.ReferenceString(aw.ref.Append("expiry_time"))
+	return terra.ReferenceAsString(aw.ref.Append("expiry_time"))
 }
 
+// Id returns a reference to field id of azurerm_automation_webhook.
 func (aw automationWebhookAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(aw.ref.Append("id"))
+	return terra.ReferenceAsString(aw.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_automation_webhook.
 func (aw automationWebhookAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(aw.ref.Append("name"))
+	return terra.ReferenceAsString(aw.ref.Append("name"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_automation_webhook.
 func (aw automationWebhookAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](aw.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](aw.ref.Append("parameters"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_automation_webhook.
 func (aw automationWebhookAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(aw.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(aw.ref.Append("resource_group_name"))
 }
 
+// RunOnWorkerGroup returns a reference to field run_on_worker_group of azurerm_automation_webhook.
 func (aw automationWebhookAttributes) RunOnWorkerGroup() terra.StringValue {
-	return terra.ReferenceString(aw.ref.Append("run_on_worker_group"))
+	return terra.ReferenceAsString(aw.ref.Append("run_on_worker_group"))
 }
 
+// RunbookName returns a reference to field runbook_name of azurerm_automation_webhook.
 func (aw automationWebhookAttributes) RunbookName() terra.StringValue {
-	return terra.ReferenceString(aw.ref.Append("runbook_name"))
+	return terra.ReferenceAsString(aw.ref.Append("runbook_name"))
 }
 
+// Uri returns a reference to field uri of azurerm_automation_webhook.
 func (aw automationWebhookAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(aw.ref.Append("uri"))
+	return terra.ReferenceAsString(aw.ref.Append("uri"))
 }
 
 func (aw automationWebhookAttributes) Timeouts() automationwebhook.TimeoutsAttributes {
-	return terra.ReferenceSingle[automationwebhook.TimeoutsAttributes](aw.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[automationwebhook.TimeoutsAttributes](aw.ref.Append("timeouts"))
 }
 
 type automationWebhookState struct {

@@ -51,136 +51,136 @@ type DatadogOrganizationAttributes struct {
 	ref terra.Reference
 }
 
-func (do DatadogOrganizationAttributes) InternalRef() terra.Reference {
-	return do.ref
+func (do DatadogOrganizationAttributes) InternalRef() (terra.Reference, error) {
+	return do.ref, nil
 }
 
 func (do DatadogOrganizationAttributes) InternalWithRef(ref terra.Reference) DatadogOrganizationAttributes {
 	return DatadogOrganizationAttributes{ref: ref}
 }
 
-func (do DatadogOrganizationAttributes) InternalTokens() hclwrite.Tokens {
+func (do DatadogOrganizationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return do.ref.InternalTokens()
 }
 
 func (do DatadogOrganizationAttributes) ApiKey() terra.StringValue {
-	return terra.ReferenceString(do.ref.Append("api_key"))
+	return terra.ReferenceAsString(do.ref.Append("api_key"))
 }
 
 func (do DatadogOrganizationAttributes) ApplicationKey() terra.StringValue {
-	return terra.ReferenceString(do.ref.Append("application_key"))
+	return terra.ReferenceAsString(do.ref.Append("application_key"))
 }
 
 func (do DatadogOrganizationAttributes) EnterpriseAppId() terra.StringValue {
-	return terra.ReferenceString(do.ref.Append("enterprise_app_id"))
+	return terra.ReferenceAsString(do.ref.Append("enterprise_app_id"))
 }
 
 func (do DatadogOrganizationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(do.ref.Append("id"))
+	return terra.ReferenceAsString(do.ref.Append("id"))
 }
 
 func (do DatadogOrganizationAttributes) LinkingAuthCode() terra.StringValue {
-	return terra.ReferenceString(do.ref.Append("linking_auth_code"))
+	return terra.ReferenceAsString(do.ref.Append("linking_auth_code"))
 }
 
 func (do DatadogOrganizationAttributes) LinkingClientId() terra.StringValue {
-	return terra.ReferenceString(do.ref.Append("linking_client_id"))
+	return terra.ReferenceAsString(do.ref.Append("linking_client_id"))
 }
 
 func (do DatadogOrganizationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(do.ref.Append("name"))
+	return terra.ReferenceAsString(do.ref.Append("name"))
 }
 
 func (do DatadogOrganizationAttributes) RedirectUri() terra.StringValue {
-	return terra.ReferenceString(do.ref.Append("redirect_uri"))
+	return terra.ReferenceAsString(do.ref.Append("redirect_uri"))
 }
 
 type IdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (i IdentityAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IdentityAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IdentityAttributes) InternalWithRef(ref terra.Reference) IdentityAttributes {
 	return IdentityAttributes{ref: ref}
 }
 
-func (i IdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (i IdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IdentityAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("principal_id"))
+	return terra.ReferenceAsString(i.ref.Append("principal_id"))
 }
 
 func (i IdentityAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(i.ref.Append("tenant_id"))
 }
 
 func (i IdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("type"))
+	return terra.ReferenceAsString(i.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type UserAttributes struct {
 	ref terra.Reference
 }
 
-func (u UserAttributes) InternalRef() terra.Reference {
-	return u.ref
+func (u UserAttributes) InternalRef() (terra.Reference, error) {
+	return u.ref, nil
 }
 
 func (u UserAttributes) InternalWithRef(ref terra.Reference) UserAttributes {
 	return UserAttributes{ref: ref}
 }
 
-func (u UserAttributes) InternalTokens() hclwrite.Tokens {
+func (u UserAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return u.ref.InternalTokens()
 }
 
 func (u UserAttributes) Email() terra.StringValue {
-	return terra.ReferenceString(u.ref.Append("email"))
+	return terra.ReferenceAsString(u.ref.Append("email"))
 }
 
 func (u UserAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(u.ref.Append("name"))
+	return terra.ReferenceAsString(u.ref.Append("name"))
 }
 
 func (u UserAttributes) PhoneNumber() terra.StringValue {
-	return terra.ReferenceString(u.ref.Append("phone_number"))
+	return terra.ReferenceAsString(u.ref.Append("phone_number"))
 }
 
 type DatadogOrganizationState struct {

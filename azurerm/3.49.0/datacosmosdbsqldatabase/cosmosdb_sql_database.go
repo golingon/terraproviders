@@ -18,40 +18,40 @@ type AutoscaleSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (as AutoscaleSettingsAttributes) InternalRef() terra.Reference {
-	return as.ref
+func (as AutoscaleSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return as.ref, nil
 }
 
 func (as AutoscaleSettingsAttributes) InternalWithRef(ref terra.Reference) AutoscaleSettingsAttributes {
 	return AutoscaleSettingsAttributes{ref: ref}
 }
 
-func (as AutoscaleSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (as AutoscaleSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return as.ref.InternalTokens()
 }
 
 func (as AutoscaleSettingsAttributes) MaxThroughput() terra.NumberValue {
-	return terra.ReferenceNumber(as.ref.Append("max_throughput"))
+	return terra.ReferenceAsNumber(as.ref.Append("max_throughput"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type AutoscaleSettingsState struct {

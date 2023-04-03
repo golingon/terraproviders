@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewDataprocClusterIamPolicy creates a new instance of [DataprocClusterIamPolicy].
 func NewDataprocClusterIamPolicy(name string, args DataprocClusterIamPolicyArgs) *DataprocClusterIamPolicy {
 	return &DataprocClusterIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewDataprocClusterIamPolicy(name string, args DataprocClusterIamPolicyArgs)
 
 var _ terra.Resource = (*DataprocClusterIamPolicy)(nil)
 
+// DataprocClusterIamPolicy represents the Terraform resource google_dataproc_cluster_iam_policy.
 type DataprocClusterIamPolicy struct {
-	Name  string
-	Args  DataprocClusterIamPolicyArgs
-	state *dataprocClusterIamPolicyState
+	Name      string
+	Args      DataprocClusterIamPolicyArgs
+	state     *dataprocClusterIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataprocClusterIamPolicy].
 func (dcip *DataprocClusterIamPolicy) Type() string {
 	return "google_dataproc_cluster_iam_policy"
 }
 
+// LocalName returns the local name for [DataprocClusterIamPolicy].
 func (dcip *DataprocClusterIamPolicy) LocalName() string {
 	return dcip.Name
 }
 
+// Configuration returns the configuration (args) for [DataprocClusterIamPolicy].
 func (dcip *DataprocClusterIamPolicy) Configuration() interface{} {
 	return dcip.Args
 }
 
+// DependOn is used for other resources to depend on [DataprocClusterIamPolicy].
+func (dcip *DataprocClusterIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(dcip)
+}
+
+// Dependencies returns the list of resources [DataprocClusterIamPolicy] depends_on.
+func (dcip *DataprocClusterIamPolicy) Dependencies() terra.Dependencies {
+	return dcip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataprocClusterIamPolicy].
+func (dcip *DataprocClusterIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return dcip.Lifecycle
+}
+
+// Attributes returns the attributes for [DataprocClusterIamPolicy].
 func (dcip *DataprocClusterIamPolicy) Attributes() dataprocClusterIamPolicyAttributes {
 	return dataprocClusterIamPolicyAttributes{ref: terra.ReferenceResource(dcip)}
 }
 
+// ImportState imports the given attribute values into [DataprocClusterIamPolicy]'s state.
 func (dcip *DataprocClusterIamPolicy) ImportState(av io.Reader) error {
 	dcip.state = &dataprocClusterIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(dcip.state); err != nil {
@@ -48,10 +72,12 @@ func (dcip *DataprocClusterIamPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataprocClusterIamPolicy] has state.
 func (dcip *DataprocClusterIamPolicy) State() (*dataprocClusterIamPolicyState, bool) {
 	return dcip.state, dcip.state != nil
 }
 
+// StateMust returns the state for [DataprocClusterIamPolicy]. Panics if the state is nil.
 func (dcip *DataprocClusterIamPolicy) StateMust() *dataprocClusterIamPolicyState {
 	if dcip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dcip.Type(), dcip.LocalName()))
@@ -59,10 +85,7 @@ func (dcip *DataprocClusterIamPolicy) StateMust() *dataprocClusterIamPolicyState
 	return dcip.state
 }
 
-func (dcip *DataprocClusterIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(dcip)
-}
-
+// DataprocClusterIamPolicyArgs contains the configurations for google_dataproc_cluster_iam_policy.
 type DataprocClusterIamPolicyArgs struct {
 	// Cluster: string, required
 	Cluster terra.StringValue `hcl:"cluster,attr" validate:"required"`
@@ -74,35 +97,39 @@ type DataprocClusterIamPolicyArgs struct {
 	Project terra.StringValue `hcl:"project,attr"`
 	// Region: string, optional
 	Region terra.StringValue `hcl:"region,attr"`
-	// DependsOn contains resources that DataprocClusterIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataprocClusterIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Cluster returns a reference to field cluster of google_dataproc_cluster_iam_policy.
 func (dcip dataprocClusterIamPolicyAttributes) Cluster() terra.StringValue {
-	return terra.ReferenceString(dcip.ref.Append("cluster"))
+	return terra.ReferenceAsString(dcip.ref.Append("cluster"))
 }
 
+// Etag returns a reference to field etag of google_dataproc_cluster_iam_policy.
 func (dcip dataprocClusterIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(dcip.ref.Append("etag"))
+	return terra.ReferenceAsString(dcip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_dataproc_cluster_iam_policy.
 func (dcip dataprocClusterIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dcip.ref.Append("id"))
+	return terra.ReferenceAsString(dcip.ref.Append("id"))
 }
 
+// PolicyData returns a reference to field policy_data of google_dataproc_cluster_iam_policy.
 func (dcip dataprocClusterIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(dcip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(dcip.ref.Append("policy_data"))
 }
 
+// Project returns a reference to field project of google_dataproc_cluster_iam_policy.
 func (dcip dataprocClusterIamPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(dcip.ref.Append("project"))
+	return terra.ReferenceAsString(dcip.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_dataproc_cluster_iam_policy.
 func (dcip dataprocClusterIamPolicyAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(dcip.ref.Append("region"))
+	return terra.ReferenceAsString(dcip.ref.Append("region"))
 }
 
 type dataprocClusterIamPolicyState struct {

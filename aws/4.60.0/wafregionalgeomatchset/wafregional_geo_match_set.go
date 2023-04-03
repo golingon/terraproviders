@@ -26,7 +26,7 @@ func (gmc GeoMatchConstraintAttributes) InternalWithRef(ref terra.Reference) Geo
 	return GeoMatchConstraintAttributes{ref: ref}
 }
 
-func (gmc GeoMatchConstraintAttributes) InternalTokens() hclwrite.Tokens {
+func (gmc GeoMatchConstraintAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gmc.ref.InternalTokens()
 }
 

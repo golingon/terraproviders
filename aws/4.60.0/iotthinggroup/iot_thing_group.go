@@ -38,7 +38,7 @@ func (m MetadataAttributes) InternalWithRef(ref terra.Reference) MetadataAttribu
 	return MetadataAttributes{ref: ref}
 }
 
-func (m MetadataAttributes) InternalTokens() hclwrite.Tokens {
+func (m MetadataAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -66,7 +66,7 @@ func (rtpg RootToParentGroupsAttributes) InternalWithRef(ref terra.Reference) Ro
 	return RootToParentGroupsAttributes{ref: ref}
 }
 
-func (rtpg RootToParentGroupsAttributes) InternalTokens() hclwrite.Tokens {
+func (rtpg RootToParentGroupsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rtpg.ref.InternalTokens()
 }
 
@@ -90,7 +90,7 @@ func (p PropertiesAttributes) InternalWithRef(ref terra.Reference) PropertiesAtt
 	return PropertiesAttributes{ref: ref}
 }
 
-func (p PropertiesAttributes) InternalTokens() hclwrite.Tokens {
+func (p PropertiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -114,7 +114,7 @@ func (ap AttributePayloadAttributes) InternalWithRef(ref terra.Reference) Attrib
 	return AttributePayloadAttributes{ref: ref}
 }
 
-func (ap AttributePayloadAttributes) InternalTokens() hclwrite.Tokens {
+func (ap AttributePayloadAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ap.ref.InternalTokens()
 }
 

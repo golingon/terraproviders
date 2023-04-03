@@ -48,7 +48,7 @@ func (dt DeploymentTargetsAttributes) InternalWithRef(ref terra.Reference) Deplo
 	return DeploymentTargetsAttributes{ref: ref}
 }
 
-func (dt DeploymentTargetsAttributes) InternalTokens() hclwrite.Tokens {
+func (dt DeploymentTargetsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dt.ref.InternalTokens()
 }
 
@@ -68,7 +68,7 @@ func (op OperationPreferencesAttributes) InternalWithRef(ref terra.Reference) Op
 	return OperationPreferencesAttributes{ref: ref}
 }
 
-func (op OperationPreferencesAttributes) InternalTokens() hclwrite.Tokens {
+func (op OperationPreferencesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return op.ref.InternalTokens()
 }
 
@@ -108,7 +108,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

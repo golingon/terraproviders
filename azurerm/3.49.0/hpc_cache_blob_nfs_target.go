@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewHpcCacheBlobNfsTarget creates a new instance of [HpcCacheBlobNfsTarget].
 func NewHpcCacheBlobNfsTarget(name string, args HpcCacheBlobNfsTargetArgs) *HpcCacheBlobNfsTarget {
 	return &HpcCacheBlobNfsTarget{
 		Args: args,
@@ -19,28 +20,51 @@ func NewHpcCacheBlobNfsTarget(name string, args HpcCacheBlobNfsTargetArgs) *HpcC
 
 var _ terra.Resource = (*HpcCacheBlobNfsTarget)(nil)
 
+// HpcCacheBlobNfsTarget represents the Terraform resource azurerm_hpc_cache_blob_nfs_target.
 type HpcCacheBlobNfsTarget struct {
-	Name  string
-	Args  HpcCacheBlobNfsTargetArgs
-	state *hpcCacheBlobNfsTargetState
+	Name      string
+	Args      HpcCacheBlobNfsTargetArgs
+	state     *hpcCacheBlobNfsTargetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [HpcCacheBlobNfsTarget].
 func (hcbnt *HpcCacheBlobNfsTarget) Type() string {
 	return "azurerm_hpc_cache_blob_nfs_target"
 }
 
+// LocalName returns the local name for [HpcCacheBlobNfsTarget].
 func (hcbnt *HpcCacheBlobNfsTarget) LocalName() string {
 	return hcbnt.Name
 }
 
+// Configuration returns the configuration (args) for [HpcCacheBlobNfsTarget].
 func (hcbnt *HpcCacheBlobNfsTarget) Configuration() interface{} {
 	return hcbnt.Args
 }
 
+// DependOn is used for other resources to depend on [HpcCacheBlobNfsTarget].
+func (hcbnt *HpcCacheBlobNfsTarget) DependOn() terra.Reference {
+	return terra.ReferenceResource(hcbnt)
+}
+
+// Dependencies returns the list of resources [HpcCacheBlobNfsTarget] depends_on.
+func (hcbnt *HpcCacheBlobNfsTarget) Dependencies() terra.Dependencies {
+	return hcbnt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [HpcCacheBlobNfsTarget].
+func (hcbnt *HpcCacheBlobNfsTarget) LifecycleManagement() *terra.Lifecycle {
+	return hcbnt.Lifecycle
+}
+
+// Attributes returns the attributes for [HpcCacheBlobNfsTarget].
 func (hcbnt *HpcCacheBlobNfsTarget) Attributes() hpcCacheBlobNfsTargetAttributes {
 	return hpcCacheBlobNfsTargetAttributes{ref: terra.ReferenceResource(hcbnt)}
 }
 
+// ImportState imports the given attribute values into [HpcCacheBlobNfsTarget]'s state.
 func (hcbnt *HpcCacheBlobNfsTarget) ImportState(av io.Reader) error {
 	hcbnt.state = &hpcCacheBlobNfsTargetState{}
 	if err := json.NewDecoder(av).Decode(hcbnt.state); err != nil {
@@ -49,10 +73,12 @@ func (hcbnt *HpcCacheBlobNfsTarget) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [HpcCacheBlobNfsTarget] has state.
 func (hcbnt *HpcCacheBlobNfsTarget) State() (*hpcCacheBlobNfsTargetState, bool) {
 	return hcbnt.state, hcbnt.state != nil
 }
 
+// StateMust returns the state for [HpcCacheBlobNfsTarget]. Panics if the state is nil.
 func (hcbnt *HpcCacheBlobNfsTarget) StateMust() *hpcCacheBlobNfsTargetState {
 	if hcbnt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", hcbnt.Type(), hcbnt.LocalName()))
@@ -60,10 +86,7 @@ func (hcbnt *HpcCacheBlobNfsTarget) StateMust() *hpcCacheBlobNfsTargetState {
 	return hcbnt.state
 }
 
-func (hcbnt *HpcCacheBlobNfsTarget) DependOn() terra.Reference {
-	return terra.ReferenceResource(hcbnt)
-}
-
+// HpcCacheBlobNfsTargetArgs contains the configurations for azurerm_hpc_cache_blob_nfs_target.
 type HpcCacheBlobNfsTargetArgs struct {
 	// AccessPolicyName: string, optional
 	AccessPolicyName terra.StringValue `hcl:"access_policy_name,attr"`
@@ -83,47 +106,53 @@ type HpcCacheBlobNfsTargetArgs struct {
 	UsageModel terra.StringValue `hcl:"usage_model,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *hpccacheblobnfstarget.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that HpcCacheBlobNfsTarget depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type hpcCacheBlobNfsTargetAttributes struct {
 	ref terra.Reference
 }
 
+// AccessPolicyName returns a reference to field access_policy_name of azurerm_hpc_cache_blob_nfs_target.
 func (hcbnt hpcCacheBlobNfsTargetAttributes) AccessPolicyName() terra.StringValue {
-	return terra.ReferenceString(hcbnt.ref.Append("access_policy_name"))
+	return terra.ReferenceAsString(hcbnt.ref.Append("access_policy_name"))
 }
 
+// CacheName returns a reference to field cache_name of azurerm_hpc_cache_blob_nfs_target.
 func (hcbnt hpcCacheBlobNfsTargetAttributes) CacheName() terra.StringValue {
-	return terra.ReferenceString(hcbnt.ref.Append("cache_name"))
+	return terra.ReferenceAsString(hcbnt.ref.Append("cache_name"))
 }
 
+// Id returns a reference to field id of azurerm_hpc_cache_blob_nfs_target.
 func (hcbnt hpcCacheBlobNfsTargetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(hcbnt.ref.Append("id"))
+	return terra.ReferenceAsString(hcbnt.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_hpc_cache_blob_nfs_target.
 func (hcbnt hpcCacheBlobNfsTargetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(hcbnt.ref.Append("name"))
+	return terra.ReferenceAsString(hcbnt.ref.Append("name"))
 }
 
+// NamespacePath returns a reference to field namespace_path of azurerm_hpc_cache_blob_nfs_target.
 func (hcbnt hpcCacheBlobNfsTargetAttributes) NamespacePath() terra.StringValue {
-	return terra.ReferenceString(hcbnt.ref.Append("namespace_path"))
+	return terra.ReferenceAsString(hcbnt.ref.Append("namespace_path"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_hpc_cache_blob_nfs_target.
 func (hcbnt hpcCacheBlobNfsTargetAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(hcbnt.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(hcbnt.ref.Append("resource_group_name"))
 }
 
+// StorageContainerId returns a reference to field storage_container_id of azurerm_hpc_cache_blob_nfs_target.
 func (hcbnt hpcCacheBlobNfsTargetAttributes) StorageContainerId() terra.StringValue {
-	return terra.ReferenceString(hcbnt.ref.Append("storage_container_id"))
+	return terra.ReferenceAsString(hcbnt.ref.Append("storage_container_id"))
 }
 
+// UsageModel returns a reference to field usage_model of azurerm_hpc_cache_blob_nfs_target.
 func (hcbnt hpcCacheBlobNfsTargetAttributes) UsageModel() terra.StringValue {
-	return terra.ReferenceString(hcbnt.ref.Append("usage_model"))
+	return terra.ReferenceAsString(hcbnt.ref.Append("usage_model"))
 }
 
 func (hcbnt hpcCacheBlobNfsTargetAttributes) Timeouts() hpccacheblobnfstarget.TimeoutsAttributes {
-	return terra.ReferenceSingle[hpccacheblobnfstarget.TimeoutsAttributes](hcbnt.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[hpccacheblobnfstarget.TimeoutsAttributes](hcbnt.ref.Append("timeouts"))
 }
 
 type hpcCacheBlobNfsTargetState struct {

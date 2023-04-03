@@ -33,7 +33,7 @@ func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes 
 	return FilterAttributes{ref: ref}
 }
 
-func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
+func (f FilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -57,7 +57,7 @@ func (t TieringAttributes) InternalWithRef(ref terra.Reference) TieringAttribute
 	return TieringAttributes{ref: ref}
 }
 
-func (t TieringAttributes) InternalTokens() hclwrite.Tokens {
+func (t TieringAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

@@ -39,96 +39,96 @@ type AllowAttributes struct {
 	ref terra.Reference
 }
 
-func (a AllowAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AllowAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AllowAttributes) InternalWithRef(ref terra.Reference) AllowAttributes {
 	return AllowAttributes{ref: ref}
 }
 
-func (a AllowAttributes) InternalTokens() hclwrite.Tokens {
+func (a AllowAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a AllowAttributes) Ports() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](a.ref.Append("ports"))
+	return terra.ReferenceAsList[terra.StringValue](a.ref.Append("ports"))
 }
 
 func (a AllowAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("protocol"))
+	return terra.ReferenceAsString(a.ref.Append("protocol"))
 }
 
 type DenyAttributes struct {
 	ref terra.Reference
 }
 
-func (d DenyAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DenyAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DenyAttributes) InternalWithRef(ref terra.Reference) DenyAttributes {
 	return DenyAttributes{ref: ref}
 }
 
-func (d DenyAttributes) InternalTokens() hclwrite.Tokens {
+func (d DenyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d DenyAttributes) Ports() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](d.ref.Append("ports"))
+	return terra.ReferenceAsList[terra.StringValue](d.ref.Append("ports"))
 }
 
 func (d DenyAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("protocol"))
+	return terra.ReferenceAsString(d.ref.Append("protocol"))
 }
 
 type LogConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (lc LogConfigAttributes) InternalRef() terra.Reference {
-	return lc.ref
+func (lc LogConfigAttributes) InternalRef() (terra.Reference, error) {
+	return lc.ref, nil
 }
 
 func (lc LogConfigAttributes) InternalWithRef(ref terra.Reference) LogConfigAttributes {
 	return LogConfigAttributes{ref: ref}
 }
 
-func (lc LogConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (lc LogConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lc.ref.InternalTokens()
 }
 
 func (lc LogConfigAttributes) Metadata() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("metadata"))
+	return terra.ReferenceAsString(lc.ref.Append("metadata"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AllowState struct {

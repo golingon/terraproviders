@@ -33,7 +33,7 @@ func (pb PermissionsBoundaryAttributes) InternalWithRef(ref terra.Reference) Per
 	return PermissionsBoundaryAttributes{ref: ref}
 }
 
-func (pb PermissionsBoundaryAttributes) InternalTokens() hclwrite.Tokens {
+func (pb PermissionsBoundaryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pb.ref.InternalTokens()
 }
 
@@ -57,7 +57,7 @@ func (cmpr CustomerManagedPolicyReferenceAttributes) InternalWithRef(ref terra.R
 	return CustomerManagedPolicyReferenceAttributes{ref: ref}
 }
 
-func (cmpr CustomerManagedPolicyReferenceAttributes) InternalTokens() hclwrite.Tokens {
+func (cmpr CustomerManagedPolicyReferenceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cmpr.ref.InternalTokens()
 }
 

@@ -45,7 +45,7 @@ func (amc AppMonitorConfigurationAttributes) InternalWithRef(ref terra.Reference
 	return AppMonitorConfigurationAttributes{ref: ref}
 }
 
-func (amc AppMonitorConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (amc AppMonitorConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return amc.ref.InternalTokens()
 }
 
@@ -97,7 +97,7 @@ func (ce CustomEventsAttributes) InternalWithRef(ref terra.Reference) CustomEven
 	return CustomEventsAttributes{ref: ref}
 }
 
-func (ce CustomEventsAttributes) InternalTokens() hclwrite.Tokens {
+func (ce CustomEventsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ce.ref.InternalTokens()
 }
 

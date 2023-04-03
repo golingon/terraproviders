@@ -40,7 +40,7 @@ func (cc ConsumptionConfigurationAttributes) InternalWithRef(ref terra.Reference
 	return ConsumptionConfigurationAttributes{ref: ref}
 }
 
-func (cc ConsumptionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (cc ConsumptionConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -68,7 +68,7 @@ func (bc BorrowConfigurationAttributes) InternalWithRef(ref terra.Reference) Bor
 	return BorrowConfigurationAttributes{ref: ref}
 }
 
-func (bc BorrowConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (bc BorrowConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bc.ref.InternalTokens()
 }
 
@@ -92,7 +92,7 @@ func (pc ProvisionalConfigurationAttributes) InternalWithRef(ref terra.Reference
 	return ProvisionalConfigurationAttributes{ref: ref}
 }
 
-func (pc ProvisionalConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (pc ProvisionalConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
@@ -112,7 +112,7 @@ func (e EntitlementsAttributes) InternalWithRef(ref terra.Reference) Entitlement
 	return EntitlementsAttributes{ref: ref}
 }
 
-func (e EntitlementsAttributes) InternalTokens() hclwrite.Tokens {
+func (e EntitlementsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -148,7 +148,7 @@ func (i IssuerAttributes) InternalWithRef(ref terra.Reference) IssuerAttributes 
 	return IssuerAttributes{ref: ref}
 }
 
-func (i IssuerAttributes) InternalTokens() hclwrite.Tokens {
+func (i IssuerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
@@ -176,7 +176,7 @@ func (lm LicenseMetadataAttributes) InternalWithRef(ref terra.Reference) License
 	return LicenseMetadataAttributes{ref: ref}
 }
 
-func (lm LicenseMetadataAttributes) InternalTokens() hclwrite.Tokens {
+func (lm LicenseMetadataAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lm.ref.InternalTokens()
 }
 
@@ -200,7 +200,7 @@ func (rm ReceivedMetadataAttributes) InternalWithRef(ref terra.Reference) Receiv
 	return ReceivedMetadataAttributes{ref: ref}
 }
 
-func (rm ReceivedMetadataAttributes) InternalTokens() hclwrite.Tokens {
+func (rm ReceivedMetadataAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rm.ref.InternalTokens()
 }
 
@@ -228,7 +228,7 @@ func (v ValidityAttributes) InternalWithRef(ref terra.Reference) ValidityAttribu
 	return ValidityAttributes{ref: ref}
 }
 
-func (v ValidityAttributes) InternalTokens() hclwrite.Tokens {
+func (v ValidityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 

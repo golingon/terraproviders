@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewVertexAiIndex creates a new instance of [VertexAiIndex].
 func NewVertexAiIndex(name string, args VertexAiIndexArgs) *VertexAiIndex {
 	return &VertexAiIndex{
 		Args: args,
@@ -19,28 +20,51 @@ func NewVertexAiIndex(name string, args VertexAiIndexArgs) *VertexAiIndex {
 
 var _ terra.Resource = (*VertexAiIndex)(nil)
 
+// VertexAiIndex represents the Terraform resource google_vertex_ai_index.
 type VertexAiIndex struct {
-	Name  string
-	Args  VertexAiIndexArgs
-	state *vertexAiIndexState
+	Name      string
+	Args      VertexAiIndexArgs
+	state     *vertexAiIndexState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VertexAiIndex].
 func (vai *VertexAiIndex) Type() string {
 	return "google_vertex_ai_index"
 }
 
+// LocalName returns the local name for [VertexAiIndex].
 func (vai *VertexAiIndex) LocalName() string {
 	return vai.Name
 }
 
+// Configuration returns the configuration (args) for [VertexAiIndex].
 func (vai *VertexAiIndex) Configuration() interface{} {
 	return vai.Args
 }
 
+// DependOn is used for other resources to depend on [VertexAiIndex].
+func (vai *VertexAiIndex) DependOn() terra.Reference {
+	return terra.ReferenceResource(vai)
+}
+
+// Dependencies returns the list of resources [VertexAiIndex] depends_on.
+func (vai *VertexAiIndex) Dependencies() terra.Dependencies {
+	return vai.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VertexAiIndex].
+func (vai *VertexAiIndex) LifecycleManagement() *terra.Lifecycle {
+	return vai.Lifecycle
+}
+
+// Attributes returns the attributes for [VertexAiIndex].
 func (vai *VertexAiIndex) Attributes() vertexAiIndexAttributes {
 	return vertexAiIndexAttributes{ref: terra.ReferenceResource(vai)}
 }
 
+// ImportState imports the given attribute values into [VertexAiIndex]'s state.
 func (vai *VertexAiIndex) ImportState(av io.Reader) error {
 	vai.state = &vertexAiIndexState{}
 	if err := json.NewDecoder(av).Decode(vai.state); err != nil {
@@ -49,10 +73,12 @@ func (vai *VertexAiIndex) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [VertexAiIndex] has state.
 func (vai *VertexAiIndex) State() (*vertexAiIndexState, bool) {
 	return vai.state, vai.state != nil
 }
 
+// StateMust returns the state for [VertexAiIndex]. Panics if the state is nil.
 func (vai *VertexAiIndex) StateMust() *vertexAiIndexState {
 	if vai.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", vai.Type(), vai.LocalName()))
@@ -60,10 +86,7 @@ func (vai *VertexAiIndex) StateMust() *vertexAiIndexState {
 	return vai.state
 }
 
-func (vai *VertexAiIndex) DependOn() terra.Reference {
-	return terra.ReferenceResource(vai)
-}
-
+// VertexAiIndexArgs contains the configurations for google_vertex_ai_index.
 type VertexAiIndexArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -87,75 +110,85 @@ type VertexAiIndexArgs struct {
 	Metadata *vertexaiindex.Metadata `hcl:"metadata,block"`
 	// Timeouts: optional
 	Timeouts *vertexaiindex.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that VertexAiIndex depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type vertexAiIndexAttributes struct {
 	ref terra.Reference
 }
 
+// CreateTime returns a reference to field create_time of google_vertex_ai_index.
 func (vai vertexAiIndexAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(vai.ref.Append("create_time"))
+	return terra.ReferenceAsString(vai.ref.Append("create_time"))
 }
 
+// Description returns a reference to field description of google_vertex_ai_index.
 func (vai vertexAiIndexAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(vai.ref.Append("description"))
+	return terra.ReferenceAsString(vai.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of google_vertex_ai_index.
 func (vai vertexAiIndexAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(vai.ref.Append("display_name"))
+	return terra.ReferenceAsString(vai.ref.Append("display_name"))
 }
 
+// Etag returns a reference to field etag of google_vertex_ai_index.
 func (vai vertexAiIndexAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(vai.ref.Append("etag"))
+	return terra.ReferenceAsString(vai.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_vertex_ai_index.
 func (vai vertexAiIndexAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vai.ref.Append("id"))
+	return terra.ReferenceAsString(vai.ref.Append("id"))
 }
 
+// IndexUpdateMethod returns a reference to field index_update_method of google_vertex_ai_index.
 func (vai vertexAiIndexAttributes) IndexUpdateMethod() terra.StringValue {
-	return terra.ReferenceString(vai.ref.Append("index_update_method"))
+	return terra.ReferenceAsString(vai.ref.Append("index_update_method"))
 }
 
+// Labels returns a reference to field labels of google_vertex_ai_index.
 func (vai vertexAiIndexAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](vai.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](vai.ref.Append("labels"))
 }
 
+// MetadataSchemaUri returns a reference to field metadata_schema_uri of google_vertex_ai_index.
 func (vai vertexAiIndexAttributes) MetadataSchemaUri() terra.StringValue {
-	return terra.ReferenceString(vai.ref.Append("metadata_schema_uri"))
+	return terra.ReferenceAsString(vai.ref.Append("metadata_schema_uri"))
 }
 
+// Name returns a reference to field name of google_vertex_ai_index.
 func (vai vertexAiIndexAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(vai.ref.Append("name"))
+	return terra.ReferenceAsString(vai.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_vertex_ai_index.
 func (vai vertexAiIndexAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(vai.ref.Append("project"))
+	return terra.ReferenceAsString(vai.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_vertex_ai_index.
 func (vai vertexAiIndexAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(vai.ref.Append("region"))
+	return terra.ReferenceAsString(vai.ref.Append("region"))
 }
 
+// UpdateTime returns a reference to field update_time of google_vertex_ai_index.
 func (vai vertexAiIndexAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(vai.ref.Append("update_time"))
+	return terra.ReferenceAsString(vai.ref.Append("update_time"))
 }
 
 func (vai vertexAiIndexAttributes) DeployedIndexes() terra.ListValue[vertexaiindex.DeployedIndexesAttributes] {
-	return terra.ReferenceList[vertexaiindex.DeployedIndexesAttributes](vai.ref.Append("deployed_indexes"))
+	return terra.ReferenceAsList[vertexaiindex.DeployedIndexesAttributes](vai.ref.Append("deployed_indexes"))
 }
 
 func (vai vertexAiIndexAttributes) IndexStats() terra.ListValue[vertexaiindex.IndexStatsAttributes] {
-	return terra.ReferenceList[vertexaiindex.IndexStatsAttributes](vai.ref.Append("index_stats"))
+	return terra.ReferenceAsList[vertexaiindex.IndexStatsAttributes](vai.ref.Append("index_stats"))
 }
 
 func (vai vertexAiIndexAttributes) Metadata() terra.ListValue[vertexaiindex.MetadataAttributes] {
-	return terra.ReferenceList[vertexaiindex.MetadataAttributes](vai.ref.Append("metadata"))
+	return terra.ReferenceAsList[vertexaiindex.MetadataAttributes](vai.ref.Append("metadata"))
 }
 
 func (vai vertexAiIndexAttributes) Timeouts() vertexaiindex.TimeoutsAttributes {
-	return terra.ReferenceSingle[vertexaiindex.TimeoutsAttributes](vai.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[vertexaiindex.TimeoutsAttributes](vai.ref.Append("timeouts"))
 }
 
 type vertexAiIndexState struct {

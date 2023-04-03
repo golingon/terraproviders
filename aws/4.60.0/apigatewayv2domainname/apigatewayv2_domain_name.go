@@ -44,7 +44,7 @@ func (dnc DomainNameConfigurationAttributes) InternalWithRef(ref terra.Reference
 	return DomainNameConfigurationAttributes{ref: ref}
 }
 
-func (dnc DomainNameConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (dnc DomainNameConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dnc.ref.InternalTokens()
 }
 
@@ -84,7 +84,7 @@ func (mta MutualTlsAuthenticationAttributes) InternalWithRef(ref terra.Reference
 	return MutualTlsAuthenticationAttributes{ref: ref}
 }
 
-func (mta MutualTlsAuthenticationAttributes) InternalTokens() hclwrite.Tokens {
+func (mta MutualTlsAuthenticationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mta.ref.InternalTokens()
 }
 
@@ -108,7 +108,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

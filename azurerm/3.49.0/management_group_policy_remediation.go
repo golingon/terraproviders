@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewManagementGroupPolicyRemediation creates a new instance of [ManagementGroupPolicyRemediation].
 func NewManagementGroupPolicyRemediation(name string, args ManagementGroupPolicyRemediationArgs) *ManagementGroupPolicyRemediation {
 	return &ManagementGroupPolicyRemediation{
 		Args: args,
@@ -19,28 +20,51 @@ func NewManagementGroupPolicyRemediation(name string, args ManagementGroupPolicy
 
 var _ terra.Resource = (*ManagementGroupPolicyRemediation)(nil)
 
+// ManagementGroupPolicyRemediation represents the Terraform resource azurerm_management_group_policy_remediation.
 type ManagementGroupPolicyRemediation struct {
-	Name  string
-	Args  ManagementGroupPolicyRemediationArgs
-	state *managementGroupPolicyRemediationState
+	Name      string
+	Args      ManagementGroupPolicyRemediationArgs
+	state     *managementGroupPolicyRemediationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ManagementGroupPolicyRemediation].
 func (mgpr *ManagementGroupPolicyRemediation) Type() string {
 	return "azurerm_management_group_policy_remediation"
 }
 
+// LocalName returns the local name for [ManagementGroupPolicyRemediation].
 func (mgpr *ManagementGroupPolicyRemediation) LocalName() string {
 	return mgpr.Name
 }
 
+// Configuration returns the configuration (args) for [ManagementGroupPolicyRemediation].
 func (mgpr *ManagementGroupPolicyRemediation) Configuration() interface{} {
 	return mgpr.Args
 }
 
+// DependOn is used for other resources to depend on [ManagementGroupPolicyRemediation].
+func (mgpr *ManagementGroupPolicyRemediation) DependOn() terra.Reference {
+	return terra.ReferenceResource(mgpr)
+}
+
+// Dependencies returns the list of resources [ManagementGroupPolicyRemediation] depends_on.
+func (mgpr *ManagementGroupPolicyRemediation) Dependencies() terra.Dependencies {
+	return mgpr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ManagementGroupPolicyRemediation].
+func (mgpr *ManagementGroupPolicyRemediation) LifecycleManagement() *terra.Lifecycle {
+	return mgpr.Lifecycle
+}
+
+// Attributes returns the attributes for [ManagementGroupPolicyRemediation].
 func (mgpr *ManagementGroupPolicyRemediation) Attributes() managementGroupPolicyRemediationAttributes {
 	return managementGroupPolicyRemediationAttributes{ref: terra.ReferenceResource(mgpr)}
 }
 
+// ImportState imports the given attribute values into [ManagementGroupPolicyRemediation]'s state.
 func (mgpr *ManagementGroupPolicyRemediation) ImportState(av io.Reader) error {
 	mgpr.state = &managementGroupPolicyRemediationState{}
 	if err := json.NewDecoder(av).Decode(mgpr.state); err != nil {
@@ -49,10 +73,12 @@ func (mgpr *ManagementGroupPolicyRemediation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ManagementGroupPolicyRemediation] has state.
 func (mgpr *ManagementGroupPolicyRemediation) State() (*managementGroupPolicyRemediationState, bool) {
 	return mgpr.state, mgpr.state != nil
 }
 
+// StateMust returns the state for [ManagementGroupPolicyRemediation]. Panics if the state is nil.
 func (mgpr *ManagementGroupPolicyRemediation) StateMust() *managementGroupPolicyRemediationState {
 	if mgpr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mgpr.Type(), mgpr.LocalName()))
@@ -60,10 +86,7 @@ func (mgpr *ManagementGroupPolicyRemediation) StateMust() *managementGroupPolicy
 	return mgpr.state
 }
 
-func (mgpr *ManagementGroupPolicyRemediation) DependOn() terra.Reference {
-	return terra.ReferenceResource(mgpr)
-}
-
+// ManagementGroupPolicyRemediationArgs contains the configurations for azurerm_management_group_policy_remediation.
 type ManagementGroupPolicyRemediationArgs struct {
 	// FailurePercentage: number, optional
 	FailurePercentage terra.NumberValue `hcl:"failure_percentage,attr"`
@@ -89,59 +112,68 @@ type ManagementGroupPolicyRemediationArgs struct {
 	ResourceDiscoveryMode terra.StringValue `hcl:"resource_discovery_mode,attr"`
 	// Timeouts: optional
 	Timeouts *managementgrouppolicyremediation.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ManagementGroupPolicyRemediation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type managementGroupPolicyRemediationAttributes struct {
 	ref terra.Reference
 }
 
+// FailurePercentage returns a reference to field failure_percentage of azurerm_management_group_policy_remediation.
 func (mgpr managementGroupPolicyRemediationAttributes) FailurePercentage() terra.NumberValue {
-	return terra.ReferenceNumber(mgpr.ref.Append("failure_percentage"))
+	return terra.ReferenceAsNumber(mgpr.ref.Append("failure_percentage"))
 }
 
+// Id returns a reference to field id of azurerm_management_group_policy_remediation.
 func (mgpr managementGroupPolicyRemediationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mgpr.ref.Append("id"))
+	return terra.ReferenceAsString(mgpr.ref.Append("id"))
 }
 
+// LocationFilters returns a reference to field location_filters of azurerm_management_group_policy_remediation.
 func (mgpr managementGroupPolicyRemediationAttributes) LocationFilters() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](mgpr.ref.Append("location_filters"))
+	return terra.ReferenceAsList[terra.StringValue](mgpr.ref.Append("location_filters"))
 }
 
+// ManagementGroupId returns a reference to field management_group_id of azurerm_management_group_policy_remediation.
 func (mgpr managementGroupPolicyRemediationAttributes) ManagementGroupId() terra.StringValue {
-	return terra.ReferenceString(mgpr.ref.Append("management_group_id"))
+	return terra.ReferenceAsString(mgpr.ref.Append("management_group_id"))
 }
 
+// Name returns a reference to field name of azurerm_management_group_policy_remediation.
 func (mgpr managementGroupPolicyRemediationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mgpr.ref.Append("name"))
+	return terra.ReferenceAsString(mgpr.ref.Append("name"))
 }
 
+// ParallelDeployments returns a reference to field parallel_deployments of azurerm_management_group_policy_remediation.
 func (mgpr managementGroupPolicyRemediationAttributes) ParallelDeployments() terra.NumberValue {
-	return terra.ReferenceNumber(mgpr.ref.Append("parallel_deployments"))
+	return terra.ReferenceAsNumber(mgpr.ref.Append("parallel_deployments"))
 }
 
+// PolicyAssignmentId returns a reference to field policy_assignment_id of azurerm_management_group_policy_remediation.
 func (mgpr managementGroupPolicyRemediationAttributes) PolicyAssignmentId() terra.StringValue {
-	return terra.ReferenceString(mgpr.ref.Append("policy_assignment_id"))
+	return terra.ReferenceAsString(mgpr.ref.Append("policy_assignment_id"))
 }
 
+// PolicyDefinitionId returns a reference to field policy_definition_id of azurerm_management_group_policy_remediation.
 func (mgpr managementGroupPolicyRemediationAttributes) PolicyDefinitionId() terra.StringValue {
-	return terra.ReferenceString(mgpr.ref.Append("policy_definition_id"))
+	return terra.ReferenceAsString(mgpr.ref.Append("policy_definition_id"))
 }
 
+// PolicyDefinitionReferenceId returns a reference to field policy_definition_reference_id of azurerm_management_group_policy_remediation.
 func (mgpr managementGroupPolicyRemediationAttributes) PolicyDefinitionReferenceId() terra.StringValue {
-	return terra.ReferenceString(mgpr.ref.Append("policy_definition_reference_id"))
+	return terra.ReferenceAsString(mgpr.ref.Append("policy_definition_reference_id"))
 }
 
+// ResourceCount returns a reference to field resource_count of azurerm_management_group_policy_remediation.
 func (mgpr managementGroupPolicyRemediationAttributes) ResourceCount() terra.NumberValue {
-	return terra.ReferenceNumber(mgpr.ref.Append("resource_count"))
+	return terra.ReferenceAsNumber(mgpr.ref.Append("resource_count"))
 }
 
+// ResourceDiscoveryMode returns a reference to field resource_discovery_mode of azurerm_management_group_policy_remediation.
 func (mgpr managementGroupPolicyRemediationAttributes) ResourceDiscoveryMode() terra.StringValue {
-	return terra.ReferenceString(mgpr.ref.Append("resource_discovery_mode"))
+	return terra.ReferenceAsString(mgpr.ref.Append("resource_discovery_mode"))
 }
 
 func (mgpr managementGroupPolicyRemediationAttributes) Timeouts() managementgrouppolicyremediation.TimeoutsAttributes {
-	return terra.ReferenceSingle[managementgrouppolicyremediation.TimeoutsAttributes](mgpr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[managementgrouppolicyremediation.TimeoutsAttributes](mgpr.ref.Append("timeouts"))
 }
 
 type managementGroupPolicyRemediationState struct {

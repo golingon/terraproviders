@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeTargetPool creates a new instance of [ComputeTargetPool].
 func NewComputeTargetPool(name string, args ComputeTargetPoolArgs) *ComputeTargetPool {
 	return &ComputeTargetPool{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeTargetPool(name string, args ComputeTargetPoolArgs) *ComputeTarge
 
 var _ terra.Resource = (*ComputeTargetPool)(nil)
 
+// ComputeTargetPool represents the Terraform resource google_compute_target_pool.
 type ComputeTargetPool struct {
-	Name  string
-	Args  ComputeTargetPoolArgs
-	state *computeTargetPoolState
+	Name      string
+	Args      ComputeTargetPoolArgs
+	state     *computeTargetPoolState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeTargetPool].
 func (ctp *ComputeTargetPool) Type() string {
 	return "google_compute_target_pool"
 }
 
+// LocalName returns the local name for [ComputeTargetPool].
 func (ctp *ComputeTargetPool) LocalName() string {
 	return ctp.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeTargetPool].
 func (ctp *ComputeTargetPool) Configuration() interface{} {
 	return ctp.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeTargetPool].
+func (ctp *ComputeTargetPool) DependOn() terra.Reference {
+	return terra.ReferenceResource(ctp)
+}
+
+// Dependencies returns the list of resources [ComputeTargetPool] depends_on.
+func (ctp *ComputeTargetPool) Dependencies() terra.Dependencies {
+	return ctp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeTargetPool].
+func (ctp *ComputeTargetPool) LifecycleManagement() *terra.Lifecycle {
+	return ctp.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeTargetPool].
 func (ctp *ComputeTargetPool) Attributes() computeTargetPoolAttributes {
 	return computeTargetPoolAttributes{ref: terra.ReferenceResource(ctp)}
 }
 
+// ImportState imports the given attribute values into [ComputeTargetPool]'s state.
 func (ctp *ComputeTargetPool) ImportState(av io.Reader) error {
 	ctp.state = &computeTargetPoolState{}
 	if err := json.NewDecoder(av).Decode(ctp.state); err != nil {
@@ -49,10 +73,12 @@ func (ctp *ComputeTargetPool) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeTargetPool] has state.
 func (ctp *ComputeTargetPool) State() (*computeTargetPoolState, bool) {
 	return ctp.state, ctp.state != nil
 }
 
+// StateMust returns the state for [ComputeTargetPool]. Panics if the state is nil.
 func (ctp *ComputeTargetPool) StateMust() *computeTargetPoolState {
 	if ctp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ctp.Type(), ctp.LocalName()))
@@ -60,10 +86,7 @@ func (ctp *ComputeTargetPool) StateMust() *computeTargetPoolState {
 	return ctp.state
 }
 
-func (ctp *ComputeTargetPool) DependOn() terra.Reference {
-	return terra.ReferenceResource(ctp)
-}
-
+// ComputeTargetPoolArgs contains the configurations for google_compute_target_pool.
 type ComputeTargetPoolArgs struct {
 	// BackupPool: string, optional
 	BackupPool terra.StringValue `hcl:"backup_pool,attr"`
@@ -87,59 +110,68 @@ type ComputeTargetPoolArgs struct {
 	SessionAffinity terra.StringValue `hcl:"session_affinity,attr"`
 	// Timeouts: optional
 	Timeouts *computetargetpool.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeTargetPool depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeTargetPoolAttributes struct {
 	ref terra.Reference
 }
 
+// BackupPool returns a reference to field backup_pool of google_compute_target_pool.
 func (ctp computeTargetPoolAttributes) BackupPool() terra.StringValue {
-	return terra.ReferenceString(ctp.ref.Append("backup_pool"))
+	return terra.ReferenceAsString(ctp.ref.Append("backup_pool"))
 }
 
+// Description returns a reference to field description of google_compute_target_pool.
 func (ctp computeTargetPoolAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ctp.ref.Append("description"))
+	return terra.ReferenceAsString(ctp.ref.Append("description"))
 }
 
+// FailoverRatio returns a reference to field failover_ratio of google_compute_target_pool.
 func (ctp computeTargetPoolAttributes) FailoverRatio() terra.NumberValue {
-	return terra.ReferenceNumber(ctp.ref.Append("failover_ratio"))
+	return terra.ReferenceAsNumber(ctp.ref.Append("failover_ratio"))
 }
 
+// HealthChecks returns a reference to field health_checks of google_compute_target_pool.
 func (ctp computeTargetPoolAttributes) HealthChecks() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ctp.ref.Append("health_checks"))
+	return terra.ReferenceAsList[terra.StringValue](ctp.ref.Append("health_checks"))
 }
 
+// Id returns a reference to field id of google_compute_target_pool.
 func (ctp computeTargetPoolAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ctp.ref.Append("id"))
+	return terra.ReferenceAsString(ctp.ref.Append("id"))
 }
 
+// Instances returns a reference to field instances of google_compute_target_pool.
 func (ctp computeTargetPoolAttributes) Instances() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ctp.ref.Append("instances"))
+	return terra.ReferenceAsSet[terra.StringValue](ctp.ref.Append("instances"))
 }
 
+// Name returns a reference to field name of google_compute_target_pool.
 func (ctp computeTargetPoolAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ctp.ref.Append("name"))
+	return terra.ReferenceAsString(ctp.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_compute_target_pool.
 func (ctp computeTargetPoolAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ctp.ref.Append("project"))
+	return terra.ReferenceAsString(ctp.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_compute_target_pool.
 func (ctp computeTargetPoolAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(ctp.ref.Append("region"))
+	return terra.ReferenceAsString(ctp.ref.Append("region"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_target_pool.
 func (ctp computeTargetPoolAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(ctp.ref.Append("self_link"))
+	return terra.ReferenceAsString(ctp.ref.Append("self_link"))
 }
 
+// SessionAffinity returns a reference to field session_affinity of google_compute_target_pool.
 func (ctp computeTargetPoolAttributes) SessionAffinity() terra.StringValue {
-	return terra.ReferenceString(ctp.ref.Append("session_affinity"))
+	return terra.ReferenceAsString(ctp.ref.Append("session_affinity"))
 }
 
 func (ctp computeTargetPoolAttributes) Timeouts() computetargetpool.TimeoutsAttributes {
-	return terra.ReferenceSingle[computetargetpool.TimeoutsAttributes](ctp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computetargetpool.TimeoutsAttributes](ctp.ref.Append("timeouts"))
 }
 
 type computeTargetPoolState struct {

@@ -27,52 +27,52 @@ type NetworkAclsAttributes struct {
 	ref terra.Reference
 }
 
-func (na NetworkAclsAttributes) InternalRef() terra.Reference {
-	return na.ref
+func (na NetworkAclsAttributes) InternalRef() (terra.Reference, error) {
+	return na.ref, nil
 }
 
 func (na NetworkAclsAttributes) InternalWithRef(ref terra.Reference) NetworkAclsAttributes {
 	return NetworkAclsAttributes{ref: ref}
 }
 
-func (na NetworkAclsAttributes) InternalTokens() hclwrite.Tokens {
+func (na NetworkAclsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return na.ref.InternalTokens()
 }
 
 func (na NetworkAclsAttributes) Bypass() terra.StringValue {
-	return terra.ReferenceString(na.ref.Append("bypass"))
+	return terra.ReferenceAsString(na.ref.Append("bypass"))
 }
 
 func (na NetworkAclsAttributes) DefaultAction() terra.StringValue {
-	return terra.ReferenceString(na.ref.Append("default_action"))
+	return terra.ReferenceAsString(na.ref.Append("default_action"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type NetworkAclsState struct {

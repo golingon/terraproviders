@@ -68,144 +68,144 @@ type HostPoolAttributes struct {
 	ref terra.Reference
 }
 
-func (hp HostPoolAttributes) InternalRef() terra.Reference {
-	return hp.ref
+func (hp HostPoolAttributes) InternalRef() (terra.Reference, error) {
+	return hp.ref, nil
 }
 
 func (hp HostPoolAttributes) InternalWithRef(ref terra.Reference) HostPoolAttributes {
 	return HostPoolAttributes{ref: ref}
 }
 
-func (hp HostPoolAttributes) InternalTokens() hclwrite.Tokens {
+func (hp HostPoolAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hp.ref.InternalTokens()
 }
 
 func (hp HostPoolAttributes) HostpoolId() terra.StringValue {
-	return terra.ReferenceString(hp.ref.Append("hostpool_id"))
+	return terra.ReferenceAsString(hp.ref.Append("hostpool_id"))
 }
 
 func (hp HostPoolAttributes) ScalingPlanEnabled() terra.BoolValue {
-	return terra.ReferenceBool(hp.ref.Append("scaling_plan_enabled"))
+	return terra.ReferenceAsBool(hp.ref.Append("scaling_plan_enabled"))
 }
 
 type ScheduleAttributes struct {
 	ref terra.Reference
 }
 
-func (s ScheduleAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ScheduleAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ScheduleAttributes) InternalWithRef(ref terra.Reference) ScheduleAttributes {
 	return ScheduleAttributes{ref: ref}
 }
 
-func (s ScheduleAttributes) InternalTokens() hclwrite.Tokens {
+func (s ScheduleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s ScheduleAttributes) DaysOfWeek() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("days_of_week"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("days_of_week"))
 }
 
 func (s ScheduleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 func (s ScheduleAttributes) OffPeakLoadBalancingAlgorithm() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("off_peak_load_balancing_algorithm"))
+	return terra.ReferenceAsString(s.ref.Append("off_peak_load_balancing_algorithm"))
 }
 
 func (s ScheduleAttributes) OffPeakStartTime() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("off_peak_start_time"))
+	return terra.ReferenceAsString(s.ref.Append("off_peak_start_time"))
 }
 
 func (s ScheduleAttributes) PeakLoadBalancingAlgorithm() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("peak_load_balancing_algorithm"))
+	return terra.ReferenceAsString(s.ref.Append("peak_load_balancing_algorithm"))
 }
 
 func (s ScheduleAttributes) PeakStartTime() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("peak_start_time"))
+	return terra.ReferenceAsString(s.ref.Append("peak_start_time"))
 }
 
 func (s ScheduleAttributes) RampDownCapacityThresholdPercent() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("ramp_down_capacity_threshold_percent"))
+	return terra.ReferenceAsNumber(s.ref.Append("ramp_down_capacity_threshold_percent"))
 }
 
 func (s ScheduleAttributes) RampDownForceLogoffUsers() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("ramp_down_force_logoff_users"))
+	return terra.ReferenceAsBool(s.ref.Append("ramp_down_force_logoff_users"))
 }
 
 func (s ScheduleAttributes) RampDownLoadBalancingAlgorithm() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("ramp_down_load_balancing_algorithm"))
+	return terra.ReferenceAsString(s.ref.Append("ramp_down_load_balancing_algorithm"))
 }
 
 func (s ScheduleAttributes) RampDownMinimumHostsPercent() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("ramp_down_minimum_hosts_percent"))
+	return terra.ReferenceAsNumber(s.ref.Append("ramp_down_minimum_hosts_percent"))
 }
 
 func (s ScheduleAttributes) RampDownNotificationMessage() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("ramp_down_notification_message"))
+	return terra.ReferenceAsString(s.ref.Append("ramp_down_notification_message"))
 }
 
 func (s ScheduleAttributes) RampDownStartTime() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("ramp_down_start_time"))
+	return terra.ReferenceAsString(s.ref.Append("ramp_down_start_time"))
 }
 
 func (s ScheduleAttributes) RampDownStopHostsWhen() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("ramp_down_stop_hosts_when"))
+	return terra.ReferenceAsString(s.ref.Append("ramp_down_stop_hosts_when"))
 }
 
 func (s ScheduleAttributes) RampDownWaitTimeMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("ramp_down_wait_time_minutes"))
+	return terra.ReferenceAsNumber(s.ref.Append("ramp_down_wait_time_minutes"))
 }
 
 func (s ScheduleAttributes) RampUpCapacityThresholdPercent() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("ramp_up_capacity_threshold_percent"))
+	return terra.ReferenceAsNumber(s.ref.Append("ramp_up_capacity_threshold_percent"))
 }
 
 func (s ScheduleAttributes) RampUpLoadBalancingAlgorithm() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("ramp_up_load_balancing_algorithm"))
+	return terra.ReferenceAsString(s.ref.Append("ramp_up_load_balancing_algorithm"))
 }
 
 func (s ScheduleAttributes) RampUpMinimumHostsPercent() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("ramp_up_minimum_hosts_percent"))
+	return terra.ReferenceAsNumber(s.ref.Append("ramp_up_minimum_hosts_percent"))
 }
 
 func (s ScheduleAttributes) RampUpStartTime() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("ramp_up_start_time"))
+	return terra.ReferenceAsString(s.ref.Append("ramp_up_start_time"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type HostPoolState struct {

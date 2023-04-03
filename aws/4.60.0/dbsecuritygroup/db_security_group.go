@@ -30,7 +30,7 @@ func (i IngressAttributes) InternalWithRef(ref terra.Reference) IngressAttribute
 	return IngressAttributes{ref: ref}
 }
 
-func (i IngressAttributes) InternalTokens() hclwrite.Tokens {
+func (i IngressAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 

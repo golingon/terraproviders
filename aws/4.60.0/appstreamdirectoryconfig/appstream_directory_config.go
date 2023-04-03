@@ -26,7 +26,7 @@ func (sac ServiceAccountCredentialsAttributes) InternalWithRef(ref terra.Referen
 	return ServiceAccountCredentialsAttributes{ref: ref}
 }
 
-func (sac ServiceAccountCredentialsAttributes) InternalTokens() hclwrite.Tokens {
+func (sac ServiceAccountCredentialsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sac.ref.InternalTokens()
 }
 

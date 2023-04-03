@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataMonitorLogProfile creates a new instance of [DataMonitorLogProfile].
 func NewDataMonitorLogProfile(name string, args DataMonitorLogProfileArgs) *DataMonitorLogProfile {
 	return &DataMonitorLogProfile{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataMonitorLogProfile(name string, args DataMonitorLogProfileArgs) *Data
 
 var _ terra.DataResource = (*DataMonitorLogProfile)(nil)
 
+// DataMonitorLogProfile represents the Terraform data resource azurerm_monitor_log_profile.
 type DataMonitorLogProfile struct {
 	Name string
 	Args DataMonitorLogProfileArgs
 }
 
+// DataSource returns the Terraform object type for [DataMonitorLogProfile].
 func (mlp *DataMonitorLogProfile) DataSource() string {
 	return "azurerm_monitor_log_profile"
 }
 
+// LocalName returns the local name for [DataMonitorLogProfile].
 func (mlp *DataMonitorLogProfile) LocalName() string {
 	return mlp.Name
 }
 
+// Configuration returns the configuration (args) for [DataMonitorLogProfile].
 func (mlp *DataMonitorLogProfile) Configuration() interface{} {
 	return mlp.Args
 }
 
+// Attributes returns the attributes for [DataMonitorLogProfile].
 func (mlp *DataMonitorLogProfile) Attributes() dataMonitorLogProfileAttributes {
 	return dataMonitorLogProfileAttributes{ref: terra.ReferenceDataResource(mlp)}
 }
 
+// DataMonitorLogProfileArgs contains the configurations for azurerm_monitor_log_profile.
 type DataMonitorLogProfileArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,34 +58,40 @@ type dataMonitorLogProfileAttributes struct {
 	ref terra.Reference
 }
 
+// Categories returns a reference to field categories of azurerm_monitor_log_profile.
 func (mlp dataMonitorLogProfileAttributes) Categories() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](mlp.ref.Append("categories"))
+	return terra.ReferenceAsList[terra.StringValue](mlp.ref.Append("categories"))
 }
 
+// Id returns a reference to field id of azurerm_monitor_log_profile.
 func (mlp dataMonitorLogProfileAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mlp.ref.Append("id"))
+	return terra.ReferenceAsString(mlp.ref.Append("id"))
 }
 
+// Locations returns a reference to field locations of azurerm_monitor_log_profile.
 func (mlp dataMonitorLogProfileAttributes) Locations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](mlp.ref.Append("locations"))
+	return terra.ReferenceAsList[terra.StringValue](mlp.ref.Append("locations"))
 }
 
+// Name returns a reference to field name of azurerm_monitor_log_profile.
 func (mlp dataMonitorLogProfileAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mlp.ref.Append("name"))
+	return terra.ReferenceAsString(mlp.ref.Append("name"))
 }
 
+// ServicebusRuleId returns a reference to field servicebus_rule_id of azurerm_monitor_log_profile.
 func (mlp dataMonitorLogProfileAttributes) ServicebusRuleId() terra.StringValue {
-	return terra.ReferenceString(mlp.ref.Append("servicebus_rule_id"))
+	return terra.ReferenceAsString(mlp.ref.Append("servicebus_rule_id"))
 }
 
+// StorageAccountId returns a reference to field storage_account_id of azurerm_monitor_log_profile.
 func (mlp dataMonitorLogProfileAttributes) StorageAccountId() terra.StringValue {
-	return terra.ReferenceString(mlp.ref.Append("storage_account_id"))
+	return terra.ReferenceAsString(mlp.ref.Append("storage_account_id"))
 }
 
 func (mlp dataMonitorLogProfileAttributes) RetentionPolicy() terra.ListValue[datamonitorlogprofile.RetentionPolicyAttributes] {
-	return terra.ReferenceList[datamonitorlogprofile.RetentionPolicyAttributes](mlp.ref.Append("retention_policy"))
+	return terra.ReferenceAsList[datamonitorlogprofile.RetentionPolicyAttributes](mlp.ref.Append("retention_policy"))
 }
 
 func (mlp dataMonitorLogProfileAttributes) Timeouts() datamonitorlogprofile.TimeoutsAttributes {
-	return terra.ReferenceSingle[datamonitorlogprofile.TimeoutsAttributes](mlp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datamonitorlogprofile.TimeoutsAttributes](mlp.ref.Append("timeouts"))
 }

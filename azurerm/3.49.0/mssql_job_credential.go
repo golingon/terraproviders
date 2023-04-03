@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMssqlJobCredential creates a new instance of [MssqlJobCredential].
 func NewMssqlJobCredential(name string, args MssqlJobCredentialArgs) *MssqlJobCredential {
 	return &MssqlJobCredential{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMssqlJobCredential(name string, args MssqlJobCredentialArgs) *MssqlJobCr
 
 var _ terra.Resource = (*MssqlJobCredential)(nil)
 
+// MssqlJobCredential represents the Terraform resource azurerm_mssql_job_credential.
 type MssqlJobCredential struct {
-	Name  string
-	Args  MssqlJobCredentialArgs
-	state *mssqlJobCredentialState
+	Name      string
+	Args      MssqlJobCredentialArgs
+	state     *mssqlJobCredentialState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MssqlJobCredential].
 func (mjc *MssqlJobCredential) Type() string {
 	return "azurerm_mssql_job_credential"
 }
 
+// LocalName returns the local name for [MssqlJobCredential].
 func (mjc *MssqlJobCredential) LocalName() string {
 	return mjc.Name
 }
 
+// Configuration returns the configuration (args) for [MssqlJobCredential].
 func (mjc *MssqlJobCredential) Configuration() interface{} {
 	return mjc.Args
 }
 
+// DependOn is used for other resources to depend on [MssqlJobCredential].
+func (mjc *MssqlJobCredential) DependOn() terra.Reference {
+	return terra.ReferenceResource(mjc)
+}
+
+// Dependencies returns the list of resources [MssqlJobCredential] depends_on.
+func (mjc *MssqlJobCredential) Dependencies() terra.Dependencies {
+	return mjc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MssqlJobCredential].
+func (mjc *MssqlJobCredential) LifecycleManagement() *terra.Lifecycle {
+	return mjc.Lifecycle
+}
+
+// Attributes returns the attributes for [MssqlJobCredential].
 func (mjc *MssqlJobCredential) Attributes() mssqlJobCredentialAttributes {
 	return mssqlJobCredentialAttributes{ref: terra.ReferenceResource(mjc)}
 }
 
+// ImportState imports the given attribute values into [MssqlJobCredential]'s state.
 func (mjc *MssqlJobCredential) ImportState(av io.Reader) error {
 	mjc.state = &mssqlJobCredentialState{}
 	if err := json.NewDecoder(av).Decode(mjc.state); err != nil {
@@ -49,10 +73,12 @@ func (mjc *MssqlJobCredential) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MssqlJobCredential] has state.
 func (mjc *MssqlJobCredential) State() (*mssqlJobCredentialState, bool) {
 	return mjc.state, mjc.state != nil
 }
 
+// StateMust returns the state for [MssqlJobCredential]. Panics if the state is nil.
 func (mjc *MssqlJobCredential) StateMust() *mssqlJobCredentialState {
 	if mjc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mjc.Type(), mjc.LocalName()))
@@ -60,10 +86,7 @@ func (mjc *MssqlJobCredential) StateMust() *mssqlJobCredentialState {
 	return mjc.state
 }
 
-func (mjc *MssqlJobCredential) DependOn() terra.Reference {
-	return terra.ReferenceResource(mjc)
-}
-
+// MssqlJobCredentialArgs contains the configurations for azurerm_mssql_job_credential.
 type MssqlJobCredentialArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,35 +100,38 @@ type MssqlJobCredentialArgs struct {
 	Username terra.StringValue `hcl:"username,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *mssqljobcredential.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MssqlJobCredential depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mssqlJobCredentialAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_mssql_job_credential.
 func (mjc mssqlJobCredentialAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mjc.ref.Append("id"))
+	return terra.ReferenceAsString(mjc.ref.Append("id"))
 }
 
+// JobAgentId returns a reference to field job_agent_id of azurerm_mssql_job_credential.
 func (mjc mssqlJobCredentialAttributes) JobAgentId() terra.StringValue {
-	return terra.ReferenceString(mjc.ref.Append("job_agent_id"))
+	return terra.ReferenceAsString(mjc.ref.Append("job_agent_id"))
 }
 
+// Name returns a reference to field name of azurerm_mssql_job_credential.
 func (mjc mssqlJobCredentialAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mjc.ref.Append("name"))
+	return terra.ReferenceAsString(mjc.ref.Append("name"))
 }
 
+// Password returns a reference to field password of azurerm_mssql_job_credential.
 func (mjc mssqlJobCredentialAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(mjc.ref.Append("password"))
+	return terra.ReferenceAsString(mjc.ref.Append("password"))
 }
 
+// Username returns a reference to field username of azurerm_mssql_job_credential.
 func (mjc mssqlJobCredentialAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(mjc.ref.Append("username"))
+	return terra.ReferenceAsString(mjc.ref.Append("username"))
 }
 
 func (mjc mssqlJobCredentialAttributes) Timeouts() mssqljobcredential.TimeoutsAttributes {
-	return terra.ReferenceSingle[mssqljobcredential.TimeoutsAttributes](mjc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[mssqljobcredential.TimeoutsAttributes](mjc.ref.Append("timeouts"))
 }
 
 type mssqlJobCredentialState struct {

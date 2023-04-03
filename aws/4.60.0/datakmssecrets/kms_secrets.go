@@ -34,7 +34,7 @@ func (s SecretAttributes) InternalWithRef(ref terra.Reference) SecretAttributes 
 	return SecretAttributes{ref: ref}
 }
 
-func (s SecretAttributes) InternalTokens() hclwrite.Tokens {
+func (s SecretAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 

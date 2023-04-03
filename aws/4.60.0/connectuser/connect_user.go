@@ -39,7 +39,7 @@ func (ii IdentityInfoAttributes) InternalWithRef(ref terra.Reference) IdentityIn
 	return IdentityInfoAttributes{ref: ref}
 }
 
-func (ii IdentityInfoAttributes) InternalTokens() hclwrite.Tokens {
+func (ii IdentityInfoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ii.ref.InternalTokens()
 }
 
@@ -67,7 +67,7 @@ func (pc PhoneConfigAttributes) InternalWithRef(ref terra.Reference) PhoneConfig
 	return PhoneConfigAttributes{ref: ref}
 }
 
-func (pc PhoneConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (pc PhoneConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 

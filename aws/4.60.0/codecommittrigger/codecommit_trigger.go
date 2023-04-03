@@ -32,7 +32,7 @@ func (t TriggerAttributes) InternalWithRef(ref terra.Reference) TriggerAttribute
 	return TriggerAttributes{ref: ref}
 }
 
-func (t TriggerAttributes) InternalTokens() hclwrite.Tokens {
+func (t TriggerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

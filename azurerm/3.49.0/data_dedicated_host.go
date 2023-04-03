@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataDedicatedHost creates a new instance of [DataDedicatedHost].
 func NewDataDedicatedHost(name string, args DataDedicatedHostArgs) *DataDedicatedHost {
 	return &DataDedicatedHost{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataDedicatedHost(name string, args DataDedicatedHostArgs) *DataDedicate
 
 var _ terra.DataResource = (*DataDedicatedHost)(nil)
 
+// DataDedicatedHost represents the Terraform data resource azurerm_dedicated_host.
 type DataDedicatedHost struct {
 	Name string
 	Args DataDedicatedHostArgs
 }
 
+// DataSource returns the Terraform object type for [DataDedicatedHost].
 func (dh *DataDedicatedHost) DataSource() string {
 	return "azurerm_dedicated_host"
 }
 
+// LocalName returns the local name for [DataDedicatedHost].
 func (dh *DataDedicatedHost) LocalName() string {
 	return dh.Name
 }
 
+// Configuration returns the configuration (args) for [DataDedicatedHost].
 func (dh *DataDedicatedHost) Configuration() interface{} {
 	return dh.Args
 }
 
+// Attributes returns the attributes for [DataDedicatedHost].
 func (dh *DataDedicatedHost) Attributes() dataDedicatedHostAttributes {
 	return dataDedicatedHostAttributes{ref: terra.ReferenceDataResource(dh)}
 }
 
+// DataDedicatedHostArgs contains the configurations for azurerm_dedicated_host.
 type DataDedicatedHostArgs struct {
 	// DedicatedHostGroupName: string, required
 	DedicatedHostGroupName terra.StringValue `hcl:"dedicated_host_group_name,attr" validate:"required"`
@@ -53,30 +60,36 @@ type dataDedicatedHostAttributes struct {
 	ref terra.Reference
 }
 
+// DedicatedHostGroupName returns a reference to field dedicated_host_group_name of azurerm_dedicated_host.
 func (dh dataDedicatedHostAttributes) DedicatedHostGroupName() terra.StringValue {
-	return terra.ReferenceString(dh.ref.Append("dedicated_host_group_name"))
+	return terra.ReferenceAsString(dh.ref.Append("dedicated_host_group_name"))
 }
 
+// Id returns a reference to field id of azurerm_dedicated_host.
 func (dh dataDedicatedHostAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dh.ref.Append("id"))
+	return terra.ReferenceAsString(dh.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_dedicated_host.
 func (dh dataDedicatedHostAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(dh.ref.Append("location"))
+	return terra.ReferenceAsString(dh.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_dedicated_host.
 func (dh dataDedicatedHostAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dh.ref.Append("name"))
+	return terra.ReferenceAsString(dh.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_dedicated_host.
 func (dh dataDedicatedHostAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(dh.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(dh.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_dedicated_host.
 func (dh dataDedicatedHostAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dh.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dh.ref.Append("tags"))
 }
 
 func (dh dataDedicatedHostAttributes) Timeouts() datadedicatedhost.TimeoutsAttributes {
-	return terra.ReferenceSingle[datadedicatedhost.TimeoutsAttributes](dh.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datadedicatedhost.TimeoutsAttributes](dh.ref.Append("timeouts"))
 }

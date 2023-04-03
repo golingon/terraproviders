@@ -175,7 +175,7 @@ func (bngi BrokerNodeGroupInfoAttributes) InternalWithRef(ref terra.Reference) B
 	return BrokerNodeGroupInfoAttributes{ref: ref}
 }
 
-func (bngi BrokerNodeGroupInfoAttributes) InternalTokens() hclwrite.Tokens {
+func (bngi BrokerNodeGroupInfoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bngi.ref.InternalTokens()
 }
 
@@ -219,7 +219,7 @@ func (ci ConnectivityInfoAttributes) InternalWithRef(ref terra.Reference) Connec
 	return ConnectivityInfoAttributes{ref: ref}
 }
 
-func (ci ConnectivityInfoAttributes) InternalTokens() hclwrite.Tokens {
+func (ci ConnectivityInfoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ci.ref.InternalTokens()
 }
 
@@ -239,7 +239,7 @@ func (pa PublicAccessAttributes) InternalWithRef(ref terra.Reference) PublicAcce
 	return PublicAccessAttributes{ref: ref}
 }
 
-func (pa PublicAccessAttributes) InternalTokens() hclwrite.Tokens {
+func (pa PublicAccessAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pa.ref.InternalTokens()
 }
 
@@ -259,7 +259,7 @@ func (si StorageInfoAttributes) InternalWithRef(ref terra.Reference) StorageInfo
 	return StorageInfoAttributes{ref: ref}
 }
 
-func (si StorageInfoAttributes) InternalTokens() hclwrite.Tokens {
+func (si StorageInfoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return si.ref.InternalTokens()
 }
 
@@ -279,7 +279,7 @@ func (esi EbsStorageInfoAttributes) InternalWithRef(ref terra.Reference) EbsStor
 	return EbsStorageInfoAttributes{ref: ref}
 }
 
-func (esi EbsStorageInfoAttributes) InternalTokens() hclwrite.Tokens {
+func (esi EbsStorageInfoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return esi.ref.InternalTokens()
 }
 
@@ -303,7 +303,7 @@ func (pt ProvisionedThroughputAttributes) InternalWithRef(ref terra.Reference) P
 	return ProvisionedThroughputAttributes{ref: ref}
 }
 
-func (pt ProvisionedThroughputAttributes) InternalTokens() hclwrite.Tokens {
+func (pt ProvisionedThroughputAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pt.ref.InternalTokens()
 }
 
@@ -327,7 +327,7 @@ func (ca ClientAuthenticationAttributes) InternalWithRef(ref terra.Reference) Cl
 	return ClientAuthenticationAttributes{ref: ref}
 }
 
-func (ca ClientAuthenticationAttributes) InternalTokens() hclwrite.Tokens {
+func (ca ClientAuthenticationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ca.ref.InternalTokens()
 }
 
@@ -355,7 +355,7 @@ func (s SaslAttributes) InternalWithRef(ref terra.Reference) SaslAttributes {
 	return SaslAttributes{ref: ref}
 }
 
-func (s SaslAttributes) InternalTokens() hclwrite.Tokens {
+func (s SaslAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -379,7 +379,7 @@ func (t TlsAttributes) InternalWithRef(ref terra.Reference) TlsAttributes {
 	return TlsAttributes{ref: ref}
 }
 
-func (t TlsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TlsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -399,7 +399,7 @@ func (ci ConfigurationInfoAttributes) InternalWithRef(ref terra.Reference) Confi
 	return ConfigurationInfoAttributes{ref: ref}
 }
 
-func (ci ConfigurationInfoAttributes) InternalTokens() hclwrite.Tokens {
+func (ci ConfigurationInfoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ci.ref.InternalTokens()
 }
 
@@ -423,7 +423,7 @@ func (ei EncryptionInfoAttributes) InternalWithRef(ref terra.Reference) Encrypti
 	return EncryptionInfoAttributes{ref: ref}
 }
 
-func (ei EncryptionInfoAttributes) InternalTokens() hclwrite.Tokens {
+func (ei EncryptionInfoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ei.ref.InternalTokens()
 }
 
@@ -447,7 +447,7 @@ func (eit EncryptionInTransitAttributes) InternalWithRef(ref terra.Reference) En
 	return EncryptionInTransitAttributes{ref: ref}
 }
 
-func (eit EncryptionInTransitAttributes) InternalTokens() hclwrite.Tokens {
+func (eit EncryptionInTransitAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return eit.ref.InternalTokens()
 }
 
@@ -471,7 +471,7 @@ func (li LoggingInfoAttributes) InternalWithRef(ref terra.Reference) LoggingInfo
 	return LoggingInfoAttributes{ref: ref}
 }
 
-func (li LoggingInfoAttributes) InternalTokens() hclwrite.Tokens {
+func (li LoggingInfoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return li.ref.InternalTokens()
 }
 
@@ -491,7 +491,7 @@ func (bl BrokerLogsAttributes) InternalWithRef(ref terra.Reference) BrokerLogsAt
 	return BrokerLogsAttributes{ref: ref}
 }
 
-func (bl BrokerLogsAttributes) InternalTokens() hclwrite.Tokens {
+func (bl BrokerLogsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bl.ref.InternalTokens()
 }
 
@@ -519,7 +519,7 @@ func (cl CloudwatchLogsAttributes) InternalWithRef(ref terra.Reference) Cloudwat
 	return CloudwatchLogsAttributes{ref: ref}
 }
 
-func (cl CloudwatchLogsAttributes) InternalTokens() hclwrite.Tokens {
+func (cl CloudwatchLogsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cl.ref.InternalTokens()
 }
 
@@ -543,7 +543,7 @@ func (f FirehoseAttributes) InternalWithRef(ref terra.Reference) FirehoseAttribu
 	return FirehoseAttributes{ref: ref}
 }
 
-func (f FirehoseAttributes) InternalTokens() hclwrite.Tokens {
+func (f FirehoseAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -567,7 +567,7 @@ func (s S3Attributes) InternalWithRef(ref terra.Reference) S3Attributes {
 	return S3Attributes{ref: ref}
 }
 
-func (s S3Attributes) InternalTokens() hclwrite.Tokens {
+func (s S3Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -595,7 +595,7 @@ func (om OpenMonitoringAttributes) InternalWithRef(ref terra.Reference) OpenMoni
 	return OpenMonitoringAttributes{ref: ref}
 }
 
-func (om OpenMonitoringAttributes) InternalTokens() hclwrite.Tokens {
+func (om OpenMonitoringAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return om.ref.InternalTokens()
 }
 
@@ -615,7 +615,7 @@ func (p PrometheusAttributes) InternalWithRef(ref terra.Reference) PrometheusAtt
 	return PrometheusAttributes{ref: ref}
 }
 
-func (p PrometheusAttributes) InternalTokens() hclwrite.Tokens {
+func (p PrometheusAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -639,7 +639,7 @@ func (je JmxExporterAttributes) InternalWithRef(ref terra.Reference) JmxExporter
 	return JmxExporterAttributes{ref: ref}
 }
 
-func (je JmxExporterAttributes) InternalTokens() hclwrite.Tokens {
+func (je JmxExporterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return je.ref.InternalTokens()
 }
 
@@ -659,7 +659,7 @@ func (ne NodeExporterAttributes) InternalWithRef(ref terra.Reference) NodeExport
 	return NodeExporterAttributes{ref: ref}
 }
 
-func (ne NodeExporterAttributes) InternalTokens() hclwrite.Tokens {
+func (ne NodeExporterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ne.ref.InternalTokens()
 }
 
@@ -679,7 +679,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

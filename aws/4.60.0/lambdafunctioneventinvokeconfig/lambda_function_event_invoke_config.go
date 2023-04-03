@@ -36,7 +36,7 @@ func (dc DestinationConfigAttributes) InternalWithRef(ref terra.Reference) Desti
 	return DestinationConfigAttributes{ref: ref}
 }
 
-func (dc DestinationConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (dc DestinationConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dc.ref.InternalTokens()
 }
 
@@ -60,7 +60,7 @@ func (of OnFailureAttributes) InternalWithRef(ref terra.Reference) OnFailureAttr
 	return OnFailureAttributes{ref: ref}
 }
 
-func (of OnFailureAttributes) InternalTokens() hclwrite.Tokens {
+func (of OnFailureAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return of.ref.InternalTokens()
 }
 
@@ -80,7 +80,7 @@ func (os OnSuccessAttributes) InternalWithRef(ref terra.Reference) OnSuccessAttr
 	return OnSuccessAttributes{ref: ref}
 }
 
-func (os OnSuccessAttributes) InternalTokens() hclwrite.Tokens {
+func (os OnSuccessAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return os.ref.InternalTokens()
 }
 

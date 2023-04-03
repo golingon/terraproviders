@@ -23,7 +23,7 @@ func (pab PublicAccessBlockAttributes) InternalWithRef(ref terra.Reference) Publ
 	return PublicAccessBlockAttributes{ref: ref}
 }
 
-func (pab PublicAccessBlockAttributes) InternalTokens() hclwrite.Tokens {
+func (pab PublicAccessBlockAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pab.ref.InternalTokens()
 }
 
@@ -55,7 +55,7 @@ func (r RegionsAttributes) InternalWithRef(ref terra.Reference) RegionsAttribute
 	return RegionsAttributes{ref: ref}
 }
 
-func (r RegionsAttributes) InternalTokens() hclwrite.Tokens {
+func (r RegionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 

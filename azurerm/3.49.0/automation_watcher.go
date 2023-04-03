@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAutomationWatcher creates a new instance of [AutomationWatcher].
 func NewAutomationWatcher(name string, args AutomationWatcherArgs) *AutomationWatcher {
 	return &AutomationWatcher{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAutomationWatcher(name string, args AutomationWatcherArgs) *AutomationWa
 
 var _ terra.Resource = (*AutomationWatcher)(nil)
 
+// AutomationWatcher represents the Terraform resource azurerm_automation_watcher.
 type AutomationWatcher struct {
-	Name  string
-	Args  AutomationWatcherArgs
-	state *automationWatcherState
+	Name      string
+	Args      AutomationWatcherArgs
+	state     *automationWatcherState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AutomationWatcher].
 func (aw *AutomationWatcher) Type() string {
 	return "azurerm_automation_watcher"
 }
 
+// LocalName returns the local name for [AutomationWatcher].
 func (aw *AutomationWatcher) LocalName() string {
 	return aw.Name
 }
 
+// Configuration returns the configuration (args) for [AutomationWatcher].
 func (aw *AutomationWatcher) Configuration() interface{} {
 	return aw.Args
 }
 
+// DependOn is used for other resources to depend on [AutomationWatcher].
+func (aw *AutomationWatcher) DependOn() terra.Reference {
+	return terra.ReferenceResource(aw)
+}
+
+// Dependencies returns the list of resources [AutomationWatcher] depends_on.
+func (aw *AutomationWatcher) Dependencies() terra.Dependencies {
+	return aw.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AutomationWatcher].
+func (aw *AutomationWatcher) LifecycleManagement() *terra.Lifecycle {
+	return aw.Lifecycle
+}
+
+// Attributes returns the attributes for [AutomationWatcher].
 func (aw *AutomationWatcher) Attributes() automationWatcherAttributes {
 	return automationWatcherAttributes{ref: terra.ReferenceResource(aw)}
 }
 
+// ImportState imports the given attribute values into [AutomationWatcher]'s state.
 func (aw *AutomationWatcher) ImportState(av io.Reader) error {
 	aw.state = &automationWatcherState{}
 	if err := json.NewDecoder(av).Decode(aw.state); err != nil {
@@ -49,10 +73,12 @@ func (aw *AutomationWatcher) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AutomationWatcher] has state.
 func (aw *AutomationWatcher) State() (*automationWatcherState, bool) {
 	return aw.state, aw.state != nil
 }
 
+// StateMust returns the state for [AutomationWatcher]. Panics if the state is nil.
 func (aw *AutomationWatcher) StateMust() *automationWatcherState {
 	if aw.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", aw.Type(), aw.LocalName()))
@@ -60,10 +86,7 @@ func (aw *AutomationWatcher) StateMust() *automationWatcherState {
 	return aw.state
 }
 
-func (aw *AutomationWatcher) DependOn() terra.Reference {
-	return terra.ReferenceResource(aw)
-}
-
+// AutomationWatcherArgs contains the configurations for azurerm_automation_watcher.
 type AutomationWatcherArgs struct {
 	// AutomationAccountId: string, required
 	AutomationAccountId terra.StringValue `hcl:"automation_account_id,attr" validate:"required"`
@@ -89,63 +112,73 @@ type AutomationWatcherArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// Timeouts: optional
 	Timeouts *automationwatcher.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that AutomationWatcher depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type automationWatcherAttributes struct {
 	ref terra.Reference
 }
 
+// AutomationAccountId returns a reference to field automation_account_id of azurerm_automation_watcher.
 func (aw automationWatcherAttributes) AutomationAccountId() terra.StringValue {
-	return terra.ReferenceString(aw.ref.Append("automation_account_id"))
+	return terra.ReferenceAsString(aw.ref.Append("automation_account_id"))
 }
 
+// Description returns a reference to field description of azurerm_automation_watcher.
 func (aw automationWatcherAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(aw.ref.Append("description"))
+	return terra.ReferenceAsString(aw.ref.Append("description"))
 }
 
+// Etag returns a reference to field etag of azurerm_automation_watcher.
 func (aw automationWatcherAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(aw.ref.Append("etag"))
+	return terra.ReferenceAsString(aw.ref.Append("etag"))
 }
 
+// ExecutionFrequencyInSeconds returns a reference to field execution_frequency_in_seconds of azurerm_automation_watcher.
 func (aw automationWatcherAttributes) ExecutionFrequencyInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(aw.ref.Append("execution_frequency_in_seconds"))
+	return terra.ReferenceAsNumber(aw.ref.Append("execution_frequency_in_seconds"))
 }
 
+// Id returns a reference to field id of azurerm_automation_watcher.
 func (aw automationWatcherAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(aw.ref.Append("id"))
+	return terra.ReferenceAsString(aw.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_automation_watcher.
 func (aw automationWatcherAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(aw.ref.Append("location"))
+	return terra.ReferenceAsString(aw.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_automation_watcher.
 func (aw automationWatcherAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(aw.ref.Append("name"))
+	return terra.ReferenceAsString(aw.ref.Append("name"))
 }
 
+// ScriptName returns a reference to field script_name of azurerm_automation_watcher.
 func (aw automationWatcherAttributes) ScriptName() terra.StringValue {
-	return terra.ReferenceString(aw.ref.Append("script_name"))
+	return terra.ReferenceAsString(aw.ref.Append("script_name"))
 }
 
+// ScriptParameters returns a reference to field script_parameters of azurerm_automation_watcher.
 func (aw automationWatcherAttributes) ScriptParameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](aw.ref.Append("script_parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](aw.ref.Append("script_parameters"))
 }
 
+// ScriptRunOn returns a reference to field script_run_on of azurerm_automation_watcher.
 func (aw automationWatcherAttributes) ScriptRunOn() terra.StringValue {
-	return terra.ReferenceString(aw.ref.Append("script_run_on"))
+	return terra.ReferenceAsString(aw.ref.Append("script_run_on"))
 }
 
+// Status returns a reference to field status of azurerm_automation_watcher.
 func (aw automationWatcherAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(aw.ref.Append("status"))
+	return terra.ReferenceAsString(aw.ref.Append("status"))
 }
 
+// Tags returns a reference to field tags of azurerm_automation_watcher.
 func (aw automationWatcherAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](aw.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](aw.ref.Append("tags"))
 }
 
 func (aw automationWatcherAttributes) Timeouts() automationwatcher.TimeoutsAttributes {
-	return terra.ReferenceSingle[automationwatcher.TimeoutsAttributes](aw.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[automationwatcher.TimeoutsAttributes](aw.ref.Append("timeouts"))
 }
 
 type automationWatcherState struct {

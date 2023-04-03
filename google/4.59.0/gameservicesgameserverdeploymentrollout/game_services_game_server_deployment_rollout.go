@@ -32,72 +32,72 @@ type GameServerConfigOverridesAttributes struct {
 	ref terra.Reference
 }
 
-func (gsco GameServerConfigOverridesAttributes) InternalRef() terra.Reference {
-	return gsco.ref
+func (gsco GameServerConfigOverridesAttributes) InternalRef() (terra.Reference, error) {
+	return gsco.ref, nil
 }
 
 func (gsco GameServerConfigOverridesAttributes) InternalWithRef(ref terra.Reference) GameServerConfigOverridesAttributes {
 	return GameServerConfigOverridesAttributes{ref: ref}
 }
 
-func (gsco GameServerConfigOverridesAttributes) InternalTokens() hclwrite.Tokens {
+func (gsco GameServerConfigOverridesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gsco.ref.InternalTokens()
 }
 
 func (gsco GameServerConfigOverridesAttributes) ConfigVersion() terra.StringValue {
-	return terra.ReferenceString(gsco.ref.Append("config_version"))
+	return terra.ReferenceAsString(gsco.ref.Append("config_version"))
 }
 
 func (gsco GameServerConfigOverridesAttributes) RealmsSelector() terra.ListValue[RealmsSelectorAttributes] {
-	return terra.ReferenceList[RealmsSelectorAttributes](gsco.ref.Append("realms_selector"))
+	return terra.ReferenceAsList[RealmsSelectorAttributes](gsco.ref.Append("realms_selector"))
 }
 
 type RealmsSelectorAttributes struct {
 	ref terra.Reference
 }
 
-func (rs RealmsSelectorAttributes) InternalRef() terra.Reference {
-	return rs.ref
+func (rs RealmsSelectorAttributes) InternalRef() (terra.Reference, error) {
+	return rs.ref, nil
 }
 
 func (rs RealmsSelectorAttributes) InternalWithRef(ref terra.Reference) RealmsSelectorAttributes {
 	return RealmsSelectorAttributes{ref: ref}
 }
 
-func (rs RealmsSelectorAttributes) InternalTokens() hclwrite.Tokens {
+func (rs RealmsSelectorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rs.ref.InternalTokens()
 }
 
 func (rs RealmsSelectorAttributes) Realms() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rs.ref.Append("realms"))
+	return terra.ReferenceAsList[terra.StringValue](rs.ref.Append("realms"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type GameServerConfigOverridesState struct {

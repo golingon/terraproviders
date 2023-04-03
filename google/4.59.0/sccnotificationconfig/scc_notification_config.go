@@ -25,48 +25,48 @@ type StreamingConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (sc StreamingConfigAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc StreamingConfigAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc StreamingConfigAttributes) InternalWithRef(ref terra.Reference) StreamingConfigAttributes {
 	return StreamingConfigAttributes{ref: ref}
 }
 
-func (sc StreamingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sc StreamingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
 func (sc StreamingConfigAttributes) Filter() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("filter"))
+	return terra.ReferenceAsString(sc.ref.Append("filter"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type StreamingConfigState struct {

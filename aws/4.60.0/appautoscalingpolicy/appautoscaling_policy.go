@@ -83,7 +83,7 @@ func (sspc StepScalingPolicyConfigurationAttributes) InternalWithRef(ref terra.R
 	return StepScalingPolicyConfigurationAttributes{ref: ref}
 }
 
-func (sspc StepScalingPolicyConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (sspc StepScalingPolicyConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sspc.ref.InternalTokens()
 }
 
@@ -119,7 +119,7 @@ func (sa StepAdjustmentAttributes) InternalWithRef(ref terra.Reference) StepAdju
 	return StepAdjustmentAttributes{ref: ref}
 }
 
-func (sa StepAdjustmentAttributes) InternalTokens() hclwrite.Tokens {
+func (sa StepAdjustmentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sa.ref.InternalTokens()
 }
 
@@ -147,7 +147,7 @@ func (ttspc TargetTrackingScalingPolicyConfigurationAttributes) InternalWithRef(
 	return TargetTrackingScalingPolicyConfigurationAttributes{ref: ref}
 }
 
-func (ttspc TargetTrackingScalingPolicyConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ttspc TargetTrackingScalingPolicyConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ttspc.ref.InternalTokens()
 }
 
@@ -187,7 +187,7 @@ func (cms CustomizedMetricSpecificationAttributes) InternalWithRef(ref terra.Ref
 	return CustomizedMetricSpecificationAttributes{ref: ref}
 }
 
-func (cms CustomizedMetricSpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (cms CustomizedMetricSpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cms.ref.InternalTokens()
 }
 
@@ -223,7 +223,7 @@ func (d DimensionsAttributes) InternalWithRef(ref terra.Reference) DimensionsAtt
 	return DimensionsAttributes{ref: ref}
 }
 
-func (d DimensionsAttributes) InternalTokens() hclwrite.Tokens {
+func (d DimensionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -247,7 +247,7 @@ func (pms PredefinedMetricSpecificationAttributes) InternalWithRef(ref terra.Ref
 	return PredefinedMetricSpecificationAttributes{ref: ref}
 }
 
-func (pms PredefinedMetricSpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (pms PredefinedMetricSpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pms.ref.InternalTokens()
 }
 

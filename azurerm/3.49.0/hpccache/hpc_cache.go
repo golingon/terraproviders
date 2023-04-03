@@ -106,280 +106,280 @@ type DefaultAccessPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (dap DefaultAccessPolicyAttributes) InternalRef() terra.Reference {
-	return dap.ref
+func (dap DefaultAccessPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return dap.ref, nil
 }
 
 func (dap DefaultAccessPolicyAttributes) InternalWithRef(ref terra.Reference) DefaultAccessPolicyAttributes {
 	return DefaultAccessPolicyAttributes{ref: ref}
 }
 
-func (dap DefaultAccessPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (dap DefaultAccessPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dap.ref.InternalTokens()
 }
 
 func (dap DefaultAccessPolicyAttributes) AccessRule() terra.SetValue[AccessRuleAttributes] {
-	return terra.ReferenceSet[AccessRuleAttributes](dap.ref.Append("access_rule"))
+	return terra.ReferenceAsSet[AccessRuleAttributes](dap.ref.Append("access_rule"))
 }
 
 type AccessRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (ar AccessRuleAttributes) InternalRef() terra.Reference {
-	return ar.ref
+func (ar AccessRuleAttributes) InternalRef() (terra.Reference, error) {
+	return ar.ref, nil
 }
 
 func (ar AccessRuleAttributes) InternalWithRef(ref terra.Reference) AccessRuleAttributes {
 	return AccessRuleAttributes{ref: ref}
 }
 
-func (ar AccessRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (ar AccessRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ar.ref.InternalTokens()
 }
 
 func (ar AccessRuleAttributes) Access() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("access"))
+	return terra.ReferenceAsString(ar.ref.Append("access"))
 }
 
 func (ar AccessRuleAttributes) AnonymousGid() terra.NumberValue {
-	return terra.ReferenceNumber(ar.ref.Append("anonymous_gid"))
+	return terra.ReferenceAsNumber(ar.ref.Append("anonymous_gid"))
 }
 
 func (ar AccessRuleAttributes) AnonymousUid() terra.NumberValue {
-	return terra.ReferenceNumber(ar.ref.Append("anonymous_uid"))
+	return terra.ReferenceAsNumber(ar.ref.Append("anonymous_uid"))
 }
 
 func (ar AccessRuleAttributes) Filter() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("filter"))
+	return terra.ReferenceAsString(ar.ref.Append("filter"))
 }
 
 func (ar AccessRuleAttributes) RootSquashEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ar.ref.Append("root_squash_enabled"))
+	return terra.ReferenceAsBool(ar.ref.Append("root_squash_enabled"))
 }
 
 func (ar AccessRuleAttributes) Scope() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("scope"))
+	return terra.ReferenceAsString(ar.ref.Append("scope"))
 }
 
 func (ar AccessRuleAttributes) SubmountAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ar.ref.Append("submount_access_enabled"))
+	return terra.ReferenceAsBool(ar.ref.Append("submount_access_enabled"))
 }
 
 func (ar AccessRuleAttributes) SuidEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ar.ref.Append("suid_enabled"))
+	return terra.ReferenceAsBool(ar.ref.Append("suid_enabled"))
 }
 
 type DirectoryActiveDirectoryAttributes struct {
 	ref terra.Reference
 }
 
-func (dad DirectoryActiveDirectoryAttributes) InternalRef() terra.Reference {
-	return dad.ref
+func (dad DirectoryActiveDirectoryAttributes) InternalRef() (terra.Reference, error) {
+	return dad.ref, nil
 }
 
 func (dad DirectoryActiveDirectoryAttributes) InternalWithRef(ref terra.Reference) DirectoryActiveDirectoryAttributes {
 	return DirectoryActiveDirectoryAttributes{ref: ref}
 }
 
-func (dad DirectoryActiveDirectoryAttributes) InternalTokens() hclwrite.Tokens {
+func (dad DirectoryActiveDirectoryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dad.ref.InternalTokens()
 }
 
 func (dad DirectoryActiveDirectoryAttributes) CacheNetbiosName() terra.StringValue {
-	return terra.ReferenceString(dad.ref.Append("cache_netbios_name"))
+	return terra.ReferenceAsString(dad.ref.Append("cache_netbios_name"))
 }
 
 func (dad DirectoryActiveDirectoryAttributes) DnsPrimaryIp() terra.StringValue {
-	return terra.ReferenceString(dad.ref.Append("dns_primary_ip"))
+	return terra.ReferenceAsString(dad.ref.Append("dns_primary_ip"))
 }
 
 func (dad DirectoryActiveDirectoryAttributes) DnsSecondaryIp() terra.StringValue {
-	return terra.ReferenceString(dad.ref.Append("dns_secondary_ip"))
+	return terra.ReferenceAsString(dad.ref.Append("dns_secondary_ip"))
 }
 
 func (dad DirectoryActiveDirectoryAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(dad.ref.Append("domain_name"))
+	return terra.ReferenceAsString(dad.ref.Append("domain_name"))
 }
 
 func (dad DirectoryActiveDirectoryAttributes) DomainNetbiosName() terra.StringValue {
-	return terra.ReferenceString(dad.ref.Append("domain_netbios_name"))
+	return terra.ReferenceAsString(dad.ref.Append("domain_netbios_name"))
 }
 
 func (dad DirectoryActiveDirectoryAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(dad.ref.Append("password"))
+	return terra.ReferenceAsString(dad.ref.Append("password"))
 }
 
 func (dad DirectoryActiveDirectoryAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(dad.ref.Append("username"))
+	return terra.ReferenceAsString(dad.ref.Append("username"))
 }
 
 type DirectoryFlatFileAttributes struct {
 	ref terra.Reference
 }
 
-func (dff DirectoryFlatFileAttributes) InternalRef() terra.Reference {
-	return dff.ref
+func (dff DirectoryFlatFileAttributes) InternalRef() (terra.Reference, error) {
+	return dff.ref, nil
 }
 
 func (dff DirectoryFlatFileAttributes) InternalWithRef(ref terra.Reference) DirectoryFlatFileAttributes {
 	return DirectoryFlatFileAttributes{ref: ref}
 }
 
-func (dff DirectoryFlatFileAttributes) InternalTokens() hclwrite.Tokens {
+func (dff DirectoryFlatFileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dff.ref.InternalTokens()
 }
 
 func (dff DirectoryFlatFileAttributes) GroupFileUri() terra.StringValue {
-	return terra.ReferenceString(dff.ref.Append("group_file_uri"))
+	return terra.ReferenceAsString(dff.ref.Append("group_file_uri"))
 }
 
 func (dff DirectoryFlatFileAttributes) PasswordFileUri() terra.StringValue {
-	return terra.ReferenceString(dff.ref.Append("password_file_uri"))
+	return terra.ReferenceAsString(dff.ref.Append("password_file_uri"))
 }
 
 type DirectoryLdapAttributes struct {
 	ref terra.Reference
 }
 
-func (dl DirectoryLdapAttributes) InternalRef() terra.Reference {
-	return dl.ref
+func (dl DirectoryLdapAttributes) InternalRef() (terra.Reference, error) {
+	return dl.ref, nil
 }
 
 func (dl DirectoryLdapAttributes) InternalWithRef(ref terra.Reference) DirectoryLdapAttributes {
 	return DirectoryLdapAttributes{ref: ref}
 }
 
-func (dl DirectoryLdapAttributes) InternalTokens() hclwrite.Tokens {
+func (dl DirectoryLdapAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dl.ref.InternalTokens()
 }
 
 func (dl DirectoryLdapAttributes) BaseDn() terra.StringValue {
-	return terra.ReferenceString(dl.ref.Append("base_dn"))
+	return terra.ReferenceAsString(dl.ref.Append("base_dn"))
 }
 
 func (dl DirectoryLdapAttributes) CertificateValidationUri() terra.StringValue {
-	return terra.ReferenceString(dl.ref.Append("certificate_validation_uri"))
+	return terra.ReferenceAsString(dl.ref.Append("certificate_validation_uri"))
 }
 
 func (dl DirectoryLdapAttributes) DownloadCertificateAutomatically() terra.BoolValue {
-	return terra.ReferenceBool(dl.ref.Append("download_certificate_automatically"))
+	return terra.ReferenceAsBool(dl.ref.Append("download_certificate_automatically"))
 }
 
 func (dl DirectoryLdapAttributes) Encrypted() terra.BoolValue {
-	return terra.ReferenceBool(dl.ref.Append("encrypted"))
+	return terra.ReferenceAsBool(dl.ref.Append("encrypted"))
 }
 
 func (dl DirectoryLdapAttributes) Server() terra.StringValue {
-	return terra.ReferenceString(dl.ref.Append("server"))
+	return terra.ReferenceAsString(dl.ref.Append("server"))
 }
 
 func (dl DirectoryLdapAttributes) Bind() terra.ListValue[BindAttributes] {
-	return terra.ReferenceList[BindAttributes](dl.ref.Append("bind"))
+	return terra.ReferenceAsList[BindAttributes](dl.ref.Append("bind"))
 }
 
 type BindAttributes struct {
 	ref terra.Reference
 }
 
-func (b BindAttributes) InternalRef() terra.Reference {
-	return b.ref
+func (b BindAttributes) InternalRef() (terra.Reference, error) {
+	return b.ref, nil
 }
 
 func (b BindAttributes) InternalWithRef(ref terra.Reference) BindAttributes {
 	return BindAttributes{ref: ref}
 }
 
-func (b BindAttributes) InternalTokens() hclwrite.Tokens {
+func (b BindAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return b.ref.InternalTokens()
 }
 
 func (b BindAttributes) Dn() terra.StringValue {
-	return terra.ReferenceString(b.ref.Append("dn"))
+	return terra.ReferenceAsString(b.ref.Append("dn"))
 }
 
 func (b BindAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(b.ref.Append("password"))
+	return terra.ReferenceAsString(b.ref.Append("password"))
 }
 
 type DnsAttributes struct {
 	ref terra.Reference
 }
 
-func (d DnsAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DnsAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DnsAttributes) InternalWithRef(ref terra.Reference) DnsAttributes {
 	return DnsAttributes{ref: ref}
 }
 
-func (d DnsAttributes) InternalTokens() hclwrite.Tokens {
+func (d DnsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d DnsAttributes) SearchDomain() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("search_domain"))
+	return terra.ReferenceAsString(d.ref.Append("search_domain"))
 }
 
 func (d DnsAttributes) Servers() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](d.ref.Append("servers"))
+	return terra.ReferenceAsList[terra.StringValue](d.ref.Append("servers"))
 }
 
 type IdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (i IdentityAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IdentityAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IdentityAttributes) InternalWithRef(ref terra.Reference) IdentityAttributes {
 	return IdentityAttributes{ref: ref}
 }
 
-func (i IdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (i IdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IdentityAttributes) IdentityIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i.ref.Append("identity_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](i.ref.Append("identity_ids"))
 }
 
 func (i IdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("type"))
+	return terra.ReferenceAsString(i.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type DefaultAccessPolicyState struct {

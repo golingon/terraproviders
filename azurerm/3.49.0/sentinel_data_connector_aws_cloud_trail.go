@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSentinelDataConnectorAwsCloudTrail creates a new instance of [SentinelDataConnectorAwsCloudTrail].
 func NewSentinelDataConnectorAwsCloudTrail(name string, args SentinelDataConnectorAwsCloudTrailArgs) *SentinelDataConnectorAwsCloudTrail {
 	return &SentinelDataConnectorAwsCloudTrail{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSentinelDataConnectorAwsCloudTrail(name string, args SentinelDataConnect
 
 var _ terra.Resource = (*SentinelDataConnectorAwsCloudTrail)(nil)
 
+// SentinelDataConnectorAwsCloudTrail represents the Terraform resource azurerm_sentinel_data_connector_aws_cloud_trail.
 type SentinelDataConnectorAwsCloudTrail struct {
-	Name  string
-	Args  SentinelDataConnectorAwsCloudTrailArgs
-	state *sentinelDataConnectorAwsCloudTrailState
+	Name      string
+	Args      SentinelDataConnectorAwsCloudTrailArgs
+	state     *sentinelDataConnectorAwsCloudTrailState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SentinelDataConnectorAwsCloudTrail].
 func (sdcact *SentinelDataConnectorAwsCloudTrail) Type() string {
 	return "azurerm_sentinel_data_connector_aws_cloud_trail"
 }
 
+// LocalName returns the local name for [SentinelDataConnectorAwsCloudTrail].
 func (sdcact *SentinelDataConnectorAwsCloudTrail) LocalName() string {
 	return sdcact.Name
 }
 
+// Configuration returns the configuration (args) for [SentinelDataConnectorAwsCloudTrail].
 func (sdcact *SentinelDataConnectorAwsCloudTrail) Configuration() interface{} {
 	return sdcact.Args
 }
 
+// DependOn is used for other resources to depend on [SentinelDataConnectorAwsCloudTrail].
+func (sdcact *SentinelDataConnectorAwsCloudTrail) DependOn() terra.Reference {
+	return terra.ReferenceResource(sdcact)
+}
+
+// Dependencies returns the list of resources [SentinelDataConnectorAwsCloudTrail] depends_on.
+func (sdcact *SentinelDataConnectorAwsCloudTrail) Dependencies() terra.Dependencies {
+	return sdcact.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SentinelDataConnectorAwsCloudTrail].
+func (sdcact *SentinelDataConnectorAwsCloudTrail) LifecycleManagement() *terra.Lifecycle {
+	return sdcact.Lifecycle
+}
+
+// Attributes returns the attributes for [SentinelDataConnectorAwsCloudTrail].
 func (sdcact *SentinelDataConnectorAwsCloudTrail) Attributes() sentinelDataConnectorAwsCloudTrailAttributes {
 	return sentinelDataConnectorAwsCloudTrailAttributes{ref: terra.ReferenceResource(sdcact)}
 }
 
+// ImportState imports the given attribute values into [SentinelDataConnectorAwsCloudTrail]'s state.
 func (sdcact *SentinelDataConnectorAwsCloudTrail) ImportState(av io.Reader) error {
 	sdcact.state = &sentinelDataConnectorAwsCloudTrailState{}
 	if err := json.NewDecoder(av).Decode(sdcact.state); err != nil {
@@ -49,10 +73,12 @@ func (sdcact *SentinelDataConnectorAwsCloudTrail) ImportState(av io.Reader) erro
 	return nil
 }
 
+// State returns the state and a bool indicating if [SentinelDataConnectorAwsCloudTrail] has state.
 func (sdcact *SentinelDataConnectorAwsCloudTrail) State() (*sentinelDataConnectorAwsCloudTrailState, bool) {
 	return sdcact.state, sdcact.state != nil
 }
 
+// StateMust returns the state for [SentinelDataConnectorAwsCloudTrail]. Panics if the state is nil.
 func (sdcact *SentinelDataConnectorAwsCloudTrail) StateMust() *sentinelDataConnectorAwsCloudTrailState {
 	if sdcact.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sdcact.Type(), sdcact.LocalName()))
@@ -60,10 +86,7 @@ func (sdcact *SentinelDataConnectorAwsCloudTrail) StateMust() *sentinelDataConne
 	return sdcact.state
 }
 
-func (sdcact *SentinelDataConnectorAwsCloudTrail) DependOn() terra.Reference {
-	return terra.ReferenceResource(sdcact)
-}
-
+// SentinelDataConnectorAwsCloudTrailArgs contains the configurations for azurerm_sentinel_data_connector_aws_cloud_trail.
 type SentinelDataConnectorAwsCloudTrailArgs struct {
 	// AwsRoleArn: string, required
 	AwsRoleArn terra.StringValue `hcl:"aws_role_arn,attr" validate:"required"`
@@ -75,31 +98,33 @@ type SentinelDataConnectorAwsCloudTrailArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *sentineldataconnectorawscloudtrail.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SentinelDataConnectorAwsCloudTrail depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sentinelDataConnectorAwsCloudTrailAttributes struct {
 	ref terra.Reference
 }
 
+// AwsRoleArn returns a reference to field aws_role_arn of azurerm_sentinel_data_connector_aws_cloud_trail.
 func (sdcact sentinelDataConnectorAwsCloudTrailAttributes) AwsRoleArn() terra.StringValue {
-	return terra.ReferenceString(sdcact.ref.Append("aws_role_arn"))
+	return terra.ReferenceAsString(sdcact.ref.Append("aws_role_arn"))
 }
 
+// Id returns a reference to field id of azurerm_sentinel_data_connector_aws_cloud_trail.
 func (sdcact sentinelDataConnectorAwsCloudTrailAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sdcact.ref.Append("id"))
+	return terra.ReferenceAsString(sdcact.ref.Append("id"))
 }
 
+// LogAnalyticsWorkspaceId returns a reference to field log_analytics_workspace_id of azurerm_sentinel_data_connector_aws_cloud_trail.
 func (sdcact sentinelDataConnectorAwsCloudTrailAttributes) LogAnalyticsWorkspaceId() terra.StringValue {
-	return terra.ReferenceString(sdcact.ref.Append("log_analytics_workspace_id"))
+	return terra.ReferenceAsString(sdcact.ref.Append("log_analytics_workspace_id"))
 }
 
+// Name returns a reference to field name of azurerm_sentinel_data_connector_aws_cloud_trail.
 func (sdcact sentinelDataConnectorAwsCloudTrailAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sdcact.ref.Append("name"))
+	return terra.ReferenceAsString(sdcact.ref.Append("name"))
 }
 
 func (sdcact sentinelDataConnectorAwsCloudTrailAttributes) Timeouts() sentineldataconnectorawscloudtrail.TimeoutsAttributes {
-	return terra.ReferenceSingle[sentineldataconnectorawscloudtrail.TimeoutsAttributes](sdcact.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[sentineldataconnectorawscloudtrail.TimeoutsAttributes](sdcact.ref.Append("timeouts"))
 }
 
 type sentinelDataConnectorAwsCloudTrailState struct {

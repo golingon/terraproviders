@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewPublicIp creates a new instance of [PublicIp].
 func NewPublicIp(name string, args PublicIpArgs) *PublicIp {
 	return &PublicIp{
 		Args: args,
@@ -19,28 +20,51 @@ func NewPublicIp(name string, args PublicIpArgs) *PublicIp {
 
 var _ terra.Resource = (*PublicIp)(nil)
 
+// PublicIp represents the Terraform resource azurerm_public_ip.
 type PublicIp struct {
-	Name  string
-	Args  PublicIpArgs
-	state *publicIpState
+	Name      string
+	Args      PublicIpArgs
+	state     *publicIpState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PublicIp].
 func (pi *PublicIp) Type() string {
 	return "azurerm_public_ip"
 }
 
+// LocalName returns the local name for [PublicIp].
 func (pi *PublicIp) LocalName() string {
 	return pi.Name
 }
 
+// Configuration returns the configuration (args) for [PublicIp].
 func (pi *PublicIp) Configuration() interface{} {
 	return pi.Args
 }
 
+// DependOn is used for other resources to depend on [PublicIp].
+func (pi *PublicIp) DependOn() terra.Reference {
+	return terra.ReferenceResource(pi)
+}
+
+// Dependencies returns the list of resources [PublicIp] depends_on.
+func (pi *PublicIp) Dependencies() terra.Dependencies {
+	return pi.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PublicIp].
+func (pi *PublicIp) LifecycleManagement() *terra.Lifecycle {
+	return pi.Lifecycle
+}
+
+// Attributes returns the attributes for [PublicIp].
 func (pi *PublicIp) Attributes() publicIpAttributes {
 	return publicIpAttributes{ref: terra.ReferenceResource(pi)}
 }
 
+// ImportState imports the given attribute values into [PublicIp]'s state.
 func (pi *PublicIp) ImportState(av io.Reader) error {
 	pi.state = &publicIpState{}
 	if err := json.NewDecoder(av).Decode(pi.state); err != nil {
@@ -49,10 +73,12 @@ func (pi *PublicIp) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PublicIp] has state.
 func (pi *PublicIp) State() (*publicIpState, bool) {
 	return pi.state, pi.state != nil
 }
 
+// StateMust returns the state for [PublicIp]. Panics if the state is nil.
 func (pi *PublicIp) StateMust() *publicIpState {
 	if pi.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pi.Type(), pi.LocalName()))
@@ -60,10 +86,7 @@ func (pi *PublicIp) StateMust() *publicIpState {
 	return pi.state
 }
 
-func (pi *PublicIp) DependOn() terra.Reference {
-	return terra.ReferenceResource(pi)
-}
-
+// PublicIpArgs contains the configurations for azurerm_public_ip.
 type PublicIpArgs struct {
 	// AllocationMethod: string, required
 	AllocationMethod terra.StringValue `hcl:"allocation_method,attr" validate:"required"`
@@ -103,95 +126,113 @@ type PublicIpArgs struct {
 	Zones terra.SetValue[terra.StringValue] `hcl:"zones,attr"`
 	// Timeouts: optional
 	Timeouts *publicip.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that PublicIp depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type publicIpAttributes struct {
 	ref terra.Reference
 }
 
+// AllocationMethod returns a reference to field allocation_method of azurerm_public_ip.
 func (pi publicIpAttributes) AllocationMethod() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("allocation_method"))
+	return terra.ReferenceAsString(pi.ref.Append("allocation_method"))
 }
 
+// DdosProtectionMode returns a reference to field ddos_protection_mode of azurerm_public_ip.
 func (pi publicIpAttributes) DdosProtectionMode() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("ddos_protection_mode"))
+	return terra.ReferenceAsString(pi.ref.Append("ddos_protection_mode"))
 }
 
+// DdosProtectionPlanId returns a reference to field ddos_protection_plan_id of azurerm_public_ip.
 func (pi publicIpAttributes) DdosProtectionPlanId() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("ddos_protection_plan_id"))
+	return terra.ReferenceAsString(pi.ref.Append("ddos_protection_plan_id"))
 }
 
+// DomainNameLabel returns a reference to field domain_name_label of azurerm_public_ip.
 func (pi publicIpAttributes) DomainNameLabel() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("domain_name_label"))
+	return terra.ReferenceAsString(pi.ref.Append("domain_name_label"))
 }
 
+// EdgeZone returns a reference to field edge_zone of azurerm_public_ip.
 func (pi publicIpAttributes) EdgeZone() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("edge_zone"))
+	return terra.ReferenceAsString(pi.ref.Append("edge_zone"))
 }
 
+// Fqdn returns a reference to field fqdn of azurerm_public_ip.
 func (pi publicIpAttributes) Fqdn() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("fqdn"))
+	return terra.ReferenceAsString(pi.ref.Append("fqdn"))
 }
 
+// Id returns a reference to field id of azurerm_public_ip.
 func (pi publicIpAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("id"))
+	return terra.ReferenceAsString(pi.ref.Append("id"))
 }
 
+// IdleTimeoutInMinutes returns a reference to field idle_timeout_in_minutes of azurerm_public_ip.
 func (pi publicIpAttributes) IdleTimeoutInMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(pi.ref.Append("idle_timeout_in_minutes"))
+	return terra.ReferenceAsNumber(pi.ref.Append("idle_timeout_in_minutes"))
 }
 
+// IpAddress returns a reference to field ip_address of azurerm_public_ip.
 func (pi publicIpAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("ip_address"))
+	return terra.ReferenceAsString(pi.ref.Append("ip_address"))
 }
 
+// IpTags returns a reference to field ip_tags of azurerm_public_ip.
 func (pi publicIpAttributes) IpTags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](pi.ref.Append("ip_tags"))
+	return terra.ReferenceAsMap[terra.StringValue](pi.ref.Append("ip_tags"))
 }
 
+// IpVersion returns a reference to field ip_version of azurerm_public_ip.
 func (pi publicIpAttributes) IpVersion() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("ip_version"))
+	return terra.ReferenceAsString(pi.ref.Append("ip_version"))
 }
 
+// Location returns a reference to field location of azurerm_public_ip.
 func (pi publicIpAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("location"))
+	return terra.ReferenceAsString(pi.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_public_ip.
 func (pi publicIpAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("name"))
+	return terra.ReferenceAsString(pi.ref.Append("name"))
 }
 
+// PublicIpPrefixId returns a reference to field public_ip_prefix_id of azurerm_public_ip.
 func (pi publicIpAttributes) PublicIpPrefixId() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("public_ip_prefix_id"))
+	return terra.ReferenceAsString(pi.ref.Append("public_ip_prefix_id"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_public_ip.
 func (pi publicIpAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(pi.ref.Append("resource_group_name"))
 }
 
+// ReverseFqdn returns a reference to field reverse_fqdn of azurerm_public_ip.
 func (pi publicIpAttributes) ReverseFqdn() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("reverse_fqdn"))
+	return terra.ReferenceAsString(pi.ref.Append("reverse_fqdn"))
 }
 
+// Sku returns a reference to field sku of azurerm_public_ip.
 func (pi publicIpAttributes) Sku() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("sku"))
+	return terra.ReferenceAsString(pi.ref.Append("sku"))
 }
 
+// SkuTier returns a reference to field sku_tier of azurerm_public_ip.
 func (pi publicIpAttributes) SkuTier() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("sku_tier"))
+	return terra.ReferenceAsString(pi.ref.Append("sku_tier"))
 }
 
+// Tags returns a reference to field tags of azurerm_public_ip.
 func (pi publicIpAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](pi.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](pi.ref.Append("tags"))
 }
 
+// Zones returns a reference to field zones of azurerm_public_ip.
 func (pi publicIpAttributes) Zones() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](pi.ref.Append("zones"))
+	return terra.ReferenceAsSet[terra.StringValue](pi.ref.Append("zones"))
 }
 
 func (pi publicIpAttributes) Timeouts() publicip.TimeoutsAttributes {
-	return terra.ReferenceSingle[publicip.TimeoutsAttributes](pi.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[publicip.TimeoutsAttributes](pi.ref.Append("timeouts"))
 }
 
 type publicIpState struct {

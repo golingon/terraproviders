@@ -61,224 +61,224 @@ type ErrorsAttributes struct {
 	ref terra.Reference
 }
 
-func (e ErrorsAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e ErrorsAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e ErrorsAttributes) InternalWithRef(ref terra.Reference) ErrorsAttributes {
 	return ErrorsAttributes{ref: ref}
 }
 
-func (e ErrorsAttributes) InternalTokens() hclwrite.Tokens {
+func (e ErrorsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
 func (e ErrorsAttributes) Message() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("message"))
+	return terra.ReferenceAsString(e.ref.Append("message"))
 }
 
 type WorkloadIdentityConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (wic WorkloadIdentityConfigAttributes) InternalRef() terra.Reference {
-	return wic.ref
+func (wic WorkloadIdentityConfigAttributes) InternalRef() (terra.Reference, error) {
+	return wic.ref, nil
 }
 
 func (wic WorkloadIdentityConfigAttributes) InternalWithRef(ref terra.Reference) WorkloadIdentityConfigAttributes {
 	return WorkloadIdentityConfigAttributes{ref: ref}
 }
 
-func (wic WorkloadIdentityConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (wic WorkloadIdentityConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wic.ref.InternalTokens()
 }
 
 func (wic WorkloadIdentityConfigAttributes) IdentityProvider() terra.StringValue {
-	return terra.ReferenceString(wic.ref.Append("identity_provider"))
+	return terra.ReferenceAsString(wic.ref.Append("identity_provider"))
 }
 
 func (wic WorkloadIdentityConfigAttributes) IssuerUri() terra.StringValue {
-	return terra.ReferenceString(wic.ref.Append("issuer_uri"))
+	return terra.ReferenceAsString(wic.ref.Append("issuer_uri"))
 }
 
 func (wic WorkloadIdentityConfigAttributes) WorkloadPool() terra.StringValue {
-	return terra.ReferenceString(wic.ref.Append("workload_pool"))
+	return terra.ReferenceAsString(wic.ref.Append("workload_pool"))
 }
 
 type AuthorizationAttributes struct {
 	ref terra.Reference
 }
 
-func (a AuthorizationAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AuthorizationAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AuthorizationAttributes) InternalWithRef(ref terra.Reference) AuthorizationAttributes {
 	return AuthorizationAttributes{ref: ref}
 }
 
-func (a AuthorizationAttributes) InternalTokens() hclwrite.Tokens {
+func (a AuthorizationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a AuthorizationAttributes) AdminUsers() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](a.ref.Append("admin_users"))
+	return terra.ReferenceAsList[terra.StringValue](a.ref.Append("admin_users"))
 }
 
 type FleetAttributes struct {
 	ref terra.Reference
 }
 
-func (f FleetAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FleetAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FleetAttributes) InternalWithRef(ref terra.Reference) FleetAttributes {
 	return FleetAttributes{ref: ref}
 }
 
-func (f FleetAttributes) InternalTokens() hclwrite.Tokens {
+func (f FleetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
 func (f FleetAttributes) Membership() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("membership"))
+	return terra.ReferenceAsString(f.ref.Append("membership"))
 }
 
 func (f FleetAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("project"))
+	return terra.ReferenceAsString(f.ref.Append("project"))
 }
 
 type LoggingConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (lc LoggingConfigAttributes) InternalRef() terra.Reference {
-	return lc.ref
+func (lc LoggingConfigAttributes) InternalRef() (terra.Reference, error) {
+	return lc.ref, nil
 }
 
 func (lc LoggingConfigAttributes) InternalWithRef(ref terra.Reference) LoggingConfigAttributes {
 	return LoggingConfigAttributes{ref: ref}
 }
 
-func (lc LoggingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (lc LoggingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lc.ref.InternalTokens()
 }
 
 func (lc LoggingConfigAttributes) ComponentConfig() terra.ListValue[ComponentConfigAttributes] {
-	return terra.ReferenceList[ComponentConfigAttributes](lc.ref.Append("component_config"))
+	return terra.ReferenceAsList[ComponentConfigAttributes](lc.ref.Append("component_config"))
 }
 
 type ComponentConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (cc ComponentConfigAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc ComponentConfigAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc ComponentConfigAttributes) InternalWithRef(ref terra.Reference) ComponentConfigAttributes {
 	return ComponentConfigAttributes{ref: ref}
 }
 
-func (cc ComponentConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (cc ComponentConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
 func (cc ComponentConfigAttributes) EnableComponents() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cc.ref.Append("enable_components"))
+	return terra.ReferenceAsList[terra.StringValue](cc.ref.Append("enable_components"))
 }
 
 type MonitoringConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (mc MonitoringConfigAttributes) InternalRef() terra.Reference {
-	return mc.ref
+func (mc MonitoringConfigAttributes) InternalRef() (terra.Reference, error) {
+	return mc.ref, nil
 }
 
 func (mc MonitoringConfigAttributes) InternalWithRef(ref terra.Reference) MonitoringConfigAttributes {
 	return MonitoringConfigAttributes{ref: ref}
 }
 
-func (mc MonitoringConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (mc MonitoringConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mc.ref.InternalTokens()
 }
 
 func (mc MonitoringConfigAttributes) ManagedPrometheusConfig() terra.ListValue[ManagedPrometheusConfigAttributes] {
-	return terra.ReferenceList[ManagedPrometheusConfigAttributes](mc.ref.Append("managed_prometheus_config"))
+	return terra.ReferenceAsList[ManagedPrometheusConfigAttributes](mc.ref.Append("managed_prometheus_config"))
 }
 
 type ManagedPrometheusConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (mpc ManagedPrometheusConfigAttributes) InternalRef() terra.Reference {
-	return mpc.ref
+func (mpc ManagedPrometheusConfigAttributes) InternalRef() (terra.Reference, error) {
+	return mpc.ref, nil
 }
 
 func (mpc ManagedPrometheusConfigAttributes) InternalWithRef(ref terra.Reference) ManagedPrometheusConfigAttributes {
 	return ManagedPrometheusConfigAttributes{ref: ref}
 }
 
-func (mpc ManagedPrometheusConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (mpc ManagedPrometheusConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mpc.ref.InternalTokens()
 }
 
 func (mpc ManagedPrometheusConfigAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(mpc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(mpc.ref.Append("enabled"))
 }
 
 type OidcConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (oc OidcConfigAttributes) InternalRef() terra.Reference {
-	return oc.ref
+func (oc OidcConfigAttributes) InternalRef() (terra.Reference, error) {
+	return oc.ref, nil
 }
 
 func (oc OidcConfigAttributes) InternalWithRef(ref terra.Reference) OidcConfigAttributes {
 	return OidcConfigAttributes{ref: ref}
 }
 
-func (oc OidcConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (oc OidcConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oc.ref.InternalTokens()
 }
 
 func (oc OidcConfigAttributes) IssuerUrl() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("issuer_url"))
+	return terra.ReferenceAsString(oc.ref.Append("issuer_url"))
 }
 
 func (oc OidcConfigAttributes) Jwks() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("jwks"))
+	return terra.ReferenceAsString(oc.ref.Append("jwks"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ErrorsState struct {

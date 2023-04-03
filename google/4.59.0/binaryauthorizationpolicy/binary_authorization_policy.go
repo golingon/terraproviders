@@ -45,108 +45,108 @@ type AdmissionWhitelistPatternsAttributes struct {
 	ref terra.Reference
 }
 
-func (awp AdmissionWhitelistPatternsAttributes) InternalRef() terra.Reference {
-	return awp.ref
+func (awp AdmissionWhitelistPatternsAttributes) InternalRef() (terra.Reference, error) {
+	return awp.ref, nil
 }
 
 func (awp AdmissionWhitelistPatternsAttributes) InternalWithRef(ref terra.Reference) AdmissionWhitelistPatternsAttributes {
 	return AdmissionWhitelistPatternsAttributes{ref: ref}
 }
 
-func (awp AdmissionWhitelistPatternsAttributes) InternalTokens() hclwrite.Tokens {
+func (awp AdmissionWhitelistPatternsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return awp.ref.InternalTokens()
 }
 
 func (awp AdmissionWhitelistPatternsAttributes) NamePattern() terra.StringValue {
-	return terra.ReferenceString(awp.ref.Append("name_pattern"))
+	return terra.ReferenceAsString(awp.ref.Append("name_pattern"))
 }
 
 type ClusterAdmissionRulesAttributes struct {
 	ref terra.Reference
 }
 
-func (car ClusterAdmissionRulesAttributes) InternalRef() terra.Reference {
-	return car.ref
+func (car ClusterAdmissionRulesAttributes) InternalRef() (terra.Reference, error) {
+	return car.ref, nil
 }
 
 func (car ClusterAdmissionRulesAttributes) InternalWithRef(ref terra.Reference) ClusterAdmissionRulesAttributes {
 	return ClusterAdmissionRulesAttributes{ref: ref}
 }
 
-func (car ClusterAdmissionRulesAttributes) InternalTokens() hclwrite.Tokens {
+func (car ClusterAdmissionRulesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return car.ref.InternalTokens()
 }
 
 func (car ClusterAdmissionRulesAttributes) Cluster() terra.StringValue {
-	return terra.ReferenceString(car.ref.Append("cluster"))
+	return terra.ReferenceAsString(car.ref.Append("cluster"))
 }
 
 func (car ClusterAdmissionRulesAttributes) EnforcementMode() terra.StringValue {
-	return terra.ReferenceString(car.ref.Append("enforcement_mode"))
+	return terra.ReferenceAsString(car.ref.Append("enforcement_mode"))
 }
 
 func (car ClusterAdmissionRulesAttributes) EvaluationMode() terra.StringValue {
-	return terra.ReferenceString(car.ref.Append("evaluation_mode"))
+	return terra.ReferenceAsString(car.ref.Append("evaluation_mode"))
 }
 
 func (car ClusterAdmissionRulesAttributes) RequireAttestationsBy() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](car.ref.Append("require_attestations_by"))
+	return terra.ReferenceAsSet[terra.StringValue](car.ref.Append("require_attestations_by"))
 }
 
 type DefaultAdmissionRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (dar DefaultAdmissionRuleAttributes) InternalRef() terra.Reference {
-	return dar.ref
+func (dar DefaultAdmissionRuleAttributes) InternalRef() (terra.Reference, error) {
+	return dar.ref, nil
 }
 
 func (dar DefaultAdmissionRuleAttributes) InternalWithRef(ref terra.Reference) DefaultAdmissionRuleAttributes {
 	return DefaultAdmissionRuleAttributes{ref: ref}
 }
 
-func (dar DefaultAdmissionRuleAttributes) InternalTokens() hclwrite.Tokens {
+func (dar DefaultAdmissionRuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dar.ref.InternalTokens()
 }
 
 func (dar DefaultAdmissionRuleAttributes) EnforcementMode() terra.StringValue {
-	return terra.ReferenceString(dar.ref.Append("enforcement_mode"))
+	return terra.ReferenceAsString(dar.ref.Append("enforcement_mode"))
 }
 
 func (dar DefaultAdmissionRuleAttributes) EvaluationMode() terra.StringValue {
-	return terra.ReferenceString(dar.ref.Append("evaluation_mode"))
+	return terra.ReferenceAsString(dar.ref.Append("evaluation_mode"))
 }
 
 func (dar DefaultAdmissionRuleAttributes) RequireAttestationsBy() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dar.ref.Append("require_attestations_by"))
+	return terra.ReferenceAsSet[terra.StringValue](dar.ref.Append("require_attestations_by"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AdmissionWhitelistPatternsState struct {

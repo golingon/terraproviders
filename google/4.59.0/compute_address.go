@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeAddress creates a new instance of [ComputeAddress].
 func NewComputeAddress(name string, args ComputeAddressArgs) *ComputeAddress {
 	return &ComputeAddress{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeAddress(name string, args ComputeAddressArgs) *ComputeAddress {
 
 var _ terra.Resource = (*ComputeAddress)(nil)
 
+// ComputeAddress represents the Terraform resource google_compute_address.
 type ComputeAddress struct {
-	Name  string
-	Args  ComputeAddressArgs
-	state *computeAddressState
+	Name      string
+	Args      ComputeAddressArgs
+	state     *computeAddressState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeAddress].
 func (ca *ComputeAddress) Type() string {
 	return "google_compute_address"
 }
 
+// LocalName returns the local name for [ComputeAddress].
 func (ca *ComputeAddress) LocalName() string {
 	return ca.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeAddress].
 func (ca *ComputeAddress) Configuration() interface{} {
 	return ca.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeAddress].
+func (ca *ComputeAddress) DependOn() terra.Reference {
+	return terra.ReferenceResource(ca)
+}
+
+// Dependencies returns the list of resources [ComputeAddress] depends_on.
+func (ca *ComputeAddress) Dependencies() terra.Dependencies {
+	return ca.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeAddress].
+func (ca *ComputeAddress) LifecycleManagement() *terra.Lifecycle {
+	return ca.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeAddress].
 func (ca *ComputeAddress) Attributes() computeAddressAttributes {
 	return computeAddressAttributes{ref: terra.ReferenceResource(ca)}
 }
 
+// ImportState imports the given attribute values into [ComputeAddress]'s state.
 func (ca *ComputeAddress) ImportState(av io.Reader) error {
 	ca.state = &computeAddressState{}
 	if err := json.NewDecoder(av).Decode(ca.state); err != nil {
@@ -49,10 +73,12 @@ func (ca *ComputeAddress) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeAddress] has state.
 func (ca *ComputeAddress) State() (*computeAddressState, bool) {
 	return ca.state, ca.state != nil
 }
 
+// StateMust returns the state for [ComputeAddress]. Panics if the state is nil.
 func (ca *ComputeAddress) StateMust() *computeAddressState {
 	if ca.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ca.Type(), ca.LocalName()))
@@ -60,10 +86,7 @@ func (ca *ComputeAddress) StateMust() *computeAddressState {
 	return ca.state
 }
 
-func (ca *ComputeAddress) DependOn() terra.Reference {
-	return terra.ReferenceResource(ca)
-}
-
+// ComputeAddressArgs contains the configurations for google_compute_address.
 type ComputeAddressArgs struct {
 	// Address: string, optional
 	Address terra.StringValue `hcl:"address,attr"`
@@ -91,75 +114,88 @@ type ComputeAddressArgs struct {
 	Subnetwork terra.StringValue `hcl:"subnetwork,attr"`
 	// Timeouts: optional
 	Timeouts *computeaddress.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeAddress depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeAddressAttributes struct {
 	ref terra.Reference
 }
 
+// Address returns a reference to field address of google_compute_address.
 func (ca computeAddressAttributes) Address() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("address"))
+	return terra.ReferenceAsString(ca.ref.Append("address"))
 }
 
+// AddressType returns a reference to field address_type of google_compute_address.
 func (ca computeAddressAttributes) AddressType() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("address_type"))
+	return terra.ReferenceAsString(ca.ref.Append("address_type"))
 }
 
+// CreationTimestamp returns a reference to field creation_timestamp of google_compute_address.
 func (ca computeAddressAttributes) CreationTimestamp() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("creation_timestamp"))
+	return terra.ReferenceAsString(ca.ref.Append("creation_timestamp"))
 }
 
+// Description returns a reference to field description of google_compute_address.
 func (ca computeAddressAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("description"))
+	return terra.ReferenceAsString(ca.ref.Append("description"))
 }
 
+// Id returns a reference to field id of google_compute_address.
 func (ca computeAddressAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("id"))
+	return terra.ReferenceAsString(ca.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_compute_address.
 func (ca computeAddressAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("name"))
+	return terra.ReferenceAsString(ca.ref.Append("name"))
 }
 
+// Network returns a reference to field network of google_compute_address.
 func (ca computeAddressAttributes) Network() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("network"))
+	return terra.ReferenceAsString(ca.ref.Append("network"))
 }
 
+// NetworkTier returns a reference to field network_tier of google_compute_address.
 func (ca computeAddressAttributes) NetworkTier() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("network_tier"))
+	return terra.ReferenceAsString(ca.ref.Append("network_tier"))
 }
 
+// PrefixLength returns a reference to field prefix_length of google_compute_address.
 func (ca computeAddressAttributes) PrefixLength() terra.NumberValue {
-	return terra.ReferenceNumber(ca.ref.Append("prefix_length"))
+	return terra.ReferenceAsNumber(ca.ref.Append("prefix_length"))
 }
 
+// Project returns a reference to field project of google_compute_address.
 func (ca computeAddressAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("project"))
+	return terra.ReferenceAsString(ca.ref.Append("project"))
 }
 
+// Purpose returns a reference to field purpose of google_compute_address.
 func (ca computeAddressAttributes) Purpose() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("purpose"))
+	return terra.ReferenceAsString(ca.ref.Append("purpose"))
 }
 
+// Region returns a reference to field region of google_compute_address.
 func (ca computeAddressAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("region"))
+	return terra.ReferenceAsString(ca.ref.Append("region"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_address.
 func (ca computeAddressAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("self_link"))
+	return terra.ReferenceAsString(ca.ref.Append("self_link"))
 }
 
+// Subnetwork returns a reference to field subnetwork of google_compute_address.
 func (ca computeAddressAttributes) Subnetwork() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("subnetwork"))
+	return terra.ReferenceAsString(ca.ref.Append("subnetwork"))
 }
 
+// Users returns a reference to field users of google_compute_address.
 func (ca computeAddressAttributes) Users() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ca.ref.Append("users"))
+	return terra.ReferenceAsList[terra.StringValue](ca.ref.Append("users"))
 }
 
 func (ca computeAddressAttributes) Timeouts() computeaddress.TimeoutsAttributes {
-	return terra.ReferenceSingle[computeaddress.TimeoutsAttributes](ca.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computeaddress.TimeoutsAttributes](ca.ref.Append("timeouts"))
 }
 
 type computeAddressState struct {

@@ -29,7 +29,7 @@ func (f FiltersAttributes) InternalWithRef(ref terra.Reference) FiltersAttribute
 	return FiltersAttributes{ref: ref}
 }
 
-func (f FiltersAttributes) InternalTokens() hclwrite.Tokens {
+func (f FiltersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -49,7 +49,7 @@ func (ip IncludedPropertyAttributes) InternalWithRef(ref terra.Reference) Includ
 	return IncludedPropertyAttributes{ref: ref}
 }
 
-func (ip IncludedPropertyAttributes) InternalTokens() hclwrite.Tokens {
+func (ip IncludedPropertyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ip.ref.InternalTokens()
 }
 

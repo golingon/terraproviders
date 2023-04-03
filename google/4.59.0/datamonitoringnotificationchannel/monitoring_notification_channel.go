@@ -13,28 +13,28 @@ type SensitiveLabelsAttributes struct {
 	ref terra.Reference
 }
 
-func (sl SensitiveLabelsAttributes) InternalRef() terra.Reference {
-	return sl.ref
+func (sl SensitiveLabelsAttributes) InternalRef() (terra.Reference, error) {
+	return sl.ref, nil
 }
 
 func (sl SensitiveLabelsAttributes) InternalWithRef(ref terra.Reference) SensitiveLabelsAttributes {
 	return SensitiveLabelsAttributes{ref: ref}
 }
 
-func (sl SensitiveLabelsAttributes) InternalTokens() hclwrite.Tokens {
+func (sl SensitiveLabelsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sl.ref.InternalTokens()
 }
 
 func (sl SensitiveLabelsAttributes) AuthToken() terra.StringValue {
-	return terra.ReferenceString(sl.ref.Append("auth_token"))
+	return terra.ReferenceAsString(sl.ref.Append("auth_token"))
 }
 
 func (sl SensitiveLabelsAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(sl.ref.Append("password"))
+	return terra.ReferenceAsString(sl.ref.Append("password"))
 }
 
 func (sl SensitiveLabelsAttributes) ServiceKey() terra.StringValue {
-	return terra.ReferenceString(sl.ref.Append("service_key"))
+	return terra.ReferenceAsString(sl.ref.Append("service_key"))
 }
 
 type SensitiveLabelsState struct {

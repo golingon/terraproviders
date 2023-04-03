@@ -37,7 +37,7 @@ func (aas AccountAggregationSourceAttributes) InternalWithRef(ref terra.Referenc
 	return AccountAggregationSourceAttributes{ref: ref}
 }
 
-func (aas AccountAggregationSourceAttributes) InternalTokens() hclwrite.Tokens {
+func (aas AccountAggregationSourceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aas.ref.InternalTokens()
 }
 
@@ -65,7 +65,7 @@ func (oas OrganizationAggregationSourceAttributes) InternalWithRef(ref terra.Ref
 	return OrganizationAggregationSourceAttributes{ref: ref}
 }
 
-func (oas OrganizationAggregationSourceAttributes) InternalTokens() hclwrite.Tokens {
+func (oas OrganizationAggregationSourceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oas.ref.InternalTokens()
 }
 

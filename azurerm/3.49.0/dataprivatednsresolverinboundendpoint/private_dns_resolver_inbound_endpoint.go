@@ -18,48 +18,48 @@ type IpConfigurationsAttributes struct {
 	ref terra.Reference
 }
 
-func (ic IpConfigurationsAttributes) InternalRef() terra.Reference {
-	return ic.ref
+func (ic IpConfigurationsAttributes) InternalRef() (terra.Reference, error) {
+	return ic.ref, nil
 }
 
 func (ic IpConfigurationsAttributes) InternalWithRef(ref terra.Reference) IpConfigurationsAttributes {
 	return IpConfigurationsAttributes{ref: ref}
 }
 
-func (ic IpConfigurationsAttributes) InternalTokens() hclwrite.Tokens {
+func (ic IpConfigurationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ic.ref.InternalTokens()
 }
 
 func (ic IpConfigurationsAttributes) PrivateIpAddress() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("private_ip_address"))
+	return terra.ReferenceAsString(ic.ref.Append("private_ip_address"))
 }
 
 func (ic IpConfigurationsAttributes) PrivateIpAllocationMethod() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("private_ip_allocation_method"))
+	return terra.ReferenceAsString(ic.ref.Append("private_ip_allocation_method"))
 }
 
 func (ic IpConfigurationsAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(ic.ref.Append("subnet_id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type IpConfigurationsState struct {

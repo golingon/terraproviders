@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeRouterNat creates a new instance of [ComputeRouterNat].
 func NewComputeRouterNat(name string, args ComputeRouterNatArgs) *ComputeRouterNat {
 	return &ComputeRouterNat{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeRouterNat(name string, args ComputeRouterNatArgs) *ComputeRouterN
 
 var _ terra.Resource = (*ComputeRouterNat)(nil)
 
+// ComputeRouterNat represents the Terraform resource google_compute_router_nat.
 type ComputeRouterNat struct {
-	Name  string
-	Args  ComputeRouterNatArgs
-	state *computeRouterNatState
+	Name      string
+	Args      ComputeRouterNatArgs
+	state     *computeRouterNatState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeRouterNat].
 func (crn *ComputeRouterNat) Type() string {
 	return "google_compute_router_nat"
 }
 
+// LocalName returns the local name for [ComputeRouterNat].
 func (crn *ComputeRouterNat) LocalName() string {
 	return crn.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeRouterNat].
 func (crn *ComputeRouterNat) Configuration() interface{} {
 	return crn.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeRouterNat].
+func (crn *ComputeRouterNat) DependOn() terra.Reference {
+	return terra.ReferenceResource(crn)
+}
+
+// Dependencies returns the list of resources [ComputeRouterNat] depends_on.
+func (crn *ComputeRouterNat) Dependencies() terra.Dependencies {
+	return crn.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeRouterNat].
+func (crn *ComputeRouterNat) LifecycleManagement() *terra.Lifecycle {
+	return crn.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeRouterNat].
 func (crn *ComputeRouterNat) Attributes() computeRouterNatAttributes {
 	return computeRouterNatAttributes{ref: terra.ReferenceResource(crn)}
 }
 
+// ImportState imports the given attribute values into [ComputeRouterNat]'s state.
 func (crn *ComputeRouterNat) ImportState(av io.Reader) error {
 	crn.state = &computeRouterNatState{}
 	if err := json.NewDecoder(av).Decode(crn.state); err != nil {
@@ -49,10 +73,12 @@ func (crn *ComputeRouterNat) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeRouterNat] has state.
 func (crn *ComputeRouterNat) State() (*computeRouterNatState, bool) {
 	return crn.state, crn.state != nil
 }
 
+// StateMust returns the state for [ComputeRouterNat]. Panics if the state is nil.
 func (crn *ComputeRouterNat) StateMust() *computeRouterNatState {
 	if crn.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", crn.Type(), crn.LocalName()))
@@ -60,10 +86,7 @@ func (crn *ComputeRouterNat) StateMust() *computeRouterNatState {
 	return crn.state
 }
 
-func (crn *ComputeRouterNat) DependOn() terra.Reference {
-	return terra.ReferenceResource(crn)
-}
-
+// ComputeRouterNatArgs contains the configurations for google_compute_router_nat.
 type ComputeRouterNatArgs struct {
 	// DrainNatIps: set of string, optional
 	DrainNatIps terra.SetValue[terra.StringValue] `hcl:"drain_nat_ips,attr"`
@@ -109,99 +132,115 @@ type ComputeRouterNatArgs struct {
 	Subnetwork []computerouternat.Subnetwork `hcl:"subnetwork,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *computerouternat.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeRouterNat depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeRouterNatAttributes struct {
 	ref terra.Reference
 }
 
+// DrainNatIps returns a reference to field drain_nat_ips of google_compute_router_nat.
 func (crn computeRouterNatAttributes) DrainNatIps() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](crn.ref.Append("drain_nat_ips"))
+	return terra.ReferenceAsSet[terra.StringValue](crn.ref.Append("drain_nat_ips"))
 }
 
+// EnableDynamicPortAllocation returns a reference to field enable_dynamic_port_allocation of google_compute_router_nat.
 func (crn computeRouterNatAttributes) EnableDynamicPortAllocation() terra.BoolValue {
-	return terra.ReferenceBool(crn.ref.Append("enable_dynamic_port_allocation"))
+	return terra.ReferenceAsBool(crn.ref.Append("enable_dynamic_port_allocation"))
 }
 
+// EnableEndpointIndependentMapping returns a reference to field enable_endpoint_independent_mapping of google_compute_router_nat.
 func (crn computeRouterNatAttributes) EnableEndpointIndependentMapping() terra.BoolValue {
-	return terra.ReferenceBool(crn.ref.Append("enable_endpoint_independent_mapping"))
+	return terra.ReferenceAsBool(crn.ref.Append("enable_endpoint_independent_mapping"))
 }
 
+// IcmpIdleTimeoutSec returns a reference to field icmp_idle_timeout_sec of google_compute_router_nat.
 func (crn computeRouterNatAttributes) IcmpIdleTimeoutSec() terra.NumberValue {
-	return terra.ReferenceNumber(crn.ref.Append("icmp_idle_timeout_sec"))
+	return terra.ReferenceAsNumber(crn.ref.Append("icmp_idle_timeout_sec"))
 }
 
+// Id returns a reference to field id of google_compute_router_nat.
 func (crn computeRouterNatAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(crn.ref.Append("id"))
+	return terra.ReferenceAsString(crn.ref.Append("id"))
 }
 
+// MaxPortsPerVm returns a reference to field max_ports_per_vm of google_compute_router_nat.
 func (crn computeRouterNatAttributes) MaxPortsPerVm() terra.NumberValue {
-	return terra.ReferenceNumber(crn.ref.Append("max_ports_per_vm"))
+	return terra.ReferenceAsNumber(crn.ref.Append("max_ports_per_vm"))
 }
 
+// MinPortsPerVm returns a reference to field min_ports_per_vm of google_compute_router_nat.
 func (crn computeRouterNatAttributes) MinPortsPerVm() terra.NumberValue {
-	return terra.ReferenceNumber(crn.ref.Append("min_ports_per_vm"))
+	return terra.ReferenceAsNumber(crn.ref.Append("min_ports_per_vm"))
 }
 
+// Name returns a reference to field name of google_compute_router_nat.
 func (crn computeRouterNatAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(crn.ref.Append("name"))
+	return terra.ReferenceAsString(crn.ref.Append("name"))
 }
 
+// NatIpAllocateOption returns a reference to field nat_ip_allocate_option of google_compute_router_nat.
 func (crn computeRouterNatAttributes) NatIpAllocateOption() terra.StringValue {
-	return terra.ReferenceString(crn.ref.Append("nat_ip_allocate_option"))
+	return terra.ReferenceAsString(crn.ref.Append("nat_ip_allocate_option"))
 }
 
+// NatIps returns a reference to field nat_ips of google_compute_router_nat.
 func (crn computeRouterNatAttributes) NatIps() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](crn.ref.Append("nat_ips"))
+	return terra.ReferenceAsSet[terra.StringValue](crn.ref.Append("nat_ips"))
 }
 
+// Project returns a reference to field project of google_compute_router_nat.
 func (crn computeRouterNatAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(crn.ref.Append("project"))
+	return terra.ReferenceAsString(crn.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_compute_router_nat.
 func (crn computeRouterNatAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(crn.ref.Append("region"))
+	return terra.ReferenceAsString(crn.ref.Append("region"))
 }
 
+// Router returns a reference to field router of google_compute_router_nat.
 func (crn computeRouterNatAttributes) Router() terra.StringValue {
-	return terra.ReferenceString(crn.ref.Append("router"))
+	return terra.ReferenceAsString(crn.ref.Append("router"))
 }
 
+// SourceSubnetworkIpRangesToNat returns a reference to field source_subnetwork_ip_ranges_to_nat of google_compute_router_nat.
 func (crn computeRouterNatAttributes) SourceSubnetworkIpRangesToNat() terra.StringValue {
-	return terra.ReferenceString(crn.ref.Append("source_subnetwork_ip_ranges_to_nat"))
+	return terra.ReferenceAsString(crn.ref.Append("source_subnetwork_ip_ranges_to_nat"))
 }
 
+// TcpEstablishedIdleTimeoutSec returns a reference to field tcp_established_idle_timeout_sec of google_compute_router_nat.
 func (crn computeRouterNatAttributes) TcpEstablishedIdleTimeoutSec() terra.NumberValue {
-	return terra.ReferenceNumber(crn.ref.Append("tcp_established_idle_timeout_sec"))
+	return terra.ReferenceAsNumber(crn.ref.Append("tcp_established_idle_timeout_sec"))
 }
 
+// TcpTimeWaitTimeoutSec returns a reference to field tcp_time_wait_timeout_sec of google_compute_router_nat.
 func (crn computeRouterNatAttributes) TcpTimeWaitTimeoutSec() terra.NumberValue {
-	return terra.ReferenceNumber(crn.ref.Append("tcp_time_wait_timeout_sec"))
+	return terra.ReferenceAsNumber(crn.ref.Append("tcp_time_wait_timeout_sec"))
 }
 
+// TcpTransitoryIdleTimeoutSec returns a reference to field tcp_transitory_idle_timeout_sec of google_compute_router_nat.
 func (crn computeRouterNatAttributes) TcpTransitoryIdleTimeoutSec() terra.NumberValue {
-	return terra.ReferenceNumber(crn.ref.Append("tcp_transitory_idle_timeout_sec"))
+	return terra.ReferenceAsNumber(crn.ref.Append("tcp_transitory_idle_timeout_sec"))
 }
 
+// UdpIdleTimeoutSec returns a reference to field udp_idle_timeout_sec of google_compute_router_nat.
 func (crn computeRouterNatAttributes) UdpIdleTimeoutSec() terra.NumberValue {
-	return terra.ReferenceNumber(crn.ref.Append("udp_idle_timeout_sec"))
+	return terra.ReferenceAsNumber(crn.ref.Append("udp_idle_timeout_sec"))
 }
 
 func (crn computeRouterNatAttributes) LogConfig() terra.ListValue[computerouternat.LogConfigAttributes] {
-	return terra.ReferenceList[computerouternat.LogConfigAttributes](crn.ref.Append("log_config"))
+	return terra.ReferenceAsList[computerouternat.LogConfigAttributes](crn.ref.Append("log_config"))
 }
 
 func (crn computeRouterNatAttributes) Rules() terra.SetValue[computerouternat.RulesAttributes] {
-	return terra.ReferenceSet[computerouternat.RulesAttributes](crn.ref.Append("rules"))
+	return terra.ReferenceAsSet[computerouternat.RulesAttributes](crn.ref.Append("rules"))
 }
 
 func (crn computeRouterNatAttributes) Subnetwork() terra.SetValue[computerouternat.SubnetworkAttributes] {
-	return terra.ReferenceSet[computerouternat.SubnetworkAttributes](crn.ref.Append("subnetwork"))
+	return terra.ReferenceAsSet[computerouternat.SubnetworkAttributes](crn.ref.Append("subnetwork"))
 }
 
 func (crn computeRouterNatAttributes) Timeouts() computerouternat.TimeoutsAttributes {
-	return terra.ReferenceSingle[computerouternat.TimeoutsAttributes](crn.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computerouternat.TimeoutsAttributes](crn.ref.Append("timeouts"))
 }
 
 type computeRouterNatState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewIothubSharedAccessPolicy creates a new instance of [IothubSharedAccessPolicy].
 func NewIothubSharedAccessPolicy(name string, args IothubSharedAccessPolicyArgs) *IothubSharedAccessPolicy {
 	return &IothubSharedAccessPolicy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewIothubSharedAccessPolicy(name string, args IothubSharedAccessPolicyArgs)
 
 var _ terra.Resource = (*IothubSharedAccessPolicy)(nil)
 
+// IothubSharedAccessPolicy represents the Terraform resource azurerm_iothub_shared_access_policy.
 type IothubSharedAccessPolicy struct {
-	Name  string
-	Args  IothubSharedAccessPolicyArgs
-	state *iothubSharedAccessPolicyState
+	Name      string
+	Args      IothubSharedAccessPolicyArgs
+	state     *iothubSharedAccessPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IothubSharedAccessPolicy].
 func (isap *IothubSharedAccessPolicy) Type() string {
 	return "azurerm_iothub_shared_access_policy"
 }
 
+// LocalName returns the local name for [IothubSharedAccessPolicy].
 func (isap *IothubSharedAccessPolicy) LocalName() string {
 	return isap.Name
 }
 
+// Configuration returns the configuration (args) for [IothubSharedAccessPolicy].
 func (isap *IothubSharedAccessPolicy) Configuration() interface{} {
 	return isap.Args
 }
 
+// DependOn is used for other resources to depend on [IothubSharedAccessPolicy].
+func (isap *IothubSharedAccessPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(isap)
+}
+
+// Dependencies returns the list of resources [IothubSharedAccessPolicy] depends_on.
+func (isap *IothubSharedAccessPolicy) Dependencies() terra.Dependencies {
+	return isap.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IothubSharedAccessPolicy].
+func (isap *IothubSharedAccessPolicy) LifecycleManagement() *terra.Lifecycle {
+	return isap.Lifecycle
+}
+
+// Attributes returns the attributes for [IothubSharedAccessPolicy].
 func (isap *IothubSharedAccessPolicy) Attributes() iothubSharedAccessPolicyAttributes {
 	return iothubSharedAccessPolicyAttributes{ref: terra.ReferenceResource(isap)}
 }
 
+// ImportState imports the given attribute values into [IothubSharedAccessPolicy]'s state.
 func (isap *IothubSharedAccessPolicy) ImportState(av io.Reader) error {
 	isap.state = &iothubSharedAccessPolicyState{}
 	if err := json.NewDecoder(av).Decode(isap.state); err != nil {
@@ -49,10 +73,12 @@ func (isap *IothubSharedAccessPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IothubSharedAccessPolicy] has state.
 func (isap *IothubSharedAccessPolicy) State() (*iothubSharedAccessPolicyState, bool) {
 	return isap.state, isap.state != nil
 }
 
+// StateMust returns the state for [IothubSharedAccessPolicy]. Panics if the state is nil.
 func (isap *IothubSharedAccessPolicy) StateMust() *iothubSharedAccessPolicyState {
 	if isap.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", isap.Type(), isap.LocalName()))
@@ -60,10 +86,7 @@ func (isap *IothubSharedAccessPolicy) StateMust() *iothubSharedAccessPolicyState
 	return isap.state
 }
 
-func (isap *IothubSharedAccessPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(isap)
-}
-
+// IothubSharedAccessPolicyArgs contains the configurations for azurerm_iothub_shared_access_policy.
 type IothubSharedAccessPolicyArgs struct {
 	// DeviceConnect: bool, optional
 	DeviceConnect terra.BoolValue `hcl:"device_connect,attr"`
@@ -83,63 +106,73 @@ type IothubSharedAccessPolicyArgs struct {
 	ServiceConnect terra.BoolValue `hcl:"service_connect,attr"`
 	// Timeouts: optional
 	Timeouts *iothubsharedaccesspolicy.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that IothubSharedAccessPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iothubSharedAccessPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// DeviceConnect returns a reference to field device_connect of azurerm_iothub_shared_access_policy.
 func (isap iothubSharedAccessPolicyAttributes) DeviceConnect() terra.BoolValue {
-	return terra.ReferenceBool(isap.ref.Append("device_connect"))
+	return terra.ReferenceAsBool(isap.ref.Append("device_connect"))
 }
 
+// Id returns a reference to field id of azurerm_iothub_shared_access_policy.
 func (isap iothubSharedAccessPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(isap.ref.Append("id"))
+	return terra.ReferenceAsString(isap.ref.Append("id"))
 }
 
+// IothubName returns a reference to field iothub_name of azurerm_iothub_shared_access_policy.
 func (isap iothubSharedAccessPolicyAttributes) IothubName() terra.StringValue {
-	return terra.ReferenceString(isap.ref.Append("iothub_name"))
+	return terra.ReferenceAsString(isap.ref.Append("iothub_name"))
 }
 
+// Name returns a reference to field name of azurerm_iothub_shared_access_policy.
 func (isap iothubSharedAccessPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(isap.ref.Append("name"))
+	return terra.ReferenceAsString(isap.ref.Append("name"))
 }
 
+// PrimaryConnectionString returns a reference to field primary_connection_string of azurerm_iothub_shared_access_policy.
 func (isap iothubSharedAccessPolicyAttributes) PrimaryConnectionString() terra.StringValue {
-	return terra.ReferenceString(isap.ref.Append("primary_connection_string"))
+	return terra.ReferenceAsString(isap.ref.Append("primary_connection_string"))
 }
 
+// PrimaryKey returns a reference to field primary_key of azurerm_iothub_shared_access_policy.
 func (isap iothubSharedAccessPolicyAttributes) PrimaryKey() terra.StringValue {
-	return terra.ReferenceString(isap.ref.Append("primary_key"))
+	return terra.ReferenceAsString(isap.ref.Append("primary_key"))
 }
 
+// RegistryRead returns a reference to field registry_read of azurerm_iothub_shared_access_policy.
 func (isap iothubSharedAccessPolicyAttributes) RegistryRead() terra.BoolValue {
-	return terra.ReferenceBool(isap.ref.Append("registry_read"))
+	return terra.ReferenceAsBool(isap.ref.Append("registry_read"))
 }
 
+// RegistryWrite returns a reference to field registry_write of azurerm_iothub_shared_access_policy.
 func (isap iothubSharedAccessPolicyAttributes) RegistryWrite() terra.BoolValue {
-	return terra.ReferenceBool(isap.ref.Append("registry_write"))
+	return terra.ReferenceAsBool(isap.ref.Append("registry_write"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_iothub_shared_access_policy.
 func (isap iothubSharedAccessPolicyAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(isap.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(isap.ref.Append("resource_group_name"))
 }
 
+// SecondaryConnectionString returns a reference to field secondary_connection_string of azurerm_iothub_shared_access_policy.
 func (isap iothubSharedAccessPolicyAttributes) SecondaryConnectionString() terra.StringValue {
-	return terra.ReferenceString(isap.ref.Append("secondary_connection_string"))
+	return terra.ReferenceAsString(isap.ref.Append("secondary_connection_string"))
 }
 
+// SecondaryKey returns a reference to field secondary_key of azurerm_iothub_shared_access_policy.
 func (isap iothubSharedAccessPolicyAttributes) SecondaryKey() terra.StringValue {
-	return terra.ReferenceString(isap.ref.Append("secondary_key"))
+	return terra.ReferenceAsString(isap.ref.Append("secondary_key"))
 }
 
+// ServiceConnect returns a reference to field service_connect of azurerm_iothub_shared_access_policy.
 func (isap iothubSharedAccessPolicyAttributes) ServiceConnect() terra.BoolValue {
-	return terra.ReferenceBool(isap.ref.Append("service_connect"))
+	return terra.ReferenceAsBool(isap.ref.Append("service_connect"))
 }
 
 func (isap iothubSharedAccessPolicyAttributes) Timeouts() iothubsharedaccesspolicy.TimeoutsAttributes {
-	return terra.ReferenceSingle[iothubsharedaccesspolicy.TimeoutsAttributes](isap.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[iothubsharedaccesspolicy.TimeoutsAttributes](isap.ref.Append("timeouts"))
 }
 
 type iothubSharedAccessPolicyState struct {

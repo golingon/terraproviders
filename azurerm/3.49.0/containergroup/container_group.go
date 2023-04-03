@@ -257,700 +257,700 @@ type ExposedPortAttributes struct {
 	ref terra.Reference
 }
 
-func (ep ExposedPortAttributes) InternalRef() terra.Reference {
-	return ep.ref
+func (ep ExposedPortAttributes) InternalRef() (terra.Reference, error) {
+	return ep.ref, nil
 }
 
 func (ep ExposedPortAttributes) InternalWithRef(ref terra.Reference) ExposedPortAttributes {
 	return ExposedPortAttributes{ref: ref}
 }
 
-func (ep ExposedPortAttributes) InternalTokens() hclwrite.Tokens {
+func (ep ExposedPortAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ep.ref.InternalTokens()
 }
 
 func (ep ExposedPortAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(ep.ref.Append("port"))
+	return terra.ReferenceAsNumber(ep.ref.Append("port"))
 }
 
 func (ep ExposedPortAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("protocol"))
+	return terra.ReferenceAsString(ep.ref.Append("protocol"))
 }
 
 type ContainerAttributes struct {
 	ref terra.Reference
 }
 
-func (c ContainerAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ContainerAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ContainerAttributes) InternalWithRef(ref terra.Reference) ContainerAttributes {
 	return ContainerAttributes{ref: ref}
 }
 
-func (c ContainerAttributes) InternalTokens() hclwrite.Tokens {
+func (c ContainerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ContainerAttributes) Commands() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](c.ref.Append("commands"))
+	return terra.ReferenceAsList[terra.StringValue](c.ref.Append("commands"))
 }
 
 func (c ContainerAttributes) Cpu() terra.NumberValue {
-	return terra.ReferenceNumber(c.ref.Append("cpu"))
+	return terra.ReferenceAsNumber(c.ref.Append("cpu"))
 }
 
 func (c ContainerAttributes) CpuLimit() terra.NumberValue {
-	return terra.ReferenceNumber(c.ref.Append("cpu_limit"))
+	return terra.ReferenceAsNumber(c.ref.Append("cpu_limit"))
 }
 
 func (c ContainerAttributes) EnvironmentVariables() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](c.ref.Append("environment_variables"))
+	return terra.ReferenceAsMap[terra.StringValue](c.ref.Append("environment_variables"))
 }
 
 func (c ContainerAttributes) Image() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("image"))
+	return terra.ReferenceAsString(c.ref.Append("image"))
 }
 
 func (c ContainerAttributes) Memory() terra.NumberValue {
-	return terra.ReferenceNumber(c.ref.Append("memory"))
+	return terra.ReferenceAsNumber(c.ref.Append("memory"))
 }
 
 func (c ContainerAttributes) MemoryLimit() terra.NumberValue {
-	return terra.ReferenceNumber(c.ref.Append("memory_limit"))
+	return terra.ReferenceAsNumber(c.ref.Append("memory_limit"))
 }
 
 func (c ContainerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("name"))
+	return terra.ReferenceAsString(c.ref.Append("name"))
 }
 
 func (c ContainerAttributes) SecureEnvironmentVariables() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](c.ref.Append("secure_environment_variables"))
+	return terra.ReferenceAsMap[terra.StringValue](c.ref.Append("secure_environment_variables"))
 }
 
 func (c ContainerAttributes) Gpu() terra.ListValue[GpuAttributes] {
-	return terra.ReferenceList[GpuAttributes](c.ref.Append("gpu"))
+	return terra.ReferenceAsList[GpuAttributes](c.ref.Append("gpu"))
 }
 
 func (c ContainerAttributes) GpuLimit() terra.ListValue[GpuLimitAttributes] {
-	return terra.ReferenceList[GpuLimitAttributes](c.ref.Append("gpu_limit"))
+	return terra.ReferenceAsList[GpuLimitAttributes](c.ref.Append("gpu_limit"))
 }
 
 func (c ContainerAttributes) LivenessProbe() terra.ListValue[LivenessProbeAttributes] {
-	return terra.ReferenceList[LivenessProbeAttributes](c.ref.Append("liveness_probe"))
+	return terra.ReferenceAsList[LivenessProbeAttributes](c.ref.Append("liveness_probe"))
 }
 
 func (c ContainerAttributes) Ports() terra.SetValue[PortsAttributes] {
-	return terra.ReferenceSet[PortsAttributes](c.ref.Append("ports"))
+	return terra.ReferenceAsSet[PortsAttributes](c.ref.Append("ports"))
 }
 
 func (c ContainerAttributes) ReadinessProbe() terra.ListValue[ReadinessProbeAttributes] {
-	return terra.ReferenceList[ReadinessProbeAttributes](c.ref.Append("readiness_probe"))
+	return terra.ReferenceAsList[ReadinessProbeAttributes](c.ref.Append("readiness_probe"))
 }
 
 func (c ContainerAttributes) Volume() terra.ListValue[ContainerVolumeAttributes] {
-	return terra.ReferenceList[ContainerVolumeAttributes](c.ref.Append("volume"))
+	return terra.ReferenceAsList[ContainerVolumeAttributes](c.ref.Append("volume"))
 }
 
 type GpuAttributes struct {
 	ref terra.Reference
 }
 
-func (g GpuAttributes) InternalRef() terra.Reference {
-	return g.ref
+func (g GpuAttributes) InternalRef() (terra.Reference, error) {
+	return g.ref, nil
 }
 
 func (g GpuAttributes) InternalWithRef(ref terra.Reference) GpuAttributes {
 	return GpuAttributes{ref: ref}
 }
 
-func (g GpuAttributes) InternalTokens() hclwrite.Tokens {
+func (g GpuAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return g.ref.InternalTokens()
 }
 
 func (g GpuAttributes) Count() terra.NumberValue {
-	return terra.ReferenceNumber(g.ref.Append("count"))
+	return terra.ReferenceAsNumber(g.ref.Append("count"))
 }
 
 func (g GpuAttributes) Sku() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("sku"))
+	return terra.ReferenceAsString(g.ref.Append("sku"))
 }
 
 type GpuLimitAttributes struct {
 	ref terra.Reference
 }
 
-func (gl GpuLimitAttributes) InternalRef() terra.Reference {
-	return gl.ref
+func (gl GpuLimitAttributes) InternalRef() (terra.Reference, error) {
+	return gl.ref, nil
 }
 
 func (gl GpuLimitAttributes) InternalWithRef(ref terra.Reference) GpuLimitAttributes {
 	return GpuLimitAttributes{ref: ref}
 }
 
-func (gl GpuLimitAttributes) InternalTokens() hclwrite.Tokens {
+func (gl GpuLimitAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gl.ref.InternalTokens()
 }
 
 func (gl GpuLimitAttributes) Count() terra.NumberValue {
-	return terra.ReferenceNumber(gl.ref.Append("count"))
+	return terra.ReferenceAsNumber(gl.ref.Append("count"))
 }
 
 func (gl GpuLimitAttributes) Sku() terra.StringValue {
-	return terra.ReferenceString(gl.ref.Append("sku"))
+	return terra.ReferenceAsString(gl.ref.Append("sku"))
 }
 
 type LivenessProbeAttributes struct {
 	ref terra.Reference
 }
 
-func (lp LivenessProbeAttributes) InternalRef() terra.Reference {
-	return lp.ref
+func (lp LivenessProbeAttributes) InternalRef() (terra.Reference, error) {
+	return lp.ref, nil
 }
 
 func (lp LivenessProbeAttributes) InternalWithRef(ref terra.Reference) LivenessProbeAttributes {
 	return LivenessProbeAttributes{ref: ref}
 }
 
-func (lp LivenessProbeAttributes) InternalTokens() hclwrite.Tokens {
+func (lp LivenessProbeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lp.ref.InternalTokens()
 }
 
 func (lp LivenessProbeAttributes) Exec() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lp.ref.Append("exec"))
+	return terra.ReferenceAsList[terra.StringValue](lp.ref.Append("exec"))
 }
 
 func (lp LivenessProbeAttributes) FailureThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(lp.ref.Append("failure_threshold"))
+	return terra.ReferenceAsNumber(lp.ref.Append("failure_threshold"))
 }
 
 func (lp LivenessProbeAttributes) InitialDelaySeconds() terra.NumberValue {
-	return terra.ReferenceNumber(lp.ref.Append("initial_delay_seconds"))
+	return terra.ReferenceAsNumber(lp.ref.Append("initial_delay_seconds"))
 }
 
 func (lp LivenessProbeAttributes) PeriodSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(lp.ref.Append("period_seconds"))
+	return terra.ReferenceAsNumber(lp.ref.Append("period_seconds"))
 }
 
 func (lp LivenessProbeAttributes) SuccessThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(lp.ref.Append("success_threshold"))
+	return terra.ReferenceAsNumber(lp.ref.Append("success_threshold"))
 }
 
 func (lp LivenessProbeAttributes) TimeoutSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(lp.ref.Append("timeout_seconds"))
+	return terra.ReferenceAsNumber(lp.ref.Append("timeout_seconds"))
 }
 
 func (lp LivenessProbeAttributes) HttpGet() terra.ListValue[LivenessProbeHttpGetAttributes] {
-	return terra.ReferenceList[LivenessProbeHttpGetAttributes](lp.ref.Append("http_get"))
+	return terra.ReferenceAsList[LivenessProbeHttpGetAttributes](lp.ref.Append("http_get"))
 }
 
 type LivenessProbeHttpGetAttributes struct {
 	ref terra.Reference
 }
 
-func (hg LivenessProbeHttpGetAttributes) InternalRef() terra.Reference {
-	return hg.ref
+func (hg LivenessProbeHttpGetAttributes) InternalRef() (terra.Reference, error) {
+	return hg.ref, nil
 }
 
 func (hg LivenessProbeHttpGetAttributes) InternalWithRef(ref terra.Reference) LivenessProbeHttpGetAttributes {
 	return LivenessProbeHttpGetAttributes{ref: ref}
 }
 
-func (hg LivenessProbeHttpGetAttributes) InternalTokens() hclwrite.Tokens {
+func (hg LivenessProbeHttpGetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hg.ref.InternalTokens()
 }
 
 func (hg LivenessProbeHttpGetAttributes) HttpHeaders() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](hg.ref.Append("http_headers"))
+	return terra.ReferenceAsMap[terra.StringValue](hg.ref.Append("http_headers"))
 }
 
 func (hg LivenessProbeHttpGetAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(hg.ref.Append("path"))
+	return terra.ReferenceAsString(hg.ref.Append("path"))
 }
 
 func (hg LivenessProbeHttpGetAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(hg.ref.Append("port"))
+	return terra.ReferenceAsNumber(hg.ref.Append("port"))
 }
 
 func (hg LivenessProbeHttpGetAttributes) Scheme() terra.StringValue {
-	return terra.ReferenceString(hg.ref.Append("scheme"))
+	return terra.ReferenceAsString(hg.ref.Append("scheme"))
 }
 
 type PortsAttributes struct {
 	ref terra.Reference
 }
 
-func (p PortsAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p PortsAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p PortsAttributes) InternalWithRef(ref terra.Reference) PortsAttributes {
 	return PortsAttributes{ref: ref}
 }
 
-func (p PortsAttributes) InternalTokens() hclwrite.Tokens {
+func (p PortsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
 func (p PortsAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(p.ref.Append("port"))
+	return terra.ReferenceAsNumber(p.ref.Append("port"))
 }
 
 func (p PortsAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("protocol"))
+	return terra.ReferenceAsString(p.ref.Append("protocol"))
 }
 
 type ReadinessProbeAttributes struct {
 	ref terra.Reference
 }
 
-func (rp ReadinessProbeAttributes) InternalRef() terra.Reference {
-	return rp.ref
+func (rp ReadinessProbeAttributes) InternalRef() (terra.Reference, error) {
+	return rp.ref, nil
 }
 
 func (rp ReadinessProbeAttributes) InternalWithRef(ref terra.Reference) ReadinessProbeAttributes {
 	return ReadinessProbeAttributes{ref: ref}
 }
 
-func (rp ReadinessProbeAttributes) InternalTokens() hclwrite.Tokens {
+func (rp ReadinessProbeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rp.ref.InternalTokens()
 }
 
 func (rp ReadinessProbeAttributes) Exec() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rp.ref.Append("exec"))
+	return terra.ReferenceAsList[terra.StringValue](rp.ref.Append("exec"))
 }
 
 func (rp ReadinessProbeAttributes) FailureThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(rp.ref.Append("failure_threshold"))
+	return terra.ReferenceAsNumber(rp.ref.Append("failure_threshold"))
 }
 
 func (rp ReadinessProbeAttributes) InitialDelaySeconds() terra.NumberValue {
-	return terra.ReferenceNumber(rp.ref.Append("initial_delay_seconds"))
+	return terra.ReferenceAsNumber(rp.ref.Append("initial_delay_seconds"))
 }
 
 func (rp ReadinessProbeAttributes) PeriodSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(rp.ref.Append("period_seconds"))
+	return terra.ReferenceAsNumber(rp.ref.Append("period_seconds"))
 }
 
 func (rp ReadinessProbeAttributes) SuccessThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(rp.ref.Append("success_threshold"))
+	return terra.ReferenceAsNumber(rp.ref.Append("success_threshold"))
 }
 
 func (rp ReadinessProbeAttributes) TimeoutSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(rp.ref.Append("timeout_seconds"))
+	return terra.ReferenceAsNumber(rp.ref.Append("timeout_seconds"))
 }
 
 func (rp ReadinessProbeAttributes) HttpGet() terra.ListValue[ReadinessProbeHttpGetAttributes] {
-	return terra.ReferenceList[ReadinessProbeHttpGetAttributes](rp.ref.Append("http_get"))
+	return terra.ReferenceAsList[ReadinessProbeHttpGetAttributes](rp.ref.Append("http_get"))
 }
 
 type ReadinessProbeHttpGetAttributes struct {
 	ref terra.Reference
 }
 
-func (hg ReadinessProbeHttpGetAttributes) InternalRef() terra.Reference {
-	return hg.ref
+func (hg ReadinessProbeHttpGetAttributes) InternalRef() (terra.Reference, error) {
+	return hg.ref, nil
 }
 
 func (hg ReadinessProbeHttpGetAttributes) InternalWithRef(ref terra.Reference) ReadinessProbeHttpGetAttributes {
 	return ReadinessProbeHttpGetAttributes{ref: ref}
 }
 
-func (hg ReadinessProbeHttpGetAttributes) InternalTokens() hclwrite.Tokens {
+func (hg ReadinessProbeHttpGetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hg.ref.InternalTokens()
 }
 
 func (hg ReadinessProbeHttpGetAttributes) HttpHeaders() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](hg.ref.Append("http_headers"))
+	return terra.ReferenceAsMap[terra.StringValue](hg.ref.Append("http_headers"))
 }
 
 func (hg ReadinessProbeHttpGetAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(hg.ref.Append("path"))
+	return terra.ReferenceAsString(hg.ref.Append("path"))
 }
 
 func (hg ReadinessProbeHttpGetAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(hg.ref.Append("port"))
+	return terra.ReferenceAsNumber(hg.ref.Append("port"))
 }
 
 func (hg ReadinessProbeHttpGetAttributes) Scheme() terra.StringValue {
-	return terra.ReferenceString(hg.ref.Append("scheme"))
+	return terra.ReferenceAsString(hg.ref.Append("scheme"))
 }
 
 type ContainerVolumeAttributes struct {
 	ref terra.Reference
 }
 
-func (v ContainerVolumeAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v ContainerVolumeAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v ContainerVolumeAttributes) InternalWithRef(ref terra.Reference) ContainerVolumeAttributes {
 	return ContainerVolumeAttributes{ref: ref}
 }
 
-func (v ContainerVolumeAttributes) InternalTokens() hclwrite.Tokens {
+func (v ContainerVolumeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 
 func (v ContainerVolumeAttributes) EmptyDir() terra.BoolValue {
-	return terra.ReferenceBool(v.ref.Append("empty_dir"))
+	return terra.ReferenceAsBool(v.ref.Append("empty_dir"))
 }
 
 func (v ContainerVolumeAttributes) MountPath() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("mount_path"))
+	return terra.ReferenceAsString(v.ref.Append("mount_path"))
 }
 
 func (v ContainerVolumeAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("name"))
+	return terra.ReferenceAsString(v.ref.Append("name"))
 }
 
 func (v ContainerVolumeAttributes) ReadOnly() terra.BoolValue {
-	return terra.ReferenceBool(v.ref.Append("read_only"))
+	return terra.ReferenceAsBool(v.ref.Append("read_only"))
 }
 
 func (v ContainerVolumeAttributes) Secret() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](v.ref.Append("secret"))
+	return terra.ReferenceAsMap[terra.StringValue](v.ref.Append("secret"))
 }
 
 func (v ContainerVolumeAttributes) ShareName() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("share_name"))
+	return terra.ReferenceAsString(v.ref.Append("share_name"))
 }
 
 func (v ContainerVolumeAttributes) StorageAccountKey() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("storage_account_key"))
+	return terra.ReferenceAsString(v.ref.Append("storage_account_key"))
 }
 
 func (v ContainerVolumeAttributes) StorageAccountName() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("storage_account_name"))
+	return terra.ReferenceAsString(v.ref.Append("storage_account_name"))
 }
 
 func (v ContainerVolumeAttributes) GitRepo() terra.ListValue[ContainerVolumeGitRepoAttributes] {
-	return terra.ReferenceList[ContainerVolumeGitRepoAttributes](v.ref.Append("git_repo"))
+	return terra.ReferenceAsList[ContainerVolumeGitRepoAttributes](v.ref.Append("git_repo"))
 }
 
 type ContainerVolumeGitRepoAttributes struct {
 	ref terra.Reference
 }
 
-func (gr ContainerVolumeGitRepoAttributes) InternalRef() terra.Reference {
-	return gr.ref
+func (gr ContainerVolumeGitRepoAttributes) InternalRef() (terra.Reference, error) {
+	return gr.ref, nil
 }
 
 func (gr ContainerVolumeGitRepoAttributes) InternalWithRef(ref terra.Reference) ContainerVolumeGitRepoAttributes {
 	return ContainerVolumeGitRepoAttributes{ref: ref}
 }
 
-func (gr ContainerVolumeGitRepoAttributes) InternalTokens() hclwrite.Tokens {
+func (gr ContainerVolumeGitRepoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gr.ref.InternalTokens()
 }
 
 func (gr ContainerVolumeGitRepoAttributes) Directory() terra.StringValue {
-	return terra.ReferenceString(gr.ref.Append("directory"))
+	return terra.ReferenceAsString(gr.ref.Append("directory"))
 }
 
 func (gr ContainerVolumeGitRepoAttributes) Revision() terra.StringValue {
-	return terra.ReferenceString(gr.ref.Append("revision"))
+	return terra.ReferenceAsString(gr.ref.Append("revision"))
 }
 
 func (gr ContainerVolumeGitRepoAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(gr.ref.Append("url"))
+	return terra.ReferenceAsString(gr.ref.Append("url"))
 }
 
 type DiagnosticsAttributes struct {
 	ref terra.Reference
 }
 
-func (d DiagnosticsAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DiagnosticsAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DiagnosticsAttributes) InternalWithRef(ref terra.Reference) DiagnosticsAttributes {
 	return DiagnosticsAttributes{ref: ref}
 }
 
-func (d DiagnosticsAttributes) InternalTokens() hclwrite.Tokens {
+func (d DiagnosticsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d DiagnosticsAttributes) LogAnalytics() terra.ListValue[LogAnalyticsAttributes] {
-	return terra.ReferenceList[LogAnalyticsAttributes](d.ref.Append("log_analytics"))
+	return terra.ReferenceAsList[LogAnalyticsAttributes](d.ref.Append("log_analytics"))
 }
 
 type LogAnalyticsAttributes struct {
 	ref terra.Reference
 }
 
-func (la LogAnalyticsAttributes) InternalRef() terra.Reference {
-	return la.ref
+func (la LogAnalyticsAttributes) InternalRef() (terra.Reference, error) {
+	return la.ref, nil
 }
 
 func (la LogAnalyticsAttributes) InternalWithRef(ref terra.Reference) LogAnalyticsAttributes {
 	return LogAnalyticsAttributes{ref: ref}
 }
 
-func (la LogAnalyticsAttributes) InternalTokens() hclwrite.Tokens {
+func (la LogAnalyticsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return la.ref.InternalTokens()
 }
 
 func (la LogAnalyticsAttributes) LogType() terra.StringValue {
-	return terra.ReferenceString(la.ref.Append("log_type"))
+	return terra.ReferenceAsString(la.ref.Append("log_type"))
 }
 
 func (la LogAnalyticsAttributes) Metadata() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](la.ref.Append("metadata"))
+	return terra.ReferenceAsMap[terra.StringValue](la.ref.Append("metadata"))
 }
 
 func (la LogAnalyticsAttributes) WorkspaceId() terra.StringValue {
-	return terra.ReferenceString(la.ref.Append("workspace_id"))
+	return terra.ReferenceAsString(la.ref.Append("workspace_id"))
 }
 
 func (la LogAnalyticsAttributes) WorkspaceKey() terra.StringValue {
-	return terra.ReferenceString(la.ref.Append("workspace_key"))
+	return terra.ReferenceAsString(la.ref.Append("workspace_key"))
 }
 
 type DnsConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (dc DnsConfigAttributes) InternalRef() terra.Reference {
-	return dc.ref
+func (dc DnsConfigAttributes) InternalRef() (terra.Reference, error) {
+	return dc.ref, nil
 }
 
 func (dc DnsConfigAttributes) InternalWithRef(ref terra.Reference) DnsConfigAttributes {
 	return DnsConfigAttributes{ref: ref}
 }
 
-func (dc DnsConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (dc DnsConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dc.ref.InternalTokens()
 }
 
 func (dc DnsConfigAttributes) Nameservers() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dc.ref.Append("nameservers"))
+	return terra.ReferenceAsList[terra.StringValue](dc.ref.Append("nameservers"))
 }
 
 func (dc DnsConfigAttributes) Options() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dc.ref.Append("options"))
+	return terra.ReferenceAsSet[terra.StringValue](dc.ref.Append("options"))
 }
 
 func (dc DnsConfigAttributes) SearchDomains() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dc.ref.Append("search_domains"))
+	return terra.ReferenceAsSet[terra.StringValue](dc.ref.Append("search_domains"))
 }
 
 type IdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (i IdentityAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IdentityAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IdentityAttributes) InternalWithRef(ref terra.Reference) IdentityAttributes {
 	return IdentityAttributes{ref: ref}
 }
 
-func (i IdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (i IdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IdentityAttributes) IdentityIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i.ref.Append("identity_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](i.ref.Append("identity_ids"))
 }
 
 func (i IdentityAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("principal_id"))
+	return terra.ReferenceAsString(i.ref.Append("principal_id"))
 }
 
 func (i IdentityAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(i.ref.Append("tenant_id"))
 }
 
 func (i IdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("type"))
+	return terra.ReferenceAsString(i.ref.Append("type"))
 }
 
 type ImageRegistryCredentialAttributes struct {
 	ref terra.Reference
 }
 
-func (irc ImageRegistryCredentialAttributes) InternalRef() terra.Reference {
-	return irc.ref
+func (irc ImageRegistryCredentialAttributes) InternalRef() (terra.Reference, error) {
+	return irc.ref, nil
 }
 
 func (irc ImageRegistryCredentialAttributes) InternalWithRef(ref terra.Reference) ImageRegistryCredentialAttributes {
 	return ImageRegistryCredentialAttributes{ref: ref}
 }
 
-func (irc ImageRegistryCredentialAttributes) InternalTokens() hclwrite.Tokens {
+func (irc ImageRegistryCredentialAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return irc.ref.InternalTokens()
 }
 
 func (irc ImageRegistryCredentialAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(irc.ref.Append("password"))
+	return terra.ReferenceAsString(irc.ref.Append("password"))
 }
 
 func (irc ImageRegistryCredentialAttributes) Server() terra.StringValue {
-	return terra.ReferenceString(irc.ref.Append("server"))
+	return terra.ReferenceAsString(irc.ref.Append("server"))
 }
 
 func (irc ImageRegistryCredentialAttributes) UserAssignedIdentityId() terra.StringValue {
-	return terra.ReferenceString(irc.ref.Append("user_assigned_identity_id"))
+	return terra.ReferenceAsString(irc.ref.Append("user_assigned_identity_id"))
 }
 
 func (irc ImageRegistryCredentialAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(irc.ref.Append("username"))
+	return terra.ReferenceAsString(irc.ref.Append("username"))
 }
 
 type InitContainerAttributes struct {
 	ref terra.Reference
 }
 
-func (ic InitContainerAttributes) InternalRef() terra.Reference {
-	return ic.ref
+func (ic InitContainerAttributes) InternalRef() (terra.Reference, error) {
+	return ic.ref, nil
 }
 
 func (ic InitContainerAttributes) InternalWithRef(ref terra.Reference) InitContainerAttributes {
 	return InitContainerAttributes{ref: ref}
 }
 
-func (ic InitContainerAttributes) InternalTokens() hclwrite.Tokens {
+func (ic InitContainerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ic.ref.InternalTokens()
 }
 
 func (ic InitContainerAttributes) Commands() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ic.ref.Append("commands"))
+	return terra.ReferenceAsList[terra.StringValue](ic.ref.Append("commands"))
 }
 
 func (ic InitContainerAttributes) EnvironmentVariables() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ic.ref.Append("environment_variables"))
+	return terra.ReferenceAsMap[terra.StringValue](ic.ref.Append("environment_variables"))
 }
 
 func (ic InitContainerAttributes) Image() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("image"))
+	return terra.ReferenceAsString(ic.ref.Append("image"))
 }
 
 func (ic InitContainerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("name"))
+	return terra.ReferenceAsString(ic.ref.Append("name"))
 }
 
 func (ic InitContainerAttributes) SecureEnvironmentVariables() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ic.ref.Append("secure_environment_variables"))
+	return terra.ReferenceAsMap[terra.StringValue](ic.ref.Append("secure_environment_variables"))
 }
 
 func (ic InitContainerAttributes) Volume() terra.ListValue[InitContainerVolumeAttributes] {
-	return terra.ReferenceList[InitContainerVolumeAttributes](ic.ref.Append("volume"))
+	return terra.ReferenceAsList[InitContainerVolumeAttributes](ic.ref.Append("volume"))
 }
 
 type InitContainerVolumeAttributes struct {
 	ref terra.Reference
 }
 
-func (v InitContainerVolumeAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v InitContainerVolumeAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v InitContainerVolumeAttributes) InternalWithRef(ref terra.Reference) InitContainerVolumeAttributes {
 	return InitContainerVolumeAttributes{ref: ref}
 }
 
-func (v InitContainerVolumeAttributes) InternalTokens() hclwrite.Tokens {
+func (v InitContainerVolumeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 
 func (v InitContainerVolumeAttributes) EmptyDir() terra.BoolValue {
-	return terra.ReferenceBool(v.ref.Append("empty_dir"))
+	return terra.ReferenceAsBool(v.ref.Append("empty_dir"))
 }
 
 func (v InitContainerVolumeAttributes) MountPath() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("mount_path"))
+	return terra.ReferenceAsString(v.ref.Append("mount_path"))
 }
 
 func (v InitContainerVolumeAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("name"))
+	return terra.ReferenceAsString(v.ref.Append("name"))
 }
 
 func (v InitContainerVolumeAttributes) ReadOnly() terra.BoolValue {
-	return terra.ReferenceBool(v.ref.Append("read_only"))
+	return terra.ReferenceAsBool(v.ref.Append("read_only"))
 }
 
 func (v InitContainerVolumeAttributes) Secret() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](v.ref.Append("secret"))
+	return terra.ReferenceAsMap[terra.StringValue](v.ref.Append("secret"))
 }
 
 func (v InitContainerVolumeAttributes) ShareName() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("share_name"))
+	return terra.ReferenceAsString(v.ref.Append("share_name"))
 }
 
 func (v InitContainerVolumeAttributes) StorageAccountKey() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("storage_account_key"))
+	return terra.ReferenceAsString(v.ref.Append("storage_account_key"))
 }
 
 func (v InitContainerVolumeAttributes) StorageAccountName() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("storage_account_name"))
+	return terra.ReferenceAsString(v.ref.Append("storage_account_name"))
 }
 
 func (v InitContainerVolumeAttributes) GitRepo() terra.ListValue[InitContainerVolumeGitRepoAttributes] {
-	return terra.ReferenceList[InitContainerVolumeGitRepoAttributes](v.ref.Append("git_repo"))
+	return terra.ReferenceAsList[InitContainerVolumeGitRepoAttributes](v.ref.Append("git_repo"))
 }
 
 type InitContainerVolumeGitRepoAttributes struct {
 	ref terra.Reference
 }
 
-func (gr InitContainerVolumeGitRepoAttributes) InternalRef() terra.Reference {
-	return gr.ref
+func (gr InitContainerVolumeGitRepoAttributes) InternalRef() (terra.Reference, error) {
+	return gr.ref, nil
 }
 
 func (gr InitContainerVolumeGitRepoAttributes) InternalWithRef(ref terra.Reference) InitContainerVolumeGitRepoAttributes {
 	return InitContainerVolumeGitRepoAttributes{ref: ref}
 }
 
-func (gr InitContainerVolumeGitRepoAttributes) InternalTokens() hclwrite.Tokens {
+func (gr InitContainerVolumeGitRepoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gr.ref.InternalTokens()
 }
 
 func (gr InitContainerVolumeGitRepoAttributes) Directory() terra.StringValue {
-	return terra.ReferenceString(gr.ref.Append("directory"))
+	return terra.ReferenceAsString(gr.ref.Append("directory"))
 }
 
 func (gr InitContainerVolumeGitRepoAttributes) Revision() terra.StringValue {
-	return terra.ReferenceString(gr.ref.Append("revision"))
+	return terra.ReferenceAsString(gr.ref.Append("revision"))
 }
 
 func (gr InitContainerVolumeGitRepoAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(gr.ref.Append("url"))
+	return terra.ReferenceAsString(gr.ref.Append("url"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ExposedPortState struct {

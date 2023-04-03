@@ -23,7 +23,7 @@ func (al AwsLocationAttributes) InternalWithRef(ref terra.Reference) AwsLocation
 	return AwsLocationAttributes{ref: ref}
 }
 
-func (al AwsLocationAttributes) InternalTokens() hclwrite.Tokens {
+func (al AwsLocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return al.ref.InternalTokens()
 }
 
@@ -47,7 +47,7 @@ func (l LocationAttributes) InternalWithRef(ref terra.Reference) LocationAttribu
 	return LocationAttributes{ref: ref}
 }
 
-func (l LocationAttributes) InternalTokens() hclwrite.Tokens {
+func (l LocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 

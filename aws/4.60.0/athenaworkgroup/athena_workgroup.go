@@ -64,7 +64,7 @@ func (c ConfigurationAttributes) InternalWithRef(ref terra.Reference) Configurat
 	return ConfigurationAttributes{ref: ref}
 }
 
-func (c ConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -108,7 +108,7 @@ func (ev EngineVersionAttributes) InternalWithRef(ref terra.Reference) EngineVer
 	return EngineVersionAttributes{ref: ref}
 }
 
-func (ev EngineVersionAttributes) InternalTokens() hclwrite.Tokens {
+func (ev EngineVersionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ev.ref.InternalTokens()
 }
 
@@ -132,7 +132,7 @@ func (rc ResultConfigurationAttributes) InternalWithRef(ref terra.Reference) Res
 	return ResultConfigurationAttributes{ref: ref}
 }
 
-func (rc ResultConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (rc ResultConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rc.ref.InternalTokens()
 }
 
@@ -164,7 +164,7 @@ func (ac AclConfigurationAttributes) InternalWithRef(ref terra.Reference) AclCon
 	return AclConfigurationAttributes{ref: ref}
 }
 
-func (ac AclConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ac AclConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
@@ -184,7 +184,7 @@ func (ec EncryptionConfigurationAttributes) InternalWithRef(ref terra.Reference)
 	return EncryptionConfigurationAttributes{ref: ref}
 }
 
-func (ec EncryptionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ec EncryptionConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 

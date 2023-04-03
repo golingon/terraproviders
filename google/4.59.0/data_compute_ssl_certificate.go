@@ -4,6 +4,7 @@ package google
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataComputeSslCertificate creates a new instance of [DataComputeSslCertificate].
 func NewDataComputeSslCertificate(name string, args DataComputeSslCertificateArgs) *DataComputeSslCertificate {
 	return &DataComputeSslCertificate{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataComputeSslCertificate(name string, args DataComputeSslCertificateArg
 
 var _ terra.DataResource = (*DataComputeSslCertificate)(nil)
 
+// DataComputeSslCertificate represents the Terraform data resource google_compute_ssl_certificate.
 type DataComputeSslCertificate struct {
 	Name string
 	Args DataComputeSslCertificateArgs
 }
 
+// DataSource returns the Terraform object type for [DataComputeSslCertificate].
 func (csc *DataComputeSslCertificate) DataSource() string {
 	return "google_compute_ssl_certificate"
 }
 
+// LocalName returns the local name for [DataComputeSslCertificate].
 func (csc *DataComputeSslCertificate) LocalName() string {
 	return csc.Name
 }
 
+// Configuration returns the configuration (args) for [DataComputeSslCertificate].
 func (csc *DataComputeSslCertificate) Configuration() interface{} {
 	return csc.Args
 }
 
+// Attributes returns the attributes for [DataComputeSslCertificate].
 func (csc *DataComputeSslCertificate) Attributes() dataComputeSslCertificateAttributes {
 	return dataComputeSslCertificateAttributes{ref: terra.ReferenceDataResource(csc)}
 }
 
+// DataComputeSslCertificateArgs contains the configurations for google_compute_ssl_certificate.
 type DataComputeSslCertificateArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -46,46 +53,57 @@ type dataComputeSslCertificateAttributes struct {
 	ref terra.Reference
 }
 
+// Certificate returns a reference to field certificate of google_compute_ssl_certificate.
 func (csc dataComputeSslCertificateAttributes) Certificate() terra.StringValue {
-	return terra.ReferenceString(csc.ref.Append("certificate"))
+	return terra.ReferenceAsString(csc.ref.Append("certificate"))
 }
 
+// CertificateId returns a reference to field certificate_id of google_compute_ssl_certificate.
 func (csc dataComputeSslCertificateAttributes) CertificateId() terra.NumberValue {
-	return terra.ReferenceNumber(csc.ref.Append("certificate_id"))
+	return terra.ReferenceAsNumber(csc.ref.Append("certificate_id"))
 }
 
+// CreationTimestamp returns a reference to field creation_timestamp of google_compute_ssl_certificate.
 func (csc dataComputeSslCertificateAttributes) CreationTimestamp() terra.StringValue {
-	return terra.ReferenceString(csc.ref.Append("creation_timestamp"))
+	return terra.ReferenceAsString(csc.ref.Append("creation_timestamp"))
 }
 
+// Description returns a reference to field description of google_compute_ssl_certificate.
 func (csc dataComputeSslCertificateAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(csc.ref.Append("description"))
+	return terra.ReferenceAsString(csc.ref.Append("description"))
 }
 
+// ExpireTime returns a reference to field expire_time of google_compute_ssl_certificate.
 func (csc dataComputeSslCertificateAttributes) ExpireTime() terra.StringValue {
-	return terra.ReferenceString(csc.ref.Append("expire_time"))
+	return terra.ReferenceAsString(csc.ref.Append("expire_time"))
 }
 
+// Id returns a reference to field id of google_compute_ssl_certificate.
 func (csc dataComputeSslCertificateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(csc.ref.Append("id"))
+	return terra.ReferenceAsString(csc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_compute_ssl_certificate.
 func (csc dataComputeSslCertificateAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(csc.ref.Append("name"))
+	return terra.ReferenceAsString(csc.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of google_compute_ssl_certificate.
 func (csc dataComputeSslCertificateAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(csc.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(csc.ref.Append("name_prefix"))
 }
 
+// PrivateKey returns a reference to field private_key of google_compute_ssl_certificate.
 func (csc dataComputeSslCertificateAttributes) PrivateKey() terra.StringValue {
-	return terra.ReferenceString(csc.ref.Append("private_key"))
+	return terra.ReferenceAsString(csc.ref.Append("private_key"))
 }
 
+// Project returns a reference to field project of google_compute_ssl_certificate.
 func (csc dataComputeSslCertificateAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(csc.ref.Append("project"))
+	return terra.ReferenceAsString(csc.ref.Append("project"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_ssl_certificate.
 func (csc dataComputeSslCertificateAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(csc.ref.Append("self_link"))
+	return terra.ReferenceAsString(csc.ref.Append("self_link"))
 }

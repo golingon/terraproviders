@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataHealthcareWorkspace creates a new instance of [DataHealthcareWorkspace].
 func NewDataHealthcareWorkspace(name string, args DataHealthcareWorkspaceArgs) *DataHealthcareWorkspace {
 	return &DataHealthcareWorkspace{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataHealthcareWorkspace(name string, args DataHealthcareWorkspaceArgs) *
 
 var _ terra.DataResource = (*DataHealthcareWorkspace)(nil)
 
+// DataHealthcareWorkspace represents the Terraform data resource azurerm_healthcare_workspace.
 type DataHealthcareWorkspace struct {
 	Name string
 	Args DataHealthcareWorkspaceArgs
 }
 
+// DataSource returns the Terraform object type for [DataHealthcareWorkspace].
 func (hw *DataHealthcareWorkspace) DataSource() string {
 	return "azurerm_healthcare_workspace"
 }
 
+// LocalName returns the local name for [DataHealthcareWorkspace].
 func (hw *DataHealthcareWorkspace) LocalName() string {
 	return hw.Name
 }
 
+// Configuration returns the configuration (args) for [DataHealthcareWorkspace].
 func (hw *DataHealthcareWorkspace) Configuration() interface{} {
 	return hw.Args
 }
 
+// Attributes returns the attributes for [DataHealthcareWorkspace].
 func (hw *DataHealthcareWorkspace) Attributes() dataHealthcareWorkspaceAttributes {
 	return dataHealthcareWorkspaceAttributes{ref: terra.ReferenceDataResource(hw)}
 }
 
+// DataHealthcareWorkspaceArgs contains the configurations for azurerm_healthcare_workspace.
 type DataHealthcareWorkspaceArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,26 +58,31 @@ type dataHealthcareWorkspaceAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_healthcare_workspace.
 func (hw dataHealthcareWorkspaceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(hw.ref.Append("id"))
+	return terra.ReferenceAsString(hw.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_healthcare_workspace.
 func (hw dataHealthcareWorkspaceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(hw.ref.Append("location"))
+	return terra.ReferenceAsString(hw.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_healthcare_workspace.
 func (hw dataHealthcareWorkspaceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(hw.ref.Append("name"))
+	return terra.ReferenceAsString(hw.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_healthcare_workspace.
 func (hw dataHealthcareWorkspaceAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(hw.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(hw.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_healthcare_workspace.
 func (hw dataHealthcareWorkspaceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](hw.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](hw.ref.Append("tags"))
 }
 
 func (hw dataHealthcareWorkspaceAttributes) Timeouts() datahealthcareworkspace.TimeoutsAttributes {
-	return terra.ReferenceSingle[datahealthcareworkspace.TimeoutsAttributes](hw.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datahealthcareworkspace.TimeoutsAttributes](hw.ref.Append("timeouts"))
 }

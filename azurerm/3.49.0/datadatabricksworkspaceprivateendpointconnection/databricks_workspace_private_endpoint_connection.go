@@ -18,56 +18,56 @@ type ConnectionsAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConnectionsAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConnectionsAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConnectionsAttributes) InternalWithRef(ref terra.Reference) ConnectionsAttributes {
 	return ConnectionsAttributes{ref: ref}
 }
 
-func (c ConnectionsAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConnectionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ConnectionsAttributes) ActionRequired() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("action_required"))
+	return terra.ReferenceAsString(c.ref.Append("action_required"))
 }
 
 func (c ConnectionsAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("description"))
+	return terra.ReferenceAsString(c.ref.Append("description"))
 }
 
 func (c ConnectionsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("name"))
+	return terra.ReferenceAsString(c.ref.Append("name"))
 }
 
 func (c ConnectionsAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("status"))
+	return terra.ReferenceAsString(c.ref.Append("status"))
 }
 
 func (c ConnectionsAttributes) WorkspacePrivateEndpointId() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("workspace_private_endpoint_id"))
+	return terra.ReferenceAsString(c.ref.Append("workspace_private_endpoint_id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type ConnectionsState struct {

@@ -22,56 +22,56 @@ type MetaDataAttributes struct {
 	ref terra.Reference
 }
 
-func (md MetaDataAttributes) InternalRef() terra.Reference {
-	return md.ref
+func (md MetaDataAttributes) InternalRef() (terra.Reference, error) {
+	return md.ref, nil
 }
 
 func (md MetaDataAttributes) InternalWithRef(ref terra.Reference) MetaDataAttributes {
 	return MetaDataAttributes{ref: ref}
 }
 
-func (md MetaDataAttributes) InternalTokens() hclwrite.Tokens {
+func (md MetaDataAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return md.ref.InternalTokens()
 }
 
 func (md MetaDataAttributes) CreatedAt() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("created_at"))
+	return terra.ReferenceAsString(md.ref.Append("created_at"))
 }
 
 func (md MetaDataAttributes) LastModifiedAt() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("last_modified_at"))
+	return terra.ReferenceAsString(md.ref.Append("last_modified_at"))
 }
 
 func (md MetaDataAttributes) SubType() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("sub_type"))
+	return terra.ReferenceAsString(md.ref.Append("sub_type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type MetaDataState struct {

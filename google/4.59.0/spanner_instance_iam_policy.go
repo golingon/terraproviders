@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSpannerInstanceIamPolicy creates a new instance of [SpannerInstanceIamPolicy].
 func NewSpannerInstanceIamPolicy(name string, args SpannerInstanceIamPolicyArgs) *SpannerInstanceIamPolicy {
 	return &SpannerInstanceIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSpannerInstanceIamPolicy(name string, args SpannerInstanceIamPolicyArgs)
 
 var _ terra.Resource = (*SpannerInstanceIamPolicy)(nil)
 
+// SpannerInstanceIamPolicy represents the Terraform resource google_spanner_instance_iam_policy.
 type SpannerInstanceIamPolicy struct {
-	Name  string
-	Args  SpannerInstanceIamPolicyArgs
-	state *spannerInstanceIamPolicyState
+	Name      string
+	Args      SpannerInstanceIamPolicyArgs
+	state     *spannerInstanceIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SpannerInstanceIamPolicy].
 func (siip *SpannerInstanceIamPolicy) Type() string {
 	return "google_spanner_instance_iam_policy"
 }
 
+// LocalName returns the local name for [SpannerInstanceIamPolicy].
 func (siip *SpannerInstanceIamPolicy) LocalName() string {
 	return siip.Name
 }
 
+// Configuration returns the configuration (args) for [SpannerInstanceIamPolicy].
 func (siip *SpannerInstanceIamPolicy) Configuration() interface{} {
 	return siip.Args
 }
 
+// DependOn is used for other resources to depend on [SpannerInstanceIamPolicy].
+func (siip *SpannerInstanceIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(siip)
+}
+
+// Dependencies returns the list of resources [SpannerInstanceIamPolicy] depends_on.
+func (siip *SpannerInstanceIamPolicy) Dependencies() terra.Dependencies {
+	return siip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SpannerInstanceIamPolicy].
+func (siip *SpannerInstanceIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return siip.Lifecycle
+}
+
+// Attributes returns the attributes for [SpannerInstanceIamPolicy].
 func (siip *SpannerInstanceIamPolicy) Attributes() spannerInstanceIamPolicyAttributes {
 	return spannerInstanceIamPolicyAttributes{ref: terra.ReferenceResource(siip)}
 }
 
+// ImportState imports the given attribute values into [SpannerInstanceIamPolicy]'s state.
 func (siip *SpannerInstanceIamPolicy) ImportState(av io.Reader) error {
 	siip.state = &spannerInstanceIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(siip.state); err != nil {
@@ -48,10 +72,12 @@ func (siip *SpannerInstanceIamPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SpannerInstanceIamPolicy] has state.
 func (siip *SpannerInstanceIamPolicy) State() (*spannerInstanceIamPolicyState, bool) {
 	return siip.state, siip.state != nil
 }
 
+// StateMust returns the state for [SpannerInstanceIamPolicy]. Panics if the state is nil.
 func (siip *SpannerInstanceIamPolicy) StateMust() *spannerInstanceIamPolicyState {
 	if siip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", siip.Type(), siip.LocalName()))
@@ -59,10 +85,7 @@ func (siip *SpannerInstanceIamPolicy) StateMust() *spannerInstanceIamPolicyState
 	return siip.state
 }
 
-func (siip *SpannerInstanceIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(siip)
-}
-
+// SpannerInstanceIamPolicyArgs contains the configurations for google_spanner_instance_iam_policy.
 type SpannerInstanceIamPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -72,31 +95,34 @@ type SpannerInstanceIamPolicyArgs struct {
 	PolicyData terra.StringValue `hcl:"policy_data,attr" validate:"required"`
 	// Project: string, optional
 	Project terra.StringValue `hcl:"project,attr"`
-	// DependsOn contains resources that SpannerInstanceIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type spannerInstanceIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_spanner_instance_iam_policy.
 func (siip spannerInstanceIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(siip.ref.Append("etag"))
+	return terra.ReferenceAsString(siip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_spanner_instance_iam_policy.
 func (siip spannerInstanceIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(siip.ref.Append("id"))
+	return terra.ReferenceAsString(siip.ref.Append("id"))
 }
 
+// Instance returns a reference to field instance of google_spanner_instance_iam_policy.
 func (siip spannerInstanceIamPolicyAttributes) Instance() terra.StringValue {
-	return terra.ReferenceString(siip.ref.Append("instance"))
+	return terra.ReferenceAsString(siip.ref.Append("instance"))
 }
 
+// PolicyData returns a reference to field policy_data of google_spanner_instance_iam_policy.
 func (siip spannerInstanceIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(siip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(siip.ref.Append("policy_data"))
 }
 
+// Project returns a reference to field project of google_spanner_instance_iam_policy.
 func (siip spannerInstanceIamPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(siip.ref.Append("project"))
+	return terra.ReferenceAsString(siip.ref.Append("project"))
 }
 
 type spannerInstanceIamPolicyState struct {

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataManagementGroupTemplateDeployment creates a new instance of [DataManagementGroupTemplateDeployment].
 func NewDataManagementGroupTemplateDeployment(name string, args DataManagementGroupTemplateDeploymentArgs) *DataManagementGroupTemplateDeployment {
 	return &DataManagementGroupTemplateDeployment{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataManagementGroupTemplateDeployment(name string, args DataManagementGr
 
 var _ terra.DataResource = (*DataManagementGroupTemplateDeployment)(nil)
 
+// DataManagementGroupTemplateDeployment represents the Terraform data resource azurerm_management_group_template_deployment.
 type DataManagementGroupTemplateDeployment struct {
 	Name string
 	Args DataManagementGroupTemplateDeploymentArgs
 }
 
+// DataSource returns the Terraform object type for [DataManagementGroupTemplateDeployment].
 func (mgtd *DataManagementGroupTemplateDeployment) DataSource() string {
 	return "azurerm_management_group_template_deployment"
 }
 
+// LocalName returns the local name for [DataManagementGroupTemplateDeployment].
 func (mgtd *DataManagementGroupTemplateDeployment) LocalName() string {
 	return mgtd.Name
 }
 
+// Configuration returns the configuration (args) for [DataManagementGroupTemplateDeployment].
 func (mgtd *DataManagementGroupTemplateDeployment) Configuration() interface{} {
 	return mgtd.Args
 }
 
+// Attributes returns the attributes for [DataManagementGroupTemplateDeployment].
 func (mgtd *DataManagementGroupTemplateDeployment) Attributes() dataManagementGroupTemplateDeploymentAttributes {
 	return dataManagementGroupTemplateDeploymentAttributes{ref: terra.ReferenceDataResource(mgtd)}
 }
 
+// DataManagementGroupTemplateDeploymentArgs contains the configurations for azurerm_management_group_template_deployment.
 type DataManagementGroupTemplateDeploymentArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,22 +58,26 @@ type dataManagementGroupTemplateDeploymentAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_management_group_template_deployment.
 func (mgtd dataManagementGroupTemplateDeploymentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mgtd.ref.Append("id"))
+	return terra.ReferenceAsString(mgtd.ref.Append("id"))
 }
 
+// ManagementGroupId returns a reference to field management_group_id of azurerm_management_group_template_deployment.
 func (mgtd dataManagementGroupTemplateDeploymentAttributes) ManagementGroupId() terra.StringValue {
-	return terra.ReferenceString(mgtd.ref.Append("management_group_id"))
+	return terra.ReferenceAsString(mgtd.ref.Append("management_group_id"))
 }
 
+// Name returns a reference to field name of azurerm_management_group_template_deployment.
 func (mgtd dataManagementGroupTemplateDeploymentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mgtd.ref.Append("name"))
+	return terra.ReferenceAsString(mgtd.ref.Append("name"))
 }
 
+// OutputContent returns a reference to field output_content of azurerm_management_group_template_deployment.
 func (mgtd dataManagementGroupTemplateDeploymentAttributes) OutputContent() terra.StringValue {
-	return terra.ReferenceString(mgtd.ref.Append("output_content"))
+	return terra.ReferenceAsString(mgtd.ref.Append("output_content"))
 }
 
 func (mgtd dataManagementGroupTemplateDeploymentAttributes) Timeouts() datamanagementgrouptemplatedeployment.TimeoutsAttributes {
-	return terra.ReferenceSingle[datamanagementgrouptemplatedeployment.TimeoutsAttributes](mgtd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datamanagementgrouptemplatedeployment.TimeoutsAttributes](mgtd.ref.Append("timeouts"))
 }

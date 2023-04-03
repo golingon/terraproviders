@@ -121,7 +121,7 @@ func (as ApplicationSourceAttributes) InternalWithRef(ref terra.Reference) Appli
 	return ApplicationSourceAttributes{ref: ref}
 }
 
-func (as ApplicationSourceAttributes) InternalTokens() hclwrite.Tokens {
+func (as ApplicationSourceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return as.ref.InternalTokens()
 }
 
@@ -145,7 +145,7 @@ func (tf TagFilterAttributes) InternalWithRef(ref terra.Reference) TagFilterAttr
 	return TagFilterAttributes{ref: ref}
 }
 
-func (tf TagFilterAttributes) InternalTokens() hclwrite.Tokens {
+func (tf TagFilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tf.ref.InternalTokens()
 }
 
@@ -169,7 +169,7 @@ func (si ScalingInstructionAttributes) InternalWithRef(ref terra.Reference) Scal
 	return ScalingInstructionAttributes{ref: ref}
 }
 
-func (si ScalingInstructionAttributes) InternalTokens() hclwrite.Tokens {
+func (si ScalingInstructionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return si.ref.InternalTokens()
 }
 
@@ -241,7 +241,7 @@ func (clms CustomizedLoadMetricSpecificationAttributes) InternalWithRef(ref terr
 	return CustomizedLoadMetricSpecificationAttributes{ref: ref}
 }
 
-func (clms CustomizedLoadMetricSpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (clms CustomizedLoadMetricSpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return clms.ref.InternalTokens()
 }
 
@@ -277,7 +277,7 @@ func (plms PredefinedLoadMetricSpecificationAttributes) InternalWithRef(ref terr
 	return PredefinedLoadMetricSpecificationAttributes{ref: ref}
 }
 
-func (plms PredefinedLoadMetricSpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (plms PredefinedLoadMetricSpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return plms.ref.InternalTokens()
 }
 
@@ -301,7 +301,7 @@ func (ttc TargetTrackingConfigurationAttributes) InternalWithRef(ref terra.Refer
 	return TargetTrackingConfigurationAttributes{ref: ref}
 }
 
-func (ttc TargetTrackingConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ttc TargetTrackingConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ttc.ref.InternalTokens()
 }
 
@@ -345,7 +345,7 @@ func (csms CustomizedScalingMetricSpecificationAttributes) InternalWithRef(ref t
 	return CustomizedScalingMetricSpecificationAttributes{ref: ref}
 }
 
-func (csms CustomizedScalingMetricSpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (csms CustomizedScalingMetricSpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return csms.ref.InternalTokens()
 }
 
@@ -381,7 +381,7 @@ func (psms PredefinedScalingMetricSpecificationAttributes) InternalWithRef(ref t
 	return PredefinedScalingMetricSpecificationAttributes{ref: ref}
 }
 
-func (psms PredefinedScalingMetricSpecificationAttributes) InternalTokens() hclwrite.Tokens {
+func (psms PredefinedScalingMetricSpecificationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return psms.ref.InternalTokens()
 }
 

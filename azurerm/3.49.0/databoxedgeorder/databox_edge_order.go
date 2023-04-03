@@ -54,224 +54,224 @@ type ReturnTrackingAttributes struct {
 	ref terra.Reference
 }
 
-func (rt ReturnTrackingAttributes) InternalRef() terra.Reference {
-	return rt.ref
+func (rt ReturnTrackingAttributes) InternalRef() (terra.Reference, error) {
+	return rt.ref, nil
 }
 
 func (rt ReturnTrackingAttributes) InternalWithRef(ref terra.Reference) ReturnTrackingAttributes {
 	return ReturnTrackingAttributes{ref: ref}
 }
 
-func (rt ReturnTrackingAttributes) InternalTokens() hclwrite.Tokens {
+func (rt ReturnTrackingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rt.ref.InternalTokens()
 }
 
 func (rt ReturnTrackingAttributes) CarrierName() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("carrier_name"))
+	return terra.ReferenceAsString(rt.ref.Append("carrier_name"))
 }
 
 func (rt ReturnTrackingAttributes) SerialNumber() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("serial_number"))
+	return terra.ReferenceAsString(rt.ref.Append("serial_number"))
 }
 
 func (rt ReturnTrackingAttributes) TrackingId() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("tracking_id"))
+	return terra.ReferenceAsString(rt.ref.Append("tracking_id"))
 }
 
 func (rt ReturnTrackingAttributes) TrackingUrl() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("tracking_url"))
+	return terra.ReferenceAsString(rt.ref.Append("tracking_url"))
 }
 
 type ShipmentHistoryAttributes struct {
 	ref terra.Reference
 }
 
-func (sh ShipmentHistoryAttributes) InternalRef() terra.Reference {
-	return sh.ref
+func (sh ShipmentHistoryAttributes) InternalRef() (terra.Reference, error) {
+	return sh.ref, nil
 }
 
 func (sh ShipmentHistoryAttributes) InternalWithRef(ref terra.Reference) ShipmentHistoryAttributes {
 	return ShipmentHistoryAttributes{ref: ref}
 }
 
-func (sh ShipmentHistoryAttributes) InternalTokens() hclwrite.Tokens {
+func (sh ShipmentHistoryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sh.ref.InternalTokens()
 }
 
 func (sh ShipmentHistoryAttributes) AdditionalDetails() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sh.ref.Append("additional_details"))
+	return terra.ReferenceAsMap[terra.StringValue](sh.ref.Append("additional_details"))
 }
 
 func (sh ShipmentHistoryAttributes) Comments() terra.StringValue {
-	return terra.ReferenceString(sh.ref.Append("comments"))
+	return terra.ReferenceAsString(sh.ref.Append("comments"))
 }
 
 func (sh ShipmentHistoryAttributes) LastUpdate() terra.StringValue {
-	return terra.ReferenceString(sh.ref.Append("last_update"))
+	return terra.ReferenceAsString(sh.ref.Append("last_update"))
 }
 
 type ShipmentTrackingAttributes struct {
 	ref terra.Reference
 }
 
-func (st ShipmentTrackingAttributes) InternalRef() terra.Reference {
-	return st.ref
+func (st ShipmentTrackingAttributes) InternalRef() (terra.Reference, error) {
+	return st.ref, nil
 }
 
 func (st ShipmentTrackingAttributes) InternalWithRef(ref terra.Reference) ShipmentTrackingAttributes {
 	return ShipmentTrackingAttributes{ref: ref}
 }
 
-func (st ShipmentTrackingAttributes) InternalTokens() hclwrite.Tokens {
+func (st ShipmentTrackingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return st.ref.InternalTokens()
 }
 
 func (st ShipmentTrackingAttributes) CarrierName() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("carrier_name"))
+	return terra.ReferenceAsString(st.ref.Append("carrier_name"))
 }
 
 func (st ShipmentTrackingAttributes) SerialNumber() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("serial_number"))
+	return terra.ReferenceAsString(st.ref.Append("serial_number"))
 }
 
 func (st ShipmentTrackingAttributes) TrackingId() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("tracking_id"))
+	return terra.ReferenceAsString(st.ref.Append("tracking_id"))
 }
 
 func (st ShipmentTrackingAttributes) TrackingUrl() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("tracking_url"))
+	return terra.ReferenceAsString(st.ref.Append("tracking_url"))
 }
 
 type StatusAttributes struct {
 	ref terra.Reference
 }
 
-func (s StatusAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s StatusAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s StatusAttributes) InternalWithRef(ref terra.Reference) StatusAttributes {
 	return StatusAttributes{ref: ref}
 }
 
-func (s StatusAttributes) InternalTokens() hclwrite.Tokens {
+func (s StatusAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s StatusAttributes) AdditionalDetails() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](s.ref.Append("additional_details"))
+	return terra.ReferenceAsMap[terra.StringValue](s.ref.Append("additional_details"))
 }
 
 func (s StatusAttributes) Comments() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("comments"))
+	return terra.ReferenceAsString(s.ref.Append("comments"))
 }
 
 func (s StatusAttributes) Info() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("info"))
+	return terra.ReferenceAsString(s.ref.Append("info"))
 }
 
 func (s StatusAttributes) LastUpdate() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("last_update"))
+	return terra.ReferenceAsString(s.ref.Append("last_update"))
 }
 
 type ContactAttributes struct {
 	ref terra.Reference
 }
 
-func (c ContactAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ContactAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ContactAttributes) InternalWithRef(ref terra.Reference) ContactAttributes {
 	return ContactAttributes{ref: ref}
 }
 
-func (c ContactAttributes) InternalTokens() hclwrite.Tokens {
+func (c ContactAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ContactAttributes) CompanyName() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("company_name"))
+	return terra.ReferenceAsString(c.ref.Append("company_name"))
 }
 
 func (c ContactAttributes) Emails() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](c.ref.Append("emails"))
+	return terra.ReferenceAsSet[terra.StringValue](c.ref.Append("emails"))
 }
 
 func (c ContactAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("name"))
+	return terra.ReferenceAsString(c.ref.Append("name"))
 }
 
 func (c ContactAttributes) PhoneNumber() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("phone_number"))
+	return terra.ReferenceAsString(c.ref.Append("phone_number"))
 }
 
 type ShipmentAddressAttributes struct {
 	ref terra.Reference
 }
 
-func (sa ShipmentAddressAttributes) InternalRef() terra.Reference {
-	return sa.ref
+func (sa ShipmentAddressAttributes) InternalRef() (terra.Reference, error) {
+	return sa.ref, nil
 }
 
 func (sa ShipmentAddressAttributes) InternalWithRef(ref terra.Reference) ShipmentAddressAttributes {
 	return ShipmentAddressAttributes{ref: ref}
 }
 
-func (sa ShipmentAddressAttributes) InternalTokens() hclwrite.Tokens {
+func (sa ShipmentAddressAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sa.ref.InternalTokens()
 }
 
 func (sa ShipmentAddressAttributes) Address() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sa.ref.Append("address"))
+	return terra.ReferenceAsList[terra.StringValue](sa.ref.Append("address"))
 }
 
 func (sa ShipmentAddressAttributes) City() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("city"))
+	return terra.ReferenceAsString(sa.ref.Append("city"))
 }
 
 func (sa ShipmentAddressAttributes) Country() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("country"))
+	return terra.ReferenceAsString(sa.ref.Append("country"))
 }
 
 func (sa ShipmentAddressAttributes) PostalCode() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("postal_code"))
+	return terra.ReferenceAsString(sa.ref.Append("postal_code"))
 }
 
 func (sa ShipmentAddressAttributes) State() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("state"))
+	return terra.ReferenceAsString(sa.ref.Append("state"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ReturnTrackingState struct {

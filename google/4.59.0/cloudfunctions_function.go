@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCloudfunctionsFunction creates a new instance of [CloudfunctionsFunction].
 func NewCloudfunctionsFunction(name string, args CloudfunctionsFunctionArgs) *CloudfunctionsFunction {
 	return &CloudfunctionsFunction{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCloudfunctionsFunction(name string, args CloudfunctionsFunctionArgs) *Cl
 
 var _ terra.Resource = (*CloudfunctionsFunction)(nil)
 
+// CloudfunctionsFunction represents the Terraform resource google_cloudfunctions_function.
 type CloudfunctionsFunction struct {
-	Name  string
-	Args  CloudfunctionsFunctionArgs
-	state *cloudfunctionsFunctionState
+	Name      string
+	Args      CloudfunctionsFunctionArgs
+	state     *cloudfunctionsFunctionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudfunctionsFunction].
 func (cf *CloudfunctionsFunction) Type() string {
 	return "google_cloudfunctions_function"
 }
 
+// LocalName returns the local name for [CloudfunctionsFunction].
 func (cf *CloudfunctionsFunction) LocalName() string {
 	return cf.Name
 }
 
+// Configuration returns the configuration (args) for [CloudfunctionsFunction].
 func (cf *CloudfunctionsFunction) Configuration() interface{} {
 	return cf.Args
 }
 
+// DependOn is used for other resources to depend on [CloudfunctionsFunction].
+func (cf *CloudfunctionsFunction) DependOn() terra.Reference {
+	return terra.ReferenceResource(cf)
+}
+
+// Dependencies returns the list of resources [CloudfunctionsFunction] depends_on.
+func (cf *CloudfunctionsFunction) Dependencies() terra.Dependencies {
+	return cf.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudfunctionsFunction].
+func (cf *CloudfunctionsFunction) LifecycleManagement() *terra.Lifecycle {
+	return cf.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudfunctionsFunction].
 func (cf *CloudfunctionsFunction) Attributes() cloudfunctionsFunctionAttributes {
 	return cloudfunctionsFunctionAttributes{ref: terra.ReferenceResource(cf)}
 }
 
+// ImportState imports the given attribute values into [CloudfunctionsFunction]'s state.
 func (cf *CloudfunctionsFunction) ImportState(av io.Reader) error {
 	cf.state = &cloudfunctionsFunctionState{}
 	if err := json.NewDecoder(av).Decode(cf.state); err != nil {
@@ -49,10 +73,12 @@ func (cf *CloudfunctionsFunction) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudfunctionsFunction] has state.
 func (cf *CloudfunctionsFunction) State() (*cloudfunctionsFunctionState, bool) {
 	return cf.state, cf.state != nil
 }
 
+// StateMust returns the state for [CloudfunctionsFunction]. Panics if the state is nil.
 func (cf *CloudfunctionsFunction) StateMust() *cloudfunctionsFunctionState {
 	if cf.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cf.Type(), cf.LocalName()))
@@ -60,10 +86,7 @@ func (cf *CloudfunctionsFunction) StateMust() *cloudfunctionsFunctionState {
 	return cf.state
 }
 
-func (cf *CloudfunctionsFunction) DependOn() terra.Reference {
-	return terra.ReferenceResource(cf)
-}
-
+// CloudfunctionsFunctionArgs contains the configurations for google_cloudfunctions_function.
 type CloudfunctionsFunctionArgs struct {
 	// AvailableMemoryMb: number, optional
 	AvailableMemoryMb terra.NumberValue `hcl:"available_memory_mb,attr"`
@@ -129,139 +152,164 @@ type CloudfunctionsFunctionArgs struct {
 	SourceRepository *cloudfunctionsfunction.SourceRepository `hcl:"source_repository,block"`
 	// Timeouts: optional
 	Timeouts *cloudfunctionsfunction.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that CloudfunctionsFunction depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudfunctionsFunctionAttributes struct {
 	ref terra.Reference
 }
 
+// AvailableMemoryMb returns a reference to field available_memory_mb of google_cloudfunctions_function.
 func (cf cloudfunctionsFunctionAttributes) AvailableMemoryMb() terra.NumberValue {
-	return terra.ReferenceNumber(cf.ref.Append("available_memory_mb"))
+	return terra.ReferenceAsNumber(cf.ref.Append("available_memory_mb"))
 }
 
+// BuildEnvironmentVariables returns a reference to field build_environment_variables of google_cloudfunctions_function.
 func (cf cloudfunctionsFunctionAttributes) BuildEnvironmentVariables() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cf.ref.Append("build_environment_variables"))
+	return terra.ReferenceAsMap[terra.StringValue](cf.ref.Append("build_environment_variables"))
 }
 
+// BuildWorkerPool returns a reference to field build_worker_pool of google_cloudfunctions_function.
 func (cf cloudfunctionsFunctionAttributes) BuildWorkerPool() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("build_worker_pool"))
+	return terra.ReferenceAsString(cf.ref.Append("build_worker_pool"))
 }
 
+// Description returns a reference to field description of google_cloudfunctions_function.
 func (cf cloudfunctionsFunctionAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("description"))
+	return terra.ReferenceAsString(cf.ref.Append("description"))
 }
 
+// DockerRegistry returns a reference to field docker_registry of google_cloudfunctions_function.
 func (cf cloudfunctionsFunctionAttributes) DockerRegistry() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("docker_registry"))
+	return terra.ReferenceAsString(cf.ref.Append("docker_registry"))
 }
 
+// DockerRepository returns a reference to field docker_repository of google_cloudfunctions_function.
 func (cf cloudfunctionsFunctionAttributes) DockerRepository() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("docker_repository"))
+	return terra.ReferenceAsString(cf.ref.Append("docker_repository"))
 }
 
+// EntryPoint returns a reference to field entry_point of google_cloudfunctions_function.
 func (cf cloudfunctionsFunctionAttributes) EntryPoint() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("entry_point"))
+	return terra.ReferenceAsString(cf.ref.Append("entry_point"))
 }
 
+// EnvironmentVariables returns a reference to field environment_variables of google_cloudfunctions_function.
 func (cf cloudfunctionsFunctionAttributes) EnvironmentVariables() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cf.ref.Append("environment_variables"))
+	return terra.ReferenceAsMap[terra.StringValue](cf.ref.Append("environment_variables"))
 }
 
+// HttpsTriggerSecurityLevel returns a reference to field https_trigger_security_level of google_cloudfunctions_function.
 func (cf cloudfunctionsFunctionAttributes) HttpsTriggerSecurityLevel() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("https_trigger_security_level"))
+	return terra.ReferenceAsString(cf.ref.Append("https_trigger_security_level"))
 }
 
+// HttpsTriggerUrl returns a reference to field https_trigger_url of google_cloudfunctions_function.
 func (cf cloudfunctionsFunctionAttributes) HttpsTriggerUrl() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("https_trigger_url"))
+	return terra.ReferenceAsString(cf.ref.Append("https_trigger_url"))
 }
 
+// Id returns a reference to field id of google_cloudfunctions_function.
 func (cf cloudfunctionsFunctionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("id"))
+	return terra.ReferenceAsString(cf.ref.Append("id"))
 }
 
+// IngressSettings returns a reference to field ingress_settings of google_cloudfunctions_function.
 func (cf cloudfunctionsFunctionAttributes) IngressSettings() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("ingress_settings"))
+	return terra.ReferenceAsString(cf.ref.Append("ingress_settings"))
 }
 
+// KmsKeyName returns a reference to field kms_key_name of google_cloudfunctions_function.
 func (cf cloudfunctionsFunctionAttributes) KmsKeyName() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("kms_key_name"))
+	return terra.ReferenceAsString(cf.ref.Append("kms_key_name"))
 }
 
+// Labels returns a reference to field labels of google_cloudfunctions_function.
 func (cf cloudfunctionsFunctionAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cf.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](cf.ref.Append("labels"))
 }
 
+// MaxInstances returns a reference to field max_instances of google_cloudfunctions_function.
 func (cf cloudfunctionsFunctionAttributes) MaxInstances() terra.NumberValue {
-	return terra.ReferenceNumber(cf.ref.Append("max_instances"))
+	return terra.ReferenceAsNumber(cf.ref.Append("max_instances"))
 }
 
+// MinInstances returns a reference to field min_instances of google_cloudfunctions_function.
 func (cf cloudfunctionsFunctionAttributes) MinInstances() terra.NumberValue {
-	return terra.ReferenceNumber(cf.ref.Append("min_instances"))
+	return terra.ReferenceAsNumber(cf.ref.Append("min_instances"))
 }
 
+// Name returns a reference to field name of google_cloudfunctions_function.
 func (cf cloudfunctionsFunctionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("name"))
+	return terra.ReferenceAsString(cf.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_cloudfunctions_function.
 func (cf cloudfunctionsFunctionAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("project"))
+	return terra.ReferenceAsString(cf.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_cloudfunctions_function.
 func (cf cloudfunctionsFunctionAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("region"))
+	return terra.ReferenceAsString(cf.ref.Append("region"))
 }
 
+// Runtime returns a reference to field runtime of google_cloudfunctions_function.
 func (cf cloudfunctionsFunctionAttributes) Runtime() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("runtime"))
+	return terra.ReferenceAsString(cf.ref.Append("runtime"))
 }
 
+// ServiceAccountEmail returns a reference to field service_account_email of google_cloudfunctions_function.
 func (cf cloudfunctionsFunctionAttributes) ServiceAccountEmail() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("service_account_email"))
+	return terra.ReferenceAsString(cf.ref.Append("service_account_email"))
 }
 
+// SourceArchiveBucket returns a reference to field source_archive_bucket of google_cloudfunctions_function.
 func (cf cloudfunctionsFunctionAttributes) SourceArchiveBucket() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("source_archive_bucket"))
+	return terra.ReferenceAsString(cf.ref.Append("source_archive_bucket"))
 }
 
+// SourceArchiveObject returns a reference to field source_archive_object of google_cloudfunctions_function.
 func (cf cloudfunctionsFunctionAttributes) SourceArchiveObject() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("source_archive_object"))
+	return terra.ReferenceAsString(cf.ref.Append("source_archive_object"))
 }
 
+// Timeout returns a reference to field timeout of google_cloudfunctions_function.
 func (cf cloudfunctionsFunctionAttributes) Timeout() terra.NumberValue {
-	return terra.ReferenceNumber(cf.ref.Append("timeout"))
+	return terra.ReferenceAsNumber(cf.ref.Append("timeout"))
 }
 
+// TriggerHttp returns a reference to field trigger_http of google_cloudfunctions_function.
 func (cf cloudfunctionsFunctionAttributes) TriggerHttp() terra.BoolValue {
-	return terra.ReferenceBool(cf.ref.Append("trigger_http"))
+	return terra.ReferenceAsBool(cf.ref.Append("trigger_http"))
 }
 
+// VpcConnector returns a reference to field vpc_connector of google_cloudfunctions_function.
 func (cf cloudfunctionsFunctionAttributes) VpcConnector() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("vpc_connector"))
+	return terra.ReferenceAsString(cf.ref.Append("vpc_connector"))
 }
 
+// VpcConnectorEgressSettings returns a reference to field vpc_connector_egress_settings of google_cloudfunctions_function.
 func (cf cloudfunctionsFunctionAttributes) VpcConnectorEgressSettings() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("vpc_connector_egress_settings"))
+	return terra.ReferenceAsString(cf.ref.Append("vpc_connector_egress_settings"))
 }
 
 func (cf cloudfunctionsFunctionAttributes) EventTrigger() terra.ListValue[cloudfunctionsfunction.EventTriggerAttributes] {
-	return terra.ReferenceList[cloudfunctionsfunction.EventTriggerAttributes](cf.ref.Append("event_trigger"))
+	return terra.ReferenceAsList[cloudfunctionsfunction.EventTriggerAttributes](cf.ref.Append("event_trigger"))
 }
 
 func (cf cloudfunctionsFunctionAttributes) SecretEnvironmentVariables() terra.ListValue[cloudfunctionsfunction.SecretEnvironmentVariablesAttributes] {
-	return terra.ReferenceList[cloudfunctionsfunction.SecretEnvironmentVariablesAttributes](cf.ref.Append("secret_environment_variables"))
+	return terra.ReferenceAsList[cloudfunctionsfunction.SecretEnvironmentVariablesAttributes](cf.ref.Append("secret_environment_variables"))
 }
 
 func (cf cloudfunctionsFunctionAttributes) SecretVolumes() terra.ListValue[cloudfunctionsfunction.SecretVolumesAttributes] {
-	return terra.ReferenceList[cloudfunctionsfunction.SecretVolumesAttributes](cf.ref.Append("secret_volumes"))
+	return terra.ReferenceAsList[cloudfunctionsfunction.SecretVolumesAttributes](cf.ref.Append("secret_volumes"))
 }
 
 func (cf cloudfunctionsFunctionAttributes) SourceRepository() terra.ListValue[cloudfunctionsfunction.SourceRepositoryAttributes] {
-	return terra.ReferenceList[cloudfunctionsfunction.SourceRepositoryAttributes](cf.ref.Append("source_repository"))
+	return terra.ReferenceAsList[cloudfunctionsfunction.SourceRepositoryAttributes](cf.ref.Append("source_repository"))
 }
 
 func (cf cloudfunctionsFunctionAttributes) Timeouts() cloudfunctionsfunction.TimeoutsAttributes {
-	return terra.ReferenceSingle[cloudfunctionsfunction.TimeoutsAttributes](cf.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cloudfunctionsfunction.TimeoutsAttributes](cf.ref.Append("timeouts"))
 }
 
 type cloudfunctionsFunctionState struct {

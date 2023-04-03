@@ -150,7 +150,7 @@ func (c CapacityAttributes) InternalWithRef(ref terra.Reference) CapacityAttribu
 	return CapacityAttributes{ref: ref}
 }
 
-func (c CapacityAttributes) InternalTokens() hclwrite.Tokens {
+func (c CapacityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -174,7 +174,7 @@ func (a AutoscalingAttributes) InternalWithRef(ref terra.Reference) AutoscalingA
 	return AutoscalingAttributes{ref: ref}
 }
 
-func (a AutoscalingAttributes) InternalTokens() hclwrite.Tokens {
+func (a AutoscalingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -210,7 +210,7 @@ func (sip ScaleInPolicyAttributes) InternalWithRef(ref terra.Reference) ScaleInP
 	return ScaleInPolicyAttributes{ref: ref}
 }
 
-func (sip ScaleInPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (sip ScaleInPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sip.ref.InternalTokens()
 }
 
@@ -230,7 +230,7 @@ func (sop ScaleOutPolicyAttributes) InternalWithRef(ref terra.Reference) ScaleOu
 	return ScaleOutPolicyAttributes{ref: ref}
 }
 
-func (sop ScaleOutPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (sop ScaleOutPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sop.ref.InternalTokens()
 }
 
@@ -250,7 +250,7 @@ func (pc ProvisionedCapacityAttributes) InternalWithRef(ref terra.Reference) Pro
 	return ProvisionedCapacityAttributes{ref: ref}
 }
 
-func (pc ProvisionedCapacityAttributes) InternalTokens() hclwrite.Tokens {
+func (pc ProvisionedCapacityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
@@ -274,7 +274,7 @@ func (kc KafkaClusterAttributes) InternalWithRef(ref terra.Reference) KafkaClust
 	return KafkaClusterAttributes{ref: ref}
 }
 
-func (kc KafkaClusterAttributes) InternalTokens() hclwrite.Tokens {
+func (kc KafkaClusterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kc.ref.InternalTokens()
 }
 
@@ -294,7 +294,7 @@ func (akc ApacheKafkaClusterAttributes) InternalWithRef(ref terra.Reference) Apa
 	return ApacheKafkaClusterAttributes{ref: ref}
 }
 
-func (akc ApacheKafkaClusterAttributes) InternalTokens() hclwrite.Tokens {
+func (akc ApacheKafkaClusterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return akc.ref.InternalTokens()
 }
 
@@ -318,7 +318,7 @@ func (v VpcAttributes) InternalWithRef(ref terra.Reference) VpcAttributes {
 	return VpcAttributes{ref: ref}
 }
 
-func (v VpcAttributes) InternalTokens() hclwrite.Tokens {
+func (v VpcAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 
@@ -342,7 +342,7 @@ func (kcca KafkaClusterClientAuthenticationAttributes) InternalWithRef(ref terra
 	return KafkaClusterClientAuthenticationAttributes{ref: ref}
 }
 
-func (kcca KafkaClusterClientAuthenticationAttributes) InternalTokens() hclwrite.Tokens {
+func (kcca KafkaClusterClientAuthenticationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kcca.ref.InternalTokens()
 }
 
@@ -362,7 +362,7 @@ func (kceit KafkaClusterEncryptionInTransitAttributes) InternalWithRef(ref terra
 	return KafkaClusterEncryptionInTransitAttributes{ref: ref}
 }
 
-func (kceit KafkaClusterEncryptionInTransitAttributes) InternalTokens() hclwrite.Tokens {
+func (kceit KafkaClusterEncryptionInTransitAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kceit.ref.InternalTokens()
 }
 
@@ -382,7 +382,7 @@ func (ld LogDeliveryAttributes) InternalWithRef(ref terra.Reference) LogDelivery
 	return LogDeliveryAttributes{ref: ref}
 }
 
-func (ld LogDeliveryAttributes) InternalTokens() hclwrite.Tokens {
+func (ld LogDeliveryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ld.ref.InternalTokens()
 }
 
@@ -402,7 +402,7 @@ func (wld WorkerLogDeliveryAttributes) InternalWithRef(ref terra.Reference) Work
 	return WorkerLogDeliveryAttributes{ref: ref}
 }
 
-func (wld WorkerLogDeliveryAttributes) InternalTokens() hclwrite.Tokens {
+func (wld WorkerLogDeliveryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wld.ref.InternalTokens()
 }
 
@@ -430,7 +430,7 @@ func (cl CloudwatchLogsAttributes) InternalWithRef(ref terra.Reference) Cloudwat
 	return CloudwatchLogsAttributes{ref: ref}
 }
 
-func (cl CloudwatchLogsAttributes) InternalTokens() hclwrite.Tokens {
+func (cl CloudwatchLogsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cl.ref.InternalTokens()
 }
 
@@ -454,7 +454,7 @@ func (f FirehoseAttributes) InternalWithRef(ref terra.Reference) FirehoseAttribu
 	return FirehoseAttributes{ref: ref}
 }
 
-func (f FirehoseAttributes) InternalTokens() hclwrite.Tokens {
+func (f FirehoseAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -478,7 +478,7 @@ func (s S3Attributes) InternalWithRef(ref terra.Reference) S3Attributes {
 	return S3Attributes{ref: ref}
 }
 
-func (s S3Attributes) InternalTokens() hclwrite.Tokens {
+func (s S3Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -506,7 +506,7 @@ func (p PluginAttributes) InternalWithRef(ref terra.Reference) PluginAttributes 
 	return PluginAttributes{ref: ref}
 }
 
-func (p PluginAttributes) InternalTokens() hclwrite.Tokens {
+func (p PluginAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -526,7 +526,7 @@ func (cp CustomPluginAttributes) InternalWithRef(ref terra.Reference) CustomPlug
 	return CustomPluginAttributes{ref: ref}
 }
 
-func (cp CustomPluginAttributes) InternalTokens() hclwrite.Tokens {
+func (cp CustomPluginAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cp.ref.InternalTokens()
 }
 
@@ -550,7 +550,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -578,7 +578,7 @@ func (wc WorkerConfigurationAttributes) InternalWithRef(ref terra.Reference) Wor
 	return WorkerConfigurationAttributes{ref: ref}
 }
 
-func (wc WorkerConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (wc WorkerConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wc.ref.InternalTokens()
 }
 

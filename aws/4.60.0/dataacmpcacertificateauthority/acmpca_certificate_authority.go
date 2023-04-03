@@ -30,7 +30,7 @@ func (rc RevocationConfigurationAttributes) InternalWithRef(ref terra.Reference)
 	return RevocationConfigurationAttributes{ref: ref}
 }
 
-func (rc RevocationConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (rc RevocationConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rc.ref.InternalTokens()
 }
 
@@ -54,7 +54,7 @@ func (cc CrlConfigurationAttributes) InternalWithRef(ref terra.Reference) CrlCon
 	return CrlConfigurationAttributes{ref: ref}
 }
 
-func (cc CrlConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (cc CrlConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -90,7 +90,7 @@ func (oc OcspConfigurationAttributes) InternalWithRef(ref terra.Reference) OcspC
 	return OcspConfigurationAttributes{ref: ref}
 }
 
-func (oc OcspConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (oc OcspConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oc.ref.InternalTokens()
 }
 

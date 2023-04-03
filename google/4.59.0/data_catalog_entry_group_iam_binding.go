@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataCatalogEntryGroupIamBinding creates a new instance of [DataCatalogEntryGroupIamBinding].
 func NewDataCatalogEntryGroupIamBinding(name string, args DataCatalogEntryGroupIamBindingArgs) *DataCatalogEntryGroupIamBinding {
 	return &DataCatalogEntryGroupIamBinding{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataCatalogEntryGroupIamBinding(name string, args DataCatalogEntryGroupI
 
 var _ terra.Resource = (*DataCatalogEntryGroupIamBinding)(nil)
 
+// DataCatalogEntryGroupIamBinding represents the Terraform resource google_data_catalog_entry_group_iam_binding.
 type DataCatalogEntryGroupIamBinding struct {
-	Name  string
-	Args  DataCatalogEntryGroupIamBindingArgs
-	state *dataCatalogEntryGroupIamBindingState
+	Name      string
+	Args      DataCatalogEntryGroupIamBindingArgs
+	state     *dataCatalogEntryGroupIamBindingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataCatalogEntryGroupIamBinding].
 func (dcegib *DataCatalogEntryGroupIamBinding) Type() string {
 	return "google_data_catalog_entry_group_iam_binding"
 }
 
+// LocalName returns the local name for [DataCatalogEntryGroupIamBinding].
 func (dcegib *DataCatalogEntryGroupIamBinding) LocalName() string {
 	return dcegib.Name
 }
 
+// Configuration returns the configuration (args) for [DataCatalogEntryGroupIamBinding].
 func (dcegib *DataCatalogEntryGroupIamBinding) Configuration() interface{} {
 	return dcegib.Args
 }
 
+// DependOn is used for other resources to depend on [DataCatalogEntryGroupIamBinding].
+func (dcegib *DataCatalogEntryGroupIamBinding) DependOn() terra.Reference {
+	return terra.ReferenceResource(dcegib)
+}
+
+// Dependencies returns the list of resources [DataCatalogEntryGroupIamBinding] depends_on.
+func (dcegib *DataCatalogEntryGroupIamBinding) Dependencies() terra.Dependencies {
+	return dcegib.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataCatalogEntryGroupIamBinding].
+func (dcegib *DataCatalogEntryGroupIamBinding) LifecycleManagement() *terra.Lifecycle {
+	return dcegib.Lifecycle
+}
+
+// Attributes returns the attributes for [DataCatalogEntryGroupIamBinding].
 func (dcegib *DataCatalogEntryGroupIamBinding) Attributes() dataCatalogEntryGroupIamBindingAttributes {
 	return dataCatalogEntryGroupIamBindingAttributes{ref: terra.ReferenceResource(dcegib)}
 }
 
+// ImportState imports the given attribute values into [DataCatalogEntryGroupIamBinding]'s state.
 func (dcegib *DataCatalogEntryGroupIamBinding) ImportState(av io.Reader) error {
 	dcegib.state = &dataCatalogEntryGroupIamBindingState{}
 	if err := json.NewDecoder(av).Decode(dcegib.state); err != nil {
@@ -49,10 +73,12 @@ func (dcegib *DataCatalogEntryGroupIamBinding) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataCatalogEntryGroupIamBinding] has state.
 func (dcegib *DataCatalogEntryGroupIamBinding) State() (*dataCatalogEntryGroupIamBindingState, bool) {
 	return dcegib.state, dcegib.state != nil
 }
 
+// StateMust returns the state for [DataCatalogEntryGroupIamBinding]. Panics if the state is nil.
 func (dcegib *DataCatalogEntryGroupIamBinding) StateMust() *dataCatalogEntryGroupIamBindingState {
 	if dcegib.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dcegib.Type(), dcegib.LocalName()))
@@ -60,10 +86,7 @@ func (dcegib *DataCatalogEntryGroupIamBinding) StateMust() *dataCatalogEntryGrou
 	return dcegib.state
 }
 
-func (dcegib *DataCatalogEntryGroupIamBinding) DependOn() terra.Reference {
-	return terra.ReferenceResource(dcegib)
-}
-
+// DataCatalogEntryGroupIamBindingArgs contains the configurations for google_data_catalog_entry_group_iam_binding.
 type DataCatalogEntryGroupIamBindingArgs struct {
 	// EntryGroup: string, required
 	EntryGroup terra.StringValue `hcl:"entry_group,attr" validate:"required"`
@@ -79,43 +102,48 @@ type DataCatalogEntryGroupIamBindingArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *datacatalogentrygroupiambinding.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that DataCatalogEntryGroupIamBinding depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataCatalogEntryGroupIamBindingAttributes struct {
 	ref terra.Reference
 }
 
+// EntryGroup returns a reference to field entry_group of google_data_catalog_entry_group_iam_binding.
 func (dcegib dataCatalogEntryGroupIamBindingAttributes) EntryGroup() terra.StringValue {
-	return terra.ReferenceString(dcegib.ref.Append("entry_group"))
+	return terra.ReferenceAsString(dcegib.ref.Append("entry_group"))
 }
 
+// Etag returns a reference to field etag of google_data_catalog_entry_group_iam_binding.
 func (dcegib dataCatalogEntryGroupIamBindingAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(dcegib.ref.Append("etag"))
+	return terra.ReferenceAsString(dcegib.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_data_catalog_entry_group_iam_binding.
 func (dcegib dataCatalogEntryGroupIamBindingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dcegib.ref.Append("id"))
+	return terra.ReferenceAsString(dcegib.ref.Append("id"))
 }
 
+// Members returns a reference to field members of google_data_catalog_entry_group_iam_binding.
 func (dcegib dataCatalogEntryGroupIamBindingAttributes) Members() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dcegib.ref.Append("members"))
+	return terra.ReferenceAsSet[terra.StringValue](dcegib.ref.Append("members"))
 }
 
+// Project returns a reference to field project of google_data_catalog_entry_group_iam_binding.
 func (dcegib dataCatalogEntryGroupIamBindingAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(dcegib.ref.Append("project"))
+	return terra.ReferenceAsString(dcegib.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_data_catalog_entry_group_iam_binding.
 func (dcegib dataCatalogEntryGroupIamBindingAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(dcegib.ref.Append("region"))
+	return terra.ReferenceAsString(dcegib.ref.Append("region"))
 }
 
+// Role returns a reference to field role of google_data_catalog_entry_group_iam_binding.
 func (dcegib dataCatalogEntryGroupIamBindingAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(dcegib.ref.Append("role"))
+	return terra.ReferenceAsString(dcegib.ref.Append("role"))
 }
 
 func (dcegib dataCatalogEntryGroupIamBindingAttributes) Condition() terra.ListValue[datacatalogentrygroupiambinding.ConditionAttributes] {
-	return terra.ReferenceList[datacatalogentrygroupiambinding.ConditionAttributes](dcegib.ref.Append("condition"))
+	return terra.ReferenceAsList[datacatalogentrygroupiambinding.ConditionAttributes](dcegib.ref.Append("condition"))
 }
 
 type dataCatalogEntryGroupIamBindingState struct {

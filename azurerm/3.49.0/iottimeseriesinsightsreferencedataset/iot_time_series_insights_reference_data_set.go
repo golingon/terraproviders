@@ -29,56 +29,56 @@ type KeyPropertyAttributes struct {
 	ref terra.Reference
 }
 
-func (kp KeyPropertyAttributes) InternalRef() terra.Reference {
-	return kp.ref
+func (kp KeyPropertyAttributes) InternalRef() (terra.Reference, error) {
+	return kp.ref, nil
 }
 
 func (kp KeyPropertyAttributes) InternalWithRef(ref terra.Reference) KeyPropertyAttributes {
 	return KeyPropertyAttributes{ref: ref}
 }
 
-func (kp KeyPropertyAttributes) InternalTokens() hclwrite.Tokens {
+func (kp KeyPropertyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kp.ref.InternalTokens()
 }
 
 func (kp KeyPropertyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(kp.ref.Append("name"))
+	return terra.ReferenceAsString(kp.ref.Append("name"))
 }
 
 func (kp KeyPropertyAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(kp.ref.Append("type"))
+	return terra.ReferenceAsString(kp.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type KeyPropertyState struct {

@@ -22,15 +22,15 @@ type ProxyAttributes struct {
 	ref terra.Reference
 }
 
-func (p ProxyAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p ProxyAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p ProxyAttributes) InternalWithRef(ref terra.Reference) ProxyAttributes {
 	return ProxyAttributes{ref: ref}
 }
 
-func (p ProxyAttributes) InternalTokens() hclwrite.Tokens {
+func (p ProxyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 

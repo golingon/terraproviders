@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewPrivateEndpoint creates a new instance of [PrivateEndpoint].
 func NewPrivateEndpoint(name string, args PrivateEndpointArgs) *PrivateEndpoint {
 	return &PrivateEndpoint{
 		Args: args,
@@ -19,28 +20,51 @@ func NewPrivateEndpoint(name string, args PrivateEndpointArgs) *PrivateEndpoint 
 
 var _ terra.Resource = (*PrivateEndpoint)(nil)
 
+// PrivateEndpoint represents the Terraform resource azurerm_private_endpoint.
 type PrivateEndpoint struct {
-	Name  string
-	Args  PrivateEndpointArgs
-	state *privateEndpointState
+	Name      string
+	Args      PrivateEndpointArgs
+	state     *privateEndpointState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PrivateEndpoint].
 func (pe *PrivateEndpoint) Type() string {
 	return "azurerm_private_endpoint"
 }
 
+// LocalName returns the local name for [PrivateEndpoint].
 func (pe *PrivateEndpoint) LocalName() string {
 	return pe.Name
 }
 
+// Configuration returns the configuration (args) for [PrivateEndpoint].
 func (pe *PrivateEndpoint) Configuration() interface{} {
 	return pe.Args
 }
 
+// DependOn is used for other resources to depend on [PrivateEndpoint].
+func (pe *PrivateEndpoint) DependOn() terra.Reference {
+	return terra.ReferenceResource(pe)
+}
+
+// Dependencies returns the list of resources [PrivateEndpoint] depends_on.
+func (pe *PrivateEndpoint) Dependencies() terra.Dependencies {
+	return pe.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PrivateEndpoint].
+func (pe *PrivateEndpoint) LifecycleManagement() *terra.Lifecycle {
+	return pe.Lifecycle
+}
+
+// Attributes returns the attributes for [PrivateEndpoint].
 func (pe *PrivateEndpoint) Attributes() privateEndpointAttributes {
 	return privateEndpointAttributes{ref: terra.ReferenceResource(pe)}
 }
 
+// ImportState imports the given attribute values into [PrivateEndpoint]'s state.
 func (pe *PrivateEndpoint) ImportState(av io.Reader) error {
 	pe.state = &privateEndpointState{}
 	if err := json.NewDecoder(av).Decode(pe.state); err != nil {
@@ -49,10 +73,12 @@ func (pe *PrivateEndpoint) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PrivateEndpoint] has state.
 func (pe *PrivateEndpoint) State() (*privateEndpointState, bool) {
 	return pe.state, pe.state != nil
 }
 
+// StateMust returns the state for [PrivateEndpoint]. Panics if the state is nil.
 func (pe *PrivateEndpoint) StateMust() *privateEndpointState {
 	if pe.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pe.Type(), pe.LocalName()))
@@ -60,10 +86,7 @@ func (pe *PrivateEndpoint) StateMust() *privateEndpointState {
 	return pe.state
 }
 
-func (pe *PrivateEndpoint) DependOn() terra.Reference {
-	return terra.ReferenceResource(pe)
-}
-
+// PrivateEndpointArgs contains the configurations for azurerm_private_endpoint.
 type PrivateEndpointArgs struct {
 	// CustomNetworkInterfaceName: string, optional
 	CustomNetworkInterfaceName terra.StringValue `hcl:"custom_network_interface_name,attr"`
@@ -93,67 +116,72 @@ type PrivateEndpointArgs struct {
 	PrivateServiceConnection *privateendpoint.PrivateServiceConnection `hcl:"private_service_connection,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *privateendpoint.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that PrivateEndpoint depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type privateEndpointAttributes struct {
 	ref terra.Reference
 }
 
+// CustomNetworkInterfaceName returns a reference to field custom_network_interface_name of azurerm_private_endpoint.
 func (pe privateEndpointAttributes) CustomNetworkInterfaceName() terra.StringValue {
-	return terra.ReferenceString(pe.ref.Append("custom_network_interface_name"))
+	return terra.ReferenceAsString(pe.ref.Append("custom_network_interface_name"))
 }
 
+// Id returns a reference to field id of azurerm_private_endpoint.
 func (pe privateEndpointAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pe.ref.Append("id"))
+	return terra.ReferenceAsString(pe.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_private_endpoint.
 func (pe privateEndpointAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(pe.ref.Append("location"))
+	return terra.ReferenceAsString(pe.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_private_endpoint.
 func (pe privateEndpointAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pe.ref.Append("name"))
+	return terra.ReferenceAsString(pe.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_private_endpoint.
 func (pe privateEndpointAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(pe.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(pe.ref.Append("resource_group_name"))
 }
 
+// SubnetId returns a reference to field subnet_id of azurerm_private_endpoint.
 func (pe privateEndpointAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(pe.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(pe.ref.Append("subnet_id"))
 }
 
+// Tags returns a reference to field tags of azurerm_private_endpoint.
 func (pe privateEndpointAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](pe.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](pe.ref.Append("tags"))
 }
 
 func (pe privateEndpointAttributes) CustomDnsConfigs() terra.ListValue[privateendpoint.CustomDnsConfigsAttributes] {
-	return terra.ReferenceList[privateendpoint.CustomDnsConfigsAttributes](pe.ref.Append("custom_dns_configs"))
+	return terra.ReferenceAsList[privateendpoint.CustomDnsConfigsAttributes](pe.ref.Append("custom_dns_configs"))
 }
 
 func (pe privateEndpointAttributes) NetworkInterface() terra.ListValue[privateendpoint.NetworkInterfaceAttributes] {
-	return terra.ReferenceList[privateendpoint.NetworkInterfaceAttributes](pe.ref.Append("network_interface"))
+	return terra.ReferenceAsList[privateendpoint.NetworkInterfaceAttributes](pe.ref.Append("network_interface"))
 }
 
 func (pe privateEndpointAttributes) PrivateDnsZoneConfigs() terra.ListValue[privateendpoint.PrivateDnsZoneConfigsAttributes] {
-	return terra.ReferenceList[privateendpoint.PrivateDnsZoneConfigsAttributes](pe.ref.Append("private_dns_zone_configs"))
+	return terra.ReferenceAsList[privateendpoint.PrivateDnsZoneConfigsAttributes](pe.ref.Append("private_dns_zone_configs"))
 }
 
 func (pe privateEndpointAttributes) IpConfiguration() terra.ListValue[privateendpoint.IpConfigurationAttributes] {
-	return terra.ReferenceList[privateendpoint.IpConfigurationAttributes](pe.ref.Append("ip_configuration"))
+	return terra.ReferenceAsList[privateendpoint.IpConfigurationAttributes](pe.ref.Append("ip_configuration"))
 }
 
 func (pe privateEndpointAttributes) PrivateDnsZoneGroup() terra.ListValue[privateendpoint.PrivateDnsZoneGroupAttributes] {
-	return terra.ReferenceList[privateendpoint.PrivateDnsZoneGroupAttributes](pe.ref.Append("private_dns_zone_group"))
+	return terra.ReferenceAsList[privateendpoint.PrivateDnsZoneGroupAttributes](pe.ref.Append("private_dns_zone_group"))
 }
 
 func (pe privateEndpointAttributes) PrivateServiceConnection() terra.ListValue[privateendpoint.PrivateServiceConnectionAttributes] {
-	return terra.ReferenceList[privateendpoint.PrivateServiceConnectionAttributes](pe.ref.Append("private_service_connection"))
+	return terra.ReferenceAsList[privateendpoint.PrivateServiceConnectionAttributes](pe.ref.Append("private_service_connection"))
 }
 
 func (pe privateEndpointAttributes) Timeouts() privateendpoint.TimeoutsAttributes {
-	return terra.ReferenceSingle[privateendpoint.TimeoutsAttributes](pe.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[privateendpoint.TimeoutsAttributes](pe.ref.Append("timeouts"))
 }
 
 type privateEndpointState struct {

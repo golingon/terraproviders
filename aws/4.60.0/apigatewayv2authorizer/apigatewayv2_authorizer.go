@@ -26,7 +26,7 @@ func (jc JwtConfigurationAttributes) InternalWithRef(ref terra.Reference) JwtCon
 	return JwtConfigurationAttributes{ref: ref}
 }
 
-func (jc JwtConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (jc JwtConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return jc.ref.InternalTokens()
 }
 

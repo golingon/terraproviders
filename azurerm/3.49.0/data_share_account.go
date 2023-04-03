@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataShareAccount creates a new instance of [DataShareAccount].
 func NewDataShareAccount(name string, args DataShareAccountArgs) *DataShareAccount {
 	return &DataShareAccount{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataShareAccount(name string, args DataShareAccountArgs) *DataShareAccou
 
 var _ terra.Resource = (*DataShareAccount)(nil)
 
+// DataShareAccount represents the Terraform resource azurerm_data_share_account.
 type DataShareAccount struct {
-	Name  string
-	Args  DataShareAccountArgs
-	state *dataShareAccountState
+	Name      string
+	Args      DataShareAccountArgs
+	state     *dataShareAccountState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataShareAccount].
 func (dsa *DataShareAccount) Type() string {
 	return "azurerm_data_share_account"
 }
 
+// LocalName returns the local name for [DataShareAccount].
 func (dsa *DataShareAccount) LocalName() string {
 	return dsa.Name
 }
 
+// Configuration returns the configuration (args) for [DataShareAccount].
 func (dsa *DataShareAccount) Configuration() interface{} {
 	return dsa.Args
 }
 
+// DependOn is used for other resources to depend on [DataShareAccount].
+func (dsa *DataShareAccount) DependOn() terra.Reference {
+	return terra.ReferenceResource(dsa)
+}
+
+// Dependencies returns the list of resources [DataShareAccount] depends_on.
+func (dsa *DataShareAccount) Dependencies() terra.Dependencies {
+	return dsa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataShareAccount].
+func (dsa *DataShareAccount) LifecycleManagement() *terra.Lifecycle {
+	return dsa.Lifecycle
+}
+
+// Attributes returns the attributes for [DataShareAccount].
 func (dsa *DataShareAccount) Attributes() dataShareAccountAttributes {
 	return dataShareAccountAttributes{ref: terra.ReferenceResource(dsa)}
 }
 
+// ImportState imports the given attribute values into [DataShareAccount]'s state.
 func (dsa *DataShareAccount) ImportState(av io.Reader) error {
 	dsa.state = &dataShareAccountState{}
 	if err := json.NewDecoder(av).Decode(dsa.state); err != nil {
@@ -49,10 +73,12 @@ func (dsa *DataShareAccount) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataShareAccount] has state.
 func (dsa *DataShareAccount) State() (*dataShareAccountState, bool) {
 	return dsa.state, dsa.state != nil
 }
 
+// StateMust returns the state for [DataShareAccount]. Panics if the state is nil.
 func (dsa *DataShareAccount) StateMust() *dataShareAccountState {
 	if dsa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dsa.Type(), dsa.LocalName()))
@@ -60,10 +86,7 @@ func (dsa *DataShareAccount) StateMust() *dataShareAccountState {
 	return dsa.state
 }
 
-func (dsa *DataShareAccount) DependOn() terra.Reference {
-	return terra.ReferenceResource(dsa)
-}
-
+// DataShareAccountArgs contains the configurations for azurerm_data_share_account.
 type DataShareAccountArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,39 +102,42 @@ type DataShareAccountArgs struct {
 	Identity *datashareaccount.Identity `hcl:"identity,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *datashareaccount.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataShareAccount depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataShareAccountAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_data_share_account.
 func (dsa dataShareAccountAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dsa.ref.Append("id"))
+	return terra.ReferenceAsString(dsa.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_data_share_account.
 func (dsa dataShareAccountAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(dsa.ref.Append("location"))
+	return terra.ReferenceAsString(dsa.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_data_share_account.
 func (dsa dataShareAccountAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dsa.ref.Append("name"))
+	return terra.ReferenceAsString(dsa.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_data_share_account.
 func (dsa dataShareAccountAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(dsa.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(dsa.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_data_share_account.
 func (dsa dataShareAccountAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dsa.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dsa.ref.Append("tags"))
 }
 
 func (dsa dataShareAccountAttributes) Identity() terra.ListValue[datashareaccount.IdentityAttributes] {
-	return terra.ReferenceList[datashareaccount.IdentityAttributes](dsa.ref.Append("identity"))
+	return terra.ReferenceAsList[datashareaccount.IdentityAttributes](dsa.ref.Append("identity"))
 }
 
 func (dsa dataShareAccountAttributes) Timeouts() datashareaccount.TimeoutsAttributes {
-	return terra.ReferenceSingle[datashareaccount.TimeoutsAttributes](dsa.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datashareaccount.TimeoutsAttributes](dsa.ref.Append("timeouts"))
 }
 
 type dataShareAccountState struct {

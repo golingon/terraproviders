@@ -43,104 +43,104 @@ type AuditConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ac AuditConfigAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac AuditConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac AuditConfigAttributes) InternalWithRef(ref terra.Reference) AuditConfigAttributes {
 	return AuditConfigAttributes{ref: ref}
 }
 
-func (ac AuditConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ac AuditConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
 func (ac AuditConfigAttributes) Service() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("service"))
+	return terra.ReferenceAsString(ac.ref.Append("service"))
 }
 
 func (ac AuditConfigAttributes) AuditLogConfigs() terra.SetValue[AuditLogConfigsAttributes] {
-	return terra.ReferenceSet[AuditLogConfigsAttributes](ac.ref.Append("audit_log_configs"))
+	return terra.ReferenceAsSet[AuditLogConfigsAttributes](ac.ref.Append("audit_log_configs"))
 }
 
 type AuditLogConfigsAttributes struct {
 	ref terra.Reference
 }
 
-func (alc AuditLogConfigsAttributes) InternalRef() terra.Reference {
-	return alc.ref
+func (alc AuditLogConfigsAttributes) InternalRef() (terra.Reference, error) {
+	return alc.ref, nil
 }
 
 func (alc AuditLogConfigsAttributes) InternalWithRef(ref terra.Reference) AuditLogConfigsAttributes {
 	return AuditLogConfigsAttributes{ref: ref}
 }
 
-func (alc AuditLogConfigsAttributes) InternalTokens() hclwrite.Tokens {
+func (alc AuditLogConfigsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return alc.ref.InternalTokens()
 }
 
 func (alc AuditLogConfigsAttributes) ExemptedMembers() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](alc.ref.Append("exempted_members"))
+	return terra.ReferenceAsSet[terra.StringValue](alc.ref.Append("exempted_members"))
 }
 
 func (alc AuditLogConfigsAttributes) LogType() terra.StringValue {
-	return terra.ReferenceString(alc.ref.Append("log_type"))
+	return terra.ReferenceAsString(alc.ref.Append("log_type"))
 }
 
 type BindingAttributes struct {
 	ref terra.Reference
 }
 
-func (b BindingAttributes) InternalRef() terra.Reference {
-	return b.ref
+func (b BindingAttributes) InternalRef() (terra.Reference, error) {
+	return b.ref, nil
 }
 
 func (b BindingAttributes) InternalWithRef(ref terra.Reference) BindingAttributes {
 	return BindingAttributes{ref: ref}
 }
 
-func (b BindingAttributes) InternalTokens() hclwrite.Tokens {
+func (b BindingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return b.ref.InternalTokens()
 }
 
 func (b BindingAttributes) Members() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](b.ref.Append("members"))
+	return terra.ReferenceAsSet[terra.StringValue](b.ref.Append("members"))
 }
 
 func (b BindingAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(b.ref.Append("role"))
+	return terra.ReferenceAsString(b.ref.Append("role"))
 }
 
 func (b BindingAttributes) Condition() terra.ListValue[ConditionAttributes] {
-	return terra.ReferenceList[ConditionAttributes](b.ref.Append("condition"))
+	return terra.ReferenceAsList[ConditionAttributes](b.ref.Append("condition"))
 }
 
 type ConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConditionAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConditionAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConditionAttributes) InternalWithRef(ref terra.Reference) ConditionAttributes {
 	return ConditionAttributes{ref: ref}
 }
 
-func (c ConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ConditionAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("description"))
+	return terra.ReferenceAsString(c.ref.Append("description"))
 }
 
 func (c ConditionAttributes) Expression() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("expression"))
+	return terra.ReferenceAsString(c.ref.Append("expression"))
 }
 
 func (c ConditionAttributes) Title() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("title"))
+	return terra.ReferenceAsString(c.ref.Append("title"))
 }
 
 type AuditConfigState struct {

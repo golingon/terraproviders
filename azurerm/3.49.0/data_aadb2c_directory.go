@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataAadb2CDirectory creates a new instance of [DataAadb2CDirectory].
 func NewDataAadb2CDirectory(name string, args DataAadb2CDirectoryArgs) *DataAadb2CDirectory {
 	return &DataAadb2CDirectory{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataAadb2CDirectory(name string, args DataAadb2CDirectoryArgs) *DataAadb
 
 var _ terra.DataResource = (*DataAadb2CDirectory)(nil)
 
+// DataAadb2CDirectory represents the Terraform data resource azurerm_aadb2c_directory.
 type DataAadb2CDirectory struct {
 	Name string
 	Args DataAadb2CDirectoryArgs
 }
 
+// DataSource returns the Terraform object type for [DataAadb2CDirectory].
 func (ad *DataAadb2CDirectory) DataSource() string {
 	return "azurerm_aadb2c_directory"
 }
 
+// LocalName returns the local name for [DataAadb2CDirectory].
 func (ad *DataAadb2CDirectory) LocalName() string {
 	return ad.Name
 }
 
+// Configuration returns the configuration (args) for [DataAadb2CDirectory].
 func (ad *DataAadb2CDirectory) Configuration() interface{} {
 	return ad.Args
 }
 
+// Attributes returns the attributes for [DataAadb2CDirectory].
 func (ad *DataAadb2CDirectory) Attributes() dataAadb2CDirectoryAttributes {
 	return dataAadb2CDirectoryAttributes{ref: terra.ReferenceDataResource(ad)}
 }
 
+// DataAadb2CDirectoryArgs contains the configurations for azurerm_aadb2c_directory.
 type DataAadb2CDirectoryArgs struct {
 	// DomainName: string, required
 	DomainName terra.StringValue `hcl:"domain_name,attr" validate:"required"`
@@ -51,42 +58,51 @@ type dataAadb2CDirectoryAttributes struct {
 	ref terra.Reference
 }
 
+// BillingType returns a reference to field billing_type of azurerm_aadb2c_directory.
 func (ad dataAadb2CDirectoryAttributes) BillingType() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("billing_type"))
+	return terra.ReferenceAsString(ad.ref.Append("billing_type"))
 }
 
+// DataResidencyLocation returns a reference to field data_residency_location of azurerm_aadb2c_directory.
 func (ad dataAadb2CDirectoryAttributes) DataResidencyLocation() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("data_residency_location"))
+	return terra.ReferenceAsString(ad.ref.Append("data_residency_location"))
 }
 
+// DomainName returns a reference to field domain_name of azurerm_aadb2c_directory.
 func (ad dataAadb2CDirectoryAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("domain_name"))
+	return terra.ReferenceAsString(ad.ref.Append("domain_name"))
 }
 
+// EffectiveStartDate returns a reference to field effective_start_date of azurerm_aadb2c_directory.
 func (ad dataAadb2CDirectoryAttributes) EffectiveStartDate() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("effective_start_date"))
+	return terra.ReferenceAsString(ad.ref.Append("effective_start_date"))
 }
 
+// Id returns a reference to field id of azurerm_aadb2c_directory.
 func (ad dataAadb2CDirectoryAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("id"))
+	return terra.ReferenceAsString(ad.ref.Append("id"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_aadb2c_directory.
 func (ad dataAadb2CDirectoryAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ad.ref.Append("resource_group_name"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_aadb2c_directory.
 func (ad dataAadb2CDirectoryAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("sku_name"))
+	return terra.ReferenceAsString(ad.ref.Append("sku_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_aadb2c_directory.
 func (ad dataAadb2CDirectoryAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ad.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ad.ref.Append("tags"))
 }
 
+// TenantId returns a reference to field tenant_id of azurerm_aadb2c_directory.
 func (ad dataAadb2CDirectoryAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(ad.ref.Append("tenant_id"))
 }
 
 func (ad dataAadb2CDirectoryAttributes) Timeouts() dataaadb2cdirectory.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataaadb2cdirectory.TimeoutsAttributes](ad.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataaadb2cdirectory.TimeoutsAttributes](ad.ref.Append("timeouts"))
 }

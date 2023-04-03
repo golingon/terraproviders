@@ -46,120 +46,120 @@ type PartitionConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (pc PartitionConfigAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc PartitionConfigAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc PartitionConfigAttributes) InternalWithRef(ref terra.Reference) PartitionConfigAttributes {
 	return PartitionConfigAttributes{ref: ref}
 }
 
-func (pc PartitionConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (pc PartitionConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pc.ref.InternalTokens()
 }
 
 func (pc PartitionConfigAttributes) Count() terra.NumberValue {
-	return terra.ReferenceNumber(pc.ref.Append("count"))
+	return terra.ReferenceAsNumber(pc.ref.Append("count"))
 }
 
 func (pc PartitionConfigAttributes) Capacity() terra.ListValue[CapacityAttributes] {
-	return terra.ReferenceList[CapacityAttributes](pc.ref.Append("capacity"))
+	return terra.ReferenceAsList[CapacityAttributes](pc.ref.Append("capacity"))
 }
 
 type CapacityAttributes struct {
 	ref terra.Reference
 }
 
-func (c CapacityAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CapacityAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CapacityAttributes) InternalWithRef(ref terra.Reference) CapacityAttributes {
 	return CapacityAttributes{ref: ref}
 }
 
-func (c CapacityAttributes) InternalTokens() hclwrite.Tokens {
+func (c CapacityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c CapacityAttributes) PublishMibPerSec() terra.NumberValue {
-	return terra.ReferenceNumber(c.ref.Append("publish_mib_per_sec"))
+	return terra.ReferenceAsNumber(c.ref.Append("publish_mib_per_sec"))
 }
 
 func (c CapacityAttributes) SubscribeMibPerSec() terra.NumberValue {
-	return terra.ReferenceNumber(c.ref.Append("subscribe_mib_per_sec"))
+	return terra.ReferenceAsNumber(c.ref.Append("subscribe_mib_per_sec"))
 }
 
 type ReservationConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (rc ReservationConfigAttributes) InternalRef() terra.Reference {
-	return rc.ref
+func (rc ReservationConfigAttributes) InternalRef() (terra.Reference, error) {
+	return rc.ref, nil
 }
 
 func (rc ReservationConfigAttributes) InternalWithRef(ref terra.Reference) ReservationConfigAttributes {
 	return ReservationConfigAttributes{ref: ref}
 }
 
-func (rc ReservationConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (rc ReservationConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rc.ref.InternalTokens()
 }
 
 func (rc ReservationConfigAttributes) ThroughputReservation() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("throughput_reservation"))
+	return terra.ReferenceAsString(rc.ref.Append("throughput_reservation"))
 }
 
 type RetentionConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (rc RetentionConfigAttributes) InternalRef() terra.Reference {
-	return rc.ref
+func (rc RetentionConfigAttributes) InternalRef() (terra.Reference, error) {
+	return rc.ref, nil
 }
 
 func (rc RetentionConfigAttributes) InternalWithRef(ref terra.Reference) RetentionConfigAttributes {
 	return RetentionConfigAttributes{ref: ref}
 }
 
-func (rc RetentionConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (rc RetentionConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rc.ref.InternalTokens()
 }
 
 func (rc RetentionConfigAttributes) PerPartitionBytes() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("per_partition_bytes"))
+	return terra.ReferenceAsString(rc.ref.Append("per_partition_bytes"))
 }
 
 func (rc RetentionConfigAttributes) Period() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("period"))
+	return terra.ReferenceAsString(rc.ref.Append("period"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type PartitionConfigState struct {

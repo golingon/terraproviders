@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewIapWebBackendServiceIamMember creates a new instance of [IapWebBackendServiceIamMember].
 func NewIapWebBackendServiceIamMember(name string, args IapWebBackendServiceIamMemberArgs) *IapWebBackendServiceIamMember {
 	return &IapWebBackendServiceIamMember{
 		Args: args,
@@ -19,28 +20,51 @@ func NewIapWebBackendServiceIamMember(name string, args IapWebBackendServiceIamM
 
 var _ terra.Resource = (*IapWebBackendServiceIamMember)(nil)
 
+// IapWebBackendServiceIamMember represents the Terraform resource google_iap_web_backend_service_iam_member.
 type IapWebBackendServiceIamMember struct {
-	Name  string
-	Args  IapWebBackendServiceIamMemberArgs
-	state *iapWebBackendServiceIamMemberState
+	Name      string
+	Args      IapWebBackendServiceIamMemberArgs
+	state     *iapWebBackendServiceIamMemberState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IapWebBackendServiceIamMember].
 func (iwbsim *IapWebBackendServiceIamMember) Type() string {
 	return "google_iap_web_backend_service_iam_member"
 }
 
+// LocalName returns the local name for [IapWebBackendServiceIamMember].
 func (iwbsim *IapWebBackendServiceIamMember) LocalName() string {
 	return iwbsim.Name
 }
 
+// Configuration returns the configuration (args) for [IapWebBackendServiceIamMember].
 func (iwbsim *IapWebBackendServiceIamMember) Configuration() interface{} {
 	return iwbsim.Args
 }
 
+// DependOn is used for other resources to depend on [IapWebBackendServiceIamMember].
+func (iwbsim *IapWebBackendServiceIamMember) DependOn() terra.Reference {
+	return terra.ReferenceResource(iwbsim)
+}
+
+// Dependencies returns the list of resources [IapWebBackendServiceIamMember] depends_on.
+func (iwbsim *IapWebBackendServiceIamMember) Dependencies() terra.Dependencies {
+	return iwbsim.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IapWebBackendServiceIamMember].
+func (iwbsim *IapWebBackendServiceIamMember) LifecycleManagement() *terra.Lifecycle {
+	return iwbsim.Lifecycle
+}
+
+// Attributes returns the attributes for [IapWebBackendServiceIamMember].
 func (iwbsim *IapWebBackendServiceIamMember) Attributes() iapWebBackendServiceIamMemberAttributes {
 	return iapWebBackendServiceIamMemberAttributes{ref: terra.ReferenceResource(iwbsim)}
 }
 
+// ImportState imports the given attribute values into [IapWebBackendServiceIamMember]'s state.
 func (iwbsim *IapWebBackendServiceIamMember) ImportState(av io.Reader) error {
 	iwbsim.state = &iapWebBackendServiceIamMemberState{}
 	if err := json.NewDecoder(av).Decode(iwbsim.state); err != nil {
@@ -49,10 +73,12 @@ func (iwbsim *IapWebBackendServiceIamMember) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IapWebBackendServiceIamMember] has state.
 func (iwbsim *IapWebBackendServiceIamMember) State() (*iapWebBackendServiceIamMemberState, bool) {
 	return iwbsim.state, iwbsim.state != nil
 }
 
+// StateMust returns the state for [IapWebBackendServiceIamMember]. Panics if the state is nil.
 func (iwbsim *IapWebBackendServiceIamMember) StateMust() *iapWebBackendServiceIamMemberState {
 	if iwbsim.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", iwbsim.Type(), iwbsim.LocalName()))
@@ -60,10 +86,7 @@ func (iwbsim *IapWebBackendServiceIamMember) StateMust() *iapWebBackendServiceIa
 	return iwbsim.state
 }
 
-func (iwbsim *IapWebBackendServiceIamMember) DependOn() terra.Reference {
-	return terra.ReferenceResource(iwbsim)
-}
-
+// IapWebBackendServiceIamMemberArgs contains the configurations for google_iap_web_backend_service_iam_member.
 type IapWebBackendServiceIamMemberArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,39 +100,43 @@ type IapWebBackendServiceIamMemberArgs struct {
 	WebBackendService terra.StringValue `hcl:"web_backend_service,attr" validate:"required"`
 	// Condition: optional
 	Condition *iapwebbackendserviceiammember.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that IapWebBackendServiceIamMember depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iapWebBackendServiceIamMemberAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_iap_web_backend_service_iam_member.
 func (iwbsim iapWebBackendServiceIamMemberAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(iwbsim.ref.Append("etag"))
+	return terra.ReferenceAsString(iwbsim.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_iap_web_backend_service_iam_member.
 func (iwbsim iapWebBackendServiceIamMemberAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(iwbsim.ref.Append("id"))
+	return terra.ReferenceAsString(iwbsim.ref.Append("id"))
 }
 
+// Member returns a reference to field member of google_iap_web_backend_service_iam_member.
 func (iwbsim iapWebBackendServiceIamMemberAttributes) Member() terra.StringValue {
-	return terra.ReferenceString(iwbsim.ref.Append("member"))
+	return terra.ReferenceAsString(iwbsim.ref.Append("member"))
 }
 
+// Project returns a reference to field project of google_iap_web_backend_service_iam_member.
 func (iwbsim iapWebBackendServiceIamMemberAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(iwbsim.ref.Append("project"))
+	return terra.ReferenceAsString(iwbsim.ref.Append("project"))
 }
 
+// Role returns a reference to field role of google_iap_web_backend_service_iam_member.
 func (iwbsim iapWebBackendServiceIamMemberAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(iwbsim.ref.Append("role"))
+	return terra.ReferenceAsString(iwbsim.ref.Append("role"))
 }
 
+// WebBackendService returns a reference to field web_backend_service of google_iap_web_backend_service_iam_member.
 func (iwbsim iapWebBackendServiceIamMemberAttributes) WebBackendService() terra.StringValue {
-	return terra.ReferenceString(iwbsim.ref.Append("web_backend_service"))
+	return terra.ReferenceAsString(iwbsim.ref.Append("web_backend_service"))
 }
 
 func (iwbsim iapWebBackendServiceIamMemberAttributes) Condition() terra.ListValue[iapwebbackendserviceiammember.ConditionAttributes] {
-	return terra.ReferenceList[iapwebbackendserviceiammember.ConditionAttributes](iwbsim.ref.Append("condition"))
+	return terra.ReferenceAsList[iapwebbackendserviceiammember.ConditionAttributes](iwbsim.ref.Append("condition"))
 }
 
 type iapWebBackendServiceIamMemberState struct {

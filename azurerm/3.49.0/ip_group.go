@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewIpGroup creates a new instance of [IpGroup].
 func NewIpGroup(name string, args IpGroupArgs) *IpGroup {
 	return &IpGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewIpGroup(name string, args IpGroupArgs) *IpGroup {
 
 var _ terra.Resource = (*IpGroup)(nil)
 
+// IpGroup represents the Terraform resource azurerm_ip_group.
 type IpGroup struct {
-	Name  string
-	Args  IpGroupArgs
-	state *ipGroupState
+	Name      string
+	Args      IpGroupArgs
+	state     *ipGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IpGroup].
 func (ig *IpGroup) Type() string {
 	return "azurerm_ip_group"
 }
 
+// LocalName returns the local name for [IpGroup].
 func (ig *IpGroup) LocalName() string {
 	return ig.Name
 }
 
+// Configuration returns the configuration (args) for [IpGroup].
 func (ig *IpGroup) Configuration() interface{} {
 	return ig.Args
 }
 
+// DependOn is used for other resources to depend on [IpGroup].
+func (ig *IpGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(ig)
+}
+
+// Dependencies returns the list of resources [IpGroup] depends_on.
+func (ig *IpGroup) Dependencies() terra.Dependencies {
+	return ig.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IpGroup].
+func (ig *IpGroup) LifecycleManagement() *terra.Lifecycle {
+	return ig.Lifecycle
+}
+
+// Attributes returns the attributes for [IpGroup].
 func (ig *IpGroup) Attributes() ipGroupAttributes {
 	return ipGroupAttributes{ref: terra.ReferenceResource(ig)}
 }
 
+// ImportState imports the given attribute values into [IpGroup]'s state.
 func (ig *IpGroup) ImportState(av io.Reader) error {
 	ig.state = &ipGroupState{}
 	if err := json.NewDecoder(av).Decode(ig.state); err != nil {
@@ -49,10 +73,12 @@ func (ig *IpGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IpGroup] has state.
 func (ig *IpGroup) State() (*ipGroupState, bool) {
 	return ig.state, ig.state != nil
 }
 
+// StateMust returns the state for [IpGroup]. Panics if the state is nil.
 func (ig *IpGroup) StateMust() *ipGroupState {
 	if ig.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ig.Type(), ig.LocalName()))
@@ -60,10 +86,7 @@ func (ig *IpGroup) StateMust() *ipGroupState {
 	return ig.state
 }
 
-func (ig *IpGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(ig)
-}
-
+// IpGroupArgs contains the configurations for azurerm_ip_group.
 type IpGroupArgs struct {
 	// Cidrs: set of string, optional
 	Cidrs terra.SetValue[terra.StringValue] `hcl:"cidrs,attr"`
@@ -79,47 +102,53 @@ type IpGroupArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// Timeouts: optional
 	Timeouts *ipgroup.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that IpGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ipGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Cidrs returns a reference to field cidrs of azurerm_ip_group.
 func (ig ipGroupAttributes) Cidrs() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ig.ref.Append("cidrs"))
+	return terra.ReferenceAsSet[terra.StringValue](ig.ref.Append("cidrs"))
 }
 
+// FirewallIds returns a reference to field firewall_ids of azurerm_ip_group.
 func (ig ipGroupAttributes) FirewallIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ig.ref.Append("firewall_ids"))
+	return terra.ReferenceAsList[terra.StringValue](ig.ref.Append("firewall_ids"))
 }
 
+// FirewallPolicyIds returns a reference to field firewall_policy_ids of azurerm_ip_group.
 func (ig ipGroupAttributes) FirewallPolicyIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ig.ref.Append("firewall_policy_ids"))
+	return terra.ReferenceAsList[terra.StringValue](ig.ref.Append("firewall_policy_ids"))
 }
 
+// Id returns a reference to field id of azurerm_ip_group.
 func (ig ipGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ig.ref.Append("id"))
+	return terra.ReferenceAsString(ig.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_ip_group.
 func (ig ipGroupAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ig.ref.Append("location"))
+	return terra.ReferenceAsString(ig.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_ip_group.
 func (ig ipGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ig.ref.Append("name"))
+	return terra.ReferenceAsString(ig.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_ip_group.
 func (ig ipGroupAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ig.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ig.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_ip_group.
 func (ig ipGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ig.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ig.ref.Append("tags"))
 }
 
 func (ig ipGroupAttributes) Timeouts() ipgroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[ipgroup.TimeoutsAttributes](ig.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[ipgroup.TimeoutsAttributes](ig.ref.Append("timeouts"))
 }
 
 type ipGroupState struct {

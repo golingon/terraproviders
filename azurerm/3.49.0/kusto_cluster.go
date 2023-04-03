@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewKustoCluster creates a new instance of [KustoCluster].
 func NewKustoCluster(name string, args KustoClusterArgs) *KustoCluster {
 	return &KustoCluster{
 		Args: args,
@@ -19,28 +20,51 @@ func NewKustoCluster(name string, args KustoClusterArgs) *KustoCluster {
 
 var _ terra.Resource = (*KustoCluster)(nil)
 
+// KustoCluster represents the Terraform resource azurerm_kusto_cluster.
 type KustoCluster struct {
-	Name  string
-	Args  KustoClusterArgs
-	state *kustoClusterState
+	Name      string
+	Args      KustoClusterArgs
+	state     *kustoClusterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [KustoCluster].
 func (kc *KustoCluster) Type() string {
 	return "azurerm_kusto_cluster"
 }
 
+// LocalName returns the local name for [KustoCluster].
 func (kc *KustoCluster) LocalName() string {
 	return kc.Name
 }
 
+// Configuration returns the configuration (args) for [KustoCluster].
 func (kc *KustoCluster) Configuration() interface{} {
 	return kc.Args
 }
 
+// DependOn is used for other resources to depend on [KustoCluster].
+func (kc *KustoCluster) DependOn() terra.Reference {
+	return terra.ReferenceResource(kc)
+}
+
+// Dependencies returns the list of resources [KustoCluster] depends_on.
+func (kc *KustoCluster) Dependencies() terra.Dependencies {
+	return kc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [KustoCluster].
+func (kc *KustoCluster) LifecycleManagement() *terra.Lifecycle {
+	return kc.Lifecycle
+}
+
+// Attributes returns the attributes for [KustoCluster].
 func (kc *KustoCluster) Attributes() kustoClusterAttributes {
 	return kustoClusterAttributes{ref: terra.ReferenceResource(kc)}
 }
 
+// ImportState imports the given attribute values into [KustoCluster]'s state.
 func (kc *KustoCluster) ImportState(av io.Reader) error {
 	kc.state = &kustoClusterState{}
 	if err := json.NewDecoder(av).Decode(kc.state); err != nil {
@@ -49,10 +73,12 @@ func (kc *KustoCluster) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [KustoCluster] has state.
 func (kc *KustoCluster) State() (*kustoClusterState, bool) {
 	return kc.state, kc.state != nil
 }
 
+// StateMust returns the state for [KustoCluster]. Panics if the state is nil.
 func (kc *KustoCluster) StateMust() *kustoClusterState {
 	if kc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", kc.Type(), kc.LocalName()))
@@ -60,10 +86,7 @@ func (kc *KustoCluster) StateMust() *kustoClusterState {
 	return kc.state
 }
 
-func (kc *KustoCluster) DependOn() terra.Reference {
-	return terra.ReferenceResource(kc)
-}
-
+// KustoClusterArgs contains the configurations for azurerm_kusto_cluster.
 type KustoClusterArgs struct {
 	// AllowedFqdns: list of string, optional
 	AllowedFqdns terra.ListValue[terra.StringValue] `hcl:"allowed_fqdns,attr"`
@@ -113,115 +136,134 @@ type KustoClusterArgs struct {
 	Timeouts *kustocluster.Timeouts `hcl:"timeouts,block"`
 	// VirtualNetworkConfiguration: optional
 	VirtualNetworkConfiguration *kustocluster.VirtualNetworkConfiguration `hcl:"virtual_network_configuration,block"`
-	// DependsOn contains resources that KustoCluster depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type kustoClusterAttributes struct {
 	ref terra.Reference
 }
 
+// AllowedFqdns returns a reference to field allowed_fqdns of azurerm_kusto_cluster.
 func (kc kustoClusterAttributes) AllowedFqdns() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](kc.ref.Append("allowed_fqdns"))
+	return terra.ReferenceAsList[terra.StringValue](kc.ref.Append("allowed_fqdns"))
 }
 
+// AllowedIpRanges returns a reference to field allowed_ip_ranges of azurerm_kusto_cluster.
 func (kc kustoClusterAttributes) AllowedIpRanges() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](kc.ref.Append("allowed_ip_ranges"))
+	return terra.ReferenceAsList[terra.StringValue](kc.ref.Append("allowed_ip_ranges"))
 }
 
+// AutoStopEnabled returns a reference to field auto_stop_enabled of azurerm_kusto_cluster.
 func (kc kustoClusterAttributes) AutoStopEnabled() terra.BoolValue {
-	return terra.ReferenceBool(kc.ref.Append("auto_stop_enabled"))
+	return terra.ReferenceAsBool(kc.ref.Append("auto_stop_enabled"))
 }
 
+// DataIngestionUri returns a reference to field data_ingestion_uri of azurerm_kusto_cluster.
 func (kc kustoClusterAttributes) DataIngestionUri() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("data_ingestion_uri"))
+	return terra.ReferenceAsString(kc.ref.Append("data_ingestion_uri"))
 }
 
+// DiskEncryptionEnabled returns a reference to field disk_encryption_enabled of azurerm_kusto_cluster.
 func (kc kustoClusterAttributes) DiskEncryptionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(kc.ref.Append("disk_encryption_enabled"))
+	return terra.ReferenceAsBool(kc.ref.Append("disk_encryption_enabled"))
 }
 
+// DoubleEncryptionEnabled returns a reference to field double_encryption_enabled of azurerm_kusto_cluster.
 func (kc kustoClusterAttributes) DoubleEncryptionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(kc.ref.Append("double_encryption_enabled"))
+	return terra.ReferenceAsBool(kc.ref.Append("double_encryption_enabled"))
 }
 
+// Engine returns a reference to field engine of azurerm_kusto_cluster.
 func (kc kustoClusterAttributes) Engine() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("engine"))
+	return terra.ReferenceAsString(kc.ref.Append("engine"))
 }
 
+// Id returns a reference to field id of azurerm_kusto_cluster.
 func (kc kustoClusterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("id"))
+	return terra.ReferenceAsString(kc.ref.Append("id"))
 }
 
+// LanguageExtensions returns a reference to field language_extensions of azurerm_kusto_cluster.
 func (kc kustoClusterAttributes) LanguageExtensions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](kc.ref.Append("language_extensions"))
+	return terra.ReferenceAsSet[terra.StringValue](kc.ref.Append("language_extensions"))
 }
 
+// Location returns a reference to field location of azurerm_kusto_cluster.
 func (kc kustoClusterAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("location"))
+	return terra.ReferenceAsString(kc.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_kusto_cluster.
 func (kc kustoClusterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("name"))
+	return terra.ReferenceAsString(kc.ref.Append("name"))
 }
 
+// OutboundNetworkAccessRestricted returns a reference to field outbound_network_access_restricted of azurerm_kusto_cluster.
 func (kc kustoClusterAttributes) OutboundNetworkAccessRestricted() terra.BoolValue {
-	return terra.ReferenceBool(kc.ref.Append("outbound_network_access_restricted"))
+	return terra.ReferenceAsBool(kc.ref.Append("outbound_network_access_restricted"))
 }
 
+// PublicIpType returns a reference to field public_ip_type of azurerm_kusto_cluster.
 func (kc kustoClusterAttributes) PublicIpType() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("public_ip_type"))
+	return terra.ReferenceAsString(kc.ref.Append("public_ip_type"))
 }
 
+// PublicNetworkAccessEnabled returns a reference to field public_network_access_enabled of azurerm_kusto_cluster.
 func (kc kustoClusterAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(kc.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(kc.ref.Append("public_network_access_enabled"))
 }
 
+// PurgeEnabled returns a reference to field purge_enabled of azurerm_kusto_cluster.
 func (kc kustoClusterAttributes) PurgeEnabled() terra.BoolValue {
-	return terra.ReferenceBool(kc.ref.Append("purge_enabled"))
+	return terra.ReferenceAsBool(kc.ref.Append("purge_enabled"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_kusto_cluster.
 func (kc kustoClusterAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(kc.ref.Append("resource_group_name"))
 }
 
+// StreamingIngestionEnabled returns a reference to field streaming_ingestion_enabled of azurerm_kusto_cluster.
 func (kc kustoClusterAttributes) StreamingIngestionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(kc.ref.Append("streaming_ingestion_enabled"))
+	return terra.ReferenceAsBool(kc.ref.Append("streaming_ingestion_enabled"))
 }
 
+// Tags returns a reference to field tags of azurerm_kusto_cluster.
 func (kc kustoClusterAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](kc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](kc.ref.Append("tags"))
 }
 
+// TrustedExternalTenants returns a reference to field trusted_external_tenants of azurerm_kusto_cluster.
 func (kc kustoClusterAttributes) TrustedExternalTenants() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](kc.ref.Append("trusted_external_tenants"))
+	return terra.ReferenceAsList[terra.StringValue](kc.ref.Append("trusted_external_tenants"))
 }
 
+// Uri returns a reference to field uri of azurerm_kusto_cluster.
 func (kc kustoClusterAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("uri"))
+	return terra.ReferenceAsString(kc.ref.Append("uri"))
 }
 
+// Zones returns a reference to field zones of azurerm_kusto_cluster.
 func (kc kustoClusterAttributes) Zones() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](kc.ref.Append("zones"))
+	return terra.ReferenceAsSet[terra.StringValue](kc.ref.Append("zones"))
 }
 
 func (kc kustoClusterAttributes) Identity() terra.ListValue[kustocluster.IdentityAttributes] {
-	return terra.ReferenceList[kustocluster.IdentityAttributes](kc.ref.Append("identity"))
+	return terra.ReferenceAsList[kustocluster.IdentityAttributes](kc.ref.Append("identity"))
 }
 
 func (kc kustoClusterAttributes) OptimizedAutoScale() terra.ListValue[kustocluster.OptimizedAutoScaleAttributes] {
-	return terra.ReferenceList[kustocluster.OptimizedAutoScaleAttributes](kc.ref.Append("optimized_auto_scale"))
+	return terra.ReferenceAsList[kustocluster.OptimizedAutoScaleAttributes](kc.ref.Append("optimized_auto_scale"))
 }
 
 func (kc kustoClusterAttributes) Sku() terra.ListValue[kustocluster.SkuAttributes] {
-	return terra.ReferenceList[kustocluster.SkuAttributes](kc.ref.Append("sku"))
+	return terra.ReferenceAsList[kustocluster.SkuAttributes](kc.ref.Append("sku"))
 }
 
 func (kc kustoClusterAttributes) Timeouts() kustocluster.TimeoutsAttributes {
-	return terra.ReferenceSingle[kustocluster.TimeoutsAttributes](kc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[kustocluster.TimeoutsAttributes](kc.ref.Append("timeouts"))
 }
 
 func (kc kustoClusterAttributes) VirtualNetworkConfiguration() terra.ListValue[kustocluster.VirtualNetworkConfigurationAttributes] {
-	return terra.ReferenceList[kustocluster.VirtualNetworkConfigurationAttributes](kc.ref.Append("virtual_network_configuration"))
+	return terra.ReferenceAsList[kustocluster.VirtualNetworkConfigurationAttributes](kc.ref.Append("virtual_network_configuration"))
 }
 
 type kustoClusterState struct {

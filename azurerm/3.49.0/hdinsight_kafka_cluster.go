@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewHdinsightKafkaCluster creates a new instance of [HdinsightKafkaCluster].
 func NewHdinsightKafkaCluster(name string, args HdinsightKafkaClusterArgs) *HdinsightKafkaCluster {
 	return &HdinsightKafkaCluster{
 		Args: args,
@@ -19,28 +20,51 @@ func NewHdinsightKafkaCluster(name string, args HdinsightKafkaClusterArgs) *Hdin
 
 var _ terra.Resource = (*HdinsightKafkaCluster)(nil)
 
+// HdinsightKafkaCluster represents the Terraform resource azurerm_hdinsight_kafka_cluster.
 type HdinsightKafkaCluster struct {
-	Name  string
-	Args  HdinsightKafkaClusterArgs
-	state *hdinsightKafkaClusterState
+	Name      string
+	Args      HdinsightKafkaClusterArgs
+	state     *hdinsightKafkaClusterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [HdinsightKafkaCluster].
 func (hkc *HdinsightKafkaCluster) Type() string {
 	return "azurerm_hdinsight_kafka_cluster"
 }
 
+// LocalName returns the local name for [HdinsightKafkaCluster].
 func (hkc *HdinsightKafkaCluster) LocalName() string {
 	return hkc.Name
 }
 
+// Configuration returns the configuration (args) for [HdinsightKafkaCluster].
 func (hkc *HdinsightKafkaCluster) Configuration() interface{} {
 	return hkc.Args
 }
 
+// DependOn is used for other resources to depend on [HdinsightKafkaCluster].
+func (hkc *HdinsightKafkaCluster) DependOn() terra.Reference {
+	return terra.ReferenceResource(hkc)
+}
+
+// Dependencies returns the list of resources [HdinsightKafkaCluster] depends_on.
+func (hkc *HdinsightKafkaCluster) Dependencies() terra.Dependencies {
+	return hkc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [HdinsightKafkaCluster].
+func (hkc *HdinsightKafkaCluster) LifecycleManagement() *terra.Lifecycle {
+	return hkc.Lifecycle
+}
+
+// Attributes returns the attributes for [HdinsightKafkaCluster].
 func (hkc *HdinsightKafkaCluster) Attributes() hdinsightKafkaClusterAttributes {
 	return hdinsightKafkaClusterAttributes{ref: terra.ReferenceResource(hkc)}
 }
 
+// ImportState imports the given attribute values into [HdinsightKafkaCluster]'s state.
 func (hkc *HdinsightKafkaCluster) ImportState(av io.Reader) error {
 	hkc.state = &hdinsightKafkaClusterState{}
 	if err := json.NewDecoder(av).Decode(hkc.state); err != nil {
@@ -49,10 +73,12 @@ func (hkc *HdinsightKafkaCluster) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [HdinsightKafkaCluster] has state.
 func (hkc *HdinsightKafkaCluster) State() (*hdinsightKafkaClusterState, bool) {
 	return hkc.state, hkc.state != nil
 }
 
+// StateMust returns the state for [HdinsightKafkaCluster]. Panics if the state is nil.
 func (hkc *HdinsightKafkaCluster) StateMust() *hdinsightKafkaClusterState {
 	if hkc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", hkc.Type(), hkc.LocalName()))
@@ -60,10 +86,7 @@ func (hkc *HdinsightKafkaCluster) StateMust() *hdinsightKafkaClusterState {
 	return hkc.state
 }
 
-func (hkc *HdinsightKafkaCluster) DependOn() terra.Reference {
-	return terra.ReferenceResource(hkc)
-}
-
+// HdinsightKafkaClusterArgs contains the configurations for azurerm_hdinsight_kafka_cluster.
 type HdinsightKafkaClusterArgs struct {
 	// ClusterVersion: string, required
 	ClusterVersion terra.StringValue `hcl:"cluster_version,attr" validate:"required"`
@@ -111,115 +134,125 @@ type HdinsightKafkaClusterArgs struct {
 	StorageAccountGen2 *hdinsightkafkacluster.StorageAccountGen2 `hcl:"storage_account_gen2,block"`
 	// Timeouts: optional
 	Timeouts *hdinsightkafkacluster.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that HdinsightKafkaCluster depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type hdinsightKafkaClusterAttributes struct {
 	ref terra.Reference
 }
 
+// ClusterVersion returns a reference to field cluster_version of azurerm_hdinsight_kafka_cluster.
 func (hkc hdinsightKafkaClusterAttributes) ClusterVersion() terra.StringValue {
-	return terra.ReferenceString(hkc.ref.Append("cluster_version"))
+	return terra.ReferenceAsString(hkc.ref.Append("cluster_version"))
 }
 
+// EncryptionInTransitEnabled returns a reference to field encryption_in_transit_enabled of azurerm_hdinsight_kafka_cluster.
 func (hkc hdinsightKafkaClusterAttributes) EncryptionInTransitEnabled() terra.BoolValue {
-	return terra.ReferenceBool(hkc.ref.Append("encryption_in_transit_enabled"))
+	return terra.ReferenceAsBool(hkc.ref.Append("encryption_in_transit_enabled"))
 }
 
+// HttpsEndpoint returns a reference to field https_endpoint of azurerm_hdinsight_kafka_cluster.
 func (hkc hdinsightKafkaClusterAttributes) HttpsEndpoint() terra.StringValue {
-	return terra.ReferenceString(hkc.ref.Append("https_endpoint"))
+	return terra.ReferenceAsString(hkc.ref.Append("https_endpoint"))
 }
 
+// Id returns a reference to field id of azurerm_hdinsight_kafka_cluster.
 func (hkc hdinsightKafkaClusterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(hkc.ref.Append("id"))
+	return terra.ReferenceAsString(hkc.ref.Append("id"))
 }
 
+// KafkaRestProxyEndpoint returns a reference to field kafka_rest_proxy_endpoint of azurerm_hdinsight_kafka_cluster.
 func (hkc hdinsightKafkaClusterAttributes) KafkaRestProxyEndpoint() terra.StringValue {
-	return terra.ReferenceString(hkc.ref.Append("kafka_rest_proxy_endpoint"))
+	return terra.ReferenceAsString(hkc.ref.Append("kafka_rest_proxy_endpoint"))
 }
 
+// Location returns a reference to field location of azurerm_hdinsight_kafka_cluster.
 func (hkc hdinsightKafkaClusterAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(hkc.ref.Append("location"))
+	return terra.ReferenceAsString(hkc.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_hdinsight_kafka_cluster.
 func (hkc hdinsightKafkaClusterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(hkc.ref.Append("name"))
+	return terra.ReferenceAsString(hkc.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_hdinsight_kafka_cluster.
 func (hkc hdinsightKafkaClusterAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(hkc.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(hkc.ref.Append("resource_group_name"))
 }
 
+// SshEndpoint returns a reference to field ssh_endpoint of azurerm_hdinsight_kafka_cluster.
 func (hkc hdinsightKafkaClusterAttributes) SshEndpoint() terra.StringValue {
-	return terra.ReferenceString(hkc.ref.Append("ssh_endpoint"))
+	return terra.ReferenceAsString(hkc.ref.Append("ssh_endpoint"))
 }
 
+// Tags returns a reference to field tags of azurerm_hdinsight_kafka_cluster.
 func (hkc hdinsightKafkaClusterAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](hkc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](hkc.ref.Append("tags"))
 }
 
+// Tier returns a reference to field tier of azurerm_hdinsight_kafka_cluster.
 func (hkc hdinsightKafkaClusterAttributes) Tier() terra.StringValue {
-	return terra.ReferenceString(hkc.ref.Append("tier"))
+	return terra.ReferenceAsString(hkc.ref.Append("tier"))
 }
 
+// TlsMinVersion returns a reference to field tls_min_version of azurerm_hdinsight_kafka_cluster.
 func (hkc hdinsightKafkaClusterAttributes) TlsMinVersion() terra.StringValue {
-	return terra.ReferenceString(hkc.ref.Append("tls_min_version"))
+	return terra.ReferenceAsString(hkc.ref.Append("tls_min_version"))
 }
 
 func (hkc hdinsightKafkaClusterAttributes) ComponentVersion() terra.ListValue[hdinsightkafkacluster.ComponentVersionAttributes] {
-	return terra.ReferenceList[hdinsightkafkacluster.ComponentVersionAttributes](hkc.ref.Append("component_version"))
+	return terra.ReferenceAsList[hdinsightkafkacluster.ComponentVersionAttributes](hkc.ref.Append("component_version"))
 }
 
 func (hkc hdinsightKafkaClusterAttributes) ComputeIsolation() terra.ListValue[hdinsightkafkacluster.ComputeIsolationAttributes] {
-	return terra.ReferenceList[hdinsightkafkacluster.ComputeIsolationAttributes](hkc.ref.Append("compute_isolation"))
+	return terra.ReferenceAsList[hdinsightkafkacluster.ComputeIsolationAttributes](hkc.ref.Append("compute_isolation"))
 }
 
 func (hkc hdinsightKafkaClusterAttributes) DiskEncryption() terra.ListValue[hdinsightkafkacluster.DiskEncryptionAttributes] {
-	return terra.ReferenceList[hdinsightkafkacluster.DiskEncryptionAttributes](hkc.ref.Append("disk_encryption"))
+	return terra.ReferenceAsList[hdinsightkafkacluster.DiskEncryptionAttributes](hkc.ref.Append("disk_encryption"))
 }
 
 func (hkc hdinsightKafkaClusterAttributes) Extension() terra.ListValue[hdinsightkafkacluster.ExtensionAttributes] {
-	return terra.ReferenceList[hdinsightkafkacluster.ExtensionAttributes](hkc.ref.Append("extension"))
+	return terra.ReferenceAsList[hdinsightkafkacluster.ExtensionAttributes](hkc.ref.Append("extension"))
 }
 
 func (hkc hdinsightKafkaClusterAttributes) Gateway() terra.ListValue[hdinsightkafkacluster.GatewayAttributes] {
-	return terra.ReferenceList[hdinsightkafkacluster.GatewayAttributes](hkc.ref.Append("gateway"))
+	return terra.ReferenceAsList[hdinsightkafkacluster.GatewayAttributes](hkc.ref.Append("gateway"))
 }
 
 func (hkc hdinsightKafkaClusterAttributes) Metastores() terra.ListValue[hdinsightkafkacluster.MetastoresAttributes] {
-	return terra.ReferenceList[hdinsightkafkacluster.MetastoresAttributes](hkc.ref.Append("metastores"))
+	return terra.ReferenceAsList[hdinsightkafkacluster.MetastoresAttributes](hkc.ref.Append("metastores"))
 }
 
 func (hkc hdinsightKafkaClusterAttributes) Monitor() terra.ListValue[hdinsightkafkacluster.MonitorAttributes] {
-	return terra.ReferenceList[hdinsightkafkacluster.MonitorAttributes](hkc.ref.Append("monitor"))
+	return terra.ReferenceAsList[hdinsightkafkacluster.MonitorAttributes](hkc.ref.Append("monitor"))
 }
 
 func (hkc hdinsightKafkaClusterAttributes) Network() terra.ListValue[hdinsightkafkacluster.NetworkAttributes] {
-	return terra.ReferenceList[hdinsightkafkacluster.NetworkAttributes](hkc.ref.Append("network"))
+	return terra.ReferenceAsList[hdinsightkafkacluster.NetworkAttributes](hkc.ref.Append("network"))
 }
 
 func (hkc hdinsightKafkaClusterAttributes) RestProxy() terra.ListValue[hdinsightkafkacluster.RestProxyAttributes] {
-	return terra.ReferenceList[hdinsightkafkacluster.RestProxyAttributes](hkc.ref.Append("rest_proxy"))
+	return terra.ReferenceAsList[hdinsightkafkacluster.RestProxyAttributes](hkc.ref.Append("rest_proxy"))
 }
 
 func (hkc hdinsightKafkaClusterAttributes) Roles() terra.ListValue[hdinsightkafkacluster.RolesAttributes] {
-	return terra.ReferenceList[hdinsightkafkacluster.RolesAttributes](hkc.ref.Append("roles"))
+	return terra.ReferenceAsList[hdinsightkafkacluster.RolesAttributes](hkc.ref.Append("roles"))
 }
 
 func (hkc hdinsightKafkaClusterAttributes) SecurityProfile() terra.ListValue[hdinsightkafkacluster.SecurityProfileAttributes] {
-	return terra.ReferenceList[hdinsightkafkacluster.SecurityProfileAttributes](hkc.ref.Append("security_profile"))
+	return terra.ReferenceAsList[hdinsightkafkacluster.SecurityProfileAttributes](hkc.ref.Append("security_profile"))
 }
 
 func (hkc hdinsightKafkaClusterAttributes) StorageAccount() terra.ListValue[hdinsightkafkacluster.StorageAccountAttributes] {
-	return terra.ReferenceList[hdinsightkafkacluster.StorageAccountAttributes](hkc.ref.Append("storage_account"))
+	return terra.ReferenceAsList[hdinsightkafkacluster.StorageAccountAttributes](hkc.ref.Append("storage_account"))
 }
 
 func (hkc hdinsightKafkaClusterAttributes) StorageAccountGen2() terra.ListValue[hdinsightkafkacluster.StorageAccountGen2Attributes] {
-	return terra.ReferenceList[hdinsightkafkacluster.StorageAccountGen2Attributes](hkc.ref.Append("storage_account_gen2"))
+	return terra.ReferenceAsList[hdinsightkafkacluster.StorageAccountGen2Attributes](hkc.ref.Append("storage_account_gen2"))
 }
 
 func (hkc hdinsightKafkaClusterAttributes) Timeouts() hdinsightkafkacluster.TimeoutsAttributes {
-	return terra.ReferenceSingle[hdinsightkafkacluster.TimeoutsAttributes](hkc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[hdinsightkafkacluster.TimeoutsAttributes](hkc.ref.Append("timeouts"))
 }
 
 type hdinsightKafkaClusterState struct {

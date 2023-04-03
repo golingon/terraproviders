@@ -25,116 +25,116 @@ type DnsConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (dc DnsConfigAttributes) InternalRef() terra.Reference {
-	return dc.ref
+func (dc DnsConfigAttributes) InternalRef() (terra.Reference, error) {
+	return dc.ref, nil
 }
 
 func (dc DnsConfigAttributes) InternalWithRef(ref terra.Reference) DnsConfigAttributes {
 	return DnsConfigAttributes{ref: ref}
 }
 
-func (dc DnsConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (dc DnsConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dc.ref.InternalTokens()
 }
 
 func (dc DnsConfigAttributes) RelativeName() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("relative_name"))
+	return terra.ReferenceAsString(dc.ref.Append("relative_name"))
 }
 
 func (dc DnsConfigAttributes) Ttl() terra.NumberValue {
-	return terra.ReferenceNumber(dc.ref.Append("ttl"))
+	return terra.ReferenceAsNumber(dc.ref.Append("ttl"))
 }
 
 type MonitorConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (mc MonitorConfigAttributes) InternalRef() terra.Reference {
-	return mc.ref
+func (mc MonitorConfigAttributes) InternalRef() (terra.Reference, error) {
+	return mc.ref, nil
 }
 
 func (mc MonitorConfigAttributes) InternalWithRef(ref terra.Reference) MonitorConfigAttributes {
 	return MonitorConfigAttributes{ref: ref}
 }
 
-func (mc MonitorConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (mc MonitorConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mc.ref.InternalTokens()
 }
 
 func (mc MonitorConfigAttributes) ExpectedStatusCodeRanges() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](mc.ref.Append("expected_status_code_ranges"))
+	return terra.ReferenceAsList[terra.StringValue](mc.ref.Append("expected_status_code_ranges"))
 }
 
 func (mc MonitorConfigAttributes) IntervalInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(mc.ref.Append("interval_in_seconds"))
+	return terra.ReferenceAsNumber(mc.ref.Append("interval_in_seconds"))
 }
 
 func (mc MonitorConfigAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("path"))
+	return terra.ReferenceAsString(mc.ref.Append("path"))
 }
 
 func (mc MonitorConfigAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(mc.ref.Append("port"))
+	return terra.ReferenceAsNumber(mc.ref.Append("port"))
 }
 
 func (mc MonitorConfigAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("protocol"))
+	return terra.ReferenceAsString(mc.ref.Append("protocol"))
 }
 
 func (mc MonitorConfigAttributes) TimeoutInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(mc.ref.Append("timeout_in_seconds"))
+	return terra.ReferenceAsNumber(mc.ref.Append("timeout_in_seconds"))
 }
 
 func (mc MonitorConfigAttributes) ToleratedNumberOfFailures() terra.NumberValue {
-	return terra.ReferenceNumber(mc.ref.Append("tolerated_number_of_failures"))
+	return terra.ReferenceAsNumber(mc.ref.Append("tolerated_number_of_failures"))
 }
 
 func (mc MonitorConfigAttributes) CustomHeader() terra.ListValue[CustomHeaderAttributes] {
-	return terra.ReferenceList[CustomHeaderAttributes](mc.ref.Append("custom_header"))
+	return terra.ReferenceAsList[CustomHeaderAttributes](mc.ref.Append("custom_header"))
 }
 
 type CustomHeaderAttributes struct {
 	ref terra.Reference
 }
 
-func (ch CustomHeaderAttributes) InternalRef() terra.Reference {
-	return ch.ref
+func (ch CustomHeaderAttributes) InternalRef() (terra.Reference, error) {
+	return ch.ref, nil
 }
 
 func (ch CustomHeaderAttributes) InternalWithRef(ref terra.Reference) CustomHeaderAttributes {
 	return CustomHeaderAttributes{ref: ref}
 }
 
-func (ch CustomHeaderAttributes) InternalTokens() hclwrite.Tokens {
+func (ch CustomHeaderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ch.ref.InternalTokens()
 }
 
 func (ch CustomHeaderAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ch.ref.Append("name"))
+	return terra.ReferenceAsString(ch.ref.Append("name"))
 }
 
 func (ch CustomHeaderAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(ch.ref.Append("value"))
+	return terra.ReferenceAsString(ch.ref.Append("value"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type DnsConfigState struct {

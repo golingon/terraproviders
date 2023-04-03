@@ -68,7 +68,7 @@ func (abs AdvancedBackupSettingAttributes) InternalWithRef(ref terra.Reference) 
 	return AdvancedBackupSettingAttributes{ref: ref}
 }
 
-func (abs AdvancedBackupSettingAttributes) InternalTokens() hclwrite.Tokens {
+func (abs AdvancedBackupSettingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return abs.ref.InternalTokens()
 }
 
@@ -92,7 +92,7 @@ func (r RuleAttributes) InternalWithRef(ref terra.Reference) RuleAttributes {
 	return RuleAttributes{ref: ref}
 }
 
-func (r RuleAttributes) InternalTokens() hclwrite.Tokens {
+func (r RuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -144,7 +144,7 @@ func (ca CopyActionAttributes) InternalWithRef(ref terra.Reference) CopyActionAt
 	return CopyActionAttributes{ref: ref}
 }
 
-func (ca CopyActionAttributes) InternalTokens() hclwrite.Tokens {
+func (ca CopyActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ca.ref.InternalTokens()
 }
 
@@ -168,7 +168,7 @@ func (l CopyActionLifecycleAttributes) InternalWithRef(ref terra.Reference) Copy
 	return CopyActionLifecycleAttributes{ref: ref}
 }
 
-func (l CopyActionLifecycleAttributes) InternalTokens() hclwrite.Tokens {
+func (l CopyActionLifecycleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 
@@ -192,7 +192,7 @@ func (l RuleLifecycleAttributes) InternalWithRef(ref terra.Reference) RuleLifecy
 	return RuleLifecycleAttributes{ref: ref}
 }
 
-func (l RuleLifecycleAttributes) InternalTokens() hclwrite.Tokens {
+func (l RuleLifecycleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 

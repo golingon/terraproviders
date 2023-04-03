@@ -31,80 +31,80 @@ type PartnerRegionAttributes struct {
 	ref terra.Reference
 }
 
-func (pr PartnerRegionAttributes) InternalRef() terra.Reference {
-	return pr.ref
+func (pr PartnerRegionAttributes) InternalRef() (terra.Reference, error) {
+	return pr.ref, nil
 }
 
 func (pr PartnerRegionAttributes) InternalWithRef(ref terra.Reference) PartnerRegionAttributes {
 	return PartnerRegionAttributes{ref: ref}
 }
 
-func (pr PartnerRegionAttributes) InternalTokens() hclwrite.Tokens {
+func (pr PartnerRegionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pr.ref.InternalTokens()
 }
 
 func (pr PartnerRegionAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(pr.ref.Append("location"))
+	return terra.ReferenceAsString(pr.ref.Append("location"))
 }
 
 func (pr PartnerRegionAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(pr.ref.Append("role"))
+	return terra.ReferenceAsString(pr.ref.Append("role"))
 }
 
 type ReadWriteEndpointFailoverPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (rwefp ReadWriteEndpointFailoverPolicyAttributes) InternalRef() terra.Reference {
-	return rwefp.ref
+func (rwefp ReadWriteEndpointFailoverPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return rwefp.ref, nil
 }
 
 func (rwefp ReadWriteEndpointFailoverPolicyAttributes) InternalWithRef(ref terra.Reference) ReadWriteEndpointFailoverPolicyAttributes {
 	return ReadWriteEndpointFailoverPolicyAttributes{ref: ref}
 }
 
-func (rwefp ReadWriteEndpointFailoverPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (rwefp ReadWriteEndpointFailoverPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rwefp.ref.InternalTokens()
 }
 
 func (rwefp ReadWriteEndpointFailoverPolicyAttributes) GraceMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(rwefp.ref.Append("grace_minutes"))
+	return terra.ReferenceAsNumber(rwefp.ref.Append("grace_minutes"))
 }
 
 func (rwefp ReadWriteEndpointFailoverPolicyAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(rwefp.ref.Append("mode"))
+	return terra.ReferenceAsString(rwefp.ref.Append("mode"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type PartnerRegionState struct {

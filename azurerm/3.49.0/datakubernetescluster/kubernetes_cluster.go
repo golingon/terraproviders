@@ -75,720 +75,720 @@ type AciConnectorLinuxAttributes struct {
 	ref terra.Reference
 }
 
-func (acl AciConnectorLinuxAttributes) InternalRef() terra.Reference {
-	return acl.ref
+func (acl AciConnectorLinuxAttributes) InternalRef() (terra.Reference, error) {
+	return acl.ref, nil
 }
 
 func (acl AciConnectorLinuxAttributes) InternalWithRef(ref terra.Reference) AciConnectorLinuxAttributes {
 	return AciConnectorLinuxAttributes{ref: ref}
 }
 
-func (acl AciConnectorLinuxAttributes) InternalTokens() hclwrite.Tokens {
+func (acl AciConnectorLinuxAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return acl.ref.InternalTokens()
 }
 
 func (acl AciConnectorLinuxAttributes) SubnetName() terra.StringValue {
-	return terra.ReferenceString(acl.ref.Append("subnet_name"))
+	return terra.ReferenceAsString(acl.ref.Append("subnet_name"))
 }
 
 type AgentPoolProfileAttributes struct {
 	ref terra.Reference
 }
 
-func (app AgentPoolProfileAttributes) InternalRef() terra.Reference {
-	return app.ref
+func (app AgentPoolProfileAttributes) InternalRef() (terra.Reference, error) {
+	return app.ref, nil
 }
 
 func (app AgentPoolProfileAttributes) InternalWithRef(ref terra.Reference) AgentPoolProfileAttributes {
 	return AgentPoolProfileAttributes{ref: ref}
 }
 
-func (app AgentPoolProfileAttributes) InternalTokens() hclwrite.Tokens {
+func (app AgentPoolProfileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return app.ref.InternalTokens()
 }
 
 func (app AgentPoolProfileAttributes) Count() terra.NumberValue {
-	return terra.ReferenceNumber(app.ref.Append("count"))
+	return terra.ReferenceAsNumber(app.ref.Append("count"))
 }
 
 func (app AgentPoolProfileAttributes) EnableAutoScaling() terra.BoolValue {
-	return terra.ReferenceBool(app.ref.Append("enable_auto_scaling"))
+	return terra.ReferenceAsBool(app.ref.Append("enable_auto_scaling"))
 }
 
 func (app AgentPoolProfileAttributes) EnableNodePublicIp() terra.BoolValue {
-	return terra.ReferenceBool(app.ref.Append("enable_node_public_ip"))
+	return terra.ReferenceAsBool(app.ref.Append("enable_node_public_ip"))
 }
 
 func (app AgentPoolProfileAttributes) MaxCount() terra.NumberValue {
-	return terra.ReferenceNumber(app.ref.Append("max_count"))
+	return terra.ReferenceAsNumber(app.ref.Append("max_count"))
 }
 
 func (app AgentPoolProfileAttributes) MaxPods() terra.NumberValue {
-	return terra.ReferenceNumber(app.ref.Append("max_pods"))
+	return terra.ReferenceAsNumber(app.ref.Append("max_pods"))
 }
 
 func (app AgentPoolProfileAttributes) MinCount() terra.NumberValue {
-	return terra.ReferenceNumber(app.ref.Append("min_count"))
+	return terra.ReferenceAsNumber(app.ref.Append("min_count"))
 }
 
 func (app AgentPoolProfileAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(app.ref.Append("name"))
+	return terra.ReferenceAsString(app.ref.Append("name"))
 }
 
 func (app AgentPoolProfileAttributes) NodeLabels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](app.ref.Append("node_labels"))
+	return terra.ReferenceAsMap[terra.StringValue](app.ref.Append("node_labels"))
 }
 
 func (app AgentPoolProfileAttributes) NodePublicIpPrefixId() terra.StringValue {
-	return terra.ReferenceString(app.ref.Append("node_public_ip_prefix_id"))
+	return terra.ReferenceAsString(app.ref.Append("node_public_ip_prefix_id"))
 }
 
 func (app AgentPoolProfileAttributes) NodeTaints() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](app.ref.Append("node_taints"))
+	return terra.ReferenceAsList[terra.StringValue](app.ref.Append("node_taints"))
 }
 
 func (app AgentPoolProfileAttributes) OrchestratorVersion() terra.StringValue {
-	return terra.ReferenceString(app.ref.Append("orchestrator_version"))
+	return terra.ReferenceAsString(app.ref.Append("orchestrator_version"))
 }
 
 func (app AgentPoolProfileAttributes) OsDiskSizeGb() terra.NumberValue {
-	return terra.ReferenceNumber(app.ref.Append("os_disk_size_gb"))
+	return terra.ReferenceAsNumber(app.ref.Append("os_disk_size_gb"))
 }
 
 func (app AgentPoolProfileAttributes) OsType() terra.StringValue {
-	return terra.ReferenceString(app.ref.Append("os_type"))
+	return terra.ReferenceAsString(app.ref.Append("os_type"))
 }
 
 func (app AgentPoolProfileAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](app.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](app.ref.Append("tags"))
 }
 
 func (app AgentPoolProfileAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(app.ref.Append("type"))
+	return terra.ReferenceAsString(app.ref.Append("type"))
 }
 
 func (app AgentPoolProfileAttributes) VmSize() terra.StringValue {
-	return terra.ReferenceString(app.ref.Append("vm_size"))
+	return terra.ReferenceAsString(app.ref.Append("vm_size"))
 }
 
 func (app AgentPoolProfileAttributes) VnetSubnetId() terra.StringValue {
-	return terra.ReferenceString(app.ref.Append("vnet_subnet_id"))
+	return terra.ReferenceAsString(app.ref.Append("vnet_subnet_id"))
 }
 
 func (app AgentPoolProfileAttributes) Zones() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](app.ref.Append("zones"))
+	return terra.ReferenceAsList[terra.StringValue](app.ref.Append("zones"))
 }
 
 func (app AgentPoolProfileAttributes) UpgradeSettings() terra.ListValue[UpgradeSettingsAttributes] {
-	return terra.ReferenceList[UpgradeSettingsAttributes](app.ref.Append("upgrade_settings"))
+	return terra.ReferenceAsList[UpgradeSettingsAttributes](app.ref.Append("upgrade_settings"))
 }
 
 type UpgradeSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (us UpgradeSettingsAttributes) InternalRef() terra.Reference {
-	return us.ref
+func (us UpgradeSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return us.ref, nil
 }
 
 func (us UpgradeSettingsAttributes) InternalWithRef(ref terra.Reference) UpgradeSettingsAttributes {
 	return UpgradeSettingsAttributes{ref: ref}
 }
 
-func (us UpgradeSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (us UpgradeSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return us.ref.InternalTokens()
 }
 
 func (us UpgradeSettingsAttributes) MaxSurge() terra.StringValue {
-	return terra.ReferenceString(us.ref.Append("max_surge"))
+	return terra.ReferenceAsString(us.ref.Append("max_surge"))
 }
 
 type AzureActiveDirectoryRoleBasedAccessControlAttributes struct {
 	ref terra.Reference
 }
 
-func (aadrbac AzureActiveDirectoryRoleBasedAccessControlAttributes) InternalRef() terra.Reference {
-	return aadrbac.ref
+func (aadrbac AzureActiveDirectoryRoleBasedAccessControlAttributes) InternalRef() (terra.Reference, error) {
+	return aadrbac.ref, nil
 }
 
 func (aadrbac AzureActiveDirectoryRoleBasedAccessControlAttributes) InternalWithRef(ref terra.Reference) AzureActiveDirectoryRoleBasedAccessControlAttributes {
 	return AzureActiveDirectoryRoleBasedAccessControlAttributes{ref: ref}
 }
 
-func (aadrbac AzureActiveDirectoryRoleBasedAccessControlAttributes) InternalTokens() hclwrite.Tokens {
+func (aadrbac AzureActiveDirectoryRoleBasedAccessControlAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aadrbac.ref.InternalTokens()
 }
 
 func (aadrbac AzureActiveDirectoryRoleBasedAccessControlAttributes) AdminGroupObjectIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](aadrbac.ref.Append("admin_group_object_ids"))
+	return terra.ReferenceAsList[terra.StringValue](aadrbac.ref.Append("admin_group_object_ids"))
 }
 
 func (aadrbac AzureActiveDirectoryRoleBasedAccessControlAttributes) AzureRbacEnabled() terra.BoolValue {
-	return terra.ReferenceBool(aadrbac.ref.Append("azure_rbac_enabled"))
+	return terra.ReferenceAsBool(aadrbac.ref.Append("azure_rbac_enabled"))
 }
 
 func (aadrbac AzureActiveDirectoryRoleBasedAccessControlAttributes) ClientAppId() terra.StringValue {
-	return terra.ReferenceString(aadrbac.ref.Append("client_app_id"))
+	return terra.ReferenceAsString(aadrbac.ref.Append("client_app_id"))
 }
 
 func (aadrbac AzureActiveDirectoryRoleBasedAccessControlAttributes) Managed() terra.BoolValue {
-	return terra.ReferenceBool(aadrbac.ref.Append("managed"))
+	return terra.ReferenceAsBool(aadrbac.ref.Append("managed"))
 }
 
 func (aadrbac AzureActiveDirectoryRoleBasedAccessControlAttributes) ServerAppId() terra.StringValue {
-	return terra.ReferenceString(aadrbac.ref.Append("server_app_id"))
+	return terra.ReferenceAsString(aadrbac.ref.Append("server_app_id"))
 }
 
 func (aadrbac AzureActiveDirectoryRoleBasedAccessControlAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(aadrbac.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(aadrbac.ref.Append("tenant_id"))
 }
 
 type IdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (i IdentityAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IdentityAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IdentityAttributes) InternalWithRef(ref terra.Reference) IdentityAttributes {
 	return IdentityAttributes{ref: ref}
 }
 
-func (i IdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (i IdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IdentityAttributes) IdentityIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](i.ref.Append("identity_ids"))
+	return terra.ReferenceAsList[terra.StringValue](i.ref.Append("identity_ids"))
 }
 
 func (i IdentityAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("principal_id"))
+	return terra.ReferenceAsString(i.ref.Append("principal_id"))
 }
 
 func (i IdentityAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(i.ref.Append("tenant_id"))
 }
 
 func (i IdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("type"))
+	return terra.ReferenceAsString(i.ref.Append("type"))
 }
 
 type IngressApplicationGatewayAttributes struct {
 	ref terra.Reference
 }
 
-func (iag IngressApplicationGatewayAttributes) InternalRef() terra.Reference {
-	return iag.ref
+func (iag IngressApplicationGatewayAttributes) InternalRef() (terra.Reference, error) {
+	return iag.ref, nil
 }
 
 func (iag IngressApplicationGatewayAttributes) InternalWithRef(ref terra.Reference) IngressApplicationGatewayAttributes {
 	return IngressApplicationGatewayAttributes{ref: ref}
 }
 
-func (iag IngressApplicationGatewayAttributes) InternalTokens() hclwrite.Tokens {
+func (iag IngressApplicationGatewayAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return iag.ref.InternalTokens()
 }
 
 func (iag IngressApplicationGatewayAttributes) EffectiveGatewayId() terra.StringValue {
-	return terra.ReferenceString(iag.ref.Append("effective_gateway_id"))
+	return terra.ReferenceAsString(iag.ref.Append("effective_gateway_id"))
 }
 
 func (iag IngressApplicationGatewayAttributes) GatewayId() terra.StringValue {
-	return terra.ReferenceString(iag.ref.Append("gateway_id"))
+	return terra.ReferenceAsString(iag.ref.Append("gateway_id"))
 }
 
 func (iag IngressApplicationGatewayAttributes) GatewayName() terra.StringValue {
-	return terra.ReferenceString(iag.ref.Append("gateway_name"))
+	return terra.ReferenceAsString(iag.ref.Append("gateway_name"))
 }
 
 func (iag IngressApplicationGatewayAttributes) SubnetCidr() terra.StringValue {
-	return terra.ReferenceString(iag.ref.Append("subnet_cidr"))
+	return terra.ReferenceAsString(iag.ref.Append("subnet_cidr"))
 }
 
 func (iag IngressApplicationGatewayAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(iag.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(iag.ref.Append("subnet_id"))
 }
 
 func (iag IngressApplicationGatewayAttributes) IngressApplicationGatewayIdentity() terra.ListValue[IngressApplicationGatewayIdentityAttributes] {
-	return terra.ReferenceList[IngressApplicationGatewayIdentityAttributes](iag.ref.Append("ingress_application_gateway_identity"))
+	return terra.ReferenceAsList[IngressApplicationGatewayIdentityAttributes](iag.ref.Append("ingress_application_gateway_identity"))
 }
 
 type IngressApplicationGatewayIdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (iagi IngressApplicationGatewayIdentityAttributes) InternalRef() terra.Reference {
-	return iagi.ref
+func (iagi IngressApplicationGatewayIdentityAttributes) InternalRef() (terra.Reference, error) {
+	return iagi.ref, nil
 }
 
 func (iagi IngressApplicationGatewayIdentityAttributes) InternalWithRef(ref terra.Reference) IngressApplicationGatewayIdentityAttributes {
 	return IngressApplicationGatewayIdentityAttributes{ref: ref}
 }
 
-func (iagi IngressApplicationGatewayIdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (iagi IngressApplicationGatewayIdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return iagi.ref.InternalTokens()
 }
 
 func (iagi IngressApplicationGatewayIdentityAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(iagi.ref.Append("client_id"))
+	return terra.ReferenceAsString(iagi.ref.Append("client_id"))
 }
 
 func (iagi IngressApplicationGatewayIdentityAttributes) ObjectId() terra.StringValue {
-	return terra.ReferenceString(iagi.ref.Append("object_id"))
+	return terra.ReferenceAsString(iagi.ref.Append("object_id"))
 }
 
 func (iagi IngressApplicationGatewayIdentityAttributes) UserAssignedIdentityId() terra.StringValue {
-	return terra.ReferenceString(iagi.ref.Append("user_assigned_identity_id"))
+	return terra.ReferenceAsString(iagi.ref.Append("user_assigned_identity_id"))
 }
 
 type KeyManagementServiceAttributes struct {
 	ref terra.Reference
 }
 
-func (kms KeyManagementServiceAttributes) InternalRef() terra.Reference {
-	return kms.ref
+func (kms KeyManagementServiceAttributes) InternalRef() (terra.Reference, error) {
+	return kms.ref, nil
 }
 
 func (kms KeyManagementServiceAttributes) InternalWithRef(ref terra.Reference) KeyManagementServiceAttributes {
 	return KeyManagementServiceAttributes{ref: ref}
 }
 
-func (kms KeyManagementServiceAttributes) InternalTokens() hclwrite.Tokens {
+func (kms KeyManagementServiceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kms.ref.InternalTokens()
 }
 
 func (kms KeyManagementServiceAttributes) KeyVaultKeyId() terra.StringValue {
-	return terra.ReferenceString(kms.ref.Append("key_vault_key_id"))
+	return terra.ReferenceAsString(kms.ref.Append("key_vault_key_id"))
 }
 
 func (kms KeyManagementServiceAttributes) KeyVaultNetworkAccess() terra.StringValue {
-	return terra.ReferenceString(kms.ref.Append("key_vault_network_access"))
+	return terra.ReferenceAsString(kms.ref.Append("key_vault_network_access"))
 }
 
 type KeyVaultSecretsProviderAttributes struct {
 	ref terra.Reference
 }
 
-func (kvsp KeyVaultSecretsProviderAttributes) InternalRef() terra.Reference {
-	return kvsp.ref
+func (kvsp KeyVaultSecretsProviderAttributes) InternalRef() (terra.Reference, error) {
+	return kvsp.ref, nil
 }
 
 func (kvsp KeyVaultSecretsProviderAttributes) InternalWithRef(ref terra.Reference) KeyVaultSecretsProviderAttributes {
 	return KeyVaultSecretsProviderAttributes{ref: ref}
 }
 
-func (kvsp KeyVaultSecretsProviderAttributes) InternalTokens() hclwrite.Tokens {
+func (kvsp KeyVaultSecretsProviderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kvsp.ref.InternalTokens()
 }
 
 func (kvsp KeyVaultSecretsProviderAttributes) SecretRotationEnabled() terra.BoolValue {
-	return terra.ReferenceBool(kvsp.ref.Append("secret_rotation_enabled"))
+	return terra.ReferenceAsBool(kvsp.ref.Append("secret_rotation_enabled"))
 }
 
 func (kvsp KeyVaultSecretsProviderAttributes) SecretRotationInterval() terra.StringValue {
-	return terra.ReferenceString(kvsp.ref.Append("secret_rotation_interval"))
+	return terra.ReferenceAsString(kvsp.ref.Append("secret_rotation_interval"))
 }
 
 func (kvsp KeyVaultSecretsProviderAttributes) SecretIdentity() terra.ListValue[SecretIdentityAttributes] {
-	return terra.ReferenceList[SecretIdentityAttributes](kvsp.ref.Append("secret_identity"))
+	return terra.ReferenceAsList[SecretIdentityAttributes](kvsp.ref.Append("secret_identity"))
 }
 
 type SecretIdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (si SecretIdentityAttributes) InternalRef() terra.Reference {
-	return si.ref
+func (si SecretIdentityAttributes) InternalRef() (terra.Reference, error) {
+	return si.ref, nil
 }
 
 func (si SecretIdentityAttributes) InternalWithRef(ref terra.Reference) SecretIdentityAttributes {
 	return SecretIdentityAttributes{ref: ref}
 }
 
-func (si SecretIdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (si SecretIdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return si.ref.InternalTokens()
 }
 
 func (si SecretIdentityAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("client_id"))
+	return terra.ReferenceAsString(si.ref.Append("client_id"))
 }
 
 func (si SecretIdentityAttributes) ObjectId() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("object_id"))
+	return terra.ReferenceAsString(si.ref.Append("object_id"))
 }
 
 func (si SecretIdentityAttributes) UserAssignedIdentityId() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("user_assigned_identity_id"))
+	return terra.ReferenceAsString(si.ref.Append("user_assigned_identity_id"))
 }
 
 type KubeAdminConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (kac KubeAdminConfigAttributes) InternalRef() terra.Reference {
-	return kac.ref
+func (kac KubeAdminConfigAttributes) InternalRef() (terra.Reference, error) {
+	return kac.ref, nil
 }
 
 func (kac KubeAdminConfigAttributes) InternalWithRef(ref terra.Reference) KubeAdminConfigAttributes {
 	return KubeAdminConfigAttributes{ref: ref}
 }
 
-func (kac KubeAdminConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (kac KubeAdminConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kac.ref.InternalTokens()
 }
 
 func (kac KubeAdminConfigAttributes) ClientCertificate() terra.StringValue {
-	return terra.ReferenceString(kac.ref.Append("client_certificate"))
+	return terra.ReferenceAsString(kac.ref.Append("client_certificate"))
 }
 
 func (kac KubeAdminConfigAttributes) ClientKey() terra.StringValue {
-	return terra.ReferenceString(kac.ref.Append("client_key"))
+	return terra.ReferenceAsString(kac.ref.Append("client_key"))
 }
 
 func (kac KubeAdminConfigAttributes) ClusterCaCertificate() terra.StringValue {
-	return terra.ReferenceString(kac.ref.Append("cluster_ca_certificate"))
+	return terra.ReferenceAsString(kac.ref.Append("cluster_ca_certificate"))
 }
 
 func (kac KubeAdminConfigAttributes) Host() terra.StringValue {
-	return terra.ReferenceString(kac.ref.Append("host"))
+	return terra.ReferenceAsString(kac.ref.Append("host"))
 }
 
 func (kac KubeAdminConfigAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(kac.ref.Append("password"))
+	return terra.ReferenceAsString(kac.ref.Append("password"))
 }
 
 func (kac KubeAdminConfigAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(kac.ref.Append("username"))
+	return terra.ReferenceAsString(kac.ref.Append("username"))
 }
 
 type KubeConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (kc KubeConfigAttributes) InternalRef() terra.Reference {
-	return kc.ref
+func (kc KubeConfigAttributes) InternalRef() (terra.Reference, error) {
+	return kc.ref, nil
 }
 
 func (kc KubeConfigAttributes) InternalWithRef(ref terra.Reference) KubeConfigAttributes {
 	return KubeConfigAttributes{ref: ref}
 }
 
-func (kc KubeConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (kc KubeConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kc.ref.InternalTokens()
 }
 
 func (kc KubeConfigAttributes) ClientCertificate() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("client_certificate"))
+	return terra.ReferenceAsString(kc.ref.Append("client_certificate"))
 }
 
 func (kc KubeConfigAttributes) ClientKey() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("client_key"))
+	return terra.ReferenceAsString(kc.ref.Append("client_key"))
 }
 
 func (kc KubeConfigAttributes) ClusterCaCertificate() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("cluster_ca_certificate"))
+	return terra.ReferenceAsString(kc.ref.Append("cluster_ca_certificate"))
 }
 
 func (kc KubeConfigAttributes) Host() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("host"))
+	return terra.ReferenceAsString(kc.ref.Append("host"))
 }
 
 func (kc KubeConfigAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("password"))
+	return terra.ReferenceAsString(kc.ref.Append("password"))
 }
 
 func (kc KubeConfigAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("username"))
+	return terra.ReferenceAsString(kc.ref.Append("username"))
 }
 
 type KubeletIdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (ki KubeletIdentityAttributes) InternalRef() terra.Reference {
-	return ki.ref
+func (ki KubeletIdentityAttributes) InternalRef() (terra.Reference, error) {
+	return ki.ref, nil
 }
 
 func (ki KubeletIdentityAttributes) InternalWithRef(ref terra.Reference) KubeletIdentityAttributes {
 	return KubeletIdentityAttributes{ref: ref}
 }
 
-func (ki KubeletIdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (ki KubeletIdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ki.ref.InternalTokens()
 }
 
 func (ki KubeletIdentityAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(ki.ref.Append("client_id"))
+	return terra.ReferenceAsString(ki.ref.Append("client_id"))
 }
 
 func (ki KubeletIdentityAttributes) ObjectId() terra.StringValue {
-	return terra.ReferenceString(ki.ref.Append("object_id"))
+	return terra.ReferenceAsString(ki.ref.Append("object_id"))
 }
 
 func (ki KubeletIdentityAttributes) UserAssignedIdentityId() terra.StringValue {
-	return terra.ReferenceString(ki.ref.Append("user_assigned_identity_id"))
+	return terra.ReferenceAsString(ki.ref.Append("user_assigned_identity_id"))
 }
 
 type LinuxProfileAttributes struct {
 	ref terra.Reference
 }
 
-func (lp LinuxProfileAttributes) InternalRef() terra.Reference {
-	return lp.ref
+func (lp LinuxProfileAttributes) InternalRef() (terra.Reference, error) {
+	return lp.ref, nil
 }
 
 func (lp LinuxProfileAttributes) InternalWithRef(ref terra.Reference) LinuxProfileAttributes {
 	return LinuxProfileAttributes{ref: ref}
 }
 
-func (lp LinuxProfileAttributes) InternalTokens() hclwrite.Tokens {
+func (lp LinuxProfileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lp.ref.InternalTokens()
 }
 
 func (lp LinuxProfileAttributes) AdminUsername() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("admin_username"))
+	return terra.ReferenceAsString(lp.ref.Append("admin_username"))
 }
 
 func (lp LinuxProfileAttributes) SshKey() terra.ListValue[SshKeyAttributes] {
-	return terra.ReferenceList[SshKeyAttributes](lp.ref.Append("ssh_key"))
+	return terra.ReferenceAsList[SshKeyAttributes](lp.ref.Append("ssh_key"))
 }
 
 type SshKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (sk SshKeyAttributes) InternalRef() terra.Reference {
-	return sk.ref
+func (sk SshKeyAttributes) InternalRef() (terra.Reference, error) {
+	return sk.ref, nil
 }
 
 func (sk SshKeyAttributes) InternalWithRef(ref terra.Reference) SshKeyAttributes {
 	return SshKeyAttributes{ref: ref}
 }
 
-func (sk SshKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (sk SshKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sk.ref.InternalTokens()
 }
 
 func (sk SshKeyAttributes) KeyData() terra.StringValue {
-	return terra.ReferenceString(sk.ref.Append("key_data"))
+	return terra.ReferenceAsString(sk.ref.Append("key_data"))
 }
 
 type MicrosoftDefenderAttributes struct {
 	ref terra.Reference
 }
 
-func (md MicrosoftDefenderAttributes) InternalRef() terra.Reference {
-	return md.ref
+func (md MicrosoftDefenderAttributes) InternalRef() (terra.Reference, error) {
+	return md.ref, nil
 }
 
 func (md MicrosoftDefenderAttributes) InternalWithRef(ref terra.Reference) MicrosoftDefenderAttributes {
 	return MicrosoftDefenderAttributes{ref: ref}
 }
 
-func (md MicrosoftDefenderAttributes) InternalTokens() hclwrite.Tokens {
+func (md MicrosoftDefenderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return md.ref.InternalTokens()
 }
 
 func (md MicrosoftDefenderAttributes) LogAnalyticsWorkspaceId() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("log_analytics_workspace_id"))
+	return terra.ReferenceAsString(md.ref.Append("log_analytics_workspace_id"))
 }
 
 type NetworkProfileAttributes struct {
 	ref terra.Reference
 }
 
-func (np NetworkProfileAttributes) InternalRef() terra.Reference {
-	return np.ref
+func (np NetworkProfileAttributes) InternalRef() (terra.Reference, error) {
+	return np.ref, nil
 }
 
 func (np NetworkProfileAttributes) InternalWithRef(ref terra.Reference) NetworkProfileAttributes {
 	return NetworkProfileAttributes{ref: ref}
 }
 
-func (np NetworkProfileAttributes) InternalTokens() hclwrite.Tokens {
+func (np NetworkProfileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return np.ref.InternalTokens()
 }
 
 func (np NetworkProfileAttributes) DnsServiceIp() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("dns_service_ip"))
+	return terra.ReferenceAsString(np.ref.Append("dns_service_ip"))
 }
 
 func (np NetworkProfileAttributes) DockerBridgeCidr() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("docker_bridge_cidr"))
+	return terra.ReferenceAsString(np.ref.Append("docker_bridge_cidr"))
 }
 
 func (np NetworkProfileAttributes) LoadBalancerSku() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("load_balancer_sku"))
+	return terra.ReferenceAsString(np.ref.Append("load_balancer_sku"))
 }
 
 func (np NetworkProfileAttributes) NetworkPlugin() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("network_plugin"))
+	return terra.ReferenceAsString(np.ref.Append("network_plugin"))
 }
 
 func (np NetworkProfileAttributes) NetworkPolicy() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("network_policy"))
+	return terra.ReferenceAsString(np.ref.Append("network_policy"))
 }
 
 func (np NetworkProfileAttributes) PodCidr() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("pod_cidr"))
+	return terra.ReferenceAsString(np.ref.Append("pod_cidr"))
 }
 
 func (np NetworkProfileAttributes) ServiceCidr() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("service_cidr"))
+	return terra.ReferenceAsString(np.ref.Append("service_cidr"))
 }
 
 type OmsAgentAttributes struct {
 	ref terra.Reference
 }
 
-func (oa OmsAgentAttributes) InternalRef() terra.Reference {
-	return oa.ref
+func (oa OmsAgentAttributes) InternalRef() (terra.Reference, error) {
+	return oa.ref, nil
 }
 
 func (oa OmsAgentAttributes) InternalWithRef(ref terra.Reference) OmsAgentAttributes {
 	return OmsAgentAttributes{ref: ref}
 }
 
-func (oa OmsAgentAttributes) InternalTokens() hclwrite.Tokens {
+func (oa OmsAgentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oa.ref.InternalTokens()
 }
 
 func (oa OmsAgentAttributes) LogAnalyticsWorkspaceId() terra.StringValue {
-	return terra.ReferenceString(oa.ref.Append("log_analytics_workspace_id"))
+	return terra.ReferenceAsString(oa.ref.Append("log_analytics_workspace_id"))
 }
 
 func (oa OmsAgentAttributes) MsiAuthForMonitoringEnabled() terra.BoolValue {
-	return terra.ReferenceBool(oa.ref.Append("msi_auth_for_monitoring_enabled"))
+	return terra.ReferenceAsBool(oa.ref.Append("msi_auth_for_monitoring_enabled"))
 }
 
 func (oa OmsAgentAttributes) OmsAgentIdentity() terra.ListValue[OmsAgentIdentityAttributes] {
-	return terra.ReferenceList[OmsAgentIdentityAttributes](oa.ref.Append("oms_agent_identity"))
+	return terra.ReferenceAsList[OmsAgentIdentityAttributes](oa.ref.Append("oms_agent_identity"))
 }
 
 type OmsAgentIdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (oai OmsAgentIdentityAttributes) InternalRef() terra.Reference {
-	return oai.ref
+func (oai OmsAgentIdentityAttributes) InternalRef() (terra.Reference, error) {
+	return oai.ref, nil
 }
 
 func (oai OmsAgentIdentityAttributes) InternalWithRef(ref terra.Reference) OmsAgentIdentityAttributes {
 	return OmsAgentIdentityAttributes{ref: ref}
 }
 
-func (oai OmsAgentIdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (oai OmsAgentIdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oai.ref.InternalTokens()
 }
 
 func (oai OmsAgentIdentityAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(oai.ref.Append("client_id"))
+	return terra.ReferenceAsString(oai.ref.Append("client_id"))
 }
 
 func (oai OmsAgentIdentityAttributes) ObjectId() terra.StringValue {
-	return terra.ReferenceString(oai.ref.Append("object_id"))
+	return terra.ReferenceAsString(oai.ref.Append("object_id"))
 }
 
 func (oai OmsAgentIdentityAttributes) UserAssignedIdentityId() terra.StringValue {
-	return terra.ReferenceString(oai.ref.Append("user_assigned_identity_id"))
+	return terra.ReferenceAsString(oai.ref.Append("user_assigned_identity_id"))
 }
 
 type ServicePrincipalAttributes struct {
 	ref terra.Reference
 }
 
-func (sp ServicePrincipalAttributes) InternalRef() terra.Reference {
-	return sp.ref
+func (sp ServicePrincipalAttributes) InternalRef() (terra.Reference, error) {
+	return sp.ref, nil
 }
 
 func (sp ServicePrincipalAttributes) InternalWithRef(ref terra.Reference) ServicePrincipalAttributes {
 	return ServicePrincipalAttributes{ref: ref}
 }
 
-func (sp ServicePrincipalAttributes) InternalTokens() hclwrite.Tokens {
+func (sp ServicePrincipalAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sp.ref.InternalTokens()
 }
 
 func (sp ServicePrincipalAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("client_id"))
+	return terra.ReferenceAsString(sp.ref.Append("client_id"))
 }
 
 type StorageProfileAttributes struct {
 	ref terra.Reference
 }
 
-func (sp StorageProfileAttributes) InternalRef() terra.Reference {
-	return sp.ref
+func (sp StorageProfileAttributes) InternalRef() (terra.Reference, error) {
+	return sp.ref, nil
 }
 
 func (sp StorageProfileAttributes) InternalWithRef(ref terra.Reference) StorageProfileAttributes {
 	return StorageProfileAttributes{ref: ref}
 }
 
-func (sp StorageProfileAttributes) InternalTokens() hclwrite.Tokens {
+func (sp StorageProfileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sp.ref.InternalTokens()
 }
 
 func (sp StorageProfileAttributes) BlobDriverEnabled() terra.BoolValue {
-	return terra.ReferenceBool(sp.ref.Append("blob_driver_enabled"))
+	return terra.ReferenceAsBool(sp.ref.Append("blob_driver_enabled"))
 }
 
 func (sp StorageProfileAttributes) DiskDriverEnabled() terra.BoolValue {
-	return terra.ReferenceBool(sp.ref.Append("disk_driver_enabled"))
+	return terra.ReferenceAsBool(sp.ref.Append("disk_driver_enabled"))
 }
 
 func (sp StorageProfileAttributes) DiskDriverVersion() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("disk_driver_version"))
+	return terra.ReferenceAsString(sp.ref.Append("disk_driver_version"))
 }
 
 func (sp StorageProfileAttributes) FileDriverEnabled() terra.BoolValue {
-	return terra.ReferenceBool(sp.ref.Append("file_driver_enabled"))
+	return terra.ReferenceAsBool(sp.ref.Append("file_driver_enabled"))
 }
 
 func (sp StorageProfileAttributes) SnapshotControllerEnabled() terra.BoolValue {
-	return terra.ReferenceBool(sp.ref.Append("snapshot_controller_enabled"))
+	return terra.ReferenceAsBool(sp.ref.Append("snapshot_controller_enabled"))
 }
 
 type WindowsProfileAttributes struct {
 	ref terra.Reference
 }
 
-func (wp WindowsProfileAttributes) InternalRef() terra.Reference {
-	return wp.ref
+func (wp WindowsProfileAttributes) InternalRef() (terra.Reference, error) {
+	return wp.ref, nil
 }
 
 func (wp WindowsProfileAttributes) InternalWithRef(ref terra.Reference) WindowsProfileAttributes {
 	return WindowsProfileAttributes{ref: ref}
 }
 
-func (wp WindowsProfileAttributes) InternalTokens() hclwrite.Tokens {
+func (wp WindowsProfileAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wp.ref.InternalTokens()
 }
 
 func (wp WindowsProfileAttributes) AdminUsername() terra.StringValue {
-	return terra.ReferenceString(wp.ref.Append("admin_username"))
+	return terra.ReferenceAsString(wp.ref.Append("admin_username"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type AciConnectorLinuxState struct {

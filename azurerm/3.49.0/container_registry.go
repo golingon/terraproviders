@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewContainerRegistry creates a new instance of [ContainerRegistry].
 func NewContainerRegistry(name string, args ContainerRegistryArgs) *ContainerRegistry {
 	return &ContainerRegistry{
 		Args: args,
@@ -19,28 +20,51 @@ func NewContainerRegistry(name string, args ContainerRegistryArgs) *ContainerReg
 
 var _ terra.Resource = (*ContainerRegistry)(nil)
 
+// ContainerRegistry represents the Terraform resource azurerm_container_registry.
 type ContainerRegistry struct {
-	Name  string
-	Args  ContainerRegistryArgs
-	state *containerRegistryState
+	Name      string
+	Args      ContainerRegistryArgs
+	state     *containerRegistryState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ContainerRegistry].
 func (cr *ContainerRegistry) Type() string {
 	return "azurerm_container_registry"
 }
 
+// LocalName returns the local name for [ContainerRegistry].
 func (cr *ContainerRegistry) LocalName() string {
 	return cr.Name
 }
 
+// Configuration returns the configuration (args) for [ContainerRegistry].
 func (cr *ContainerRegistry) Configuration() interface{} {
 	return cr.Args
 }
 
+// DependOn is used for other resources to depend on [ContainerRegistry].
+func (cr *ContainerRegistry) DependOn() terra.Reference {
+	return terra.ReferenceResource(cr)
+}
+
+// Dependencies returns the list of resources [ContainerRegistry] depends_on.
+func (cr *ContainerRegistry) Dependencies() terra.Dependencies {
+	return cr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ContainerRegistry].
+func (cr *ContainerRegistry) LifecycleManagement() *terra.Lifecycle {
+	return cr.Lifecycle
+}
+
+// Attributes returns the attributes for [ContainerRegistry].
 func (cr *ContainerRegistry) Attributes() containerRegistryAttributes {
 	return containerRegistryAttributes{ref: terra.ReferenceResource(cr)}
 }
 
+// ImportState imports the given attribute values into [ContainerRegistry]'s state.
 func (cr *ContainerRegistry) ImportState(av io.Reader) error {
 	cr.state = &containerRegistryState{}
 	if err := json.NewDecoder(av).Decode(cr.state); err != nil {
@@ -49,10 +73,12 @@ func (cr *ContainerRegistry) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ContainerRegistry] has state.
 func (cr *ContainerRegistry) State() (*containerRegistryState, bool) {
 	return cr.state, cr.state != nil
 }
 
+// StateMust returns the state for [ContainerRegistry]. Panics if the state is nil.
 func (cr *ContainerRegistry) StateMust() *containerRegistryState {
 	if cr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cr.Type(), cr.LocalName()))
@@ -60,10 +86,7 @@ func (cr *ContainerRegistry) StateMust() *containerRegistryState {
 	return cr.state
 }
 
-func (cr *ContainerRegistry) DependOn() terra.Reference {
-	return terra.ReferenceResource(cr)
-}
-
+// ContainerRegistryArgs contains the configurations for azurerm_container_registry.
 type ContainerRegistryArgs struct {
 	// AdminEnabled: bool, optional
 	AdminEnabled terra.BoolValue `hcl:"admin_enabled,attr"`
@@ -107,107 +130,122 @@ type ContainerRegistryArgs struct {
 	Identity *containerregistry.Identity `hcl:"identity,block"`
 	// Timeouts: optional
 	Timeouts *containerregistry.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ContainerRegistry depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type containerRegistryAttributes struct {
 	ref terra.Reference
 }
 
+// AdminEnabled returns a reference to field admin_enabled of azurerm_container_registry.
 func (cr containerRegistryAttributes) AdminEnabled() terra.BoolValue {
-	return terra.ReferenceBool(cr.ref.Append("admin_enabled"))
+	return terra.ReferenceAsBool(cr.ref.Append("admin_enabled"))
 }
 
+// AdminPassword returns a reference to field admin_password of azurerm_container_registry.
 func (cr containerRegistryAttributes) AdminPassword() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("admin_password"))
+	return terra.ReferenceAsString(cr.ref.Append("admin_password"))
 }
 
+// AdminUsername returns a reference to field admin_username of azurerm_container_registry.
 func (cr containerRegistryAttributes) AdminUsername() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("admin_username"))
+	return terra.ReferenceAsString(cr.ref.Append("admin_username"))
 }
 
+// AnonymousPullEnabled returns a reference to field anonymous_pull_enabled of azurerm_container_registry.
 func (cr containerRegistryAttributes) AnonymousPullEnabled() terra.BoolValue {
-	return terra.ReferenceBool(cr.ref.Append("anonymous_pull_enabled"))
+	return terra.ReferenceAsBool(cr.ref.Append("anonymous_pull_enabled"))
 }
 
+// DataEndpointEnabled returns a reference to field data_endpoint_enabled of azurerm_container_registry.
 func (cr containerRegistryAttributes) DataEndpointEnabled() terra.BoolValue {
-	return terra.ReferenceBool(cr.ref.Append("data_endpoint_enabled"))
+	return terra.ReferenceAsBool(cr.ref.Append("data_endpoint_enabled"))
 }
 
+// ExportPolicyEnabled returns a reference to field export_policy_enabled of azurerm_container_registry.
 func (cr containerRegistryAttributes) ExportPolicyEnabled() terra.BoolValue {
-	return terra.ReferenceBool(cr.ref.Append("export_policy_enabled"))
+	return terra.ReferenceAsBool(cr.ref.Append("export_policy_enabled"))
 }
 
+// Id returns a reference to field id of azurerm_container_registry.
 func (cr containerRegistryAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("id"))
+	return terra.ReferenceAsString(cr.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_container_registry.
 func (cr containerRegistryAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("location"))
+	return terra.ReferenceAsString(cr.ref.Append("location"))
 }
 
+// LoginServer returns a reference to field login_server of azurerm_container_registry.
 func (cr containerRegistryAttributes) LoginServer() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("login_server"))
+	return terra.ReferenceAsString(cr.ref.Append("login_server"))
 }
 
+// Name returns a reference to field name of azurerm_container_registry.
 func (cr containerRegistryAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("name"))
+	return terra.ReferenceAsString(cr.ref.Append("name"))
 }
 
+// NetworkRuleBypassOption returns a reference to field network_rule_bypass_option of azurerm_container_registry.
 func (cr containerRegistryAttributes) NetworkRuleBypassOption() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("network_rule_bypass_option"))
+	return terra.ReferenceAsString(cr.ref.Append("network_rule_bypass_option"))
 }
 
+// PublicNetworkAccessEnabled returns a reference to field public_network_access_enabled of azurerm_container_registry.
 func (cr containerRegistryAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(cr.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(cr.ref.Append("public_network_access_enabled"))
 }
 
+// QuarantinePolicyEnabled returns a reference to field quarantine_policy_enabled of azurerm_container_registry.
 func (cr containerRegistryAttributes) QuarantinePolicyEnabled() terra.BoolValue {
-	return terra.ReferenceBool(cr.ref.Append("quarantine_policy_enabled"))
+	return terra.ReferenceAsBool(cr.ref.Append("quarantine_policy_enabled"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_container_registry.
 func (cr containerRegistryAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(cr.ref.Append("resource_group_name"))
 }
 
+// Sku returns a reference to field sku of azurerm_container_registry.
 func (cr containerRegistryAttributes) Sku() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("sku"))
+	return terra.ReferenceAsString(cr.ref.Append("sku"))
 }
 
+// Tags returns a reference to field tags of azurerm_container_registry.
 func (cr containerRegistryAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](cr.ref.Append("tags"))
 }
 
+// ZoneRedundancyEnabled returns a reference to field zone_redundancy_enabled of azurerm_container_registry.
 func (cr containerRegistryAttributes) ZoneRedundancyEnabled() terra.BoolValue {
-	return terra.ReferenceBool(cr.ref.Append("zone_redundancy_enabled"))
+	return terra.ReferenceAsBool(cr.ref.Append("zone_redundancy_enabled"))
 }
 
 func (cr containerRegistryAttributes) Encryption() terra.ListValue[containerregistry.EncryptionAttributes] {
-	return terra.ReferenceList[containerregistry.EncryptionAttributes](cr.ref.Append("encryption"))
+	return terra.ReferenceAsList[containerregistry.EncryptionAttributes](cr.ref.Append("encryption"))
 }
 
 func (cr containerRegistryAttributes) NetworkRuleSet() terra.ListValue[containerregistry.NetworkRuleSetAttributes] {
-	return terra.ReferenceList[containerregistry.NetworkRuleSetAttributes](cr.ref.Append("network_rule_set"))
+	return terra.ReferenceAsList[containerregistry.NetworkRuleSetAttributes](cr.ref.Append("network_rule_set"))
 }
 
 func (cr containerRegistryAttributes) RetentionPolicy() terra.ListValue[containerregistry.RetentionPolicyAttributes] {
-	return terra.ReferenceList[containerregistry.RetentionPolicyAttributes](cr.ref.Append("retention_policy"))
+	return terra.ReferenceAsList[containerregistry.RetentionPolicyAttributes](cr.ref.Append("retention_policy"))
 }
 
 func (cr containerRegistryAttributes) TrustPolicy() terra.ListValue[containerregistry.TrustPolicyAttributes] {
-	return terra.ReferenceList[containerregistry.TrustPolicyAttributes](cr.ref.Append("trust_policy"))
+	return terra.ReferenceAsList[containerregistry.TrustPolicyAttributes](cr.ref.Append("trust_policy"))
 }
 
 func (cr containerRegistryAttributes) Georeplications() terra.ListValue[containerregistry.GeoreplicationsAttributes] {
-	return terra.ReferenceList[containerregistry.GeoreplicationsAttributes](cr.ref.Append("georeplications"))
+	return terra.ReferenceAsList[containerregistry.GeoreplicationsAttributes](cr.ref.Append("georeplications"))
 }
 
 func (cr containerRegistryAttributes) Identity() terra.ListValue[containerregistry.IdentityAttributes] {
-	return terra.ReferenceList[containerregistry.IdentityAttributes](cr.ref.Append("identity"))
+	return terra.ReferenceAsList[containerregistry.IdentityAttributes](cr.ref.Append("identity"))
 }
 
 func (cr containerRegistryAttributes) Timeouts() containerregistry.TimeoutsAttributes {
-	return terra.ReferenceSingle[containerregistry.TimeoutsAttributes](cr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[containerregistry.TimeoutsAttributes](cr.ref.Append("timeouts"))
 }
 
 type containerRegistryState struct {

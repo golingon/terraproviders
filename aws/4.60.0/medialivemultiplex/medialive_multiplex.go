@@ -39,7 +39,7 @@ func (ms MultiplexSettingsAttributes) InternalWithRef(ref terra.Reference) Multi
 	return MultiplexSettingsAttributes{ref: ref}
 }
 
-func (ms MultiplexSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ms MultiplexSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ms.ref.InternalTokens()
 }
 
@@ -71,7 +71,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

@@ -18,52 +18,52 @@ type RecordAttributes struct {
 	ref terra.Reference
 }
 
-func (r RecordAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RecordAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RecordAttributes) InternalWithRef(ref terra.Reference) RecordAttributes {
 	return RecordAttributes{ref: ref}
 }
 
-func (r RecordAttributes) InternalTokens() hclwrite.Tokens {
+func (r RecordAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RecordAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("port"))
+	return terra.ReferenceAsNumber(r.ref.Append("port"))
 }
 
 func (r RecordAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("priority"))
+	return terra.ReferenceAsNumber(r.ref.Append("priority"))
 }
 
 func (r RecordAttributes) Target() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("target"))
+	return terra.ReferenceAsString(r.ref.Append("target"))
 }
 
 func (r RecordAttributes) Weight() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("weight"))
+	return terra.ReferenceAsNumber(r.ref.Append("weight"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type RecordState struct {

@@ -13,44 +13,44 @@ type DatabasesAttributes struct {
 	ref terra.Reference
 }
 
-func (d DatabasesAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DatabasesAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DatabasesAttributes) InternalWithRef(ref terra.Reference) DatabasesAttributes {
 	return DatabasesAttributes{ref: ref}
 }
 
-func (d DatabasesAttributes) InternalTokens() hclwrite.Tokens {
+func (d DatabasesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d DatabasesAttributes) Charset() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("charset"))
+	return terra.ReferenceAsString(d.ref.Append("charset"))
 }
 
 func (d DatabasesAttributes) Collation() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("collation"))
+	return terra.ReferenceAsString(d.ref.Append("collation"))
 }
 
 func (d DatabasesAttributes) DeletionPolicy() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("deletion_policy"))
+	return terra.ReferenceAsString(d.ref.Append("deletion_policy"))
 }
 
 func (d DatabasesAttributes) Instance() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("instance"))
+	return terra.ReferenceAsString(d.ref.Append("instance"))
 }
 
 func (d DatabasesAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("name"))
+	return terra.ReferenceAsString(d.ref.Append("name"))
 }
 
 func (d DatabasesAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("project"))
+	return terra.ReferenceAsString(d.ref.Append("project"))
 }
 
 func (d DatabasesAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("self_link"))
+	return terra.ReferenceAsString(d.ref.Append("self_link"))
 }
 
 type DatabasesState struct {

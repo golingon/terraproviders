@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewStorageQueue creates a new instance of [StorageQueue].
 func NewStorageQueue(name string, args StorageQueueArgs) *StorageQueue {
 	return &StorageQueue{
 		Args: args,
@@ -19,28 +20,51 @@ func NewStorageQueue(name string, args StorageQueueArgs) *StorageQueue {
 
 var _ terra.Resource = (*StorageQueue)(nil)
 
+// StorageQueue represents the Terraform resource azurerm_storage_queue.
 type StorageQueue struct {
-	Name  string
-	Args  StorageQueueArgs
-	state *storageQueueState
+	Name      string
+	Args      StorageQueueArgs
+	state     *storageQueueState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [StorageQueue].
 func (sq *StorageQueue) Type() string {
 	return "azurerm_storage_queue"
 }
 
+// LocalName returns the local name for [StorageQueue].
 func (sq *StorageQueue) LocalName() string {
 	return sq.Name
 }
 
+// Configuration returns the configuration (args) for [StorageQueue].
 func (sq *StorageQueue) Configuration() interface{} {
 	return sq.Args
 }
 
+// DependOn is used for other resources to depend on [StorageQueue].
+func (sq *StorageQueue) DependOn() terra.Reference {
+	return terra.ReferenceResource(sq)
+}
+
+// Dependencies returns the list of resources [StorageQueue] depends_on.
+func (sq *StorageQueue) Dependencies() terra.Dependencies {
+	return sq.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [StorageQueue].
+func (sq *StorageQueue) LifecycleManagement() *terra.Lifecycle {
+	return sq.Lifecycle
+}
+
+// Attributes returns the attributes for [StorageQueue].
 func (sq *StorageQueue) Attributes() storageQueueAttributes {
 	return storageQueueAttributes{ref: terra.ReferenceResource(sq)}
 }
 
+// ImportState imports the given attribute values into [StorageQueue]'s state.
 func (sq *StorageQueue) ImportState(av io.Reader) error {
 	sq.state = &storageQueueState{}
 	if err := json.NewDecoder(av).Decode(sq.state); err != nil {
@@ -49,10 +73,12 @@ func (sq *StorageQueue) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [StorageQueue] has state.
 func (sq *StorageQueue) State() (*storageQueueState, bool) {
 	return sq.state, sq.state != nil
 }
 
+// StateMust returns the state for [StorageQueue]. Panics if the state is nil.
 func (sq *StorageQueue) StateMust() *storageQueueState {
 	if sq.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sq.Type(), sq.LocalName()))
@@ -60,10 +86,7 @@ func (sq *StorageQueue) StateMust() *storageQueueState {
 	return sq.state
 }
 
-func (sq *StorageQueue) DependOn() terra.Reference {
-	return terra.ReferenceResource(sq)
-}
-
+// StorageQueueArgs contains the configurations for azurerm_storage_queue.
 type StorageQueueArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -75,35 +98,38 @@ type StorageQueueArgs struct {
 	StorageAccountName terra.StringValue `hcl:"storage_account_name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *storagequeue.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that StorageQueue depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type storageQueueAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_storage_queue.
 func (sq storageQueueAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("id"))
+	return terra.ReferenceAsString(sq.ref.Append("id"))
 }
 
+// Metadata returns a reference to field metadata of azurerm_storage_queue.
 func (sq storageQueueAttributes) Metadata() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sq.ref.Append("metadata"))
+	return terra.ReferenceAsMap[terra.StringValue](sq.ref.Append("metadata"))
 }
 
+// Name returns a reference to field name of azurerm_storage_queue.
 func (sq storageQueueAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("name"))
+	return terra.ReferenceAsString(sq.ref.Append("name"))
 }
 
+// ResourceManagerId returns a reference to field resource_manager_id of azurerm_storage_queue.
 func (sq storageQueueAttributes) ResourceManagerId() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("resource_manager_id"))
+	return terra.ReferenceAsString(sq.ref.Append("resource_manager_id"))
 }
 
+// StorageAccountName returns a reference to field storage_account_name of azurerm_storage_queue.
 func (sq storageQueueAttributes) StorageAccountName() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("storage_account_name"))
+	return terra.ReferenceAsString(sq.ref.Append("storage_account_name"))
 }
 
 func (sq storageQueueAttributes) Timeouts() storagequeue.TimeoutsAttributes {
-	return terra.ReferenceSingle[storagequeue.TimeoutsAttributes](sq.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[storagequeue.TimeoutsAttributes](sq.ref.Append("timeouts"))
 }
 
 type storageQueueState struct {

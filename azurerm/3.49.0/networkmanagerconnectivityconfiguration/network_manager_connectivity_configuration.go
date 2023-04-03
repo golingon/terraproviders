@@ -40,88 +40,88 @@ type AppliesToGroupAttributes struct {
 	ref terra.Reference
 }
 
-func (atg AppliesToGroupAttributes) InternalRef() terra.Reference {
-	return atg.ref
+func (atg AppliesToGroupAttributes) InternalRef() (terra.Reference, error) {
+	return atg.ref, nil
 }
 
 func (atg AppliesToGroupAttributes) InternalWithRef(ref terra.Reference) AppliesToGroupAttributes {
 	return AppliesToGroupAttributes{ref: ref}
 }
 
-func (atg AppliesToGroupAttributes) InternalTokens() hclwrite.Tokens {
+func (atg AppliesToGroupAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return atg.ref.InternalTokens()
 }
 
 func (atg AppliesToGroupAttributes) GlobalMeshEnabled() terra.BoolValue {
-	return terra.ReferenceBool(atg.ref.Append("global_mesh_enabled"))
+	return terra.ReferenceAsBool(atg.ref.Append("global_mesh_enabled"))
 }
 
 func (atg AppliesToGroupAttributes) GroupConnectivity() terra.StringValue {
-	return terra.ReferenceString(atg.ref.Append("group_connectivity"))
+	return terra.ReferenceAsString(atg.ref.Append("group_connectivity"))
 }
 
 func (atg AppliesToGroupAttributes) NetworkGroupId() terra.StringValue {
-	return terra.ReferenceString(atg.ref.Append("network_group_id"))
+	return terra.ReferenceAsString(atg.ref.Append("network_group_id"))
 }
 
 func (atg AppliesToGroupAttributes) UseHubGateway() terra.BoolValue {
-	return terra.ReferenceBool(atg.ref.Append("use_hub_gateway"))
+	return terra.ReferenceAsBool(atg.ref.Append("use_hub_gateway"))
 }
 
 type HubAttributes struct {
 	ref terra.Reference
 }
 
-func (h HubAttributes) InternalRef() terra.Reference {
-	return h.ref
+func (h HubAttributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h HubAttributes) InternalWithRef(ref terra.Reference) HubAttributes {
 	return HubAttributes{ref: ref}
 }
 
-func (h HubAttributes) InternalTokens() hclwrite.Tokens {
+func (h HubAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 
 func (h HubAttributes) ResourceId() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("resource_id"))
+	return terra.ReferenceAsString(h.ref.Append("resource_id"))
 }
 
 func (h HubAttributes) ResourceType() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("resource_type"))
+	return terra.ReferenceAsString(h.ref.Append("resource_type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AppliesToGroupState struct {

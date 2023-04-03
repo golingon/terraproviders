@@ -58,148 +58,148 @@ type LinkAttributes struct {
 	ref terra.Reference
 }
 
-func (l LinkAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l LinkAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l LinkAttributes) InternalWithRef(ref terra.Reference) LinkAttributes {
 	return LinkAttributes{ref: ref}
 }
 
-func (l LinkAttributes) InternalTokens() hclwrite.Tokens {
+func (l LinkAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 
 func (l LinkAttributes) Fqdn() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("fqdn"))
+	return terra.ReferenceAsString(l.ref.Append("fqdn"))
 }
 
 func (l LinkAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("id"))
+	return terra.ReferenceAsString(l.ref.Append("id"))
 }
 
 func (l LinkAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("ip_address"))
+	return terra.ReferenceAsString(l.ref.Append("ip_address"))
 }
 
 func (l LinkAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("name"))
+	return terra.ReferenceAsString(l.ref.Append("name"))
 }
 
 func (l LinkAttributes) ProviderName() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("provider_name"))
+	return terra.ReferenceAsString(l.ref.Append("provider_name"))
 }
 
 func (l LinkAttributes) SpeedInMbps() terra.NumberValue {
-	return terra.ReferenceNumber(l.ref.Append("speed_in_mbps"))
+	return terra.ReferenceAsNumber(l.ref.Append("speed_in_mbps"))
 }
 
 func (l LinkAttributes) Bgp() terra.ListValue[BgpAttributes] {
-	return terra.ReferenceList[BgpAttributes](l.ref.Append("bgp"))
+	return terra.ReferenceAsList[BgpAttributes](l.ref.Append("bgp"))
 }
 
 type BgpAttributes struct {
 	ref terra.Reference
 }
 
-func (b BgpAttributes) InternalRef() terra.Reference {
-	return b.ref
+func (b BgpAttributes) InternalRef() (terra.Reference, error) {
+	return b.ref, nil
 }
 
 func (b BgpAttributes) InternalWithRef(ref terra.Reference) BgpAttributes {
 	return BgpAttributes{ref: ref}
 }
 
-func (b BgpAttributes) InternalTokens() hclwrite.Tokens {
+func (b BgpAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return b.ref.InternalTokens()
 }
 
 func (b BgpAttributes) Asn() terra.NumberValue {
-	return terra.ReferenceNumber(b.ref.Append("asn"))
+	return terra.ReferenceAsNumber(b.ref.Append("asn"))
 }
 
 func (b BgpAttributes) PeeringAddress() terra.StringValue {
-	return terra.ReferenceString(b.ref.Append("peering_address"))
+	return terra.ReferenceAsString(b.ref.Append("peering_address"))
 }
 
 type O365PolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (op O365PolicyAttributes) InternalRef() terra.Reference {
-	return op.ref
+func (op O365PolicyAttributes) InternalRef() (terra.Reference, error) {
+	return op.ref, nil
 }
 
 func (op O365PolicyAttributes) InternalWithRef(ref terra.Reference) O365PolicyAttributes {
 	return O365PolicyAttributes{ref: ref}
 }
 
-func (op O365PolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (op O365PolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return op.ref.InternalTokens()
 }
 
 func (op O365PolicyAttributes) TrafficCategory() terra.ListValue[TrafficCategoryAttributes] {
-	return terra.ReferenceList[TrafficCategoryAttributes](op.ref.Append("traffic_category"))
+	return terra.ReferenceAsList[TrafficCategoryAttributes](op.ref.Append("traffic_category"))
 }
 
 type TrafficCategoryAttributes struct {
 	ref terra.Reference
 }
 
-func (tc TrafficCategoryAttributes) InternalRef() terra.Reference {
-	return tc.ref
+func (tc TrafficCategoryAttributes) InternalRef() (terra.Reference, error) {
+	return tc.ref, nil
 }
 
 func (tc TrafficCategoryAttributes) InternalWithRef(ref terra.Reference) TrafficCategoryAttributes {
 	return TrafficCategoryAttributes{ref: ref}
 }
 
-func (tc TrafficCategoryAttributes) InternalTokens() hclwrite.Tokens {
+func (tc TrafficCategoryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tc.ref.InternalTokens()
 }
 
 func (tc TrafficCategoryAttributes) AllowEndpointEnabled() terra.BoolValue {
-	return terra.ReferenceBool(tc.ref.Append("allow_endpoint_enabled"))
+	return terra.ReferenceAsBool(tc.ref.Append("allow_endpoint_enabled"))
 }
 
 func (tc TrafficCategoryAttributes) DefaultEndpointEnabled() terra.BoolValue {
-	return terra.ReferenceBool(tc.ref.Append("default_endpoint_enabled"))
+	return terra.ReferenceAsBool(tc.ref.Append("default_endpoint_enabled"))
 }
 
 func (tc TrafficCategoryAttributes) OptimizeEndpointEnabled() terra.BoolValue {
-	return terra.ReferenceBool(tc.ref.Append("optimize_endpoint_enabled"))
+	return terra.ReferenceAsBool(tc.ref.Append("optimize_endpoint_enabled"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type LinkState struct {

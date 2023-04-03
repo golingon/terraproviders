@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataFirewall creates a new instance of [DataFirewall].
 func NewDataFirewall(name string, args DataFirewallArgs) *DataFirewall {
 	return &DataFirewall{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataFirewall(name string, args DataFirewallArgs) *DataFirewall {
 
 var _ terra.DataResource = (*DataFirewall)(nil)
 
+// DataFirewall represents the Terraform data resource azurerm_firewall.
 type DataFirewall struct {
 	Name string
 	Args DataFirewallArgs
 }
 
+// DataSource returns the Terraform object type for [DataFirewall].
 func (f *DataFirewall) DataSource() string {
 	return "azurerm_firewall"
 }
 
+// LocalName returns the local name for [DataFirewall].
 func (f *DataFirewall) LocalName() string {
 	return f.Name
 }
 
+// Configuration returns the configuration (args) for [DataFirewall].
 func (f *DataFirewall) Configuration() interface{} {
 	return f.Args
 }
 
+// Attributes returns the attributes for [DataFirewall].
 func (f *DataFirewall) Attributes() dataFirewallAttributes {
 	return dataFirewallAttributes{ref: terra.ReferenceDataResource(f)}
 }
 
+// DataFirewallArgs contains the configurations for azurerm_firewall.
 type DataFirewallArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -57,62 +64,73 @@ type dataFirewallAttributes struct {
 	ref terra.Reference
 }
 
+// DnsServers returns a reference to field dns_servers of azurerm_firewall.
 func (f dataFirewallAttributes) DnsServers() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](f.ref.Append("dns_servers"))
+	return terra.ReferenceAsList[terra.StringValue](f.ref.Append("dns_servers"))
 }
 
+// FirewallPolicyId returns a reference to field firewall_policy_id of azurerm_firewall.
 func (f dataFirewallAttributes) FirewallPolicyId() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("firewall_policy_id"))
+	return terra.ReferenceAsString(f.ref.Append("firewall_policy_id"))
 }
 
+// Id returns a reference to field id of azurerm_firewall.
 func (f dataFirewallAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("id"))
+	return terra.ReferenceAsString(f.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_firewall.
 func (f dataFirewallAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("location"))
+	return terra.ReferenceAsString(f.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_firewall.
 func (f dataFirewallAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("name"))
+	return terra.ReferenceAsString(f.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_firewall.
 func (f dataFirewallAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(f.ref.Append("resource_group_name"))
 }
 
+// SkuName returns a reference to field sku_name of azurerm_firewall.
 func (f dataFirewallAttributes) SkuName() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("sku_name"))
+	return terra.ReferenceAsString(f.ref.Append("sku_name"))
 }
 
+// SkuTier returns a reference to field sku_tier of azurerm_firewall.
 func (f dataFirewallAttributes) SkuTier() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("sku_tier"))
+	return terra.ReferenceAsString(f.ref.Append("sku_tier"))
 }
 
+// Tags returns a reference to field tags of azurerm_firewall.
 func (f dataFirewallAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](f.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](f.ref.Append("tags"))
 }
 
+// ThreatIntelMode returns a reference to field threat_intel_mode of azurerm_firewall.
 func (f dataFirewallAttributes) ThreatIntelMode() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("threat_intel_mode"))
+	return terra.ReferenceAsString(f.ref.Append("threat_intel_mode"))
 }
 
+// Zones returns a reference to field zones of azurerm_firewall.
 func (f dataFirewallAttributes) Zones() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](f.ref.Append("zones"))
+	return terra.ReferenceAsList[terra.StringValue](f.ref.Append("zones"))
 }
 
 func (f dataFirewallAttributes) IpConfiguration() terra.ListValue[datafirewall.IpConfigurationAttributes] {
-	return terra.ReferenceList[datafirewall.IpConfigurationAttributes](f.ref.Append("ip_configuration"))
+	return terra.ReferenceAsList[datafirewall.IpConfigurationAttributes](f.ref.Append("ip_configuration"))
 }
 
 func (f dataFirewallAttributes) ManagementIpConfiguration() terra.ListValue[datafirewall.ManagementIpConfigurationAttributes] {
-	return terra.ReferenceList[datafirewall.ManagementIpConfigurationAttributes](f.ref.Append("management_ip_configuration"))
+	return terra.ReferenceAsList[datafirewall.ManagementIpConfigurationAttributes](f.ref.Append("management_ip_configuration"))
 }
 
 func (f dataFirewallAttributes) VirtualHub() terra.ListValue[datafirewall.VirtualHubAttributes] {
-	return terra.ReferenceList[datafirewall.VirtualHubAttributes](f.ref.Append("virtual_hub"))
+	return terra.ReferenceAsList[datafirewall.VirtualHubAttributes](f.ref.Append("virtual_hub"))
 }
 
 func (f dataFirewallAttributes) Timeouts() datafirewall.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafirewall.TimeoutsAttributes](f.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafirewall.TimeoutsAttributes](f.ref.Append("timeouts"))
 }

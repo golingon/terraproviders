@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataSharedImageGallery creates a new instance of [DataSharedImageGallery].
 func NewDataSharedImageGallery(name string, args DataSharedImageGalleryArgs) *DataSharedImageGallery {
 	return &DataSharedImageGallery{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataSharedImageGallery(name string, args DataSharedImageGalleryArgs) *Da
 
 var _ terra.DataResource = (*DataSharedImageGallery)(nil)
 
+// DataSharedImageGallery represents the Terraform data resource azurerm_shared_image_gallery.
 type DataSharedImageGallery struct {
 	Name string
 	Args DataSharedImageGalleryArgs
 }
 
+// DataSource returns the Terraform object type for [DataSharedImageGallery].
 func (sig *DataSharedImageGallery) DataSource() string {
 	return "azurerm_shared_image_gallery"
 }
 
+// LocalName returns the local name for [DataSharedImageGallery].
 func (sig *DataSharedImageGallery) LocalName() string {
 	return sig.Name
 }
 
+// Configuration returns the configuration (args) for [DataSharedImageGallery].
 func (sig *DataSharedImageGallery) Configuration() interface{} {
 	return sig.Args
 }
 
+// Attributes returns the attributes for [DataSharedImageGallery].
 func (sig *DataSharedImageGallery) Attributes() dataSharedImageGalleryAttributes {
 	return dataSharedImageGalleryAttributes{ref: terra.ReferenceDataResource(sig)}
 }
 
+// DataSharedImageGalleryArgs contains the configurations for azurerm_shared_image_gallery.
 type DataSharedImageGalleryArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,34 +58,41 @@ type dataSharedImageGalleryAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of azurerm_shared_image_gallery.
 func (sig dataSharedImageGalleryAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(sig.ref.Append("description"))
+	return terra.ReferenceAsString(sig.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_shared_image_gallery.
 func (sig dataSharedImageGalleryAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sig.ref.Append("id"))
+	return terra.ReferenceAsString(sig.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_shared_image_gallery.
 func (sig dataSharedImageGalleryAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(sig.ref.Append("location"))
+	return terra.ReferenceAsString(sig.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_shared_image_gallery.
 func (sig dataSharedImageGalleryAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sig.ref.Append("name"))
+	return terra.ReferenceAsString(sig.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_shared_image_gallery.
 func (sig dataSharedImageGalleryAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(sig.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(sig.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_shared_image_gallery.
 func (sig dataSharedImageGalleryAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sig.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sig.ref.Append("tags"))
 }
 
+// UniqueName returns a reference to field unique_name of azurerm_shared_image_gallery.
 func (sig dataSharedImageGalleryAttributes) UniqueName() terra.StringValue {
-	return terra.ReferenceString(sig.ref.Append("unique_name"))
+	return terra.ReferenceAsString(sig.ref.Append("unique_name"))
 }
 
 func (sig dataSharedImageGalleryAttributes) Timeouts() datasharedimagegallery.TimeoutsAttributes {
-	return terra.ReferenceSingle[datasharedimagegallery.TimeoutsAttributes](sig.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datasharedimagegallery.TimeoutsAttributes](sig.ref.Append("timeouts"))
 }

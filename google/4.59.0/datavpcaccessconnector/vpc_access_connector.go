@@ -13,24 +13,24 @@ type SubnetAttributes struct {
 	ref terra.Reference
 }
 
-func (s SubnetAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SubnetAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SubnetAttributes) InternalWithRef(ref terra.Reference) SubnetAttributes {
 	return SubnetAttributes{ref: ref}
 }
 
-func (s SubnetAttributes) InternalTokens() hclwrite.Tokens {
+func (s SubnetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SubnetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 func (s SubnetAttributes) ProjectId() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("project_id"))
+	return terra.ReferenceAsString(s.ref.Append("project_id"))
 }
 
 type SubnetState struct {

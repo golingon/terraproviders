@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataMobileNetworkService creates a new instance of [DataMobileNetworkService].
 func NewDataMobileNetworkService(name string, args DataMobileNetworkServiceArgs) *DataMobileNetworkService {
 	return &DataMobileNetworkService{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataMobileNetworkService(name string, args DataMobileNetworkServiceArgs)
 
 var _ terra.DataResource = (*DataMobileNetworkService)(nil)
 
+// DataMobileNetworkService represents the Terraform data resource azurerm_mobile_network_service.
 type DataMobileNetworkService struct {
 	Name string
 	Args DataMobileNetworkServiceArgs
 }
 
+// DataSource returns the Terraform object type for [DataMobileNetworkService].
 func (mns *DataMobileNetworkService) DataSource() string {
 	return "azurerm_mobile_network_service"
 }
 
+// LocalName returns the local name for [DataMobileNetworkService].
 func (mns *DataMobileNetworkService) LocalName() string {
 	return mns.Name
 }
 
+// Configuration returns the configuration (args) for [DataMobileNetworkService].
 func (mns *DataMobileNetworkService) Configuration() interface{} {
 	return mns.Args
 }
 
+// Attributes returns the attributes for [DataMobileNetworkService].
 func (mns *DataMobileNetworkService) Attributes() dataMobileNetworkServiceAttributes {
 	return dataMobileNetworkServiceAttributes{ref: terra.ReferenceDataResource(mns)}
 }
 
+// DataMobileNetworkServiceArgs contains the configurations for azurerm_mobile_network_service.
 type DataMobileNetworkServiceArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -55,38 +62,44 @@ type dataMobileNetworkServiceAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_mobile_network_service.
 func (mns dataMobileNetworkServiceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mns.ref.Append("id"))
+	return terra.ReferenceAsString(mns.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_mobile_network_service.
 func (mns dataMobileNetworkServiceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(mns.ref.Append("location"))
+	return terra.ReferenceAsString(mns.ref.Append("location"))
 }
 
+// MobileNetworkId returns a reference to field mobile_network_id of azurerm_mobile_network_service.
 func (mns dataMobileNetworkServiceAttributes) MobileNetworkId() terra.StringValue {
-	return terra.ReferenceString(mns.ref.Append("mobile_network_id"))
+	return terra.ReferenceAsString(mns.ref.Append("mobile_network_id"))
 }
 
+// Name returns a reference to field name of azurerm_mobile_network_service.
 func (mns dataMobileNetworkServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mns.ref.Append("name"))
+	return terra.ReferenceAsString(mns.ref.Append("name"))
 }
 
+// ServicePrecedence returns a reference to field service_precedence of azurerm_mobile_network_service.
 func (mns dataMobileNetworkServiceAttributes) ServicePrecedence() terra.NumberValue {
-	return terra.ReferenceNumber(mns.ref.Append("service_precedence"))
+	return terra.ReferenceAsNumber(mns.ref.Append("service_precedence"))
 }
 
+// Tags returns a reference to field tags of azurerm_mobile_network_service.
 func (mns dataMobileNetworkServiceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mns.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mns.ref.Append("tags"))
 }
 
 func (mns dataMobileNetworkServiceAttributes) PccRule() terra.ListValue[datamobilenetworkservice.PccRuleAttributes] {
-	return terra.ReferenceList[datamobilenetworkservice.PccRuleAttributes](mns.ref.Append("pcc_rule"))
+	return terra.ReferenceAsList[datamobilenetworkservice.PccRuleAttributes](mns.ref.Append("pcc_rule"))
 }
 
 func (mns dataMobileNetworkServiceAttributes) ServiceQosPolicy() terra.ListValue[datamobilenetworkservice.ServiceQosPolicyAttributes] {
-	return terra.ReferenceList[datamobilenetworkservice.ServiceQosPolicyAttributes](mns.ref.Append("service_qos_policy"))
+	return terra.ReferenceAsList[datamobilenetworkservice.ServiceQosPolicyAttributes](mns.ref.Append("service_qos_policy"))
 }
 
 func (mns dataMobileNetworkServiceAttributes) Timeouts() datamobilenetworkservice.TimeoutsAttributes {
-	return terra.ReferenceSingle[datamobilenetworkservice.TimeoutsAttributes](mns.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datamobilenetworkservice.TimeoutsAttributes](mns.ref.Append("timeouts"))
 }

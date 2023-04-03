@@ -42,92 +42,92 @@ type HealthProbeAttributes struct {
 	ref terra.Reference
 }
 
-func (hp HealthProbeAttributes) InternalRef() terra.Reference {
-	return hp.ref
+func (hp HealthProbeAttributes) InternalRef() (terra.Reference, error) {
+	return hp.ref, nil
 }
 
 func (hp HealthProbeAttributes) InternalWithRef(ref terra.Reference) HealthProbeAttributes {
 	return HealthProbeAttributes{ref: ref}
 }
 
-func (hp HealthProbeAttributes) InternalTokens() hclwrite.Tokens {
+func (hp HealthProbeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hp.ref.InternalTokens()
 }
 
 func (hp HealthProbeAttributes) IntervalInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(hp.ref.Append("interval_in_seconds"))
+	return terra.ReferenceAsNumber(hp.ref.Append("interval_in_seconds"))
 }
 
 func (hp HealthProbeAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(hp.ref.Append("path"))
+	return terra.ReferenceAsString(hp.ref.Append("path"))
 }
 
 func (hp HealthProbeAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(hp.ref.Append("protocol"))
+	return terra.ReferenceAsString(hp.ref.Append("protocol"))
 }
 
 func (hp HealthProbeAttributes) RequestType() terra.StringValue {
-	return terra.ReferenceString(hp.ref.Append("request_type"))
+	return terra.ReferenceAsString(hp.ref.Append("request_type"))
 }
 
 type LoadBalancingAttributes struct {
 	ref terra.Reference
 }
 
-func (lb LoadBalancingAttributes) InternalRef() terra.Reference {
-	return lb.ref
+func (lb LoadBalancingAttributes) InternalRef() (terra.Reference, error) {
+	return lb.ref, nil
 }
 
 func (lb LoadBalancingAttributes) InternalWithRef(ref terra.Reference) LoadBalancingAttributes {
 	return LoadBalancingAttributes{ref: ref}
 }
 
-func (lb LoadBalancingAttributes) InternalTokens() hclwrite.Tokens {
+func (lb LoadBalancingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lb.ref.InternalTokens()
 }
 
 func (lb LoadBalancingAttributes) AdditionalLatencyInMilliseconds() terra.NumberValue {
-	return terra.ReferenceNumber(lb.ref.Append("additional_latency_in_milliseconds"))
+	return terra.ReferenceAsNumber(lb.ref.Append("additional_latency_in_milliseconds"))
 }
 
 func (lb LoadBalancingAttributes) SampleSize() terra.NumberValue {
-	return terra.ReferenceNumber(lb.ref.Append("sample_size"))
+	return terra.ReferenceAsNumber(lb.ref.Append("sample_size"))
 }
 
 func (lb LoadBalancingAttributes) SuccessfulSamplesRequired() terra.NumberValue {
-	return terra.ReferenceNumber(lb.ref.Append("successful_samples_required"))
+	return terra.ReferenceAsNumber(lb.ref.Append("successful_samples_required"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type HealthProbeState struct {

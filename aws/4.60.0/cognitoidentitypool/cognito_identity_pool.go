@@ -28,7 +28,7 @@ func (cip CognitoIdentityProvidersAttributes) InternalWithRef(ref terra.Referenc
 	return CognitoIdentityProvidersAttributes{ref: ref}
 }
 
-func (cip CognitoIdentityProvidersAttributes) InternalTokens() hclwrite.Tokens {
+func (cip CognitoIdentityProvidersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cip.ref.InternalTokens()
 }
 

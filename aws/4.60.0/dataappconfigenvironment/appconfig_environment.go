@@ -21,7 +21,7 @@ func (m MonitorAttributes) InternalWithRef(ref terra.Reference) MonitorAttribute
 	return MonitorAttributes{ref: ref}
 }
 
-func (m MonitorAttributes) InternalTokens() hclwrite.Tokens {
+func (m MonitorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 

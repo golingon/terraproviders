@@ -41,100 +41,100 @@ type ConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConditionAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConditionAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConditionAttributes) InternalWithRef(ref terra.Reference) ConditionAttributes {
 	return ConditionAttributes{ref: ref}
 }
 
-func (c ConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ConditionAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("description"))
+	return terra.ReferenceAsString(c.ref.Append("description"))
 }
 
 func (c ConditionAttributes) Expression() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("expression"))
+	return terra.ReferenceAsString(c.ref.Append("expression"))
 }
 
 func (c ConditionAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("location"))
+	return terra.ReferenceAsString(c.ref.Append("location"))
 }
 
 func (c ConditionAttributes) Title() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("title"))
+	return terra.ReferenceAsString(c.ref.Append("title"))
 }
 
 type FeedOutputConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (foc FeedOutputConfigAttributes) InternalRef() terra.Reference {
-	return foc.ref
+func (foc FeedOutputConfigAttributes) InternalRef() (terra.Reference, error) {
+	return foc.ref, nil
 }
 
 func (foc FeedOutputConfigAttributes) InternalWithRef(ref terra.Reference) FeedOutputConfigAttributes {
 	return FeedOutputConfigAttributes{ref: ref}
 }
 
-func (foc FeedOutputConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (foc FeedOutputConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return foc.ref.InternalTokens()
 }
 
 func (foc FeedOutputConfigAttributes) PubsubDestination() terra.ListValue[PubsubDestinationAttributes] {
-	return terra.ReferenceList[PubsubDestinationAttributes](foc.ref.Append("pubsub_destination"))
+	return terra.ReferenceAsList[PubsubDestinationAttributes](foc.ref.Append("pubsub_destination"))
 }
 
 type PubsubDestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (pd PubsubDestinationAttributes) InternalRef() terra.Reference {
-	return pd.ref
+func (pd PubsubDestinationAttributes) InternalRef() (terra.Reference, error) {
+	return pd.ref, nil
 }
 
 func (pd PubsubDestinationAttributes) InternalWithRef(ref terra.Reference) PubsubDestinationAttributes {
 	return PubsubDestinationAttributes{ref: ref}
 }
 
-func (pd PubsubDestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (pd PubsubDestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pd.ref.InternalTokens()
 }
 
 func (pd PubsubDestinationAttributes) Topic() terra.StringValue {
-	return terra.ReferenceString(pd.ref.Append("topic"))
+	return terra.ReferenceAsString(pd.ref.Append("topic"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ConditionState struct {

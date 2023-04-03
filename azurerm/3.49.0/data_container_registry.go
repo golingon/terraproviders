@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataContainerRegistry creates a new instance of [DataContainerRegistry].
 func NewDataContainerRegistry(name string, args DataContainerRegistryArgs) *DataContainerRegistry {
 	return &DataContainerRegistry{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataContainerRegistry(name string, args DataContainerRegistryArgs) *Data
 
 var _ terra.DataResource = (*DataContainerRegistry)(nil)
 
+// DataContainerRegistry represents the Terraform data resource azurerm_container_registry.
 type DataContainerRegistry struct {
 	Name string
 	Args DataContainerRegistryArgs
 }
 
+// DataSource returns the Terraform object type for [DataContainerRegistry].
 func (cr *DataContainerRegistry) DataSource() string {
 	return "azurerm_container_registry"
 }
 
+// LocalName returns the local name for [DataContainerRegistry].
 func (cr *DataContainerRegistry) LocalName() string {
 	return cr.Name
 }
 
+// Configuration returns the configuration (args) for [DataContainerRegistry].
 func (cr *DataContainerRegistry) Configuration() interface{} {
 	return cr.Args
 }
 
+// Attributes returns the attributes for [DataContainerRegistry].
 func (cr *DataContainerRegistry) Attributes() dataContainerRegistryAttributes {
 	return dataContainerRegistryAttributes{ref: terra.ReferenceDataResource(cr)}
 }
 
+// DataContainerRegistryArgs contains the configurations for azurerm_container_registry.
 type DataContainerRegistryArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,50 +58,61 @@ type dataContainerRegistryAttributes struct {
 	ref terra.Reference
 }
 
+// AdminEnabled returns a reference to field admin_enabled of azurerm_container_registry.
 func (cr dataContainerRegistryAttributes) AdminEnabled() terra.BoolValue {
-	return terra.ReferenceBool(cr.ref.Append("admin_enabled"))
+	return terra.ReferenceAsBool(cr.ref.Append("admin_enabled"))
 }
 
+// AdminPassword returns a reference to field admin_password of azurerm_container_registry.
 func (cr dataContainerRegistryAttributes) AdminPassword() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("admin_password"))
+	return terra.ReferenceAsString(cr.ref.Append("admin_password"))
 }
 
+// AdminUsername returns a reference to field admin_username of azurerm_container_registry.
 func (cr dataContainerRegistryAttributes) AdminUsername() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("admin_username"))
+	return terra.ReferenceAsString(cr.ref.Append("admin_username"))
 }
 
+// DataEndpointEnabled returns a reference to field data_endpoint_enabled of azurerm_container_registry.
 func (cr dataContainerRegistryAttributes) DataEndpointEnabled() terra.BoolValue {
-	return terra.ReferenceBool(cr.ref.Append("data_endpoint_enabled"))
+	return terra.ReferenceAsBool(cr.ref.Append("data_endpoint_enabled"))
 }
 
+// Id returns a reference to field id of azurerm_container_registry.
 func (cr dataContainerRegistryAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("id"))
+	return terra.ReferenceAsString(cr.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_container_registry.
 func (cr dataContainerRegistryAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("location"))
+	return terra.ReferenceAsString(cr.ref.Append("location"))
 }
 
+// LoginServer returns a reference to field login_server of azurerm_container_registry.
 func (cr dataContainerRegistryAttributes) LoginServer() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("login_server"))
+	return terra.ReferenceAsString(cr.ref.Append("login_server"))
 }
 
+// Name returns a reference to field name of azurerm_container_registry.
 func (cr dataContainerRegistryAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("name"))
+	return terra.ReferenceAsString(cr.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_container_registry.
 func (cr dataContainerRegistryAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(cr.ref.Append("resource_group_name"))
 }
 
+// Sku returns a reference to field sku of azurerm_container_registry.
 func (cr dataContainerRegistryAttributes) Sku() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("sku"))
+	return terra.ReferenceAsString(cr.ref.Append("sku"))
 }
 
+// Tags returns a reference to field tags of azurerm_container_registry.
 func (cr dataContainerRegistryAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](cr.ref.Append("tags"))
 }
 
 func (cr dataContainerRegistryAttributes) Timeouts() datacontainerregistry.TimeoutsAttributes {
-	return terra.ReferenceSingle[datacontainerregistry.TimeoutsAttributes](cr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datacontainerregistry.TimeoutsAttributes](cr.ref.Append("timeouts"))
 }

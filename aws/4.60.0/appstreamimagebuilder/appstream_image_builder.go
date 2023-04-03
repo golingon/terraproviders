@@ -40,7 +40,7 @@ func (ae AccessEndpointAttributes) InternalWithRef(ref terra.Reference) AccessEn
 	return AccessEndpointAttributes{ref: ref}
 }
 
-func (ae AccessEndpointAttributes) InternalTokens() hclwrite.Tokens {
+func (ae AccessEndpointAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ae.ref.InternalTokens()
 }
 
@@ -64,7 +64,7 @@ func (dji DomainJoinInfoAttributes) InternalWithRef(ref terra.Reference) DomainJ
 	return DomainJoinInfoAttributes{ref: ref}
 }
 
-func (dji DomainJoinInfoAttributes) InternalTokens() hclwrite.Tokens {
+func (dji DomainJoinInfoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dji.ref.InternalTokens()
 }
 
@@ -88,7 +88,7 @@ func (vc VpcConfigAttributes) InternalWithRef(ref terra.Reference) VpcConfigAttr
 	return VpcConfigAttributes{ref: ref}
 }
 
-func (vc VpcConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (vc VpcConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vc.ref.InternalTokens()
 }
 

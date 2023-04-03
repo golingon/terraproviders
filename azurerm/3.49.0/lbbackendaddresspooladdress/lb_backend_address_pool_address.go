@@ -24,60 +24,60 @@ type InboundNatRulePortMappingAttributes struct {
 	ref terra.Reference
 }
 
-func (inrpm InboundNatRulePortMappingAttributes) InternalRef() terra.Reference {
-	return inrpm.ref
+func (inrpm InboundNatRulePortMappingAttributes) InternalRef() (terra.Reference, error) {
+	return inrpm.ref, nil
 }
 
 func (inrpm InboundNatRulePortMappingAttributes) InternalWithRef(ref terra.Reference) InboundNatRulePortMappingAttributes {
 	return InboundNatRulePortMappingAttributes{ref: ref}
 }
 
-func (inrpm InboundNatRulePortMappingAttributes) InternalTokens() hclwrite.Tokens {
+func (inrpm InboundNatRulePortMappingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return inrpm.ref.InternalTokens()
 }
 
 func (inrpm InboundNatRulePortMappingAttributes) BackendPort() terra.NumberValue {
-	return terra.ReferenceNumber(inrpm.ref.Append("backend_port"))
+	return terra.ReferenceAsNumber(inrpm.ref.Append("backend_port"))
 }
 
 func (inrpm InboundNatRulePortMappingAttributes) FrontendPort() terra.NumberValue {
-	return terra.ReferenceNumber(inrpm.ref.Append("frontend_port"))
+	return terra.ReferenceAsNumber(inrpm.ref.Append("frontend_port"))
 }
 
 func (inrpm InboundNatRulePortMappingAttributes) InboundNatRuleName() terra.StringValue {
-	return terra.ReferenceString(inrpm.ref.Append("inbound_nat_rule_name"))
+	return terra.ReferenceAsString(inrpm.ref.Append("inbound_nat_rule_name"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type InboundNatRulePortMappingState struct {

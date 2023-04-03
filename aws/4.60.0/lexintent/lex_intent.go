@@ -179,7 +179,7 @@ func (cs ConclusionStatementAttributes) InternalWithRef(ref terra.Reference) Con
 	return ConclusionStatementAttributes{ref: ref}
 }
 
-func (cs ConclusionStatementAttributes) InternalTokens() hclwrite.Tokens {
+func (cs ConclusionStatementAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cs.ref.InternalTokens()
 }
 
@@ -203,7 +203,7 @@ func (m ConclusionStatementMessageAttributes) InternalWithRef(ref terra.Referenc
 	return ConclusionStatementMessageAttributes{ref: ref}
 }
 
-func (m ConclusionStatementMessageAttributes) InternalTokens() hclwrite.Tokens {
+func (m ConclusionStatementMessageAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -231,7 +231,7 @@ func (cp ConfirmationPromptAttributes) InternalWithRef(ref terra.Reference) Conf
 	return ConfirmationPromptAttributes{ref: ref}
 }
 
-func (cp ConfirmationPromptAttributes) InternalTokens() hclwrite.Tokens {
+func (cp ConfirmationPromptAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cp.ref.InternalTokens()
 }
 
@@ -259,7 +259,7 @@ func (m ConfirmationPromptMessageAttributes) InternalWithRef(ref terra.Reference
 	return ConfirmationPromptMessageAttributes{ref: ref}
 }
 
-func (m ConfirmationPromptMessageAttributes) InternalTokens() hclwrite.Tokens {
+func (m ConfirmationPromptMessageAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -287,7 +287,7 @@ func (dch DialogCodeHookAttributes) InternalWithRef(ref terra.Reference) DialogC
 	return DialogCodeHookAttributes{ref: ref}
 }
 
-func (dch DialogCodeHookAttributes) InternalTokens() hclwrite.Tokens {
+func (dch DialogCodeHookAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dch.ref.InternalTokens()
 }
 
@@ -311,7 +311,7 @@ func (fup FollowUpPromptAttributes) InternalWithRef(ref terra.Reference) FollowU
 	return FollowUpPromptAttributes{ref: ref}
 }
 
-func (fup FollowUpPromptAttributes) InternalTokens() hclwrite.Tokens {
+func (fup FollowUpPromptAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fup.ref.InternalTokens()
 }
 
@@ -335,7 +335,7 @@ func (p PromptAttributes) InternalWithRef(ref terra.Reference) PromptAttributes 
 	return PromptAttributes{ref: ref}
 }
 
-func (p PromptAttributes) InternalTokens() hclwrite.Tokens {
+func (p PromptAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -363,7 +363,7 @@ func (m PromptMessageAttributes) InternalWithRef(ref terra.Reference) PromptMess
 	return PromptMessageAttributes{ref: ref}
 }
 
-func (m PromptMessageAttributes) InternalTokens() hclwrite.Tokens {
+func (m PromptMessageAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -391,7 +391,7 @@ func (rs FollowUpPromptRejectionStatementAttributes) InternalWithRef(ref terra.R
 	return FollowUpPromptRejectionStatementAttributes{ref: ref}
 }
 
-func (rs FollowUpPromptRejectionStatementAttributes) InternalTokens() hclwrite.Tokens {
+func (rs FollowUpPromptRejectionStatementAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rs.ref.InternalTokens()
 }
 
@@ -415,7 +415,7 @@ func (m FollowUpPromptRejectionStatementMessageAttributes) InternalWithRef(ref t
 	return FollowUpPromptRejectionStatementMessageAttributes{ref: ref}
 }
 
-func (m FollowUpPromptRejectionStatementMessageAttributes) InternalTokens() hclwrite.Tokens {
+func (m FollowUpPromptRejectionStatementMessageAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -443,7 +443,7 @@ func (fa FulfillmentActivityAttributes) InternalWithRef(ref terra.Reference) Ful
 	return FulfillmentActivityAttributes{ref: ref}
 }
 
-func (fa FulfillmentActivityAttributes) InternalTokens() hclwrite.Tokens {
+func (fa FulfillmentActivityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fa.ref.InternalTokens()
 }
 
@@ -467,7 +467,7 @@ func (ch CodeHookAttributes) InternalWithRef(ref terra.Reference) CodeHookAttrib
 	return CodeHookAttributes{ref: ref}
 }
 
-func (ch CodeHookAttributes) InternalTokens() hclwrite.Tokens {
+func (ch CodeHookAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ch.ref.InternalTokens()
 }
 
@@ -491,7 +491,7 @@ func (rs RejectionStatementAttributes) InternalWithRef(ref terra.Reference) Reje
 	return RejectionStatementAttributes{ref: ref}
 }
 
-func (rs RejectionStatementAttributes) InternalTokens() hclwrite.Tokens {
+func (rs RejectionStatementAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rs.ref.InternalTokens()
 }
 
@@ -515,7 +515,7 @@ func (m RejectionStatementMessageAttributes) InternalWithRef(ref terra.Reference
 	return RejectionStatementMessageAttributes{ref: ref}
 }
 
-func (m RejectionStatementMessageAttributes) InternalTokens() hclwrite.Tokens {
+func (m RejectionStatementMessageAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -543,7 +543,7 @@ func (s SlotAttributes) InternalWithRef(ref terra.Reference) SlotAttributes {
 	return SlotAttributes{ref: ref}
 }
 
-func (s SlotAttributes) InternalTokens() hclwrite.Tokens {
+func (s SlotAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -595,7 +595,7 @@ func (vep ValueElicitationPromptAttributes) InternalWithRef(ref terra.Reference)
 	return ValueElicitationPromptAttributes{ref: ref}
 }
 
-func (vep ValueElicitationPromptAttributes) InternalTokens() hclwrite.Tokens {
+func (vep ValueElicitationPromptAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vep.ref.InternalTokens()
 }
 
@@ -623,7 +623,7 @@ func (m ValueElicitationPromptMessageAttributes) InternalWithRef(ref terra.Refer
 	return ValueElicitationPromptMessageAttributes{ref: ref}
 }
 
-func (m ValueElicitationPromptMessageAttributes) InternalTokens() hclwrite.Tokens {
+func (m ValueElicitationPromptMessageAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -651,7 +651,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

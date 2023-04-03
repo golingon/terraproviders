@@ -21,7 +21,7 @@ func (rr RotationRulesAttributes) InternalWithRef(ref terra.Reference) RotationR
 	return RotationRulesAttributes{ref: ref}
 }
 
-func (rr RotationRulesAttributes) InternalTokens() hclwrite.Tokens {
+func (rr RotationRulesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rr.ref.InternalTokens()
 }
 

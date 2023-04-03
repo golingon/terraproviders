@@ -37,72 +37,72 @@ type SharingAttributes struct {
 	ref terra.Reference
 }
 
-func (s SharingAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SharingAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SharingAttributes) InternalWithRef(ref terra.Reference) SharingAttributes {
 	return SharingAttributes{ref: ref}
 }
 
-func (s SharingAttributes) InternalTokens() hclwrite.Tokens {
+func (s SharingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SharingAttributes) ExternalTablesToExclude() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("external_tables_to_exclude"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("external_tables_to_exclude"))
 }
 
 func (s SharingAttributes) ExternalTablesToInclude() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("external_tables_to_include"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("external_tables_to_include"))
 }
 
 func (s SharingAttributes) MaterializedViewsToExclude() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("materialized_views_to_exclude"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("materialized_views_to_exclude"))
 }
 
 func (s SharingAttributes) MaterializedViewsToInclude() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("materialized_views_to_include"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("materialized_views_to_include"))
 }
 
 func (s SharingAttributes) TablesToExclude() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("tables_to_exclude"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("tables_to_exclude"))
 }
 
 func (s SharingAttributes) TablesToInclude() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("tables_to_include"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("tables_to_include"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type SharingState struct {

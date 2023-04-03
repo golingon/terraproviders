@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFactoryLinkedServiceAzureFunction creates a new instance of [DataFactoryLinkedServiceAzureFunction].
 func NewDataFactoryLinkedServiceAzureFunction(name string, args DataFactoryLinkedServiceAzureFunctionArgs) *DataFactoryLinkedServiceAzureFunction {
 	return &DataFactoryLinkedServiceAzureFunction{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFactoryLinkedServiceAzureFunction(name string, args DataFactoryLinke
 
 var _ terra.Resource = (*DataFactoryLinkedServiceAzureFunction)(nil)
 
+// DataFactoryLinkedServiceAzureFunction represents the Terraform resource azurerm_data_factory_linked_service_azure_function.
 type DataFactoryLinkedServiceAzureFunction struct {
-	Name  string
-	Args  DataFactoryLinkedServiceAzureFunctionArgs
-	state *dataFactoryLinkedServiceAzureFunctionState
+	Name      string
+	Args      DataFactoryLinkedServiceAzureFunctionArgs
+	state     *dataFactoryLinkedServiceAzureFunctionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFactoryLinkedServiceAzureFunction].
 func (dflsaf *DataFactoryLinkedServiceAzureFunction) Type() string {
 	return "azurerm_data_factory_linked_service_azure_function"
 }
 
+// LocalName returns the local name for [DataFactoryLinkedServiceAzureFunction].
 func (dflsaf *DataFactoryLinkedServiceAzureFunction) LocalName() string {
 	return dflsaf.Name
 }
 
+// Configuration returns the configuration (args) for [DataFactoryLinkedServiceAzureFunction].
 func (dflsaf *DataFactoryLinkedServiceAzureFunction) Configuration() interface{} {
 	return dflsaf.Args
 }
 
+// DependOn is used for other resources to depend on [DataFactoryLinkedServiceAzureFunction].
+func (dflsaf *DataFactoryLinkedServiceAzureFunction) DependOn() terra.Reference {
+	return terra.ReferenceResource(dflsaf)
+}
+
+// Dependencies returns the list of resources [DataFactoryLinkedServiceAzureFunction] depends_on.
+func (dflsaf *DataFactoryLinkedServiceAzureFunction) Dependencies() terra.Dependencies {
+	return dflsaf.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFactoryLinkedServiceAzureFunction].
+func (dflsaf *DataFactoryLinkedServiceAzureFunction) LifecycleManagement() *terra.Lifecycle {
+	return dflsaf.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFactoryLinkedServiceAzureFunction].
 func (dflsaf *DataFactoryLinkedServiceAzureFunction) Attributes() dataFactoryLinkedServiceAzureFunctionAttributes {
 	return dataFactoryLinkedServiceAzureFunctionAttributes{ref: terra.ReferenceResource(dflsaf)}
 }
 
+// ImportState imports the given attribute values into [DataFactoryLinkedServiceAzureFunction]'s state.
 func (dflsaf *DataFactoryLinkedServiceAzureFunction) ImportState(av io.Reader) error {
 	dflsaf.state = &dataFactoryLinkedServiceAzureFunctionState{}
 	if err := json.NewDecoder(av).Decode(dflsaf.state); err != nil {
@@ -49,10 +73,12 @@ func (dflsaf *DataFactoryLinkedServiceAzureFunction) ImportState(av io.Reader) e
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFactoryLinkedServiceAzureFunction] has state.
 func (dflsaf *DataFactoryLinkedServiceAzureFunction) State() (*dataFactoryLinkedServiceAzureFunctionState, bool) {
 	return dflsaf.state, dflsaf.state != nil
 }
 
+// StateMust returns the state for [DataFactoryLinkedServiceAzureFunction]. Panics if the state is nil.
 func (dflsaf *DataFactoryLinkedServiceAzureFunction) StateMust() *dataFactoryLinkedServiceAzureFunctionState {
 	if dflsaf.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dflsaf.Type(), dflsaf.LocalName()))
@@ -60,10 +86,7 @@ func (dflsaf *DataFactoryLinkedServiceAzureFunction) StateMust() *dataFactoryLin
 	return dflsaf.state
 }
 
-func (dflsaf *DataFactoryLinkedServiceAzureFunction) DependOn() terra.Reference {
-	return terra.ReferenceResource(dflsaf)
-}
-
+// DataFactoryLinkedServiceAzureFunctionArgs contains the configurations for azurerm_data_factory_linked_service_azure_function.
 type DataFactoryLinkedServiceAzureFunctionArgs struct {
 	// AdditionalProperties: map of string, optional
 	AdditionalProperties terra.MapValue[terra.StringValue] `hcl:"additional_properties,attr"`
@@ -89,59 +112,67 @@ type DataFactoryLinkedServiceAzureFunctionArgs struct {
 	KeyVaultKey *datafactorylinkedserviceazurefunction.KeyVaultKey `hcl:"key_vault_key,block"`
 	// Timeouts: optional
 	Timeouts *datafactorylinkedserviceazurefunction.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataFactoryLinkedServiceAzureFunction depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFactoryLinkedServiceAzureFunctionAttributes struct {
 	ref terra.Reference
 }
 
+// AdditionalProperties returns a reference to field additional_properties of azurerm_data_factory_linked_service_azure_function.
 func (dflsaf dataFactoryLinkedServiceAzureFunctionAttributes) AdditionalProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dflsaf.ref.Append("additional_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](dflsaf.ref.Append("additional_properties"))
 }
 
+// Annotations returns a reference to field annotations of azurerm_data_factory_linked_service_azure_function.
 func (dflsaf dataFactoryLinkedServiceAzureFunctionAttributes) Annotations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dflsaf.ref.Append("annotations"))
+	return terra.ReferenceAsList[terra.StringValue](dflsaf.ref.Append("annotations"))
 }
 
+// DataFactoryId returns a reference to field data_factory_id of azurerm_data_factory_linked_service_azure_function.
 func (dflsaf dataFactoryLinkedServiceAzureFunctionAttributes) DataFactoryId() terra.StringValue {
-	return terra.ReferenceString(dflsaf.ref.Append("data_factory_id"))
+	return terra.ReferenceAsString(dflsaf.ref.Append("data_factory_id"))
 }
 
+// Description returns a reference to field description of azurerm_data_factory_linked_service_azure_function.
 func (dflsaf dataFactoryLinkedServiceAzureFunctionAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dflsaf.ref.Append("description"))
+	return terra.ReferenceAsString(dflsaf.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_data_factory_linked_service_azure_function.
 func (dflsaf dataFactoryLinkedServiceAzureFunctionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dflsaf.ref.Append("id"))
+	return terra.ReferenceAsString(dflsaf.ref.Append("id"))
 }
 
+// IntegrationRuntimeName returns a reference to field integration_runtime_name of azurerm_data_factory_linked_service_azure_function.
 func (dflsaf dataFactoryLinkedServiceAzureFunctionAttributes) IntegrationRuntimeName() terra.StringValue {
-	return terra.ReferenceString(dflsaf.ref.Append("integration_runtime_name"))
+	return terra.ReferenceAsString(dflsaf.ref.Append("integration_runtime_name"))
 }
 
+// Key returns a reference to field key of azurerm_data_factory_linked_service_azure_function.
 func (dflsaf dataFactoryLinkedServiceAzureFunctionAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(dflsaf.ref.Append("key"))
+	return terra.ReferenceAsString(dflsaf.ref.Append("key"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory_linked_service_azure_function.
 func (dflsaf dataFactoryLinkedServiceAzureFunctionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dflsaf.ref.Append("name"))
+	return terra.ReferenceAsString(dflsaf.ref.Append("name"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_data_factory_linked_service_azure_function.
 func (dflsaf dataFactoryLinkedServiceAzureFunctionAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dflsaf.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](dflsaf.ref.Append("parameters"))
 }
 
+// Url returns a reference to field url of azurerm_data_factory_linked_service_azure_function.
 func (dflsaf dataFactoryLinkedServiceAzureFunctionAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(dflsaf.ref.Append("url"))
+	return terra.ReferenceAsString(dflsaf.ref.Append("url"))
 }
 
 func (dflsaf dataFactoryLinkedServiceAzureFunctionAttributes) KeyVaultKey() terra.ListValue[datafactorylinkedserviceazurefunction.KeyVaultKeyAttributes] {
-	return terra.ReferenceList[datafactorylinkedserviceazurefunction.KeyVaultKeyAttributes](dflsaf.ref.Append("key_vault_key"))
+	return terra.ReferenceAsList[datafactorylinkedserviceazurefunction.KeyVaultKeyAttributes](dflsaf.ref.Append("key_vault_key"))
 }
 
 func (dflsaf dataFactoryLinkedServiceAzureFunctionAttributes) Timeouts() datafactorylinkedserviceazurefunction.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafactorylinkedserviceazurefunction.TimeoutsAttributes](dflsaf.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafactorylinkedserviceazurefunction.TimeoutsAttributes](dflsaf.ref.Append("timeouts"))
 }
 
 type dataFactoryLinkedServiceAzureFunctionState struct {

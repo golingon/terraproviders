@@ -91,7 +91,7 @@ func (ec EncryptionConfigurationAttributes) InternalWithRef(ref terra.Reference)
 	return EncryptionConfigurationAttributes{ref: ref}
 }
 
-func (ec EncryptionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ec EncryptionConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 
@@ -115,7 +115,7 @@ func (fp FirewallPolicyAttributes) InternalWithRef(ref terra.Reference) Firewall
 	return FirewallPolicyAttributes{ref: ref}
 }
 
-func (fp FirewallPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (fp FirewallPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fp.ref.InternalTokens()
 }
 
@@ -159,7 +159,7 @@ func (seo StatefulEngineOptionsAttributes) InternalWithRef(ref terra.Reference) 
 	return StatefulEngineOptionsAttributes{ref: ref}
 }
 
-func (seo StatefulEngineOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (seo StatefulEngineOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return seo.ref.InternalTokens()
 }
 
@@ -179,7 +179,7 @@ func (srgr StatefulRuleGroupReferenceAttributes) InternalWithRef(ref terra.Refer
 	return StatefulRuleGroupReferenceAttributes{ref: ref}
 }
 
-func (srgr StatefulRuleGroupReferenceAttributes) InternalTokens() hclwrite.Tokens {
+func (srgr StatefulRuleGroupReferenceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return srgr.ref.InternalTokens()
 }
 
@@ -207,7 +207,7 @@ func (o OverrideAttributes) InternalWithRef(ref terra.Reference) OverrideAttribu
 	return OverrideAttributes{ref: ref}
 }
 
-func (o OverrideAttributes) InternalTokens() hclwrite.Tokens {
+func (o OverrideAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return o.ref.InternalTokens()
 }
 
@@ -227,7 +227,7 @@ func (sca StatelessCustomActionAttributes) InternalWithRef(ref terra.Reference) 
 	return StatelessCustomActionAttributes{ref: ref}
 }
 
-func (sca StatelessCustomActionAttributes) InternalTokens() hclwrite.Tokens {
+func (sca StatelessCustomActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sca.ref.InternalTokens()
 }
 
@@ -251,7 +251,7 @@ func (ad ActionDefinitionAttributes) InternalWithRef(ref terra.Reference) Action
 	return ActionDefinitionAttributes{ref: ref}
 }
 
-func (ad ActionDefinitionAttributes) InternalTokens() hclwrite.Tokens {
+func (ad ActionDefinitionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ad.ref.InternalTokens()
 }
 
@@ -271,7 +271,7 @@ func (pma PublishMetricActionAttributes) InternalWithRef(ref terra.Reference) Pu
 	return PublishMetricActionAttributes{ref: ref}
 }
 
-func (pma PublishMetricActionAttributes) InternalTokens() hclwrite.Tokens {
+func (pma PublishMetricActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pma.ref.InternalTokens()
 }
 
@@ -291,7 +291,7 @@ func (d DimensionAttributes) InternalWithRef(ref terra.Reference) DimensionAttri
 	return DimensionAttributes{ref: ref}
 }
 
-func (d DimensionAttributes) InternalTokens() hclwrite.Tokens {
+func (d DimensionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -311,7 +311,7 @@ func (srgr StatelessRuleGroupReferenceAttributes) InternalWithRef(ref terra.Refe
 	return StatelessRuleGroupReferenceAttributes{ref: ref}
 }
 
-func (srgr StatelessRuleGroupReferenceAttributes) InternalTokens() hclwrite.Tokens {
+func (srgr StatelessRuleGroupReferenceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return srgr.ref.InternalTokens()
 }
 

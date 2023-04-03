@@ -26,7 +26,7 @@ func (pph PreProvisioningHookAttributes) InternalWithRef(ref terra.Reference) Pr
 	return PreProvisioningHookAttributes{ref: ref}
 }
 
-func (pph PreProvisioningHookAttributes) InternalTokens() hclwrite.Tokens {
+func (pph PreProvisioningHookAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pph.ref.InternalTokens()
 }
 

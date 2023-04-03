@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMlEngineModel creates a new instance of [MlEngineModel].
 func NewMlEngineModel(name string, args MlEngineModelArgs) *MlEngineModel {
 	return &MlEngineModel{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMlEngineModel(name string, args MlEngineModelArgs) *MlEngineModel {
 
 var _ terra.Resource = (*MlEngineModel)(nil)
 
+// MlEngineModel represents the Terraform resource google_ml_engine_model.
 type MlEngineModel struct {
-	Name  string
-	Args  MlEngineModelArgs
-	state *mlEngineModelState
+	Name      string
+	Args      MlEngineModelArgs
+	state     *mlEngineModelState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MlEngineModel].
 func (mem *MlEngineModel) Type() string {
 	return "google_ml_engine_model"
 }
 
+// LocalName returns the local name for [MlEngineModel].
 func (mem *MlEngineModel) LocalName() string {
 	return mem.Name
 }
 
+// Configuration returns the configuration (args) for [MlEngineModel].
 func (mem *MlEngineModel) Configuration() interface{} {
 	return mem.Args
 }
 
+// DependOn is used for other resources to depend on [MlEngineModel].
+func (mem *MlEngineModel) DependOn() terra.Reference {
+	return terra.ReferenceResource(mem)
+}
+
+// Dependencies returns the list of resources [MlEngineModel] depends_on.
+func (mem *MlEngineModel) Dependencies() terra.Dependencies {
+	return mem.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MlEngineModel].
+func (mem *MlEngineModel) LifecycleManagement() *terra.Lifecycle {
+	return mem.Lifecycle
+}
+
+// Attributes returns the attributes for [MlEngineModel].
 func (mem *MlEngineModel) Attributes() mlEngineModelAttributes {
 	return mlEngineModelAttributes{ref: terra.ReferenceResource(mem)}
 }
 
+// ImportState imports the given attribute values into [MlEngineModel]'s state.
 func (mem *MlEngineModel) ImportState(av io.Reader) error {
 	mem.state = &mlEngineModelState{}
 	if err := json.NewDecoder(av).Decode(mem.state); err != nil {
@@ -49,10 +73,12 @@ func (mem *MlEngineModel) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MlEngineModel] has state.
 func (mem *MlEngineModel) State() (*mlEngineModelState, bool) {
 	return mem.state, mem.state != nil
 }
 
+// StateMust returns the state for [MlEngineModel]. Panics if the state is nil.
 func (mem *MlEngineModel) StateMust() *mlEngineModelState {
 	if mem.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mem.Type(), mem.LocalName()))
@@ -60,10 +86,7 @@ func (mem *MlEngineModel) StateMust() *mlEngineModelState {
 	return mem.state
 }
 
-func (mem *MlEngineModel) DependOn() terra.Reference {
-	return terra.ReferenceResource(mem)
-}
-
+// MlEngineModelArgs contains the configurations for google_ml_engine_model.
 type MlEngineModelArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -85,51 +108,57 @@ type MlEngineModelArgs struct {
 	DefaultVersion *mlenginemodel.DefaultVersion `hcl:"default_version,block"`
 	// Timeouts: optional
 	Timeouts *mlenginemodel.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MlEngineModel depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mlEngineModelAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of google_ml_engine_model.
 func (mem mlEngineModelAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(mem.ref.Append("description"))
+	return terra.ReferenceAsString(mem.ref.Append("description"))
 }
 
+// Id returns a reference to field id of google_ml_engine_model.
 func (mem mlEngineModelAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mem.ref.Append("id"))
+	return terra.ReferenceAsString(mem.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_ml_engine_model.
 func (mem mlEngineModelAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mem.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](mem.ref.Append("labels"))
 }
 
+// Name returns a reference to field name of google_ml_engine_model.
 func (mem mlEngineModelAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mem.ref.Append("name"))
+	return terra.ReferenceAsString(mem.ref.Append("name"))
 }
 
+// OnlinePredictionConsoleLogging returns a reference to field online_prediction_console_logging of google_ml_engine_model.
 func (mem mlEngineModelAttributes) OnlinePredictionConsoleLogging() terra.BoolValue {
-	return terra.ReferenceBool(mem.ref.Append("online_prediction_console_logging"))
+	return terra.ReferenceAsBool(mem.ref.Append("online_prediction_console_logging"))
 }
 
+// OnlinePredictionLogging returns a reference to field online_prediction_logging of google_ml_engine_model.
 func (mem mlEngineModelAttributes) OnlinePredictionLogging() terra.BoolValue {
-	return terra.ReferenceBool(mem.ref.Append("online_prediction_logging"))
+	return terra.ReferenceAsBool(mem.ref.Append("online_prediction_logging"))
 }
 
+// Project returns a reference to field project of google_ml_engine_model.
 func (mem mlEngineModelAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(mem.ref.Append("project"))
+	return terra.ReferenceAsString(mem.ref.Append("project"))
 }
 
+// Regions returns a reference to field regions of google_ml_engine_model.
 func (mem mlEngineModelAttributes) Regions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](mem.ref.Append("regions"))
+	return terra.ReferenceAsList[terra.StringValue](mem.ref.Append("regions"))
 }
 
 func (mem mlEngineModelAttributes) DefaultVersion() terra.ListValue[mlenginemodel.DefaultVersionAttributes] {
-	return terra.ReferenceList[mlenginemodel.DefaultVersionAttributes](mem.ref.Append("default_version"))
+	return terra.ReferenceAsList[mlenginemodel.DefaultVersionAttributes](mem.ref.Append("default_version"))
 }
 
 func (mem mlEngineModelAttributes) Timeouts() mlenginemodel.TimeoutsAttributes {
-	return terra.ReferenceSingle[mlenginemodel.TimeoutsAttributes](mem.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[mlenginemodel.TimeoutsAttributes](mem.ref.Append("timeouts"))
 }
 
 type mlEngineModelState struct {

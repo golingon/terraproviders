@@ -39,88 +39,88 @@ type SoaRecordAttributes struct {
 	ref terra.Reference
 }
 
-func (sr SoaRecordAttributes) InternalRef() terra.Reference {
-	return sr.ref
+func (sr SoaRecordAttributes) InternalRef() (terra.Reference, error) {
+	return sr.ref, nil
 }
 
 func (sr SoaRecordAttributes) InternalWithRef(ref terra.Reference) SoaRecordAttributes {
 	return SoaRecordAttributes{ref: ref}
 }
 
-func (sr SoaRecordAttributes) InternalTokens() hclwrite.Tokens {
+func (sr SoaRecordAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sr.ref.InternalTokens()
 }
 
 func (sr SoaRecordAttributes) Email() terra.StringValue {
-	return terra.ReferenceString(sr.ref.Append("email"))
+	return terra.ReferenceAsString(sr.ref.Append("email"))
 }
 
 func (sr SoaRecordAttributes) ExpireTime() terra.NumberValue {
-	return terra.ReferenceNumber(sr.ref.Append("expire_time"))
+	return terra.ReferenceAsNumber(sr.ref.Append("expire_time"))
 }
 
 func (sr SoaRecordAttributes) Fqdn() terra.StringValue {
-	return terra.ReferenceString(sr.ref.Append("fqdn"))
+	return terra.ReferenceAsString(sr.ref.Append("fqdn"))
 }
 
 func (sr SoaRecordAttributes) HostName() terra.StringValue {
-	return terra.ReferenceString(sr.ref.Append("host_name"))
+	return terra.ReferenceAsString(sr.ref.Append("host_name"))
 }
 
 func (sr SoaRecordAttributes) MinimumTtl() terra.NumberValue {
-	return terra.ReferenceNumber(sr.ref.Append("minimum_ttl"))
+	return terra.ReferenceAsNumber(sr.ref.Append("minimum_ttl"))
 }
 
 func (sr SoaRecordAttributes) RefreshTime() terra.NumberValue {
-	return terra.ReferenceNumber(sr.ref.Append("refresh_time"))
+	return terra.ReferenceAsNumber(sr.ref.Append("refresh_time"))
 }
 
 func (sr SoaRecordAttributes) RetryTime() terra.NumberValue {
-	return terra.ReferenceNumber(sr.ref.Append("retry_time"))
+	return terra.ReferenceAsNumber(sr.ref.Append("retry_time"))
 }
 
 func (sr SoaRecordAttributes) SerialNumber() terra.NumberValue {
-	return terra.ReferenceNumber(sr.ref.Append("serial_number"))
+	return terra.ReferenceAsNumber(sr.ref.Append("serial_number"))
 }
 
 func (sr SoaRecordAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sr.ref.Append("tags"))
 }
 
 func (sr SoaRecordAttributes) Ttl() terra.NumberValue {
-	return terra.ReferenceNumber(sr.ref.Append("ttl"))
+	return terra.ReferenceAsNumber(sr.ref.Append("ttl"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type SoaRecordState struct {

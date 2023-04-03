@@ -43,7 +43,7 @@ func (fc FindingCriteriaAttributes) InternalWithRef(ref terra.Reference) Finding
 	return FindingCriteriaAttributes{ref: ref}
 }
 
-func (fc FindingCriteriaAttributes) InternalTokens() hclwrite.Tokens {
+func (fc FindingCriteriaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fc.ref.InternalTokens()
 }
 
@@ -63,7 +63,7 @@ func (c CriterionAttributes) InternalWithRef(ref terra.Reference) CriterionAttri
 	return CriterionAttributes{ref: ref}
 }
 
-func (c CriterionAttributes) InternalTokens() hclwrite.Tokens {
+func (c CriterionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 

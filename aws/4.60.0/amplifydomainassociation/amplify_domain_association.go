@@ -26,7 +26,7 @@ func (sd SubDomainAttributes) InternalWithRef(ref terra.Reference) SubDomainAttr
 	return SubDomainAttributes{ref: ref}
 }
 
-func (sd SubDomainAttributes) InternalTokens() hclwrite.Tokens {
+func (sd SubDomainAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sd.ref.InternalTokens()
 }
 

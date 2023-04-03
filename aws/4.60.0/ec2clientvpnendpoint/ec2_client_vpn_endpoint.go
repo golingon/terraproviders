@@ -55,7 +55,7 @@ func (ao AuthenticationOptionsAttributes) InternalWithRef(ref terra.Reference) A
 	return AuthenticationOptionsAttributes{ref: ref}
 }
 
-func (ao AuthenticationOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (ao AuthenticationOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ao.ref.InternalTokens()
 }
 
@@ -91,7 +91,7 @@ func (cco ClientConnectOptionsAttributes) InternalWithRef(ref terra.Reference) C
 	return ClientConnectOptionsAttributes{ref: ref}
 }
 
-func (cco ClientConnectOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (cco ClientConnectOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cco.ref.InternalTokens()
 }
 
@@ -115,7 +115,7 @@ func (clbo ClientLoginBannerOptionsAttributes) InternalWithRef(ref terra.Referen
 	return ClientLoginBannerOptionsAttributes{ref: ref}
 }
 
-func (clbo ClientLoginBannerOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (clbo ClientLoginBannerOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return clbo.ref.InternalTokens()
 }
 
@@ -139,7 +139,7 @@ func (clo ConnectionLogOptionsAttributes) InternalWithRef(ref terra.Reference) C
 	return ConnectionLogOptionsAttributes{ref: ref}
 }
 
-func (clo ConnectionLogOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (clo ConnectionLogOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return clo.ref.InternalTokens()
 }
 

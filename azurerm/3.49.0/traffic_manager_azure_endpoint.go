@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewTrafficManagerAzureEndpoint creates a new instance of [TrafficManagerAzureEndpoint].
 func NewTrafficManagerAzureEndpoint(name string, args TrafficManagerAzureEndpointArgs) *TrafficManagerAzureEndpoint {
 	return &TrafficManagerAzureEndpoint{
 		Args: args,
@@ -19,28 +20,51 @@ func NewTrafficManagerAzureEndpoint(name string, args TrafficManagerAzureEndpoin
 
 var _ terra.Resource = (*TrafficManagerAzureEndpoint)(nil)
 
+// TrafficManagerAzureEndpoint represents the Terraform resource azurerm_traffic_manager_azure_endpoint.
 type TrafficManagerAzureEndpoint struct {
-	Name  string
-	Args  TrafficManagerAzureEndpointArgs
-	state *trafficManagerAzureEndpointState
+	Name      string
+	Args      TrafficManagerAzureEndpointArgs
+	state     *trafficManagerAzureEndpointState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [TrafficManagerAzureEndpoint].
 func (tmae *TrafficManagerAzureEndpoint) Type() string {
 	return "azurerm_traffic_manager_azure_endpoint"
 }
 
+// LocalName returns the local name for [TrafficManagerAzureEndpoint].
 func (tmae *TrafficManagerAzureEndpoint) LocalName() string {
 	return tmae.Name
 }
 
+// Configuration returns the configuration (args) for [TrafficManagerAzureEndpoint].
 func (tmae *TrafficManagerAzureEndpoint) Configuration() interface{} {
 	return tmae.Args
 }
 
+// DependOn is used for other resources to depend on [TrafficManagerAzureEndpoint].
+func (tmae *TrafficManagerAzureEndpoint) DependOn() terra.Reference {
+	return terra.ReferenceResource(tmae)
+}
+
+// Dependencies returns the list of resources [TrafficManagerAzureEndpoint] depends_on.
+func (tmae *TrafficManagerAzureEndpoint) Dependencies() terra.Dependencies {
+	return tmae.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [TrafficManagerAzureEndpoint].
+func (tmae *TrafficManagerAzureEndpoint) LifecycleManagement() *terra.Lifecycle {
+	return tmae.Lifecycle
+}
+
+// Attributes returns the attributes for [TrafficManagerAzureEndpoint].
 func (tmae *TrafficManagerAzureEndpoint) Attributes() trafficManagerAzureEndpointAttributes {
 	return trafficManagerAzureEndpointAttributes{ref: terra.ReferenceResource(tmae)}
 }
 
+// ImportState imports the given attribute values into [TrafficManagerAzureEndpoint]'s state.
 func (tmae *TrafficManagerAzureEndpoint) ImportState(av io.Reader) error {
 	tmae.state = &trafficManagerAzureEndpointState{}
 	if err := json.NewDecoder(av).Decode(tmae.state); err != nil {
@@ -49,10 +73,12 @@ func (tmae *TrafficManagerAzureEndpoint) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [TrafficManagerAzureEndpoint] has state.
 func (tmae *TrafficManagerAzureEndpoint) State() (*trafficManagerAzureEndpointState, bool) {
 	return tmae.state, tmae.state != nil
 }
 
+// StateMust returns the state for [TrafficManagerAzureEndpoint]. Panics if the state is nil.
 func (tmae *TrafficManagerAzureEndpoint) StateMust() *trafficManagerAzureEndpointState {
 	if tmae.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", tmae.Type(), tmae.LocalName()))
@@ -60,10 +86,7 @@ func (tmae *TrafficManagerAzureEndpoint) StateMust() *trafficManagerAzureEndpoin
 	return tmae.state
 }
 
-func (tmae *TrafficManagerAzureEndpoint) DependOn() terra.Reference {
-	return terra.ReferenceResource(tmae)
-}
-
+// TrafficManagerAzureEndpointArgs contains the configurations for azurerm_traffic_manager_azure_endpoint.
 type TrafficManagerAzureEndpointArgs struct {
 	// Enabled: bool, optional
 	Enabled terra.BoolValue `hcl:"enabled,attr"`
@@ -87,55 +110,61 @@ type TrafficManagerAzureEndpointArgs struct {
 	Subnet []trafficmanagerazureendpoint.Subnet `hcl:"subnet,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *trafficmanagerazureendpoint.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that TrafficManagerAzureEndpoint depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type trafficManagerAzureEndpointAttributes struct {
 	ref terra.Reference
 }
 
+// Enabled returns a reference to field enabled of azurerm_traffic_manager_azure_endpoint.
 func (tmae trafficManagerAzureEndpointAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(tmae.ref.Append("enabled"))
+	return terra.ReferenceAsBool(tmae.ref.Append("enabled"))
 }
 
+// GeoMappings returns a reference to field geo_mappings of azurerm_traffic_manager_azure_endpoint.
 func (tmae trafficManagerAzureEndpointAttributes) GeoMappings() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](tmae.ref.Append("geo_mappings"))
+	return terra.ReferenceAsList[terra.StringValue](tmae.ref.Append("geo_mappings"))
 }
 
+// Id returns a reference to field id of azurerm_traffic_manager_azure_endpoint.
 func (tmae trafficManagerAzureEndpointAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(tmae.ref.Append("id"))
+	return terra.ReferenceAsString(tmae.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_traffic_manager_azure_endpoint.
 func (tmae trafficManagerAzureEndpointAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(tmae.ref.Append("name"))
+	return terra.ReferenceAsString(tmae.ref.Append("name"))
 }
 
+// Priority returns a reference to field priority of azurerm_traffic_manager_azure_endpoint.
 func (tmae trafficManagerAzureEndpointAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(tmae.ref.Append("priority"))
+	return terra.ReferenceAsNumber(tmae.ref.Append("priority"))
 }
 
+// ProfileId returns a reference to field profile_id of azurerm_traffic_manager_azure_endpoint.
 func (tmae trafficManagerAzureEndpointAttributes) ProfileId() terra.StringValue {
-	return terra.ReferenceString(tmae.ref.Append("profile_id"))
+	return terra.ReferenceAsString(tmae.ref.Append("profile_id"))
 }
 
+// TargetResourceId returns a reference to field target_resource_id of azurerm_traffic_manager_azure_endpoint.
 func (tmae trafficManagerAzureEndpointAttributes) TargetResourceId() terra.StringValue {
-	return terra.ReferenceString(tmae.ref.Append("target_resource_id"))
+	return terra.ReferenceAsString(tmae.ref.Append("target_resource_id"))
 }
 
+// Weight returns a reference to field weight of azurerm_traffic_manager_azure_endpoint.
 func (tmae trafficManagerAzureEndpointAttributes) Weight() terra.NumberValue {
-	return terra.ReferenceNumber(tmae.ref.Append("weight"))
+	return terra.ReferenceAsNumber(tmae.ref.Append("weight"))
 }
 
 func (tmae trafficManagerAzureEndpointAttributes) CustomHeader() terra.ListValue[trafficmanagerazureendpoint.CustomHeaderAttributes] {
-	return terra.ReferenceList[trafficmanagerazureendpoint.CustomHeaderAttributes](tmae.ref.Append("custom_header"))
+	return terra.ReferenceAsList[trafficmanagerazureendpoint.CustomHeaderAttributes](tmae.ref.Append("custom_header"))
 }
 
 func (tmae trafficManagerAzureEndpointAttributes) Subnet() terra.ListValue[trafficmanagerazureendpoint.SubnetAttributes] {
-	return terra.ReferenceList[trafficmanagerazureendpoint.SubnetAttributes](tmae.ref.Append("subnet"))
+	return terra.ReferenceAsList[trafficmanagerazureendpoint.SubnetAttributes](tmae.ref.Append("subnet"))
 }
 
 func (tmae trafficManagerAzureEndpointAttributes) Timeouts() trafficmanagerazureendpoint.TimeoutsAttributes {
-	return terra.ReferenceSingle[trafficmanagerazureendpoint.TimeoutsAttributes](tmae.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[trafficmanagerazureendpoint.TimeoutsAttributes](tmae.ref.Append("timeouts"))
 }
 
 type trafficManagerAzureEndpointState struct {

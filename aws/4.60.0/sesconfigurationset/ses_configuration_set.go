@@ -29,7 +29,7 @@ func (do DeliveryOptionsAttributes) InternalWithRef(ref terra.Reference) Deliver
 	return DeliveryOptionsAttributes{ref: ref}
 }
 
-func (do DeliveryOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (do DeliveryOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return do.ref.InternalTokens()
 }
 
@@ -49,7 +49,7 @@ func (to TrackingOptionsAttributes) InternalWithRef(ref terra.Reference) Trackin
 	return TrackingOptionsAttributes{ref: ref}
 }
 
-func (to TrackingOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (to TrackingOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return to.ref.InternalTokens()
 }
 

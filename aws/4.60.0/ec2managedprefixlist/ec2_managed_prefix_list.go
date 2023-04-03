@@ -26,7 +26,7 @@ func (e EntryAttributes) InternalWithRef(ref terra.Reference) EntryAttributes {
 	return EntryAttributes{ref: ref}
 }
 
-func (e EntryAttributes) InternalTokens() hclwrite.Tokens {
+func (e EntryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 

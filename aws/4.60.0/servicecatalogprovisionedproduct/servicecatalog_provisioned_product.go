@@ -56,7 +56,7 @@ func (o OutputsAttributes) InternalWithRef(ref terra.Reference) OutputsAttribute
 	return OutputsAttributes{ref: ref}
 }
 
-func (o OutputsAttributes) InternalTokens() hclwrite.Tokens {
+func (o OutputsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return o.ref.InternalTokens()
 }
 
@@ -84,7 +84,7 @@ func (pp ProvisioningParametersAttributes) InternalWithRef(ref terra.Reference) 
 	return ProvisioningParametersAttributes{ref: ref}
 }
 
-func (pp ProvisioningParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (pp ProvisioningParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pp.ref.InternalTokens()
 }
 
@@ -112,7 +112,7 @@ func (sspp StackSetProvisioningPreferencesAttributes) InternalWithRef(ref terra.
 	return StackSetProvisioningPreferencesAttributes{ref: ref}
 }
 
-func (sspp StackSetProvisioningPreferencesAttributes) InternalTokens() hclwrite.Tokens {
+func (sspp StackSetProvisioningPreferencesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sspp.ref.InternalTokens()
 }
 
@@ -152,7 +152,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

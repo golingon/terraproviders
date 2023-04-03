@@ -74,7 +74,7 @@ func (sc StorageConfigAttributes) InternalWithRef(ref terra.Reference) StorageCo
 	return StorageConfigAttributes{ref: ref}
 }
 
-func (sc StorageConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sc StorageConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -110,7 +110,7 @@ func (kfc KinesisFirehoseConfigAttributes) InternalWithRef(ref terra.Reference) 
 	return KinesisFirehoseConfigAttributes{ref: ref}
 }
 
-func (kfc KinesisFirehoseConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (kfc KinesisFirehoseConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kfc.ref.InternalTokens()
 }
 
@@ -130,7 +130,7 @@ func (ksc KinesisStreamConfigAttributes) InternalWithRef(ref terra.Reference) Ki
 	return KinesisStreamConfigAttributes{ref: ref}
 }
 
-func (ksc KinesisStreamConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ksc KinesisStreamConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ksc.ref.InternalTokens()
 }
 
@@ -150,7 +150,7 @@ func (kvsc KinesisVideoStreamConfigAttributes) InternalWithRef(ref terra.Referen
 	return KinesisVideoStreamConfigAttributes{ref: ref}
 }
 
-func (kvsc KinesisVideoStreamConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (kvsc KinesisVideoStreamConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kvsc.ref.InternalTokens()
 }
 
@@ -178,7 +178,7 @@ func (ec KinesisVideoStreamConfigEncryptionConfigAttributes) InternalWithRef(ref
 	return KinesisVideoStreamConfigEncryptionConfigAttributes{ref: ref}
 }
 
-func (ec KinesisVideoStreamConfigEncryptionConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ec KinesisVideoStreamConfigEncryptionConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 
@@ -202,7 +202,7 @@ func (sc S3ConfigAttributes) InternalWithRef(ref terra.Reference) S3ConfigAttrib
 	return S3ConfigAttributes{ref: ref}
 }
 
-func (sc S3ConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sc S3ConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -230,7 +230,7 @@ func (ec S3ConfigEncryptionConfigAttributes) InternalWithRef(ref terra.Reference
 	return S3ConfigEncryptionConfigAttributes{ref: ref}
 }
 
-func (ec S3ConfigEncryptionConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ec S3ConfigEncryptionConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 

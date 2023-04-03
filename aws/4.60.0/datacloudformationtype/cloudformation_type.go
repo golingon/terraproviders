@@ -21,7 +21,7 @@ func (lc LoggingConfigAttributes) InternalWithRef(ref terra.Reference) LoggingCo
 	return LoggingConfigAttributes{ref: ref}
 }
 
-func (lc LoggingConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (lc LoggingConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lc.ref.InternalTokens()
 }
 

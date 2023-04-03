@@ -67,7 +67,7 @@ func (cc CertificateConfigurationAttributes) InternalWithRef(ref terra.Reference
 	return CertificateConfigurationAttributes{ref: ref}
 }
 
-func (cc CertificateConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (cc CertificateConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -87,7 +87,7 @@ func (eip Ec2InboundPermissionAttributes) InternalWithRef(ref terra.Reference) E
 	return Ec2InboundPermissionAttributes{ref: ref}
 }
 
-func (eip Ec2InboundPermissionAttributes) InternalTokens() hclwrite.Tokens {
+func (eip Ec2InboundPermissionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return eip.ref.InternalTokens()
 }
 
@@ -119,7 +119,7 @@ func (rclp ResourceCreationLimitPolicyAttributes) InternalWithRef(ref terra.Refe
 	return ResourceCreationLimitPolicyAttributes{ref: ref}
 }
 
-func (rclp ResourceCreationLimitPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (rclp ResourceCreationLimitPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rclp.ref.InternalTokens()
 }
 
@@ -143,7 +143,7 @@ func (rc RuntimeConfigurationAttributes) InternalWithRef(ref terra.Reference) Ru
 	return RuntimeConfigurationAttributes{ref: ref}
 }
 
-func (rc RuntimeConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (rc RuntimeConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rc.ref.InternalTokens()
 }
 
@@ -171,7 +171,7 @@ func (sp ServerProcessAttributes) InternalWithRef(ref terra.Reference) ServerPro
 	return ServerProcessAttributes{ref: ref}
 }
 
-func (sp ServerProcessAttributes) InternalTokens() hclwrite.Tokens {
+func (sp ServerProcessAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sp.ref.InternalTokens()
 }
 
@@ -199,7 +199,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

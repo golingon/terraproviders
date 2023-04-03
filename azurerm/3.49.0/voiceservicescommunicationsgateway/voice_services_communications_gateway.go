@@ -35,68 +35,68 @@ type ServiceLocationAttributes struct {
 	ref terra.Reference
 }
 
-func (sl ServiceLocationAttributes) InternalRef() terra.Reference {
-	return sl.ref
+func (sl ServiceLocationAttributes) InternalRef() (terra.Reference, error) {
+	return sl.ref, nil
 }
 
 func (sl ServiceLocationAttributes) InternalWithRef(ref terra.Reference) ServiceLocationAttributes {
 	return ServiceLocationAttributes{ref: ref}
 }
 
-func (sl ServiceLocationAttributes) InternalTokens() hclwrite.Tokens {
+func (sl ServiceLocationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sl.ref.InternalTokens()
 }
 
 func (sl ServiceLocationAttributes) AllowedMediaSourceAddressPrefixes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sl.ref.Append("allowed_media_source_address_prefixes"))
+	return terra.ReferenceAsSet[terra.StringValue](sl.ref.Append("allowed_media_source_address_prefixes"))
 }
 
 func (sl ServiceLocationAttributes) AllowedSignalingSourceAddressPrefixes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sl.ref.Append("allowed_signaling_source_address_prefixes"))
+	return terra.ReferenceAsSet[terra.StringValue](sl.ref.Append("allowed_signaling_source_address_prefixes"))
 }
 
 func (sl ServiceLocationAttributes) EsrpAddresses() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sl.ref.Append("esrp_addresses"))
+	return terra.ReferenceAsSet[terra.StringValue](sl.ref.Append("esrp_addresses"))
 }
 
 func (sl ServiceLocationAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(sl.ref.Append("location"))
+	return terra.ReferenceAsString(sl.ref.Append("location"))
 }
 
 func (sl ServiceLocationAttributes) OperatorAddresses() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sl.ref.Append("operator_addresses"))
+	return terra.ReferenceAsSet[terra.StringValue](sl.ref.Append("operator_addresses"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ServiceLocationState struct {

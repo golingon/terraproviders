@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewProjectIamPolicy creates a new instance of [ProjectIamPolicy].
 func NewProjectIamPolicy(name string, args ProjectIamPolicyArgs) *ProjectIamPolicy {
 	return &ProjectIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewProjectIamPolicy(name string, args ProjectIamPolicyArgs) *ProjectIamPoli
 
 var _ terra.Resource = (*ProjectIamPolicy)(nil)
 
+// ProjectIamPolicy represents the Terraform resource google_project_iam_policy.
 type ProjectIamPolicy struct {
-	Name  string
-	Args  ProjectIamPolicyArgs
-	state *projectIamPolicyState
+	Name      string
+	Args      ProjectIamPolicyArgs
+	state     *projectIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ProjectIamPolicy].
 func (pip *ProjectIamPolicy) Type() string {
 	return "google_project_iam_policy"
 }
 
+// LocalName returns the local name for [ProjectIamPolicy].
 func (pip *ProjectIamPolicy) LocalName() string {
 	return pip.Name
 }
 
+// Configuration returns the configuration (args) for [ProjectIamPolicy].
 func (pip *ProjectIamPolicy) Configuration() interface{} {
 	return pip.Args
 }
 
+// DependOn is used for other resources to depend on [ProjectIamPolicy].
+func (pip *ProjectIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(pip)
+}
+
+// Dependencies returns the list of resources [ProjectIamPolicy] depends_on.
+func (pip *ProjectIamPolicy) Dependencies() terra.Dependencies {
+	return pip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ProjectIamPolicy].
+func (pip *ProjectIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return pip.Lifecycle
+}
+
+// Attributes returns the attributes for [ProjectIamPolicy].
 func (pip *ProjectIamPolicy) Attributes() projectIamPolicyAttributes {
 	return projectIamPolicyAttributes{ref: terra.ReferenceResource(pip)}
 }
 
+// ImportState imports the given attribute values into [ProjectIamPolicy]'s state.
 func (pip *ProjectIamPolicy) ImportState(av io.Reader) error {
 	pip.state = &projectIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(pip.state); err != nil {
@@ -48,10 +72,12 @@ func (pip *ProjectIamPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ProjectIamPolicy] has state.
 func (pip *ProjectIamPolicy) State() (*projectIamPolicyState, bool) {
 	return pip.state, pip.state != nil
 }
 
+// StateMust returns the state for [ProjectIamPolicy]. Panics if the state is nil.
 func (pip *ProjectIamPolicy) StateMust() *projectIamPolicyState {
 	if pip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pip.Type(), pip.LocalName()))
@@ -59,10 +85,7 @@ func (pip *ProjectIamPolicy) StateMust() *projectIamPolicyState {
 	return pip.state
 }
 
-func (pip *ProjectIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(pip)
-}
-
+// ProjectIamPolicyArgs contains the configurations for google_project_iam_policy.
 type ProjectIamPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,27 +93,29 @@ type ProjectIamPolicyArgs struct {
 	PolicyData terra.StringValue `hcl:"policy_data,attr" validate:"required"`
 	// Project: string, required
 	Project terra.StringValue `hcl:"project,attr" validate:"required"`
-	// DependsOn contains resources that ProjectIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type projectIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_project_iam_policy.
 func (pip projectIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(pip.ref.Append("etag"))
+	return terra.ReferenceAsString(pip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_project_iam_policy.
 func (pip projectIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pip.ref.Append("id"))
+	return terra.ReferenceAsString(pip.ref.Append("id"))
 }
 
+// PolicyData returns a reference to field policy_data of google_project_iam_policy.
 func (pip projectIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(pip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(pip.ref.Append("policy_data"))
 }
 
+// Project returns a reference to field project of google_project_iam_policy.
 func (pip projectIamPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(pip.ref.Append("project"))
+	return terra.ReferenceAsString(pip.ref.Append("project"))
 }
 
 type projectIamPolicyState struct {

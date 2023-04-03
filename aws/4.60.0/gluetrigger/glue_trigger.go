@@ -73,7 +73,7 @@ func (a ActionsAttributes) InternalWithRef(ref terra.Reference) ActionsAttribute
 	return ActionsAttributes{ref: ref}
 }
 
-func (a ActionsAttributes) InternalTokens() hclwrite.Tokens {
+func (a ActionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -113,7 +113,7 @@ func (np NotificationPropertyAttributes) InternalWithRef(ref terra.Reference) No
 	return NotificationPropertyAttributes{ref: ref}
 }
 
-func (np NotificationPropertyAttributes) InternalTokens() hclwrite.Tokens {
+func (np NotificationPropertyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return np.ref.InternalTokens()
 }
 
@@ -133,7 +133,7 @@ func (ebc EventBatchingConditionAttributes) InternalWithRef(ref terra.Reference)
 	return EventBatchingConditionAttributes{ref: ref}
 }
 
-func (ebc EventBatchingConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (ebc EventBatchingConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ebc.ref.InternalTokens()
 }
 
@@ -157,7 +157,7 @@ func (p PredicateAttributes) InternalWithRef(ref terra.Reference) PredicateAttri
 	return PredicateAttributes{ref: ref}
 }
 
-func (p PredicateAttributes) InternalTokens() hclwrite.Tokens {
+func (p PredicateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -181,7 +181,7 @@ func (c ConditionsAttributes) InternalWithRef(ref terra.Reference) ConditionsAtt
 	return ConditionsAttributes{ref: ref}
 }
 
-func (c ConditionsAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConditionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -217,7 +217,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

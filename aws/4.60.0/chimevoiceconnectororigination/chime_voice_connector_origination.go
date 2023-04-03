@@ -32,7 +32,7 @@ func (r RouteAttributes) InternalWithRef(ref terra.Reference) RouteAttributes {
 	return RouteAttributes{ref: ref}
 }
 
-func (r RouteAttributes) InternalTokens() hclwrite.Tokens {
+func (r RouteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 

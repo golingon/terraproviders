@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataDnsARecord creates a new instance of [DataDnsARecord].
 func NewDataDnsARecord(name string, args DataDnsARecordArgs) *DataDnsARecord {
 	return &DataDnsARecord{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataDnsARecord(name string, args DataDnsARecordArgs) *DataDnsARecord {
 
 var _ terra.DataResource = (*DataDnsARecord)(nil)
 
+// DataDnsARecord represents the Terraform data resource azurerm_dns_a_record.
 type DataDnsARecord struct {
 	Name string
 	Args DataDnsARecordArgs
 }
 
+// DataSource returns the Terraform object type for [DataDnsARecord].
 func (dar *DataDnsARecord) DataSource() string {
 	return "azurerm_dns_a_record"
 }
 
+// LocalName returns the local name for [DataDnsARecord].
 func (dar *DataDnsARecord) LocalName() string {
 	return dar.Name
 }
 
+// Configuration returns the configuration (args) for [DataDnsARecord].
 func (dar *DataDnsARecord) Configuration() interface{} {
 	return dar.Args
 }
 
+// Attributes returns the attributes for [DataDnsARecord].
 func (dar *DataDnsARecord) Attributes() dataDnsARecordAttributes {
 	return dataDnsARecordAttributes{ref: terra.ReferenceDataResource(dar)}
 }
 
+// DataDnsARecordArgs contains the configurations for azurerm_dns_a_record.
 type DataDnsARecordArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,42 +60,51 @@ type dataDnsARecordAttributes struct {
 	ref terra.Reference
 }
 
+// Fqdn returns a reference to field fqdn of azurerm_dns_a_record.
 func (dar dataDnsARecordAttributes) Fqdn() terra.StringValue {
-	return terra.ReferenceString(dar.ref.Append("fqdn"))
+	return terra.ReferenceAsString(dar.ref.Append("fqdn"))
 }
 
+// Id returns a reference to field id of azurerm_dns_a_record.
 func (dar dataDnsARecordAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dar.ref.Append("id"))
+	return terra.ReferenceAsString(dar.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_dns_a_record.
 func (dar dataDnsARecordAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dar.ref.Append("name"))
+	return terra.ReferenceAsString(dar.ref.Append("name"))
 }
 
+// Records returns a reference to field records of azurerm_dns_a_record.
 func (dar dataDnsARecordAttributes) Records() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dar.ref.Append("records"))
+	return terra.ReferenceAsSet[terra.StringValue](dar.ref.Append("records"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_dns_a_record.
 func (dar dataDnsARecordAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(dar.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(dar.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_dns_a_record.
 func (dar dataDnsARecordAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dar.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dar.ref.Append("tags"))
 }
 
+// TargetResourceId returns a reference to field target_resource_id of azurerm_dns_a_record.
 func (dar dataDnsARecordAttributes) TargetResourceId() terra.StringValue {
-	return terra.ReferenceString(dar.ref.Append("target_resource_id"))
+	return terra.ReferenceAsString(dar.ref.Append("target_resource_id"))
 }
 
+// Ttl returns a reference to field ttl of azurerm_dns_a_record.
 func (dar dataDnsARecordAttributes) Ttl() terra.NumberValue {
-	return terra.ReferenceNumber(dar.ref.Append("ttl"))
+	return terra.ReferenceAsNumber(dar.ref.Append("ttl"))
 }
 
+// ZoneName returns a reference to field zone_name of azurerm_dns_a_record.
 func (dar dataDnsARecordAttributes) ZoneName() terra.StringValue {
-	return terra.ReferenceString(dar.ref.Append("zone_name"))
+	return terra.ReferenceAsString(dar.ref.Append("zone_name"))
 }
 
 func (dar dataDnsARecordAttributes) Timeouts() datadnsarecord.TimeoutsAttributes {
-	return terra.ReferenceSingle[datadnsarecord.TimeoutsAttributes](dar.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datadnsarecord.TimeoutsAttributes](dar.ref.Append("timeouts"))
 }

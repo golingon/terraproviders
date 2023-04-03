@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAppConfigurationFeature creates a new instance of [AppConfigurationFeature].
 func NewAppConfigurationFeature(name string, args AppConfigurationFeatureArgs) *AppConfigurationFeature {
 	return &AppConfigurationFeature{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAppConfigurationFeature(name string, args AppConfigurationFeatureArgs) *
 
 var _ terra.Resource = (*AppConfigurationFeature)(nil)
 
+// AppConfigurationFeature represents the Terraform resource azurerm_app_configuration_feature.
 type AppConfigurationFeature struct {
-	Name  string
-	Args  AppConfigurationFeatureArgs
-	state *appConfigurationFeatureState
+	Name      string
+	Args      AppConfigurationFeatureArgs
+	state     *appConfigurationFeatureState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AppConfigurationFeature].
 func (acf *AppConfigurationFeature) Type() string {
 	return "azurerm_app_configuration_feature"
 }
 
+// LocalName returns the local name for [AppConfigurationFeature].
 func (acf *AppConfigurationFeature) LocalName() string {
 	return acf.Name
 }
 
+// Configuration returns the configuration (args) for [AppConfigurationFeature].
 func (acf *AppConfigurationFeature) Configuration() interface{} {
 	return acf.Args
 }
 
+// DependOn is used for other resources to depend on [AppConfigurationFeature].
+func (acf *AppConfigurationFeature) DependOn() terra.Reference {
+	return terra.ReferenceResource(acf)
+}
+
+// Dependencies returns the list of resources [AppConfigurationFeature] depends_on.
+func (acf *AppConfigurationFeature) Dependencies() terra.Dependencies {
+	return acf.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AppConfigurationFeature].
+func (acf *AppConfigurationFeature) LifecycleManagement() *terra.Lifecycle {
+	return acf.Lifecycle
+}
+
+// Attributes returns the attributes for [AppConfigurationFeature].
 func (acf *AppConfigurationFeature) Attributes() appConfigurationFeatureAttributes {
 	return appConfigurationFeatureAttributes{ref: terra.ReferenceResource(acf)}
 }
 
+// ImportState imports the given attribute values into [AppConfigurationFeature]'s state.
 func (acf *AppConfigurationFeature) ImportState(av io.Reader) error {
 	acf.state = &appConfigurationFeatureState{}
 	if err := json.NewDecoder(av).Decode(acf.state); err != nil {
@@ -49,10 +73,12 @@ func (acf *AppConfigurationFeature) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AppConfigurationFeature] has state.
 func (acf *AppConfigurationFeature) State() (*appConfigurationFeatureState, bool) {
 	return acf.state, acf.state != nil
 }
 
+// StateMust returns the state for [AppConfigurationFeature]. Panics if the state is nil.
 func (acf *AppConfigurationFeature) StateMust() *appConfigurationFeatureState {
 	if acf.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", acf.Type(), acf.LocalName()))
@@ -60,10 +86,7 @@ func (acf *AppConfigurationFeature) StateMust() *appConfigurationFeatureState {
 	return acf.state
 }
 
-func (acf *AppConfigurationFeature) DependOn() terra.Reference {
-	return terra.ReferenceResource(acf)
-}
-
+// AppConfigurationFeatureArgs contains the configurations for azurerm_app_configuration_feature.
 type AppConfigurationFeatureArgs struct {
 	// ConfigurationStoreId: string, required
 	ConfigurationStoreId terra.StringValue `hcl:"configuration_store_id,attr" validate:"required"`
@@ -91,63 +114,71 @@ type AppConfigurationFeatureArgs struct {
 	Timeouts *appconfigurationfeature.Timeouts `hcl:"timeouts,block"`
 	// TimewindowFilter: min=0
 	TimewindowFilter []appconfigurationfeature.TimewindowFilter `hcl:"timewindow_filter,block" validate:"min=0"`
-	// DependsOn contains resources that AppConfigurationFeature depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type appConfigurationFeatureAttributes struct {
 	ref terra.Reference
 }
 
+// ConfigurationStoreId returns a reference to field configuration_store_id of azurerm_app_configuration_feature.
 func (acf appConfigurationFeatureAttributes) ConfigurationStoreId() terra.StringValue {
-	return terra.ReferenceString(acf.ref.Append("configuration_store_id"))
+	return terra.ReferenceAsString(acf.ref.Append("configuration_store_id"))
 }
 
+// Description returns a reference to field description of azurerm_app_configuration_feature.
 func (acf appConfigurationFeatureAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(acf.ref.Append("description"))
+	return terra.ReferenceAsString(acf.ref.Append("description"))
 }
 
+// Enabled returns a reference to field enabled of azurerm_app_configuration_feature.
 func (acf appConfigurationFeatureAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(acf.ref.Append("enabled"))
+	return terra.ReferenceAsBool(acf.ref.Append("enabled"))
 }
 
+// Etag returns a reference to field etag of azurerm_app_configuration_feature.
 func (acf appConfigurationFeatureAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(acf.ref.Append("etag"))
+	return terra.ReferenceAsString(acf.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of azurerm_app_configuration_feature.
 func (acf appConfigurationFeatureAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(acf.ref.Append("id"))
+	return terra.ReferenceAsString(acf.ref.Append("id"))
 }
 
+// Label returns a reference to field label of azurerm_app_configuration_feature.
 func (acf appConfigurationFeatureAttributes) Label() terra.StringValue {
-	return terra.ReferenceString(acf.ref.Append("label"))
+	return terra.ReferenceAsString(acf.ref.Append("label"))
 }
 
+// Locked returns a reference to field locked of azurerm_app_configuration_feature.
 func (acf appConfigurationFeatureAttributes) Locked() terra.BoolValue {
-	return terra.ReferenceBool(acf.ref.Append("locked"))
+	return terra.ReferenceAsBool(acf.ref.Append("locked"))
 }
 
+// Name returns a reference to field name of azurerm_app_configuration_feature.
 func (acf appConfigurationFeatureAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(acf.ref.Append("name"))
+	return terra.ReferenceAsString(acf.ref.Append("name"))
 }
 
+// PercentageFilterValue returns a reference to field percentage_filter_value of azurerm_app_configuration_feature.
 func (acf appConfigurationFeatureAttributes) PercentageFilterValue() terra.NumberValue {
-	return terra.ReferenceNumber(acf.ref.Append("percentage_filter_value"))
+	return terra.ReferenceAsNumber(acf.ref.Append("percentage_filter_value"))
 }
 
+// Tags returns a reference to field tags of azurerm_app_configuration_feature.
 func (acf appConfigurationFeatureAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](acf.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](acf.ref.Append("tags"))
 }
 
 func (acf appConfigurationFeatureAttributes) TargetingFilter() terra.ListValue[appconfigurationfeature.TargetingFilterAttributes] {
-	return terra.ReferenceList[appconfigurationfeature.TargetingFilterAttributes](acf.ref.Append("targeting_filter"))
+	return terra.ReferenceAsList[appconfigurationfeature.TargetingFilterAttributes](acf.ref.Append("targeting_filter"))
 }
 
 func (acf appConfigurationFeatureAttributes) Timeouts() appconfigurationfeature.TimeoutsAttributes {
-	return terra.ReferenceSingle[appconfigurationfeature.TimeoutsAttributes](acf.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[appconfigurationfeature.TimeoutsAttributes](acf.ref.Append("timeouts"))
 }
 
 func (acf appConfigurationFeatureAttributes) TimewindowFilter() terra.ListValue[appconfigurationfeature.TimewindowFilterAttributes] {
-	return terra.ReferenceList[appconfigurationfeature.TimewindowFilterAttributes](acf.ref.Append("timewindow_filter"))
+	return terra.ReferenceAsList[appconfigurationfeature.TimewindowFilterAttributes](acf.ref.Append("timewindow_filter"))
 }
 
 type appConfigurationFeatureState struct {

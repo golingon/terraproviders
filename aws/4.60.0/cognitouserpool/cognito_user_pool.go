@@ -200,7 +200,7 @@ func (ars AccountRecoverySettingAttributes) InternalWithRef(ref terra.Reference)
 	return AccountRecoverySettingAttributes{ref: ref}
 }
 
-func (ars AccountRecoverySettingAttributes) InternalTokens() hclwrite.Tokens {
+func (ars AccountRecoverySettingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ars.ref.InternalTokens()
 }
 
@@ -220,7 +220,7 @@ func (rm RecoveryMechanismAttributes) InternalWithRef(ref terra.Reference) Recov
 	return RecoveryMechanismAttributes{ref: ref}
 }
 
-func (rm RecoveryMechanismAttributes) InternalTokens() hclwrite.Tokens {
+func (rm RecoveryMechanismAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rm.ref.InternalTokens()
 }
 
@@ -244,7 +244,7 @@ func (acuc AdminCreateUserConfigAttributes) InternalWithRef(ref terra.Reference)
 	return AdminCreateUserConfigAttributes{ref: ref}
 }
 
-func (acuc AdminCreateUserConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (acuc AdminCreateUserConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return acuc.ref.InternalTokens()
 }
 
@@ -268,7 +268,7 @@ func (imt InviteMessageTemplateAttributes) InternalWithRef(ref terra.Reference) 
 	return InviteMessageTemplateAttributes{ref: ref}
 }
 
-func (imt InviteMessageTemplateAttributes) InternalTokens() hclwrite.Tokens {
+func (imt InviteMessageTemplateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return imt.ref.InternalTokens()
 }
 
@@ -296,7 +296,7 @@ func (dc DeviceConfigurationAttributes) InternalWithRef(ref terra.Reference) Dev
 	return DeviceConfigurationAttributes{ref: ref}
 }
 
-func (dc DeviceConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (dc DeviceConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dc.ref.InternalTokens()
 }
 
@@ -320,7 +320,7 @@ func (ec EmailConfigurationAttributes) InternalWithRef(ref terra.Reference) Emai
 	return EmailConfigurationAttributes{ref: ref}
 }
 
-func (ec EmailConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ec EmailConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 
@@ -356,7 +356,7 @@ func (lc LambdaConfigAttributes) InternalWithRef(ref terra.Reference) LambdaConf
 	return LambdaConfigAttributes{ref: ref}
 }
 
-func (lc LambdaConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (lc LambdaConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lc.ref.InternalTokens()
 }
 
@@ -424,7 +424,7 @@ func (ces CustomEmailSenderAttributes) InternalWithRef(ref terra.Reference) Cust
 	return CustomEmailSenderAttributes{ref: ref}
 }
 
-func (ces CustomEmailSenderAttributes) InternalTokens() hclwrite.Tokens {
+func (ces CustomEmailSenderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ces.ref.InternalTokens()
 }
 
@@ -448,7 +448,7 @@ func (css CustomSmsSenderAttributes) InternalWithRef(ref terra.Reference) Custom
 	return CustomSmsSenderAttributes{ref: ref}
 }
 
-func (css CustomSmsSenderAttributes) InternalTokens() hclwrite.Tokens {
+func (css CustomSmsSenderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return css.ref.InternalTokens()
 }
 
@@ -472,7 +472,7 @@ func (pp PasswordPolicyAttributes) InternalWithRef(ref terra.Reference) Password
 	return PasswordPolicyAttributes{ref: ref}
 }
 
-func (pp PasswordPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (pp PasswordPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pp.ref.InternalTokens()
 }
 
@@ -512,7 +512,7 @@ func (s SchemaAttributes) InternalWithRef(ref terra.Reference) SchemaAttributes 
 	return SchemaAttributes{ref: ref}
 }
 
-func (s SchemaAttributes) InternalTokens() hclwrite.Tokens {
+func (s SchemaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -556,7 +556,7 @@ func (nac NumberAttributeConstraintsAttributes) InternalWithRef(ref terra.Refere
 	return NumberAttributeConstraintsAttributes{ref: ref}
 }
 
-func (nac NumberAttributeConstraintsAttributes) InternalTokens() hclwrite.Tokens {
+func (nac NumberAttributeConstraintsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nac.ref.InternalTokens()
 }
 
@@ -580,7 +580,7 @@ func (sac StringAttributeConstraintsAttributes) InternalWithRef(ref terra.Refere
 	return StringAttributeConstraintsAttributes{ref: ref}
 }
 
-func (sac StringAttributeConstraintsAttributes) InternalTokens() hclwrite.Tokens {
+func (sac StringAttributeConstraintsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sac.ref.InternalTokens()
 }
 
@@ -604,7 +604,7 @@ func (sc SmsConfigurationAttributes) InternalWithRef(ref terra.Reference) SmsCon
 	return SmsConfigurationAttributes{ref: ref}
 }
 
-func (sc SmsConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (sc SmsConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -632,7 +632,7 @@ func (stmc SoftwareTokenMfaConfigurationAttributes) InternalWithRef(ref terra.Re
 	return SoftwareTokenMfaConfigurationAttributes{ref: ref}
 }
 
-func (stmc SoftwareTokenMfaConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (stmc SoftwareTokenMfaConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return stmc.ref.InternalTokens()
 }
 
@@ -652,7 +652,7 @@ func (uaus UserAttributeUpdateSettingsAttributes) InternalWithRef(ref terra.Refe
 	return UserAttributeUpdateSettingsAttributes{ref: ref}
 }
 
-func (uaus UserAttributeUpdateSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (uaus UserAttributeUpdateSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return uaus.ref.InternalTokens()
 }
 
@@ -672,7 +672,7 @@ func (upao UserPoolAddOnsAttributes) InternalWithRef(ref terra.Reference) UserPo
 	return UserPoolAddOnsAttributes{ref: ref}
 }
 
-func (upao UserPoolAddOnsAttributes) InternalTokens() hclwrite.Tokens {
+func (upao UserPoolAddOnsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return upao.ref.InternalTokens()
 }
 
@@ -692,7 +692,7 @@ func (uc UsernameConfigurationAttributes) InternalWithRef(ref terra.Reference) U
 	return UsernameConfigurationAttributes{ref: ref}
 }
 
-func (uc UsernameConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (uc UsernameConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return uc.ref.InternalTokens()
 }
 
@@ -712,7 +712,7 @@ func (vmt VerificationMessageTemplateAttributes) InternalWithRef(ref terra.Refer
 	return VerificationMessageTemplateAttributes{ref: ref}
 }
 
-func (vmt VerificationMessageTemplateAttributes) InternalTokens() hclwrite.Tokens {
+func (vmt VerificationMessageTemplateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vmt.ref.InternalTokens()
 }
 

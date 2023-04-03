@@ -29,72 +29,72 @@ type TelemetryAttributes struct {
 	ref terra.Reference
 }
 
-func (t TelemetryAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TelemetryAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TelemetryAttributes) InternalWithRef(ref terra.Reference) TelemetryAttributes {
 	return TelemetryAttributes{ref: ref}
 }
 
-func (t TelemetryAttributes) InternalTokens() hclwrite.Tokens {
+func (t TelemetryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TelemetryAttributes) ResourceName() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("resource_name"))
+	return terra.ReferenceAsString(t.ref.Append("resource_name"))
 }
 
 type BasicServiceAttributes struct {
 	ref terra.Reference
 }
 
-func (bs BasicServiceAttributes) InternalRef() terra.Reference {
-	return bs.ref
+func (bs BasicServiceAttributes) InternalRef() (terra.Reference, error) {
+	return bs.ref, nil
 }
 
 func (bs BasicServiceAttributes) InternalWithRef(ref terra.Reference) BasicServiceAttributes {
 	return BasicServiceAttributes{ref: ref}
 }
 
-func (bs BasicServiceAttributes) InternalTokens() hclwrite.Tokens {
+func (bs BasicServiceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bs.ref.InternalTokens()
 }
 
 func (bs BasicServiceAttributes) ServiceLabels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bs.ref.Append("service_labels"))
+	return terra.ReferenceAsMap[terra.StringValue](bs.ref.Append("service_labels"))
 }
 
 func (bs BasicServiceAttributes) ServiceType() terra.StringValue {
-	return terra.ReferenceString(bs.ref.Append("service_type"))
+	return terra.ReferenceAsString(bs.ref.Append("service_type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type TelemetryState struct {

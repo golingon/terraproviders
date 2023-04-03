@@ -36,100 +36,100 @@ type ResourcesAttributes struct {
 	ref terra.Reference
 }
 
-func (r ResourcesAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r ResourcesAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r ResourcesAttributes) InternalWithRef(ref terra.Reference) ResourcesAttributes {
 	return ResourcesAttributes{ref: ref}
 }
 
-func (r ResourcesAttributes) InternalTokens() hclwrite.Tokens {
+func (r ResourcesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r ResourcesAttributes) ResourceId() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("resource_id"))
+	return terra.ReferenceAsNumber(r.ref.Append("resource_id"))
 }
 
 func (r ResourcesAttributes) ResourceType() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("resource_type"))
+	return terra.ReferenceAsString(r.ref.Append("resource_type"))
 }
 
 type KmsSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ks KmsSettingsAttributes) InternalRef() terra.Reference {
-	return ks.ref
+func (ks KmsSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ks.ref, nil
 }
 
 func (ks KmsSettingsAttributes) InternalWithRef(ref terra.Reference) KmsSettingsAttributes {
 	return KmsSettingsAttributes{ref: ref}
 }
 
-func (ks KmsSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ks KmsSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ks.ref.InternalTokens()
 }
 
 func (ks KmsSettingsAttributes) NextRotationTime() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("next_rotation_time"))
+	return terra.ReferenceAsString(ks.ref.Append("next_rotation_time"))
 }
 
 func (ks KmsSettingsAttributes) RotationPeriod() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("rotation_period"))
+	return terra.ReferenceAsString(ks.ref.Append("rotation_period"))
 }
 
 type ResourceSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (rs ResourceSettingsAttributes) InternalRef() terra.Reference {
-	return rs.ref
+func (rs ResourceSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return rs.ref, nil
 }
 
 func (rs ResourceSettingsAttributes) InternalWithRef(ref terra.Reference) ResourceSettingsAttributes {
 	return ResourceSettingsAttributes{ref: ref}
 }
 
-func (rs ResourceSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (rs ResourceSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rs.ref.InternalTokens()
 }
 
 func (rs ResourceSettingsAttributes) ResourceId() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("resource_id"))
+	return terra.ReferenceAsString(rs.ref.Append("resource_id"))
 }
 
 func (rs ResourceSettingsAttributes) ResourceType() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("resource_type"))
+	return terra.ReferenceAsString(rs.ref.Append("resource_type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ResourcesState struct {

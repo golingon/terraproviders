@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLogAnalyticsWorkspace creates a new instance of [LogAnalyticsWorkspace].
 func NewLogAnalyticsWorkspace(name string, args LogAnalyticsWorkspaceArgs) *LogAnalyticsWorkspace {
 	return &LogAnalyticsWorkspace{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLogAnalyticsWorkspace(name string, args LogAnalyticsWorkspaceArgs) *LogA
 
 var _ terra.Resource = (*LogAnalyticsWorkspace)(nil)
 
+// LogAnalyticsWorkspace represents the Terraform resource azurerm_log_analytics_workspace.
 type LogAnalyticsWorkspace struct {
-	Name  string
-	Args  LogAnalyticsWorkspaceArgs
-	state *logAnalyticsWorkspaceState
+	Name      string
+	Args      LogAnalyticsWorkspaceArgs
+	state     *logAnalyticsWorkspaceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LogAnalyticsWorkspace].
 func (law *LogAnalyticsWorkspace) Type() string {
 	return "azurerm_log_analytics_workspace"
 }
 
+// LocalName returns the local name for [LogAnalyticsWorkspace].
 func (law *LogAnalyticsWorkspace) LocalName() string {
 	return law.Name
 }
 
+// Configuration returns the configuration (args) for [LogAnalyticsWorkspace].
 func (law *LogAnalyticsWorkspace) Configuration() interface{} {
 	return law.Args
 }
 
+// DependOn is used for other resources to depend on [LogAnalyticsWorkspace].
+func (law *LogAnalyticsWorkspace) DependOn() terra.Reference {
+	return terra.ReferenceResource(law)
+}
+
+// Dependencies returns the list of resources [LogAnalyticsWorkspace] depends_on.
+func (law *LogAnalyticsWorkspace) Dependencies() terra.Dependencies {
+	return law.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LogAnalyticsWorkspace].
+func (law *LogAnalyticsWorkspace) LifecycleManagement() *terra.Lifecycle {
+	return law.Lifecycle
+}
+
+// Attributes returns the attributes for [LogAnalyticsWorkspace].
 func (law *LogAnalyticsWorkspace) Attributes() logAnalyticsWorkspaceAttributes {
 	return logAnalyticsWorkspaceAttributes{ref: terra.ReferenceResource(law)}
 }
 
+// ImportState imports the given attribute values into [LogAnalyticsWorkspace]'s state.
 func (law *LogAnalyticsWorkspace) ImportState(av io.Reader) error {
 	law.state = &logAnalyticsWorkspaceState{}
 	if err := json.NewDecoder(av).Decode(law.state); err != nil {
@@ -49,10 +73,12 @@ func (law *LogAnalyticsWorkspace) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LogAnalyticsWorkspace] has state.
 func (law *LogAnalyticsWorkspace) State() (*logAnalyticsWorkspaceState, bool) {
 	return law.state, law.state != nil
 }
 
+// StateMust returns the state for [LogAnalyticsWorkspace]. Panics if the state is nil.
 func (law *LogAnalyticsWorkspace) StateMust() *logAnalyticsWorkspaceState {
 	if law.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", law.Type(), law.LocalName()))
@@ -60,10 +86,7 @@ func (law *LogAnalyticsWorkspace) StateMust() *logAnalyticsWorkspaceState {
 	return law.state
 }
 
-func (law *LogAnalyticsWorkspace) DependOn() terra.Reference {
-	return terra.ReferenceResource(law)
-}
-
+// LogAnalyticsWorkspaceArgs contains the configurations for azurerm_log_analytics_workspace.
 type LogAnalyticsWorkspaceArgs struct {
 	// AllowResourceOnlyPermissions: bool, optional
 	AllowResourceOnlyPermissions terra.BoolValue `hcl:"allow_resource_only_permissions,attr"`
@@ -95,83 +118,98 @@ type LogAnalyticsWorkspaceArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// Timeouts: optional
 	Timeouts *loganalyticsworkspace.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LogAnalyticsWorkspace depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type logAnalyticsWorkspaceAttributes struct {
 	ref terra.Reference
 }
 
+// AllowResourceOnlyPermissions returns a reference to field allow_resource_only_permissions of azurerm_log_analytics_workspace.
 func (law logAnalyticsWorkspaceAttributes) AllowResourceOnlyPermissions() terra.BoolValue {
-	return terra.ReferenceBool(law.ref.Append("allow_resource_only_permissions"))
+	return terra.ReferenceAsBool(law.ref.Append("allow_resource_only_permissions"))
 }
 
+// CmkForQueryForced returns a reference to field cmk_for_query_forced of azurerm_log_analytics_workspace.
 func (law logAnalyticsWorkspaceAttributes) CmkForQueryForced() terra.BoolValue {
-	return terra.ReferenceBool(law.ref.Append("cmk_for_query_forced"))
+	return terra.ReferenceAsBool(law.ref.Append("cmk_for_query_forced"))
 }
 
+// DailyQuotaGb returns a reference to field daily_quota_gb of azurerm_log_analytics_workspace.
 func (law logAnalyticsWorkspaceAttributes) DailyQuotaGb() terra.NumberValue {
-	return terra.ReferenceNumber(law.ref.Append("daily_quota_gb"))
+	return terra.ReferenceAsNumber(law.ref.Append("daily_quota_gb"))
 }
 
+// Id returns a reference to field id of azurerm_log_analytics_workspace.
 func (law logAnalyticsWorkspaceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(law.ref.Append("id"))
+	return terra.ReferenceAsString(law.ref.Append("id"))
 }
 
+// InternetIngestionEnabled returns a reference to field internet_ingestion_enabled of azurerm_log_analytics_workspace.
 func (law logAnalyticsWorkspaceAttributes) InternetIngestionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(law.ref.Append("internet_ingestion_enabled"))
+	return terra.ReferenceAsBool(law.ref.Append("internet_ingestion_enabled"))
 }
 
+// InternetQueryEnabled returns a reference to field internet_query_enabled of azurerm_log_analytics_workspace.
 func (law logAnalyticsWorkspaceAttributes) InternetQueryEnabled() terra.BoolValue {
-	return terra.ReferenceBool(law.ref.Append("internet_query_enabled"))
+	return terra.ReferenceAsBool(law.ref.Append("internet_query_enabled"))
 }
 
+// LocalAuthenticationDisabled returns a reference to field local_authentication_disabled of azurerm_log_analytics_workspace.
 func (law logAnalyticsWorkspaceAttributes) LocalAuthenticationDisabled() terra.BoolValue {
-	return terra.ReferenceBool(law.ref.Append("local_authentication_disabled"))
+	return terra.ReferenceAsBool(law.ref.Append("local_authentication_disabled"))
 }
 
+// Location returns a reference to field location of azurerm_log_analytics_workspace.
 func (law logAnalyticsWorkspaceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(law.ref.Append("location"))
+	return terra.ReferenceAsString(law.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_log_analytics_workspace.
 func (law logAnalyticsWorkspaceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(law.ref.Append("name"))
+	return terra.ReferenceAsString(law.ref.Append("name"))
 }
 
+// PrimarySharedKey returns a reference to field primary_shared_key of azurerm_log_analytics_workspace.
 func (law logAnalyticsWorkspaceAttributes) PrimarySharedKey() terra.StringValue {
-	return terra.ReferenceString(law.ref.Append("primary_shared_key"))
+	return terra.ReferenceAsString(law.ref.Append("primary_shared_key"))
 }
 
+// ReservationCapacityInGbPerDay returns a reference to field reservation_capacity_in_gb_per_day of azurerm_log_analytics_workspace.
 func (law logAnalyticsWorkspaceAttributes) ReservationCapacityInGbPerDay() terra.NumberValue {
-	return terra.ReferenceNumber(law.ref.Append("reservation_capacity_in_gb_per_day"))
+	return terra.ReferenceAsNumber(law.ref.Append("reservation_capacity_in_gb_per_day"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_log_analytics_workspace.
 func (law logAnalyticsWorkspaceAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(law.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(law.ref.Append("resource_group_name"))
 }
 
+// RetentionInDays returns a reference to field retention_in_days of azurerm_log_analytics_workspace.
 func (law logAnalyticsWorkspaceAttributes) RetentionInDays() terra.NumberValue {
-	return terra.ReferenceNumber(law.ref.Append("retention_in_days"))
+	return terra.ReferenceAsNumber(law.ref.Append("retention_in_days"))
 }
 
+// SecondarySharedKey returns a reference to field secondary_shared_key of azurerm_log_analytics_workspace.
 func (law logAnalyticsWorkspaceAttributes) SecondarySharedKey() terra.StringValue {
-	return terra.ReferenceString(law.ref.Append("secondary_shared_key"))
+	return terra.ReferenceAsString(law.ref.Append("secondary_shared_key"))
 }
 
+// Sku returns a reference to field sku of azurerm_log_analytics_workspace.
 func (law logAnalyticsWorkspaceAttributes) Sku() terra.StringValue {
-	return terra.ReferenceString(law.ref.Append("sku"))
+	return terra.ReferenceAsString(law.ref.Append("sku"))
 }
 
+// Tags returns a reference to field tags of azurerm_log_analytics_workspace.
 func (law logAnalyticsWorkspaceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](law.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](law.ref.Append("tags"))
 }
 
+// WorkspaceId returns a reference to field workspace_id of azurerm_log_analytics_workspace.
 func (law logAnalyticsWorkspaceAttributes) WorkspaceId() terra.StringValue {
-	return terra.ReferenceString(law.ref.Append("workspace_id"))
+	return terra.ReferenceAsString(law.ref.Append("workspace_id"))
 }
 
 func (law logAnalyticsWorkspaceAttributes) Timeouts() loganalyticsworkspace.TimeoutsAttributes {
-	return terra.ReferenceSingle[loganalyticsworkspace.TimeoutsAttributes](law.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[loganalyticsworkspace.TimeoutsAttributes](law.ref.Append("timeouts"))
 }
 
 type logAnalyticsWorkspaceState struct {

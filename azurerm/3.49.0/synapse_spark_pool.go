@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSynapseSparkPool creates a new instance of [SynapseSparkPool].
 func NewSynapseSparkPool(name string, args SynapseSparkPoolArgs) *SynapseSparkPool {
 	return &SynapseSparkPool{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSynapseSparkPool(name string, args SynapseSparkPoolArgs) *SynapseSparkPo
 
 var _ terra.Resource = (*SynapseSparkPool)(nil)
 
+// SynapseSparkPool represents the Terraform resource azurerm_synapse_spark_pool.
 type SynapseSparkPool struct {
-	Name  string
-	Args  SynapseSparkPoolArgs
-	state *synapseSparkPoolState
+	Name      string
+	Args      SynapseSparkPoolArgs
+	state     *synapseSparkPoolState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SynapseSparkPool].
 func (ssp *SynapseSparkPool) Type() string {
 	return "azurerm_synapse_spark_pool"
 }
 
+// LocalName returns the local name for [SynapseSparkPool].
 func (ssp *SynapseSparkPool) LocalName() string {
 	return ssp.Name
 }
 
+// Configuration returns the configuration (args) for [SynapseSparkPool].
 func (ssp *SynapseSparkPool) Configuration() interface{} {
 	return ssp.Args
 }
 
+// DependOn is used for other resources to depend on [SynapseSparkPool].
+func (ssp *SynapseSparkPool) DependOn() terra.Reference {
+	return terra.ReferenceResource(ssp)
+}
+
+// Dependencies returns the list of resources [SynapseSparkPool] depends_on.
+func (ssp *SynapseSparkPool) Dependencies() terra.Dependencies {
+	return ssp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SynapseSparkPool].
+func (ssp *SynapseSparkPool) LifecycleManagement() *terra.Lifecycle {
+	return ssp.Lifecycle
+}
+
+// Attributes returns the attributes for [SynapseSparkPool].
 func (ssp *SynapseSparkPool) Attributes() synapseSparkPoolAttributes {
 	return synapseSparkPoolAttributes{ref: terra.ReferenceResource(ssp)}
 }
 
+// ImportState imports the given attribute values into [SynapseSparkPool]'s state.
 func (ssp *SynapseSparkPool) ImportState(av io.Reader) error {
 	ssp.state = &synapseSparkPoolState{}
 	if err := json.NewDecoder(av).Decode(ssp.state); err != nil {
@@ -49,10 +73,12 @@ func (ssp *SynapseSparkPool) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SynapseSparkPool] has state.
 func (ssp *SynapseSparkPool) State() (*synapseSparkPoolState, bool) {
 	return ssp.state, ssp.state != nil
 }
 
+// StateMust returns the state for [SynapseSparkPool]. Panics if the state is nil.
 func (ssp *SynapseSparkPool) StateMust() *synapseSparkPoolState {
 	if ssp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ssp.Type(), ssp.LocalName()))
@@ -60,10 +86,7 @@ func (ssp *SynapseSparkPool) StateMust() *synapseSparkPoolState {
 	return ssp.state
 }
 
-func (ssp *SynapseSparkPool) DependOn() terra.Reference {
-	return terra.ReferenceResource(ssp)
-}
-
+// SynapseSparkPoolArgs contains the configurations for azurerm_synapse_spark_pool.
 type SynapseSparkPoolArgs struct {
 	// CacheSize: number, optional
 	CacheSize terra.NumberValue `hcl:"cache_size,attr"`
@@ -107,95 +130,109 @@ type SynapseSparkPoolArgs struct {
 	SparkConfig *synapsesparkpool.SparkConfig `hcl:"spark_config,block"`
 	// Timeouts: optional
 	Timeouts *synapsesparkpool.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SynapseSparkPool depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type synapseSparkPoolAttributes struct {
 	ref terra.Reference
 }
 
+// CacheSize returns a reference to field cache_size of azurerm_synapse_spark_pool.
 func (ssp synapseSparkPoolAttributes) CacheSize() terra.NumberValue {
-	return terra.ReferenceNumber(ssp.ref.Append("cache_size"))
+	return terra.ReferenceAsNumber(ssp.ref.Append("cache_size"))
 }
 
+// ComputeIsolationEnabled returns a reference to field compute_isolation_enabled of azurerm_synapse_spark_pool.
 func (ssp synapseSparkPoolAttributes) ComputeIsolationEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ssp.ref.Append("compute_isolation_enabled"))
+	return terra.ReferenceAsBool(ssp.ref.Append("compute_isolation_enabled"))
 }
 
+// DynamicExecutorAllocationEnabled returns a reference to field dynamic_executor_allocation_enabled of azurerm_synapse_spark_pool.
 func (ssp synapseSparkPoolAttributes) DynamicExecutorAllocationEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ssp.ref.Append("dynamic_executor_allocation_enabled"))
+	return terra.ReferenceAsBool(ssp.ref.Append("dynamic_executor_allocation_enabled"))
 }
 
+// Id returns a reference to field id of azurerm_synapse_spark_pool.
 func (ssp synapseSparkPoolAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ssp.ref.Append("id"))
+	return terra.ReferenceAsString(ssp.ref.Append("id"))
 }
 
+// MaxExecutors returns a reference to field max_executors of azurerm_synapse_spark_pool.
 func (ssp synapseSparkPoolAttributes) MaxExecutors() terra.NumberValue {
-	return terra.ReferenceNumber(ssp.ref.Append("max_executors"))
+	return terra.ReferenceAsNumber(ssp.ref.Append("max_executors"))
 }
 
+// MinExecutors returns a reference to field min_executors of azurerm_synapse_spark_pool.
 func (ssp synapseSparkPoolAttributes) MinExecutors() terra.NumberValue {
-	return terra.ReferenceNumber(ssp.ref.Append("min_executors"))
+	return terra.ReferenceAsNumber(ssp.ref.Append("min_executors"))
 }
 
+// Name returns a reference to field name of azurerm_synapse_spark_pool.
 func (ssp synapseSparkPoolAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ssp.ref.Append("name"))
+	return terra.ReferenceAsString(ssp.ref.Append("name"))
 }
 
+// NodeCount returns a reference to field node_count of azurerm_synapse_spark_pool.
 func (ssp synapseSparkPoolAttributes) NodeCount() terra.NumberValue {
-	return terra.ReferenceNumber(ssp.ref.Append("node_count"))
+	return terra.ReferenceAsNumber(ssp.ref.Append("node_count"))
 }
 
+// NodeSize returns a reference to field node_size of azurerm_synapse_spark_pool.
 func (ssp synapseSparkPoolAttributes) NodeSize() terra.StringValue {
-	return terra.ReferenceString(ssp.ref.Append("node_size"))
+	return terra.ReferenceAsString(ssp.ref.Append("node_size"))
 }
 
+// NodeSizeFamily returns a reference to field node_size_family of azurerm_synapse_spark_pool.
 func (ssp synapseSparkPoolAttributes) NodeSizeFamily() terra.StringValue {
-	return terra.ReferenceString(ssp.ref.Append("node_size_family"))
+	return terra.ReferenceAsString(ssp.ref.Append("node_size_family"))
 }
 
+// SessionLevelPackagesEnabled returns a reference to field session_level_packages_enabled of azurerm_synapse_spark_pool.
 func (ssp synapseSparkPoolAttributes) SessionLevelPackagesEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ssp.ref.Append("session_level_packages_enabled"))
+	return terra.ReferenceAsBool(ssp.ref.Append("session_level_packages_enabled"))
 }
 
+// SparkEventsFolder returns a reference to field spark_events_folder of azurerm_synapse_spark_pool.
 func (ssp synapseSparkPoolAttributes) SparkEventsFolder() terra.StringValue {
-	return terra.ReferenceString(ssp.ref.Append("spark_events_folder"))
+	return terra.ReferenceAsString(ssp.ref.Append("spark_events_folder"))
 }
 
+// SparkLogFolder returns a reference to field spark_log_folder of azurerm_synapse_spark_pool.
 func (ssp synapseSparkPoolAttributes) SparkLogFolder() terra.StringValue {
-	return terra.ReferenceString(ssp.ref.Append("spark_log_folder"))
+	return terra.ReferenceAsString(ssp.ref.Append("spark_log_folder"))
 }
 
+// SparkVersion returns a reference to field spark_version of azurerm_synapse_spark_pool.
 func (ssp synapseSparkPoolAttributes) SparkVersion() terra.StringValue {
-	return terra.ReferenceString(ssp.ref.Append("spark_version"))
+	return terra.ReferenceAsString(ssp.ref.Append("spark_version"))
 }
 
+// SynapseWorkspaceId returns a reference to field synapse_workspace_id of azurerm_synapse_spark_pool.
 func (ssp synapseSparkPoolAttributes) SynapseWorkspaceId() terra.StringValue {
-	return terra.ReferenceString(ssp.ref.Append("synapse_workspace_id"))
+	return terra.ReferenceAsString(ssp.ref.Append("synapse_workspace_id"))
 }
 
+// Tags returns a reference to field tags of azurerm_synapse_spark_pool.
 func (ssp synapseSparkPoolAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ssp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ssp.ref.Append("tags"))
 }
 
 func (ssp synapseSparkPoolAttributes) AutoPause() terra.ListValue[synapsesparkpool.AutoPauseAttributes] {
-	return terra.ReferenceList[synapsesparkpool.AutoPauseAttributes](ssp.ref.Append("auto_pause"))
+	return terra.ReferenceAsList[synapsesparkpool.AutoPauseAttributes](ssp.ref.Append("auto_pause"))
 }
 
 func (ssp synapseSparkPoolAttributes) AutoScale() terra.ListValue[synapsesparkpool.AutoScaleAttributes] {
-	return terra.ReferenceList[synapsesparkpool.AutoScaleAttributes](ssp.ref.Append("auto_scale"))
+	return terra.ReferenceAsList[synapsesparkpool.AutoScaleAttributes](ssp.ref.Append("auto_scale"))
 }
 
 func (ssp synapseSparkPoolAttributes) LibraryRequirement() terra.ListValue[synapsesparkpool.LibraryRequirementAttributes] {
-	return terra.ReferenceList[synapsesparkpool.LibraryRequirementAttributes](ssp.ref.Append("library_requirement"))
+	return terra.ReferenceAsList[synapsesparkpool.LibraryRequirementAttributes](ssp.ref.Append("library_requirement"))
 }
 
 func (ssp synapseSparkPoolAttributes) SparkConfig() terra.ListValue[synapsesparkpool.SparkConfigAttributes] {
-	return terra.ReferenceList[synapsesparkpool.SparkConfigAttributes](ssp.ref.Append("spark_config"))
+	return terra.ReferenceAsList[synapsesparkpool.SparkConfigAttributes](ssp.ref.Append("spark_config"))
 }
 
 func (ssp synapseSparkPoolAttributes) Timeouts() synapsesparkpool.TimeoutsAttributes {
-	return terra.ReferenceSingle[synapsesparkpool.TimeoutsAttributes](ssp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[synapsesparkpool.TimeoutsAttributes](ssp.ref.Append("timeouts"))
 }
 
 type synapseSparkPoolState struct {

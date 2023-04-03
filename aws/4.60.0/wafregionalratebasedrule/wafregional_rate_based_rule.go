@@ -28,7 +28,7 @@ func (p PredicateAttributes) InternalWithRef(ref terra.Reference) PredicateAttri
 	return PredicateAttributes{ref: ref}
 }
 
-func (p PredicateAttributes) InternalTokens() hclwrite.Tokens {
+func (p PredicateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 

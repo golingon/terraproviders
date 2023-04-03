@@ -22,116 +22,116 @@ type PeeringsAttributes struct {
 	ref terra.Reference
 }
 
-func (p PeeringsAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p PeeringsAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p PeeringsAttributes) InternalWithRef(ref terra.Reference) PeeringsAttributes {
 	return PeeringsAttributes{ref: ref}
 }
 
-func (p PeeringsAttributes) InternalTokens() hclwrite.Tokens {
+func (p PeeringsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
 func (p PeeringsAttributes) AzureAsn() terra.NumberValue {
-	return terra.ReferenceNumber(p.ref.Append("azure_asn"))
+	return terra.ReferenceAsNumber(p.ref.Append("azure_asn"))
 }
 
 func (p PeeringsAttributes) PeerAsn() terra.NumberValue {
-	return terra.ReferenceNumber(p.ref.Append("peer_asn"))
+	return terra.ReferenceAsNumber(p.ref.Append("peer_asn"))
 }
 
 func (p PeeringsAttributes) PeeringType() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("peering_type"))
+	return terra.ReferenceAsString(p.ref.Append("peering_type"))
 }
 
 func (p PeeringsAttributes) PrimaryPeerAddressPrefix() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("primary_peer_address_prefix"))
+	return terra.ReferenceAsString(p.ref.Append("primary_peer_address_prefix"))
 }
 
 func (p PeeringsAttributes) SecondaryPeerAddressPrefix() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("secondary_peer_address_prefix"))
+	return terra.ReferenceAsString(p.ref.Append("secondary_peer_address_prefix"))
 }
 
 func (p PeeringsAttributes) SharedKey() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("shared_key"))
+	return terra.ReferenceAsString(p.ref.Append("shared_key"))
 }
 
 func (p PeeringsAttributes) VlanId() terra.NumberValue {
-	return terra.ReferenceNumber(p.ref.Append("vlan_id"))
+	return terra.ReferenceAsNumber(p.ref.Append("vlan_id"))
 }
 
 type ServiceProviderPropertiesAttributes struct {
 	ref terra.Reference
 }
 
-func (spp ServiceProviderPropertiesAttributes) InternalRef() terra.Reference {
-	return spp.ref
+func (spp ServiceProviderPropertiesAttributes) InternalRef() (terra.Reference, error) {
+	return spp.ref, nil
 }
 
 func (spp ServiceProviderPropertiesAttributes) InternalWithRef(ref terra.Reference) ServiceProviderPropertiesAttributes {
 	return ServiceProviderPropertiesAttributes{ref: ref}
 }
 
-func (spp ServiceProviderPropertiesAttributes) InternalTokens() hclwrite.Tokens {
+func (spp ServiceProviderPropertiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return spp.ref.InternalTokens()
 }
 
 func (spp ServiceProviderPropertiesAttributes) BandwidthInMbps() terra.NumberValue {
-	return terra.ReferenceNumber(spp.ref.Append("bandwidth_in_mbps"))
+	return terra.ReferenceAsNumber(spp.ref.Append("bandwidth_in_mbps"))
 }
 
 func (spp ServiceProviderPropertiesAttributes) PeeringLocation() terra.StringValue {
-	return terra.ReferenceString(spp.ref.Append("peering_location"))
+	return terra.ReferenceAsString(spp.ref.Append("peering_location"))
 }
 
 func (spp ServiceProviderPropertiesAttributes) ServiceProviderName() terra.StringValue {
-	return terra.ReferenceString(spp.ref.Append("service_provider_name"))
+	return terra.ReferenceAsString(spp.ref.Append("service_provider_name"))
 }
 
 type SkuAttributes struct {
 	ref terra.Reference
 }
 
-func (s SkuAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SkuAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SkuAttributes) InternalWithRef(ref terra.Reference) SkuAttributes {
 	return SkuAttributes{ref: ref}
 }
 
-func (s SkuAttributes) InternalTokens() hclwrite.Tokens {
+func (s SkuAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SkuAttributes) Family() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("family"))
+	return terra.ReferenceAsString(s.ref.Append("family"))
 }
 
 func (s SkuAttributes) Tier() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("tier"))
+	return terra.ReferenceAsString(s.ref.Append("tier"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type PeeringsState struct {

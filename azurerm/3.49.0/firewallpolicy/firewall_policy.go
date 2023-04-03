@@ -120,328 +120,328 @@ type DnsAttributes struct {
 	ref terra.Reference
 }
 
-func (d DnsAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DnsAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DnsAttributes) InternalWithRef(ref terra.Reference) DnsAttributes {
 	return DnsAttributes{ref: ref}
 }
 
-func (d DnsAttributes) InternalTokens() hclwrite.Tokens {
+func (d DnsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d DnsAttributes) ProxyEnabled() terra.BoolValue {
-	return terra.ReferenceBool(d.ref.Append("proxy_enabled"))
+	return terra.ReferenceAsBool(d.ref.Append("proxy_enabled"))
 }
 
 func (d DnsAttributes) Servers() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](d.ref.Append("servers"))
+	return terra.ReferenceAsList[terra.StringValue](d.ref.Append("servers"))
 }
 
 type ExplicitProxyAttributes struct {
 	ref terra.Reference
 }
 
-func (ep ExplicitProxyAttributes) InternalRef() terra.Reference {
-	return ep.ref
+func (ep ExplicitProxyAttributes) InternalRef() (terra.Reference, error) {
+	return ep.ref, nil
 }
 
 func (ep ExplicitProxyAttributes) InternalWithRef(ref terra.Reference) ExplicitProxyAttributes {
 	return ExplicitProxyAttributes{ref: ref}
 }
 
-func (ep ExplicitProxyAttributes) InternalTokens() hclwrite.Tokens {
+func (ep ExplicitProxyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ep.ref.InternalTokens()
 }
 
 func (ep ExplicitProxyAttributes) EnablePacFile() terra.BoolValue {
-	return terra.ReferenceBool(ep.ref.Append("enable_pac_file"))
+	return terra.ReferenceAsBool(ep.ref.Append("enable_pac_file"))
 }
 
 func (ep ExplicitProxyAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(ep.ref.Append("enabled"))
+	return terra.ReferenceAsBool(ep.ref.Append("enabled"))
 }
 
 func (ep ExplicitProxyAttributes) HttpPort() terra.NumberValue {
-	return terra.ReferenceNumber(ep.ref.Append("http_port"))
+	return terra.ReferenceAsNumber(ep.ref.Append("http_port"))
 }
 
 func (ep ExplicitProxyAttributes) HttpsPort() terra.NumberValue {
-	return terra.ReferenceNumber(ep.ref.Append("https_port"))
+	return terra.ReferenceAsNumber(ep.ref.Append("https_port"))
 }
 
 func (ep ExplicitProxyAttributes) PacFile() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("pac_file"))
+	return terra.ReferenceAsString(ep.ref.Append("pac_file"))
 }
 
 func (ep ExplicitProxyAttributes) PacFilePort() terra.NumberValue {
-	return terra.ReferenceNumber(ep.ref.Append("pac_file_port"))
+	return terra.ReferenceAsNumber(ep.ref.Append("pac_file_port"))
 }
 
 type IdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (i IdentityAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IdentityAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IdentityAttributes) InternalWithRef(ref terra.Reference) IdentityAttributes {
 	return IdentityAttributes{ref: ref}
 }
 
-func (i IdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (i IdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IdentityAttributes) IdentityIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i.ref.Append("identity_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](i.ref.Append("identity_ids"))
 }
 
 func (i IdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("type"))
+	return terra.ReferenceAsString(i.ref.Append("type"))
 }
 
 type InsightsAttributes struct {
 	ref terra.Reference
 }
 
-func (i InsightsAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i InsightsAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i InsightsAttributes) InternalWithRef(ref terra.Reference) InsightsAttributes {
 	return InsightsAttributes{ref: ref}
 }
 
-func (i InsightsAttributes) InternalTokens() hclwrite.Tokens {
+func (i InsightsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i InsightsAttributes) DefaultLogAnalyticsWorkspaceId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("default_log_analytics_workspace_id"))
+	return terra.ReferenceAsString(i.ref.Append("default_log_analytics_workspace_id"))
 }
 
 func (i InsightsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(i.ref.Append("enabled"))
+	return terra.ReferenceAsBool(i.ref.Append("enabled"))
 }
 
 func (i InsightsAttributes) RetentionInDays() terra.NumberValue {
-	return terra.ReferenceNumber(i.ref.Append("retention_in_days"))
+	return terra.ReferenceAsNumber(i.ref.Append("retention_in_days"))
 }
 
 func (i InsightsAttributes) LogAnalyticsWorkspace() terra.ListValue[LogAnalyticsWorkspaceAttributes] {
-	return terra.ReferenceList[LogAnalyticsWorkspaceAttributes](i.ref.Append("log_analytics_workspace"))
+	return terra.ReferenceAsList[LogAnalyticsWorkspaceAttributes](i.ref.Append("log_analytics_workspace"))
 }
 
 type LogAnalyticsWorkspaceAttributes struct {
 	ref terra.Reference
 }
 
-func (law LogAnalyticsWorkspaceAttributes) InternalRef() terra.Reference {
-	return law.ref
+func (law LogAnalyticsWorkspaceAttributes) InternalRef() (terra.Reference, error) {
+	return law.ref, nil
 }
 
 func (law LogAnalyticsWorkspaceAttributes) InternalWithRef(ref terra.Reference) LogAnalyticsWorkspaceAttributes {
 	return LogAnalyticsWorkspaceAttributes{ref: ref}
 }
 
-func (law LogAnalyticsWorkspaceAttributes) InternalTokens() hclwrite.Tokens {
+func (law LogAnalyticsWorkspaceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return law.ref.InternalTokens()
 }
 
 func (law LogAnalyticsWorkspaceAttributes) FirewallLocation() terra.StringValue {
-	return terra.ReferenceString(law.ref.Append("firewall_location"))
+	return terra.ReferenceAsString(law.ref.Append("firewall_location"))
 }
 
 func (law LogAnalyticsWorkspaceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(law.ref.Append("id"))
+	return terra.ReferenceAsString(law.ref.Append("id"))
 }
 
 type IntrusionDetectionAttributes struct {
 	ref terra.Reference
 }
 
-func (id IntrusionDetectionAttributes) InternalRef() terra.Reference {
-	return id.ref
+func (id IntrusionDetectionAttributes) InternalRef() (terra.Reference, error) {
+	return id.ref, nil
 }
 
 func (id IntrusionDetectionAttributes) InternalWithRef(ref terra.Reference) IntrusionDetectionAttributes {
 	return IntrusionDetectionAttributes{ref: ref}
 }
 
-func (id IntrusionDetectionAttributes) InternalTokens() hclwrite.Tokens {
+func (id IntrusionDetectionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return id.ref.InternalTokens()
 }
 
 func (id IntrusionDetectionAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(id.ref.Append("mode"))
+	return terra.ReferenceAsString(id.ref.Append("mode"))
 }
 
 func (id IntrusionDetectionAttributes) PrivateRanges() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](id.ref.Append("private_ranges"))
+	return terra.ReferenceAsList[terra.StringValue](id.ref.Append("private_ranges"))
 }
 
 func (id IntrusionDetectionAttributes) SignatureOverrides() terra.ListValue[SignatureOverridesAttributes] {
-	return terra.ReferenceList[SignatureOverridesAttributes](id.ref.Append("signature_overrides"))
+	return terra.ReferenceAsList[SignatureOverridesAttributes](id.ref.Append("signature_overrides"))
 }
 
 func (id IntrusionDetectionAttributes) TrafficBypass() terra.ListValue[TrafficBypassAttributes] {
-	return terra.ReferenceList[TrafficBypassAttributes](id.ref.Append("traffic_bypass"))
+	return terra.ReferenceAsList[TrafficBypassAttributes](id.ref.Append("traffic_bypass"))
 }
 
 type SignatureOverridesAttributes struct {
 	ref terra.Reference
 }
 
-func (so SignatureOverridesAttributes) InternalRef() terra.Reference {
-	return so.ref
+func (so SignatureOverridesAttributes) InternalRef() (terra.Reference, error) {
+	return so.ref, nil
 }
 
 func (so SignatureOverridesAttributes) InternalWithRef(ref terra.Reference) SignatureOverridesAttributes {
 	return SignatureOverridesAttributes{ref: ref}
 }
 
-func (so SignatureOverridesAttributes) InternalTokens() hclwrite.Tokens {
+func (so SignatureOverridesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return so.ref.InternalTokens()
 }
 
 func (so SignatureOverridesAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(so.ref.Append("id"))
+	return terra.ReferenceAsString(so.ref.Append("id"))
 }
 
 func (so SignatureOverridesAttributes) State() terra.StringValue {
-	return terra.ReferenceString(so.ref.Append("state"))
+	return terra.ReferenceAsString(so.ref.Append("state"))
 }
 
 type TrafficBypassAttributes struct {
 	ref terra.Reference
 }
 
-func (tb TrafficBypassAttributes) InternalRef() terra.Reference {
-	return tb.ref
+func (tb TrafficBypassAttributes) InternalRef() (terra.Reference, error) {
+	return tb.ref, nil
 }
 
 func (tb TrafficBypassAttributes) InternalWithRef(ref terra.Reference) TrafficBypassAttributes {
 	return TrafficBypassAttributes{ref: ref}
 }
 
-func (tb TrafficBypassAttributes) InternalTokens() hclwrite.Tokens {
+func (tb TrafficBypassAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tb.ref.InternalTokens()
 }
 
 func (tb TrafficBypassAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(tb.ref.Append("description"))
+	return terra.ReferenceAsString(tb.ref.Append("description"))
 }
 
 func (tb TrafficBypassAttributes) DestinationAddresses() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](tb.ref.Append("destination_addresses"))
+	return terra.ReferenceAsSet[terra.StringValue](tb.ref.Append("destination_addresses"))
 }
 
 func (tb TrafficBypassAttributes) DestinationIpGroups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](tb.ref.Append("destination_ip_groups"))
+	return terra.ReferenceAsSet[terra.StringValue](tb.ref.Append("destination_ip_groups"))
 }
 
 func (tb TrafficBypassAttributes) DestinationPorts() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](tb.ref.Append("destination_ports"))
+	return terra.ReferenceAsSet[terra.StringValue](tb.ref.Append("destination_ports"))
 }
 
 func (tb TrafficBypassAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(tb.ref.Append("name"))
+	return terra.ReferenceAsString(tb.ref.Append("name"))
 }
 
 func (tb TrafficBypassAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(tb.ref.Append("protocol"))
+	return terra.ReferenceAsString(tb.ref.Append("protocol"))
 }
 
 func (tb TrafficBypassAttributes) SourceAddresses() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](tb.ref.Append("source_addresses"))
+	return terra.ReferenceAsSet[terra.StringValue](tb.ref.Append("source_addresses"))
 }
 
 func (tb TrafficBypassAttributes) SourceIpGroups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](tb.ref.Append("source_ip_groups"))
+	return terra.ReferenceAsSet[terra.StringValue](tb.ref.Append("source_ip_groups"))
 }
 
 type ThreatIntelligenceAllowlistAttributes struct {
 	ref terra.Reference
 }
 
-func (tia ThreatIntelligenceAllowlistAttributes) InternalRef() terra.Reference {
-	return tia.ref
+func (tia ThreatIntelligenceAllowlistAttributes) InternalRef() (terra.Reference, error) {
+	return tia.ref, nil
 }
 
 func (tia ThreatIntelligenceAllowlistAttributes) InternalWithRef(ref terra.Reference) ThreatIntelligenceAllowlistAttributes {
 	return ThreatIntelligenceAllowlistAttributes{ref: ref}
 }
 
-func (tia ThreatIntelligenceAllowlistAttributes) InternalTokens() hclwrite.Tokens {
+func (tia ThreatIntelligenceAllowlistAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tia.ref.InternalTokens()
 }
 
 func (tia ThreatIntelligenceAllowlistAttributes) Fqdns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](tia.ref.Append("fqdns"))
+	return terra.ReferenceAsSet[terra.StringValue](tia.ref.Append("fqdns"))
 }
 
 func (tia ThreatIntelligenceAllowlistAttributes) IpAddresses() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](tia.ref.Append("ip_addresses"))
+	return terra.ReferenceAsSet[terra.StringValue](tia.ref.Append("ip_addresses"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type TlsCertificateAttributes struct {
 	ref terra.Reference
 }
 
-func (tc TlsCertificateAttributes) InternalRef() terra.Reference {
-	return tc.ref
+func (tc TlsCertificateAttributes) InternalRef() (terra.Reference, error) {
+	return tc.ref, nil
 }
 
 func (tc TlsCertificateAttributes) InternalWithRef(ref terra.Reference) TlsCertificateAttributes {
 	return TlsCertificateAttributes{ref: ref}
 }
 
-func (tc TlsCertificateAttributes) InternalTokens() hclwrite.Tokens {
+func (tc TlsCertificateAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tc.ref.InternalTokens()
 }
 
 func (tc TlsCertificateAttributes) KeyVaultSecretId() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("key_vault_secret_id"))
+	return terra.ReferenceAsString(tc.ref.Append("key_vault_secret_id"))
 }
 
 func (tc TlsCertificateAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("name"))
+	return terra.ReferenceAsString(tc.ref.Append("name"))
 }
 
 type DnsState struct {

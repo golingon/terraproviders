@@ -48,7 +48,7 @@ func (er EvaluationRulesAttributes) InternalWithRef(ref terra.Reference) Evaluat
 	return EvaluationRulesAttributes{ref: ref}
 }
 
-func (er EvaluationRulesAttributes) InternalTokens() hclwrite.Tokens {
+func (er EvaluationRulesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return er.ref.InternalTokens()
 }
 
@@ -72,7 +72,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -100,7 +100,7 @@ func (v VariationsAttributes) InternalWithRef(ref terra.Reference) VariationsAtt
 	return VariationsAttributes{ref: ref}
 }
 
-func (v VariationsAttributes) InternalTokens() hclwrite.Tokens {
+func (v VariationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 
@@ -124,7 +124,7 @@ func (v ValueAttributes) InternalWithRef(ref terra.Reference) ValueAttributes {
 	return ValueAttributes{ref: ref}
 }
 
-func (v ValueAttributes) InternalTokens() hclwrite.Tokens {
+func (v ValueAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 

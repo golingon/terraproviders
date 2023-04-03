@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewRecaptchaEnterpriseKey creates a new instance of [RecaptchaEnterpriseKey].
 func NewRecaptchaEnterpriseKey(name string, args RecaptchaEnterpriseKeyArgs) *RecaptchaEnterpriseKey {
 	return &RecaptchaEnterpriseKey{
 		Args: args,
@@ -19,28 +20,51 @@ func NewRecaptchaEnterpriseKey(name string, args RecaptchaEnterpriseKeyArgs) *Re
 
 var _ terra.Resource = (*RecaptchaEnterpriseKey)(nil)
 
+// RecaptchaEnterpriseKey represents the Terraform resource google_recaptcha_enterprise_key.
 type RecaptchaEnterpriseKey struct {
-	Name  string
-	Args  RecaptchaEnterpriseKeyArgs
-	state *recaptchaEnterpriseKeyState
+	Name      string
+	Args      RecaptchaEnterpriseKeyArgs
+	state     *recaptchaEnterpriseKeyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RecaptchaEnterpriseKey].
 func (rek *RecaptchaEnterpriseKey) Type() string {
 	return "google_recaptcha_enterprise_key"
 }
 
+// LocalName returns the local name for [RecaptchaEnterpriseKey].
 func (rek *RecaptchaEnterpriseKey) LocalName() string {
 	return rek.Name
 }
 
+// Configuration returns the configuration (args) for [RecaptchaEnterpriseKey].
 func (rek *RecaptchaEnterpriseKey) Configuration() interface{} {
 	return rek.Args
 }
 
+// DependOn is used for other resources to depend on [RecaptchaEnterpriseKey].
+func (rek *RecaptchaEnterpriseKey) DependOn() terra.Reference {
+	return terra.ReferenceResource(rek)
+}
+
+// Dependencies returns the list of resources [RecaptchaEnterpriseKey] depends_on.
+func (rek *RecaptchaEnterpriseKey) Dependencies() terra.Dependencies {
+	return rek.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RecaptchaEnterpriseKey].
+func (rek *RecaptchaEnterpriseKey) LifecycleManagement() *terra.Lifecycle {
+	return rek.Lifecycle
+}
+
+// Attributes returns the attributes for [RecaptchaEnterpriseKey].
 func (rek *RecaptchaEnterpriseKey) Attributes() recaptchaEnterpriseKeyAttributes {
 	return recaptchaEnterpriseKeyAttributes{ref: terra.ReferenceResource(rek)}
 }
 
+// ImportState imports the given attribute values into [RecaptchaEnterpriseKey]'s state.
 func (rek *RecaptchaEnterpriseKey) ImportState(av io.Reader) error {
 	rek.state = &recaptchaEnterpriseKeyState{}
 	if err := json.NewDecoder(av).Decode(rek.state); err != nil {
@@ -49,10 +73,12 @@ func (rek *RecaptchaEnterpriseKey) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RecaptchaEnterpriseKey] has state.
 func (rek *RecaptchaEnterpriseKey) State() (*recaptchaEnterpriseKeyState, bool) {
 	return rek.state, rek.state != nil
 }
 
+// StateMust returns the state for [RecaptchaEnterpriseKey]. Panics if the state is nil.
 func (rek *RecaptchaEnterpriseKey) StateMust() *recaptchaEnterpriseKeyState {
 	if rek.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rek.Type(), rek.LocalName()))
@@ -60,10 +86,7 @@ func (rek *RecaptchaEnterpriseKey) StateMust() *recaptchaEnterpriseKeyState {
 	return rek.state
 }
 
-func (rek *RecaptchaEnterpriseKey) DependOn() terra.Reference {
-	return terra.ReferenceResource(rek)
-}
-
+// RecaptchaEnterpriseKeyArgs contains the configurations for google_recaptcha_enterprise_key.
 type RecaptchaEnterpriseKeyArgs struct {
 	// DisplayName: string, required
 	DisplayName terra.StringValue `hcl:"display_name,attr" validate:"required"`
@@ -83,55 +106,59 @@ type RecaptchaEnterpriseKeyArgs struct {
 	Timeouts *recaptchaenterprisekey.Timeouts `hcl:"timeouts,block"`
 	// WebSettings: optional
 	WebSettings *recaptchaenterprisekey.WebSettings `hcl:"web_settings,block"`
-	// DependsOn contains resources that RecaptchaEnterpriseKey depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type recaptchaEnterpriseKeyAttributes struct {
 	ref terra.Reference
 }
 
+// CreateTime returns a reference to field create_time of google_recaptcha_enterprise_key.
 func (rek recaptchaEnterpriseKeyAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(rek.ref.Append("create_time"))
+	return terra.ReferenceAsString(rek.ref.Append("create_time"))
 }
 
+// DisplayName returns a reference to field display_name of google_recaptcha_enterprise_key.
 func (rek recaptchaEnterpriseKeyAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(rek.ref.Append("display_name"))
+	return terra.ReferenceAsString(rek.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of google_recaptcha_enterprise_key.
 func (rek recaptchaEnterpriseKeyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rek.ref.Append("id"))
+	return terra.ReferenceAsString(rek.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_recaptcha_enterprise_key.
 func (rek recaptchaEnterpriseKeyAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rek.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](rek.ref.Append("labels"))
 }
 
+// Name returns a reference to field name of google_recaptcha_enterprise_key.
 func (rek recaptchaEnterpriseKeyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rek.ref.Append("name"))
+	return terra.ReferenceAsString(rek.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_recaptcha_enterprise_key.
 func (rek recaptchaEnterpriseKeyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(rek.ref.Append("project"))
+	return terra.ReferenceAsString(rek.ref.Append("project"))
 }
 
 func (rek recaptchaEnterpriseKeyAttributes) AndroidSettings() terra.ListValue[recaptchaenterprisekey.AndroidSettingsAttributes] {
-	return terra.ReferenceList[recaptchaenterprisekey.AndroidSettingsAttributes](rek.ref.Append("android_settings"))
+	return terra.ReferenceAsList[recaptchaenterprisekey.AndroidSettingsAttributes](rek.ref.Append("android_settings"))
 }
 
 func (rek recaptchaEnterpriseKeyAttributes) IosSettings() terra.ListValue[recaptchaenterprisekey.IosSettingsAttributes] {
-	return terra.ReferenceList[recaptchaenterprisekey.IosSettingsAttributes](rek.ref.Append("ios_settings"))
+	return terra.ReferenceAsList[recaptchaenterprisekey.IosSettingsAttributes](rek.ref.Append("ios_settings"))
 }
 
 func (rek recaptchaEnterpriseKeyAttributes) TestingOptions() terra.ListValue[recaptchaenterprisekey.TestingOptionsAttributes] {
-	return terra.ReferenceList[recaptchaenterprisekey.TestingOptionsAttributes](rek.ref.Append("testing_options"))
+	return terra.ReferenceAsList[recaptchaenterprisekey.TestingOptionsAttributes](rek.ref.Append("testing_options"))
 }
 
 func (rek recaptchaEnterpriseKeyAttributes) Timeouts() recaptchaenterprisekey.TimeoutsAttributes {
-	return terra.ReferenceSingle[recaptchaenterprisekey.TimeoutsAttributes](rek.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[recaptchaenterprisekey.TimeoutsAttributes](rek.ref.Append("timeouts"))
 }
 
 func (rek recaptchaEnterpriseKeyAttributes) WebSettings() terra.ListValue[recaptchaenterprisekey.WebSettingsAttributes] {
-	return terra.ReferenceList[recaptchaenterprisekey.WebSettingsAttributes](rek.ref.Append("web_settings"))
+	return terra.ReferenceAsList[recaptchaenterprisekey.WebSettingsAttributes](rek.ref.Append("web_settings"))
 }
 
 type recaptchaEnterpriseKeyState struct {

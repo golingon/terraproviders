@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataTrafficManagerGeographicalLocation creates a new instance of [DataTrafficManagerGeographicalLocation].
 func NewDataTrafficManagerGeographicalLocation(name string, args DataTrafficManagerGeographicalLocationArgs) *DataTrafficManagerGeographicalLocation {
 	return &DataTrafficManagerGeographicalLocation{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataTrafficManagerGeographicalLocation(name string, args DataTrafficMana
 
 var _ terra.DataResource = (*DataTrafficManagerGeographicalLocation)(nil)
 
+// DataTrafficManagerGeographicalLocation represents the Terraform data resource azurerm_traffic_manager_geographical_location.
 type DataTrafficManagerGeographicalLocation struct {
 	Name string
 	Args DataTrafficManagerGeographicalLocationArgs
 }
 
+// DataSource returns the Terraform object type for [DataTrafficManagerGeographicalLocation].
 func (tmgl *DataTrafficManagerGeographicalLocation) DataSource() string {
 	return "azurerm_traffic_manager_geographical_location"
 }
 
+// LocalName returns the local name for [DataTrafficManagerGeographicalLocation].
 func (tmgl *DataTrafficManagerGeographicalLocation) LocalName() string {
 	return tmgl.Name
 }
 
+// Configuration returns the configuration (args) for [DataTrafficManagerGeographicalLocation].
 func (tmgl *DataTrafficManagerGeographicalLocation) Configuration() interface{} {
 	return tmgl.Args
 }
 
+// Attributes returns the attributes for [DataTrafficManagerGeographicalLocation].
 func (tmgl *DataTrafficManagerGeographicalLocation) Attributes() dataTrafficManagerGeographicalLocationAttributes {
 	return dataTrafficManagerGeographicalLocationAttributes{ref: terra.ReferenceDataResource(tmgl)}
 }
 
+// DataTrafficManagerGeographicalLocationArgs contains the configurations for azurerm_traffic_manager_geographical_location.
 type DataTrafficManagerGeographicalLocationArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -49,14 +56,16 @@ type dataTrafficManagerGeographicalLocationAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_traffic_manager_geographical_location.
 func (tmgl dataTrafficManagerGeographicalLocationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(tmgl.ref.Append("id"))
+	return terra.ReferenceAsString(tmgl.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_traffic_manager_geographical_location.
 func (tmgl dataTrafficManagerGeographicalLocationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(tmgl.ref.Append("name"))
+	return terra.ReferenceAsString(tmgl.ref.Append("name"))
 }
 
 func (tmgl dataTrafficManagerGeographicalLocationAttributes) Timeouts() datatrafficmanagergeographicallocation.TimeoutsAttributes {
-	return terra.ReferenceSingle[datatrafficmanagergeographicallocation.TimeoutsAttributes](tmgl.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datatrafficmanagergeographicallocation.TimeoutsAttributes](tmgl.ref.Append("timeouts"))
 }

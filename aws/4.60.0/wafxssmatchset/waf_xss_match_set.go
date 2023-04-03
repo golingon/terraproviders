@@ -33,7 +33,7 @@ func (xmt XssMatchTuplesAttributes) InternalWithRef(ref terra.Reference) XssMatc
 	return XssMatchTuplesAttributes{ref: ref}
 }
 
-func (xmt XssMatchTuplesAttributes) InternalTokens() hclwrite.Tokens {
+func (xmt XssMatchTuplesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return xmt.ref.InternalTokens()
 }
 
@@ -57,7 +57,7 @@ func (ftm FieldToMatchAttributes) InternalWithRef(ref terra.Reference) FieldToMa
 	return FieldToMatchAttributes{ref: ref}
 }
 
-func (ftm FieldToMatchAttributes) InternalTokens() hclwrite.Tokens {
+func (ftm FieldToMatchAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ftm.ref.InternalTokens()
 }
 

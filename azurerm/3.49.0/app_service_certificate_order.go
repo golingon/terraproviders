@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAppServiceCertificateOrder creates a new instance of [AppServiceCertificateOrder].
 func NewAppServiceCertificateOrder(name string, args AppServiceCertificateOrderArgs) *AppServiceCertificateOrder {
 	return &AppServiceCertificateOrder{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAppServiceCertificateOrder(name string, args AppServiceCertificateOrderA
 
 var _ terra.Resource = (*AppServiceCertificateOrder)(nil)
 
+// AppServiceCertificateOrder represents the Terraform resource azurerm_app_service_certificate_order.
 type AppServiceCertificateOrder struct {
-	Name  string
-	Args  AppServiceCertificateOrderArgs
-	state *appServiceCertificateOrderState
+	Name      string
+	Args      AppServiceCertificateOrderArgs
+	state     *appServiceCertificateOrderState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AppServiceCertificateOrder].
 func (asco *AppServiceCertificateOrder) Type() string {
 	return "azurerm_app_service_certificate_order"
 }
 
+// LocalName returns the local name for [AppServiceCertificateOrder].
 func (asco *AppServiceCertificateOrder) LocalName() string {
 	return asco.Name
 }
 
+// Configuration returns the configuration (args) for [AppServiceCertificateOrder].
 func (asco *AppServiceCertificateOrder) Configuration() interface{} {
 	return asco.Args
 }
 
+// DependOn is used for other resources to depend on [AppServiceCertificateOrder].
+func (asco *AppServiceCertificateOrder) DependOn() terra.Reference {
+	return terra.ReferenceResource(asco)
+}
+
+// Dependencies returns the list of resources [AppServiceCertificateOrder] depends_on.
+func (asco *AppServiceCertificateOrder) Dependencies() terra.Dependencies {
+	return asco.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AppServiceCertificateOrder].
+func (asco *AppServiceCertificateOrder) LifecycleManagement() *terra.Lifecycle {
+	return asco.Lifecycle
+}
+
+// Attributes returns the attributes for [AppServiceCertificateOrder].
 func (asco *AppServiceCertificateOrder) Attributes() appServiceCertificateOrderAttributes {
 	return appServiceCertificateOrderAttributes{ref: terra.ReferenceResource(asco)}
 }
 
+// ImportState imports the given attribute values into [AppServiceCertificateOrder]'s state.
 func (asco *AppServiceCertificateOrder) ImportState(av io.Reader) error {
 	asco.state = &appServiceCertificateOrderState{}
 	if err := json.NewDecoder(av).Decode(asco.state); err != nil {
@@ -49,10 +73,12 @@ func (asco *AppServiceCertificateOrder) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AppServiceCertificateOrder] has state.
 func (asco *AppServiceCertificateOrder) State() (*appServiceCertificateOrderState, bool) {
 	return asco.state, asco.state != nil
 }
 
+// StateMust returns the state for [AppServiceCertificateOrder]. Panics if the state is nil.
 func (asco *AppServiceCertificateOrder) StateMust() *appServiceCertificateOrderState {
 	if asco.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", asco.Type(), asco.LocalName()))
@@ -60,10 +86,7 @@ func (asco *AppServiceCertificateOrder) StateMust() *appServiceCertificateOrderS
 	return asco.state
 }
 
-func (asco *AppServiceCertificateOrder) DependOn() terra.Reference {
-	return terra.ReferenceResource(asco)
-}
-
+// AppServiceCertificateOrderArgs contains the configurations for azurerm_app_service_certificate_order.
 type AppServiceCertificateOrderArgs struct {
 	// AutoRenew: bool, optional
 	AutoRenew terra.BoolValue `hcl:"auto_renew,attr"`
@@ -91,95 +114,112 @@ type AppServiceCertificateOrderArgs struct {
 	Certificates []appservicecertificateorder.Certificates `hcl:"certificates,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *appservicecertificateorder.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that AppServiceCertificateOrder depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type appServiceCertificateOrderAttributes struct {
 	ref terra.Reference
 }
 
+// AppServiceCertificateNotRenewableReasons returns a reference to field app_service_certificate_not_renewable_reasons of azurerm_app_service_certificate_order.
 func (asco appServiceCertificateOrderAttributes) AppServiceCertificateNotRenewableReasons() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](asco.ref.Append("app_service_certificate_not_renewable_reasons"))
+	return terra.ReferenceAsList[terra.StringValue](asco.ref.Append("app_service_certificate_not_renewable_reasons"))
 }
 
+// AutoRenew returns a reference to field auto_renew of azurerm_app_service_certificate_order.
 func (asco appServiceCertificateOrderAttributes) AutoRenew() terra.BoolValue {
-	return terra.ReferenceBool(asco.ref.Append("auto_renew"))
+	return terra.ReferenceAsBool(asco.ref.Append("auto_renew"))
 }
 
+// Csr returns a reference to field csr of azurerm_app_service_certificate_order.
 func (asco appServiceCertificateOrderAttributes) Csr() terra.StringValue {
-	return terra.ReferenceString(asco.ref.Append("csr"))
+	return terra.ReferenceAsString(asco.ref.Append("csr"))
 }
 
+// DistinguishedName returns a reference to field distinguished_name of azurerm_app_service_certificate_order.
 func (asco appServiceCertificateOrderAttributes) DistinguishedName() terra.StringValue {
-	return terra.ReferenceString(asco.ref.Append("distinguished_name"))
+	return terra.ReferenceAsString(asco.ref.Append("distinguished_name"))
 }
 
+// DomainVerificationToken returns a reference to field domain_verification_token of azurerm_app_service_certificate_order.
 func (asco appServiceCertificateOrderAttributes) DomainVerificationToken() terra.StringValue {
-	return terra.ReferenceString(asco.ref.Append("domain_verification_token"))
+	return terra.ReferenceAsString(asco.ref.Append("domain_verification_token"))
 }
 
+// ExpirationTime returns a reference to field expiration_time of azurerm_app_service_certificate_order.
 func (asco appServiceCertificateOrderAttributes) ExpirationTime() terra.StringValue {
-	return terra.ReferenceString(asco.ref.Append("expiration_time"))
+	return terra.ReferenceAsString(asco.ref.Append("expiration_time"))
 }
 
+// Id returns a reference to field id of azurerm_app_service_certificate_order.
 func (asco appServiceCertificateOrderAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(asco.ref.Append("id"))
+	return terra.ReferenceAsString(asco.ref.Append("id"))
 }
 
+// IntermediateThumbprint returns a reference to field intermediate_thumbprint of azurerm_app_service_certificate_order.
 func (asco appServiceCertificateOrderAttributes) IntermediateThumbprint() terra.StringValue {
-	return terra.ReferenceString(asco.ref.Append("intermediate_thumbprint"))
+	return terra.ReferenceAsString(asco.ref.Append("intermediate_thumbprint"))
 }
 
+// IsPrivateKeyExternal returns a reference to field is_private_key_external of azurerm_app_service_certificate_order.
 func (asco appServiceCertificateOrderAttributes) IsPrivateKeyExternal() terra.BoolValue {
-	return terra.ReferenceBool(asco.ref.Append("is_private_key_external"))
+	return terra.ReferenceAsBool(asco.ref.Append("is_private_key_external"))
 }
 
+// KeySize returns a reference to field key_size of azurerm_app_service_certificate_order.
 func (asco appServiceCertificateOrderAttributes) KeySize() terra.NumberValue {
-	return terra.ReferenceNumber(asco.ref.Append("key_size"))
+	return terra.ReferenceAsNumber(asco.ref.Append("key_size"))
 }
 
+// Location returns a reference to field location of azurerm_app_service_certificate_order.
 func (asco appServiceCertificateOrderAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(asco.ref.Append("location"))
+	return terra.ReferenceAsString(asco.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_app_service_certificate_order.
 func (asco appServiceCertificateOrderAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(asco.ref.Append("name"))
+	return terra.ReferenceAsString(asco.ref.Append("name"))
 }
 
+// ProductType returns a reference to field product_type of azurerm_app_service_certificate_order.
 func (asco appServiceCertificateOrderAttributes) ProductType() terra.StringValue {
-	return terra.ReferenceString(asco.ref.Append("product_type"))
+	return terra.ReferenceAsString(asco.ref.Append("product_type"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_app_service_certificate_order.
 func (asco appServiceCertificateOrderAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(asco.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(asco.ref.Append("resource_group_name"))
 }
 
+// RootThumbprint returns a reference to field root_thumbprint of azurerm_app_service_certificate_order.
 func (asco appServiceCertificateOrderAttributes) RootThumbprint() terra.StringValue {
-	return terra.ReferenceString(asco.ref.Append("root_thumbprint"))
+	return terra.ReferenceAsString(asco.ref.Append("root_thumbprint"))
 }
 
+// SignedCertificateThumbprint returns a reference to field signed_certificate_thumbprint of azurerm_app_service_certificate_order.
 func (asco appServiceCertificateOrderAttributes) SignedCertificateThumbprint() terra.StringValue {
-	return terra.ReferenceString(asco.ref.Append("signed_certificate_thumbprint"))
+	return terra.ReferenceAsString(asco.ref.Append("signed_certificate_thumbprint"))
 }
 
+// Status returns a reference to field status of azurerm_app_service_certificate_order.
 func (asco appServiceCertificateOrderAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(asco.ref.Append("status"))
+	return terra.ReferenceAsString(asco.ref.Append("status"))
 }
 
+// Tags returns a reference to field tags of azurerm_app_service_certificate_order.
 func (asco appServiceCertificateOrderAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](asco.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](asco.ref.Append("tags"))
 }
 
+// ValidityInYears returns a reference to field validity_in_years of azurerm_app_service_certificate_order.
 func (asco appServiceCertificateOrderAttributes) ValidityInYears() terra.NumberValue {
-	return terra.ReferenceNumber(asco.ref.Append("validity_in_years"))
+	return terra.ReferenceAsNumber(asco.ref.Append("validity_in_years"))
 }
 
 func (asco appServiceCertificateOrderAttributes) Certificates() terra.ListValue[appservicecertificateorder.CertificatesAttributes] {
-	return terra.ReferenceList[appservicecertificateorder.CertificatesAttributes](asco.ref.Append("certificates"))
+	return terra.ReferenceAsList[appservicecertificateorder.CertificatesAttributes](asco.ref.Append("certificates"))
 }
 
 func (asco appServiceCertificateOrderAttributes) Timeouts() appservicecertificateorder.TimeoutsAttributes {
-	return terra.ReferenceSingle[appservicecertificateorder.TimeoutsAttributes](asco.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[appservicecertificateorder.TimeoutsAttributes](asco.ref.Append("timeouts"))
 }
 
 type appServiceCertificateOrderState struct {

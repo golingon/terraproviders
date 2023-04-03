@@ -22,112 +22,112 @@ type AuthenticationAttributes struct {
 	ref terra.Reference
 }
 
-func (a AuthenticationAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AuthenticationAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AuthenticationAttributes) InternalWithRef(ref terra.Reference) AuthenticationAttributes {
 	return AuthenticationAttributes{ref: ref}
 }
 
-func (a AuthenticationAttributes) InternalTokens() hclwrite.Tokens {
+func (a AuthenticationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a AuthenticationAttributes) Audience() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("audience"))
+	return terra.ReferenceAsString(a.ref.Append("audience"))
 }
 
 func (a AuthenticationAttributes) Authority() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("authority"))
+	return terra.ReferenceAsString(a.ref.Append("authority"))
 }
 
 func (a AuthenticationAttributes) SmartProxyEnabled() terra.BoolValue {
-	return terra.ReferenceBool(a.ref.Append("smart_proxy_enabled"))
+	return terra.ReferenceAsBool(a.ref.Append("smart_proxy_enabled"))
 }
 
 type CorsAttributes struct {
 	ref terra.Reference
 }
 
-func (c CorsAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CorsAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CorsAttributes) InternalWithRef(ref terra.Reference) CorsAttributes {
 	return CorsAttributes{ref: ref}
 }
 
-func (c CorsAttributes) InternalTokens() hclwrite.Tokens {
+func (c CorsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c CorsAttributes) AllowedHeaders() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](c.ref.Append("allowed_headers"))
+	return terra.ReferenceAsList[terra.StringValue](c.ref.Append("allowed_headers"))
 }
 
 func (c CorsAttributes) AllowedMethods() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](c.ref.Append("allowed_methods"))
+	return terra.ReferenceAsList[terra.StringValue](c.ref.Append("allowed_methods"))
 }
 
 func (c CorsAttributes) AllowedOrigins() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](c.ref.Append("allowed_origins"))
+	return terra.ReferenceAsList[terra.StringValue](c.ref.Append("allowed_origins"))
 }
 
 func (c CorsAttributes) CredentialsAllowed() terra.BoolValue {
-	return terra.ReferenceBool(c.ref.Append("credentials_allowed"))
+	return terra.ReferenceAsBool(c.ref.Append("credentials_allowed"))
 }
 
 func (c CorsAttributes) MaxAgeInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(c.ref.Append("max_age_in_seconds"))
+	return terra.ReferenceAsNumber(c.ref.Append("max_age_in_seconds"))
 }
 
 type IdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (i IdentityAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IdentityAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IdentityAttributes) InternalWithRef(ref terra.Reference) IdentityAttributes {
 	return IdentityAttributes{ref: ref}
 }
 
-func (i IdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (i IdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IdentityAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("principal_id"))
+	return terra.ReferenceAsString(i.ref.Append("principal_id"))
 }
 
 func (i IdentityAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(i.ref.Append("tenant_id"))
 }
 
 func (i IdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("type"))
+	return terra.ReferenceAsString(i.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type AuthenticationState struct {

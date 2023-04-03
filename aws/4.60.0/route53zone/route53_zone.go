@@ -26,7 +26,7 @@ func (v VpcAttributes) InternalWithRef(ref terra.Reference) VpcAttributes {
 	return VpcAttributes{ref: ref}
 }
 
-func (v VpcAttributes) InternalTokens() hclwrite.Tokens {
+func (v VpcAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 

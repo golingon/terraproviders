@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFactoryTriggerTumblingWindow creates a new instance of [DataFactoryTriggerTumblingWindow].
 func NewDataFactoryTriggerTumblingWindow(name string, args DataFactoryTriggerTumblingWindowArgs) *DataFactoryTriggerTumblingWindow {
 	return &DataFactoryTriggerTumblingWindow{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFactoryTriggerTumblingWindow(name string, args DataFactoryTriggerTum
 
 var _ terra.Resource = (*DataFactoryTriggerTumblingWindow)(nil)
 
+// DataFactoryTriggerTumblingWindow represents the Terraform resource azurerm_data_factory_trigger_tumbling_window.
 type DataFactoryTriggerTumblingWindow struct {
-	Name  string
-	Args  DataFactoryTriggerTumblingWindowArgs
-	state *dataFactoryTriggerTumblingWindowState
+	Name      string
+	Args      DataFactoryTriggerTumblingWindowArgs
+	state     *dataFactoryTriggerTumblingWindowState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFactoryTriggerTumblingWindow].
 func (dfttw *DataFactoryTriggerTumblingWindow) Type() string {
 	return "azurerm_data_factory_trigger_tumbling_window"
 }
 
+// LocalName returns the local name for [DataFactoryTriggerTumblingWindow].
 func (dfttw *DataFactoryTriggerTumblingWindow) LocalName() string {
 	return dfttw.Name
 }
 
+// Configuration returns the configuration (args) for [DataFactoryTriggerTumblingWindow].
 func (dfttw *DataFactoryTriggerTumblingWindow) Configuration() interface{} {
 	return dfttw.Args
 }
 
+// DependOn is used for other resources to depend on [DataFactoryTriggerTumblingWindow].
+func (dfttw *DataFactoryTriggerTumblingWindow) DependOn() terra.Reference {
+	return terra.ReferenceResource(dfttw)
+}
+
+// Dependencies returns the list of resources [DataFactoryTriggerTumblingWindow] depends_on.
+func (dfttw *DataFactoryTriggerTumblingWindow) Dependencies() terra.Dependencies {
+	return dfttw.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFactoryTriggerTumblingWindow].
+func (dfttw *DataFactoryTriggerTumblingWindow) LifecycleManagement() *terra.Lifecycle {
+	return dfttw.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFactoryTriggerTumblingWindow].
 func (dfttw *DataFactoryTriggerTumblingWindow) Attributes() dataFactoryTriggerTumblingWindowAttributes {
 	return dataFactoryTriggerTumblingWindowAttributes{ref: terra.ReferenceResource(dfttw)}
 }
 
+// ImportState imports the given attribute values into [DataFactoryTriggerTumblingWindow]'s state.
 func (dfttw *DataFactoryTriggerTumblingWindow) ImportState(av io.Reader) error {
 	dfttw.state = &dataFactoryTriggerTumblingWindowState{}
 	if err := json.NewDecoder(av).Decode(dfttw.state); err != nil {
@@ -49,10 +73,12 @@ func (dfttw *DataFactoryTriggerTumblingWindow) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFactoryTriggerTumblingWindow] has state.
 func (dfttw *DataFactoryTriggerTumblingWindow) State() (*dataFactoryTriggerTumblingWindowState, bool) {
 	return dfttw.state, dfttw.state != nil
 }
 
+// StateMust returns the state for [DataFactoryTriggerTumblingWindow]. Panics if the state is nil.
 func (dfttw *DataFactoryTriggerTumblingWindow) StateMust() *dataFactoryTriggerTumblingWindowState {
 	if dfttw.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dfttw.Type(), dfttw.LocalName()))
@@ -60,10 +86,7 @@ func (dfttw *DataFactoryTriggerTumblingWindow) StateMust() *dataFactoryTriggerTu
 	return dfttw.state
 }
 
-func (dfttw *DataFactoryTriggerTumblingWindow) DependOn() terra.Reference {
-	return terra.ReferenceResource(dfttw)
-}
-
+// DataFactoryTriggerTumblingWindowArgs contains the configurations for azurerm_data_factory_trigger_tumbling_window.
 type DataFactoryTriggerTumblingWindowArgs struct {
 	// Activated: bool, optional
 	Activated terra.BoolValue `hcl:"activated,attr"`
@@ -99,79 +122,90 @@ type DataFactoryTriggerTumblingWindowArgs struct {
 	Timeouts *datafactorytriggertumblingwindow.Timeouts `hcl:"timeouts,block"`
 	// TriggerDependency: min=0
 	TriggerDependency []datafactorytriggertumblingwindow.TriggerDependency `hcl:"trigger_dependency,block" validate:"min=0"`
-	// DependsOn contains resources that DataFactoryTriggerTumblingWindow depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFactoryTriggerTumblingWindowAttributes struct {
 	ref terra.Reference
 }
 
+// Activated returns a reference to field activated of azurerm_data_factory_trigger_tumbling_window.
 func (dfttw dataFactoryTriggerTumblingWindowAttributes) Activated() terra.BoolValue {
-	return terra.ReferenceBool(dfttw.ref.Append("activated"))
+	return terra.ReferenceAsBool(dfttw.ref.Append("activated"))
 }
 
+// AdditionalProperties returns a reference to field additional_properties of azurerm_data_factory_trigger_tumbling_window.
 func (dfttw dataFactoryTriggerTumblingWindowAttributes) AdditionalProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dfttw.ref.Append("additional_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](dfttw.ref.Append("additional_properties"))
 }
 
+// Annotations returns a reference to field annotations of azurerm_data_factory_trigger_tumbling_window.
 func (dfttw dataFactoryTriggerTumblingWindowAttributes) Annotations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dfttw.ref.Append("annotations"))
+	return terra.ReferenceAsList[terra.StringValue](dfttw.ref.Append("annotations"))
 }
 
+// DataFactoryId returns a reference to field data_factory_id of azurerm_data_factory_trigger_tumbling_window.
 func (dfttw dataFactoryTriggerTumblingWindowAttributes) DataFactoryId() terra.StringValue {
-	return terra.ReferenceString(dfttw.ref.Append("data_factory_id"))
+	return terra.ReferenceAsString(dfttw.ref.Append("data_factory_id"))
 }
 
+// Delay returns a reference to field delay of azurerm_data_factory_trigger_tumbling_window.
 func (dfttw dataFactoryTriggerTumblingWindowAttributes) Delay() terra.StringValue {
-	return terra.ReferenceString(dfttw.ref.Append("delay"))
+	return terra.ReferenceAsString(dfttw.ref.Append("delay"))
 }
 
+// Description returns a reference to field description of azurerm_data_factory_trigger_tumbling_window.
 func (dfttw dataFactoryTriggerTumblingWindowAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dfttw.ref.Append("description"))
+	return terra.ReferenceAsString(dfttw.ref.Append("description"))
 }
 
+// EndTime returns a reference to field end_time of azurerm_data_factory_trigger_tumbling_window.
 func (dfttw dataFactoryTriggerTumblingWindowAttributes) EndTime() terra.StringValue {
-	return terra.ReferenceString(dfttw.ref.Append("end_time"))
+	return terra.ReferenceAsString(dfttw.ref.Append("end_time"))
 }
 
+// Frequency returns a reference to field frequency of azurerm_data_factory_trigger_tumbling_window.
 func (dfttw dataFactoryTriggerTumblingWindowAttributes) Frequency() terra.StringValue {
-	return terra.ReferenceString(dfttw.ref.Append("frequency"))
+	return terra.ReferenceAsString(dfttw.ref.Append("frequency"))
 }
 
+// Id returns a reference to field id of azurerm_data_factory_trigger_tumbling_window.
 func (dfttw dataFactoryTriggerTumblingWindowAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dfttw.ref.Append("id"))
+	return terra.ReferenceAsString(dfttw.ref.Append("id"))
 }
 
+// Interval returns a reference to field interval of azurerm_data_factory_trigger_tumbling_window.
 func (dfttw dataFactoryTriggerTumblingWindowAttributes) Interval() terra.NumberValue {
-	return terra.ReferenceNumber(dfttw.ref.Append("interval"))
+	return terra.ReferenceAsNumber(dfttw.ref.Append("interval"))
 }
 
+// MaxConcurrency returns a reference to field max_concurrency of azurerm_data_factory_trigger_tumbling_window.
 func (dfttw dataFactoryTriggerTumblingWindowAttributes) MaxConcurrency() terra.NumberValue {
-	return terra.ReferenceNumber(dfttw.ref.Append("max_concurrency"))
+	return terra.ReferenceAsNumber(dfttw.ref.Append("max_concurrency"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory_trigger_tumbling_window.
 func (dfttw dataFactoryTriggerTumblingWindowAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dfttw.ref.Append("name"))
+	return terra.ReferenceAsString(dfttw.ref.Append("name"))
 }
 
+// StartTime returns a reference to field start_time of azurerm_data_factory_trigger_tumbling_window.
 func (dfttw dataFactoryTriggerTumblingWindowAttributes) StartTime() terra.StringValue {
-	return terra.ReferenceString(dfttw.ref.Append("start_time"))
+	return terra.ReferenceAsString(dfttw.ref.Append("start_time"))
 }
 
 func (dfttw dataFactoryTriggerTumblingWindowAttributes) Pipeline() terra.ListValue[datafactorytriggertumblingwindow.PipelineAttributes] {
-	return terra.ReferenceList[datafactorytriggertumblingwindow.PipelineAttributes](dfttw.ref.Append("pipeline"))
+	return terra.ReferenceAsList[datafactorytriggertumblingwindow.PipelineAttributes](dfttw.ref.Append("pipeline"))
 }
 
 func (dfttw dataFactoryTriggerTumblingWindowAttributes) Retry() terra.ListValue[datafactorytriggertumblingwindow.RetryAttributes] {
-	return terra.ReferenceList[datafactorytriggertumblingwindow.RetryAttributes](dfttw.ref.Append("retry"))
+	return terra.ReferenceAsList[datafactorytriggertumblingwindow.RetryAttributes](dfttw.ref.Append("retry"))
 }
 
 func (dfttw dataFactoryTriggerTumblingWindowAttributes) Timeouts() datafactorytriggertumblingwindow.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafactorytriggertumblingwindow.TimeoutsAttributes](dfttw.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafactorytriggertumblingwindow.TimeoutsAttributes](dfttw.ref.Append("timeouts"))
 }
 
 func (dfttw dataFactoryTriggerTumblingWindowAttributes) TriggerDependency() terra.SetValue[datafactorytriggertumblingwindow.TriggerDependencyAttributes] {
-	return terra.ReferenceSet[datafactorytriggertumblingwindow.TriggerDependencyAttributes](dfttw.ref.Append("trigger_dependency"))
+	return terra.ReferenceAsSet[datafactorytriggertumblingwindow.TriggerDependencyAttributes](dfttw.ref.Append("trigger_dependency"))
 }
 
 type dataFactoryTriggerTumblingWindowState struct {

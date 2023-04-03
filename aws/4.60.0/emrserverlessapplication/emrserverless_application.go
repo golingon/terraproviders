@@ -70,7 +70,7 @@ func (asc AutoStartConfigurationAttributes) InternalWithRef(ref terra.Reference)
 	return AutoStartConfigurationAttributes{ref: ref}
 }
 
-func (asc AutoStartConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (asc AutoStartConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return asc.ref.InternalTokens()
 }
 
@@ -90,7 +90,7 @@ func (asc AutoStopConfigurationAttributes) InternalWithRef(ref terra.Reference) 
 	return AutoStopConfigurationAttributes{ref: ref}
 }
 
-func (asc AutoStopConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (asc AutoStopConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return asc.ref.InternalTokens()
 }
 
@@ -114,7 +114,7 @@ func (ic InitialCapacityAttributes) InternalWithRef(ref terra.Reference) Initial
 	return InitialCapacityAttributes{ref: ref}
 }
 
-func (ic InitialCapacityAttributes) InternalTokens() hclwrite.Tokens {
+func (ic InitialCapacityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ic.ref.InternalTokens()
 }
 
@@ -138,7 +138,7 @@ func (icc InitialCapacityConfigAttributes) InternalWithRef(ref terra.Reference) 
 	return InitialCapacityConfigAttributes{ref: ref}
 }
 
-func (icc InitialCapacityConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (icc InitialCapacityConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return icc.ref.InternalTokens()
 }
 
@@ -162,7 +162,7 @@ func (wc WorkerConfigurationAttributes) InternalWithRef(ref terra.Reference) Wor
 	return WorkerConfigurationAttributes{ref: ref}
 }
 
-func (wc WorkerConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (wc WorkerConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wc.ref.InternalTokens()
 }
 
@@ -190,7 +190,7 @@ func (mc MaximumCapacityAttributes) InternalWithRef(ref terra.Reference) Maximum
 	return MaximumCapacityAttributes{ref: ref}
 }
 
-func (mc MaximumCapacityAttributes) InternalTokens() hclwrite.Tokens {
+func (mc MaximumCapacityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mc.ref.InternalTokens()
 }
 
@@ -218,7 +218,7 @@ func (nc NetworkConfigurationAttributes) InternalWithRef(ref terra.Reference) Ne
 	return NetworkConfigurationAttributes{ref: ref}
 }
 
-func (nc NetworkConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (nc NetworkConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nc.ref.InternalTokens()
 }
 

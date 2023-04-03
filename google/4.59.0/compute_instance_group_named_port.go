@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeInstanceGroupNamedPort creates a new instance of [ComputeInstanceGroupNamedPort].
 func NewComputeInstanceGroupNamedPort(name string, args ComputeInstanceGroupNamedPortArgs) *ComputeInstanceGroupNamedPort {
 	return &ComputeInstanceGroupNamedPort{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeInstanceGroupNamedPort(name string, args ComputeInstanceGroupName
 
 var _ terra.Resource = (*ComputeInstanceGroupNamedPort)(nil)
 
+// ComputeInstanceGroupNamedPort represents the Terraform resource google_compute_instance_group_named_port.
 type ComputeInstanceGroupNamedPort struct {
-	Name  string
-	Args  ComputeInstanceGroupNamedPortArgs
-	state *computeInstanceGroupNamedPortState
+	Name      string
+	Args      ComputeInstanceGroupNamedPortArgs
+	state     *computeInstanceGroupNamedPortState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeInstanceGroupNamedPort].
 func (cignp *ComputeInstanceGroupNamedPort) Type() string {
 	return "google_compute_instance_group_named_port"
 }
 
+// LocalName returns the local name for [ComputeInstanceGroupNamedPort].
 func (cignp *ComputeInstanceGroupNamedPort) LocalName() string {
 	return cignp.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeInstanceGroupNamedPort].
 func (cignp *ComputeInstanceGroupNamedPort) Configuration() interface{} {
 	return cignp.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeInstanceGroupNamedPort].
+func (cignp *ComputeInstanceGroupNamedPort) DependOn() terra.Reference {
+	return terra.ReferenceResource(cignp)
+}
+
+// Dependencies returns the list of resources [ComputeInstanceGroupNamedPort] depends_on.
+func (cignp *ComputeInstanceGroupNamedPort) Dependencies() terra.Dependencies {
+	return cignp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeInstanceGroupNamedPort].
+func (cignp *ComputeInstanceGroupNamedPort) LifecycleManagement() *terra.Lifecycle {
+	return cignp.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeInstanceGroupNamedPort].
 func (cignp *ComputeInstanceGroupNamedPort) Attributes() computeInstanceGroupNamedPortAttributes {
 	return computeInstanceGroupNamedPortAttributes{ref: terra.ReferenceResource(cignp)}
 }
 
+// ImportState imports the given attribute values into [ComputeInstanceGroupNamedPort]'s state.
 func (cignp *ComputeInstanceGroupNamedPort) ImportState(av io.Reader) error {
 	cignp.state = &computeInstanceGroupNamedPortState{}
 	if err := json.NewDecoder(av).Decode(cignp.state); err != nil {
@@ -49,10 +73,12 @@ func (cignp *ComputeInstanceGroupNamedPort) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeInstanceGroupNamedPort] has state.
 func (cignp *ComputeInstanceGroupNamedPort) State() (*computeInstanceGroupNamedPortState, bool) {
 	return cignp.state, cignp.state != nil
 }
 
+// StateMust returns the state for [ComputeInstanceGroupNamedPort]. Panics if the state is nil.
 func (cignp *ComputeInstanceGroupNamedPort) StateMust() *computeInstanceGroupNamedPortState {
 	if cignp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cignp.Type(), cignp.LocalName()))
@@ -60,10 +86,7 @@ func (cignp *ComputeInstanceGroupNamedPort) StateMust() *computeInstanceGroupNam
 	return cignp.state
 }
 
-func (cignp *ComputeInstanceGroupNamedPort) DependOn() terra.Reference {
-	return terra.ReferenceResource(cignp)
-}
-
+// ComputeInstanceGroupNamedPortArgs contains the configurations for google_compute_instance_group_named_port.
 type ComputeInstanceGroupNamedPortArgs struct {
 	// Group: string, required
 	Group terra.StringValue `hcl:"group,attr" validate:"required"`
@@ -79,39 +102,43 @@ type ComputeInstanceGroupNamedPortArgs struct {
 	Zone terra.StringValue `hcl:"zone,attr"`
 	// Timeouts: optional
 	Timeouts *computeinstancegroupnamedport.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeInstanceGroupNamedPort depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeInstanceGroupNamedPortAttributes struct {
 	ref terra.Reference
 }
 
+// Group returns a reference to field group of google_compute_instance_group_named_port.
 func (cignp computeInstanceGroupNamedPortAttributes) Group() terra.StringValue {
-	return terra.ReferenceString(cignp.ref.Append("group"))
+	return terra.ReferenceAsString(cignp.ref.Append("group"))
 }
 
+// Id returns a reference to field id of google_compute_instance_group_named_port.
 func (cignp computeInstanceGroupNamedPortAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cignp.ref.Append("id"))
+	return terra.ReferenceAsString(cignp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_compute_instance_group_named_port.
 func (cignp computeInstanceGroupNamedPortAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cignp.ref.Append("name"))
+	return terra.ReferenceAsString(cignp.ref.Append("name"))
 }
 
+// Port returns a reference to field port of google_compute_instance_group_named_port.
 func (cignp computeInstanceGroupNamedPortAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(cignp.ref.Append("port"))
+	return terra.ReferenceAsNumber(cignp.ref.Append("port"))
 }
 
+// Project returns a reference to field project of google_compute_instance_group_named_port.
 func (cignp computeInstanceGroupNamedPortAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cignp.ref.Append("project"))
+	return terra.ReferenceAsString(cignp.ref.Append("project"))
 }
 
+// Zone returns a reference to field zone of google_compute_instance_group_named_port.
 func (cignp computeInstanceGroupNamedPortAttributes) Zone() terra.StringValue {
-	return terra.ReferenceString(cignp.ref.Append("zone"))
+	return terra.ReferenceAsString(cignp.ref.Append("zone"))
 }
 
 func (cignp computeInstanceGroupNamedPortAttributes) Timeouts() computeinstancegroupnamedport.TimeoutsAttributes {
-	return terra.ReferenceSingle[computeinstancegroupnamedport.TimeoutsAttributes](cignp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computeinstancegroupnamedport.TimeoutsAttributes](cignp.ref.Append("timeouts"))
 }
 
 type computeInstanceGroupNamedPortState struct {

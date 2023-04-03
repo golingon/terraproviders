@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDiskAccess creates a new instance of [DiskAccess].
 func NewDiskAccess(name string, args DiskAccessArgs) *DiskAccess {
 	return &DiskAccess{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDiskAccess(name string, args DiskAccessArgs) *DiskAccess {
 
 var _ terra.Resource = (*DiskAccess)(nil)
 
+// DiskAccess represents the Terraform resource azurerm_disk_access.
 type DiskAccess struct {
-	Name  string
-	Args  DiskAccessArgs
-	state *diskAccessState
+	Name      string
+	Args      DiskAccessArgs
+	state     *diskAccessState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DiskAccess].
 func (da *DiskAccess) Type() string {
 	return "azurerm_disk_access"
 }
 
+// LocalName returns the local name for [DiskAccess].
 func (da *DiskAccess) LocalName() string {
 	return da.Name
 }
 
+// Configuration returns the configuration (args) for [DiskAccess].
 func (da *DiskAccess) Configuration() interface{} {
 	return da.Args
 }
 
+// DependOn is used for other resources to depend on [DiskAccess].
+func (da *DiskAccess) DependOn() terra.Reference {
+	return terra.ReferenceResource(da)
+}
+
+// Dependencies returns the list of resources [DiskAccess] depends_on.
+func (da *DiskAccess) Dependencies() terra.Dependencies {
+	return da.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DiskAccess].
+func (da *DiskAccess) LifecycleManagement() *terra.Lifecycle {
+	return da.Lifecycle
+}
+
+// Attributes returns the attributes for [DiskAccess].
 func (da *DiskAccess) Attributes() diskAccessAttributes {
 	return diskAccessAttributes{ref: terra.ReferenceResource(da)}
 }
 
+// ImportState imports the given attribute values into [DiskAccess]'s state.
 func (da *DiskAccess) ImportState(av io.Reader) error {
 	da.state = &diskAccessState{}
 	if err := json.NewDecoder(av).Decode(da.state); err != nil {
@@ -49,10 +73,12 @@ func (da *DiskAccess) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DiskAccess] has state.
 func (da *DiskAccess) State() (*diskAccessState, bool) {
 	return da.state, da.state != nil
 }
 
+// StateMust returns the state for [DiskAccess]. Panics if the state is nil.
 func (da *DiskAccess) StateMust() *diskAccessState {
 	if da.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", da.Type(), da.LocalName()))
@@ -60,10 +86,7 @@ func (da *DiskAccess) StateMust() *diskAccessState {
 	return da.state
 }
 
-func (da *DiskAccess) DependOn() terra.Reference {
-	return terra.ReferenceResource(da)
-}
-
+// DiskAccessArgs contains the configurations for azurerm_disk_access.
 type DiskAccessArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,35 +100,38 @@ type DiskAccessArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// Timeouts: optional
 	Timeouts *diskaccess.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DiskAccess depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type diskAccessAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_disk_access.
 func (da diskAccessAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("id"))
+	return terra.ReferenceAsString(da.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_disk_access.
 func (da diskAccessAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("location"))
+	return terra.ReferenceAsString(da.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_disk_access.
 func (da diskAccessAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("name"))
+	return terra.ReferenceAsString(da.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_disk_access.
 func (da diskAccessAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(da.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_disk_access.
 func (da diskAccessAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](da.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](da.ref.Append("tags"))
 }
 
 func (da diskAccessAttributes) Timeouts() diskaccess.TimeoutsAttributes {
-	return terra.ReferenceSingle[diskaccess.TimeoutsAttributes](da.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[diskaccess.TimeoutsAttributes](da.ref.Append("timeouts"))
 }
 
 type diskAccessState struct {

@@ -27,80 +27,80 @@ type GclbTargetsAttributes struct {
 	ref terra.Reference
 }
 
-func (gt GclbTargetsAttributes) InternalRef() terra.Reference {
-	return gt.ref
+func (gt GclbTargetsAttributes) InternalRef() (terra.Reference, error) {
+	return gt.ref, nil
 }
 
 func (gt GclbTargetsAttributes) InternalWithRef(ref terra.Reference) GclbTargetsAttributes {
 	return GclbTargetsAttributes{ref: ref}
 }
 
-func (gt GclbTargetsAttributes) InternalTokens() hclwrite.Tokens {
+func (gt GclbTargetsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gt.ref.InternalTokens()
 }
 
 func (gt GclbTargetsAttributes) TargetHttpsProxy() terra.StringValue {
-	return terra.ReferenceString(gt.ref.Append("target_https_proxy"))
+	return terra.ReferenceAsString(gt.ref.Append("target_https_proxy"))
 }
 
 func (gt GclbTargetsAttributes) TargetSslProxy() terra.StringValue {
-	return terra.ReferenceString(gt.ref.Append("target_ssl_proxy"))
+	return terra.ReferenceAsString(gt.ref.Append("target_ssl_proxy"))
 }
 
 func (gt GclbTargetsAttributes) IpConfigs() terra.ListValue[IpConfigsAttributes] {
-	return terra.ReferenceList[IpConfigsAttributes](gt.ref.Append("ip_configs"))
+	return terra.ReferenceAsList[IpConfigsAttributes](gt.ref.Append("ip_configs"))
 }
 
 type IpConfigsAttributes struct {
 	ref terra.Reference
 }
 
-func (ic IpConfigsAttributes) InternalRef() terra.Reference {
-	return ic.ref
+func (ic IpConfigsAttributes) InternalRef() (terra.Reference, error) {
+	return ic.ref, nil
 }
 
 func (ic IpConfigsAttributes) InternalWithRef(ref terra.Reference) IpConfigsAttributes {
 	return IpConfigsAttributes{ref: ref}
 }
 
-func (ic IpConfigsAttributes) InternalTokens() hclwrite.Tokens {
+func (ic IpConfigsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ic.ref.InternalTokens()
 }
 
 func (ic IpConfigsAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("ip_address"))
+	return terra.ReferenceAsString(ic.ref.Append("ip_address"))
 }
 
 func (ic IpConfigsAttributes) Ports() terra.ListValue[terra.NumberValue] {
-	return terra.ReferenceList[terra.NumberValue](ic.ref.Append("ports"))
+	return terra.ReferenceAsList[terra.NumberValue](ic.ref.Append("ports"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type GclbTargetsState struct {

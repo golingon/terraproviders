@@ -63,7 +63,7 @@ func (fd FeatureDefinitionAttributes) InternalWithRef(ref terra.Reference) Featu
 	return FeatureDefinitionAttributes{ref: ref}
 }
 
-func (fd FeatureDefinitionAttributes) InternalTokens() hclwrite.Tokens {
+func (fd FeatureDefinitionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fd.ref.InternalTokens()
 }
 
@@ -87,7 +87,7 @@ func (osc OfflineStoreConfigAttributes) InternalWithRef(ref terra.Reference) Off
 	return OfflineStoreConfigAttributes{ref: ref}
 }
 
-func (osc OfflineStoreConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (osc OfflineStoreConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return osc.ref.InternalTokens()
 }
 
@@ -115,7 +115,7 @@ func (dcc DataCatalogConfigAttributes) InternalWithRef(ref terra.Reference) Data
 	return DataCatalogConfigAttributes{ref: ref}
 }
 
-func (dcc DataCatalogConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (dcc DataCatalogConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dcc.ref.InternalTokens()
 }
 
@@ -143,7 +143,7 @@ func (ssc S3StorageConfigAttributes) InternalWithRef(ref terra.Reference) S3Stor
 	return S3StorageConfigAttributes{ref: ref}
 }
 
-func (ssc S3StorageConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (ssc S3StorageConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ssc.ref.InternalTokens()
 }
 
@@ -167,7 +167,7 @@ func (osc OnlineStoreConfigAttributes) InternalWithRef(ref terra.Reference) Onli
 	return OnlineStoreConfigAttributes{ref: ref}
 }
 
-func (osc OnlineStoreConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (osc OnlineStoreConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return osc.ref.InternalTokens()
 }
 
@@ -191,7 +191,7 @@ func (sc SecurityConfigAttributes) InternalWithRef(ref terra.Reference) Security
 	return SecurityConfigAttributes{ref: ref}
 }
 
-func (sc SecurityConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (sc SecurityConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 

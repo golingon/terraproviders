@@ -34,76 +34,76 @@ type PublicKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (pk PublicKeyAttributes) InternalRef() terra.Reference {
-	return pk.ref
+func (pk PublicKeyAttributes) InternalRef() (terra.Reference, error) {
+	return pk.ref, nil
 }
 
 func (pk PublicKeyAttributes) InternalWithRef(ref terra.Reference) PublicKeyAttributes {
 	return PublicKeyAttributes{ref: ref}
 }
 
-func (pk PublicKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (pk PublicKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pk.ref.InternalTokens()
 }
 
 func (pk PublicKeyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pk.ref.Append("id"))
+	return terra.ReferenceAsString(pk.ref.Append("id"))
 }
 
 func (pk PublicKeyAttributes) Managed() terra.BoolValue {
-	return terra.ReferenceBool(pk.ref.Append("managed"))
+	return terra.ReferenceAsBool(pk.ref.Append("managed"))
 }
 
 func (pk PublicKeyAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(pk.ref.Append("value"))
+	return terra.ReferenceAsString(pk.ref.Append("value"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ValidationSharedKeysAttributes struct {
 	ref terra.Reference
 }
 
-func (vsk ValidationSharedKeysAttributes) InternalRef() terra.Reference {
-	return vsk.ref
+func (vsk ValidationSharedKeysAttributes) InternalRef() (terra.Reference, error) {
+	return vsk.ref, nil
 }
 
 func (vsk ValidationSharedKeysAttributes) InternalWithRef(ref terra.Reference) ValidationSharedKeysAttributes {
 	return ValidationSharedKeysAttributes{ref: ref}
 }
 
-func (vsk ValidationSharedKeysAttributes) InternalTokens() hclwrite.Tokens {
+func (vsk ValidationSharedKeysAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vsk.ref.InternalTokens()
 }
 
 func (vsk ValidationSharedKeysAttributes) SecretVersion() terra.StringValue {
-	return terra.ReferenceString(vsk.ref.Append("secret_version"))
+	return terra.ReferenceAsString(vsk.ref.Append("secret_version"))
 }
 
 type PublicKeyState struct {

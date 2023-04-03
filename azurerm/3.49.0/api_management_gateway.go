@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApiManagementGateway creates a new instance of [ApiManagementGateway].
 func NewApiManagementGateway(name string, args ApiManagementGatewayArgs) *ApiManagementGateway {
 	return &ApiManagementGateway{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApiManagementGateway(name string, args ApiManagementGatewayArgs) *ApiMan
 
 var _ terra.Resource = (*ApiManagementGateway)(nil)
 
+// ApiManagementGateway represents the Terraform resource azurerm_api_management_gateway.
 type ApiManagementGateway struct {
-	Name  string
-	Args  ApiManagementGatewayArgs
-	state *apiManagementGatewayState
+	Name      string
+	Args      ApiManagementGatewayArgs
+	state     *apiManagementGatewayState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiManagementGateway].
 func (amg *ApiManagementGateway) Type() string {
 	return "azurerm_api_management_gateway"
 }
 
+// LocalName returns the local name for [ApiManagementGateway].
 func (amg *ApiManagementGateway) LocalName() string {
 	return amg.Name
 }
 
+// Configuration returns the configuration (args) for [ApiManagementGateway].
 func (amg *ApiManagementGateway) Configuration() interface{} {
 	return amg.Args
 }
 
+// DependOn is used for other resources to depend on [ApiManagementGateway].
+func (amg *ApiManagementGateway) DependOn() terra.Reference {
+	return terra.ReferenceResource(amg)
+}
+
+// Dependencies returns the list of resources [ApiManagementGateway] depends_on.
+func (amg *ApiManagementGateway) Dependencies() terra.Dependencies {
+	return amg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiManagementGateway].
+func (amg *ApiManagementGateway) LifecycleManagement() *terra.Lifecycle {
+	return amg.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiManagementGateway].
 func (amg *ApiManagementGateway) Attributes() apiManagementGatewayAttributes {
 	return apiManagementGatewayAttributes{ref: terra.ReferenceResource(amg)}
 }
 
+// ImportState imports the given attribute values into [ApiManagementGateway]'s state.
 func (amg *ApiManagementGateway) ImportState(av io.Reader) error {
 	amg.state = &apiManagementGatewayState{}
 	if err := json.NewDecoder(av).Decode(amg.state); err != nil {
@@ -49,10 +73,12 @@ func (amg *ApiManagementGateway) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiManagementGateway] has state.
 func (amg *ApiManagementGateway) State() (*apiManagementGatewayState, bool) {
 	return amg.state, amg.state != nil
 }
 
+// StateMust returns the state for [ApiManagementGateway]. Panics if the state is nil.
 func (amg *ApiManagementGateway) StateMust() *apiManagementGatewayState {
 	if amg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", amg.Type(), amg.LocalName()))
@@ -60,10 +86,7 @@ func (amg *ApiManagementGateway) StateMust() *apiManagementGatewayState {
 	return amg.state
 }
 
-func (amg *ApiManagementGateway) DependOn() terra.Reference {
-	return terra.ReferenceResource(amg)
-}
-
+// ApiManagementGatewayArgs contains the configurations for azurerm_api_management_gateway.
 type ApiManagementGatewayArgs struct {
 	// ApiManagementId: string, required
 	ApiManagementId terra.StringValue `hcl:"api_management_id,attr" validate:"required"`
@@ -77,35 +100,37 @@ type ApiManagementGatewayArgs struct {
 	LocationData *apimanagementgateway.LocationData `hcl:"location_data,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *apimanagementgateway.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ApiManagementGateway depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiManagementGatewayAttributes struct {
 	ref terra.Reference
 }
 
+// ApiManagementId returns a reference to field api_management_id of azurerm_api_management_gateway.
 func (amg apiManagementGatewayAttributes) ApiManagementId() terra.StringValue {
-	return terra.ReferenceString(amg.ref.Append("api_management_id"))
+	return terra.ReferenceAsString(amg.ref.Append("api_management_id"))
 }
 
+// Description returns a reference to field description of azurerm_api_management_gateway.
 func (amg apiManagementGatewayAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(amg.ref.Append("description"))
+	return terra.ReferenceAsString(amg.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_api_management_gateway.
 func (amg apiManagementGatewayAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(amg.ref.Append("id"))
+	return terra.ReferenceAsString(amg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_api_management_gateway.
 func (amg apiManagementGatewayAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(amg.ref.Append("name"))
+	return terra.ReferenceAsString(amg.ref.Append("name"))
 }
 
 func (amg apiManagementGatewayAttributes) LocationData() terra.ListValue[apimanagementgateway.LocationDataAttributes] {
-	return terra.ReferenceList[apimanagementgateway.LocationDataAttributes](amg.ref.Append("location_data"))
+	return terra.ReferenceAsList[apimanagementgateway.LocationDataAttributes](amg.ref.Append("location_data"))
 }
 
 func (amg apiManagementGatewayAttributes) Timeouts() apimanagementgateway.TimeoutsAttributes {
-	return terra.ReferenceSingle[apimanagementgateway.TimeoutsAttributes](amg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[apimanagementgateway.TimeoutsAttributes](amg.ref.Append("timeouts"))
 }
 
 type apiManagementGatewayState struct {

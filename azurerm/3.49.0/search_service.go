@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSearchService creates a new instance of [SearchService].
 func NewSearchService(name string, args SearchServiceArgs) *SearchService {
 	return &SearchService{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSearchService(name string, args SearchServiceArgs) *SearchService {
 
 var _ terra.Resource = (*SearchService)(nil)
 
+// SearchService represents the Terraform resource azurerm_search_service.
 type SearchService struct {
-	Name  string
-	Args  SearchServiceArgs
-	state *searchServiceState
+	Name      string
+	Args      SearchServiceArgs
+	state     *searchServiceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SearchService].
 func (ss *SearchService) Type() string {
 	return "azurerm_search_service"
 }
 
+// LocalName returns the local name for [SearchService].
 func (ss *SearchService) LocalName() string {
 	return ss.Name
 }
 
+// Configuration returns the configuration (args) for [SearchService].
 func (ss *SearchService) Configuration() interface{} {
 	return ss.Args
 }
 
+// DependOn is used for other resources to depend on [SearchService].
+func (ss *SearchService) DependOn() terra.Reference {
+	return terra.ReferenceResource(ss)
+}
+
+// Dependencies returns the list of resources [SearchService] depends_on.
+func (ss *SearchService) Dependencies() terra.Dependencies {
+	return ss.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SearchService].
+func (ss *SearchService) LifecycleManagement() *terra.Lifecycle {
+	return ss.Lifecycle
+}
+
+// Attributes returns the attributes for [SearchService].
 func (ss *SearchService) Attributes() searchServiceAttributes {
 	return searchServiceAttributes{ref: terra.ReferenceResource(ss)}
 }
 
+// ImportState imports the given attribute values into [SearchService]'s state.
 func (ss *SearchService) ImportState(av io.Reader) error {
 	ss.state = &searchServiceState{}
 	if err := json.NewDecoder(av).Decode(ss.state); err != nil {
@@ -49,10 +73,12 @@ func (ss *SearchService) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SearchService] has state.
 func (ss *SearchService) State() (*searchServiceState, bool) {
 	return ss.state, ss.state != nil
 }
 
+// StateMust returns the state for [SearchService]. Panics if the state is nil.
 func (ss *SearchService) StateMust() *searchServiceState {
 	if ss.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ss.Type(), ss.LocalName()))
@@ -60,10 +86,7 @@ func (ss *SearchService) StateMust() *searchServiceState {
 	return ss.state
 }
 
-func (ss *SearchService) DependOn() terra.Reference {
-	return terra.ReferenceResource(ss)
-}
-
+// SearchServiceArgs contains the configurations for azurerm_search_service.
 type SearchServiceArgs struct {
 	// AllowedIps: list of string, optional
 	AllowedIps terra.ListValue[terra.StringValue] `hcl:"allowed_ips,attr"`
@@ -91,71 +114,81 @@ type SearchServiceArgs struct {
 	Identity *searchservice.Identity `hcl:"identity,block"`
 	// Timeouts: optional
 	Timeouts *searchservice.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SearchService depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type searchServiceAttributes struct {
 	ref terra.Reference
 }
 
+// AllowedIps returns a reference to field allowed_ips of azurerm_search_service.
 func (ss searchServiceAttributes) AllowedIps() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ss.ref.Append("allowed_ips"))
+	return terra.ReferenceAsList[terra.StringValue](ss.ref.Append("allowed_ips"))
 }
 
+// Id returns a reference to field id of azurerm_search_service.
 func (ss searchServiceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("id"))
+	return terra.ReferenceAsString(ss.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_search_service.
 func (ss searchServiceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("location"))
+	return terra.ReferenceAsString(ss.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_search_service.
 func (ss searchServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("name"))
+	return terra.ReferenceAsString(ss.ref.Append("name"))
 }
 
+// PartitionCount returns a reference to field partition_count of azurerm_search_service.
 func (ss searchServiceAttributes) PartitionCount() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("partition_count"))
+	return terra.ReferenceAsNumber(ss.ref.Append("partition_count"))
 }
 
+// PrimaryKey returns a reference to field primary_key of azurerm_search_service.
 func (ss searchServiceAttributes) PrimaryKey() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("primary_key"))
+	return terra.ReferenceAsString(ss.ref.Append("primary_key"))
 }
 
+// PublicNetworkAccessEnabled returns a reference to field public_network_access_enabled of azurerm_search_service.
 func (ss searchServiceAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ss.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(ss.ref.Append("public_network_access_enabled"))
 }
 
+// ReplicaCount returns a reference to field replica_count of azurerm_search_service.
 func (ss searchServiceAttributes) ReplicaCount() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("replica_count"))
+	return terra.ReferenceAsNumber(ss.ref.Append("replica_count"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_search_service.
 func (ss searchServiceAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ss.ref.Append("resource_group_name"))
 }
 
+// SecondaryKey returns a reference to field secondary_key of azurerm_search_service.
 func (ss searchServiceAttributes) SecondaryKey() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("secondary_key"))
+	return terra.ReferenceAsString(ss.ref.Append("secondary_key"))
 }
 
+// Sku returns a reference to field sku of azurerm_search_service.
 func (ss searchServiceAttributes) Sku() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("sku"))
+	return terra.ReferenceAsString(ss.ref.Append("sku"))
 }
 
+// Tags returns a reference to field tags of azurerm_search_service.
 func (ss searchServiceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ss.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ss.ref.Append("tags"))
 }
 
 func (ss searchServiceAttributes) QueryKeys() terra.ListValue[searchservice.QueryKeysAttributes] {
-	return terra.ReferenceList[searchservice.QueryKeysAttributes](ss.ref.Append("query_keys"))
+	return terra.ReferenceAsList[searchservice.QueryKeysAttributes](ss.ref.Append("query_keys"))
 }
 
 func (ss searchServiceAttributes) Identity() terra.ListValue[searchservice.IdentityAttributes] {
-	return terra.ReferenceList[searchservice.IdentityAttributes](ss.ref.Append("identity"))
+	return terra.ReferenceAsList[searchservice.IdentityAttributes](ss.ref.Append("identity"))
 }
 
 func (ss searchServiceAttributes) Timeouts() searchservice.TimeoutsAttributes {
-	return terra.ReferenceSingle[searchservice.TimeoutsAttributes](ss.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[searchservice.TimeoutsAttributes](ss.ref.Append("timeouts"))
 }
 
 type searchServiceState struct {

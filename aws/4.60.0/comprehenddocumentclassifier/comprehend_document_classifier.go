@@ -70,7 +70,7 @@ func (idc InputDataConfigAttributes) InternalWithRef(ref terra.Reference) InputD
 	return InputDataConfigAttributes{ref: ref}
 }
 
-func (idc InputDataConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (idc InputDataConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return idc.ref.InternalTokens()
 }
 
@@ -106,7 +106,7 @@ func (am AugmentedManifestsAttributes) InternalWithRef(ref terra.Reference) Augm
 	return AugmentedManifestsAttributes{ref: ref}
 }
 
-func (am AugmentedManifestsAttributes) InternalTokens() hclwrite.Tokens {
+func (am AugmentedManifestsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return am.ref.InternalTokens()
 }
 
@@ -146,7 +146,7 @@ func (odc OutputDataConfigAttributes) InternalWithRef(ref terra.Reference) Outpu
 	return OutputDataConfigAttributes{ref: ref}
 }
 
-func (odc OutputDataConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (odc OutputDataConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return odc.ref.InternalTokens()
 }
 
@@ -174,7 +174,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -202,7 +202,7 @@ func (vc VpcConfigAttributes) InternalWithRef(ref terra.Reference) VpcConfigAttr
 	return VpcConfigAttributes{ref: ref}
 }
 
-func (vc VpcConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (vc VpcConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vc.ref.InternalTokens()
 }
 

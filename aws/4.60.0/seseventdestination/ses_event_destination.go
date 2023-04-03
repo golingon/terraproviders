@@ -40,7 +40,7 @@ func (cd CloudwatchDestinationAttributes) InternalWithRef(ref terra.Reference) C
 	return CloudwatchDestinationAttributes{ref: ref}
 }
 
-func (cd CloudwatchDestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (cd CloudwatchDestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cd.ref.InternalTokens()
 }
 
@@ -68,7 +68,7 @@ func (kd KinesisDestinationAttributes) InternalWithRef(ref terra.Reference) Kine
 	return KinesisDestinationAttributes{ref: ref}
 }
 
-func (kd KinesisDestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (kd KinesisDestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kd.ref.InternalTokens()
 }
 
@@ -92,7 +92,7 @@ func (sd SnsDestinationAttributes) InternalWithRef(ref terra.Reference) SnsDesti
 	return SnsDestinationAttributes{ref: ref}
 }
 
-func (sd SnsDestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (sd SnsDestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sd.ref.InternalTokens()
 }
 

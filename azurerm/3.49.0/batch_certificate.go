@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBatchCertificate creates a new instance of [BatchCertificate].
 func NewBatchCertificate(name string, args BatchCertificateArgs) *BatchCertificate {
 	return &BatchCertificate{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBatchCertificate(name string, args BatchCertificateArgs) *BatchCertifica
 
 var _ terra.Resource = (*BatchCertificate)(nil)
 
+// BatchCertificate represents the Terraform resource azurerm_batch_certificate.
 type BatchCertificate struct {
-	Name  string
-	Args  BatchCertificateArgs
-	state *batchCertificateState
+	Name      string
+	Args      BatchCertificateArgs
+	state     *batchCertificateState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BatchCertificate].
 func (bc *BatchCertificate) Type() string {
 	return "azurerm_batch_certificate"
 }
 
+// LocalName returns the local name for [BatchCertificate].
 func (bc *BatchCertificate) LocalName() string {
 	return bc.Name
 }
 
+// Configuration returns the configuration (args) for [BatchCertificate].
 func (bc *BatchCertificate) Configuration() interface{} {
 	return bc.Args
 }
 
+// DependOn is used for other resources to depend on [BatchCertificate].
+func (bc *BatchCertificate) DependOn() terra.Reference {
+	return terra.ReferenceResource(bc)
+}
+
+// Dependencies returns the list of resources [BatchCertificate] depends_on.
+func (bc *BatchCertificate) Dependencies() terra.Dependencies {
+	return bc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BatchCertificate].
+func (bc *BatchCertificate) LifecycleManagement() *terra.Lifecycle {
+	return bc.Lifecycle
+}
+
+// Attributes returns the attributes for [BatchCertificate].
 func (bc *BatchCertificate) Attributes() batchCertificateAttributes {
 	return batchCertificateAttributes{ref: terra.ReferenceResource(bc)}
 }
 
+// ImportState imports the given attribute values into [BatchCertificate]'s state.
 func (bc *BatchCertificate) ImportState(av io.Reader) error {
 	bc.state = &batchCertificateState{}
 	if err := json.NewDecoder(av).Decode(bc.state); err != nil {
@@ -49,10 +73,12 @@ func (bc *BatchCertificate) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BatchCertificate] has state.
 func (bc *BatchCertificate) State() (*batchCertificateState, bool) {
 	return bc.state, bc.state != nil
 }
 
+// StateMust returns the state for [BatchCertificate]. Panics if the state is nil.
 func (bc *BatchCertificate) StateMust() *batchCertificateState {
 	if bc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bc.Type(), bc.LocalName()))
@@ -60,10 +86,7 @@ func (bc *BatchCertificate) StateMust() *batchCertificateState {
 	return bc.state
 }
 
-func (bc *BatchCertificate) DependOn() terra.Reference {
-	return terra.ReferenceResource(bc)
-}
-
+// BatchCertificateArgs contains the configurations for azurerm_batch_certificate.
 type BatchCertificateArgs struct {
 	// AccountName: string, required
 	AccountName terra.StringValue `hcl:"account_name,attr" validate:"required"`
@@ -83,55 +106,63 @@ type BatchCertificateArgs struct {
 	ThumbprintAlgorithm terra.StringValue `hcl:"thumbprint_algorithm,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *batchcertificate.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that BatchCertificate depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type batchCertificateAttributes struct {
 	ref terra.Reference
 }
 
+// AccountName returns a reference to field account_name of azurerm_batch_certificate.
 func (bc batchCertificateAttributes) AccountName() terra.StringValue {
-	return terra.ReferenceString(bc.ref.Append("account_name"))
+	return terra.ReferenceAsString(bc.ref.Append("account_name"))
 }
 
+// Certificate returns a reference to field certificate of azurerm_batch_certificate.
 func (bc batchCertificateAttributes) Certificate() terra.StringValue {
-	return terra.ReferenceString(bc.ref.Append("certificate"))
+	return terra.ReferenceAsString(bc.ref.Append("certificate"))
 }
 
+// Format returns a reference to field format of azurerm_batch_certificate.
 func (bc batchCertificateAttributes) Format() terra.StringValue {
-	return terra.ReferenceString(bc.ref.Append("format"))
+	return terra.ReferenceAsString(bc.ref.Append("format"))
 }
 
+// Id returns a reference to field id of azurerm_batch_certificate.
 func (bc batchCertificateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bc.ref.Append("id"))
+	return terra.ReferenceAsString(bc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_batch_certificate.
 func (bc batchCertificateAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(bc.ref.Append("name"))
+	return terra.ReferenceAsString(bc.ref.Append("name"))
 }
 
+// Password returns a reference to field password of azurerm_batch_certificate.
 func (bc batchCertificateAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(bc.ref.Append("password"))
+	return terra.ReferenceAsString(bc.ref.Append("password"))
 }
 
+// PublicData returns a reference to field public_data of azurerm_batch_certificate.
 func (bc batchCertificateAttributes) PublicData() terra.StringValue {
-	return terra.ReferenceString(bc.ref.Append("public_data"))
+	return terra.ReferenceAsString(bc.ref.Append("public_data"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_batch_certificate.
 func (bc batchCertificateAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(bc.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(bc.ref.Append("resource_group_name"))
 }
 
+// Thumbprint returns a reference to field thumbprint of azurerm_batch_certificate.
 func (bc batchCertificateAttributes) Thumbprint() terra.StringValue {
-	return terra.ReferenceString(bc.ref.Append("thumbprint"))
+	return terra.ReferenceAsString(bc.ref.Append("thumbprint"))
 }
 
+// ThumbprintAlgorithm returns a reference to field thumbprint_algorithm of azurerm_batch_certificate.
 func (bc batchCertificateAttributes) ThumbprintAlgorithm() terra.StringValue {
-	return terra.ReferenceString(bc.ref.Append("thumbprint_algorithm"))
+	return terra.ReferenceAsString(bc.ref.Append("thumbprint_algorithm"))
 }
 
 func (bc batchCertificateAttributes) Timeouts() batchcertificate.TimeoutsAttributes {
-	return terra.ReferenceSingle[batchcertificate.TimeoutsAttributes](bc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[batchcertificate.TimeoutsAttributes](bc.ref.Append("timeouts"))
 }
 
 type batchCertificateState struct {

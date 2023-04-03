@@ -64,7 +64,7 @@ func (mps MultiplexProgramSettingsAttributes) InternalWithRef(ref terra.Referenc
 	return MultiplexProgramSettingsAttributes{ref: ref}
 }
 
-func (mps MultiplexProgramSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (mps MultiplexProgramSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mps.ref.InternalTokens()
 }
 
@@ -96,7 +96,7 @@ func (sd ServiceDescriptorAttributes) InternalWithRef(ref terra.Reference) Servi
 	return ServiceDescriptorAttributes{ref: ref}
 }
 
-func (sd ServiceDescriptorAttributes) InternalTokens() hclwrite.Tokens {
+func (sd ServiceDescriptorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sd.ref.InternalTokens()
 }
 
@@ -120,7 +120,7 @@ func (vs VideoSettingsAttributes) InternalWithRef(ref terra.Reference) VideoSett
 	return VideoSettingsAttributes{ref: ref}
 }
 
-func (vs VideoSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (vs VideoSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vs.ref.InternalTokens()
 }
 
@@ -148,7 +148,7 @@ func (ss StatemuxSettingsAttributes) InternalWithRef(ref terra.Reference) Statem
 	return StatemuxSettingsAttributes{ref: ref}
 }
 
-func (ss StatemuxSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ss StatemuxSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ss.ref.InternalTokens()
 }
 
@@ -176,7 +176,7 @@ func (ss StatmuxSettingsAttributes) InternalWithRef(ref terra.Reference) Statmux
 	return StatmuxSettingsAttributes{ref: ref}
 }
 
-func (ss StatmuxSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ss StatmuxSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ss.ref.InternalTokens()
 }
 

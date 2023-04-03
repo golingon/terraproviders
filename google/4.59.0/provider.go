@@ -17,22 +17,27 @@ type Provider struct {
 	Args ProviderArgs
 }
 
+// LocalName returns the provider local name for [Provider].
 func (p *Provider) LocalName() string {
 	return "google"
 }
 
+// Source returns the provider source for [Provider].
 func (p *Provider) Source() string {
 	return "hashicorp/google"
 }
 
+// Version returns the provider version for [Provider].
 func (p *Provider) Version() string {
 	return "4.59.0"
 }
 
+// Configuration returns the configuration (args) for [Provider].
 func (p *Provider) Configuration() interface{} {
 	return p.Args
 }
 
+// ProviderArgs contains the configurations for provider.
 type ProviderArgs struct {
 	// AccessApprovalCustomEndpoint: string, optional
 	AccessApprovalCustomEndpoint terra.StringValue `hcl:"access_approval_custom_endpoint,attr"`

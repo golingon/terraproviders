@@ -28,7 +28,7 @@ func (ip IpamPoolsAttributes) InternalWithRef(ref terra.Reference) IpamPoolsAttr
 	return IpamPoolsAttributes{ref: ref}
 }
 
-func (ip IpamPoolsAttributes) InternalTokens() hclwrite.Tokens {
+func (ip IpamPoolsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ip.ref.InternalTokens()
 }
 
@@ -120,7 +120,7 @@ func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes 
 	return FilterAttributes{ref: ref}
 }
 
-func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
+func (f FilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 

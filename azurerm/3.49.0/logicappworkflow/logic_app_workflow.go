@@ -76,228 +76,228 @@ type AccessControlAttributes struct {
 	ref terra.Reference
 }
 
-func (ac AccessControlAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac AccessControlAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac AccessControlAttributes) InternalWithRef(ref terra.Reference) AccessControlAttributes {
 	return AccessControlAttributes{ref: ref}
 }
 
-func (ac AccessControlAttributes) InternalTokens() hclwrite.Tokens {
+func (ac AccessControlAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ac.ref.InternalTokens()
 }
 
 func (ac AccessControlAttributes) Action() terra.ListValue[ActionAttributes] {
-	return terra.ReferenceList[ActionAttributes](ac.ref.Append("action"))
+	return terra.ReferenceAsList[ActionAttributes](ac.ref.Append("action"))
 }
 
 func (ac AccessControlAttributes) Content() terra.ListValue[ContentAttributes] {
-	return terra.ReferenceList[ContentAttributes](ac.ref.Append("content"))
+	return terra.ReferenceAsList[ContentAttributes](ac.ref.Append("content"))
 }
 
 func (ac AccessControlAttributes) Trigger() terra.ListValue[TriggerAttributes] {
-	return terra.ReferenceList[TriggerAttributes](ac.ref.Append("trigger"))
+	return terra.ReferenceAsList[TriggerAttributes](ac.ref.Append("trigger"))
 }
 
 func (ac AccessControlAttributes) WorkflowManagement() terra.ListValue[WorkflowManagementAttributes] {
-	return terra.ReferenceList[WorkflowManagementAttributes](ac.ref.Append("workflow_management"))
+	return terra.ReferenceAsList[WorkflowManagementAttributes](ac.ref.Append("workflow_management"))
 }
 
 type ActionAttributes struct {
 	ref terra.Reference
 }
 
-func (a ActionAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a ActionAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a ActionAttributes) InternalWithRef(ref terra.Reference) ActionAttributes {
 	return ActionAttributes{ref: ref}
 }
 
-func (a ActionAttributes) InternalTokens() hclwrite.Tokens {
+func (a ActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a ActionAttributes) AllowedCallerIpAddressRange() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](a.ref.Append("allowed_caller_ip_address_range"))
+	return terra.ReferenceAsSet[terra.StringValue](a.ref.Append("allowed_caller_ip_address_range"))
 }
 
 type ContentAttributes struct {
 	ref terra.Reference
 }
 
-func (c ContentAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ContentAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ContentAttributes) InternalWithRef(ref terra.Reference) ContentAttributes {
 	return ContentAttributes{ref: ref}
 }
 
-func (c ContentAttributes) InternalTokens() hclwrite.Tokens {
+func (c ContentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ContentAttributes) AllowedCallerIpAddressRange() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](c.ref.Append("allowed_caller_ip_address_range"))
+	return terra.ReferenceAsSet[terra.StringValue](c.ref.Append("allowed_caller_ip_address_range"))
 }
 
 type TriggerAttributes struct {
 	ref terra.Reference
 }
 
-func (t TriggerAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TriggerAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TriggerAttributes) InternalWithRef(ref terra.Reference) TriggerAttributes {
 	return TriggerAttributes{ref: ref}
 }
 
-func (t TriggerAttributes) InternalTokens() hclwrite.Tokens {
+func (t TriggerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TriggerAttributes) AllowedCallerIpAddressRange() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](t.ref.Append("allowed_caller_ip_address_range"))
+	return terra.ReferenceAsSet[terra.StringValue](t.ref.Append("allowed_caller_ip_address_range"))
 }
 
 func (t TriggerAttributes) OpenAuthenticationPolicy() terra.SetValue[OpenAuthenticationPolicyAttributes] {
-	return terra.ReferenceSet[OpenAuthenticationPolicyAttributes](t.ref.Append("open_authentication_policy"))
+	return terra.ReferenceAsSet[OpenAuthenticationPolicyAttributes](t.ref.Append("open_authentication_policy"))
 }
 
 type OpenAuthenticationPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (oap OpenAuthenticationPolicyAttributes) InternalRef() terra.Reference {
-	return oap.ref
+func (oap OpenAuthenticationPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return oap.ref, nil
 }
 
 func (oap OpenAuthenticationPolicyAttributes) InternalWithRef(ref terra.Reference) OpenAuthenticationPolicyAttributes {
 	return OpenAuthenticationPolicyAttributes{ref: ref}
 }
 
-func (oap OpenAuthenticationPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (oap OpenAuthenticationPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oap.ref.InternalTokens()
 }
 
 func (oap OpenAuthenticationPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(oap.ref.Append("name"))
+	return terra.ReferenceAsString(oap.ref.Append("name"))
 }
 
 func (oap OpenAuthenticationPolicyAttributes) Claim() terra.SetValue[ClaimAttributes] {
-	return terra.ReferenceSet[ClaimAttributes](oap.ref.Append("claim"))
+	return terra.ReferenceAsSet[ClaimAttributes](oap.ref.Append("claim"))
 }
 
 type ClaimAttributes struct {
 	ref terra.Reference
 }
 
-func (c ClaimAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ClaimAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ClaimAttributes) InternalWithRef(ref terra.Reference) ClaimAttributes {
 	return ClaimAttributes{ref: ref}
 }
 
-func (c ClaimAttributes) InternalTokens() hclwrite.Tokens {
+func (c ClaimAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ClaimAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("name"))
+	return terra.ReferenceAsString(c.ref.Append("name"))
 }
 
 func (c ClaimAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("value"))
+	return terra.ReferenceAsString(c.ref.Append("value"))
 }
 
 type WorkflowManagementAttributes struct {
 	ref terra.Reference
 }
 
-func (wm WorkflowManagementAttributes) InternalRef() terra.Reference {
-	return wm.ref
+func (wm WorkflowManagementAttributes) InternalRef() (terra.Reference, error) {
+	return wm.ref, nil
 }
 
 func (wm WorkflowManagementAttributes) InternalWithRef(ref terra.Reference) WorkflowManagementAttributes {
 	return WorkflowManagementAttributes{ref: ref}
 }
 
-func (wm WorkflowManagementAttributes) InternalTokens() hclwrite.Tokens {
+func (wm WorkflowManagementAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wm.ref.InternalTokens()
 }
 
 func (wm WorkflowManagementAttributes) AllowedCallerIpAddressRange() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](wm.ref.Append("allowed_caller_ip_address_range"))
+	return terra.ReferenceAsSet[terra.StringValue](wm.ref.Append("allowed_caller_ip_address_range"))
 }
 
 type IdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (i IdentityAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IdentityAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IdentityAttributes) InternalWithRef(ref terra.Reference) IdentityAttributes {
 	return IdentityAttributes{ref: ref}
 }
 
-func (i IdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (i IdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IdentityAttributes) IdentityIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i.ref.Append("identity_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](i.ref.Append("identity_ids"))
 }
 
 func (i IdentityAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("principal_id"))
+	return terra.ReferenceAsString(i.ref.Append("principal_id"))
 }
 
 func (i IdentityAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(i.ref.Append("tenant_id"))
 }
 
 func (i IdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("type"))
+	return terra.ReferenceAsString(i.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AccessControlState struct {

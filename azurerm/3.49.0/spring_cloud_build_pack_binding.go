@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSpringCloudBuildPackBinding creates a new instance of [SpringCloudBuildPackBinding].
 func NewSpringCloudBuildPackBinding(name string, args SpringCloudBuildPackBindingArgs) *SpringCloudBuildPackBinding {
 	return &SpringCloudBuildPackBinding{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSpringCloudBuildPackBinding(name string, args SpringCloudBuildPackBindin
 
 var _ terra.Resource = (*SpringCloudBuildPackBinding)(nil)
 
+// SpringCloudBuildPackBinding represents the Terraform resource azurerm_spring_cloud_build_pack_binding.
 type SpringCloudBuildPackBinding struct {
-	Name  string
-	Args  SpringCloudBuildPackBindingArgs
-	state *springCloudBuildPackBindingState
+	Name      string
+	Args      SpringCloudBuildPackBindingArgs
+	state     *springCloudBuildPackBindingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SpringCloudBuildPackBinding].
 func (scbpb *SpringCloudBuildPackBinding) Type() string {
 	return "azurerm_spring_cloud_build_pack_binding"
 }
 
+// LocalName returns the local name for [SpringCloudBuildPackBinding].
 func (scbpb *SpringCloudBuildPackBinding) LocalName() string {
 	return scbpb.Name
 }
 
+// Configuration returns the configuration (args) for [SpringCloudBuildPackBinding].
 func (scbpb *SpringCloudBuildPackBinding) Configuration() interface{} {
 	return scbpb.Args
 }
 
+// DependOn is used for other resources to depend on [SpringCloudBuildPackBinding].
+func (scbpb *SpringCloudBuildPackBinding) DependOn() terra.Reference {
+	return terra.ReferenceResource(scbpb)
+}
+
+// Dependencies returns the list of resources [SpringCloudBuildPackBinding] depends_on.
+func (scbpb *SpringCloudBuildPackBinding) Dependencies() terra.Dependencies {
+	return scbpb.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SpringCloudBuildPackBinding].
+func (scbpb *SpringCloudBuildPackBinding) LifecycleManagement() *terra.Lifecycle {
+	return scbpb.Lifecycle
+}
+
+// Attributes returns the attributes for [SpringCloudBuildPackBinding].
 func (scbpb *SpringCloudBuildPackBinding) Attributes() springCloudBuildPackBindingAttributes {
 	return springCloudBuildPackBindingAttributes{ref: terra.ReferenceResource(scbpb)}
 }
 
+// ImportState imports the given attribute values into [SpringCloudBuildPackBinding]'s state.
 func (scbpb *SpringCloudBuildPackBinding) ImportState(av io.Reader) error {
 	scbpb.state = &springCloudBuildPackBindingState{}
 	if err := json.NewDecoder(av).Decode(scbpb.state); err != nil {
@@ -49,10 +73,12 @@ func (scbpb *SpringCloudBuildPackBinding) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SpringCloudBuildPackBinding] has state.
 func (scbpb *SpringCloudBuildPackBinding) State() (*springCloudBuildPackBindingState, bool) {
 	return scbpb.state, scbpb.state != nil
 }
 
+// StateMust returns the state for [SpringCloudBuildPackBinding]. Panics if the state is nil.
 func (scbpb *SpringCloudBuildPackBinding) StateMust() *springCloudBuildPackBindingState {
 	if scbpb.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", scbpb.Type(), scbpb.LocalName()))
@@ -60,10 +86,7 @@ func (scbpb *SpringCloudBuildPackBinding) StateMust() *springCloudBuildPackBindi
 	return scbpb.state
 }
 
-func (scbpb *SpringCloudBuildPackBinding) DependOn() terra.Reference {
-	return terra.ReferenceResource(scbpb)
-}
-
+// SpringCloudBuildPackBindingArgs contains the configurations for azurerm_spring_cloud_build_pack_binding.
 type SpringCloudBuildPackBindingArgs struct {
 	// BindingType: string, optional
 	BindingType terra.StringValue `hcl:"binding_type,attr"`
@@ -77,35 +100,37 @@ type SpringCloudBuildPackBindingArgs struct {
 	Launch *springcloudbuildpackbinding.Launch `hcl:"launch,block"`
 	// Timeouts: optional
 	Timeouts *springcloudbuildpackbinding.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SpringCloudBuildPackBinding depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type springCloudBuildPackBindingAttributes struct {
 	ref terra.Reference
 }
 
+// BindingType returns a reference to field binding_type of azurerm_spring_cloud_build_pack_binding.
 func (scbpb springCloudBuildPackBindingAttributes) BindingType() terra.StringValue {
-	return terra.ReferenceString(scbpb.ref.Append("binding_type"))
+	return terra.ReferenceAsString(scbpb.ref.Append("binding_type"))
 }
 
+// Id returns a reference to field id of azurerm_spring_cloud_build_pack_binding.
 func (scbpb springCloudBuildPackBindingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(scbpb.ref.Append("id"))
+	return terra.ReferenceAsString(scbpb.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_spring_cloud_build_pack_binding.
 func (scbpb springCloudBuildPackBindingAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(scbpb.ref.Append("name"))
+	return terra.ReferenceAsString(scbpb.ref.Append("name"))
 }
 
+// SpringCloudBuilderId returns a reference to field spring_cloud_builder_id of azurerm_spring_cloud_build_pack_binding.
 func (scbpb springCloudBuildPackBindingAttributes) SpringCloudBuilderId() terra.StringValue {
-	return terra.ReferenceString(scbpb.ref.Append("spring_cloud_builder_id"))
+	return terra.ReferenceAsString(scbpb.ref.Append("spring_cloud_builder_id"))
 }
 
 func (scbpb springCloudBuildPackBindingAttributes) Launch() terra.ListValue[springcloudbuildpackbinding.LaunchAttributes] {
-	return terra.ReferenceList[springcloudbuildpackbinding.LaunchAttributes](scbpb.ref.Append("launch"))
+	return terra.ReferenceAsList[springcloudbuildpackbinding.LaunchAttributes](scbpb.ref.Append("launch"))
 }
 
 func (scbpb springCloudBuildPackBindingAttributes) Timeouts() springcloudbuildpackbinding.TimeoutsAttributes {
-	return terra.ReferenceSingle[springcloudbuildpackbinding.TimeoutsAttributes](scbpb.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[springcloudbuildpackbinding.TimeoutsAttributes](scbpb.ref.Append("timeouts"))
 }
 
 type springCloudBuildPackBindingState struct {

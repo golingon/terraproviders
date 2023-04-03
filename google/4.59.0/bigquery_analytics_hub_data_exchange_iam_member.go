@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBigqueryAnalyticsHubDataExchangeIamMember creates a new instance of [BigqueryAnalyticsHubDataExchangeIamMember].
 func NewBigqueryAnalyticsHubDataExchangeIamMember(name string, args BigqueryAnalyticsHubDataExchangeIamMemberArgs) *BigqueryAnalyticsHubDataExchangeIamMember {
 	return &BigqueryAnalyticsHubDataExchangeIamMember{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBigqueryAnalyticsHubDataExchangeIamMember(name string, args BigqueryAnal
 
 var _ terra.Resource = (*BigqueryAnalyticsHubDataExchangeIamMember)(nil)
 
+// BigqueryAnalyticsHubDataExchangeIamMember represents the Terraform resource google_bigquery_analytics_hub_data_exchange_iam_member.
 type BigqueryAnalyticsHubDataExchangeIamMember struct {
-	Name  string
-	Args  BigqueryAnalyticsHubDataExchangeIamMemberArgs
-	state *bigqueryAnalyticsHubDataExchangeIamMemberState
+	Name      string
+	Args      BigqueryAnalyticsHubDataExchangeIamMemberArgs
+	state     *bigqueryAnalyticsHubDataExchangeIamMemberState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BigqueryAnalyticsHubDataExchangeIamMember].
 func (bahdeim *BigqueryAnalyticsHubDataExchangeIamMember) Type() string {
 	return "google_bigquery_analytics_hub_data_exchange_iam_member"
 }
 
+// LocalName returns the local name for [BigqueryAnalyticsHubDataExchangeIamMember].
 func (bahdeim *BigqueryAnalyticsHubDataExchangeIamMember) LocalName() string {
 	return bahdeim.Name
 }
 
+// Configuration returns the configuration (args) for [BigqueryAnalyticsHubDataExchangeIamMember].
 func (bahdeim *BigqueryAnalyticsHubDataExchangeIamMember) Configuration() interface{} {
 	return bahdeim.Args
 }
 
+// DependOn is used for other resources to depend on [BigqueryAnalyticsHubDataExchangeIamMember].
+func (bahdeim *BigqueryAnalyticsHubDataExchangeIamMember) DependOn() terra.Reference {
+	return terra.ReferenceResource(bahdeim)
+}
+
+// Dependencies returns the list of resources [BigqueryAnalyticsHubDataExchangeIamMember] depends_on.
+func (bahdeim *BigqueryAnalyticsHubDataExchangeIamMember) Dependencies() terra.Dependencies {
+	return bahdeim.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BigqueryAnalyticsHubDataExchangeIamMember].
+func (bahdeim *BigqueryAnalyticsHubDataExchangeIamMember) LifecycleManagement() *terra.Lifecycle {
+	return bahdeim.Lifecycle
+}
+
+// Attributes returns the attributes for [BigqueryAnalyticsHubDataExchangeIamMember].
 func (bahdeim *BigqueryAnalyticsHubDataExchangeIamMember) Attributes() bigqueryAnalyticsHubDataExchangeIamMemberAttributes {
 	return bigqueryAnalyticsHubDataExchangeIamMemberAttributes{ref: terra.ReferenceResource(bahdeim)}
 }
 
+// ImportState imports the given attribute values into [BigqueryAnalyticsHubDataExchangeIamMember]'s state.
 func (bahdeim *BigqueryAnalyticsHubDataExchangeIamMember) ImportState(av io.Reader) error {
 	bahdeim.state = &bigqueryAnalyticsHubDataExchangeIamMemberState{}
 	if err := json.NewDecoder(av).Decode(bahdeim.state); err != nil {
@@ -49,10 +73,12 @@ func (bahdeim *BigqueryAnalyticsHubDataExchangeIamMember) ImportState(av io.Read
 	return nil
 }
 
+// State returns the state and a bool indicating if [BigqueryAnalyticsHubDataExchangeIamMember] has state.
 func (bahdeim *BigqueryAnalyticsHubDataExchangeIamMember) State() (*bigqueryAnalyticsHubDataExchangeIamMemberState, bool) {
 	return bahdeim.state, bahdeim.state != nil
 }
 
+// StateMust returns the state for [BigqueryAnalyticsHubDataExchangeIamMember]. Panics if the state is nil.
 func (bahdeim *BigqueryAnalyticsHubDataExchangeIamMember) StateMust() *bigqueryAnalyticsHubDataExchangeIamMemberState {
 	if bahdeim.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bahdeim.Type(), bahdeim.LocalName()))
@@ -60,10 +86,7 @@ func (bahdeim *BigqueryAnalyticsHubDataExchangeIamMember) StateMust() *bigqueryA
 	return bahdeim.state
 }
 
-func (bahdeim *BigqueryAnalyticsHubDataExchangeIamMember) DependOn() terra.Reference {
-	return terra.ReferenceResource(bahdeim)
-}
-
+// BigqueryAnalyticsHubDataExchangeIamMemberArgs contains the configurations for google_bigquery_analytics_hub_data_exchange_iam_member.
 type BigqueryAnalyticsHubDataExchangeIamMemberArgs struct {
 	// DataExchangeId: string, required
 	DataExchangeId terra.StringValue `hcl:"data_exchange_id,attr" validate:"required"`
@@ -79,43 +102,48 @@ type BigqueryAnalyticsHubDataExchangeIamMemberArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *bigqueryanalyticshubdataexchangeiammember.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that BigqueryAnalyticsHubDataExchangeIamMember depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type bigqueryAnalyticsHubDataExchangeIamMemberAttributes struct {
 	ref terra.Reference
 }
 
+// DataExchangeId returns a reference to field data_exchange_id of google_bigquery_analytics_hub_data_exchange_iam_member.
 func (bahdeim bigqueryAnalyticsHubDataExchangeIamMemberAttributes) DataExchangeId() terra.StringValue {
-	return terra.ReferenceString(bahdeim.ref.Append("data_exchange_id"))
+	return terra.ReferenceAsString(bahdeim.ref.Append("data_exchange_id"))
 }
 
+// Etag returns a reference to field etag of google_bigquery_analytics_hub_data_exchange_iam_member.
 func (bahdeim bigqueryAnalyticsHubDataExchangeIamMemberAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(bahdeim.ref.Append("etag"))
+	return terra.ReferenceAsString(bahdeim.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_bigquery_analytics_hub_data_exchange_iam_member.
 func (bahdeim bigqueryAnalyticsHubDataExchangeIamMemberAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bahdeim.ref.Append("id"))
+	return terra.ReferenceAsString(bahdeim.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_bigquery_analytics_hub_data_exchange_iam_member.
 func (bahdeim bigqueryAnalyticsHubDataExchangeIamMemberAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(bahdeim.ref.Append("location"))
+	return terra.ReferenceAsString(bahdeim.ref.Append("location"))
 }
 
+// Member returns a reference to field member of google_bigquery_analytics_hub_data_exchange_iam_member.
 func (bahdeim bigqueryAnalyticsHubDataExchangeIamMemberAttributes) Member() terra.StringValue {
-	return terra.ReferenceString(bahdeim.ref.Append("member"))
+	return terra.ReferenceAsString(bahdeim.ref.Append("member"))
 }
 
+// Project returns a reference to field project of google_bigquery_analytics_hub_data_exchange_iam_member.
 func (bahdeim bigqueryAnalyticsHubDataExchangeIamMemberAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(bahdeim.ref.Append("project"))
+	return terra.ReferenceAsString(bahdeim.ref.Append("project"))
 }
 
+// Role returns a reference to field role of google_bigquery_analytics_hub_data_exchange_iam_member.
 func (bahdeim bigqueryAnalyticsHubDataExchangeIamMemberAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(bahdeim.ref.Append("role"))
+	return terra.ReferenceAsString(bahdeim.ref.Append("role"))
 }
 
 func (bahdeim bigqueryAnalyticsHubDataExchangeIamMemberAttributes) Condition() terra.ListValue[bigqueryanalyticshubdataexchangeiammember.ConditionAttributes] {
-	return terra.ReferenceList[bigqueryanalyticshubdataexchangeiammember.ConditionAttributes](bahdeim.ref.Append("condition"))
+	return terra.ReferenceAsList[bigqueryanalyticshubdataexchangeiammember.ConditionAttributes](bahdeim.ref.Append("condition"))
 }
 
 type bigqueryAnalyticsHubDataExchangeIamMemberState struct {

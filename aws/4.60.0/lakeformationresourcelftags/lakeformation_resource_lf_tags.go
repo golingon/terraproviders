@@ -68,7 +68,7 @@ func (d DatabaseAttributes) InternalWithRef(ref terra.Reference) DatabaseAttribu
 	return DatabaseAttributes{ref: ref}
 }
 
-func (d DatabaseAttributes) InternalTokens() hclwrite.Tokens {
+func (d DatabaseAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -92,7 +92,7 @@ func (lt LfTagAttributes) InternalWithRef(ref terra.Reference) LfTagAttributes {
 	return LfTagAttributes{ref: ref}
 }
 
-func (lt LfTagAttributes) InternalTokens() hclwrite.Tokens {
+func (lt LfTagAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lt.ref.InternalTokens()
 }
 
@@ -120,7 +120,7 @@ func (t TableAttributes) InternalWithRef(ref terra.Reference) TableAttributes {
 	return TableAttributes{ref: ref}
 }
 
-func (t TableAttributes) InternalTokens() hclwrite.Tokens {
+func (t TableAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -152,7 +152,7 @@ func (twc TableWithColumnsAttributes) InternalWithRef(ref terra.Reference) Table
 	return TableWithColumnsAttributes{ref: ref}
 }
 
-func (twc TableWithColumnsAttributes) InternalTokens() hclwrite.Tokens {
+func (twc TableWithColumnsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return twc.ref.InternalTokens()
 }
 
@@ -192,7 +192,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

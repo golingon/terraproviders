@@ -54,7 +54,7 @@ func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes 
 	return FilterAttributes{ref: ref}
 }
 
-func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
+func (f FilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -78,7 +78,7 @@ func (sca StorageClassAnalysisAttributes) InternalWithRef(ref terra.Reference) S
 	return StorageClassAnalysisAttributes{ref: ref}
 }
 
-func (sca StorageClassAnalysisAttributes) InternalTokens() hclwrite.Tokens {
+func (sca StorageClassAnalysisAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sca.ref.InternalTokens()
 }
 
@@ -98,7 +98,7 @@ func (de DataExportAttributes) InternalWithRef(ref terra.Reference) DataExportAt
 	return DataExportAttributes{ref: ref}
 }
 
-func (de DataExportAttributes) InternalTokens() hclwrite.Tokens {
+func (de DataExportAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return de.ref.InternalTokens()
 }
 
@@ -122,7 +122,7 @@ func (d DestinationAttributes) InternalWithRef(ref terra.Reference) DestinationA
 	return DestinationAttributes{ref: ref}
 }
 
-func (d DestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (d DestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -142,7 +142,7 @@ func (sbd S3BucketDestinationAttributes) InternalWithRef(ref terra.Reference) S3
 	return S3BucketDestinationAttributes{ref: ref}
 }
 
-func (sbd S3BucketDestinationAttributes) InternalTokens() hclwrite.Tokens {
+func (sbd S3BucketDestinationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sbd.ref.InternalTokens()
 }
 

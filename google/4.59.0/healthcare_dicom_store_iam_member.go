@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewHealthcareDicomStoreIamMember creates a new instance of [HealthcareDicomStoreIamMember].
 func NewHealthcareDicomStoreIamMember(name string, args HealthcareDicomStoreIamMemberArgs) *HealthcareDicomStoreIamMember {
 	return &HealthcareDicomStoreIamMember{
 		Args: args,
@@ -19,28 +20,51 @@ func NewHealthcareDicomStoreIamMember(name string, args HealthcareDicomStoreIamM
 
 var _ terra.Resource = (*HealthcareDicomStoreIamMember)(nil)
 
+// HealthcareDicomStoreIamMember represents the Terraform resource google_healthcare_dicom_store_iam_member.
 type HealthcareDicomStoreIamMember struct {
-	Name  string
-	Args  HealthcareDicomStoreIamMemberArgs
-	state *healthcareDicomStoreIamMemberState
+	Name      string
+	Args      HealthcareDicomStoreIamMemberArgs
+	state     *healthcareDicomStoreIamMemberState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [HealthcareDicomStoreIamMember].
 func (hdsim *HealthcareDicomStoreIamMember) Type() string {
 	return "google_healthcare_dicom_store_iam_member"
 }
 
+// LocalName returns the local name for [HealthcareDicomStoreIamMember].
 func (hdsim *HealthcareDicomStoreIamMember) LocalName() string {
 	return hdsim.Name
 }
 
+// Configuration returns the configuration (args) for [HealthcareDicomStoreIamMember].
 func (hdsim *HealthcareDicomStoreIamMember) Configuration() interface{} {
 	return hdsim.Args
 }
 
+// DependOn is used for other resources to depend on [HealthcareDicomStoreIamMember].
+func (hdsim *HealthcareDicomStoreIamMember) DependOn() terra.Reference {
+	return terra.ReferenceResource(hdsim)
+}
+
+// Dependencies returns the list of resources [HealthcareDicomStoreIamMember] depends_on.
+func (hdsim *HealthcareDicomStoreIamMember) Dependencies() terra.Dependencies {
+	return hdsim.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [HealthcareDicomStoreIamMember].
+func (hdsim *HealthcareDicomStoreIamMember) LifecycleManagement() *terra.Lifecycle {
+	return hdsim.Lifecycle
+}
+
+// Attributes returns the attributes for [HealthcareDicomStoreIamMember].
 func (hdsim *HealthcareDicomStoreIamMember) Attributes() healthcareDicomStoreIamMemberAttributes {
 	return healthcareDicomStoreIamMemberAttributes{ref: terra.ReferenceResource(hdsim)}
 }
 
+// ImportState imports the given attribute values into [HealthcareDicomStoreIamMember]'s state.
 func (hdsim *HealthcareDicomStoreIamMember) ImportState(av io.Reader) error {
 	hdsim.state = &healthcareDicomStoreIamMemberState{}
 	if err := json.NewDecoder(av).Decode(hdsim.state); err != nil {
@@ -49,10 +73,12 @@ func (hdsim *HealthcareDicomStoreIamMember) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [HealthcareDicomStoreIamMember] has state.
 func (hdsim *HealthcareDicomStoreIamMember) State() (*healthcareDicomStoreIamMemberState, bool) {
 	return hdsim.state, hdsim.state != nil
 }
 
+// StateMust returns the state for [HealthcareDicomStoreIamMember]. Panics if the state is nil.
 func (hdsim *HealthcareDicomStoreIamMember) StateMust() *healthcareDicomStoreIamMemberState {
 	if hdsim.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", hdsim.Type(), hdsim.LocalName()))
@@ -60,10 +86,7 @@ func (hdsim *HealthcareDicomStoreIamMember) StateMust() *healthcareDicomStoreIam
 	return hdsim.state
 }
 
-func (hdsim *HealthcareDicomStoreIamMember) DependOn() terra.Reference {
-	return terra.ReferenceResource(hdsim)
-}
-
+// HealthcareDicomStoreIamMemberArgs contains the configurations for google_healthcare_dicom_store_iam_member.
 type HealthcareDicomStoreIamMemberArgs struct {
 	// DicomStoreId: string, required
 	DicomStoreId terra.StringValue `hcl:"dicom_store_id,attr" validate:"required"`
@@ -75,35 +98,38 @@ type HealthcareDicomStoreIamMemberArgs struct {
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
 	// Condition: optional
 	Condition *healthcaredicomstoreiammember.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that HealthcareDicomStoreIamMember depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type healthcareDicomStoreIamMemberAttributes struct {
 	ref terra.Reference
 }
 
+// DicomStoreId returns a reference to field dicom_store_id of google_healthcare_dicom_store_iam_member.
 func (hdsim healthcareDicomStoreIamMemberAttributes) DicomStoreId() terra.StringValue {
-	return terra.ReferenceString(hdsim.ref.Append("dicom_store_id"))
+	return terra.ReferenceAsString(hdsim.ref.Append("dicom_store_id"))
 }
 
+// Etag returns a reference to field etag of google_healthcare_dicom_store_iam_member.
 func (hdsim healthcareDicomStoreIamMemberAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(hdsim.ref.Append("etag"))
+	return terra.ReferenceAsString(hdsim.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_healthcare_dicom_store_iam_member.
 func (hdsim healthcareDicomStoreIamMemberAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(hdsim.ref.Append("id"))
+	return terra.ReferenceAsString(hdsim.ref.Append("id"))
 }
 
+// Member returns a reference to field member of google_healthcare_dicom_store_iam_member.
 func (hdsim healthcareDicomStoreIamMemberAttributes) Member() terra.StringValue {
-	return terra.ReferenceString(hdsim.ref.Append("member"))
+	return terra.ReferenceAsString(hdsim.ref.Append("member"))
 }
 
+// Role returns a reference to field role of google_healthcare_dicom_store_iam_member.
 func (hdsim healthcareDicomStoreIamMemberAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(hdsim.ref.Append("role"))
+	return terra.ReferenceAsString(hdsim.ref.Append("role"))
 }
 
 func (hdsim healthcareDicomStoreIamMemberAttributes) Condition() terra.ListValue[healthcaredicomstoreiammember.ConditionAttributes] {
-	return terra.ReferenceList[healthcaredicomstoreiammember.ConditionAttributes](hdsim.ref.Append("condition"))
+	return terra.ReferenceAsList[healthcaredicomstoreiammember.ConditionAttributes](hdsim.ref.Append("condition"))
 }
 
 type healthcareDicomStoreIamMemberState struct {

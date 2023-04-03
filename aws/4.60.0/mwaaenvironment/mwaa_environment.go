@@ -90,7 +90,7 @@ func (lu LastUpdatedAttributes) InternalWithRef(ref terra.Reference) LastUpdated
 	return LastUpdatedAttributes{ref: ref}
 }
 
-func (lu LastUpdatedAttributes) InternalTokens() hclwrite.Tokens {
+func (lu LastUpdatedAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lu.ref.InternalTokens()
 }
 
@@ -118,7 +118,7 @@ func (e ErrorAttributes) InternalWithRef(ref terra.Reference) ErrorAttributes {
 	return ErrorAttributes{ref: ref}
 }
 
-func (e ErrorAttributes) InternalTokens() hclwrite.Tokens {
+func (e ErrorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -142,7 +142,7 @@ func (lc LoggingConfigurationAttributes) InternalWithRef(ref terra.Reference) Lo
 	return LoggingConfigurationAttributes{ref: ref}
 }
 
-func (lc LoggingConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (lc LoggingConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return lc.ref.InternalTokens()
 }
 
@@ -178,7 +178,7 @@ func (dpl DagProcessingLogsAttributes) InternalWithRef(ref terra.Reference) DagP
 	return DagProcessingLogsAttributes{ref: ref}
 }
 
-func (dpl DagProcessingLogsAttributes) InternalTokens() hclwrite.Tokens {
+func (dpl DagProcessingLogsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dpl.ref.InternalTokens()
 }
 
@@ -206,7 +206,7 @@ func (sl SchedulerLogsAttributes) InternalWithRef(ref terra.Reference) Scheduler
 	return SchedulerLogsAttributes{ref: ref}
 }
 
-func (sl SchedulerLogsAttributes) InternalTokens() hclwrite.Tokens {
+func (sl SchedulerLogsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sl.ref.InternalTokens()
 }
 
@@ -234,7 +234,7 @@ func (tl TaskLogsAttributes) InternalWithRef(ref terra.Reference) TaskLogsAttrib
 	return TaskLogsAttributes{ref: ref}
 }
 
-func (tl TaskLogsAttributes) InternalTokens() hclwrite.Tokens {
+func (tl TaskLogsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tl.ref.InternalTokens()
 }
 
@@ -262,7 +262,7 @@ func (wl WebserverLogsAttributes) InternalWithRef(ref terra.Reference) Webserver
 	return WebserverLogsAttributes{ref: ref}
 }
 
-func (wl WebserverLogsAttributes) InternalTokens() hclwrite.Tokens {
+func (wl WebserverLogsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wl.ref.InternalTokens()
 }
 
@@ -290,7 +290,7 @@ func (wl WorkerLogsAttributes) InternalWithRef(ref terra.Reference) WorkerLogsAt
 	return WorkerLogsAttributes{ref: ref}
 }
 
-func (wl WorkerLogsAttributes) InternalTokens() hclwrite.Tokens {
+func (wl WorkerLogsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wl.ref.InternalTokens()
 }
 
@@ -318,7 +318,7 @@ func (nc NetworkConfigurationAttributes) InternalWithRef(ref terra.Reference) Ne
 	return NetworkConfigurationAttributes{ref: ref}
 }
 
-func (nc NetworkConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (nc NetworkConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nc.ref.InternalTokens()
 }
 
@@ -342,7 +342,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

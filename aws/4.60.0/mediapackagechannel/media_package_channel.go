@@ -26,7 +26,7 @@ func (hi HlsIngestAttributes) InternalWithRef(ref terra.Reference) HlsIngestAttr
 	return HlsIngestAttributes{ref: ref}
 }
 
-func (hi HlsIngestAttributes) InternalTokens() hclwrite.Tokens {
+func (hi HlsIngestAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hi.ref.InternalTokens()
 }
 
@@ -46,7 +46,7 @@ func (ie IngestEndpointsAttributes) InternalWithRef(ref terra.Reference) IngestE
 	return IngestEndpointsAttributes{ref: ref}
 }
 
-func (ie IngestEndpointsAttributes) InternalTokens() hclwrite.Tokens {
+func (ie IngestEndpointsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ie.ref.InternalTokens()
 }
 

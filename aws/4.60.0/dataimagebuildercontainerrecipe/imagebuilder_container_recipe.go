@@ -40,7 +40,7 @@ func (c ComponentAttributes) InternalWithRef(ref terra.Reference) ComponentAttri
 	return ComponentAttributes{ref: ref}
 }
 
-func (c ComponentAttributes) InternalTokens() hclwrite.Tokens {
+func (c ComponentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -64,7 +64,7 @@ func (p ParameterAttributes) InternalWithRef(ref terra.Reference) ParameterAttri
 	return ParameterAttributes{ref: ref}
 }
 
-func (p ParameterAttributes) InternalTokens() hclwrite.Tokens {
+func (p ParameterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -88,7 +88,7 @@ func (ic InstanceConfigurationAttributes) InternalWithRef(ref terra.Reference) I
 	return InstanceConfigurationAttributes{ref: ref}
 }
 
-func (ic InstanceConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ic InstanceConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ic.ref.InternalTokens()
 }
 
@@ -112,7 +112,7 @@ func (bdm BlockDeviceMappingAttributes) InternalWithRef(ref terra.Reference) Blo
 	return BlockDeviceMappingAttributes{ref: ref}
 }
 
-func (bdm BlockDeviceMappingAttributes) InternalTokens() hclwrite.Tokens {
+func (bdm BlockDeviceMappingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bdm.ref.InternalTokens()
 }
 
@@ -144,7 +144,7 @@ func (e EbsAttributes) InternalWithRef(ref terra.Reference) EbsAttributes {
 	return EbsAttributes{ref: ref}
 }
 
-func (e EbsAttributes) InternalTokens() hclwrite.Tokens {
+func (e EbsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -192,7 +192,7 @@ func (tr TargetRepositoryAttributes) InternalWithRef(ref terra.Reference) Target
 	return TargetRepositoryAttributes{ref: ref}
 }
 
-func (tr TargetRepositoryAttributes) InternalTokens() hclwrite.Tokens {
+func (tr TargetRepositoryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tr.ref.InternalTokens()
 }
 

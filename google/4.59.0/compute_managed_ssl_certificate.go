@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeManagedSslCertificate creates a new instance of [ComputeManagedSslCertificate].
 func NewComputeManagedSslCertificate(name string, args ComputeManagedSslCertificateArgs) *ComputeManagedSslCertificate {
 	return &ComputeManagedSslCertificate{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeManagedSslCertificate(name string, args ComputeManagedSslCertific
 
 var _ terra.Resource = (*ComputeManagedSslCertificate)(nil)
 
+// ComputeManagedSslCertificate represents the Terraform resource google_compute_managed_ssl_certificate.
 type ComputeManagedSslCertificate struct {
-	Name  string
-	Args  ComputeManagedSslCertificateArgs
-	state *computeManagedSslCertificateState
+	Name      string
+	Args      ComputeManagedSslCertificateArgs
+	state     *computeManagedSslCertificateState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeManagedSslCertificate].
 func (cmsc *ComputeManagedSslCertificate) Type() string {
 	return "google_compute_managed_ssl_certificate"
 }
 
+// LocalName returns the local name for [ComputeManagedSslCertificate].
 func (cmsc *ComputeManagedSslCertificate) LocalName() string {
 	return cmsc.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeManagedSslCertificate].
 func (cmsc *ComputeManagedSslCertificate) Configuration() interface{} {
 	return cmsc.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeManagedSslCertificate].
+func (cmsc *ComputeManagedSslCertificate) DependOn() terra.Reference {
+	return terra.ReferenceResource(cmsc)
+}
+
+// Dependencies returns the list of resources [ComputeManagedSslCertificate] depends_on.
+func (cmsc *ComputeManagedSslCertificate) Dependencies() terra.Dependencies {
+	return cmsc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeManagedSslCertificate].
+func (cmsc *ComputeManagedSslCertificate) LifecycleManagement() *terra.Lifecycle {
+	return cmsc.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeManagedSslCertificate].
 func (cmsc *ComputeManagedSslCertificate) Attributes() computeManagedSslCertificateAttributes {
 	return computeManagedSslCertificateAttributes{ref: terra.ReferenceResource(cmsc)}
 }
 
+// ImportState imports the given attribute values into [ComputeManagedSslCertificate]'s state.
 func (cmsc *ComputeManagedSslCertificate) ImportState(av io.Reader) error {
 	cmsc.state = &computeManagedSslCertificateState{}
 	if err := json.NewDecoder(av).Decode(cmsc.state); err != nil {
@@ -49,10 +73,12 @@ func (cmsc *ComputeManagedSslCertificate) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeManagedSslCertificate] has state.
 func (cmsc *ComputeManagedSslCertificate) State() (*computeManagedSslCertificateState, bool) {
 	return cmsc.state, cmsc.state != nil
 }
 
+// StateMust returns the state for [ComputeManagedSslCertificate]. Panics if the state is nil.
 func (cmsc *ComputeManagedSslCertificate) StateMust() *computeManagedSslCertificateState {
 	if cmsc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cmsc.Type(), cmsc.LocalName()))
@@ -60,10 +86,7 @@ func (cmsc *ComputeManagedSslCertificate) StateMust() *computeManagedSslCertific
 	return cmsc.state
 }
 
-func (cmsc *ComputeManagedSslCertificate) DependOn() terra.Reference {
-	return terra.ReferenceResource(cmsc)
-}
-
+// ComputeManagedSslCertificateArgs contains the configurations for google_compute_managed_ssl_certificate.
 type ComputeManagedSslCertificateArgs struct {
 	// CertificateId: number, optional
 	CertificateId terra.NumberValue `hcl:"certificate_id,attr"`
@@ -81,59 +104,67 @@ type ComputeManagedSslCertificateArgs struct {
 	Managed *computemanagedsslcertificate.Managed `hcl:"managed,block"`
 	// Timeouts: optional
 	Timeouts *computemanagedsslcertificate.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeManagedSslCertificate depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeManagedSslCertificateAttributes struct {
 	ref terra.Reference
 }
 
+// CertificateId returns a reference to field certificate_id of google_compute_managed_ssl_certificate.
 func (cmsc computeManagedSslCertificateAttributes) CertificateId() terra.NumberValue {
-	return terra.ReferenceNumber(cmsc.ref.Append("certificate_id"))
+	return terra.ReferenceAsNumber(cmsc.ref.Append("certificate_id"))
 }
 
+// CreationTimestamp returns a reference to field creation_timestamp of google_compute_managed_ssl_certificate.
 func (cmsc computeManagedSslCertificateAttributes) CreationTimestamp() terra.StringValue {
-	return terra.ReferenceString(cmsc.ref.Append("creation_timestamp"))
+	return terra.ReferenceAsString(cmsc.ref.Append("creation_timestamp"))
 }
 
+// Description returns a reference to field description of google_compute_managed_ssl_certificate.
 func (cmsc computeManagedSslCertificateAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cmsc.ref.Append("description"))
+	return terra.ReferenceAsString(cmsc.ref.Append("description"))
 }
 
+// ExpireTime returns a reference to field expire_time of google_compute_managed_ssl_certificate.
 func (cmsc computeManagedSslCertificateAttributes) ExpireTime() terra.StringValue {
-	return terra.ReferenceString(cmsc.ref.Append("expire_time"))
+	return terra.ReferenceAsString(cmsc.ref.Append("expire_time"))
 }
 
+// Id returns a reference to field id of google_compute_managed_ssl_certificate.
 func (cmsc computeManagedSslCertificateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cmsc.ref.Append("id"))
+	return terra.ReferenceAsString(cmsc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_compute_managed_ssl_certificate.
 func (cmsc computeManagedSslCertificateAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cmsc.ref.Append("name"))
+	return terra.ReferenceAsString(cmsc.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_compute_managed_ssl_certificate.
 func (cmsc computeManagedSslCertificateAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cmsc.ref.Append("project"))
+	return terra.ReferenceAsString(cmsc.ref.Append("project"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_managed_ssl_certificate.
 func (cmsc computeManagedSslCertificateAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(cmsc.ref.Append("self_link"))
+	return terra.ReferenceAsString(cmsc.ref.Append("self_link"))
 }
 
+// SubjectAlternativeNames returns a reference to field subject_alternative_names of google_compute_managed_ssl_certificate.
 func (cmsc computeManagedSslCertificateAttributes) SubjectAlternativeNames() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cmsc.ref.Append("subject_alternative_names"))
+	return terra.ReferenceAsList[terra.StringValue](cmsc.ref.Append("subject_alternative_names"))
 }
 
+// Type returns a reference to field type of google_compute_managed_ssl_certificate.
 func (cmsc computeManagedSslCertificateAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(cmsc.ref.Append("type"))
+	return terra.ReferenceAsString(cmsc.ref.Append("type"))
 }
 
 func (cmsc computeManagedSslCertificateAttributes) Managed() terra.ListValue[computemanagedsslcertificate.ManagedAttributes] {
-	return terra.ReferenceList[computemanagedsslcertificate.ManagedAttributes](cmsc.ref.Append("managed"))
+	return terra.ReferenceAsList[computemanagedsslcertificate.ManagedAttributes](cmsc.ref.Append("managed"))
 }
 
 func (cmsc computeManagedSslCertificateAttributes) Timeouts() computemanagedsslcertificate.TimeoutsAttributes {
-	return terra.ReferenceSingle[computemanagedsslcertificate.TimeoutsAttributes](cmsc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computemanagedsslcertificate.TimeoutsAttributes](cmsc.ref.Append("timeouts"))
 }
 
 type computeManagedSslCertificateState struct {

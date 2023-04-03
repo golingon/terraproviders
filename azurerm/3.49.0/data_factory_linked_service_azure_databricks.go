@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFactoryLinkedServiceAzureDatabricks creates a new instance of [DataFactoryLinkedServiceAzureDatabricks].
 func NewDataFactoryLinkedServiceAzureDatabricks(name string, args DataFactoryLinkedServiceAzureDatabricksArgs) *DataFactoryLinkedServiceAzureDatabricks {
 	return &DataFactoryLinkedServiceAzureDatabricks{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFactoryLinkedServiceAzureDatabricks(name string, args DataFactoryLin
 
 var _ terra.Resource = (*DataFactoryLinkedServiceAzureDatabricks)(nil)
 
+// DataFactoryLinkedServiceAzureDatabricks represents the Terraform resource azurerm_data_factory_linked_service_azure_databricks.
 type DataFactoryLinkedServiceAzureDatabricks struct {
-	Name  string
-	Args  DataFactoryLinkedServiceAzureDatabricksArgs
-	state *dataFactoryLinkedServiceAzureDatabricksState
+	Name      string
+	Args      DataFactoryLinkedServiceAzureDatabricksArgs
+	state     *dataFactoryLinkedServiceAzureDatabricksState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFactoryLinkedServiceAzureDatabricks].
 func (dflsad *DataFactoryLinkedServiceAzureDatabricks) Type() string {
 	return "azurerm_data_factory_linked_service_azure_databricks"
 }
 
+// LocalName returns the local name for [DataFactoryLinkedServiceAzureDatabricks].
 func (dflsad *DataFactoryLinkedServiceAzureDatabricks) LocalName() string {
 	return dflsad.Name
 }
 
+// Configuration returns the configuration (args) for [DataFactoryLinkedServiceAzureDatabricks].
 func (dflsad *DataFactoryLinkedServiceAzureDatabricks) Configuration() interface{} {
 	return dflsad.Args
 }
 
+// DependOn is used for other resources to depend on [DataFactoryLinkedServiceAzureDatabricks].
+func (dflsad *DataFactoryLinkedServiceAzureDatabricks) DependOn() terra.Reference {
+	return terra.ReferenceResource(dflsad)
+}
+
+// Dependencies returns the list of resources [DataFactoryLinkedServiceAzureDatabricks] depends_on.
+func (dflsad *DataFactoryLinkedServiceAzureDatabricks) Dependencies() terra.Dependencies {
+	return dflsad.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFactoryLinkedServiceAzureDatabricks].
+func (dflsad *DataFactoryLinkedServiceAzureDatabricks) LifecycleManagement() *terra.Lifecycle {
+	return dflsad.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFactoryLinkedServiceAzureDatabricks].
 func (dflsad *DataFactoryLinkedServiceAzureDatabricks) Attributes() dataFactoryLinkedServiceAzureDatabricksAttributes {
 	return dataFactoryLinkedServiceAzureDatabricksAttributes{ref: terra.ReferenceResource(dflsad)}
 }
 
+// ImportState imports the given attribute values into [DataFactoryLinkedServiceAzureDatabricks]'s state.
 func (dflsad *DataFactoryLinkedServiceAzureDatabricks) ImportState(av io.Reader) error {
 	dflsad.state = &dataFactoryLinkedServiceAzureDatabricksState{}
 	if err := json.NewDecoder(av).Decode(dflsad.state); err != nil {
@@ -49,10 +73,12 @@ func (dflsad *DataFactoryLinkedServiceAzureDatabricks) ImportState(av io.Reader)
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFactoryLinkedServiceAzureDatabricks] has state.
 func (dflsad *DataFactoryLinkedServiceAzureDatabricks) State() (*dataFactoryLinkedServiceAzureDatabricksState, bool) {
 	return dflsad.state, dflsad.state != nil
 }
 
+// StateMust returns the state for [DataFactoryLinkedServiceAzureDatabricks]. Panics if the state is nil.
 func (dflsad *DataFactoryLinkedServiceAzureDatabricks) StateMust() *dataFactoryLinkedServiceAzureDatabricksState {
 	if dflsad.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dflsad.Type(), dflsad.LocalName()))
@@ -60,10 +86,7 @@ func (dflsad *DataFactoryLinkedServiceAzureDatabricks) StateMust() *dataFactoryL
 	return dflsad.state
 }
 
-func (dflsad *DataFactoryLinkedServiceAzureDatabricks) DependOn() terra.Reference {
-	return terra.ReferenceResource(dflsad)
-}
-
+// DataFactoryLinkedServiceAzureDatabricksArgs contains the configurations for azurerm_data_factory_linked_service_azure_databricks.
 type DataFactoryLinkedServiceAzureDatabricksArgs struct {
 	// AccessToken: string, optional
 	AccessToken terra.StringValue `hcl:"access_token,attr"`
@@ -97,75 +120,85 @@ type DataFactoryLinkedServiceAzureDatabricksArgs struct {
 	NewClusterConfig *datafactorylinkedserviceazuredatabricks.NewClusterConfig `hcl:"new_cluster_config,block"`
 	// Timeouts: optional
 	Timeouts *datafactorylinkedserviceazuredatabricks.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataFactoryLinkedServiceAzureDatabricks depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFactoryLinkedServiceAzureDatabricksAttributes struct {
 	ref terra.Reference
 }
 
+// AccessToken returns a reference to field access_token of azurerm_data_factory_linked_service_azure_databricks.
 func (dflsad dataFactoryLinkedServiceAzureDatabricksAttributes) AccessToken() terra.StringValue {
-	return terra.ReferenceString(dflsad.ref.Append("access_token"))
+	return terra.ReferenceAsString(dflsad.ref.Append("access_token"))
 }
 
+// AdbDomain returns a reference to field adb_domain of azurerm_data_factory_linked_service_azure_databricks.
 func (dflsad dataFactoryLinkedServiceAzureDatabricksAttributes) AdbDomain() terra.StringValue {
-	return terra.ReferenceString(dflsad.ref.Append("adb_domain"))
+	return terra.ReferenceAsString(dflsad.ref.Append("adb_domain"))
 }
 
+// AdditionalProperties returns a reference to field additional_properties of azurerm_data_factory_linked_service_azure_databricks.
 func (dflsad dataFactoryLinkedServiceAzureDatabricksAttributes) AdditionalProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dflsad.ref.Append("additional_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](dflsad.ref.Append("additional_properties"))
 }
 
+// Annotations returns a reference to field annotations of azurerm_data_factory_linked_service_azure_databricks.
 func (dflsad dataFactoryLinkedServiceAzureDatabricksAttributes) Annotations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dflsad.ref.Append("annotations"))
+	return terra.ReferenceAsList[terra.StringValue](dflsad.ref.Append("annotations"))
 }
 
+// DataFactoryId returns a reference to field data_factory_id of azurerm_data_factory_linked_service_azure_databricks.
 func (dflsad dataFactoryLinkedServiceAzureDatabricksAttributes) DataFactoryId() terra.StringValue {
-	return terra.ReferenceString(dflsad.ref.Append("data_factory_id"))
+	return terra.ReferenceAsString(dflsad.ref.Append("data_factory_id"))
 }
 
+// Description returns a reference to field description of azurerm_data_factory_linked_service_azure_databricks.
 func (dflsad dataFactoryLinkedServiceAzureDatabricksAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dflsad.ref.Append("description"))
+	return terra.ReferenceAsString(dflsad.ref.Append("description"))
 }
 
+// ExistingClusterId returns a reference to field existing_cluster_id of azurerm_data_factory_linked_service_azure_databricks.
 func (dflsad dataFactoryLinkedServiceAzureDatabricksAttributes) ExistingClusterId() terra.StringValue {
-	return terra.ReferenceString(dflsad.ref.Append("existing_cluster_id"))
+	return terra.ReferenceAsString(dflsad.ref.Append("existing_cluster_id"))
 }
 
+// Id returns a reference to field id of azurerm_data_factory_linked_service_azure_databricks.
 func (dflsad dataFactoryLinkedServiceAzureDatabricksAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dflsad.ref.Append("id"))
+	return terra.ReferenceAsString(dflsad.ref.Append("id"))
 }
 
+// IntegrationRuntimeName returns a reference to field integration_runtime_name of azurerm_data_factory_linked_service_azure_databricks.
 func (dflsad dataFactoryLinkedServiceAzureDatabricksAttributes) IntegrationRuntimeName() terra.StringValue {
-	return terra.ReferenceString(dflsad.ref.Append("integration_runtime_name"))
+	return terra.ReferenceAsString(dflsad.ref.Append("integration_runtime_name"))
 }
 
+// MsiWorkSpaceResourceId returns a reference to field msi_work_space_resource_id of azurerm_data_factory_linked_service_azure_databricks.
 func (dflsad dataFactoryLinkedServiceAzureDatabricksAttributes) MsiWorkSpaceResourceId() terra.StringValue {
-	return terra.ReferenceString(dflsad.ref.Append("msi_work_space_resource_id"))
+	return terra.ReferenceAsString(dflsad.ref.Append("msi_work_space_resource_id"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory_linked_service_azure_databricks.
 func (dflsad dataFactoryLinkedServiceAzureDatabricksAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dflsad.ref.Append("name"))
+	return terra.ReferenceAsString(dflsad.ref.Append("name"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_data_factory_linked_service_azure_databricks.
 func (dflsad dataFactoryLinkedServiceAzureDatabricksAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dflsad.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](dflsad.ref.Append("parameters"))
 }
 
 func (dflsad dataFactoryLinkedServiceAzureDatabricksAttributes) InstancePool() terra.ListValue[datafactorylinkedserviceazuredatabricks.InstancePoolAttributes] {
-	return terra.ReferenceList[datafactorylinkedserviceazuredatabricks.InstancePoolAttributes](dflsad.ref.Append("instance_pool"))
+	return terra.ReferenceAsList[datafactorylinkedserviceazuredatabricks.InstancePoolAttributes](dflsad.ref.Append("instance_pool"))
 }
 
 func (dflsad dataFactoryLinkedServiceAzureDatabricksAttributes) KeyVaultPassword() terra.ListValue[datafactorylinkedserviceazuredatabricks.KeyVaultPasswordAttributes] {
-	return terra.ReferenceList[datafactorylinkedserviceazuredatabricks.KeyVaultPasswordAttributes](dflsad.ref.Append("key_vault_password"))
+	return terra.ReferenceAsList[datafactorylinkedserviceazuredatabricks.KeyVaultPasswordAttributes](dflsad.ref.Append("key_vault_password"))
 }
 
 func (dflsad dataFactoryLinkedServiceAzureDatabricksAttributes) NewClusterConfig() terra.ListValue[datafactorylinkedserviceazuredatabricks.NewClusterConfigAttributes] {
-	return terra.ReferenceList[datafactorylinkedserviceazuredatabricks.NewClusterConfigAttributes](dflsad.ref.Append("new_cluster_config"))
+	return terra.ReferenceAsList[datafactorylinkedserviceazuredatabricks.NewClusterConfigAttributes](dflsad.ref.Append("new_cluster_config"))
 }
 
 func (dflsad dataFactoryLinkedServiceAzureDatabricksAttributes) Timeouts() datafactorylinkedserviceazuredatabricks.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafactorylinkedserviceazuredatabricks.TimeoutsAttributes](dflsad.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafactorylinkedserviceazuredatabricks.TimeoutsAttributes](dflsad.ref.Append("timeouts"))
 }
 
 type dataFactoryLinkedServiceAzureDatabricksState struct {

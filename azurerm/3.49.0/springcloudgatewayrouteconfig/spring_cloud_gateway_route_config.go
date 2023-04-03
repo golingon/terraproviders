@@ -48,104 +48,104 @@ type OpenApiAttributes struct {
 	ref terra.Reference
 }
 
-func (oa OpenApiAttributes) InternalRef() terra.Reference {
-	return oa.ref
+func (oa OpenApiAttributes) InternalRef() (terra.Reference, error) {
+	return oa.ref, nil
 }
 
 func (oa OpenApiAttributes) InternalWithRef(ref terra.Reference) OpenApiAttributes {
 	return OpenApiAttributes{ref: ref}
 }
 
-func (oa OpenApiAttributes) InternalTokens() hclwrite.Tokens {
+func (oa OpenApiAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oa.ref.InternalTokens()
 }
 
 func (oa OpenApiAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(oa.ref.Append("uri"))
+	return terra.ReferenceAsString(oa.ref.Append("uri"))
 }
 
 type RouteAttributes struct {
 	ref terra.Reference
 }
 
-func (r RouteAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RouteAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RouteAttributes) InternalWithRef(ref terra.Reference) RouteAttributes {
 	return RouteAttributes{ref: ref}
 }
 
-func (r RouteAttributes) InternalTokens() hclwrite.Tokens {
+func (r RouteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RouteAttributes) ClassificationTags() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](r.ref.Append("classification_tags"))
+	return terra.ReferenceAsSet[terra.StringValue](r.ref.Append("classification_tags"))
 }
 
 func (r RouteAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("description"))
+	return terra.ReferenceAsString(r.ref.Append("description"))
 }
 
 func (r RouteAttributes) Filters() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](r.ref.Append("filters"))
+	return terra.ReferenceAsSet[terra.StringValue](r.ref.Append("filters"))
 }
 
 func (r RouteAttributes) Order() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("order"))
+	return terra.ReferenceAsNumber(r.ref.Append("order"))
 }
 
 func (r RouteAttributes) Predicates() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](r.ref.Append("predicates"))
+	return terra.ReferenceAsSet[terra.StringValue](r.ref.Append("predicates"))
 }
 
 func (r RouteAttributes) SsoValidationEnabled() terra.BoolValue {
-	return terra.ReferenceBool(r.ref.Append("sso_validation_enabled"))
+	return terra.ReferenceAsBool(r.ref.Append("sso_validation_enabled"))
 }
 
 func (r RouteAttributes) Title() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("title"))
+	return terra.ReferenceAsString(r.ref.Append("title"))
 }
 
 func (r RouteAttributes) TokenRelay() terra.BoolValue {
-	return terra.ReferenceBool(r.ref.Append("token_relay"))
+	return terra.ReferenceAsBool(r.ref.Append("token_relay"))
 }
 
 func (r RouteAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("uri"))
+	return terra.ReferenceAsString(r.ref.Append("uri"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type OpenApiState struct {

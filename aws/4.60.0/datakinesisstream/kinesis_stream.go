@@ -21,7 +21,7 @@ func (smd StreamModeDetailsAttributes) InternalWithRef(ref terra.Reference) Stre
 	return StreamModeDetailsAttributes{ref: ref}
 }
 
-func (smd StreamModeDetailsAttributes) InternalTokens() hclwrite.Tokens {
+func (smd StreamModeDetailsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return smd.ref.InternalTokens()
 }
 

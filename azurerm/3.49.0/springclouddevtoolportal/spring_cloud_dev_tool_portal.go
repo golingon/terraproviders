@@ -33,64 +33,64 @@ type SsoAttributes struct {
 	ref terra.Reference
 }
 
-func (s SsoAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SsoAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SsoAttributes) InternalWithRef(ref terra.Reference) SsoAttributes {
 	return SsoAttributes{ref: ref}
 }
 
-func (s SsoAttributes) InternalTokens() hclwrite.Tokens {
+func (s SsoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SsoAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("client_id"))
+	return terra.ReferenceAsString(s.ref.Append("client_id"))
 }
 
 func (s SsoAttributes) ClientSecret() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("client_secret"))
+	return terra.ReferenceAsString(s.ref.Append("client_secret"))
 }
 
 func (s SsoAttributes) MetadataUrl() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("metadata_url"))
+	return terra.ReferenceAsString(s.ref.Append("metadata_url"))
 }
 
 func (s SsoAttributes) Scope() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("scope"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("scope"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type SsoState struct {

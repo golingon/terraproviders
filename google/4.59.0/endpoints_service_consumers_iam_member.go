@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEndpointsServiceConsumersIamMember creates a new instance of [EndpointsServiceConsumersIamMember].
 func NewEndpointsServiceConsumersIamMember(name string, args EndpointsServiceConsumersIamMemberArgs) *EndpointsServiceConsumersIamMember {
 	return &EndpointsServiceConsumersIamMember{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEndpointsServiceConsumersIamMember(name string, args EndpointsServiceCon
 
 var _ terra.Resource = (*EndpointsServiceConsumersIamMember)(nil)
 
+// EndpointsServiceConsumersIamMember represents the Terraform resource google_endpoints_service_consumers_iam_member.
 type EndpointsServiceConsumersIamMember struct {
-	Name  string
-	Args  EndpointsServiceConsumersIamMemberArgs
-	state *endpointsServiceConsumersIamMemberState
+	Name      string
+	Args      EndpointsServiceConsumersIamMemberArgs
+	state     *endpointsServiceConsumersIamMemberState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EndpointsServiceConsumersIamMember].
 func (escim *EndpointsServiceConsumersIamMember) Type() string {
 	return "google_endpoints_service_consumers_iam_member"
 }
 
+// LocalName returns the local name for [EndpointsServiceConsumersIamMember].
 func (escim *EndpointsServiceConsumersIamMember) LocalName() string {
 	return escim.Name
 }
 
+// Configuration returns the configuration (args) for [EndpointsServiceConsumersIamMember].
 func (escim *EndpointsServiceConsumersIamMember) Configuration() interface{} {
 	return escim.Args
 }
 
+// DependOn is used for other resources to depend on [EndpointsServiceConsumersIamMember].
+func (escim *EndpointsServiceConsumersIamMember) DependOn() terra.Reference {
+	return terra.ReferenceResource(escim)
+}
+
+// Dependencies returns the list of resources [EndpointsServiceConsumersIamMember] depends_on.
+func (escim *EndpointsServiceConsumersIamMember) Dependencies() terra.Dependencies {
+	return escim.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EndpointsServiceConsumersIamMember].
+func (escim *EndpointsServiceConsumersIamMember) LifecycleManagement() *terra.Lifecycle {
+	return escim.Lifecycle
+}
+
+// Attributes returns the attributes for [EndpointsServiceConsumersIamMember].
 func (escim *EndpointsServiceConsumersIamMember) Attributes() endpointsServiceConsumersIamMemberAttributes {
 	return endpointsServiceConsumersIamMemberAttributes{ref: terra.ReferenceResource(escim)}
 }
 
+// ImportState imports the given attribute values into [EndpointsServiceConsumersIamMember]'s state.
 func (escim *EndpointsServiceConsumersIamMember) ImportState(av io.Reader) error {
 	escim.state = &endpointsServiceConsumersIamMemberState{}
 	if err := json.NewDecoder(av).Decode(escim.state); err != nil {
@@ -49,10 +73,12 @@ func (escim *EndpointsServiceConsumersIamMember) ImportState(av io.Reader) error
 	return nil
 }
 
+// State returns the state and a bool indicating if [EndpointsServiceConsumersIamMember] has state.
 func (escim *EndpointsServiceConsumersIamMember) State() (*endpointsServiceConsumersIamMemberState, bool) {
 	return escim.state, escim.state != nil
 }
 
+// StateMust returns the state for [EndpointsServiceConsumersIamMember]. Panics if the state is nil.
 func (escim *EndpointsServiceConsumersIamMember) StateMust() *endpointsServiceConsumersIamMemberState {
 	if escim.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", escim.Type(), escim.LocalName()))
@@ -60,10 +86,7 @@ func (escim *EndpointsServiceConsumersIamMember) StateMust() *endpointsServiceCo
 	return escim.state
 }
 
-func (escim *EndpointsServiceConsumersIamMember) DependOn() terra.Reference {
-	return terra.ReferenceResource(escim)
-}
-
+// EndpointsServiceConsumersIamMemberArgs contains the configurations for google_endpoints_service_consumers_iam_member.
 type EndpointsServiceConsumersIamMemberArgs struct {
 	// ConsumerProject: string, required
 	ConsumerProject terra.StringValue `hcl:"consumer_project,attr" validate:"required"`
@@ -77,39 +100,43 @@ type EndpointsServiceConsumersIamMemberArgs struct {
 	ServiceName terra.StringValue `hcl:"service_name,attr" validate:"required"`
 	// Condition: optional
 	Condition *endpointsserviceconsumersiammember.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that EndpointsServiceConsumersIamMember depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type endpointsServiceConsumersIamMemberAttributes struct {
 	ref terra.Reference
 }
 
+// ConsumerProject returns a reference to field consumer_project of google_endpoints_service_consumers_iam_member.
 func (escim endpointsServiceConsumersIamMemberAttributes) ConsumerProject() terra.StringValue {
-	return terra.ReferenceString(escim.ref.Append("consumer_project"))
+	return terra.ReferenceAsString(escim.ref.Append("consumer_project"))
 }
 
+// Etag returns a reference to field etag of google_endpoints_service_consumers_iam_member.
 func (escim endpointsServiceConsumersIamMemberAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(escim.ref.Append("etag"))
+	return terra.ReferenceAsString(escim.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_endpoints_service_consumers_iam_member.
 func (escim endpointsServiceConsumersIamMemberAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(escim.ref.Append("id"))
+	return terra.ReferenceAsString(escim.ref.Append("id"))
 }
 
+// Member returns a reference to field member of google_endpoints_service_consumers_iam_member.
 func (escim endpointsServiceConsumersIamMemberAttributes) Member() terra.StringValue {
-	return terra.ReferenceString(escim.ref.Append("member"))
+	return terra.ReferenceAsString(escim.ref.Append("member"))
 }
 
+// Role returns a reference to field role of google_endpoints_service_consumers_iam_member.
 func (escim endpointsServiceConsumersIamMemberAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(escim.ref.Append("role"))
+	return terra.ReferenceAsString(escim.ref.Append("role"))
 }
 
+// ServiceName returns a reference to field service_name of google_endpoints_service_consumers_iam_member.
 func (escim endpointsServiceConsumersIamMemberAttributes) ServiceName() terra.StringValue {
-	return terra.ReferenceString(escim.ref.Append("service_name"))
+	return terra.ReferenceAsString(escim.ref.Append("service_name"))
 }
 
 func (escim endpointsServiceConsumersIamMemberAttributes) Condition() terra.ListValue[endpointsserviceconsumersiammember.ConditionAttributes] {
-	return terra.ReferenceList[endpointsserviceconsumersiammember.ConditionAttributes](escim.ref.Append("condition"))
+	return terra.ReferenceAsList[endpointsserviceconsumersiammember.ConditionAttributes](escim.ref.Append("condition"))
 }
 
 type endpointsServiceConsumersIamMemberState struct {

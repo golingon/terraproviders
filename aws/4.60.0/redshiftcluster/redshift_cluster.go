@@ -52,7 +52,7 @@ func (cn ClusterNodesAttributes) InternalWithRef(ref terra.Reference) ClusterNod
 	return ClusterNodesAttributes{ref: ref}
 }
 
-func (cn ClusterNodesAttributes) InternalTokens() hclwrite.Tokens {
+func (cn ClusterNodesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cn.ref.InternalTokens()
 }
 
@@ -80,7 +80,7 @@ func (l LoggingAttributes) InternalWithRef(ref terra.Reference) LoggingAttribute
 	return LoggingAttributes{ref: ref}
 }
 
-func (l LoggingAttributes) InternalTokens() hclwrite.Tokens {
+func (l LoggingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return l.ref.InternalTokens()
 }
 
@@ -116,7 +116,7 @@ func (sc SnapshotCopyAttributes) InternalWithRef(ref terra.Reference) SnapshotCo
 	return SnapshotCopyAttributes{ref: ref}
 }
 
-func (sc SnapshotCopyAttributes) InternalTokens() hclwrite.Tokens {
+func (sc SnapshotCopyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -144,7 +144,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

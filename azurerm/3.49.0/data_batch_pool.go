@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataBatchPool creates a new instance of [DataBatchPool].
 func NewDataBatchPool(name string, args DataBatchPoolArgs) *DataBatchPool {
 	return &DataBatchPool{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataBatchPool(name string, args DataBatchPoolArgs) *DataBatchPool {
 
 var _ terra.DataResource = (*DataBatchPool)(nil)
 
+// DataBatchPool represents the Terraform data resource azurerm_batch_pool.
 type DataBatchPool struct {
 	Name string
 	Args DataBatchPoolArgs
 }
 
+// DataSource returns the Terraform object type for [DataBatchPool].
 func (bp *DataBatchPool) DataSource() string {
 	return "azurerm_batch_pool"
 }
 
+// LocalName returns the local name for [DataBatchPool].
 func (bp *DataBatchPool) LocalName() string {
 	return bp.Name
 }
 
+// Configuration returns the configuration (args) for [DataBatchPool].
 func (bp *DataBatchPool) Configuration() interface{} {
 	return bp.Args
 }
 
+// Attributes returns the attributes for [DataBatchPool].
 func (bp *DataBatchPool) Attributes() dataBatchPoolAttributes {
 	return dataBatchPoolAttributes{ref: terra.ReferenceDataResource(bp)}
 }
 
+// DataBatchPoolArgs contains the configurations for azurerm_batch_pool.
 type DataBatchPoolArgs struct {
 	// AccountName: string, required
 	AccountName terra.StringValue `hcl:"account_name,attr" validate:"required"`
@@ -83,114 +90,126 @@ type dataBatchPoolAttributes struct {
 	ref terra.Reference
 }
 
+// AccountName returns a reference to field account_name of azurerm_batch_pool.
 func (bp dataBatchPoolAttributes) AccountName() terra.StringValue {
-	return terra.ReferenceString(bp.ref.Append("account_name"))
+	return terra.ReferenceAsString(bp.ref.Append("account_name"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_batch_pool.
 func (bp dataBatchPoolAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(bp.ref.Append("display_name"))
+	return terra.ReferenceAsString(bp.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of azurerm_batch_pool.
 func (bp dataBatchPoolAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bp.ref.Append("id"))
+	return terra.ReferenceAsString(bp.ref.Append("id"))
 }
 
+// InterNodeCommunication returns a reference to field inter_node_communication of azurerm_batch_pool.
 func (bp dataBatchPoolAttributes) InterNodeCommunication() terra.StringValue {
-	return terra.ReferenceString(bp.ref.Append("inter_node_communication"))
+	return terra.ReferenceAsString(bp.ref.Append("inter_node_communication"))
 }
 
+// LicenseType returns a reference to field license_type of azurerm_batch_pool.
 func (bp dataBatchPoolAttributes) LicenseType() terra.StringValue {
-	return terra.ReferenceString(bp.ref.Append("license_type"))
+	return terra.ReferenceAsString(bp.ref.Append("license_type"))
 }
 
+// MaxTasksPerNode returns a reference to field max_tasks_per_node of azurerm_batch_pool.
 func (bp dataBatchPoolAttributes) MaxTasksPerNode() terra.NumberValue {
-	return terra.ReferenceNumber(bp.ref.Append("max_tasks_per_node"))
+	return terra.ReferenceAsNumber(bp.ref.Append("max_tasks_per_node"))
 }
 
+// Metadata returns a reference to field metadata of azurerm_batch_pool.
 func (bp dataBatchPoolAttributes) Metadata() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bp.ref.Append("metadata"))
+	return terra.ReferenceAsMap[terra.StringValue](bp.ref.Append("metadata"))
 }
 
+// Name returns a reference to field name of azurerm_batch_pool.
 func (bp dataBatchPoolAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(bp.ref.Append("name"))
+	return terra.ReferenceAsString(bp.ref.Append("name"))
 }
 
+// NodeAgentSkuId returns a reference to field node_agent_sku_id of azurerm_batch_pool.
 func (bp dataBatchPoolAttributes) NodeAgentSkuId() terra.StringValue {
-	return terra.ReferenceString(bp.ref.Append("node_agent_sku_id"))
+	return terra.ReferenceAsString(bp.ref.Append("node_agent_sku_id"))
 }
 
+// OsDiskPlacement returns a reference to field os_disk_placement of azurerm_batch_pool.
 func (bp dataBatchPoolAttributes) OsDiskPlacement() terra.StringValue {
-	return terra.ReferenceString(bp.ref.Append("os_disk_placement"))
+	return terra.ReferenceAsString(bp.ref.Append("os_disk_placement"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_batch_pool.
 func (bp dataBatchPoolAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(bp.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(bp.ref.Append("resource_group_name"))
 }
 
+// VmSize returns a reference to field vm_size of azurerm_batch_pool.
 func (bp dataBatchPoolAttributes) VmSize() terra.StringValue {
-	return terra.ReferenceString(bp.ref.Append("vm_size"))
+	return terra.ReferenceAsString(bp.ref.Append("vm_size"))
 }
 
 func (bp dataBatchPoolAttributes) AutoScale() terra.ListValue[databatchpool.AutoScaleAttributes] {
-	return terra.ReferenceList[databatchpool.AutoScaleAttributes](bp.ref.Append("auto_scale"))
+	return terra.ReferenceAsList[databatchpool.AutoScaleAttributes](bp.ref.Append("auto_scale"))
 }
 
 func (bp dataBatchPoolAttributes) Certificate() terra.ListValue[databatchpool.CertificateAttributes] {
-	return terra.ReferenceList[databatchpool.CertificateAttributes](bp.ref.Append("certificate"))
+	return terra.ReferenceAsList[databatchpool.CertificateAttributes](bp.ref.Append("certificate"))
 }
 
 func (bp dataBatchPoolAttributes) ContainerConfiguration() terra.ListValue[databatchpool.ContainerConfigurationAttributes] {
-	return terra.ReferenceList[databatchpool.ContainerConfigurationAttributes](bp.ref.Append("container_configuration"))
+	return terra.ReferenceAsList[databatchpool.ContainerConfigurationAttributes](bp.ref.Append("container_configuration"))
 }
 
 func (bp dataBatchPoolAttributes) DataDisks() terra.ListValue[databatchpool.DataDisksAttributes] {
-	return terra.ReferenceList[databatchpool.DataDisksAttributes](bp.ref.Append("data_disks"))
+	return terra.ReferenceAsList[databatchpool.DataDisksAttributes](bp.ref.Append("data_disks"))
 }
 
 func (bp dataBatchPoolAttributes) DiskEncryption() terra.ListValue[databatchpool.DiskEncryptionAttributes] {
-	return terra.ReferenceList[databatchpool.DiskEncryptionAttributes](bp.ref.Append("disk_encryption"))
+	return terra.ReferenceAsList[databatchpool.DiskEncryptionAttributes](bp.ref.Append("disk_encryption"))
 }
 
 func (bp dataBatchPoolAttributes) Extensions() terra.ListValue[databatchpool.ExtensionsAttributes] {
-	return terra.ReferenceList[databatchpool.ExtensionsAttributes](bp.ref.Append("extensions"))
+	return terra.ReferenceAsList[databatchpool.ExtensionsAttributes](bp.ref.Append("extensions"))
 }
 
 func (bp dataBatchPoolAttributes) FixedScale() terra.ListValue[databatchpool.FixedScaleAttributes] {
-	return terra.ReferenceList[databatchpool.FixedScaleAttributes](bp.ref.Append("fixed_scale"))
+	return terra.ReferenceAsList[databatchpool.FixedScaleAttributes](bp.ref.Append("fixed_scale"))
 }
 
 func (bp dataBatchPoolAttributes) Mount() terra.ListValue[databatchpool.MountAttributes] {
-	return terra.ReferenceList[databatchpool.MountAttributes](bp.ref.Append("mount"))
+	return terra.ReferenceAsList[databatchpool.MountAttributes](bp.ref.Append("mount"))
 }
 
 func (bp dataBatchPoolAttributes) NetworkConfiguration() terra.ListValue[databatchpool.NetworkConfigurationAttributes] {
-	return terra.ReferenceList[databatchpool.NetworkConfigurationAttributes](bp.ref.Append("network_configuration"))
+	return terra.ReferenceAsList[databatchpool.NetworkConfigurationAttributes](bp.ref.Append("network_configuration"))
 }
 
 func (bp dataBatchPoolAttributes) NodePlacement() terra.ListValue[databatchpool.NodePlacementAttributes] {
-	return terra.ReferenceList[databatchpool.NodePlacementAttributes](bp.ref.Append("node_placement"))
+	return terra.ReferenceAsList[databatchpool.NodePlacementAttributes](bp.ref.Append("node_placement"))
 }
 
 func (bp dataBatchPoolAttributes) StartTask() terra.ListValue[databatchpool.StartTaskAttributes] {
-	return terra.ReferenceList[databatchpool.StartTaskAttributes](bp.ref.Append("start_task"))
+	return terra.ReferenceAsList[databatchpool.StartTaskAttributes](bp.ref.Append("start_task"))
 }
 
 func (bp dataBatchPoolAttributes) StorageImageReference() terra.ListValue[databatchpool.StorageImageReferenceAttributes] {
-	return terra.ReferenceList[databatchpool.StorageImageReferenceAttributes](bp.ref.Append("storage_image_reference"))
+	return terra.ReferenceAsList[databatchpool.StorageImageReferenceAttributes](bp.ref.Append("storage_image_reference"))
 }
 
 func (bp dataBatchPoolAttributes) TaskSchedulingPolicy() terra.ListValue[databatchpool.TaskSchedulingPolicyAttributes] {
-	return terra.ReferenceList[databatchpool.TaskSchedulingPolicyAttributes](bp.ref.Append("task_scheduling_policy"))
+	return terra.ReferenceAsList[databatchpool.TaskSchedulingPolicyAttributes](bp.ref.Append("task_scheduling_policy"))
 }
 
 func (bp dataBatchPoolAttributes) UserAccounts() terra.ListValue[databatchpool.UserAccountsAttributes] {
-	return terra.ReferenceList[databatchpool.UserAccountsAttributes](bp.ref.Append("user_accounts"))
+	return terra.ReferenceAsList[databatchpool.UserAccountsAttributes](bp.ref.Append("user_accounts"))
 }
 
 func (bp dataBatchPoolAttributes) Windows() terra.ListValue[databatchpool.WindowsAttributes] {
-	return terra.ReferenceList[databatchpool.WindowsAttributes](bp.ref.Append("windows"))
+	return terra.ReferenceAsList[databatchpool.WindowsAttributes](bp.ref.Append("windows"))
 }
 
 func (bp dataBatchPoolAttributes) Timeouts() databatchpool.TimeoutsAttributes {
-	return terra.ReferenceSingle[databatchpool.TimeoutsAttributes](bp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[databatchpool.TimeoutsAttributes](bp.ref.Append("timeouts"))
 }

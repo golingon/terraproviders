@@ -300,768 +300,768 @@ type RequestAttributes struct {
 	ref terra.Reference
 }
 
-func (r RequestAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RequestAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RequestAttributes) InternalWithRef(ref terra.Reference) RequestAttributes {
 	return RequestAttributes{ref: ref}
 }
 
-func (r RequestAttributes) InternalTokens() hclwrite.Tokens {
+func (r RequestAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RequestAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("description"))
+	return terra.ReferenceAsString(r.ref.Append("description"))
 }
 
 func (r RequestAttributes) Header() terra.ListValue[RequestHeaderAttributes] {
-	return terra.ReferenceList[RequestHeaderAttributes](r.ref.Append("header"))
+	return terra.ReferenceAsList[RequestHeaderAttributes](r.ref.Append("header"))
 }
 
 func (r RequestAttributes) QueryParameter() terra.ListValue[QueryParameterAttributes] {
-	return terra.ReferenceList[QueryParameterAttributes](r.ref.Append("query_parameter"))
+	return terra.ReferenceAsList[QueryParameterAttributes](r.ref.Append("query_parameter"))
 }
 
 func (r RequestAttributes) Representation() terra.ListValue[RequestRepresentationAttributes] {
-	return terra.ReferenceList[RequestRepresentationAttributes](r.ref.Append("representation"))
+	return terra.ReferenceAsList[RequestRepresentationAttributes](r.ref.Append("representation"))
 }
 
 type RequestHeaderAttributes struct {
 	ref terra.Reference
 }
 
-func (h RequestHeaderAttributes) InternalRef() terra.Reference {
-	return h.ref
+func (h RequestHeaderAttributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h RequestHeaderAttributes) InternalWithRef(ref terra.Reference) RequestHeaderAttributes {
 	return RequestHeaderAttributes{ref: ref}
 }
 
-func (h RequestHeaderAttributes) InternalTokens() hclwrite.Tokens {
+func (h RequestHeaderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 
 func (h RequestHeaderAttributes) DefaultValue() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("default_value"))
+	return terra.ReferenceAsString(h.ref.Append("default_value"))
 }
 
 func (h RequestHeaderAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("description"))
+	return terra.ReferenceAsString(h.ref.Append("description"))
 }
 
 func (h RequestHeaderAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("name"))
+	return terra.ReferenceAsString(h.ref.Append("name"))
 }
 
 func (h RequestHeaderAttributes) Required() terra.BoolValue {
-	return terra.ReferenceBool(h.ref.Append("required"))
+	return terra.ReferenceAsBool(h.ref.Append("required"))
 }
 
 func (h RequestHeaderAttributes) SchemaId() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("schema_id"))
+	return terra.ReferenceAsString(h.ref.Append("schema_id"))
 }
 
 func (h RequestHeaderAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("type"))
+	return terra.ReferenceAsString(h.ref.Append("type"))
 }
 
 func (h RequestHeaderAttributes) TypeName() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("type_name"))
+	return terra.ReferenceAsString(h.ref.Append("type_name"))
 }
 
 func (h RequestHeaderAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](h.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](h.ref.Append("values"))
 }
 
 func (h RequestHeaderAttributes) Example() terra.ListValue[RequestHeaderExampleAttributes] {
-	return terra.ReferenceList[RequestHeaderExampleAttributes](h.ref.Append("example"))
+	return terra.ReferenceAsList[RequestHeaderExampleAttributes](h.ref.Append("example"))
 }
 
 type RequestHeaderExampleAttributes struct {
 	ref terra.Reference
 }
 
-func (e RequestHeaderExampleAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e RequestHeaderExampleAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e RequestHeaderExampleAttributes) InternalWithRef(ref terra.Reference) RequestHeaderExampleAttributes {
 	return RequestHeaderExampleAttributes{ref: ref}
 }
 
-func (e RequestHeaderExampleAttributes) InternalTokens() hclwrite.Tokens {
+func (e RequestHeaderExampleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
 func (e RequestHeaderExampleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("description"))
+	return terra.ReferenceAsString(e.ref.Append("description"))
 }
 
 func (e RequestHeaderExampleAttributes) ExternalValue() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("external_value"))
+	return terra.ReferenceAsString(e.ref.Append("external_value"))
 }
 
 func (e RequestHeaderExampleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("name"))
+	return terra.ReferenceAsString(e.ref.Append("name"))
 }
 
 func (e RequestHeaderExampleAttributes) Summary() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("summary"))
+	return terra.ReferenceAsString(e.ref.Append("summary"))
 }
 
 func (e RequestHeaderExampleAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("value"))
+	return terra.ReferenceAsString(e.ref.Append("value"))
 }
 
 type QueryParameterAttributes struct {
 	ref terra.Reference
 }
 
-func (qp QueryParameterAttributes) InternalRef() terra.Reference {
-	return qp.ref
+func (qp QueryParameterAttributes) InternalRef() (terra.Reference, error) {
+	return qp.ref, nil
 }
 
 func (qp QueryParameterAttributes) InternalWithRef(ref terra.Reference) QueryParameterAttributes {
 	return QueryParameterAttributes{ref: ref}
 }
 
-func (qp QueryParameterAttributes) InternalTokens() hclwrite.Tokens {
+func (qp QueryParameterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return qp.ref.InternalTokens()
 }
 
 func (qp QueryParameterAttributes) DefaultValue() terra.StringValue {
-	return terra.ReferenceString(qp.ref.Append("default_value"))
+	return terra.ReferenceAsString(qp.ref.Append("default_value"))
 }
 
 func (qp QueryParameterAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(qp.ref.Append("description"))
+	return terra.ReferenceAsString(qp.ref.Append("description"))
 }
 
 func (qp QueryParameterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(qp.ref.Append("name"))
+	return terra.ReferenceAsString(qp.ref.Append("name"))
 }
 
 func (qp QueryParameterAttributes) Required() terra.BoolValue {
-	return terra.ReferenceBool(qp.ref.Append("required"))
+	return terra.ReferenceAsBool(qp.ref.Append("required"))
 }
 
 func (qp QueryParameterAttributes) SchemaId() terra.StringValue {
-	return terra.ReferenceString(qp.ref.Append("schema_id"))
+	return terra.ReferenceAsString(qp.ref.Append("schema_id"))
 }
 
 func (qp QueryParameterAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(qp.ref.Append("type"))
+	return terra.ReferenceAsString(qp.ref.Append("type"))
 }
 
 func (qp QueryParameterAttributes) TypeName() terra.StringValue {
-	return terra.ReferenceString(qp.ref.Append("type_name"))
+	return terra.ReferenceAsString(qp.ref.Append("type_name"))
 }
 
 func (qp QueryParameterAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](qp.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](qp.ref.Append("values"))
 }
 
 func (qp QueryParameterAttributes) Example() terra.ListValue[QueryParameterExampleAttributes] {
-	return terra.ReferenceList[QueryParameterExampleAttributes](qp.ref.Append("example"))
+	return terra.ReferenceAsList[QueryParameterExampleAttributes](qp.ref.Append("example"))
 }
 
 type QueryParameterExampleAttributes struct {
 	ref terra.Reference
 }
 
-func (e QueryParameterExampleAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e QueryParameterExampleAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e QueryParameterExampleAttributes) InternalWithRef(ref terra.Reference) QueryParameterExampleAttributes {
 	return QueryParameterExampleAttributes{ref: ref}
 }
 
-func (e QueryParameterExampleAttributes) InternalTokens() hclwrite.Tokens {
+func (e QueryParameterExampleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
 func (e QueryParameterExampleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("description"))
+	return terra.ReferenceAsString(e.ref.Append("description"))
 }
 
 func (e QueryParameterExampleAttributes) ExternalValue() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("external_value"))
+	return terra.ReferenceAsString(e.ref.Append("external_value"))
 }
 
 func (e QueryParameterExampleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("name"))
+	return terra.ReferenceAsString(e.ref.Append("name"))
 }
 
 func (e QueryParameterExampleAttributes) Summary() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("summary"))
+	return terra.ReferenceAsString(e.ref.Append("summary"))
 }
 
 func (e QueryParameterExampleAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("value"))
+	return terra.ReferenceAsString(e.ref.Append("value"))
 }
 
 type RequestRepresentationAttributes struct {
 	ref terra.Reference
 }
 
-func (r RequestRepresentationAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RequestRepresentationAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RequestRepresentationAttributes) InternalWithRef(ref terra.Reference) RequestRepresentationAttributes {
 	return RequestRepresentationAttributes{ref: ref}
 }
 
-func (r RequestRepresentationAttributes) InternalTokens() hclwrite.Tokens {
+func (r RequestRepresentationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RequestRepresentationAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("content_type"))
+	return terra.ReferenceAsString(r.ref.Append("content_type"))
 }
 
 func (r RequestRepresentationAttributes) SchemaId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("schema_id"))
+	return terra.ReferenceAsString(r.ref.Append("schema_id"))
 }
 
 func (r RequestRepresentationAttributes) TypeName() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("type_name"))
+	return terra.ReferenceAsString(r.ref.Append("type_name"))
 }
 
 func (r RequestRepresentationAttributes) Example() terra.ListValue[RequestRepresentationExampleAttributes] {
-	return terra.ReferenceList[RequestRepresentationExampleAttributes](r.ref.Append("example"))
+	return terra.ReferenceAsList[RequestRepresentationExampleAttributes](r.ref.Append("example"))
 }
 
 func (r RequestRepresentationAttributes) FormParameter() terra.ListValue[RequestRepresentationFormParameterAttributes] {
-	return terra.ReferenceList[RequestRepresentationFormParameterAttributes](r.ref.Append("form_parameter"))
+	return terra.ReferenceAsList[RequestRepresentationFormParameterAttributes](r.ref.Append("form_parameter"))
 }
 
 type RequestRepresentationExampleAttributes struct {
 	ref terra.Reference
 }
 
-func (e RequestRepresentationExampleAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e RequestRepresentationExampleAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e RequestRepresentationExampleAttributes) InternalWithRef(ref terra.Reference) RequestRepresentationExampleAttributes {
 	return RequestRepresentationExampleAttributes{ref: ref}
 }
 
-func (e RequestRepresentationExampleAttributes) InternalTokens() hclwrite.Tokens {
+func (e RequestRepresentationExampleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
 func (e RequestRepresentationExampleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("description"))
+	return terra.ReferenceAsString(e.ref.Append("description"))
 }
 
 func (e RequestRepresentationExampleAttributes) ExternalValue() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("external_value"))
+	return terra.ReferenceAsString(e.ref.Append("external_value"))
 }
 
 func (e RequestRepresentationExampleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("name"))
+	return terra.ReferenceAsString(e.ref.Append("name"))
 }
 
 func (e RequestRepresentationExampleAttributes) Summary() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("summary"))
+	return terra.ReferenceAsString(e.ref.Append("summary"))
 }
 
 func (e RequestRepresentationExampleAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("value"))
+	return terra.ReferenceAsString(e.ref.Append("value"))
 }
 
 type RequestRepresentationFormParameterAttributes struct {
 	ref terra.Reference
 }
 
-func (fp RequestRepresentationFormParameterAttributes) InternalRef() terra.Reference {
-	return fp.ref
+func (fp RequestRepresentationFormParameterAttributes) InternalRef() (terra.Reference, error) {
+	return fp.ref, nil
 }
 
 func (fp RequestRepresentationFormParameterAttributes) InternalWithRef(ref terra.Reference) RequestRepresentationFormParameterAttributes {
 	return RequestRepresentationFormParameterAttributes{ref: ref}
 }
 
-func (fp RequestRepresentationFormParameterAttributes) InternalTokens() hclwrite.Tokens {
+func (fp RequestRepresentationFormParameterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fp.ref.InternalTokens()
 }
 
 func (fp RequestRepresentationFormParameterAttributes) DefaultValue() terra.StringValue {
-	return terra.ReferenceString(fp.ref.Append("default_value"))
+	return terra.ReferenceAsString(fp.ref.Append("default_value"))
 }
 
 func (fp RequestRepresentationFormParameterAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(fp.ref.Append("description"))
+	return terra.ReferenceAsString(fp.ref.Append("description"))
 }
 
 func (fp RequestRepresentationFormParameterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(fp.ref.Append("name"))
+	return terra.ReferenceAsString(fp.ref.Append("name"))
 }
 
 func (fp RequestRepresentationFormParameterAttributes) Required() terra.BoolValue {
-	return terra.ReferenceBool(fp.ref.Append("required"))
+	return terra.ReferenceAsBool(fp.ref.Append("required"))
 }
 
 func (fp RequestRepresentationFormParameterAttributes) SchemaId() terra.StringValue {
-	return terra.ReferenceString(fp.ref.Append("schema_id"))
+	return terra.ReferenceAsString(fp.ref.Append("schema_id"))
 }
 
 func (fp RequestRepresentationFormParameterAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(fp.ref.Append("type"))
+	return terra.ReferenceAsString(fp.ref.Append("type"))
 }
 
 func (fp RequestRepresentationFormParameterAttributes) TypeName() terra.StringValue {
-	return terra.ReferenceString(fp.ref.Append("type_name"))
+	return terra.ReferenceAsString(fp.ref.Append("type_name"))
 }
 
 func (fp RequestRepresentationFormParameterAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](fp.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](fp.ref.Append("values"))
 }
 
 func (fp RequestRepresentationFormParameterAttributes) Example() terra.ListValue[RequestRepresentationFormParameterExampleAttributes] {
-	return terra.ReferenceList[RequestRepresentationFormParameterExampleAttributes](fp.ref.Append("example"))
+	return terra.ReferenceAsList[RequestRepresentationFormParameterExampleAttributes](fp.ref.Append("example"))
 }
 
 type RequestRepresentationFormParameterExampleAttributes struct {
 	ref terra.Reference
 }
 
-func (e RequestRepresentationFormParameterExampleAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e RequestRepresentationFormParameterExampleAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e RequestRepresentationFormParameterExampleAttributes) InternalWithRef(ref terra.Reference) RequestRepresentationFormParameterExampleAttributes {
 	return RequestRepresentationFormParameterExampleAttributes{ref: ref}
 }
 
-func (e RequestRepresentationFormParameterExampleAttributes) InternalTokens() hclwrite.Tokens {
+func (e RequestRepresentationFormParameterExampleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
 func (e RequestRepresentationFormParameterExampleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("description"))
+	return terra.ReferenceAsString(e.ref.Append("description"))
 }
 
 func (e RequestRepresentationFormParameterExampleAttributes) ExternalValue() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("external_value"))
+	return terra.ReferenceAsString(e.ref.Append("external_value"))
 }
 
 func (e RequestRepresentationFormParameterExampleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("name"))
+	return terra.ReferenceAsString(e.ref.Append("name"))
 }
 
 func (e RequestRepresentationFormParameterExampleAttributes) Summary() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("summary"))
+	return terra.ReferenceAsString(e.ref.Append("summary"))
 }
 
 func (e RequestRepresentationFormParameterExampleAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("value"))
+	return terra.ReferenceAsString(e.ref.Append("value"))
 }
 
 type ResponseAttributes struct {
 	ref terra.Reference
 }
 
-func (r ResponseAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r ResponseAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r ResponseAttributes) InternalWithRef(ref terra.Reference) ResponseAttributes {
 	return ResponseAttributes{ref: ref}
 }
 
-func (r ResponseAttributes) InternalTokens() hclwrite.Tokens {
+func (r ResponseAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r ResponseAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("description"))
+	return terra.ReferenceAsString(r.ref.Append("description"))
 }
 
 func (r ResponseAttributes) StatusCode() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("status_code"))
+	return terra.ReferenceAsNumber(r.ref.Append("status_code"))
 }
 
 func (r ResponseAttributes) Header() terra.ListValue[ResponseHeaderAttributes] {
-	return terra.ReferenceList[ResponseHeaderAttributes](r.ref.Append("header"))
+	return terra.ReferenceAsList[ResponseHeaderAttributes](r.ref.Append("header"))
 }
 
 func (r ResponseAttributes) Representation() terra.ListValue[ResponseRepresentationAttributes] {
-	return terra.ReferenceList[ResponseRepresentationAttributes](r.ref.Append("representation"))
+	return terra.ReferenceAsList[ResponseRepresentationAttributes](r.ref.Append("representation"))
 }
 
 type ResponseHeaderAttributes struct {
 	ref terra.Reference
 }
 
-func (h ResponseHeaderAttributes) InternalRef() terra.Reference {
-	return h.ref
+func (h ResponseHeaderAttributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h ResponseHeaderAttributes) InternalWithRef(ref terra.Reference) ResponseHeaderAttributes {
 	return ResponseHeaderAttributes{ref: ref}
 }
 
-func (h ResponseHeaderAttributes) InternalTokens() hclwrite.Tokens {
+func (h ResponseHeaderAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 
 func (h ResponseHeaderAttributes) DefaultValue() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("default_value"))
+	return terra.ReferenceAsString(h.ref.Append("default_value"))
 }
 
 func (h ResponseHeaderAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("description"))
+	return terra.ReferenceAsString(h.ref.Append("description"))
 }
 
 func (h ResponseHeaderAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("name"))
+	return terra.ReferenceAsString(h.ref.Append("name"))
 }
 
 func (h ResponseHeaderAttributes) Required() terra.BoolValue {
-	return terra.ReferenceBool(h.ref.Append("required"))
+	return terra.ReferenceAsBool(h.ref.Append("required"))
 }
 
 func (h ResponseHeaderAttributes) SchemaId() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("schema_id"))
+	return terra.ReferenceAsString(h.ref.Append("schema_id"))
 }
 
 func (h ResponseHeaderAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("type"))
+	return terra.ReferenceAsString(h.ref.Append("type"))
 }
 
 func (h ResponseHeaderAttributes) TypeName() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("type_name"))
+	return terra.ReferenceAsString(h.ref.Append("type_name"))
 }
 
 func (h ResponseHeaderAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](h.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](h.ref.Append("values"))
 }
 
 func (h ResponseHeaderAttributes) Example() terra.ListValue[ResponseHeaderExampleAttributes] {
-	return terra.ReferenceList[ResponseHeaderExampleAttributes](h.ref.Append("example"))
+	return terra.ReferenceAsList[ResponseHeaderExampleAttributes](h.ref.Append("example"))
 }
 
 type ResponseHeaderExampleAttributes struct {
 	ref terra.Reference
 }
 
-func (e ResponseHeaderExampleAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e ResponseHeaderExampleAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e ResponseHeaderExampleAttributes) InternalWithRef(ref terra.Reference) ResponseHeaderExampleAttributes {
 	return ResponseHeaderExampleAttributes{ref: ref}
 }
 
-func (e ResponseHeaderExampleAttributes) InternalTokens() hclwrite.Tokens {
+func (e ResponseHeaderExampleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
 func (e ResponseHeaderExampleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("description"))
+	return terra.ReferenceAsString(e.ref.Append("description"))
 }
 
 func (e ResponseHeaderExampleAttributes) ExternalValue() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("external_value"))
+	return terra.ReferenceAsString(e.ref.Append("external_value"))
 }
 
 func (e ResponseHeaderExampleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("name"))
+	return terra.ReferenceAsString(e.ref.Append("name"))
 }
 
 func (e ResponseHeaderExampleAttributes) Summary() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("summary"))
+	return terra.ReferenceAsString(e.ref.Append("summary"))
 }
 
 func (e ResponseHeaderExampleAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("value"))
+	return terra.ReferenceAsString(e.ref.Append("value"))
 }
 
 type ResponseRepresentationAttributes struct {
 	ref terra.Reference
 }
 
-func (r ResponseRepresentationAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r ResponseRepresentationAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r ResponseRepresentationAttributes) InternalWithRef(ref terra.Reference) ResponseRepresentationAttributes {
 	return ResponseRepresentationAttributes{ref: ref}
 }
 
-func (r ResponseRepresentationAttributes) InternalTokens() hclwrite.Tokens {
+func (r ResponseRepresentationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r ResponseRepresentationAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("content_type"))
+	return terra.ReferenceAsString(r.ref.Append("content_type"))
 }
 
 func (r ResponseRepresentationAttributes) SchemaId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("schema_id"))
+	return terra.ReferenceAsString(r.ref.Append("schema_id"))
 }
 
 func (r ResponseRepresentationAttributes) TypeName() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("type_name"))
+	return terra.ReferenceAsString(r.ref.Append("type_name"))
 }
 
 func (r ResponseRepresentationAttributes) Example() terra.ListValue[ResponseRepresentationExampleAttributes] {
-	return terra.ReferenceList[ResponseRepresentationExampleAttributes](r.ref.Append("example"))
+	return terra.ReferenceAsList[ResponseRepresentationExampleAttributes](r.ref.Append("example"))
 }
 
 func (r ResponseRepresentationAttributes) FormParameter() terra.ListValue[ResponseRepresentationFormParameterAttributes] {
-	return terra.ReferenceList[ResponseRepresentationFormParameterAttributes](r.ref.Append("form_parameter"))
+	return terra.ReferenceAsList[ResponseRepresentationFormParameterAttributes](r.ref.Append("form_parameter"))
 }
 
 type ResponseRepresentationExampleAttributes struct {
 	ref terra.Reference
 }
 
-func (e ResponseRepresentationExampleAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e ResponseRepresentationExampleAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e ResponseRepresentationExampleAttributes) InternalWithRef(ref terra.Reference) ResponseRepresentationExampleAttributes {
 	return ResponseRepresentationExampleAttributes{ref: ref}
 }
 
-func (e ResponseRepresentationExampleAttributes) InternalTokens() hclwrite.Tokens {
+func (e ResponseRepresentationExampleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
 func (e ResponseRepresentationExampleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("description"))
+	return terra.ReferenceAsString(e.ref.Append("description"))
 }
 
 func (e ResponseRepresentationExampleAttributes) ExternalValue() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("external_value"))
+	return terra.ReferenceAsString(e.ref.Append("external_value"))
 }
 
 func (e ResponseRepresentationExampleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("name"))
+	return terra.ReferenceAsString(e.ref.Append("name"))
 }
 
 func (e ResponseRepresentationExampleAttributes) Summary() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("summary"))
+	return terra.ReferenceAsString(e.ref.Append("summary"))
 }
 
 func (e ResponseRepresentationExampleAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("value"))
+	return terra.ReferenceAsString(e.ref.Append("value"))
 }
 
 type ResponseRepresentationFormParameterAttributes struct {
 	ref terra.Reference
 }
 
-func (fp ResponseRepresentationFormParameterAttributes) InternalRef() terra.Reference {
-	return fp.ref
+func (fp ResponseRepresentationFormParameterAttributes) InternalRef() (terra.Reference, error) {
+	return fp.ref, nil
 }
 
 func (fp ResponseRepresentationFormParameterAttributes) InternalWithRef(ref terra.Reference) ResponseRepresentationFormParameterAttributes {
 	return ResponseRepresentationFormParameterAttributes{ref: ref}
 }
 
-func (fp ResponseRepresentationFormParameterAttributes) InternalTokens() hclwrite.Tokens {
+func (fp ResponseRepresentationFormParameterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fp.ref.InternalTokens()
 }
 
 func (fp ResponseRepresentationFormParameterAttributes) DefaultValue() terra.StringValue {
-	return terra.ReferenceString(fp.ref.Append("default_value"))
+	return terra.ReferenceAsString(fp.ref.Append("default_value"))
 }
 
 func (fp ResponseRepresentationFormParameterAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(fp.ref.Append("description"))
+	return terra.ReferenceAsString(fp.ref.Append("description"))
 }
 
 func (fp ResponseRepresentationFormParameterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(fp.ref.Append("name"))
+	return terra.ReferenceAsString(fp.ref.Append("name"))
 }
 
 func (fp ResponseRepresentationFormParameterAttributes) Required() terra.BoolValue {
-	return terra.ReferenceBool(fp.ref.Append("required"))
+	return terra.ReferenceAsBool(fp.ref.Append("required"))
 }
 
 func (fp ResponseRepresentationFormParameterAttributes) SchemaId() terra.StringValue {
-	return terra.ReferenceString(fp.ref.Append("schema_id"))
+	return terra.ReferenceAsString(fp.ref.Append("schema_id"))
 }
 
 func (fp ResponseRepresentationFormParameterAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(fp.ref.Append("type"))
+	return terra.ReferenceAsString(fp.ref.Append("type"))
 }
 
 func (fp ResponseRepresentationFormParameterAttributes) TypeName() terra.StringValue {
-	return terra.ReferenceString(fp.ref.Append("type_name"))
+	return terra.ReferenceAsString(fp.ref.Append("type_name"))
 }
 
 func (fp ResponseRepresentationFormParameterAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](fp.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](fp.ref.Append("values"))
 }
 
 func (fp ResponseRepresentationFormParameterAttributes) Example() terra.ListValue[ResponseRepresentationFormParameterExampleAttributes] {
-	return terra.ReferenceList[ResponseRepresentationFormParameterExampleAttributes](fp.ref.Append("example"))
+	return terra.ReferenceAsList[ResponseRepresentationFormParameterExampleAttributes](fp.ref.Append("example"))
 }
 
 type ResponseRepresentationFormParameterExampleAttributes struct {
 	ref terra.Reference
 }
 
-func (e ResponseRepresentationFormParameterExampleAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e ResponseRepresentationFormParameterExampleAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e ResponseRepresentationFormParameterExampleAttributes) InternalWithRef(ref terra.Reference) ResponseRepresentationFormParameterExampleAttributes {
 	return ResponseRepresentationFormParameterExampleAttributes{ref: ref}
 }
 
-func (e ResponseRepresentationFormParameterExampleAttributes) InternalTokens() hclwrite.Tokens {
+func (e ResponseRepresentationFormParameterExampleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
 func (e ResponseRepresentationFormParameterExampleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("description"))
+	return terra.ReferenceAsString(e.ref.Append("description"))
 }
 
 func (e ResponseRepresentationFormParameterExampleAttributes) ExternalValue() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("external_value"))
+	return terra.ReferenceAsString(e.ref.Append("external_value"))
 }
 
 func (e ResponseRepresentationFormParameterExampleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("name"))
+	return terra.ReferenceAsString(e.ref.Append("name"))
 }
 
 func (e ResponseRepresentationFormParameterExampleAttributes) Summary() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("summary"))
+	return terra.ReferenceAsString(e.ref.Append("summary"))
 }
 
 func (e ResponseRepresentationFormParameterExampleAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("value"))
+	return terra.ReferenceAsString(e.ref.Append("value"))
 }
 
 type TemplateParameterAttributes struct {
 	ref terra.Reference
 }
 
-func (tp TemplateParameterAttributes) InternalRef() terra.Reference {
-	return tp.ref
+func (tp TemplateParameterAttributes) InternalRef() (terra.Reference, error) {
+	return tp.ref, nil
 }
 
 func (tp TemplateParameterAttributes) InternalWithRef(ref terra.Reference) TemplateParameterAttributes {
 	return TemplateParameterAttributes{ref: ref}
 }
 
-func (tp TemplateParameterAttributes) InternalTokens() hclwrite.Tokens {
+func (tp TemplateParameterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tp.ref.InternalTokens()
 }
 
 func (tp TemplateParameterAttributes) DefaultValue() terra.StringValue {
-	return terra.ReferenceString(tp.ref.Append("default_value"))
+	return terra.ReferenceAsString(tp.ref.Append("default_value"))
 }
 
 func (tp TemplateParameterAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(tp.ref.Append("description"))
+	return terra.ReferenceAsString(tp.ref.Append("description"))
 }
 
 func (tp TemplateParameterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(tp.ref.Append("name"))
+	return terra.ReferenceAsString(tp.ref.Append("name"))
 }
 
 func (tp TemplateParameterAttributes) Required() terra.BoolValue {
-	return terra.ReferenceBool(tp.ref.Append("required"))
+	return terra.ReferenceAsBool(tp.ref.Append("required"))
 }
 
 func (tp TemplateParameterAttributes) SchemaId() terra.StringValue {
-	return terra.ReferenceString(tp.ref.Append("schema_id"))
+	return terra.ReferenceAsString(tp.ref.Append("schema_id"))
 }
 
 func (tp TemplateParameterAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(tp.ref.Append("type"))
+	return terra.ReferenceAsString(tp.ref.Append("type"))
 }
 
 func (tp TemplateParameterAttributes) TypeName() terra.StringValue {
-	return terra.ReferenceString(tp.ref.Append("type_name"))
+	return terra.ReferenceAsString(tp.ref.Append("type_name"))
 }
 
 func (tp TemplateParameterAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](tp.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](tp.ref.Append("values"))
 }
 
 func (tp TemplateParameterAttributes) Example() terra.ListValue[TemplateParameterExampleAttributes] {
-	return terra.ReferenceList[TemplateParameterExampleAttributes](tp.ref.Append("example"))
+	return terra.ReferenceAsList[TemplateParameterExampleAttributes](tp.ref.Append("example"))
 }
 
 type TemplateParameterExampleAttributes struct {
 	ref terra.Reference
 }
 
-func (e TemplateParameterExampleAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e TemplateParameterExampleAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e TemplateParameterExampleAttributes) InternalWithRef(ref terra.Reference) TemplateParameterExampleAttributes {
 	return TemplateParameterExampleAttributes{ref: ref}
 }
 
-func (e TemplateParameterExampleAttributes) InternalTokens() hclwrite.Tokens {
+func (e TemplateParameterExampleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
 func (e TemplateParameterExampleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("description"))
+	return terra.ReferenceAsString(e.ref.Append("description"))
 }
 
 func (e TemplateParameterExampleAttributes) ExternalValue() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("external_value"))
+	return terra.ReferenceAsString(e.ref.Append("external_value"))
 }
 
 func (e TemplateParameterExampleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("name"))
+	return terra.ReferenceAsString(e.ref.Append("name"))
 }
 
 func (e TemplateParameterExampleAttributes) Summary() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("summary"))
+	return terra.ReferenceAsString(e.ref.Append("summary"))
 }
 
 func (e TemplateParameterExampleAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("value"))
+	return terra.ReferenceAsString(e.ref.Append("value"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type RequestState struct {

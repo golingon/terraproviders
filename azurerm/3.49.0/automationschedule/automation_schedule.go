@@ -29,56 +29,56 @@ type MonthlyOccurrenceAttributes struct {
 	ref terra.Reference
 }
 
-func (mo MonthlyOccurrenceAttributes) InternalRef() terra.Reference {
-	return mo.ref
+func (mo MonthlyOccurrenceAttributes) InternalRef() (terra.Reference, error) {
+	return mo.ref, nil
 }
 
 func (mo MonthlyOccurrenceAttributes) InternalWithRef(ref terra.Reference) MonthlyOccurrenceAttributes {
 	return MonthlyOccurrenceAttributes{ref: ref}
 }
 
-func (mo MonthlyOccurrenceAttributes) InternalTokens() hclwrite.Tokens {
+func (mo MonthlyOccurrenceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mo.ref.InternalTokens()
 }
 
 func (mo MonthlyOccurrenceAttributes) Day() terra.StringValue {
-	return terra.ReferenceString(mo.ref.Append("day"))
+	return terra.ReferenceAsString(mo.ref.Append("day"))
 }
 
 func (mo MonthlyOccurrenceAttributes) Occurrence() terra.NumberValue {
-	return terra.ReferenceNumber(mo.ref.Append("occurrence"))
+	return terra.ReferenceAsNumber(mo.ref.Append("occurrence"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type MonthlyOccurrenceState struct {

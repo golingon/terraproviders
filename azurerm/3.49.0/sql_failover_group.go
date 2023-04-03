@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSqlFailoverGroup creates a new instance of [SqlFailoverGroup].
 func NewSqlFailoverGroup(name string, args SqlFailoverGroupArgs) *SqlFailoverGroup {
 	return &SqlFailoverGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSqlFailoverGroup(name string, args SqlFailoverGroupArgs) *SqlFailoverGro
 
 var _ terra.Resource = (*SqlFailoverGroup)(nil)
 
+// SqlFailoverGroup represents the Terraform resource azurerm_sql_failover_group.
 type SqlFailoverGroup struct {
-	Name  string
-	Args  SqlFailoverGroupArgs
-	state *sqlFailoverGroupState
+	Name      string
+	Args      SqlFailoverGroupArgs
+	state     *sqlFailoverGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SqlFailoverGroup].
 func (sfg *SqlFailoverGroup) Type() string {
 	return "azurerm_sql_failover_group"
 }
 
+// LocalName returns the local name for [SqlFailoverGroup].
 func (sfg *SqlFailoverGroup) LocalName() string {
 	return sfg.Name
 }
 
+// Configuration returns the configuration (args) for [SqlFailoverGroup].
 func (sfg *SqlFailoverGroup) Configuration() interface{} {
 	return sfg.Args
 }
 
+// DependOn is used for other resources to depend on [SqlFailoverGroup].
+func (sfg *SqlFailoverGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(sfg)
+}
+
+// Dependencies returns the list of resources [SqlFailoverGroup] depends_on.
+func (sfg *SqlFailoverGroup) Dependencies() terra.Dependencies {
+	return sfg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SqlFailoverGroup].
+func (sfg *SqlFailoverGroup) LifecycleManagement() *terra.Lifecycle {
+	return sfg.Lifecycle
+}
+
+// Attributes returns the attributes for [SqlFailoverGroup].
 func (sfg *SqlFailoverGroup) Attributes() sqlFailoverGroupAttributes {
 	return sqlFailoverGroupAttributes{ref: terra.ReferenceResource(sfg)}
 }
 
+// ImportState imports the given attribute values into [SqlFailoverGroup]'s state.
 func (sfg *SqlFailoverGroup) ImportState(av io.Reader) error {
 	sfg.state = &sqlFailoverGroupState{}
 	if err := json.NewDecoder(av).Decode(sfg.state); err != nil {
@@ -49,10 +73,12 @@ func (sfg *SqlFailoverGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SqlFailoverGroup] has state.
 func (sfg *SqlFailoverGroup) State() (*sqlFailoverGroupState, bool) {
 	return sfg.state, sfg.state != nil
 }
 
+// StateMust returns the state for [SqlFailoverGroup]. Panics if the state is nil.
 func (sfg *SqlFailoverGroup) StateMust() *sqlFailoverGroupState {
 	if sfg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sfg.Type(), sfg.LocalName()))
@@ -60,10 +86,7 @@ func (sfg *SqlFailoverGroup) StateMust() *sqlFailoverGroupState {
 	return sfg.state
 }
 
-func (sfg *SqlFailoverGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(sfg)
-}
-
+// SqlFailoverGroupArgs contains the configurations for azurerm_sql_failover_group.
 type SqlFailoverGroupArgs struct {
 	// Databases: set of string, optional
 	Databases terra.SetValue[terra.StringValue] `hcl:"databases,attr"`
@@ -85,59 +108,65 @@ type SqlFailoverGroupArgs struct {
 	ReadonlyEndpointFailoverPolicy *sqlfailovergroup.ReadonlyEndpointFailoverPolicy `hcl:"readonly_endpoint_failover_policy,block"`
 	// Timeouts: optional
 	Timeouts *sqlfailovergroup.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SqlFailoverGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sqlFailoverGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Databases returns a reference to field databases of azurerm_sql_failover_group.
 func (sfg sqlFailoverGroupAttributes) Databases() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sfg.ref.Append("databases"))
+	return terra.ReferenceAsSet[terra.StringValue](sfg.ref.Append("databases"))
 }
 
+// Id returns a reference to field id of azurerm_sql_failover_group.
 func (sfg sqlFailoverGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sfg.ref.Append("id"))
+	return terra.ReferenceAsString(sfg.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_sql_failover_group.
 func (sfg sqlFailoverGroupAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(sfg.ref.Append("location"))
+	return terra.ReferenceAsString(sfg.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_sql_failover_group.
 func (sfg sqlFailoverGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sfg.ref.Append("name"))
+	return terra.ReferenceAsString(sfg.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_sql_failover_group.
 func (sfg sqlFailoverGroupAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(sfg.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(sfg.ref.Append("resource_group_name"))
 }
 
+// Role returns a reference to field role of azurerm_sql_failover_group.
 func (sfg sqlFailoverGroupAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(sfg.ref.Append("role"))
+	return terra.ReferenceAsString(sfg.ref.Append("role"))
 }
 
+// ServerName returns a reference to field server_name of azurerm_sql_failover_group.
 func (sfg sqlFailoverGroupAttributes) ServerName() terra.StringValue {
-	return terra.ReferenceString(sfg.ref.Append("server_name"))
+	return terra.ReferenceAsString(sfg.ref.Append("server_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_sql_failover_group.
 func (sfg sqlFailoverGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sfg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sfg.ref.Append("tags"))
 }
 
 func (sfg sqlFailoverGroupAttributes) PartnerServers() terra.ListValue[sqlfailovergroup.PartnerServersAttributes] {
-	return terra.ReferenceList[sqlfailovergroup.PartnerServersAttributes](sfg.ref.Append("partner_servers"))
+	return terra.ReferenceAsList[sqlfailovergroup.PartnerServersAttributes](sfg.ref.Append("partner_servers"))
 }
 
 func (sfg sqlFailoverGroupAttributes) ReadWriteEndpointFailoverPolicy() terra.ListValue[sqlfailovergroup.ReadWriteEndpointFailoverPolicyAttributes] {
-	return terra.ReferenceList[sqlfailovergroup.ReadWriteEndpointFailoverPolicyAttributes](sfg.ref.Append("read_write_endpoint_failover_policy"))
+	return terra.ReferenceAsList[sqlfailovergroup.ReadWriteEndpointFailoverPolicyAttributes](sfg.ref.Append("read_write_endpoint_failover_policy"))
 }
 
 func (sfg sqlFailoverGroupAttributes) ReadonlyEndpointFailoverPolicy() terra.ListValue[sqlfailovergroup.ReadonlyEndpointFailoverPolicyAttributes] {
-	return terra.ReferenceList[sqlfailovergroup.ReadonlyEndpointFailoverPolicyAttributes](sfg.ref.Append("readonly_endpoint_failover_policy"))
+	return terra.ReferenceAsList[sqlfailovergroup.ReadonlyEndpointFailoverPolicyAttributes](sfg.ref.Append("readonly_endpoint_failover_policy"))
 }
 
 func (sfg sqlFailoverGroupAttributes) Timeouts() sqlfailovergroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[sqlfailovergroup.TimeoutsAttributes](sfg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[sqlfailovergroup.TimeoutsAttributes](sfg.ref.Append("timeouts"))
 }
 
 type sqlFailoverGroupState struct {

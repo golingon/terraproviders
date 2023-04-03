@@ -31,60 +31,60 @@ type PolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (p PolicyAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p PolicyAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p PolicyAttributes) InternalWithRef(ref terra.Reference) PolicyAttributes {
 	return PolicyAttributes{ref: ref}
 }
 
-func (p PolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (p PolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
 func (p PolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("name"))
+	return terra.ReferenceAsString(p.ref.Append("name"))
 }
 
 func (p PolicyAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("type"))
+	return terra.ReferenceAsString(p.ref.Append("type"))
 }
 
 func (p PolicyAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("value"))
+	return terra.ReferenceAsString(p.ref.Append("value"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type PolicyState struct {

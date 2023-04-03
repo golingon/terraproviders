@@ -42,7 +42,7 @@ func (ec ExecutionControlsAttributes) InternalWithRef(ref terra.Reference) Execu
 	return ExecutionControlsAttributes{ref: ref}
 }
 
-func (ec ExecutionControlsAttributes) InternalTokens() hclwrite.Tokens {
+func (ec ExecutionControlsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 
@@ -62,7 +62,7 @@ func (sc SsmControlsAttributes) InternalWithRef(ref terra.Reference) SsmControls
 	return SsmControlsAttributes{ref: ref}
 }
 
-func (sc SsmControlsAttributes) InternalTokens() hclwrite.Tokens {
+func (sc SsmControlsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -86,7 +86,7 @@ func (p ParameterAttributes) InternalWithRef(ref terra.Reference) ParameterAttri
 	return ParameterAttributes{ref: ref}
 }
 
-func (p ParameterAttributes) InternalTokens() hclwrite.Tokens {
+func (p ParameterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 

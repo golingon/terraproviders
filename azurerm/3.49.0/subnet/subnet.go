@@ -36,80 +36,80 @@ type DelegationAttributes struct {
 	ref terra.Reference
 }
 
-func (d DelegationAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DelegationAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DelegationAttributes) InternalWithRef(ref terra.Reference) DelegationAttributes {
 	return DelegationAttributes{ref: ref}
 }
 
-func (d DelegationAttributes) InternalTokens() hclwrite.Tokens {
+func (d DelegationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d DelegationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("name"))
+	return terra.ReferenceAsString(d.ref.Append("name"))
 }
 
 func (d DelegationAttributes) ServiceDelegation() terra.ListValue[ServiceDelegationAttributes] {
-	return terra.ReferenceList[ServiceDelegationAttributes](d.ref.Append("service_delegation"))
+	return terra.ReferenceAsList[ServiceDelegationAttributes](d.ref.Append("service_delegation"))
 }
 
 type ServiceDelegationAttributes struct {
 	ref terra.Reference
 }
 
-func (sd ServiceDelegationAttributes) InternalRef() terra.Reference {
-	return sd.ref
+func (sd ServiceDelegationAttributes) InternalRef() (terra.Reference, error) {
+	return sd.ref, nil
 }
 
 func (sd ServiceDelegationAttributes) InternalWithRef(ref terra.Reference) ServiceDelegationAttributes {
 	return ServiceDelegationAttributes{ref: ref}
 }
 
-func (sd ServiceDelegationAttributes) InternalTokens() hclwrite.Tokens {
+func (sd ServiceDelegationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sd.ref.InternalTokens()
 }
 
 func (sd ServiceDelegationAttributes) Actions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sd.ref.Append("actions"))
+	return terra.ReferenceAsList[terra.StringValue](sd.ref.Append("actions"))
 }
 
 func (sd ServiceDelegationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("name"))
+	return terra.ReferenceAsString(sd.ref.Append("name"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type DelegationState struct {

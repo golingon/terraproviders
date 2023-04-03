@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewPrivateDnsAaaaRecord creates a new instance of [PrivateDnsAaaaRecord].
 func NewPrivateDnsAaaaRecord(name string, args PrivateDnsAaaaRecordArgs) *PrivateDnsAaaaRecord {
 	return &PrivateDnsAaaaRecord{
 		Args: args,
@@ -19,28 +20,51 @@ func NewPrivateDnsAaaaRecord(name string, args PrivateDnsAaaaRecordArgs) *Privat
 
 var _ terra.Resource = (*PrivateDnsAaaaRecord)(nil)
 
+// PrivateDnsAaaaRecord represents the Terraform resource azurerm_private_dns_aaaa_record.
 type PrivateDnsAaaaRecord struct {
-	Name  string
-	Args  PrivateDnsAaaaRecordArgs
-	state *privateDnsAaaaRecordState
+	Name      string
+	Args      PrivateDnsAaaaRecordArgs
+	state     *privateDnsAaaaRecordState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PrivateDnsAaaaRecord].
 func (pdar *PrivateDnsAaaaRecord) Type() string {
 	return "azurerm_private_dns_aaaa_record"
 }
 
+// LocalName returns the local name for [PrivateDnsAaaaRecord].
 func (pdar *PrivateDnsAaaaRecord) LocalName() string {
 	return pdar.Name
 }
 
+// Configuration returns the configuration (args) for [PrivateDnsAaaaRecord].
 func (pdar *PrivateDnsAaaaRecord) Configuration() interface{} {
 	return pdar.Args
 }
 
+// DependOn is used for other resources to depend on [PrivateDnsAaaaRecord].
+func (pdar *PrivateDnsAaaaRecord) DependOn() terra.Reference {
+	return terra.ReferenceResource(pdar)
+}
+
+// Dependencies returns the list of resources [PrivateDnsAaaaRecord] depends_on.
+func (pdar *PrivateDnsAaaaRecord) Dependencies() terra.Dependencies {
+	return pdar.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PrivateDnsAaaaRecord].
+func (pdar *PrivateDnsAaaaRecord) LifecycleManagement() *terra.Lifecycle {
+	return pdar.Lifecycle
+}
+
+// Attributes returns the attributes for [PrivateDnsAaaaRecord].
 func (pdar *PrivateDnsAaaaRecord) Attributes() privateDnsAaaaRecordAttributes {
 	return privateDnsAaaaRecordAttributes{ref: terra.ReferenceResource(pdar)}
 }
 
+// ImportState imports the given attribute values into [PrivateDnsAaaaRecord]'s state.
 func (pdar *PrivateDnsAaaaRecord) ImportState(av io.Reader) error {
 	pdar.state = &privateDnsAaaaRecordState{}
 	if err := json.NewDecoder(av).Decode(pdar.state); err != nil {
@@ -49,10 +73,12 @@ func (pdar *PrivateDnsAaaaRecord) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PrivateDnsAaaaRecord] has state.
 func (pdar *PrivateDnsAaaaRecord) State() (*privateDnsAaaaRecordState, bool) {
 	return pdar.state, pdar.state != nil
 }
 
+// StateMust returns the state for [PrivateDnsAaaaRecord]. Panics if the state is nil.
 func (pdar *PrivateDnsAaaaRecord) StateMust() *privateDnsAaaaRecordState {
 	if pdar.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pdar.Type(), pdar.LocalName()))
@@ -60,10 +86,7 @@ func (pdar *PrivateDnsAaaaRecord) StateMust() *privateDnsAaaaRecordState {
 	return pdar.state
 }
 
-func (pdar *PrivateDnsAaaaRecord) DependOn() terra.Reference {
-	return terra.ReferenceResource(pdar)
-}
-
+// PrivateDnsAaaaRecordArgs contains the configurations for azurerm_private_dns_aaaa_record.
 type PrivateDnsAaaaRecordArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -81,47 +104,53 @@ type PrivateDnsAaaaRecordArgs struct {
 	ZoneName terra.StringValue `hcl:"zone_name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *privatednsaaaarecord.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that PrivateDnsAaaaRecord depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type privateDnsAaaaRecordAttributes struct {
 	ref terra.Reference
 }
 
+// Fqdn returns a reference to field fqdn of azurerm_private_dns_aaaa_record.
 func (pdar privateDnsAaaaRecordAttributes) Fqdn() terra.StringValue {
-	return terra.ReferenceString(pdar.ref.Append("fqdn"))
+	return terra.ReferenceAsString(pdar.ref.Append("fqdn"))
 }
 
+// Id returns a reference to field id of azurerm_private_dns_aaaa_record.
 func (pdar privateDnsAaaaRecordAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pdar.ref.Append("id"))
+	return terra.ReferenceAsString(pdar.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_private_dns_aaaa_record.
 func (pdar privateDnsAaaaRecordAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pdar.ref.Append("name"))
+	return terra.ReferenceAsString(pdar.ref.Append("name"))
 }
 
+// Records returns a reference to field records of azurerm_private_dns_aaaa_record.
 func (pdar privateDnsAaaaRecordAttributes) Records() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](pdar.ref.Append("records"))
+	return terra.ReferenceAsSet[terra.StringValue](pdar.ref.Append("records"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_private_dns_aaaa_record.
 func (pdar privateDnsAaaaRecordAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(pdar.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(pdar.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_private_dns_aaaa_record.
 func (pdar privateDnsAaaaRecordAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](pdar.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](pdar.ref.Append("tags"))
 }
 
+// Ttl returns a reference to field ttl of azurerm_private_dns_aaaa_record.
 func (pdar privateDnsAaaaRecordAttributes) Ttl() terra.NumberValue {
-	return terra.ReferenceNumber(pdar.ref.Append("ttl"))
+	return terra.ReferenceAsNumber(pdar.ref.Append("ttl"))
 }
 
+// ZoneName returns a reference to field zone_name of azurerm_private_dns_aaaa_record.
 func (pdar privateDnsAaaaRecordAttributes) ZoneName() terra.StringValue {
-	return terra.ReferenceString(pdar.ref.Append("zone_name"))
+	return terra.ReferenceAsString(pdar.ref.Append("zone_name"))
 }
 
 func (pdar privateDnsAaaaRecordAttributes) Timeouts() privatednsaaaarecord.TimeoutsAttributes {
-	return terra.ReferenceSingle[privatednsaaaarecord.TimeoutsAttributes](pdar.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[privatednsaaaarecord.TimeoutsAttributes](pdar.ref.Append("timeouts"))
 }
 
 type privateDnsAaaaRecordState struct {

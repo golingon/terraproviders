@@ -30,7 +30,7 @@ func (rs ResourceSpecAttributes) InternalWithRef(ref terra.Reference) ResourceSp
 	return ResourceSpecAttributes{ref: ref}
 }
 
-func (rs ResourceSpecAttributes) InternalTokens() hclwrite.Tokens {
+func (rs ResourceSpecAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rs.ref.InternalTokens()
 }
 

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataKeyVaultCertificateIssuer creates a new instance of [DataKeyVaultCertificateIssuer].
 func NewDataKeyVaultCertificateIssuer(name string, args DataKeyVaultCertificateIssuerArgs) *DataKeyVaultCertificateIssuer {
 	return &DataKeyVaultCertificateIssuer{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataKeyVaultCertificateIssuer(name string, args DataKeyVaultCertificateI
 
 var _ terra.DataResource = (*DataKeyVaultCertificateIssuer)(nil)
 
+// DataKeyVaultCertificateIssuer represents the Terraform data resource azurerm_key_vault_certificate_issuer.
 type DataKeyVaultCertificateIssuer struct {
 	Name string
 	Args DataKeyVaultCertificateIssuerArgs
 }
 
+// DataSource returns the Terraform object type for [DataKeyVaultCertificateIssuer].
 func (kvci *DataKeyVaultCertificateIssuer) DataSource() string {
 	return "azurerm_key_vault_certificate_issuer"
 }
 
+// LocalName returns the local name for [DataKeyVaultCertificateIssuer].
 func (kvci *DataKeyVaultCertificateIssuer) LocalName() string {
 	return kvci.Name
 }
 
+// Configuration returns the configuration (args) for [DataKeyVaultCertificateIssuer].
 func (kvci *DataKeyVaultCertificateIssuer) Configuration() interface{} {
 	return kvci.Args
 }
 
+// Attributes returns the attributes for [DataKeyVaultCertificateIssuer].
 func (kvci *DataKeyVaultCertificateIssuer) Attributes() dataKeyVaultCertificateIssuerAttributes {
 	return dataKeyVaultCertificateIssuerAttributes{ref: terra.ReferenceDataResource(kvci)}
 }
 
+// DataKeyVaultCertificateIssuerArgs contains the configurations for azurerm_key_vault_certificate_issuer.
 type DataKeyVaultCertificateIssuerArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,34 +60,40 @@ type dataKeyVaultCertificateIssuerAttributes struct {
 	ref terra.Reference
 }
 
+// AccountId returns a reference to field account_id of azurerm_key_vault_certificate_issuer.
 func (kvci dataKeyVaultCertificateIssuerAttributes) AccountId() terra.StringValue {
-	return terra.ReferenceString(kvci.ref.Append("account_id"))
+	return terra.ReferenceAsString(kvci.ref.Append("account_id"))
 }
 
+// Id returns a reference to field id of azurerm_key_vault_certificate_issuer.
 func (kvci dataKeyVaultCertificateIssuerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kvci.ref.Append("id"))
+	return terra.ReferenceAsString(kvci.ref.Append("id"))
 }
 
+// KeyVaultId returns a reference to field key_vault_id of azurerm_key_vault_certificate_issuer.
 func (kvci dataKeyVaultCertificateIssuerAttributes) KeyVaultId() terra.StringValue {
-	return terra.ReferenceString(kvci.ref.Append("key_vault_id"))
+	return terra.ReferenceAsString(kvci.ref.Append("key_vault_id"))
 }
 
+// Name returns a reference to field name of azurerm_key_vault_certificate_issuer.
 func (kvci dataKeyVaultCertificateIssuerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(kvci.ref.Append("name"))
+	return terra.ReferenceAsString(kvci.ref.Append("name"))
 }
 
+// OrgId returns a reference to field org_id of azurerm_key_vault_certificate_issuer.
 func (kvci dataKeyVaultCertificateIssuerAttributes) OrgId() terra.StringValue {
-	return terra.ReferenceString(kvci.ref.Append("org_id"))
+	return terra.ReferenceAsString(kvci.ref.Append("org_id"))
 }
 
+// ProviderName returns a reference to field provider_name of azurerm_key_vault_certificate_issuer.
 func (kvci dataKeyVaultCertificateIssuerAttributes) ProviderName() terra.StringValue {
-	return terra.ReferenceString(kvci.ref.Append("provider_name"))
+	return terra.ReferenceAsString(kvci.ref.Append("provider_name"))
 }
 
 func (kvci dataKeyVaultCertificateIssuerAttributes) Admin() terra.ListValue[datakeyvaultcertificateissuer.AdminAttributes] {
-	return terra.ReferenceList[datakeyvaultcertificateissuer.AdminAttributes](kvci.ref.Append("admin"))
+	return terra.ReferenceAsList[datakeyvaultcertificateissuer.AdminAttributes](kvci.ref.Append("admin"))
 }
 
 func (kvci dataKeyVaultCertificateIssuerAttributes) Timeouts() datakeyvaultcertificateissuer.TimeoutsAttributes {
-	return terra.ReferenceSingle[datakeyvaultcertificateissuer.TimeoutsAttributes](kvci.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datakeyvaultcertificateissuer.TimeoutsAttributes](kvci.ref.Append("timeouts"))
 }

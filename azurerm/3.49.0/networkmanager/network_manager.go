@@ -31,84 +31,84 @@ type CrossTenantScopesAttributes struct {
 	ref terra.Reference
 }
 
-func (cts CrossTenantScopesAttributes) InternalRef() terra.Reference {
-	return cts.ref
+func (cts CrossTenantScopesAttributes) InternalRef() (terra.Reference, error) {
+	return cts.ref, nil
 }
 
 func (cts CrossTenantScopesAttributes) InternalWithRef(ref terra.Reference) CrossTenantScopesAttributes {
 	return CrossTenantScopesAttributes{ref: ref}
 }
 
-func (cts CrossTenantScopesAttributes) InternalTokens() hclwrite.Tokens {
+func (cts CrossTenantScopesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cts.ref.InternalTokens()
 }
 
 func (cts CrossTenantScopesAttributes) ManagementGroups() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cts.ref.Append("management_groups"))
+	return terra.ReferenceAsList[terra.StringValue](cts.ref.Append("management_groups"))
 }
 
 func (cts CrossTenantScopesAttributes) Subscriptions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cts.ref.Append("subscriptions"))
+	return terra.ReferenceAsList[terra.StringValue](cts.ref.Append("subscriptions"))
 }
 
 func (cts CrossTenantScopesAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(cts.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(cts.ref.Append("tenant_id"))
 }
 
 type ScopeAttributes struct {
 	ref terra.Reference
 }
 
-func (s ScopeAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ScopeAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ScopeAttributes) InternalWithRef(ref terra.Reference) ScopeAttributes {
 	return ScopeAttributes{ref: ref}
 }
 
-func (s ScopeAttributes) InternalTokens() hclwrite.Tokens {
+func (s ScopeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s ScopeAttributes) ManagementGroupIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](s.ref.Append("management_group_ids"))
+	return terra.ReferenceAsList[terra.StringValue](s.ref.Append("management_group_ids"))
 }
 
 func (s ScopeAttributes) SubscriptionIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](s.ref.Append("subscription_ids"))
+	return terra.ReferenceAsList[terra.StringValue](s.ref.Append("subscription_ids"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type CrossTenantScopesState struct {

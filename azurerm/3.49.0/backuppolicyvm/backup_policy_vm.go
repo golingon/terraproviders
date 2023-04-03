@@ -74,196 +74,196 @@ type BackupAttributes struct {
 	ref terra.Reference
 }
 
-func (b BackupAttributes) InternalRef() terra.Reference {
-	return b.ref
+func (b BackupAttributes) InternalRef() (terra.Reference, error) {
+	return b.ref, nil
 }
 
 func (b BackupAttributes) InternalWithRef(ref terra.Reference) BackupAttributes {
 	return BackupAttributes{ref: ref}
 }
 
-func (b BackupAttributes) InternalTokens() hclwrite.Tokens {
+func (b BackupAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return b.ref.InternalTokens()
 }
 
 func (b BackupAttributes) Frequency() terra.StringValue {
-	return terra.ReferenceString(b.ref.Append("frequency"))
+	return terra.ReferenceAsString(b.ref.Append("frequency"))
 }
 
 func (b BackupAttributes) HourDuration() terra.NumberValue {
-	return terra.ReferenceNumber(b.ref.Append("hour_duration"))
+	return terra.ReferenceAsNumber(b.ref.Append("hour_duration"))
 }
 
 func (b BackupAttributes) HourInterval() terra.NumberValue {
-	return terra.ReferenceNumber(b.ref.Append("hour_interval"))
+	return terra.ReferenceAsNumber(b.ref.Append("hour_interval"))
 }
 
 func (b BackupAttributes) Time() terra.StringValue {
-	return terra.ReferenceString(b.ref.Append("time"))
+	return terra.ReferenceAsString(b.ref.Append("time"))
 }
 
 func (b BackupAttributes) Weekdays() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](b.ref.Append("weekdays"))
+	return terra.ReferenceAsSet[terra.StringValue](b.ref.Append("weekdays"))
 }
 
 type InstantRestoreResourceGroupAttributes struct {
 	ref terra.Reference
 }
 
-func (irrg InstantRestoreResourceGroupAttributes) InternalRef() terra.Reference {
-	return irrg.ref
+func (irrg InstantRestoreResourceGroupAttributes) InternalRef() (terra.Reference, error) {
+	return irrg.ref, nil
 }
 
 func (irrg InstantRestoreResourceGroupAttributes) InternalWithRef(ref terra.Reference) InstantRestoreResourceGroupAttributes {
 	return InstantRestoreResourceGroupAttributes{ref: ref}
 }
 
-func (irrg InstantRestoreResourceGroupAttributes) InternalTokens() hclwrite.Tokens {
+func (irrg InstantRestoreResourceGroupAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return irrg.ref.InternalTokens()
 }
 
 func (irrg InstantRestoreResourceGroupAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(irrg.ref.Append("prefix"))
+	return terra.ReferenceAsString(irrg.ref.Append("prefix"))
 }
 
 func (irrg InstantRestoreResourceGroupAttributes) Suffix() terra.StringValue {
-	return terra.ReferenceString(irrg.ref.Append("suffix"))
+	return terra.ReferenceAsString(irrg.ref.Append("suffix"))
 }
 
 type RetentionDailyAttributes struct {
 	ref terra.Reference
 }
 
-func (rd RetentionDailyAttributes) InternalRef() terra.Reference {
-	return rd.ref
+func (rd RetentionDailyAttributes) InternalRef() (terra.Reference, error) {
+	return rd.ref, nil
 }
 
 func (rd RetentionDailyAttributes) InternalWithRef(ref terra.Reference) RetentionDailyAttributes {
 	return RetentionDailyAttributes{ref: ref}
 }
 
-func (rd RetentionDailyAttributes) InternalTokens() hclwrite.Tokens {
+func (rd RetentionDailyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rd.ref.InternalTokens()
 }
 
 func (rd RetentionDailyAttributes) Count() terra.NumberValue {
-	return terra.ReferenceNumber(rd.ref.Append("count"))
+	return terra.ReferenceAsNumber(rd.ref.Append("count"))
 }
 
 type RetentionMonthlyAttributes struct {
 	ref terra.Reference
 }
 
-func (rm RetentionMonthlyAttributes) InternalRef() terra.Reference {
-	return rm.ref
+func (rm RetentionMonthlyAttributes) InternalRef() (terra.Reference, error) {
+	return rm.ref, nil
 }
 
 func (rm RetentionMonthlyAttributes) InternalWithRef(ref terra.Reference) RetentionMonthlyAttributes {
 	return RetentionMonthlyAttributes{ref: ref}
 }
 
-func (rm RetentionMonthlyAttributes) InternalTokens() hclwrite.Tokens {
+func (rm RetentionMonthlyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rm.ref.InternalTokens()
 }
 
 func (rm RetentionMonthlyAttributes) Count() terra.NumberValue {
-	return terra.ReferenceNumber(rm.ref.Append("count"))
+	return terra.ReferenceAsNumber(rm.ref.Append("count"))
 }
 
 func (rm RetentionMonthlyAttributes) Weekdays() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rm.ref.Append("weekdays"))
+	return terra.ReferenceAsSet[terra.StringValue](rm.ref.Append("weekdays"))
 }
 
 func (rm RetentionMonthlyAttributes) Weeks() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rm.ref.Append("weeks"))
+	return terra.ReferenceAsSet[terra.StringValue](rm.ref.Append("weeks"))
 }
 
 type RetentionWeeklyAttributes struct {
 	ref terra.Reference
 }
 
-func (rw RetentionWeeklyAttributes) InternalRef() terra.Reference {
-	return rw.ref
+func (rw RetentionWeeklyAttributes) InternalRef() (terra.Reference, error) {
+	return rw.ref, nil
 }
 
 func (rw RetentionWeeklyAttributes) InternalWithRef(ref terra.Reference) RetentionWeeklyAttributes {
 	return RetentionWeeklyAttributes{ref: ref}
 }
 
-func (rw RetentionWeeklyAttributes) InternalTokens() hclwrite.Tokens {
+func (rw RetentionWeeklyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rw.ref.InternalTokens()
 }
 
 func (rw RetentionWeeklyAttributes) Count() terra.NumberValue {
-	return terra.ReferenceNumber(rw.ref.Append("count"))
+	return terra.ReferenceAsNumber(rw.ref.Append("count"))
 }
 
 func (rw RetentionWeeklyAttributes) Weekdays() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rw.ref.Append("weekdays"))
+	return terra.ReferenceAsSet[terra.StringValue](rw.ref.Append("weekdays"))
 }
 
 type RetentionYearlyAttributes struct {
 	ref terra.Reference
 }
 
-func (ry RetentionYearlyAttributes) InternalRef() terra.Reference {
-	return ry.ref
+func (ry RetentionYearlyAttributes) InternalRef() (terra.Reference, error) {
+	return ry.ref, nil
 }
 
 func (ry RetentionYearlyAttributes) InternalWithRef(ref terra.Reference) RetentionYearlyAttributes {
 	return RetentionYearlyAttributes{ref: ref}
 }
 
-func (ry RetentionYearlyAttributes) InternalTokens() hclwrite.Tokens {
+func (ry RetentionYearlyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ry.ref.InternalTokens()
 }
 
 func (ry RetentionYearlyAttributes) Count() terra.NumberValue {
-	return terra.ReferenceNumber(ry.ref.Append("count"))
+	return terra.ReferenceAsNumber(ry.ref.Append("count"))
 }
 
 func (ry RetentionYearlyAttributes) Months() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ry.ref.Append("months"))
+	return terra.ReferenceAsSet[terra.StringValue](ry.ref.Append("months"))
 }
 
 func (ry RetentionYearlyAttributes) Weekdays() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ry.ref.Append("weekdays"))
+	return terra.ReferenceAsSet[terra.StringValue](ry.ref.Append("weekdays"))
 }
 
 func (ry RetentionYearlyAttributes) Weeks() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ry.ref.Append("weeks"))
+	return terra.ReferenceAsSet[terra.StringValue](ry.ref.Append("weeks"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type BackupState struct {

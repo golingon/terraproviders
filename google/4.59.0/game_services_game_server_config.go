@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewGameServicesGameServerConfig creates a new instance of [GameServicesGameServerConfig].
 func NewGameServicesGameServerConfig(name string, args GameServicesGameServerConfigArgs) *GameServicesGameServerConfig {
 	return &GameServicesGameServerConfig{
 		Args: args,
@@ -19,28 +20,51 @@ func NewGameServicesGameServerConfig(name string, args GameServicesGameServerCon
 
 var _ terra.Resource = (*GameServicesGameServerConfig)(nil)
 
+// GameServicesGameServerConfig represents the Terraform resource google_game_services_game_server_config.
 type GameServicesGameServerConfig struct {
-	Name  string
-	Args  GameServicesGameServerConfigArgs
-	state *gameServicesGameServerConfigState
+	Name      string
+	Args      GameServicesGameServerConfigArgs
+	state     *gameServicesGameServerConfigState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GameServicesGameServerConfig].
 func (gsgsc *GameServicesGameServerConfig) Type() string {
 	return "google_game_services_game_server_config"
 }
 
+// LocalName returns the local name for [GameServicesGameServerConfig].
 func (gsgsc *GameServicesGameServerConfig) LocalName() string {
 	return gsgsc.Name
 }
 
+// Configuration returns the configuration (args) for [GameServicesGameServerConfig].
 func (gsgsc *GameServicesGameServerConfig) Configuration() interface{} {
 	return gsgsc.Args
 }
 
+// DependOn is used for other resources to depend on [GameServicesGameServerConfig].
+func (gsgsc *GameServicesGameServerConfig) DependOn() terra.Reference {
+	return terra.ReferenceResource(gsgsc)
+}
+
+// Dependencies returns the list of resources [GameServicesGameServerConfig] depends_on.
+func (gsgsc *GameServicesGameServerConfig) Dependencies() terra.Dependencies {
+	return gsgsc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GameServicesGameServerConfig].
+func (gsgsc *GameServicesGameServerConfig) LifecycleManagement() *terra.Lifecycle {
+	return gsgsc.Lifecycle
+}
+
+// Attributes returns the attributes for [GameServicesGameServerConfig].
 func (gsgsc *GameServicesGameServerConfig) Attributes() gameServicesGameServerConfigAttributes {
 	return gameServicesGameServerConfigAttributes{ref: terra.ReferenceResource(gsgsc)}
 }
 
+// ImportState imports the given attribute values into [GameServicesGameServerConfig]'s state.
 func (gsgsc *GameServicesGameServerConfig) ImportState(av io.Reader) error {
 	gsgsc.state = &gameServicesGameServerConfigState{}
 	if err := json.NewDecoder(av).Decode(gsgsc.state); err != nil {
@@ -49,10 +73,12 @@ func (gsgsc *GameServicesGameServerConfig) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GameServicesGameServerConfig] has state.
 func (gsgsc *GameServicesGameServerConfig) State() (*gameServicesGameServerConfigState, bool) {
 	return gsgsc.state, gsgsc.state != nil
 }
 
+// StateMust returns the state for [GameServicesGameServerConfig]. Panics if the state is nil.
 func (gsgsc *GameServicesGameServerConfig) StateMust() *gameServicesGameServerConfigState {
 	if gsgsc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", gsgsc.Type(), gsgsc.LocalName()))
@@ -60,10 +86,7 @@ func (gsgsc *GameServicesGameServerConfig) StateMust() *gameServicesGameServerCo
 	return gsgsc.state
 }
 
-func (gsgsc *GameServicesGameServerConfig) DependOn() terra.Reference {
-	return terra.ReferenceResource(gsgsc)
-}
-
+// GameServicesGameServerConfigArgs contains the configurations for google_game_services_game_server_config.
 type GameServicesGameServerConfigArgs struct {
 	// ConfigId: string, required
 	ConfigId terra.StringValue `hcl:"config_id,attr" validate:"required"`
@@ -85,55 +108,61 @@ type GameServicesGameServerConfigArgs struct {
 	ScalingConfigs []gameservicesgameserverconfig.ScalingConfigs `hcl:"scaling_configs,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *gameservicesgameserverconfig.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that GameServicesGameServerConfig depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type gameServicesGameServerConfigAttributes struct {
 	ref terra.Reference
 }
 
+// ConfigId returns a reference to field config_id of google_game_services_game_server_config.
 func (gsgsc gameServicesGameServerConfigAttributes) ConfigId() terra.StringValue {
-	return terra.ReferenceString(gsgsc.ref.Append("config_id"))
+	return terra.ReferenceAsString(gsgsc.ref.Append("config_id"))
 }
 
+// DeploymentId returns a reference to field deployment_id of google_game_services_game_server_config.
 func (gsgsc gameServicesGameServerConfigAttributes) DeploymentId() terra.StringValue {
-	return terra.ReferenceString(gsgsc.ref.Append("deployment_id"))
+	return terra.ReferenceAsString(gsgsc.ref.Append("deployment_id"))
 }
 
+// Description returns a reference to field description of google_game_services_game_server_config.
 func (gsgsc gameServicesGameServerConfigAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(gsgsc.ref.Append("description"))
+	return terra.ReferenceAsString(gsgsc.ref.Append("description"))
 }
 
+// Id returns a reference to field id of google_game_services_game_server_config.
 func (gsgsc gameServicesGameServerConfigAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(gsgsc.ref.Append("id"))
+	return terra.ReferenceAsString(gsgsc.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_game_services_game_server_config.
 func (gsgsc gameServicesGameServerConfigAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gsgsc.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](gsgsc.ref.Append("labels"))
 }
 
+// Location returns a reference to field location of google_game_services_game_server_config.
 func (gsgsc gameServicesGameServerConfigAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(gsgsc.ref.Append("location"))
+	return terra.ReferenceAsString(gsgsc.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_game_services_game_server_config.
 func (gsgsc gameServicesGameServerConfigAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(gsgsc.ref.Append("name"))
+	return terra.ReferenceAsString(gsgsc.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_game_services_game_server_config.
 func (gsgsc gameServicesGameServerConfigAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(gsgsc.ref.Append("project"))
+	return terra.ReferenceAsString(gsgsc.ref.Append("project"))
 }
 
 func (gsgsc gameServicesGameServerConfigAttributes) FleetConfigs() terra.ListValue[gameservicesgameserverconfig.FleetConfigsAttributes] {
-	return terra.ReferenceList[gameservicesgameserverconfig.FleetConfigsAttributes](gsgsc.ref.Append("fleet_configs"))
+	return terra.ReferenceAsList[gameservicesgameserverconfig.FleetConfigsAttributes](gsgsc.ref.Append("fleet_configs"))
 }
 
 func (gsgsc gameServicesGameServerConfigAttributes) ScalingConfigs() terra.ListValue[gameservicesgameserverconfig.ScalingConfigsAttributes] {
-	return terra.ReferenceList[gameservicesgameserverconfig.ScalingConfigsAttributes](gsgsc.ref.Append("scaling_configs"))
+	return terra.ReferenceAsList[gameservicesgameserverconfig.ScalingConfigsAttributes](gsgsc.ref.Append("scaling_configs"))
 }
 
 func (gsgsc gameServicesGameServerConfigAttributes) Timeouts() gameservicesgameserverconfig.TimeoutsAttributes {
-	return terra.ReferenceSingle[gameservicesgameserverconfig.TimeoutsAttributes](gsgsc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[gameservicesgameserverconfig.TimeoutsAttributes](gsgsc.ref.Append("timeouts"))
 }
 
 type gameServicesGameServerConfigState struct {

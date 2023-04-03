@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLoadTest creates a new instance of [LoadTest].
 func NewLoadTest(name string, args LoadTestArgs) *LoadTest {
 	return &LoadTest{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLoadTest(name string, args LoadTestArgs) *LoadTest {
 
 var _ terra.Resource = (*LoadTest)(nil)
 
+// LoadTest represents the Terraform resource azurerm_load_test.
 type LoadTest struct {
-	Name  string
-	Args  LoadTestArgs
-	state *loadTestState
+	Name      string
+	Args      LoadTestArgs
+	state     *loadTestState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LoadTest].
 func (lt *LoadTest) Type() string {
 	return "azurerm_load_test"
 }
 
+// LocalName returns the local name for [LoadTest].
 func (lt *LoadTest) LocalName() string {
 	return lt.Name
 }
 
+// Configuration returns the configuration (args) for [LoadTest].
 func (lt *LoadTest) Configuration() interface{} {
 	return lt.Args
 }
 
+// DependOn is used for other resources to depend on [LoadTest].
+func (lt *LoadTest) DependOn() terra.Reference {
+	return terra.ReferenceResource(lt)
+}
+
+// Dependencies returns the list of resources [LoadTest] depends_on.
+func (lt *LoadTest) Dependencies() terra.Dependencies {
+	return lt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LoadTest].
+func (lt *LoadTest) LifecycleManagement() *terra.Lifecycle {
+	return lt.Lifecycle
+}
+
+// Attributes returns the attributes for [LoadTest].
 func (lt *LoadTest) Attributes() loadTestAttributes {
 	return loadTestAttributes{ref: terra.ReferenceResource(lt)}
 }
 
+// ImportState imports the given attribute values into [LoadTest]'s state.
 func (lt *LoadTest) ImportState(av io.Reader) error {
 	lt.state = &loadTestState{}
 	if err := json.NewDecoder(av).Decode(lt.state); err != nil {
@@ -49,10 +73,12 @@ func (lt *LoadTest) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LoadTest] has state.
 func (lt *LoadTest) State() (*loadTestState, bool) {
 	return lt.state, lt.state != nil
 }
 
+// StateMust returns the state for [LoadTest]. Panics if the state is nil.
 func (lt *LoadTest) StateMust() *loadTestState {
 	if lt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lt.Type(), lt.LocalName()))
@@ -60,10 +86,7 @@ func (lt *LoadTest) StateMust() *loadTestState {
 	return lt.state
 }
 
-func (lt *LoadTest) DependOn() terra.Reference {
-	return terra.ReferenceResource(lt)
-}
-
+// LoadTestArgs contains the configurations for azurerm_load_test.
 type LoadTestArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -81,47 +104,52 @@ type LoadTestArgs struct {
 	Identity *loadtest.Identity `hcl:"identity,block"`
 	// Timeouts: optional
 	Timeouts *loadtest.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LoadTest depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type loadTestAttributes struct {
 	ref terra.Reference
 }
 
+// DataPlaneUri returns a reference to field data_plane_uri of azurerm_load_test.
 func (lt loadTestAttributes) DataPlaneUri() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("data_plane_uri"))
+	return terra.ReferenceAsString(lt.ref.Append("data_plane_uri"))
 }
 
+// Description returns a reference to field description of azurerm_load_test.
 func (lt loadTestAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("description"))
+	return terra.ReferenceAsString(lt.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_load_test.
 func (lt loadTestAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("id"))
+	return terra.ReferenceAsString(lt.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_load_test.
 func (lt loadTestAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("location"))
+	return terra.ReferenceAsString(lt.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_load_test.
 func (lt loadTestAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("name"))
+	return terra.ReferenceAsString(lt.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_load_test.
 func (lt loadTestAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(lt.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_load_test.
 func (lt loadTestAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lt.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](lt.ref.Append("tags"))
 }
 
 func (lt loadTestAttributes) Identity() terra.ListValue[loadtest.IdentityAttributes] {
-	return terra.ReferenceList[loadtest.IdentityAttributes](lt.ref.Append("identity"))
+	return terra.ReferenceAsList[loadtest.IdentityAttributes](lt.ref.Append("identity"))
 }
 
 func (lt loadTestAttributes) Timeouts() loadtest.TimeoutsAttributes {
-	return terra.ReferenceSingle[loadtest.TimeoutsAttributes](lt.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[loadtest.TimeoutsAttributes](lt.ref.Append("timeouts"))
 }
 
 type loadTestState struct {

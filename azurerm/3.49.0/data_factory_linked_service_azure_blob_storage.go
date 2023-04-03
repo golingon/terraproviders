@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFactoryLinkedServiceAzureBlobStorage creates a new instance of [DataFactoryLinkedServiceAzureBlobStorage].
 func NewDataFactoryLinkedServiceAzureBlobStorage(name string, args DataFactoryLinkedServiceAzureBlobStorageArgs) *DataFactoryLinkedServiceAzureBlobStorage {
 	return &DataFactoryLinkedServiceAzureBlobStorage{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFactoryLinkedServiceAzureBlobStorage(name string, args DataFactoryLi
 
 var _ terra.Resource = (*DataFactoryLinkedServiceAzureBlobStorage)(nil)
 
+// DataFactoryLinkedServiceAzureBlobStorage represents the Terraform resource azurerm_data_factory_linked_service_azure_blob_storage.
 type DataFactoryLinkedServiceAzureBlobStorage struct {
-	Name  string
-	Args  DataFactoryLinkedServiceAzureBlobStorageArgs
-	state *dataFactoryLinkedServiceAzureBlobStorageState
+	Name      string
+	Args      DataFactoryLinkedServiceAzureBlobStorageArgs
+	state     *dataFactoryLinkedServiceAzureBlobStorageState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFactoryLinkedServiceAzureBlobStorage].
 func (dflsabs *DataFactoryLinkedServiceAzureBlobStorage) Type() string {
 	return "azurerm_data_factory_linked_service_azure_blob_storage"
 }
 
+// LocalName returns the local name for [DataFactoryLinkedServiceAzureBlobStorage].
 func (dflsabs *DataFactoryLinkedServiceAzureBlobStorage) LocalName() string {
 	return dflsabs.Name
 }
 
+// Configuration returns the configuration (args) for [DataFactoryLinkedServiceAzureBlobStorage].
 func (dflsabs *DataFactoryLinkedServiceAzureBlobStorage) Configuration() interface{} {
 	return dflsabs.Args
 }
 
+// DependOn is used for other resources to depend on [DataFactoryLinkedServiceAzureBlobStorage].
+func (dflsabs *DataFactoryLinkedServiceAzureBlobStorage) DependOn() terra.Reference {
+	return terra.ReferenceResource(dflsabs)
+}
+
+// Dependencies returns the list of resources [DataFactoryLinkedServiceAzureBlobStorage] depends_on.
+func (dflsabs *DataFactoryLinkedServiceAzureBlobStorage) Dependencies() terra.Dependencies {
+	return dflsabs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFactoryLinkedServiceAzureBlobStorage].
+func (dflsabs *DataFactoryLinkedServiceAzureBlobStorage) LifecycleManagement() *terra.Lifecycle {
+	return dflsabs.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFactoryLinkedServiceAzureBlobStorage].
 func (dflsabs *DataFactoryLinkedServiceAzureBlobStorage) Attributes() dataFactoryLinkedServiceAzureBlobStorageAttributes {
 	return dataFactoryLinkedServiceAzureBlobStorageAttributes{ref: terra.ReferenceResource(dflsabs)}
 }
 
+// ImportState imports the given attribute values into [DataFactoryLinkedServiceAzureBlobStorage]'s state.
 func (dflsabs *DataFactoryLinkedServiceAzureBlobStorage) ImportState(av io.Reader) error {
 	dflsabs.state = &dataFactoryLinkedServiceAzureBlobStorageState{}
 	if err := json.NewDecoder(av).Decode(dflsabs.state); err != nil {
@@ -49,10 +73,12 @@ func (dflsabs *DataFactoryLinkedServiceAzureBlobStorage) ImportState(av io.Reade
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFactoryLinkedServiceAzureBlobStorage] has state.
 func (dflsabs *DataFactoryLinkedServiceAzureBlobStorage) State() (*dataFactoryLinkedServiceAzureBlobStorageState, bool) {
 	return dflsabs.state, dflsabs.state != nil
 }
 
+// StateMust returns the state for [DataFactoryLinkedServiceAzureBlobStorage]. Panics if the state is nil.
 func (dflsabs *DataFactoryLinkedServiceAzureBlobStorage) StateMust() *dataFactoryLinkedServiceAzureBlobStorageState {
 	if dflsabs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dflsabs.Type(), dflsabs.LocalName()))
@@ -60,10 +86,7 @@ func (dflsabs *DataFactoryLinkedServiceAzureBlobStorage) StateMust() *dataFactor
 	return dflsabs.state
 }
 
-func (dflsabs *DataFactoryLinkedServiceAzureBlobStorage) DependOn() terra.Reference {
-	return terra.ReferenceResource(dflsabs)
-}
-
+// DataFactoryLinkedServiceAzureBlobStorageArgs contains the configurations for azurerm_data_factory_linked_service_azure_blob_storage.
 type DataFactoryLinkedServiceAzureBlobStorageArgs struct {
 	// AdditionalProperties: map of string, optional
 	AdditionalProperties terra.MapValue[terra.StringValue] `hcl:"additional_properties,attr"`
@@ -105,91 +128,106 @@ type DataFactoryLinkedServiceAzureBlobStorageArgs struct {
 	ServicePrincipalLinkedKeyVaultKey *datafactorylinkedserviceazureblobstorage.ServicePrincipalLinkedKeyVaultKey `hcl:"service_principal_linked_key_vault_key,block"`
 	// Timeouts: optional
 	Timeouts *datafactorylinkedserviceazureblobstorage.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataFactoryLinkedServiceAzureBlobStorage depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFactoryLinkedServiceAzureBlobStorageAttributes struct {
 	ref terra.Reference
 }
 
+// AdditionalProperties returns a reference to field additional_properties of azurerm_data_factory_linked_service_azure_blob_storage.
 func (dflsabs dataFactoryLinkedServiceAzureBlobStorageAttributes) AdditionalProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dflsabs.ref.Append("additional_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](dflsabs.ref.Append("additional_properties"))
 }
 
+// Annotations returns a reference to field annotations of azurerm_data_factory_linked_service_azure_blob_storage.
 func (dflsabs dataFactoryLinkedServiceAzureBlobStorageAttributes) Annotations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dflsabs.ref.Append("annotations"))
+	return terra.ReferenceAsList[terra.StringValue](dflsabs.ref.Append("annotations"))
 }
 
+// ConnectionString returns a reference to field connection_string of azurerm_data_factory_linked_service_azure_blob_storage.
 func (dflsabs dataFactoryLinkedServiceAzureBlobStorageAttributes) ConnectionString() terra.StringValue {
-	return terra.ReferenceString(dflsabs.ref.Append("connection_string"))
+	return terra.ReferenceAsString(dflsabs.ref.Append("connection_string"))
 }
 
+// ConnectionStringInsecure returns a reference to field connection_string_insecure of azurerm_data_factory_linked_service_azure_blob_storage.
 func (dflsabs dataFactoryLinkedServiceAzureBlobStorageAttributes) ConnectionStringInsecure() terra.StringValue {
-	return terra.ReferenceString(dflsabs.ref.Append("connection_string_insecure"))
+	return terra.ReferenceAsString(dflsabs.ref.Append("connection_string_insecure"))
 }
 
+// DataFactoryId returns a reference to field data_factory_id of azurerm_data_factory_linked_service_azure_blob_storage.
 func (dflsabs dataFactoryLinkedServiceAzureBlobStorageAttributes) DataFactoryId() terra.StringValue {
-	return terra.ReferenceString(dflsabs.ref.Append("data_factory_id"))
+	return terra.ReferenceAsString(dflsabs.ref.Append("data_factory_id"))
 }
 
+// Description returns a reference to field description of azurerm_data_factory_linked_service_azure_blob_storage.
 func (dflsabs dataFactoryLinkedServiceAzureBlobStorageAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dflsabs.ref.Append("description"))
+	return terra.ReferenceAsString(dflsabs.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_data_factory_linked_service_azure_blob_storage.
 func (dflsabs dataFactoryLinkedServiceAzureBlobStorageAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dflsabs.ref.Append("id"))
+	return terra.ReferenceAsString(dflsabs.ref.Append("id"))
 }
 
+// IntegrationRuntimeName returns a reference to field integration_runtime_name of azurerm_data_factory_linked_service_azure_blob_storage.
 func (dflsabs dataFactoryLinkedServiceAzureBlobStorageAttributes) IntegrationRuntimeName() terra.StringValue {
-	return terra.ReferenceString(dflsabs.ref.Append("integration_runtime_name"))
+	return terra.ReferenceAsString(dflsabs.ref.Append("integration_runtime_name"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory_linked_service_azure_blob_storage.
 func (dflsabs dataFactoryLinkedServiceAzureBlobStorageAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dflsabs.ref.Append("name"))
+	return terra.ReferenceAsString(dflsabs.ref.Append("name"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_data_factory_linked_service_azure_blob_storage.
 func (dflsabs dataFactoryLinkedServiceAzureBlobStorageAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dflsabs.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](dflsabs.ref.Append("parameters"))
 }
 
+// SasUri returns a reference to field sas_uri of azurerm_data_factory_linked_service_azure_blob_storage.
 func (dflsabs dataFactoryLinkedServiceAzureBlobStorageAttributes) SasUri() terra.StringValue {
-	return terra.ReferenceString(dflsabs.ref.Append("sas_uri"))
+	return terra.ReferenceAsString(dflsabs.ref.Append("sas_uri"))
 }
 
+// ServiceEndpoint returns a reference to field service_endpoint of azurerm_data_factory_linked_service_azure_blob_storage.
 func (dflsabs dataFactoryLinkedServiceAzureBlobStorageAttributes) ServiceEndpoint() terra.StringValue {
-	return terra.ReferenceString(dflsabs.ref.Append("service_endpoint"))
+	return terra.ReferenceAsString(dflsabs.ref.Append("service_endpoint"))
 }
 
+// ServicePrincipalId returns a reference to field service_principal_id of azurerm_data_factory_linked_service_azure_blob_storage.
 func (dflsabs dataFactoryLinkedServiceAzureBlobStorageAttributes) ServicePrincipalId() terra.StringValue {
-	return terra.ReferenceString(dflsabs.ref.Append("service_principal_id"))
+	return terra.ReferenceAsString(dflsabs.ref.Append("service_principal_id"))
 }
 
+// ServicePrincipalKey returns a reference to field service_principal_key of azurerm_data_factory_linked_service_azure_blob_storage.
 func (dflsabs dataFactoryLinkedServiceAzureBlobStorageAttributes) ServicePrincipalKey() terra.StringValue {
-	return terra.ReferenceString(dflsabs.ref.Append("service_principal_key"))
+	return terra.ReferenceAsString(dflsabs.ref.Append("service_principal_key"))
 }
 
+// StorageKind returns a reference to field storage_kind of azurerm_data_factory_linked_service_azure_blob_storage.
 func (dflsabs dataFactoryLinkedServiceAzureBlobStorageAttributes) StorageKind() terra.StringValue {
-	return terra.ReferenceString(dflsabs.ref.Append("storage_kind"))
+	return terra.ReferenceAsString(dflsabs.ref.Append("storage_kind"))
 }
 
+// TenantId returns a reference to field tenant_id of azurerm_data_factory_linked_service_azure_blob_storage.
 func (dflsabs dataFactoryLinkedServiceAzureBlobStorageAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(dflsabs.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(dflsabs.ref.Append("tenant_id"))
 }
 
+// UseManagedIdentity returns a reference to field use_managed_identity of azurerm_data_factory_linked_service_azure_blob_storage.
 func (dflsabs dataFactoryLinkedServiceAzureBlobStorageAttributes) UseManagedIdentity() terra.BoolValue {
-	return terra.ReferenceBool(dflsabs.ref.Append("use_managed_identity"))
+	return terra.ReferenceAsBool(dflsabs.ref.Append("use_managed_identity"))
 }
 
 func (dflsabs dataFactoryLinkedServiceAzureBlobStorageAttributes) KeyVaultSasToken() terra.ListValue[datafactorylinkedserviceazureblobstorage.KeyVaultSasTokenAttributes] {
-	return terra.ReferenceList[datafactorylinkedserviceazureblobstorage.KeyVaultSasTokenAttributes](dflsabs.ref.Append("key_vault_sas_token"))
+	return terra.ReferenceAsList[datafactorylinkedserviceazureblobstorage.KeyVaultSasTokenAttributes](dflsabs.ref.Append("key_vault_sas_token"))
 }
 
 func (dflsabs dataFactoryLinkedServiceAzureBlobStorageAttributes) ServicePrincipalLinkedKeyVaultKey() terra.ListValue[datafactorylinkedserviceazureblobstorage.ServicePrincipalLinkedKeyVaultKeyAttributes] {
-	return terra.ReferenceList[datafactorylinkedserviceazureblobstorage.ServicePrincipalLinkedKeyVaultKeyAttributes](dflsabs.ref.Append("service_principal_linked_key_vault_key"))
+	return terra.ReferenceAsList[datafactorylinkedserviceazureblobstorage.ServicePrincipalLinkedKeyVaultKeyAttributes](dflsabs.ref.Append("service_principal_linked_key_vault_key"))
 }
 
 func (dflsabs dataFactoryLinkedServiceAzureBlobStorageAttributes) Timeouts() datafactorylinkedserviceazureblobstorage.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafactorylinkedserviceazureblobstorage.TimeoutsAttributes](dflsabs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafactorylinkedserviceazureblobstorage.TimeoutsAttributes](dflsabs.ref.Append("timeouts"))
 }
 
 type dataFactoryLinkedServiceAzureBlobStorageState struct {

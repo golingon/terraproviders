@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSccSourceIamBinding creates a new instance of [SccSourceIamBinding].
 func NewSccSourceIamBinding(name string, args SccSourceIamBindingArgs) *SccSourceIamBinding {
 	return &SccSourceIamBinding{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSccSourceIamBinding(name string, args SccSourceIamBindingArgs) *SccSourc
 
 var _ terra.Resource = (*SccSourceIamBinding)(nil)
 
+// SccSourceIamBinding represents the Terraform resource google_scc_source_iam_binding.
 type SccSourceIamBinding struct {
-	Name  string
-	Args  SccSourceIamBindingArgs
-	state *sccSourceIamBindingState
+	Name      string
+	Args      SccSourceIamBindingArgs
+	state     *sccSourceIamBindingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SccSourceIamBinding].
 func (ssib *SccSourceIamBinding) Type() string {
 	return "google_scc_source_iam_binding"
 }
 
+// LocalName returns the local name for [SccSourceIamBinding].
 func (ssib *SccSourceIamBinding) LocalName() string {
 	return ssib.Name
 }
 
+// Configuration returns the configuration (args) for [SccSourceIamBinding].
 func (ssib *SccSourceIamBinding) Configuration() interface{} {
 	return ssib.Args
 }
 
+// DependOn is used for other resources to depend on [SccSourceIamBinding].
+func (ssib *SccSourceIamBinding) DependOn() terra.Reference {
+	return terra.ReferenceResource(ssib)
+}
+
+// Dependencies returns the list of resources [SccSourceIamBinding] depends_on.
+func (ssib *SccSourceIamBinding) Dependencies() terra.Dependencies {
+	return ssib.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SccSourceIamBinding].
+func (ssib *SccSourceIamBinding) LifecycleManagement() *terra.Lifecycle {
+	return ssib.Lifecycle
+}
+
+// Attributes returns the attributes for [SccSourceIamBinding].
 func (ssib *SccSourceIamBinding) Attributes() sccSourceIamBindingAttributes {
 	return sccSourceIamBindingAttributes{ref: terra.ReferenceResource(ssib)}
 }
 
+// ImportState imports the given attribute values into [SccSourceIamBinding]'s state.
 func (ssib *SccSourceIamBinding) ImportState(av io.Reader) error {
 	ssib.state = &sccSourceIamBindingState{}
 	if err := json.NewDecoder(av).Decode(ssib.state); err != nil {
@@ -49,10 +73,12 @@ func (ssib *SccSourceIamBinding) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SccSourceIamBinding] has state.
 func (ssib *SccSourceIamBinding) State() (*sccSourceIamBindingState, bool) {
 	return ssib.state, ssib.state != nil
 }
 
+// StateMust returns the state for [SccSourceIamBinding]. Panics if the state is nil.
 func (ssib *SccSourceIamBinding) StateMust() *sccSourceIamBindingState {
 	if ssib.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ssib.Type(), ssib.LocalName()))
@@ -60,10 +86,7 @@ func (ssib *SccSourceIamBinding) StateMust() *sccSourceIamBindingState {
 	return ssib.state
 }
 
-func (ssib *SccSourceIamBinding) DependOn() terra.Reference {
-	return terra.ReferenceResource(ssib)
-}
-
+// SccSourceIamBindingArgs contains the configurations for google_scc_source_iam_binding.
 type SccSourceIamBindingArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,39 +100,43 @@ type SccSourceIamBindingArgs struct {
 	Source terra.StringValue `hcl:"source,attr" validate:"required"`
 	// Condition: optional
 	Condition *sccsourceiambinding.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that SccSourceIamBinding depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sccSourceIamBindingAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_scc_source_iam_binding.
 func (ssib sccSourceIamBindingAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(ssib.ref.Append("etag"))
+	return terra.ReferenceAsString(ssib.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_scc_source_iam_binding.
 func (ssib sccSourceIamBindingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ssib.ref.Append("id"))
+	return terra.ReferenceAsString(ssib.ref.Append("id"))
 }
 
+// Members returns a reference to field members of google_scc_source_iam_binding.
 func (ssib sccSourceIamBindingAttributes) Members() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ssib.ref.Append("members"))
+	return terra.ReferenceAsSet[terra.StringValue](ssib.ref.Append("members"))
 }
 
+// Organization returns a reference to field organization of google_scc_source_iam_binding.
 func (ssib sccSourceIamBindingAttributes) Organization() terra.StringValue {
-	return terra.ReferenceString(ssib.ref.Append("organization"))
+	return terra.ReferenceAsString(ssib.ref.Append("organization"))
 }
 
+// Role returns a reference to field role of google_scc_source_iam_binding.
 func (ssib sccSourceIamBindingAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(ssib.ref.Append("role"))
+	return terra.ReferenceAsString(ssib.ref.Append("role"))
 }
 
+// Source returns a reference to field source of google_scc_source_iam_binding.
 func (ssib sccSourceIamBindingAttributes) Source() terra.StringValue {
-	return terra.ReferenceString(ssib.ref.Append("source"))
+	return terra.ReferenceAsString(ssib.ref.Append("source"))
 }
 
 func (ssib sccSourceIamBindingAttributes) Condition() terra.ListValue[sccsourceiambinding.ConditionAttributes] {
-	return terra.ReferenceList[sccsourceiambinding.ConditionAttributes](ssib.ref.Append("condition"))
+	return terra.ReferenceAsList[sccsourceiambinding.ConditionAttributes](ssib.ref.Append("condition"))
 }
 
 type sccSourceIamBindingState struct {

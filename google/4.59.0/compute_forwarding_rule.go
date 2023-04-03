@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewComputeForwardingRule creates a new instance of [ComputeForwardingRule].
 func NewComputeForwardingRule(name string, args ComputeForwardingRuleArgs) *ComputeForwardingRule {
 	return &ComputeForwardingRule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewComputeForwardingRule(name string, args ComputeForwardingRuleArgs) *Comp
 
 var _ terra.Resource = (*ComputeForwardingRule)(nil)
 
+// ComputeForwardingRule represents the Terraform resource google_compute_forwarding_rule.
 type ComputeForwardingRule struct {
-	Name  string
-	Args  ComputeForwardingRuleArgs
-	state *computeForwardingRuleState
+	Name      string
+	Args      ComputeForwardingRuleArgs
+	state     *computeForwardingRuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ComputeForwardingRule].
 func (cfr *ComputeForwardingRule) Type() string {
 	return "google_compute_forwarding_rule"
 }
 
+// LocalName returns the local name for [ComputeForwardingRule].
 func (cfr *ComputeForwardingRule) LocalName() string {
 	return cfr.Name
 }
 
+// Configuration returns the configuration (args) for [ComputeForwardingRule].
 func (cfr *ComputeForwardingRule) Configuration() interface{} {
 	return cfr.Args
 }
 
+// DependOn is used for other resources to depend on [ComputeForwardingRule].
+func (cfr *ComputeForwardingRule) DependOn() terra.Reference {
+	return terra.ReferenceResource(cfr)
+}
+
+// Dependencies returns the list of resources [ComputeForwardingRule] depends_on.
+func (cfr *ComputeForwardingRule) Dependencies() terra.Dependencies {
+	return cfr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ComputeForwardingRule].
+func (cfr *ComputeForwardingRule) LifecycleManagement() *terra.Lifecycle {
+	return cfr.Lifecycle
+}
+
+// Attributes returns the attributes for [ComputeForwardingRule].
 func (cfr *ComputeForwardingRule) Attributes() computeForwardingRuleAttributes {
 	return computeForwardingRuleAttributes{ref: terra.ReferenceResource(cfr)}
 }
 
+// ImportState imports the given attribute values into [ComputeForwardingRule]'s state.
 func (cfr *ComputeForwardingRule) ImportState(av io.Reader) error {
 	cfr.state = &computeForwardingRuleState{}
 	if err := json.NewDecoder(av).Decode(cfr.state); err != nil {
@@ -49,10 +73,12 @@ func (cfr *ComputeForwardingRule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ComputeForwardingRule] has state.
 func (cfr *ComputeForwardingRule) State() (*computeForwardingRuleState, bool) {
 	return cfr.state, cfr.state != nil
 }
 
+// StateMust returns the state for [ComputeForwardingRule]. Panics if the state is nil.
 func (cfr *ComputeForwardingRule) StateMust() *computeForwardingRuleState {
 	if cfr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cfr.Type(), cfr.LocalName()))
@@ -60,10 +86,7 @@ func (cfr *ComputeForwardingRule) StateMust() *computeForwardingRuleState {
 	return cfr.state
 }
 
-func (cfr *ComputeForwardingRule) DependOn() terra.Reference {
-	return terra.ReferenceResource(cfr)
-}
-
+// ComputeForwardingRuleArgs contains the configurations for google_compute_forwarding_rule.
 type ComputeForwardingRuleArgs struct {
 	// AllPorts: bool, optional
 	AllPorts terra.BoolValue `hcl:"all_ports,attr"`
@@ -109,123 +132,147 @@ type ComputeForwardingRuleArgs struct {
 	ServiceDirectoryRegistrations []computeforwardingrule.ServiceDirectoryRegistrations `hcl:"service_directory_registrations,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *computeforwardingrule.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ComputeForwardingRule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type computeForwardingRuleAttributes struct {
 	ref terra.Reference
 }
 
+// AllPorts returns a reference to field all_ports of google_compute_forwarding_rule.
 func (cfr computeForwardingRuleAttributes) AllPorts() terra.BoolValue {
-	return terra.ReferenceBool(cfr.ref.Append("all_ports"))
+	return terra.ReferenceAsBool(cfr.ref.Append("all_ports"))
 }
 
+// AllowGlobalAccess returns a reference to field allow_global_access of google_compute_forwarding_rule.
 func (cfr computeForwardingRuleAttributes) AllowGlobalAccess() terra.BoolValue {
-	return terra.ReferenceBool(cfr.ref.Append("allow_global_access"))
+	return terra.ReferenceAsBool(cfr.ref.Append("allow_global_access"))
 }
 
+// BackendService returns a reference to field backend_service of google_compute_forwarding_rule.
 func (cfr computeForwardingRuleAttributes) BackendService() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("backend_service"))
+	return terra.ReferenceAsString(cfr.ref.Append("backend_service"))
 }
 
+// CreationTimestamp returns a reference to field creation_timestamp of google_compute_forwarding_rule.
 func (cfr computeForwardingRuleAttributes) CreationTimestamp() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("creation_timestamp"))
+	return terra.ReferenceAsString(cfr.ref.Append("creation_timestamp"))
 }
 
+// Description returns a reference to field description of google_compute_forwarding_rule.
 func (cfr computeForwardingRuleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("description"))
+	return terra.ReferenceAsString(cfr.ref.Append("description"))
 }
 
+// Id returns a reference to field id of google_compute_forwarding_rule.
 func (cfr computeForwardingRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("id"))
+	return terra.ReferenceAsString(cfr.ref.Append("id"))
 }
 
+// IpAddress returns a reference to field ip_address of google_compute_forwarding_rule.
 func (cfr computeForwardingRuleAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("ip_address"))
+	return terra.ReferenceAsString(cfr.ref.Append("ip_address"))
 }
 
+// IpProtocol returns a reference to field ip_protocol of google_compute_forwarding_rule.
 func (cfr computeForwardingRuleAttributes) IpProtocol() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("ip_protocol"))
+	return terra.ReferenceAsString(cfr.ref.Append("ip_protocol"))
 }
 
+// IsMirroringCollector returns a reference to field is_mirroring_collector of google_compute_forwarding_rule.
 func (cfr computeForwardingRuleAttributes) IsMirroringCollector() terra.BoolValue {
-	return terra.ReferenceBool(cfr.ref.Append("is_mirroring_collector"))
+	return terra.ReferenceAsBool(cfr.ref.Append("is_mirroring_collector"))
 }
 
+// LabelFingerprint returns a reference to field label_fingerprint of google_compute_forwarding_rule.
 func (cfr computeForwardingRuleAttributes) LabelFingerprint() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("label_fingerprint"))
+	return terra.ReferenceAsString(cfr.ref.Append("label_fingerprint"))
 }
 
+// Labels returns a reference to field labels of google_compute_forwarding_rule.
 func (cfr computeForwardingRuleAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cfr.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](cfr.ref.Append("labels"))
 }
 
+// LoadBalancingScheme returns a reference to field load_balancing_scheme of google_compute_forwarding_rule.
 func (cfr computeForwardingRuleAttributes) LoadBalancingScheme() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("load_balancing_scheme"))
+	return terra.ReferenceAsString(cfr.ref.Append("load_balancing_scheme"))
 }
 
+// Name returns a reference to field name of google_compute_forwarding_rule.
 func (cfr computeForwardingRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("name"))
+	return terra.ReferenceAsString(cfr.ref.Append("name"))
 }
 
+// Network returns a reference to field network of google_compute_forwarding_rule.
 func (cfr computeForwardingRuleAttributes) Network() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("network"))
+	return terra.ReferenceAsString(cfr.ref.Append("network"))
 }
 
+// NetworkTier returns a reference to field network_tier of google_compute_forwarding_rule.
 func (cfr computeForwardingRuleAttributes) NetworkTier() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("network_tier"))
+	return terra.ReferenceAsString(cfr.ref.Append("network_tier"))
 }
 
+// PortRange returns a reference to field port_range of google_compute_forwarding_rule.
 func (cfr computeForwardingRuleAttributes) PortRange() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("port_range"))
+	return terra.ReferenceAsString(cfr.ref.Append("port_range"))
 }
 
+// Ports returns a reference to field ports of google_compute_forwarding_rule.
 func (cfr computeForwardingRuleAttributes) Ports() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cfr.ref.Append("ports"))
+	return terra.ReferenceAsSet[terra.StringValue](cfr.ref.Append("ports"))
 }
 
+// Project returns a reference to field project of google_compute_forwarding_rule.
 func (cfr computeForwardingRuleAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("project"))
+	return terra.ReferenceAsString(cfr.ref.Append("project"))
 }
 
+// PscConnectionId returns a reference to field psc_connection_id of google_compute_forwarding_rule.
 func (cfr computeForwardingRuleAttributes) PscConnectionId() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("psc_connection_id"))
+	return terra.ReferenceAsString(cfr.ref.Append("psc_connection_id"))
 }
 
+// PscConnectionStatus returns a reference to field psc_connection_status of google_compute_forwarding_rule.
 func (cfr computeForwardingRuleAttributes) PscConnectionStatus() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("psc_connection_status"))
+	return terra.ReferenceAsString(cfr.ref.Append("psc_connection_status"))
 }
 
+// Region returns a reference to field region of google_compute_forwarding_rule.
 func (cfr computeForwardingRuleAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("region"))
+	return terra.ReferenceAsString(cfr.ref.Append("region"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_forwarding_rule.
 func (cfr computeForwardingRuleAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("self_link"))
+	return terra.ReferenceAsString(cfr.ref.Append("self_link"))
 }
 
+// ServiceLabel returns a reference to field service_label of google_compute_forwarding_rule.
 func (cfr computeForwardingRuleAttributes) ServiceLabel() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("service_label"))
+	return terra.ReferenceAsString(cfr.ref.Append("service_label"))
 }
 
+// ServiceName returns a reference to field service_name of google_compute_forwarding_rule.
 func (cfr computeForwardingRuleAttributes) ServiceName() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("service_name"))
+	return terra.ReferenceAsString(cfr.ref.Append("service_name"))
 }
 
+// Subnetwork returns a reference to field subnetwork of google_compute_forwarding_rule.
 func (cfr computeForwardingRuleAttributes) Subnetwork() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("subnetwork"))
+	return terra.ReferenceAsString(cfr.ref.Append("subnetwork"))
 }
 
+// Target returns a reference to field target of google_compute_forwarding_rule.
 func (cfr computeForwardingRuleAttributes) Target() terra.StringValue {
-	return terra.ReferenceString(cfr.ref.Append("target"))
+	return terra.ReferenceAsString(cfr.ref.Append("target"))
 }
 
 func (cfr computeForwardingRuleAttributes) ServiceDirectoryRegistrations() terra.ListValue[computeforwardingrule.ServiceDirectoryRegistrationsAttributes] {
-	return terra.ReferenceList[computeforwardingrule.ServiceDirectoryRegistrationsAttributes](cfr.ref.Append("service_directory_registrations"))
+	return terra.ReferenceAsList[computeforwardingrule.ServiceDirectoryRegistrationsAttributes](cfr.ref.Append("service_directory_registrations"))
 }
 
 func (cfr computeForwardingRuleAttributes) Timeouts() computeforwardingrule.TimeoutsAttributes {
-	return terra.ReferenceSingle[computeforwardingrule.TimeoutsAttributes](cfr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[computeforwardingrule.TimeoutsAttributes](cfr.ref.Append("timeouts"))
 }
 
 type computeForwardingRuleState struct {

@@ -18,72 +18,72 @@ type RecommendationsAttributes struct {
 	ref terra.Reference
 }
 
-func (r RecommendationsAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RecommendationsAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RecommendationsAttributes) InternalWithRef(ref terra.Reference) RecommendationsAttributes {
 	return RecommendationsAttributes{ref: ref}
 }
 
-func (r RecommendationsAttributes) InternalTokens() hclwrite.Tokens {
+func (r RecommendationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
 func (r RecommendationsAttributes) Category() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("category"))
+	return terra.ReferenceAsString(r.ref.Append("category"))
 }
 
 func (r RecommendationsAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("description"))
+	return terra.ReferenceAsString(r.ref.Append("description"))
 }
 
 func (r RecommendationsAttributes) Impact() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("impact"))
+	return terra.ReferenceAsString(r.ref.Append("impact"))
 }
 
 func (r RecommendationsAttributes) RecommendationName() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("recommendation_name"))
+	return terra.ReferenceAsString(r.ref.Append("recommendation_name"))
 }
 
 func (r RecommendationsAttributes) RecommendationTypeId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("recommendation_type_id"))
+	return terra.ReferenceAsString(r.ref.Append("recommendation_type_id"))
 }
 
 func (r RecommendationsAttributes) ResourceName() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("resource_name"))
+	return terra.ReferenceAsString(r.ref.Append("resource_name"))
 }
 
 func (r RecommendationsAttributes) ResourceType() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("resource_type"))
+	return terra.ReferenceAsString(r.ref.Append("resource_type"))
 }
 
 func (r RecommendationsAttributes) SuppressionNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](r.ref.Append("suppression_names"))
+	return terra.ReferenceAsSet[terra.StringValue](r.ref.Append("suppression_names"))
 }
 
 func (r RecommendationsAttributes) UpdatedTime() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("updated_time"))
+	return terra.ReferenceAsString(r.ref.Append("updated_time"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type RecommendationsState struct {

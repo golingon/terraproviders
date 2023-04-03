@@ -52,7 +52,7 @@ func (as AppSourceAttributes) InternalWithRef(ref terra.Reference) AppSourceAttr
 	return AppSourceAttributes{ref: ref}
 }
 
-func (as AppSourceAttributes) InternalTokens() hclwrite.Tokens {
+func (as AppSourceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return as.ref.InternalTokens()
 }
 
@@ -92,7 +92,7 @@ func (e EnvironmentAttributes) InternalWithRef(ref terra.Reference) EnvironmentA
 	return EnvironmentAttributes{ref: ref}
 }
 
-func (e EnvironmentAttributes) InternalTokens() hclwrite.Tokens {
+func (e EnvironmentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -120,7 +120,7 @@ func (sc SslConfigurationAttributes) InternalWithRef(ref terra.Reference) SslCon
 	return SslConfigurationAttributes{ref: ref}
 }
 
-func (sc SslConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (sc SslConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataComputeInstanceGroupManager creates a new instance of [DataComputeInstanceGroupManager].
 func NewDataComputeInstanceGroupManager(name string, args DataComputeInstanceGroupManagerArgs) *DataComputeInstanceGroupManager {
 	return &DataComputeInstanceGroupManager{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataComputeInstanceGroupManager(name string, args DataComputeInstanceGro
 
 var _ terra.DataResource = (*DataComputeInstanceGroupManager)(nil)
 
+// DataComputeInstanceGroupManager represents the Terraform data resource google_compute_instance_group_manager.
 type DataComputeInstanceGroupManager struct {
 	Name string
 	Args DataComputeInstanceGroupManagerArgs
 }
 
+// DataSource returns the Terraform object type for [DataComputeInstanceGroupManager].
 func (cigm *DataComputeInstanceGroupManager) DataSource() string {
 	return "google_compute_instance_group_manager"
 }
 
+// LocalName returns the local name for [DataComputeInstanceGroupManager].
 func (cigm *DataComputeInstanceGroupManager) LocalName() string {
 	return cigm.Name
 }
 
+// Configuration returns the configuration (args) for [DataComputeInstanceGroupManager].
 func (cigm *DataComputeInstanceGroupManager) Configuration() interface{} {
 	return cigm.Args
 }
 
+// Attributes returns the attributes for [DataComputeInstanceGroupManager].
 func (cigm *DataComputeInstanceGroupManager) Attributes() dataComputeInstanceGroupManagerAttributes {
 	return dataComputeInstanceGroupManagerAttributes{ref: terra.ReferenceDataResource(cigm)}
 }
 
+// DataComputeInstanceGroupManagerArgs contains the configurations for google_compute_instance_group_manager.
 type DataComputeInstanceGroupManagerArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -65,86 +72,101 @@ type dataComputeInstanceGroupManagerAttributes struct {
 	ref terra.Reference
 }
 
+// BaseInstanceName returns a reference to field base_instance_name of google_compute_instance_group_manager.
 func (cigm dataComputeInstanceGroupManagerAttributes) BaseInstanceName() terra.StringValue {
-	return terra.ReferenceString(cigm.ref.Append("base_instance_name"))
+	return terra.ReferenceAsString(cigm.ref.Append("base_instance_name"))
 }
 
+// Description returns a reference to field description of google_compute_instance_group_manager.
 func (cigm dataComputeInstanceGroupManagerAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cigm.ref.Append("description"))
+	return terra.ReferenceAsString(cigm.ref.Append("description"))
 }
 
+// Fingerprint returns a reference to field fingerprint of google_compute_instance_group_manager.
 func (cigm dataComputeInstanceGroupManagerAttributes) Fingerprint() terra.StringValue {
-	return terra.ReferenceString(cigm.ref.Append("fingerprint"))
+	return terra.ReferenceAsString(cigm.ref.Append("fingerprint"))
 }
 
+// Id returns a reference to field id of google_compute_instance_group_manager.
 func (cigm dataComputeInstanceGroupManagerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cigm.ref.Append("id"))
+	return terra.ReferenceAsString(cigm.ref.Append("id"))
 }
 
+// InstanceGroup returns a reference to field instance_group of google_compute_instance_group_manager.
 func (cigm dataComputeInstanceGroupManagerAttributes) InstanceGroup() terra.StringValue {
-	return terra.ReferenceString(cigm.ref.Append("instance_group"))
+	return terra.ReferenceAsString(cigm.ref.Append("instance_group"))
 }
 
+// ListManagedInstancesResults returns a reference to field list_managed_instances_results of google_compute_instance_group_manager.
 func (cigm dataComputeInstanceGroupManagerAttributes) ListManagedInstancesResults() terra.StringValue {
-	return terra.ReferenceString(cigm.ref.Append("list_managed_instances_results"))
+	return terra.ReferenceAsString(cigm.ref.Append("list_managed_instances_results"))
 }
 
+// Name returns a reference to field name of google_compute_instance_group_manager.
 func (cigm dataComputeInstanceGroupManagerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cigm.ref.Append("name"))
+	return terra.ReferenceAsString(cigm.ref.Append("name"))
 }
 
+// Operation returns a reference to field operation of google_compute_instance_group_manager.
 func (cigm dataComputeInstanceGroupManagerAttributes) Operation() terra.StringValue {
-	return terra.ReferenceString(cigm.ref.Append("operation"))
+	return terra.ReferenceAsString(cigm.ref.Append("operation"))
 }
 
+// Project returns a reference to field project of google_compute_instance_group_manager.
 func (cigm dataComputeInstanceGroupManagerAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cigm.ref.Append("project"))
+	return terra.ReferenceAsString(cigm.ref.Append("project"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_instance_group_manager.
 func (cigm dataComputeInstanceGroupManagerAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(cigm.ref.Append("self_link"))
+	return terra.ReferenceAsString(cigm.ref.Append("self_link"))
 }
 
+// TargetPools returns a reference to field target_pools of google_compute_instance_group_manager.
 func (cigm dataComputeInstanceGroupManagerAttributes) TargetPools() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cigm.ref.Append("target_pools"))
+	return terra.ReferenceAsSet[terra.StringValue](cigm.ref.Append("target_pools"))
 }
 
+// TargetSize returns a reference to field target_size of google_compute_instance_group_manager.
 func (cigm dataComputeInstanceGroupManagerAttributes) TargetSize() terra.NumberValue {
-	return terra.ReferenceNumber(cigm.ref.Append("target_size"))
+	return terra.ReferenceAsNumber(cigm.ref.Append("target_size"))
 }
 
+// WaitForInstances returns a reference to field wait_for_instances of google_compute_instance_group_manager.
 func (cigm dataComputeInstanceGroupManagerAttributes) WaitForInstances() terra.BoolValue {
-	return terra.ReferenceBool(cigm.ref.Append("wait_for_instances"))
+	return terra.ReferenceAsBool(cigm.ref.Append("wait_for_instances"))
 }
 
+// WaitForInstancesStatus returns a reference to field wait_for_instances_status of google_compute_instance_group_manager.
 func (cigm dataComputeInstanceGroupManagerAttributes) WaitForInstancesStatus() terra.StringValue {
-	return terra.ReferenceString(cigm.ref.Append("wait_for_instances_status"))
+	return terra.ReferenceAsString(cigm.ref.Append("wait_for_instances_status"))
 }
 
+// Zone returns a reference to field zone of google_compute_instance_group_manager.
 func (cigm dataComputeInstanceGroupManagerAttributes) Zone() terra.StringValue {
-	return terra.ReferenceString(cigm.ref.Append("zone"))
+	return terra.ReferenceAsString(cigm.ref.Append("zone"))
 }
 
 func (cigm dataComputeInstanceGroupManagerAttributes) AutoHealingPolicies() terra.ListValue[datacomputeinstancegroupmanager.AutoHealingPoliciesAttributes] {
-	return terra.ReferenceList[datacomputeinstancegroupmanager.AutoHealingPoliciesAttributes](cigm.ref.Append("auto_healing_policies"))
+	return terra.ReferenceAsList[datacomputeinstancegroupmanager.AutoHealingPoliciesAttributes](cigm.ref.Append("auto_healing_policies"))
 }
 
 func (cigm dataComputeInstanceGroupManagerAttributes) NamedPort() terra.SetValue[datacomputeinstancegroupmanager.NamedPortAttributes] {
-	return terra.ReferenceSet[datacomputeinstancegroupmanager.NamedPortAttributes](cigm.ref.Append("named_port"))
+	return terra.ReferenceAsSet[datacomputeinstancegroupmanager.NamedPortAttributes](cigm.ref.Append("named_port"))
 }
 
 func (cigm dataComputeInstanceGroupManagerAttributes) StatefulDisk() terra.SetValue[datacomputeinstancegroupmanager.StatefulDiskAttributes] {
-	return terra.ReferenceSet[datacomputeinstancegroupmanager.StatefulDiskAttributes](cigm.ref.Append("stateful_disk"))
+	return terra.ReferenceAsSet[datacomputeinstancegroupmanager.StatefulDiskAttributes](cigm.ref.Append("stateful_disk"))
 }
 
 func (cigm dataComputeInstanceGroupManagerAttributes) Status() terra.ListValue[datacomputeinstancegroupmanager.StatusAttributes] {
-	return terra.ReferenceList[datacomputeinstancegroupmanager.StatusAttributes](cigm.ref.Append("status"))
+	return terra.ReferenceAsList[datacomputeinstancegroupmanager.StatusAttributes](cigm.ref.Append("status"))
 }
 
 func (cigm dataComputeInstanceGroupManagerAttributes) UpdatePolicy() terra.ListValue[datacomputeinstancegroupmanager.UpdatePolicyAttributes] {
-	return terra.ReferenceList[datacomputeinstancegroupmanager.UpdatePolicyAttributes](cigm.ref.Append("update_policy"))
+	return terra.ReferenceAsList[datacomputeinstancegroupmanager.UpdatePolicyAttributes](cigm.ref.Append("update_policy"))
 }
 
 func (cigm dataComputeInstanceGroupManagerAttributes) Version() terra.ListValue[datacomputeinstancegroupmanager.VersionAttributes] {
-	return terra.ReferenceList[datacomputeinstancegroupmanager.VersionAttributes](cigm.ref.Append("version"))
+	return terra.ReferenceAsList[datacomputeinstancegroupmanager.VersionAttributes](cigm.ref.Append("version"))
 }

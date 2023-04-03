@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewOsConfigOsPolicyAssignment creates a new instance of [OsConfigOsPolicyAssignment].
 func NewOsConfigOsPolicyAssignment(name string, args OsConfigOsPolicyAssignmentArgs) *OsConfigOsPolicyAssignment {
 	return &OsConfigOsPolicyAssignment{
 		Args: args,
@@ -19,28 +20,51 @@ func NewOsConfigOsPolicyAssignment(name string, args OsConfigOsPolicyAssignmentA
 
 var _ terra.Resource = (*OsConfigOsPolicyAssignment)(nil)
 
+// OsConfigOsPolicyAssignment represents the Terraform resource google_os_config_os_policy_assignment.
 type OsConfigOsPolicyAssignment struct {
-	Name  string
-	Args  OsConfigOsPolicyAssignmentArgs
-	state *osConfigOsPolicyAssignmentState
+	Name      string
+	Args      OsConfigOsPolicyAssignmentArgs
+	state     *osConfigOsPolicyAssignmentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [OsConfigOsPolicyAssignment].
 func (ocopa *OsConfigOsPolicyAssignment) Type() string {
 	return "google_os_config_os_policy_assignment"
 }
 
+// LocalName returns the local name for [OsConfigOsPolicyAssignment].
 func (ocopa *OsConfigOsPolicyAssignment) LocalName() string {
 	return ocopa.Name
 }
 
+// Configuration returns the configuration (args) for [OsConfigOsPolicyAssignment].
 func (ocopa *OsConfigOsPolicyAssignment) Configuration() interface{} {
 	return ocopa.Args
 }
 
+// DependOn is used for other resources to depend on [OsConfigOsPolicyAssignment].
+func (ocopa *OsConfigOsPolicyAssignment) DependOn() terra.Reference {
+	return terra.ReferenceResource(ocopa)
+}
+
+// Dependencies returns the list of resources [OsConfigOsPolicyAssignment] depends_on.
+func (ocopa *OsConfigOsPolicyAssignment) Dependencies() terra.Dependencies {
+	return ocopa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [OsConfigOsPolicyAssignment].
+func (ocopa *OsConfigOsPolicyAssignment) LifecycleManagement() *terra.Lifecycle {
+	return ocopa.Lifecycle
+}
+
+// Attributes returns the attributes for [OsConfigOsPolicyAssignment].
 func (ocopa *OsConfigOsPolicyAssignment) Attributes() osConfigOsPolicyAssignmentAttributes {
 	return osConfigOsPolicyAssignmentAttributes{ref: terra.ReferenceResource(ocopa)}
 }
 
+// ImportState imports the given attribute values into [OsConfigOsPolicyAssignment]'s state.
 func (ocopa *OsConfigOsPolicyAssignment) ImportState(av io.Reader) error {
 	ocopa.state = &osConfigOsPolicyAssignmentState{}
 	if err := json.NewDecoder(av).Decode(ocopa.state); err != nil {
@@ -49,10 +73,12 @@ func (ocopa *OsConfigOsPolicyAssignment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [OsConfigOsPolicyAssignment] has state.
 func (ocopa *OsConfigOsPolicyAssignment) State() (*osConfigOsPolicyAssignmentState, bool) {
 	return ocopa.state, ocopa.state != nil
 }
 
+// StateMust returns the state for [OsConfigOsPolicyAssignment]. Panics if the state is nil.
 func (ocopa *OsConfigOsPolicyAssignment) StateMust() *osConfigOsPolicyAssignmentState {
 	if ocopa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ocopa.Type(), ocopa.LocalName()))
@@ -60,10 +86,7 @@ func (ocopa *OsConfigOsPolicyAssignment) StateMust() *osConfigOsPolicyAssignment
 	return ocopa.state
 }
 
-func (ocopa *OsConfigOsPolicyAssignment) DependOn() terra.Reference {
-	return terra.ReferenceResource(ocopa)
-}
-
+// OsConfigOsPolicyAssignmentArgs contains the configurations for google_os_config_os_policy_assignment.
 type OsConfigOsPolicyAssignmentArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -85,83 +108,95 @@ type OsConfigOsPolicyAssignmentArgs struct {
 	Rollout *osconfigospolicyassignment.Rollout `hcl:"rollout,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *osconfigospolicyassignment.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that OsConfigOsPolicyAssignment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type osConfigOsPolicyAssignmentAttributes struct {
 	ref terra.Reference
 }
 
+// Baseline returns a reference to field baseline of google_os_config_os_policy_assignment.
 func (ocopa osConfigOsPolicyAssignmentAttributes) Baseline() terra.BoolValue {
-	return terra.ReferenceBool(ocopa.ref.Append("baseline"))
+	return terra.ReferenceAsBool(ocopa.ref.Append("baseline"))
 }
 
+// Deleted returns a reference to field deleted of google_os_config_os_policy_assignment.
 func (ocopa osConfigOsPolicyAssignmentAttributes) Deleted() terra.BoolValue {
-	return terra.ReferenceBool(ocopa.ref.Append("deleted"))
+	return terra.ReferenceAsBool(ocopa.ref.Append("deleted"))
 }
 
+// Description returns a reference to field description of google_os_config_os_policy_assignment.
 func (ocopa osConfigOsPolicyAssignmentAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ocopa.ref.Append("description"))
+	return terra.ReferenceAsString(ocopa.ref.Append("description"))
 }
 
+// Etag returns a reference to field etag of google_os_config_os_policy_assignment.
 func (ocopa osConfigOsPolicyAssignmentAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(ocopa.ref.Append("etag"))
+	return terra.ReferenceAsString(ocopa.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_os_config_os_policy_assignment.
 func (ocopa osConfigOsPolicyAssignmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ocopa.ref.Append("id"))
+	return terra.ReferenceAsString(ocopa.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_os_config_os_policy_assignment.
 func (ocopa osConfigOsPolicyAssignmentAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ocopa.ref.Append("location"))
+	return terra.ReferenceAsString(ocopa.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_os_config_os_policy_assignment.
 func (ocopa osConfigOsPolicyAssignmentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ocopa.ref.Append("name"))
+	return terra.ReferenceAsString(ocopa.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_os_config_os_policy_assignment.
 func (ocopa osConfigOsPolicyAssignmentAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ocopa.ref.Append("project"))
+	return terra.ReferenceAsString(ocopa.ref.Append("project"))
 }
 
+// Reconciling returns a reference to field reconciling of google_os_config_os_policy_assignment.
 func (ocopa osConfigOsPolicyAssignmentAttributes) Reconciling() terra.BoolValue {
-	return terra.ReferenceBool(ocopa.ref.Append("reconciling"))
+	return terra.ReferenceAsBool(ocopa.ref.Append("reconciling"))
 }
 
+// RevisionCreateTime returns a reference to field revision_create_time of google_os_config_os_policy_assignment.
 func (ocopa osConfigOsPolicyAssignmentAttributes) RevisionCreateTime() terra.StringValue {
-	return terra.ReferenceString(ocopa.ref.Append("revision_create_time"))
+	return terra.ReferenceAsString(ocopa.ref.Append("revision_create_time"))
 }
 
+// RevisionId returns a reference to field revision_id of google_os_config_os_policy_assignment.
 func (ocopa osConfigOsPolicyAssignmentAttributes) RevisionId() terra.StringValue {
-	return terra.ReferenceString(ocopa.ref.Append("revision_id"))
+	return terra.ReferenceAsString(ocopa.ref.Append("revision_id"))
 }
 
+// RolloutState returns a reference to field rollout_state of google_os_config_os_policy_assignment.
 func (ocopa osConfigOsPolicyAssignmentAttributes) RolloutState() terra.StringValue {
-	return terra.ReferenceString(ocopa.ref.Append("rollout_state"))
+	return terra.ReferenceAsString(ocopa.ref.Append("rollout_state"))
 }
 
+// SkipAwaitRollout returns a reference to field skip_await_rollout of google_os_config_os_policy_assignment.
 func (ocopa osConfigOsPolicyAssignmentAttributes) SkipAwaitRollout() terra.BoolValue {
-	return terra.ReferenceBool(ocopa.ref.Append("skip_await_rollout"))
+	return terra.ReferenceAsBool(ocopa.ref.Append("skip_await_rollout"))
 }
 
+// Uid returns a reference to field uid of google_os_config_os_policy_assignment.
 func (ocopa osConfigOsPolicyAssignmentAttributes) Uid() terra.StringValue {
-	return terra.ReferenceString(ocopa.ref.Append("uid"))
+	return terra.ReferenceAsString(ocopa.ref.Append("uid"))
 }
 
 func (ocopa osConfigOsPolicyAssignmentAttributes) InstanceFilter() terra.ListValue[osconfigospolicyassignment.InstanceFilterAttributes] {
-	return terra.ReferenceList[osconfigospolicyassignment.InstanceFilterAttributes](ocopa.ref.Append("instance_filter"))
+	return terra.ReferenceAsList[osconfigospolicyassignment.InstanceFilterAttributes](ocopa.ref.Append("instance_filter"))
 }
 
 func (ocopa osConfigOsPolicyAssignmentAttributes) OsPolicies() terra.ListValue[osconfigospolicyassignment.OsPoliciesAttributes] {
-	return terra.ReferenceList[osconfigospolicyassignment.OsPoliciesAttributes](ocopa.ref.Append("os_policies"))
+	return terra.ReferenceAsList[osconfigospolicyassignment.OsPoliciesAttributes](ocopa.ref.Append("os_policies"))
 }
 
 func (ocopa osConfigOsPolicyAssignmentAttributes) Rollout() terra.ListValue[osconfigospolicyassignment.RolloutAttributes] {
-	return terra.ReferenceList[osconfigospolicyassignment.RolloutAttributes](ocopa.ref.Append("rollout"))
+	return terra.ReferenceAsList[osconfigospolicyassignment.RolloutAttributes](ocopa.ref.Append("rollout"))
 }
 
 func (ocopa osConfigOsPolicyAssignmentAttributes) Timeouts() osconfigospolicyassignment.TimeoutsAttributes {
-	return terra.ReferenceSingle[osconfigospolicyassignment.TimeoutsAttributes](ocopa.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[osconfigospolicyassignment.TimeoutsAttributes](ocopa.ref.Append("timeouts"))
 }
 
 type osConfigOsPolicyAssignmentState struct {

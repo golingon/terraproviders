@@ -63,232 +63,232 @@ type MaintenanceScheduleAttributes struct {
 	ref terra.Reference
 }
 
-func (ms MaintenanceScheduleAttributes) InternalRef() terra.Reference {
-	return ms.ref
+func (ms MaintenanceScheduleAttributes) InternalRef() (terra.Reference, error) {
+	return ms.ref, nil
 }
 
 func (ms MaintenanceScheduleAttributes) InternalWithRef(ref terra.Reference) MaintenanceScheduleAttributes {
 	return MaintenanceScheduleAttributes{ref: ref}
 }
 
-func (ms MaintenanceScheduleAttributes) InternalTokens() hclwrite.Tokens {
+func (ms MaintenanceScheduleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ms.ref.InternalTokens()
 }
 
 func (ms MaintenanceScheduleAttributes) EndTime() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("end_time"))
+	return terra.ReferenceAsString(ms.ref.Append("end_time"))
 }
 
 func (ms MaintenanceScheduleAttributes) ScheduleDeadlineTime() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("schedule_deadline_time"))
+	return terra.ReferenceAsString(ms.ref.Append("schedule_deadline_time"))
 }
 
 func (ms MaintenanceScheduleAttributes) StartTime() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("start_time"))
+	return terra.ReferenceAsString(ms.ref.Append("start_time"))
 }
 
 type MemcacheNodesAttributes struct {
 	ref terra.Reference
 }
 
-func (mn MemcacheNodesAttributes) InternalRef() terra.Reference {
-	return mn.ref
+func (mn MemcacheNodesAttributes) InternalRef() (terra.Reference, error) {
+	return mn.ref, nil
 }
 
 func (mn MemcacheNodesAttributes) InternalWithRef(ref terra.Reference) MemcacheNodesAttributes {
 	return MemcacheNodesAttributes{ref: ref}
 }
 
-func (mn MemcacheNodesAttributes) InternalTokens() hclwrite.Tokens {
+func (mn MemcacheNodesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mn.ref.InternalTokens()
 }
 
 func (mn MemcacheNodesAttributes) Host() terra.StringValue {
-	return terra.ReferenceString(mn.ref.Append("host"))
+	return terra.ReferenceAsString(mn.ref.Append("host"))
 }
 
 func (mn MemcacheNodesAttributes) NodeId() terra.StringValue {
-	return terra.ReferenceString(mn.ref.Append("node_id"))
+	return terra.ReferenceAsString(mn.ref.Append("node_id"))
 }
 
 func (mn MemcacheNodesAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(mn.ref.Append("port"))
+	return terra.ReferenceAsNumber(mn.ref.Append("port"))
 }
 
 func (mn MemcacheNodesAttributes) State() terra.StringValue {
-	return terra.ReferenceString(mn.ref.Append("state"))
+	return terra.ReferenceAsString(mn.ref.Append("state"))
 }
 
 func (mn MemcacheNodesAttributes) Zone() terra.StringValue {
-	return terra.ReferenceString(mn.ref.Append("zone"))
+	return terra.ReferenceAsString(mn.ref.Append("zone"))
 }
 
 type MaintenancePolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (mp MaintenancePolicyAttributes) InternalRef() terra.Reference {
-	return mp.ref
+func (mp MaintenancePolicyAttributes) InternalRef() (terra.Reference, error) {
+	return mp.ref, nil
 }
 
 func (mp MaintenancePolicyAttributes) InternalWithRef(ref terra.Reference) MaintenancePolicyAttributes {
 	return MaintenancePolicyAttributes{ref: ref}
 }
 
-func (mp MaintenancePolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (mp MaintenancePolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mp.ref.InternalTokens()
 }
 
 func (mp MaintenancePolicyAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(mp.ref.Append("create_time"))
+	return terra.ReferenceAsString(mp.ref.Append("create_time"))
 }
 
 func (mp MaintenancePolicyAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(mp.ref.Append("description"))
+	return terra.ReferenceAsString(mp.ref.Append("description"))
 }
 
 func (mp MaintenancePolicyAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(mp.ref.Append("update_time"))
+	return terra.ReferenceAsString(mp.ref.Append("update_time"))
 }
 
 func (mp MaintenancePolicyAttributes) WeeklyMaintenanceWindow() terra.ListValue[WeeklyMaintenanceWindowAttributes] {
-	return terra.ReferenceList[WeeklyMaintenanceWindowAttributes](mp.ref.Append("weekly_maintenance_window"))
+	return terra.ReferenceAsList[WeeklyMaintenanceWindowAttributes](mp.ref.Append("weekly_maintenance_window"))
 }
 
 type WeeklyMaintenanceWindowAttributes struct {
 	ref terra.Reference
 }
 
-func (wmw WeeklyMaintenanceWindowAttributes) InternalRef() terra.Reference {
-	return wmw.ref
+func (wmw WeeklyMaintenanceWindowAttributes) InternalRef() (terra.Reference, error) {
+	return wmw.ref, nil
 }
 
 func (wmw WeeklyMaintenanceWindowAttributes) InternalWithRef(ref terra.Reference) WeeklyMaintenanceWindowAttributes {
 	return WeeklyMaintenanceWindowAttributes{ref: ref}
 }
 
-func (wmw WeeklyMaintenanceWindowAttributes) InternalTokens() hclwrite.Tokens {
+func (wmw WeeklyMaintenanceWindowAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return wmw.ref.InternalTokens()
 }
 
 func (wmw WeeklyMaintenanceWindowAttributes) Day() terra.StringValue {
-	return terra.ReferenceString(wmw.ref.Append("day"))
+	return terra.ReferenceAsString(wmw.ref.Append("day"))
 }
 
 func (wmw WeeklyMaintenanceWindowAttributes) Duration() terra.StringValue {
-	return terra.ReferenceString(wmw.ref.Append("duration"))
+	return terra.ReferenceAsString(wmw.ref.Append("duration"))
 }
 
 func (wmw WeeklyMaintenanceWindowAttributes) StartTime() terra.ListValue[StartTimeAttributes] {
-	return terra.ReferenceList[StartTimeAttributes](wmw.ref.Append("start_time"))
+	return terra.ReferenceAsList[StartTimeAttributes](wmw.ref.Append("start_time"))
 }
 
 type StartTimeAttributes struct {
 	ref terra.Reference
 }
 
-func (st StartTimeAttributes) InternalRef() terra.Reference {
-	return st.ref
+func (st StartTimeAttributes) InternalRef() (terra.Reference, error) {
+	return st.ref, nil
 }
 
 func (st StartTimeAttributes) InternalWithRef(ref terra.Reference) StartTimeAttributes {
 	return StartTimeAttributes{ref: ref}
 }
 
-func (st StartTimeAttributes) InternalTokens() hclwrite.Tokens {
+func (st StartTimeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return st.ref.InternalTokens()
 }
 
 func (st StartTimeAttributes) Hours() terra.NumberValue {
-	return terra.ReferenceNumber(st.ref.Append("hours"))
+	return terra.ReferenceAsNumber(st.ref.Append("hours"))
 }
 
 func (st StartTimeAttributes) Minutes() terra.NumberValue {
-	return terra.ReferenceNumber(st.ref.Append("minutes"))
+	return terra.ReferenceAsNumber(st.ref.Append("minutes"))
 }
 
 func (st StartTimeAttributes) Nanos() terra.NumberValue {
-	return terra.ReferenceNumber(st.ref.Append("nanos"))
+	return terra.ReferenceAsNumber(st.ref.Append("nanos"))
 }
 
 func (st StartTimeAttributes) Seconds() terra.NumberValue {
-	return terra.ReferenceNumber(st.ref.Append("seconds"))
+	return terra.ReferenceAsNumber(st.ref.Append("seconds"))
 }
 
 type MemcacheParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (mp MemcacheParametersAttributes) InternalRef() terra.Reference {
-	return mp.ref
+func (mp MemcacheParametersAttributes) InternalRef() (terra.Reference, error) {
+	return mp.ref, nil
 }
 
 func (mp MemcacheParametersAttributes) InternalWithRef(ref terra.Reference) MemcacheParametersAttributes {
 	return MemcacheParametersAttributes{ref: ref}
 }
 
-func (mp MemcacheParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (mp MemcacheParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mp.ref.InternalTokens()
 }
 
 func (mp MemcacheParametersAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mp.ref.Append("id"))
+	return terra.ReferenceAsString(mp.ref.Append("id"))
 }
 
 func (mp MemcacheParametersAttributes) Params() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mp.ref.Append("params"))
+	return terra.ReferenceAsMap[terra.StringValue](mp.ref.Append("params"))
 }
 
 type NodeConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (nc NodeConfigAttributes) InternalRef() terra.Reference {
-	return nc.ref
+func (nc NodeConfigAttributes) InternalRef() (terra.Reference, error) {
+	return nc.ref, nil
 }
 
 func (nc NodeConfigAttributes) InternalWithRef(ref terra.Reference) NodeConfigAttributes {
 	return NodeConfigAttributes{ref: ref}
 }
 
-func (nc NodeConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (nc NodeConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nc.ref.InternalTokens()
 }
 
 func (nc NodeConfigAttributes) CpuCount() terra.NumberValue {
-	return terra.ReferenceNumber(nc.ref.Append("cpu_count"))
+	return terra.ReferenceAsNumber(nc.ref.Append("cpu_count"))
 }
 
 func (nc NodeConfigAttributes) MemorySizeMb() terra.NumberValue {
-	return terra.ReferenceNumber(nc.ref.Append("memory_size_mb"))
+	return terra.ReferenceAsNumber(nc.ref.Append("memory_size_mb"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type MaintenanceScheduleState struct {

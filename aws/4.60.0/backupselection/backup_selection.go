@@ -67,7 +67,7 @@ func (c ConditionAttributes) InternalWithRef(ref terra.Reference) ConditionAttri
 	return ConditionAttributes{ref: ref}
 }
 
-func (c ConditionAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConditionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -99,7 +99,7 @@ func (se StringEqualsAttributes) InternalWithRef(ref terra.Reference) StringEqua
 	return StringEqualsAttributes{ref: ref}
 }
 
-func (se StringEqualsAttributes) InternalTokens() hclwrite.Tokens {
+func (se StringEqualsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return se.ref.InternalTokens()
 }
 
@@ -123,7 +123,7 @@ func (sl StringLikeAttributes) InternalWithRef(ref terra.Reference) StringLikeAt
 	return StringLikeAttributes{ref: ref}
 }
 
-func (sl StringLikeAttributes) InternalTokens() hclwrite.Tokens {
+func (sl StringLikeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sl.ref.InternalTokens()
 }
 
@@ -147,7 +147,7 @@ func (sne StringNotEqualsAttributes) InternalWithRef(ref terra.Reference) String
 	return StringNotEqualsAttributes{ref: ref}
 }
 
-func (sne StringNotEqualsAttributes) InternalTokens() hclwrite.Tokens {
+func (sne StringNotEqualsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sne.ref.InternalTokens()
 }
 
@@ -171,7 +171,7 @@ func (snl StringNotLikeAttributes) InternalWithRef(ref terra.Reference) StringNo
 	return StringNotLikeAttributes{ref: ref}
 }
 
-func (snl StringNotLikeAttributes) InternalTokens() hclwrite.Tokens {
+func (snl StringNotLikeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return snl.ref.InternalTokens()
 }
 
@@ -195,7 +195,7 @@ func (st SelectionTagAttributes) InternalWithRef(ref terra.Reference) SelectionT
 	return SelectionTagAttributes{ref: ref}
 }
 
-func (st SelectionTagAttributes) InternalTokens() hclwrite.Tokens {
+func (st SelectionTagAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return st.ref.InternalTokens()
 }
 

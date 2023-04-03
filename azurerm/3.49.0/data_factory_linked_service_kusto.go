@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFactoryLinkedServiceKusto creates a new instance of [DataFactoryLinkedServiceKusto].
 func NewDataFactoryLinkedServiceKusto(name string, args DataFactoryLinkedServiceKustoArgs) *DataFactoryLinkedServiceKusto {
 	return &DataFactoryLinkedServiceKusto{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFactoryLinkedServiceKusto(name string, args DataFactoryLinkedService
 
 var _ terra.Resource = (*DataFactoryLinkedServiceKusto)(nil)
 
+// DataFactoryLinkedServiceKusto represents the Terraform resource azurerm_data_factory_linked_service_kusto.
 type DataFactoryLinkedServiceKusto struct {
-	Name  string
-	Args  DataFactoryLinkedServiceKustoArgs
-	state *dataFactoryLinkedServiceKustoState
+	Name      string
+	Args      DataFactoryLinkedServiceKustoArgs
+	state     *dataFactoryLinkedServiceKustoState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFactoryLinkedServiceKusto].
 func (dflsk *DataFactoryLinkedServiceKusto) Type() string {
 	return "azurerm_data_factory_linked_service_kusto"
 }
 
+// LocalName returns the local name for [DataFactoryLinkedServiceKusto].
 func (dflsk *DataFactoryLinkedServiceKusto) LocalName() string {
 	return dflsk.Name
 }
 
+// Configuration returns the configuration (args) for [DataFactoryLinkedServiceKusto].
 func (dflsk *DataFactoryLinkedServiceKusto) Configuration() interface{} {
 	return dflsk.Args
 }
 
+// DependOn is used for other resources to depend on [DataFactoryLinkedServiceKusto].
+func (dflsk *DataFactoryLinkedServiceKusto) DependOn() terra.Reference {
+	return terra.ReferenceResource(dflsk)
+}
+
+// Dependencies returns the list of resources [DataFactoryLinkedServiceKusto] depends_on.
+func (dflsk *DataFactoryLinkedServiceKusto) Dependencies() terra.Dependencies {
+	return dflsk.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFactoryLinkedServiceKusto].
+func (dflsk *DataFactoryLinkedServiceKusto) LifecycleManagement() *terra.Lifecycle {
+	return dflsk.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFactoryLinkedServiceKusto].
 func (dflsk *DataFactoryLinkedServiceKusto) Attributes() dataFactoryLinkedServiceKustoAttributes {
 	return dataFactoryLinkedServiceKustoAttributes{ref: terra.ReferenceResource(dflsk)}
 }
 
+// ImportState imports the given attribute values into [DataFactoryLinkedServiceKusto]'s state.
 func (dflsk *DataFactoryLinkedServiceKusto) ImportState(av io.Reader) error {
 	dflsk.state = &dataFactoryLinkedServiceKustoState{}
 	if err := json.NewDecoder(av).Decode(dflsk.state); err != nil {
@@ -49,10 +73,12 @@ func (dflsk *DataFactoryLinkedServiceKusto) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFactoryLinkedServiceKusto] has state.
 func (dflsk *DataFactoryLinkedServiceKusto) State() (*dataFactoryLinkedServiceKustoState, bool) {
 	return dflsk.state, dflsk.state != nil
 }
 
+// StateMust returns the state for [DataFactoryLinkedServiceKusto]. Panics if the state is nil.
 func (dflsk *DataFactoryLinkedServiceKusto) StateMust() *dataFactoryLinkedServiceKustoState {
 	if dflsk.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dflsk.Type(), dflsk.LocalName()))
@@ -60,10 +86,7 @@ func (dflsk *DataFactoryLinkedServiceKusto) StateMust() *dataFactoryLinkedServic
 	return dflsk.state
 }
 
-func (dflsk *DataFactoryLinkedServiceKusto) DependOn() terra.Reference {
-	return terra.ReferenceResource(dflsk)
-}
-
+// DataFactoryLinkedServiceKustoArgs contains the configurations for azurerm_data_factory_linked_service_kusto.
 type DataFactoryLinkedServiceKustoArgs struct {
 	// AdditionalProperties: map of string, optional
 	AdditionalProperties terra.MapValue[terra.StringValue] `hcl:"additional_properties,attr"`
@@ -95,71 +118,83 @@ type DataFactoryLinkedServiceKustoArgs struct {
 	UseManagedIdentity terra.BoolValue `hcl:"use_managed_identity,attr"`
 	// Timeouts: optional
 	Timeouts *datafactorylinkedservicekusto.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DataFactoryLinkedServiceKusto depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFactoryLinkedServiceKustoAttributes struct {
 	ref terra.Reference
 }
 
+// AdditionalProperties returns a reference to field additional_properties of azurerm_data_factory_linked_service_kusto.
 func (dflsk dataFactoryLinkedServiceKustoAttributes) AdditionalProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dflsk.ref.Append("additional_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](dflsk.ref.Append("additional_properties"))
 }
 
+// Annotations returns a reference to field annotations of azurerm_data_factory_linked_service_kusto.
 func (dflsk dataFactoryLinkedServiceKustoAttributes) Annotations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dflsk.ref.Append("annotations"))
+	return terra.ReferenceAsList[terra.StringValue](dflsk.ref.Append("annotations"))
 }
 
+// DataFactoryId returns a reference to field data_factory_id of azurerm_data_factory_linked_service_kusto.
 func (dflsk dataFactoryLinkedServiceKustoAttributes) DataFactoryId() terra.StringValue {
-	return terra.ReferenceString(dflsk.ref.Append("data_factory_id"))
+	return terra.ReferenceAsString(dflsk.ref.Append("data_factory_id"))
 }
 
+// Description returns a reference to field description of azurerm_data_factory_linked_service_kusto.
 func (dflsk dataFactoryLinkedServiceKustoAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dflsk.ref.Append("description"))
+	return terra.ReferenceAsString(dflsk.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_data_factory_linked_service_kusto.
 func (dflsk dataFactoryLinkedServiceKustoAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dflsk.ref.Append("id"))
+	return terra.ReferenceAsString(dflsk.ref.Append("id"))
 }
 
+// IntegrationRuntimeName returns a reference to field integration_runtime_name of azurerm_data_factory_linked_service_kusto.
 func (dflsk dataFactoryLinkedServiceKustoAttributes) IntegrationRuntimeName() terra.StringValue {
-	return terra.ReferenceString(dflsk.ref.Append("integration_runtime_name"))
+	return terra.ReferenceAsString(dflsk.ref.Append("integration_runtime_name"))
 }
 
+// KustoDatabaseName returns a reference to field kusto_database_name of azurerm_data_factory_linked_service_kusto.
 func (dflsk dataFactoryLinkedServiceKustoAttributes) KustoDatabaseName() terra.StringValue {
-	return terra.ReferenceString(dflsk.ref.Append("kusto_database_name"))
+	return terra.ReferenceAsString(dflsk.ref.Append("kusto_database_name"))
 }
 
+// KustoEndpoint returns a reference to field kusto_endpoint of azurerm_data_factory_linked_service_kusto.
 func (dflsk dataFactoryLinkedServiceKustoAttributes) KustoEndpoint() terra.StringValue {
-	return terra.ReferenceString(dflsk.ref.Append("kusto_endpoint"))
+	return terra.ReferenceAsString(dflsk.ref.Append("kusto_endpoint"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory_linked_service_kusto.
 func (dflsk dataFactoryLinkedServiceKustoAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dflsk.ref.Append("name"))
+	return terra.ReferenceAsString(dflsk.ref.Append("name"))
 }
 
+// Parameters returns a reference to field parameters of azurerm_data_factory_linked_service_kusto.
 func (dflsk dataFactoryLinkedServiceKustoAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dflsk.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](dflsk.ref.Append("parameters"))
 }
 
+// ServicePrincipalId returns a reference to field service_principal_id of azurerm_data_factory_linked_service_kusto.
 func (dflsk dataFactoryLinkedServiceKustoAttributes) ServicePrincipalId() terra.StringValue {
-	return terra.ReferenceString(dflsk.ref.Append("service_principal_id"))
+	return terra.ReferenceAsString(dflsk.ref.Append("service_principal_id"))
 }
 
+// ServicePrincipalKey returns a reference to field service_principal_key of azurerm_data_factory_linked_service_kusto.
 func (dflsk dataFactoryLinkedServiceKustoAttributes) ServicePrincipalKey() terra.StringValue {
-	return terra.ReferenceString(dflsk.ref.Append("service_principal_key"))
+	return terra.ReferenceAsString(dflsk.ref.Append("service_principal_key"))
 }
 
+// Tenant returns a reference to field tenant of azurerm_data_factory_linked_service_kusto.
 func (dflsk dataFactoryLinkedServiceKustoAttributes) Tenant() terra.StringValue {
-	return terra.ReferenceString(dflsk.ref.Append("tenant"))
+	return terra.ReferenceAsString(dflsk.ref.Append("tenant"))
 }
 
+// UseManagedIdentity returns a reference to field use_managed_identity of azurerm_data_factory_linked_service_kusto.
 func (dflsk dataFactoryLinkedServiceKustoAttributes) UseManagedIdentity() terra.BoolValue {
-	return terra.ReferenceBool(dflsk.ref.Append("use_managed_identity"))
+	return terra.ReferenceAsBool(dflsk.ref.Append("use_managed_identity"))
 }
 
 func (dflsk dataFactoryLinkedServiceKustoAttributes) Timeouts() datafactorylinkedservicekusto.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafactorylinkedservicekusto.TimeoutsAttributes](dflsk.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafactorylinkedservicekusto.TimeoutsAttributes](dflsk.ref.Append("timeouts"))
 }
 
 type dataFactoryLinkedServiceKustoState struct {

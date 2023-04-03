@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSignalrService creates a new instance of [SignalrService].
 func NewSignalrService(name string, args SignalrServiceArgs) *SignalrService {
 	return &SignalrService{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSignalrService(name string, args SignalrServiceArgs) *SignalrService {
 
 var _ terra.Resource = (*SignalrService)(nil)
 
+// SignalrService represents the Terraform resource azurerm_signalr_service.
 type SignalrService struct {
-	Name  string
-	Args  SignalrServiceArgs
-	state *signalrServiceState
+	Name      string
+	Args      SignalrServiceArgs
+	state     *signalrServiceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SignalrService].
 func (ss *SignalrService) Type() string {
 	return "azurerm_signalr_service"
 }
 
+// LocalName returns the local name for [SignalrService].
 func (ss *SignalrService) LocalName() string {
 	return ss.Name
 }
 
+// Configuration returns the configuration (args) for [SignalrService].
 func (ss *SignalrService) Configuration() interface{} {
 	return ss.Args
 }
 
+// DependOn is used for other resources to depend on [SignalrService].
+func (ss *SignalrService) DependOn() terra.Reference {
+	return terra.ReferenceResource(ss)
+}
+
+// Dependencies returns the list of resources [SignalrService] depends_on.
+func (ss *SignalrService) Dependencies() terra.Dependencies {
+	return ss.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SignalrService].
+func (ss *SignalrService) LifecycleManagement() *terra.Lifecycle {
+	return ss.Lifecycle
+}
+
+// Attributes returns the attributes for [SignalrService].
 func (ss *SignalrService) Attributes() signalrServiceAttributes {
 	return signalrServiceAttributes{ref: terra.ReferenceResource(ss)}
 }
 
+// ImportState imports the given attribute values into [SignalrService]'s state.
 func (ss *SignalrService) ImportState(av io.Reader) error {
 	ss.state = &signalrServiceState{}
 	if err := json.NewDecoder(av).Decode(ss.state); err != nil {
@@ -49,10 +73,12 @@ func (ss *SignalrService) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SignalrService] has state.
 func (ss *SignalrService) State() (*signalrServiceState, bool) {
 	return ss.state, ss.state != nil
 }
 
+// StateMust returns the state for [SignalrService]. Panics if the state is nil.
 func (ss *SignalrService) StateMust() *signalrServiceState {
 	if ss.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ss.Type(), ss.LocalName()))
@@ -60,10 +86,7 @@ func (ss *SignalrService) StateMust() *signalrServiceState {
 	return ss.state
 }
 
-func (ss *SignalrService) DependOn() terra.Reference {
-	return terra.ReferenceResource(ss)
-}
-
+// SignalrServiceArgs contains the configurations for azurerm_signalr_service.
 type SignalrServiceArgs struct {
 	// AadAuthEnabled: bool, optional
 	AadAuthEnabled terra.BoolValue `hcl:"aad_auth_enabled,attr"`
@@ -105,123 +128,143 @@ type SignalrServiceArgs struct {
 	Timeouts *signalrservice.Timeouts `hcl:"timeouts,block"`
 	// UpstreamEndpoint: min=0
 	UpstreamEndpoint []signalrservice.UpstreamEndpoint `hcl:"upstream_endpoint,block" validate:"min=0"`
-	// DependsOn contains resources that SignalrService depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type signalrServiceAttributes struct {
 	ref terra.Reference
 }
 
+// AadAuthEnabled returns a reference to field aad_auth_enabled of azurerm_signalr_service.
 func (ss signalrServiceAttributes) AadAuthEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ss.ref.Append("aad_auth_enabled"))
+	return terra.ReferenceAsBool(ss.ref.Append("aad_auth_enabled"))
 }
 
+// ConnectivityLogsEnabled returns a reference to field connectivity_logs_enabled of azurerm_signalr_service.
 func (ss signalrServiceAttributes) ConnectivityLogsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ss.ref.Append("connectivity_logs_enabled"))
+	return terra.ReferenceAsBool(ss.ref.Append("connectivity_logs_enabled"))
 }
 
+// Hostname returns a reference to field hostname of azurerm_signalr_service.
 func (ss signalrServiceAttributes) Hostname() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("hostname"))
+	return terra.ReferenceAsString(ss.ref.Append("hostname"))
 }
 
+// Id returns a reference to field id of azurerm_signalr_service.
 func (ss signalrServiceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("id"))
+	return terra.ReferenceAsString(ss.ref.Append("id"))
 }
 
+// IpAddress returns a reference to field ip_address of azurerm_signalr_service.
 func (ss signalrServiceAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("ip_address"))
+	return terra.ReferenceAsString(ss.ref.Append("ip_address"))
 }
 
+// LiveTraceEnabled returns a reference to field live_trace_enabled of azurerm_signalr_service.
 func (ss signalrServiceAttributes) LiveTraceEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ss.ref.Append("live_trace_enabled"))
+	return terra.ReferenceAsBool(ss.ref.Append("live_trace_enabled"))
 }
 
+// LocalAuthEnabled returns a reference to field local_auth_enabled of azurerm_signalr_service.
 func (ss signalrServiceAttributes) LocalAuthEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ss.ref.Append("local_auth_enabled"))
+	return terra.ReferenceAsBool(ss.ref.Append("local_auth_enabled"))
 }
 
+// Location returns a reference to field location of azurerm_signalr_service.
 func (ss signalrServiceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("location"))
+	return terra.ReferenceAsString(ss.ref.Append("location"))
 }
 
+// MessagingLogsEnabled returns a reference to field messaging_logs_enabled of azurerm_signalr_service.
 func (ss signalrServiceAttributes) MessagingLogsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ss.ref.Append("messaging_logs_enabled"))
+	return terra.ReferenceAsBool(ss.ref.Append("messaging_logs_enabled"))
 }
 
+// Name returns a reference to field name of azurerm_signalr_service.
 func (ss signalrServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("name"))
+	return terra.ReferenceAsString(ss.ref.Append("name"))
 }
 
+// PrimaryAccessKey returns a reference to field primary_access_key of azurerm_signalr_service.
 func (ss signalrServiceAttributes) PrimaryAccessKey() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("primary_access_key"))
+	return terra.ReferenceAsString(ss.ref.Append("primary_access_key"))
 }
 
+// PrimaryConnectionString returns a reference to field primary_connection_string of azurerm_signalr_service.
 func (ss signalrServiceAttributes) PrimaryConnectionString() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("primary_connection_string"))
+	return terra.ReferenceAsString(ss.ref.Append("primary_connection_string"))
 }
 
+// PublicNetworkAccessEnabled returns a reference to field public_network_access_enabled of azurerm_signalr_service.
 func (ss signalrServiceAttributes) PublicNetworkAccessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ss.ref.Append("public_network_access_enabled"))
+	return terra.ReferenceAsBool(ss.ref.Append("public_network_access_enabled"))
 }
 
+// PublicPort returns a reference to field public_port of azurerm_signalr_service.
 func (ss signalrServiceAttributes) PublicPort() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("public_port"))
+	return terra.ReferenceAsNumber(ss.ref.Append("public_port"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_signalr_service.
 func (ss signalrServiceAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ss.ref.Append("resource_group_name"))
 }
 
+// SecondaryAccessKey returns a reference to field secondary_access_key of azurerm_signalr_service.
 func (ss signalrServiceAttributes) SecondaryAccessKey() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("secondary_access_key"))
+	return terra.ReferenceAsString(ss.ref.Append("secondary_access_key"))
 }
 
+// SecondaryConnectionString returns a reference to field secondary_connection_string of azurerm_signalr_service.
 func (ss signalrServiceAttributes) SecondaryConnectionString() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("secondary_connection_string"))
+	return terra.ReferenceAsString(ss.ref.Append("secondary_connection_string"))
 }
 
+// ServerPort returns a reference to field server_port of azurerm_signalr_service.
 func (ss signalrServiceAttributes) ServerPort() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("server_port"))
+	return terra.ReferenceAsNumber(ss.ref.Append("server_port"))
 }
 
+// ServerlessConnectionTimeoutInSeconds returns a reference to field serverless_connection_timeout_in_seconds of azurerm_signalr_service.
 func (ss signalrServiceAttributes) ServerlessConnectionTimeoutInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("serverless_connection_timeout_in_seconds"))
+	return terra.ReferenceAsNumber(ss.ref.Append("serverless_connection_timeout_in_seconds"))
 }
 
+// ServiceMode returns a reference to field service_mode of azurerm_signalr_service.
 func (ss signalrServiceAttributes) ServiceMode() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("service_mode"))
+	return terra.ReferenceAsString(ss.ref.Append("service_mode"))
 }
 
+// Tags returns a reference to field tags of azurerm_signalr_service.
 func (ss signalrServiceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ss.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ss.ref.Append("tags"))
 }
 
+// TlsClientCertEnabled returns a reference to field tls_client_cert_enabled of azurerm_signalr_service.
 func (ss signalrServiceAttributes) TlsClientCertEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ss.ref.Append("tls_client_cert_enabled"))
+	return terra.ReferenceAsBool(ss.ref.Append("tls_client_cert_enabled"))
 }
 
 func (ss signalrServiceAttributes) Cors() terra.ListValue[signalrservice.CorsAttributes] {
-	return terra.ReferenceList[signalrservice.CorsAttributes](ss.ref.Append("cors"))
+	return terra.ReferenceAsList[signalrservice.CorsAttributes](ss.ref.Append("cors"))
 }
 
 func (ss signalrServiceAttributes) Identity() terra.ListValue[signalrservice.IdentityAttributes] {
-	return terra.ReferenceList[signalrservice.IdentityAttributes](ss.ref.Append("identity"))
+	return terra.ReferenceAsList[signalrservice.IdentityAttributes](ss.ref.Append("identity"))
 }
 
 func (ss signalrServiceAttributes) LiveTrace() terra.ListValue[signalrservice.LiveTraceAttributes] {
-	return terra.ReferenceList[signalrservice.LiveTraceAttributes](ss.ref.Append("live_trace"))
+	return terra.ReferenceAsList[signalrservice.LiveTraceAttributes](ss.ref.Append("live_trace"))
 }
 
 func (ss signalrServiceAttributes) Sku() terra.ListValue[signalrservice.SkuAttributes] {
-	return terra.ReferenceList[signalrservice.SkuAttributes](ss.ref.Append("sku"))
+	return terra.ReferenceAsList[signalrservice.SkuAttributes](ss.ref.Append("sku"))
 }
 
 func (ss signalrServiceAttributes) Timeouts() signalrservice.TimeoutsAttributes {
-	return terra.ReferenceSingle[signalrservice.TimeoutsAttributes](ss.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[signalrservice.TimeoutsAttributes](ss.ref.Append("timeouts"))
 }
 
 func (ss signalrServiceAttributes) UpstreamEndpoint() terra.SetValue[signalrservice.UpstreamEndpointAttributes] {
-	return terra.ReferenceSet[signalrservice.UpstreamEndpointAttributes](ss.ref.Append("upstream_endpoint"))
+	return terra.ReferenceAsSet[signalrservice.UpstreamEndpointAttributes](ss.ref.Append("upstream_endpoint"))
 }
 
 type signalrServiceState struct {

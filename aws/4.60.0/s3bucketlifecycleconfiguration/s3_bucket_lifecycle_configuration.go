@@ -110,7 +110,7 @@ func (r RuleAttributes) InternalWithRef(ref terra.Reference) RuleAttributes {
 	return RuleAttributes{ref: ref}
 }
 
-func (r RuleAttributes) InternalTokens() hclwrite.Tokens {
+func (r RuleAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -162,7 +162,7 @@ func (aimu AbortIncompleteMultipartUploadAttributes) InternalWithRef(ref terra.R
 	return AbortIncompleteMultipartUploadAttributes{ref: ref}
 }
 
-func (aimu AbortIncompleteMultipartUploadAttributes) InternalTokens() hclwrite.Tokens {
+func (aimu AbortIncompleteMultipartUploadAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aimu.ref.InternalTokens()
 }
 
@@ -182,7 +182,7 @@ func (e ExpirationAttributes) InternalWithRef(ref terra.Reference) ExpirationAtt
 	return ExpirationAttributes{ref: ref}
 }
 
-func (e ExpirationAttributes) InternalTokens() hclwrite.Tokens {
+func (e ExpirationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return e.ref.InternalTokens()
 }
 
@@ -210,7 +210,7 @@ func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes 
 	return FilterAttributes{ref: ref}
 }
 
-func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
+func (f FilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return f.ref.InternalTokens()
 }
 
@@ -246,7 +246,7 @@ func (a AndAttributes) InternalWithRef(ref terra.Reference) AndAttributes {
 	return AndAttributes{ref: ref}
 }
 
-func (a AndAttributes) InternalTokens() hclwrite.Tokens {
+func (a AndAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -278,7 +278,7 @@ func (t TagAttributes) InternalWithRef(ref terra.Reference) TagAttributes {
 	return TagAttributes{ref: ref}
 }
 
-func (t TagAttributes) InternalTokens() hclwrite.Tokens {
+func (t TagAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -302,7 +302,7 @@ func (nve NoncurrentVersionExpirationAttributes) InternalWithRef(ref terra.Refer
 	return NoncurrentVersionExpirationAttributes{ref: ref}
 }
 
-func (nve NoncurrentVersionExpirationAttributes) InternalTokens() hclwrite.Tokens {
+func (nve NoncurrentVersionExpirationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nve.ref.InternalTokens()
 }
 
@@ -326,7 +326,7 @@ func (nvt NoncurrentVersionTransitionAttributes) InternalWithRef(ref terra.Refer
 	return NoncurrentVersionTransitionAttributes{ref: ref}
 }
 
-func (nvt NoncurrentVersionTransitionAttributes) InternalTokens() hclwrite.Tokens {
+func (nvt NoncurrentVersionTransitionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nvt.ref.InternalTokens()
 }
 
@@ -354,7 +354,7 @@ func (t TransitionAttributes) InternalWithRef(ref terra.Reference) TransitionAtt
 	return TransitionAttributes{ref: ref}
 }
 
-func (t TransitionAttributes) InternalTokens() hclwrite.Tokens {
+func (t TransitionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

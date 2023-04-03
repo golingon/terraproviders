@@ -22,116 +22,116 @@ type IpConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ic IpConfigurationAttributes) InternalRef() terra.Reference {
-	return ic.ref
+func (ic IpConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ic.ref, nil
 }
 
 func (ic IpConfigurationAttributes) InternalWithRef(ref terra.Reference) IpConfigurationAttributes {
 	return IpConfigurationAttributes{ref: ref}
 }
 
-func (ic IpConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ic IpConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ic.ref.InternalTokens()
 }
 
 func (ic IpConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("name"))
+	return terra.ReferenceAsString(ic.ref.Append("name"))
 }
 
 func (ic IpConfigurationAttributes) PrivateIpAddress() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("private_ip_address"))
+	return terra.ReferenceAsString(ic.ref.Append("private_ip_address"))
 }
 
 func (ic IpConfigurationAttributes) PublicIpAddressId() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("public_ip_address_id"))
+	return terra.ReferenceAsString(ic.ref.Append("public_ip_address_id"))
 }
 
 func (ic IpConfigurationAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(ic.ref.Append("subnet_id"))
 }
 
 type ManagementIpConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (mic ManagementIpConfigurationAttributes) InternalRef() terra.Reference {
-	return mic.ref
+func (mic ManagementIpConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return mic.ref, nil
 }
 
 func (mic ManagementIpConfigurationAttributes) InternalWithRef(ref terra.Reference) ManagementIpConfigurationAttributes {
 	return ManagementIpConfigurationAttributes{ref: ref}
 }
 
-func (mic ManagementIpConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (mic ManagementIpConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mic.ref.InternalTokens()
 }
 
 func (mic ManagementIpConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mic.ref.Append("name"))
+	return terra.ReferenceAsString(mic.ref.Append("name"))
 }
 
 func (mic ManagementIpConfigurationAttributes) PrivateIpAddress() terra.StringValue {
-	return terra.ReferenceString(mic.ref.Append("private_ip_address"))
+	return terra.ReferenceAsString(mic.ref.Append("private_ip_address"))
 }
 
 func (mic ManagementIpConfigurationAttributes) PublicIpAddressId() terra.StringValue {
-	return terra.ReferenceString(mic.ref.Append("public_ip_address_id"))
+	return terra.ReferenceAsString(mic.ref.Append("public_ip_address_id"))
 }
 
 func (mic ManagementIpConfigurationAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(mic.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(mic.ref.Append("subnet_id"))
 }
 
 type VirtualHubAttributes struct {
 	ref terra.Reference
 }
 
-func (vh VirtualHubAttributes) InternalRef() terra.Reference {
-	return vh.ref
+func (vh VirtualHubAttributes) InternalRef() (terra.Reference, error) {
+	return vh.ref, nil
 }
 
 func (vh VirtualHubAttributes) InternalWithRef(ref terra.Reference) VirtualHubAttributes {
 	return VirtualHubAttributes{ref: ref}
 }
 
-func (vh VirtualHubAttributes) InternalTokens() hclwrite.Tokens {
+func (vh VirtualHubAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vh.ref.InternalTokens()
 }
 
 func (vh VirtualHubAttributes) PrivateIpAddress() terra.StringValue {
-	return terra.ReferenceString(vh.ref.Append("private_ip_address"))
+	return terra.ReferenceAsString(vh.ref.Append("private_ip_address"))
 }
 
 func (vh VirtualHubAttributes) PublicIpAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](vh.ref.Append("public_ip_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](vh.ref.Append("public_ip_addresses"))
 }
 
 func (vh VirtualHubAttributes) PublicIpCount() terra.NumberValue {
-	return terra.ReferenceNumber(vh.ref.Append("public_ip_count"))
+	return terra.ReferenceAsNumber(vh.ref.Append("public_ip_count"))
 }
 
 func (vh VirtualHubAttributes) VirtualHubId() terra.StringValue {
-	return terra.ReferenceString(vh.ref.Append("virtual_hub_id"))
+	return terra.ReferenceAsString(vh.ref.Append("virtual_hub_id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type IpConfigurationState struct {

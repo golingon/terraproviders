@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewContainerRegistryTokenPassword creates a new instance of [ContainerRegistryTokenPassword].
 func NewContainerRegistryTokenPassword(name string, args ContainerRegistryTokenPasswordArgs) *ContainerRegistryTokenPassword {
 	return &ContainerRegistryTokenPassword{
 		Args: args,
@@ -19,28 +20,51 @@ func NewContainerRegistryTokenPassword(name string, args ContainerRegistryTokenP
 
 var _ terra.Resource = (*ContainerRegistryTokenPassword)(nil)
 
+// ContainerRegistryTokenPassword represents the Terraform resource azurerm_container_registry_token_password.
 type ContainerRegistryTokenPassword struct {
-	Name  string
-	Args  ContainerRegistryTokenPasswordArgs
-	state *containerRegistryTokenPasswordState
+	Name      string
+	Args      ContainerRegistryTokenPasswordArgs
+	state     *containerRegistryTokenPasswordState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ContainerRegistryTokenPassword].
 func (crtp *ContainerRegistryTokenPassword) Type() string {
 	return "azurerm_container_registry_token_password"
 }
 
+// LocalName returns the local name for [ContainerRegistryTokenPassword].
 func (crtp *ContainerRegistryTokenPassword) LocalName() string {
 	return crtp.Name
 }
 
+// Configuration returns the configuration (args) for [ContainerRegistryTokenPassword].
 func (crtp *ContainerRegistryTokenPassword) Configuration() interface{} {
 	return crtp.Args
 }
 
+// DependOn is used for other resources to depend on [ContainerRegistryTokenPassword].
+func (crtp *ContainerRegistryTokenPassword) DependOn() terra.Reference {
+	return terra.ReferenceResource(crtp)
+}
+
+// Dependencies returns the list of resources [ContainerRegistryTokenPassword] depends_on.
+func (crtp *ContainerRegistryTokenPassword) Dependencies() terra.Dependencies {
+	return crtp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ContainerRegistryTokenPassword].
+func (crtp *ContainerRegistryTokenPassword) LifecycleManagement() *terra.Lifecycle {
+	return crtp.Lifecycle
+}
+
+// Attributes returns the attributes for [ContainerRegistryTokenPassword].
 func (crtp *ContainerRegistryTokenPassword) Attributes() containerRegistryTokenPasswordAttributes {
 	return containerRegistryTokenPasswordAttributes{ref: terra.ReferenceResource(crtp)}
 }
 
+// ImportState imports the given attribute values into [ContainerRegistryTokenPassword]'s state.
 func (crtp *ContainerRegistryTokenPassword) ImportState(av io.Reader) error {
 	crtp.state = &containerRegistryTokenPasswordState{}
 	if err := json.NewDecoder(av).Decode(crtp.state); err != nil {
@@ -49,10 +73,12 @@ func (crtp *ContainerRegistryTokenPassword) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ContainerRegistryTokenPassword] has state.
 func (crtp *ContainerRegistryTokenPassword) State() (*containerRegistryTokenPasswordState, bool) {
 	return crtp.state, crtp.state != nil
 }
 
+// StateMust returns the state for [ContainerRegistryTokenPassword]. Panics if the state is nil.
 func (crtp *ContainerRegistryTokenPassword) StateMust() *containerRegistryTokenPasswordState {
 	if crtp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", crtp.Type(), crtp.LocalName()))
@@ -60,10 +86,7 @@ func (crtp *ContainerRegistryTokenPassword) StateMust() *containerRegistryTokenP
 	return crtp.state
 }
 
-func (crtp *ContainerRegistryTokenPassword) DependOn() terra.Reference {
-	return terra.ReferenceResource(crtp)
-}
-
+// ContainerRegistryTokenPasswordArgs contains the configurations for azurerm_container_registry_token_password.
 type ContainerRegistryTokenPasswordArgs struct {
 	// ContainerRegistryTokenId: string, required
 	ContainerRegistryTokenId terra.StringValue `hcl:"container_registry_token_id,attr" validate:"required"`
@@ -75,31 +98,31 @@ type ContainerRegistryTokenPasswordArgs struct {
 	Password2 *containerregistrytokenpassword.Password2 `hcl:"password2,block"`
 	// Timeouts: optional
 	Timeouts *containerregistrytokenpassword.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ContainerRegistryTokenPassword depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type containerRegistryTokenPasswordAttributes struct {
 	ref terra.Reference
 }
 
+// ContainerRegistryTokenId returns a reference to field container_registry_token_id of azurerm_container_registry_token_password.
 func (crtp containerRegistryTokenPasswordAttributes) ContainerRegistryTokenId() terra.StringValue {
-	return terra.ReferenceString(crtp.ref.Append("container_registry_token_id"))
+	return terra.ReferenceAsString(crtp.ref.Append("container_registry_token_id"))
 }
 
+// Id returns a reference to field id of azurerm_container_registry_token_password.
 func (crtp containerRegistryTokenPasswordAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(crtp.ref.Append("id"))
+	return terra.ReferenceAsString(crtp.ref.Append("id"))
 }
 
 func (crtp containerRegistryTokenPasswordAttributes) Password1() terra.ListValue[containerregistrytokenpassword.Password1Attributes] {
-	return terra.ReferenceList[containerregistrytokenpassword.Password1Attributes](crtp.ref.Append("password1"))
+	return terra.ReferenceAsList[containerregistrytokenpassword.Password1Attributes](crtp.ref.Append("password1"))
 }
 
 func (crtp containerRegistryTokenPasswordAttributes) Password2() terra.ListValue[containerregistrytokenpassword.Password2Attributes] {
-	return terra.ReferenceList[containerregistrytokenpassword.Password2Attributes](crtp.ref.Append("password2"))
+	return terra.ReferenceAsList[containerregistrytokenpassword.Password2Attributes](crtp.ref.Append("password2"))
 }
 
 func (crtp containerRegistryTokenPasswordAttributes) Timeouts() containerregistrytokenpassword.TimeoutsAttributes {
-	return terra.ReferenceSingle[containerregistrytokenpassword.TimeoutsAttributes](crtp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[containerregistrytokenpassword.TimeoutsAttributes](crtp.ref.Append("timeouts"))
 }
 
 type containerRegistryTokenPasswordState struct {

@@ -67,7 +67,7 @@ func (eo EndpointOptionsAttributes) InternalWithRef(ref terra.Reference) Endpoin
 	return EndpointOptionsAttributes{ref: ref}
 }
 
-func (eo EndpointOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (eo EndpointOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return eo.ref.InternalTokens()
 }
 
@@ -91,7 +91,7 @@ func (_if IndexFieldAttributes) InternalWithRef(ref terra.Reference) IndexFieldA
 	return IndexFieldAttributes{ref: ref}
 }
 
-func (_if IndexFieldAttributes) InternalTokens() hclwrite.Tokens {
+func (_if IndexFieldAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return _if.ref.InternalTokens()
 }
 
@@ -147,7 +147,7 @@ func (sp ScalingParametersAttributes) InternalWithRef(ref terra.Reference) Scali
 	return ScalingParametersAttributes{ref: ref}
 }
 
-func (sp ScalingParametersAttributes) InternalTokens() hclwrite.Tokens {
+func (sp ScalingParametersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sp.ref.InternalTokens()
 }
 
@@ -175,7 +175,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

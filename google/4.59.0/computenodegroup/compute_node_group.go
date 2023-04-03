@@ -48,124 +48,124 @@ type AutoscalingPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (ap AutoscalingPolicyAttributes) InternalRef() terra.Reference {
-	return ap.ref
+func (ap AutoscalingPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return ap.ref, nil
 }
 
 func (ap AutoscalingPolicyAttributes) InternalWithRef(ref terra.Reference) AutoscalingPolicyAttributes {
 	return AutoscalingPolicyAttributes{ref: ref}
 }
 
-func (ap AutoscalingPolicyAttributes) InternalTokens() hclwrite.Tokens {
+func (ap AutoscalingPolicyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ap.ref.InternalTokens()
 }
 
 func (ap AutoscalingPolicyAttributes) MaxNodes() terra.NumberValue {
-	return terra.ReferenceNumber(ap.ref.Append("max_nodes"))
+	return terra.ReferenceAsNumber(ap.ref.Append("max_nodes"))
 }
 
 func (ap AutoscalingPolicyAttributes) MinNodes() terra.NumberValue {
-	return terra.ReferenceNumber(ap.ref.Append("min_nodes"))
+	return terra.ReferenceAsNumber(ap.ref.Append("min_nodes"))
 }
 
 func (ap AutoscalingPolicyAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("mode"))
+	return terra.ReferenceAsString(ap.ref.Append("mode"))
 }
 
 type MaintenanceWindowAttributes struct {
 	ref terra.Reference
 }
 
-func (mw MaintenanceWindowAttributes) InternalRef() terra.Reference {
-	return mw.ref
+func (mw MaintenanceWindowAttributes) InternalRef() (terra.Reference, error) {
+	return mw.ref, nil
 }
 
 func (mw MaintenanceWindowAttributes) InternalWithRef(ref terra.Reference) MaintenanceWindowAttributes {
 	return MaintenanceWindowAttributes{ref: ref}
 }
 
-func (mw MaintenanceWindowAttributes) InternalTokens() hclwrite.Tokens {
+func (mw MaintenanceWindowAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return mw.ref.InternalTokens()
 }
 
 func (mw MaintenanceWindowAttributes) StartTime() terra.StringValue {
-	return terra.ReferenceString(mw.ref.Append("start_time"))
+	return terra.ReferenceAsString(mw.ref.Append("start_time"))
 }
 
 type ShareSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ss ShareSettingsAttributes) InternalRef() terra.Reference {
-	return ss.ref
+func (ss ShareSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ss.ref, nil
 }
 
 func (ss ShareSettingsAttributes) InternalWithRef(ref terra.Reference) ShareSettingsAttributes {
 	return ShareSettingsAttributes{ref: ref}
 }
 
-func (ss ShareSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ss ShareSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ss.ref.InternalTokens()
 }
 
 func (ss ShareSettingsAttributes) ShareType() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("share_type"))
+	return terra.ReferenceAsString(ss.ref.Append("share_type"))
 }
 
 func (ss ShareSettingsAttributes) ProjectMap() terra.SetValue[ProjectMapAttributes] {
-	return terra.ReferenceSet[ProjectMapAttributes](ss.ref.Append("project_map"))
+	return terra.ReferenceAsSet[ProjectMapAttributes](ss.ref.Append("project_map"))
 }
 
 type ProjectMapAttributes struct {
 	ref terra.Reference
 }
 
-func (pm ProjectMapAttributes) InternalRef() terra.Reference {
-	return pm.ref
+func (pm ProjectMapAttributes) InternalRef() (terra.Reference, error) {
+	return pm.ref, nil
 }
 
 func (pm ProjectMapAttributes) InternalWithRef(ref terra.Reference) ProjectMapAttributes {
 	return ProjectMapAttributes{ref: ref}
 }
 
-func (pm ProjectMapAttributes) InternalTokens() hclwrite.Tokens {
+func (pm ProjectMapAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pm.ref.InternalTokens()
 }
 
 func (pm ProjectMapAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pm.ref.Append("id"))
+	return terra.ReferenceAsString(pm.ref.Append("id"))
 }
 
 func (pm ProjectMapAttributes) ProjectId() terra.StringValue {
-	return terra.ReferenceString(pm.ref.Append("project_id"))
+	return terra.ReferenceAsString(pm.ref.Append("project_id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AutoscalingPolicyState struct {

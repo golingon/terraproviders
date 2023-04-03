@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAvailabilitySet creates a new instance of [AvailabilitySet].
 func NewAvailabilitySet(name string, args AvailabilitySetArgs) *AvailabilitySet {
 	return &AvailabilitySet{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAvailabilitySet(name string, args AvailabilitySetArgs) *AvailabilitySet 
 
 var _ terra.Resource = (*AvailabilitySet)(nil)
 
+// AvailabilitySet represents the Terraform resource azurerm_availability_set.
 type AvailabilitySet struct {
-	Name  string
-	Args  AvailabilitySetArgs
-	state *availabilitySetState
+	Name      string
+	Args      AvailabilitySetArgs
+	state     *availabilitySetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AvailabilitySet].
 func (as *AvailabilitySet) Type() string {
 	return "azurerm_availability_set"
 }
 
+// LocalName returns the local name for [AvailabilitySet].
 func (as *AvailabilitySet) LocalName() string {
 	return as.Name
 }
 
+// Configuration returns the configuration (args) for [AvailabilitySet].
 func (as *AvailabilitySet) Configuration() interface{} {
 	return as.Args
 }
 
+// DependOn is used for other resources to depend on [AvailabilitySet].
+func (as *AvailabilitySet) DependOn() terra.Reference {
+	return terra.ReferenceResource(as)
+}
+
+// Dependencies returns the list of resources [AvailabilitySet] depends_on.
+func (as *AvailabilitySet) Dependencies() terra.Dependencies {
+	return as.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AvailabilitySet].
+func (as *AvailabilitySet) LifecycleManagement() *terra.Lifecycle {
+	return as.Lifecycle
+}
+
+// Attributes returns the attributes for [AvailabilitySet].
 func (as *AvailabilitySet) Attributes() availabilitySetAttributes {
 	return availabilitySetAttributes{ref: terra.ReferenceResource(as)}
 }
 
+// ImportState imports the given attribute values into [AvailabilitySet]'s state.
 func (as *AvailabilitySet) ImportState(av io.Reader) error {
 	as.state = &availabilitySetState{}
 	if err := json.NewDecoder(av).Decode(as.state); err != nil {
@@ -49,10 +73,12 @@ func (as *AvailabilitySet) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AvailabilitySet] has state.
 func (as *AvailabilitySet) State() (*availabilitySetState, bool) {
 	return as.state, as.state != nil
 }
 
+// StateMust returns the state for [AvailabilitySet]. Panics if the state is nil.
 func (as *AvailabilitySet) StateMust() *availabilitySetState {
 	if as.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", as.Type(), as.LocalName()))
@@ -60,10 +86,7 @@ func (as *AvailabilitySet) StateMust() *availabilitySetState {
 	return as.state
 }
 
-func (as *AvailabilitySet) DependOn() terra.Reference {
-	return terra.ReferenceResource(as)
-}
-
+// AvailabilitySetArgs contains the configurations for azurerm_availability_set.
 type AvailabilitySetArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -85,51 +108,58 @@ type AvailabilitySetArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// Timeouts: optional
 	Timeouts *availabilityset.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that AvailabilitySet depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type availabilitySetAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_availability_set.
 func (as availabilitySetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("id"))
+	return terra.ReferenceAsString(as.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_availability_set.
 func (as availabilitySetAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("location"))
+	return terra.ReferenceAsString(as.ref.Append("location"))
 }
 
+// Managed returns a reference to field managed of azurerm_availability_set.
 func (as availabilitySetAttributes) Managed() terra.BoolValue {
-	return terra.ReferenceBool(as.ref.Append("managed"))
+	return terra.ReferenceAsBool(as.ref.Append("managed"))
 }
 
+// Name returns a reference to field name of azurerm_availability_set.
 func (as availabilitySetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("name"))
+	return terra.ReferenceAsString(as.ref.Append("name"))
 }
 
+// PlatformFaultDomainCount returns a reference to field platform_fault_domain_count of azurerm_availability_set.
 func (as availabilitySetAttributes) PlatformFaultDomainCount() terra.NumberValue {
-	return terra.ReferenceNumber(as.ref.Append("platform_fault_domain_count"))
+	return terra.ReferenceAsNumber(as.ref.Append("platform_fault_domain_count"))
 }
 
+// PlatformUpdateDomainCount returns a reference to field platform_update_domain_count of azurerm_availability_set.
 func (as availabilitySetAttributes) PlatformUpdateDomainCount() terra.NumberValue {
-	return terra.ReferenceNumber(as.ref.Append("platform_update_domain_count"))
+	return terra.ReferenceAsNumber(as.ref.Append("platform_update_domain_count"))
 }
 
+// ProximityPlacementGroupId returns a reference to field proximity_placement_group_id of azurerm_availability_set.
 func (as availabilitySetAttributes) ProximityPlacementGroupId() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("proximity_placement_group_id"))
+	return terra.ReferenceAsString(as.ref.Append("proximity_placement_group_id"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_availability_set.
 func (as availabilitySetAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(as.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_availability_set.
 func (as availabilitySetAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](as.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](as.ref.Append("tags"))
 }
 
 func (as availabilitySetAttributes) Timeouts() availabilityset.TimeoutsAttributes {
-	return terra.ReferenceSingle[availabilityset.TimeoutsAttributes](as.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[availabilityset.TimeoutsAttributes](as.ref.Append("timeouts"))
 }
 
 type availabilitySetState struct {

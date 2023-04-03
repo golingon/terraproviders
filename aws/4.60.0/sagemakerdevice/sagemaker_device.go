@@ -28,7 +28,7 @@ func (d DeviceAttributes) InternalWithRef(ref terra.Reference) DeviceAttributes 
 	return DeviceAttributes{ref: ref}
 }
 
-func (d DeviceAttributes) InternalTokens() hclwrite.Tokens {
+func (d DeviceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 

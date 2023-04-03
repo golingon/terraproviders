@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApiManagementSubscription creates a new instance of [ApiManagementSubscription].
 func NewApiManagementSubscription(name string, args ApiManagementSubscriptionArgs) *ApiManagementSubscription {
 	return &ApiManagementSubscription{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApiManagementSubscription(name string, args ApiManagementSubscriptionArg
 
 var _ terra.Resource = (*ApiManagementSubscription)(nil)
 
+// ApiManagementSubscription represents the Terraform resource azurerm_api_management_subscription.
 type ApiManagementSubscription struct {
-	Name  string
-	Args  ApiManagementSubscriptionArgs
-	state *apiManagementSubscriptionState
+	Name      string
+	Args      ApiManagementSubscriptionArgs
+	state     *apiManagementSubscriptionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiManagementSubscription].
 func (ams *ApiManagementSubscription) Type() string {
 	return "azurerm_api_management_subscription"
 }
 
+// LocalName returns the local name for [ApiManagementSubscription].
 func (ams *ApiManagementSubscription) LocalName() string {
 	return ams.Name
 }
 
+// Configuration returns the configuration (args) for [ApiManagementSubscription].
 func (ams *ApiManagementSubscription) Configuration() interface{} {
 	return ams.Args
 }
 
+// DependOn is used for other resources to depend on [ApiManagementSubscription].
+func (ams *ApiManagementSubscription) DependOn() terra.Reference {
+	return terra.ReferenceResource(ams)
+}
+
+// Dependencies returns the list of resources [ApiManagementSubscription] depends_on.
+func (ams *ApiManagementSubscription) Dependencies() terra.Dependencies {
+	return ams.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiManagementSubscription].
+func (ams *ApiManagementSubscription) LifecycleManagement() *terra.Lifecycle {
+	return ams.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiManagementSubscription].
 func (ams *ApiManagementSubscription) Attributes() apiManagementSubscriptionAttributes {
 	return apiManagementSubscriptionAttributes{ref: terra.ReferenceResource(ams)}
 }
 
+// ImportState imports the given attribute values into [ApiManagementSubscription]'s state.
 func (ams *ApiManagementSubscription) ImportState(av io.Reader) error {
 	ams.state = &apiManagementSubscriptionState{}
 	if err := json.NewDecoder(av).Decode(ams.state); err != nil {
@@ -49,10 +73,12 @@ func (ams *ApiManagementSubscription) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiManagementSubscription] has state.
 func (ams *ApiManagementSubscription) State() (*apiManagementSubscriptionState, bool) {
 	return ams.state, ams.state != nil
 }
 
+// StateMust returns the state for [ApiManagementSubscription]. Panics if the state is nil.
 func (ams *ApiManagementSubscription) StateMust() *apiManagementSubscriptionState {
 	if ams.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ams.Type(), ams.LocalName()))
@@ -60,10 +86,7 @@ func (ams *ApiManagementSubscription) StateMust() *apiManagementSubscriptionStat
 	return ams.state
 }
 
-func (ams *ApiManagementSubscription) DependOn() terra.Reference {
-	return terra.ReferenceResource(ams)
-}
-
+// ApiManagementSubscriptionArgs contains the configurations for azurerm_api_management_subscription.
 type ApiManagementSubscriptionArgs struct {
 	// AllowTracing: bool, optional
 	AllowTracing terra.BoolValue `hcl:"allow_tracing,attr"`
@@ -91,63 +114,73 @@ type ApiManagementSubscriptionArgs struct {
 	UserId terra.StringValue `hcl:"user_id,attr"`
 	// Timeouts: optional
 	Timeouts *apimanagementsubscription.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ApiManagementSubscription depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiManagementSubscriptionAttributes struct {
 	ref terra.Reference
 }
 
+// AllowTracing returns a reference to field allow_tracing of azurerm_api_management_subscription.
 func (ams apiManagementSubscriptionAttributes) AllowTracing() terra.BoolValue {
-	return terra.ReferenceBool(ams.ref.Append("allow_tracing"))
+	return terra.ReferenceAsBool(ams.ref.Append("allow_tracing"))
 }
 
+// ApiId returns a reference to field api_id of azurerm_api_management_subscription.
 func (ams apiManagementSubscriptionAttributes) ApiId() terra.StringValue {
-	return terra.ReferenceString(ams.ref.Append("api_id"))
+	return terra.ReferenceAsString(ams.ref.Append("api_id"))
 }
 
+// ApiManagementName returns a reference to field api_management_name of azurerm_api_management_subscription.
 func (ams apiManagementSubscriptionAttributes) ApiManagementName() terra.StringValue {
-	return terra.ReferenceString(ams.ref.Append("api_management_name"))
+	return terra.ReferenceAsString(ams.ref.Append("api_management_name"))
 }
 
+// DisplayName returns a reference to field display_name of azurerm_api_management_subscription.
 func (ams apiManagementSubscriptionAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(ams.ref.Append("display_name"))
+	return terra.ReferenceAsString(ams.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of azurerm_api_management_subscription.
 func (ams apiManagementSubscriptionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ams.ref.Append("id"))
+	return terra.ReferenceAsString(ams.ref.Append("id"))
 }
 
+// PrimaryKey returns a reference to field primary_key of azurerm_api_management_subscription.
 func (ams apiManagementSubscriptionAttributes) PrimaryKey() terra.StringValue {
-	return terra.ReferenceString(ams.ref.Append("primary_key"))
+	return terra.ReferenceAsString(ams.ref.Append("primary_key"))
 }
 
+// ProductId returns a reference to field product_id of azurerm_api_management_subscription.
 func (ams apiManagementSubscriptionAttributes) ProductId() terra.StringValue {
-	return terra.ReferenceString(ams.ref.Append("product_id"))
+	return terra.ReferenceAsString(ams.ref.Append("product_id"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_api_management_subscription.
 func (ams apiManagementSubscriptionAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ams.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ams.ref.Append("resource_group_name"))
 }
 
+// SecondaryKey returns a reference to field secondary_key of azurerm_api_management_subscription.
 func (ams apiManagementSubscriptionAttributes) SecondaryKey() terra.StringValue {
-	return terra.ReferenceString(ams.ref.Append("secondary_key"))
+	return terra.ReferenceAsString(ams.ref.Append("secondary_key"))
 }
 
+// State returns a reference to field state of azurerm_api_management_subscription.
 func (ams apiManagementSubscriptionAttributes) State() terra.StringValue {
-	return terra.ReferenceString(ams.ref.Append("state"))
+	return terra.ReferenceAsString(ams.ref.Append("state"))
 }
 
+// SubscriptionId returns a reference to field subscription_id of azurerm_api_management_subscription.
 func (ams apiManagementSubscriptionAttributes) SubscriptionId() terra.StringValue {
-	return terra.ReferenceString(ams.ref.Append("subscription_id"))
+	return terra.ReferenceAsString(ams.ref.Append("subscription_id"))
 }
 
+// UserId returns a reference to field user_id of azurerm_api_management_subscription.
 func (ams apiManagementSubscriptionAttributes) UserId() terra.StringValue {
-	return terra.ReferenceString(ams.ref.Append("user_id"))
+	return terra.ReferenceAsString(ams.ref.Append("user_id"))
 }
 
 func (ams apiManagementSubscriptionAttributes) Timeouts() apimanagementsubscription.TimeoutsAttributes {
-	return terra.ReferenceSingle[apimanagementsubscription.TimeoutsAttributes](ams.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[apimanagementsubscription.TimeoutsAttributes](ams.ref.Append("timeouts"))
 }
 
 type apiManagementSubscriptionState struct {

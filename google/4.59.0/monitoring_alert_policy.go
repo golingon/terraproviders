@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMonitoringAlertPolicy creates a new instance of [MonitoringAlertPolicy].
 func NewMonitoringAlertPolicy(name string, args MonitoringAlertPolicyArgs) *MonitoringAlertPolicy {
 	return &MonitoringAlertPolicy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMonitoringAlertPolicy(name string, args MonitoringAlertPolicyArgs) *Moni
 
 var _ terra.Resource = (*MonitoringAlertPolicy)(nil)
 
+// MonitoringAlertPolicy represents the Terraform resource google_monitoring_alert_policy.
 type MonitoringAlertPolicy struct {
-	Name  string
-	Args  MonitoringAlertPolicyArgs
-	state *monitoringAlertPolicyState
+	Name      string
+	Args      MonitoringAlertPolicyArgs
+	state     *monitoringAlertPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MonitoringAlertPolicy].
 func (_map *MonitoringAlertPolicy) Type() string {
 	return "google_monitoring_alert_policy"
 }
 
+// LocalName returns the local name for [MonitoringAlertPolicy].
 func (_map *MonitoringAlertPolicy) LocalName() string {
 	return _map.Name
 }
 
+// Configuration returns the configuration (args) for [MonitoringAlertPolicy].
 func (_map *MonitoringAlertPolicy) Configuration() interface{} {
 	return _map.Args
 }
 
+// DependOn is used for other resources to depend on [MonitoringAlertPolicy].
+func (_map *MonitoringAlertPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(_map)
+}
+
+// Dependencies returns the list of resources [MonitoringAlertPolicy] depends_on.
+func (_map *MonitoringAlertPolicy) Dependencies() terra.Dependencies {
+	return _map.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MonitoringAlertPolicy].
+func (_map *MonitoringAlertPolicy) LifecycleManagement() *terra.Lifecycle {
+	return _map.Lifecycle
+}
+
+// Attributes returns the attributes for [MonitoringAlertPolicy].
 func (_map *MonitoringAlertPolicy) Attributes() monitoringAlertPolicyAttributes {
 	return monitoringAlertPolicyAttributes{ref: terra.ReferenceResource(_map)}
 }
 
+// ImportState imports the given attribute values into [MonitoringAlertPolicy]'s state.
 func (_map *MonitoringAlertPolicy) ImportState(av io.Reader) error {
 	_map.state = &monitoringAlertPolicyState{}
 	if err := json.NewDecoder(av).Decode(_map.state); err != nil {
@@ -49,10 +73,12 @@ func (_map *MonitoringAlertPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MonitoringAlertPolicy] has state.
 func (_map *MonitoringAlertPolicy) State() (*monitoringAlertPolicyState, bool) {
 	return _map.state, _map.state != nil
 }
 
+// StateMust returns the state for [MonitoringAlertPolicy]. Panics if the state is nil.
 func (_map *MonitoringAlertPolicy) StateMust() *monitoringAlertPolicyState {
 	if _map.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", _map.Type(), _map.LocalName()))
@@ -60,10 +86,7 @@ func (_map *MonitoringAlertPolicy) StateMust() *monitoringAlertPolicyState {
 	return _map.state
 }
 
-func (_map *MonitoringAlertPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(_map)
-}
-
+// MonitoringAlertPolicyArgs contains the configurations for google_monitoring_alert_policy.
 type MonitoringAlertPolicyArgs struct {
 	// Combiner: string, required
 	Combiner terra.StringValue `hcl:"combiner,attr" validate:"required"`
@@ -89,63 +112,69 @@ type MonitoringAlertPolicyArgs struct {
 	Documentation *monitoringalertpolicy.Documentation `hcl:"documentation,block"`
 	// Timeouts: optional
 	Timeouts *monitoringalertpolicy.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MonitoringAlertPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type monitoringAlertPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Combiner returns a reference to field combiner of google_monitoring_alert_policy.
 func (_map monitoringAlertPolicyAttributes) Combiner() terra.StringValue {
-	return terra.ReferenceString(_map.ref.Append("combiner"))
+	return terra.ReferenceAsString(_map.ref.Append("combiner"))
 }
 
+// DisplayName returns a reference to field display_name of google_monitoring_alert_policy.
 func (_map monitoringAlertPolicyAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(_map.ref.Append("display_name"))
+	return terra.ReferenceAsString(_map.ref.Append("display_name"))
 }
 
+// Enabled returns a reference to field enabled of google_monitoring_alert_policy.
 func (_map monitoringAlertPolicyAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(_map.ref.Append("enabled"))
+	return terra.ReferenceAsBool(_map.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of google_monitoring_alert_policy.
 func (_map monitoringAlertPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(_map.ref.Append("id"))
+	return terra.ReferenceAsString(_map.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_monitoring_alert_policy.
 func (_map monitoringAlertPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(_map.ref.Append("name"))
+	return terra.ReferenceAsString(_map.ref.Append("name"))
 }
 
+// NotificationChannels returns a reference to field notification_channels of google_monitoring_alert_policy.
 func (_map monitoringAlertPolicyAttributes) NotificationChannels() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](_map.ref.Append("notification_channels"))
+	return terra.ReferenceAsList[terra.StringValue](_map.ref.Append("notification_channels"))
 }
 
+// Project returns a reference to field project of google_monitoring_alert_policy.
 func (_map monitoringAlertPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(_map.ref.Append("project"))
+	return terra.ReferenceAsString(_map.ref.Append("project"))
 }
 
+// UserLabels returns a reference to field user_labels of google_monitoring_alert_policy.
 func (_map monitoringAlertPolicyAttributes) UserLabels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](_map.ref.Append("user_labels"))
+	return terra.ReferenceAsMap[terra.StringValue](_map.ref.Append("user_labels"))
 }
 
 func (_map monitoringAlertPolicyAttributes) CreationRecord() terra.ListValue[monitoringalertpolicy.CreationRecordAttributes] {
-	return terra.ReferenceList[monitoringalertpolicy.CreationRecordAttributes](_map.ref.Append("creation_record"))
+	return terra.ReferenceAsList[monitoringalertpolicy.CreationRecordAttributes](_map.ref.Append("creation_record"))
 }
 
 func (_map monitoringAlertPolicyAttributes) AlertStrategy() terra.ListValue[monitoringalertpolicy.AlertStrategyAttributes] {
-	return terra.ReferenceList[monitoringalertpolicy.AlertStrategyAttributes](_map.ref.Append("alert_strategy"))
+	return terra.ReferenceAsList[monitoringalertpolicy.AlertStrategyAttributes](_map.ref.Append("alert_strategy"))
 }
 
 func (_map monitoringAlertPolicyAttributes) Conditions() terra.ListValue[monitoringalertpolicy.ConditionsAttributes] {
-	return terra.ReferenceList[monitoringalertpolicy.ConditionsAttributes](_map.ref.Append("conditions"))
+	return terra.ReferenceAsList[monitoringalertpolicy.ConditionsAttributes](_map.ref.Append("conditions"))
 }
 
 func (_map monitoringAlertPolicyAttributes) Documentation() terra.ListValue[monitoringalertpolicy.DocumentationAttributes] {
-	return terra.ReferenceList[monitoringalertpolicy.DocumentationAttributes](_map.ref.Append("documentation"))
+	return terra.ReferenceAsList[monitoringalertpolicy.DocumentationAttributes](_map.ref.Append("documentation"))
 }
 
 func (_map monitoringAlertPolicyAttributes) Timeouts() monitoringalertpolicy.TimeoutsAttributes {
-	return terra.ReferenceSingle[monitoringalertpolicy.TimeoutsAttributes](_map.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[monitoringalertpolicy.TimeoutsAttributes](_map.ref.Append("timeouts"))
 }
 
 type monitoringAlertPolicyState struct {

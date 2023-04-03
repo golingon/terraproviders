@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLbBackendAddressPool creates a new instance of [LbBackendAddressPool].
 func NewLbBackendAddressPool(name string, args LbBackendAddressPoolArgs) *LbBackendAddressPool {
 	return &LbBackendAddressPool{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLbBackendAddressPool(name string, args LbBackendAddressPoolArgs) *LbBack
 
 var _ terra.Resource = (*LbBackendAddressPool)(nil)
 
+// LbBackendAddressPool represents the Terraform resource azurerm_lb_backend_address_pool.
 type LbBackendAddressPool struct {
-	Name  string
-	Args  LbBackendAddressPoolArgs
-	state *lbBackendAddressPoolState
+	Name      string
+	Args      LbBackendAddressPoolArgs
+	state     *lbBackendAddressPoolState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LbBackendAddressPool].
 func (lbap *LbBackendAddressPool) Type() string {
 	return "azurerm_lb_backend_address_pool"
 }
 
+// LocalName returns the local name for [LbBackendAddressPool].
 func (lbap *LbBackendAddressPool) LocalName() string {
 	return lbap.Name
 }
 
+// Configuration returns the configuration (args) for [LbBackendAddressPool].
 func (lbap *LbBackendAddressPool) Configuration() interface{} {
 	return lbap.Args
 }
 
+// DependOn is used for other resources to depend on [LbBackendAddressPool].
+func (lbap *LbBackendAddressPool) DependOn() terra.Reference {
+	return terra.ReferenceResource(lbap)
+}
+
+// Dependencies returns the list of resources [LbBackendAddressPool] depends_on.
+func (lbap *LbBackendAddressPool) Dependencies() terra.Dependencies {
+	return lbap.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LbBackendAddressPool].
+func (lbap *LbBackendAddressPool) LifecycleManagement() *terra.Lifecycle {
+	return lbap.Lifecycle
+}
+
+// Attributes returns the attributes for [LbBackendAddressPool].
 func (lbap *LbBackendAddressPool) Attributes() lbBackendAddressPoolAttributes {
 	return lbBackendAddressPoolAttributes{ref: terra.ReferenceResource(lbap)}
 }
 
+// ImportState imports the given attribute values into [LbBackendAddressPool]'s state.
 func (lbap *LbBackendAddressPool) ImportState(av io.Reader) error {
 	lbap.state = &lbBackendAddressPoolState{}
 	if err := json.NewDecoder(av).Decode(lbap.state); err != nil {
@@ -49,10 +73,12 @@ func (lbap *LbBackendAddressPool) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LbBackendAddressPool] has state.
 func (lbap *LbBackendAddressPool) State() (*lbBackendAddressPoolState, bool) {
 	return lbap.state, lbap.state != nil
 }
 
+// StateMust returns the state for [LbBackendAddressPool]. Panics if the state is nil.
 func (lbap *LbBackendAddressPool) StateMust() *lbBackendAddressPoolState {
 	if lbap.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lbap.Type(), lbap.LocalName()))
@@ -60,10 +86,7 @@ func (lbap *LbBackendAddressPool) StateMust() *lbBackendAddressPoolState {
 	return lbap.state
 }
 
-func (lbap *LbBackendAddressPool) DependOn() terra.Reference {
-	return terra.ReferenceResource(lbap)
-}
-
+// LbBackendAddressPoolArgs contains the configurations for azurerm_lb_backend_address_pool.
 type LbBackendAddressPoolArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,51 +100,57 @@ type LbBackendAddressPoolArgs struct {
 	Timeouts *lbbackendaddresspool.Timeouts `hcl:"timeouts,block"`
 	// TunnelInterface: min=0
 	TunnelInterface []lbbackendaddresspool.TunnelInterface `hcl:"tunnel_interface,block" validate:"min=0"`
-	// DependsOn contains resources that LbBackendAddressPool depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lbBackendAddressPoolAttributes struct {
 	ref terra.Reference
 }
 
+// BackendIpConfigurations returns a reference to field backend_ip_configurations of azurerm_lb_backend_address_pool.
 func (lbap lbBackendAddressPoolAttributes) BackendIpConfigurations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lbap.ref.Append("backend_ip_configurations"))
+	return terra.ReferenceAsList[terra.StringValue](lbap.ref.Append("backend_ip_configurations"))
 }
 
+// Id returns a reference to field id of azurerm_lb_backend_address_pool.
 func (lbap lbBackendAddressPoolAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lbap.ref.Append("id"))
+	return terra.ReferenceAsString(lbap.ref.Append("id"))
 }
 
+// InboundNatRules returns a reference to field inbound_nat_rules of azurerm_lb_backend_address_pool.
 func (lbap lbBackendAddressPoolAttributes) InboundNatRules() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lbap.ref.Append("inbound_nat_rules"))
+	return terra.ReferenceAsList[terra.StringValue](lbap.ref.Append("inbound_nat_rules"))
 }
 
+// LoadBalancingRules returns a reference to field load_balancing_rules of azurerm_lb_backend_address_pool.
 func (lbap lbBackendAddressPoolAttributes) LoadBalancingRules() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lbap.ref.Append("load_balancing_rules"))
+	return terra.ReferenceAsList[terra.StringValue](lbap.ref.Append("load_balancing_rules"))
 }
 
+// LoadbalancerId returns a reference to field loadbalancer_id of azurerm_lb_backend_address_pool.
 func (lbap lbBackendAddressPoolAttributes) LoadbalancerId() terra.StringValue {
-	return terra.ReferenceString(lbap.ref.Append("loadbalancer_id"))
+	return terra.ReferenceAsString(lbap.ref.Append("loadbalancer_id"))
 }
 
+// Name returns a reference to field name of azurerm_lb_backend_address_pool.
 func (lbap lbBackendAddressPoolAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lbap.ref.Append("name"))
+	return terra.ReferenceAsString(lbap.ref.Append("name"))
 }
 
+// OutboundRules returns a reference to field outbound_rules of azurerm_lb_backend_address_pool.
 func (lbap lbBackendAddressPoolAttributes) OutboundRules() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lbap.ref.Append("outbound_rules"))
+	return terra.ReferenceAsList[terra.StringValue](lbap.ref.Append("outbound_rules"))
 }
 
+// VirtualNetworkId returns a reference to field virtual_network_id of azurerm_lb_backend_address_pool.
 func (lbap lbBackendAddressPoolAttributes) VirtualNetworkId() terra.StringValue {
-	return terra.ReferenceString(lbap.ref.Append("virtual_network_id"))
+	return terra.ReferenceAsString(lbap.ref.Append("virtual_network_id"))
 }
 
 func (lbap lbBackendAddressPoolAttributes) Timeouts() lbbackendaddresspool.TimeoutsAttributes {
-	return terra.ReferenceSingle[lbbackendaddresspool.TimeoutsAttributes](lbap.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[lbbackendaddresspool.TimeoutsAttributes](lbap.ref.Append("timeouts"))
 }
 
 func (lbap lbBackendAddressPoolAttributes) TunnelInterface() terra.ListValue[lbbackendaddresspool.TunnelInterfaceAttributes] {
-	return terra.ReferenceList[lbbackendaddresspool.TunnelInterfaceAttributes](lbap.ref.Append("tunnel_interface"))
+	return terra.ReferenceAsList[lbbackendaddresspool.TunnelInterfaceAttributes](lbap.ref.Append("tunnel_interface"))
 }
 
 type lbBackendAddressPoolState struct {

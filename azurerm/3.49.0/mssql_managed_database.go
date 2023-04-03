@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMssqlManagedDatabase creates a new instance of [MssqlManagedDatabase].
 func NewMssqlManagedDatabase(name string, args MssqlManagedDatabaseArgs) *MssqlManagedDatabase {
 	return &MssqlManagedDatabase{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMssqlManagedDatabase(name string, args MssqlManagedDatabaseArgs) *MssqlM
 
 var _ terra.Resource = (*MssqlManagedDatabase)(nil)
 
+// MssqlManagedDatabase represents the Terraform resource azurerm_mssql_managed_database.
 type MssqlManagedDatabase struct {
-	Name  string
-	Args  MssqlManagedDatabaseArgs
-	state *mssqlManagedDatabaseState
+	Name      string
+	Args      MssqlManagedDatabaseArgs
+	state     *mssqlManagedDatabaseState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MssqlManagedDatabase].
 func (mmd *MssqlManagedDatabase) Type() string {
 	return "azurerm_mssql_managed_database"
 }
 
+// LocalName returns the local name for [MssqlManagedDatabase].
 func (mmd *MssqlManagedDatabase) LocalName() string {
 	return mmd.Name
 }
 
+// Configuration returns the configuration (args) for [MssqlManagedDatabase].
 func (mmd *MssqlManagedDatabase) Configuration() interface{} {
 	return mmd.Args
 }
 
+// DependOn is used for other resources to depend on [MssqlManagedDatabase].
+func (mmd *MssqlManagedDatabase) DependOn() terra.Reference {
+	return terra.ReferenceResource(mmd)
+}
+
+// Dependencies returns the list of resources [MssqlManagedDatabase] depends_on.
+func (mmd *MssqlManagedDatabase) Dependencies() terra.Dependencies {
+	return mmd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MssqlManagedDatabase].
+func (mmd *MssqlManagedDatabase) LifecycleManagement() *terra.Lifecycle {
+	return mmd.Lifecycle
+}
+
+// Attributes returns the attributes for [MssqlManagedDatabase].
 func (mmd *MssqlManagedDatabase) Attributes() mssqlManagedDatabaseAttributes {
 	return mssqlManagedDatabaseAttributes{ref: terra.ReferenceResource(mmd)}
 }
 
+// ImportState imports the given attribute values into [MssqlManagedDatabase]'s state.
 func (mmd *MssqlManagedDatabase) ImportState(av io.Reader) error {
 	mmd.state = &mssqlManagedDatabaseState{}
 	if err := json.NewDecoder(av).Decode(mmd.state); err != nil {
@@ -49,10 +73,12 @@ func (mmd *MssqlManagedDatabase) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MssqlManagedDatabase] has state.
 func (mmd *MssqlManagedDatabase) State() (*mssqlManagedDatabaseState, bool) {
 	return mmd.state, mmd.state != nil
 }
 
+// StateMust returns the state for [MssqlManagedDatabase]. Panics if the state is nil.
 func (mmd *MssqlManagedDatabase) StateMust() *mssqlManagedDatabaseState {
 	if mmd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mmd.Type(), mmd.LocalName()))
@@ -60,10 +86,7 @@ func (mmd *MssqlManagedDatabase) StateMust() *mssqlManagedDatabaseState {
 	return mmd.state
 }
 
-func (mmd *MssqlManagedDatabase) DependOn() terra.Reference {
-	return terra.ReferenceResource(mmd)
-}
-
+// MssqlManagedDatabaseArgs contains the configurations for azurerm_mssql_managed_database.
 type MssqlManagedDatabaseArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,35 +100,37 @@ type MssqlManagedDatabaseArgs struct {
 	LongTermRetentionPolicy *mssqlmanageddatabase.LongTermRetentionPolicy `hcl:"long_term_retention_policy,block"`
 	// Timeouts: optional
 	Timeouts *mssqlmanageddatabase.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MssqlManagedDatabase depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mssqlManagedDatabaseAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_mssql_managed_database.
 func (mmd mssqlManagedDatabaseAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mmd.ref.Append("id"))
+	return terra.ReferenceAsString(mmd.ref.Append("id"))
 }
 
+// ManagedInstanceId returns a reference to field managed_instance_id of azurerm_mssql_managed_database.
 func (mmd mssqlManagedDatabaseAttributes) ManagedInstanceId() terra.StringValue {
-	return terra.ReferenceString(mmd.ref.Append("managed_instance_id"))
+	return terra.ReferenceAsString(mmd.ref.Append("managed_instance_id"))
 }
 
+// Name returns a reference to field name of azurerm_mssql_managed_database.
 func (mmd mssqlManagedDatabaseAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mmd.ref.Append("name"))
+	return terra.ReferenceAsString(mmd.ref.Append("name"))
 }
 
+// ShortTermRetentionDays returns a reference to field short_term_retention_days of azurerm_mssql_managed_database.
 func (mmd mssqlManagedDatabaseAttributes) ShortTermRetentionDays() terra.NumberValue {
-	return terra.ReferenceNumber(mmd.ref.Append("short_term_retention_days"))
+	return terra.ReferenceAsNumber(mmd.ref.Append("short_term_retention_days"))
 }
 
 func (mmd mssqlManagedDatabaseAttributes) LongTermRetentionPolicy() terra.ListValue[mssqlmanageddatabase.LongTermRetentionPolicyAttributes] {
-	return terra.ReferenceList[mssqlmanageddatabase.LongTermRetentionPolicyAttributes](mmd.ref.Append("long_term_retention_policy"))
+	return terra.ReferenceAsList[mssqlmanageddatabase.LongTermRetentionPolicyAttributes](mmd.ref.Append("long_term_retention_policy"))
 }
 
 func (mmd mssqlManagedDatabaseAttributes) Timeouts() mssqlmanageddatabase.TimeoutsAttributes {
-	return terra.ReferenceSingle[mssqlmanageddatabase.TimeoutsAttributes](mmd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[mssqlmanageddatabase.TimeoutsAttributes](mmd.ref.Append("timeouts"))
 }
 
 type mssqlManagedDatabaseState struct {

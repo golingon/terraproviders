@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataCatalogTaxonomyIamMember creates a new instance of [DataCatalogTaxonomyIamMember].
 func NewDataCatalogTaxonomyIamMember(name string, args DataCatalogTaxonomyIamMemberArgs) *DataCatalogTaxonomyIamMember {
 	return &DataCatalogTaxonomyIamMember{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataCatalogTaxonomyIamMember(name string, args DataCatalogTaxonomyIamMem
 
 var _ terra.Resource = (*DataCatalogTaxonomyIamMember)(nil)
 
+// DataCatalogTaxonomyIamMember represents the Terraform resource google_data_catalog_taxonomy_iam_member.
 type DataCatalogTaxonomyIamMember struct {
-	Name  string
-	Args  DataCatalogTaxonomyIamMemberArgs
-	state *dataCatalogTaxonomyIamMemberState
+	Name      string
+	Args      DataCatalogTaxonomyIamMemberArgs
+	state     *dataCatalogTaxonomyIamMemberState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataCatalogTaxonomyIamMember].
 func (dctim *DataCatalogTaxonomyIamMember) Type() string {
 	return "google_data_catalog_taxonomy_iam_member"
 }
 
+// LocalName returns the local name for [DataCatalogTaxonomyIamMember].
 func (dctim *DataCatalogTaxonomyIamMember) LocalName() string {
 	return dctim.Name
 }
 
+// Configuration returns the configuration (args) for [DataCatalogTaxonomyIamMember].
 func (dctim *DataCatalogTaxonomyIamMember) Configuration() interface{} {
 	return dctim.Args
 }
 
+// DependOn is used for other resources to depend on [DataCatalogTaxonomyIamMember].
+func (dctim *DataCatalogTaxonomyIamMember) DependOn() terra.Reference {
+	return terra.ReferenceResource(dctim)
+}
+
+// Dependencies returns the list of resources [DataCatalogTaxonomyIamMember] depends_on.
+func (dctim *DataCatalogTaxonomyIamMember) Dependencies() terra.Dependencies {
+	return dctim.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataCatalogTaxonomyIamMember].
+func (dctim *DataCatalogTaxonomyIamMember) LifecycleManagement() *terra.Lifecycle {
+	return dctim.Lifecycle
+}
+
+// Attributes returns the attributes for [DataCatalogTaxonomyIamMember].
 func (dctim *DataCatalogTaxonomyIamMember) Attributes() dataCatalogTaxonomyIamMemberAttributes {
 	return dataCatalogTaxonomyIamMemberAttributes{ref: terra.ReferenceResource(dctim)}
 }
 
+// ImportState imports the given attribute values into [DataCatalogTaxonomyIamMember]'s state.
 func (dctim *DataCatalogTaxonomyIamMember) ImportState(av io.Reader) error {
 	dctim.state = &dataCatalogTaxonomyIamMemberState{}
 	if err := json.NewDecoder(av).Decode(dctim.state); err != nil {
@@ -49,10 +73,12 @@ func (dctim *DataCatalogTaxonomyIamMember) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataCatalogTaxonomyIamMember] has state.
 func (dctim *DataCatalogTaxonomyIamMember) State() (*dataCatalogTaxonomyIamMemberState, bool) {
 	return dctim.state, dctim.state != nil
 }
 
+// StateMust returns the state for [DataCatalogTaxonomyIamMember]. Panics if the state is nil.
 func (dctim *DataCatalogTaxonomyIamMember) StateMust() *dataCatalogTaxonomyIamMemberState {
 	if dctim.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dctim.Type(), dctim.LocalName()))
@@ -60,10 +86,7 @@ func (dctim *DataCatalogTaxonomyIamMember) StateMust() *dataCatalogTaxonomyIamMe
 	return dctim.state
 }
 
-func (dctim *DataCatalogTaxonomyIamMember) DependOn() terra.Reference {
-	return terra.ReferenceResource(dctim)
-}
-
+// DataCatalogTaxonomyIamMemberArgs contains the configurations for google_data_catalog_taxonomy_iam_member.
 type DataCatalogTaxonomyIamMemberArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,43 +102,48 @@ type DataCatalogTaxonomyIamMemberArgs struct {
 	Taxonomy terra.StringValue `hcl:"taxonomy,attr" validate:"required"`
 	// Condition: optional
 	Condition *datacatalogtaxonomyiammember.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that DataCatalogTaxonomyIamMember depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataCatalogTaxonomyIamMemberAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_data_catalog_taxonomy_iam_member.
 func (dctim dataCatalogTaxonomyIamMemberAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(dctim.ref.Append("etag"))
+	return terra.ReferenceAsString(dctim.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_data_catalog_taxonomy_iam_member.
 func (dctim dataCatalogTaxonomyIamMemberAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dctim.ref.Append("id"))
+	return terra.ReferenceAsString(dctim.ref.Append("id"))
 }
 
+// Member returns a reference to field member of google_data_catalog_taxonomy_iam_member.
 func (dctim dataCatalogTaxonomyIamMemberAttributes) Member() terra.StringValue {
-	return terra.ReferenceString(dctim.ref.Append("member"))
+	return terra.ReferenceAsString(dctim.ref.Append("member"))
 }
 
+// Project returns a reference to field project of google_data_catalog_taxonomy_iam_member.
 func (dctim dataCatalogTaxonomyIamMemberAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(dctim.ref.Append("project"))
+	return terra.ReferenceAsString(dctim.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_data_catalog_taxonomy_iam_member.
 func (dctim dataCatalogTaxonomyIamMemberAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(dctim.ref.Append("region"))
+	return terra.ReferenceAsString(dctim.ref.Append("region"))
 }
 
+// Role returns a reference to field role of google_data_catalog_taxonomy_iam_member.
 func (dctim dataCatalogTaxonomyIamMemberAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(dctim.ref.Append("role"))
+	return terra.ReferenceAsString(dctim.ref.Append("role"))
 }
 
+// Taxonomy returns a reference to field taxonomy of google_data_catalog_taxonomy_iam_member.
 func (dctim dataCatalogTaxonomyIamMemberAttributes) Taxonomy() terra.StringValue {
-	return terra.ReferenceString(dctim.ref.Append("taxonomy"))
+	return terra.ReferenceAsString(dctim.ref.Append("taxonomy"))
 }
 
 func (dctim dataCatalogTaxonomyIamMemberAttributes) Condition() terra.ListValue[datacatalogtaxonomyiammember.ConditionAttributes] {
-	return terra.ReferenceList[datacatalogtaxonomyiammember.ConditionAttributes](dctim.ref.Append("condition"))
+	return terra.ReferenceAsList[datacatalogtaxonomyiammember.ConditionAttributes](dctim.ref.Append("condition"))
 }
 
 type dataCatalogTaxonomyIamMemberState struct {

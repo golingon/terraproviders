@@ -29,56 +29,56 @@ type TargetDnsServersAttributes struct {
 	ref terra.Reference
 }
 
-func (tds TargetDnsServersAttributes) InternalRef() terra.Reference {
-	return tds.ref
+func (tds TargetDnsServersAttributes) InternalRef() (terra.Reference, error) {
+	return tds.ref, nil
 }
 
 func (tds TargetDnsServersAttributes) InternalWithRef(ref terra.Reference) TargetDnsServersAttributes {
 	return TargetDnsServersAttributes{ref: ref}
 }
 
-func (tds TargetDnsServersAttributes) InternalTokens() hclwrite.Tokens {
+func (tds TargetDnsServersAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tds.ref.InternalTokens()
 }
 
 func (tds TargetDnsServersAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(tds.ref.Append("ip_address"))
+	return terra.ReferenceAsString(tds.ref.Append("ip_address"))
 }
 
 func (tds TargetDnsServersAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(tds.ref.Append("port"))
+	return terra.ReferenceAsNumber(tds.ref.Append("port"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type TargetDnsServersState struct {

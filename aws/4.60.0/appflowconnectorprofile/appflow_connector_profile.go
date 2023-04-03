@@ -501,7 +501,7 @@ func (cpc ConnectorProfileConfigAttributes) InternalWithRef(ref terra.Reference)
 	return ConnectorProfileConfigAttributes{ref: ref}
 }
 
-func (cpc ConnectorProfileConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (cpc ConnectorProfileConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cpc.ref.InternalTokens()
 }
 
@@ -525,7 +525,7 @@ func (cpc ConnectorProfileCredentialsAttributes) InternalWithRef(ref terra.Refer
 	return ConnectorProfileCredentialsAttributes{ref: ref}
 }
 
-func (cpc ConnectorProfileCredentialsAttributes) InternalTokens() hclwrite.Tokens {
+func (cpc ConnectorProfileCredentialsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cpc.ref.InternalTokens()
 }
 
@@ -613,7 +613,7 @@ func (a ConnectorProfileCredentialsAmplitudeAttributes) InternalWithRef(ref terr
 	return ConnectorProfileCredentialsAmplitudeAttributes{ref: ref}
 }
 
-func (a ConnectorProfileCredentialsAmplitudeAttributes) InternalTokens() hclwrite.Tokens {
+func (a ConnectorProfileCredentialsAmplitudeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -637,7 +637,7 @@ func (cc ConnectorProfileCredentialsCustomConnectorAttributes) InternalWithRef(r
 	return ConnectorProfileCredentialsCustomConnectorAttributes{ref: ref}
 }
 
-func (cc ConnectorProfileCredentialsCustomConnectorAttributes) InternalTokens() hclwrite.Tokens {
+func (cc ConnectorProfileCredentialsCustomConnectorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -673,7 +673,7 @@ func (ak ApiKeyAttributes) InternalWithRef(ref terra.Reference) ApiKeyAttributes
 	return ApiKeyAttributes{ref: ref}
 }
 
-func (ak ApiKeyAttributes) InternalTokens() hclwrite.Tokens {
+func (ak ApiKeyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ak.ref.InternalTokens()
 }
 
@@ -697,7 +697,7 @@ func (b BasicAttributes) InternalWithRef(ref terra.Reference) BasicAttributes {
 	return BasicAttributes{ref: ref}
 }
 
-func (b BasicAttributes) InternalTokens() hclwrite.Tokens {
+func (b BasicAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return b.ref.InternalTokens()
 }
 
@@ -721,7 +721,7 @@ func (c CustomAttributes) InternalWithRef(ref terra.Reference) CustomAttributes 
 	return CustomAttributes{ref: ref}
 }
 
-func (c CustomAttributes) InternalTokens() hclwrite.Tokens {
+func (c CustomAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -745,7 +745,7 @@ func (o Oauth2Attributes) InternalWithRef(ref terra.Reference) Oauth2Attributes 
 	return Oauth2Attributes{ref: ref}
 }
 
-func (o Oauth2Attributes) InternalTokens() hclwrite.Tokens {
+func (o Oauth2Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return o.ref.InternalTokens()
 }
 
@@ -781,7 +781,7 @@ func (or Oauth2OauthRequestAttributes) InternalWithRef(ref terra.Reference) Oaut
 	return Oauth2OauthRequestAttributes{ref: ref}
 }
 
-func (or Oauth2OauthRequestAttributes) InternalTokens() hclwrite.Tokens {
+func (or Oauth2OauthRequestAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return or.ref.InternalTokens()
 }
 
@@ -805,7 +805,7 @@ func (d ConnectorProfileCredentialsDatadogAttributes) InternalWithRef(ref terra.
 	return ConnectorProfileCredentialsDatadogAttributes{ref: ref}
 }
 
-func (d ConnectorProfileCredentialsDatadogAttributes) InternalTokens() hclwrite.Tokens {
+func (d ConnectorProfileCredentialsDatadogAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -829,7 +829,7 @@ func (d ConnectorProfileCredentialsDynatraceAttributes) InternalWithRef(ref terr
 	return ConnectorProfileCredentialsDynatraceAttributes{ref: ref}
 }
 
-func (d ConnectorProfileCredentialsDynatraceAttributes) InternalTokens() hclwrite.Tokens {
+func (d ConnectorProfileCredentialsDynatraceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -849,7 +849,7 @@ func (ga ConnectorProfileCredentialsGoogleAnalyticsAttributes) InternalWithRef(r
 	return ConnectorProfileCredentialsGoogleAnalyticsAttributes{ref: ref}
 }
 
-func (ga ConnectorProfileCredentialsGoogleAnalyticsAttributes) InternalTokens() hclwrite.Tokens {
+func (ga ConnectorProfileCredentialsGoogleAnalyticsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ga.ref.InternalTokens()
 }
 
@@ -885,7 +885,7 @@ func (or GoogleAnalyticsOauthRequestAttributes) InternalWithRef(ref terra.Refere
 	return GoogleAnalyticsOauthRequestAttributes{ref: ref}
 }
 
-func (or GoogleAnalyticsOauthRequestAttributes) InternalTokens() hclwrite.Tokens {
+func (or GoogleAnalyticsOauthRequestAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return or.ref.InternalTokens()
 }
 
@@ -909,7 +909,7 @@ func (h ConnectorProfileCredentialsHoneycodeAttributes) InternalWithRef(ref terr
 	return ConnectorProfileCredentialsHoneycodeAttributes{ref: ref}
 }
 
-func (h ConnectorProfileCredentialsHoneycodeAttributes) InternalTokens() hclwrite.Tokens {
+func (h ConnectorProfileCredentialsHoneycodeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 
@@ -937,7 +937,7 @@ func (or HoneycodeOauthRequestAttributes) InternalWithRef(ref terra.Reference) H
 	return HoneycodeOauthRequestAttributes{ref: ref}
 }
 
-func (or HoneycodeOauthRequestAttributes) InternalTokens() hclwrite.Tokens {
+func (or HoneycodeOauthRequestAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return or.ref.InternalTokens()
 }
 
@@ -961,7 +961,7 @@ func (in ConnectorProfileCredentialsInforNexusAttributes) InternalWithRef(ref te
 	return ConnectorProfileCredentialsInforNexusAttributes{ref: ref}
 }
 
-func (in ConnectorProfileCredentialsInforNexusAttributes) InternalTokens() hclwrite.Tokens {
+func (in ConnectorProfileCredentialsInforNexusAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return in.ref.InternalTokens()
 }
 
@@ -993,7 +993,7 @@ func (m ConnectorProfileCredentialsMarketoAttributes) InternalWithRef(ref terra.
 	return ConnectorProfileCredentialsMarketoAttributes{ref: ref}
 }
 
-func (m ConnectorProfileCredentialsMarketoAttributes) InternalTokens() hclwrite.Tokens {
+func (m ConnectorProfileCredentialsMarketoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -1025,7 +1025,7 @@ func (or MarketoOauthRequestAttributes) InternalWithRef(ref terra.Reference) Mar
 	return MarketoOauthRequestAttributes{ref: ref}
 }
 
-func (or MarketoOauthRequestAttributes) InternalTokens() hclwrite.Tokens {
+func (or MarketoOauthRequestAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return or.ref.InternalTokens()
 }
 
@@ -1049,7 +1049,7 @@ func (r ConnectorProfileCredentialsRedshiftAttributes) InternalWithRef(ref terra
 	return ConnectorProfileCredentialsRedshiftAttributes{ref: ref}
 }
 
-func (r ConnectorProfileCredentialsRedshiftAttributes) InternalTokens() hclwrite.Tokens {
+func (r ConnectorProfileCredentialsRedshiftAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -1073,7 +1073,7 @@ func (s ConnectorProfileCredentialsSalesforceAttributes) InternalWithRef(ref ter
 	return ConnectorProfileCredentialsSalesforceAttributes{ref: ref}
 }
 
-func (s ConnectorProfileCredentialsSalesforceAttributes) InternalTokens() hclwrite.Tokens {
+func (s ConnectorProfileCredentialsSalesforceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -1105,7 +1105,7 @@ func (or SalesforceOauthRequestAttributes) InternalWithRef(ref terra.Reference) 
 	return SalesforceOauthRequestAttributes{ref: ref}
 }
 
-func (or SalesforceOauthRequestAttributes) InternalTokens() hclwrite.Tokens {
+func (or SalesforceOauthRequestAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return or.ref.InternalTokens()
 }
 
@@ -1129,7 +1129,7 @@ func (sd ConnectorProfileCredentialsSapoDataAttributes) InternalWithRef(ref terr
 	return ConnectorProfileCredentialsSapoDataAttributes{ref: ref}
 }
 
-func (sd ConnectorProfileCredentialsSapoDataAttributes) InternalTokens() hclwrite.Tokens {
+func (sd ConnectorProfileCredentialsSapoDataAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sd.ref.InternalTokens()
 }
 
@@ -1153,7 +1153,7 @@ func (bac BasicAuthCredentialsAttributes) InternalWithRef(ref terra.Reference) B
 	return BasicAuthCredentialsAttributes{ref: ref}
 }
 
-func (bac BasicAuthCredentialsAttributes) InternalTokens() hclwrite.Tokens {
+func (bac BasicAuthCredentialsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return bac.ref.InternalTokens()
 }
 
@@ -1177,7 +1177,7 @@ func (oc OauthCredentialsAttributes) InternalWithRef(ref terra.Reference) OauthC
 	return OauthCredentialsAttributes{ref: ref}
 }
 
-func (oc OauthCredentialsAttributes) InternalTokens() hclwrite.Tokens {
+func (oc OauthCredentialsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return oc.ref.InternalTokens()
 }
 
@@ -1213,7 +1213,7 @@ func (or OauthCredentialsOauthRequestAttributes) InternalWithRef(ref terra.Refer
 	return OauthCredentialsOauthRequestAttributes{ref: ref}
 }
 
-func (or OauthCredentialsOauthRequestAttributes) InternalTokens() hclwrite.Tokens {
+func (or OauthCredentialsOauthRequestAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return or.ref.InternalTokens()
 }
 
@@ -1237,7 +1237,7 @@ func (sn ConnectorProfileCredentialsServiceNowAttributes) InternalWithRef(ref te
 	return ConnectorProfileCredentialsServiceNowAttributes{ref: ref}
 }
 
-func (sn ConnectorProfileCredentialsServiceNowAttributes) InternalTokens() hclwrite.Tokens {
+func (sn ConnectorProfileCredentialsServiceNowAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sn.ref.InternalTokens()
 }
 
@@ -1261,7 +1261,7 @@ func (s ConnectorProfileCredentialsSingularAttributes) InternalWithRef(ref terra
 	return ConnectorProfileCredentialsSingularAttributes{ref: ref}
 }
 
-func (s ConnectorProfileCredentialsSingularAttributes) InternalTokens() hclwrite.Tokens {
+func (s ConnectorProfileCredentialsSingularAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -1281,7 +1281,7 @@ func (s ConnectorProfileCredentialsSlackAttributes) InternalWithRef(ref terra.Re
 	return ConnectorProfileCredentialsSlackAttributes{ref: ref}
 }
 
-func (s ConnectorProfileCredentialsSlackAttributes) InternalTokens() hclwrite.Tokens {
+func (s ConnectorProfileCredentialsSlackAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -1313,7 +1313,7 @@ func (or SlackOauthRequestAttributes) InternalWithRef(ref terra.Reference) Slack
 	return SlackOauthRequestAttributes{ref: ref}
 }
 
-func (or SlackOauthRequestAttributes) InternalTokens() hclwrite.Tokens {
+func (or SlackOauthRequestAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return or.ref.InternalTokens()
 }
 
@@ -1337,7 +1337,7 @@ func (s ConnectorProfileCredentialsSnowflakeAttributes) InternalWithRef(ref terr
 	return ConnectorProfileCredentialsSnowflakeAttributes{ref: ref}
 }
 
-func (s ConnectorProfileCredentialsSnowflakeAttributes) InternalTokens() hclwrite.Tokens {
+func (s ConnectorProfileCredentialsSnowflakeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -1361,7 +1361,7 @@ func (t ConnectorProfileCredentialsTrendmicroAttributes) InternalWithRef(ref ter
 	return ConnectorProfileCredentialsTrendmicroAttributes{ref: ref}
 }
 
-func (t ConnectorProfileCredentialsTrendmicroAttributes) InternalTokens() hclwrite.Tokens {
+func (t ConnectorProfileCredentialsTrendmicroAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -1381,7 +1381,7 @@ func (v ConnectorProfileCredentialsVeevaAttributes) InternalWithRef(ref terra.Re
 	return ConnectorProfileCredentialsVeevaAttributes{ref: ref}
 }
 
-func (v ConnectorProfileCredentialsVeevaAttributes) InternalTokens() hclwrite.Tokens {
+func (v ConnectorProfileCredentialsVeevaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 
@@ -1405,7 +1405,7 @@ func (z ConnectorProfileCredentialsZendeskAttributes) InternalWithRef(ref terra.
 	return ConnectorProfileCredentialsZendeskAttributes{ref: ref}
 }
 
-func (z ConnectorProfileCredentialsZendeskAttributes) InternalTokens() hclwrite.Tokens {
+func (z ConnectorProfileCredentialsZendeskAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return z.ref.InternalTokens()
 }
 
@@ -1437,7 +1437,7 @@ func (or ZendeskOauthRequestAttributes) InternalWithRef(ref terra.Reference) Zen
 	return ZendeskOauthRequestAttributes{ref: ref}
 }
 
-func (or ZendeskOauthRequestAttributes) InternalTokens() hclwrite.Tokens {
+func (or ZendeskOauthRequestAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return or.ref.InternalTokens()
 }
 
@@ -1461,7 +1461,7 @@ func (cpp ConnectorProfilePropertiesAttributes) InternalWithRef(ref terra.Refere
 	return ConnectorProfilePropertiesAttributes{ref: ref}
 }
 
-func (cpp ConnectorProfilePropertiesAttributes) InternalTokens() hclwrite.Tokens {
+func (cpp ConnectorProfilePropertiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cpp.ref.InternalTokens()
 }
 
@@ -1549,7 +1549,7 @@ func (a ConnectorProfilePropertiesAmplitudeAttributes) InternalWithRef(ref terra
 	return ConnectorProfilePropertiesAmplitudeAttributes{ref: ref}
 }
 
-func (a ConnectorProfilePropertiesAmplitudeAttributes) InternalTokens() hclwrite.Tokens {
+func (a ConnectorProfilePropertiesAmplitudeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -1565,7 +1565,7 @@ func (cc ConnectorProfilePropertiesCustomConnectorAttributes) InternalWithRef(re
 	return ConnectorProfilePropertiesCustomConnectorAttributes{ref: ref}
 }
 
-func (cc ConnectorProfilePropertiesCustomConnectorAttributes) InternalTokens() hclwrite.Tokens {
+func (cc ConnectorProfilePropertiesCustomConnectorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 
@@ -1589,7 +1589,7 @@ func (op Oauth2PropertiesAttributes) InternalWithRef(ref terra.Reference) Oauth2
 	return Oauth2PropertiesAttributes{ref: ref}
 }
 
-func (op Oauth2PropertiesAttributes) InternalTokens() hclwrite.Tokens {
+func (op Oauth2PropertiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return op.ref.InternalTokens()
 }
 
@@ -1617,7 +1617,7 @@ func (d ConnectorProfilePropertiesDatadogAttributes) InternalWithRef(ref terra.R
 	return ConnectorProfilePropertiesDatadogAttributes{ref: ref}
 }
 
-func (d ConnectorProfilePropertiesDatadogAttributes) InternalTokens() hclwrite.Tokens {
+func (d ConnectorProfilePropertiesDatadogAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -1637,7 +1637,7 @@ func (d ConnectorProfilePropertiesDynatraceAttributes) InternalWithRef(ref terra
 	return ConnectorProfilePropertiesDynatraceAttributes{ref: ref}
 }
 
-func (d ConnectorProfilePropertiesDynatraceAttributes) InternalTokens() hclwrite.Tokens {
+func (d ConnectorProfilePropertiesDynatraceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
@@ -1657,7 +1657,7 @@ func (ga ConnectorProfilePropertiesGoogleAnalyticsAttributes) InternalWithRef(re
 	return ConnectorProfilePropertiesGoogleAnalyticsAttributes{ref: ref}
 }
 
-func (ga ConnectorProfilePropertiesGoogleAnalyticsAttributes) InternalTokens() hclwrite.Tokens {
+func (ga ConnectorProfilePropertiesGoogleAnalyticsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ga.ref.InternalTokens()
 }
 
@@ -1673,7 +1673,7 @@ func (h ConnectorProfilePropertiesHoneycodeAttributes) InternalWithRef(ref terra
 	return ConnectorProfilePropertiesHoneycodeAttributes{ref: ref}
 }
 
-func (h ConnectorProfilePropertiesHoneycodeAttributes) InternalTokens() hclwrite.Tokens {
+func (h ConnectorProfilePropertiesHoneycodeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 
@@ -1689,7 +1689,7 @@ func (in ConnectorProfilePropertiesInforNexusAttributes) InternalWithRef(ref ter
 	return ConnectorProfilePropertiesInforNexusAttributes{ref: ref}
 }
 
-func (in ConnectorProfilePropertiesInforNexusAttributes) InternalTokens() hclwrite.Tokens {
+func (in ConnectorProfilePropertiesInforNexusAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return in.ref.InternalTokens()
 }
 
@@ -1709,7 +1709,7 @@ func (m ConnectorProfilePropertiesMarketoAttributes) InternalWithRef(ref terra.R
 	return ConnectorProfilePropertiesMarketoAttributes{ref: ref}
 }
 
-func (m ConnectorProfilePropertiesMarketoAttributes) InternalTokens() hclwrite.Tokens {
+func (m ConnectorProfilePropertiesMarketoAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -1729,7 +1729,7 @@ func (r ConnectorProfilePropertiesRedshiftAttributes) InternalWithRef(ref terra.
 	return ConnectorProfilePropertiesRedshiftAttributes{ref: ref}
 }
 
-func (r ConnectorProfilePropertiesRedshiftAttributes) InternalTokens() hclwrite.Tokens {
+func (r ConnectorProfilePropertiesRedshiftAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -1773,7 +1773,7 @@ func (s ConnectorProfilePropertiesSalesforceAttributes) InternalWithRef(ref terr
 	return ConnectorProfilePropertiesSalesforceAttributes{ref: ref}
 }
 
-func (s ConnectorProfilePropertiesSalesforceAttributes) InternalTokens() hclwrite.Tokens {
+func (s ConnectorProfilePropertiesSalesforceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -1797,7 +1797,7 @@ func (sd ConnectorProfilePropertiesSapoDataAttributes) InternalWithRef(ref terra
 	return ConnectorProfilePropertiesSapoDataAttributes{ref: ref}
 }
 
-func (sd ConnectorProfilePropertiesSapoDataAttributes) InternalTokens() hclwrite.Tokens {
+func (sd ConnectorProfilePropertiesSapoDataAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sd.ref.InternalTokens()
 }
 
@@ -1841,7 +1841,7 @@ func (op OauthPropertiesAttributes) InternalWithRef(ref terra.Reference) OauthPr
 	return OauthPropertiesAttributes{ref: ref}
 }
 
-func (op OauthPropertiesAttributes) InternalTokens() hclwrite.Tokens {
+func (op OauthPropertiesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return op.ref.InternalTokens()
 }
 
@@ -1869,7 +1869,7 @@ func (sn ConnectorProfilePropertiesServiceNowAttributes) InternalWithRef(ref ter
 	return ConnectorProfilePropertiesServiceNowAttributes{ref: ref}
 }
 
-func (sn ConnectorProfilePropertiesServiceNowAttributes) InternalTokens() hclwrite.Tokens {
+func (sn ConnectorProfilePropertiesServiceNowAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sn.ref.InternalTokens()
 }
 
@@ -1889,7 +1889,7 @@ func (s ConnectorProfilePropertiesSingularAttributes) InternalWithRef(ref terra.
 	return ConnectorProfilePropertiesSingularAttributes{ref: ref}
 }
 
-func (s ConnectorProfilePropertiesSingularAttributes) InternalTokens() hclwrite.Tokens {
+func (s ConnectorProfilePropertiesSingularAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -1905,7 +1905,7 @@ func (s ConnectorProfilePropertiesSlackAttributes) InternalWithRef(ref terra.Ref
 	return ConnectorProfilePropertiesSlackAttributes{ref: ref}
 }
 
-func (s ConnectorProfilePropertiesSlackAttributes) InternalTokens() hclwrite.Tokens {
+func (s ConnectorProfilePropertiesSlackAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -1925,7 +1925,7 @@ func (s ConnectorProfilePropertiesSnowflakeAttributes) InternalWithRef(ref terra
 	return ConnectorProfilePropertiesSnowflakeAttributes{ref: ref}
 }
 
-func (s ConnectorProfilePropertiesSnowflakeAttributes) InternalTokens() hclwrite.Tokens {
+func (s ConnectorProfilePropertiesSnowflakeAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -1969,7 +1969,7 @@ func (t ConnectorProfilePropertiesTrendmicroAttributes) InternalWithRef(ref terr
 	return ConnectorProfilePropertiesTrendmicroAttributes{ref: ref}
 }
 
-func (t ConnectorProfilePropertiesTrendmicroAttributes) InternalTokens() hclwrite.Tokens {
+func (t ConnectorProfilePropertiesTrendmicroAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -1985,7 +1985,7 @@ func (v ConnectorProfilePropertiesVeevaAttributes) InternalWithRef(ref terra.Ref
 	return ConnectorProfilePropertiesVeevaAttributes{ref: ref}
 }
 
-func (v ConnectorProfilePropertiesVeevaAttributes) InternalTokens() hclwrite.Tokens {
+func (v ConnectorProfilePropertiesVeevaAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return v.ref.InternalTokens()
 }
 
@@ -2005,7 +2005,7 @@ func (z ConnectorProfilePropertiesZendeskAttributes) InternalWithRef(ref terra.R
 	return ConnectorProfilePropertiesZendeskAttributes{ref: ref}
 }
 
-func (z ConnectorProfilePropertiesZendeskAttributes) InternalTokens() hclwrite.Tokens {
+func (z ConnectorProfilePropertiesZendeskAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return z.ref.InternalTokens()
 }
 

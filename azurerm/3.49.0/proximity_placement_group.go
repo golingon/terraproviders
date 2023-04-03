@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewProximityPlacementGroup creates a new instance of [ProximityPlacementGroup].
 func NewProximityPlacementGroup(name string, args ProximityPlacementGroupArgs) *ProximityPlacementGroup {
 	return &ProximityPlacementGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewProximityPlacementGroup(name string, args ProximityPlacementGroupArgs) *
 
 var _ terra.Resource = (*ProximityPlacementGroup)(nil)
 
+// ProximityPlacementGroup represents the Terraform resource azurerm_proximity_placement_group.
 type ProximityPlacementGroup struct {
-	Name  string
-	Args  ProximityPlacementGroupArgs
-	state *proximityPlacementGroupState
+	Name      string
+	Args      ProximityPlacementGroupArgs
+	state     *proximityPlacementGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ProximityPlacementGroup].
 func (ppg *ProximityPlacementGroup) Type() string {
 	return "azurerm_proximity_placement_group"
 }
 
+// LocalName returns the local name for [ProximityPlacementGroup].
 func (ppg *ProximityPlacementGroup) LocalName() string {
 	return ppg.Name
 }
 
+// Configuration returns the configuration (args) for [ProximityPlacementGroup].
 func (ppg *ProximityPlacementGroup) Configuration() interface{} {
 	return ppg.Args
 }
 
+// DependOn is used for other resources to depend on [ProximityPlacementGroup].
+func (ppg *ProximityPlacementGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(ppg)
+}
+
+// Dependencies returns the list of resources [ProximityPlacementGroup] depends_on.
+func (ppg *ProximityPlacementGroup) Dependencies() terra.Dependencies {
+	return ppg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ProximityPlacementGroup].
+func (ppg *ProximityPlacementGroup) LifecycleManagement() *terra.Lifecycle {
+	return ppg.Lifecycle
+}
+
+// Attributes returns the attributes for [ProximityPlacementGroup].
 func (ppg *ProximityPlacementGroup) Attributes() proximityPlacementGroupAttributes {
 	return proximityPlacementGroupAttributes{ref: terra.ReferenceResource(ppg)}
 }
 
+// ImportState imports the given attribute values into [ProximityPlacementGroup]'s state.
 func (ppg *ProximityPlacementGroup) ImportState(av io.Reader) error {
 	ppg.state = &proximityPlacementGroupState{}
 	if err := json.NewDecoder(av).Decode(ppg.state); err != nil {
@@ -49,10 +73,12 @@ func (ppg *ProximityPlacementGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ProximityPlacementGroup] has state.
 func (ppg *ProximityPlacementGroup) State() (*proximityPlacementGroupState, bool) {
 	return ppg.state, ppg.state != nil
 }
 
+// StateMust returns the state for [ProximityPlacementGroup]. Panics if the state is nil.
 func (ppg *ProximityPlacementGroup) StateMust() *proximityPlacementGroupState {
 	if ppg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ppg.Type(), ppg.LocalName()))
@@ -60,10 +86,7 @@ func (ppg *ProximityPlacementGroup) StateMust() *proximityPlacementGroupState {
 	return ppg.state
 }
 
-func (ppg *ProximityPlacementGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(ppg)
-}
-
+// ProximityPlacementGroupArgs contains the configurations for azurerm_proximity_placement_group.
 type ProximityPlacementGroupArgs struct {
 	// AllowedVmSizes: set of string, optional
 	AllowedVmSizes terra.SetValue[terra.StringValue] `hcl:"allowed_vm_sizes,attr"`
@@ -81,43 +104,48 @@ type ProximityPlacementGroupArgs struct {
 	Zone terra.StringValue `hcl:"zone,attr"`
 	// Timeouts: optional
 	Timeouts *proximityplacementgroup.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ProximityPlacementGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type proximityPlacementGroupAttributes struct {
 	ref terra.Reference
 }
 
+// AllowedVmSizes returns a reference to field allowed_vm_sizes of azurerm_proximity_placement_group.
 func (ppg proximityPlacementGroupAttributes) AllowedVmSizes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ppg.ref.Append("allowed_vm_sizes"))
+	return terra.ReferenceAsSet[terra.StringValue](ppg.ref.Append("allowed_vm_sizes"))
 }
 
+// Id returns a reference to field id of azurerm_proximity_placement_group.
 func (ppg proximityPlacementGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ppg.ref.Append("id"))
+	return terra.ReferenceAsString(ppg.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_proximity_placement_group.
 func (ppg proximityPlacementGroupAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ppg.ref.Append("location"))
+	return terra.ReferenceAsString(ppg.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_proximity_placement_group.
 func (ppg proximityPlacementGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ppg.ref.Append("name"))
+	return terra.ReferenceAsString(ppg.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_proximity_placement_group.
 func (ppg proximityPlacementGroupAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ppg.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ppg.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_proximity_placement_group.
 func (ppg proximityPlacementGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ppg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ppg.ref.Append("tags"))
 }
 
+// Zone returns a reference to field zone of azurerm_proximity_placement_group.
 func (ppg proximityPlacementGroupAttributes) Zone() terra.StringValue {
-	return terra.ReferenceString(ppg.ref.Append("zone"))
+	return terra.ReferenceAsString(ppg.ref.Append("zone"))
 }
 
 func (ppg proximityPlacementGroupAttributes) Timeouts() proximityplacementgroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[proximityplacementgroup.TimeoutsAttributes](ppg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[proximityplacementgroup.TimeoutsAttributes](ppg.ref.Append("timeouts"))
 }
 
 type proximityPlacementGroupState struct {

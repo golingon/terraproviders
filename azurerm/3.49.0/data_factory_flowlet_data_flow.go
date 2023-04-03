@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDataFactoryFlowletDataFlow creates a new instance of [DataFactoryFlowletDataFlow].
 func NewDataFactoryFlowletDataFlow(name string, args DataFactoryFlowletDataFlowArgs) *DataFactoryFlowletDataFlow {
 	return &DataFactoryFlowletDataFlow{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDataFactoryFlowletDataFlow(name string, args DataFactoryFlowletDataFlowA
 
 var _ terra.Resource = (*DataFactoryFlowletDataFlow)(nil)
 
+// DataFactoryFlowletDataFlow represents the Terraform resource azurerm_data_factory_flowlet_data_flow.
 type DataFactoryFlowletDataFlow struct {
-	Name  string
-	Args  DataFactoryFlowletDataFlowArgs
-	state *dataFactoryFlowletDataFlowState
+	Name      string
+	Args      DataFactoryFlowletDataFlowArgs
+	state     *dataFactoryFlowletDataFlowState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataFactoryFlowletDataFlow].
 func (dffdf *DataFactoryFlowletDataFlow) Type() string {
 	return "azurerm_data_factory_flowlet_data_flow"
 }
 
+// LocalName returns the local name for [DataFactoryFlowletDataFlow].
 func (dffdf *DataFactoryFlowletDataFlow) LocalName() string {
 	return dffdf.Name
 }
 
+// Configuration returns the configuration (args) for [DataFactoryFlowletDataFlow].
 func (dffdf *DataFactoryFlowletDataFlow) Configuration() interface{} {
 	return dffdf.Args
 }
 
+// DependOn is used for other resources to depend on [DataFactoryFlowletDataFlow].
+func (dffdf *DataFactoryFlowletDataFlow) DependOn() terra.Reference {
+	return terra.ReferenceResource(dffdf)
+}
+
+// Dependencies returns the list of resources [DataFactoryFlowletDataFlow] depends_on.
+func (dffdf *DataFactoryFlowletDataFlow) Dependencies() terra.Dependencies {
+	return dffdf.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataFactoryFlowletDataFlow].
+func (dffdf *DataFactoryFlowletDataFlow) LifecycleManagement() *terra.Lifecycle {
+	return dffdf.Lifecycle
+}
+
+// Attributes returns the attributes for [DataFactoryFlowletDataFlow].
 func (dffdf *DataFactoryFlowletDataFlow) Attributes() dataFactoryFlowletDataFlowAttributes {
 	return dataFactoryFlowletDataFlowAttributes{ref: terra.ReferenceResource(dffdf)}
 }
 
+// ImportState imports the given attribute values into [DataFactoryFlowletDataFlow]'s state.
 func (dffdf *DataFactoryFlowletDataFlow) ImportState(av io.Reader) error {
 	dffdf.state = &dataFactoryFlowletDataFlowState{}
 	if err := json.NewDecoder(av).Decode(dffdf.state); err != nil {
@@ -49,10 +73,12 @@ func (dffdf *DataFactoryFlowletDataFlow) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataFactoryFlowletDataFlow] has state.
 func (dffdf *DataFactoryFlowletDataFlow) State() (*dataFactoryFlowletDataFlowState, bool) {
 	return dffdf.state, dffdf.state != nil
 }
 
+// StateMust returns the state for [DataFactoryFlowletDataFlow]. Panics if the state is nil.
 func (dffdf *DataFactoryFlowletDataFlow) StateMust() *dataFactoryFlowletDataFlowState {
 	if dffdf.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dffdf.Type(), dffdf.LocalName()))
@@ -60,10 +86,7 @@ func (dffdf *DataFactoryFlowletDataFlow) StateMust() *dataFactoryFlowletDataFlow
 	return dffdf.state
 }
 
-func (dffdf *DataFactoryFlowletDataFlow) DependOn() terra.Reference {
-	return terra.ReferenceResource(dffdf)
-}
-
+// DataFactoryFlowletDataFlowArgs contains the configurations for azurerm_data_factory_flowlet_data_flow.
 type DataFactoryFlowletDataFlowArgs struct {
 	// Annotations: list of string, optional
 	Annotations terra.ListValue[terra.StringValue] `hcl:"annotations,attr"`
@@ -89,59 +112,65 @@ type DataFactoryFlowletDataFlowArgs struct {
 	Timeouts *datafactoryflowletdataflow.Timeouts `hcl:"timeouts,block"`
 	// Transformation: min=0
 	Transformation []datafactoryflowletdataflow.Transformation `hcl:"transformation,block" validate:"min=0"`
-	// DependsOn contains resources that DataFactoryFlowletDataFlow depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataFactoryFlowletDataFlowAttributes struct {
 	ref terra.Reference
 }
 
+// Annotations returns a reference to field annotations of azurerm_data_factory_flowlet_data_flow.
 func (dffdf dataFactoryFlowletDataFlowAttributes) Annotations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dffdf.ref.Append("annotations"))
+	return terra.ReferenceAsList[terra.StringValue](dffdf.ref.Append("annotations"))
 }
 
+// DataFactoryId returns a reference to field data_factory_id of azurerm_data_factory_flowlet_data_flow.
 func (dffdf dataFactoryFlowletDataFlowAttributes) DataFactoryId() terra.StringValue {
-	return terra.ReferenceString(dffdf.ref.Append("data_factory_id"))
+	return terra.ReferenceAsString(dffdf.ref.Append("data_factory_id"))
 }
 
+// Description returns a reference to field description of azurerm_data_factory_flowlet_data_flow.
 func (dffdf dataFactoryFlowletDataFlowAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dffdf.ref.Append("description"))
+	return terra.ReferenceAsString(dffdf.ref.Append("description"))
 }
 
+// Folder returns a reference to field folder of azurerm_data_factory_flowlet_data_flow.
 func (dffdf dataFactoryFlowletDataFlowAttributes) Folder() terra.StringValue {
-	return terra.ReferenceString(dffdf.ref.Append("folder"))
+	return terra.ReferenceAsString(dffdf.ref.Append("folder"))
 }
 
+// Id returns a reference to field id of azurerm_data_factory_flowlet_data_flow.
 func (dffdf dataFactoryFlowletDataFlowAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dffdf.ref.Append("id"))
+	return terra.ReferenceAsString(dffdf.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_data_factory_flowlet_data_flow.
 func (dffdf dataFactoryFlowletDataFlowAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dffdf.ref.Append("name"))
+	return terra.ReferenceAsString(dffdf.ref.Append("name"))
 }
 
+// Script returns a reference to field script of azurerm_data_factory_flowlet_data_flow.
 func (dffdf dataFactoryFlowletDataFlowAttributes) Script() terra.StringValue {
-	return terra.ReferenceString(dffdf.ref.Append("script"))
+	return terra.ReferenceAsString(dffdf.ref.Append("script"))
 }
 
+// ScriptLines returns a reference to field script_lines of azurerm_data_factory_flowlet_data_flow.
 func (dffdf dataFactoryFlowletDataFlowAttributes) ScriptLines() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dffdf.ref.Append("script_lines"))
+	return terra.ReferenceAsList[terra.StringValue](dffdf.ref.Append("script_lines"))
 }
 
 func (dffdf dataFactoryFlowletDataFlowAttributes) Sink() terra.ListValue[datafactoryflowletdataflow.SinkAttributes] {
-	return terra.ReferenceList[datafactoryflowletdataflow.SinkAttributes](dffdf.ref.Append("sink"))
+	return terra.ReferenceAsList[datafactoryflowletdataflow.SinkAttributes](dffdf.ref.Append("sink"))
 }
 
 func (dffdf dataFactoryFlowletDataFlowAttributes) Source() terra.ListValue[datafactoryflowletdataflow.SourceAttributes] {
-	return terra.ReferenceList[datafactoryflowletdataflow.SourceAttributes](dffdf.ref.Append("source"))
+	return terra.ReferenceAsList[datafactoryflowletdataflow.SourceAttributes](dffdf.ref.Append("source"))
 }
 
 func (dffdf dataFactoryFlowletDataFlowAttributes) Timeouts() datafactoryflowletdataflow.TimeoutsAttributes {
-	return terra.ReferenceSingle[datafactoryflowletdataflow.TimeoutsAttributes](dffdf.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datafactoryflowletdataflow.TimeoutsAttributes](dffdf.ref.Append("timeouts"))
 }
 
 func (dffdf dataFactoryFlowletDataFlowAttributes) Transformation() terra.ListValue[datafactoryflowletdataflow.TransformationAttributes] {
-	return terra.ReferenceList[datafactoryflowletdataflow.TransformationAttributes](dffdf.ref.Append("transformation"))
+	return terra.ReferenceAsList[datafactoryflowletdataflow.TransformationAttributes](dffdf.ref.Append("transformation"))
 }
 
 type dataFactoryFlowletDataFlowState struct {

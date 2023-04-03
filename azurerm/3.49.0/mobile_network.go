@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMobileNetwork creates a new instance of [MobileNetwork].
 func NewMobileNetwork(name string, args MobileNetworkArgs) *MobileNetwork {
 	return &MobileNetwork{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMobileNetwork(name string, args MobileNetworkArgs) *MobileNetwork {
 
 var _ terra.Resource = (*MobileNetwork)(nil)
 
+// MobileNetwork represents the Terraform resource azurerm_mobile_network.
 type MobileNetwork struct {
-	Name  string
-	Args  MobileNetworkArgs
-	state *mobileNetworkState
+	Name      string
+	Args      MobileNetworkArgs
+	state     *mobileNetworkState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MobileNetwork].
 func (mn *MobileNetwork) Type() string {
 	return "azurerm_mobile_network"
 }
 
+// LocalName returns the local name for [MobileNetwork].
 func (mn *MobileNetwork) LocalName() string {
 	return mn.Name
 }
 
+// Configuration returns the configuration (args) for [MobileNetwork].
 func (mn *MobileNetwork) Configuration() interface{} {
 	return mn.Args
 }
 
+// DependOn is used for other resources to depend on [MobileNetwork].
+func (mn *MobileNetwork) DependOn() terra.Reference {
+	return terra.ReferenceResource(mn)
+}
+
+// Dependencies returns the list of resources [MobileNetwork] depends_on.
+func (mn *MobileNetwork) Dependencies() terra.Dependencies {
+	return mn.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MobileNetwork].
+func (mn *MobileNetwork) LifecycleManagement() *terra.Lifecycle {
+	return mn.Lifecycle
+}
+
+// Attributes returns the attributes for [MobileNetwork].
 func (mn *MobileNetwork) Attributes() mobileNetworkAttributes {
 	return mobileNetworkAttributes{ref: terra.ReferenceResource(mn)}
 }
 
+// ImportState imports the given attribute values into [MobileNetwork]'s state.
 func (mn *MobileNetwork) ImportState(av io.Reader) error {
 	mn.state = &mobileNetworkState{}
 	if err := json.NewDecoder(av).Decode(mn.state); err != nil {
@@ -49,10 +73,12 @@ func (mn *MobileNetwork) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MobileNetwork] has state.
 func (mn *MobileNetwork) State() (*mobileNetworkState, bool) {
 	return mn.state, mn.state != nil
 }
 
+// StateMust returns the state for [MobileNetwork]. Panics if the state is nil.
 func (mn *MobileNetwork) StateMust() *mobileNetworkState {
 	if mn.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mn.Type(), mn.LocalName()))
@@ -60,10 +86,7 @@ func (mn *MobileNetwork) StateMust() *mobileNetworkState {
 	return mn.state
 }
 
-func (mn *MobileNetwork) DependOn() terra.Reference {
-	return terra.ReferenceResource(mn)
-}
-
+// MobileNetworkArgs contains the configurations for azurerm_mobile_network.
 type MobileNetworkArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -81,47 +104,53 @@ type MobileNetworkArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// Timeouts: optional
 	Timeouts *mobilenetwork.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MobileNetwork depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mobileNetworkAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_mobile_network.
 func (mn mobileNetworkAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mn.ref.Append("id"))
+	return terra.ReferenceAsString(mn.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_mobile_network.
 func (mn mobileNetworkAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(mn.ref.Append("location"))
+	return terra.ReferenceAsString(mn.ref.Append("location"))
 }
 
+// MobileCountryCode returns a reference to field mobile_country_code of azurerm_mobile_network.
 func (mn mobileNetworkAttributes) MobileCountryCode() terra.StringValue {
-	return terra.ReferenceString(mn.ref.Append("mobile_country_code"))
+	return terra.ReferenceAsString(mn.ref.Append("mobile_country_code"))
 }
 
+// MobileNetworkCode returns a reference to field mobile_network_code of azurerm_mobile_network.
 func (mn mobileNetworkAttributes) MobileNetworkCode() terra.StringValue {
-	return terra.ReferenceString(mn.ref.Append("mobile_network_code"))
+	return terra.ReferenceAsString(mn.ref.Append("mobile_network_code"))
 }
 
+// Name returns a reference to field name of azurerm_mobile_network.
 func (mn mobileNetworkAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mn.ref.Append("name"))
+	return terra.ReferenceAsString(mn.ref.Append("name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_mobile_network.
 func (mn mobileNetworkAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(mn.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(mn.ref.Append("resource_group_name"))
 }
 
+// ServiceKey returns a reference to field service_key of azurerm_mobile_network.
 func (mn mobileNetworkAttributes) ServiceKey() terra.StringValue {
-	return terra.ReferenceString(mn.ref.Append("service_key"))
+	return terra.ReferenceAsString(mn.ref.Append("service_key"))
 }
 
+// Tags returns a reference to field tags of azurerm_mobile_network.
 func (mn mobileNetworkAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mn.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mn.ref.Append("tags"))
 }
 
 func (mn mobileNetworkAttributes) Timeouts() mobilenetwork.TimeoutsAttributes {
-	return terra.ReferenceSingle[mobilenetwork.TimeoutsAttributes](mn.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[mobilenetwork.TimeoutsAttributes](mn.ref.Append("timeouts"))
 }
 
 type mobileNetworkState struct {

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataComputeRouter creates a new instance of [DataComputeRouter].
 func NewDataComputeRouter(name string, args DataComputeRouterArgs) *DataComputeRouter {
 	return &DataComputeRouter{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataComputeRouter(name string, args DataComputeRouterArgs) *DataComputeR
 
 var _ terra.DataResource = (*DataComputeRouter)(nil)
 
+// DataComputeRouter represents the Terraform data resource google_compute_router.
 type DataComputeRouter struct {
 	Name string
 	Args DataComputeRouterArgs
 }
 
+// DataSource returns the Terraform object type for [DataComputeRouter].
 func (cr *DataComputeRouter) DataSource() string {
 	return "google_compute_router"
 }
 
+// LocalName returns the local name for [DataComputeRouter].
 func (cr *DataComputeRouter) LocalName() string {
 	return cr.Name
 }
 
+// Configuration returns the configuration (args) for [DataComputeRouter].
 func (cr *DataComputeRouter) Configuration() interface{} {
 	return cr.Args
 }
 
+// Attributes returns the attributes for [DataComputeRouter].
 func (cr *DataComputeRouter) Attributes() dataComputeRouterAttributes {
 	return dataComputeRouterAttributes{ref: terra.ReferenceDataResource(cr)}
 }
 
+// DataComputeRouterArgs contains the configurations for google_compute_router.
 type DataComputeRouterArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -55,42 +62,51 @@ type dataComputeRouterAttributes struct {
 	ref terra.Reference
 }
 
+// CreationTimestamp returns a reference to field creation_timestamp of google_compute_router.
 func (cr dataComputeRouterAttributes) CreationTimestamp() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("creation_timestamp"))
+	return terra.ReferenceAsString(cr.ref.Append("creation_timestamp"))
 }
 
+// Description returns a reference to field description of google_compute_router.
 func (cr dataComputeRouterAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("description"))
+	return terra.ReferenceAsString(cr.ref.Append("description"))
 }
 
+// EncryptedInterconnectRouter returns a reference to field encrypted_interconnect_router of google_compute_router.
 func (cr dataComputeRouterAttributes) EncryptedInterconnectRouter() terra.BoolValue {
-	return terra.ReferenceBool(cr.ref.Append("encrypted_interconnect_router"))
+	return terra.ReferenceAsBool(cr.ref.Append("encrypted_interconnect_router"))
 }
 
+// Id returns a reference to field id of google_compute_router.
 func (cr dataComputeRouterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("id"))
+	return terra.ReferenceAsString(cr.ref.Append("id"))
 }
 
+// Name returns a reference to field name of google_compute_router.
 func (cr dataComputeRouterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("name"))
+	return terra.ReferenceAsString(cr.ref.Append("name"))
 }
 
+// Network returns a reference to field network of google_compute_router.
 func (cr dataComputeRouterAttributes) Network() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("network"))
+	return terra.ReferenceAsString(cr.ref.Append("network"))
 }
 
+// Project returns a reference to field project of google_compute_router.
 func (cr dataComputeRouterAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("project"))
+	return terra.ReferenceAsString(cr.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_compute_router.
 func (cr dataComputeRouterAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("region"))
+	return terra.ReferenceAsString(cr.ref.Append("region"))
 }
 
+// SelfLink returns a reference to field self_link of google_compute_router.
 func (cr dataComputeRouterAttributes) SelfLink() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("self_link"))
+	return terra.ReferenceAsString(cr.ref.Append("self_link"))
 }
 
 func (cr dataComputeRouterAttributes) Bgp() terra.ListValue[datacomputerouter.BgpAttributes] {
-	return terra.ReferenceList[datacomputerouter.BgpAttributes](cr.ref.Append("bgp"))
+	return terra.ReferenceAsList[datacomputerouter.BgpAttributes](cr.ref.Append("bgp"))
 }

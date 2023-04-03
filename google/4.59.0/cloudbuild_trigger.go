@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCloudbuildTrigger creates a new instance of [CloudbuildTrigger].
 func NewCloudbuildTrigger(name string, args CloudbuildTriggerArgs) *CloudbuildTrigger {
 	return &CloudbuildTrigger{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCloudbuildTrigger(name string, args CloudbuildTriggerArgs) *CloudbuildTr
 
 var _ terra.Resource = (*CloudbuildTrigger)(nil)
 
+// CloudbuildTrigger represents the Terraform resource google_cloudbuild_trigger.
 type CloudbuildTrigger struct {
-	Name  string
-	Args  CloudbuildTriggerArgs
-	state *cloudbuildTriggerState
+	Name      string
+	Args      CloudbuildTriggerArgs
+	state     *cloudbuildTriggerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudbuildTrigger].
 func (ct *CloudbuildTrigger) Type() string {
 	return "google_cloudbuild_trigger"
 }
 
+// LocalName returns the local name for [CloudbuildTrigger].
 func (ct *CloudbuildTrigger) LocalName() string {
 	return ct.Name
 }
 
+// Configuration returns the configuration (args) for [CloudbuildTrigger].
 func (ct *CloudbuildTrigger) Configuration() interface{} {
 	return ct.Args
 }
 
+// DependOn is used for other resources to depend on [CloudbuildTrigger].
+func (ct *CloudbuildTrigger) DependOn() terra.Reference {
+	return terra.ReferenceResource(ct)
+}
+
+// Dependencies returns the list of resources [CloudbuildTrigger] depends_on.
+func (ct *CloudbuildTrigger) Dependencies() terra.Dependencies {
+	return ct.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudbuildTrigger].
+func (ct *CloudbuildTrigger) LifecycleManagement() *terra.Lifecycle {
+	return ct.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudbuildTrigger].
 func (ct *CloudbuildTrigger) Attributes() cloudbuildTriggerAttributes {
 	return cloudbuildTriggerAttributes{ref: terra.ReferenceResource(ct)}
 }
 
+// ImportState imports the given attribute values into [CloudbuildTrigger]'s state.
 func (ct *CloudbuildTrigger) ImportState(av io.Reader) error {
 	ct.state = &cloudbuildTriggerState{}
 	if err := json.NewDecoder(av).Decode(ct.state); err != nil {
@@ -49,10 +73,12 @@ func (ct *CloudbuildTrigger) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudbuildTrigger] has state.
 func (ct *CloudbuildTrigger) State() (*cloudbuildTriggerState, bool) {
 	return ct.state, ct.state != nil
 }
 
+// StateMust returns the state for [CloudbuildTrigger]. Panics if the state is nil.
 func (ct *CloudbuildTrigger) StateMust() *cloudbuildTriggerState {
 	if ct.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ct.Type(), ct.LocalName()))
@@ -60,10 +86,7 @@ func (ct *CloudbuildTrigger) StateMust() *cloudbuildTriggerState {
 	return ct.state
 }
 
-func (ct *CloudbuildTrigger) DependOn() terra.Reference {
-	return terra.ReferenceResource(ct)
-}
-
+// CloudbuildTriggerArgs contains the configurations for google_cloudbuild_trigger.
 type CloudbuildTriggerArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -113,115 +136,129 @@ type CloudbuildTriggerArgs struct {
 	TriggerTemplate *cloudbuildtrigger.TriggerTemplate `hcl:"trigger_template,block"`
 	// WebhookConfig: optional
 	WebhookConfig *cloudbuildtrigger.WebhookConfig `hcl:"webhook_config,block"`
-	// DependsOn contains resources that CloudbuildTrigger depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudbuildTriggerAttributes struct {
 	ref terra.Reference
 }
 
+// CreateTime returns a reference to field create_time of google_cloudbuild_trigger.
 func (ct cloudbuildTriggerAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(ct.ref.Append("create_time"))
+	return terra.ReferenceAsString(ct.ref.Append("create_time"))
 }
 
+// Description returns a reference to field description of google_cloudbuild_trigger.
 func (ct cloudbuildTriggerAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ct.ref.Append("description"))
+	return terra.ReferenceAsString(ct.ref.Append("description"))
 }
 
+// Disabled returns a reference to field disabled of google_cloudbuild_trigger.
 func (ct cloudbuildTriggerAttributes) Disabled() terra.BoolValue {
-	return terra.ReferenceBool(ct.ref.Append("disabled"))
+	return terra.ReferenceAsBool(ct.ref.Append("disabled"))
 }
 
+// Filename returns a reference to field filename of google_cloudbuild_trigger.
 func (ct cloudbuildTriggerAttributes) Filename() terra.StringValue {
-	return terra.ReferenceString(ct.ref.Append("filename"))
+	return terra.ReferenceAsString(ct.ref.Append("filename"))
 }
 
+// Filter returns a reference to field filter of google_cloudbuild_trigger.
 func (ct cloudbuildTriggerAttributes) Filter() terra.StringValue {
-	return terra.ReferenceString(ct.ref.Append("filter"))
+	return terra.ReferenceAsString(ct.ref.Append("filter"))
 }
 
+// Id returns a reference to field id of google_cloudbuild_trigger.
 func (ct cloudbuildTriggerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ct.ref.Append("id"))
+	return terra.ReferenceAsString(ct.ref.Append("id"))
 }
 
+// IgnoredFiles returns a reference to field ignored_files of google_cloudbuild_trigger.
 func (ct cloudbuildTriggerAttributes) IgnoredFiles() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ct.ref.Append("ignored_files"))
+	return terra.ReferenceAsList[terra.StringValue](ct.ref.Append("ignored_files"))
 }
 
+// IncludeBuildLogs returns a reference to field include_build_logs of google_cloudbuild_trigger.
 func (ct cloudbuildTriggerAttributes) IncludeBuildLogs() terra.StringValue {
-	return terra.ReferenceString(ct.ref.Append("include_build_logs"))
+	return terra.ReferenceAsString(ct.ref.Append("include_build_logs"))
 }
 
+// IncludedFiles returns a reference to field included_files of google_cloudbuild_trigger.
 func (ct cloudbuildTriggerAttributes) IncludedFiles() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ct.ref.Append("included_files"))
+	return terra.ReferenceAsList[terra.StringValue](ct.ref.Append("included_files"))
 }
 
+// Location returns a reference to field location of google_cloudbuild_trigger.
 func (ct cloudbuildTriggerAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ct.ref.Append("location"))
+	return terra.ReferenceAsString(ct.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_cloudbuild_trigger.
 func (ct cloudbuildTriggerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ct.ref.Append("name"))
+	return terra.ReferenceAsString(ct.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_cloudbuild_trigger.
 func (ct cloudbuildTriggerAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ct.ref.Append("project"))
+	return terra.ReferenceAsString(ct.ref.Append("project"))
 }
 
+// ServiceAccount returns a reference to field service_account of google_cloudbuild_trigger.
 func (ct cloudbuildTriggerAttributes) ServiceAccount() terra.StringValue {
-	return terra.ReferenceString(ct.ref.Append("service_account"))
+	return terra.ReferenceAsString(ct.ref.Append("service_account"))
 }
 
+// Substitutions returns a reference to field substitutions of google_cloudbuild_trigger.
 func (ct cloudbuildTriggerAttributes) Substitutions() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ct.ref.Append("substitutions"))
+	return terra.ReferenceAsMap[terra.StringValue](ct.ref.Append("substitutions"))
 }
 
+// Tags returns a reference to field tags of google_cloudbuild_trigger.
 func (ct cloudbuildTriggerAttributes) Tags() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ct.ref.Append("tags"))
+	return terra.ReferenceAsList[terra.StringValue](ct.ref.Append("tags"))
 }
 
+// TriggerId returns a reference to field trigger_id of google_cloudbuild_trigger.
 func (ct cloudbuildTriggerAttributes) TriggerId() terra.StringValue {
-	return terra.ReferenceString(ct.ref.Append("trigger_id"))
+	return terra.ReferenceAsString(ct.ref.Append("trigger_id"))
 }
 
 func (ct cloudbuildTriggerAttributes) ApprovalConfig() terra.ListValue[cloudbuildtrigger.ApprovalConfigAttributes] {
-	return terra.ReferenceList[cloudbuildtrigger.ApprovalConfigAttributes](ct.ref.Append("approval_config"))
+	return terra.ReferenceAsList[cloudbuildtrigger.ApprovalConfigAttributes](ct.ref.Append("approval_config"))
 }
 
 func (ct cloudbuildTriggerAttributes) BitbucketServerTriggerConfig() terra.ListValue[cloudbuildtrigger.BitbucketServerTriggerConfigAttributes] {
-	return terra.ReferenceList[cloudbuildtrigger.BitbucketServerTriggerConfigAttributes](ct.ref.Append("bitbucket_server_trigger_config"))
+	return terra.ReferenceAsList[cloudbuildtrigger.BitbucketServerTriggerConfigAttributes](ct.ref.Append("bitbucket_server_trigger_config"))
 }
 
 func (ct cloudbuildTriggerAttributes) Build() terra.ListValue[cloudbuildtrigger.BuildAttributes] {
-	return terra.ReferenceList[cloudbuildtrigger.BuildAttributes](ct.ref.Append("build"))
+	return terra.ReferenceAsList[cloudbuildtrigger.BuildAttributes](ct.ref.Append("build"))
 }
 
 func (ct cloudbuildTriggerAttributes) GitFileSource() terra.ListValue[cloudbuildtrigger.GitFileSourceAttributes] {
-	return terra.ReferenceList[cloudbuildtrigger.GitFileSourceAttributes](ct.ref.Append("git_file_source"))
+	return terra.ReferenceAsList[cloudbuildtrigger.GitFileSourceAttributes](ct.ref.Append("git_file_source"))
 }
 
 func (ct cloudbuildTriggerAttributes) Github() terra.ListValue[cloudbuildtrigger.GithubAttributes] {
-	return terra.ReferenceList[cloudbuildtrigger.GithubAttributes](ct.ref.Append("github"))
+	return terra.ReferenceAsList[cloudbuildtrigger.GithubAttributes](ct.ref.Append("github"))
 }
 
 func (ct cloudbuildTriggerAttributes) PubsubConfig() terra.ListValue[cloudbuildtrigger.PubsubConfigAttributes] {
-	return terra.ReferenceList[cloudbuildtrigger.PubsubConfigAttributes](ct.ref.Append("pubsub_config"))
+	return terra.ReferenceAsList[cloudbuildtrigger.PubsubConfigAttributes](ct.ref.Append("pubsub_config"))
 }
 
 func (ct cloudbuildTriggerAttributes) SourceToBuild() terra.ListValue[cloudbuildtrigger.SourceToBuildAttributes] {
-	return terra.ReferenceList[cloudbuildtrigger.SourceToBuildAttributes](ct.ref.Append("source_to_build"))
+	return terra.ReferenceAsList[cloudbuildtrigger.SourceToBuildAttributes](ct.ref.Append("source_to_build"))
 }
 
 func (ct cloudbuildTriggerAttributes) Timeouts() cloudbuildtrigger.TimeoutsAttributes {
-	return terra.ReferenceSingle[cloudbuildtrigger.TimeoutsAttributes](ct.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cloudbuildtrigger.TimeoutsAttributes](ct.ref.Append("timeouts"))
 }
 
 func (ct cloudbuildTriggerAttributes) TriggerTemplate() terra.ListValue[cloudbuildtrigger.TriggerTemplateAttributes] {
-	return terra.ReferenceList[cloudbuildtrigger.TriggerTemplateAttributes](ct.ref.Append("trigger_template"))
+	return terra.ReferenceAsList[cloudbuildtrigger.TriggerTemplateAttributes](ct.ref.Append("trigger_template"))
 }
 
 func (ct cloudbuildTriggerAttributes) WebhookConfig() terra.ListValue[cloudbuildtrigger.WebhookConfigAttributes] {
-	return terra.ReferenceList[cloudbuildtrigger.WebhookConfigAttributes](ct.ref.Append("webhook_config"))
+	return terra.ReferenceAsList[cloudbuildtrigger.WebhookConfigAttributes](ct.ref.Append("webhook_config"))
 }
 
 type cloudbuildTriggerState struct {

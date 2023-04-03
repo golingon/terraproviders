@@ -175,7 +175,7 @@ func (s SpecAttributes) InternalWithRef(ref terra.Reference) SpecAttributes {
 	return SpecAttributes{ref: ref}
 }
 
-func (s SpecAttributes) InternalTokens() hclwrite.Tokens {
+func (s SpecAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -203,7 +203,7 @@ func (gr GrpcRouteAttributes) InternalWithRef(ref terra.Reference) GrpcRouteAttr
 	return GrpcRouteAttributes{ref: ref}
 }
 
-func (gr GrpcRouteAttributes) InternalTokens() hclwrite.Tokens {
+func (gr GrpcRouteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gr.ref.InternalTokens()
 }
 
@@ -227,7 +227,7 @@ func (a GrpcRouteActionAttributes) InternalWithRef(ref terra.Reference) GrpcRout
 	return GrpcRouteActionAttributes{ref: ref}
 }
 
-func (a GrpcRouteActionAttributes) InternalTokens() hclwrite.Tokens {
+func (a GrpcRouteActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -247,7 +247,7 @@ func (t GrpcRouteActionTargetAttributes) InternalWithRef(ref terra.Reference) Gr
 	return GrpcRouteActionTargetAttributes{ref: ref}
 }
 
-func (t GrpcRouteActionTargetAttributes) InternalTokens() hclwrite.Tokens {
+func (t GrpcRouteActionTargetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -267,7 +267,7 @@ func (vs GrpcRouteActionTargetVirtualServiceAttributes) InternalWithRef(ref terr
 	return GrpcRouteActionTargetVirtualServiceAttributes{ref: ref}
 }
 
-func (vs GrpcRouteActionTargetVirtualServiceAttributes) InternalTokens() hclwrite.Tokens {
+func (vs GrpcRouteActionTargetVirtualServiceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vs.ref.InternalTokens()
 }
 
@@ -287,7 +287,7 @@ func (m GrpcRouteMatchAttributes) InternalWithRef(ref terra.Reference) GrpcRoute
 	return GrpcRouteMatchAttributes{ref: ref}
 }
 
-func (m GrpcRouteMatchAttributes) InternalTokens() hclwrite.Tokens {
+func (m GrpcRouteMatchAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -311,7 +311,7 @@ func (hr Http2RouteAttributes) InternalWithRef(ref terra.Reference) Http2RouteAt
 	return Http2RouteAttributes{ref: ref}
 }
 
-func (hr Http2RouteAttributes) InternalTokens() hclwrite.Tokens {
+func (hr Http2RouteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hr.ref.InternalTokens()
 }
 
@@ -335,7 +335,7 @@ func (a Http2RouteActionAttributes) InternalWithRef(ref terra.Reference) Http2Ro
 	return Http2RouteActionAttributes{ref: ref}
 }
 
-func (a Http2RouteActionAttributes) InternalTokens() hclwrite.Tokens {
+func (a Http2RouteActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -359,7 +359,7 @@ func (r Http2RouteActionRewriteAttributes) InternalWithRef(ref terra.Reference) 
 	return Http2RouteActionRewriteAttributes{ref: ref}
 }
 
-func (r Http2RouteActionRewriteAttributes) InternalTokens() hclwrite.Tokens {
+func (r Http2RouteActionRewriteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -383,7 +383,7 @@ func (h Http2RouteActionRewriteHostnameAttributes) InternalWithRef(ref terra.Ref
 	return Http2RouteActionRewriteHostnameAttributes{ref: ref}
 }
 
-func (h Http2RouteActionRewriteHostnameAttributes) InternalTokens() hclwrite.Tokens {
+func (h Http2RouteActionRewriteHostnameAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 
@@ -403,7 +403,7 @@ func (p Http2RouteActionRewritePrefixAttributes) InternalWithRef(ref terra.Refer
 	return Http2RouteActionRewritePrefixAttributes{ref: ref}
 }
 
-func (p Http2RouteActionRewritePrefixAttributes) InternalTokens() hclwrite.Tokens {
+func (p Http2RouteActionRewritePrefixAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -427,7 +427,7 @@ func (t Http2RouteActionTargetAttributes) InternalWithRef(ref terra.Reference) H
 	return Http2RouteActionTargetAttributes{ref: ref}
 }
 
-func (t Http2RouteActionTargetAttributes) InternalTokens() hclwrite.Tokens {
+func (t Http2RouteActionTargetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -447,7 +447,7 @@ func (vs Http2RouteActionTargetVirtualServiceAttributes) InternalWithRef(ref ter
 	return Http2RouteActionTargetVirtualServiceAttributes{ref: ref}
 }
 
-func (vs Http2RouteActionTargetVirtualServiceAttributes) InternalTokens() hclwrite.Tokens {
+func (vs Http2RouteActionTargetVirtualServiceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vs.ref.InternalTokens()
 }
 
@@ -467,7 +467,7 @@ func (m Http2RouteMatchAttributes) InternalWithRef(ref terra.Reference) Http2Rou
 	return Http2RouteMatchAttributes{ref: ref}
 }
 
-func (m Http2RouteMatchAttributes) InternalTokens() hclwrite.Tokens {
+func (m Http2RouteMatchAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -495,7 +495,7 @@ func (h Http2RouteMatchHostnameAttributes) InternalWithRef(ref terra.Reference) 
 	return Http2RouteMatchHostnameAttributes{ref: ref}
 }
 
-func (h Http2RouteMatchHostnameAttributes) InternalTokens() hclwrite.Tokens {
+func (h Http2RouteMatchHostnameAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 
@@ -519,7 +519,7 @@ func (hr HttpRouteAttributes) InternalWithRef(ref terra.Reference) HttpRouteAttr
 	return HttpRouteAttributes{ref: ref}
 }
 
-func (hr HttpRouteAttributes) InternalTokens() hclwrite.Tokens {
+func (hr HttpRouteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hr.ref.InternalTokens()
 }
 
@@ -543,7 +543,7 @@ func (a HttpRouteActionAttributes) InternalWithRef(ref terra.Reference) HttpRout
 	return HttpRouteActionAttributes{ref: ref}
 }
 
-func (a HttpRouteActionAttributes) InternalTokens() hclwrite.Tokens {
+func (a HttpRouteActionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -567,7 +567,7 @@ func (r HttpRouteActionRewriteAttributes) InternalWithRef(ref terra.Reference) H
 	return HttpRouteActionRewriteAttributes{ref: ref}
 }
 
-func (r HttpRouteActionRewriteAttributes) InternalTokens() hclwrite.Tokens {
+func (r HttpRouteActionRewriteAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return r.ref.InternalTokens()
 }
 
@@ -591,7 +591,7 @@ func (h HttpRouteActionRewriteHostnameAttributes) InternalWithRef(ref terra.Refe
 	return HttpRouteActionRewriteHostnameAttributes{ref: ref}
 }
 
-func (h HttpRouteActionRewriteHostnameAttributes) InternalTokens() hclwrite.Tokens {
+func (h HttpRouteActionRewriteHostnameAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 
@@ -611,7 +611,7 @@ func (p HttpRouteActionRewritePrefixAttributes) InternalWithRef(ref terra.Refere
 	return HttpRouteActionRewritePrefixAttributes{ref: ref}
 }
 
-func (p HttpRouteActionRewritePrefixAttributes) InternalTokens() hclwrite.Tokens {
+func (p HttpRouteActionRewritePrefixAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
@@ -635,7 +635,7 @@ func (t HttpRouteActionTargetAttributes) InternalWithRef(ref terra.Reference) Ht
 	return HttpRouteActionTargetAttributes{ref: ref}
 }
 
-func (t HttpRouteActionTargetAttributes) InternalTokens() hclwrite.Tokens {
+func (t HttpRouteActionTargetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
@@ -655,7 +655,7 @@ func (vs HttpRouteActionTargetVirtualServiceAttributes) InternalWithRef(ref terr
 	return HttpRouteActionTargetVirtualServiceAttributes{ref: ref}
 }
 
-func (vs HttpRouteActionTargetVirtualServiceAttributes) InternalTokens() hclwrite.Tokens {
+func (vs HttpRouteActionTargetVirtualServiceAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return vs.ref.InternalTokens()
 }
 
@@ -675,7 +675,7 @@ func (m HttpRouteMatchAttributes) InternalWithRef(ref terra.Reference) HttpRoute
 	return HttpRouteMatchAttributes{ref: ref}
 }
 
-func (m HttpRouteMatchAttributes) InternalTokens() hclwrite.Tokens {
+func (m HttpRouteMatchAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return m.ref.InternalTokens()
 }
 
@@ -703,7 +703,7 @@ func (h HttpRouteMatchHostnameAttributes) InternalWithRef(ref terra.Reference) H
 	return HttpRouteMatchHostnameAttributes{ref: ref}
 }
 
-func (h HttpRouteMatchHostnameAttributes) InternalTokens() hclwrite.Tokens {
+func (h HttpRouteMatchHostnameAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return h.ref.InternalTokens()
 }
 

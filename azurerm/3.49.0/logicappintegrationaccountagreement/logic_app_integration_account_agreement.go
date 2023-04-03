@@ -36,80 +36,80 @@ type GuestIdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (gi GuestIdentityAttributes) InternalRef() terra.Reference {
-	return gi.ref
+func (gi GuestIdentityAttributes) InternalRef() (terra.Reference, error) {
+	return gi.ref, nil
 }
 
 func (gi GuestIdentityAttributes) InternalWithRef(ref terra.Reference) GuestIdentityAttributes {
 	return GuestIdentityAttributes{ref: ref}
 }
 
-func (gi GuestIdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (gi GuestIdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return gi.ref.InternalTokens()
 }
 
 func (gi GuestIdentityAttributes) Qualifier() terra.StringValue {
-	return terra.ReferenceString(gi.ref.Append("qualifier"))
+	return terra.ReferenceAsString(gi.ref.Append("qualifier"))
 }
 
 func (gi GuestIdentityAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(gi.ref.Append("value"))
+	return terra.ReferenceAsString(gi.ref.Append("value"))
 }
 
 type HostIdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (hi HostIdentityAttributes) InternalRef() terra.Reference {
-	return hi.ref
+func (hi HostIdentityAttributes) InternalRef() (terra.Reference, error) {
+	return hi.ref, nil
 }
 
 func (hi HostIdentityAttributes) InternalWithRef(ref terra.Reference) HostIdentityAttributes {
 	return HostIdentityAttributes{ref: ref}
 }
 
-func (hi HostIdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (hi HostIdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return hi.ref.InternalTokens()
 }
 
 func (hi HostIdentityAttributes) Qualifier() terra.StringValue {
-	return terra.ReferenceString(hi.ref.Append("qualifier"))
+	return terra.ReferenceAsString(hi.ref.Append("qualifier"))
 }
 
 func (hi HostIdentityAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(hi.ref.Append("value"))
+	return terra.ReferenceAsString(hi.ref.Append("value"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type GuestIdentityState struct {

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataMobileNetworkDataNetwork creates a new instance of [DataMobileNetworkDataNetwork].
 func NewDataMobileNetworkDataNetwork(name string, args DataMobileNetworkDataNetworkArgs) *DataMobileNetworkDataNetwork {
 	return &DataMobileNetworkDataNetwork{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataMobileNetworkDataNetwork(name string, args DataMobileNetworkDataNetw
 
 var _ terra.DataResource = (*DataMobileNetworkDataNetwork)(nil)
 
+// DataMobileNetworkDataNetwork represents the Terraform data resource azurerm_mobile_network_data_network.
 type DataMobileNetworkDataNetwork struct {
 	Name string
 	Args DataMobileNetworkDataNetworkArgs
 }
 
+// DataSource returns the Terraform object type for [DataMobileNetworkDataNetwork].
 func (mndn *DataMobileNetworkDataNetwork) DataSource() string {
 	return "azurerm_mobile_network_data_network"
 }
 
+// LocalName returns the local name for [DataMobileNetworkDataNetwork].
 func (mndn *DataMobileNetworkDataNetwork) LocalName() string {
 	return mndn.Name
 }
 
+// Configuration returns the configuration (args) for [DataMobileNetworkDataNetwork].
 func (mndn *DataMobileNetworkDataNetwork) Configuration() interface{} {
 	return mndn.Args
 }
 
+// Attributes returns the attributes for [DataMobileNetworkDataNetwork].
 func (mndn *DataMobileNetworkDataNetwork) Attributes() dataMobileNetworkDataNetworkAttributes {
 	return dataMobileNetworkDataNetworkAttributes{ref: terra.ReferenceDataResource(mndn)}
 }
 
+// DataMobileNetworkDataNetworkArgs contains the configurations for azurerm_mobile_network_data_network.
 type DataMobileNetworkDataNetworkArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,30 +58,36 @@ type dataMobileNetworkDataNetworkAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of azurerm_mobile_network_data_network.
 func (mndn dataMobileNetworkDataNetworkAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(mndn.ref.Append("description"))
+	return terra.ReferenceAsString(mndn.ref.Append("description"))
 }
 
+// Id returns a reference to field id of azurerm_mobile_network_data_network.
 func (mndn dataMobileNetworkDataNetworkAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mndn.ref.Append("id"))
+	return terra.ReferenceAsString(mndn.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_mobile_network_data_network.
 func (mndn dataMobileNetworkDataNetworkAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(mndn.ref.Append("location"))
+	return terra.ReferenceAsString(mndn.ref.Append("location"))
 }
 
+// MobileNetworkId returns a reference to field mobile_network_id of azurerm_mobile_network_data_network.
 func (mndn dataMobileNetworkDataNetworkAttributes) MobileNetworkId() terra.StringValue {
-	return terra.ReferenceString(mndn.ref.Append("mobile_network_id"))
+	return terra.ReferenceAsString(mndn.ref.Append("mobile_network_id"))
 }
 
+// Name returns a reference to field name of azurerm_mobile_network_data_network.
 func (mndn dataMobileNetworkDataNetworkAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mndn.ref.Append("name"))
+	return terra.ReferenceAsString(mndn.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of azurerm_mobile_network_data_network.
 func (mndn dataMobileNetworkDataNetworkAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mndn.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mndn.ref.Append("tags"))
 }
 
 func (mndn dataMobileNetworkDataNetworkAttributes) Timeouts() datamobilenetworkdatanetwork.TimeoutsAttributes {
-	return terra.ReferenceSingle[datamobilenetworkdatanetwork.TimeoutsAttributes](mndn.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datamobilenetworkdatanetwork.TimeoutsAttributes](mndn.ref.Append("timeouts"))
 }

@@ -53,132 +53,132 @@ type FileSharesAttributes struct {
 	ref terra.Reference
 }
 
-func (fs FileSharesAttributes) InternalRef() terra.Reference {
-	return fs.ref
+func (fs FileSharesAttributes) InternalRef() (terra.Reference, error) {
+	return fs.ref, nil
 }
 
 func (fs FileSharesAttributes) InternalWithRef(ref terra.Reference) FileSharesAttributes {
 	return FileSharesAttributes{ref: ref}
 }
 
-func (fs FileSharesAttributes) InternalTokens() hclwrite.Tokens {
+func (fs FileSharesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fs.ref.InternalTokens()
 }
 
 func (fs FileSharesAttributes) CapacityGb() terra.NumberValue {
-	return terra.ReferenceNumber(fs.ref.Append("capacity_gb"))
+	return terra.ReferenceAsNumber(fs.ref.Append("capacity_gb"))
 }
 
 func (fs FileSharesAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(fs.ref.Append("name"))
+	return terra.ReferenceAsString(fs.ref.Append("name"))
 }
 
 func (fs FileSharesAttributes) SourceBackup() terra.StringValue {
-	return terra.ReferenceString(fs.ref.Append("source_backup"))
+	return terra.ReferenceAsString(fs.ref.Append("source_backup"))
 }
 
 func (fs FileSharesAttributes) NfsExportOptions() terra.ListValue[NfsExportOptionsAttributes] {
-	return terra.ReferenceList[NfsExportOptionsAttributes](fs.ref.Append("nfs_export_options"))
+	return terra.ReferenceAsList[NfsExportOptionsAttributes](fs.ref.Append("nfs_export_options"))
 }
 
 type NfsExportOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (neo NfsExportOptionsAttributes) InternalRef() terra.Reference {
-	return neo.ref
+func (neo NfsExportOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return neo.ref, nil
 }
 
 func (neo NfsExportOptionsAttributes) InternalWithRef(ref terra.Reference) NfsExportOptionsAttributes {
 	return NfsExportOptionsAttributes{ref: ref}
 }
 
-func (neo NfsExportOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (neo NfsExportOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return neo.ref.InternalTokens()
 }
 
 func (neo NfsExportOptionsAttributes) AccessMode() terra.StringValue {
-	return terra.ReferenceString(neo.ref.Append("access_mode"))
+	return terra.ReferenceAsString(neo.ref.Append("access_mode"))
 }
 
 func (neo NfsExportOptionsAttributes) AnonGid() terra.NumberValue {
-	return terra.ReferenceNumber(neo.ref.Append("anon_gid"))
+	return terra.ReferenceAsNumber(neo.ref.Append("anon_gid"))
 }
 
 func (neo NfsExportOptionsAttributes) AnonUid() terra.NumberValue {
-	return terra.ReferenceNumber(neo.ref.Append("anon_uid"))
+	return terra.ReferenceAsNumber(neo.ref.Append("anon_uid"))
 }
 
 func (neo NfsExportOptionsAttributes) IpRanges() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](neo.ref.Append("ip_ranges"))
+	return terra.ReferenceAsList[terra.StringValue](neo.ref.Append("ip_ranges"))
 }
 
 func (neo NfsExportOptionsAttributes) SquashMode() terra.StringValue {
-	return terra.ReferenceString(neo.ref.Append("squash_mode"))
+	return terra.ReferenceAsString(neo.ref.Append("squash_mode"))
 }
 
 type NetworksAttributes struct {
 	ref terra.Reference
 }
 
-func (n NetworksAttributes) InternalRef() terra.Reference {
-	return n.ref
+func (n NetworksAttributes) InternalRef() (terra.Reference, error) {
+	return n.ref, nil
 }
 
 func (n NetworksAttributes) InternalWithRef(ref terra.Reference) NetworksAttributes {
 	return NetworksAttributes{ref: ref}
 }
 
-func (n NetworksAttributes) InternalTokens() hclwrite.Tokens {
+func (n NetworksAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return n.ref.InternalTokens()
 }
 
 func (n NetworksAttributes) ConnectMode() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("connect_mode"))
+	return terra.ReferenceAsString(n.ref.Append("connect_mode"))
 }
 
 func (n NetworksAttributes) IpAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](n.ref.Append("ip_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](n.ref.Append("ip_addresses"))
 }
 
 func (n NetworksAttributes) Modes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](n.ref.Append("modes"))
+	return terra.ReferenceAsList[terra.StringValue](n.ref.Append("modes"))
 }
 
 func (n NetworksAttributes) Network() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("network"))
+	return terra.ReferenceAsString(n.ref.Append("network"))
 }
 
 func (n NetworksAttributes) ReservedIpRange() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("reserved_ip_range"))
+	return terra.ReferenceAsString(n.ref.Append("reserved_ip_range"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type FileSharesState struct {

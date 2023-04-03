@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCloudTasksQueueIamPolicy creates a new instance of [CloudTasksQueueIamPolicy].
 func NewCloudTasksQueueIamPolicy(name string, args CloudTasksQueueIamPolicyArgs) *CloudTasksQueueIamPolicy {
 	return &CloudTasksQueueIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCloudTasksQueueIamPolicy(name string, args CloudTasksQueueIamPolicyArgs)
 
 var _ terra.Resource = (*CloudTasksQueueIamPolicy)(nil)
 
+// CloudTasksQueueIamPolicy represents the Terraform resource google_cloud_tasks_queue_iam_policy.
 type CloudTasksQueueIamPolicy struct {
-	Name  string
-	Args  CloudTasksQueueIamPolicyArgs
-	state *cloudTasksQueueIamPolicyState
+	Name      string
+	Args      CloudTasksQueueIamPolicyArgs
+	state     *cloudTasksQueueIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudTasksQueueIamPolicy].
 func (ctqip *CloudTasksQueueIamPolicy) Type() string {
 	return "google_cloud_tasks_queue_iam_policy"
 }
 
+// LocalName returns the local name for [CloudTasksQueueIamPolicy].
 func (ctqip *CloudTasksQueueIamPolicy) LocalName() string {
 	return ctqip.Name
 }
 
+// Configuration returns the configuration (args) for [CloudTasksQueueIamPolicy].
 func (ctqip *CloudTasksQueueIamPolicy) Configuration() interface{} {
 	return ctqip.Args
 }
 
+// DependOn is used for other resources to depend on [CloudTasksQueueIamPolicy].
+func (ctqip *CloudTasksQueueIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(ctqip)
+}
+
+// Dependencies returns the list of resources [CloudTasksQueueIamPolicy] depends_on.
+func (ctqip *CloudTasksQueueIamPolicy) Dependencies() terra.Dependencies {
+	return ctqip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudTasksQueueIamPolicy].
+func (ctqip *CloudTasksQueueIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return ctqip.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudTasksQueueIamPolicy].
 func (ctqip *CloudTasksQueueIamPolicy) Attributes() cloudTasksQueueIamPolicyAttributes {
 	return cloudTasksQueueIamPolicyAttributes{ref: terra.ReferenceResource(ctqip)}
 }
 
+// ImportState imports the given attribute values into [CloudTasksQueueIamPolicy]'s state.
 func (ctqip *CloudTasksQueueIamPolicy) ImportState(av io.Reader) error {
 	ctqip.state = &cloudTasksQueueIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(ctqip.state); err != nil {
@@ -48,10 +72,12 @@ func (ctqip *CloudTasksQueueIamPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudTasksQueueIamPolicy] has state.
 func (ctqip *CloudTasksQueueIamPolicy) State() (*cloudTasksQueueIamPolicyState, bool) {
 	return ctqip.state, ctqip.state != nil
 }
 
+// StateMust returns the state for [CloudTasksQueueIamPolicy]. Panics if the state is nil.
 func (ctqip *CloudTasksQueueIamPolicy) StateMust() *cloudTasksQueueIamPolicyState {
 	if ctqip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ctqip.Type(), ctqip.LocalName()))
@@ -59,10 +85,7 @@ func (ctqip *CloudTasksQueueIamPolicy) StateMust() *cloudTasksQueueIamPolicyStat
 	return ctqip.state
 }
 
-func (ctqip *CloudTasksQueueIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(ctqip)
-}
-
+// CloudTasksQueueIamPolicyArgs contains the configurations for google_cloud_tasks_queue_iam_policy.
 type CloudTasksQueueIamPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -74,35 +97,39 @@ type CloudTasksQueueIamPolicyArgs struct {
 	PolicyData terra.StringValue `hcl:"policy_data,attr" validate:"required"`
 	// Project: string, optional
 	Project terra.StringValue `hcl:"project,attr"`
-	// DependsOn contains resources that CloudTasksQueueIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudTasksQueueIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_cloud_tasks_queue_iam_policy.
 func (ctqip cloudTasksQueueIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(ctqip.ref.Append("etag"))
+	return terra.ReferenceAsString(ctqip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_cloud_tasks_queue_iam_policy.
 func (ctqip cloudTasksQueueIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ctqip.ref.Append("id"))
+	return terra.ReferenceAsString(ctqip.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_cloud_tasks_queue_iam_policy.
 func (ctqip cloudTasksQueueIamPolicyAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ctqip.ref.Append("location"))
+	return terra.ReferenceAsString(ctqip.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_cloud_tasks_queue_iam_policy.
 func (ctqip cloudTasksQueueIamPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ctqip.ref.Append("name"))
+	return terra.ReferenceAsString(ctqip.ref.Append("name"))
 }
 
+// PolicyData returns a reference to field policy_data of google_cloud_tasks_queue_iam_policy.
 func (ctqip cloudTasksQueueIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(ctqip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(ctqip.ref.Append("policy_data"))
 }
 
+// Project returns a reference to field project of google_cloud_tasks_queue_iam_policy.
 func (ctqip cloudTasksQueueIamPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ctqip.ref.Append("project"))
+	return terra.ReferenceAsString(ctqip.ref.Append("project"))
 }
 
 type cloudTasksQueueIamPolicyState struct {

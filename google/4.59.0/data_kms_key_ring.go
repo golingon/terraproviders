@@ -4,6 +4,7 @@ package google
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataKmsKeyRing creates a new instance of [DataKmsKeyRing].
 func NewDataKmsKeyRing(name string, args DataKmsKeyRingArgs) *DataKmsKeyRing {
 	return &DataKmsKeyRing{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataKmsKeyRing(name string, args DataKmsKeyRingArgs) *DataKmsKeyRing {
 
 var _ terra.DataResource = (*DataKmsKeyRing)(nil)
 
+// DataKmsKeyRing represents the Terraform data resource google_kms_key_ring.
 type DataKmsKeyRing struct {
 	Name string
 	Args DataKmsKeyRingArgs
 }
 
+// DataSource returns the Terraform object type for [DataKmsKeyRing].
 func (kkr *DataKmsKeyRing) DataSource() string {
 	return "google_kms_key_ring"
 }
 
+// LocalName returns the local name for [DataKmsKeyRing].
 func (kkr *DataKmsKeyRing) LocalName() string {
 	return kkr.Name
 }
 
+// Configuration returns the configuration (args) for [DataKmsKeyRing].
 func (kkr *DataKmsKeyRing) Configuration() interface{} {
 	return kkr.Args
 }
 
+// Attributes returns the attributes for [DataKmsKeyRing].
 func (kkr *DataKmsKeyRing) Attributes() dataKmsKeyRingAttributes {
 	return dataKmsKeyRingAttributes{ref: terra.ReferenceDataResource(kkr)}
 }
 
+// DataKmsKeyRingArgs contains the configurations for google_kms_key_ring.
 type DataKmsKeyRingArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -48,18 +55,22 @@ type dataKmsKeyRingAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of google_kms_key_ring.
 func (kkr dataKmsKeyRingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kkr.ref.Append("id"))
+	return terra.ReferenceAsString(kkr.ref.Append("id"))
 }
 
+// Location returns a reference to field location of google_kms_key_ring.
 func (kkr dataKmsKeyRingAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(kkr.ref.Append("location"))
+	return terra.ReferenceAsString(kkr.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_kms_key_ring.
 func (kkr dataKmsKeyRingAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(kkr.ref.Append("name"))
+	return terra.ReferenceAsString(kkr.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_kms_key_ring.
 func (kkr dataKmsKeyRingAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(kkr.ref.Append("project"))
+	return terra.ReferenceAsString(kkr.ref.Append("project"))
 }

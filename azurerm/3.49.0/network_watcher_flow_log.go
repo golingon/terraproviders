@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNetworkWatcherFlowLog creates a new instance of [NetworkWatcherFlowLog].
 func NewNetworkWatcherFlowLog(name string, args NetworkWatcherFlowLogArgs) *NetworkWatcherFlowLog {
 	return &NetworkWatcherFlowLog{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNetworkWatcherFlowLog(name string, args NetworkWatcherFlowLogArgs) *Netw
 
 var _ terra.Resource = (*NetworkWatcherFlowLog)(nil)
 
+// NetworkWatcherFlowLog represents the Terraform resource azurerm_network_watcher_flow_log.
 type NetworkWatcherFlowLog struct {
-	Name  string
-	Args  NetworkWatcherFlowLogArgs
-	state *networkWatcherFlowLogState
+	Name      string
+	Args      NetworkWatcherFlowLogArgs
+	state     *networkWatcherFlowLogState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NetworkWatcherFlowLog].
 func (nwfl *NetworkWatcherFlowLog) Type() string {
 	return "azurerm_network_watcher_flow_log"
 }
 
+// LocalName returns the local name for [NetworkWatcherFlowLog].
 func (nwfl *NetworkWatcherFlowLog) LocalName() string {
 	return nwfl.Name
 }
 
+// Configuration returns the configuration (args) for [NetworkWatcherFlowLog].
 func (nwfl *NetworkWatcherFlowLog) Configuration() interface{} {
 	return nwfl.Args
 }
 
+// DependOn is used for other resources to depend on [NetworkWatcherFlowLog].
+func (nwfl *NetworkWatcherFlowLog) DependOn() terra.Reference {
+	return terra.ReferenceResource(nwfl)
+}
+
+// Dependencies returns the list of resources [NetworkWatcherFlowLog] depends_on.
+func (nwfl *NetworkWatcherFlowLog) Dependencies() terra.Dependencies {
+	return nwfl.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NetworkWatcherFlowLog].
+func (nwfl *NetworkWatcherFlowLog) LifecycleManagement() *terra.Lifecycle {
+	return nwfl.Lifecycle
+}
+
+// Attributes returns the attributes for [NetworkWatcherFlowLog].
 func (nwfl *NetworkWatcherFlowLog) Attributes() networkWatcherFlowLogAttributes {
 	return networkWatcherFlowLogAttributes{ref: terra.ReferenceResource(nwfl)}
 }
 
+// ImportState imports the given attribute values into [NetworkWatcherFlowLog]'s state.
 func (nwfl *NetworkWatcherFlowLog) ImportState(av io.Reader) error {
 	nwfl.state = &networkWatcherFlowLogState{}
 	if err := json.NewDecoder(av).Decode(nwfl.state); err != nil {
@@ -49,10 +73,12 @@ func (nwfl *NetworkWatcherFlowLog) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NetworkWatcherFlowLog] has state.
 func (nwfl *NetworkWatcherFlowLog) State() (*networkWatcherFlowLogState, bool) {
 	return nwfl.state, nwfl.state != nil
 }
 
+// StateMust returns the state for [NetworkWatcherFlowLog]. Panics if the state is nil.
 func (nwfl *NetworkWatcherFlowLog) StateMust() *networkWatcherFlowLogState {
 	if nwfl.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", nwfl.Type(), nwfl.LocalName()))
@@ -60,10 +86,7 @@ func (nwfl *NetworkWatcherFlowLog) StateMust() *networkWatcherFlowLogState {
 	return nwfl.state
 }
 
-func (nwfl *NetworkWatcherFlowLog) DependOn() terra.Reference {
-	return terra.ReferenceResource(nwfl)
-}
-
+// NetworkWatcherFlowLogArgs contains the configurations for azurerm_network_watcher_flow_log.
 type NetworkWatcherFlowLogArgs struct {
 	// Enabled: bool, required
 	Enabled terra.BoolValue `hcl:"enabled,attr" validate:"required"`
@@ -91,63 +114,71 @@ type NetworkWatcherFlowLogArgs struct {
 	Timeouts *networkwatcherflowlog.Timeouts `hcl:"timeouts,block"`
 	// TrafficAnalytics: optional
 	TrafficAnalytics *networkwatcherflowlog.TrafficAnalytics `hcl:"traffic_analytics,block"`
-	// DependsOn contains resources that NetworkWatcherFlowLog depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type networkWatcherFlowLogAttributes struct {
 	ref terra.Reference
 }
 
+// Enabled returns a reference to field enabled of azurerm_network_watcher_flow_log.
 func (nwfl networkWatcherFlowLogAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(nwfl.ref.Append("enabled"))
+	return terra.ReferenceAsBool(nwfl.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of azurerm_network_watcher_flow_log.
 func (nwfl networkWatcherFlowLogAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(nwfl.ref.Append("id"))
+	return terra.ReferenceAsString(nwfl.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_network_watcher_flow_log.
 func (nwfl networkWatcherFlowLogAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(nwfl.ref.Append("location"))
+	return terra.ReferenceAsString(nwfl.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_network_watcher_flow_log.
 func (nwfl networkWatcherFlowLogAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(nwfl.ref.Append("name"))
+	return terra.ReferenceAsString(nwfl.ref.Append("name"))
 }
 
+// NetworkSecurityGroupId returns a reference to field network_security_group_id of azurerm_network_watcher_flow_log.
 func (nwfl networkWatcherFlowLogAttributes) NetworkSecurityGroupId() terra.StringValue {
-	return terra.ReferenceString(nwfl.ref.Append("network_security_group_id"))
+	return terra.ReferenceAsString(nwfl.ref.Append("network_security_group_id"))
 }
 
+// NetworkWatcherName returns a reference to field network_watcher_name of azurerm_network_watcher_flow_log.
 func (nwfl networkWatcherFlowLogAttributes) NetworkWatcherName() terra.StringValue {
-	return terra.ReferenceString(nwfl.ref.Append("network_watcher_name"))
+	return terra.ReferenceAsString(nwfl.ref.Append("network_watcher_name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_network_watcher_flow_log.
 func (nwfl networkWatcherFlowLogAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(nwfl.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(nwfl.ref.Append("resource_group_name"))
 }
 
+// StorageAccountId returns a reference to field storage_account_id of azurerm_network_watcher_flow_log.
 func (nwfl networkWatcherFlowLogAttributes) StorageAccountId() terra.StringValue {
-	return terra.ReferenceString(nwfl.ref.Append("storage_account_id"))
+	return terra.ReferenceAsString(nwfl.ref.Append("storage_account_id"))
 }
 
+// Tags returns a reference to field tags of azurerm_network_watcher_flow_log.
 func (nwfl networkWatcherFlowLogAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](nwfl.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](nwfl.ref.Append("tags"))
 }
 
+// Version returns a reference to field version of azurerm_network_watcher_flow_log.
 func (nwfl networkWatcherFlowLogAttributes) Version() terra.NumberValue {
-	return terra.ReferenceNumber(nwfl.ref.Append("version"))
+	return terra.ReferenceAsNumber(nwfl.ref.Append("version"))
 }
 
 func (nwfl networkWatcherFlowLogAttributes) RetentionPolicy() terra.ListValue[networkwatcherflowlog.RetentionPolicyAttributes] {
-	return terra.ReferenceList[networkwatcherflowlog.RetentionPolicyAttributes](nwfl.ref.Append("retention_policy"))
+	return terra.ReferenceAsList[networkwatcherflowlog.RetentionPolicyAttributes](nwfl.ref.Append("retention_policy"))
 }
 
 func (nwfl networkWatcherFlowLogAttributes) Timeouts() networkwatcherflowlog.TimeoutsAttributes {
-	return terra.ReferenceSingle[networkwatcherflowlog.TimeoutsAttributes](nwfl.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[networkwatcherflowlog.TimeoutsAttributes](nwfl.ref.Append("timeouts"))
 }
 
 func (nwfl networkWatcherFlowLogAttributes) TrafficAnalytics() terra.ListValue[networkwatcherflowlog.TrafficAnalyticsAttributes] {
-	return terra.ReferenceList[networkwatcherflowlog.TrafficAnalyticsAttributes](nwfl.ref.Append("traffic_analytics"))
+	return terra.ReferenceAsList[networkwatcherflowlog.TrafficAnalyticsAttributes](nwfl.ref.Append("traffic_analytics"))
 }
 
 type networkWatcherFlowLogState struct {

@@ -49,7 +49,7 @@ func (ec EncryptionConfigurationAttributes) InternalWithRef(ref terra.Reference)
 	return EncryptionConfigurationAttributes{ref: ref}
 }
 
-func (ec EncryptionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (ec EncryptionConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ec.ref.InternalTokens()
 }
 
@@ -73,7 +73,7 @@ func (fs FirewallStatusAttributes) InternalWithRef(ref terra.Reference) Firewall
 	return FirewallStatusAttributes{ref: ref}
 }
 
-func (fs FirewallStatusAttributes) InternalTokens() hclwrite.Tokens {
+func (fs FirewallStatusAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fs.ref.InternalTokens()
 }
 
@@ -105,7 +105,7 @@ func (cus CapacityUsageSummaryAttributes) InternalWithRef(ref terra.Reference) C
 	return CapacityUsageSummaryAttributes{ref: ref}
 }
 
-func (cus CapacityUsageSummaryAttributes) InternalTokens() hclwrite.Tokens {
+func (cus CapacityUsageSummaryAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cus.ref.InternalTokens()
 }
 
@@ -125,7 +125,7 @@ func (c CidrsAttributes) InternalWithRef(ref terra.Reference) CidrsAttributes {
 	return CidrsAttributes{ref: ref}
 }
 
-func (c CidrsAttributes) InternalTokens() hclwrite.Tokens {
+func (c CidrsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
@@ -153,7 +153,7 @@ func (isr IpSetReferencesAttributes) InternalWithRef(ref terra.Reference) IpSetR
 	return IpSetReferencesAttributes{ref: ref}
 }
 
-func (isr IpSetReferencesAttributes) InternalTokens() hclwrite.Tokens {
+func (isr IpSetReferencesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return isr.ref.InternalTokens()
 }
 
@@ -173,7 +173,7 @@ func (ss SyncStatesAttributes) InternalWithRef(ref terra.Reference) SyncStatesAt
 	return SyncStatesAttributes{ref: ref}
 }
 
-func (ss SyncStatesAttributes) InternalTokens() hclwrite.Tokens {
+func (ss SyncStatesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ss.ref.InternalTokens()
 }
 
@@ -197,7 +197,7 @@ func (a AttachmentAttributes) InternalWithRef(ref terra.Reference) AttachmentAtt
 	return AttachmentAttributes{ref: ref}
 }
 
-func (a AttachmentAttributes) InternalTokens() hclwrite.Tokens {
+func (a AttachmentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
@@ -225,7 +225,7 @@ func (sm SubnetMappingAttributes) InternalWithRef(ref terra.Reference) SubnetMap
 	return SubnetMappingAttributes{ref: ref}
 }
 
-func (sm SubnetMappingAttributes) InternalTokens() hclwrite.Tokens {
+func (sm SubnetMappingAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sm.ref.InternalTokens()
 }
 

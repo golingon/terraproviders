@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewVirtualWan creates a new instance of [VirtualWan].
 func NewVirtualWan(name string, args VirtualWanArgs) *VirtualWan {
 	return &VirtualWan{
 		Args: args,
@@ -19,28 +20,51 @@ func NewVirtualWan(name string, args VirtualWanArgs) *VirtualWan {
 
 var _ terra.Resource = (*VirtualWan)(nil)
 
+// VirtualWan represents the Terraform resource azurerm_virtual_wan.
 type VirtualWan struct {
-	Name  string
-	Args  VirtualWanArgs
-	state *virtualWanState
+	Name      string
+	Args      VirtualWanArgs
+	state     *virtualWanState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VirtualWan].
 func (vw *VirtualWan) Type() string {
 	return "azurerm_virtual_wan"
 }
 
+// LocalName returns the local name for [VirtualWan].
 func (vw *VirtualWan) LocalName() string {
 	return vw.Name
 }
 
+// Configuration returns the configuration (args) for [VirtualWan].
 func (vw *VirtualWan) Configuration() interface{} {
 	return vw.Args
 }
 
+// DependOn is used for other resources to depend on [VirtualWan].
+func (vw *VirtualWan) DependOn() terra.Reference {
+	return terra.ReferenceResource(vw)
+}
+
+// Dependencies returns the list of resources [VirtualWan] depends_on.
+func (vw *VirtualWan) Dependencies() terra.Dependencies {
+	return vw.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VirtualWan].
+func (vw *VirtualWan) LifecycleManagement() *terra.Lifecycle {
+	return vw.Lifecycle
+}
+
+// Attributes returns the attributes for [VirtualWan].
 func (vw *VirtualWan) Attributes() virtualWanAttributes {
 	return virtualWanAttributes{ref: terra.ReferenceResource(vw)}
 }
 
+// ImportState imports the given attribute values into [VirtualWan]'s state.
 func (vw *VirtualWan) ImportState(av io.Reader) error {
 	vw.state = &virtualWanState{}
 	if err := json.NewDecoder(av).Decode(vw.state); err != nil {
@@ -49,10 +73,12 @@ func (vw *VirtualWan) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [VirtualWan] has state.
 func (vw *VirtualWan) State() (*virtualWanState, bool) {
 	return vw.state, vw.state != nil
 }
 
+// StateMust returns the state for [VirtualWan]. Panics if the state is nil.
 func (vw *VirtualWan) StateMust() *virtualWanState {
 	if vw.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", vw.Type(), vw.LocalName()))
@@ -60,10 +86,7 @@ func (vw *VirtualWan) StateMust() *virtualWanState {
 	return vw.state
 }
 
-func (vw *VirtualWan) DependOn() terra.Reference {
-	return terra.ReferenceResource(vw)
-}
-
+// VirtualWanArgs contains the configurations for azurerm_virtual_wan.
 type VirtualWanArgs struct {
 	// AllowBranchToBranchTraffic: bool, optional
 	AllowBranchToBranchTraffic terra.BoolValue `hcl:"allow_branch_to_branch_traffic,attr"`
@@ -85,51 +108,58 @@ type VirtualWanArgs struct {
 	Type terra.StringValue `hcl:"type,attr"`
 	// Timeouts: optional
 	Timeouts *virtualwan.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that VirtualWan depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type virtualWanAttributes struct {
 	ref terra.Reference
 }
 
+// AllowBranchToBranchTraffic returns a reference to field allow_branch_to_branch_traffic of azurerm_virtual_wan.
 func (vw virtualWanAttributes) AllowBranchToBranchTraffic() terra.BoolValue {
-	return terra.ReferenceBool(vw.ref.Append("allow_branch_to_branch_traffic"))
+	return terra.ReferenceAsBool(vw.ref.Append("allow_branch_to_branch_traffic"))
 }
 
+// DisableVpnEncryption returns a reference to field disable_vpn_encryption of azurerm_virtual_wan.
 func (vw virtualWanAttributes) DisableVpnEncryption() terra.BoolValue {
-	return terra.ReferenceBool(vw.ref.Append("disable_vpn_encryption"))
+	return terra.ReferenceAsBool(vw.ref.Append("disable_vpn_encryption"))
 }
 
+// Id returns a reference to field id of azurerm_virtual_wan.
 func (vw virtualWanAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vw.ref.Append("id"))
+	return terra.ReferenceAsString(vw.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_virtual_wan.
 func (vw virtualWanAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(vw.ref.Append("location"))
+	return terra.ReferenceAsString(vw.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_virtual_wan.
 func (vw virtualWanAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(vw.ref.Append("name"))
+	return terra.ReferenceAsString(vw.ref.Append("name"))
 }
 
+// Office365LocalBreakoutCategory returns a reference to field office365_local_breakout_category of azurerm_virtual_wan.
 func (vw virtualWanAttributes) Office365LocalBreakoutCategory() terra.StringValue {
-	return terra.ReferenceString(vw.ref.Append("office365_local_breakout_category"))
+	return terra.ReferenceAsString(vw.ref.Append("office365_local_breakout_category"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_virtual_wan.
 func (vw virtualWanAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(vw.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(vw.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of azurerm_virtual_wan.
 func (vw virtualWanAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](vw.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](vw.ref.Append("tags"))
 }
 
+// Type returns a reference to field type of azurerm_virtual_wan.
 func (vw virtualWanAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(vw.ref.Append("type"))
+	return terra.ReferenceAsString(vw.ref.Append("type"))
 }
 
 func (vw virtualWanAttributes) Timeouts() virtualwan.TimeoutsAttributes {
-	return terra.ReferenceSingle[virtualwan.TimeoutsAttributes](vw.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[virtualwan.TimeoutsAttributes](vw.ref.Append("timeouts"))
 }
 
 type virtualWanState struct {

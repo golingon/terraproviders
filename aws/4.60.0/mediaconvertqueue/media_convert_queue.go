@@ -28,7 +28,7 @@ func (rps ReservationPlanSettingsAttributes) InternalWithRef(ref terra.Reference
 	return ReservationPlanSettingsAttributes{ref: ref}
 }
 
-func (rps ReservationPlanSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (rps ReservationPlanSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rps.ref.InternalTokens()
 }
 

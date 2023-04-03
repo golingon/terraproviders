@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataLbOutboundRule creates a new instance of [DataLbOutboundRule].
 func NewDataLbOutboundRule(name string, args DataLbOutboundRuleArgs) *DataLbOutboundRule {
 	return &DataLbOutboundRule{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataLbOutboundRule(name string, args DataLbOutboundRuleArgs) *DataLbOutb
 
 var _ terra.DataResource = (*DataLbOutboundRule)(nil)
 
+// DataLbOutboundRule represents the Terraform data resource azurerm_lb_outbound_rule.
 type DataLbOutboundRule struct {
 	Name string
 	Args DataLbOutboundRuleArgs
 }
 
+// DataSource returns the Terraform object type for [DataLbOutboundRule].
 func (lor *DataLbOutboundRule) DataSource() string {
 	return "azurerm_lb_outbound_rule"
 }
 
+// LocalName returns the local name for [DataLbOutboundRule].
 func (lor *DataLbOutboundRule) LocalName() string {
 	return lor.Name
 }
 
+// Configuration returns the configuration (args) for [DataLbOutboundRule].
 func (lor *DataLbOutboundRule) Configuration() interface{} {
 	return lor.Args
 }
 
+// Attributes returns the attributes for [DataLbOutboundRule].
 func (lor *DataLbOutboundRule) Attributes() dataLbOutboundRuleAttributes {
 	return dataLbOutboundRuleAttributes{ref: terra.ReferenceDataResource(lor)}
 }
 
+// DataLbOutboundRuleArgs contains the configurations for azurerm_lb_outbound_rule.
 type DataLbOutboundRuleArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,42 +60,50 @@ type dataLbOutboundRuleAttributes struct {
 	ref terra.Reference
 }
 
+// AllocatedOutboundPorts returns a reference to field allocated_outbound_ports of azurerm_lb_outbound_rule.
 func (lor dataLbOutboundRuleAttributes) AllocatedOutboundPorts() terra.NumberValue {
-	return terra.ReferenceNumber(lor.ref.Append("allocated_outbound_ports"))
+	return terra.ReferenceAsNumber(lor.ref.Append("allocated_outbound_ports"))
 }
 
+// BackendAddressPoolId returns a reference to field backend_address_pool_id of azurerm_lb_outbound_rule.
 func (lor dataLbOutboundRuleAttributes) BackendAddressPoolId() terra.StringValue {
-	return terra.ReferenceString(lor.ref.Append("backend_address_pool_id"))
+	return terra.ReferenceAsString(lor.ref.Append("backend_address_pool_id"))
 }
 
+// Id returns a reference to field id of azurerm_lb_outbound_rule.
 func (lor dataLbOutboundRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lor.ref.Append("id"))
+	return terra.ReferenceAsString(lor.ref.Append("id"))
 }
 
+// IdleTimeoutInMinutes returns a reference to field idle_timeout_in_minutes of azurerm_lb_outbound_rule.
 func (lor dataLbOutboundRuleAttributes) IdleTimeoutInMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(lor.ref.Append("idle_timeout_in_minutes"))
+	return terra.ReferenceAsNumber(lor.ref.Append("idle_timeout_in_minutes"))
 }
 
+// LoadbalancerId returns a reference to field loadbalancer_id of azurerm_lb_outbound_rule.
 func (lor dataLbOutboundRuleAttributes) LoadbalancerId() terra.StringValue {
-	return terra.ReferenceString(lor.ref.Append("loadbalancer_id"))
+	return terra.ReferenceAsString(lor.ref.Append("loadbalancer_id"))
 }
 
+// Name returns a reference to field name of azurerm_lb_outbound_rule.
 func (lor dataLbOutboundRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lor.ref.Append("name"))
+	return terra.ReferenceAsString(lor.ref.Append("name"))
 }
 
+// Protocol returns a reference to field protocol of azurerm_lb_outbound_rule.
 func (lor dataLbOutboundRuleAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(lor.ref.Append("protocol"))
+	return terra.ReferenceAsString(lor.ref.Append("protocol"))
 }
 
+// TcpResetEnabled returns a reference to field tcp_reset_enabled of azurerm_lb_outbound_rule.
 func (lor dataLbOutboundRuleAttributes) TcpResetEnabled() terra.BoolValue {
-	return terra.ReferenceBool(lor.ref.Append("tcp_reset_enabled"))
+	return terra.ReferenceAsBool(lor.ref.Append("tcp_reset_enabled"))
 }
 
 func (lor dataLbOutboundRuleAttributes) FrontendIpConfiguration() terra.ListValue[datalboutboundrule.FrontendIpConfigurationAttributes] {
-	return terra.ReferenceList[datalboutboundrule.FrontendIpConfigurationAttributes](lor.ref.Append("frontend_ip_configuration"))
+	return terra.ReferenceAsList[datalboutboundrule.FrontendIpConfigurationAttributes](lor.ref.Append("frontend_ip_configuration"))
 }
 
 func (lor dataLbOutboundRuleAttributes) Timeouts() datalboutboundrule.TimeoutsAttributes {
-	return terra.ReferenceSingle[datalboutboundrule.TimeoutsAttributes](lor.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datalboutboundrule.TimeoutsAttributes](lor.ref.Append("timeouts"))
 }

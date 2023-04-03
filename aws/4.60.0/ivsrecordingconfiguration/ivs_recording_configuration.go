@@ -43,7 +43,7 @@ func (dc DestinationConfigurationAttributes) InternalWithRef(ref terra.Reference
 	return DestinationConfigurationAttributes{ref: ref}
 }
 
-func (dc DestinationConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (dc DestinationConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dc.ref.InternalTokens()
 }
 
@@ -63,7 +63,7 @@ func (s S3Attributes) InternalWithRef(ref terra.Reference) S3Attributes {
 	return S3Attributes{ref: ref}
 }
 
-func (s S3Attributes) InternalTokens() hclwrite.Tokens {
+func (s S3Attributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
@@ -83,7 +83,7 @@ func (tc ThumbnailConfigurationAttributes) InternalWithRef(ref terra.Reference) 
 	return ThumbnailConfigurationAttributes{ref: ref}
 }
 
-func (tc ThumbnailConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (tc ThumbnailConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return tc.ref.InternalTokens()
 }
 
@@ -107,7 +107,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

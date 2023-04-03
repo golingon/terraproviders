@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewKustoDatabasePrincipalAssignment creates a new instance of [KustoDatabasePrincipalAssignment].
 func NewKustoDatabasePrincipalAssignment(name string, args KustoDatabasePrincipalAssignmentArgs) *KustoDatabasePrincipalAssignment {
 	return &KustoDatabasePrincipalAssignment{
 		Args: args,
@@ -19,28 +20,51 @@ func NewKustoDatabasePrincipalAssignment(name string, args KustoDatabasePrincipa
 
 var _ terra.Resource = (*KustoDatabasePrincipalAssignment)(nil)
 
+// KustoDatabasePrincipalAssignment represents the Terraform resource azurerm_kusto_database_principal_assignment.
 type KustoDatabasePrincipalAssignment struct {
-	Name  string
-	Args  KustoDatabasePrincipalAssignmentArgs
-	state *kustoDatabasePrincipalAssignmentState
+	Name      string
+	Args      KustoDatabasePrincipalAssignmentArgs
+	state     *kustoDatabasePrincipalAssignmentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [KustoDatabasePrincipalAssignment].
 func (kdpa *KustoDatabasePrincipalAssignment) Type() string {
 	return "azurerm_kusto_database_principal_assignment"
 }
 
+// LocalName returns the local name for [KustoDatabasePrincipalAssignment].
 func (kdpa *KustoDatabasePrincipalAssignment) LocalName() string {
 	return kdpa.Name
 }
 
+// Configuration returns the configuration (args) for [KustoDatabasePrincipalAssignment].
 func (kdpa *KustoDatabasePrincipalAssignment) Configuration() interface{} {
 	return kdpa.Args
 }
 
+// DependOn is used for other resources to depend on [KustoDatabasePrincipalAssignment].
+func (kdpa *KustoDatabasePrincipalAssignment) DependOn() terra.Reference {
+	return terra.ReferenceResource(kdpa)
+}
+
+// Dependencies returns the list of resources [KustoDatabasePrincipalAssignment] depends_on.
+func (kdpa *KustoDatabasePrincipalAssignment) Dependencies() terra.Dependencies {
+	return kdpa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [KustoDatabasePrincipalAssignment].
+func (kdpa *KustoDatabasePrincipalAssignment) LifecycleManagement() *terra.Lifecycle {
+	return kdpa.Lifecycle
+}
+
+// Attributes returns the attributes for [KustoDatabasePrincipalAssignment].
 func (kdpa *KustoDatabasePrincipalAssignment) Attributes() kustoDatabasePrincipalAssignmentAttributes {
 	return kustoDatabasePrincipalAssignmentAttributes{ref: terra.ReferenceResource(kdpa)}
 }
 
+// ImportState imports the given attribute values into [KustoDatabasePrincipalAssignment]'s state.
 func (kdpa *KustoDatabasePrincipalAssignment) ImportState(av io.Reader) error {
 	kdpa.state = &kustoDatabasePrincipalAssignmentState{}
 	if err := json.NewDecoder(av).Decode(kdpa.state); err != nil {
@@ -49,10 +73,12 @@ func (kdpa *KustoDatabasePrincipalAssignment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [KustoDatabasePrincipalAssignment] has state.
 func (kdpa *KustoDatabasePrincipalAssignment) State() (*kustoDatabasePrincipalAssignmentState, bool) {
 	return kdpa.state, kdpa.state != nil
 }
 
+// StateMust returns the state for [KustoDatabasePrincipalAssignment]. Panics if the state is nil.
 func (kdpa *KustoDatabasePrincipalAssignment) StateMust() *kustoDatabasePrincipalAssignmentState {
 	if kdpa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", kdpa.Type(), kdpa.LocalName()))
@@ -60,10 +86,7 @@ func (kdpa *KustoDatabasePrincipalAssignment) StateMust() *kustoDatabasePrincipa
 	return kdpa.state
 }
 
-func (kdpa *KustoDatabasePrincipalAssignment) DependOn() terra.Reference {
-	return terra.ReferenceResource(kdpa)
-}
-
+// KustoDatabasePrincipalAssignmentArgs contains the configurations for azurerm_kusto_database_principal_assignment.
 type KustoDatabasePrincipalAssignmentArgs struct {
 	// ClusterName: string, required
 	ClusterName terra.StringValue `hcl:"cluster_name,attr" validate:"required"`
@@ -85,59 +108,68 @@ type KustoDatabasePrincipalAssignmentArgs struct {
 	TenantId terra.StringValue `hcl:"tenant_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *kustodatabaseprincipalassignment.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that KustoDatabasePrincipalAssignment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type kustoDatabasePrincipalAssignmentAttributes struct {
 	ref terra.Reference
 }
 
+// ClusterName returns a reference to field cluster_name of azurerm_kusto_database_principal_assignment.
 func (kdpa kustoDatabasePrincipalAssignmentAttributes) ClusterName() terra.StringValue {
-	return terra.ReferenceString(kdpa.ref.Append("cluster_name"))
+	return terra.ReferenceAsString(kdpa.ref.Append("cluster_name"))
 }
 
+// DatabaseName returns a reference to field database_name of azurerm_kusto_database_principal_assignment.
 func (kdpa kustoDatabasePrincipalAssignmentAttributes) DatabaseName() terra.StringValue {
-	return terra.ReferenceString(kdpa.ref.Append("database_name"))
+	return terra.ReferenceAsString(kdpa.ref.Append("database_name"))
 }
 
+// Id returns a reference to field id of azurerm_kusto_database_principal_assignment.
 func (kdpa kustoDatabasePrincipalAssignmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kdpa.ref.Append("id"))
+	return terra.ReferenceAsString(kdpa.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_kusto_database_principal_assignment.
 func (kdpa kustoDatabasePrincipalAssignmentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(kdpa.ref.Append("name"))
+	return terra.ReferenceAsString(kdpa.ref.Append("name"))
 }
 
+// PrincipalId returns a reference to field principal_id of azurerm_kusto_database_principal_assignment.
 func (kdpa kustoDatabasePrincipalAssignmentAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(kdpa.ref.Append("principal_id"))
+	return terra.ReferenceAsString(kdpa.ref.Append("principal_id"))
 }
 
+// PrincipalName returns a reference to field principal_name of azurerm_kusto_database_principal_assignment.
 func (kdpa kustoDatabasePrincipalAssignmentAttributes) PrincipalName() terra.StringValue {
-	return terra.ReferenceString(kdpa.ref.Append("principal_name"))
+	return terra.ReferenceAsString(kdpa.ref.Append("principal_name"))
 }
 
+// PrincipalType returns a reference to field principal_type of azurerm_kusto_database_principal_assignment.
 func (kdpa kustoDatabasePrincipalAssignmentAttributes) PrincipalType() terra.StringValue {
-	return terra.ReferenceString(kdpa.ref.Append("principal_type"))
+	return terra.ReferenceAsString(kdpa.ref.Append("principal_type"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_kusto_database_principal_assignment.
 func (kdpa kustoDatabasePrincipalAssignmentAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(kdpa.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(kdpa.ref.Append("resource_group_name"))
 }
 
+// Role returns a reference to field role of azurerm_kusto_database_principal_assignment.
 func (kdpa kustoDatabasePrincipalAssignmentAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(kdpa.ref.Append("role"))
+	return terra.ReferenceAsString(kdpa.ref.Append("role"))
 }
 
+// TenantId returns a reference to field tenant_id of azurerm_kusto_database_principal_assignment.
 func (kdpa kustoDatabasePrincipalAssignmentAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(kdpa.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(kdpa.ref.Append("tenant_id"))
 }
 
+// TenantName returns a reference to field tenant_name of azurerm_kusto_database_principal_assignment.
 func (kdpa kustoDatabasePrincipalAssignmentAttributes) TenantName() terra.StringValue {
-	return terra.ReferenceString(kdpa.ref.Append("tenant_name"))
+	return terra.ReferenceAsString(kdpa.ref.Append("tenant_name"))
 }
 
 func (kdpa kustoDatabasePrincipalAssignmentAttributes) Timeouts() kustodatabaseprincipalassignment.TimeoutsAttributes {
-	return terra.ReferenceSingle[kustodatabaseprincipalassignment.TimeoutsAttributes](kdpa.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[kustodatabaseprincipalassignment.TimeoutsAttributes](kdpa.ref.Append("timeouts"))
 }
 
 type kustoDatabasePrincipalAssignmentState struct {

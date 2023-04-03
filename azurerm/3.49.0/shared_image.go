@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSharedImage creates a new instance of [SharedImage].
 func NewSharedImage(name string, args SharedImageArgs) *SharedImage {
 	return &SharedImage{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSharedImage(name string, args SharedImageArgs) *SharedImage {
 
 var _ terra.Resource = (*SharedImage)(nil)
 
+// SharedImage represents the Terraform resource azurerm_shared_image.
 type SharedImage struct {
-	Name  string
-	Args  SharedImageArgs
-	state *sharedImageState
+	Name      string
+	Args      SharedImageArgs
+	state     *sharedImageState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SharedImage].
 func (si *SharedImage) Type() string {
 	return "azurerm_shared_image"
 }
 
+// LocalName returns the local name for [SharedImage].
 func (si *SharedImage) LocalName() string {
 	return si.Name
 }
 
+// Configuration returns the configuration (args) for [SharedImage].
 func (si *SharedImage) Configuration() interface{} {
 	return si.Args
 }
 
+// DependOn is used for other resources to depend on [SharedImage].
+func (si *SharedImage) DependOn() terra.Reference {
+	return terra.ReferenceResource(si)
+}
+
+// Dependencies returns the list of resources [SharedImage] depends_on.
+func (si *SharedImage) Dependencies() terra.Dependencies {
+	return si.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SharedImage].
+func (si *SharedImage) LifecycleManagement() *terra.Lifecycle {
+	return si.Lifecycle
+}
+
+// Attributes returns the attributes for [SharedImage].
 func (si *SharedImage) Attributes() sharedImageAttributes {
 	return sharedImageAttributes{ref: terra.ReferenceResource(si)}
 }
 
+// ImportState imports the given attribute values into [SharedImage]'s state.
 func (si *SharedImage) ImportState(av io.Reader) error {
 	si.state = &sharedImageState{}
 	if err := json.NewDecoder(av).Decode(si.state); err != nil {
@@ -49,10 +73,12 @@ func (si *SharedImage) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SharedImage] has state.
 func (si *SharedImage) State() (*sharedImageState, bool) {
 	return si.state, si.state != nil
 }
 
+// StateMust returns the state for [SharedImage]. Panics if the state is nil.
 func (si *SharedImage) StateMust() *sharedImageState {
 	if si.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", si.Type(), si.LocalName()))
@@ -60,10 +86,7 @@ func (si *SharedImage) StateMust() *sharedImageState {
 	return si.state
 }
 
-func (si *SharedImage) DependOn() terra.Reference {
-	return terra.ReferenceResource(si)
-}
-
+// SharedImageArgs contains the configurations for azurerm_shared_image.
 type SharedImageArgs struct {
 	// AcceleratedNetworkSupportEnabled: bool, optional
 	AcceleratedNetworkSupportEnabled terra.BoolValue `hcl:"accelerated_network_support_enabled,attr"`
@@ -119,119 +142,141 @@ type SharedImageArgs struct {
 	PurchasePlan *sharedimage.PurchasePlan `hcl:"purchase_plan,block"`
 	// Timeouts: optional
 	Timeouts *sharedimage.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SharedImage depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sharedImageAttributes struct {
 	ref terra.Reference
 }
 
+// AcceleratedNetworkSupportEnabled returns a reference to field accelerated_network_support_enabled of azurerm_shared_image.
 func (si sharedImageAttributes) AcceleratedNetworkSupportEnabled() terra.BoolValue {
-	return terra.ReferenceBool(si.ref.Append("accelerated_network_support_enabled"))
+	return terra.ReferenceAsBool(si.ref.Append("accelerated_network_support_enabled"))
 }
 
+// Architecture returns a reference to field architecture of azurerm_shared_image.
 func (si sharedImageAttributes) Architecture() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("architecture"))
+	return terra.ReferenceAsString(si.ref.Append("architecture"))
 }
 
+// ConfidentialVmEnabled returns a reference to field confidential_vm_enabled of azurerm_shared_image.
 func (si sharedImageAttributes) ConfidentialVmEnabled() terra.BoolValue {
-	return terra.ReferenceBool(si.ref.Append("confidential_vm_enabled"))
+	return terra.ReferenceAsBool(si.ref.Append("confidential_vm_enabled"))
 }
 
+// ConfidentialVmSupported returns a reference to field confidential_vm_supported of azurerm_shared_image.
 func (si sharedImageAttributes) ConfidentialVmSupported() terra.BoolValue {
-	return terra.ReferenceBool(si.ref.Append("confidential_vm_supported"))
+	return terra.ReferenceAsBool(si.ref.Append("confidential_vm_supported"))
 }
 
+// Description returns a reference to field description of azurerm_shared_image.
 func (si sharedImageAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("description"))
+	return terra.ReferenceAsString(si.ref.Append("description"))
 }
 
+// DiskTypesNotAllowed returns a reference to field disk_types_not_allowed of azurerm_shared_image.
 func (si sharedImageAttributes) DiskTypesNotAllowed() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](si.ref.Append("disk_types_not_allowed"))
+	return terra.ReferenceAsSet[terra.StringValue](si.ref.Append("disk_types_not_allowed"))
 }
 
+// EndOfLifeDate returns a reference to field end_of_life_date of azurerm_shared_image.
 func (si sharedImageAttributes) EndOfLifeDate() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("end_of_life_date"))
+	return terra.ReferenceAsString(si.ref.Append("end_of_life_date"))
 }
 
+// Eula returns a reference to field eula of azurerm_shared_image.
 func (si sharedImageAttributes) Eula() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("eula"))
+	return terra.ReferenceAsString(si.ref.Append("eula"))
 }
 
+// GalleryName returns a reference to field gallery_name of azurerm_shared_image.
 func (si sharedImageAttributes) GalleryName() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("gallery_name"))
+	return terra.ReferenceAsString(si.ref.Append("gallery_name"))
 }
 
+// HyperVGeneration returns a reference to field hyper_v_generation of azurerm_shared_image.
 func (si sharedImageAttributes) HyperVGeneration() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("hyper_v_generation"))
+	return terra.ReferenceAsString(si.ref.Append("hyper_v_generation"))
 }
 
+// Id returns a reference to field id of azurerm_shared_image.
 func (si sharedImageAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("id"))
+	return terra.ReferenceAsString(si.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_shared_image.
 func (si sharedImageAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("location"))
+	return terra.ReferenceAsString(si.ref.Append("location"))
 }
 
+// MaxRecommendedMemoryInGb returns a reference to field max_recommended_memory_in_gb of azurerm_shared_image.
 func (si sharedImageAttributes) MaxRecommendedMemoryInGb() terra.NumberValue {
-	return terra.ReferenceNumber(si.ref.Append("max_recommended_memory_in_gb"))
+	return terra.ReferenceAsNumber(si.ref.Append("max_recommended_memory_in_gb"))
 }
 
+// MaxRecommendedVcpuCount returns a reference to field max_recommended_vcpu_count of azurerm_shared_image.
 func (si sharedImageAttributes) MaxRecommendedVcpuCount() terra.NumberValue {
-	return terra.ReferenceNumber(si.ref.Append("max_recommended_vcpu_count"))
+	return terra.ReferenceAsNumber(si.ref.Append("max_recommended_vcpu_count"))
 }
 
+// MinRecommendedMemoryInGb returns a reference to field min_recommended_memory_in_gb of azurerm_shared_image.
 func (si sharedImageAttributes) MinRecommendedMemoryInGb() terra.NumberValue {
-	return terra.ReferenceNumber(si.ref.Append("min_recommended_memory_in_gb"))
+	return terra.ReferenceAsNumber(si.ref.Append("min_recommended_memory_in_gb"))
 }
 
+// MinRecommendedVcpuCount returns a reference to field min_recommended_vcpu_count of azurerm_shared_image.
 func (si sharedImageAttributes) MinRecommendedVcpuCount() terra.NumberValue {
-	return terra.ReferenceNumber(si.ref.Append("min_recommended_vcpu_count"))
+	return terra.ReferenceAsNumber(si.ref.Append("min_recommended_vcpu_count"))
 }
 
+// Name returns a reference to field name of azurerm_shared_image.
 func (si sharedImageAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("name"))
+	return terra.ReferenceAsString(si.ref.Append("name"))
 }
 
+// OsType returns a reference to field os_type of azurerm_shared_image.
 func (si sharedImageAttributes) OsType() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("os_type"))
+	return terra.ReferenceAsString(si.ref.Append("os_type"))
 }
 
+// PrivacyStatementUri returns a reference to field privacy_statement_uri of azurerm_shared_image.
 func (si sharedImageAttributes) PrivacyStatementUri() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("privacy_statement_uri"))
+	return terra.ReferenceAsString(si.ref.Append("privacy_statement_uri"))
 }
 
+// ReleaseNoteUri returns a reference to field release_note_uri of azurerm_shared_image.
 func (si sharedImageAttributes) ReleaseNoteUri() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("release_note_uri"))
+	return terra.ReferenceAsString(si.ref.Append("release_note_uri"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_shared_image.
 func (si sharedImageAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(si.ref.Append("resource_group_name"))
 }
 
+// Specialized returns a reference to field specialized of azurerm_shared_image.
 func (si sharedImageAttributes) Specialized() terra.BoolValue {
-	return terra.ReferenceBool(si.ref.Append("specialized"))
+	return terra.ReferenceAsBool(si.ref.Append("specialized"))
 }
 
+// Tags returns a reference to field tags of azurerm_shared_image.
 func (si sharedImageAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](si.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](si.ref.Append("tags"))
 }
 
+// TrustedLaunchEnabled returns a reference to field trusted_launch_enabled of azurerm_shared_image.
 func (si sharedImageAttributes) TrustedLaunchEnabled() terra.BoolValue {
-	return terra.ReferenceBool(si.ref.Append("trusted_launch_enabled"))
+	return terra.ReferenceAsBool(si.ref.Append("trusted_launch_enabled"))
 }
 
 func (si sharedImageAttributes) Identifier() terra.ListValue[sharedimage.IdentifierAttributes] {
-	return terra.ReferenceList[sharedimage.IdentifierAttributes](si.ref.Append("identifier"))
+	return terra.ReferenceAsList[sharedimage.IdentifierAttributes](si.ref.Append("identifier"))
 }
 
 func (si sharedImageAttributes) PurchasePlan() terra.ListValue[sharedimage.PurchasePlanAttributes] {
-	return terra.ReferenceList[sharedimage.PurchasePlanAttributes](si.ref.Append("purchase_plan"))
+	return terra.ReferenceAsList[sharedimage.PurchasePlanAttributes](si.ref.Append("purchase_plan"))
 }
 
 func (si sharedImageAttributes) Timeouts() sharedimage.TimeoutsAttributes {
-	return terra.ReferenceSingle[sharedimage.TimeoutsAttributes](si.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[sharedimage.TimeoutsAttributes](si.ref.Append("timeouts"))
 }
 
 type sharedImageState struct {

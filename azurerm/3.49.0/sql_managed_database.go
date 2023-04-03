@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSqlManagedDatabase creates a new instance of [SqlManagedDatabase].
 func NewSqlManagedDatabase(name string, args SqlManagedDatabaseArgs) *SqlManagedDatabase {
 	return &SqlManagedDatabase{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSqlManagedDatabase(name string, args SqlManagedDatabaseArgs) *SqlManaged
 
 var _ terra.Resource = (*SqlManagedDatabase)(nil)
 
+// SqlManagedDatabase represents the Terraform resource azurerm_sql_managed_database.
 type SqlManagedDatabase struct {
-	Name  string
-	Args  SqlManagedDatabaseArgs
-	state *sqlManagedDatabaseState
+	Name      string
+	Args      SqlManagedDatabaseArgs
+	state     *sqlManagedDatabaseState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SqlManagedDatabase].
 func (smd *SqlManagedDatabase) Type() string {
 	return "azurerm_sql_managed_database"
 }
 
+// LocalName returns the local name for [SqlManagedDatabase].
 func (smd *SqlManagedDatabase) LocalName() string {
 	return smd.Name
 }
 
+// Configuration returns the configuration (args) for [SqlManagedDatabase].
 func (smd *SqlManagedDatabase) Configuration() interface{} {
 	return smd.Args
 }
 
+// DependOn is used for other resources to depend on [SqlManagedDatabase].
+func (smd *SqlManagedDatabase) DependOn() terra.Reference {
+	return terra.ReferenceResource(smd)
+}
+
+// Dependencies returns the list of resources [SqlManagedDatabase] depends_on.
+func (smd *SqlManagedDatabase) Dependencies() terra.Dependencies {
+	return smd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SqlManagedDatabase].
+func (smd *SqlManagedDatabase) LifecycleManagement() *terra.Lifecycle {
+	return smd.Lifecycle
+}
+
+// Attributes returns the attributes for [SqlManagedDatabase].
 func (smd *SqlManagedDatabase) Attributes() sqlManagedDatabaseAttributes {
 	return sqlManagedDatabaseAttributes{ref: terra.ReferenceResource(smd)}
 }
 
+// ImportState imports the given attribute values into [SqlManagedDatabase]'s state.
 func (smd *SqlManagedDatabase) ImportState(av io.Reader) error {
 	smd.state = &sqlManagedDatabaseState{}
 	if err := json.NewDecoder(av).Decode(smd.state); err != nil {
@@ -49,10 +73,12 @@ func (smd *SqlManagedDatabase) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SqlManagedDatabase] has state.
 func (smd *SqlManagedDatabase) State() (*sqlManagedDatabaseState, bool) {
 	return smd.state, smd.state != nil
 }
 
+// StateMust returns the state for [SqlManagedDatabase]. Panics if the state is nil.
 func (smd *SqlManagedDatabase) StateMust() *sqlManagedDatabaseState {
 	if smd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", smd.Type(), smd.LocalName()))
@@ -60,10 +86,7 @@ func (smd *SqlManagedDatabase) StateMust() *sqlManagedDatabaseState {
 	return smd.state
 }
 
-func (smd *SqlManagedDatabase) DependOn() terra.Reference {
-	return terra.ReferenceResource(smd)
-}
-
+// SqlManagedDatabaseArgs contains the configurations for azurerm_sql_managed_database.
 type SqlManagedDatabaseArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -75,31 +98,33 @@ type SqlManagedDatabaseArgs struct {
 	SqlManagedInstanceId terra.StringValue `hcl:"sql_managed_instance_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *sqlmanageddatabase.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SqlManagedDatabase depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sqlManagedDatabaseAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_sql_managed_database.
 func (smd sqlManagedDatabaseAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(smd.ref.Append("id"))
+	return terra.ReferenceAsString(smd.ref.Append("id"))
 }
 
+// Location returns a reference to field location of azurerm_sql_managed_database.
 func (smd sqlManagedDatabaseAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(smd.ref.Append("location"))
+	return terra.ReferenceAsString(smd.ref.Append("location"))
 }
 
+// Name returns a reference to field name of azurerm_sql_managed_database.
 func (smd sqlManagedDatabaseAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(smd.ref.Append("name"))
+	return terra.ReferenceAsString(smd.ref.Append("name"))
 }
 
+// SqlManagedInstanceId returns a reference to field sql_managed_instance_id of azurerm_sql_managed_database.
 func (smd sqlManagedDatabaseAttributes) SqlManagedInstanceId() terra.StringValue {
-	return terra.ReferenceString(smd.ref.Append("sql_managed_instance_id"))
+	return terra.ReferenceAsString(smd.ref.Append("sql_managed_instance_id"))
 }
 
 func (smd sqlManagedDatabaseAttributes) Timeouts() sqlmanageddatabase.TimeoutsAttributes {
-	return terra.ReferenceSingle[sqlmanageddatabase.TimeoutsAttributes](smd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[sqlmanageddatabase.TimeoutsAttributes](smd.ref.Append("timeouts"))
 }
 
 type sqlManagedDatabaseState struct {

@@ -40,88 +40,88 @@ type SubnetAttributes struct {
 	ref terra.Reference
 }
 
-func (s SubnetAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SubnetAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SubnetAttributes) InternalWithRef(ref terra.Reference) SubnetAttributes {
 	return SubnetAttributes{ref: ref}
 }
 
-func (s SubnetAttributes) InternalTokens() hclwrite.Tokens {
+func (s SubnetAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SubnetAttributes) AddressPrefix() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("address_prefix"))
+	return terra.ReferenceAsString(s.ref.Append("address_prefix"))
 }
 
 func (s SubnetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("id"))
+	return terra.ReferenceAsString(s.ref.Append("id"))
 }
 
 func (s SubnetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 func (s SubnetAttributes) SecurityGroup() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("security_group"))
+	return terra.ReferenceAsString(s.ref.Append("security_group"))
 }
 
 type DdosProtectionPlanAttributes struct {
 	ref terra.Reference
 }
 
-func (dpp DdosProtectionPlanAttributes) InternalRef() terra.Reference {
-	return dpp.ref
+func (dpp DdosProtectionPlanAttributes) InternalRef() (terra.Reference, error) {
+	return dpp.ref, nil
 }
 
 func (dpp DdosProtectionPlanAttributes) InternalWithRef(ref terra.Reference) DdosProtectionPlanAttributes {
 	return DdosProtectionPlanAttributes{ref: ref}
 }
 
-func (dpp DdosProtectionPlanAttributes) InternalTokens() hclwrite.Tokens {
+func (dpp DdosProtectionPlanAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dpp.ref.InternalTokens()
 }
 
 func (dpp DdosProtectionPlanAttributes) Enable() terra.BoolValue {
-	return terra.ReferenceBool(dpp.ref.Append("enable"))
+	return terra.ReferenceAsBool(dpp.ref.Append("enable"))
 }
 
 func (dpp DdosProtectionPlanAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dpp.ref.Append("id"))
+	return terra.ReferenceAsString(dpp.ref.Append("id"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type SubnetState struct {

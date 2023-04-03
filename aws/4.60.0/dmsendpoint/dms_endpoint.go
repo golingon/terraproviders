@@ -221,7 +221,7 @@ func (es ElasticsearchSettingsAttributes) InternalWithRef(ref terra.Reference) E
 	return ElasticsearchSettingsAttributes{ref: ref}
 }
 
-func (es ElasticsearchSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (es ElasticsearchSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return es.ref.InternalTokens()
 }
 
@@ -253,7 +253,7 @@ func (ks KafkaSettingsAttributes) InternalWithRef(ref terra.Reference) KafkaSett
 	return KafkaSettingsAttributes{ref: ref}
 }
 
-func (ks KafkaSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ks KafkaSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ks.ref.InternalTokens()
 }
 
@@ -341,7 +341,7 @@ func (ks KinesisSettingsAttributes) InternalWithRef(ref terra.Reference) Kinesis
 	return KinesisSettingsAttributes{ref: ref}
 }
 
-func (ks KinesisSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ks KinesisSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ks.ref.InternalTokens()
 }
 
@@ -393,7 +393,7 @@ func (ms MongodbSettingsAttributes) InternalWithRef(ref terra.Reference) Mongodb
 	return MongodbSettingsAttributes{ref: ref}
 }
 
-func (ms MongodbSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ms MongodbSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ms.ref.InternalTokens()
 }
 
@@ -433,7 +433,7 @@ func (rs RedisSettingsAttributes) InternalWithRef(ref terra.Reference) RedisSett
 	return RedisSettingsAttributes{ref: ref}
 }
 
-func (rs RedisSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (rs RedisSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rs.ref.InternalTokens()
 }
 
@@ -477,7 +477,7 @@ func (rs RedshiftSettingsAttributes) InternalWithRef(ref terra.Reference) Redshi
 	return RedshiftSettingsAttributes{ref: ref}
 }
 
-func (rs RedshiftSettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (rs RedshiftSettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return rs.ref.InternalTokens()
 }
 
@@ -513,7 +513,7 @@ func (ss S3SettingsAttributes) InternalWithRef(ref terra.Reference) S3SettingsAt
 	return S3SettingsAttributes{ref: ref}
 }
 
-func (ss S3SettingsAttributes) InternalTokens() hclwrite.Tokens {
+func (ss S3SettingsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ss.ref.InternalTokens()
 }
 
@@ -681,7 +681,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

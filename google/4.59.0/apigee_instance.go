@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApigeeInstance creates a new instance of [ApigeeInstance].
 func NewApigeeInstance(name string, args ApigeeInstanceArgs) *ApigeeInstance {
 	return &ApigeeInstance{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApigeeInstance(name string, args ApigeeInstanceArgs) *ApigeeInstance {
 
 var _ terra.Resource = (*ApigeeInstance)(nil)
 
+// ApigeeInstance represents the Terraform resource google_apigee_instance.
 type ApigeeInstance struct {
-	Name  string
-	Args  ApigeeInstanceArgs
-	state *apigeeInstanceState
+	Name      string
+	Args      ApigeeInstanceArgs
+	state     *apigeeInstanceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApigeeInstance].
 func (ai *ApigeeInstance) Type() string {
 	return "google_apigee_instance"
 }
 
+// LocalName returns the local name for [ApigeeInstance].
 func (ai *ApigeeInstance) LocalName() string {
 	return ai.Name
 }
 
+// Configuration returns the configuration (args) for [ApigeeInstance].
 func (ai *ApigeeInstance) Configuration() interface{} {
 	return ai.Args
 }
 
+// DependOn is used for other resources to depend on [ApigeeInstance].
+func (ai *ApigeeInstance) DependOn() terra.Reference {
+	return terra.ReferenceResource(ai)
+}
+
+// Dependencies returns the list of resources [ApigeeInstance] depends_on.
+func (ai *ApigeeInstance) Dependencies() terra.Dependencies {
+	return ai.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApigeeInstance].
+func (ai *ApigeeInstance) LifecycleManagement() *terra.Lifecycle {
+	return ai.Lifecycle
+}
+
+// Attributes returns the attributes for [ApigeeInstance].
 func (ai *ApigeeInstance) Attributes() apigeeInstanceAttributes {
 	return apigeeInstanceAttributes{ref: terra.ReferenceResource(ai)}
 }
 
+// ImportState imports the given attribute values into [ApigeeInstance]'s state.
 func (ai *ApigeeInstance) ImportState(av io.Reader) error {
 	ai.state = &apigeeInstanceState{}
 	if err := json.NewDecoder(av).Decode(ai.state); err != nil {
@@ -49,10 +73,12 @@ func (ai *ApigeeInstance) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApigeeInstance] has state.
 func (ai *ApigeeInstance) State() (*apigeeInstanceState, bool) {
 	return ai.state, ai.state != nil
 }
 
+// StateMust returns the state for [ApigeeInstance]. Panics if the state is nil.
 func (ai *ApigeeInstance) StateMust() *apigeeInstanceState {
 	if ai.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ai.Type(), ai.LocalName()))
@@ -60,10 +86,7 @@ func (ai *ApigeeInstance) StateMust() *apigeeInstanceState {
 	return ai.state
 }
 
-func (ai *ApigeeInstance) DependOn() terra.Reference {
-	return terra.ReferenceResource(ai)
-}
-
+// ApigeeInstanceArgs contains the configurations for google_apigee_instance.
 type ApigeeInstanceArgs struct {
 	// ConsumerAcceptList: list of string, optional
 	ConsumerAcceptList terra.ListValue[terra.StringValue] `hcl:"consumer_accept_list,attr"`
@@ -87,67 +110,78 @@ type ApigeeInstanceArgs struct {
 	PeeringCidrRange terra.StringValue `hcl:"peering_cidr_range,attr"`
 	// Timeouts: optional
 	Timeouts *apigeeinstance.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ApigeeInstance depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apigeeInstanceAttributes struct {
 	ref terra.Reference
 }
 
+// ConsumerAcceptList returns a reference to field consumer_accept_list of google_apigee_instance.
 func (ai apigeeInstanceAttributes) ConsumerAcceptList() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ai.ref.Append("consumer_accept_list"))
+	return terra.ReferenceAsList[terra.StringValue](ai.ref.Append("consumer_accept_list"))
 }
 
+// Description returns a reference to field description of google_apigee_instance.
 func (ai apigeeInstanceAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("description"))
+	return terra.ReferenceAsString(ai.ref.Append("description"))
 }
 
+// DiskEncryptionKeyName returns a reference to field disk_encryption_key_name of google_apigee_instance.
 func (ai apigeeInstanceAttributes) DiskEncryptionKeyName() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("disk_encryption_key_name"))
+	return terra.ReferenceAsString(ai.ref.Append("disk_encryption_key_name"))
 }
 
+// DisplayName returns a reference to field display_name of google_apigee_instance.
 func (ai apigeeInstanceAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("display_name"))
+	return terra.ReferenceAsString(ai.ref.Append("display_name"))
 }
 
+// Host returns a reference to field host of google_apigee_instance.
 func (ai apigeeInstanceAttributes) Host() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("host"))
+	return terra.ReferenceAsString(ai.ref.Append("host"))
 }
 
+// Id returns a reference to field id of google_apigee_instance.
 func (ai apigeeInstanceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("id"))
+	return terra.ReferenceAsString(ai.ref.Append("id"))
 }
 
+// IpRange returns a reference to field ip_range of google_apigee_instance.
 func (ai apigeeInstanceAttributes) IpRange() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("ip_range"))
+	return terra.ReferenceAsString(ai.ref.Append("ip_range"))
 }
 
+// Location returns a reference to field location of google_apigee_instance.
 func (ai apigeeInstanceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("location"))
+	return terra.ReferenceAsString(ai.ref.Append("location"))
 }
 
+// Name returns a reference to field name of google_apigee_instance.
 func (ai apigeeInstanceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("name"))
+	return terra.ReferenceAsString(ai.ref.Append("name"))
 }
 
+// OrgId returns a reference to field org_id of google_apigee_instance.
 func (ai apigeeInstanceAttributes) OrgId() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("org_id"))
+	return terra.ReferenceAsString(ai.ref.Append("org_id"))
 }
 
+// PeeringCidrRange returns a reference to field peering_cidr_range of google_apigee_instance.
 func (ai apigeeInstanceAttributes) PeeringCidrRange() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("peering_cidr_range"))
+	return terra.ReferenceAsString(ai.ref.Append("peering_cidr_range"))
 }
 
+// Port returns a reference to field port of google_apigee_instance.
 func (ai apigeeInstanceAttributes) Port() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("port"))
+	return terra.ReferenceAsString(ai.ref.Append("port"))
 }
 
+// ServiceAttachment returns a reference to field service_attachment of google_apigee_instance.
 func (ai apigeeInstanceAttributes) ServiceAttachment() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("service_attachment"))
+	return terra.ReferenceAsString(ai.ref.Append("service_attachment"))
 }
 
 func (ai apigeeInstanceAttributes) Timeouts() apigeeinstance.TimeoutsAttributes {
-	return terra.ReferenceSingle[apigeeinstance.TimeoutsAttributes](ai.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[apigeeinstance.TimeoutsAttributes](ai.ref.Append("timeouts"))
 }
 
 type apigeeInstanceState struct {

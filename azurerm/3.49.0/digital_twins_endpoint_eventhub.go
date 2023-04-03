@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDigitalTwinsEndpointEventhub creates a new instance of [DigitalTwinsEndpointEventhub].
 func NewDigitalTwinsEndpointEventhub(name string, args DigitalTwinsEndpointEventhubArgs) *DigitalTwinsEndpointEventhub {
 	return &DigitalTwinsEndpointEventhub{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDigitalTwinsEndpointEventhub(name string, args DigitalTwinsEndpointEvent
 
 var _ terra.Resource = (*DigitalTwinsEndpointEventhub)(nil)
 
+// DigitalTwinsEndpointEventhub represents the Terraform resource azurerm_digital_twins_endpoint_eventhub.
 type DigitalTwinsEndpointEventhub struct {
-	Name  string
-	Args  DigitalTwinsEndpointEventhubArgs
-	state *digitalTwinsEndpointEventhubState
+	Name      string
+	Args      DigitalTwinsEndpointEventhubArgs
+	state     *digitalTwinsEndpointEventhubState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DigitalTwinsEndpointEventhub].
 func (dtee *DigitalTwinsEndpointEventhub) Type() string {
 	return "azurerm_digital_twins_endpoint_eventhub"
 }
 
+// LocalName returns the local name for [DigitalTwinsEndpointEventhub].
 func (dtee *DigitalTwinsEndpointEventhub) LocalName() string {
 	return dtee.Name
 }
 
+// Configuration returns the configuration (args) for [DigitalTwinsEndpointEventhub].
 func (dtee *DigitalTwinsEndpointEventhub) Configuration() interface{} {
 	return dtee.Args
 }
 
+// DependOn is used for other resources to depend on [DigitalTwinsEndpointEventhub].
+func (dtee *DigitalTwinsEndpointEventhub) DependOn() terra.Reference {
+	return terra.ReferenceResource(dtee)
+}
+
+// Dependencies returns the list of resources [DigitalTwinsEndpointEventhub] depends_on.
+func (dtee *DigitalTwinsEndpointEventhub) Dependencies() terra.Dependencies {
+	return dtee.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DigitalTwinsEndpointEventhub].
+func (dtee *DigitalTwinsEndpointEventhub) LifecycleManagement() *terra.Lifecycle {
+	return dtee.Lifecycle
+}
+
+// Attributes returns the attributes for [DigitalTwinsEndpointEventhub].
 func (dtee *DigitalTwinsEndpointEventhub) Attributes() digitalTwinsEndpointEventhubAttributes {
 	return digitalTwinsEndpointEventhubAttributes{ref: terra.ReferenceResource(dtee)}
 }
 
+// ImportState imports the given attribute values into [DigitalTwinsEndpointEventhub]'s state.
 func (dtee *DigitalTwinsEndpointEventhub) ImportState(av io.Reader) error {
 	dtee.state = &digitalTwinsEndpointEventhubState{}
 	if err := json.NewDecoder(av).Decode(dtee.state); err != nil {
@@ -49,10 +73,12 @@ func (dtee *DigitalTwinsEndpointEventhub) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DigitalTwinsEndpointEventhub] has state.
 func (dtee *DigitalTwinsEndpointEventhub) State() (*digitalTwinsEndpointEventhubState, bool) {
 	return dtee.state, dtee.state != nil
 }
 
+// StateMust returns the state for [DigitalTwinsEndpointEventhub]. Panics if the state is nil.
 func (dtee *DigitalTwinsEndpointEventhub) StateMust() *digitalTwinsEndpointEventhubState {
 	if dtee.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dtee.Type(), dtee.LocalName()))
@@ -60,10 +86,7 @@ func (dtee *DigitalTwinsEndpointEventhub) StateMust() *digitalTwinsEndpointEvent
 	return dtee.state
 }
 
-func (dtee *DigitalTwinsEndpointEventhub) DependOn() terra.Reference {
-	return terra.ReferenceResource(dtee)
-}
-
+// DigitalTwinsEndpointEventhubArgs contains the configurations for azurerm_digital_twins_endpoint_eventhub.
 type DigitalTwinsEndpointEventhubArgs struct {
 	// DeadLetterStorageSecret: string, optional
 	DeadLetterStorageSecret terra.StringValue `hcl:"dead_letter_storage_secret,attr"`
@@ -79,39 +102,43 @@ type DigitalTwinsEndpointEventhubArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *digitaltwinsendpointeventhub.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DigitalTwinsEndpointEventhub depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type digitalTwinsEndpointEventhubAttributes struct {
 	ref terra.Reference
 }
 
+// DeadLetterStorageSecret returns a reference to field dead_letter_storage_secret of azurerm_digital_twins_endpoint_eventhub.
 func (dtee digitalTwinsEndpointEventhubAttributes) DeadLetterStorageSecret() terra.StringValue {
-	return terra.ReferenceString(dtee.ref.Append("dead_letter_storage_secret"))
+	return terra.ReferenceAsString(dtee.ref.Append("dead_letter_storage_secret"))
 }
 
+// DigitalTwinsId returns a reference to field digital_twins_id of azurerm_digital_twins_endpoint_eventhub.
 func (dtee digitalTwinsEndpointEventhubAttributes) DigitalTwinsId() terra.StringValue {
-	return terra.ReferenceString(dtee.ref.Append("digital_twins_id"))
+	return terra.ReferenceAsString(dtee.ref.Append("digital_twins_id"))
 }
 
+// EventhubPrimaryConnectionString returns a reference to field eventhub_primary_connection_string of azurerm_digital_twins_endpoint_eventhub.
 func (dtee digitalTwinsEndpointEventhubAttributes) EventhubPrimaryConnectionString() terra.StringValue {
-	return terra.ReferenceString(dtee.ref.Append("eventhub_primary_connection_string"))
+	return terra.ReferenceAsString(dtee.ref.Append("eventhub_primary_connection_string"))
 }
 
+// EventhubSecondaryConnectionString returns a reference to field eventhub_secondary_connection_string of azurerm_digital_twins_endpoint_eventhub.
 func (dtee digitalTwinsEndpointEventhubAttributes) EventhubSecondaryConnectionString() terra.StringValue {
-	return terra.ReferenceString(dtee.ref.Append("eventhub_secondary_connection_string"))
+	return terra.ReferenceAsString(dtee.ref.Append("eventhub_secondary_connection_string"))
 }
 
+// Id returns a reference to field id of azurerm_digital_twins_endpoint_eventhub.
 func (dtee digitalTwinsEndpointEventhubAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dtee.ref.Append("id"))
+	return terra.ReferenceAsString(dtee.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_digital_twins_endpoint_eventhub.
 func (dtee digitalTwinsEndpointEventhubAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dtee.ref.Append("name"))
+	return terra.ReferenceAsString(dtee.ref.Append("name"))
 }
 
 func (dtee digitalTwinsEndpointEventhubAttributes) Timeouts() digitaltwinsendpointeventhub.TimeoutsAttributes {
-	return terra.ReferenceSingle[digitaltwinsendpointeventhub.TimeoutsAttributes](dtee.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[digitaltwinsendpointeventhub.TimeoutsAttributes](dtee.ref.Append("timeouts"))
 }
 
 type digitalTwinsEndpointEventhubState struct {

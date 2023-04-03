@@ -42,7 +42,7 @@ func (kgic KernelGatewayImageConfigAttributes) InternalWithRef(ref terra.Referen
 	return KernelGatewayImageConfigAttributes{ref: ref}
 }
 
-func (kgic KernelGatewayImageConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (kgic KernelGatewayImageConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return kgic.ref.InternalTokens()
 }
 
@@ -66,7 +66,7 @@ func (fsc FileSystemConfigAttributes) InternalWithRef(ref terra.Reference) FileS
 	return FileSystemConfigAttributes{ref: ref}
 }
 
-func (fsc FileSystemConfigAttributes) InternalTokens() hclwrite.Tokens {
+func (fsc FileSystemConfigAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return fsc.ref.InternalTokens()
 }
 
@@ -94,7 +94,7 @@ func (ks KernelSpecAttributes) InternalWithRef(ref terra.Reference) KernelSpecAt
 	return KernelSpecAttributes{ref: ref}
 }
 
-func (ks KernelSpecAttributes) InternalTokens() hclwrite.Tokens {
+func (ks KernelSpecAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ks.ref.InternalTokens()
 }
 

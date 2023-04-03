@@ -21,7 +21,7 @@ func (dsc DataSourceConfigurationAttributes) InternalWithRef(ref terra.Reference
 	return DataSourceConfigurationAttributes{ref: ref}
 }
 
-func (dsc DataSourceConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (dsc DataSourceConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dsc.ref.InternalTokens()
 }
 

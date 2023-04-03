@@ -21,7 +21,7 @@ func (cc ClusterCertificatesAttributes) InternalWithRef(ref terra.Reference) Clu
 	return ClusterCertificatesAttributes{ref: ref}
 }
 
-func (cc ClusterCertificatesAttributes) InternalTokens() hclwrite.Tokens {
+func (cc ClusterCertificatesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cc.ref.InternalTokens()
 }
 

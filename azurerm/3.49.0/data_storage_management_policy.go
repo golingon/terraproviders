@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataStorageManagementPolicy creates a new instance of [DataStorageManagementPolicy].
 func NewDataStorageManagementPolicy(name string, args DataStorageManagementPolicyArgs) *DataStorageManagementPolicy {
 	return &DataStorageManagementPolicy{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataStorageManagementPolicy(name string, args DataStorageManagementPolic
 
 var _ terra.DataResource = (*DataStorageManagementPolicy)(nil)
 
+// DataStorageManagementPolicy represents the Terraform data resource azurerm_storage_management_policy.
 type DataStorageManagementPolicy struct {
 	Name string
 	Args DataStorageManagementPolicyArgs
 }
 
+// DataSource returns the Terraform object type for [DataStorageManagementPolicy].
 func (smp *DataStorageManagementPolicy) DataSource() string {
 	return "azurerm_storage_management_policy"
 }
 
+// LocalName returns the local name for [DataStorageManagementPolicy].
 func (smp *DataStorageManagementPolicy) LocalName() string {
 	return smp.Name
 }
 
+// Configuration returns the configuration (args) for [DataStorageManagementPolicy].
 func (smp *DataStorageManagementPolicy) Configuration() interface{} {
 	return smp.Args
 }
 
+// Attributes returns the attributes for [DataStorageManagementPolicy].
 func (smp *DataStorageManagementPolicy) Attributes() dataStorageManagementPolicyAttributes {
 	return dataStorageManagementPolicyAttributes{ref: terra.ReferenceDataResource(smp)}
 }
 
+// DataStorageManagementPolicyArgs contains the configurations for azurerm_storage_management_policy.
 type DataStorageManagementPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,18 +58,20 @@ type dataStorageManagementPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_storage_management_policy.
 func (smp dataStorageManagementPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(smp.ref.Append("id"))
+	return terra.ReferenceAsString(smp.ref.Append("id"))
 }
 
+// StorageAccountId returns a reference to field storage_account_id of azurerm_storage_management_policy.
 func (smp dataStorageManagementPolicyAttributes) StorageAccountId() terra.StringValue {
-	return terra.ReferenceString(smp.ref.Append("storage_account_id"))
+	return terra.ReferenceAsString(smp.ref.Append("storage_account_id"))
 }
 
 func (smp dataStorageManagementPolicyAttributes) Rule() terra.ListValue[datastoragemanagementpolicy.RuleAttributes] {
-	return terra.ReferenceList[datastoragemanagementpolicy.RuleAttributes](smp.ref.Append("rule"))
+	return terra.ReferenceAsList[datastoragemanagementpolicy.RuleAttributes](smp.ref.Append("rule"))
 }
 
 func (smp dataStorageManagementPolicyAttributes) Timeouts() datastoragemanagementpolicy.TimeoutsAttributes {
-	return terra.ReferenceSingle[datastoragemanagementpolicy.TimeoutsAttributes](smp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datastoragemanagementpolicy.TimeoutsAttributes](smp.ref.Append("timeouts"))
 }

@@ -35,68 +35,68 @@ type GalleriesAttributes struct {
 	ref terra.Reference
 }
 
-func (g GalleriesAttributes) InternalRef() terra.Reference {
-	return g.ref
+func (g GalleriesAttributes) InternalRef() (terra.Reference, error) {
+	return g.ref, nil
 }
 
 func (g GalleriesAttributes) InternalWithRef(ref terra.Reference) GalleriesAttributes {
 	return GalleriesAttributes{ref: ref}
 }
 
-func (g GalleriesAttributes) InternalTokens() hclwrite.Tokens {
+func (g GalleriesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return g.ref.InternalTokens()
 }
 
 func (g GalleriesAttributes) Category() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("category"))
+	return terra.ReferenceAsString(g.ref.Append("category"))
 }
 
 func (g GalleriesAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("name"))
+	return terra.ReferenceAsString(g.ref.Append("name"))
 }
 
 func (g GalleriesAttributes) Order() terra.NumberValue {
-	return terra.ReferenceNumber(g.ref.Append("order"))
+	return terra.ReferenceAsNumber(g.ref.Append("order"))
 }
 
 func (g GalleriesAttributes) ResourceType() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("resource_type"))
+	return terra.ReferenceAsString(g.ref.Append("resource_type"))
 }
 
 func (g GalleriesAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("type"))
+	return terra.ReferenceAsString(g.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type GalleriesState struct {

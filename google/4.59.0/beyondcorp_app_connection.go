@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBeyondcorpAppConnection creates a new instance of [BeyondcorpAppConnection].
 func NewBeyondcorpAppConnection(name string, args BeyondcorpAppConnectionArgs) *BeyondcorpAppConnection {
 	return &BeyondcorpAppConnection{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBeyondcorpAppConnection(name string, args BeyondcorpAppConnectionArgs) *
 
 var _ terra.Resource = (*BeyondcorpAppConnection)(nil)
 
+// BeyondcorpAppConnection represents the Terraform resource google_beyondcorp_app_connection.
 type BeyondcorpAppConnection struct {
-	Name  string
-	Args  BeyondcorpAppConnectionArgs
-	state *beyondcorpAppConnectionState
+	Name      string
+	Args      BeyondcorpAppConnectionArgs
+	state     *beyondcorpAppConnectionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BeyondcorpAppConnection].
 func (bac *BeyondcorpAppConnection) Type() string {
 	return "google_beyondcorp_app_connection"
 }
 
+// LocalName returns the local name for [BeyondcorpAppConnection].
 func (bac *BeyondcorpAppConnection) LocalName() string {
 	return bac.Name
 }
 
+// Configuration returns the configuration (args) for [BeyondcorpAppConnection].
 func (bac *BeyondcorpAppConnection) Configuration() interface{} {
 	return bac.Args
 }
 
+// DependOn is used for other resources to depend on [BeyondcorpAppConnection].
+func (bac *BeyondcorpAppConnection) DependOn() terra.Reference {
+	return terra.ReferenceResource(bac)
+}
+
+// Dependencies returns the list of resources [BeyondcorpAppConnection] depends_on.
+func (bac *BeyondcorpAppConnection) Dependencies() terra.Dependencies {
+	return bac.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BeyondcorpAppConnection].
+func (bac *BeyondcorpAppConnection) LifecycleManagement() *terra.Lifecycle {
+	return bac.Lifecycle
+}
+
+// Attributes returns the attributes for [BeyondcorpAppConnection].
 func (bac *BeyondcorpAppConnection) Attributes() beyondcorpAppConnectionAttributes {
 	return beyondcorpAppConnectionAttributes{ref: terra.ReferenceResource(bac)}
 }
 
+// ImportState imports the given attribute values into [BeyondcorpAppConnection]'s state.
 func (bac *BeyondcorpAppConnection) ImportState(av io.Reader) error {
 	bac.state = &beyondcorpAppConnectionState{}
 	if err := json.NewDecoder(av).Decode(bac.state); err != nil {
@@ -49,10 +73,12 @@ func (bac *BeyondcorpAppConnection) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BeyondcorpAppConnection] has state.
 func (bac *BeyondcorpAppConnection) State() (*beyondcorpAppConnectionState, bool) {
 	return bac.state, bac.state != nil
 }
 
+// StateMust returns the state for [BeyondcorpAppConnection]. Panics if the state is nil.
 func (bac *BeyondcorpAppConnection) StateMust() *beyondcorpAppConnectionState {
 	if bac.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bac.Type(), bac.LocalName()))
@@ -60,10 +86,7 @@ func (bac *BeyondcorpAppConnection) StateMust() *beyondcorpAppConnectionState {
 	return bac.state
 }
 
-func (bac *BeyondcorpAppConnection) DependOn() terra.Reference {
-	return terra.ReferenceResource(bac)
-}
-
+// BeyondcorpAppConnectionArgs contains the configurations for google_beyondcorp_app_connection.
 type BeyondcorpAppConnectionArgs struct {
 	// Connectors: list of string, optional
 	Connectors terra.ListValue[terra.StringValue] `hcl:"connectors,attr"`
@@ -87,55 +110,61 @@ type BeyondcorpAppConnectionArgs struct {
 	Gateway *beyondcorpappconnection.Gateway `hcl:"gateway,block"`
 	// Timeouts: optional
 	Timeouts *beyondcorpappconnection.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that BeyondcorpAppConnection depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type beyondcorpAppConnectionAttributes struct {
 	ref terra.Reference
 }
 
+// Connectors returns a reference to field connectors of google_beyondcorp_app_connection.
 func (bac beyondcorpAppConnectionAttributes) Connectors() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](bac.ref.Append("connectors"))
+	return terra.ReferenceAsList[terra.StringValue](bac.ref.Append("connectors"))
 }
 
+// DisplayName returns a reference to field display_name of google_beyondcorp_app_connection.
 func (bac beyondcorpAppConnectionAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(bac.ref.Append("display_name"))
+	return terra.ReferenceAsString(bac.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of google_beyondcorp_app_connection.
 func (bac beyondcorpAppConnectionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bac.ref.Append("id"))
+	return terra.ReferenceAsString(bac.ref.Append("id"))
 }
 
+// Labels returns a reference to field labels of google_beyondcorp_app_connection.
 func (bac beyondcorpAppConnectionAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bac.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](bac.ref.Append("labels"))
 }
 
+// Name returns a reference to field name of google_beyondcorp_app_connection.
 func (bac beyondcorpAppConnectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(bac.ref.Append("name"))
+	return terra.ReferenceAsString(bac.ref.Append("name"))
 }
 
+// Project returns a reference to field project of google_beyondcorp_app_connection.
 func (bac beyondcorpAppConnectionAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(bac.ref.Append("project"))
+	return terra.ReferenceAsString(bac.ref.Append("project"))
 }
 
+// Region returns a reference to field region of google_beyondcorp_app_connection.
 func (bac beyondcorpAppConnectionAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(bac.ref.Append("region"))
+	return terra.ReferenceAsString(bac.ref.Append("region"))
 }
 
+// Type returns a reference to field type of google_beyondcorp_app_connection.
 func (bac beyondcorpAppConnectionAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(bac.ref.Append("type"))
+	return terra.ReferenceAsString(bac.ref.Append("type"))
 }
 
 func (bac beyondcorpAppConnectionAttributes) ApplicationEndpoint() terra.ListValue[beyondcorpappconnection.ApplicationEndpointAttributes] {
-	return terra.ReferenceList[beyondcorpappconnection.ApplicationEndpointAttributes](bac.ref.Append("application_endpoint"))
+	return terra.ReferenceAsList[beyondcorpappconnection.ApplicationEndpointAttributes](bac.ref.Append("application_endpoint"))
 }
 
 func (bac beyondcorpAppConnectionAttributes) Gateway() terra.ListValue[beyondcorpappconnection.GatewayAttributes] {
-	return terra.ReferenceList[beyondcorpappconnection.GatewayAttributes](bac.ref.Append("gateway"))
+	return terra.ReferenceAsList[beyondcorpappconnection.GatewayAttributes](bac.ref.Append("gateway"))
 }
 
 func (bac beyondcorpAppConnectionAttributes) Timeouts() beyondcorpappconnection.TimeoutsAttributes {
-	return terra.ReferenceSingle[beyondcorpappconnection.TimeoutsAttributes](bac.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[beyondcorpappconnection.TimeoutsAttributes](bac.ref.Append("timeouts"))
 }
 
 type beyondcorpAppConnectionState struct {

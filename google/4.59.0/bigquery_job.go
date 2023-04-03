@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBigqueryJob creates a new instance of [BigqueryJob].
 func NewBigqueryJob(name string, args BigqueryJobArgs) *BigqueryJob {
 	return &BigqueryJob{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBigqueryJob(name string, args BigqueryJobArgs) *BigqueryJob {
 
 var _ terra.Resource = (*BigqueryJob)(nil)
 
+// BigqueryJob represents the Terraform resource google_bigquery_job.
 type BigqueryJob struct {
-	Name  string
-	Args  BigqueryJobArgs
-	state *bigqueryJobState
+	Name      string
+	Args      BigqueryJobArgs
+	state     *bigqueryJobState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BigqueryJob].
 func (bj *BigqueryJob) Type() string {
 	return "google_bigquery_job"
 }
 
+// LocalName returns the local name for [BigqueryJob].
 func (bj *BigqueryJob) LocalName() string {
 	return bj.Name
 }
 
+// Configuration returns the configuration (args) for [BigqueryJob].
 func (bj *BigqueryJob) Configuration() interface{} {
 	return bj.Args
 }
 
+// DependOn is used for other resources to depend on [BigqueryJob].
+func (bj *BigqueryJob) DependOn() terra.Reference {
+	return terra.ReferenceResource(bj)
+}
+
+// Dependencies returns the list of resources [BigqueryJob] depends_on.
+func (bj *BigqueryJob) Dependencies() terra.Dependencies {
+	return bj.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BigqueryJob].
+func (bj *BigqueryJob) LifecycleManagement() *terra.Lifecycle {
+	return bj.Lifecycle
+}
+
+// Attributes returns the attributes for [BigqueryJob].
 func (bj *BigqueryJob) Attributes() bigqueryJobAttributes {
 	return bigqueryJobAttributes{ref: terra.ReferenceResource(bj)}
 }
 
+// ImportState imports the given attribute values into [BigqueryJob]'s state.
 func (bj *BigqueryJob) ImportState(av io.Reader) error {
 	bj.state = &bigqueryJobState{}
 	if err := json.NewDecoder(av).Decode(bj.state); err != nil {
@@ -49,10 +73,12 @@ func (bj *BigqueryJob) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BigqueryJob] has state.
 func (bj *BigqueryJob) State() (*bigqueryJobState, bool) {
 	return bj.state, bj.state != nil
 }
 
+// StateMust returns the state for [BigqueryJob]. Panics if the state is nil.
 func (bj *BigqueryJob) StateMust() *bigqueryJobState {
 	if bj.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bj.Type(), bj.LocalName()))
@@ -60,10 +86,7 @@ func (bj *BigqueryJob) StateMust() *bigqueryJobState {
 	return bj.state
 }
 
-func (bj *BigqueryJob) DependOn() terra.Reference {
-	return terra.ReferenceResource(bj)
-}
-
+// BigqueryJobArgs contains the configurations for google_bigquery_job.
 type BigqueryJobArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -89,67 +112,73 @@ type BigqueryJobArgs struct {
 	Query *bigqueryjob.Query `hcl:"query,block"`
 	// Timeouts: optional
 	Timeouts *bigqueryjob.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that BigqueryJob depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type bigqueryJobAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of google_bigquery_job.
 func (bj bigqueryJobAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bj.ref.Append("id"))
+	return terra.ReferenceAsString(bj.ref.Append("id"))
 }
 
+// JobId returns a reference to field job_id of google_bigquery_job.
 func (bj bigqueryJobAttributes) JobId() terra.StringValue {
-	return terra.ReferenceString(bj.ref.Append("job_id"))
+	return terra.ReferenceAsString(bj.ref.Append("job_id"))
 }
 
+// JobTimeoutMs returns a reference to field job_timeout_ms of google_bigquery_job.
 func (bj bigqueryJobAttributes) JobTimeoutMs() terra.StringValue {
-	return terra.ReferenceString(bj.ref.Append("job_timeout_ms"))
+	return terra.ReferenceAsString(bj.ref.Append("job_timeout_ms"))
 }
 
+// JobType returns a reference to field job_type of google_bigquery_job.
 func (bj bigqueryJobAttributes) JobType() terra.StringValue {
-	return terra.ReferenceString(bj.ref.Append("job_type"))
+	return terra.ReferenceAsString(bj.ref.Append("job_type"))
 }
 
+// Labels returns a reference to field labels of google_bigquery_job.
 func (bj bigqueryJobAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bj.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](bj.ref.Append("labels"))
 }
 
+// Location returns a reference to field location of google_bigquery_job.
 func (bj bigqueryJobAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(bj.ref.Append("location"))
+	return terra.ReferenceAsString(bj.ref.Append("location"))
 }
 
+// Project returns a reference to field project of google_bigquery_job.
 func (bj bigqueryJobAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(bj.ref.Append("project"))
+	return terra.ReferenceAsString(bj.ref.Append("project"))
 }
 
+// UserEmail returns a reference to field user_email of google_bigquery_job.
 func (bj bigqueryJobAttributes) UserEmail() terra.StringValue {
-	return terra.ReferenceString(bj.ref.Append("user_email"))
+	return terra.ReferenceAsString(bj.ref.Append("user_email"))
 }
 
 func (bj bigqueryJobAttributes) Status() terra.ListValue[bigqueryjob.StatusAttributes] {
-	return terra.ReferenceList[bigqueryjob.StatusAttributes](bj.ref.Append("status"))
+	return terra.ReferenceAsList[bigqueryjob.StatusAttributes](bj.ref.Append("status"))
 }
 
 func (bj bigqueryJobAttributes) Copy() terra.ListValue[bigqueryjob.CopyAttributes] {
-	return terra.ReferenceList[bigqueryjob.CopyAttributes](bj.ref.Append("copy"))
+	return terra.ReferenceAsList[bigqueryjob.CopyAttributes](bj.ref.Append("copy"))
 }
 
 func (bj bigqueryJobAttributes) Extract() terra.ListValue[bigqueryjob.ExtractAttributes] {
-	return terra.ReferenceList[bigqueryjob.ExtractAttributes](bj.ref.Append("extract"))
+	return terra.ReferenceAsList[bigqueryjob.ExtractAttributes](bj.ref.Append("extract"))
 }
 
 func (bj bigqueryJobAttributes) Load() terra.ListValue[bigqueryjob.LoadAttributes] {
-	return terra.ReferenceList[bigqueryjob.LoadAttributes](bj.ref.Append("load"))
+	return terra.ReferenceAsList[bigqueryjob.LoadAttributes](bj.ref.Append("load"))
 }
 
 func (bj bigqueryJobAttributes) Query() terra.ListValue[bigqueryjob.QueryAttributes] {
-	return terra.ReferenceList[bigqueryjob.QueryAttributes](bj.ref.Append("query"))
+	return terra.ReferenceAsList[bigqueryjob.QueryAttributes](bj.ref.Append("query"))
 }
 
 func (bj bigqueryJobAttributes) Timeouts() bigqueryjob.TimeoutsAttributes {
-	return terra.ReferenceSingle[bigqueryjob.TimeoutsAttributes](bj.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[bigqueryjob.TimeoutsAttributes](bj.ref.Append("timeouts"))
 }
 
 type bigqueryJobState struct {

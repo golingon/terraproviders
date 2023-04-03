@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataSentinelAlertRuleTemplate creates a new instance of [DataSentinelAlertRuleTemplate].
 func NewDataSentinelAlertRuleTemplate(name string, args DataSentinelAlertRuleTemplateArgs) *DataSentinelAlertRuleTemplate {
 	return &DataSentinelAlertRuleTemplate{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataSentinelAlertRuleTemplate(name string, args DataSentinelAlertRuleTem
 
 var _ terra.DataResource = (*DataSentinelAlertRuleTemplate)(nil)
 
+// DataSentinelAlertRuleTemplate represents the Terraform data resource azurerm_sentinel_alert_rule_template.
 type DataSentinelAlertRuleTemplate struct {
 	Name string
 	Args DataSentinelAlertRuleTemplateArgs
 }
 
+// DataSource returns the Terraform object type for [DataSentinelAlertRuleTemplate].
 func (sart *DataSentinelAlertRuleTemplate) DataSource() string {
 	return "azurerm_sentinel_alert_rule_template"
 }
 
+// LocalName returns the local name for [DataSentinelAlertRuleTemplate].
 func (sart *DataSentinelAlertRuleTemplate) LocalName() string {
 	return sart.Name
 }
 
+// Configuration returns the configuration (args) for [DataSentinelAlertRuleTemplate].
 func (sart *DataSentinelAlertRuleTemplate) Configuration() interface{} {
 	return sart.Args
 }
 
+// Attributes returns the attributes for [DataSentinelAlertRuleTemplate].
 func (sart *DataSentinelAlertRuleTemplate) Attributes() dataSentinelAlertRuleTemplateAttributes {
 	return dataSentinelAlertRuleTemplateAttributes{ref: terra.ReferenceDataResource(sart)}
 }
 
+// DataSentinelAlertRuleTemplateArgs contains the configurations for azurerm_sentinel_alert_rule_template.
 type DataSentinelAlertRuleTemplateArgs struct {
 	// DisplayName: string, optional
 	DisplayName terra.StringValue `hcl:"display_name,attr"`
@@ -59,34 +66,38 @@ type dataSentinelAlertRuleTemplateAttributes struct {
 	ref terra.Reference
 }
 
+// DisplayName returns a reference to field display_name of azurerm_sentinel_alert_rule_template.
 func (sart dataSentinelAlertRuleTemplateAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(sart.ref.Append("display_name"))
+	return terra.ReferenceAsString(sart.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of azurerm_sentinel_alert_rule_template.
 func (sart dataSentinelAlertRuleTemplateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sart.ref.Append("id"))
+	return terra.ReferenceAsString(sart.ref.Append("id"))
 }
 
+// LogAnalyticsWorkspaceId returns a reference to field log_analytics_workspace_id of azurerm_sentinel_alert_rule_template.
 func (sart dataSentinelAlertRuleTemplateAttributes) LogAnalyticsWorkspaceId() terra.StringValue {
-	return terra.ReferenceString(sart.ref.Append("log_analytics_workspace_id"))
+	return terra.ReferenceAsString(sart.ref.Append("log_analytics_workspace_id"))
 }
 
+// Name returns a reference to field name of azurerm_sentinel_alert_rule_template.
 func (sart dataSentinelAlertRuleTemplateAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sart.ref.Append("name"))
+	return terra.ReferenceAsString(sart.ref.Append("name"))
 }
 
 func (sart dataSentinelAlertRuleTemplateAttributes) NrtTemplate() terra.ListValue[datasentinelalertruletemplate.NrtTemplateAttributes] {
-	return terra.ReferenceList[datasentinelalertruletemplate.NrtTemplateAttributes](sart.ref.Append("nrt_template"))
+	return terra.ReferenceAsList[datasentinelalertruletemplate.NrtTemplateAttributes](sart.ref.Append("nrt_template"))
 }
 
 func (sart dataSentinelAlertRuleTemplateAttributes) ScheduledTemplate() terra.ListValue[datasentinelalertruletemplate.ScheduledTemplateAttributes] {
-	return terra.ReferenceList[datasentinelalertruletemplate.ScheduledTemplateAttributes](sart.ref.Append("scheduled_template"))
+	return terra.ReferenceAsList[datasentinelalertruletemplate.ScheduledTemplateAttributes](sart.ref.Append("scheduled_template"))
 }
 
 func (sart dataSentinelAlertRuleTemplateAttributes) SecurityIncidentTemplate() terra.ListValue[datasentinelalertruletemplate.SecurityIncidentTemplateAttributes] {
-	return terra.ReferenceList[datasentinelalertruletemplate.SecurityIncidentTemplateAttributes](sart.ref.Append("security_incident_template"))
+	return terra.ReferenceAsList[datasentinelalertruletemplate.SecurityIncidentTemplateAttributes](sart.ref.Append("security_incident_template"))
 }
 
 func (sart dataSentinelAlertRuleTemplateAttributes) Timeouts() datasentinelalertruletemplate.TimeoutsAttributes {
-	return terra.ReferenceSingle[datasentinelalertruletemplate.TimeoutsAttributes](sart.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datasentinelalertruletemplate.TimeoutsAttributes](sart.ref.Append("timeouts"))
 }

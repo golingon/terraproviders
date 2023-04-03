@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewVpnServerConfigurationPolicyGroup creates a new instance of [VpnServerConfigurationPolicyGroup].
 func NewVpnServerConfigurationPolicyGroup(name string, args VpnServerConfigurationPolicyGroupArgs) *VpnServerConfigurationPolicyGroup {
 	return &VpnServerConfigurationPolicyGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewVpnServerConfigurationPolicyGroup(name string, args VpnServerConfigurati
 
 var _ terra.Resource = (*VpnServerConfigurationPolicyGroup)(nil)
 
+// VpnServerConfigurationPolicyGroup represents the Terraform resource azurerm_vpn_server_configuration_policy_group.
 type VpnServerConfigurationPolicyGroup struct {
-	Name  string
-	Args  VpnServerConfigurationPolicyGroupArgs
-	state *vpnServerConfigurationPolicyGroupState
+	Name      string
+	Args      VpnServerConfigurationPolicyGroupArgs
+	state     *vpnServerConfigurationPolicyGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VpnServerConfigurationPolicyGroup].
 func (vscpg *VpnServerConfigurationPolicyGroup) Type() string {
 	return "azurerm_vpn_server_configuration_policy_group"
 }
 
+// LocalName returns the local name for [VpnServerConfigurationPolicyGroup].
 func (vscpg *VpnServerConfigurationPolicyGroup) LocalName() string {
 	return vscpg.Name
 }
 
+// Configuration returns the configuration (args) for [VpnServerConfigurationPolicyGroup].
 func (vscpg *VpnServerConfigurationPolicyGroup) Configuration() interface{} {
 	return vscpg.Args
 }
 
+// DependOn is used for other resources to depend on [VpnServerConfigurationPolicyGroup].
+func (vscpg *VpnServerConfigurationPolicyGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(vscpg)
+}
+
+// Dependencies returns the list of resources [VpnServerConfigurationPolicyGroup] depends_on.
+func (vscpg *VpnServerConfigurationPolicyGroup) Dependencies() terra.Dependencies {
+	return vscpg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VpnServerConfigurationPolicyGroup].
+func (vscpg *VpnServerConfigurationPolicyGroup) LifecycleManagement() *terra.Lifecycle {
+	return vscpg.Lifecycle
+}
+
+// Attributes returns the attributes for [VpnServerConfigurationPolicyGroup].
 func (vscpg *VpnServerConfigurationPolicyGroup) Attributes() vpnServerConfigurationPolicyGroupAttributes {
 	return vpnServerConfigurationPolicyGroupAttributes{ref: terra.ReferenceResource(vscpg)}
 }
 
+// ImportState imports the given attribute values into [VpnServerConfigurationPolicyGroup]'s state.
 func (vscpg *VpnServerConfigurationPolicyGroup) ImportState(av io.Reader) error {
 	vscpg.state = &vpnServerConfigurationPolicyGroupState{}
 	if err := json.NewDecoder(av).Decode(vscpg.state); err != nil {
@@ -49,10 +73,12 @@ func (vscpg *VpnServerConfigurationPolicyGroup) ImportState(av io.Reader) error 
 	return nil
 }
 
+// State returns the state and a bool indicating if [VpnServerConfigurationPolicyGroup] has state.
 func (vscpg *VpnServerConfigurationPolicyGroup) State() (*vpnServerConfigurationPolicyGroupState, bool) {
 	return vscpg.state, vscpg.state != nil
 }
 
+// StateMust returns the state for [VpnServerConfigurationPolicyGroup]. Panics if the state is nil.
 func (vscpg *VpnServerConfigurationPolicyGroup) StateMust() *vpnServerConfigurationPolicyGroupState {
 	if vscpg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", vscpg.Type(), vscpg.LocalName()))
@@ -60,10 +86,7 @@ func (vscpg *VpnServerConfigurationPolicyGroup) StateMust() *vpnServerConfigurat
 	return vscpg.state
 }
 
-func (vscpg *VpnServerConfigurationPolicyGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(vscpg)
-}
-
+// VpnServerConfigurationPolicyGroupArgs contains the configurations for azurerm_vpn_server_configuration_policy_group.
 type VpnServerConfigurationPolicyGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,39 +102,42 @@ type VpnServerConfigurationPolicyGroupArgs struct {
 	Policy []vpnserverconfigurationpolicygroup.Policy `hcl:"policy,block" validate:"min=1"`
 	// Timeouts: optional
 	Timeouts *vpnserverconfigurationpolicygroup.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that VpnServerConfigurationPolicyGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type vpnServerConfigurationPolicyGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_vpn_server_configuration_policy_group.
 func (vscpg vpnServerConfigurationPolicyGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vscpg.ref.Append("id"))
+	return terra.ReferenceAsString(vscpg.ref.Append("id"))
 }
 
+// IsDefault returns a reference to field is_default of azurerm_vpn_server_configuration_policy_group.
 func (vscpg vpnServerConfigurationPolicyGroupAttributes) IsDefault() terra.BoolValue {
-	return terra.ReferenceBool(vscpg.ref.Append("is_default"))
+	return terra.ReferenceAsBool(vscpg.ref.Append("is_default"))
 }
 
+// Name returns a reference to field name of azurerm_vpn_server_configuration_policy_group.
 func (vscpg vpnServerConfigurationPolicyGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(vscpg.ref.Append("name"))
+	return terra.ReferenceAsString(vscpg.ref.Append("name"))
 }
 
+// Priority returns a reference to field priority of azurerm_vpn_server_configuration_policy_group.
 func (vscpg vpnServerConfigurationPolicyGroupAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(vscpg.ref.Append("priority"))
+	return terra.ReferenceAsNumber(vscpg.ref.Append("priority"))
 }
 
+// VpnServerConfigurationId returns a reference to field vpn_server_configuration_id of azurerm_vpn_server_configuration_policy_group.
 func (vscpg vpnServerConfigurationPolicyGroupAttributes) VpnServerConfigurationId() terra.StringValue {
-	return terra.ReferenceString(vscpg.ref.Append("vpn_server_configuration_id"))
+	return terra.ReferenceAsString(vscpg.ref.Append("vpn_server_configuration_id"))
 }
 
 func (vscpg vpnServerConfigurationPolicyGroupAttributes) Policy() terra.SetValue[vpnserverconfigurationpolicygroup.PolicyAttributes] {
-	return terra.ReferenceSet[vpnserverconfigurationpolicygroup.PolicyAttributes](vscpg.ref.Append("policy"))
+	return terra.ReferenceAsSet[vpnserverconfigurationpolicygroup.PolicyAttributes](vscpg.ref.Append("policy"))
 }
 
 func (vscpg vpnServerConfigurationPolicyGroupAttributes) Timeouts() vpnserverconfigurationpolicygroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[vpnserverconfigurationpolicygroup.TimeoutsAttributes](vscpg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[vpnserverconfigurationpolicygroup.TimeoutsAttributes](vscpg.ref.Append("timeouts"))
 }
 
 type vpnServerConfigurationPolicyGroupState struct {

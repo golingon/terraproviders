@@ -52,7 +52,7 @@ func (ef ExcludeFilterAttributes) InternalWithRef(ref terra.Reference) ExcludeFi
 	return ExcludeFilterAttributes{ref: ref}
 }
 
-func (ef ExcludeFilterAttributes) InternalTokens() hclwrite.Tokens {
+func (ef ExcludeFilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ef.ref.InternalTokens()
 }
 
@@ -72,7 +72,7 @@ func (_if IncludeFilterAttributes) InternalWithRef(ref terra.Reference) IncludeF
 	return IncludeFilterAttributes{ref: ref}
 }
 
-func (_if IncludeFilterAttributes) InternalTokens() hclwrite.Tokens {
+func (_if IncludeFilterAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return _if.ref.InternalTokens()
 }
 
@@ -92,7 +92,7 @@ func (sc StatisticsConfigurationAttributes) InternalWithRef(ref terra.Reference)
 	return StatisticsConfigurationAttributes{ref: ref}
 }
 
-func (sc StatisticsConfigurationAttributes) InternalTokens() hclwrite.Tokens {
+func (sc StatisticsConfigurationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return sc.ref.InternalTokens()
 }
 
@@ -116,7 +116,7 @@ func (im IncludeMetricAttributes) InternalWithRef(ref terra.Reference) IncludeMe
 	return IncludeMetricAttributes{ref: ref}
 }
 
-func (im IncludeMetricAttributes) InternalTokens() hclwrite.Tokens {
+func (im IncludeMetricAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return im.ref.InternalTokens()
 }
 
@@ -140,7 +140,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

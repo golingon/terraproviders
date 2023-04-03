@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBackupPolicyVmWorkload creates a new instance of [BackupPolicyVmWorkload].
 func NewBackupPolicyVmWorkload(name string, args BackupPolicyVmWorkloadArgs) *BackupPolicyVmWorkload {
 	return &BackupPolicyVmWorkload{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBackupPolicyVmWorkload(name string, args BackupPolicyVmWorkloadArgs) *Ba
 
 var _ terra.Resource = (*BackupPolicyVmWorkload)(nil)
 
+// BackupPolicyVmWorkload represents the Terraform resource azurerm_backup_policy_vm_workload.
 type BackupPolicyVmWorkload struct {
-	Name  string
-	Args  BackupPolicyVmWorkloadArgs
-	state *backupPolicyVmWorkloadState
+	Name      string
+	Args      BackupPolicyVmWorkloadArgs
+	state     *backupPolicyVmWorkloadState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BackupPolicyVmWorkload].
 func (bpvw *BackupPolicyVmWorkload) Type() string {
 	return "azurerm_backup_policy_vm_workload"
 }
 
+// LocalName returns the local name for [BackupPolicyVmWorkload].
 func (bpvw *BackupPolicyVmWorkload) LocalName() string {
 	return bpvw.Name
 }
 
+// Configuration returns the configuration (args) for [BackupPolicyVmWorkload].
 func (bpvw *BackupPolicyVmWorkload) Configuration() interface{} {
 	return bpvw.Args
 }
 
+// DependOn is used for other resources to depend on [BackupPolicyVmWorkload].
+func (bpvw *BackupPolicyVmWorkload) DependOn() terra.Reference {
+	return terra.ReferenceResource(bpvw)
+}
+
+// Dependencies returns the list of resources [BackupPolicyVmWorkload] depends_on.
+func (bpvw *BackupPolicyVmWorkload) Dependencies() terra.Dependencies {
+	return bpvw.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BackupPolicyVmWorkload].
+func (bpvw *BackupPolicyVmWorkload) LifecycleManagement() *terra.Lifecycle {
+	return bpvw.Lifecycle
+}
+
+// Attributes returns the attributes for [BackupPolicyVmWorkload].
 func (bpvw *BackupPolicyVmWorkload) Attributes() backupPolicyVmWorkloadAttributes {
 	return backupPolicyVmWorkloadAttributes{ref: terra.ReferenceResource(bpvw)}
 }
 
+// ImportState imports the given attribute values into [BackupPolicyVmWorkload]'s state.
 func (bpvw *BackupPolicyVmWorkload) ImportState(av io.Reader) error {
 	bpvw.state = &backupPolicyVmWorkloadState{}
 	if err := json.NewDecoder(av).Decode(bpvw.state); err != nil {
@@ -49,10 +73,12 @@ func (bpvw *BackupPolicyVmWorkload) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BackupPolicyVmWorkload] has state.
 func (bpvw *BackupPolicyVmWorkload) State() (*backupPolicyVmWorkloadState, bool) {
 	return bpvw.state, bpvw.state != nil
 }
 
+// StateMust returns the state for [BackupPolicyVmWorkload]. Panics if the state is nil.
 func (bpvw *BackupPolicyVmWorkload) StateMust() *backupPolicyVmWorkloadState {
 	if bpvw.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bpvw.Type(), bpvw.LocalName()))
@@ -60,10 +86,7 @@ func (bpvw *BackupPolicyVmWorkload) StateMust() *backupPolicyVmWorkloadState {
 	return bpvw.state
 }
 
-func (bpvw *BackupPolicyVmWorkload) DependOn() terra.Reference {
-	return terra.ReferenceResource(bpvw)
-}
-
+// BackupPolicyVmWorkloadArgs contains the configurations for azurerm_backup_policy_vm_workload.
 type BackupPolicyVmWorkloadArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -81,43 +104,46 @@ type BackupPolicyVmWorkloadArgs struct {
 	Settings *backuppolicyvmworkload.Settings `hcl:"settings,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *backuppolicyvmworkload.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that BackupPolicyVmWorkload depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type backupPolicyVmWorkloadAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_backup_policy_vm_workload.
 func (bpvw backupPolicyVmWorkloadAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bpvw.ref.Append("id"))
+	return terra.ReferenceAsString(bpvw.ref.Append("id"))
 }
 
+// Name returns a reference to field name of azurerm_backup_policy_vm_workload.
 func (bpvw backupPolicyVmWorkloadAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(bpvw.ref.Append("name"))
+	return terra.ReferenceAsString(bpvw.ref.Append("name"))
 }
 
+// RecoveryVaultName returns a reference to field recovery_vault_name of azurerm_backup_policy_vm_workload.
 func (bpvw backupPolicyVmWorkloadAttributes) RecoveryVaultName() terra.StringValue {
-	return terra.ReferenceString(bpvw.ref.Append("recovery_vault_name"))
+	return terra.ReferenceAsString(bpvw.ref.Append("recovery_vault_name"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_backup_policy_vm_workload.
 func (bpvw backupPolicyVmWorkloadAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(bpvw.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(bpvw.ref.Append("resource_group_name"))
 }
 
+// WorkloadType returns a reference to field workload_type of azurerm_backup_policy_vm_workload.
 func (bpvw backupPolicyVmWorkloadAttributes) WorkloadType() terra.StringValue {
-	return terra.ReferenceString(bpvw.ref.Append("workload_type"))
+	return terra.ReferenceAsString(bpvw.ref.Append("workload_type"))
 }
 
 func (bpvw backupPolicyVmWorkloadAttributes) ProtectionPolicy() terra.SetValue[backuppolicyvmworkload.ProtectionPolicyAttributes] {
-	return terra.ReferenceSet[backuppolicyvmworkload.ProtectionPolicyAttributes](bpvw.ref.Append("protection_policy"))
+	return terra.ReferenceAsSet[backuppolicyvmworkload.ProtectionPolicyAttributes](bpvw.ref.Append("protection_policy"))
 }
 
 func (bpvw backupPolicyVmWorkloadAttributes) Settings() terra.ListValue[backuppolicyvmworkload.SettingsAttributes] {
-	return terra.ReferenceList[backuppolicyvmworkload.SettingsAttributes](bpvw.ref.Append("settings"))
+	return terra.ReferenceAsList[backuppolicyvmworkload.SettingsAttributes](bpvw.ref.Append("settings"))
 }
 
 func (bpvw backupPolicyVmWorkloadAttributes) Timeouts() backuppolicyvmworkload.TimeoutsAttributes {
-	return terra.ReferenceSingle[backuppolicyvmworkload.TimeoutsAttributes](bpvw.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[backuppolicyvmworkload.TimeoutsAttributes](bpvw.ref.Append("timeouts"))
 }
 
 type backupPolicyVmWorkloadState struct {

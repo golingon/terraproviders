@@ -33,7 +33,7 @@ func (pi PartitionIndexAttributes) InternalWithRef(ref terra.Reference) Partitio
 	return PartitionIndexAttributes{ref: ref}
 }
 
-func (pi PartitionIndexAttributes) InternalTokens() hclwrite.Tokens {
+func (pi PartitionIndexAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pi.ref.InternalTokens()
 }
 
@@ -61,7 +61,7 @@ func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttribu
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 

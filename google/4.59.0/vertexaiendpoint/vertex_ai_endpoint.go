@@ -49,252 +49,252 @@ type DeployedModelsAttributes struct {
 	ref terra.Reference
 }
 
-func (dm DeployedModelsAttributes) InternalRef() terra.Reference {
-	return dm.ref
+func (dm DeployedModelsAttributes) InternalRef() (terra.Reference, error) {
+	return dm.ref, nil
 }
 
 func (dm DeployedModelsAttributes) InternalWithRef(ref terra.Reference) DeployedModelsAttributes {
 	return DeployedModelsAttributes{ref: ref}
 }
 
-func (dm DeployedModelsAttributes) InternalTokens() hclwrite.Tokens {
+func (dm DeployedModelsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dm.ref.InternalTokens()
 }
 
 func (dm DeployedModelsAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(dm.ref.Append("create_time"))
+	return terra.ReferenceAsString(dm.ref.Append("create_time"))
 }
 
 func (dm DeployedModelsAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(dm.ref.Append("display_name"))
+	return terra.ReferenceAsString(dm.ref.Append("display_name"))
 }
 
 func (dm DeployedModelsAttributes) EnableAccessLogging() terra.BoolValue {
-	return terra.ReferenceBool(dm.ref.Append("enable_access_logging"))
+	return terra.ReferenceAsBool(dm.ref.Append("enable_access_logging"))
 }
 
 func (dm DeployedModelsAttributes) EnableContainerLogging() terra.BoolValue {
-	return terra.ReferenceBool(dm.ref.Append("enable_container_logging"))
+	return terra.ReferenceAsBool(dm.ref.Append("enable_container_logging"))
 }
 
 func (dm DeployedModelsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dm.ref.Append("id"))
+	return terra.ReferenceAsString(dm.ref.Append("id"))
 }
 
 func (dm DeployedModelsAttributes) Model() terra.StringValue {
-	return terra.ReferenceString(dm.ref.Append("model"))
+	return terra.ReferenceAsString(dm.ref.Append("model"))
 }
 
 func (dm DeployedModelsAttributes) ModelVersionId() terra.StringValue {
-	return terra.ReferenceString(dm.ref.Append("model_version_id"))
+	return terra.ReferenceAsString(dm.ref.Append("model_version_id"))
 }
 
 func (dm DeployedModelsAttributes) ServiceAccount() terra.StringValue {
-	return terra.ReferenceString(dm.ref.Append("service_account"))
+	return terra.ReferenceAsString(dm.ref.Append("service_account"))
 }
 
 func (dm DeployedModelsAttributes) SharedResources() terra.StringValue {
-	return terra.ReferenceString(dm.ref.Append("shared_resources"))
+	return terra.ReferenceAsString(dm.ref.Append("shared_resources"))
 }
 
 func (dm DeployedModelsAttributes) AutomaticResources() terra.ListValue[AutomaticResourcesAttributes] {
-	return terra.ReferenceList[AutomaticResourcesAttributes](dm.ref.Append("automatic_resources"))
+	return terra.ReferenceAsList[AutomaticResourcesAttributes](dm.ref.Append("automatic_resources"))
 }
 
 func (dm DeployedModelsAttributes) DedicatedResources() terra.ListValue[DedicatedResourcesAttributes] {
-	return terra.ReferenceList[DedicatedResourcesAttributes](dm.ref.Append("dedicated_resources"))
+	return terra.ReferenceAsList[DedicatedResourcesAttributes](dm.ref.Append("dedicated_resources"))
 }
 
 func (dm DeployedModelsAttributes) PrivateEndpoints() terra.ListValue[PrivateEndpointsAttributes] {
-	return terra.ReferenceList[PrivateEndpointsAttributes](dm.ref.Append("private_endpoints"))
+	return terra.ReferenceAsList[PrivateEndpointsAttributes](dm.ref.Append("private_endpoints"))
 }
 
 type AutomaticResourcesAttributes struct {
 	ref terra.Reference
 }
 
-func (ar AutomaticResourcesAttributes) InternalRef() terra.Reference {
-	return ar.ref
+func (ar AutomaticResourcesAttributes) InternalRef() (terra.Reference, error) {
+	return ar.ref, nil
 }
 
 func (ar AutomaticResourcesAttributes) InternalWithRef(ref terra.Reference) AutomaticResourcesAttributes {
 	return AutomaticResourcesAttributes{ref: ref}
 }
 
-func (ar AutomaticResourcesAttributes) InternalTokens() hclwrite.Tokens {
+func (ar AutomaticResourcesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ar.ref.InternalTokens()
 }
 
 func (ar AutomaticResourcesAttributes) MaxReplicaCount() terra.NumberValue {
-	return terra.ReferenceNumber(ar.ref.Append("max_replica_count"))
+	return terra.ReferenceAsNumber(ar.ref.Append("max_replica_count"))
 }
 
 func (ar AutomaticResourcesAttributes) MinReplicaCount() terra.NumberValue {
-	return terra.ReferenceNumber(ar.ref.Append("min_replica_count"))
+	return terra.ReferenceAsNumber(ar.ref.Append("min_replica_count"))
 }
 
 type DedicatedResourcesAttributes struct {
 	ref terra.Reference
 }
 
-func (dr DedicatedResourcesAttributes) InternalRef() terra.Reference {
-	return dr.ref
+func (dr DedicatedResourcesAttributes) InternalRef() (terra.Reference, error) {
+	return dr.ref, nil
 }
 
 func (dr DedicatedResourcesAttributes) InternalWithRef(ref terra.Reference) DedicatedResourcesAttributes {
 	return DedicatedResourcesAttributes{ref: ref}
 }
 
-func (dr DedicatedResourcesAttributes) InternalTokens() hclwrite.Tokens {
+func (dr DedicatedResourcesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dr.ref.InternalTokens()
 }
 
 func (dr DedicatedResourcesAttributes) MaxReplicaCount() terra.NumberValue {
-	return terra.ReferenceNumber(dr.ref.Append("max_replica_count"))
+	return terra.ReferenceAsNumber(dr.ref.Append("max_replica_count"))
 }
 
 func (dr DedicatedResourcesAttributes) MinReplicaCount() terra.NumberValue {
-	return terra.ReferenceNumber(dr.ref.Append("min_replica_count"))
+	return terra.ReferenceAsNumber(dr.ref.Append("min_replica_count"))
 }
 
 func (dr DedicatedResourcesAttributes) AutoscalingMetricSpecs() terra.ListValue[AutoscalingMetricSpecsAttributes] {
-	return terra.ReferenceList[AutoscalingMetricSpecsAttributes](dr.ref.Append("autoscaling_metric_specs"))
+	return terra.ReferenceAsList[AutoscalingMetricSpecsAttributes](dr.ref.Append("autoscaling_metric_specs"))
 }
 
 func (dr DedicatedResourcesAttributes) MachineSpec() terra.ListValue[MachineSpecAttributes] {
-	return terra.ReferenceList[MachineSpecAttributes](dr.ref.Append("machine_spec"))
+	return terra.ReferenceAsList[MachineSpecAttributes](dr.ref.Append("machine_spec"))
 }
 
 type AutoscalingMetricSpecsAttributes struct {
 	ref terra.Reference
 }
 
-func (ams AutoscalingMetricSpecsAttributes) InternalRef() terra.Reference {
-	return ams.ref
+func (ams AutoscalingMetricSpecsAttributes) InternalRef() (terra.Reference, error) {
+	return ams.ref, nil
 }
 
 func (ams AutoscalingMetricSpecsAttributes) InternalWithRef(ref terra.Reference) AutoscalingMetricSpecsAttributes {
 	return AutoscalingMetricSpecsAttributes{ref: ref}
 }
 
-func (ams AutoscalingMetricSpecsAttributes) InternalTokens() hclwrite.Tokens {
+func (ams AutoscalingMetricSpecsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ams.ref.InternalTokens()
 }
 
 func (ams AutoscalingMetricSpecsAttributes) MetricName() terra.StringValue {
-	return terra.ReferenceString(ams.ref.Append("metric_name"))
+	return terra.ReferenceAsString(ams.ref.Append("metric_name"))
 }
 
 func (ams AutoscalingMetricSpecsAttributes) Target() terra.NumberValue {
-	return terra.ReferenceNumber(ams.ref.Append("target"))
+	return terra.ReferenceAsNumber(ams.ref.Append("target"))
 }
 
 type MachineSpecAttributes struct {
 	ref terra.Reference
 }
 
-func (ms MachineSpecAttributes) InternalRef() terra.Reference {
-	return ms.ref
+func (ms MachineSpecAttributes) InternalRef() (terra.Reference, error) {
+	return ms.ref, nil
 }
 
 func (ms MachineSpecAttributes) InternalWithRef(ref terra.Reference) MachineSpecAttributes {
 	return MachineSpecAttributes{ref: ref}
 }
 
-func (ms MachineSpecAttributes) InternalTokens() hclwrite.Tokens {
+func (ms MachineSpecAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ms.ref.InternalTokens()
 }
 
 func (ms MachineSpecAttributes) AcceleratorCount() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("accelerator_count"))
+	return terra.ReferenceAsNumber(ms.ref.Append("accelerator_count"))
 }
 
 func (ms MachineSpecAttributes) AcceleratorType() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("accelerator_type"))
+	return terra.ReferenceAsString(ms.ref.Append("accelerator_type"))
 }
 
 func (ms MachineSpecAttributes) MachineType() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("machine_type"))
+	return terra.ReferenceAsString(ms.ref.Append("machine_type"))
 }
 
 type PrivateEndpointsAttributes struct {
 	ref terra.Reference
 }
 
-func (pe PrivateEndpointsAttributes) InternalRef() terra.Reference {
-	return pe.ref
+func (pe PrivateEndpointsAttributes) InternalRef() (terra.Reference, error) {
+	return pe.ref, nil
 }
 
 func (pe PrivateEndpointsAttributes) InternalWithRef(ref terra.Reference) PrivateEndpointsAttributes {
 	return PrivateEndpointsAttributes{ref: ref}
 }
 
-func (pe PrivateEndpointsAttributes) InternalTokens() hclwrite.Tokens {
+func (pe PrivateEndpointsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return pe.ref.InternalTokens()
 }
 
 func (pe PrivateEndpointsAttributes) ExplainHttpUri() terra.StringValue {
-	return terra.ReferenceString(pe.ref.Append("explain_http_uri"))
+	return terra.ReferenceAsString(pe.ref.Append("explain_http_uri"))
 }
 
 func (pe PrivateEndpointsAttributes) HealthHttpUri() terra.StringValue {
-	return terra.ReferenceString(pe.ref.Append("health_http_uri"))
+	return terra.ReferenceAsString(pe.ref.Append("health_http_uri"))
 }
 
 func (pe PrivateEndpointsAttributes) PredictHttpUri() terra.StringValue {
-	return terra.ReferenceString(pe.ref.Append("predict_http_uri"))
+	return terra.ReferenceAsString(pe.ref.Append("predict_http_uri"))
 }
 
 func (pe PrivateEndpointsAttributes) ServiceAttachment() terra.StringValue {
-	return terra.ReferenceString(pe.ref.Append("service_attachment"))
+	return terra.ReferenceAsString(pe.ref.Append("service_attachment"))
 }
 
 type EncryptionSpecAttributes struct {
 	ref terra.Reference
 }
 
-func (es EncryptionSpecAttributes) InternalRef() terra.Reference {
-	return es.ref
+func (es EncryptionSpecAttributes) InternalRef() (terra.Reference, error) {
+	return es.ref, nil
 }
 
 func (es EncryptionSpecAttributes) InternalWithRef(ref terra.Reference) EncryptionSpecAttributes {
 	return EncryptionSpecAttributes{ref: ref}
 }
 
-func (es EncryptionSpecAttributes) InternalTokens() hclwrite.Tokens {
+func (es EncryptionSpecAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return es.ref.InternalTokens()
 }
 
 func (es EncryptionSpecAttributes) KmsKeyName() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("kms_key_name"))
+	return terra.ReferenceAsString(es.ref.Append("kms_key_name"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type DeployedModelsState struct {

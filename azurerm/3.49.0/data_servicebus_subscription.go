@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataServicebusSubscription creates a new instance of [DataServicebusSubscription].
 func NewDataServicebusSubscription(name string, args DataServicebusSubscriptionArgs) *DataServicebusSubscription {
 	return &DataServicebusSubscription{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataServicebusSubscription(name string, args DataServicebusSubscriptionA
 
 var _ terra.DataResource = (*DataServicebusSubscription)(nil)
 
+// DataServicebusSubscription represents the Terraform data resource azurerm_servicebus_subscription.
 type DataServicebusSubscription struct {
 	Name string
 	Args DataServicebusSubscriptionArgs
 }
 
+// DataSource returns the Terraform object type for [DataServicebusSubscription].
 func (ss *DataServicebusSubscription) DataSource() string {
 	return "azurerm_servicebus_subscription"
 }
 
+// LocalName returns the local name for [DataServicebusSubscription].
 func (ss *DataServicebusSubscription) LocalName() string {
 	return ss.Name
 }
 
+// Configuration returns the configuration (args) for [DataServicebusSubscription].
 func (ss *DataServicebusSubscription) Configuration() interface{} {
 	return ss.Args
 }
 
+// Attributes returns the attributes for [DataServicebusSubscription].
 func (ss *DataServicebusSubscription) Attributes() dataServicebusSubscriptionAttributes {
 	return dataServicebusSubscriptionAttributes{ref: terra.ReferenceDataResource(ss)}
 }
 
+// DataServicebusSubscriptionArgs contains the configurations for azurerm_servicebus_subscription.
 type DataServicebusSubscriptionArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -57,70 +64,86 @@ type dataServicebusSubscriptionAttributes struct {
 	ref terra.Reference
 }
 
+// AutoDeleteOnIdle returns a reference to field auto_delete_on_idle of azurerm_servicebus_subscription.
 func (ss dataServicebusSubscriptionAttributes) AutoDeleteOnIdle() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("auto_delete_on_idle"))
+	return terra.ReferenceAsString(ss.ref.Append("auto_delete_on_idle"))
 }
 
+// DeadLetteringOnFilterEvaluationError returns a reference to field dead_lettering_on_filter_evaluation_error of azurerm_servicebus_subscription.
 func (ss dataServicebusSubscriptionAttributes) DeadLetteringOnFilterEvaluationError() terra.BoolValue {
-	return terra.ReferenceBool(ss.ref.Append("dead_lettering_on_filter_evaluation_error"))
+	return terra.ReferenceAsBool(ss.ref.Append("dead_lettering_on_filter_evaluation_error"))
 }
 
+// DeadLetteringOnMessageExpiration returns a reference to field dead_lettering_on_message_expiration of azurerm_servicebus_subscription.
 func (ss dataServicebusSubscriptionAttributes) DeadLetteringOnMessageExpiration() terra.BoolValue {
-	return terra.ReferenceBool(ss.ref.Append("dead_lettering_on_message_expiration"))
+	return terra.ReferenceAsBool(ss.ref.Append("dead_lettering_on_message_expiration"))
 }
 
+// DefaultMessageTtl returns a reference to field default_message_ttl of azurerm_servicebus_subscription.
 func (ss dataServicebusSubscriptionAttributes) DefaultMessageTtl() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("default_message_ttl"))
+	return terra.ReferenceAsString(ss.ref.Append("default_message_ttl"))
 }
 
+// EnableBatchedOperations returns a reference to field enable_batched_operations of azurerm_servicebus_subscription.
 func (ss dataServicebusSubscriptionAttributes) EnableBatchedOperations() terra.BoolValue {
-	return terra.ReferenceBool(ss.ref.Append("enable_batched_operations"))
+	return terra.ReferenceAsBool(ss.ref.Append("enable_batched_operations"))
 }
 
+// ForwardDeadLetteredMessagesTo returns a reference to field forward_dead_lettered_messages_to of azurerm_servicebus_subscription.
 func (ss dataServicebusSubscriptionAttributes) ForwardDeadLetteredMessagesTo() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("forward_dead_lettered_messages_to"))
+	return terra.ReferenceAsString(ss.ref.Append("forward_dead_lettered_messages_to"))
 }
 
+// ForwardTo returns a reference to field forward_to of azurerm_servicebus_subscription.
 func (ss dataServicebusSubscriptionAttributes) ForwardTo() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("forward_to"))
+	return terra.ReferenceAsString(ss.ref.Append("forward_to"))
 }
 
+// Id returns a reference to field id of azurerm_servicebus_subscription.
 func (ss dataServicebusSubscriptionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("id"))
+	return terra.ReferenceAsString(ss.ref.Append("id"))
 }
 
+// LockDuration returns a reference to field lock_duration of azurerm_servicebus_subscription.
 func (ss dataServicebusSubscriptionAttributes) LockDuration() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("lock_duration"))
+	return terra.ReferenceAsString(ss.ref.Append("lock_duration"))
 }
 
+// MaxDeliveryCount returns a reference to field max_delivery_count of azurerm_servicebus_subscription.
 func (ss dataServicebusSubscriptionAttributes) MaxDeliveryCount() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("max_delivery_count"))
+	return terra.ReferenceAsNumber(ss.ref.Append("max_delivery_count"))
 }
 
+// Name returns a reference to field name of azurerm_servicebus_subscription.
 func (ss dataServicebusSubscriptionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("name"))
+	return terra.ReferenceAsString(ss.ref.Append("name"))
 }
 
+// NamespaceName returns a reference to field namespace_name of azurerm_servicebus_subscription.
 func (ss dataServicebusSubscriptionAttributes) NamespaceName() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("namespace_name"))
+	return terra.ReferenceAsString(ss.ref.Append("namespace_name"))
 }
 
+// RequiresSession returns a reference to field requires_session of azurerm_servicebus_subscription.
 func (ss dataServicebusSubscriptionAttributes) RequiresSession() terra.BoolValue {
-	return terra.ReferenceBool(ss.ref.Append("requires_session"))
+	return terra.ReferenceAsBool(ss.ref.Append("requires_session"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of azurerm_servicebus_subscription.
 func (ss dataServicebusSubscriptionAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(ss.ref.Append("resource_group_name"))
 }
 
+// TopicId returns a reference to field topic_id of azurerm_servicebus_subscription.
 func (ss dataServicebusSubscriptionAttributes) TopicId() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("topic_id"))
+	return terra.ReferenceAsString(ss.ref.Append("topic_id"))
 }
 
+// TopicName returns a reference to field topic_name of azurerm_servicebus_subscription.
 func (ss dataServicebusSubscriptionAttributes) TopicName() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("topic_name"))
+	return terra.ReferenceAsString(ss.ref.Append("topic_name"))
 }
 
 func (ss dataServicebusSubscriptionAttributes) Timeouts() dataservicebussubscription.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataservicebussubscription.TimeoutsAttributes](ss.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataservicebussubscription.TimeoutsAttributes](ss.ref.Append("timeouts"))
 }

@@ -40,96 +40,96 @@ type AzureadAdministratorAttributes struct {
 	ref terra.Reference
 }
 
-func (aa AzureadAdministratorAttributes) InternalRef() terra.Reference {
-	return aa.ref
+func (aa AzureadAdministratorAttributes) InternalRef() (terra.Reference, error) {
+	return aa.ref, nil
 }
 
 func (aa AzureadAdministratorAttributes) InternalWithRef(ref terra.Reference) AzureadAdministratorAttributes {
 	return AzureadAdministratorAttributes{ref: ref}
 }
 
-func (aa AzureadAdministratorAttributes) InternalTokens() hclwrite.Tokens {
+func (aa AzureadAdministratorAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return aa.ref.InternalTokens()
 }
 
 func (aa AzureadAdministratorAttributes) AzureadAuthenticationOnly() terra.BoolValue {
-	return terra.ReferenceBool(aa.ref.Append("azuread_authentication_only"))
+	return terra.ReferenceAsBool(aa.ref.Append("azuread_authentication_only"))
 }
 
 func (aa AzureadAdministratorAttributes) LoginUsername() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("login_username"))
+	return terra.ReferenceAsString(aa.ref.Append("login_username"))
 }
 
 func (aa AzureadAdministratorAttributes) ObjectId() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("object_id"))
+	return terra.ReferenceAsString(aa.ref.Append("object_id"))
 }
 
 func (aa AzureadAdministratorAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(aa.ref.Append("tenant_id"))
 }
 
 type IdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (i IdentityAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IdentityAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IdentityAttributes) InternalWithRef(ref terra.Reference) IdentityAttributes {
 	return IdentityAttributes{ref: ref}
 }
 
-func (i IdentityAttributes) InternalTokens() hclwrite.Tokens {
+func (i IdentityAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return i.ref.InternalTokens()
 }
 
 func (i IdentityAttributes) IdentityIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i.ref.Append("identity_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](i.ref.Append("identity_ids"))
 }
 
 func (i IdentityAttributes) PrincipalId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("principal_id"))
+	return terra.ReferenceAsString(i.ref.Append("principal_id"))
 }
 
 func (i IdentityAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(i.ref.Append("tenant_id"))
 }
 
 func (i IdentityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("type"))
+	return terra.ReferenceAsString(i.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AzureadAdministratorState struct {

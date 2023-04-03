@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSentinelDataConnectorAzureAdvancedThreatProtection creates a new instance of [SentinelDataConnectorAzureAdvancedThreatProtection].
 func NewSentinelDataConnectorAzureAdvancedThreatProtection(name string, args SentinelDataConnectorAzureAdvancedThreatProtectionArgs) *SentinelDataConnectorAzureAdvancedThreatProtection {
 	return &SentinelDataConnectorAzureAdvancedThreatProtection{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSentinelDataConnectorAzureAdvancedThreatProtection(name string, args Sen
 
 var _ terra.Resource = (*SentinelDataConnectorAzureAdvancedThreatProtection)(nil)
 
+// SentinelDataConnectorAzureAdvancedThreatProtection represents the Terraform resource azurerm_sentinel_data_connector_azure_advanced_threat_protection.
 type SentinelDataConnectorAzureAdvancedThreatProtection struct {
-	Name  string
-	Args  SentinelDataConnectorAzureAdvancedThreatProtectionArgs
-	state *sentinelDataConnectorAzureAdvancedThreatProtectionState
+	Name      string
+	Args      SentinelDataConnectorAzureAdvancedThreatProtectionArgs
+	state     *sentinelDataConnectorAzureAdvancedThreatProtectionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SentinelDataConnectorAzureAdvancedThreatProtection].
 func (sdcaatp *SentinelDataConnectorAzureAdvancedThreatProtection) Type() string {
 	return "azurerm_sentinel_data_connector_azure_advanced_threat_protection"
 }
 
+// LocalName returns the local name for [SentinelDataConnectorAzureAdvancedThreatProtection].
 func (sdcaatp *SentinelDataConnectorAzureAdvancedThreatProtection) LocalName() string {
 	return sdcaatp.Name
 }
 
+// Configuration returns the configuration (args) for [SentinelDataConnectorAzureAdvancedThreatProtection].
 func (sdcaatp *SentinelDataConnectorAzureAdvancedThreatProtection) Configuration() interface{} {
 	return sdcaatp.Args
 }
 
+// DependOn is used for other resources to depend on [SentinelDataConnectorAzureAdvancedThreatProtection].
+func (sdcaatp *SentinelDataConnectorAzureAdvancedThreatProtection) DependOn() terra.Reference {
+	return terra.ReferenceResource(sdcaatp)
+}
+
+// Dependencies returns the list of resources [SentinelDataConnectorAzureAdvancedThreatProtection] depends_on.
+func (sdcaatp *SentinelDataConnectorAzureAdvancedThreatProtection) Dependencies() terra.Dependencies {
+	return sdcaatp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SentinelDataConnectorAzureAdvancedThreatProtection].
+func (sdcaatp *SentinelDataConnectorAzureAdvancedThreatProtection) LifecycleManagement() *terra.Lifecycle {
+	return sdcaatp.Lifecycle
+}
+
+// Attributes returns the attributes for [SentinelDataConnectorAzureAdvancedThreatProtection].
 func (sdcaatp *SentinelDataConnectorAzureAdvancedThreatProtection) Attributes() sentinelDataConnectorAzureAdvancedThreatProtectionAttributes {
 	return sentinelDataConnectorAzureAdvancedThreatProtectionAttributes{ref: terra.ReferenceResource(sdcaatp)}
 }
 
+// ImportState imports the given attribute values into [SentinelDataConnectorAzureAdvancedThreatProtection]'s state.
 func (sdcaatp *SentinelDataConnectorAzureAdvancedThreatProtection) ImportState(av io.Reader) error {
 	sdcaatp.state = &sentinelDataConnectorAzureAdvancedThreatProtectionState{}
 	if err := json.NewDecoder(av).Decode(sdcaatp.state); err != nil {
@@ -49,10 +73,12 @@ func (sdcaatp *SentinelDataConnectorAzureAdvancedThreatProtection) ImportState(a
 	return nil
 }
 
+// State returns the state and a bool indicating if [SentinelDataConnectorAzureAdvancedThreatProtection] has state.
 func (sdcaatp *SentinelDataConnectorAzureAdvancedThreatProtection) State() (*sentinelDataConnectorAzureAdvancedThreatProtectionState, bool) {
 	return sdcaatp.state, sdcaatp.state != nil
 }
 
+// StateMust returns the state for [SentinelDataConnectorAzureAdvancedThreatProtection]. Panics if the state is nil.
 func (sdcaatp *SentinelDataConnectorAzureAdvancedThreatProtection) StateMust() *sentinelDataConnectorAzureAdvancedThreatProtectionState {
 	if sdcaatp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sdcaatp.Type(), sdcaatp.LocalName()))
@@ -60,10 +86,7 @@ func (sdcaatp *SentinelDataConnectorAzureAdvancedThreatProtection) StateMust() *
 	return sdcaatp.state
 }
 
-func (sdcaatp *SentinelDataConnectorAzureAdvancedThreatProtection) DependOn() terra.Reference {
-	return terra.ReferenceResource(sdcaatp)
-}
-
+// SentinelDataConnectorAzureAdvancedThreatProtectionArgs contains the configurations for azurerm_sentinel_data_connector_azure_advanced_threat_protection.
 type SentinelDataConnectorAzureAdvancedThreatProtectionArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -75,31 +98,33 @@ type SentinelDataConnectorAzureAdvancedThreatProtectionArgs struct {
 	TenantId terra.StringValue `hcl:"tenant_id,attr"`
 	// Timeouts: optional
 	Timeouts *sentineldataconnectorazureadvancedthreatprotection.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SentinelDataConnectorAzureAdvancedThreatProtection depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sentinelDataConnectorAzureAdvancedThreatProtectionAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of azurerm_sentinel_data_connector_azure_advanced_threat_protection.
 func (sdcaatp sentinelDataConnectorAzureAdvancedThreatProtectionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sdcaatp.ref.Append("id"))
+	return terra.ReferenceAsString(sdcaatp.ref.Append("id"))
 }
 
+// LogAnalyticsWorkspaceId returns a reference to field log_analytics_workspace_id of azurerm_sentinel_data_connector_azure_advanced_threat_protection.
 func (sdcaatp sentinelDataConnectorAzureAdvancedThreatProtectionAttributes) LogAnalyticsWorkspaceId() terra.StringValue {
-	return terra.ReferenceString(sdcaatp.ref.Append("log_analytics_workspace_id"))
+	return terra.ReferenceAsString(sdcaatp.ref.Append("log_analytics_workspace_id"))
 }
 
+// Name returns a reference to field name of azurerm_sentinel_data_connector_azure_advanced_threat_protection.
 func (sdcaatp sentinelDataConnectorAzureAdvancedThreatProtectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sdcaatp.ref.Append("name"))
+	return terra.ReferenceAsString(sdcaatp.ref.Append("name"))
 }
 
+// TenantId returns a reference to field tenant_id of azurerm_sentinel_data_connector_azure_advanced_threat_protection.
 func (sdcaatp sentinelDataConnectorAzureAdvancedThreatProtectionAttributes) TenantId() terra.StringValue {
-	return terra.ReferenceString(sdcaatp.ref.Append("tenant_id"))
+	return terra.ReferenceAsString(sdcaatp.ref.Append("tenant_id"))
 }
 
 func (sdcaatp sentinelDataConnectorAzureAdvancedThreatProtectionAttributes) Timeouts() sentineldataconnectorazureadvancedthreatprotection.TimeoutsAttributes {
-	return terra.ReferenceSingle[sentineldataconnectorazureadvancedthreatprotection.TimeoutsAttributes](sdcaatp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[sentineldataconnectorazureadvancedthreatprotection.TimeoutsAttributes](sdcaatp.ref.Append("timeouts"))
 }
 
 type sentinelDataConnectorAzureAdvancedThreatProtectionState struct {

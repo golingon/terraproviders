@@ -158,468 +158,468 @@ type CreationRecordAttributes struct {
 	ref terra.Reference
 }
 
-func (cr CreationRecordAttributes) InternalRef() terra.Reference {
-	return cr.ref
+func (cr CreationRecordAttributes) InternalRef() (terra.Reference, error) {
+	return cr.ref, nil
 }
 
 func (cr CreationRecordAttributes) InternalWithRef(ref terra.Reference) CreationRecordAttributes {
 	return CreationRecordAttributes{ref: ref}
 }
 
-func (cr CreationRecordAttributes) InternalTokens() hclwrite.Tokens {
+func (cr CreationRecordAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cr.ref.InternalTokens()
 }
 
 func (cr CreationRecordAttributes) MutateTime() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("mutate_time"))
+	return terra.ReferenceAsString(cr.ref.Append("mutate_time"))
 }
 
 func (cr CreationRecordAttributes) MutatedBy() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("mutated_by"))
+	return terra.ReferenceAsString(cr.ref.Append("mutated_by"))
 }
 
 type AlertStrategyAttributes struct {
 	ref terra.Reference
 }
 
-func (as AlertStrategyAttributes) InternalRef() terra.Reference {
-	return as.ref
+func (as AlertStrategyAttributes) InternalRef() (terra.Reference, error) {
+	return as.ref, nil
 }
 
 func (as AlertStrategyAttributes) InternalWithRef(ref terra.Reference) AlertStrategyAttributes {
 	return AlertStrategyAttributes{ref: ref}
 }
 
-func (as AlertStrategyAttributes) InternalTokens() hclwrite.Tokens {
+func (as AlertStrategyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return as.ref.InternalTokens()
 }
 
 func (as AlertStrategyAttributes) AutoClose() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("auto_close"))
+	return terra.ReferenceAsString(as.ref.Append("auto_close"))
 }
 
 func (as AlertStrategyAttributes) NotificationRateLimit() terra.ListValue[NotificationRateLimitAttributes] {
-	return terra.ReferenceList[NotificationRateLimitAttributes](as.ref.Append("notification_rate_limit"))
+	return terra.ReferenceAsList[NotificationRateLimitAttributes](as.ref.Append("notification_rate_limit"))
 }
 
 type NotificationRateLimitAttributes struct {
 	ref terra.Reference
 }
 
-func (nrl NotificationRateLimitAttributes) InternalRef() terra.Reference {
-	return nrl.ref
+func (nrl NotificationRateLimitAttributes) InternalRef() (terra.Reference, error) {
+	return nrl.ref, nil
 }
 
 func (nrl NotificationRateLimitAttributes) InternalWithRef(ref terra.Reference) NotificationRateLimitAttributes {
 	return NotificationRateLimitAttributes{ref: ref}
 }
 
-func (nrl NotificationRateLimitAttributes) InternalTokens() hclwrite.Tokens {
+func (nrl NotificationRateLimitAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return nrl.ref.InternalTokens()
 }
 
 func (nrl NotificationRateLimitAttributes) Period() terra.StringValue {
-	return terra.ReferenceString(nrl.ref.Append("period"))
+	return terra.ReferenceAsString(nrl.ref.Append("period"))
 }
 
 type ConditionsAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConditionsAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConditionsAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConditionsAttributes) InternalWithRef(ref terra.Reference) ConditionsAttributes {
 	return ConditionsAttributes{ref: ref}
 }
 
-func (c ConditionsAttributes) InternalTokens() hclwrite.Tokens {
+func (c ConditionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c ConditionsAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("display_name"))
+	return terra.ReferenceAsString(c.ref.Append("display_name"))
 }
 
 func (c ConditionsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("name"))
+	return terra.ReferenceAsString(c.ref.Append("name"))
 }
 
 func (c ConditionsAttributes) ConditionAbsent() terra.ListValue[ConditionAbsentAttributes] {
-	return terra.ReferenceList[ConditionAbsentAttributes](c.ref.Append("condition_absent"))
+	return terra.ReferenceAsList[ConditionAbsentAttributes](c.ref.Append("condition_absent"))
 }
 
 func (c ConditionsAttributes) ConditionMatchedLog() terra.ListValue[ConditionMatchedLogAttributes] {
-	return terra.ReferenceList[ConditionMatchedLogAttributes](c.ref.Append("condition_matched_log"))
+	return terra.ReferenceAsList[ConditionMatchedLogAttributes](c.ref.Append("condition_matched_log"))
 }
 
 func (c ConditionsAttributes) ConditionMonitoringQueryLanguage() terra.ListValue[ConditionMonitoringQueryLanguageAttributes] {
-	return terra.ReferenceList[ConditionMonitoringQueryLanguageAttributes](c.ref.Append("condition_monitoring_query_language"))
+	return terra.ReferenceAsList[ConditionMonitoringQueryLanguageAttributes](c.ref.Append("condition_monitoring_query_language"))
 }
 
 func (c ConditionsAttributes) ConditionThreshold() terra.ListValue[ConditionThresholdAttributes] {
-	return terra.ReferenceList[ConditionThresholdAttributes](c.ref.Append("condition_threshold"))
+	return terra.ReferenceAsList[ConditionThresholdAttributes](c.ref.Append("condition_threshold"))
 }
 
 type ConditionAbsentAttributes struct {
 	ref terra.Reference
 }
 
-func (ca ConditionAbsentAttributes) InternalRef() terra.Reference {
-	return ca.ref
+func (ca ConditionAbsentAttributes) InternalRef() (terra.Reference, error) {
+	return ca.ref, nil
 }
 
 func (ca ConditionAbsentAttributes) InternalWithRef(ref terra.Reference) ConditionAbsentAttributes {
 	return ConditionAbsentAttributes{ref: ref}
 }
 
-func (ca ConditionAbsentAttributes) InternalTokens() hclwrite.Tokens {
+func (ca ConditionAbsentAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ca.ref.InternalTokens()
 }
 
 func (ca ConditionAbsentAttributes) Duration() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("duration"))
+	return terra.ReferenceAsString(ca.ref.Append("duration"))
 }
 
 func (ca ConditionAbsentAttributes) Filter() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("filter"))
+	return terra.ReferenceAsString(ca.ref.Append("filter"))
 }
 
 func (ca ConditionAbsentAttributes) Aggregations() terra.ListValue[ConditionAbsentAggregationsAttributes] {
-	return terra.ReferenceList[ConditionAbsentAggregationsAttributes](ca.ref.Append("aggregations"))
+	return terra.ReferenceAsList[ConditionAbsentAggregationsAttributes](ca.ref.Append("aggregations"))
 }
 
 func (ca ConditionAbsentAttributes) Trigger() terra.ListValue[ConditionAbsentTriggerAttributes] {
-	return terra.ReferenceList[ConditionAbsentTriggerAttributes](ca.ref.Append("trigger"))
+	return terra.ReferenceAsList[ConditionAbsentTriggerAttributes](ca.ref.Append("trigger"))
 }
 
 type ConditionAbsentAggregationsAttributes struct {
 	ref terra.Reference
 }
 
-func (a ConditionAbsentAggregationsAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a ConditionAbsentAggregationsAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a ConditionAbsentAggregationsAttributes) InternalWithRef(ref terra.Reference) ConditionAbsentAggregationsAttributes {
 	return ConditionAbsentAggregationsAttributes{ref: ref}
 }
 
-func (a ConditionAbsentAggregationsAttributes) InternalTokens() hclwrite.Tokens {
+func (a ConditionAbsentAggregationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a ConditionAbsentAggregationsAttributes) AlignmentPeriod() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("alignment_period"))
+	return terra.ReferenceAsString(a.ref.Append("alignment_period"))
 }
 
 func (a ConditionAbsentAggregationsAttributes) CrossSeriesReducer() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("cross_series_reducer"))
+	return terra.ReferenceAsString(a.ref.Append("cross_series_reducer"))
 }
 
 func (a ConditionAbsentAggregationsAttributes) GroupByFields() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](a.ref.Append("group_by_fields"))
+	return terra.ReferenceAsList[terra.StringValue](a.ref.Append("group_by_fields"))
 }
 
 func (a ConditionAbsentAggregationsAttributes) PerSeriesAligner() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("per_series_aligner"))
+	return terra.ReferenceAsString(a.ref.Append("per_series_aligner"))
 }
 
 type ConditionAbsentTriggerAttributes struct {
 	ref terra.Reference
 }
 
-func (t ConditionAbsentTriggerAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t ConditionAbsentTriggerAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t ConditionAbsentTriggerAttributes) InternalWithRef(ref terra.Reference) ConditionAbsentTriggerAttributes {
 	return ConditionAbsentTriggerAttributes{ref: ref}
 }
 
-func (t ConditionAbsentTriggerAttributes) InternalTokens() hclwrite.Tokens {
+func (t ConditionAbsentTriggerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t ConditionAbsentTriggerAttributes) Count() terra.NumberValue {
-	return terra.ReferenceNumber(t.ref.Append("count"))
+	return terra.ReferenceAsNumber(t.ref.Append("count"))
 }
 
 func (t ConditionAbsentTriggerAttributes) Percent() terra.NumberValue {
-	return terra.ReferenceNumber(t.ref.Append("percent"))
+	return terra.ReferenceAsNumber(t.ref.Append("percent"))
 }
 
 type ConditionMatchedLogAttributes struct {
 	ref terra.Reference
 }
 
-func (cml ConditionMatchedLogAttributes) InternalRef() terra.Reference {
-	return cml.ref
+func (cml ConditionMatchedLogAttributes) InternalRef() (terra.Reference, error) {
+	return cml.ref, nil
 }
 
 func (cml ConditionMatchedLogAttributes) InternalWithRef(ref terra.Reference) ConditionMatchedLogAttributes {
 	return ConditionMatchedLogAttributes{ref: ref}
 }
 
-func (cml ConditionMatchedLogAttributes) InternalTokens() hclwrite.Tokens {
+func (cml ConditionMatchedLogAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cml.ref.InternalTokens()
 }
 
 func (cml ConditionMatchedLogAttributes) Filter() terra.StringValue {
-	return terra.ReferenceString(cml.ref.Append("filter"))
+	return terra.ReferenceAsString(cml.ref.Append("filter"))
 }
 
 func (cml ConditionMatchedLogAttributes) LabelExtractors() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cml.ref.Append("label_extractors"))
+	return terra.ReferenceAsMap[terra.StringValue](cml.ref.Append("label_extractors"))
 }
 
 type ConditionMonitoringQueryLanguageAttributes struct {
 	ref terra.Reference
 }
 
-func (cmql ConditionMonitoringQueryLanguageAttributes) InternalRef() terra.Reference {
-	return cmql.ref
+func (cmql ConditionMonitoringQueryLanguageAttributes) InternalRef() (terra.Reference, error) {
+	return cmql.ref, nil
 }
 
 func (cmql ConditionMonitoringQueryLanguageAttributes) InternalWithRef(ref terra.Reference) ConditionMonitoringQueryLanguageAttributes {
 	return ConditionMonitoringQueryLanguageAttributes{ref: ref}
 }
 
-func (cmql ConditionMonitoringQueryLanguageAttributes) InternalTokens() hclwrite.Tokens {
+func (cmql ConditionMonitoringQueryLanguageAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return cmql.ref.InternalTokens()
 }
 
 func (cmql ConditionMonitoringQueryLanguageAttributes) Duration() terra.StringValue {
-	return terra.ReferenceString(cmql.ref.Append("duration"))
+	return terra.ReferenceAsString(cmql.ref.Append("duration"))
 }
 
 func (cmql ConditionMonitoringQueryLanguageAttributes) EvaluationMissingData() terra.StringValue {
-	return terra.ReferenceString(cmql.ref.Append("evaluation_missing_data"))
+	return terra.ReferenceAsString(cmql.ref.Append("evaluation_missing_data"))
 }
 
 func (cmql ConditionMonitoringQueryLanguageAttributes) Query() terra.StringValue {
-	return terra.ReferenceString(cmql.ref.Append("query"))
+	return terra.ReferenceAsString(cmql.ref.Append("query"))
 }
 
 func (cmql ConditionMonitoringQueryLanguageAttributes) Trigger() terra.ListValue[ConditionMonitoringQueryLanguageTriggerAttributes] {
-	return terra.ReferenceList[ConditionMonitoringQueryLanguageTriggerAttributes](cmql.ref.Append("trigger"))
+	return terra.ReferenceAsList[ConditionMonitoringQueryLanguageTriggerAttributes](cmql.ref.Append("trigger"))
 }
 
 type ConditionMonitoringQueryLanguageTriggerAttributes struct {
 	ref terra.Reference
 }
 
-func (t ConditionMonitoringQueryLanguageTriggerAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t ConditionMonitoringQueryLanguageTriggerAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t ConditionMonitoringQueryLanguageTriggerAttributes) InternalWithRef(ref terra.Reference) ConditionMonitoringQueryLanguageTriggerAttributes {
 	return ConditionMonitoringQueryLanguageTriggerAttributes{ref: ref}
 }
 
-func (t ConditionMonitoringQueryLanguageTriggerAttributes) InternalTokens() hclwrite.Tokens {
+func (t ConditionMonitoringQueryLanguageTriggerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t ConditionMonitoringQueryLanguageTriggerAttributes) Count() terra.NumberValue {
-	return terra.ReferenceNumber(t.ref.Append("count"))
+	return terra.ReferenceAsNumber(t.ref.Append("count"))
 }
 
 func (t ConditionMonitoringQueryLanguageTriggerAttributes) Percent() terra.NumberValue {
-	return terra.ReferenceNumber(t.ref.Append("percent"))
+	return terra.ReferenceAsNumber(t.ref.Append("percent"))
 }
 
 type ConditionThresholdAttributes struct {
 	ref terra.Reference
 }
 
-func (ct ConditionThresholdAttributes) InternalRef() terra.Reference {
-	return ct.ref
+func (ct ConditionThresholdAttributes) InternalRef() (terra.Reference, error) {
+	return ct.ref, nil
 }
 
 func (ct ConditionThresholdAttributes) InternalWithRef(ref terra.Reference) ConditionThresholdAttributes {
 	return ConditionThresholdAttributes{ref: ref}
 }
 
-func (ct ConditionThresholdAttributes) InternalTokens() hclwrite.Tokens {
+func (ct ConditionThresholdAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return ct.ref.InternalTokens()
 }
 
 func (ct ConditionThresholdAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(ct.ref.Append("comparison"))
+	return terra.ReferenceAsString(ct.ref.Append("comparison"))
 }
 
 func (ct ConditionThresholdAttributes) DenominatorFilter() terra.StringValue {
-	return terra.ReferenceString(ct.ref.Append("denominator_filter"))
+	return terra.ReferenceAsString(ct.ref.Append("denominator_filter"))
 }
 
 func (ct ConditionThresholdAttributes) Duration() terra.StringValue {
-	return terra.ReferenceString(ct.ref.Append("duration"))
+	return terra.ReferenceAsString(ct.ref.Append("duration"))
 }
 
 func (ct ConditionThresholdAttributes) EvaluationMissingData() terra.StringValue {
-	return terra.ReferenceString(ct.ref.Append("evaluation_missing_data"))
+	return terra.ReferenceAsString(ct.ref.Append("evaluation_missing_data"))
 }
 
 func (ct ConditionThresholdAttributes) Filter() terra.StringValue {
-	return terra.ReferenceString(ct.ref.Append("filter"))
+	return terra.ReferenceAsString(ct.ref.Append("filter"))
 }
 
 func (ct ConditionThresholdAttributes) ThresholdValue() terra.NumberValue {
-	return terra.ReferenceNumber(ct.ref.Append("threshold_value"))
+	return terra.ReferenceAsNumber(ct.ref.Append("threshold_value"))
 }
 
 func (ct ConditionThresholdAttributes) Aggregations() terra.ListValue[ConditionThresholdAggregationsAttributes] {
-	return terra.ReferenceList[ConditionThresholdAggregationsAttributes](ct.ref.Append("aggregations"))
+	return terra.ReferenceAsList[ConditionThresholdAggregationsAttributes](ct.ref.Append("aggregations"))
 }
 
 func (ct ConditionThresholdAttributes) DenominatorAggregations() terra.ListValue[DenominatorAggregationsAttributes] {
-	return terra.ReferenceList[DenominatorAggregationsAttributes](ct.ref.Append("denominator_aggregations"))
+	return terra.ReferenceAsList[DenominatorAggregationsAttributes](ct.ref.Append("denominator_aggregations"))
 }
 
 func (ct ConditionThresholdAttributes) Trigger() terra.ListValue[ConditionThresholdTriggerAttributes] {
-	return terra.ReferenceList[ConditionThresholdTriggerAttributes](ct.ref.Append("trigger"))
+	return terra.ReferenceAsList[ConditionThresholdTriggerAttributes](ct.ref.Append("trigger"))
 }
 
 type ConditionThresholdAggregationsAttributes struct {
 	ref terra.Reference
 }
 
-func (a ConditionThresholdAggregationsAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a ConditionThresholdAggregationsAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a ConditionThresholdAggregationsAttributes) InternalWithRef(ref terra.Reference) ConditionThresholdAggregationsAttributes {
 	return ConditionThresholdAggregationsAttributes{ref: ref}
 }
 
-func (a ConditionThresholdAggregationsAttributes) InternalTokens() hclwrite.Tokens {
+func (a ConditionThresholdAggregationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return a.ref.InternalTokens()
 }
 
 func (a ConditionThresholdAggregationsAttributes) AlignmentPeriod() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("alignment_period"))
+	return terra.ReferenceAsString(a.ref.Append("alignment_period"))
 }
 
 func (a ConditionThresholdAggregationsAttributes) CrossSeriesReducer() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("cross_series_reducer"))
+	return terra.ReferenceAsString(a.ref.Append("cross_series_reducer"))
 }
 
 func (a ConditionThresholdAggregationsAttributes) GroupByFields() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](a.ref.Append("group_by_fields"))
+	return terra.ReferenceAsList[terra.StringValue](a.ref.Append("group_by_fields"))
 }
 
 func (a ConditionThresholdAggregationsAttributes) PerSeriesAligner() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("per_series_aligner"))
+	return terra.ReferenceAsString(a.ref.Append("per_series_aligner"))
 }
 
 type DenominatorAggregationsAttributes struct {
 	ref terra.Reference
 }
 
-func (da DenominatorAggregationsAttributes) InternalRef() terra.Reference {
-	return da.ref
+func (da DenominatorAggregationsAttributes) InternalRef() (terra.Reference, error) {
+	return da.ref, nil
 }
 
 func (da DenominatorAggregationsAttributes) InternalWithRef(ref terra.Reference) DenominatorAggregationsAttributes {
 	return DenominatorAggregationsAttributes{ref: ref}
 }
 
-func (da DenominatorAggregationsAttributes) InternalTokens() hclwrite.Tokens {
+func (da DenominatorAggregationsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return da.ref.InternalTokens()
 }
 
 func (da DenominatorAggregationsAttributes) AlignmentPeriod() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("alignment_period"))
+	return terra.ReferenceAsString(da.ref.Append("alignment_period"))
 }
 
 func (da DenominatorAggregationsAttributes) CrossSeriesReducer() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("cross_series_reducer"))
+	return terra.ReferenceAsString(da.ref.Append("cross_series_reducer"))
 }
 
 func (da DenominatorAggregationsAttributes) GroupByFields() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](da.ref.Append("group_by_fields"))
+	return terra.ReferenceAsList[terra.StringValue](da.ref.Append("group_by_fields"))
 }
 
 func (da DenominatorAggregationsAttributes) PerSeriesAligner() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("per_series_aligner"))
+	return terra.ReferenceAsString(da.ref.Append("per_series_aligner"))
 }
 
 type ConditionThresholdTriggerAttributes struct {
 	ref terra.Reference
 }
 
-func (t ConditionThresholdTriggerAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t ConditionThresholdTriggerAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t ConditionThresholdTriggerAttributes) InternalWithRef(ref terra.Reference) ConditionThresholdTriggerAttributes {
 	return ConditionThresholdTriggerAttributes{ref: ref}
 }
 
-func (t ConditionThresholdTriggerAttributes) InternalTokens() hclwrite.Tokens {
+func (t ConditionThresholdTriggerAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t ConditionThresholdTriggerAttributes) Count() terra.NumberValue {
-	return terra.ReferenceNumber(t.ref.Append("count"))
+	return terra.ReferenceAsNumber(t.ref.Append("count"))
 }
 
 func (t ConditionThresholdTriggerAttributes) Percent() terra.NumberValue {
-	return terra.ReferenceNumber(t.ref.Append("percent"))
+	return terra.ReferenceAsNumber(t.ref.Append("percent"))
 }
 
 type DocumentationAttributes struct {
 	ref terra.Reference
 }
 
-func (d DocumentationAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DocumentationAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DocumentationAttributes) InternalWithRef(ref terra.Reference) DocumentationAttributes {
 	return DocumentationAttributes{ref: ref}
 }
 
-func (d DocumentationAttributes) InternalTokens() hclwrite.Tokens {
+func (d DocumentationAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return d.ref.InternalTokens()
 }
 
 func (d DocumentationAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("content"))
+	return terra.ReferenceAsString(d.ref.Append("content"))
 }
 
 func (d DocumentationAttributes) MimeType() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("mime_type"))
+	return terra.ReferenceAsString(d.ref.Append("mime_type"))
 }
 
 type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
 	return TimeoutsAttributes{ref: ref}
 }
 
-func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
+func (t TimeoutsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return t.ref.InternalTokens()
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type CreationRecordState struct {

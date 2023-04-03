@@ -21,7 +21,7 @@ func (dvo DomainValidationOptionsAttributes) InternalWithRef(ref terra.Reference
 	return DomainValidationOptionsAttributes{ref: ref}
 }
 
-func (dvo DomainValidationOptionsAttributes) InternalTokens() hclwrite.Tokens {
+func (dvo DomainValidationOptionsAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return dvo.ref.InternalTokens()
 }
 

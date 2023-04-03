@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewIapWebTypeComputeIamPolicy creates a new instance of [IapWebTypeComputeIamPolicy].
 func NewIapWebTypeComputeIamPolicy(name string, args IapWebTypeComputeIamPolicyArgs) *IapWebTypeComputeIamPolicy {
 	return &IapWebTypeComputeIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewIapWebTypeComputeIamPolicy(name string, args IapWebTypeComputeIamPolicyA
 
 var _ terra.Resource = (*IapWebTypeComputeIamPolicy)(nil)
 
+// IapWebTypeComputeIamPolicy represents the Terraform resource google_iap_web_type_compute_iam_policy.
 type IapWebTypeComputeIamPolicy struct {
-	Name  string
-	Args  IapWebTypeComputeIamPolicyArgs
-	state *iapWebTypeComputeIamPolicyState
+	Name      string
+	Args      IapWebTypeComputeIamPolicyArgs
+	state     *iapWebTypeComputeIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IapWebTypeComputeIamPolicy].
 func (iwtcip *IapWebTypeComputeIamPolicy) Type() string {
 	return "google_iap_web_type_compute_iam_policy"
 }
 
+// LocalName returns the local name for [IapWebTypeComputeIamPolicy].
 func (iwtcip *IapWebTypeComputeIamPolicy) LocalName() string {
 	return iwtcip.Name
 }
 
+// Configuration returns the configuration (args) for [IapWebTypeComputeIamPolicy].
 func (iwtcip *IapWebTypeComputeIamPolicy) Configuration() interface{} {
 	return iwtcip.Args
 }
 
+// DependOn is used for other resources to depend on [IapWebTypeComputeIamPolicy].
+func (iwtcip *IapWebTypeComputeIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(iwtcip)
+}
+
+// Dependencies returns the list of resources [IapWebTypeComputeIamPolicy] depends_on.
+func (iwtcip *IapWebTypeComputeIamPolicy) Dependencies() terra.Dependencies {
+	return iwtcip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IapWebTypeComputeIamPolicy].
+func (iwtcip *IapWebTypeComputeIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return iwtcip.Lifecycle
+}
+
+// Attributes returns the attributes for [IapWebTypeComputeIamPolicy].
 func (iwtcip *IapWebTypeComputeIamPolicy) Attributes() iapWebTypeComputeIamPolicyAttributes {
 	return iapWebTypeComputeIamPolicyAttributes{ref: terra.ReferenceResource(iwtcip)}
 }
 
+// ImportState imports the given attribute values into [IapWebTypeComputeIamPolicy]'s state.
 func (iwtcip *IapWebTypeComputeIamPolicy) ImportState(av io.Reader) error {
 	iwtcip.state = &iapWebTypeComputeIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(iwtcip.state); err != nil {
@@ -48,10 +72,12 @@ func (iwtcip *IapWebTypeComputeIamPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IapWebTypeComputeIamPolicy] has state.
 func (iwtcip *IapWebTypeComputeIamPolicy) State() (*iapWebTypeComputeIamPolicyState, bool) {
 	return iwtcip.state, iwtcip.state != nil
 }
 
+// StateMust returns the state for [IapWebTypeComputeIamPolicy]. Panics if the state is nil.
 func (iwtcip *IapWebTypeComputeIamPolicy) StateMust() *iapWebTypeComputeIamPolicyState {
 	if iwtcip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", iwtcip.Type(), iwtcip.LocalName()))
@@ -59,10 +85,7 @@ func (iwtcip *IapWebTypeComputeIamPolicy) StateMust() *iapWebTypeComputeIamPolic
 	return iwtcip.state
 }
 
-func (iwtcip *IapWebTypeComputeIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(iwtcip)
-}
-
+// IapWebTypeComputeIamPolicyArgs contains the configurations for google_iap_web_type_compute_iam_policy.
 type IapWebTypeComputeIamPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,27 +93,29 @@ type IapWebTypeComputeIamPolicyArgs struct {
 	PolicyData terra.StringValue `hcl:"policy_data,attr" validate:"required"`
 	// Project: string, optional
 	Project terra.StringValue `hcl:"project,attr"`
-	// DependsOn contains resources that IapWebTypeComputeIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iapWebTypeComputeIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_iap_web_type_compute_iam_policy.
 func (iwtcip iapWebTypeComputeIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(iwtcip.ref.Append("etag"))
+	return terra.ReferenceAsString(iwtcip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_iap_web_type_compute_iam_policy.
 func (iwtcip iapWebTypeComputeIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(iwtcip.ref.Append("id"))
+	return terra.ReferenceAsString(iwtcip.ref.Append("id"))
 }
 
+// PolicyData returns a reference to field policy_data of google_iap_web_type_compute_iam_policy.
 func (iwtcip iapWebTypeComputeIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(iwtcip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(iwtcip.ref.Append("policy_data"))
 }
 
+// Project returns a reference to field project of google_iap_web_type_compute_iam_policy.
 func (iwtcip iapWebTypeComputeIamPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(iwtcip.ref.Append("project"))
+	return terra.ReferenceAsString(iwtcip.ref.Append("project"))
 }
 
 type iapWebTypeComputeIamPolicyState struct {

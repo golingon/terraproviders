@@ -26,7 +26,7 @@ func (es EventSubscriptionAttributes) InternalWithRef(ref terra.Reference) Event
 	return EventSubscriptionAttributes{ref: ref}
 }
 
-func (es EventSubscriptionAttributes) InternalTokens() hclwrite.Tokens {
+func (es EventSubscriptionAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return es.ref.InternalTokens()
 }
 

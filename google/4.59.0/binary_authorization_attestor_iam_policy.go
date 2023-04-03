@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewBinaryAuthorizationAttestorIamPolicy creates a new instance of [BinaryAuthorizationAttestorIamPolicy].
 func NewBinaryAuthorizationAttestorIamPolicy(name string, args BinaryAuthorizationAttestorIamPolicyArgs) *BinaryAuthorizationAttestorIamPolicy {
 	return &BinaryAuthorizationAttestorIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewBinaryAuthorizationAttestorIamPolicy(name string, args BinaryAuthorizati
 
 var _ terra.Resource = (*BinaryAuthorizationAttestorIamPolicy)(nil)
 
+// BinaryAuthorizationAttestorIamPolicy represents the Terraform resource google_binary_authorization_attestor_iam_policy.
 type BinaryAuthorizationAttestorIamPolicy struct {
-	Name  string
-	Args  BinaryAuthorizationAttestorIamPolicyArgs
-	state *binaryAuthorizationAttestorIamPolicyState
+	Name      string
+	Args      BinaryAuthorizationAttestorIamPolicyArgs
+	state     *binaryAuthorizationAttestorIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BinaryAuthorizationAttestorIamPolicy].
 func (baaip *BinaryAuthorizationAttestorIamPolicy) Type() string {
 	return "google_binary_authorization_attestor_iam_policy"
 }
 
+// LocalName returns the local name for [BinaryAuthorizationAttestorIamPolicy].
 func (baaip *BinaryAuthorizationAttestorIamPolicy) LocalName() string {
 	return baaip.Name
 }
 
+// Configuration returns the configuration (args) for [BinaryAuthorizationAttestorIamPolicy].
 func (baaip *BinaryAuthorizationAttestorIamPolicy) Configuration() interface{} {
 	return baaip.Args
 }
 
+// DependOn is used for other resources to depend on [BinaryAuthorizationAttestorIamPolicy].
+func (baaip *BinaryAuthorizationAttestorIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(baaip)
+}
+
+// Dependencies returns the list of resources [BinaryAuthorizationAttestorIamPolicy] depends_on.
+func (baaip *BinaryAuthorizationAttestorIamPolicy) Dependencies() terra.Dependencies {
+	return baaip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BinaryAuthorizationAttestorIamPolicy].
+func (baaip *BinaryAuthorizationAttestorIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return baaip.Lifecycle
+}
+
+// Attributes returns the attributes for [BinaryAuthorizationAttestorIamPolicy].
 func (baaip *BinaryAuthorizationAttestorIamPolicy) Attributes() binaryAuthorizationAttestorIamPolicyAttributes {
 	return binaryAuthorizationAttestorIamPolicyAttributes{ref: terra.ReferenceResource(baaip)}
 }
 
+// ImportState imports the given attribute values into [BinaryAuthorizationAttestorIamPolicy]'s state.
 func (baaip *BinaryAuthorizationAttestorIamPolicy) ImportState(av io.Reader) error {
 	baaip.state = &binaryAuthorizationAttestorIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(baaip.state); err != nil {
@@ -48,10 +72,12 @@ func (baaip *BinaryAuthorizationAttestorIamPolicy) ImportState(av io.Reader) err
 	return nil
 }
 
+// State returns the state and a bool indicating if [BinaryAuthorizationAttestorIamPolicy] has state.
 func (baaip *BinaryAuthorizationAttestorIamPolicy) State() (*binaryAuthorizationAttestorIamPolicyState, bool) {
 	return baaip.state, baaip.state != nil
 }
 
+// StateMust returns the state for [BinaryAuthorizationAttestorIamPolicy]. Panics if the state is nil.
 func (baaip *BinaryAuthorizationAttestorIamPolicy) StateMust() *binaryAuthorizationAttestorIamPolicyState {
 	if baaip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", baaip.Type(), baaip.LocalName()))
@@ -59,10 +85,7 @@ func (baaip *BinaryAuthorizationAttestorIamPolicy) StateMust() *binaryAuthorizat
 	return baaip.state
 }
 
-func (baaip *BinaryAuthorizationAttestorIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(baaip)
-}
-
+// BinaryAuthorizationAttestorIamPolicyArgs contains the configurations for google_binary_authorization_attestor_iam_policy.
 type BinaryAuthorizationAttestorIamPolicyArgs struct {
 	// Attestor: string, required
 	Attestor terra.StringValue `hcl:"attestor,attr" validate:"required"`
@@ -72,31 +95,34 @@ type BinaryAuthorizationAttestorIamPolicyArgs struct {
 	PolicyData terra.StringValue `hcl:"policy_data,attr" validate:"required"`
 	// Project: string, optional
 	Project terra.StringValue `hcl:"project,attr"`
-	// DependsOn contains resources that BinaryAuthorizationAttestorIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type binaryAuthorizationAttestorIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Attestor returns a reference to field attestor of google_binary_authorization_attestor_iam_policy.
 func (baaip binaryAuthorizationAttestorIamPolicyAttributes) Attestor() terra.StringValue {
-	return terra.ReferenceString(baaip.ref.Append("attestor"))
+	return terra.ReferenceAsString(baaip.ref.Append("attestor"))
 }
 
+// Etag returns a reference to field etag of google_binary_authorization_attestor_iam_policy.
 func (baaip binaryAuthorizationAttestorIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(baaip.ref.Append("etag"))
+	return terra.ReferenceAsString(baaip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_binary_authorization_attestor_iam_policy.
 func (baaip binaryAuthorizationAttestorIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(baaip.ref.Append("id"))
+	return terra.ReferenceAsString(baaip.ref.Append("id"))
 }
 
+// PolicyData returns a reference to field policy_data of google_binary_authorization_attestor_iam_policy.
 func (baaip binaryAuthorizationAttestorIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(baaip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(baaip.ref.Append("policy_data"))
 }
 
+// Project returns a reference to field project of google_binary_authorization_attestor_iam_policy.
 func (baaip binaryAuthorizationAttestorIamPolicyAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(baaip.ref.Append("project"))
+	return terra.ReferenceAsString(baaip.ref.Append("project"))
 }
 
 type binaryAuthorizationAttestorIamPolicyState struct {

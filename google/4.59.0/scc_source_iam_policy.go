@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSccSourceIamPolicy creates a new instance of [SccSourceIamPolicy].
 func NewSccSourceIamPolicy(name string, args SccSourceIamPolicyArgs) *SccSourceIamPolicy {
 	return &SccSourceIamPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSccSourceIamPolicy(name string, args SccSourceIamPolicyArgs) *SccSourceI
 
 var _ terra.Resource = (*SccSourceIamPolicy)(nil)
 
+// SccSourceIamPolicy represents the Terraform resource google_scc_source_iam_policy.
 type SccSourceIamPolicy struct {
-	Name  string
-	Args  SccSourceIamPolicyArgs
-	state *sccSourceIamPolicyState
+	Name      string
+	Args      SccSourceIamPolicyArgs
+	state     *sccSourceIamPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SccSourceIamPolicy].
 func (ssip *SccSourceIamPolicy) Type() string {
 	return "google_scc_source_iam_policy"
 }
 
+// LocalName returns the local name for [SccSourceIamPolicy].
 func (ssip *SccSourceIamPolicy) LocalName() string {
 	return ssip.Name
 }
 
+// Configuration returns the configuration (args) for [SccSourceIamPolicy].
 func (ssip *SccSourceIamPolicy) Configuration() interface{} {
 	return ssip.Args
 }
 
+// DependOn is used for other resources to depend on [SccSourceIamPolicy].
+func (ssip *SccSourceIamPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(ssip)
+}
+
+// Dependencies returns the list of resources [SccSourceIamPolicy] depends_on.
+func (ssip *SccSourceIamPolicy) Dependencies() terra.Dependencies {
+	return ssip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SccSourceIamPolicy].
+func (ssip *SccSourceIamPolicy) LifecycleManagement() *terra.Lifecycle {
+	return ssip.Lifecycle
+}
+
+// Attributes returns the attributes for [SccSourceIamPolicy].
 func (ssip *SccSourceIamPolicy) Attributes() sccSourceIamPolicyAttributes {
 	return sccSourceIamPolicyAttributes{ref: terra.ReferenceResource(ssip)}
 }
 
+// ImportState imports the given attribute values into [SccSourceIamPolicy]'s state.
 func (ssip *SccSourceIamPolicy) ImportState(av io.Reader) error {
 	ssip.state = &sccSourceIamPolicyState{}
 	if err := json.NewDecoder(av).Decode(ssip.state); err != nil {
@@ -48,10 +72,12 @@ func (ssip *SccSourceIamPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SccSourceIamPolicy] has state.
 func (ssip *SccSourceIamPolicy) State() (*sccSourceIamPolicyState, bool) {
 	return ssip.state, ssip.state != nil
 }
 
+// StateMust returns the state for [SccSourceIamPolicy]. Panics if the state is nil.
 func (ssip *SccSourceIamPolicy) StateMust() *sccSourceIamPolicyState {
 	if ssip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ssip.Type(), ssip.LocalName()))
@@ -59,10 +85,7 @@ func (ssip *SccSourceIamPolicy) StateMust() *sccSourceIamPolicyState {
 	return ssip.state
 }
 
-func (ssip *SccSourceIamPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(ssip)
-}
-
+// SccSourceIamPolicyArgs contains the configurations for google_scc_source_iam_policy.
 type SccSourceIamPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -72,31 +95,34 @@ type SccSourceIamPolicyArgs struct {
 	PolicyData terra.StringValue `hcl:"policy_data,attr" validate:"required"`
 	// Source: string, required
 	Source terra.StringValue `hcl:"source,attr" validate:"required"`
-	// DependsOn contains resources that SccSourceIamPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sccSourceIamPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Etag returns a reference to field etag of google_scc_source_iam_policy.
 func (ssip sccSourceIamPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(ssip.ref.Append("etag"))
+	return terra.ReferenceAsString(ssip.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of google_scc_source_iam_policy.
 func (ssip sccSourceIamPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ssip.ref.Append("id"))
+	return terra.ReferenceAsString(ssip.ref.Append("id"))
 }
 
+// Organization returns a reference to field organization of google_scc_source_iam_policy.
 func (ssip sccSourceIamPolicyAttributes) Organization() terra.StringValue {
-	return terra.ReferenceString(ssip.ref.Append("organization"))
+	return terra.ReferenceAsString(ssip.ref.Append("organization"))
 }
 
+// PolicyData returns a reference to field policy_data of google_scc_source_iam_policy.
 func (ssip sccSourceIamPolicyAttributes) PolicyData() terra.StringValue {
-	return terra.ReferenceString(ssip.ref.Append("policy_data"))
+	return terra.ReferenceAsString(ssip.ref.Append("policy_data"))
 }
 
+// Source returns a reference to field source of google_scc_source_iam_policy.
 func (ssip sccSourceIamPolicyAttributes) Source() terra.StringValue {
-	return terra.ReferenceString(ssip.ref.Append("source"))
+	return terra.ReferenceAsString(ssip.ref.Append("source"))
 }
 
 type sccSourceIamPolicyState struct {
