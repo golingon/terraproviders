@@ -13,40 +13,40 @@ type NodeInfoListAttributes struct {
 	ref terra.Reference
 }
 
-func (nil NodeInfoListAttributes) InternalRef() (terra.Reference, error) {
-	return nil.ref, nil
+func (_nil NodeInfoListAttributes) InternalRef() (terra.Reference, error) {
+	return _nil.ref, nil
 }
 
-func (nil NodeInfoListAttributes) InternalWithRef(ref terra.Reference) NodeInfoListAttributes {
+func (_nil NodeInfoListAttributes) InternalWithRef(ref terra.Reference) NodeInfoListAttributes {
 	return NodeInfoListAttributes{ref: ref}
 }
 
-func (nil NodeInfoListAttributes) InternalTokens() (hclwrite.Tokens, error) {
-	return nil.ref.InternalTokens()
+func (_nil NodeInfoListAttributes) InternalTokens() (hclwrite.Tokens, error) {
+	return _nil.ref.InternalTokens()
 }
 
-func (nil NodeInfoListAttributes) AttachedEniId() terra.StringValue {
-	return terra.ReferenceAsString(nil.ref.Append("attached_eni_id"))
+func (_nil NodeInfoListAttributes) AttachedEniId() terra.StringValue {
+	return terra.ReferenceAsString(_nil.ref.Append("attached_eni_id"))
 }
 
-func (nil NodeInfoListAttributes) BrokerId() terra.NumberValue {
-	return terra.ReferenceAsNumber(nil.ref.Append("broker_id"))
+func (_nil NodeInfoListAttributes) BrokerId() terra.NumberValue {
+	return terra.ReferenceAsNumber(_nil.ref.Append("broker_id"))
 }
 
-func (nil NodeInfoListAttributes) ClientSubnet() terra.StringValue {
-	return terra.ReferenceAsString(nil.ref.Append("client_subnet"))
+func (_nil NodeInfoListAttributes) ClientSubnet() terra.StringValue {
+	return terra.ReferenceAsString(_nil.ref.Append("client_subnet"))
 }
 
-func (nil NodeInfoListAttributes) ClientVpcIpAddress() terra.StringValue {
-	return terra.ReferenceAsString(nil.ref.Append("client_vpc_ip_address"))
+func (_nil NodeInfoListAttributes) ClientVpcIpAddress() terra.StringValue {
+	return terra.ReferenceAsString(_nil.ref.Append("client_vpc_ip_address"))
 }
 
-func (nil NodeInfoListAttributes) Endpoints() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceAsSet[terra.StringValue](nil.ref.Append("endpoints"))
+func (_nil NodeInfoListAttributes) Endpoints() terra.SetValue[terra.StringValue] {
+	return terra.ReferenceAsSet[terra.StringValue](_nil.ref.Append("endpoints"))
 }
 
-func (nil NodeInfoListAttributes) NodeArn() terra.StringValue {
-	return terra.ReferenceAsString(nil.ref.Append("node_arn"))
+func (_nil NodeInfoListAttributes) NodeArn() terra.StringValue {
+	return terra.ReferenceAsString(_nil.ref.Append("node_arn"))
 }
 
 type NodeInfoListState struct {
