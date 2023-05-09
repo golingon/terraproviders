@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCertRequest creates a new instance of [CertRequest].
 func NewCertRequest(name string, args CertRequestArgs) *CertRequest {
 	return &CertRequest{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCertRequest(name string, args CertRequestArgs) *CertRequest {
 
 var _ terra.Resource = (*CertRequest)(nil)
 
+// CertRequest represents the Terraform resource tls_cert_request.
 type CertRequest struct {
-	Name  string
-	Args  CertRequestArgs
-	state *certRequestState
+	Name      string
+	Args      CertRequestArgs
+	state     *certRequestState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CertRequest].
 func (cr *CertRequest) Type() string {
 	return "tls_cert_request"
 }
 
+// LocalName returns the local name for [CertRequest].
 func (cr *CertRequest) LocalName() string {
 	return cr.Name
 }
 
+// Configuration returns the configuration (args) for [CertRequest].
 func (cr *CertRequest) Configuration() interface{} {
 	return cr.Args
 }
 
+// DependOn is used for other resources to depend on [CertRequest].
+func (cr *CertRequest) DependOn() terra.Reference {
+	return terra.ReferenceResource(cr)
+}
+
+// Dependencies returns the list of resources [CertRequest] depends_on.
+func (cr *CertRequest) Dependencies() terra.Dependencies {
+	return cr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CertRequest].
+func (cr *CertRequest) LifecycleManagement() *terra.Lifecycle {
+	return cr.Lifecycle
+}
+
+// Attributes returns the attributes for [CertRequest].
 func (cr *CertRequest) Attributes() certRequestAttributes {
 	return certRequestAttributes{ref: terra.ReferenceResource(cr)}
 }
 
+// ImportState imports the given attribute values into [CertRequest]'s state.
 func (cr *CertRequest) ImportState(av io.Reader) error {
 	cr.state = &certRequestState{}
 	if err := json.NewDecoder(av).Decode(cr.state); err != nil {
@@ -49,10 +73,12 @@ func (cr *CertRequest) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CertRequest] has state.
 func (cr *CertRequest) State() (*certRequestState, bool) {
 	return cr.state, cr.state != nil
 }
 
+// StateMust returns the state for [CertRequest]. Panics if the state is nil.
 func (cr *CertRequest) StateMust() *certRequestState {
 	if cr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cr.Type(), cr.LocalName()))
@@ -60,10 +86,7 @@ func (cr *CertRequest) StateMust() *certRequestState {
 	return cr.state
 }
 
-func (cr *CertRequest) DependOn() terra.Reference {
-	return terra.ReferenceResource(cr)
-}
-
+// CertRequestArgs contains the configurations for tls_cert_request.
 type CertRequestArgs struct {
 	// DnsNames: list of string, optional
 	DnsNames terra.ListValue[terra.StringValue] `hcl:"dns_names,attr"`
@@ -75,43 +98,48 @@ type CertRequestArgs struct {
 	Uris terra.ListValue[terra.StringValue] `hcl:"uris,attr"`
 	// Subject: optional
 	Subject *certrequest.Subject `hcl:"subject,block"`
-	// DependsOn contains resources that CertRequest depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type certRequestAttributes struct {
 	ref terra.Reference
 }
 
+// CertRequestPem returns a reference to field cert_request_pem of tls_cert_request.
 func (cr certRequestAttributes) CertRequestPem() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("cert_request_pem"))
+	return terra.ReferenceAsString(cr.ref.Append("cert_request_pem"))
 }
 
+// DnsNames returns a reference to field dns_names of tls_cert_request.
 func (cr certRequestAttributes) DnsNames() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cr.ref.Append("dns_names"))
+	return terra.ReferenceAsList[terra.StringValue](cr.ref.Append("dns_names"))
 }
 
+// Id returns a reference to field id of tls_cert_request.
 func (cr certRequestAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("id"))
+	return terra.ReferenceAsString(cr.ref.Append("id"))
 }
 
+// IpAddresses returns a reference to field ip_addresses of tls_cert_request.
 func (cr certRequestAttributes) IpAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cr.ref.Append("ip_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](cr.ref.Append("ip_addresses"))
 }
 
+// KeyAlgorithm returns a reference to field key_algorithm of tls_cert_request.
 func (cr certRequestAttributes) KeyAlgorithm() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("key_algorithm"))
+	return terra.ReferenceAsString(cr.ref.Append("key_algorithm"))
 }
 
+// PrivateKeyPem returns a reference to field private_key_pem of tls_cert_request.
 func (cr certRequestAttributes) PrivateKeyPem() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("private_key_pem"))
+	return terra.ReferenceAsString(cr.ref.Append("private_key_pem"))
 }
 
+// Uris returns a reference to field uris of tls_cert_request.
 func (cr certRequestAttributes) Uris() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cr.ref.Append("uris"))
+	return terra.ReferenceAsList[terra.StringValue](cr.ref.Append("uris"))
 }
 
 func (cr certRequestAttributes) Subject() terra.ListValue[certrequest.SubjectAttributes] {
-	return terra.ReferenceList[certrequest.SubjectAttributes](cr.ref.Append("subject"))
+	return terra.ReferenceAsList[certrequest.SubjectAttributes](cr.ref.Append("subject"))
 }
 
 type certRequestState struct {

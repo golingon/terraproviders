@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataCertificate creates a new instance of [DataCertificate].
 func NewDataCertificate(name string, args DataCertificateArgs) *DataCertificate {
 	return &DataCertificate{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataCertificate(name string, args DataCertificateArgs) *DataCertificate 
 
 var _ terra.DataResource = (*DataCertificate)(nil)
 
+// DataCertificate represents the Terraform data resource tls_certificate.
 type DataCertificate struct {
 	Name string
 	Args DataCertificateArgs
 }
 
+// DataSource returns the Terraform object type for [DataCertificate].
 func (c *DataCertificate) DataSource() string {
 	return "tls_certificate"
 }
 
+// LocalName returns the local name for [DataCertificate].
 func (c *DataCertificate) LocalName() string {
 	return c.Name
 }
 
+// Configuration returns the configuration (args) for [DataCertificate].
 func (c *DataCertificate) Configuration() interface{} {
 	return c.Args
 }
 
+// Attributes returns the attributes for [DataCertificate].
 func (c *DataCertificate) Attributes() dataCertificateAttributes {
 	return dataCertificateAttributes{ref: terra.ReferenceDataResource(c)}
 }
 
+// DataCertificateArgs contains the configurations for tls_certificate.
 type DataCertificateArgs struct {
 	// Content: string, optional
 	Content terra.StringValue `hcl:"content,attr"`
@@ -51,22 +58,26 @@ type dataCertificateAttributes struct {
 	ref terra.Reference
 }
 
+// Content returns a reference to field content of tls_certificate.
 func (c dataCertificateAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("content"))
+	return terra.ReferenceAsString(c.ref.Append("content"))
 }
 
+// Id returns a reference to field id of tls_certificate.
 func (c dataCertificateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("id"))
+	return terra.ReferenceAsString(c.ref.Append("id"))
 }
 
+// Url returns a reference to field url of tls_certificate.
 func (c dataCertificateAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("url"))
+	return terra.ReferenceAsString(c.ref.Append("url"))
 }
 
+// VerifyChain returns a reference to field verify_chain of tls_certificate.
 func (c dataCertificateAttributes) VerifyChain() terra.BoolValue {
-	return terra.ReferenceBool(c.ref.Append("verify_chain"))
+	return terra.ReferenceAsBool(c.ref.Append("verify_chain"))
 }
 
 func (c dataCertificateAttributes) Certificates() terra.ListValue[datacertificate.CertificatesAttributes] {
-	return terra.ReferenceList[datacertificate.CertificatesAttributes](c.ref.Append("certificates"))
+	return terra.ReferenceAsList[datacertificate.CertificatesAttributes](c.ref.Append("certificates"))
 }

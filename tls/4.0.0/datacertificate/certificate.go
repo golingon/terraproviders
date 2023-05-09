@@ -13,60 +13,60 @@ type CertificatesAttributes struct {
 	ref terra.Reference
 }
 
-func (c CertificatesAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CertificatesAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CertificatesAttributes) InternalWithRef(ref terra.Reference) CertificatesAttributes {
 	return CertificatesAttributes{ref: ref}
 }
 
-func (c CertificatesAttributes) InternalTokens() hclwrite.Tokens {
+func (c CertificatesAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return c.ref.InternalTokens()
 }
 
 func (c CertificatesAttributes) CertPem() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("cert_pem"))
+	return terra.ReferenceAsString(c.ref.Append("cert_pem"))
 }
 
 func (c CertificatesAttributes) IsCa() terra.BoolValue {
-	return terra.ReferenceBool(c.ref.Append("is_ca"))
+	return terra.ReferenceAsBool(c.ref.Append("is_ca"))
 }
 
 func (c CertificatesAttributes) Issuer() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("issuer"))
+	return terra.ReferenceAsString(c.ref.Append("issuer"))
 }
 
 func (c CertificatesAttributes) NotAfter() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("not_after"))
+	return terra.ReferenceAsString(c.ref.Append("not_after"))
 }
 
 func (c CertificatesAttributes) NotBefore() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("not_before"))
+	return terra.ReferenceAsString(c.ref.Append("not_before"))
 }
 
 func (c CertificatesAttributes) PublicKeyAlgorithm() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("public_key_algorithm"))
+	return terra.ReferenceAsString(c.ref.Append("public_key_algorithm"))
 }
 
 func (c CertificatesAttributes) SerialNumber() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("serial_number"))
+	return terra.ReferenceAsString(c.ref.Append("serial_number"))
 }
 
 func (c CertificatesAttributes) Sha1Fingerprint() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("sha1_fingerprint"))
+	return terra.ReferenceAsString(c.ref.Append("sha1_fingerprint"))
 }
 
 func (c CertificatesAttributes) SignatureAlgorithm() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("signature_algorithm"))
+	return terra.ReferenceAsString(c.ref.Append("signature_algorithm"))
 }
 
 func (c CertificatesAttributes) Subject() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("subject"))
+	return terra.ReferenceAsString(c.ref.Append("subject"))
 }
 
 func (c CertificatesAttributes) Version() terra.NumberValue {
-	return terra.ReferenceNumber(c.ref.Append("version"))
+	return terra.ReferenceAsNumber(c.ref.Append("version"))
 }
 
 type CertificatesState struct {

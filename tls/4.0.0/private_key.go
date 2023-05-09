@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewPrivateKey creates a new instance of [PrivateKey].
 func NewPrivateKey(name string, args PrivateKeyArgs) *PrivateKey {
 	return &PrivateKey{
 		Args: args,
@@ -18,28 +19,51 @@ func NewPrivateKey(name string, args PrivateKeyArgs) *PrivateKey {
 
 var _ terra.Resource = (*PrivateKey)(nil)
 
+// PrivateKey represents the Terraform resource tls_private_key.
 type PrivateKey struct {
-	Name  string
-	Args  PrivateKeyArgs
-	state *privateKeyState
+	Name      string
+	Args      PrivateKeyArgs
+	state     *privateKeyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PrivateKey].
 func (pk *PrivateKey) Type() string {
 	return "tls_private_key"
 }
 
+// LocalName returns the local name for [PrivateKey].
 func (pk *PrivateKey) LocalName() string {
 	return pk.Name
 }
 
+// Configuration returns the configuration (args) for [PrivateKey].
 func (pk *PrivateKey) Configuration() interface{} {
 	return pk.Args
 }
 
+// DependOn is used for other resources to depend on [PrivateKey].
+func (pk *PrivateKey) DependOn() terra.Reference {
+	return terra.ReferenceResource(pk)
+}
+
+// Dependencies returns the list of resources [PrivateKey] depends_on.
+func (pk *PrivateKey) Dependencies() terra.Dependencies {
+	return pk.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PrivateKey].
+func (pk *PrivateKey) LifecycleManagement() *terra.Lifecycle {
+	return pk.Lifecycle
+}
+
+// Attributes returns the attributes for [PrivateKey].
 func (pk *PrivateKey) Attributes() privateKeyAttributes {
 	return privateKeyAttributes{ref: terra.ReferenceResource(pk)}
 }
 
+// ImportState imports the given attribute values into [PrivateKey]'s state.
 func (pk *PrivateKey) ImportState(av io.Reader) error {
 	pk.state = &privateKeyState{}
 	if err := json.NewDecoder(av).Decode(pk.state); err != nil {
@@ -48,10 +72,12 @@ func (pk *PrivateKey) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PrivateKey] has state.
 func (pk *PrivateKey) State() (*privateKeyState, bool) {
 	return pk.state, pk.state != nil
 }
 
+// StateMust returns the state for [PrivateKey]. Panics if the state is nil.
 func (pk *PrivateKey) StateMust() *privateKeyState {
 	if pk.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pk.Type(), pk.LocalName()))
@@ -59,10 +85,7 @@ func (pk *PrivateKey) StateMust() *privateKeyState {
 	return pk.state
 }
 
-func (pk *PrivateKey) DependOn() terra.Reference {
-	return terra.ReferenceResource(pk)
-}
-
+// PrivateKeyArgs contains the configurations for tls_private_key.
 type PrivateKeyArgs struct {
 	// Algorithm: string, required
 	Algorithm terra.StringValue `hcl:"algorithm,attr" validate:"required"`
@@ -70,55 +93,64 @@ type PrivateKeyArgs struct {
 	EcdsaCurve terra.StringValue `hcl:"ecdsa_curve,attr"`
 	// RsaBits: number, optional
 	RsaBits terra.NumberValue `hcl:"rsa_bits,attr"`
-	// DependsOn contains resources that PrivateKey depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type privateKeyAttributes struct {
 	ref terra.Reference
 }
 
+// Algorithm returns a reference to field algorithm of tls_private_key.
 func (pk privateKeyAttributes) Algorithm() terra.StringValue {
-	return terra.ReferenceString(pk.ref.Append("algorithm"))
+	return terra.ReferenceAsString(pk.ref.Append("algorithm"))
 }
 
+// EcdsaCurve returns a reference to field ecdsa_curve of tls_private_key.
 func (pk privateKeyAttributes) EcdsaCurve() terra.StringValue {
-	return terra.ReferenceString(pk.ref.Append("ecdsa_curve"))
+	return terra.ReferenceAsString(pk.ref.Append("ecdsa_curve"))
 }
 
+// Id returns a reference to field id of tls_private_key.
 func (pk privateKeyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pk.ref.Append("id"))
+	return terra.ReferenceAsString(pk.ref.Append("id"))
 }
 
+// PrivateKeyOpenssh returns a reference to field private_key_openssh of tls_private_key.
 func (pk privateKeyAttributes) PrivateKeyOpenssh() terra.StringValue {
-	return terra.ReferenceString(pk.ref.Append("private_key_openssh"))
+	return terra.ReferenceAsString(pk.ref.Append("private_key_openssh"))
 }
 
+// PrivateKeyPem returns a reference to field private_key_pem of tls_private_key.
 func (pk privateKeyAttributes) PrivateKeyPem() terra.StringValue {
-	return terra.ReferenceString(pk.ref.Append("private_key_pem"))
+	return terra.ReferenceAsString(pk.ref.Append("private_key_pem"))
 }
 
+// PrivateKeyPemPkcs8 returns a reference to field private_key_pem_pkcs8 of tls_private_key.
 func (pk privateKeyAttributes) PrivateKeyPemPkcs8() terra.StringValue {
-	return terra.ReferenceString(pk.ref.Append("private_key_pem_pkcs8"))
+	return terra.ReferenceAsString(pk.ref.Append("private_key_pem_pkcs8"))
 }
 
+// PublicKeyFingerprintMd5 returns a reference to field public_key_fingerprint_md5 of tls_private_key.
 func (pk privateKeyAttributes) PublicKeyFingerprintMd5() terra.StringValue {
-	return terra.ReferenceString(pk.ref.Append("public_key_fingerprint_md5"))
+	return terra.ReferenceAsString(pk.ref.Append("public_key_fingerprint_md5"))
 }
 
+// PublicKeyFingerprintSha256 returns a reference to field public_key_fingerprint_sha256 of tls_private_key.
 func (pk privateKeyAttributes) PublicKeyFingerprintSha256() terra.StringValue {
-	return terra.ReferenceString(pk.ref.Append("public_key_fingerprint_sha256"))
+	return terra.ReferenceAsString(pk.ref.Append("public_key_fingerprint_sha256"))
 }
 
+// PublicKeyOpenssh returns a reference to field public_key_openssh of tls_private_key.
 func (pk privateKeyAttributes) PublicKeyOpenssh() terra.StringValue {
-	return terra.ReferenceString(pk.ref.Append("public_key_openssh"))
+	return terra.ReferenceAsString(pk.ref.Append("public_key_openssh"))
 }
 
+// PublicKeyPem returns a reference to field public_key_pem of tls_private_key.
 func (pk privateKeyAttributes) PublicKeyPem() terra.StringValue {
-	return terra.ReferenceString(pk.ref.Append("public_key_pem"))
+	return terra.ReferenceAsString(pk.ref.Append("public_key_pem"))
 }
 
+// RsaBits returns a reference to field rsa_bits of tls_private_key.
 func (pk privateKeyAttributes) RsaBits() terra.NumberValue {
-	return terra.ReferenceNumber(pk.ref.Append("rsa_bits"))
+	return terra.ReferenceAsNumber(pk.ref.Append("rsa_bits"))
 }
 
 type privateKeyState struct {

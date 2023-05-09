@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewLocallySignedCert creates a new instance of [LocallySignedCert].
 func NewLocallySignedCert(name string, args LocallySignedCertArgs) *LocallySignedCert {
 	return &LocallySignedCert{
 		Args: args,
@@ -18,28 +19,51 @@ func NewLocallySignedCert(name string, args LocallySignedCertArgs) *LocallySigne
 
 var _ terra.Resource = (*LocallySignedCert)(nil)
 
+// LocallySignedCert represents the Terraform resource tls_locally_signed_cert.
 type LocallySignedCert struct {
-	Name  string
-	Args  LocallySignedCertArgs
-	state *locallySignedCertState
+	Name      string
+	Args      LocallySignedCertArgs
+	state     *locallySignedCertState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LocallySignedCert].
 func (lsc *LocallySignedCert) Type() string {
 	return "tls_locally_signed_cert"
 }
 
+// LocalName returns the local name for [LocallySignedCert].
 func (lsc *LocallySignedCert) LocalName() string {
 	return lsc.Name
 }
 
+// Configuration returns the configuration (args) for [LocallySignedCert].
 func (lsc *LocallySignedCert) Configuration() interface{} {
 	return lsc.Args
 }
 
+// DependOn is used for other resources to depend on [LocallySignedCert].
+func (lsc *LocallySignedCert) DependOn() terra.Reference {
+	return terra.ReferenceResource(lsc)
+}
+
+// Dependencies returns the list of resources [LocallySignedCert] depends_on.
+func (lsc *LocallySignedCert) Dependencies() terra.Dependencies {
+	return lsc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LocallySignedCert].
+func (lsc *LocallySignedCert) LifecycleManagement() *terra.Lifecycle {
+	return lsc.Lifecycle
+}
+
+// Attributes returns the attributes for [LocallySignedCert].
 func (lsc *LocallySignedCert) Attributes() locallySignedCertAttributes {
 	return locallySignedCertAttributes{ref: terra.ReferenceResource(lsc)}
 }
 
+// ImportState imports the given attribute values into [LocallySignedCert]'s state.
 func (lsc *LocallySignedCert) ImportState(av io.Reader) error {
 	lsc.state = &locallySignedCertState{}
 	if err := json.NewDecoder(av).Decode(lsc.state); err != nil {
@@ -48,10 +72,12 @@ func (lsc *LocallySignedCert) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LocallySignedCert] has state.
 func (lsc *LocallySignedCert) State() (*locallySignedCertState, bool) {
 	return lsc.state, lsc.state != nil
 }
 
+// StateMust returns the state for [LocallySignedCert]. Panics if the state is nil.
 func (lsc *LocallySignedCert) StateMust() *locallySignedCertState {
 	if lsc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lsc.Type(), lsc.LocalName()))
@@ -59,10 +85,7 @@ func (lsc *LocallySignedCert) StateMust() *locallySignedCertState {
 	return lsc.state
 }
 
-func (lsc *LocallySignedCert) DependOn() terra.Reference {
-	return terra.ReferenceResource(lsc)
-}
-
+// LocallySignedCertArgs contains the configurations for tls_locally_signed_cert.
 type LocallySignedCertArgs struct {
 	// AllowedUses: list of string, required
 	AllowedUses terra.ListValue[terra.StringValue] `hcl:"allowed_uses,attr" validate:"required"`
@@ -80,67 +103,79 @@ type LocallySignedCertArgs struct {
 	SetSubjectKeyId terra.BoolValue `hcl:"set_subject_key_id,attr"`
 	// ValidityPeriodHours: number, required
 	ValidityPeriodHours terra.NumberValue `hcl:"validity_period_hours,attr" validate:"required"`
-	// DependsOn contains resources that LocallySignedCert depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type locallySignedCertAttributes struct {
 	ref terra.Reference
 }
 
+// AllowedUses returns a reference to field allowed_uses of tls_locally_signed_cert.
 func (lsc locallySignedCertAttributes) AllowedUses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lsc.ref.Append("allowed_uses"))
+	return terra.ReferenceAsList[terra.StringValue](lsc.ref.Append("allowed_uses"))
 }
 
+// CaCertPem returns a reference to field ca_cert_pem of tls_locally_signed_cert.
 func (lsc locallySignedCertAttributes) CaCertPem() terra.StringValue {
-	return terra.ReferenceString(lsc.ref.Append("ca_cert_pem"))
+	return terra.ReferenceAsString(lsc.ref.Append("ca_cert_pem"))
 }
 
+// CaKeyAlgorithm returns a reference to field ca_key_algorithm of tls_locally_signed_cert.
 func (lsc locallySignedCertAttributes) CaKeyAlgorithm() terra.StringValue {
-	return terra.ReferenceString(lsc.ref.Append("ca_key_algorithm"))
+	return terra.ReferenceAsString(lsc.ref.Append("ca_key_algorithm"))
 }
 
+// CaPrivateKeyPem returns a reference to field ca_private_key_pem of tls_locally_signed_cert.
 func (lsc locallySignedCertAttributes) CaPrivateKeyPem() terra.StringValue {
-	return terra.ReferenceString(lsc.ref.Append("ca_private_key_pem"))
+	return terra.ReferenceAsString(lsc.ref.Append("ca_private_key_pem"))
 }
 
+// CertPem returns a reference to field cert_pem of tls_locally_signed_cert.
 func (lsc locallySignedCertAttributes) CertPem() terra.StringValue {
-	return terra.ReferenceString(lsc.ref.Append("cert_pem"))
+	return terra.ReferenceAsString(lsc.ref.Append("cert_pem"))
 }
 
+// CertRequestPem returns a reference to field cert_request_pem of tls_locally_signed_cert.
 func (lsc locallySignedCertAttributes) CertRequestPem() terra.StringValue {
-	return terra.ReferenceString(lsc.ref.Append("cert_request_pem"))
+	return terra.ReferenceAsString(lsc.ref.Append("cert_request_pem"))
 }
 
+// EarlyRenewalHours returns a reference to field early_renewal_hours of tls_locally_signed_cert.
 func (lsc locallySignedCertAttributes) EarlyRenewalHours() terra.NumberValue {
-	return terra.ReferenceNumber(lsc.ref.Append("early_renewal_hours"))
+	return terra.ReferenceAsNumber(lsc.ref.Append("early_renewal_hours"))
 }
 
+// Id returns a reference to field id of tls_locally_signed_cert.
 func (lsc locallySignedCertAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lsc.ref.Append("id"))
+	return terra.ReferenceAsString(lsc.ref.Append("id"))
 }
 
+// IsCaCertificate returns a reference to field is_ca_certificate of tls_locally_signed_cert.
 func (lsc locallySignedCertAttributes) IsCaCertificate() terra.BoolValue {
-	return terra.ReferenceBool(lsc.ref.Append("is_ca_certificate"))
+	return terra.ReferenceAsBool(lsc.ref.Append("is_ca_certificate"))
 }
 
+// ReadyForRenewal returns a reference to field ready_for_renewal of tls_locally_signed_cert.
 func (lsc locallySignedCertAttributes) ReadyForRenewal() terra.BoolValue {
-	return terra.ReferenceBool(lsc.ref.Append("ready_for_renewal"))
+	return terra.ReferenceAsBool(lsc.ref.Append("ready_for_renewal"))
 }
 
+// SetSubjectKeyId returns a reference to field set_subject_key_id of tls_locally_signed_cert.
 func (lsc locallySignedCertAttributes) SetSubjectKeyId() terra.BoolValue {
-	return terra.ReferenceBool(lsc.ref.Append("set_subject_key_id"))
+	return terra.ReferenceAsBool(lsc.ref.Append("set_subject_key_id"))
 }
 
+// ValidityEndTime returns a reference to field validity_end_time of tls_locally_signed_cert.
 func (lsc locallySignedCertAttributes) ValidityEndTime() terra.StringValue {
-	return terra.ReferenceString(lsc.ref.Append("validity_end_time"))
+	return terra.ReferenceAsString(lsc.ref.Append("validity_end_time"))
 }
 
+// ValidityPeriodHours returns a reference to field validity_period_hours of tls_locally_signed_cert.
 func (lsc locallySignedCertAttributes) ValidityPeriodHours() terra.NumberValue {
-	return terra.ReferenceNumber(lsc.ref.Append("validity_period_hours"))
+	return terra.ReferenceAsNumber(lsc.ref.Append("validity_period_hours"))
 }
 
+// ValidityStartTime returns a reference to field validity_start_time of tls_locally_signed_cert.
 func (lsc locallySignedCertAttributes) ValidityStartTime() terra.StringValue {
-	return terra.ReferenceString(lsc.ref.Append("validity_start_time"))
+	return terra.ReferenceAsString(lsc.ref.Append("validity_start_time"))
 }
 
 type locallySignedCertState struct {

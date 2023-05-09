@@ -22,32 +22,32 @@ type ProxyAttributes struct {
 	ref terra.Reference
 }
 
-func (p ProxyAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p ProxyAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p ProxyAttributes) InternalWithRef(ref terra.Reference) ProxyAttributes {
 	return ProxyAttributes{ref: ref}
 }
 
-func (p ProxyAttributes) InternalTokens() hclwrite.Tokens {
+func (p ProxyAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return p.ref.InternalTokens()
 }
 
 func (p ProxyAttributes) FromEnv() terra.BoolValue {
-	return terra.ReferenceBool(p.ref.Append("from_env"))
+	return terra.ReferenceAsBool(p.ref.Append("from_env"))
 }
 
 func (p ProxyAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("password"))
+	return terra.ReferenceAsString(p.ref.Append("password"))
 }
 
 func (p ProxyAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("url"))
+	return terra.ReferenceAsString(p.ref.Append("url"))
 }
 
 func (p ProxyAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("username"))
+	return terra.ReferenceAsString(p.ref.Append("username"))
 }
 
 type ProxyState struct {

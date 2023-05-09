@@ -32,52 +32,52 @@ type SubjectAttributes struct {
 	ref terra.Reference
 }
 
-func (s SubjectAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SubjectAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SubjectAttributes) InternalWithRef(ref terra.Reference) SubjectAttributes {
 	return SubjectAttributes{ref: ref}
 }
 
-func (s SubjectAttributes) InternalTokens() hclwrite.Tokens {
+func (s SubjectAttributes) InternalTokens() (hclwrite.Tokens, error) {
 	return s.ref.InternalTokens()
 }
 
 func (s SubjectAttributes) CommonName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("common_name"))
+	return terra.ReferenceAsString(s.ref.Append("common_name"))
 }
 
 func (s SubjectAttributes) Country() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("country"))
+	return terra.ReferenceAsString(s.ref.Append("country"))
 }
 
 func (s SubjectAttributes) Locality() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("locality"))
+	return terra.ReferenceAsString(s.ref.Append("locality"))
 }
 
 func (s SubjectAttributes) Organization() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("organization"))
+	return terra.ReferenceAsString(s.ref.Append("organization"))
 }
 
 func (s SubjectAttributes) OrganizationalUnit() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("organizational_unit"))
+	return terra.ReferenceAsString(s.ref.Append("organizational_unit"))
 }
 
 func (s SubjectAttributes) PostalCode() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("postal_code"))
+	return terra.ReferenceAsString(s.ref.Append("postal_code"))
 }
 
 func (s SubjectAttributes) Province() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("province"))
+	return terra.ReferenceAsString(s.ref.Append("province"))
 }
 
 func (s SubjectAttributes) SerialNumber() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("serial_number"))
+	return terra.ReferenceAsString(s.ref.Append("serial_number"))
 }
 
 func (s SubjectAttributes) StreetAddress() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](s.ref.Append("street_address"))
+	return terra.ReferenceAsList[terra.StringValue](s.ref.Append("street_address"))
 }
 
 type SubjectState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSelfSignedCert creates a new instance of [SelfSignedCert].
 func NewSelfSignedCert(name string, args SelfSignedCertArgs) *SelfSignedCert {
 	return &SelfSignedCert{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSelfSignedCert(name string, args SelfSignedCertArgs) *SelfSignedCert {
 
 var _ terra.Resource = (*SelfSignedCert)(nil)
 
+// SelfSignedCert represents the Terraform resource tls_self_signed_cert.
 type SelfSignedCert struct {
-	Name  string
-	Args  SelfSignedCertArgs
-	state *selfSignedCertState
+	Name      string
+	Args      SelfSignedCertArgs
+	state     *selfSignedCertState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SelfSignedCert].
 func (ssc *SelfSignedCert) Type() string {
 	return "tls_self_signed_cert"
 }
 
+// LocalName returns the local name for [SelfSignedCert].
 func (ssc *SelfSignedCert) LocalName() string {
 	return ssc.Name
 }
 
+// Configuration returns the configuration (args) for [SelfSignedCert].
 func (ssc *SelfSignedCert) Configuration() interface{} {
 	return ssc.Args
 }
 
+// DependOn is used for other resources to depend on [SelfSignedCert].
+func (ssc *SelfSignedCert) DependOn() terra.Reference {
+	return terra.ReferenceResource(ssc)
+}
+
+// Dependencies returns the list of resources [SelfSignedCert] depends_on.
+func (ssc *SelfSignedCert) Dependencies() terra.Dependencies {
+	return ssc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SelfSignedCert].
+func (ssc *SelfSignedCert) LifecycleManagement() *terra.Lifecycle {
+	return ssc.Lifecycle
+}
+
+// Attributes returns the attributes for [SelfSignedCert].
 func (ssc *SelfSignedCert) Attributes() selfSignedCertAttributes {
 	return selfSignedCertAttributes{ref: terra.ReferenceResource(ssc)}
 }
 
+// ImportState imports the given attribute values into [SelfSignedCert]'s state.
 func (ssc *SelfSignedCert) ImportState(av io.Reader) error {
 	ssc.state = &selfSignedCertState{}
 	if err := json.NewDecoder(av).Decode(ssc.state); err != nil {
@@ -49,10 +73,12 @@ func (ssc *SelfSignedCert) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SelfSignedCert] has state.
 func (ssc *SelfSignedCert) State() (*selfSignedCertState, bool) {
 	return ssc.state, ssc.state != nil
 }
 
+// StateMust returns the state for [SelfSignedCert]. Panics if the state is nil.
 func (ssc *SelfSignedCert) StateMust() *selfSignedCertState {
 	if ssc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ssc.Type(), ssc.LocalName()))
@@ -60,10 +86,7 @@ func (ssc *SelfSignedCert) StateMust() *selfSignedCertState {
 	return ssc.state
 }
 
-func (ssc *SelfSignedCert) DependOn() terra.Reference {
-	return terra.ReferenceResource(ssc)
-}
-
+// SelfSignedCertArgs contains the configurations for tls_self_signed_cert.
 type SelfSignedCertArgs struct {
 	// AllowedUses: list of string, required
 	AllowedUses terra.ListValue[terra.StringValue] `hcl:"allowed_uses,attr" validate:"required"`
@@ -87,79 +110,93 @@ type SelfSignedCertArgs struct {
 	ValidityPeriodHours terra.NumberValue `hcl:"validity_period_hours,attr" validate:"required"`
 	// Subject: optional
 	Subject *selfsignedcert.Subject `hcl:"subject,block"`
-	// DependsOn contains resources that SelfSignedCert depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type selfSignedCertAttributes struct {
 	ref terra.Reference
 }
 
+// AllowedUses returns a reference to field allowed_uses of tls_self_signed_cert.
 func (ssc selfSignedCertAttributes) AllowedUses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ssc.ref.Append("allowed_uses"))
+	return terra.ReferenceAsList[terra.StringValue](ssc.ref.Append("allowed_uses"))
 }
 
+// CertPem returns a reference to field cert_pem of tls_self_signed_cert.
 func (ssc selfSignedCertAttributes) CertPem() terra.StringValue {
-	return terra.ReferenceString(ssc.ref.Append("cert_pem"))
+	return terra.ReferenceAsString(ssc.ref.Append("cert_pem"))
 }
 
+// DnsNames returns a reference to field dns_names of tls_self_signed_cert.
 func (ssc selfSignedCertAttributes) DnsNames() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ssc.ref.Append("dns_names"))
+	return terra.ReferenceAsList[terra.StringValue](ssc.ref.Append("dns_names"))
 }
 
+// EarlyRenewalHours returns a reference to field early_renewal_hours of tls_self_signed_cert.
 func (ssc selfSignedCertAttributes) EarlyRenewalHours() terra.NumberValue {
-	return terra.ReferenceNumber(ssc.ref.Append("early_renewal_hours"))
+	return terra.ReferenceAsNumber(ssc.ref.Append("early_renewal_hours"))
 }
 
+// Id returns a reference to field id of tls_self_signed_cert.
 func (ssc selfSignedCertAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ssc.ref.Append("id"))
+	return terra.ReferenceAsString(ssc.ref.Append("id"))
 }
 
+// IpAddresses returns a reference to field ip_addresses of tls_self_signed_cert.
 func (ssc selfSignedCertAttributes) IpAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ssc.ref.Append("ip_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](ssc.ref.Append("ip_addresses"))
 }
 
+// IsCaCertificate returns a reference to field is_ca_certificate of tls_self_signed_cert.
 func (ssc selfSignedCertAttributes) IsCaCertificate() terra.BoolValue {
-	return terra.ReferenceBool(ssc.ref.Append("is_ca_certificate"))
+	return terra.ReferenceAsBool(ssc.ref.Append("is_ca_certificate"))
 }
 
+// KeyAlgorithm returns a reference to field key_algorithm of tls_self_signed_cert.
 func (ssc selfSignedCertAttributes) KeyAlgorithm() terra.StringValue {
-	return terra.ReferenceString(ssc.ref.Append("key_algorithm"))
+	return terra.ReferenceAsString(ssc.ref.Append("key_algorithm"))
 }
 
+// PrivateKeyPem returns a reference to field private_key_pem of tls_self_signed_cert.
 func (ssc selfSignedCertAttributes) PrivateKeyPem() terra.StringValue {
-	return terra.ReferenceString(ssc.ref.Append("private_key_pem"))
+	return terra.ReferenceAsString(ssc.ref.Append("private_key_pem"))
 }
 
+// ReadyForRenewal returns a reference to field ready_for_renewal of tls_self_signed_cert.
 func (ssc selfSignedCertAttributes) ReadyForRenewal() terra.BoolValue {
-	return terra.ReferenceBool(ssc.ref.Append("ready_for_renewal"))
+	return terra.ReferenceAsBool(ssc.ref.Append("ready_for_renewal"))
 }
 
+// SetAuthorityKeyId returns a reference to field set_authority_key_id of tls_self_signed_cert.
 func (ssc selfSignedCertAttributes) SetAuthorityKeyId() terra.BoolValue {
-	return terra.ReferenceBool(ssc.ref.Append("set_authority_key_id"))
+	return terra.ReferenceAsBool(ssc.ref.Append("set_authority_key_id"))
 }
 
+// SetSubjectKeyId returns a reference to field set_subject_key_id of tls_self_signed_cert.
 func (ssc selfSignedCertAttributes) SetSubjectKeyId() terra.BoolValue {
-	return terra.ReferenceBool(ssc.ref.Append("set_subject_key_id"))
+	return terra.ReferenceAsBool(ssc.ref.Append("set_subject_key_id"))
 }
 
+// Uris returns a reference to field uris of tls_self_signed_cert.
 func (ssc selfSignedCertAttributes) Uris() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ssc.ref.Append("uris"))
+	return terra.ReferenceAsList[terra.StringValue](ssc.ref.Append("uris"))
 }
 
+// ValidityEndTime returns a reference to field validity_end_time of tls_self_signed_cert.
 func (ssc selfSignedCertAttributes) ValidityEndTime() terra.StringValue {
-	return terra.ReferenceString(ssc.ref.Append("validity_end_time"))
+	return terra.ReferenceAsString(ssc.ref.Append("validity_end_time"))
 }
 
+// ValidityPeriodHours returns a reference to field validity_period_hours of tls_self_signed_cert.
 func (ssc selfSignedCertAttributes) ValidityPeriodHours() terra.NumberValue {
-	return terra.ReferenceNumber(ssc.ref.Append("validity_period_hours"))
+	return terra.ReferenceAsNumber(ssc.ref.Append("validity_period_hours"))
 }
 
+// ValidityStartTime returns a reference to field validity_start_time of tls_self_signed_cert.
 func (ssc selfSignedCertAttributes) ValidityStartTime() terra.StringValue {
-	return terra.ReferenceString(ssc.ref.Append("validity_start_time"))
+	return terra.ReferenceAsString(ssc.ref.Append("validity_start_time"))
 }
 
 func (ssc selfSignedCertAttributes) Subject() terra.ListValue[selfsignedcert.SubjectAttributes] {
-	return terra.ReferenceList[selfsignedcert.SubjectAttributes](ssc.ref.Append("subject"))
+	return terra.ReferenceAsList[selfsignedcert.SubjectAttributes](ssc.ref.Append("subject"))
 }
 
 type selfSignedCertState struct {
