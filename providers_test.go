@@ -17,8 +17,8 @@ import (
 )
 
 //go:generate go install github.com/volvo-cars/lingon/cmd/terragen@latest
-//go:generate go test -v -run ^TestParseProv$ 
-//go:generate go test -v -run ^TestGenerate$ 
+//go:generate go test -v -run ^TestParseProv$
+//go:generate go test -v -run ^TestGenerate$
 
 type Provider struct {
 	Name      string `json:"name"`
@@ -181,25 +181,24 @@ func TestGenerate(t *testing.T) {
 			t.Fatal(err)
 		}
 
-    // create go.mod
-    gocmd := exec.Command("go", "mod", "init", outPkg)
-    gocmd.Dir = outDir
-    gocmd.Stderr = os.Stderr
-    gocmd.Stdout = os.Stdout
+		// create go.mod
+		gocmd := exec.Command("go", "mod", "init", outPkg)
+		gocmd.Dir = outDir
+		gocmd.Stderr = os.Stderr
+		gocmd.Stdout = os.Stdout
 
-    if err = gocmd.Run(); err != nil {
-      t.Fatal(err)
-    }
+		if err = gocmd.Run(); err != nil {
+			t.Fatal(err)
+		}
 
-    tidycmd := exec.Command("go", "mod", "tidy")
-    tidycmd.Dir = outDir
-    tidycmd.Stderr = os.Stderr
-    tidycmd.Stdout = os.Stdout
+		tidycmd := exec.Command("go", "mod", "tidy")
+		tidycmd.Dir = outDir
+		tidycmd.Stderr = os.Stderr
+		tidycmd.Stdout = os.Stdout
 
-    if err = tidycmd.Run(); err != nil {
-      t.Fatal(err)
-    }
+		if err = tidycmd.Run(); err != nil {
+			t.Fatal(err)
+		}
 
 	}
-  
 }

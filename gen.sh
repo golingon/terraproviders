@@ -9,6 +9,8 @@
 # Example:
 #   gen.sh aws hashicorp/aws 4.63.0
 
+command -v terragen >/dev/null 2>&1 || { echo >&2 "terragen is required but it's not installed.  Aborting."; exit 1; }
+
 function gen() {
     set -x
     local PROVIDER_NAME="$1"    # i.e. aws

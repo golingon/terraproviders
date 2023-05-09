@@ -7,6 +7,8 @@ The plan is to add automation and do this on a regular interval.
 
 ## Manually generate a provider
 
+Requirements: `go install github.com/volvo-cars/lingon/cmd/terragen@latest`
+
 ```bash
 
 gen.sh aws hashicorp/aws 4.63.0
