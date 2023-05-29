@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/hashicorp/hcl/v2 v2.16.2
-	github.com/volvo-cars/lingon v0.0.0-20230522071136-dca6a6fc5a39
+	github.com/volvo-cars/lingon v0.0.0-20230529113525-2f8eb8598205
 )
 
 require (
@@ -19,7 +19,7 @@ require (
 	github.com/hashicorp/terraform-json v0.16.0 // indirect
 	github.com/leodido/go-urn v1.2.4 // indirect
 	github.com/mitchellh/go-wordwrap v1.0.1 // indirect
-	github.com/zclconf/go-cty v1.13.1 // indirect
+	github.com/zclconf/go-cty v1.13.2 // indirect
 	golang.org/x/crypto v0.9.0 // indirect
 	golang.org/x/net v0.10.0 // indirect
 	golang.org/x/sys v0.8.0 // indirect

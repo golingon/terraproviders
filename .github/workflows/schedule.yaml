@@ -2,9 +2,10 @@
 name: Update providers
 
 on: 
-  schedule:
-    - cron: '0 6 * * 1' # at 6 on Mondays # https://crontab.guru/#0_6_*_*_1
-      #- cron: '*/15 * * * *' # For testing
+  push
+  #  schedule:
+  #    - cron: '0 6 * * 1' # at 6 on Mondays # https://crontab.guru/#0_6_*_*_1
+  #      #- cron: '*/15 * * * *' # For testing
 
 permissions:
   contents: write
