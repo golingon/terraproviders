@@ -3,6 +3,7 @@ name: Update providers
 
 on: 
   push
+
   #  schedule:
   #    - cron: '0 6 * * 1' # at 6 on Mondays # https://crontab.guru/#0_6_*_*_1
   #      #- cron: '*/15 * * * *' # For testing
@@ -28,8 +29,4 @@ jobs:
           go generate .
 
           # only commits if there are changes to commit
-          [ ! -z "$(git status --porcelain)" ]  && \
-            git config --global user.name 'lingonbot' && \
-            git config --global user.email 'lingonbot@users.noreply.github.com' && \
-            git commit -am "automated update of providers" && \
-            git push
+          ./ci.sh
