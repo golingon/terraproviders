@@ -3,8 +3,8 @@ module github.com/golingon/terraproviders/googleworkspace/0.7.0
 go 1.20
 
 require (
-	github.com/hashicorp/hcl/v2 v2.16.2
-	github.com/volvo-cars/lingon v0.0.0-20230529113525-2f8eb8598205
+	github.com/hashicorp/hcl/v2 v2.17.0
+	github.com/volvo-cars/lingon v0.0.0-20230604043955-13bf097d7e28
 )
 
 require (
