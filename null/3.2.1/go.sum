@@ -51,8 +51,8 @@ github.com/stretchr/testify v1.7.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/
 github.com/stretchr/testify v1.8.0/go.mod h1:yNjHg4UonilssWZ8iaSj1OCr/vHnekPRkoO+kdMU+MU=
 github.com/stretchr/testify v1.8.2 h1:+h33VjcLVPDHtOdpUCuF+7gSuG3yGIftsP1YvFihtJ8=
 github.com/stretchr/testify v1.8.2/go.mod h1:w2LPCIKwWwSfY2zedu0+kehJoqGctiVI29o6fzry7u4=
-github.com/volvo-cars/lingon v0.0.0-20230622180706-f7956c2d85ec h1:m6lUu3+FPtOixEA9Mxc1SQHKdcP5opoeH0gqG7pdkUY=
-github.com/volvo-cars/lingon v0.0.0-20230622180706-f7956c2d85ec/go.mod h1:591vYcUUntPsveb4BZUh0+FE/vZZjPEnRP29hqAGpFA=
+github.com/volvo-cars/lingon v0.0.0-20230626063423-45140aff4268 h1:JDCMAKA1UyWEXBz2Cn/ugOQdL2k/rn62B5UF4VM1gZs=
+github.com/volvo-cars/lingon v0.0.0-20230626063423-45140aff4268/go.mod h1:591vYcUUntPsveb4BZUh0+FE/vZZjPEnRP29hqAGpFA=
 github.com/zclconf/go-cty v1.13.2 h1:4GvrUxe/QUDYuJKAav4EYqdM47/kZa672LwmXFmEKT0=
 github.com/zclconf/go-cty v1.13.2/go.mod h1:YKQzy/7pZ7iq2jNFzy5go57xdxdWoLLpaEp4u238AE0=
 github.com/zegl/kube-score v1.16.1 h1:aR4355f6kH9rwVMQPUT9946KlcHvr4r8drLQK5J7kOM=
