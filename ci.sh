@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
+set -ex
 
-go generate .
+go generate -x ./...
 
 # only commits if there are changes to commit
-[ -z "$(git status --porcelain)" ]  && echo "nothing to commit" || {
-  set -ex
+if [ -z "$(git status --porcelain)" ];
+then
+  echo "nothing to commit" 
+else
   git config --global user.name 'lingonbot'
   git config --global user.email 'lingonbot@users.noreply.github.com'
-  git commit -am "automated update of providers"
+  git add .
+  git commit -m "automated update of providers"
   git push
-}
+fi

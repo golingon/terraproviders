@@ -24,7 +24,5 @@ jobs:
 
       - name: Commit updated providers
         run: |
-          go generate .
-
           # only commits if there are changes to commit
           ./ci.sh
