@@ -2,7 +2,7 @@ module github.com/golingon/terraproviders/local/2.4.0
 
 go 1.20
 
-require github.com/volvo-cars/lingon v0.0.0-20230703105113-1bcac3444c58
+require github.com/volvo-cars/lingon v0.0.0-20230707195820-333df09ffe29
 
 require (
 	github.com/agext/levenshtein v1.2.3 // indirect
@@ -18,8 +18,8 @@ require (
 	github.com/leodido/go-urn v1.2.4 // indirect
 	github.com/mitchellh/go-wordwrap v1.0.1 // indirect
 	github.com/zclconf/go-cty v1.13.2 // indirect
-	golang.org/x/crypto v0.9.0 // indirect
-	golang.org/x/net v0.10.0 // indirect
-	golang.org/x/sys v0.8.0 // indirect
-	golang.org/x/text v0.9.0 // indirect
+	golang.org/x/crypto v0.10.0 // indirect
+	golang.org/x/net v0.11.0 // indirect
+	golang.org/x/sys v0.9.0 // indirect
+	golang.org/x/text v0.10.0 // indirect
 )
