@@ -2,7 +2,7 @@ module github.com/golingon/terraproviders/local/2.4.0
 
 go 1.20
 
-require github.com/volvo-cars/lingon v0.0.0-20230716050242-618073d65bec
+require github.com/volvo-cars/lingon v0.0.0-20230814121704-8832578d7bbf
 
 require (
 	github.com/agext/levenshtein v1.2.3 // indirect
