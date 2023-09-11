@@ -1,8 +1,8 @@
 module github.com/golingon/terraproviders/null/3.2.1
 
-go 1.21.0
+go 1.21.1
 
-require github.com/volvo-cars/lingon v0.0.0-20230829075314-4fbb39a7d2e5
+require github.com/volvo-cars/lingon v0.0.0-20230907071837-f9f635be687a
 
 require (
 	github.com/agext/levenshtein v1.2.3 // indirect

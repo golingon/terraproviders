@@ -1,10 +1,10 @@
 module github.com/golingon/terraproviders/helm/2.11.0
 
-go 1.21.0
+go 1.21.1
 
 require (
 	github.com/hashicorp/hcl/v2 v2.18.0
-	github.com/volvo-cars/lingon v0.0.0-20230829075314-4fbb39a7d2e5
+	github.com/volvo-cars/lingon v0.0.0-20230907071837-f9f635be687a
 )
 
 require (
