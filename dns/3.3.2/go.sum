@@ -48,8 +48,8 @@ github.com/stretchr/testify v1.7.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/
 github.com/stretchr/testify v1.8.0/go.mod h1:yNjHg4UonilssWZ8iaSj1OCr/vHnekPRkoO+kdMU+MU=
 github.com/stretchr/testify v1.8.2 h1:+h33VjcLVPDHtOdpUCuF+7gSuG3yGIftsP1YvFihtJ8=
 github.com/stretchr/testify v1.8.2/go.mod h1:w2LPCIKwWwSfY2zedu0+kehJoqGctiVI29o6fzry7u4=
-github.com/volvo-cars/lingon v0.0.0-20230907071837-f9f635be687a h1:HWX50B9TuH9SE7ZJsk6+7OyLuCtVjmvvw06RthYu208=
-github.com/volvo-cars/lingon v0.0.0-20230907071837-f9f635be687a/go.mod h1:jbofdP7hibh9yBsgeDl77tNxpSOHO8YGoB/J60lX2nA=
+github.com/volvo-cars/lingon v0.0.0-20230912061845-85f9ded64e1d h1:UuAKcQVpB0G/kAgAvvpD8n65eZsX8TDmUDyxGgLKqVA=
+github.com/volvo-cars/lingon v0.0.0-20230912061845-85f9ded64e1d/go.mod h1:jbofdP7hibh9yBsgeDl77tNxpSOHO8YGoB/J60lX2nA=
 github.com/zclconf/go-cty v1.13.2 h1:4GvrUxe/QUDYuJKAav4EYqdM47/kZa672LwmXFmEKT0=
 github.com/zclconf/go-cty v1.13.2/go.mod h1:YKQzy/7pZ7iq2jNFzy5go57xdxdWoLLpaEp4u238AE0=
 golang.org/x/crypto v0.12.0 h1:tFM/ta59kqch6LlvYnPa0yx5a83cL2nHflFhYKvv9Yk=
