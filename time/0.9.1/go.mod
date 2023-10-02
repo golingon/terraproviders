@@ -2,7 +2,7 @@ module github.com/golingon/terraproviders/time/0.9.1
 
 go 1.21.1
 
-require github.com/volvo-cars/lingon v0.0.0-20230912061845-85f9ded64e1d
+require github.com/volvo-cars/lingon v0.0.0-20230928083259-862afa6549f0
 
 require (
 	github.com/agext/levenshtein v1.2.3 // indirect
