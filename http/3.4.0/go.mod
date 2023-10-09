@@ -3,7 +3,7 @@ module github.com/golingon/terraproviders/http/3.4.0
 go 1.21.1
 
 require (
-	github.com/hashicorp/hcl/v2 v2.18.0
+	github.com/hashicorp/hcl/v2 v2.18.1
 	github.com/volvo-cars/lingon v0.0.0-20230928083259-862afa6549f0
 )
 
