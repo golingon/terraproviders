@@ -1,6 +1,6 @@
 module github.com/golingon/terraproviders/googleworkspace/0.7.0
 
-go 1.21.1
+go 1.21.3
 
 require (
 	github.com/hashicorp/hcl/v2 v2.18.1

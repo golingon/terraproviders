@@ -1,6 +1,6 @@
 module github.com/golingon/terraproviders/null/3.2.1
 
-go 1.21.1
+go 1.21.3
 
 require github.com/volvo-cars/lingon v0.0.0-20230928083259-862afa6549f0
 

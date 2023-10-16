@@ -1,6 +1,6 @@
 module github.com/golingon/terraproviders/azurestack/1.0.0
 
-go 1.21.1
+go 1.21.3
 
 require (
 	github.com/hashicorp/hcl/v2 v2.18.1

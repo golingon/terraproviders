@@ -1,6 +1,6 @@
 module github.com/golingon/terraproviders/dns/3.3.2
 
-go 1.21.1
+go 1.21.3
 
 require (
 	github.com/hashicorp/hcl/v2 v2.18.1
