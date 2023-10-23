@@ -3,7 +3,7 @@ module github.com/golingon/terraproviders/helm/2.11.0
 go 1.21.3
 
 require (
-	github.com/hashicorp/hcl/v2 v2.18.1
+	github.com/hashicorp/hcl/v2 v2.19.1
 	github.com/volvo-cars/lingon v0.0.0-20230928083259-862afa6549f0
 )
 
