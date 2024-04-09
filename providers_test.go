@@ -16,7 +16,7 @@ import (
 	"time"
 )
 
-//go:generate go install github.com/volvo-cars/lingon/cmd/terragen@latest
+//go:generate go install github.com/golingon/lingon/cmd/terragen@latest
 //go:generate go test -v -run ^TestParseProv$
 //go:generate go test -v -run ^TestGenerate$
 

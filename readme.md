@@ -1,13 +1,13 @@
 # Terra Providers
 
-This repository contains popular Terraform providers generated using [Lingon](https://github.com/volvo-cars/lingon)'s `terragen`.
+This repository contains popular Terraform providers generated using [Lingon](https://github.com/golingon/lingon)'s `terragen`.
 
 The current providers were created manually.
 The plan is to add automation and do this on a regular interval.
 
 ## Manually generate a provider
 
-Requirements: `go install github.com/volvo-cars/lingon/cmd/terragen@latest`
+Requirements: `go install github.com/golingon/lingon/cmd/terragen@latest`
 
 ```bash
 
