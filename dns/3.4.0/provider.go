@@ -2,19 +2,14 @@
 
 package dns
 
-import (
-	"github.com/golingon/lingon/pkg/terra"
-	provider "github.com/golingon/terraproviders/dns/3.4.0/provider"
-)
-
-func NewProvider(args ProviderArgs) *Provider {
-	return &Provider{Args: args}
-}
+import "github.com/golingon/lingon/pkg/terra"
 
 var _ terra.Provider = (*Provider)(nil)
 
+// Provider contains the configurations for provider.
 type Provider struct {
-	Args ProviderArgs
+	// Update: min=0
+	Update []Update `hcl:"update,block" validate:"min=0"`
 }
 
 // LocalName returns the provider local name for [Provider].
@@ -32,13 +27,7 @@ func (p *Provider) Version() string {
 	return "3.4.0"
 }
 
-// Configuration returns the configuration (args) for [Provider].
+// Configuration returns the provider configuration for [Provider].
 func (p *Provider) Configuration() interface{} {
-	return p.Args
-}
-
-// ProviderArgs contains the configurations for provider.
-type ProviderArgs struct {
-	// Update: min=0
-	Update []provider.Update `hcl:"update,block" validate:"min=0"`
+	return p
 }

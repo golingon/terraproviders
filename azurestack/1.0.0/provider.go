@@ -2,43 +2,12 @@
 
 package azurestack
 
-import (
-	"github.com/golingon/lingon/pkg/terra"
-	provider "github.com/golingon/terraproviders/azurestack/1.0.0/provider"
-)
-
-func NewProvider(args ProviderArgs) *Provider {
-	return &Provider{Args: args}
-}
+import "github.com/golingon/lingon/pkg/terra"
 
 var _ terra.Provider = (*Provider)(nil)
 
+// Provider contains the configurations for provider.
 type Provider struct {
-	Args ProviderArgs
-}
-
-// LocalName returns the provider local name for [Provider].
-func (p *Provider) LocalName() string {
-	return "azurestack"
-}
-
-// Source returns the provider source for [Provider].
-func (p *Provider) Source() string {
-	return "hashicorp/azurestack"
-}
-
-// Version returns the provider version for [Provider].
-func (p *Provider) Version() string {
-	return "1.0.0"
-}
-
-// Configuration returns the configuration (args) for [Provider].
-func (p *Provider) Configuration() interface{} {
-	return p.Args
-}
-
-// ProviderArgs contains the configurations for provider.
-type ProviderArgs struct {
 	// ArmEndpoint: string, optional
 	ArmEndpoint terra.StringValue `hcl:"arm_endpoint,attr"`
 	// AuxiliaryTenantIds: list of string, optional
@@ -68,5 +37,25 @@ type ProviderArgs struct {
 	// UseMsi: bool, optional
 	UseMsi terra.BoolValue `hcl:"use_msi,attr"`
 	// Features: required
-	Features *provider.Features `hcl:"features,block" validate:"required"`
+	Features *Features `hcl:"features,block" validate:"required"`
+}
+
+// LocalName returns the provider local name for [Provider].
+func (p *Provider) LocalName() string {
+	return "azurestack"
+}
+
+// Source returns the provider source for [Provider].
+func (p *Provider) Source() string {
+	return "hashicorp/azurestack"
+}
+
+// Version returns the provider version for [Provider].
+func (p *Provider) Version() string {
+	return "1.0.0"
+}
+
+// Configuration returns the provider configuration for [Provider].
+func (p *Provider) Configuration() interface{} {
+	return p
 }

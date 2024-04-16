@@ -4,14 +4,22 @@ package googleworkspace
 
 import "github.com/golingon/lingon/pkg/terra"
 
-func NewProvider(args ProviderArgs) *Provider {
-	return &Provider{Args: args}
-}
-
 var _ terra.Provider = (*Provider)(nil)
 
+// Provider contains the configurations for provider.
 type Provider struct {
-	Args ProviderArgs
+	// AccessToken: string, optional
+	AccessToken terra.StringValue `hcl:"access_token,attr"`
+	// Credentials: string, optional
+	Credentials terra.StringValue `hcl:"credentials,attr"`
+	// CustomerId: string, optional
+	CustomerId terra.StringValue `hcl:"customer_id,attr"`
+	// ImpersonatedUserEmail: string, optional
+	ImpersonatedUserEmail terra.StringValue `hcl:"impersonated_user_email,attr"`
+	// OauthScopes: list of string, optional
+	OauthScopes terra.ListValue[terra.StringValue] `hcl:"oauth_scopes,attr"`
+	// ServiceAccount: string, optional
+	ServiceAccount terra.StringValue `hcl:"service_account,attr"`
 }
 
 // LocalName returns the provider local name for [Provider].
@@ -29,23 +37,7 @@ func (p *Provider) Version() string {
 	return "0.7.0"
 }
 
-// Configuration returns the configuration (args) for [Provider].
+// Configuration returns the provider configuration for [Provider].
 func (p *Provider) Configuration() interface{} {
-	return p.Args
-}
-
-// ProviderArgs contains the configurations for provider.
-type ProviderArgs struct {
-	// AccessToken: string, optional
-	AccessToken terra.StringValue `hcl:"access_token,attr"`
-	// Credentials: string, optional
-	Credentials terra.StringValue `hcl:"credentials,attr"`
-	// CustomerId: string, optional
-	CustomerId terra.StringValue `hcl:"customer_id,attr"`
-	// ImpersonatedUserEmail: string, optional
-	ImpersonatedUserEmail terra.StringValue `hcl:"impersonated_user_email,attr"`
-	// OauthScopes: list of string, optional
-	OauthScopes terra.ListValue[terra.StringValue] `hcl:"oauth_scopes,attr"`
-	// ServiceAccount: string, optional
-	ServiceAccount terra.StringValue `hcl:"service_account,attr"`
+	return p
 }

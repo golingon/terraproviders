@@ -2,43 +2,12 @@
 
 package vault
 
-import (
-	"github.com/golingon/lingon/pkg/terra"
-	provider "github.com/golingon/terraproviders/vault/4.2.0/provider"
-)
-
-func NewProvider(args ProviderArgs) *Provider {
-	return &Provider{Args: args}
-}
+import "github.com/golingon/lingon/pkg/terra"
 
 var _ terra.Provider = (*Provider)(nil)
 
+// Provider contains the configurations for provider.
 type Provider struct {
-	Args ProviderArgs
-}
-
-// LocalName returns the provider local name for [Provider].
-func (p *Provider) LocalName() string {
-	return "vault"
-}
-
-// Source returns the provider source for [Provider].
-func (p *Provider) Source() string {
-	return "hashicorp/vault"
-}
-
-// Version returns the provider version for [Provider].
-func (p *Provider) Version() string {
-	return "4.2.0"
-}
-
-// Configuration returns the configuration (args) for [Provider].
-func (p *Provider) Configuration() interface{} {
-	return p.Args
-}
-
-// ProviderArgs contains the configurations for provider.
-type ProviderArgs struct {
 	// AddAddressToEnv: string, optional
 	AddAddressToEnv terra.StringValue `hcl:"add_address_to_env,attr"`
 	// Address: string, required
@@ -72,31 +41,51 @@ type ProviderArgs struct {
 	// VaultVersionOverride: string, optional
 	VaultVersionOverride terra.StringValue `hcl:"vault_version_override,attr"`
 	// AuthLogin: optional
-	AuthLogin *provider.AuthLogin `hcl:"auth_login,block"`
+	AuthLogin *AuthLogin `hcl:"auth_login,block"`
 	// AuthLoginAws: optional
-	AuthLoginAws *provider.AuthLoginAws `hcl:"auth_login_aws,block"`
+	AuthLoginAws *AuthLoginAws `hcl:"auth_login_aws,block"`
 	// AuthLoginAzure: optional
-	AuthLoginAzure *provider.AuthLoginAzure `hcl:"auth_login_azure,block"`
+	AuthLoginAzure *AuthLoginAzure `hcl:"auth_login_azure,block"`
 	// AuthLoginCert: optional
-	AuthLoginCert *provider.AuthLoginCert `hcl:"auth_login_cert,block"`
+	AuthLoginCert *AuthLoginCert `hcl:"auth_login_cert,block"`
 	// AuthLoginGcp: optional
-	AuthLoginGcp *provider.AuthLoginGcp `hcl:"auth_login_gcp,block"`
+	AuthLoginGcp *AuthLoginGcp `hcl:"auth_login_gcp,block"`
 	// AuthLoginJwt: optional
-	AuthLoginJwt *provider.AuthLoginJwt `hcl:"auth_login_jwt,block"`
+	AuthLoginJwt *AuthLoginJwt `hcl:"auth_login_jwt,block"`
 	// AuthLoginKerberos: optional
-	AuthLoginKerberos *provider.AuthLoginKerberos `hcl:"auth_login_kerberos,block"`
+	AuthLoginKerberos *AuthLoginKerberos `hcl:"auth_login_kerberos,block"`
 	// AuthLoginOci: optional
-	AuthLoginOci *provider.AuthLoginOci `hcl:"auth_login_oci,block"`
+	AuthLoginOci *AuthLoginOci `hcl:"auth_login_oci,block"`
 	// AuthLoginOidc: optional
-	AuthLoginOidc *provider.AuthLoginOidc `hcl:"auth_login_oidc,block"`
+	AuthLoginOidc *AuthLoginOidc `hcl:"auth_login_oidc,block"`
 	// AuthLoginRadius: optional
-	AuthLoginRadius *provider.AuthLoginRadius `hcl:"auth_login_radius,block"`
+	AuthLoginRadius *AuthLoginRadius `hcl:"auth_login_radius,block"`
 	// AuthLoginTokenFile: optional
-	AuthLoginTokenFile *provider.AuthLoginTokenFile `hcl:"auth_login_token_file,block"`
+	AuthLoginTokenFile *AuthLoginTokenFile `hcl:"auth_login_token_file,block"`
 	// AuthLoginUserpass: optional
-	AuthLoginUserpass *provider.AuthLoginUserpass `hcl:"auth_login_userpass,block"`
+	AuthLoginUserpass *AuthLoginUserpass `hcl:"auth_login_userpass,block"`
 	// ClientAuth: optional
-	ClientAuth *provider.ClientAuth `hcl:"client_auth,block"`
+	ClientAuth *ClientAuth `hcl:"client_auth,block"`
 	// Headers: min=0
-	Headers []provider.Headers `hcl:"headers,block" validate:"min=0"`
+	Headers []Headers `hcl:"headers,block" validate:"min=0"`
+}
+
+// LocalName returns the provider local name for [Provider].
+func (p *Provider) LocalName() string {
+	return "vault"
+}
+
+// Source returns the provider source for [Provider].
+func (p *Provider) Source() string {
+	return "hashicorp/vault"
+}
+
+// Version returns the provider version for [Provider].
+func (p *Provider) Version() string {
+	return "4.2.0"
+}
+
+// Configuration returns the provider configuration for [Provider].
+func (p *Provider) Configuration() interface{} {
+	return p
 }

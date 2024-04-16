@@ -2,19 +2,14 @@
 
 package tls
 
-import (
-	"github.com/golingon/lingon/pkg/terra"
-	provider "github.com/golingon/terraproviders/tls/4.0.5/provider"
-)
-
-func NewProvider(args ProviderArgs) *Provider {
-	return &Provider{Args: args}
-}
+import "github.com/golingon/lingon/pkg/terra"
 
 var _ terra.Provider = (*Provider)(nil)
 
+// Provider contains the configurations for provider.
 type Provider struct {
-	Args ProviderArgs
+	// Proxy: min=0
+	Proxy []Proxy `hcl:"proxy,block" validate:"min=0"`
 }
 
 // LocalName returns the provider local name for [Provider].
@@ -32,13 +27,7 @@ func (p *Provider) Version() string {
 	return "4.0.5"
 }
 
-// Configuration returns the configuration (args) for [Provider].
+// Configuration returns the provider configuration for [Provider].
 func (p *Provider) Configuration() interface{} {
-	return p.Args
-}
-
-// ProviderArgs contains the configurations for provider.
-type ProviderArgs struct {
-	// Proxy: min=0
-	Proxy []provider.Proxy `hcl:"proxy,block" validate:"min=0"`
+	return p
 }

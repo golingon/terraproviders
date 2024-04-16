@@ -2,19 +2,32 @@
 
 package helm
 
-import (
-	"github.com/golingon/lingon/pkg/terra"
-	provider "github.com/golingon/terraproviders/helm/2.13.0/provider"
-)
-
-func NewProvider(args ProviderArgs) *Provider {
-	return &Provider{Args: args}
-}
+import "github.com/golingon/lingon/pkg/terra"
 
 var _ terra.Provider = (*Provider)(nil)
 
+// Provider contains the configurations for provider.
 type Provider struct {
-	Args ProviderArgs
+	// BurstLimit: number, optional
+	BurstLimit terra.NumberValue `hcl:"burst_limit,attr"`
+	// Debug: bool, optional
+	Debug terra.BoolValue `hcl:"debug,attr"`
+	// HelmDriver: string, optional
+	HelmDriver terra.StringValue `hcl:"helm_driver,attr"`
+	// PluginsPath: string, optional
+	PluginsPath terra.StringValue `hcl:"plugins_path,attr"`
+	// RegistryConfigPath: string, optional
+	RegistryConfigPath terra.StringValue `hcl:"registry_config_path,attr"`
+	// RepositoryCache: string, optional
+	RepositoryCache terra.StringValue `hcl:"repository_cache,attr"`
+	// RepositoryConfigPath: string, optional
+	RepositoryConfigPath terra.StringValue `hcl:"repository_config_path,attr"`
+	// Experiments: optional
+	Experiments *Experiments `hcl:"experiments,block"`
+	// Kubernetes: optional
+	Kubernetes *Kubernetes `hcl:"kubernetes,block"`
+	// Registry: min=0
+	Registry []Registry `hcl:"registry,block" validate:"min=0"`
 }
 
 // LocalName returns the provider local name for [Provider].
@@ -32,31 +45,7 @@ func (p *Provider) Version() string {
 	return "2.13.0"
 }
 
-// Configuration returns the configuration (args) for [Provider].
+// Configuration returns the provider configuration for [Provider].
 func (p *Provider) Configuration() interface{} {
-	return p.Args
-}
-
-// ProviderArgs contains the configurations for provider.
-type ProviderArgs struct {
-	// BurstLimit: number, optional
-	BurstLimit terra.NumberValue `hcl:"burst_limit,attr"`
-	// Debug: bool, optional
-	Debug terra.BoolValue `hcl:"debug,attr"`
-	// HelmDriver: string, optional
-	HelmDriver terra.StringValue `hcl:"helm_driver,attr"`
-	// PluginsPath: string, optional
-	PluginsPath terra.StringValue `hcl:"plugins_path,attr"`
-	// RegistryConfigPath: string, optional
-	RegistryConfigPath terra.StringValue `hcl:"registry_config_path,attr"`
-	// RepositoryCache: string, optional
-	RepositoryCache terra.StringValue `hcl:"repository_cache,attr"`
-	// RepositoryConfigPath: string, optional
-	RepositoryConfigPath terra.StringValue `hcl:"repository_config_path,attr"`
-	// Experiments: optional
-	Experiments *provider.Experiments `hcl:"experiments,block"`
-	// Kubernetes: optional
-	Kubernetes *provider.Kubernetes `hcl:"kubernetes,block"`
-	// Registry: min=0
-	Registry []provider.Registry `hcl:"registry,block" validate:"min=0"`
+	return p
 }
